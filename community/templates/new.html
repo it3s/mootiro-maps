@@ -2,7 +2,9 @@ Create new community:
 <br/><br/>
 
 <form action="/community/save" method="post">
-    {% csrf_token %}
+  {% csrf_token %}
+  <table>
     {{ form }}
-    <input type="submit" value="Submit" />
+  </table>
+  <input type="submit" value="Submit" />
 </form>
