@@ -3,8 +3,8 @@
 from __future__ import unicode_literals  # unicode by default
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from mootiro_komoo.community.models import Community
-from mootiro_komoo.community.forms import CommunityForm
+from community.models import Community
+from community.forms import CommunityForm
 
 
 def new(request):
