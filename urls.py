@@ -7,6 +7,7 @@ from django.conf.urls.defaults import patterns, include
 urlpatterns = patterns('',
     (r'', include('community.urls')),
     (r'', include('need.urls')),
+    (r'', include('proposal.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

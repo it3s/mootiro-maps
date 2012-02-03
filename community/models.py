@@ -30,7 +30,6 @@ class Community(models.Model):
 
     @name.setter
     def name(self, name):
-        print "name setted"
         self.name_has_changed = True
         self._name = name
 
