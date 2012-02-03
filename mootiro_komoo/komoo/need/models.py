@@ -15,8 +15,11 @@ class Need(models.Model):
         ('TEN', '12-18'),
         ('MIN', 'Minorities'),
     )
-    
+
     title = models.CharField(max_length=256)
     description = models.TextField()
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     target_audience = models.CharField(max_length=3, choices=AUDIENCE_CHOICES)
+
+    class Meta:
+        app_label = 'komoo'  # needed for Django to find the model

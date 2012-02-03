@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+import re
 from django.db import models
 from django.template.defaultfilters import slugify
-
-import re
 
 
 class Community(models.Model):
@@ -20,6 +19,7 @@ class Community(models.Model):
     address = models.CharField(max_length=1024)
 
     class Meta:
+        app_label = 'komoo'  # needed for Django to find the model
         verbose_name = "community"
         verbose_name_plural = "communities"
 
@@ -47,7 +47,7 @@ class Community(models.Model):
             n += 1
         self._slug = s
 
-    def save (self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         print self.name_has_changed
         if self.name_has_changed or not self.id:
             self.set_slug()

@@ -11,3 +11,7 @@ class Proposal(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     # TODO: Proposal must belong to a Need
+    class Meta:
+        app_label = 'komoo'  # needed for Django to find the model
+        verbose_name = "solution proposal"
+        verbose_name_plural = "solution proposals"

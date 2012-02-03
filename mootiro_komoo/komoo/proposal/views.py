@@ -11,14 +11,14 @@ def new(request):
     context = {
         'form': ProposalForm()
     }
-    return render_to_response('edit_proposal.html', context,
+    return render_to_response('proposal_edit.html', context,
             context_instance=RequestContext(request))
 
 def save(request):
     ProposalForm(request.POST).save()
-    return render_to_response('edit_proposal.html')
+    return render_to_response('proposal_edit.html')
 
 def edit(request, slug):
     p = Proposal.objects.get()
-    return render_to_response('edit_proposal.html', {'proposal': p},
+    return render_to_response('proposal_edit.html', {'proposal': p},
             context_instance=RequestContext(request))
