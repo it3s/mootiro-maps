@@ -19,6 +19,6 @@ def save(request):
     return render_to_response('edit_proposal.html')
 
 def edit(request, slug):
-    p = Proposal.objects.get(slug=slug)
+    p = Proposal.objects.get()
     return render_to_response('edit_proposal.html', {'proposal': p},
             context_instance=RequestContext(request))

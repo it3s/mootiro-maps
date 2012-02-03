@@ -1,0 +1,9 @@
+{% extends "aaa.html" %}
+{% block content %}
+  <h1>Proposals</h1>
+  <ul>
+    {% for proposal in object_list %}
+      <li>{{ proposal.name }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -6,8 +6,6 @@ from django.db import models
 
 class Proposal(models.Model):
     name = models.CharField(max_length=256)
-    # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.SlugField(max_length=256)
     description = models.TextField()
     content = models.TextField()
     creation_date = models.DateTimeField(auto_now_add=True)
