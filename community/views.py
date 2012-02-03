@@ -8,9 +8,8 @@ from community.forms import CommunityForm
 
 
 def new(request):
-    community_form = CommunityForm()
     context = {
-        'form': community_form
+        'form': CommunityForm()
     }
     return render_to_response('new.html', context,
             context_instance=RequestContext(request))

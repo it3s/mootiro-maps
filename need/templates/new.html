@@ -1,0 +1,10 @@
+Create new need:
+<br/><br/>
+
+<form action="/need/save" method="post">
+  {% csrf_token %}
+  <table>
+    {{ form }}
+  </table>
+  <input type="submit" value="Submit" />
+</form>

@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.forms import ModelForm
-from community.models import Community
+from need.models import Need
 
 
-class CommunityForm(ModelForm):
+class NeedForm(ModelForm):
     class Meta:
-        model = Community
+        model = Need
