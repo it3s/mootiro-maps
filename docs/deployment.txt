@@ -1,6 +1,6 @@
 # Instead of compiling the libraries as in
 # https://docs.djangoproject.com/en/dev/ref/contrib/gis/install/#spatial-database
-sudo apt-get install postgis libgeos-3.2.0 libgeos-c1 python-pyproj proj-bin proj-data libproj-dev proj-ps-doc libproj0
+sudo apt-get install postgis libgeos-3.2.0 libgeos-c1 python-pyproj proj-bin proj-data libproj-dev proj-ps-doc libproj0 binutils
 easy_install -UZ django
 # Prepare the database template
 ./create_template_postgis-debian.sh
