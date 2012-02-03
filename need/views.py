@@ -10,10 +10,10 @@ def new(request):
     context = {
         'form': NeedForm()
     }
-    return render_to_response('new.html', context,
+    return render_to_response('need_edit.html', context,
             context_instance=RequestContext(request))
 
 def save(request):
     need = NeedForm(request.POST)
     need.save()
-    return render_to_response('new.html')
+    return render_to_response('need_edit.html')
