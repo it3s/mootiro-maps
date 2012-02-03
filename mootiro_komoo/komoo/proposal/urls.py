@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from .models import Proposal
 
 
-urlpatterns = patterns('mootiro_komoo.proposal.views',
+urlpatterns = patterns('komoo.proposal.views',
     url(r'^proposal/new$', 'new', name='new_proposal'),
     url(r'^proposal/save$', 'save', name='save_proposal'),
     # url(r'^proposal/(?P<slug>\w+)/edit$', 'edit', name='edit_proposal'),

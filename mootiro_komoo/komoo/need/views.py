@@ -3,7 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from need.forms import NeedForm
+from komoo.need.forms import NeedForm
 
 
 def new(request):
