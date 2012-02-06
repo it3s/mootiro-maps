@@ -10,6 +10,7 @@ def new(request):
     context = {
         'form': NeedForm()
     }
+    
     return render_to_response('need_edit.html', context,
             context_instance=RequestContext(request))
 

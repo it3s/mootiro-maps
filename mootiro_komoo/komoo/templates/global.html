@@ -3,12 +3,18 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>{% block title %}MootiroKomoo!{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}styles.css" />
   </head>
   <body>
     <div id='centralizer'>
       <div id="content">
+        #{{MEDIA_URL}}#<br/>
         {% block content %}{% endblock %}
       </div>
     </div>
+
+    <script type="text/javascript" src="{{STATIC_URL}}jquery-1.7.1.js"></script>
+
+    {% block page_scripts %}{% endblock %}
   </body>
 </html>

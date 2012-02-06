@@ -3,6 +3,8 @@
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
 
+from komoo.community.models import Community
+
 
 class Need(models.Model):
     CATEGORY_CHOICES = (
@@ -20,6 +22,8 @@ class Need(models.Model):
     description = models.TextField()
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     target_audience = models.CharField(max_length=3, choices=AUDIENCE_CHOICES)
+
+    community = models.ForeignKey(Community, related_name="needs")
 
     class Meta:
         app_label = 'komoo'  # needed for Django to find the model
