@@ -112,8 +112,9 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     # Nah. Walk SITE_ROOT looking for directories named "templates"?
-    SITE_ROOT + '/templates',
-    SITE_ROOT + '/proposal/templates',
+    SITE_ROOT + '/komoo/community/templates',
+    SITE_ROOT + '/komoo/need/templates',
+    SITE_ROOT + '/komoo/proposal/templates',
 )
 
 INSTALLED_APPS = (
@@ -129,8 +130,7 @@ INSTALLED_APPS = (
     # 'easy_maps',  # pip install geopy django-easy-maps
     # http://pypi.python.org/pypi/django-easy-maps
     'easy_maps',
-    'community',
-    'need',
+    'komoo',
 )
 
 COMMENT_MAX_LENGTH = 80 * 500

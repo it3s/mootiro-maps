@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.forms import ModelForm
-from komoo.community.models import Community
+from models import Community
 
 
 class CommunityForm(ModelForm):

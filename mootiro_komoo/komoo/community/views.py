@@ -5,8 +5,9 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils import simplejson
-from komoo.community.models import Community
-from komoo.community.forms import CommunityForm
+
+from models import Community
+from forms import CommunityForm
 
 
 def new(request):
