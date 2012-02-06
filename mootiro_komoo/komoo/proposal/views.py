@@ -22,13 +22,18 @@ def new(request):
 
 def save(request):
     form = ProposalForm(request.POST)
-    p = form.save()
-    # return redirect('komoo.proposal.views.view', p.id)
-    # return redirect('view_proposal', p.id)
-    return redirect(view, p.id)
+    if form.is_valid():
+        p = form.save()
+        # return redirect('komoo.proposal.views.view', p.id)
+        # return redirect('view_proposal', p.id)
+        return redirect(view, p.id)
+    else:
+        return render_to_response('proposal_edit.html', dict(form=form),
+            context_instance=RequestContext(request))
 
 
 def edit(request, id):
     p = Proposal.objects.get(id=id)
-    return render_to_response('proposal_edit.html', {'proposal': p},
+    context = dict(form=ProposalForm(instance=p))
+    return render_to_response('proposal_edit.html', context,
             context_instance=RequestContext(request))
