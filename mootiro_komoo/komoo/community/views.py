@@ -27,7 +27,7 @@ def map(request, slug):
     return render_to_response('map.html', {'community': community},
             context_instance=RequestContext(request))
 
-def autocomplete_search(request):
+def search_by_name(request):
     term = request.GET['term']
     communities = Community.objects.filter(_name__icontains=term)
     d = [ (c.slug, c.name) for c in communities ]

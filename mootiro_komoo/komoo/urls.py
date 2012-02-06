@@ -4,7 +4,7 @@ from django.conf.urls.defaults import patterns, include
 # from django.contrib import admin
 # admin.autodiscover()
 
-urlpatterns = patterns('komoo',
+urlpatterns = patterns('',
     (r'', include('komoo.community.urls')),
     (r'', include('komoo.need.urls')),
     (r'', include('komoo.proposal.urls')),

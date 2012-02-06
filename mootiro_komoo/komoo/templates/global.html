@@ -3,6 +3,8 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>{% block title %}MootiroKomoo!{% endblock %}</title>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{MEDIA_URL}}styles.css" />
   </head>
   <body>
@@ -12,9 +14,6 @@
         {% block content %}{% endblock %}
       </div>
     </div>
-
-    <script type="text/javascript" src="{{STATIC_URL}}jquery-1.7.1.js"></script>
-
     {% block page_scripts %}{% endblock %}
   </body>
 </html>

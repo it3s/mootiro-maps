@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django import forms
-
+from django.core.urlresolvers import reverse
+from komoo.widgets import JQueryAutoComplete
 from komoo.need.models import Need
 
 
-class NeedForm(forms.Form):
+class NeedForm(forms.ModelForm):
+    class Meta:
+        model = Need
 
+    community = forms.CharField(widget=JQueryAutoComplete("/community/search_by_name"))
 
-    class Media:
-        js = ('jquery-1.7.1.js', 'jquery-ui-1.8.16.min')

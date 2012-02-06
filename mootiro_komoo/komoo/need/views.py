@@ -6,6 +6,11 @@ from django.template import RequestContext
 from komoo.need.forms import NeedForm
 
 
+def save(request):
+    need = NeedForm(request.POST)
+    need.save()
+    return render_to_response('need_edit.html')
+
 def new(request):
     context = {
         'form': NeedForm()
@@ -14,7 +19,3 @@ def new(request):
     return render_to_response('need_edit.html', context,
             context_instance=RequestContext(request))
 
-def save(request):
-    need = NeedForm(request.POST)
-    need.save()
-    return render_to_response('need_edit.html')
