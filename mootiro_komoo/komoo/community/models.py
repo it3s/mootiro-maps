@@ -9,7 +9,7 @@ from django.template.defaultfilters import slugify
 class Community(models.Model):
     _name = models.CharField(max_length=256)
     # Auto-generated url slug. It's not editable via ModelForm.
-    _slug = models.SlugField(max_length=256, editable=False, blank=False)
+    slug = models.SlugField(max_length=256, editable=False, blank=False)
 
     population = models.IntegerField()  # number of inhabitants
     description = models.TextField()
@@ -33,19 +33,15 @@ class Community(models.Model):
         self.name_has_changed = True
         self._name = name
 
-    @property
-    def slug(self):
-        return self._slug
-
     def set_slug(self):
         original = slugify(self.name)
         s = original
         n = 2
-        while Community.objects.filter(_slug=s).exists():
+        while Community.objects.filter(slug=s).exists():
             s = re.sub(r'\d+$', '', s)  # removes trailing '-number'
             s = original + '-' + str(n)
             n += 1
-        self._slug = s
+        self.slug = s
 
     def save(self, *args, **kwargs):
         print self.name_has_changed
