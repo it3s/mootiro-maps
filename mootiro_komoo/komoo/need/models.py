@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
-from django import forms
 
 from komoo.community.models import Community
+from komoo.utils import slugify
 
 
 class Need(models.Model):
@@ -19,7 +19,9 @@ class Need(models.Model):
         ('MIN', 'Minorities'),
     )
 
-    title = models.CharField(max_length=256)
+    title = models.CharField(max_length=256, blank=False)
+    # Auto-generated url slug. It's not editable via ModelForm.
+    slug = models.SlugField(max_length=256, editable=False, blank=False)
     description = models.TextField()
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     target_audience = models.CharField(max_length=3, choices=AUDIENCE_CHOICES)
@@ -28,3 +30,15 @@ class Need(models.Model):
 
     class Meta:
         app_label = 'komoo'  # needed for Django to find the model
+
+    ### Needed to slugify items ###
+    def slug_exists(self, slug):
+        """Answers if a given slug is valid in the needs namespace of the
+        community.
+        """
+        return Need.objects.filter(community=self.community, slug=slug).exists()
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title, self.slug_exists)
+        super(Need, self).save(*args, **kwargs)
+    ### END ###

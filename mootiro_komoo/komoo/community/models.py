@@ -1,51 +1,37 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
-import re
+
 from django.db import models
-from django.template.defaultfilters import slugify
+
+from komoo.utils import slugify
 
 
 class Community(models.Model):
-    _name = models.CharField(max_length=256)
+    name = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.SlugField(max_length=256, editable=False, blank=False)
 
-    population = models.IntegerField()  # number of inhabitants
-    description = models.TextField()
+    population = models.IntegerField(null=True, blank=True)  # number of inhabitants
+    description = models.TextField(null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
-    address = models.CharField(max_length=1024)
+    address = models.CharField(max_length=1024, null=True, blank=True)
 
     class Meta:
         app_label = 'komoo'  # needed for Django to find the model
         verbose_name = "community"
         verbose_name_plural = "communities"
 
-    name_has_changed = False
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        self.name_has_changed = True
-        self._name = name
-
-    def set_slug(self):
-        original = slugify(self.name)
-        s = original
-        n = 2
-        while Community.objects.filter(slug=s).exists():
-            s = re.sub(r'\d+$', '', s)  # removes trailing '-number'
-            s = original + '-' + str(n)
-            n += 1
-        self.slug = s
+    ### Needed to slugify items ###
+    def slug_exists(self, slug):
+        """Answers if a given slug is valid in the communities namespace."""
+        return Community.objects.filter(slug=slug).exists()
 
     def save(self, *args, **kwargs):
-        print self.name_has_changed
-        if self.name_has_changed or not self.id:
-            self.set_slug()
+        old_name = Community.objects.get(id=self.id) if self.id else None
+        if not self.id or old_name != self.name:
+            self.slug = slugify(self.name, self.slug_exists)
         super(Community, self).save(*args, **kwargs)
-        self.name_has_changed = False
+    ### END ###
