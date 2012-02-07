@@ -3,7 +3,6 @@
 from __future__ import unicode_literals  # unicode by default
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-
 from komoo.community.models import Community
 from komoo.need.models import Need
 from komoo.need.forms import NeedForm
@@ -18,8 +17,12 @@ def new(request):
 
 def save(request):
     form = NeedForm(request.POST)
-    need = form.save()
-    return redirect(view, need.community.slug, need.slug)
+    if form.is_valid():
+        need = form.save()
+        return redirect(view, need.community.slug, need.slug)
+    else:
+        return render_to_response('need_edit.html', dict(form=form),
+            context_instance=RequestContext(request))
 
 def view(request, community_slug, need_slug):
     community = Community.objects.get(slug=community_slug)

@@ -21,7 +21,8 @@ class Need(models.Model):
 
     title = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.SlugField(max_length=256, editable=False, blank=False)
+    slug = models.SlugField(max_length=256, unique=True,
+                            editable=False, blank=False)
     description = models.TextField()
     category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     target_audience = models.CharField(max_length=3, choices=AUDIENCE_CHOICES)

@@ -19,13 +19,17 @@ def new(request):
 
 def save(request):
     form = CommunityForm(request.POST)
-    community = form.save()
-    return redirect(view, community.slug)
+    if form.is_valid():
+        community = form.save()
+        return redirect(view, community.slug)
+    else:
+        return render_to_response('community_new.html', dict(form=form),
+            context_instance=RequestContext(request))
 
 def view(request, slug):
     community = Community.objects.get(slug=slug)
     return render_to_response('community_view.html', {'community': community})
-    
+
 def search_by_name(request):
     term = request.GET['term']
     communities = Community.objects.filter(name__istartswith=term)
