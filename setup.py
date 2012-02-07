@@ -39,6 +39,7 @@ setup(
         'Django>=1.3',
         'geopy',
         'django-easy-maps',
+        'django_tinymce',
         # 'django-comments-threaded',  # has no pypi package yet
     ],
     license='BSD license',
