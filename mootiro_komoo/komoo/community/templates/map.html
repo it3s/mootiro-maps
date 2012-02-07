@@ -1,9 +1,0 @@
-{% extends "global.html" %}
-{% load komoo_map_tags %}
-
-{% block title %}{{ community.name }}{% endblock %}
-
-{% block content %}
-{{ community.name }}
-{% komoo_map_editor community.address 800 600 %}
-{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "global.html" %}
+
+{% block title %}{{ community.name }}{% endblock %}
+
+{% block content %}
+{{ community.name }}<br/>
+{{ community.slug }}<br/>
+{{ community.population }}<br/>
+{{ community.description }}<br/>
+{{ community.creation_date }}<br/>
+{{ community.last_update }}<br/>
+{{ community.address }}<br/>
+{% endblock %}

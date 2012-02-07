@@ -7,4 +7,6 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('komoo.need.views',
     url(r'^need/new$', 'new', name='new_need'),
     url(r'^need/save$', 'save', name='save_need'),
+    url(r'^(?P<community_slug>[a-zA-Z0-9-]+)/need/(?P<need_slug>[a-zA-Z0-9-]+)$',
+        'view', name='view_need'),
 )

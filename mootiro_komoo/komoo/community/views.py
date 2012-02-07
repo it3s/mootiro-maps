@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.http import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.utils import simplejson
 
@@ -14,19 +14,18 @@ def new(request):
     context = {
         'form': CommunityForm()
     }
-    return render_to_response('new.html', context,
+    return render_to_response('community_new.html', context,
             context_instance=RequestContext(request))
 
 def save(request):
-    community = CommunityForm(request.POST)
-    community.save()
-    return render_to_response('new.html')
+    form = CommunityForm(request.POST)
+    community = form.save()
+    return redirect(view, community.slug)
 
-def map(request, slug):
+def view(request, slug):
     community = Community.objects.get(slug=slug)
-    return render_to_response('map.html', {'community': community},
-            context_instance=RequestContext(request))
-
+    return render_to_response('community_view.html', {'community': community})
+    
 def search_by_name(request):
     term = request.GET['term']
     communities = Community.objects.filter(name__istartswith=term)
