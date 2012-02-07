@@ -8,7 +8,10 @@ from .models import Proposal
 
 class ProposalForm(ModelForm):
     '''https://github.com/aljosa/django-tinymce/blob/master/docs/usage.rst'''
-    content = CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    # content = CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    content = CharField(widget=TinyMCE())
+    # report = CharField(widget=TinyMCE(), required=False)
 
     class Meta:
         model = Proposal
+        exclude = ('report',)

@@ -1,4 +1,16 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals  # unicode by default
 from django.conf.urls.defaults import patterns, include, url
+
+
+# Some URL fragments to be reused throughout the application
+COMMUNITY_SLUG = r'(?P<community_slug>[a-zA-Z0-9-]+)'
+NEED_SLUG      =      r'(?P<need_slug>[a-zA-Z0-9-]+)'
+def prepare_regex(regex):
+    return regex.replace('COMMUNITY_SLUG', COMMUNITY_SLUG) \
+                .replace('NEED_SLUG', NEED_SLUG)
+
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
