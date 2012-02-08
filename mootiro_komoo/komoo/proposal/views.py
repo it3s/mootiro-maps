@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from annoying.decorators import render_to
+from django.contrib.auth.decorators import login_required
 from ..need.models import Need
 from .models import Proposal
 from .forms import ProposalForm
@@ -16,14 +17,16 @@ def view(request, need_slug, id):
 
 
 @render_to('proposal_edit.html')
+@login_required
 def new(request, need_slug):
     return dict(form=ProposalForm(),
                 action=reverse('save_proposal', args=(need_slug,)))
 
 
 @render_to('proposal_edit.html')
+@login_required
 def save(request, need_slug):
-    need = Need.objects.get(slug=need_slug)
+    need = Need.objects.get(slug=need_slug, creator=request.user)
     proposal = Proposal(need=need)
     form = ProposalForm(request.POST, instance=proposal)
     if form.is_valid():
@@ -34,6 +37,7 @@ def save(request, need_slug):
 
 
 @render_to('proposal_edit.html')
+@login_required
 def edit(request, need_slug, id):
     p = Proposal.objects.get(id=id)
     return dict(form=ProposalForm(instance=p),

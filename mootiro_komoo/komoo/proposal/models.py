@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
+from django.contrib.auth.models import User
 # from ..need.models import Need
 
 
@@ -14,10 +15,12 @@ class Proposal(models.Model):
 
     # Relationships
     need = models.ForeignKey('Need', related_name='proposals')
-    # TODO: creator = models.ForeignKey(User, related_name='proposals')
+    creator = models.ForeignKey(User, related_name='proposals_created')
 
-    # TODO: Realizadores (um ou mais relacionamentos p/ organizações ou pessoas)
-    cost = models.DecimalField(decimal_places=2, max_digits=14)
+    # Consummation, realization, attainment:
+    realizers = models.ManyToManyField(User)
+    # TODO: Also: organizations = model.ManyToManyField(Organization)
+    cost = models.DecimalField(decimal_places=2, max_digits=14, null=True)
     report = models.TextField()
 
     class Meta:
