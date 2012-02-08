@@ -17,14 +17,15 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'^tinymce/', include('tinymce.urls')),
-    (r'', include('komoo.community.urls')),
-    (r'', include('komoo.need.urls')),
-    (r'', include('komoo.proposal.urls')),
-
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+
+    (r'^tinymce/', include('tinymce.urls')),
+    (r'', include('komoo.need.urls')),
+    (r'', include('komoo.proposal.urls')),
+    # Community URLs go last because one of them can match anything
+    (r'', include('komoo.community.urls')),
 )
