@@ -22,7 +22,7 @@ def new(request, community_slug, need_slug):
             context_instance=RequestContext(request))
 
 
-def save(request, community_slug, need_slug):
+def save(request, need_slug):
     need = Need.objects.get(slug=need_slug)
     proposal = Proposal(need=need)
     form = ProposalForm(request.POST, instance=proposal)

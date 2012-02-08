@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from .models import Proposal
 from ..urls import prepare_regex
 
-prefix = prepare_regex(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/')
+prefix = prepare_regex(r'^need/NEED_SLUG/proposal/')
 
 # TODO Finish adding prefix below
 urlpatterns = patterns('komoo.proposal.views',
