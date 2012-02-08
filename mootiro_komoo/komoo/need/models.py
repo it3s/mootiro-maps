@@ -3,6 +3,8 @@
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
 
+from taggit.managers import TaggableManager
+
 from komoo.community.models import Community
 from komoo.utils import slugify
 
@@ -29,6 +31,8 @@ class Need(models.Model):
 
     community = models.ForeignKey(Community, related_name="needs")
 
+    tags = TaggableManager()
+
     class Meta:
         app_label = 'komoo'  # needed for Django to find the model
 
@@ -40,6 +44,8 @@ class Need(models.Model):
         return Need.objects.filter(community=self.community, slug=slug).exists()
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title, self.slug_exists)
+        old_title = Need.objects.get(id=self.id) if self.id else None
+        if not self.id or old_title != self.title:
+            self.slug = slugify(self.title, self.slug_exists)
         super(Need, self).save(*args, **kwargs)
     ### END ###

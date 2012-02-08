@@ -32,10 +32,7 @@ class JQueryAutoComplete(forms.TextInput):
             print type(self.source)
             raise ValueError('source type is not valid')
 
-        print source
-
-        js = \
-        u"""
+        js = u"""
         $("#%(label_id)s").autocomplete({
             source: "%(source)s",
             focus: function(event, ui) {
@@ -72,3 +69,40 @@ class JQueryAutoComplete(forms.TextInput):
             'attrs': flatatt(final_attrs),
             'js': self.render_js(final_attrs['id'], "id_%s" % self.value_field),
         }
+
+
+class Tagsinput(forms.TextInput):
+    """Widget for using JQuery Tags Input Plugin by xoxco.com
+    See http://xoxco.com/projects/code/tagsinput/
+    """
+
+    class Media:
+        css = {'all': ('lib/tagsinput/jquery.tagsinput.css',)}
+        js = ('lib/tagsinput/jquery.tagsinput.min.js',)
+        
+
+    def render_js(self, elem_id):
+        js = u"""
+        $('#%(elem_id)s').tagsInput();
+        """ % {
+            'elem_id': elem_id,
+        }
+        return js
+
+    def render(self, name, value=None, attrs=None):
+        final_attrs = self.build_attrs(attrs, name=name)
+
+        if not id in self.attrs:
+            final_attrs['id'] = 'id_%s' % name
+
+        html = u"""
+        <input %(attrs)s"/>
+        <script type="text/javascript"><!--//
+          %(js)s
+        //--></script>
+        """ % {
+            'name': name,
+            'attrs': flatatt(final_attrs),
+            'js': self.render_js(final_attrs['id'])
+        }
+        return html
