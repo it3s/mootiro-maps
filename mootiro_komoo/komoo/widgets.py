@@ -47,7 +47,7 @@ class JQueryAutoComplete(forms.TextInput):
                 $("#%(value_id)s").val(ui.item.value);
                 return false;
             }
-	})
+        });
         """ % {
             'source': source,
             'label_id': label_id,
@@ -61,7 +61,7 @@ class JQueryAutoComplete(forms.TextInput):
         if value:
             final_attrs['value'] = escape(unicode(value))
 
-        if not self.attrs.has_key('id'):
+        if not id in self.attrs:
             final_attrs['id'] = 'id_%s' % name
 
         return u'''<input type="text" %(attrs)s/>
@@ -69,6 +69,6 @@ class JQueryAutoComplete(forms.TextInput):
         %(js)s//--></script>
         ''' % {
             'name': name,
-            'attrs' : flatatt(final_attrs),
-            'js' : self.render_js(final_attrs['id'], "id_%s" % self.value_field),
+            'attrs': flatatt(final_attrs),
+            'js': self.render_js(final_attrs['id'], "id_%s" % self.value_field),
         }
