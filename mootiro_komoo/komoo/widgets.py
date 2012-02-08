@@ -58,7 +58,7 @@ class JQueryAutoComplete(forms.TextInput):
         if value:
             final_attrs['value'] = escape(unicode(value))
 
-        if not id in self.attrs:
+        if not 'id' in self.attrs:
             final_attrs['id'] = 'id_%s' % name
 
         return u'''<input type="text" %(attrs)s/>
@@ -79,20 +79,31 @@ class Tagsinput(forms.TextInput):
     class Media:
         css = {'all': ('lib/tagsinput/jquery.tagsinput.css',)}
         js = ('lib/tagsinput/jquery.tagsinput.min.js',)
+
         
+    def __init__(self, autocomplete_url="", options={}, attrs={}):
+        self.autocomplete_url = autocomplete_url
+        self.options = options
+        self.attrs = attrs
 
     def render_js(self, elem_id):
+        if self.autocomplete_url:
+            options_str = "{autocomplete_url: '%s'}" % self.autocomplete_url
+        else:
+            options_str = ""
+
         js = u"""
-        $('#%(elem_id)s').tagsInput();
+        $('#%(elem_id)s').tagsInput(%(options)s);
         """ % {
             'elem_id': elem_id,
+            'options': options_str,
         }
         return js
 
     def render(self, name, value=None, attrs=None):
         final_attrs = self.build_attrs(attrs, name=name)
 
-        if not id in self.attrs:
+        if not 'id' in self.attrs:
             final_attrs['id'] = 'id_%s' % name
 
         html = u"""
@@ -105,4 +116,5 @@ class Tagsinput(forms.TextInput):
             'attrs': flatatt(final_attrs),
             'js': self.render_js(final_attrs['id'])
         }
+
         return html
