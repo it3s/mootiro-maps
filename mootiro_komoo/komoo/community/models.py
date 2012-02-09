@@ -30,7 +30,7 @@ class Community(models.Model):
         return Community.objects.filter(slug=slug).exists()
 
     def save(self, *args, **kwargs):
-        old_name = Community.objects.get(id=self.id) if self.id else None
+        old_name = Community.objects.get(id=self.id).name if self.id else None
         if not self.id or old_name != self.name:
             self.slug = slugify(self.name, self.slug_exists)
         super(Community, self).save(*args, **kwargs)
