@@ -1,0 +1,16 @@
+{% extends "global.html" %}
+
+{% block title %}Community{% endblock %}
+
+{% block content %}
+Draw the community region:
+<br/><br/>
+
+<form action="/community/map" method="post">
+  {% csrf_token %}
+  <table>
+    {{ form }}
+  </table>
+  <input type="submit" value="Next" />
+</form>
+{% endblock %}

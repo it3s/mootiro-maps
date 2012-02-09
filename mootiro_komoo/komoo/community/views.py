@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 
 from models import Community
-from forms import CommunityForm
+from forms import CommunityForm, CommunityMapForm
 
 
 def new(request):
@@ -16,6 +16,15 @@ def new(request):
     }
     return render_to_response('community_new.html', context,
             context_instance=RequestContext(request))
+
+
+def map(request):
+    #TODO: Use FormWizard.
+    form = CommunityMapForm(request.POST)
+
+    return render_to_response('community_map.html', dict(form=form),
+            context_instance=RequestContext(request))
+
 
 def save(request):
     form = CommunityForm(request.POST)
@@ -26,9 +35,11 @@ def save(request):
         return render_to_response('community_new.html', dict(form=form),
             context_instance=RequestContext(request))
 
+
 def view(request, slug):
     community = Community.objects.get(slug=slug)
     return render_to_response('community_view.html', {'community': community})
+
 
 def search_by_name(request):
     term = request.GET['term']

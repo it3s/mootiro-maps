@@ -1,9 +1,18 @@
-from django.forms import TextInput
+from django.forms import Textarea
 from django.template import Template, Context
 
-class AddressWithMapWidget(TextInput):
+
+#TODO: Update the form field when change the map overlays.
+class AddressWithMapWidget(Textarea):
     def render(self, name, value, attrs=None):
         default_html = super(AddressWithMapWidget, self).render(name, value, attrs)
-        map_template = Template("{% load komoo_map_tags %}{% komoo_map address 700 200 16 %}")
-        context = Context({'address': value})
+        map_template = Template("{% load komoo_map_tags %}{% komoo_map_editor address width height zoom geojson %}")
+        #TODO: Make parameters configurable
+        context = Context({
+            'address': '',
+            'width': 700,
+            'height': 600,
+            'zoom': 15,
+            'geojson': value or '{}'
+        })
         return default_html + map_template.render(context)

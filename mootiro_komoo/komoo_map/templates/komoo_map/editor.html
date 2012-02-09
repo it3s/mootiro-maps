@@ -4,13 +4,13 @@
 {% block api_js %}
     <!-- Google Maps API javascript -->
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/komoo_map.js"></script>
+    <script type="text/javascript" src="/static/js/komoo_map.js"></script>
 {% endblock %}
 
 {% block html %}
     <!-- HTML map container -->
     <div id="map-canvas-{{ map.pk }}"
-         {% if width and map.latitude and not map.geocode_error %}
+         {% if width %}
             style="width: {{ width }}px; height: {{ height }}px;"
          {% endif %}
          class="komoo-map-googlemap">
@@ -25,6 +25,7 @@
 {% block map_js %}
     <!-- Map creation script -->
     <script type="text/javascript">
+        var map;
         function initialize_map_{{ map.pk }}() {
             var latlng = new google.maps.LatLng({{ lat }}, {{ long }});
             var mapElem = document.getElementById("map-canvas-{{ map.pk }}");
@@ -40,14 +41,11 @@
             };
             {% endblock %}
 
-            var map = new komoo.Map(mapElem, mapOptions);
+            map = new komoo.Map(mapElem, mapOptions);
 
             {% block extra_js %}
-            var marker = new google.maps.Marker({
-                position: latlng,
-                map: map.googleMap,
-                title: "{{ map.address }}"
-            });
+            var geojson = JSON.parse('{{ geojson|safe }}');
+            map.loadGeoJSON(geojson, true);
             {% endblock %}
         }
 

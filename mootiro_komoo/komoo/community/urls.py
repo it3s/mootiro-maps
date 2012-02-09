@@ -6,6 +6,7 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('komoo.community.views',
     url(r'^community/new$', 'new', name='new_community'),
+    url(r'^community/map$', 'map', name='map_community'),
     url(r'^community/save$', 'save', name='save_community'),
     url(r'^(?P<slug>[a-zA-Z0-9-]+)$', 'view', name='view_community'),
     url(r'^community/search_by_name$', 'search_by_name',
