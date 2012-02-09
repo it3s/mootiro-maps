@@ -37,9 +37,9 @@ setup(
     test_suite='mootiro_komoo.tests',
     install_requires=[
         'Django>=1.3',
-        'django-taggit',
         'geopy',
-        'django-easy-maps',
+        'django-taggit',
+        'django-annoying',
         'django_tinymce',
         # 'django-comments-threaded',  # has no pypi package yet
     ],

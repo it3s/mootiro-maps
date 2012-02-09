@@ -105,8 +105,6 @@ INSTALLED_APPS = (
     'django.contrib.gis',
     'tinymce',
     'taggit',
-#    'easy_maps',  # pip install geopy django-easy-maps
-    # http://pypi.python.org/pypi/django-easy-maps
     'komoo_map',
     'komoo',
 )
