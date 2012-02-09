@@ -1,0 +1,56 @@
+body {
+  /* http://www.ms-studio.com/articles.html */
+  font-family: Ubuntu, Helvetica, 'Trebuchet MS', sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
+}
+html {
+    background-color: #fff;
+    padding: 0;
+    margin: 0;
+}
+img { border: 0px }
+/* Link pattern */
+a { text-decoration: none }
+a:link    { color: #F39200 }
+a:visited { color: #F39200 }
+a:hover   { color: black;}
+a:active { background-color: #eee }
+ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+}
+table { border-collapse: collapse }
+
+/* Structural elements */
+#root {
+    width: 90%;
+    border: 1px solid #777;
+}
+#logo {
+    display: inline-block;
+    
+    background-color: aquamarine;
+    font-family: monospace;
+    font-size: 30px;
+    padding: 0 10px;
+}
+#top-menu {
+    text-align: center;
+    padding: 0;
+    border-bottom: 3px solid red;
+    background: #abc;
+}
+#top-menu ul { display: inline-block; background: #eed }
+#top-menu ul li {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 5px 10px;
+    background: #80dae7;
+    float: left;
+}
+
+
+

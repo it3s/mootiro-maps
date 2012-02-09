@@ -11,8 +11,17 @@
     {{ form.media.js }}
   </head>
   <body>
-    <div id='centralizer'>
-        <h1><pre>LOGOO<br/> TIPO</pre></h1>
+    <div id="root">
+      <div id="logo">LOGOO<br/>&nbsp;TIPO</div>
+      <div id="top-menu">
+        <ul>
+          <li>Map</li>
+          <li>Needs</li>
+          <li>Resources</li>
+          <li>Organizations</li>
+          <li>Financiadores</li>
+        </ul>
+      </div>
       <div id="content">
         {% block content %}{% endblock %}
       </div>
