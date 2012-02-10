@@ -12,7 +12,7 @@ class AddressWithMapWidget(Textarea):
             'address': '',
             'width': 700,
             'height': 600,
-            'zoom': 15,
+            'zoom': 13,
             'geojson': value or '{}'
         })
         return default_html + map_template.render(context)
