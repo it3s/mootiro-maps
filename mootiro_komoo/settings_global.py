@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
+#
+#  Global Settings 
 from __future__ import unicode_literals  # unicode by default
-
-'''Django common, global settings for mootiro_komoo project
-
-https://docs.djangoproject.com/en/dev/ref/settings/
-'''
-
 import os
 
 ADMINS = (
@@ -55,6 +51,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    os.path.join(SITE_ROOT, 'komoo/comments/static'),
 )
 
 # List of finder classes that know how to find static files in
@@ -88,9 +85,10 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     # Nah. Walk SITE_ROOT looking for directories named "templates"?
     # SITE_ROOT + '/komoo/templates',
-    SITE_ROOT + '/komoo/community/templates',
-    SITE_ROOT + '/komoo/need/templates',
-    SITE_ROOT + '/komoo/proposal/templates',
+    os.path.join(SITE_ROOT, 'komoo/community/templates'),
+    os.path.join(SITE_ROOT, 'komoo/need/templates'),
+    os.path.join(SITE_ROOT, 'komoo/proposal/templates'),
+    os.path.join(SITE_ROOT, 'komoo/comments/templates'),
 )
 
 INSTALLED_APPS = (

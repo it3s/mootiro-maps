@@ -6,3 +6,4 @@ from __future__ import unicode_literals  # unicode by default
 from .proposal.models import Proposal
 from .community.models import Community
 from .need.models import Need
+from .comments.models import Comment
