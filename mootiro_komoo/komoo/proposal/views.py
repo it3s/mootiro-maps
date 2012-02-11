@@ -26,8 +26,8 @@ def new(request, need_slug):
 @render_to('proposal_edit.html')
 @login_required
 def save(request, need_slug):
-    need = Need.objects.get(slug=need_slug, creator=request.user)
-    proposal = Proposal(need=need)
+    need = Need.objects.get(slug=need_slug)
+    proposal = Proposal(need=need, creator=request.user)
     form = ProposalForm(request.POST, instance=proposal)
     if form.is_valid():
         proposal = form.save()

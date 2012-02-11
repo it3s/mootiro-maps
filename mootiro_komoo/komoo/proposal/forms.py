@@ -16,4 +16,4 @@ class ProposalForm(ModelForm):
 
     class Meta:
         model = Proposal
-        exclude = 'report creator'.split()
+        exclude = 'report creator realizers need'.split()
