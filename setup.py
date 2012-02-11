@@ -38,6 +38,7 @@ setup(
     install_requires=[
         'Django>=1.3',
         'geopy',
+        'django-cas',  # http://code.google.com/p/django-cas/
         'django-taggit',
         'django-annoying',
         'django_tinymce',

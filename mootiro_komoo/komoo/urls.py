@@ -23,11 +23,15 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
+    # These are the django-cas URLs:
+    (r'^accounts/login/$', 'django_cas.views.login'),
+    (r'^accounts/logout/$', 'django_cas.views.logout'),
+
+    # (r'', include('komoo.user.urls')),  # use django-cas instead
     (r'^tinymce/', include('tinymce.urls')),
     (r'', include('komoo.need.urls')),
     (r'', include('komoo.proposal.urls')),
     (r'^comments/', include('komoo.comments.urls')),
     # Community URLs go last because one of them can match anything
     (r'', include('komoo.community.urls')),
-
 )

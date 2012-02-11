@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-#  Global Settings 
+#  Global Settings
 from __future__ import unicode_literals  # unicode by default
 import os
 
@@ -69,18 +69,27 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'mootiro_bar.DjangoMiddleware',
+]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'komoo.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
+# Connect Mootiro Bar to django-cas:
+MOOTIRO_BAR_LOGIN_URL = '/accounts/login'
+MOOTIRO_BAR_LOGOUT_URL = '/accounts/logout'
 
 ROOT_URLCONF = 'komoo.urls'
 
-TEMPLATE_DIRS = (
+TEMPLATE_DIRS = [
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -90,9 +99,9 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT, 'komoo/need/templates'),
     os.path.join(SITE_ROOT, 'komoo/proposal/templates'),
     os.path.join(SITE_ROOT, 'komoo/comments/templates'),
-)
+]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -106,7 +115,7 @@ INSTALLED_APPS = (
     'taggit',
     'komoo_map',
     'komoo',
-)
+]
 
 COMMENT_MAX_LENGTH = 80 * 500
 
