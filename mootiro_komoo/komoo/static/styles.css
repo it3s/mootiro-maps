@@ -23,10 +23,7 @@ ul {
   padding: 0px;
 }
 table { border-collapse: collapse }
-
-/* Mootiro Bar */
-.mootiro_bar a { color: #3EBAC2 }
-
+/* Reusable styles */
 .button {
     background-color: #3EBAC2;
     color: #fff;
@@ -37,7 +34,8 @@ table { border-collapse: collapse }
     cursor: pointer;
     padding: 3px;
 }
-
+/* Mootiro Bar */
+.mootiro_bar a { color: #3EBAC2 }
 /* Structural elements */
 #root {
     width: 100%;
