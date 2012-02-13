@@ -9,12 +9,17 @@ from komoo.community.models import Community
 from komoo.utils import slugify
 
 
+class NeedCategory(models.Model):
+    name = models.CharField(max_length=64, blank=False)
+
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        app_label = 'komoo'  # needed for Django to find the model
+
+
 class Need(models.Model):
-    CATEGORY_CHOICES = (
-        ('ENV', 'Environment'),
-        ('HLT', 'Health'),
-        ('EDU', 'Education'),
-    )
     AUDIENCE_CHOICES = (
         ('CHL', '0-12'),
         ('TEN', '12-18'),
@@ -26,10 +31,11 @@ class Need(models.Model):
     slug = models.SlugField(max_length=256, unique=True,
                             editable=False, blank=False)
     description = models.TextField()
-    category = models.CharField(max_length=3, choices=CATEGORY_CHOICES)
     target_audience = models.CharField(max_length=3, choices=AUDIENCE_CHOICES)
 
+    # Relationships
     community = models.ForeignKey(Community, related_name="needs")
+    categories = models.ManyToManyField(NeedCategory)
 
     tags = TaggableManager()
 

@@ -5,7 +5,7 @@ from django import forms
 
 from komoo.fields import TagsField
 from komoo.widgets import JQueryAutoComplete, Tagsinput
-from komoo.need.models import Need
+from komoo.need.models import Need, NeedCategory
 from komoo.community.models import Community
 
 
@@ -18,6 +18,10 @@ class NeedForm(forms.ModelForm):
     # reverse_lazy function, which is not implemented in Django 1.3 yet.
     community = forms.CharField(widget=JQueryAutoComplete("/community/search_by_name",
         value_field='community_slug'))
+
+    categories = forms.ModelMultipleChoiceField(
+                    queryset=NeedCategory.objects.all(),
+                    widget=forms.CheckboxSelectMultiple)
 
     tags = TagsField(widget=Tagsinput(autocomplete_url="/need/tag_search"))
 

@@ -12,7 +12,7 @@ class KomooCASBackend(CASBackend):
     def authenticate(self, ticket, service):
         """Verifies CAS ticket and gets or creates User object.
         """
-        email, authentication_response = _verify(ticket, service)
+        email = _verify(ticket, service)
         if not email:
             return None
         try:
