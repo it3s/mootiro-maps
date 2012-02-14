@@ -5,7 +5,7 @@
 {% block content %}
 
 <div id='divFormComment'>
-	<form method="post" id="formComment" action="" >
+	<form method="post" id="formComment" action="{% url comments_add %}" >
 		<!-- <fieldset> -->
 			{% csrf_token %}
 			{{ form_comment }}
@@ -17,8 +17,8 @@
 <h2>Comments: </h2>
 <div id="comments-list">
 	{% for comment in comments %}
-		<div class="comment-container" style="margin-top:20px;">
-			<div class="comment" commentID="{{ comment.id }}">
+		<div class="comment-container" style="margin-top:20px;" commentID="{{ comment.id }}">
+			<div class="comment" >
 				{{ comment.comment}}  - [{{ comment.pub_date}}]
 			</div>
 			{% if comment.sub_comments > 0 %}
@@ -27,7 +27,7 @@
 			</div>
 			{% endif %}
 			<div class="comment-add">
-				<input type="button" class="btnCommentAdd" value="comment" />
+				<input type="button" class="btnSubCommentAdd" value="comment" />
 			</div>
 		</div>
 	{% endfor %}
@@ -35,5 +35,6 @@
 {% endblock %}
 
 {% block page_scripts %}
+	<script type="text/javascript" src="{{STATIC_URL}}komoo_utils.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/comments.js"></script>
 {% endblock %}

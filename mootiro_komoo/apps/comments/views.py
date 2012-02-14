@@ -7,7 +7,7 @@ from annoying.decorators import render_to, ajax_request
 @render_to('comments/comments_poc.html')
 def comments_index(request):
     form_comment = FormComment()
-    comments = Comment.objects.filter(parent__isnull=True)
+    comments = Comment.objects.filter(parent__isnull=True).order_by('-pub_date')
     
     return {'form_comment' : FormComment(), 'comments' : comments}
 

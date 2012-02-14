@@ -4,52 +4,70 @@
 
         var $btnFormCommentSubmit = $('#btnFormCommentSubmit');
         var $formComment = $('#formComment');
-        var $btnCommentAdd = $('.btnCommentAdd');
+        var $btnSubCommentAdd = $('.btnSubCommentAdd');
         var $linkSubComments = $('.linkSubComments');
+        var $csrftoken = $formComment.find('input[name=csrfmiddlewaretoken]')
 
         var init = function(){
             $btnFormCommentSubmit.click(function(evt){
                 evt.preventDefault();
-                $.post('/comments/add/', $formComment.serialize(), function(data) {
-                    console.log('json returned?');
-                    $('#comments-list').append("" + 
-                        "<div class='comment-container' style='margin-top:20px;'>" + 
-                            "<div class='comment' commentID='" + data.comment.id + "'>" + 
+                addComment();
+            });
+
+            // add sub-comment
+            $btnSubCommentAdd.live('click', function(evt){
+                evt.preventDefault();
+                btnSubCommentAdd(evt.target);
+            });
+
+            // $linkSubComments.click(function(evt){
+            //     evt.preventDefault();
+            //     var comment_id = $(this).parent().parent().children().first().attr('commentID')
+            //     console.log(comment_id);
+            // });
+        }
+
+        var btnSubCommentAdd = function(btn){
+            var parent = $(btn).parent();
+            var comment_id = parent.parent().attr('commentID');
+            var csrftoken = $csrftoken.val();
+            console.log('' + csrftoken);
+            $(btn).css('display', 'none');
+            parent.append('' + 
+                '<div class="comment-form">' + 
+                    '<form method="post" action="/comments/add/">' + 
+                        '<label>Comment: </label><input type="text" name="comment" />' + 
+                        '<input type="text" name="parent_id" style="display: none;" value="' + comment_id + '" />' + 
+                        '<input type="text" name="csrfmiddlewaretoken" style="display: none;" value="' + csrftoken + '" />' + //TODO csrftoken
+                        '<input type="submit" value="save"/>' + 
+                    '</form>' + 
+                '</div>'
+            );  
+        };
+
+        var addComment = function(){
+            $.post('/comments/add/', $formComment.serialize(), function(data) {
+                if (data.success){
+                    //here we want to explicitly re-do this query
+                    $('#comments-list').prepend("" + 
+                        "<div class='comment-container' style='margin-top:20px;' commentID='" + data.comment.id + "'>" + 
+                            "<div class='comment'>" + 
                                 data.comment.comment + " - [" + data.comment.pub_date + "]" +
                             "</div>" + 
                             "<div class='comment-add'>" + 
-                                "<input type='button' class='btnCommentAdd' value='comment' />" + 
+                                "<input type='button' class='btnSubCommentAdd' value='comment' />" + 
                             "</div>" + 
                         "</div>"
                     );
-                } , 'json');
-            });
-
-            $btnCommentAdd.live('click', function(evt){
-                evt.preventDefault();
-                var parent = $(this).parent();
-                var comment_id = parent.parent().children().first().attr('commentID')
-                $(this).css('display', 'none');
-                parent.append('' + 
-                    '<div class="comment-form">' + 
-                        '<form methos="POST" action="/comments/add/">' + 
-                            '<label>Comment: </label><input type="text" name="comment" />' + 
-                            '<input type="text" name="parent_id" style="display: none;" value="' + comment_id + '" />' + 
-                            '<input type="submit" value="save"/>' + 
-                        '</form>' + 
-                    '</div>'
-                );
-            });
-
-            $linkSubComments.click(function(evt){
-                evt.preventDefault();
-                var comment_id = $(this).parent().parent().children().first().attr('commentID')
-                console.log(comment_id);
-            });
-            }
+                    $formComment.clearForm();
+                } else {
+                    alert('error saving comment: ' + data.errors);
+                }
+            } , 'json');
+        }
 
         return {
-            init : init
+            init : init, addComment : addComment
         } 
     })();
 
