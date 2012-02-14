@@ -7,6 +7,8 @@ from django.forms.widgets import flatatt
 from django.utils.html import escape
 from django.utils.simplejson import JSONEncoder
 
+from annoying.functions import get_config
+
 
 class JQueryAutoComplete(forms.TextInput):
     def __init__(self, source, value_field=None, options={}, attrs={}):
@@ -118,3 +120,63 @@ class Tagsinput(forms.TextInput):
         }
 
         return html
+
+
+class ImageSwitch(forms.CheckboxInput):
+
+    class Media:
+        js = ('lib/jquery.imagetick.min.js',)
+
+    def __init__(self, image_tick, image_no_tick, attrs=None):
+        super(ImageSwitch, self).__init__(attrs)
+        self.image_tick = get_config("STATIC_URL", "") + image_tick
+        self.image_no_tick = get_config("STATIC_URL", "") + image_no_tick
+
+    def render_js(self, checkbox_id):
+        js = u"""
+        $("#%(checkbox_id)s").imageTick({
+            tick_image_path: "%(image_tick)s",
+            no_tick_image_path: "%(image_no_tick)s"
+        });
+        """ % {
+            'checkbox_id': checkbox_id,
+            'image_tick': self.image_tick,
+            'image_no_tick': self.image_no_tick,
+        }
+        return js
+
+    def render(self, name, value, attrs=None):
+        html = u"""
+        %(checkbox)s
+        <script type="text/javascript"><!--//
+          %(js)s
+        //--></script>
+        """ % {
+            'checkbox': super(ImageSwitch, self).render(name, value, attrs),
+            'js': self.render_js(attrs['id'])
+        }
+        return html
+
+
+#class ImagesSwitchMultiple(forms.CheckboxSelectMultiple):
+#
+#    class Media:
+#        js = ('lib/jquery-1.7.1.js',)
+#
+#    def render_js(self):
+#        js = u"""
+#        alert('Mãe lindona');
+#        """
+#        return js
+#
+#    def render(self, *a, **kw):
+#        html = u"""
+#        %(html)s
+#        <script type="text/javascript"><!--//
+#          %(js)s
+#        //--></script>
+#        """ % {
+#            'html': super(CheckboxImagesSelectMultiple, self).render(*a, **kw),
+#            'js': self.render_js()
+#        }
+#        return html
