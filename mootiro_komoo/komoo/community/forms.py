@@ -12,4 +12,4 @@ class CommunityForm(ModelForm):
 
 
 class CommunityMapForm(Form):
-    map = CharField(widget=AddressWithMapWidget, required=True)
+    map = CharField(widget=AddressWithMapWidget, required=False)
