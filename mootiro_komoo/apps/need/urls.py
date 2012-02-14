@@ -5,7 +5,7 @@ from django.conf.urls.defaults import *
 from mootiro_komoo.urls import prepare_regex
 
 
-urlpatterns = patterns('komoo.need.views',
+urlpatterns = patterns('need.views',
     url(r'^need/new$', 'new', name='new_need'),
     url(r'^need/save$', 'save', name='save_need'),
     url(prepare_regex(r'^COMMUNITY_SLUG/need/NEED_SLUG$'),

@@ -16,14 +16,14 @@ def view(request, need_slug, id):
     return render_to_response('proposal_view.html', dict(proposal=proposal))
 
 
-@render_to('proposal_edit.html')
+@render_to('proposal/proposal_edit.html')
 @login_required
 def new(request, need_slug):
     return dict(form=ProposalForm(),
                 action=reverse('save_proposal', args=(need_slug,)))
 
 
-@render_to('proposal_edit.html')
+@render_to('proposal/proposal_edit.html')
 @login_required
 def save(request, need_slug):
     need = Need.objects.get(slug=need_slug)
@@ -36,9 +36,8 @@ def save(request, need_slug):
         return dict(form=form)
 
 
-@render_to('proposal_edit.html')
+@render_to('proposal/proposal_edit.html')
 @login_required
 def edit(request, need_slug, id):
     p = Proposal.objects.get(id=id)
-    return dict(form=ProposalForm(instance=p),
-                action=reverse('save_proposal', args=(need_slug,)))
+    return dict(form=ProposalForm(instance=p),action=reverse('save_proposal', args=(need_slug,)))

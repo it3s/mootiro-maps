@@ -12,7 +12,7 @@ from community.models import Community
 from community.forms import CommunityForm, CommunityMapForm
 
 
-@render_to('community_edit.html')
+@render_to('community/community_edit.html')
 def edit(request, community_slug=""):
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
@@ -31,18 +31,17 @@ def edit(request, community_slug=""):
         return {'form': CommunityForm(instance=community), 'action': action}
 
 
-@render_to('community_view.html')
+@render_to('community/community_view.html')
 def view(request, community_slug):
     community = get_object_or_404(Community, slug=community_slug)
     return {'community': community}
 
-
+@render_to('community/community_map.html')
 def map(request):
     #TODO: Use FormWizard.
     form = CommunityMapForm(request.POST)
 
-    return render_to_response('community_map.html', dict(form=form),
-            context_instance=RequestContext(request))
+    return dict(form=form)
 
 
 @ajax_request
