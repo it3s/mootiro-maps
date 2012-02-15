@@ -110,8 +110,13 @@ table { border-collapse: collapse }
     background: #dceff4;
 }
 .map-panel .content,
-.map-panel .map-panel-buttons,
-.map-panel .map-panel-title{
+.map-panel .map-panel-buttons {
+    margin: 10px 5px;
+}
+.map-panel .content .map-button {
+    margin: 0px;
+}
+.map-panel .map-panel-title {
     margin: 10px;
 }
 #top #menu, #top #search { margin-left: 60px }

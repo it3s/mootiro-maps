@@ -288,7 +288,7 @@ komoo.Map.prototype = {
         /* Marks only the current overlay as editable */
         if (this.currentOverlay && this.currentOverlay.setEditable) {
             this.currentOverlay.setEditable(false);
-            $('#komoo-map-add-button, #komoo-map-cut-out-button').hide();
+            $('#komoo-map-add-button, #komoo-map-cut-out-button, #komoo-map-delete-button').hide();
         }
         this.currentOverlay = overlay;
         //console.log(this.currentOverlay.properties);
@@ -296,7 +296,7 @@ komoo.Map.prototype = {
                 this.currentOverlay.properties &&
                 this.currentOverlay.properties.userCanEdit) {
             this.currentOverlay.setEditable(true);
-            $('#komoo-map-add-button, #komoo-map-cut-out-button').show();
+            $('#komoo-map-add-button, #komoo-map-cut-out-button, #komoo-map-delete-button').show();
         }
     },
 
@@ -546,7 +546,7 @@ komoo.Map.prototype = {
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.CIRCLE);
             });
-            komooMap.editToolbar.append(radiusButton);
+            //komooMap.editToolbar.append(radiusButton);
 
             var polygonButton = komoo.createMapButton('Adicionar área', 'Draw a shape', function (e) {
                 komooMap.editMode = null;
@@ -570,17 +570,10 @@ komoo.Map.prototype = {
             //komooMap.editToolbar.append(markerButton);
 
             var addMenu = komoo.createMapMenu('Add new...', [polygonButton, lineButton, markerButton]);
-            komooMap.editToolbar.append(addMenu);
+            //komooMap.editToolbar.append(addMenu);
             komooMap.addItems = $('.map-container', addMenu);
 
-            var deleteButton = komoo.createMapButton('Delete', 'Delete a region', function (e) {
-                komooMap.editMode = 'delete';
-                komooMap.drawingManagerOptions.drawingMode = null;
-                komooMap.drawingManager.setOptions(komooMap.drawingManagerOptions);
-            });
-            komooMap.editToolbar.append(deleteButton);
-
-            var addButton = komoo.createMapButton('Add', 'Add another region', function (e) {
+            var addButton = komoo.createMapButton('Adicionar', 'Add another region', function (e) {
                 komooMap.editMode = 'add';
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.POLYGON);
@@ -589,7 +582,7 @@ komoo.Map.prototype = {
             addButton.attr('id', 'komoo-map-add-button');
             komooMap.editToolbar.append(addButton);
 
-            var cutOutButton = komoo.createMapButton('Cut out', 'Cut out a hole from a region', function (e) {
+            var cutOutButton = komoo.createMapButton('Cortar', 'Cut out a hole from a region', function (e) {
                 komooMap.editMode = 'cutout';
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.POLYGON);
@@ -597,6 +590,16 @@ komoo.Map.prototype = {
             cutOutButton.hide();
             cutOutButton.attr('id', 'komoo-map-cut-out-button');
             komooMap.editToolbar.append(cutOutButton);
+
+            var deleteButton = komoo.createMapButton('Apagar', 'Delete a region', function (e) {
+                komooMap.editMode = 'delete';
+                komooMap.drawingManagerOptions.drawingMode = null;
+                komooMap.drawingManager.setOptions(komooMap.drawingManagerOptions);
+            });
+            deleteButton.hide();
+            deleteButton.attr('id', 'komoo-map-delete-button');
+            komooMap.editToolbar.append(deleteButton);
+
         }
 
     },
@@ -669,7 +672,7 @@ komoo.Map.prototype = {
                     komooMap.addPanel.show();
                 } else {
                     // FIXME: Change to edit panel
-                    komooMap.addPanel.hide();
+                    //komooMap.addPanel.hide();
                 }
             });
 
@@ -706,6 +709,9 @@ komoo.Map.prototype = {
             komooMap.event.trigger('finish_click');
         });
 
+        content.css({'clear': 'both'});
+        buttons.css({'clear': 'both'});
+        content.append(komooMap.editToolbar);
         panel.append(title);
         panel.append(content);
         panel.append(buttons);
@@ -714,7 +720,7 @@ komoo.Map.prototype = {
 
         panel.css({
             'margin': '10px 10px 10px 0',
-            'width': '180px'
+            'width': '220px'
         });
 
         return panel.hide();
@@ -763,7 +769,7 @@ komoo.createMapButton = function (name, title, onClick) {
     var selector = $('<div>' + name + '</div>');
     selector.addClass('map-button');
     selector.addClass('gmnoprint');
-    komoo._setButtonStyle(selector);
+    //komoo._setButtonStyle(selector);
     selector.attr('title', title);
     selector.bind('click', onClick);
     return selector;
