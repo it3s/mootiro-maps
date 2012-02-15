@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from django.contrib.auth.models import User
+from need.models import Need
 
 
 class Proposal(models.Model):
@@ -13,7 +14,7 @@ class Proposal(models.Model):
     content = models.TextField()
 
     # Relationships
-    need = models.ForeignKey('Need', related_name='proposals')
+    need = models.ForeignKey(Need, related_name='proposals')
     creator = models.ForeignKey(User, related_name='proposals_created')
 
     # Consummation, realization, attainment:
@@ -23,6 +24,5 @@ class Proposal(models.Model):
     report = models.TextField()
 
     class Meta:
-        app_label = 'komoo'  # needed for Django to find the model
         verbose_name = "solution proposal"
         verbose_name_plural = "solution proposals"

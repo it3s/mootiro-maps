@@ -119,12 +119,13 @@ INSTALLED_APPS = [
     'tinymce',
     'taggit',
     'komoo_map',
-    'comments',
     'community',
     'main',
     'need',
     'proposal',
+    'komoo_comments',
     'user_cas',
+    
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500

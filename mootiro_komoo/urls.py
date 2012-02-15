@@ -31,7 +31,7 @@ urlpatterns = patterns('',
     (r'^tinymce/', include('tinymce.urls')),
     (r'', include('need.urls')),
     (r'', include('proposal.urls')),
-    (r'^comments/', include('comments.urls')),
+    (r'^comments/', include('komoo_comments.urls')),
     # Community URLs go last because one of them can match anything
     (r'', include('community.urls')),
 )

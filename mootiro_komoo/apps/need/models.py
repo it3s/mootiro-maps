@@ -15,9 +15,6 @@ class NeedCategory(models.Model):
     def __unicode__(self):
         return self.name
 
-    class Meta:
-        app_label = 'komoo'  # needed for Django to find the model
-
 
 class Need(models.Model):
     AUDIENCE_CHOICES = (
@@ -28,8 +25,7 @@ class Need(models.Model):
 
     title = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.SlugField(max_length=256, unique=True,
-                            editable=False, blank=False)
+    slug = models.SlugField(max_length=256, unique=True, editable=False, blank=False)
     description = models.TextField()
     target_audience = models.CharField(max_length=3, choices=AUDIENCE_CHOICES)
 
@@ -38,9 +34,6 @@ class Need(models.Model):
     categories = models.ManyToManyField(NeedCategory)
 
     tags = TaggableManager()
-
-    class Meta:
-        app_label = 'komoo'  # needed for Django to find the model
 
     ### Needed to slugify items ###
     def slug_exists(self, slug):
