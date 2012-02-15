@@ -46,6 +46,14 @@ def syncdb():
     """
     local('python manage.py syncdb --noinput {}'.format(django_settings[env]))
 
+def recreate_db():
+    """
+    Drops komoo database, recreates it with postgis template and runs syncdb
+    """
+    print "Recreating database 'komoo'"
+    local('dropdb mootiro_komoo && createdb -T template_postgis mootiro_komoo')
+    syncdb()
+
 def shell():
     """
     Launches Django interactive shell

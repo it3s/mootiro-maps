@@ -31,7 +31,6 @@
             var parent = $(btn).parent();
             var comment_id = parent.parent().attr('commentID');
             var csrftoken = $csrftoken.val();
-            console.log('' + csrftoken);
             $(btn).css('display', 'none');
             parent.append('' + 
                 '<div class="comment-form">' + 
