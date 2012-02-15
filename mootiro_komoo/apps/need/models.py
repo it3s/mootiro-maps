@@ -19,16 +19,6 @@ class NeedCategory(models.Model):
         app_label = 'komoo'  # needed for Django to find the model
 
 
-class NeedCategory(models.Model):
-    name = models.CharField(max_length=64, blank=False)
-
-    def __unicode__(self):
-        return self.name
-
-    class Meta:
-        app_label = 'komoo'  # needed for Django to find the model
-
-
 class Need(models.Model):
     AUDIENCE_CHOICES = (
         ('CHL', '0-12'),

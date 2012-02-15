@@ -4,8 +4,8 @@ from __future__ import unicode_literals  # unicode by default
 from django import forms
 
 from main.fields import TagsField
-from main.widgets import JQueryAutoComplete, Tagsinput
-from need.models import Need
+from main.widgets import JQueryAutoComplete, Tagsinput, ImageSwitch
+from need.models import Need, NeedCategory
 from community.models import Community
 
 
