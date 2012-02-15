@@ -1,9 +1,0 @@
-[
-  {
-    "model": "komoo.needcategory",
-    "pk": 1,
-    "fields": {
-      "name": "Environment",
-    }
-  }
-]
