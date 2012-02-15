@@ -12,8 +12,23 @@
   </head>
   <body>
     <!-- Mootiro_bar goes here -->
-    <div id='centralizer'>
-        <h1><pre>LOGOO<br/> TIPO</pre></h1>
+    <div id="root">
+      <div id="logo">LOGOO<br/>&nbsp;TIPO</div>
+      <div id="top">
+        <ul id="menu">
+          <li>Mapa</li>
+          <li>Comunidades</li>
+          <li>Necessidades</li>
+          <li>Organizações</li>
+          <li>Recursos</li>
+          <li>Financiadores</li>
+        </ul>
+        <br/>
+        <div id="search">
+          <input type="text" id="search-bar"/>
+          <input type="submit" id="search-button" class="button" value="Search"/>
+        </div>
+      </div>
       <div id="content">
         {% block content %}{% endblock %}
       </div>

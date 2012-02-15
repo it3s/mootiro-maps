@@ -18,7 +18,14 @@ class NeedForm(forms.ModelForm):
     # reverse_lazy function, which is not implemented in Django 1.3 yet.
     community = forms.CharField(widget=JQueryAutoComplete("/community/search_by_name",
         value_field='community_slug'))
+    
+    categories = forms.ModelMultipleChoiceField(
+                    queryset=NeedCategory.objects.all(),
+                    widget=forms.CheckboxSelectMultiple)
 
+    booleano = forms.BooleanField(widget=ImageSwitch("need/environment-off.png",
+                "need/environment-on.png"))
+                
     tags = TagsField(widget=Tagsinput(autocomplete_url="/need/tag_search"))
 
     def clean_community_slug(self):

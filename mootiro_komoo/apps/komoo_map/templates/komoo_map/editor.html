@@ -11,7 +11,7 @@
     <!-- HTML map container -->
     <div id="map-canvas-{{ map.pk }}"
          {% if width %}
-            style="width: {{ width }}px; height: {{ height }}px;"
+            style="width: {{ width }}; height: {{ height }};"
          {% endif %}
          class="komoo-map-googlemap">
          {% block noscript %}
@@ -45,6 +45,11 @@
             {% block extra_js %}
             var geojson = JSON.parse('{{ geojson|safe }}');
             map.loadGeoJSON(geojson, true);
+            map.event.bind('finish_click', function () {
+                var geojson = JSON.stringify(map.getGeoJSON());
+                $('#{{input_id}}').val(geojson);
+                console.log(geojson);
+            });
             {% endblock %}
         }
 

@@ -24,7 +24,7 @@ def komoo_map(parser, token):
 def komoo_map_editor(parser, token):
     """
     The syntax:
-        {% komoo_map_editor <address> [<width> <height>] [<zoom>] [<geojson>] [using <template_name>] %}
+        {% komoo_map_editor <address> [<width> <height>] [<zoom>] [<geojson>] [<input_id>] [using <template_name>] %}
     """
     params = token.split_contents()
 
@@ -34,9 +34,9 @@ def komoo_map_editor(parser, token):
     if len(params) < 2:
         raise template.TemplateSyntaxError('komoo_map_editor tag requires address argument')
 
-    if len(params) == 3 or len(params) > 8:
+    if len(params) == 3 or len(params) > 9:
         raise template.TemplateSyntaxError('komoo_map_editor tag has the following syntax: '
-                   '{% komoo_map_editor <address> <width> <height> [zoom] [using <template_name>] %}')
+                   '{% komoo_map_editor <address> <width> <height> [zoom] [<geojson>] [<input_id>] [using <template_name>] %}')
     return KomooMapNode(params)
 
 class KomooMapNode(template.Node):
@@ -55,12 +55,15 @@ class KomooMapNode(template.Node):
             width, height, zoom = params[2], params[3], params[4]
         elif len(params) == 6:
             width, height, zoom, geojson = params[2], params[3], params[4], params[5]
+        elif len(params) == 7:
+            width, height, zoom, geojson, input_id = params[2], params[3], params[4], params[5], params[6]
 
         self.address = template.Variable(address)
         self.width = template.Variable(width or '')
         self.height = template.Variable(height or '')
         self.zoom = template.Variable(zoom or 16)
         self.geojson = template.Variable(geojson or '{}')
+        self.input_id = template.Variable(input_id or '')
         self.template_name = template.Variable(template_name or '"komoo_map/map.html"')
 
     def render(self, context):
@@ -71,6 +74,12 @@ class KomooMapNode(template.Node):
             height = self.height.resolve(context)
             zoom = self.zoom.resolve(context)
             geojson = self.geojson.resolve(context)
+            input_id = self.input_id.resolve(context)
+
+            if not width.endswith('%') and not width.endswith('px'):
+                width = width + 'px'
+            if not height.endswith('%') and not height.endswith('px'):
+                height = height + 'px'
 
             map_, _ = Address.objects.get_or_create(address=address or '')
             if not map_.latitude:
@@ -82,6 +91,7 @@ class KomooMapNode(template.Node):
                 'height': height,
                 'zoom': zoom,
                 'geojson': geojson,
+                'input_id': input_id,
                 'template_name': template_name
             })
             return render_to_string(template_name, context_instance=context)
