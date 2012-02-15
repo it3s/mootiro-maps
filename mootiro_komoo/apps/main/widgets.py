@@ -158,25 +158,22 @@ class ImageSwitch(forms.CheckboxInput):
         return html
 
 
-#class ImagesSwitchMultiple(forms.CheckboxSelectMultiple):
-#
-#    class Media:
-#        js = ('lib/jquery-1.7.1.js',)
-#
-#    def render_js(self):
-#        js = u"""
-#        alert('Mãe lindona');
-#        """
-#        return js
-#
-#    def render(self, *a, **kw):
-#        html = u"""
-#        %(html)s
-#        <script type="text/javascript"><!--//
-#          %(js)s
-#        //--></script>
-#        """ % {
-#            'html': super(CheckboxImagesSelectMultiple, self).render(*a, **kw),
-#            'js': self.render_js()
-#        }
-#        return html
+class ImagesSwitchMultiple(forms.CheckboxSelectMultiple):
+
+    def render_js(self):
+        js = u"""
+        alert('Mãe lindona');
+        """
+        return js
+
+    def render(self, *a, **kw):
+        html = u"""
+        %(html)s
+        <script type="text/javascript"><!--//
+          %(js)s
+        //--></script>
+        """ % {
+            'html': super(CheckboxImagesSelectMultiple, self).render(*a, **kw),
+            'js': self.render_js()
+        }
+        return html

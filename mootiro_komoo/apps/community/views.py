@@ -3,10 +3,11 @@
 from __future__ import unicode_literals  # unicode by default
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
+from django.http import HttpResponse
+from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
-from annoying.decorators import render_to, ajax_request
-from annoying.functions import get_object_or_None
+from annoying.decorators import render_to
 
 from community.models import Community
 from community.forms import CommunityForm, CommunityMapForm
@@ -44,9 +45,9 @@ def map(request):
     return dict(form=form)
 
 
-@ajax_request
 def search_by_name(request):
     term = request.GET['term']
     communities = Community.objects.filter(name__istartswith=term)
-    communities = [{'value': c.slug, 'label': c.name} for c in communities]
-    return {'communities': communities}
+    d = [{'value': c.slug, 'label': c.name} for c in communities]
+    return HttpResponse(simplejson.dumps(d),
+        mimetype="application/x-javascript")
