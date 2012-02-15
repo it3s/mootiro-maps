@@ -8,10 +8,26 @@
  * @copyright (c) 2012 it3s
  */
 
-//TODO: Emit events
-
 /** @namespace */
 var komoo = {};
+
+/**
+ *
+ */
+komoo.OverlayTypes = [
+    {
+        type: 'community',
+        title: 'Comunidades',
+        color: '#ff0',
+        icon: ''
+    },
+    {
+        type: 'needs',
+        title: 'Necessidades',
+        color: '#f00',
+        icon: ''
+    }
+];
 
 /**
  * Options object to {@link komoo.Map}.
@@ -30,12 +46,13 @@ komoo.MapOptions = {
     editable: true,
     useGeoLocation: false,
     defaultDrawingControl: false,
+    overlayTypes: komoo.OverlayTypes,
     overlayOptions: {
         fillColor: '#ff0',
-        fillOpacity: 0.4,
+        fillOpacity: 0.45,
         strokeColor: '#ff0',
         strokeWeight: 3,
-        strokeOpacity: 0.4
+        strokeOpacity: 0.45
     },
     googleMapOptions: {
         center: new google.maps.LatLng(-23.55, -46.65),  // São Paulo, SP - Brasil
@@ -70,6 +87,7 @@ komoo.MapOptions = {
  * @property {google.maps.StreetViewPanorama} streetView
  * @property {JQuery} event
  * @property {google.maps.Circle} radiusCircle
+ * @property {Object} overlayOptions
  */
 komoo.Map = function (element, options) {
     var komooMap = this;
@@ -82,6 +100,7 @@ komoo.Map = function (element, options) {
 
     komooMap.options = options;
     komooMap.drawingManagerOptions = {};
+    komooMap.overlayOptions = {};
     komooMap.overlays = [];
 
     komooMap.event = $('<div>');
@@ -144,6 +163,7 @@ komoo.Map.prototype = {
      * @returns {void}
      */
     loadGeoJSON: function (geoJSON, panTo) {
+        // TODO: Use the correct color
         // TODO: Document the geoJSON properties:
         // - userCanEdit
         // - type (community, need...)
@@ -186,6 +206,14 @@ komoo.Map.prototype = {
             var geometry = feature.geometry;
             var overlay;
             var paths = [];
+            if (feature.properties.type && komooMap.overlayOptions[feature.properties.type]) {
+                var color = komooMap.overlayOptions[feature.properties.type].color;
+                polygonOptions.fillColor = color;
+                polygonOptions.strokeColor = color;
+                polylineOptions.strokeColor = color;
+            } else {
+                // TODO: set a default color
+            }
             if (geometry.type == 'Polygon') {
                 overlay = new google.maps.Polygon(polygonOptions);
                 $.each(geometry.coordinates, function (j, coord) {
@@ -569,6 +597,11 @@ komoo.Map.prototype = {
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.POLYGON);
+                if (komooMap.overlayOptions[komooMap.type]) {
+                    var color = komooMap.overlayOptions[komooMap.type].color;
+                    komooMap.drawingManagerOptions.polygonOptions.fillColor = color;
+                    komooMap.drawingManagerOptions.polygonOptions.strokeColor = color;
+                }
             });
             //komooMap.editToolbar.append(polygonButton);
 
@@ -577,6 +610,10 @@ komoo.Map.prototype = {
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.POLYLINE);
+                if (komooMap.overlayOptions[komooMap.type]) {
+                    var color = komooMap.overlayOptions[komooMap.type].color;
+                    komooMap.drawingManagerOptions.polylineOptions.strokeColor = color;
+                }
             });
             //komooMap.editToolbar.append(lineButton);
 
@@ -645,8 +682,9 @@ komoo.Map.prototype = {
             {title: 'Adicionar', content: menu}
         ]);
 
-        $.each(types, function (i, type) {
-            var item = $('<li><span>' +  type + '</span></li>').addClass('map-menuitem');
+        $.each(komooMap.options.overlayTypes, function (i, type) {
+            komooMap.overlayOptions[type.type] = type;
+            var item = $('<li><span>' +  type.title + '</span></li>').addClass('map-menuitem');
             var submenu = komooMap.addItems.clone(true);
             var submenuItems = $('div', submenu);
             submenuItems.attr({'style': ''}); // Clear the css style
@@ -668,7 +706,7 @@ komoo.Map.prototype = {
             komoo._setMenuItemStyle(item);
             item.hover(
                 function () { // Over
-                    komooMap.type = type;
+                    komooMap.type = type.type;
                     submenu.css({'left': item.outerWidth() + 'px'});
                     if (komooMap.addPanel.is(':hidden')) {
                         submenu.show();
