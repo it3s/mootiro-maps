@@ -1,9 +1,23 @@
 [
   {
-    "model": "komoo.needcategory",
+    "model": "need.needcategory",
     "pk": 1,
     "fields": {
-      "name": "Environment",
+      "name": "Environment"
+    }
+  },
+  {
+    "model": "need.needcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Sport"
+    }
+  },
+  {
+    "model": "need.needcategory",
+    "pk": 3,
+    "fields": {
+      "name": "Education"
     }
   }
 ]

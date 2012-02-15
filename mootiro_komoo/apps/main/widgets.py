@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+from itertools import chain
 
 from django import forms
 from django.forms.widgets import flatatt
-from django.utils.html import escape
 from django.utils.simplejson import JSONEncoder
+from django.utils.html import escape, conditional_escape
+from django.utils.encoding import force_unicode
+from django.utils.safestring import mark_safe
+from django.template.defaultfilters import slugify
 
 from annoying.functions import get_config
 
@@ -145,35 +149,53 @@ class ImageSwitch(forms.CheckboxInput):
         }
         return js
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, **attrs):
+        final_attrs = self.build_attrs(attrs, name=name)
+
+        if not 'id' in self.attrs:
+            final_attrs['id'] = 'id_%s' % name
+
         html = u"""
         %(checkbox)s
         <script type="text/javascript"><!--//
           %(js)s
         //--></script>
         """ % {
-            'checkbox': super(ImageSwitch, self).render(name, value, attrs),
-            'js': self.render_js(attrs['id'])
+            'checkbox': super(ImageSwitch, self).render(name, value, final_attrs),
+            'js': self.render_js(final_attrs['id'])
         }
         return html
 
 
-class ImagesSwitchMultiple(forms.CheckboxSelectMultiple):
+class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
 
-    def render_js(self):
-        js = u"""
-        alert('Mãe lindona');
-        """
-        return js
+    class Media:
+        js = ('lib/jquery.imagetick.min.js',)
 
-    def render(self, *a, **kw):
-        html = u"""
-        %(html)s
-        <script type="text/javascript"><!--//
-          %(js)s
-        //--></script>
-        """ % {
-            'html': super(CheckboxImagesSelectMultiple, self).render(*a, **kw),
-            'js': self.render_js()
-        }
-        return html
+
+    def render(self, name, value, attrs=None, choices=()):
+        if value is None: value = []
+        has_id = attrs and 'id' in attrs
+        final_attrs = self.build_attrs(attrs, name=name)
+        output = [u'<ul>']
+        # Normalize to strings
+        str_values = set([force_unicode(v) for v in value])
+        for i, (option_value, option_label) in enumerate(chain(self.choices, choices)):
+            # If an ID attribute was given, add a numeric index as a suffix,
+            # so that the checkboxes don't all have the same ID attribute.
+            if has_id:
+                final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], i))
+                label_for = u' for="%s"' % final_attrs['id']
+            else:
+                label_for = ''
+
+            image_tick = "%s-tick.png" % slugify(option_label)
+            image_no_tick = "%s-no-tick.png" % slugify(option_label)
+            cb = ImageSwitch(image_tick, image_no_tick, attrs=final_attrs)
+            option_value = force_unicode(option_value)
+            rendered_cb = cb.render(name, option_value)
+            option_label = conditional_escape(force_unicode(option_label))
+            #output.append(u'<li>%s <label%s>%s</label></li>' % (rendered_cb, label_for, option_label))
+            output.append(u'<li title="%s">%s</li>' % (option_label, rendered_cb))
+        output.append(u'</ul>')
+        return mark_safe(u'\n'.join(output))
