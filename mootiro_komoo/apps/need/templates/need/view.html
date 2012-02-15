@@ -1,0 +1,12 @@
+{% extends "global.html" %}
+
+{% block title %}{{ need.title }} at {{ need.community.name }}{% endblock %}
+
+{% block content %}
+{{ need.title }}<br/>
+{{ need.slug }}<br/>
+{{ need.description }}<br/>
+{{ need.category }}<br/>
+{{ need.target_audience }}<br/>
+{{ need.community.name }}<br/>
+{% endblock %}

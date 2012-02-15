@@ -1,0 +1,16 @@
+{% extends "global.html" %}
+
+{% block title %}Need{% endblock %}
+
+{% block content %}
+Create new need:
+<br/><br/>
+
+<form action="{{action}}" method="post">
+  {% csrf_token %}
+  <table>
+    {{ form }}
+  </table>
+  <input type="submit" value="Submit" />
+</form>
+{% endblock %}
