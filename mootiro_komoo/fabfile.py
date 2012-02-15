@@ -14,7 +14,7 @@ env = 'dev'
 
 def dev():
     """
-    Sets environment to development
+    Set environment to development
     """
     global env
     env= 'dev'
@@ -22,14 +22,14 @@ def dev():
 
 def test():
     """
-    Sets environment to test
+    Set environment to test
     """
     global env
     env = 'test'
 
 def prod():
     """
-    Sets environment to production
+    Set environment to production
     """
     global env
     env = 'prod'

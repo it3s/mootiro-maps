@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.forms import ModelForm, Form, CharField
-from comments.models import Comment
+from komoo_comments.models import Comment
 from django.forms import fields
 
 class FormComment(ModelForm):

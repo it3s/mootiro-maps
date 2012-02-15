@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
-from comments.forms import FormComment
-from comments.models import Comment
+from komoo_comments.forms import FormComment
+from komoo_comments.models import Comment
 from annoying.decorators import render_to, ajax_request
 
 @render_to('comments/comments_poc.html')

@@ -18,7 +18,6 @@ class Community(models.Model):
     address = models.CharField(max_length=1024, null=True, blank=True)
 
     class Meta:
-        app_label = 'komoo'  # needed for Django to find the model
         verbose_name = "community"
         verbose_name_plural = "communities"
 

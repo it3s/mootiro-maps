@@ -4,7 +4,6 @@
 '''This module is unfinished and not being used. We are instead using
 django-cas with some customization done on kommo.__init__.py.
 '''
-
 from __future__ import unicode_literals  # unicode by default
 from django.shortcuts import render_to_response, redirect
 from django.core.urlresolvers import reverse
