@@ -9,7 +9,7 @@
 		<!-- <fieldset> -->
 			{% csrf_token %}
 			{{ form_comment }}
-			<input type="submit" id="btnFormCommentSubmit" value="save"/>
+			<input type="submit" id="btnFormCommentSubmit" class="button" value="save"/>
 		<!-- </fieldset> -->
 	</form>
 </div>
@@ -17,7 +17,7 @@
 <h2>Comments: </h2>
 <div id="comments-list">
 	{% for comment in comments %}
-		<div class="comment-container" style="margin-top:20px;" commentID="{{ comment.id }}">
+		<div class="comment-container" commentID="{{ comment.id }}">
 			<div class="comment" >
 				{{ comment.comment}}  - [{{ comment.pub_date}}]
 			</div>
@@ -27,7 +27,7 @@
 			</div>
 			{% endif %}
 			<div class="comment-add">
-				<input type="button" class="btnSubCommentAdd" value="comment" />
+				<a class="btnSubCommentAdd" href="#">Responder</a>
 			</div>
 		</div>
 	{% endfor %}
@@ -37,4 +37,8 @@
 {% block page_scripts %}
 	<script type="text/javascript" src="{{STATIC_URL}}komoo_utils.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/comments.js"></script>
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/comments.css" />
 {% endblock %}

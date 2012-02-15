@@ -1,0 +1,9 @@
+.comment-container{
+	margin-top:20px;
+	background-color: rgb(220, 239, 244);
+	padding: 10px;
+}
+
+.comment-container a{
+	color: rgb(62, 186, 194)
+}

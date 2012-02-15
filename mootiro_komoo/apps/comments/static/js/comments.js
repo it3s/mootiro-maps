@@ -39,7 +39,7 @@
                         '<label>Comment: </label><input type="text" name="comment" />' + 
                         '<input type="text" name="parent_id" style="display: none;" value="' + comment_id + '" />' + 
                         '<input type="text" name="csrfmiddlewaretoken" style="display: none;" value="' + csrftoken + '" />' + //TODO csrftoken
-                        '<input type="submit" value="save"/>' + 
+                        '<input type="submit" class="button" value="save"/>' + 
                     '</form>' + 
                 '</div>'
             );  
@@ -50,12 +50,12 @@
                 if (data.success){
                     //here we want to explicitly re-do this query
                     $('#comments-list').prepend("" + 
-                        "<div class='comment-container' style='margin-top:20px;' commentID='" + data.comment.id + "'>" + 
+                        "<div class='comment-container' commentID='" + data.comment.id + "'>" + 
                             "<div class='comment'>" + 
                                 data.comment.comment + " - [" + data.comment.pub_date + "]" +
                             "</div>" + 
                             "<div class='comment-add'>" + 
-                                "<input type='button' class='btnSubCommentAdd' value='comment' />" + 
+                                "<a class='btnSubCommentAdd' href='#'>Responder</a>" + 
                             "</div>" + 
                         "</div>"
                     );
