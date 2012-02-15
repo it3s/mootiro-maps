@@ -4,7 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Comment(models.Model):
-    # author = models.ForeignKey(User, blank=True, null=True)
+    author = models.ForeignKey(User, blank=True, null=True)
     comment = models.CharField(max_length=1024)
     parent = models.ForeignKey('Comment', null=True, blank=True, related_name="comment_parent")
     sub_comments = models.IntegerField(blank=True, default=0)

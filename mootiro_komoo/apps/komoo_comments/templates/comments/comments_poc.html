@@ -19,16 +19,16 @@
 	{% for comment in comments %}
 		<div class="comment-container" commentID="{{ comment.id }}">
 			<div class="comment-header">
-				<a href="#">{% firstoff comment.author 'annonynous'} </a>
+				<a href="#">Usuario goes here!</a>  {{ comment.pub_date|date:'d/m/Y, H:i'}}
+				{% if comment.sub_comments > 0 %}
+					({{ comment.sub_comments }} respostas)
+				{% endif %}
+				<a href="#">Denunciar</a>
 			</div>
+
 			<div class="comment" >
-				{{ comment.comment}}  - [{{ comment.pub_date}}]
+				{{ comment.comment}}  
 			</div>
-			{% if comment.sub_comments > 0 %}
-			<div>
-				<a href="#" class="linkSubComments">[{{ comment.sub_comments }} sub-comments]</a>
-			</div>
-			{% endif %}
 			<div class="comment-add">
 				<a class="btnSubCommentAdd" href="#">Responder</a>
 			</div>

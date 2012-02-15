@@ -5,5 +5,13 @@
 }
 
 .comment-container a{
-	color: rgb(62, 186, 194)
+	color: rgb(62, 186, 194);
+	margin: 0 15px;
 }
+.comment-header{
+	margin-bottom: 15px;
+}
+.comment{
+	margin: 0 15px;
+}
+
