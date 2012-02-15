@@ -9,6 +9,7 @@ from django.utils.simplejson import JSONEncoder
 from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
+from django.template.defaultfilters import slugify
 
 from annoying.functions import get_config
 
@@ -171,6 +172,7 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
     class Media:
         js = ('lib/jquery.imagetick.min.js',)
 
+
     def render(self, name, value, attrs=None, choices=()):
         if value is None: value = []
         has_id = attrs and 'id' in attrs
@@ -187,7 +189,9 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
             else:
                 label_for = ''
 
-            cb = ImageSwitch("environment-off.png", "environment-on.png", attrs=final_attrs)
+            image_tick = "%s-tick.png" % slugify(option_label)
+            image_no_tick = "%s-no-tick.png" % slugify(option_label)
+            cb = ImageSwitch(image_tick, image_no_tick, attrs=final_attrs)
             option_value = force_unicode(option_value)
             rendered_cb = cb.render(name, option_value)
             option_label = conditional_escape(force_unicode(option_label))
