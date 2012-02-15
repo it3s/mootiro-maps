@@ -26,7 +26,7 @@ def comments_add(request):
             }
         } 
     else:
-        return {'success' : False, 'errors' : form.errors} 
+        return {'success' : False, 'errors' : form_comment.errors} 
           
 @ajax_request
 def subcomments_load(request):
