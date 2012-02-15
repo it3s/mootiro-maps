@@ -96,9 +96,9 @@ table { border-collapse: collapse }
     -webkit-border-radius: 0 6px 6px 0;
 }
 .map-button {
-    display: inline-block;
+    float: left;
     padding: 5px;
-    margin: 0 5px;
+    margin: 10px 5px;
 }
 .map-panel,
 .map-button {
@@ -109,12 +109,12 @@ table { border-collapse: collapse }
 .map-panel {
     background: #dceff4;
 }
-.map-panel .content,
-.map-panel .map-panel-buttons {
-    margin: 10px 5px;
+.map-panel .map-panel-buttons,
+.map-panel .content {
+    margin: 0 5px;
 }
 .map-panel .content .map-button {
-    margin: 0px;
+    margin: 0 0px;
 }
 .map-panel .map-panel-title {
     margin: 10px;
