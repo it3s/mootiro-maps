@@ -35,7 +35,6 @@ class JQueryAutoComplete(forms.TextInput):
         elif isinstance(self.source, basestring):
             source = "%s" % escape(self.source)
         else:
-            print type(self.source)
             raise ValueError('source type is not valid')
 
         js = u"""

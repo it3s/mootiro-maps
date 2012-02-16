@@ -1,5 +1,6 @@
 from django import forms
-from main.widgets import Tagsinput
+from main.widgets import JQueryAutoComplete, Tagsinput
+
 
 class TagsField(forms.CharField):
     widget = Tagsinput
