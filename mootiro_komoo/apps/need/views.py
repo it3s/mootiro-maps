@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
@@ -26,6 +26,7 @@ def edit(request, community_slug="", need_slug=""):
         need = None
         action = reverse('new_need')
     if request.POST:
+        print "POST =====", request.POST
         form = NeedForm(request.POST, instance=need)
         if form.is_valid():
             need = form.save()
@@ -41,13 +42,10 @@ def view(request, community_slug, need_slug):
     need = get_object_or_404(Need, slug=need_slug, community=community)
     return {'need': need}
 
-@ajax_request
 def tag_search(request):
     # FIXME: get only tags related to needs
     term = request.GET['term']
     qset = Tag.objects.filter(name__istartswith=term)
     tags = [ t.name for t in qset ]
-    return tags
-    # return HttpResponse(simplejson.dumps(tags),
-    #         mimetype="application/x-javascript")
-
+    return HttpResponse(simplejson.dumps(tags),
+                mimetype="application/x-javascript")

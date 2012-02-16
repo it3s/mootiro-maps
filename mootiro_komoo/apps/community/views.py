@@ -47,7 +47,8 @@ def map(request):
 
 def search_by_name(request):
     term = request.GET['term']
-    communities = Community.objects.filter(name__istartswith=term)
-    d = [{'value': c.slug, 'label': c.name} for c in communities]
+    rx = "^{0}|\s{0}".format(term)  # matches only beginning of words
+    communities = Community.objects.filter(name__iregex=rx)
+    d = [{'value': c.id, 'label': c.name} for c in communities]
     return HttpResponse(simplejson.dumps(d),
         mimetype="application/x-javascript")
