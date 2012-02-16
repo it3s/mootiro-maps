@@ -4,8 +4,6 @@ from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from main.utils import slugify
 
-from taggit.managers import TaggableManager
-
 
 class Community(models.Model):
     name = models.CharField(max_length=256, blank=False)
@@ -18,8 +16,6 @@ class Community(models.Model):
     last_update = models.DateTimeField(auto_now=True)
 
     address = models.CharField(max_length=1024, null=True, blank=True)
-
-    tags = TaggableManager()
 
     class Meta:
         verbose_name = "community"

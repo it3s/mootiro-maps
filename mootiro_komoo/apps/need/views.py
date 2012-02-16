@@ -29,7 +29,7 @@ def edit(request, community_slug="", need_slug=""):
         form = NeedForm(request.POST, instance=need)
         if form.is_valid():
             need = form.save()
-            return redirect(view, community_slug=need.community.slug, 
+            return redirect(view, community_slug=need.community.slug,
                         need_slug=need.slug)
         else:
             return {'form': form, 'action': action}
