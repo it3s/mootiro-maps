@@ -32,25 +32,30 @@ def run():
     """Runs django's development server"""
     local('python manage.py runserver 8001 {}'.format(django_settings[env]))
 
-def syncdb():
-    """Runs syncdb (with no input flag)"""
-    local('python manage.py syncdb --noinput {}'.format(django_settings[env]))
+def syncdb(create_superuser=""):
+    """Runs syncdb (with no input flag by default)"""
+    noinput = "" if create_superuser else "--noinput"
+    local('python manage.py syncdb {} {}'.format(noinput, django_settings[env]))
+    system_fixtures()
 
 def recreate_db():
     """Drops komoo database, recreates it with postgis template and runs syncdb
     """
     print "Recreating database 'komoo'"
     local('dropdb mootiro_komoo && createdb -T template_postgis mootiro_komoo')
-    syncdb()
 
 def shell():
     """Launches Django interactive shell"""
     local('python manage.py shell {}'.format(django_settings[env]))
 
-
-def load_fixtures():
-    """Loads all fixtures into database"""
+def system_fixtures():
+    """Load fixtures that populates the db with system info"""
     local('python manage.py loaddata apps/need/initial_data.json {}' \
+            .format(django_settings[env]))
+
+def test_fixtures():
+    """Loads all fixtures into database"""
+    local('python manage.py loaddata test_data.json {}' \
             .format(django_settings[env]))
 
 def help():

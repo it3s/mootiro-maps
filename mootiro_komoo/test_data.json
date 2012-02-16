@@ -1,0 +1,39 @@
+[
+  {
+    "model": "community.community",
+    "pk": 1,
+    "fields": {
+      "name": "São Remo",
+      "slug": "sao-remo",
+      "population": 123
+    }
+  },
+  {
+    "model": "community.community",
+    "pk": 2,
+    "fields": {
+      "name": "Higienópolis",
+      "slug": "higienopolis",
+      "population": 456
+    }
+  },
+  {
+    "model": "community.community",
+    "pk": 3,
+    "fields": {
+      "name": "Complexo do Alemão",
+      "slug": "complexo-do-alemão",
+      "population": 1000000
+    }
+  },
+  {
+    "model": "need.need",
+    "pk": 1,
+    "fields": {
+      "title": "Parquinho",
+      "slug": "parquinho",
+      "description": "Muita areia e brinquedos legais para a garotada!",
+      "community": 1
+    }
+  }
+]

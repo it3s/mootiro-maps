@@ -7,7 +7,7 @@ from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to
-from taggit.models import Tag
+from taggit.models import TaggedItem
 from annoying.decorators import render_to, ajax_request
 
 from community.models import Community
@@ -26,11 +26,11 @@ def edit(request, community_slug="", need_slug=""):
         need = None
         action = reverse('new_need')
     if request.POST:
-        print "POST =====", request.POST
         form = NeedForm(request.POST, instance=need)
         if form.is_valid():
             need = form.save()
-            return redirect(view, need.community.slug, need.slug)
+            return redirect(view, community_slug=need.community.slug, 
+                        need_slug=need.slug)
         else:
             return {'form': form, 'action': action}
     else:
@@ -43,9 +43,8 @@ def view(request, community_slug, need_slug):
     return {'need': need}
 
 def tag_search(request):
-    # FIXME: get only tags related to needs
     term = request.GET['term']
-    qset = Tag.objects.filter(name__istartswith=term)
+    qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
     tags = [ t.name for t in qset ]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
