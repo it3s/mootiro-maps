@@ -19,7 +19,7 @@
 </div>
 
 <h2>Comments: </h2>
-<div id="comments-list">
+<div class="comments-list">
     {% for comment in comments %}
         <div class="comment-container" commentID="{{ comment.id }}">
             <div class="comment-header">
@@ -36,13 +36,12 @@
             <div class="comment-footer">
                 <a class="btnSubCommentAdd" href="#">Responder</a>
                 {% if comment.sub_comments > 0 %}
-                    <a href="#">{{ comment.sub_comments }} resposta(s)</a>
+                    <a class="link_subcomments" href="" comment-id="{{ comment.id }}">{{ comment.sub_comments }} resposta(s)</a>
                 {% endif %}
                 <div class='comment-form'>
                     <form method='post' class='stacked-form' action='/comments/add/' >
                         <fieldset>
                             {% csrf_token %}
-
                             <label>Comment:</label></th><td><textarea rows='5' cols='80' name='comment' class='span8'></textarea>
                             <input type='hidden' name='parent_id' value="{{comment.id}}" />
                             <div class='clearfix'>
