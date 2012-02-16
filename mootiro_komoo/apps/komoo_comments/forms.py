@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
-from django.forms import ModelForm, Form, CharField
+from django.forms import ModelForm, Form, CharField, Textarea
 from komoo_comments.models import Comment
 from django.forms import fields
 
@@ -10,10 +10,9 @@ class FormComment(ModelForm):
     class Meta:
         model = Comment
         fields = ['comment',]
-
-    # def __init__(self, *args, **kwargs):
-    #     retorn = super(FormComment, self).__init__(*args, **kwargs)
-    #     self.fields['parent'].widgets = fields.HiddenInput
+        widgets = {
+            'comment' : Textarea(attrs={'cols': 80, 'rows': 5, 'class' : 'span8'}),
+        }
 
     def save(self, *args, **kwargs):
         comment = super(FormComment, self).save(*args, **kwargs)

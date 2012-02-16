@@ -6,9 +6,15 @@
         var $formComment = $('#formComment');
         var $btnSubCommentAdd = $('.btnSubCommentAdd');
         var $linkSubComments = $('.linkSubComments');
+        var $btnShowForm = $('.btnShowForm');
         var $csrftoken = $formComment.find('input[name=csrfmiddlewaretoken]')
 
         var init = function(){
+
+            $btnShowForm.click(function(evt){
+                $formComment.slideToggle('fast');
+            });
+
             $btnFormCommentSubmit.click(function(evt){
                 evt.preventDefault();
                 addComment();
@@ -28,20 +34,8 @@
         }
 
         var btnSubCommentAdd = function(btn){
-            var parent = $(btn).parent();
-            var comment_id = parent.parent().attr('commentID');
-            var csrftoken = $csrftoken.val();
-            $(btn).css('display', 'none');
-            parent.append('' + 
-                '<div class="comment-form">' + 
-                    '<form method="post" action="/comments/add/">' + 
-                        '<label>Comment: </label><input type="text" name="comment" />' + 
-                        '<input type="text" name="parent_id" style="display: none;" value="' + comment_id + '" />' + 
-                        '<input type="text" name="csrfmiddlewaretoken" style="display: none;" value="' + csrftoken + '" />' + //TODO csrftoken
-                        '<input type="submit" class="button" value="save"/>' + 
-                    '</form>' + 
-                '</div>'
-            );  
+            $(btn).parent().find('.comment-form').slideToggle('fast');
+
         };
 
         var addComment = function(){
