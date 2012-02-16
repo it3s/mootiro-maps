@@ -18,7 +18,7 @@
                 btnSubCommentAdd(evt.target);
             });
 
-            $link_subcomments.click(function(evt){
+            $link_subcomments.live('click', function(evt){
                 evt.preventDefault();
                 var link = $(evt.target);
 
@@ -33,10 +33,12 @@
                         if (data.success){
                             subcomments_list = '<div class="comments-list" style="display: none;">'
 
+                            link_parent = link.parent().parent();
+
                             for (i in data.comments){
                                 comment = data.comments[i];
                                 subcomments_list += '' +
-                                    '<div class="comment-container inner-comment" commentID="' + comment.id + '">' +
+                                    '<div class="comment-container inner-comment ' + (link_parent.hasClass('odd')? '' : 'odd') + '" commentID="' + comment.id + '">' +
                                         '<div class="comment-header">' +
                                             '<a href="#">' + comment.author + '</a>' + comment.pub_date  +
                                             ((comments.sub_comments > 0) ? ('(' + comment.sub_comments + ' respostas)') : '') +
@@ -48,7 +50,7 @@
                                         '<div class="comment-footer">' +
                                             '<a class="btnSubCommentAdd" href="#">Responder</a>' +
                                             ((comment.sub_comments > 0 ) ? (
-                                                '<a class="link_subcomments" href="" comment-id="' + comment.id + '">' +  comment.sub_comments + 'resposta(s)</a>') : '') +
+                                                '<a class="link_subcomments" href="#" comment-id="' + comment.id + '">' +  comment.sub_comments + 'resposta(s)</a>') : '') +
                                             "<div class='comment-form'>" +
                                                 "<form method='post' class='stacked-form' action='/comments/add/' >" +
                                                     '<fieldset>' +

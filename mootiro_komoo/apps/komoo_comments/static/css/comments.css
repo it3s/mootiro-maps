@@ -32,8 +32,10 @@ a.btnShowForm{
     display: none;
 }
 .inner-comment{
-   background-color: rgb(235, 249, 255);
    margin-right: -1px;
    padding-bottom: 0;
    margin-bottom: -1px;
+}
+.odd{
+    background-color: rgb(235, 249, 255);
 }
