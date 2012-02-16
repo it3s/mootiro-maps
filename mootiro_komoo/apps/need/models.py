@@ -3,8 +3,8 @@
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
 
-from taggit.managers import TaggableManager
-#from taggit.models import TaggedItemBase
+from lib.taggit.managers import TaggableManager
+from lib.taggit.models import TaggedItemBase
 
 from community.models import Community
 from main.utils import slugify
@@ -17,6 +17,10 @@ class NeedCategory(models.Model):
         return self.name 
 
 
+class NeedTargetAudienceTag(TaggedItemBase):
+    content_object = models.ForeignKey('Need')
+
+
 class Need(models.Model):
     """A need of a Community"""
 
@@ -24,13 +28,14 @@ class Need(models.Model):
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.CharField(max_length=256, unique=True, editable=False, blank=False)
     description = models.TextField()
-    #target_audience = TaggableManager(related_name="target_audience")
 
     # Relationships
     community = models.ForeignKey(Community, related_name="needs")
     categories = models.ManyToManyField(NeedCategory)
 
-    tags = TaggableManager()
+    tags = TaggableManager(related_name='need_tags')
+    target_audience = TaggableManager(verbose_name="Target audience",
+        related_name="target_audience", through=NeedTargetAudienceTag)
 
     ### Needed to slugify items ###
     def slug_exists(self, slug):

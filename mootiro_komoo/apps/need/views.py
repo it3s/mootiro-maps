@@ -11,7 +11,7 @@ from taggit.models import TaggedItem
 from annoying.decorators import render_to, ajax_request
 
 from community.models import Community
-from need.models import Need
+from need.models import Need, NeedTargetAudienceTag
 from need.forms import NeedForm
 
 
@@ -29,7 +29,7 @@ def edit(request, community_slug="", need_slug=""):
         form = NeedForm(request.POST, instance=need)
         if form.is_valid():
             need = form.save()
-            return redirect(view, community_slug=need.community.slug,
+            return redirect('view_need', community_slug=need.community.slug,
                         need_slug=need.slug)
         else:
             return {'form': form, 'action': action}
@@ -44,7 +44,7 @@ def view(request, community_slug, need_slug):
 
 def tag_search(request):
     term = request.GET['term']
-    qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
+    qset = TaggedItem.tags_for(NeedTargetAudienceTag).filter(name__istartswith=term)
     tags = [ t.name for t in qset ]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")

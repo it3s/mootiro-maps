@@ -117,7 +117,7 @@ INSTALLED_APPS = [
     'django.contrib.comments',
     'django.contrib.gis',
     'tinymce',
-    'taggit',
+    'lib.taggit',
     'komoo_map',
     'community',
     'main',
