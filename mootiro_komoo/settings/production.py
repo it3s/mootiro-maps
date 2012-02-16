@@ -40,4 +40,67 @@ LANGUAGE_CODE = 'en-us'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'ycx!))zk0_w(557x3rwvw)okxb^iai$ldtzno&pv*6^^iz1q=x'
 
+
 # production LOG goes here
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': '[%(levelname)s] [%(name)s : %(funcName)s] - %(asctime)s :\n%(message)s'
+        },
+    },
+    'handlers': {
+        'null': {
+            'level':'WARNING',
+            'class':'django.utils.log.NullHandler',
+        },
+        'log_file': {
+            'level':'DEBUG',
+            'class':'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(SITE_ROOT, 'logs/log_prod.log',
+            'maxBytes': 1024*1024*50, # 5 MB
+            'backupCount': 5,
+            'formatter':'standard',
+        },
+        'console':{
+            'level':'WARNING',
+            'class':'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'request_handler': {
+                'level':'WARNING',
+                'class':'logging.handlers.RotatingFileHandler',
+                'filename': os.path.join(SITE_ROOT, 'logs/django_request.log',
+                'maxBytes': 1024*1024*50, # 5 MB
+                'backupCount': 5,
+                'formatter':'standard',
+        },
+    },
+    'loggers': {
+#        'django': {
+#            'handlers':['null'],
+#            'propagate': True,
+#            'level':'INFO',
+#        },
+        'django.request': {
+            'handlers': ['request_handler'],
+            'level': 'ERROR',
+            'propagate': False
+        },
+        'app': {
+            'handlers': ['log_file'],
+            'level': 'WARNING',
+            'propagate': True
+        },
+    }
+}
+my_app_logger = {
+    'handlers': ['log_file'],
+    'level': 'WARNING',
+    'propagate': True
+}
+LOGGING['loggers'].update({'{}.views'.format(app):my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.models'.format(app):my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.forms'.format(app):my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.utils'.format(app):my_app_logger for app in os.listdir('apps/')})

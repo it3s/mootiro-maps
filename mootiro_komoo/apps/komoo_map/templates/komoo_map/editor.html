@@ -1,19 +1,9 @@
 {% with map.latitude|stringformat:"f" as lat %}
 {% with map.longitude|stringformat:"f" as long %}
 
-{% block api_js %}
-    <!-- Google Maps API javascript -->
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
-    <script type="text/javascript" src="/static/js/komoo_map.js"></script>
-{% endblock %}
-
 {% block html %}
     <!-- HTML map container -->
-    <div id="map-canvas-{{ map.pk }}"
-         {% if width %}
-            style="width: {{ width }}; height: {{ height }};"
-         {% endif %}
-         class="komoo-map-googlemap">
+    <div id="map-canvas-{{ map.pk }}"{% if width %} style="width: {{ width }}; height: {{ height }};"{% endif %} class="komoo-map-googlemap">
          {% block noscript %}
          <noscript>
             <img alt="Map of {{ map.address }}" src="http://maps.google.com/maps/api/staticmap?center={{ lat }},{{ long }}&zoom={{ zoom }}&markers={{ lat }},{{ long }}&size={{ width }}x{{ height }}&sensor=false">
@@ -45,11 +35,12 @@
             {% block extra_js %}
             var geojson = JSON.parse('{{ geojson|safe }}');
             map.loadGeoJSON(geojson, true);
-            map.event.bind('finish_click', function () {
-                var geojson = JSON.stringify(map.getGeoJSON());
-                $('#{{input_id}}').val(geojson);
-                console.log(geojson);
-            });
+            if ('{{input_id}}') {
+                map.event.bind('changed', function () {
+                    var geojson = JSON.stringify(map.getGeoJSON());
+                    $('#{{input_id}}').val(geojson);
+                });
+            }
             {% endblock %}
         }
 

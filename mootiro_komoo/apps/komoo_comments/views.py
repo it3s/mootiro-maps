@@ -19,15 +19,6 @@ def comments_add(request):
     if form_comment.is_valid():
         comment = form_comment.save()
         return HttpResponseRedirect(reverse('comments_index'))
-        # return {
-        #     'success' : True,
-        #     'comment': {
-        #         'comment': comment.comment,
-        #         'id' : comment.id,
-        #         'pub_date' : comment.pub_date.strftime('%d/%m/%Y'),
-        #         'sub_comments' : comment.sub_comments
-        #     }
-        # }
     else:
         return {'success' : False, 'errors' : form_comment.errors}
 

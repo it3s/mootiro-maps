@@ -63,8 +63,7 @@ table { border-collapse: collapse }
     float: left;
 }
 #top #menu li,
-.map-tab,
-.map-button {
+.map-tab, .map-button {
     border: 1px solid #c7c7c7;
 
     background-color: #ededed;
@@ -78,6 +77,7 @@ table { border-collapse: collapse }
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CECECE, endColorstr=#EDEDED)";
 }
 #top #menu li:hover, #top #menu li.selected,
+.map-menuitem:hover, .map-menuitem.selected,
 .map-tab:hover, .map-tab.selected,
 .map-button:hover, .map-button.selected {
     color: #fff;
@@ -100,8 +100,16 @@ table { border-collapse: collapse }
     padding: 5px;
     margin: 10px 5px;
 }
-.map-panel,
-.map-button {
+.map-tab {
+    text-align: center;
+    padding: 5px 0px;
+    float: left;
+}
+.map-tab-container {
+    clear: both;
+    background: #dceff4;
+}
+.map-panel, .map-button {
     border-radius        : 6px;
     -moz-border-radius   : 6px;
     -webkit-border-radius: 6px;
@@ -119,6 +127,20 @@ table { border-collapse: collapse }
 .map-panel .map-panel-title {
     margin: 10px;
 }
+.map-menuitem,
+.map-menuitem.frozen:hover {
+    cursor: default;
+    direction: ltr;
+    position: relative;
+    padding: 10px;
+    background: #dceff4 !important;
+    color: #000;
+    white-space: nowrap;
+}
+.map-menuitem.disabled, .map-menuitem.disabled:hover {
+    color: #aaa;
+    background: #dceff4 !important;
+}
 #top #menu, #top #search { margin-left: 60px }
 
 #search-bar {
@@ -126,3 +148,10 @@ table { border-collapse: collapse }
     font-size: 16px;
 }
 #search-button { margin-left: 4px }
+.komoo-map-googlemap img { /* Revert bootstrap changes */
+    max-width: none !important;
+}
+.komoo-map-googlemap label { /* Revert bootstrap changes */
+    width: auto !important;
+    display: inline !important;
+}
