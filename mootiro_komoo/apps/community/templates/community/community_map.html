@@ -3,11 +3,21 @@
 {% block title %}Community{% endblock %}
 
 {% block content %}
-<form action="/community/map" method="post">
+<form action="/community/map" method="post" id="map_form">
   {% csrf_token %}
-  <table>
-    {{ form }}
-  </table>
+  {{ form }}
+  <script>
+    komoo.onMapReady = function (map) {
+      map.event.bind('finish_click', function () {
+        var geojson = map.getGeoJSON(true);
+        if (geojson.features.length > 0) {
+          alert('O formulário deveria aparecer agora!');
+          } else {
+          alert('Algo não deu certo!');
+        }
+      });
+    };
+  </script>
   <input type="submit" value="Next" />
 </form>
 {% endblock %}

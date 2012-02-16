@@ -12,20 +12,41 @@
 var komoo = {};
 
 /**
- *
+ * Array of Types to populate the 'Add' tab of main panel.
  */
 komoo.OverlayTypes = [
     {
         type: 'community',
-        title: 'Comunidades',
+        title: 'Comunidade',
         color: '#ff0',
         icon: ''
     },
     {
-        type: 'needs',
-        title: 'Necessidades',
+        type: 'need',
+        title: 'Necessidade',
         color: '#f00',
         icon: ''
+    },
+    {
+        type: 'organization',
+        title: 'Organização',
+        color: '#00f',
+        icon: '',
+        disabled: true
+    },
+    {
+        type: 'resource',
+        title: 'Recurso',
+        color: '#fff',
+        icon: '',
+        disabled: true
+    },
+    {
+        type: 'financing',
+        title: 'Financiamento',
+        color: '#000',
+        icon: '',
+        disabled: true
     }
 ];
 
@@ -74,6 +95,8 @@ komoo.MapOptions = {
  *           The options object used to construct the komoo.Map object.
  * @property {google.maps.Polygon[]|google.maps.Polyline[]} overlays
  *           Array containing all overlays.
+ * @property {google.maps.Polygon[]|google.maps.Polyline[]} newOverlays
+ *           Array containing new overlays added by user.
  * @property {google.maps.Map} googleMap The Google Maps map object.
  * @property {google.maps.drawing.DrawingManager} drawingManager
  *           Drawing manager from Google Maps library.
@@ -102,6 +125,7 @@ komoo.Map = function (element, options) {
     komooMap.drawingManagerOptions = {};
     komooMap.overlayOptions = {};
     komooMap.overlays = [];
+    komooMap.newOverlays = [];
 
     komooMap.event = $('<div>');
 
@@ -153,6 +177,8 @@ komoo.Map = function (element, options) {
 
     /* Adds GeoCoder */
     komooMap.geocoder = new google.maps.Geocoder();
+
+    if (komoo.onMapReady) komoo.onMapReady(komooMap);
 }
 
 komoo.Map.prototype = {
@@ -255,14 +281,16 @@ komoo.Map.prototype = {
 
     /**
      * Create a GeoJSON with the map's overlays.
+     * @param {boolean} newOnly
      * @returns {json}
      */
-    getGeoJSON: function () {
+    getGeoJSON: function (newOnly) {
         var geoJSON = {
             'type': 'FeatureCollection',
             'features': []
         };
-        $.each(this.overlays, function (i, overlay) {
+        var list = newOnly ? this.newOverlays : this.overlays;
+        $.each(list, function (i, overlay) {
             var coords = [];
             var subCoords = [];
             var feature = {
@@ -296,7 +324,7 @@ komoo.Map.prototype = {
                 coords.push(pos.lng());
             }
             feature.properties = overlay.properties;
-            geoJSON['features'].push(feature);
+            if (feature.geometry.coordinates.length) geoJSON['features'].push(feature);
         });
         return geoJSON;
     },
@@ -565,6 +593,7 @@ komoo.Map.prototype = {
                 komooMap.editMode = null;
             } else {
                 komooMap.overlays.push(e.overlay);
+                komooMap.newOverlays.push(e.overlay);
                 /* Listen events from drawn overlay */
                 komooMap._attachOverlayEvents(e.overlay);
                 komooMap.setCurrentOverlay(e.overlay);
@@ -671,29 +700,29 @@ komoo.Map.prototype = {
     },
 
     _createMainPanel: function () {
-        // TODO: improve
         var komooMap = this;
         var panel = $('<div>').addClass('map-panel');
-        var menu = $('<ul>').addClass('map-menu');
-        var types = ['Comunidades', 'Necessidades', 'Organizações', 'Recursos', 'Financiamentos'];
+        var addMenu = $('<ul>').addClass('map-menu');
 
         var tabs = komoo.createMapTab([
             {title: 'Filtrar'},
-            {title: 'Adicionar', content: menu}
+            {title: 'Adicionar', content: addMenu}
         ]);
 
         $.each(komooMap.options.overlayTypes, function (i, type) {
             komooMap.overlayOptions[type.type] = type;
-            var item = $('<li><span>' +  type.title + '</span></li>').addClass('map-menuitem');
+            var item = $('<li>').addClass('map-menuitem').append($('<span>').text(type.title));
             var submenu = komooMap.addItems.clone(true);
             var submenuItems = $('div', submenu);
-            submenuItems.attr({'style': ''}); // Clear the css style
-            submenuItems.addClass('map-menuitem').removeClass('map-button'); // Change the class
+            submenuItems.removeClass('map-button').addClass('map-menuitem'); // Change the class
             submenuItems.bind('click', function (){
                 submenu.hide();
                 $('.map-panel-title', komooMap.addPanel).text($(this).text())
+                $('.map-menuitem.selected', komooMap.mainPanel).removeClass('selected');
+                item.addClass('selected');
+                $('.map-menuitem:not(.selected)', komooMap.mainPanel).addClass('frozen');
             });
-            submenuItems.each(function () { komoo._setMenuItemStyle($(this)); }); // Set the correct style
+            if (type.disabled) item.addClass('disabled');
             item.css({
                 'position': 'relative'
             });
@@ -703,19 +732,19 @@ komoo.Map.prototype = {
                 'z-index': '999999'
             });
             item.append(submenu);
-            komoo._setMenuItemStyle(item);
             item.hover(
                 function () { // Over
-                    komooMap.type = type.type;
-                    submenu.css({'left': item.outerWidth() + 'px'});
-                    if (komooMap.addPanel.is(':hidden')) {
+                    if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
+                        komooMap.type = type.type;
+                        submenu.css({'left': item.outerWidth() + 'px'});
                         submenu.show();
                     }
                 },
                 function () { // Out
                     submenu.hide();
                 });
-            menu.append(item);
+            addMenu.append(item);
+            type.selector = item;
         });
 
         panel.css({
@@ -729,9 +758,6 @@ komoo.Map.prototype = {
             function (e){
                 if (komooMap.drawingManager.drawingMode) {
                     komooMap.addPanel.show();
-                } else {
-                    // FIXME: Change to edit panel
-                    //komooMap.addPanel.hide();
                 }
             });
 
@@ -739,16 +765,17 @@ komoo.Map.prototype = {
     },
 
     _createAddPanel: function () {
-        // TODO: improve
         var komooMap = this;
         var panel = $('<div>').addClass('map-panel');
         var content = $('<div>').addClass('content');
-        var title = $('<div>Título</div>').addClass('map-panel-title');
+        var title = $('<div>').text('Título').addClass('map-panel-title');
         var buttons = $('<div>').addClass('map-panel-buttons');
-        var finishButton = $('<div>Concluir</div>').addClass('map-button');
-        var cancelButton = $('<div>Cancelar</div>').addClass('map-button');
+        var finishButton = $('<div>').text('Concluir').addClass('map-button');
+        var cancelButton = $('<div>').text('Cancelar').addClass('map-button');
 
         function button_click () {
+            $('.map-menuitem.selected', komooMap.mainPanel).removeClass('selected');
+            $('.frozen', komooMap.mainPanel).removeClass('frozen');
             komooMap.drawingManager.setDrawingMode(null);
             komooMap.type = null;
             panel.hide();
@@ -825,10 +852,7 @@ komoo.isPointInside = function (point, path) {
  *
  */
 komoo.createMapButton = function (name, title, onClick) {
-    var selector = $('<div>' + name + '</div>');
-    selector.addClass('map-button');
-    selector.addClass('gmnoprint');
-    //komoo._setButtonStyle(selector);
+    var selector = $('<div>').text(name).addClass('map-button');
     selector.attr('title', title);
     selector.bind('click', onClick);
     return selector;
@@ -838,16 +862,11 @@ komoo.createMapButton = function (name, title, onClick) {
  *
  */
 komoo.createMapMenu = function (name, items) {
-    // TODO: Create the menu widget.
-    var selector = $('<div>' + name + '</div>');
-    selector.addClass('map-menu');
-    selector.addClass('gmnoprint');
-    komoo._setButtonStyle(selector);
+    var selector = $('<div>').text(name).addClass('map-menu');
     var container = $('<div>').addClass('map-container').hide();
     $.each(items, function (i, item) {
         container.append(item);
-        item.css('clear', 'both');
-        item.css('float', 'none');
+        item.css({'clear': 'both', 'float': 'none'});
         item.bind('click', function () { container.hide(); });
     });
     selector.append(container);
@@ -857,22 +876,23 @@ komoo.createMapMenu = function (name, items) {
     return selector;
 };
 
+/**
+ *
+ */
 komoo.createMapTab = function (items) {
-    var tabs = {};
-    tabs.items = {};
-    tabs.selector = $('<div>');
-    tabs.tabsSelector = $('<div>').addClass('map-tabs');
-    tabs.containersSelector = $('<div>').addClass('map-container');
-    tabs.selector.append(tabs.tabsSelector);
-    tabs.selector.append(tabs.containersSelector);
+    var tabs = {
+        items: {},
+        selector: $('<div>'),
+        tabsSelector: $('<div>').addClass('map-tabs'),
+        containersSelector: $('<div>').addClass('map-container'),
+    };
+    tabs.selector.append(tabs.tabsSelector, tabs.containersSelector);
     $.each(items, function (i, item) {
-        var tab = {};
-        tab.tabSelector = $('<div>' + item.title + '</div>').addClass('map-tab');
-        tab.tabSelector.css({'border': '0px'});
-        komoo._setTabStyle(tab.tabSelector);
-        tab.containerSelector = $('<div>').addClass('map-tab-container').hide();
+        var tab = {
+            tabSelector: $('<div>').text(item.title).addClass('map-tab').css({'border': '0px'}),
+            containerSelector: $('<div>').addClass('map-tab-container').hide()
+        };
         if (item.content) tab.containerSelector.append(item.content);
-        komoo._setContainerStyle(tab.containerSelector);
         tab.tabSelector.click(
             function () {
                 if (tabs.current && tabs.current != tab) {
@@ -886,86 +906,9 @@ komoo.createMapTab = function (items) {
         );
 
         tabs.items[item.title] = tab;
-        var size = 100 / items.length;
-        tab.tabSelector.css({'width': size + '%'});
+        tab.tabSelector.css({'width': 100 / items.length + '%'});
         tabs.tabsSelector.append(tab.tabSelector);
         tabs.containersSelector.append(tab.containerSelector);
     });
     return tabs;
 }
-
-/**
- *
- */
-komoo._setButtonStyle = function (selector) {
-    selector.css({
-        'cursor': 'default',
-        //'margin-right': '2px',
-        'float': 'left',
-        'direction': 'ltr',
-        'overflow': 'hidden',
-        'position': 'relative',
-        //'font': '13px Arial, sans-serif',
-        'padding': '4px',
-        'border': '1px solid rgb(113, 123, 135)',
-        'box-shadow': 'rgba(0, 0, 0, 0.398438) 0px 2px 4px',
-        'background': '-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(255, 255, 255)), to(rgb(230, 230, 230)))',
-        'color': '#000'
-    });
-    selector.css({'background': '-moz-linear-gradient(center top , #FFFFFF, #E6E6E6) repeat scroll 0 0 transparent'});
-};
-
-
-komoo._setTabStyle = function (selector) {
-    selector.css({
-        //'font': '13px Arial, sans-serif',
-        'text-align': 'center',
-        'padding': '5px 0px',
-        'float': 'left',
-        'background': '#dceff4'
-    });
-};
-
-komoo._setContainerStyle = function (selector) {
-    selector.css({
-        'clear': 'both',
-        'background': '#dceff4'
-    });
-};
-
-komoo._setMenuItemStyle = function (selector) {
-    selector.css({
-        'cursor': 'default',
-        'direction': 'ltr',
-        //'overflow': 'hidden',
-        'position': 'relative',
-        //'font': '13px Arial, sans-serif',
-        'padding': '10px',
-        //'box-shadow': 'rgba(0, 0, 0, 0.398438) 0px 2px 4px',
-        'background': '#dceff4',
-        'color': '#000',
-        'white-space': 'nowrap'
-    });
-
-    selector.hover(function () {
-        selector.css({
-            'background': '#39b9c0',
-            'color': '#fff'
-        });
-    }, function () {
-        selector.css({
-            'background': '#dceff4',
-            'color': '#000'
-        });
-    });
-};
-
-/*$(function () {
-    var myOptions = {
-        useGeoLocation: true,
-        googleMapOptions: {
-            zoom: 16
-        }
-    };
-    map = new komoo.Map(document.getElementById('map-canvas'), myOptions);
-});*/
