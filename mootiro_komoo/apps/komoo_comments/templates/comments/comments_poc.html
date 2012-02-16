@@ -4,6 +4,8 @@
 
 {% block content %}
 
+<h2>Comments: </h2>
+
 <div id='divFormComment'>
     <a href="#" class="btnShowForm">Novo Comentário</a>
     <form method="post" id="formComment" class="stacked-form" action="{% url comments_add %}" >
@@ -18,7 +20,6 @@
 
 </div>
 
-<h2>Comments: </h2>
 <div class="comments-list">
     {% for comment in comments %}
         <div class="comment-container" commentID="{{ comment.id }}">

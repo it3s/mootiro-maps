@@ -3,3 +3,4 @@ local_settings.py
 *.egg-info
 .idea/
 .codeintel/
+logs/
