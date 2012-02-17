@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+
+import json
+
 from django.shortcuts import render_to_response, redirect, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
@@ -36,7 +39,18 @@ def edit(request, community_slug=""):
 @render_to('community/community_view.html')
 def view(request, community_slug):
     community = get_object_or_404(Community, slug=community_slug)
-    return {'community': community}
+    geojson = json.dumps({
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'geometry': json.loads(community.geometry.geojson),
+                'properties': {'type': 'community'}
+            }
+        ]
+    })
+    mapform = CommunityMapForm({'map': geojson})
+    return {'community': community, 'form': mapform}
 
 @render_to('community/community_map.html')
 def map(request):
