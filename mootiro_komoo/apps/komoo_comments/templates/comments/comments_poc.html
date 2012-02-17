@@ -8,15 +8,17 @@
 
 <div id='divFormComment'>
     <a href="#" class="btnShowForm">Novo Comentário</a>
-    <form method="post" id="formComment" class="stacked-form" action="{% url comments_add %}" >
-        <fieldset>
-            {% csrf_token %}
-            {{ form_comment }}
-            <div class="clearfix">
-                <input type="submit" id="btnFormCommentSubmit" class="button" value="save"/>
-            </div>
-        </fieldset>
-    </form>
+    <div class='comment-form'>
+        <form method="post" id="formComment" class="stacked-form" action="{% url comments_add %}" >
+            <fieldset>
+                {% csrf_token %}
+                {{ form_comment }}
+                <div class="clearfix">
+                    <input type="submit" class="btnFormCommentSubmit button" value="save"/>
+                </div>
+            </fieldset>
+        </form>
+    </div>
 
 </div>
 
@@ -35,7 +37,7 @@
                 {{ comment.comment}}
             </div>
             <div class="comment-footer">
-                <a class="btnSubCommentAdd" href="#">Responder</a>
+                <a class="btnShowForm" href="#">Responder</a>
                 {% if comment.sub_comments > 0 %}
                     <a class="link_subcomments" href="" comment-id="{{ comment.id }}">{{ comment.sub_comments }} resposta(s)</a>
                 {% endif %}
@@ -46,7 +48,7 @@
                             <label>Comment:</label></th><td><textarea rows='5' cols='80' name='comment' class='span8'></textarea>
                             <input type='hidden' name='parent_id' value="{{comment.id}}" />
                             <div class='clearfix'>
-                                <input type='submit' class='button' value='save'/>
+                                <input type='submit' class='btnFormCommentSubmit button' value='save'/>
                             </div>
                         </fieldset>
                     </form>

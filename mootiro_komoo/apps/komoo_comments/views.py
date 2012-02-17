@@ -18,7 +18,17 @@ def comments_add(request):
     form_comment = FormComment(request.POST)
     if form_comment.is_valid():
         comment = form_comment.save()
-        return HttpResponseRedirect(reverse('comments_index'))
+        #return HttpResponseRedirect(reverse('comments_index'))
+        return {
+            'success' : True,
+            'comment': {
+                'id' : comment.id,
+                'comment' : comment.comment,
+                'pub_date' : comment.pub_date.strftime('%d/%m/%Y, %H:%M'),
+                'author' : 'User goes here!',
+                'sub_comments' : comment.sub_comments
+            }
+        }
     else:
         return {'success' : False, 'errors' : form_comment.errors}
 
@@ -29,7 +39,7 @@ def comments_load(request):
     if id_:
         comments = Comment.objects.filter(parent = id_).order_by('-pub_date')
         return {'success' : True, 'comments' : [
-                    {'id' : c.id, 'content' : c.comment, 'pub_date' : c.pub_date.strftime('%d/%m/%Y, %H:%M'),
+                    {'id' : c.id, 'comment' : c.comment, 'pub_date' : c.pub_date.strftime('%d/%m/%Y, %H:%M'),
                      'author' : 'Author goes here!', 'sub_comments' : c.sub_comments} for c in comments]}
     else:
         return {'success' : False }
