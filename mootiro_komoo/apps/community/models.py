@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
-from django.db import models
+#from django.db import models
+from django.contrib.gis.db import models
 from main.utils import slugify
 
 
@@ -9,13 +10,14 @@ class Community(models.Model):
     name = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.SlugField(max_length=256, editable=False, blank=False)
-
     population = models.IntegerField(null=True, blank=True)  # number of inhabitants
     description = models.TextField(null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
-    address = models.CharField(max_length=1024, null=True, blank=True)
+    # Geolocalization attributes
+    objects = models.GeoManager()
+    geometry = models.PolygonField(srid=4326)
 
     class Meta:
         verbose_name = "community"
