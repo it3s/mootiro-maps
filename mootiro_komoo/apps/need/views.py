@@ -44,7 +44,7 @@ def view(request, community_slug, need_slug):
 
 def tag_search(request):
     term = request.GET['term']
-    qset = TaggedItem.tags_for(NeedTargetAudienceTag).filter(name__istartswith=term)
+    qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
     tags = [ t.name for t in qset ]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
