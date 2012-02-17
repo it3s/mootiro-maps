@@ -203,14 +203,14 @@ komoo.Map.prototype = {
         var featureCollection;
 
         var polygonOptions = $.extend({
-                clickable: true,
-                editable: false,
-                zIndex: 1
-            }, komooMap.options.overlayOptions);
+            clickable: true,
+            editable: false,
+            zIndex: 1
+        }, komooMap.options.overlayOptions);
         var polylineOptions = $.extend({
-                clickable: true,
-                editable: false
-            }, komooMap.options.overlayOptions);
+            clickable: true,
+            editable: false
+        }, komooMap.options.overlayOptions);
         var markerOptions = {};
 
         if (!geoJSON.type) return; // geoJSON is invalid.
@@ -222,7 +222,7 @@ komoo.Map.prototype = {
         var w = null;
         var s = null;
         var e = null;
-        function getCenter(pos) {
+        function getBounds(pos) {
             if (n == null) {
                 n = s = pos[0];
                 w = e = pos[1];
@@ -231,9 +231,9 @@ komoo.Map.prototype = {
             s = pos[0] > s ? pos[0] : s;
             w = pos[1] < w ? pos[1] : w;
             e = pos[1] > e ? pos[1] : e;
-            return [(s + n)/2, (w + e)/2];
+            return [[s, w], [n, e]];
         }
-        var center;
+        var bounds;
         $.each(featureCollection, function (i, feature) {
             var geometry = feature.geometry;
             var overlay;
@@ -253,7 +253,7 @@ komoo.Map.prototype = {
                     $.each(coord, function (k, pos) {
                         var latLng = new google.maps.LatLng(pos[0], pos[1]);
                         path.push(latLng);
-                        center = getCenter(pos);
+                        bounds = getBounds(pos);
                     });
                     path.pop(); // Removes the last point that closes the loop
                     paths.push(path);
@@ -265,7 +265,7 @@ komoo.Map.prototype = {
                 $.each(geometry.coordinates, function (k, pos) {
                     var latLng = new google.maps.LatLng(pos[0], pos[1]);
                     path.push(latLng);
-                    center = getCenter(pos);
+                    bounds = getBounds(pos);
                 });
                 overlay.setPath(path);
             }  else if (geometry.type == 'Point') {
@@ -281,8 +281,11 @@ komoo.Map.prototype = {
                 komooMap.overlays.push(overlay);
             }
         });
-        if (panTo && center) {
-            komooMap.panTo(new google.maps.LatLng(center[0], center[1]));
+        if (panTo && bounds) {
+            komooMap.googleMap.fitBounds(new google.maps.LatLngBounds(
+                        new google.maps.LatLng(bounds[0][0], bounds[0][1]),
+                        new google.maps.LatLng(bounds[1][0], bounds[1][1])
+                    ));
         }
     },
 
@@ -447,6 +450,18 @@ komoo.Map.prototype = {
      */
     goTo: function (position) {
         var komooMap = this;
+        var latLng;
+        function _go (latLng) {
+            if (latLng) {
+                komooMap.googleMap.panTo(latLng);
+                if (! komooMap.searchMarker) {
+                    komooMap.searchMarker = new google.maps.Marker();
+                    komooMap.searchMarker.setMap(komooMap.googleMap);
+                }
+                komooMap.searchMarker.setPosition(latLng);
+            }
+            console.log(komooMap.searchMarker);
+        }
         if (typeof position == 'string') { // Got address
             var request = {
                 address: position,
@@ -455,18 +470,17 @@ komoo.Map.prototype = {
             this.geocoder.geocode(request, function (result, status_) {
                 if (status_ == google.maps.GeocoderStatus.OK) {
                     var first_result = result[0];
-                    var latLng = first_result.geometry.location;
-                    komooMap.googleMap.panTo(latLng);
+                    latLng = first_result.geometry.location;
+                    _go(latLng);
                 }
             });
         } else {
-            var latLng;
             if (position instanceof Array) {
                 latLng = new google.maps.LatLng(position[0], position[1]);
             } else {
                 latLng = position;
             }
-            komooMap.googleMap.panTo(latLng);
+            _go(latLng);
         }
     },
 
