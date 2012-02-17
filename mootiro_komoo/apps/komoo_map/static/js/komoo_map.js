@@ -19,19 +19,23 @@ komoo.OverlayTypes = [
         type: 'community',
         title: 'Comunidade',
         color: '#ff0',
-        icon: ''
+        icon: '',
+        formURL: '/community/new' // TODO: Dont use hardcoded urls
     },
     {
         type: 'need',
         title: 'Necessidade',
         color: '#f00',
-        icon: ''
+        icon: '',
+        formUrl: '',
+        disabled: true
     },
     {
         type: 'organization',
         title: 'Organização',
         color: '#00f',
         icon: '',
+        formUrl: '',
         disabled: true
     },
     {
@@ -39,6 +43,7 @@ komoo.OverlayTypes = [
         title: 'Recurso',
         color: '#fff',
         icon: '',
+        formUrl: '',
         disabled: true
     },
     {
@@ -46,6 +51,7 @@ komoo.OverlayTypes = [
         title: 'Financiamento',
         color: '#000',
         icon: '',
+        formUrl: '',
         disabled: true
     }
 ];
@@ -249,6 +255,7 @@ komoo.Map.prototype = {
                         path.push(latLng);
                         center = getCenter(pos);
                     });
+                    path.pop(); // Removes the last point that closes the loop
                     paths.push(path);
                 });
                 overlay.setPaths(paths);
@@ -307,6 +314,7 @@ komoo.Map.prototype = {
                     path.forEach(function (pos, j) {
                         subCoords.push([pos.lat(), pos.lng()]);
                     });
+                    subCoords.push(subCoords[0]);  // Copy the first point as the last one to close the loop
                     coords.push(subCoords);
                     feature.geometry.type = 'Polygon';
                 });
@@ -777,7 +785,6 @@ komoo.Map.prototype = {
             $('.map-menuitem.selected', komooMap.mainPanel).removeClass('selected');
             $('.frozen', komooMap.mainPanel).removeClass('frozen');
             komooMap.drawingManager.setDrawingMode(null);
-            komooMap.type = null;
             panel.hide();
         }
         cancelButton.bind('click', function () {
@@ -789,10 +796,13 @@ komoo.Map.prototype = {
                 overlay.setMap(null);
             }
             komooMap.event.trigger('cancel_click');
+            komooMap.type = null;
         });
         finishButton.bind('click', function () {
             button_click();
-            komooMap.event.trigger('finish_click');
+            console.log('finish_click', komooMap.overlayOptions[komooMap.type]);
+            komooMap.event.trigger('finish_click', komooMap.overlayOptions[komooMap.type]);
+            komooMap.type = null;
         });
 
         content.css({'clear': 'both'});
