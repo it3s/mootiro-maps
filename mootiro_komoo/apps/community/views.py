@@ -25,7 +25,8 @@ def edit(request, community_slug=""):
         form = CommunityForm(request.POST, instance=community)
         if form.is_valid():
             community = form.save()
-            return redirect(view, community.slug)
+            #return redirect(view, community.slug)
+            return {'redirect': reverse('view_community', args=(community.slug,))}
         else:
             return {'form': form, 'action': action}
     else:
