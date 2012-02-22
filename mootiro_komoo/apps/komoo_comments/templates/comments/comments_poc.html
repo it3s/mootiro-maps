@@ -22,41 +22,10 @@
 
 </div>
 
-<div class="comments-list">
-    {% for comment in comments %}
-        <div class="comment-container" commentID="{{ comment.id }}">
-            <div class="comment-header">
-                <a href="#">Usuario goes here!</a>  {{ comment.pub_date|date:'d/m/Y, H:i'}}
-                {% if comment.sub_comments > 0 %}
-                    ({{ comment.sub_comments }} respostas)
-                {% endif %}
-                <a href="#">Denunciar</a>
-            </div>
+{% autoescape off %}
+    {{ comments_list }}
+{% endautoescape %}
 
-            <div class="comment" >
-                {{ comment.comment}}
-            </div>
-            <div class="comment-footer">
-                <a class="btnShowForm" href="#">Responder</a>
-                {% if comment.sub_comments > 0 %}
-                    <a class="link_subcomments" href="" comment-id="{{ comment.id }}">{{ comment.sub_comments }} resposta(s)</a>
-                {% endif %}
-                <div class='comment-form'>
-                    <form method='post' class='stacked-form' action='/comments/add/' >
-                        <fieldset>
-                            {% csrf_token %}
-                            <label>Comment:</label></th><td><textarea rows='5' cols='80' name='comment' class='span8'></textarea>
-                            <input type='hidden' name='parent_id' value="{{comment.id}}" />
-                            <div class='clearfix'>
-                                <input type='submit' class='btnFormCommentSubmit button' value='save'/>
-                            </div>
-                        </fieldset>
-                    </form>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-</div>
 {% endblock %}
 
 {% block page_scripts %}

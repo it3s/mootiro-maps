@@ -2,8 +2,8 @@
 from __future__ import unicode_literals  # unicode by default
 import logging
 
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from annoying.decorators import render_to, ajax_request
 
@@ -12,13 +12,13 @@ from komoo_comments.models import Comment
 
 logger = logging.getLogger(__name__)
 
+
 @render_to('comments/comments_poc.html')
 def comments_index(request):
     logger.debug('accessing Comments > comments_index')
-    form_comment = FormComment()
-    comments = Comment.objects.filter(parent__isnull=True).order_by('-pub_date')
 
-    return {'form_comment' : FormComment(), 'comments' : comments}
+    return {'form_comment': FormComment(), 'comments_list': comments_list(context=RequestContext(request), **request.GET).content}
+
 
 @ajax_request
 def comments_add(request):
@@ -27,31 +27,33 @@ def comments_add(request):
     form_comment = FormComment(request.POST)
     if form_comment.is_valid():
         comment = form_comment.save()
-        #return HttpResponseRedirect(reverse('comments_index'))
         return {
-            'success' : True,
-            'comment': {
-                'id' : comment.id,
-                'comment' : comment.comment,
-                'pub_date' : comment.pub_date.strftime('%d/%m/%Y, %H:%M'),
-                'author' : 'User goes here!',
-                'sub_comments' : comment.sub_comments
-            }
+            'success': True,
+            'comment': render_to_response('comments/comment.html', dict(comment=comment), context_instance=RequestContext(request)).content
         }
     else:
         logger.debug('invalid form: {}'.format(form_comment.errors))
-        return {'success' : False, 'errors' : form_comment.errors}
+        return {'success': False, 'errors': form_comment.errors}
+
+
+def comments_list(parent_id=None, width=1, height=10, context=None, inner=False):
+    logger.debug('accessing Comments > comments_list')
+    width = int(width[0]) if isinstance(width, list) else int(width)
+    height = int(height[0]) if isinstance(height, list) else int(height)
+    parent_id = int(parent_id[0]) if parent_id and isinstance(parent_id, list) else parent_id
+
+    logger.debug('loading comment with parent={} , width={} , height={}'.format(parent_id, width, height))
+    if parent_id:
+        comments = Comment.objects.filter(parent=parent_id).order_by('-pub_date')[:height]
+    else:
+        comments = Comment.objects.filter(parent__isnull=True).order_by('-pub_date')[:height]
+    if width:
+        for comment in comments:
+            if comment.sub_comments > 0:
+                comment.sub_comments_list = comments_list(parent_id=comment.id, width=width - 1, context=context).content
+    return render_to_response('comments/comments_list.html', dict(parent_id=parent_id, comments=comments, inner=inner), context_instance=context)
+
 
 @ajax_request
 def comments_load(request):
-    logger.debug('accessing Comments > comments_load')
-    id_ = request.GET.get('id', None)
-    logger.debug('loading comment with parent "{}"'.format(id_))
-    if id_:
-        comments = Comment.objects.filter(parent = id_).order_by('-pub_date')
-        return {'success' : True, 'comments' : [
-                    {'id' : c.id, 'comment' : c.comment, 'pub_date' : c.pub_date.strftime('%d/%m/%Y, %H:%M'),
-                     'author' : 'Author goes here!', 'sub_comments' : c.sub_comments} for c in comments]}
-    else:
-        logger.debug('parent id not given')
-        return {'success' : False }
+    return dict(comments=comments_list(context=RequestContext(request), inner=True, **request.GET).content)

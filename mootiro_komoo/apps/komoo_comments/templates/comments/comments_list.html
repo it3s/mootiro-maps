@@ -1,0 +1,13 @@
+{% if inner %}
+    <div class="comments-list inner-list">
+        {% for comment in comments %}
+            {% include 'comments/comment.html' %}
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="comments-list">
+        {% for comment in comments %}
+            {% include 'comments/comment.html' %}
+        {% endfor %}
+    </div>
+{% endif %}
