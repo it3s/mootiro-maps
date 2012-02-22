@@ -36,7 +36,7 @@ def comments_add(request):
         return {'success': False, 'errors': form_comment.errors}
 
 
-def comments_list(parent_id=None, width=1, height=10, context=None, inner=False):
+def comments_list(parent_id=None, width=0, height=10, context=None, inner=False):
     logger.debug('accessing Comments > comments_list')
     width = int(width[0]) if isinstance(width, list) else int(width)
     height = int(height[0]) if isinstance(height, list) else int(height)
