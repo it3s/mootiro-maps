@@ -31,7 +31,7 @@ class NeedForm(forms.ModelForm):
 
     categories = forms.ModelMultipleChoiceField(
         queryset=NeedCategory.objects.all(),
-        widget=forms.CheckboxSelectMultiple
+        widget=ImageSwitchMultiple
     )
 
     tags = TagsField(widget=Tagsinput(autocomplete_url="/need/tag_search"))
@@ -39,7 +39,7 @@ class NeedForm(forms.ModelForm):
     def __init__(self, *a, **kw):
         self.helper = MooHelper()
         super(NeedForm, self).__init__(*a, **kw)
-        if 'instance' in kw and kw['instance']:  # self.is_bound does not work properly
+        if 'instance' in kw and kw['instance']:  # self.is_bound does not work properly with ModelForm
             self.fields.pop('community_name')
 
     def clean_community(self):
