@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 def comments_index(request):
     logger.debug('accessing Comments > comments_index')
 
-    return {'form_comment': FormComment(), 'comments_list': comments_list(context=RequestContext(request), **request.GET).content}
+    return {'form_comment': FormComment(), 'comments_list': comments_list(context=RequestContext(request), root=True, **request.GET).content}
 
 
 @ajax_request
@@ -29,14 +29,14 @@ def comments_add(request):
         comment = form_comment.save()
         return {
             'success': True,
-            'comment': render_to_response('comments/comment.html', dict(comment=comment), context_instance=RequestContext(request)).content
+            'comment': render_to_response('comments/comment.html', dict(comment=comment, comment_class=''), context_instance=RequestContext(request)).content
         }
     else:
         logger.debug('invalid form: {}'.format(form_comment.errors))
         return {'success': False, 'errors': form_comment.errors}
 
 
-def comments_list(parent_id=None, width=0, height=10, context=None, inner=False):
+def comments_list(parent_id=None, width=0, height=10, context=None, inner=False, comment_class='', root=False):
     logger.debug('accessing Comments > comments_list')
     width = int(width[0]) if isinstance(width, list) else int(width)
     height = int(height[0]) if isinstance(height, list) else int(height)
@@ -50,8 +50,12 @@ def comments_list(parent_id=None, width=0, height=10, context=None, inner=False)
     if width:
         for comment in comments:
             if comment.sub_comments > 0:
-                comment.sub_comments_list = comments_list(parent_id=comment.id, width=width - 1, context=context).content
-    return render_to_response('comments/comments_list.html', dict(parent_id=parent_id, comments=comments, inner=inner), context_instance=context)
+                comment.sub_comments_list = comments_list(parent_id=comment.id, width=width - 1, comment_class='' if comment_class else 'odd', context=context).content
+    if not root:
+        comment_class += ' inner-comment'
+    return render_to_response('comments/comments_list.html',
+            dict(parent_id=parent_id, comments=comments, comment_class=comment_class, inner=inner),
+            context_instance=context)
 
 
 @ajax_request
