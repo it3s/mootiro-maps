@@ -118,6 +118,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'tinymce',
     'lib.taggit',
+    'crispy_forms',
     'komoo_map',
     'community',
     'main',

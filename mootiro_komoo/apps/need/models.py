@@ -34,8 +34,8 @@ class Need(models.Model):
     categories = models.ManyToManyField(NeedCategory)
 
     tags = TaggableManager(related_name='need_tags')
-    target_audience = TaggableManager(verbose_name="Target audience",
-        related_name="target_audience", through=NeedTargetAudienceTag)
+    #target_audience = TaggableManager(verbose_name="Target audience",
+    #    related_name="target_audience", through=NeedTargetAudienceTag)
 
     ### Needed to slugify items ###
     def slug_exists(self, slug):
