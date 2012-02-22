@@ -3,7 +3,7 @@
     "model": "need.needcategory",
     "pk": 1,
     "fields": {
-      "name": "Environment"
+      "name": "Education"
     }
   },
   {
@@ -17,7 +17,35 @@
     "model": "need.needcategory",
     "pk": 3,
     "fields": {
-      "name": "Education"
+      "name": "Environment"
+    }
+  },
+  {
+    "model": "need.needcategory",
+    "pk": 4,
+    "fields": {
+      "name": "Health"
+    }
+  },
+  {
+    "model": "need.needcategory",
+    "pk": 5,
+    "fields": {
+      "name": "Housing"
+    }
+  },
+  {
+    "model": "need.needcategory",
+    "pk": 6,
+    "fields": {
+      "name": "Local Economy"
+    }
+  },
+  {
+    "model": "need.needcategory",
+    "pk": 7,
+    "fields": {
+      "name": "Social Service"
     }
   }
 ]
