@@ -85,7 +85,6 @@ class Tagsinput(forms.TextInput):
         css = {'all': ('lib/tagsinput/jquery.tagsinput.css',)}
         js = ('lib/tagsinput/jquery.tagsinput.min.js',)
 
-        
     def __init__(self, autocomplete_url="", options={}, attrs={}):
         self.autocomplete_url = autocomplete_url
         self.options = options
@@ -130,8 +129,8 @@ class ImageSwitch(forms.CheckboxInput):
     class Media:
         js = ('lib/jquery.imagetick.min.js',)
 
-    def __init__(self, image_tick, image_no_tick, attrs=None):
-        super(ImageSwitch, self).__init__(attrs)
+    def __init__(self, image_tick, image_no_tick, attrs=None, *a, **kw):
+        super(ImageSwitch, self).__init__(attrs, *a, **kw)
         self.image_tick = get_config("STATIC_URL", "") + image_tick
         self.image_no_tick = get_config("STATIC_URL", "") + image_no_tick
 
@@ -171,9 +170,9 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
     class Media:
         js = ('lib/jquery.imagetick.min.js',)
 
-
     def render(self, name, value, attrs=None, choices=()):
-        if value is None: value = []
+        if value is None:
+            value = []
         has_id = attrs and 'id' in attrs
         final_attrs = self.build_attrs(attrs, name=name)
         output = [u'<ul>']
@@ -184,17 +183,14 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
             # so that the checkboxes don't all have the same ID attribute.
             if has_id:
                 final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], i))
-                label_for = u' for="%s"' % final_attrs['id']
-            else:
-                label_for = ''
 
             image_tick = "%s-tick.png" % slugify(option_label)
             image_no_tick = "%s-no-tick.png" % slugify(option_label)
-            cb = ImageSwitch(image_tick, image_no_tick, attrs=final_attrs)
+            cb = ImageSwitch(image_tick, image_no_tick, attrs=final_attrs,
+                    check_test=lambda value: value in str_values)
             option_value = force_unicode(option_value)
             rendered_cb = cb.render(name, option_value)
             option_label = conditional_escape(force_unicode(option_label))
-            #output.append(u'<li>%s <label%s>%s</label></li>' % (rendered_cb, label_for, option_label))
             output.append(u'<li title="%s">%s</li>' % (option_label, rendered_cb))
         output.append(u'</ul>')
         return mark_safe(u'\n'.join(output))
