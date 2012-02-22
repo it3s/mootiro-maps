@@ -15,31 +15,19 @@ from annoying.functions import get_config
 
 
 class JQueryAutoComplete(forms.TextInput):
-    def __init__(self, source, value_field=None, options={}, attrs={}):
-        """source can be a list containing the autocomplete values or a
-        string containing the url used for the XHR request.
-
-        For available options see the autocomplete sample page::
-        http://jquery.bassistance.de/autocomplete/"""
-
-        self.value_field = value_field
-        self.options = options
-        self.attrs = {'autocomplete': 'off'}
-        self.source = source
-
-        self.attrs.update(attrs)
+    """Widget that uses a JQuery autocomplete façade to fill a hidden field.
+    Usually to be used on ForeignKey fields.
+        label_id: html id of the visible autocomplete field;
+        value_id: html id of the hidden field that contains data to be persisted;
+    """
+    def __init__(self, source_url, *a, **kw):
+        self.source_url = source_url
+        super(JQueryAutoComplete, self).__init__(*a, **kw)
 
     def render_js(self, label_id, value_id):
-        if isinstance(self.source, list):
-            source = JSONEncoder().encode(self.source)
-        elif isinstance(self.source, basestring):
-            source = "%s" % escape(self.source)
-        else:
-            raise ValueError('source type is not valid')
-
         js = u"""
         $("#%(label_id)s").autocomplete({
-            source: "%(source)s",
+            source: "%(source_url)s",
             focus: function(event, ui) {
                 $("#%(label_id)s").val(ui.item.label);
                 return false;
@@ -51,29 +39,39 @@ class JQueryAutoComplete(forms.TextInput):
             }
         });
         """ % {
-            'source': source,
+            'source_url': self.source_url,
             'label_id': label_id,
             'value_id': value_id
         }
-
         return js
 
     def render(self, name, value=None, attrs=None):
-        final_attrs = self.build_attrs(attrs, name=name)
+        value_id = 'id_%s' % name  # id_fieldname
+        label_id = '%s_autocomplete' % value_id  # id_fieldname_autocomplete
+
+        value_attrs = dict(id=value_id, name=name, value=value)
+
+        # attrs is consumed by the label field (autocomplete)
+        label_attrs = self.build_attrs(attrs, name=name)
         if value:
-            final_attrs['value'] = escape(unicode(value))
-
+            # TODO: get label for initial bounded value. How?
+            label_attrs['value'] = escape(unicode(value))
         if not 'id' in self.attrs:
-            final_attrs['id'] = 'id_%s' % name
+            label_attrs['id'] = label_id
 
-        return u'''<input type="text" %(attrs)s/>
+        html = u'''
+        <input type="hidden" %(value_attrs)s />
+        <input type="text" %(label_attrs)s />
         <script type="text/javascript"><!--//
-        %(js)s//--></script>
+          %(js)s
+        //--></script>
         ''' % {
-            'name': name,
-            'attrs': flatatt(final_attrs),
-            'js': self.render_js(final_attrs['id'], "id_%s" % self.value_field),
+            'rendered_value_field': super(JQueryAutoComplete, self).render(name, value),
+            'value_attrs': flatatt(value_attrs),
+            'label_attrs': flatatt(label_attrs),
+            'js': self.render_js(label_id, value_id),
         }
+        return html
 
 
 class Tagsinput(forms.TextInput):
@@ -120,7 +118,6 @@ class Tagsinput(forms.TextInput):
             'attrs': flatatt(final_attrs),
             'js': self.render_js(final_attrs['id'])
         }
-
         return html
 
 

@@ -14,11 +14,14 @@ class NeedCategory(models.Model):
     name = models.CharField(max_length=64, blank=False)
 
     def __unicode__(self):
-        return self.name 
+        return self.name
 
 
-class NeedTargetAudienceTag(TaggedItemBase):
-    content_object = models.ForeignKey('Need')
+class TargetAudience(models.Model):
+    name = models.CharField(max_length=64, blank=False)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Need(models.Model):
@@ -32,6 +35,7 @@ class Need(models.Model):
     # Relationships
     community = models.ForeignKey(Community, related_name="needs")
     categories = models.ManyToManyField(NeedCategory)
+    #target_audience = models.ManyToManyField(TargetAudience)
 
     tags = TaggableManager(related_name='need_tags')
     #target_audience = TaggableManager(verbose_name="Target audience",
@@ -45,6 +49,7 @@ class Need(models.Model):
         return Need.objects.filter(community=self.community, slug=slug).exists()
 
     def save(self, *args, **kwargs):
+        # FIXME: always changing the name
         old_title = Need.objects.get(id=self.id) if self.id else None
         if not self.id or old_title != self.title:
             self.slug = slugify(self.title, self.slug_exists)
