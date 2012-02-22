@@ -12,6 +12,13 @@ from need.models import Need, NeedCategory
 from community.models import Community
 
 
+class MooHelper(FormHelper):
+    def __init__(self, *a, **kw):
+        super(MooHelper, self).__init__(*a, **kw)
+        self.add_input(Submit('submit', 'Submit'))
+        self.add_input(Reset('reset', 'Reset'))
+
+
 class NeedForm(forms.ModelForm):
     class Meta:
         model = Need
