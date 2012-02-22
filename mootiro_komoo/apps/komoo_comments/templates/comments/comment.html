@@ -27,10 +27,10 @@
                 </fieldset>
             </form>
         </div>
-        {% if comment.sub_comments > 0 %}
-            {% autoescape off %}
-                {{ comment.sub_comments_list }}
-            {% endautoescape %}
-        {% endif %}
     </div>
+    {% if comment.sub_comments > 0 %}
+        {% autoescape off %}
+            {{ comment.sub_comments_list }}
+        {% endautoescape %}
+    {% endif %}
 </div>
