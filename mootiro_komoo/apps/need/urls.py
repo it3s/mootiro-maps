@@ -11,4 +11,5 @@ urlpatterns = patterns('need.views',
     url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/edit$'), 'edit', name='edit_need'),
     url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG$'), 'view', name='view_need'),
     url(r'^need/tag_search$', 'tag_search', name='need_tag_search'),
+    url(r'^need/target_audience_search$', 'target_audience_search', name='target_audience_search'),
 )

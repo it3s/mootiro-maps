@@ -8,7 +8,7 @@ from crispy_forms.layout import Submit, Reset
 
 from main.fields import TagsField
 from main.widgets import JQueryAutoComplete, Tagsinput, ImageSwitchMultiple
-from need.models import Need, NeedCategory
+from need.models import Need, NeedCategory, TargetAudience
 from community.models import Community
 
 
@@ -34,7 +34,14 @@ class NeedForm(forms.ModelForm):
         widget=ImageSwitchMultiple
     )
 
-    tags = TagsField(widget=Tagsinput(autocomplete_url="/need/tag_search"))
+    target_audience = forms.ModelMultipleChoiceField(
+        queryset=TargetAudience.objects.all(),
+        widget=Tagsinput(autocomplete_url="/need/target_audience_search")
+    )
+
+    tags = TagsField(
+        widget=Tagsinput(autocomplete_url="/need/tag_search")
+    )
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper()

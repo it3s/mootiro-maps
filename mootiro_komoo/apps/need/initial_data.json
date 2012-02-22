@@ -47,5 +47,26 @@
     "fields": {
       "name": "Social Service"
     }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 1,
+    "fields": {
+      "name": "crianças"
+    }
+    },
+  {
+    "model": "need.targetaudience",
+    "pk": 2,
+    "fields": {
+      "name": "adolescentes"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 3,
+    "fields": {
+      "name": "mulheres"
+    }
   }
 ]

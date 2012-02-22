@@ -3,14 +3,16 @@
 from __future__ import unicode_literals  # unicode by default
 import logging
 
+from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.utils import simplejson
 
 from annoying.decorators import render_to, ajax_request
 from taggit.models import TaggedItem
 
 from community.models import Community
-from need.models import Need
+from need.models import Need, TargetAudience
 from need.forms import NeedForm
 
 logger = logging.getLogger(__name__)
@@ -47,10 +49,21 @@ def view(request, community_slug, need_slug):
     return {'need': need}
 
 
-@ajax_request
+# DOES NOT SIMPLY WORK WITH @ajax_request, please test before commit!
 def tag_search(request):
-    logger('acessing nedd > tag_search')
+    logger.debug('acessing need > tag_search')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
     tags = [t.name for t in qset]
-    return tags
+    return HttpResponse(simplejson.dumps(tags),
+                mimetype="application/x-javascript")
+
+
+# DOES NOT SIMPLY WORK WITH @ajax_request, please test before commit!
+def target_audience_search(request):
+    logger.debug('acessing need > target_audience_search')
+    term = request.GET['term']
+    qset = TargetAudience.objects.filter(name__istartswith=term)
+    target_audiences = [ta.name for ta in qset]
+    return HttpResponse(simplejson.dumps(target_audiences),
+                mimetype="application/x-javascript")
