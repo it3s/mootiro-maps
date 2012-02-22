@@ -50,7 +50,9 @@ def comments_list(parent_id=None, width=0, height=10, context=None, inner=False,
     if width:
         for comment in comments:
             if comment.sub_comments > 0:
-                comment.sub_comments_list = comments_list(parent_id=comment.id, width=width - 1, comment_class='' if comment_class else 'odd', context=context).content
+                comment.sub_comments_list = comments_list(parent_id=comment.id, width=width - 1,
+                    comment_class='inner-comment' if 'odd' in comment_class else 'inner-comment odd',
+                    context=context).content
     if not root:
         comment_class += ' inner-comment'
     return render_to_response('comments/comments_list.html',
