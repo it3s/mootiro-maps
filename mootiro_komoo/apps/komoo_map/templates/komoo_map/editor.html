@@ -42,6 +42,7 @@
                     $('#{{input_id}}').val(geojson);
                 });
             }
+            // Load the form when user click 'finish' button
             map.event.bind('finish_click', function (e, overlayType) {
                 console.log(overlayType);
                 $('#map-canvas-{{ map.pk }}').slideUp();
@@ -82,6 +83,12 @@
                 } else {
                     alert('Algo não deu certo!');
                 }
+            });
+
+            // Connect the search input box
+            $('#search-button').bind('click', function () {
+                var query = $('#search-bar').val();
+                map.goTo(query);
             });
             {% endblock %}
         }

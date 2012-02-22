@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+import logging
+
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
-from annoying.decorators import render_to
+from annoying.decorators import render_to, ajax_request
 from taggit.models import TaggedItem
 from annoying.decorators import render_to, ajax_request
 
@@ -14,9 +16,11 @@ from community.models import Community
 from need.models import Need, NeedTargetAudienceTag
 from need.forms import NeedForm
 
+logger = logging.getLogger(__name__)
 
 @render_to('need/edit.html')
 def edit(request, community_slug="", need_slug=""):
+    logger.debug('acessing need > edit')
     # always receives both slugs or none of them
     if need_slug:
         community = get_object_or_404(Community, slug=community_slug)
@@ -38,13 +42,15 @@ def edit(request, community_slug="", need_slug=""):
 
 @render_to('need/view.html')
 def view(request, community_slug, need_slug):
+    logger.debug('acessing need > view')
     community = get_object_or_404(Community, slug=community_slug)
     need = get_object_or_404(Need, slug=need_slug, community=community)
     return {'need': need}
 
+@ajax_request
 def tag_search(request):
+    logger('acessing nedd > tag_search')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
     tags = [ t.name for t in qset ]
-    return HttpResponse(simplejson.dumps(tags),
-                mimetype="application/x-javascript")
+    return tags

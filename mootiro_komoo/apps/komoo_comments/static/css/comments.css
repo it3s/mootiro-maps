@@ -23,9 +23,6 @@
 .comment{
     margin: 0 15px;
 }
-#formComment{
-    display: none;
-}
 a.btnShowForm{
     font-weight: bolder;
     font-size: 1.2em;
@@ -41,4 +38,7 @@ a.btnShowForm{
 }
 .odd{
     background-color: rgb(235, 249, 255);
+}
+.comments-list .inner-list{
+    display: none;
 }

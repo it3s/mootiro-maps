@@ -149,6 +149,12 @@ TINYMCE_DEFAULT_CONFIG = dict(
     theme_advanced_buttons3='',
 )
 
+
+# PROFILE_DATABASE = 'localhost|profile|username|password'
+
+#CAS config
+CAS_SERVER_URL = 'https://localhost:8443/cas/'
+
 # # A sample logging configuration. The only tangible logging
 # # performed by this configuration is to send an email to
 # # the site admins on every HTTP 500 error.

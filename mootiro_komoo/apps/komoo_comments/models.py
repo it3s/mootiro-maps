@@ -11,7 +11,6 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
-        # TODO   sub comments counting here
         if self.parent:
             parent = self.parent
             parent.sub_comments += 1
