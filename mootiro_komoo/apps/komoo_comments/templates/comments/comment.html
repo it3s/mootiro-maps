@@ -12,9 +12,9 @@
     </div>
     <div class="comment-footer">
         <a class="btnShowForm" href="#">Responder</a>
-        {% if comment.sub_comments > 0 %}
+        {#% if comment.sub_comments > 0 %#}
             <a class="link_subcomments" href="" comment-id="{{ comment.id }}">{{ comment.sub_comments }} resposta(s)</a>
-        {% endif %}
+        {#% endif %#}
         <div class='comment-form'>
             <form method='post' class='stacked-form' action='/comments/add/' >
                 <fieldset>

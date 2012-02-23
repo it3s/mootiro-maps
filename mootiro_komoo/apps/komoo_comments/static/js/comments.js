@@ -68,7 +68,11 @@
                 }
             }
             $.get('/comments/load', {parent_id:link.attr('comment-id')}, function(data){
-                div_comment_container.append(data.comments).find('.comments-list').slideToggle('fast');
+                div_comment_container.append(data.comments);
+                if (!div_comment_container.hasClass('odd')){
+                    div_comment_container.find('.comment-container').addClass('odd');
+                }
+                div_comment_container.find('.comments-list').slideToggle('fast');
             });
         };
 
