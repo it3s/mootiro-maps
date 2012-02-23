@@ -89,8 +89,9 @@ class Tagsinput(forms.TextInput):
         self.attrs = attrs
 
     def value_from_datadict(self, data, files, name):
-        s = data.get(name, None)  # comma separated string
-        return s.split(',')
+        s = data.get(name, '')  # comma separated string
+        l = s.split(',') if s else None
+        return l
 
     def render_js(self, elem_id):
         if self.autocomplete_url:
