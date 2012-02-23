@@ -4,7 +4,6 @@ from __future__ import unicode_literals  # unicode by default
 from django.db import models
 
 from lib.taggit.managers import TaggableManager
-from lib.taggit.models import TaggedItemBase
 
 from community.models import Community
 from main.utils import slugify
@@ -35,7 +34,7 @@ class Need(models.Model):
     # Relationships
     community = models.ForeignKey(Community, related_name="needs")
     categories = models.ManyToManyField(NeedCategory)
-    target_audiences = models.ManyToManyField(TargetAudience, blank=True)
+    target_audiences = models.ManyToManyField(TargetAudience, blank=False)
 
     tags = TaggableManager()
     #target_audience = TaggableManager(verbose_name="Target audience",
