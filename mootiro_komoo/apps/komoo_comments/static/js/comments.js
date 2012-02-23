@@ -41,10 +41,14 @@
                 $.post(form.attr('action'), form.serialize(), function(data){
                     var div_comments_container, div_comments_list;
                     if (data.success){
-                        for(; !tmp.is('.comment-container'); tmp=tmp.parent());
-                        div_comments_container = tmp;
-                        div_comments_list = div_comments_container.find('.comments-list');
-                        div_comments_list.prepend(data.comment);
+                        if (form.parent().parent().is('#divFormComment')){
+                            $('.comments-list:first').prepend(data.comment);
+                        }else {
+                            for(; !tmp.is('.comment-container'); tmp=tmp.parent());
+                            div_comments_container = tmp;
+                            div_comments_list = div_comments_container.find('.comments-list');
+                            div_comments_list.prepend(data.comment);
+                        }
 
                         form.parent().slideToggle('fast');
                         form.clearForm();

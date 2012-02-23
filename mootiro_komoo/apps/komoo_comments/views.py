@@ -56,9 +56,8 @@ def comments_list(parent_id=None, page=0, width=0, height=10, context=None, comm
     page = int(page[0]) if isinstance(page, list) else int(page)
 
     logger.debug('loading comment with parent={} , page={} , width={} , height={}'.format(parent_id, page, width, height))
-    start = page * height
-    end = (page + 1) * height
-    print 'start', start, 'end', end
+    start, end = page * height, (page + 1) * height
+
     if parent_id:
         comments = Comment.objects.filter(parent=parent_id).order_by('-pub_date')[start:end]
     else:
