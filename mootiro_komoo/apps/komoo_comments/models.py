@@ -28,3 +28,8 @@ class Comment(models.Model):
             parent.sub_comments += 1
             parent.save()
         return super(Comment, self).save(*args, **kwargs)
+
+    @classmethod
+    def get_comments_for(klass, obj):
+        obj_content_type = ContentType.objects.get_for_model(obj)
+        return Comment.objects.filter(content_type=obj_content_type, object_id=obj.id)
