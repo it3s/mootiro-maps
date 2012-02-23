@@ -47,6 +47,19 @@ table { border-collapse: collapse }
     font-size: 30px;
     padding: 0 10px;
 }
+#tabs { margin-top: 10px; }
+#tabs .tab {
+    display: inline;
+    background: #dceff4;
+    padding: 4px 15px;
+    font-weight: bold;
+    border-radius        : 6px 6px 0 0;
+    -moz-border-radius   : 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+}
+#tabs .tab.placeholder {
+    background: none;
+}
 #top {
     padding: 15px 0;
     background: #dceff4;
@@ -164,7 +177,8 @@ table { border-collapse: collapse }
     color: #aaa;
     background: #dceff4 !important;
 }
-#top #menu, #top #search { margin-left: 60px }
+#tabs, #top #menu, #top #search { margin-left: 60px; }
+#top #search { margin-bottom: 0px; }
 
 #search-bar {
     width: 450px;

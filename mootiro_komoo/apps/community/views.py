@@ -56,7 +56,7 @@ def view(request, community_slug):
         ]
     })
     mapform = CommunityMapForm({'map': geojson})
-    return {'community': community, 'form': mapform}
+    return {'community': community, 'form': mapform, 'current_item': 'map'}
 
 @render_to('community/community_map.html')
 def map(request):
