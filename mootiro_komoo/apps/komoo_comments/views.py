@@ -36,17 +36,33 @@ def comments_add(request):
         return {'success': False, 'errors': form_comment.errors}
 
 
-def comments_list(parent_id=None, width=0, height=10, context=None, inner=False, comment_class='', root=False):
+def comments_list(parent_id=None, page=0, width=0, height=10, context=None, comment_class='', wrap=True, root=False):
+    """
+    builds a list o comments recursivelly and returns its rendered template
+    params:
+        parent_id : id of the parent for subcomments (default: None -> retrieves root comments)
+        page : page number
+        width: depth of subcomments to be loaded
+        height: number of 'root' (in this sub-tree) comments to be loaded
+        context: a RequestContext object, needed for csrf purposes
+        comment_class: used for controlling the css classes (depth striped) on comment-container
+        root : flag to identify if its a root comment
+    """
     logger.debug('accessing Comments > comments_list')
     width = int(width[0]) if isinstance(width, list) else int(width)
     height = int(height[0]) if isinstance(height, list) else int(height)
     parent_id = int(parent_id[0]) if parent_id and isinstance(parent_id, list) else parent_id
+    wrap = int(wrap[0]) if wrap and isinstance(wrap, list) else wrap
+    page = int(page[0]) if isinstance(page, list) else int(page)
 
-    logger.debug('loading comment with parent={} , width={} , height={}'.format(parent_id, width, height))
+    logger.debug('loading comment with parent={} , page={} , width={} , height={}'.format(parent_id, page, width, height))
+    start = page * height
+    end = (page + 1) * height
+    print 'start', start, 'end', end
     if parent_id:
-        comments = Comment.objects.filter(parent=parent_id).order_by('-pub_date')[:height]
+        comments = Comment.objects.filter(parent=parent_id).order_by('-pub_date')[start:end]
     else:
-        comments = Comment.objects.filter(parent__isnull=True).order_by('-pub_date')[:height]
+        comments = Comment.objects.filter(parent__isnull=True).order_by('-pub_date')[start:end]
     if width:
         for comment in comments:
             if comment.sub_comments > 0:
@@ -56,10 +72,10 @@ def comments_list(parent_id=None, width=0, height=10, context=None, inner=False,
     if not root:
         comment_class += ' inner-comment'
     return render_to_response('comments/comments_list.html',
-            dict(parent_id=parent_id, comments=comments, comment_class=comment_class, inner=inner),
+            dict(parent_id=parent_id, comments=comments, comment_class=comment_class, wrap=wrap),
             context_instance=context)
 
 
 @ajax_request
 def comments_load(request):
-    return dict(comments=comments_list(context=RequestContext(request), inner=True, **request.GET).content)
+    return dict(comments=comments_list(context=RequestContext(request), **request.GET).content)

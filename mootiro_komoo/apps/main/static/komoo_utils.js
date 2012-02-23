@@ -14,7 +14,7 @@ function storageRemove(key){
 /* function for getting xsrf cookies */
 function getCookie(name) {
     var cookieValue = null;
-    if (document.cookie && document.cookie != '') {
+    if (document.cookie && document.cookie !== '') {
         var cookies = document.cookie.split(';');
         for (var i = 0; i < cookies.length; i++) {
             var cookie = jQuery.trim(cookies[i]);
@@ -89,16 +89,16 @@ function getUrlVars(){
 
         /*  callback configs  */
         if (config && config.onSubmit){
-            $form.onSubmit = config.onSubmit
+            $form.onSubmit = config.onSubmit;
         }
         if (config && config.onSuccess){
-            $form.onSuccess = config.onSuccess
+            $form.onSuccess = config.onSuccess;
         }
         if (config && config.onError){
-            $form.onError = config.onError
+            $form.onError = config.onError;
         }
         if (config && config.onFocus){
-            $form.onFocus = config.onFocus
+            $form.onFocus = config.onFocus;
         }
 
         $form.submit( function(evt){
@@ -111,10 +111,11 @@ function getUrlVars(){
                 $form.serialize(),        /* dados */
                 function(data){           /* callback */
                     if (data){
+                        var validation_div;
                         /* em caso de sucesso limpa forma e chama callback */
                         if (data.success === "true"){
                             $form.clearForm();
-                            var validation_div = $('#validation-error');
+                            validation_div = $('#validation-error');
                             if(validation_div.length){
                                 validation_div.remove();
                             }
@@ -132,7 +133,7 @@ function getUrlVars(){
                                 }
                             });
                             message += '<br/>';
-                            var validation_div = $('#validation-error');
+                            validation_div = $('#validation-error');
                             if (validation_div.length){
                                 validation_div.remove();
                             }
