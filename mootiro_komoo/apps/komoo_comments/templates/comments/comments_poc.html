@@ -1,20 +1,15 @@
 {% extends "global.html" %}
 
-{% block title %}Comment{% endblock %}
+{% load comment_tags %}
 
-{% block content %}
-
-    {% load comment_tags %}
-
-    {% comments comments_list %}
-
+{% block title %}
+    Comment
 {% endblock %}
 
-{% block page_scripts %}
-    <script type="text/javascript" src="{{STATIC_URL}}komoo_utils.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/comments.js"></script>
+{% block content %}
+    {% comments comments_list %}
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/comments.css" />
+    {% comments_staticfiles %}
 {% endblock %}
