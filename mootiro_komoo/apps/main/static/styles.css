@@ -76,31 +76,51 @@ table { border-collapse: collapse }
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #CECECE), color-stop(1, #EDEDED)) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CECECE, endColorstr=#EDEDED)";
 }
+.button, .map-panel .content .map-button,
 #top #menu li:hover, #top #menu li.selected,
 .map-menuitem:hover, .map-menuitem.selected,
 .map-tab:hover, .map-tab.selected,
 .map-button:hover, .map-button.selected {
     color: #fff;
-    background: #3EBAC2 !important;
+    background-color: #3EBAC2;
+    /* Generated from: http://gradients.glrzad.com/ */
+    background-image: linear-gradient(bottom, #4092A9 0%, #3EBAC2 100%) !important;
+    background-image: -o-linear-gradient(bottom, #4092A9 0%, #3EBAC2 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #4092A9 0%, #3EBAC2 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #4092A9 0%, #3EBAC2 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #4092A9 0%, #3EBAC2 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4092A9), color-stop(1, #3EBAC2)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4092A9, endColorstr=#3EBAC2)";
 }
+#komoo-map-add-button,
 #top #menu li:first-child,
 .map-tab:first-child {
     border-radius        : 6px 0 0 6px;
     -moz-border-radius   : 6px 0 0 6px;
     -webkit-border-radius: 6px 0 0 6px;
 }
+#komoo-map-cut-out-button,
 #top #menu li:last-child,
 .map-tab:last-child {
     border-radius        : 0 6px 6px 0;
     -moz-border-radius   : 0 6px 6px 0;
     -webkit-border-radius: 0 6px 6px 0;
 }
+#komoo-map-delete-button {
+    margin: 0 5px;
+}
 .map-button {
+    cursor: pointer;
     float: left;
     padding: 5px;
     margin: 10px 5px;
 }
+.map-panel .content .map-button,
+.map-button:hover, .map-button.selected {
+    border: 1px solid #4092a9 !important;
+}
 .map-tab {
+    cursor: pointer;
     text-align: center;
     padding: 5px 0px;
     float: left;
@@ -126,6 +146,9 @@ table { border-collapse: collapse }
 }
 .map-panel .map-panel-title {
     margin: 10px;
+}
+.map-panel .content .map-button.active {
+    background: #2E6167 !important;
 }
 .map-menuitem,
 .map-menuitem.frozen:hover {
