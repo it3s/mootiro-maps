@@ -88,6 +88,10 @@ class Tagsinput(forms.TextInput):
         self.options = options
         self.attrs = attrs
 
+    def value_from_datadict(self, data, files, name):
+        s = data.get(name, None)  # comma separated string
+        return s.split(',')
+
     def render_js(self, elem_id):
         if self.autocomplete_url:
             options_str = "{autocomplete_url: '%s'}" % self.autocomplete_url

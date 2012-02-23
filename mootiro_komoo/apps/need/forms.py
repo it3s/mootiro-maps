@@ -6,7 +6,6 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Reset
 
-from main.fields import TagsField
 from main.widgets import JQueryAutoComplete, Tagsinput, ImageSwitchMultiple
 from need.models import Need, NeedCategory, TargetAudience
 from community.models import Community
@@ -39,14 +38,15 @@ class NeedForm(forms.ModelForm):
         widget=Tagsinput(autocomplete_url="/need/target_audience_search")
     )
 
-    tags = TagsField(
+    tags = forms.CharField(
         widget=Tagsinput(autocomplete_url="/need/tag_search")
     )
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper()
         super(NeedForm, self).__init__(*a, **kw)
-        if 'instance' in kw and kw['instance']:  # self.is_bound does not work properly with ModelForm
+        # self.is_bound does not work properly with ModelForm
+        if 'instance' in kw and kw['instance']:
             self.fields.pop('community')
 
     def clean_community(self):
