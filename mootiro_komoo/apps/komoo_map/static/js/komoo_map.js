@@ -14,12 +14,13 @@ var komoo = {};
 /**
  * Array of Types to populate the 'Add' tab of main panel.
  */
-komoo.OverlayTypes = [
+komoo.RegionTypes = [
     {
         type: 'community',
         title: 'Comunidade',
         color: '#ff0',
         icon: '',
+        overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formURL: '/community/new' // TODO: Dont use hardcoded urls
     },
     {
@@ -27,14 +28,18 @@ komoo.OverlayTypes = [
         title: 'Necessidade',
         color: '#f00',
         icon: '',
+        overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
+                       google.maps.drawing.OverlayType.POLYLINE,
+                       google.maps.drawing.OverlayType.MARKER],
         formUrl: '',
-        disabled: true
+        //disabled: true
     },
     {
         type: 'organization',
         title: 'Organização',
         color: '#00f',
         icon: '',
+        overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: '',
         disabled: true
     },
@@ -43,6 +48,7 @@ komoo.OverlayTypes = [
         title: 'Recurso',
         color: '#fff',
         icon: '',
+        overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: '',
         disabled: true
     },
@@ -51,6 +57,7 @@ komoo.OverlayTypes = [
         title: 'Financiamento',
         color: '#000',
         icon: '',
+        overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: '',
         disabled: true
     }
@@ -66,6 +73,7 @@ komoo.OverlayTypes = [
  *           Define if the HTML5 GeoLocation will be used to set the initial location.
  * @property {boolean} [defaultDrawingControl=false]
  *           If true the controls from Google Drawing library are used.
+ * @property {Object} regionTypes
  * @property {Object} overlayOptions
  * @property {google.maps.MapOptions} googleMapOptions The Google Maps map options.
  */
@@ -73,7 +81,7 @@ komoo.MapOptions = {
     editable: true,
     useGeoLocation: false,
     defaultDrawingControl: false,
-    overlayTypes: komoo.OverlayTypes,
+    regionTypes: komoo.RegionTypes,
     overlayOptions: {
         fillColor: '#ff0',
         fillOpacity: 0.45,
@@ -641,7 +649,6 @@ komoo.Map.prototype = {
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.CIRCLE);
             });
-            //komooMap.editToolbar.append(radiusButton);
 
             var polygonButton = komoo.createMapButton('Adicionar área', 'Draw a shape', function (e) {
                 komooMap.editMode = null;
@@ -653,8 +660,7 @@ komoo.Map.prototype = {
                     komooMap.drawingManagerOptions.polygonOptions.fillColor = color;
                     komooMap.drawingManagerOptions.polygonOptions.strokeColor = color;
                 }
-            });
-            //komooMap.editToolbar.append(polygonButton);
+            }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.POLYGON);
 
             var lineButton = komoo.createMapButton('Adicionar linha', 'Draw a line', function (e) {
                 komooMap.editMode = null;
@@ -665,16 +671,14 @@ komoo.Map.prototype = {
                     var color = komooMap.overlayOptions[komooMap.type].color;
                     komooMap.drawingManagerOptions.polylineOptions.strokeColor = color;
                 }
-            });
-            //komooMap.editToolbar.append(lineButton);
+            }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.POLYLINE);
 
             var markerButton = komoo.createMapButton('Adicionar ponto', 'Add a marker', function (e) {
                 komooMap.editMode = null;
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.MARKER);
-            });
-            //komooMap.editToolbar.append(markerButton);
+            }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.MARKER);
 
             var addMenu = komoo.createMapMenu('Add new...', [polygonButton, lineButton, markerButton]);
             //komooMap.editToolbar.append(addMenu);
@@ -731,12 +735,12 @@ komoo.Map.prototype = {
             {title: 'Adicionar', content: addMenu}
         ]);
 
-        $.each(komooMap.options.overlayTypes, function (i, type) {
+        $.each(komooMap.options.regionTypes, function (i, type) {
             komooMap.overlayOptions[type.type] = type;
             var item = $('<li>').addClass('map-menuitem').append($('<span>').text(type.title));
             var submenu = komooMap.addItems.clone(true);
             var submenuItems = $('div', submenu);
-            submenuItems.removeClass('map-button').addClass('map-menuitem'); // Change the class
+            submenuItems.removeClass('map-button').addClass('map-menuitem').hide(); // Change the class
             submenuItems.bind('click', function (){
                 submenu.hide();
                 $('.map-panel-title', komooMap.addPanel).text($(this).text())
@@ -759,6 +763,7 @@ komoo.Map.prototype = {
                     if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
                         komooMap.type = type.type;
                         submenu.css({'left': item.outerWidth() + 'px'});
+                        $.each(type.overlayTypes, function (key, overlayType) { $('#map-add-' + overlayType, submenu).show(); });
                         submenu.show();
                     }
                 },
