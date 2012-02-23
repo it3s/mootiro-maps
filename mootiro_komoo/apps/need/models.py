@@ -37,7 +37,7 @@ class Need(models.Model):
     categories = models.ManyToManyField(NeedCategory)
     target_audiences = models.ManyToManyField(TargetAudience, blank=True)
 
-    tags = TaggableManager(related_name='need_tags')
+    tags = TaggableManager()
     #target_audience = TaggableManager(verbose_name="Target audience",
     #    related_name="target_audience", through=NeedTargetAudienceTag)
 

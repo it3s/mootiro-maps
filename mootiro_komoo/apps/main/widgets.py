@@ -5,7 +5,6 @@ from itertools import chain
 
 from django import forms
 from django.forms.widgets import flatatt
-from django.utils.simplejson import JSONEncoder
 from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
@@ -52,7 +51,7 @@ class JQueryAutoComplete(forms.TextInput):
         value_attrs = dict(id=value_id, name=name, value=value)
 
         # attrs is consumed by the label field (autocomplete)
-        label_attrs = self.build_attrs(attrs, name=name)
+        label_attrs = self.build_attrs(attrs)  # must not have 'name' attribute
         if value:
             # TODO: get label for initial bounded value. How?
             label_attrs['value'] = escape(unicode(value))
@@ -60,7 +59,7 @@ class JQueryAutoComplete(forms.TextInput):
             label_attrs['id'] = label_id
 
         html = u'''
-        <input type="hidden" %(value_attrs)s />
+        <input type="text" %(value_attrs)s />
         <input type="text" %(label_attrs)s />
         <script type="text/javascript"><!--//
           %(js)s
@@ -112,6 +111,8 @@ class Tagsinput(forms.TextInput):
 
         if not 'id' in self.attrs:
             final_attrs['id'] = 'id_%s' % name
+        if value:
+            final_attrs['value'] = ", ".join([escape(unicode(v.tag)) for v in value])
 
         html = u"""
         <input %(attrs)s"/>
