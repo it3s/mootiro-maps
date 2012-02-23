@@ -16,8 +16,7 @@ logger = logging.getLogger(__name__)
 @render_to('comments/comments_poc.html')
 def comments_index(request):
     logger.debug('accessing Comments > comments_index')
-
-    return {'form_comment': FormComment(), 'comments_list': comments_list(context=RequestContext(request), root=True, **request.GET).content}
+    return {'comments_list': comments_list(context=RequestContext(request), root=True, **request.GET).content}
 
 
 @ajax_request

@@ -1,0 +1,22 @@
+<h2>Comments: </h2>
+
+<div id='divFormComment'>
+    <a href="#" class="btnShowForm">Novo Comentário</a>
+    <div class='comment-form'>
+        <form method="post" id="formComment" class="stacked-form" action="{% url comments_add %}" >
+            <fieldset>
+                {% csrf_token %}
+                {{ form_comment }}
+                <div class="clearfix">
+                    <input type="submit" class="btnFormCommentSubmit button" value="save"/>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+</div>
+
+{% autoescape off %}
+    {{ comments_list }}
+    <a class="btnShowMore" href='#'>ver mais ...</a>
+{% endautoescape %}
