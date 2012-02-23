@@ -28,6 +28,10 @@ def prod():
     global env
     env = 'prod'
 
+def build_environment():
+    local("pip install -r settings/requirements.txt")
+    local("patch -p0 `which python | sed -e 's/bin\/python$/lib\/python2.7\/site-packages\/django\/contrib\/gis\/db\/backends\/postgis\/adapter.py/'` ../docs/postgis-adapter-2.patch")
+
 def run():
     """Runs django's development server"""
     local('python manage.py runserver 8001 {}'.format(django_settings[env]))

@@ -35,7 +35,7 @@ class Need(models.Model):
     # Relationships
     community = models.ForeignKey(Community, related_name="needs")
     categories = models.ManyToManyField(NeedCategory)
-    target_audience = models.ManyToManyField(TargetAudience)
+    target_audiences = models.ManyToManyField(TargetAudience, blank=True)
 
     tags = TaggableManager(related_name='need_tags')
     #target_audience = TaggableManager(verbose_name="Target audience",
