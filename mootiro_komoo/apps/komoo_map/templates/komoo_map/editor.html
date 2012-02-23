@@ -86,9 +86,10 @@
             });
 
             // Connect the search input box
-            $('#search-button').bind('click', function () {
+            $('#search').submit(function () {
                 var query = $('#search-bar').val();
                 map.goTo(query);
+                return false;
             });
             {% endblock %}
         }
