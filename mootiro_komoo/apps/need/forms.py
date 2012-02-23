@@ -35,11 +35,13 @@ class NeedForm(forms.ModelForm):
 
     target_audiences = forms.ModelMultipleChoiceField(
         queryset=TargetAudience.objects.all(),
-        widget=Tagsinput(autocomplete_url="/need/target_audience_search"),
-        required=False
+        widget=Tagsinput(autocomplete_url="/need/target_audience_search")
     )
 
-    tags = forms.Field(widget=Tagsinput(autocomplete_url="/need/tag_search"))
+    tags = forms.Field(
+        widget=Tagsinput(autocomplete_url="/need/tag_search"),
+        required=False
+    )
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper()

@@ -52,21 +52,84 @@
     "model": "need.targetaudience",
     "pk": 1,
     "fields": {
-      "name": "crianças"
+      "name": "children (0-6)"
     }
     },
   {
     "model": "need.targetaudience",
     "pk": 2,
     "fields": {
-      "name": "adolescentes"
+      "name": "children (7-12)"
     }
   },
   {
     "model": "need.targetaudience",
     "pk": 3,
     "fields": {
+      "name": "teenagers (13-17)"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 4,
+    "fields": {
+      "name": "youth (18-25)"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 5,
+    "fields": {
+      "name": "adults (26-59)"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 6,
+    "fields": {
+      "name": "seniors (>60)"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 7,
+    "fields": {
       "name": "mulheres"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 8,
+    "fields": {
+      "name": "afrodescentes"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 9,
+    "fields": {
+      "name": "LGTB"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 10,
+    "fields": {
+      "name": "pessoas com deficiência"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 11,
+    "fields": {
+      "name": "indígenas"
+    }
+  },
+  {
+    "model": "need.targetaudience",
+    "pk": 12,
+    "fields": {
+      "name": "lideranças"
     }
   }
 ]

@@ -36,7 +36,8 @@
       "title": "Parquinho",
       "slug": "parquinho",
       "description": "Muita areia e brinquedos legais para a garotada!",
-      "community": 1
+      "community": 1,
+      "categories": [2, 3]
     }
   }
 ]
