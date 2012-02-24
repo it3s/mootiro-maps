@@ -42,6 +42,7 @@ def comments_list(content_object=None, parent_id=None, page=0, width=0, height=1
     """
     builds a list o comments recursivelly and returns its rendered template
     params:
+        content_object : object that these comments references (if Nones gets comments for any objects)
         parent_id : id of the parent for subcomments (default: None -> retrieves root comments)
         page : page number
         width: depth of subcomments to be loaded
@@ -49,6 +50,7 @@ def comments_list(content_object=None, parent_id=None, page=0, width=0, height=1
         context: a RequestContext object, needed for csrf purposes
         comment_class: used for controlling the css classes (depth striped) on comment-container
         root : flag to identify if its a root comment
+        warp : defines if the comments list renders wrapped by a div.comments-list or not
     """
     logger.debug('accessing Comments > comments_list')
     width = int(width[0]) if isinstance(width, list) else int(width)
@@ -80,11 +82,9 @@ def comments_list(content_object=None, parent_id=None, page=0, width=0, height=1
 @ajax_request
 def comments_load(request):
     logger.debug('accessing komoo_comments > comments_load : GET={}'.format(request.GET))
+    content_object = None
     if 'content_type' in request.GET and 'object_id' in request.GET:
         content_object = ContentType.objects.get_for_id(request.GET['content_type']).\
                                             model_class().objects.get(pk=request.GET['object_id'])
-        return dict(comments=comments_list(context=RequestContext(request),
+    return dict(comments=comments_list(context=RequestContext(request),
                     content_object=content_object, **request.GET).content)
-    else:
-        return dict(comments=comments_list(context=RequestContext(request),
-                    **request.GET).content)
