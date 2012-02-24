@@ -104,7 +104,7 @@ class MultipleAutocompleteBase(forms.TextInput):
 
     def value_from_datadict(self, data, files, name):
         s = data.get(name, '')  # comma separated string
-        l = [self.widget_to_field(v) for v in s.split(',')] if s else None
+        l = [self.widget_to_field(v) for v in s.split(',')] if s else []
         return l
 
     def render_js(self, elem_id):

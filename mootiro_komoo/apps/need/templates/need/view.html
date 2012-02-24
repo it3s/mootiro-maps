@@ -10,4 +10,7 @@ Categories: {{ need.categories.all }}<br/>
 Target audiences: {{ need.target_audiences.all }}<br/>
 Community: {{ need.community.name }}<br/>
 Tags: {{ need.tags.all }}
+<br/><br/>
+<a href="{% url edit_need need.community.slug need.slug %}">EDIT</a>
+
 {% endblock %}
