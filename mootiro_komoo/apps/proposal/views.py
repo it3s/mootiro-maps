@@ -3,9 +3,8 @@
 from __future__ import unicode_literals  # unicode by default
 import logging
 
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
 from annoying.decorators import render_to
@@ -15,6 +14,7 @@ from proposal.models import Proposal
 from proposal.forms import ProposalForm
 
 logger = logging.getLogger(__name__)
+
 
 @render_to('proposal_view.html')
 def view(request, need_slug, id):

@@ -11,7 +11,7 @@ from community.models import Community
 class CommunityForm(forms.ModelForm):
     class Meta:
         model = Community
-    
+
     geometry = forms.CharField(widget=forms.HiddenInput())
 
 

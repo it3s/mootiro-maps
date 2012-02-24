@@ -8,7 +8,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.utils import simplejson
 
-from annoying.decorators import render_to, ajax_request
+from annoying.decorators import render_to
 from taggit.models import TaggedItem
 
 from community.models import Community

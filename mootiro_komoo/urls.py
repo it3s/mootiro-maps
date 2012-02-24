@@ -8,6 +8,7 @@ from django.conf.urls.defaults import patterns, include, url
 COMMUNITY_SLUG = r'(?P<community_slug>[a-zA-Z0-9-]+)'
 NEED_SLUG = r'(?P<need_slug>[a-zA-Z0-9-]+)'
 
+
 def prepare_regex(regex):
     return regex.replace('COMMUNITY_SLUG', COMMUNITY_SLUG).replace('NEED_SLUG', NEED_SLUG)
 

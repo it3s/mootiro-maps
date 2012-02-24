@@ -42,12 +42,12 @@ class KomooCASBackend(CASBackend):
             # from forum.actions import UserJoinsAction
             # UserJoinsAction(user=user).save()
         return user
-        '''
-        #~ user, created = User.objects.get_or_create(username=username)
-        #~ if created:
-            #~ user.set_unusable_password()
-        if authentication_response and _CAS_USER_DETAILS_RESOLVER:
-            _CAS_USER_DETAILS_RESOLVER(user, authentication_response)
-        #~ user.save()
-        return user
-        '''
+        # '''
+        # #~ user, created = User.objects.get_or_create(username=username)
+        # #~ if created:
+        #     #~ user.set_unusable_password()
+        # if authentication_response and _CAS_USER_DETAILS_RESOLVER:
+        #     _CAS_USER_DETAILS_RESOLVER(user, authentication_response)
+        # #~ user.save()
+        # return user
+        # '''

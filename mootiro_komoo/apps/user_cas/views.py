@@ -7,13 +7,12 @@ django-cas with some customization done on kommo.__init__.py.
 from __future__ import unicode_literals  # unicode by default
 import logging
 
-from django.shortcuts import render_to_response, redirect
-from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from django.conf import settings
 
-from annoying.decorators import render_to
 
 logger = logging.getLogger(__name__)
+
 
 def login(request):
     '''When the user clicks "login" on Mootiro Bar, this view runs.

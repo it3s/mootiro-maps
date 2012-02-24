@@ -5,8 +5,7 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import logging
 
-from django.shortcuts import render_to_response, redirect, get_object_or_404
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
@@ -17,6 +16,7 @@ from community.models import Community
 from community.forms import CommunityForm, CommunityMapForm
 
 logger = logging.getLogger(__name__)
+
 
 @render_to('community/community_edit.html')
 def edit(request, community_slug=""):
@@ -57,6 +57,7 @@ def view(request, community_slug):
     })
     mapform = CommunityMapForm({'map': geojson})
     return {'community': community, 'form': mapform, 'current_item': 'map'}
+
 
 @render_to('community/community_map.html')
 def map(request):

@@ -151,9 +151,8 @@ TINYMCE_DEFAULT_CONFIG = dict(
 )
 
 
-# PROFILE_DATABASE = 'localhost|profile|username|password'
-
 #CAS config
+PROFILE_DATABASE = 'localhost|profile|username|password'
 CAS_SERVER_URL = 'https://localhost:8443/cas/'
 
 # KOMOO Comments settings
