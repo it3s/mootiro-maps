@@ -61,16 +61,20 @@ def shell():
     local('python manage.py shell {}'.format(django_settings[env]))
 
 
-def system_fixtures():
-    """Load fixtures that populates the db with system info"""
-    local('python manage.py loaddata apps/need/initial_data.json {}' \
-            .format(django_settings[env]))
-
-
-def test_fixtures():
-    """Loads all fixtures into database"""
-    local('python manage.py loaddata test_data.json {}' \
-            .format(django_settings[env]))
+def load_fixtures(type_='system'):
+    """
+    load fixtures (system and test).
+    usage:
+        fab load_fixtures  ->  loads all files which name ends with '_fixtures.json' inside the fixtures folder (except for 'test_fixtures.json')
+        fab load_fixtures:test  -> load only the fixtures/test_fixtures.json file
+    """
+    if type_ == 'test':
+        local('python manage.py loaddata fixtures/test_fixtures.json {}'.format(django_settings[env]))
+    else:
+        import os
+        for fixture in os.listdir('fixtures'):
+            if fixture.endswith('_fixtures.json') and fixture != 'test_fixtures.json':
+                local('python manage.py loaddata fixtures/{} {}'.format(fixture, django_settings[env]))
 
 
 def help():
