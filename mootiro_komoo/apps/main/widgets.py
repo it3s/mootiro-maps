@@ -13,15 +13,15 @@ from django.template.defaultfilters import slugify
 from annoying.functions import get_config
 
 
-class JQueryAutoComplete(forms.TextInput):
-    """Widget that uses a JQuery autocomplete façade to fill a hidden field.
+class Autocomplete(forms.TextInput):
+    """Widget that uses a JQuery autocomplete facade to fill a hidden field.
     Usually to be used on ForeignKey fields.
-        label_id: html id of the visible autocomplete field;
-        value_id: html id of the hidden field that contains data to be persisted;
+        label_id: html id of the visible autocomplete field
+        value_id: html id of the hidden field that contains data to be persisted
     """
     def __init__(self, source_url, *a, **kw):
         self.source_url = source_url
-        super(JQueryAutoComplete, self).__init__(*a, **kw)
+        super(Autocomplete, self).__init__(*a, **kw)
 
     def render_js(self, label_id, value_id):
         js = u"""
@@ -65,7 +65,6 @@ class JQueryAutoComplete(forms.TextInput):
           %(js)s
         //--></script>
         ''' % {
-            'rendered_value_field': super(JQueryAutoComplete, self).render(name, value),
             'value_attrs': flatatt(value_attrs),
             'label_attrs': flatatt(label_attrs),
             'js': self.render_js(label_id, value_id),
@@ -73,9 +72,10 @@ class JQueryAutoComplete(forms.TextInput):
         return html
 
 
-class Tagsinput(forms.TextInput):
-    """Widget for using JQuery Tags Input Plugin by xoxco.com
-    See http://xoxco.com/projects/code/tagsinput/
+class MultipleAutocompleteBase(forms.TextInput):
+    """Widget that uses the JQuery Tags Input Plugin by xoxco.com. It can be
+    used as an friendly interface for many to many relationship fields, as it
+    has an ajax autocomplete functionality. See http://xoxco.com/projects/code/tagsinput/.
     """
 
     class Media:
@@ -83,13 +83,20 @@ class Tagsinput(forms.TextInput):
         js = ('lib/tagsinput/jquery.tagsinput.min.js',)
 
     def __init__(self, autocomplete_url="", options={}, attrs={}):
+        """Arguments are:
+            autocomplete_url: url that accepts a 'term' GET variable and returns
+                a json list containing names that matches the given term.
+            converter: a function that will used to convert each string in the
+                comma-separated string given by the user. The output type must
+                fit the containing Field requirements.
+        """
         self.autocomplete_url = autocomplete_url
         self.options = options
         self.attrs = attrs
 
     def value_from_datadict(self, data, files, name):
         s = data.get(name, '')  # comma separated string
-        l = s.split(',') if s else None
+        l = [self.widget_to_field(v) for v in s.split(',')] if s else None
         return l
 
     def render_js(self, elem_id):
@@ -112,7 +119,8 @@ class Tagsinput(forms.TextInput):
         if not 'id' in self.attrs:
             final_attrs['id'] = 'id_%s' % name
         if value:
-            final_attrs['value'] = ", ".join([escape(unicode(v.tag)) for v in value])
+            strings = [self.field_to_widget(v) for v in value]
+            final_attrs['value'] = ", ".join([escape(s) for s in strings])
 
         html = u"""
         <input %(attrs)s"/>
@@ -125,6 +133,32 @@ class Tagsinput(forms.TextInput):
             'js': self.render_js(final_attrs['id'])
         }
         return html
+
+
+class Tagsinput(MultipleAutocompleteBase):
+    """Assumes attribute 'name' to the tag Model"""
+
+    def __init__(self, model, *a, **kw):
+        self.model = model
+        super(Tagsinput, self).__init__(*a, **kw)
+
+    def widget_to_field(self, tag_name):
+        instance, created = self.model.objects.get_or_create(name=tag_name)
+        return instance
+
+    def field_to_widget(self, tag_id):
+        instance = self.model.objects.get(id=tag_id)
+        return unicode(instance.name)
+
+
+class TaggitWidget(MultipleAutocompleteBase):
+    """Follows django-taggit api"""
+
+    def widget_to_field(self, tag_name):
+        return tag_name
+
+    def field_to_widget(self, instance):
+        return unicode(instance.tag)
 
 
 class ImageSwitch(forms.CheckboxInput):

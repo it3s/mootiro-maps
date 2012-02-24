@@ -6,7 +6,7 @@ from django import forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Reset
 
-from main.widgets import JQueryAutoComplete, Tagsinput, ImageSwitchMultiple
+from main.widgets import Autocomplete, Tagsinput, TaggitWidget, ImageSwitchMultiple
 from need.models import Need, NeedCategory, TargetAudience
 from community.models import Community
 
@@ -25,7 +25,7 @@ class NeedForm(forms.ModelForm):
     # FIXME: the urls below should not be hardcoded. They should be calculated
     # with reverse_lazy function, which is not implemented in Django 1.3 yet.
     community = forms.CharField(
-        widget=JQueryAutoComplete("/community/search_by_name")
+        widget=Autocomplete("/community/search_by_name")
     )
 
     categories = forms.ModelMultipleChoiceField(
@@ -33,13 +33,14 @@ class NeedForm(forms.ModelForm):
         widget=ImageSwitchMultiple
     )
 
-    target_audiences = forms.ModelMultipleChoiceField(
-        queryset=TargetAudience.objects.all(),
-        widget=Tagsinput(autocomplete_url="/need/target_audience_search")
+    target_audiences = forms.Field(
+        widget=Tagsinput(
+            TargetAudience,
+            autocomplete_url="/need/target_audience_search")
     )
 
     tags = forms.Field(
-        widget=Tagsinput(autocomplete_url="/need/tag_search"),
+        widget=TaggitWidget(autocomplete_url="/need/tag_search"),
         required=False
     )
 
