@@ -58,15 +58,9 @@
 
             $btnShowMore.live('click', function(evt){
                 evt.preventDefault();
-                var args = {page:++page, wrap:0},
-                    urlVars = getUrlVars();
-
-                if (urlVars['height']){
-                    args['height'] = urlVars['height'];
-                }
-                if (urlVars['width']){
-                    args['width'] = urlVars['width'];
-                }
+                var args = storageGet('load_info');
+                args.page = ++page;
+                args.wrap = 0;
 
                 $.get('/comments/load', args, function(data){
                     $('.comments-list:first').append(data.comments);

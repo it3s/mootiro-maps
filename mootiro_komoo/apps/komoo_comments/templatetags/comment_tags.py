@@ -36,7 +36,7 @@ def comments(context, content_object, arg1='', arg2=''):
     form = FormComment(initial={'content_type_id': c.id, 'object_id': content_object.id})
 
     comments = comments_list(content_object=content_object, context=context,  width=width, height=height, root=True).content
-    return {'form_comment': form, 'comments_list': comments}
+    return dict(form_comment=form, comments_list=comments, width=width, height=height, content_type=c.id, object_id=content_object.id)
 
 
 @register.inclusion_tag('comments/comments_staticfiles.html')

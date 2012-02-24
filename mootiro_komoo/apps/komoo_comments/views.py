@@ -4,6 +4,7 @@ import logging
 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.contrib.contenttypes.models import ContentType
 
 from annoying.decorators import render_to, ajax_request
 
@@ -37,7 +38,7 @@ def comments_add(request):
         return {'success': False, 'errors': form_comment.errors}
 
 
-def comments_list(content_object=None, parent_id=None, page=0, width=0, height=10, context=None, comment_class='', wrap=True, root=False):
+def comments_list(content_object=None, parent_id=None, page=0, width=0, height=10, context=None, comment_class='', wrap=True, root=False, *args, **kwargs):
     """
     builds a list o comments recursivelly and returns its rendered template
     params:
@@ -78,4 +79,12 @@ def comments_list(content_object=None, parent_id=None, page=0, width=0, height=1
 
 @ajax_request
 def comments_load(request):
-    return dict(comments=comments_list(context=RequestContext(request), **request.GET).content)
+    logger.debug('accessing komoo_comments > comments_load : GET={}'.format(request.GET))
+    if 'content_type' in request.GET and 'object_id' in request.GET:
+        content_object = ContentType.objects.get_for_id(request.GET['content_type']).\
+                                            model_class().objects.get(pk=request.GET['object_id'])
+        return dict(comments=comments_list(context=RequestContext(request),
+                    content_object=content_object, **request.GET).content)
+    else:
+        return dict(comments=comments_list(context=RequestContext(request),
+                    **request.GET).content)
