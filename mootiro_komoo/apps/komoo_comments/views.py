@@ -16,12 +16,14 @@ logger = logging.getLogger(__name__)
 @render_to('comments/comments_poc.html')
 def comments_index(request):
     logger.debug('accessing Comments > comments_index')
-    return {'comments_list': comments_list(context=RequestContext(request), root=True, **request.GET).content}
+    from need.models import Need
+    return {'content_object': Need.objects.get(pk=1)}
+    # return {'content_object': None}
 
 
 @ajax_request
 def comments_add(request):
-    logger.debug('accessing Comments > comments_add')
+    logger.debug('accessing Comments > comments_add : POST={}'.format(request.POST))
 
     form_comment = FormComment(request.POST)
     if form_comment.is_valid():
@@ -35,7 +37,7 @@ def comments_add(request):
         return {'success': False, 'errors': form_comment.errors}
 
 
-def comments_list(parent_id=None, page=0, width=0, height=10, context=None, comment_class='', wrap=True, root=False):
+def comments_list(content_object=None, parent_id=None, page=0, width=0, height=10, context=None, comment_class='', wrap=True, root=False):
     """
     builds a list o comments recursivelly and returns its rendered template
     params:
@@ -56,11 +58,11 @@ def comments_list(parent_id=None, page=0, width=0, height=10, context=None, comm
 
     logger.debug('loading comment with parent={} , page={} , width={} , height={}'.format(parent_id, page, width, height))
     start, end = page * height, (page + 1) * height
-
+    comments_query = Comment.get_comments_for(content_object) if content_object else Comment.objects
     if parent_id:
-        comments = Comment.objects.filter(parent=parent_id).order_by('-pub_date')[start:end]
+        comments = comments_query.filter(parent=parent_id).order_by('-pub_date')[start:end]
     else:
-        comments = Comment.objects.filter(parent__isnull=True).order_by('-pub_date')[start:end]
+        comments = comments_query.filter(parent__isnull=True).order_by('-pub_date')[start:end]
     if width:
         for comment in comments:
             if comment.sub_comments > 0:
