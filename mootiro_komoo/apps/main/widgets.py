@@ -73,9 +73,13 @@ class Autocomplete(forms.TextInput):
 
 
 class MultipleAutocompleteBase(forms.TextInput):
-    """Widget that uses the JQuery Tags Input Plugin by xoxco.com. It can be
-    used as an friendly interface for many to many relationship fields, as it
-    has an ajax autocomplete functionality. See http://xoxco.com/projects/code/tagsinput/.
+    """User friendly text input for many to many relationship fields.
+
+    The JQuery Tags Input Plugin by xoxco.com (seehttp://xoxco.com/projects/code/tagsinput/)
+    provides the friendly tag insertion interface.
+
+    This class can be easily extended to work with different Field types by
+    overwriting 'widget_to_field' and 'field_to_widget' converter methods.
     """
 
     class Media:
@@ -83,16 +87,20 @@ class MultipleAutocompleteBase(forms.TextInput):
         js = ('lib/tagsinput/jquery.tagsinput.min.js',)
 
     def __init__(self, autocomplete_url="", options={}, attrs={}):
-        """Arguments are:
-            autocomplete_url: url that accepts a 'term' GET variable and returns
-                a json list containing names that matches the given term.
-            converter: a function that will used to convert each string in the
-                comma-separated string given by the user. The output type must
-                fit the containing Field requirements.
+        """Constructs the widget.
+
+        - autocomplete_url: url that accepts a 'term' GET variable and returns a
+          json list containing names that matches the given term.
         """
         self.autocomplete_url = autocomplete_url
         self.options = options
         self.attrs = attrs
+
+    def widget_to_field(self, x):
+        return x
+
+    def field_to_widget(self, x):
+        return x
 
     def value_from_datadict(self, data, files, name):
         s = data.get(name, '')  # comma separated string
@@ -136,7 +144,10 @@ class MultipleAutocompleteBase(forms.TextInput):
 
 
 class Tagsinput(MultipleAutocompleteBase):
-    """Assumes attribute 'name' to the tag Model"""
+    """Widget for inputting 'tag-like' objects.
+
+    Uses 'name' as the default attribute for showing.
+    """
 
     def __init__(self, model, *a, **kw):
         self.model = model
