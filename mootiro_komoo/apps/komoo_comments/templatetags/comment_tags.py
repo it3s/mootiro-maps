@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django import template
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from ..forms import FormComment
 from ..views import comments_list
@@ -30,7 +31,7 @@ def comments(context, content_object, arg1='', arg2=''):
         {% comments proposal 'height=6' 'width=3' %}
     """
     parsed_args = _parse_args(arg1, arg2)
-    width, height = parsed_args.get('width', 0), parsed_args.get('height', 5)
+    width, height = parsed_args.get('width', settings.KOMOO_COMMENTS_WIDTH), parsed_args.get('height', settings.KOMOO_COMMENTS_HEIGHT)
 
     c = ContentType.objects.get_for_model(content_object)
     form = FormComment(initial={'content_type_id': c.id, 'object_id': content_object.id})

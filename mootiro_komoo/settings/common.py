@@ -156,6 +156,10 @@ TINYMCE_DEFAULT_CONFIG = dict(
 #CAS config
 CAS_SERVER_URL = 'https://localhost:8443/cas/'
 
+# KOMOO Comments settings
+KOMOO_COMMENTS_WIDTH = 4
+KOMOO_COMMENTS_HEIGHT = 20
+
 # # A sample logging configuration. The only tangible logging
 # # performed by this configuration is to send an email to
 # # the site admins on every HTTP 500 error.

@@ -2,6 +2,7 @@
 from __future__ import unicode_literals  # unicode by default
 import logging
 
+from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
@@ -31,14 +32,17 @@ def comments_add(request):
         comment = form_comment.save()
         return {
             'success': True,
-            'comment': render_to_response('comments/comment.html', dict(comment=comment, comment_class=''), context_instance=RequestContext(request)).content
+            'comment': render_to_response('comments/comment.html', dict(comment=comment, comment_class=''),
+                context_instance=RequestContext(request)).content
         }
     else:
         logger.debug('invalid form: {}'.format(form_comment.errors))
         return {'success': False, 'errors': form_comment.errors}
 
 
-def comments_list(content_object=None, parent_id=None, page=0, width=0, height=10, context=None, comment_class='', wrap=True, root=False, *args, **kwargs):
+def comments_list(content_object=None, parent_id=None, page=0, width=settings.KOMOO_COMMENTS_WIDTH,
+                  height=settings.KOMOO_COMMENTS_HEIGHT, context=None, comment_class='', wrap=True,
+                  root=False, *args, **kwargs):
     """
     builds a list o comments recursivelly and returns its rendered template
     params:
