@@ -49,6 +49,13 @@ def view(request, community_slug, need_slug):
     return {'need': need}
 
 
+@render_to('need/list.html')
+def list(request, community_slug):
+    logger.debug('acessing need > list')
+    community = get_object_or_404(Community, slug=community_slug)
+    return {'community': community}
+
+
 # DOES NOT SIMPLY WORK WITH @ajax_request, please test before commit!
 def tag_search(request):
     logger.debug('acessing need > tag_search')

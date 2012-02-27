@@ -6,7 +6,7 @@
     {{ form.media.css }}
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}styles.css" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.min.js"></script>
     {{ form.media.js }}
@@ -15,7 +15,6 @@
   <body>
     <!-- Mootiro_bar goes here -->
     <div id="root">
-      <div id="logo">LOGOO<br/>&nbsp;TIPO</div>
       <div id="tabs">
         {% if community %}
         <div class="tab">{{community.name}}</div>
@@ -24,18 +23,21 @@
         {% endif %}
       </div>
       <div id="top">
-        <ul id="menu">
-          <li{% if current_item == 'map' %} class='selected'{% endif %}>Mapa</li>
-          <li{% if current_item == 'communities' %} class='selected'{% endif %}>Comunidades</li>
-          <li{% if current_item == 'needs' %} class='selected'{% endif %}>Necessidades</li>
-          <li{% if current_item == 'orgs' %} class='selected'{% endif %}>Organizações</li>
-          <li{% if current_item == 'resources' %} class='selected'{% endif %}>Recursos</li>
-          <li{% if current_item == 'funders' %} class='selected'{% endif %}>Financiadores</li>
-        </ul>
-        <form id="search">
-          <input type="text" id="search-bar"/>
-          <input type="submit" id="search-button" class="button" value="Search"/>
-        </form>
+        <div id="logo"><img src='{{STATIC_URL}}images/logo.png' alt='Mootiro Maps'/></div>
+        <div id="navigation">
+          <ul id="menu">
+            <li{% if current_item == 'map' %} class='selected'{% endif %}>Mapa</li>
+            <li{% if current_item == 'communities' %} class='selected'{% endif %}>Comunidades</li>
+            <li{% if current_item == 'needs' %} class='selected'{% endif %}>Necessidades</li>
+            <li{% if current_item == 'orgs' %} class='selected'{% endif %}>Organizações</li>
+            <li{% if current_item == 'resources' %} class='selected'{% endif %}>Recursos</li>
+            <li{% if current_item == 'funders' %} class='selected'{% endif %}>Financiadores</li>
+          </ul>
+          <form id="search">
+            <input type="text" id="search-bar"/>
+            <input type="submit" id="search-button" class="button" value="Search"/>
+          </form>
+        </div>
       </div>
       <div id="content">
         {% block content %}{% endblock %}

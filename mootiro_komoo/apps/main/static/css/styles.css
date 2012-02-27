@@ -8,7 +8,7 @@ body {
   font-size: 14px;
   margin: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: #dceff4;
 }
 img { border: 0px }
 /* Link pattern */
@@ -47,8 +47,16 @@ table { border-collapse: collapse }
     font-size: 30px;
     padding: 0 10px;
 }
-#tabs { margin-top: 10px; }
+#tabs {
+    position: relative;
+    min-height: 70px;
+    padding-left: 60px;
+    background: #fff;
+    display: block;
+}
 #tabs .tab {
+    position: absolute;
+    bottom: 0;
     display: inline;
     background: #dceff4;
     padding: 4px 15px;
@@ -64,9 +72,11 @@ table { border-collapse: collapse }
     padding: 15px 0;
     background: #dceff4;
 }
+#top #logo, #top #navigation {
+    display: inline-block;
+}
 #top #menu {
     display: inline-block;
-    background: #eed;
     margin-bottom: 5px;
 }
 #top #menu li {
@@ -177,7 +187,7 @@ table { border-collapse: collapse }
     color: #aaa;
     background: #dceff4 !important;
 }
-#tabs, #top #menu, #top #search { margin-left: 60px; }
+#top #menu, #top #search { margin-left: 60px; }
 #top #search { margin-bottom: 0px; }
 
 #search-bar {
@@ -191,4 +201,9 @@ table { border-collapse: collapse }
 .komoo-map-googlemap label { /* Revert bootstrap changes */
     width: auto !important;
     display: inline !important;
+}
+
+#content {
+    background: #dceff4;
+    display: block;
 }

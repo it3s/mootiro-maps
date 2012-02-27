@@ -1,0 +1,9 @@
+{% extends "global.html" %}
+
+{% block title %}{{ need.title }} at {{ need.community.name }}{% endblock %}
+
+{% block content %}
+
+<a href="{% url new_need %}">New need</a>
+
+{% endblock %}
