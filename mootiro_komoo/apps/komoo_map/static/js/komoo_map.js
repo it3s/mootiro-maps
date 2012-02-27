@@ -140,6 +140,8 @@ komoo.Map = function (element, options) {
     komooMap.overlayOptions = {};
     komooMap.overlays = [];
     komooMap.newOverlays = [];
+    komooMap.boundsLoaded = new google.maps.LatLngBounds();
+    komooMap.boundsAwaiting = new google.maps.LatLngBounds();
 
     komooMap.event = $('<div>');
 
@@ -181,12 +183,48 @@ komoo.Map = function (element, options) {
     /* Uses HTML5 Geo Location */
     if (options.useGeoLocation) komooMap.goToUserLocation();
 
+    // TODO: Create a method with all events connections
     /* Listen Google Maps map events */
     google.maps.event.addListener(komooMap.googleMap, 'click', function(e) {
         if (komooMap.addPanel.is(':hidden')) {
             komooMap.setCurrentOverlay(null);  // Remove the overlay selection
         }
         komooMap._emit_mapclick(e)
+    });
+
+    /* Loads overlays when user navigate */
+    google.maps.event.addListener(komooMap.googleMap, 'bounds_changed', function () {
+        /* Loads only overlays not loaded yet */
+        var visibleBounds = komooMap.googleMap.getBounds();
+
+        var isNewRegion = (!komooMap.boundsLoaded.contains(visibleBounds.getNorthEast())
+                || !komooMap.boundsLoaded.contains(visibleBounds.getSouthWest())
+        );
+        if (isNewRegion) {
+            komooMap.boundsAwaiting.union(visibleBounds);
+        }
+    });
+    /* Sends the ajax request when idle */
+    google.maps.event.addListener(komooMap.googleMap, 'idle', function () {
+        if (!komooMap.boundsAwaiting.equals(komooMap.boundsLoaded)) {
+            // TODO: Don't hardcode the url
+            var url = '/community/get_geojson?bounds=' + komooMap.boundsAwaiting.toUrlValue();
+            console.log('Loading overlays from server...');
+            // TODO: Load only overlays that were not loaded yet.
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'GET',
+                success: function (data, textStatus, jqXHR) {
+                    komooMap.clear()
+                    komooMap.loadGeoJSON(JSON.parse(data));
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('ERRO!!!11!');
+                }
+            });
+            komooMap.boundsLoaded.union(komooMap.boundsAwaiting);
+        }
     });
 
     /* Adds GeoCoder */

@@ -9,6 +9,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
+from django.contrib.gis.geos import Polygon
 
 from annoying.decorators import render_to
 
@@ -33,7 +34,8 @@ def edit(request, community_slug=""):
         if form.is_valid():
             community = form.save()
             #return redirect(view, community.slug)
-            return {'redirect': reverse('view_community', args=(community.slug,))}
+            return {'redirect': reverse('view_community',
+                                        args=(community.slug,))}
         else:
             return {'form': form, 'action': action}
     else:
@@ -42,7 +44,8 @@ def edit(request, community_slug=""):
 
 @render_to('community/community_view.html')
 def view(request, community_slug):
-    logger.debug('acessing Community > view : community_slug={}'.format(community_slug))
+    logger.debug('acessing Community > view : community_slug={}'.format(
+            community_slug))
 
     community = get_object_or_404(Community, slug=community_slug)
     geojson = json.dumps({
@@ -62,10 +65,30 @@ def view(request, community_slug):
 @render_to('community/community_map.html')
 def map(request):
     logger.debug('acessing Community > map')
-    #TODO: Use FormWizard.
     form = CommunityMapForm(request.POST)
 
     return dict(form=form)
+
+
+def communities_geojson(request):
+    bounds = request.GET.get('bounds', None)
+    x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
+
+    polygon = Polygon(((x1, y1), (x1, y2), (x2, y2), (x2, y1), (x1, y1)))
+    communities = Community.objects.filter(geometry__intersects=polygon)
+    geojson = json.dumps({
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'geometry': json.loads(community.geometry.geojson),
+                'properties': {'type': 'community'}
+            } for community in communities
+        ]
+    })
+
+    return HttpResponse(json.dumps(geojson),
+        mimetype="application/x-javascript")
 
 
 def search_by_name(request):
