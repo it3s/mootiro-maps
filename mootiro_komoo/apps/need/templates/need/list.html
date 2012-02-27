@@ -1,9 +1,20 @@
 {% extends "global.html" %}
 
-{% block title %}{{ need.title }} at {{ need.community.name }}{% endblock %}
+{% block title %}Needs for {{ community.name }}{% endblock %}
 
 {% block content %}
 
-<a href="{% url new_need %}">New need</a>
+<div class="block">
+  <a class="button" href="{% url new_need %}">New need</a>
+  <div class="ajax-search"><input type="text"/></div>
+</div>
+
+<div class="highlight">
+  <ul>
+    <li>NEED 111</li>
+    <li>NEED 222</li>
+    <li>NEED 333</li>
+  </ul>
+</div>
 
 {% endblock %}

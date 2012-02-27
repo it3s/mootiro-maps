@@ -1,6 +1,7 @@
 html {
     padding: 0;
     margin: 0;
+    height: 100%;
 }
 body {
   /* http://www.ms-studio.com/articles.html */
@@ -8,9 +9,11 @@ body {
   font-size: 14px;
   margin: 0;
   padding: 0;
-  background-color: #dceff4;
+  background-color: #fff;
+  height: 100%;
 }
 img { border: 0px }
+
 /* Link pattern */
 a { text-decoration: none }
 a:link    { color: #F39200 }
@@ -23,23 +26,30 @@ ul {
   padding: 0px;
 }
 table { border-collapse: collapse }
+
 /* Reusable styles */
 .button {
     background-color: #3EBAC2;
     color: #fff;
-    border: none;
-    border-radius        : 6px;
-    -moz-border-radius   : 6px;
-    -webkit-border-radius: 6px;
+    border: 1px solid #4092A9;
+    border-radius        : 4px;
+    -moz-border-radius   : 4px;
+    -webkit-border-radius: 4px;
     cursor: pointer;
-    padding: 3px;
+    padding: 5px 8px;
 }
+a.button { color: #fff;}
+
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }
+
 /* Structural elements */
 #root {
     width: 100%;
+    height: 100%;
+    display: block;
     clear: both;
+    background-color: #dceff4;
 }
 #logo {
     display: inline-block;
@@ -49,11 +59,23 @@ table { border-collapse: collapse }
 }
 #tabs {
     position: relative;
+    width: 100%;
     min-height: 70px;
-    padding-left: 60px;
     background: #fff;
     display: block;
 }
+#content {
+    padding: 15px 60px;
+    background: #dceff4;
+    display: block;
+}
+.highlight {
+    margin-top: 30px;
+    clear: both;
+    background: #eff8f9;
+}
+
+
 #tabs .tab {
     position: absolute;
     bottom: 0;
@@ -65,9 +87,8 @@ table { border-collapse: collapse }
     -moz-border-radius   : 6px 6px 0 0;
     -webkit-border-radius: 6px 6px 0 0;
 }
-#tabs .tab.placeholder {
-    background: none;
-}
+#tabs .tab.placeholder { background: none }
+#tabs .tab:first-child { margin-left: 60px }
 #top {
     padding: 15px 0;
     background: #dceff4;
@@ -203,7 +224,9 @@ table { border-collapse: collapse }
     display: inline !important;
 }
 
-#content {
-    background: #dceff4;
-    display: block;
+/* Ajax Search */
+.ajax-search { float: right }
+.ajax-search input {
+    width: 200px;
+    background: #fff url("../img/glass.png") no-repeat right bottom;
 }
