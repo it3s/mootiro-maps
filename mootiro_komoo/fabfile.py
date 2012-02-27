@@ -46,7 +46,7 @@ def syncdb(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
     noinput = "" if create_superuser else "--noinput"
     local('python manage.py syncdb {} {}'.format(noinput, django_settings[env]))
-    system_fixtures()
+    load_fixtures()
 
 
 def recreate_db():
