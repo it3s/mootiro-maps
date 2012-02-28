@@ -10,6 +10,8 @@ import logging
 from django.shortcuts import redirect
 from django.conf import settings
 
+from annoying.decorators import render_to
+
 
 logger = logging.getLogger(__name__)
 
@@ -37,3 +39,9 @@ def after_login(request):
 
 def logout(request):
     logger.debug('accessing user_cas > logout')
+
+
+@render_to('user_cas/login_test.html')
+def test_login(request):
+    logger.debug('\nUSER:\n{}\n{}'.format(dir(request.user), request.user.username))
+    return {}

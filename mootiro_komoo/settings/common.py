@@ -82,9 +82,9 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    #'django_cas.middleware.CASMiddleware',
+    'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'mootiro_bar.DjangoMiddleware',
+    # 'mootiro_bar.DjangoMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = (

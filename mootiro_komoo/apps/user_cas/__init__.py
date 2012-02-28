@@ -3,6 +3,9 @@ from __future__ import unicode_literals  # unicode by default
 from django.conf import settings
 from django.contrib.auth.models import User
 from django_cas.backends import CASBackend, _verify
+import logging
+
+logger = logging.getLogger('default')
 
 
 class KomooCASBackend(CASBackend):
@@ -13,6 +16,7 @@ class KomooCASBackend(CASBackend):
         """Verifies CAS ticket and gets or creates User object.
         """
         email = _verify(ticket, service)
+        logger.debug('CAS verifying email: {}'.format(email))
         if not email:
             return None
         try:
@@ -24,6 +28,7 @@ class KomooCASBackend(CASBackend):
             # Get username from Profile server
             profile_db = "host='{}' dbname='{}' user='{}' password='{}'" \
                 .format(*settings.PROFILE_DATABASE.split("|"))
+            logger.debug('CAS: Postgres DB -> {}'.format(profile_db))
             import psycopg2
             profile_db_conn = psycopg2.connect(profile_db)
             c = profile_db_conn.cursor()

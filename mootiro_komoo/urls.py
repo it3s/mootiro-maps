@@ -18,21 +18,18 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Uncomment the admin/doc line below to enable admin documentation:
+    # admin stuff
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-    # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 
-    # These are the django-cas URLs:
-    (r'^accounts/login/$', 'django_cas.views.login'),
-    (r'^accounts/logout/$', 'django_cas.views.logout'),
+    # user and CAS urls
+    url(r'^user/', include('user_cas.urls')),
 
-    # (r'', include('komoo.user.urls')),  # use django-cas instead
-    (r'^tinymce/', include('tinymce.urls')),
-    (r'', include('need.urls')),
-    (r'', include('proposal.urls')),
-    (r'^comments/', include('komoo_comments.urls')),
+    url(r'^tinymce/', include('tinymce.urls')),
+    url(r'', include('need.urls')),
+    url(r'', include('proposal.urls')),
+    url(r'^comments/', include('komoo_comments.urls')),
+
     # Community URLs go last because one of them can match anything
-    (r'', include('community.urls')),
+    url(r'', include('community.urls')),
 )

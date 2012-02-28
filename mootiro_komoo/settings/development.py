@@ -56,29 +56,29 @@ LOGGING = {
     },
     'handlers': {
         'null': {
-            'level':'DEBUG',
-            'class':'django.utils.log.NullHandler',
+            'level': 'DEBUG',
+            'class': 'django.utils.log.NullHandler',
         },
         'log_file': {
-            'level':'DEBUG',
-            'class':'logging.handlers.RotatingFileHandler',
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(SITE_ROOT, 'logs/log_dev.log'),
-            'maxBytes': 1024*1024*5, # 5 MB
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
             'backupCount': 5,
-            'formatter':'standard',
+            'formatter': 'standard',
         },
-        'console':{
-            'level':'DEBUG',
-            'class':'logging.StreamHandler',
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
             'formatter': 'standard'
         },
         'request_handler': {
-                'level':'DEBUG',
-                'class':'logging.handlers.RotatingFileHandler',
+                'level': 'DEBUG',
+                'class': 'logging.handlers.RotatingFileHandler',
                 'filename': os.path.join(SITE_ROOT, 'logs/django_request.log'),
-                'maxBytes': 1024*1024*5, # 5 MB
+                'maxBytes': 1024 * 1024 * 5,  # 5 MB
                 'backupCount': 5,
-                'formatter':'standard',
+                'formatter': 'standard',
         },
     },
     'loggers': {
@@ -97,11 +97,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False
         },
-#        'app': {
-#            'handlers': ['console', 'log_file'],
-#            'level': 'DEBUG',
-#            'propagate': True
-#        },
+       'default': {
+           'handlers': ['console', 'log_file'],
+           'level': 'DEBUG',
+           'propagate': True
+       },
     }
 }
 my_app_logger = {
@@ -109,14 +109,14 @@ my_app_logger = {
     'level': 'DEBUG',
     'propagate': True
 }
-LOGGING['loggers'].update({'{}.views'.format(app):my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.models'.format(app):my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.forms'.format(app):my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.utils'.format(app):my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.views'.format(app): my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.models'.format(app): my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.forms'.format(app): my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.listdir('apps/')})
 
 
 # This for local_settings (user specific, like db access)
 try:
-	from local_settings import *
+    from local_settings import *
 except Exception:
-	pass
+    pass
