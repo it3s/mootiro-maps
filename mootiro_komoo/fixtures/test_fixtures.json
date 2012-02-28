@@ -37,7 +37,32 @@
       "slug": "parquinho",
       "description": "Muita areia e brinquedos legais para a garotada!",
       "community": 1,
-      "categories": [2, 3]
+      "categories": [2, 3],
+      "target_audiences": [2, 3, 4]
+    }
+  },
+  {
+    "model": "need.need",
+    "pk": 2,
+    "fields": {
+      "title": "Coleta de lixo",
+      "slug": "coleta-de-lixo",
+      "description": "Ta fidido o bagulho aqui!!!",
+      "community": 1,
+      "categories": [3, 4, 5],
+      "target_audiences": [1]
+    }
+  },
+  {
+    "model": "need.need",
+    "pk": 3,
+    "fields": {
+      "title": "Alfabetização de adultos",
+      "slug": "alfabetizacao-de-adultos",
+      "description": "Temos muitas pessoas que não sabem ler e escrever.",
+      "community": 1,
+      "categories": [3, 4, 5],
+      "target_audiences": [1]
     }
   }
 ]
