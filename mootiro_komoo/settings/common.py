@@ -156,7 +156,7 @@ PROFILE_DATABASE = 'localhost|profile|username|password'
 CAS_SERVER_URL = 'https://localhost:8443/cas/'
 
 # KOMOO Comments settings
-KOMOO_COMMENTS_WIDTH = 4
+KOMOO_COMMENTS_WIDTH = 3
 KOMOO_COMMENTS_HEIGHT = 20
 
 # # A sample logging configuration. The only tangible logging

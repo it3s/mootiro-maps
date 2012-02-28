@@ -29,7 +29,7 @@ def comments_add(request):
 
     form_comment = FormComment(request.POST)
     if form_comment.is_valid():
-        comment = form_comment.save()
+        comment = form_comment.save(user=request.user)
         return {
             'success': True,
             'comment': render_to_response('comments/comment.html', dict(comment=comment, comment_class=''),
@@ -54,9 +54,9 @@ def comments_list(content_object=None, parent_id=None, page=0, width=settings.KO
         context: a RequestContext object, needed for csrf purposes
         comment_class: used for controlling the css classes (depth striped) on comment-container
         root : flag to identify if its a root comment
-        warp : defines if the comments list renders wrapped by a div.comments-list or not
+        wrap : defines if the comments list renders wrapped by a div.comments-list or not
     """
-    logger.debug('accessing Comments > comments_list')
+    # logger.debug('accessing Comments > comments_list')
     width = int(width[0]) if isinstance(width, list) else int(width)
     height = int(height[0]) if isinstance(height, list) else int(height)
     parent_id = int(parent_id[0]) if parent_id and isinstance(parent_id, list) else parent_id

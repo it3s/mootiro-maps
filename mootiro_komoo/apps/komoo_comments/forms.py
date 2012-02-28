@@ -19,9 +19,13 @@ class FormComment(forms.ModelForm):
             'comment': forms.Textarea(attrs={'cols': 80, 'rows': 5, 'class': 'span8'}),
         }
 
-    def save(self, *args, **kwargs):
+    def save(self, user=None, *args, **kwargs):
         comment = super(FormComment, self).save(*args, **kwargs)
         update = False
+        if user and not user.is_anonymous():
+            print 'USER: %s' % user
+            comment.author_id = user.id
+            update = True
         if self.cleaned_data.get('content_type_id', None):
             comment.content_type_id = self.cleaned_data['content_type_id']
             update = True
