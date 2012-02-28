@@ -3,7 +3,8 @@
 }
 .comment-container{
     margin:20px 0 15px 15px;
-    background-color: rgb(220, 239, 244);
+    /*background-color: rgb(220, 239, 244);*/
+    background-color: rgb(235, 249, 255);
     padding: 10px 0 10px 10px;
     border-radius: 5px;
     border-color: rgb(62, 186, 194);
@@ -37,7 +38,8 @@ a.btnShowForm{
    margin-bottom: -1px;
 }
 .odd{
-    background-color: rgb(235, 249, 255);
+    /*background-color: rgb(235, 249, 255);*/
+    background-color: rgb(220, 239, 244);
 }
 .comments-list .inner-list{
     display: none;
