@@ -3,49 +3,49 @@
     "model": "need.needcategory",
     "pk": 1,
     "fields": {
-      "name": "Educação"
+      "name": "Education"
     }
   },
   {
     "model": "need.needcategory",
     "pk": 2,
     "fields": {
-      "name": "Esporte"
+      "name": "Sport"
     }
   },
   {
     "model": "need.needcategory",
     "pk": 3,
     "fields": {
-      "name": "Meio Ambiente"
+      "name": "Environment"
     }
   },
   {
     "model": "need.needcategory",
     "pk": 4,
     "fields": {
-      "name": "Saúde"
+      "name": "Health"
     }
   },
   {
     "model": "need.needcategory",
     "pk": 5,
     "fields": {
-      "name": "Moradia"
+      "name": "Housing"
     }
   },
   {
     "model": "need.needcategory",
     "pk": 6,
     "fields": {
-      "name": "Economia Local"
+      "name": "Local Economy"
     }
   },
   {
     "model": "need.needcategory",
     "pk": 7,
     "fields": {
-      "name": "Serviço Social"
+      "name": "Social Service"
     }
   },
   {

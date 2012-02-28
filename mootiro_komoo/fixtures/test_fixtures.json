@@ -61,8 +61,8 @@
       "slug": "alfabetizacao-de-adultos",
       "description": "Temos muitas pessoas que não sabem ler e escrever.",
       "community": 1,
-      "categories": [3, 4, 5],
-      "target_audiences": [1]
+      "categories": [1],
+      "target_audiences": [6, 7]
     }
   }
 ]
