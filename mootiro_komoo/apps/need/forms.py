@@ -30,7 +30,10 @@ class NeedForm(forms.ModelForm):
 
     categories = forms.ModelMultipleChoiceField(
         queryset=NeedCategory.objects.all(),
-        widget=ImageSwitchMultiple
+        widget=ImageSwitchMultiple(
+            get_image_tick=NeedCategory.get_image_tick,
+            get_image_no_tick=NeedCategory.get_image_no_tick
+        )
     )
 
     target_audiences = forms.Field(

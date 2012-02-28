@@ -6,7 +6,7 @@ import re
 from django.template.defaultfilters import slugify as simple_slugify
 
 
-def slugify(term, slug_exists):
+def slugify(term, slug_exists=lambda s: False):
     """Receives a term and a validator for the created slug in a namespace.
     Returns a slug that is unique according to the validator.
     """

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+
 from django.db import models
 
 from taggit.managers import TaggableManager
@@ -15,6 +16,18 @@ class NeedCategory(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    @classmethod
+    def get_image_tick(cls, name):
+        print slugify.__doc__
+        return "%s-tick.png" % slugify(name)
+
+    @classmethod
+    def get_image_no_tick(cls, name):
+        return "%s-no-tick.png" % slugify(name)
+
+    def image(self):
+        return self.get_image_tick(self.name)
 
 
 class TargetAudience(models.Model):

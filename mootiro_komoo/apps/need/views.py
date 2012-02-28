@@ -53,7 +53,8 @@ def view(request, community_slug, need_slug):
 def list(request, community_slug):
     logger.debug('acessing need > list')
     community = get_object_or_404(Community, slug=community_slug)
-    return {'community': community}
+    needs = community.needs.all()
+    return {'community': community, 'needs': needs}
 
 
 # DOES NOT SIMPLY WORK WITH @ajax_request, please test before commit!
