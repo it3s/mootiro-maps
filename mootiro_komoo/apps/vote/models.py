@@ -12,7 +12,7 @@ class Vote(models.Model):
     """
     author = models.ForeignKey(User, blank=True, null=True)
 
-    ## TODO need modeling
+    like = models.NullBooleanField(null=True, blank=True)
 
     # dynamic ref
     content_type = models.ForeignKey(ContentType,  null=True, blank=True)
