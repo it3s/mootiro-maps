@@ -1,0 +1,35 @@
+/*
+.mootiro_bar a {
+  color: white;
+}
+*/
+.mootiro_bar {
+  height: 25px;
+  background-color: #ececec;
+}
+.mootiro_bar ol {
+  display: block;
+  list-style: none outside none;
+  margin: 0;
+  padding: 0;
+}
+.mootiro_bar ol li {
+  display: inline-block;
+  line-height: 27px;
+  padding: 0;
+  margin: 0 10px;
+  position: relative;
+  vertical-align: top;
+}
+.mootiro_bar .services {
+  float:left;
+}
+.mootiro_bar .userinfo {
+  float:right;
+}
+#LoginBox {
+  display:none;
+}
+#Top.Unlogged #Menu {
+  width:100% !important;
+}

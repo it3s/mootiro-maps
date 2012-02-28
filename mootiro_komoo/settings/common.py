@@ -84,7 +84,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'mootiro_bar.DjangoMiddleware',
+    'lib.mootiro_bar.DjangoMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -92,8 +92,8 @@ AUTHENTICATION_BACKENDS = (
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
 # Connect Mootiro Bar to django-cas:
-MOOTIRO_BAR_LOGIN_URL = '/accounts/login'
-MOOTIRO_BAR_LOGOUT_URL = '/accounts/logout'
+MOOTIRO_BAR_LOGIN_URL = '/user/login'
+MOOTIRO_BAR_LOGOUT_URL = '/user/logout'
 
 ROOT_URLCONF = 'mootiro_komoo.urls'
 

@@ -34,6 +34,7 @@ def prod():
 def build_environment():
     """build environment: pip install everything + patch django for postgis encoding problem on postgres 9.1 """
     local("pip install -r settings/requirements.txt")
+    local('cd lib; git clone git@it3s.org:mootiro.bar ; ln -s mootiro_bar/mootiro_bar mootiro_bar')
     local("patch -p0 `which python | sed -e 's/bin\/python$/lib\/python2.7\/site-packages\/django\/contrib\/gis\/db\/backends\/postgis\/adapter.py/'` ../docs/postgis-adapter-2.patch")
 
 
