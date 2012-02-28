@@ -6,7 +6,9 @@ from django.template import Template, Context
 #TODO: Update the form field when change the map overlays.
 class AddressWithMapWidget(HiddenInput):
     class Media:
-        js = ('http://maps.google.com/maps/api/js?sensor=false&libraries=drawing', 'js/komoo_map.js')
+        js = ('http://maps.google.com/maps/api/js?sensor=false&libraries=drawing',
+              'js/infobox_packed.js',
+              'js/komoo_map.js')
 
     def render(self, name, value, attrs=None):
         default_html = super(AddressWithMapWidget, self).render(name, value, attrs)

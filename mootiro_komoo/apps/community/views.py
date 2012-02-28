@@ -54,7 +54,11 @@ def view(request, community_slug):
             {
                 'type': 'Feature',
                 'geometry': json.loads(community.geometry.geojson),
-                'properties': {'type': 'community'}
+                'properties': {
+                    'type': 'community',
+                    'name': community.name,
+                    'community_slug': community.slug
+                    }
             }
         ]
     })
@@ -82,7 +86,11 @@ def communities_geojson(request):
             {
                 'type': 'Feature',
                 'geometry': json.loads(community.geometry.geojson),
-                'properties': {'type': 'community'}
+                'properties': {
+                    'type': 'community',
+                    'name': community.name,
+                    'community_slug': community.slug
+                }
             } for community in communities
         ]
     })

@@ -21,7 +21,7 @@ komoo.RegionTypes = [
         color: '#ff0',
         icon: '',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
-        formURL: '/community/new' // TODO: Dont use hardcoded urls
+        formURL: dutils.urls.resolve('new_community')
     },
     {
         type: 'need',
@@ -92,10 +92,13 @@ komoo.MapOptions = {
     googleMapOptions: {
         center: new google.maps.LatLng(-23.55, -46.65),  // São Paulo, SP - Brasil
         zoom: 13,
-        mapTypeId: google.maps.MapTypeId.SATELLITE,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
         streetViewControl: false,
+        scaleControl: true,
         panControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},
-        zoomControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP}
+        zoomControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},
+        scaleControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM,
+                              style: google.maps.ScaleControlStyle.DEFAULT}
     }
 };
 
@@ -125,6 +128,7 @@ komoo.MapOptions = {
  * @property {JQuery} event
  * @property {google.maps.Circle} radiusCircle
  * @property {Object} overlayOptions
+ * @propert {InfoBox | google.maps.InfoWindow} infoWindow
  */
 komoo.Map = function (element, options) {
     var komooMap = this;
@@ -180,6 +184,29 @@ komoo.Map = function (element, options) {
     //komooMap.googleMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
     //        controlSelector.get(0));
 
+
+    /* Create the infoWindow */
+    if (InfoBox) {
+        komooMap.infoWindow = new InfoBox({
+            pixelOffset: new google.maps.Size(0, -20),
+            closeBoxMargin: '10px',
+            boxStyle: {
+                background: 'url(/static/img/infowindow-arrow.png) no-repeat 0 10px', // TODO: Hardcode is evil
+                width: '200px',
+            }
+        });
+        /* Clear the overlay property from infowindow when close it */
+        google.maps.event.addDomListener(komooMap.infoWindow, 'domready', function (e) {
+            var closeBox = komooMap.infoWindow.div_.firstChild;
+            google.maps.event.addDomListener(closeBox, 'click', function (e) {
+                komooMap.infoWindow.overlay = undefined;
+            });
+        });
+    } else {
+        if (window.console) console.log('Using default info window.');
+        komooMap.infoWindow = new google.maps.InfoWindow();
+    }
+
     /* Uses HTML5 Geo Location */
     if (options.useGeoLocation) komooMap.goToUserLocation();
 
@@ -207,9 +234,8 @@ komoo.Map = function (element, options) {
     /* Sends the ajax request when idle */
     google.maps.event.addListener(komooMap.googleMap, 'idle', function () {
         if (!komooMap.boundsAwaiting.equals(komooMap.boundsLoaded)) {
-            // TODO: Don't hardcode the url
-            var url = '/community/get_geojson?bounds=' + komooMap.boundsAwaiting.toUrlValue();
-            console.log('Loading overlays from server...');
+            var url = dutils.urls.resolve('communities_geojson') + '?bounds=' + komooMap.boundsAwaiting.toUrlValue();
+            if (window.console) console.log('Loading overlays from server...');
             // TODO: Load only overlays that were not loaded yet.
             $.ajax({
                 url: url,
@@ -543,7 +569,17 @@ komoo.Map.prototype = {
      * @returns {void}
      */
     _attachOverlayEvents: function (overlay) {
+        var infoWindowTimer;
         var komooMap = this;
+        var infoContent = $('<div>').addClass('map-infowindow-content');
+        if (InfoBox) {
+            infoContent.css({
+                background: 'white',
+                padding: '10px',
+                margin: '0 0 0 15px'
+            });
+        }
+
         google.maps.event.addListener(overlay, 'click', function (e) {
             if (window.console) console.log('Clicked on overlay');
             if (komooMap.addPanel.is(':visible') && this != komooMap.currentOverlay) {
@@ -579,6 +615,34 @@ komoo.Map.prototype = {
                 komooMap.setEditMode(null);
                 komooMap.setCurrentOverlay(this);  // Select the clicked overlay
             }
+        });
+
+        if (overlay.properties.type == 'community') {
+            // TODO: Add more info
+            var infoContentTitle = $('<a>').attr('href',
+                    dutils.urls.resolve('view_community', {community_slug: overlay.properties.community_slug}));
+            infoContentTitle.text(overlay.properties.name);
+            infoContent.append(infoContentTitle);
+        }
+        // TODO: Add timer
+        var mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
+            if (komooMap.infoWindow.overlay &&
+                    komooMap.infoWindow.overlay == overlay) {
+                return;
+            }
+            overlay.mouseLatLng = e.latLng;
+            clearTimeout(infoWindowTimer);
+            infoWindowTimer = setTimeout(function () {
+                komooMap.infoWindow.overlay = overlay;
+                komooMap.infoWindow.setContent(infoContent.get(0));
+                komooMap.infoWindow.setPosition(e.latLng);
+                komooMap.infoWindow.open(komooMap.googleMap);
+                console.log(overlay.properties.name);
+            }, 1000);
+        });
+
+        google.maps.event.addListener(overlay, 'mouseout', function (e) {
+            clearTimeout(infoWindowTimer);
         });
     },
 

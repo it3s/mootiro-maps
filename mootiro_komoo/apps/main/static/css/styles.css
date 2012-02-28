@@ -18,7 +18,7 @@ img { border: 0px }
 a { text-decoration: none }
 a:link    { color: #4092A9 }
 a:visited { color: #4092A9 }
-a:hover   { 
+a:hover   {
     color: #333;
     text-decoration: none;
 }
@@ -183,7 +183,12 @@ ul.horizontal li {
     clear: both;
     background: #dceff4;
 }
-.map-panel, .map-button {
+.map-infowindow-content {
+    -moz-box-shadow: 2px 2px 2px black;
+    -webkit-box-shadow: 2px 2px 2px black;
+    box-shadow: 2px 2px 2px black;
+}
+.map-panel, .map-button, .map-infowindow-content {
     border-radius        : 6px;
     -moz-border-radius   : 6px;
     -webkit-border-radius: 6px;
