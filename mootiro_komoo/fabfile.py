@@ -42,6 +42,11 @@ def run():
     local('python manage.py runserver 8001 {}'.format(django_settings[env]))
 
 
+def js_urls():
+    """Creates a javascript file containing urls"""
+    local('python manage.py js_urls {}'.format(django_settings[env]))
+
+
 def syncdb(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
     noinput = "" if create_superuser else "--noinput"
