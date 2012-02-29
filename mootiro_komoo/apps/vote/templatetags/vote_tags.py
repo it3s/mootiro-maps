@@ -16,7 +16,14 @@ def vote(context, content_object):
     votes_queryset = Vote.get_votes_for(content_object)
     votes = {'up': votes_queryset.filter(like=True).count(),
              'down': votes_queryset.filter(like=False).count()}
-    return dict(content_type=c.id, object_id=content_object.id, votes=votes)
+    user_vote_query = votes_queryset.filter(author=context['user'])
+    if user_vote_query.count():
+        user_vote = 'up' if user_vote_query[0].like else 'down'
+    else:
+        user_vote = None
+
+    return dict(content_type=c.id, object_id=content_object.id, votes=votes,
+                user_vote=user_vote)
 
 
 @register.inclusion_tag('vote/vote_staticfiles.html', takes_context=True)

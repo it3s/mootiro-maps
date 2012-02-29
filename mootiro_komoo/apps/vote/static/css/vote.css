@@ -1,13 +1,19 @@
 .votable{
     min-height: 50px;
     min-width: 270px;
-    background-color: rgba(204, 204, 215, 0.8);
+    background-color: rgb(235, 249, 255);
     padding: 5px;
-    /*background-image: -moz-linear-gradient(center bottom , rgb(64, 146, 169) 0%, rgb(62, 186, 194) 100%) !important;*/
-    border-radius: 3px;
+    border-radius: 5px;
+    border-color: rgb(62, 186, 194);
+    border-style: solid;
+    border-width: 1px;
+}
+.vote{
+    display: inline-block;
+    margin: 0 5px;
 }
 .vote-num{
-    color: #444444;
+    color: #777777;
     font-size: 0.9em;
     font-weight:bold;
     vertical-align: top;
@@ -17,23 +23,49 @@
     display: inline-block;
     background: #dddddd url("/static/img/up.png") no-repeat center;
     padding: 3px;
-    border-radius: 2px;
+    border-radius: 4px;
     width: 15px;
     height: 15px;
     margin: 0 7px;
+    border: solid 1px #bbbbbb;
 }
 .vote-up a:hover{
+    background-color: #cecece;
+    box-shadow: 1px 1px 1px #666666 inset;
     background-image: url("/static/img/up-hover.png");
+}
+.vote-up.active a{
+    display: inline-block;
+    background: #dddddd url("/static/img/up-active.png") no-repeat center;
+    padding: 3px;
+    border-radius: 4px;
+    width: 15px;
+    height: 15px;
+    margin: 0 7px;
+    border: solid 1px #bbbbbb;
 }
 .vote-down a{
     display: inline-block;
     background: #dddddd url("/static/img/down.png") no-repeat center;
     padding: 3px;
-    border-radius: 2px;
+    border-radius: 4px;
     width: 15px;
     height: 15px;
     margin: 0 7px;
+    border: solid 1px #bbbbbb;
 }
 .vote-down a:hover{
+    background-color: #cecece;
+    box-shadow: 1px 1px 1px #666666 inset;
     background-image: url("/static/img/down-hover.png");
+}
+.vote-down.active a{
+    display: inline-block;
+    background: #dddddd url("/static/img/down-active.png") no-repeat center;
+    padding: 3px;
+    border-radius: 4px;
+    width: 15px;
+    height: 15px;
+    margin: 0 7px;
+    border: solid 1px #bbbbbb;
 }
