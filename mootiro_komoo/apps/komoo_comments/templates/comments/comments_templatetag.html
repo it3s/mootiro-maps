@@ -18,7 +18,9 @@
 
 {% autoescape off %}
     {{ comments_list }}
+    {% if has_comments %}
     <a class="btnShowMore" href='#'>ver mais ...</a>
+    {% endif %}
     <script type="text/javascript">
         load_info = {
             width: "{{ width }}",
@@ -27,4 +29,5 @@
             object_id: "{{ object_id }}"
         };
     </script>
+
 {% endautoescape %}

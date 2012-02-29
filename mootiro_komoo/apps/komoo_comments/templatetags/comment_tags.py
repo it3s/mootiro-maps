@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from ..forms import FormComment
 from ..views import comments_list
+from ..models import Comment
 
 register = template.Library()
 
@@ -42,8 +43,10 @@ def comments(context, content_object, arg1='', arg2=''):
 
     comments = comments_list(content_object=content_object, context=context,
                     width=width, height=height, root=True).content
+    has_comments = Comment.get_comments_for(content_object).count()
     return dict(form_comment=form, comments_list=comments, width=width,
-                height=height, content_type=c.id, object_id=content_object.id)
+                height=height, content_type=c.id, object_id=content_object.id,
+                has_comments=has_comments)
 
 
 @register.inclusion_tag('comments/comments_staticfiles.html')
