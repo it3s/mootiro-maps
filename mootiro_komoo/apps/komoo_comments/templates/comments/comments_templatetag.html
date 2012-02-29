@@ -20,11 +20,11 @@
     {{ comments_list }}
     <a class="btnShowMore" href='#'>ver mais ...</a>
     <script type="text/javascript">
-        storageSet('load_info', {
+        load_info = {
             width: "{{ width }}",
             height: "{{ height }}",
             content_type: "{{ content_type }}",
             object_id: "{{ object_id }}"
-        });
+        };
     </script>
 {% endautoescape %}

@@ -21,7 +21,7 @@
           commentsListToggle($(evt.target).siblings('.link_subcomments'));
         }
         comment_form.slideToggle('fast');
-        return false;
+        // return false;
       });
 
       // add subcomments list
@@ -66,7 +66,7 @@
 
       $btnShowMore.live('click', function(evt){
         evt.preventDefault();
-        var args = storageGet('load_info');
+        var args = load_info;
         args.page = ++page;
         args.wrap = 0;
 

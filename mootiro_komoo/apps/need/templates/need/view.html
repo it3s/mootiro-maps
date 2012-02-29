@@ -27,7 +27,7 @@
     <h4>Tags</h4>
     {{ need.tags.all|join:", " }}
 </div>
-  
+
 
 
 <div class="right-bar">
@@ -56,10 +56,9 @@
 <div class="clear-both"></div>
 {% comments need %}
 
-{% block css %}
-    {% comments_staticfiles %}
 {% endblock %}
 
 
-
+{% block page_scripts %}
+    {% comments_staticfiles %}
 {% endblock %}
