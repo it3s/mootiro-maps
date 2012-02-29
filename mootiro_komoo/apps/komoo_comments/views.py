@@ -32,8 +32,9 @@ def comments_add(request):
         comment = form_comment.save(user=request.user)
         return {
             'success': True,
-            'comment': render_to_response('comments/comment.html', dict(comment=comment, comment_class=''),
-                context_instance=RequestContext(request)).content
+            'comment': render_to_response('comments/comment.html',
+                        dict(comment=comment, comment_class=''),
+                        context_instance=RequestContext(request)).content
         }
     else:
         logger.debug('invalid form: {}'.format(form_comment.errors))

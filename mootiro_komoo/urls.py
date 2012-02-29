@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'', include('need.urls')),
     url(r'', include('proposal.urls')),
     url(r'^comments/', include('komoo_comments.urls')),
+    url(r'^vote/', include('vote.urls')),
 
     # Community URLs go last because one of them can match anything
     url(r'', include('community.urls')),
