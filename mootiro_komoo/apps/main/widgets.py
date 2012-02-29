@@ -8,7 +8,6 @@ from django.forms.widgets import flatatt
 from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
-from django.template.defaultfilters import slugify
 
 from annoying.functions import get_config
 
@@ -109,7 +108,14 @@ class MultipleAutocompleteBase(forms.TextInput):
 
     def render_js(self, elem_id):
         if self.autocomplete_url:
-            options_str = "{autocomplete_url: '%s'}" % self.autocomplete_url
+            options_str = """
+            { 'autocomplete_url': '%(url)s',
+              'height':'auto',
+              'width':'100%%', }
+            """ % {
+                'url': self.autocomplete_url,
+            }
+
         else:
             options_str = ""
 
@@ -218,8 +224,8 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
     class Media:
         js = ('lib/jquery.imagetick.min.js',)
 
-    def __init__(self, get_image_tick, get_image_no_tick, attrs=None, *a, **kw):
-        super(ImageSwitchMultiple, self).__init__(attrs, *a, **kw)
+    def __init__(self, get_image_tick, get_image_no_tick, *a, **kw):
+        super(ImageSwitchMultiple, self).__init__(*a, **kw)
         self.get_image_tick = get_image_tick
         self.get_image_no_tick = get_image_no_tick
 
@@ -237,6 +243,7 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
             if has_id:
                 final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], i))
 
+            print "FINAL_ATTRS ===", final_attrs
             image_tick = self.get_image_tick(option_label)
             image_no_tick = self.get_image_no_tick(option_label)
             cb = ImageSwitch(image_tick, image_no_tick, attrs=final_attrs,

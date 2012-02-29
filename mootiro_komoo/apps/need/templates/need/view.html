@@ -4,8 +4,6 @@
 {% block title %}{{ need.title }} at {{ need.community.name }}{% endblock %}
 
 {% block content %}
-
-
 <div class="main-column">
   <h3>
     {{ need.title }}
@@ -27,8 +25,6 @@
     <h4>Tags</h4>
     {{ need.tags.all|join:", " }}
 </div>
-
-
 
 <div class="right-bar">
   <img class="map-preview" alt="map preview" src=""/>
@@ -57,7 +53,6 @@
 {% comments need %}
 
 {% endblock %}
-
 
 {% block page_scripts %}
     {% comments_staticfiles %}

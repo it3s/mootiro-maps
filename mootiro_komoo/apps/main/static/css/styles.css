@@ -86,8 +86,6 @@ ul.horizontal li {
     clear: both;
     background: #eff8f9;
 }
-
-
 #tabs .tab {
     position: absolute;
     bottom: 0;
@@ -241,21 +239,10 @@ ul.horizontal li {
     display: inline !important;
 }
 
-/* Ajax Search */
-.ajax-search { float: right }
-.ajax-search input {
-    width: 200px;
-    background: #fff url("../img/glass.png") no-repeat right bottom;
-}
-
-/* Needs List */
-div.list > div { padding: 5px 20px }
-div.list > div:first-child { padding-top: 20px }
-div.list > div:last-child { padding-bottom: 20px }
-
-/* Need View */
+/* Page layout */
 .main-column {
-    max-width: 700px;
+    width: 700px;
+    display: block;
     margin-right: 30px;
     float: left;
 }
@@ -281,10 +268,38 @@ div.list > div:last-child { padding-bottom: 20px }
     background-color: #dceff4;
     margin: 5px 0;
 }
+
+/* Forms */
+form .control-group { clear: both }
+form .form-actions {
+    background: none;
+    border: none;
+}
+
+#need_form { width: 100% }
+#need_form input[type=text], #need_form textarea { width: 100% }
+#need_form #div_id_categories ul { display: inline-block }
+#need_form #div_id_categories li {
+    float: left;
+    margin: 0 2px;
+}
+
+/* Ajax Search */
+.ajax-search { float: right }
+.ajax-search input {
+    width: 200px;
+    background: #fff url("../img/glass.png") no-repeat right bottom;
+}
+
+/* Object Listing */
+div.list > div { padding: 5px 20px }
+div.list > div:first-child { padding-top: 20px }
+div.list > div:last-child { padding-bottom: 20px }
+
+/* Objects Viewing */
 .map-preview {
     width: 200px;
     height: 200px;
     display: block;
     background: #bbb;
 }
-
