@@ -1,13 +1,12 @@
 {% extends "global.html" %}
+{% load crispy_forms_tags %}
+
 {% block title %}Create or edit proposal{% endblock %}
 
 {% block content %}
-  <h1>Create or edit proposal</h1>
-  <form action="{{action}}" method="post">
-    {% csrf_token %}
-    <table>
-      {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
-  </form>
+
+<div class="main-column">
+  {% crispy form form.helper %}
+</div>
+
 {% endblock %}

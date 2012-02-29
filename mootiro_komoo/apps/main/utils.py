@@ -5,6 +5,9 @@ import re
 
 from django.template.defaultfilters import slugify as simple_slugify
 
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit, Reset
+
 
 def slugify(term, slug_exists=lambda s: False):
     """Receives a term and a validator for the created slug in a namespace.
@@ -19,3 +22,10 @@ def slugify(term, slug_exists=lambda s: False):
         slug = original + '-' + str(n)
         n += 1
     return slug
+
+
+class MooHelper(FormHelper):
+    def __init__(self, *a, **kw):
+        super(MooHelper, self).__init__(*a, **kw)
+        self.add_input(Submit('submit', 'Submit'))
+        self.add_input(Reset('reset', 'Reset'))

@@ -7,11 +7,13 @@ from need.models import Need
 
 
 class Proposal(models.Model):
-    '''http://dev.mootiro.org/projects/needs/wiki/EntidadesProposta'''
-    name = models.CharField('proposal name', max_length=256)
+    """A proposed solution for solving a need"""
+
+    title = models.CharField(max_length=256)
+    description = models.TextField()
+    number = models.IntegerField(null=False)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
-    content = models.TextField()
 
     # Relationships
     need = models.ForeignKey(Need, related_name='proposals')
