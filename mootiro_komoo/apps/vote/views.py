@@ -16,16 +16,7 @@ def vote_poc(request):
     logger.debug('acessing vote > vote_poc')
     from need.models import Need
     need = Need.objects.get(pk=1)
-    ct = ContentType.objects.get_for_model(need)
-    votes = Vote.get_votes_for(need)
-    votes_up = votes.filter(like=True).count()
-    votes_down = votes.filter(like=False).count()
-    return dict(content_object=need, content_type=ct.id, votes_up=votes_up,
-                votes_down=votes_down)
-
-
-def _get_from_request(request, field, method="POST"):
-    return getattr(request, method)[field][0]
+    return dict(content_object=need)
 
 
 @ajax_request
