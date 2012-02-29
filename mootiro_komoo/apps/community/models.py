@@ -18,6 +18,9 @@ class Community(models.Model):
     objects = models.GeoManager()
     geometry = models.PolygonField(srid=4326)
 
+    def __unicode__(self):
+        return self.name
+
     class Meta:
         verbose_name = "community"
         verbose_name_plural = "communities"

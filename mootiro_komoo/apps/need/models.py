@@ -44,6 +44,8 @@ class Need(models.Model):
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.CharField(max_length=256, unique=True, editable=False, blank=False)
     description = models.TextField()
+    creation_date = models.DateTimeField(auto_now_add=True)
+    last_update = models.DateTimeField(auto_now=True)
 
     # Relationships
     community = models.ForeignKey(Community, related_name="needs")

@@ -283,6 +283,7 @@ form .form-actions {
     float: left;
     margin: 0 2px;
 }
+#need_form #div_id_community input { width: 150px }
 
 /* Ajax Search */
 .ajax-search { float: right }

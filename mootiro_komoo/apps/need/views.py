@@ -5,7 +5,6 @@ import logging
 
 from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
-from django.core.urlresolvers import reverse
 from django.utils import simplejson
 
 from annoying.decorators import render_to
@@ -21,14 +20,11 @@ logger = logging.getLogger(__name__)
 @render_to('need/edit.html')
 def edit(request, community_slug="", need_slug=""):
     logger.debug('acessing need > edit')
-    # always receives both slugs or none of them
+    community = get_object_or_404(Community, slug=community_slug)
     if need_slug:
-        community = get_object_or_404(Community, slug=community_slug)
         need = get_object_or_404(Need, slug=need_slug, community=community)
-        action = reverse('edit_need', args=(community_slug, need_slug))
     else:
-        need = None
-        action = reverse('new_need')
+        need = Need(community=community)
     if request.POST:
         form = NeedForm(request.POST, instance=need)
         if form.is_valid():
@@ -36,9 +32,12 @@ def edit(request, community_slug="", need_slug=""):
             return redirect('view_need', community_slug=need.community.slug,
                         need_slug=need.slug)
         else:
-            return {'form': form, 'action': action}
+            return {'form': form}
     else:
-        return {'form': NeedForm(instance=need), 'action': action}
+        form = NeedForm(instance=need)
+        if need.id:
+            form.fields.pop('community')
+        return {'form': form}
 
 
 @render_to('need/view.html')

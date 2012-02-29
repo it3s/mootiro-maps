@@ -18,7 +18,8 @@ class Autocomplete(forms.TextInput):
         label_id: html id of the visible autocomplete field
         value_id: html id of the hidden field that contains data to be persisted
     """
-    def __init__(self, source_url, *a, **kw):
+    def __init__(self, model, source_url, *a, **kw):
+        self.model = model
         self.source_url = source_url
         super(Autocomplete, self).__init__(*a, **kw)
 
@@ -52,8 +53,7 @@ class Autocomplete(forms.TextInput):
         # attrs is consumed by the label field (autocomplete)
         label_attrs = self.build_attrs(attrs)  # must not have 'name' attribute
         if value:
-            # TODO: get label for initial bounded value. How?
-            label_attrs['value'] = escape(unicode(value))
+            label_attrs['value'] = self.model.objects.get(id=value)
         if not 'id' in self.attrs:
             label_attrs['id'] = label_id
 
