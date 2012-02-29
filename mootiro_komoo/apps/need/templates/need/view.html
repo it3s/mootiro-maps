@@ -1,16 +1,43 @@
 {% extends "global.html" %}
+{% load comment_tags %}
 
 {% block title %}{{ need.title }} at {{ need.community.name }}{% endblock %}
 
 {% block content %}
-Title: {{ need.title }}<br/>
-Slug: {{ need.slug }}<br/>
-Description: {{ need.description }}<br/>
-Categories: {{ need.categories.all }}<br/>
-Target audiences: {{ need.target_audiences.all }}<br/>
-Community: {{ need.community.name }}<br/>
-Tags: {{ need.tags.all }}
-<br/><br/>
-<a href="{% url edit_need need.community.slug need.slug %}">EDIT</a>
+
+
+<div class="main-column">
+  <h3>
+    {{ need.title }}
+    <a class="right" href="{% url edit_need need.community.slug need.slug %}">EDIT</a>
+  </h3>
+  <ul class="horizontal">
+    {% for c in need.categories.all %}
+    <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
+    {% endfor %}
+  </ul>
+  <div class="clear-both"></div>
+  <p>
+    <span class="apart">created by:</span>
+    <span class="apart">target audience: {{ need.target_audiences.all|join:", " }}</span>
+    <span class="apart">status:</span>
+  </p>
+  <p>{{ need.description }}</p>
+</div>
+  
+
+
+<div class="right-bar">
+  <img class="map-preview right" src=""/>
+</div>
+
+<div class="clear-both"></div>
+{% comments need %}
+
+{% block css %}
+    {% comments_staticfiles %}
+{% endblock %}
+
+
 
 {% endblock %}
