@@ -1,0 +1,29 @@
+{% extends 'global.html' %}
+
+{% block title %}Vote - Mootiro Maps {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <h2>Prova de Conceito para Votos do Mootiro Maps</h2>
+        </div>
+
+        <div class="row">
+            <div class="votable">
+                <div class="vote" object-id="{{ content_object.id }}" content-type="{{ content_type }}">
+                    <span class="vote-up"><a href="#">up</a></span> |
+                    <span class="vote-down"><a href="#">down</a></span>
+                </div>
+
+
+                <div>VoteTeste</div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/vote.css">
+    <script type="text/javascript" src="{{STATIC_URL}}js/vote.js"></script>
+{% endblock %}

@@ -22,4 +22,5 @@ class Vote(models.Model):
     @classmethod
     def get_votes_for(klass, obj):
         obj_content_type = ContentType.objects.get_for_model(obj)
-        return Vote.objects.filter(content_type=obj_content_type, object_id=obj.id)
+        return Vote.objects.filter(content_type=obj_content_type,
+            object_id=obj.id)
