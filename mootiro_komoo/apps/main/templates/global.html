@@ -18,13 +18,11 @@
     <!-- Mootiro_bar goes here -->
     <div id="root">
       <div id="tabs">
-        {% if community %}
-        <div class="tab">{{community.name}}</div>
-        {% else %}{% if need %}
-        <div class="tab">{{need.community.name}}</div>
+        {% if community or need %}
+        <div class="tab">{% firstof community.name need.community.name %}</div>
         {% else %}
         <div class="tab placeholder"></div>
-        {% endif %}{% endif %}
+        {% endif %}
       </div>
       <div id="top">
         <div id="logo"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></div>

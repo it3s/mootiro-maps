@@ -23,12 +23,34 @@
     <span class="apart">status:</span>
   </p>
   <p>{{ need.description }}</p>
+  <p>
+    <h4>Tags</h4>
+    {{ need.tags.all|join:", " }}
 </div>
   
 
 
 <div class="right-bar">
-  <img class="map-preview right" src=""/>
+  <img class="map-preview" alt="map preview" src=""/>
+  <div class="block">
+    <h3>Proposals</h3>
+    <div class="block">
+      <h3>Proposal 1</h3>
+      Lorem ipsum dolor sit amet.
+    </div>
+    <div class="block">
+      <h3>Proposal 2</h3>
+      Lorem ipsum dolor sit amet.
+    </div>
+  </div>
+  <div class="block">
+    <h3>Related needs</h3>
+    <ul>
+      <li>Need 1</li>
+      <li>Need 2</li>
+      <li>Need 3</li>
+    </ul>
+  </div>
 </div>
 
 <div class="clear-both"></div>
