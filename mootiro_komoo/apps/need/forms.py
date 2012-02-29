@@ -48,7 +48,10 @@ class NeedForm(forms.ModelForm):
     )
 
     def __init__(self, *a, **kw):
+        # Crispy forms configuration
         self.helper = MooHelper()
+        self.helper.form_id = "need_form"
+
         super(NeedForm, self).__init__(*a, **kw)
         # self.is_bound does not work properly with ModelForm
         if 'instance' in kw and kw['instance']:
