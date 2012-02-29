@@ -6,5 +6,6 @@ from django.conf.urls.defaults import patterns, url
 
 urlpatterns = patterns('vote.views',
     url(r'^$', 'vote_poc', name='vote_poc'),
+    url(r'^add/$', 'vote', name='vote'),
 
 )
