@@ -1,4 +1,13 @@
 <div class="vote" object-id="{{ object_id }}" content-type="{{ content_type }}">
-    <span class="vote-up"><a href="{% url vote %}">up</a>{{ votes.up }}</span> |
-    <span class="vote-down"><a href="{% url vote %}">down</a>{{ votes.down }}</span>
+    {% if user_vote and user_vote == "up" %}
+    <span class="vote-up active"><a href="{% url vote %}"><span class="vote-img"></span></a><span class="vote-num">{{ votes.up }}</span></span>
+    {% else %}
+    <span class="vote-up"><a href="{% url vote %}"><span class="vote-img"></span></a><span class="vote-num">{{ votes.up }}</span></span>
+    {% endif %}
+
+    {% if user_vote and user_vote == "down" %}
+    <span class="vote-down active"><a href="{% url vote %}"><span class="vote-img"></span></a><span class="vote-num">{{ votes.down }}</span></span>
+    {% else %}
+    <span class="vote-down"><a href="{% url vote %}"><span class="vote-img"></span></a><span class="vote-num">{{ votes.down }}</span></span>
+    {% endif %}
 </div>
