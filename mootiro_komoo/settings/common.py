@@ -130,6 +130,7 @@ INSTALLED_APPS = [
     'proposal',
     'komoo_comments',
     'vote',
+    'komoo_resource',
     'user_cas',
 
 ]
