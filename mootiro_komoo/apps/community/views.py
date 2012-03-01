@@ -5,9 +5,10 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import logging
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render_to_response
 from django.http import HttpResponse
 from django.utils import simplejson
+from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 
@@ -19,9 +20,13 @@ from community.forms import CommunityForm, CommunityMapForm
 logger = logging.getLogger(__name__)
 
 
-@render_to('community/community_edit.html')
 def edit(request, community_slug=""):
     logger.debug('acessing Community > edit')
+
+    if request.is_ajax():
+        template_file = 'community/community_form.html'
+    else:
+        template_file = 'community/community_edit.html'
 
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
@@ -33,13 +38,22 @@ def edit(request, community_slug=""):
         form = CommunityForm(request.POST, instance=community)
         if form.is_valid():
             community = form.save()
-            #return redirect(view, community.slug)
-            return {'redirect': reverse('view_community',
-                                        args=(community.slug,))}
+
+            if not request.is_ajax():
+                return redirect(view, community.slug)
+
+            return render_to_response(template_file,
+                    {'redirect': reverse('view_community',
+                                        args=(community.slug,))},
+                    context_instance=RequestContext(request))
         else:
-            return {'form': form, 'action': action}
+            return render_to_response(template_file,
+                    {'form': form, 'action': action},
+                    context_instance=RequestContext(request))
     else:
-        return {'form': CommunityForm(instance=community), 'action': action}
+        return render_to_response(template_file,
+                {'form': CommunityForm(instance=community), 'action': action},
+                context_instance=RequestContext(request))
 
 
 @render_to('community/community_view.html')

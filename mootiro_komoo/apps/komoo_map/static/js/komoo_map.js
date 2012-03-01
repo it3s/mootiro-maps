@@ -31,7 +31,7 @@ komoo.RegionTypes = [
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
                        google.maps.drawing.OverlayType.MARKER],
-        formUrl: '',
+        formURL: dutils.urls.resolve('new_need', {community_slug: 'community_slug'})
         //disabled: true
     },
     {

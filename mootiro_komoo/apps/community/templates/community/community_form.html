@@ -1,0 +1,11 @@
+{% if redirect %}
+  <script>window.location = '{{redirect}}';</script>
+{% else %}
+  <form action="{{action}}" method="post">
+    {% csrf_token %}
+    <table>
+      {{ form }}
+    </table>
+    <input type="submit" value="Submit" />
+  </form>
+{% endif %}

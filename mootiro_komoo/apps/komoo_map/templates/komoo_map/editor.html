@@ -48,7 +48,7 @@
                 $('#map-canvas-{{ map.pk }}').slideUp();
                 var geojson = map.getGeoJSON(true);
                 if (geojson.features.length > 0) {
-                    var url = overlayType.formURL;
+                    var url = overlayType.formURL.replace('community_slug', community_slug);
                     var context = $('#dinamic-form');
                     $.ajax({
                         url: url,

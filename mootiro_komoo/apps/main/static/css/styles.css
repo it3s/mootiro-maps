@@ -80,6 +80,13 @@ ul.horizontal li {
     background: #dceff4;
     display: block;
 }
+#dinamic-form,
+#main-content {
+    padding: 15px 60px;
+}
+#dinamic-form {
+    width: 700px;
+}
 .highlight {
     margin-top: 30px;
     clear: both;

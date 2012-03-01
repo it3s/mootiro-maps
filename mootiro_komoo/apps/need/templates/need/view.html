@@ -4,54 +4,55 @@
 {% block title %}{{ need.title }} at {{ need.community.name }}{% endblock %}
 
 {% block content %}
-<div class="main-column">
-  <h3>
-    {{ need.title }}
-    <a class="right" href="{% url edit_need need.community.slug need.slug %}">EDIT</a>
-  </h3>
-  <ul class="horizontal">
-    {% for c in need.categories.all %}
-    <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
-    {% endfor %}
-  </ul>
-  <div class="clear-both"></div>
-  <p>
-    <span class="apart">created by:</span>
-    <span class="apart">target audience: {{ need.target_audiences.all|join:", " }}</span>
-    <span class="apart">status:</span>
-  </p>
-  <p>{{ need.description }}</p>
-  <p>
-    <h4>Tags</h4>
-    {{ need.tags.all|join:", " }}
-</div>
-
-<div class="right-bar">
-  <img class="map-preview" alt="map preview" src=""/>
-  <div class="block">
-    <h3>Proposals</h3>
-    <div class="block">
-      <h3>Proposal 1</h3>
-      Lorem ipsum dolor sit amet.
-    </div>
-    <div class="block">
-      <h3>Proposal 2</h3>
-      Lorem ipsum dolor sit amet.
-    </div>
-  </div>
-  <div class="block">
-    <h3>Related needs</h3>
-    <ul>
-      <li>Need 1</li>
-      <li>Need 2</li>
-      <li>Need 3</li>
+<div id="main-content">
+  <div class="main-column">
+    <h3>
+      {{ need.title }}
+      <a class="right" href="{% url edit_need need.community.slug need.slug %}">EDIT</a>
+    </h3>
+    <ul class="horizontal">
+      {% for c in need.categories.all %}
+      <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
+      {% endfor %}
     </ul>
+    <div class="clear-both"></div>
+    <p>
+      <span class="apart">created by:</span>
+      <span class="apart">target audience: {{ need.target_audiences.all|join:", " }}</span>
+      <span class="apart">status:</span>
+    </p>
+    <p>{{ need.description }}</p>
+    <p>
+      <h4>Tags</h4>
+      {{ need.tags.all|join:", " }}
   </div>
+
+  <div class="right-bar">
+    <img class="map-preview" alt="map preview" src=""/>
+    <div class="block">
+      <h3>Proposals</h3>
+      <div class="block">
+        <h3>Proposal 1</h3>
+        Lorem ipsum dolor sit amet.
+      </div>
+      <div class="block">
+        <h3>Proposal 2</h3>
+        Lorem ipsum dolor sit amet.
+      </div>
+    </div>
+    <div class="block">
+      <h3>Related needs</h3>
+      <ul>
+        <li>Need 1</li>
+        <li>Need 2</li>
+        <li>Need 3</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="clear-both"></div>
+  {% comments need %}
 </div>
-
-<div class="clear-both"></div>
-{% comments need %}
-
 {% endblock %}
 
 {% block page_scripts %}
