@@ -20,7 +20,9 @@
 
                 $.post(_this.attr('href'), args, function(data){
                     if (data.success){
-                        alert('sucesso!');
+                        _this.parent().addClass('active');
+                        var vote_num = _this.siblings('.vote-num:first');
+                        vote_num.text(parseInt(vote_num.text(),10) + 1);
                     } else {
                         alert('falha : ' + data.error);
                     }
