@@ -16,6 +16,6 @@ def root(request):
     logger.debug('acessing Root')
     form = CommunityMapForm(request.POST)
 
-    return dict(form=form)
+    return dict(form=form, current_item='map')
 
 

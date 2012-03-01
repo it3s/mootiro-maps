@@ -72,12 +72,11 @@ ul.horizontal li {
 #tabs {
     position: relative;
     width: 100%;
-    min-height: 70px;
+    min-height: 33px;
     background: #fff;
     display: block;
 }
 #content {
-    padding: 15px 60px;
     background: #dceff4;
     display: block;
 }
@@ -100,7 +99,7 @@ ul.horizontal li {
 #tabs .tab.placeholder { background: none }
 #tabs .tab:first-child { margin-left: 60px }
 #top {
-    padding: 15px 0;
+    padding: 15px 0 0;
     background: #dceff4;
 }
 #top #logo, #top #navigation {
