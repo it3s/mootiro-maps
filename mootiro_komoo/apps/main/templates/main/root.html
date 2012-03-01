@@ -1,0 +1,21 @@
+{% extends "global.html" %}
+
+{% block title %}Mootiro Maps{% endblock %}
+
+{% block content %}
+<form method="post" id="map-form">
+  {% csrf_token %}
+  {{ form }}
+</form>
+{% endblock %}
+
+{% block page_scripts %}
+<script type="text/javascript">
+google.maps.event.addDomListener(window, 'load', function () {
+    if (!map.goToLastLocation()) {
+      console.log('AAAAAA');
+      map.goToUserLocation();
+    }
+  });
+</script>
+{% endblock %}

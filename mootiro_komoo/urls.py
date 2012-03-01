@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     # user and CAS urls
     url(r'^user/', include('user_cas.urls')),
 
+    url(r'^$', include('main.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'', include('need.urls')),
     url(r'', include('proposal.urls')),

@@ -7,6 +7,7 @@ from django.template import Template, Context
 class AddressWithMapWidget(HiddenInput):
     class Media:
         js = ('http://maps.google.com/maps/api/js?sensor=false&libraries=drawing',
+              'http://www.google.com/jsapi',
               'js/infobox_packed.js',
               'js/komoo_map.js')
 

@@ -233,6 +233,8 @@ komoo.Map = function (element, options) {
     });
     /* Sends the ajax request when idle */
     google.maps.event.addListener(komooMap.googleMap, 'idle', function () {
+        komooMap.saveLocation();
+
         if (!komooMap.boundsAwaiting.equals(komooMap.boundsLoaded)) {
             var url = dutils.urls.resolve('communities_geojson') + '?bounds=' + komooMap.boundsAwaiting.toUrlValue();
             if (window.console) console.log('Loading overlays from server...');
@@ -246,7 +248,8 @@ komoo.Map = function (element, options) {
                     komooMap.loadGeoJSON(JSON.parse(data));
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert('ERRO!!!11!');
+                    console.error(textStatus);
+                    alert('ERRO!!!11! - ' + url);
                 }
             });
             komooMap.boundsLoaded.union(komooMap.boundsAwaiting);
@@ -260,6 +263,37 @@ komoo.Map = function (element, options) {
 }
 
 komoo.Map.prototype = {
+    /**
+     * Saves the map location to cookie
+     * @returns {void}
+     */
+    saveLocation: function () {
+        var komooMap = this;
+        var center = komooMap.googleMap.getCenter();
+        var zoom = komooMap.googleMap.getZoom();
+        komoo.createCookie('lastLocation', center.toUrlValue(), 90);
+        komoo.createCookie('lastZoom', zoom, 90);
+    },
+
+    /**
+     * Loads the location saved in a cookie and go to there.
+     * @see komoo.Map.saveLocation
+     * @returns {boolean}
+     */
+    goToLastLocation: function () {
+        var komooMap = this;
+        var lastLocation = komoo.readCookie('lastLocation')
+        var zoom = parseInt(komoo.readCookie('lastZoom'));
+        if (lastLocation && zoom) {
+            lastLocation = lastLocation.split(',');
+            var center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
+            komooMap.googleMap.setCenter(center);
+            komooMap.googleMap.setZoom(zoom);
+            return true;
+        }
+        return false;
+    },
+
     /**
      * Load the features from geoJSON into the map.
      * @param {json} geoJSON The json that will be loaded.
@@ -504,12 +538,20 @@ komoo.Map.prototype = {
      */
     goToUserLocation: function () {
         var komooMap = this;
-        if (navigator.geolocation) {
+        if (google.loader.ClientLocation) { // Gets from google service
+            var pos = new google.maps.LatLng(google.loader.ClientLocation.latitude,
+                                             google.loader.ClientLocation.longitude);
+        }
+        if (navigator.geolocation) { // Uses "HTML5"
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = new google.maps.LatLng(position.coords.latitude,
                                                  position.coords.longitude);
                 komooMap.googleMap.setCenter(pos);
+            }, function () { // User denied the "HTML5" access so use the info from google
+                if (pos) komooMap.googleMap.setCenter(pos);
             });
+        } else { // Dont support "HTML5" so use info from google
+            if (pos) komooMap.googleMap.setCenter(pos);
         }
     },
 
@@ -689,7 +731,8 @@ komoo.Map.prototype = {
                 'overlaycomplete', function (e) {
             e.overlay.properties = {
                 userCanEdit: true,
-                type: komooMap.type
+                type: komooMap.type,
+                name: 'Sem nome'
             };
 
             // Switch back to non-drawing mode after drawing a shape.
@@ -841,7 +884,8 @@ komoo.Map.prototype = {
     },
 
     /**
-     *
+     * @param {String} mode
+     * @returns {void}
      */
     setEditMode: function (mode) {
         this.editMode = mode;
@@ -858,6 +902,9 @@ komoo.Map.prototype = {
                 this.streetViewPanel.get(0), options);
     },
 
+    /**
+     * @returns {JQuery}
+     */
     _createMainPanel: function () {
         var komooMap = this;
         var panel = $('<div>').addClass('map-panel');
@@ -925,6 +972,9 @@ komoo.Map.prototype = {
         return panel;
     },
 
+    /**
+     * @returns {JQuery}
+     */
     _createAddPanel: function () {
         var komooMap = this;
         var panel = $('<div>').addClass('map-panel');
@@ -975,14 +1025,23 @@ komoo.Map.prototype = {
         return panel.hide();
     },
 
+    /**
+     * @returns {void}
+     */
     _emit_mapclick: function (e) {
         this.event.trigger('mapclick', e);
     },
 
+    /**
+     * @returns {void}
+     */
     _emit_overlayclick: function (e) {
         this.event.trigger('overlayclick', e);
     },
 
+    /**
+     * @returns {void}
+     */
     _emit_changed: function (e) {
         this.event.trigger('changed', e);
     }
@@ -1012,7 +1071,7 @@ komoo.isPointInside = function (point, path) {
 };
 
 /**
- *
+ * @returns {JQuery}
  */
 komoo.createMapButton = function (name, title, onClick) {
     var selector = $('<div>').text(name).addClass('map-button');
@@ -1022,7 +1081,7 @@ komoo.createMapButton = function (name, title, onClick) {
 };
 
 /**
- *
+ * @returns {JQuery}
  */
 komoo.createMapMenu = function (name, items) {
     var selector = $('<div>').text(name).addClass('map-menu');
@@ -1040,7 +1099,7 @@ komoo.createMapMenu = function (name, items) {
 };
 
 /**
- *
+ * @returns {JQuery}
  */
 komoo.createMapTab = function (items) {
     var tabs = {
@@ -1074,4 +1133,46 @@ komoo.createMapTab = function (items) {
         tabs.containersSelector.append(tab.containerSelector);
     });
     return tabs;
+}
+
+/**
+ * Creates a cookie and save it.
+ * @param {String} name
+ * @param {String | Number} value
+ * @param {Number} days
+ * @returns {void}
+ */
+komoo.createCookie = function (name, value, days) {
+        if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        var expires = "; expires="+date.toGMTString();
+    }
+    else var expires = "";
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+/**
+ * Reads a cookie.
+ * @param {String} name
+ * @returns {String}
+ */
+komoo.readCookie = function (name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+    }
+    return null;
+}
+
+/**
+ * Removes a cookie.
+ * @param {String} name
+ * @returns {void}
+ */
+komoo.eraseCookie = function (name) {
+    createCookie(name,"",-1);
 }
