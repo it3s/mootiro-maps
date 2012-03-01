@@ -1,4 +1,4 @@
-<h2>Comments: </h2>
+<h2 class="comment-title">Comentários: </h2>
 
 <div id='divFormComment'>
     <a href="#" class="btnShowForm">Novo Comentário</a>
@@ -6,7 +6,9 @@
         <form method="post" id="formComment" class="stacked-form" action="{% url comments_add %}" >
             <fieldset>
                 {% csrf_token %}
-                {{ form_comment }}
+                {% for field in form_comment %}
+                    {{ field }}
+                {% endfor %}
                 <div class="clearfix">
                     <input type="submit" class="btnFormCommentSubmit button" value="save"/>
                 </div>

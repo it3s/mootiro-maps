@@ -310,7 +310,7 @@ div.list > div:last-child { padding-bottom: 20px }
 
 .vote{
     display: inline-block;
-    margin: 0 5px;
+    margin: 5px 0 0px 0;
 }
 .vote-num{
     color: #777777;
@@ -318,15 +318,16 @@ div.list > div:last-child { padding-bottom: 20px }
     font-weight:bold;
     vertical-align: top;
     padding-bottom: 2px;
+    margin-left: -5px;
 }
 .vote-up a{
     display: inline-block;
     background: #dddddd url("/static/img/up.png") no-repeat center;
     padding: 3px;
     border-radius: 4px;
-    width: 15px;
-    height: 15px;
-    margin: 0 7px;
+    width: 10px;
+    height: 10px;
+    /*margin: 0 4px;*/
     border: solid 1px #bbbbbb;
 }
 .vote-up a:hover{
@@ -335,23 +336,16 @@ div.list > div:last-child { padding-bottom: 20px }
     background-image: url("/static/img/up-hover.png");
 }
 .vote-up.active a{
-    display: inline-block;
     background: #dddddd url("/static/img/up-active.png") no-repeat center;
-    padding: 3px;
-    border-radius: 4px;
-    width: 15px;
-    height: 15px;
-    margin: 0 7px;
-    border: solid 1px #bbbbbb;
 }
 .vote-down a{
     display: inline-block;
     background: #dddddd url("/static/img/down.png") no-repeat center;
     padding: 3px;
     border-radius: 4px;
-    width: 15px;
-    height: 15px;
-    margin: 0 7px;
+    width: 10px;
+    height: 10px;
+    /*margin: 0 4px;*/
     border: solid 1px #bbbbbb;
 }
 .vote-down a:hover{
@@ -360,14 +354,7 @@ div.list > div:last-child { padding-bottom: 20px }
     background-image: url("/static/img/down-hover.png");
 }
 .vote-down.active a{
-    display: inline-block;
     background: #dddddd url("/static/img/down-active.png") no-repeat center;
-    padding: 3px;
-    border-radius: 4px;
-    width: 15px;
-    height: 15px;
-    margin: 0 7px;
-    border: solid 1px #bbbbbb;
 }
 
 /* =========== end of VOTE section ======= */
@@ -378,7 +365,6 @@ div.list > div:last-child { padding-bottom: 20px }
 }
 .comment-container{
     margin:20px 0 15px 15px;
-    /*background-color: rgb(220, 239, 244);*/
     background-color: rgb(235, 249, 255);
     padding: 10px 0 10px 10px;
     border-radius: 5px;
@@ -391,7 +377,7 @@ div.list > div:last-child { padding-bottom: 20px }
     margin: 0 15px;
 }
 .comment-header{
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 .comment-footer{
     margin-top: 15px;
@@ -400,8 +386,8 @@ div.list > div:last-child { padding-bottom: 20px }
     margin: 0 15px;
 }
 a.btnShowForm{
-    font-weight: bolder;
-    font-size: 1.2em;
+    font-weight: bold;
+    /*font-size: 1.2em;*/
     color: rgb(62, 186, 194);
 }
 .comment-form{
@@ -413,10 +399,13 @@ a.btnShowForm{
    margin-bottom: -1px;
 }
 .odd{
-    /*background-color: rgb(235, 249, 255);*/
     background-color: rgb(220, 239, 244);
 }
 .comments-list .inner-list{
     display: none;
+}
+.comment-title{
+    font-size: 1.2em;
+    color: #4f4f4f;
 }
 /* =========== end of COMMENT section ======= */

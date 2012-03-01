@@ -1,3 +1,4 @@
+{% load vote_tags %}
 <div class="comment-container {{ comment_class }}" commentID="{{ comment.id }}">
     <div class="comment-header">
         <a href="#">{% firstof comment.author.get_full_name comment.author.username 'anonymous' %}</a>  {{ comment.pub_date|date:'d/m/Y, H:i'}}
@@ -5,6 +6,9 @@
             ({{ comment.sub_comments }} respostas)
         {% endif %}
         <a href="#">Denunciar</a>
+        <div class="comment-vote">
+            {% vote comment %}
+        </div>
     </div>
 
     <div class="comment" >
@@ -19,7 +23,7 @@
             <form method='post' class='stacked-form' action='/comments/add/' >
                 <fieldset>
                     {% csrf_token %}
-                    <label>Comment:</label><textarea rows='5' cols='80' id="id_comment" name='comment' class='span8'></textarea>
+                    <!--label>Comment:</label--><textarea rows='5' cols='80' id="id_comment" name='comment' class='span8'></textarea>
                     <input type="hidden" name="content_type_id" value="{{ comment.content_type_id }}" id="id_content_type_id" />
                     <input type="hidden" name="object_id" value="{{ comment.object_id }}" id="id_object_id" />
                     <input type='hidden' name='parent_id' value="{{comment.id}}" id="id_parent_id" />
