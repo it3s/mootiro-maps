@@ -28,7 +28,7 @@ def vote(request):
             if 'content_type' in request.POST else None
         object_id = request.POST['object_id'] if 'object_id' in request.POST \
             else None
-        vote_obj, created = Vote.objects.get_or_create(content_type=content_type,
+        vote_obj, created = Vote.objects.get_or_create(content_type_id=content_type,
                                 object_id=object_id, author=request.user)
         print 'vote: {}  created: {}'.format(vote_obj, created)
         vote_obj.like = True if vote == 'up' else False
