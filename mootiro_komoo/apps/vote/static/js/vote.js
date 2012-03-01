@@ -1,23 +1,24 @@
 (function($){
 
   var vote = (function(){
-    $vote = $('.vote');
-    $vote_up = $('.vote-up');
-    $vote_down = $('.vote-down');
-    $vote_links = $vote.find('a');
+    $vote_links = $('.vote a');
 
     var init = function(){
+
       $vote_links.live('click', function(evt){
+        /* click on any vote link */
         evt.preventDefault();
         var _this = $(evt.target),
-          div_vote = _this.parent().parent();
+            div_vote = _this.parent().parent();
 
+        /* gather arguments info for the ajax request */
         args = {};
         args.vote = _this.parent().is('.vote-up') ? 'up' : 'down';
         args.csrfmiddlewaretoken = csrftoken;
         args.content_type = div_vote.attr('content-type');
         args.object_id = div_vote.attr('object-id');
 
+        /* ajax post on /vote/add/  */
         $.post(_this.attr('href'), args, function(data){
           if (data.success){
             if (! data.create) {
@@ -33,6 +34,7 @@
             vote_num.text(parseInt(vote_num.text(),10) + 1);
 
           } else {
+            /* holy crap, we have an error =( */
             alert('falha : ' + data.error);
           }
         }, 'json');

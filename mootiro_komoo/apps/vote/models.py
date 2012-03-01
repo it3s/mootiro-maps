@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 class Vote(models.Model):
     """
-    Vote Model. Should dinamically reference any table/object.
+    Vote Model. Should dinamically make reference to any table/object.
     """
     author = models.ForeignKey(User, blank=True, null=True)
 
@@ -21,6 +21,10 @@ class Vote(models.Model):
 
     @classmethod
     def get_votes_for(klass, obj):
+        """
+        returns a queryset for the votes of for any given object.
+        It can be chained later with any filter
+        """
         obj_content_type = ContentType.objects.get_for_model(obj)
         return Vote.objects.filter(content_type=obj_content_type,
             object_id=obj.id)

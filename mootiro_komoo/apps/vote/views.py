@@ -2,8 +2,6 @@
 from __future__ import unicode_literals
 import logging
 
-# from django.contrib.contenttypes.models import ContentType
-
 from annoying.decorators import ajax_request, render_to
 
 from vote.models import Vote
@@ -13,6 +11,7 @@ logger = logging.getLogger(__name__)
 
 @render_to('vote/vote_poc.html')
 def vote_poc(request):
+    """Proof of concept (test) for voting"""
     logger.debug('acessing vote > vote_poc')
     from need.models import Need
     need = Need.objects.get(pk=1)
@@ -21,6 +20,15 @@ def vote_poc(request):
 
 @ajax_request
 def vote(request):
+    """
+    method for voting.
+    It ensures the user is authenticated then creates or update a
+    vote given a content_type and  a object_id.
+    params:
+        vote: String 'up' or 'down' for your vote
+        object_id: id of the object you are voting
+        content_type: id of the content_type you are voting
+    """
     logger.debug('acessing vote > vote : request:\n{}'.format(request.POST))
     if request.user and not request.user.is_anonymous():
         vote = request.POST['vote'] if 'vote' in request.POST else None
