@@ -16,9 +16,12 @@ def vote(context, content_object):
     votes_queryset = Vote.get_votes_for(content_object)
     votes = {'up': votes_queryset.filter(like=True).count(),
              'down': votes_queryset.filter(like=False).count()}
-    user_vote_query = votes_queryset.filter(author=context['user'])
-    if user_vote_query.count():
-        user_vote = 'up' if user_vote_query[0].like else 'down'
+    if 'user' in context and not context['user'].is_anonymous():
+        user_vote_query = votes_queryset.filter(author=context.get('user', 0))
+        if user_vote_query.count():
+            user_vote = 'up' if user_vote_query[0].like else 'down'
+        else:
+            user_vote = None
     else:
         user_vote = None
 
