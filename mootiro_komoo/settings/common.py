@@ -84,6 +84,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django_cas.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.transaction.TransactionMiddleware',
+    'reversion.middleware.RevisionMiddleware',
     'lib.mootiro_bar.DjangoMiddleware',
 ]
 
@@ -120,6 +122,7 @@ INSTALLED_APPS = [
     'lib.taggit',
     'lib.django_js_utils',
     'crispy_forms',
+    'reversion',
     'komoo_map',
     'community',
     'main',

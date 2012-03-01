@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from django.contrib.auth.models import User
+import reversion
 from need.models import Need
 
 
@@ -28,3 +29,5 @@ class Proposal(models.Model):
     class Meta:
         verbose_name = "solution proposal"
         verbose_name_plural = "solution proposals"
+
+reversion.register(Proposal)

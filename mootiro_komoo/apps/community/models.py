@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.contrib.gis.db import models
+import reversion
 from main.utils import slugify
 
 
@@ -36,3 +37,5 @@ class Community(models.Model):
             self.slug = slugify(self.name, self.slug_exists)
         super(Community, self).save(*args, **kwargs)
     ### END ###
+
+reversion.register(Community)

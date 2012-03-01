@@ -4,6 +4,7 @@ from __future__ import unicode_literals  # unicode by default
 
 from django.db import models
 
+import reversion
 from taggit.managers import TaggableManager
 #from taggit.models import TaggedItemBase
 
@@ -68,3 +69,5 @@ class Need(models.Model):
             self.slug = slugify(self.title, self.slug_exists)
         super(Need, self).save(*args, **kwargs)
     ### END ###
+
+reversion.register(Need)
