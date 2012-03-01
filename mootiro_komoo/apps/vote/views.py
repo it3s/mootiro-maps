@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import logging
 
-from django.contrib.contenttypes.models import ContentType
+# from django.contrib.contenttypes.models import ContentType
 
 from annoying.decorators import ajax_request, render_to
 
@@ -28,13 +28,11 @@ def vote(request):
             if 'content_type' in request.POST else None
         object_id = request.POST['object_id'] if 'object_id' in request.POST \
             else None
-
-        content_object = ContentType.objects.get_for_id(content_type
-                ).model_class().objects.get(pk=object_id)
-        if not Vote.get_votes_for(content_object).filter(author=request.user).count():
-            vote = Vote(content_object=content_object, author=request.user,
-                 like=(True if vote == 'up' else False)).save()
-            return {'success': True}
-        else:
-            return {'success': False, 'error': 'Usuario já votou!'}
+        vote_obj, created = Vote.objects.get_or_create(content_type=content_type,
+                                object_id=object_id, author=request.user)
+        print 'vote: {}  created: {}'.format(vote_obj, created)
+        vote_obj.like = True if vote == 'up' else False
+        vote_obj.save()
+        print 'vote: {}   like: {}'.format(vote_obj, vote_obj.like)
+        return {'success': True, 'created': created}
     return {'success': False, 'error': 'Usuario não logado ou anônimo'}
