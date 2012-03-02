@@ -26,6 +26,7 @@ def slugify(term, slug_exists=lambda s: False):
 
 class MooHelper(FormHelper):
     def __init__(self, *a, **kw):
-        super(MooHelper, self).__init__(*a, **kw)
+        retorno = super(MooHelper, self).__init__(*a, **kw)
         self.add_input(Submit('submit', 'Submit'))
         self.add_input(Reset('reset', 'Reset'))
+        return retorno
