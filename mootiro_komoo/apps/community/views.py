@@ -20,13 +20,9 @@ from community.forms import CommunityForm, CommunityMapForm
 logger = logging.getLogger(__name__)
 
 
+@render_to('community/community_edit.html')
 def edit(request, community_slug=""):
     logger.debug('acessing Community > edit')
-
-    if request.is_ajax():
-        template_file = 'community/community_form.html'
-    else:
-        template_file = 'community/community_edit.html'
 
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
@@ -42,18 +38,12 @@ def edit(request, community_slug=""):
             if not request.is_ajax():
                 return redirect(view, community.slug)
 
-            return render_to_response(template_file,
-                    {'redirect': reverse('view_community',
-                                        args=(community.slug,))},
-                    context_instance=RequestContext(request))
+            return {'redirect': reverse('view_community',
+                                        args=(community.slug,))}
         else:
-            return render_to_response(template_file,
-                    {'form': form, 'action': action},
-                    context_instance=RequestContext(request))
+            return {'form': form, 'action': action}
     else:
-        return render_to_response(template_file,
-                {'form': CommunityForm(instance=community), 'action': action},
-                context_instance=RequestContext(request))
+        return {'form': CommunityForm(instance=community), 'action': action}
 
 
 @render_to('community/community_view.html')
