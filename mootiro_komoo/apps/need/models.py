@@ -50,7 +50,7 @@ class Need(models.Model):
 
     # Relationships
     #creator = models.ForeignKey(User, related_name='proposals_created')
-    community = models.ForeignKey(Community, related_name="needs", blank=False)
+    community = models.ForeignKey(Community, related_name="needs", null=True, blank=True)
     categories = models.ManyToManyField(NeedCategory)
     target_audiences = models.ManyToManyField(TargetAudience, blank=False)
 
@@ -64,7 +64,6 @@ class Need(models.Model):
         return Need.objects.filter(community=self.community, slug=slug).exists()
 
     def save(self, *args, **kwargs):
-        # FIXME: always changing the name
         old_title = Need.objects.get(id=self.id).title if self.id else None
         if not self.id or old_title != self.title:
             self.slug = slugify(self.title, self.slug_exists)

@@ -21,11 +21,10 @@ logger = logging.getLogger(__name__)
 @render_to('need/edit.html')
 def edit(request, community_slug="", need_slug=""):
     logger.debug('acessing need > edit')
-    community = get_object_or_404(Community, slug=community_slug)
-    if need_slug:
-        need = get_object_or_404(Need, slug=need_slug, community=community)
-    else:
-        need = Need(community=community)
+    community = get_object_or_404(Community, slug=community_slug) \
+                    if community_slug else None
+    need = get_object_or_404(Need, slug=need_slug, community=community) \
+                if need_slug else None
     if request.POST:
         form = NeedForm(request.POST, instance=need)
         if form.is_valid():
@@ -36,7 +35,7 @@ def edit(request, community_slug="", need_slug=""):
             return {'form': form}
     else:
         form = NeedForm(instance=need)
-        if need.id:
+        if community:
             form.fields.pop('community')
         return {'form': form}
 
