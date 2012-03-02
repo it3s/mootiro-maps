@@ -33,14 +33,15 @@
     <img class="map-preview" alt="map preview" src=""/>
     <div class="block">
       <h3>Proposals</h3>
+      {% for proposal in need.proposals.all %}
       <div class="block">
-        <h3>Proposal 1</h3>
-        Lorem ipsum dolor sit amet.
+        <h3>{{ proposal.title|truncatewords:3 }}</h3>
+        <span class="meta-info">created by</span> <a href="#">{{ proposal.creator.name }}</a>
       </div>
-      <div class="block">
-        <h3>Proposal 2</h3>
-        Lorem ipsum dolor sit amet.
-      </div>
+      {% endfor %}
+      <a class="button" href="{% url new_proposal need.community.slug need.slug %}">
+        New proposal
+      </a>
     </div>
     <div class="block">
       <h3>Related needs</h3>
