@@ -14,16 +14,28 @@ logger = logging.getLogger(__name__)
 
 
 @render_to('resource/list.html')
-def index(request):
+def resource_list(request):
+    logger.debug('acessing komoo_resource > list')
     resources = Resource.objects.all()
     return dict(resources=resources)
+
+
+@render_to('resource/show.html')
+def show(request, id=None):
+    logger.debug('acessing komoo_resource > show')
+    resource = get_object_or_404(Resource, pk=id)
+    return dict(resource=resource)
 
 
 class Edit(View):
     """ Class based view for editing a Resource """
     def get(self, request, *args, **kwargs):
         logger.debug('acessing komoo_resource > Edit with GET')
-        form_resource = FormResource()
+        if request.GET.get('id', None):
+            resource = get_object_or_404(Resource, pk=request.GET['id'])
+            form_resource = FormResource(instance=resource)
+        else:
+            form_resource = FormResource()
         return render_to_response('resource/edit.html',
             dict(form_resource=form_resource),
             context_instance=RequestContext(request))
@@ -38,7 +50,7 @@ class Edit(View):
             form_resource = FormResource(request.POST)
         if form_resource.is_valid():
             form_resource.save()
-            return HttpResponseRedirect(reverse(index))
+            return HttpResponseRedirect(reverse(resource_list))
         else:
             logger.debug('Form erros: {}'.format(dict(form_resource.__errors)))
             return render_to_response('resource/edit.html',

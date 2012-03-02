@@ -1,39 +1,41 @@
-.resource-item{
+
+/* resource list */
+.resource-list-item{
   padding: 10px;
   background-color: rgb(220, 239, 244);
   margin: 0 50px;
 }
-.resource-item.odd{
+.resource-list-item.odd{
   background-color: rgb(235, 249, 255);
 }
-.resource-item div{
+.resource-list-item div{
   display: inline-block;
 }
-.resource-image{
+.resource-list-image{
   width:5%;
   min-width: 40px;
 }
-.resource-image div{
+.resource-list-image div{
   background-color: rgb(64, 146, 169);
   width: 50px;
   height: 50px;
   border-radius: 3px;
 }
-.resource-name{
+.resource-list-name{
   width:50%;
   min-width:500px;
   vertical-align: 100%;
 }
-.resource-type{
+.resource-list-type{
   width:10%;
   min-width: 150px;
   vertical-align: 100%;
 }
-.resource-header{
+.resource-list-header{
   font-weight: bold;
   color: #444444;
 }
-.resource-header div{
+.resource-list-header div{
   display: inline-block;
   vertical-align: bottom;
   margin-top:40px;
@@ -45,4 +47,8 @@
 }
 #form_resource input[type=text], #form_resource textarea{
   width: 100%;
+}
+/* resource show */
+.resource {
+
 }

@@ -6,6 +6,7 @@ from komoo_resource.views import Edit
 
 
 urlpatterns = patterns('komoo_resource.views',
-    url(r'^$', 'index', name='resource_index'),
+    url(r'^$', 'resource_list', name='resource_list'),
     url(r'^edit/?$', Edit.as_view(), name='resource_edit'),
+    url(r'^(?P<id>\d+)/?$', 'show', name='resource_show'),
 )

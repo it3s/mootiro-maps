@@ -1,16 +1,16 @@
 {% extends 'global.html' %}
 
 {% block content %}
-  <div class="resource-item resource-header">
-      <div class="resource-image"></div>
-      <div class="resource-name">Nome</div>
-      <div class="resource-type">Tipo</div>
+  <div class="resource-list-item resource-list-header">
+      <div class="resource-list-image"></div>
+      <div class="resource-list-name">Nome</div>
+      <div class="resource-list-type">Tipo</div>
     </div>
   {% for resource in resources %}
-    <div class="resource-item {% cycle 'odd' '' %}">
-      <div class="resource-image"><div></div></div>
-      <div class="resource-name"><a href="#">{{ resource.name }}</a></div>
-      <div class="resource-type">stuff</div>
+    <div class="resource-list-item {% cycle 'odd' '' %}">
+      <div class="resource-list-image"><div></div></div>
+      <div class="resource-list-name"><a href="#">{{ resource.name }}</a></div>
+      <div class="resource-list-type">stuff</div>
     </div>
   {% endfor %}
 {% endblock %}
