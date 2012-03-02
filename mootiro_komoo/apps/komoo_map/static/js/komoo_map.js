@@ -400,15 +400,26 @@ komoo.Map.prototype = {
      * @param {boolean} newOnly
      * @returns {json}
      */
-    getGeoJSON: function (newOnly) {
-        var geoJSON = {
-            'type': 'FeatureCollection',
-            'features': []
-        };
-        var list = newOnly ? this.newOverlays : this.overlays;
+    getGeoJSON: function (options) {
+        // TODO: Create a default options object
+        if (!options) options = {};
+        var geoJSON;
+        var geoms = [];
+        if (options.geometryCollection) {
+            geoJSON = {
+                'type': 'GeometryCollection',
+                'geometries': geoms
+            };
+        } else {
+            geoJSON = {
+                'type': 'FeatureCollection',
+                'features': []
+            };
+        }
+        var list = options.newOnly ? this.newOverlays : this.overlays;
         $.each(list, function (i, overlay) {
-            var coords = [];
             var subCoords = [];
+            var coords = [];
             var feature = {
                 'type': 'Feature',
                 'geometry': {
@@ -441,7 +452,10 @@ komoo.Map.prototype = {
                 coords.push(pos.lng());
             }
             feature.properties = overlay.properties;
-            if (feature.geometry.coordinates.length) geoJSON['features'].push(feature);
+            if (feature.geometry.coordinates.length)  {
+                if (geoJSON.features) geoJSON.features.push(feature);
+                if (geoJSON.geometries) geoJSON.geometries.push(feature.geometry);
+            }
         });
         return geoJSON;
     },

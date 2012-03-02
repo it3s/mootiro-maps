@@ -46,8 +46,9 @@
             map.event.bind('finish_click', function (e, overlayType) {
                 console.log(overlayType);
                 $('#map-canvas-{{ map.pk }}').slideUp();
-                var geojson = map.getGeoJSON(true);
-                if (geojson.features.length > 0) {
+                var geojson = map.getGeoJSON({newOnly: true, geometryCollection: true});
+                console.log(geojson);
+                if (geojson.geometries.length > 0) {
                     var url = overlayType.formURL.replace('community_slug', community_slug);
                     var context = $('#dinamic-form');
 
@@ -78,7 +79,7 @@
                         success: function (data, textStatus, jqXHR) {
                             $(this).html(data);
                             $('form', $(this)).submit(onSubmit);
-                            $('#id_geometry').val(JSON.stringify(geojson['features'][0]['geometry']));
+                            $('#id_geometry').val(JSON.stringify(geojson));
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             alert('ERRO!!!11!');

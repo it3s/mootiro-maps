@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django.db import models
+from django.contrib.gis.db.models.fields import GeometryCollectionField
 
 import reversion
 from taggit.managers import TaggableManager
@@ -55,6 +56,8 @@ class Need(models.Model):
     target_audiences = models.ManyToManyField(TargetAudience, blank=False)
 
     tags = TaggableManager()
+
+    geometry = GeometryCollectionField()
 
     ### Needed to slugify items ###
     def slug_exists(self, slug):

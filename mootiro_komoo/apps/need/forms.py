@@ -39,6 +39,8 @@ class NeedForm(forms.ModelForm):
         required=False
     )
 
+    geometry = forms.CharField(widget=forms.HiddenInput())
+
     def __init__(self, *a, **kw):
         # Crispy forms configuration
         self.helper = MooHelper()

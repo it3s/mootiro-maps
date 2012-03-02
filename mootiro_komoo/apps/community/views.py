@@ -5,10 +5,9 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import logging
 
-from django.shortcuts import get_object_or_404, redirect, render_to_response
+from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import simplejson
-from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 
@@ -31,7 +30,10 @@ def edit(request, community_slug=""):
         community = None
         action = reverse('new_community')
     if request.POST:
-        form = CommunityForm(request.POST, instance=community)
+        POST = request.POST.copy()
+        POST['geometry'] = json.dumps(
+                json.loads(POST['geometry'])['geometries'][0])
+        form = CommunityForm(POST, instance=community)
         if form.is_valid():
             community = form.save()
 
