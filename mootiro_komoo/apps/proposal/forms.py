@@ -18,9 +18,8 @@ class ProposalForm(ModelForm):
         model = Proposal
         exclude = 'report creator realizers need'.split()
 
-    # content = CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
-    content = CharField(widget=TinyMCE())
-    # report = CharField(widget=TinyMCE(), required=False)
+    description = CharField(widget=TinyMCE())
+    report = CharField(widget=TinyMCE(), required=False)
 
     def __init__(self, *a, **kw):
         # Crispy forms configuration

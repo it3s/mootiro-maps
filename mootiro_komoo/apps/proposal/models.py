@@ -18,7 +18,7 @@ class Proposal(models.Model):
 
     # Relationships
     need = models.ForeignKey(Need, related_name='proposals')
-    creator = models.ForeignKey(User, related_name='proposals_created')
+    #creator = models.ForeignKey(User, related_name='proposals_created')
 
     # Consummation, realization, attainment:
     realizers = models.ManyToManyField(User)

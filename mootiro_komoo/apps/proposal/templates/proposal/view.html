@@ -2,7 +2,27 @@
 {% block title %}Proposal: {{proposal.name}} ― Komoo{% endblock %}
 
 {% block content %}
-  <h1>{{proposal.name}}</h1>
-  <p class='description'>{{proposal.description}}</p>
-  <div class='content'>{{proposal.content}}</div>
+
+<div class="main-column">
+  <h3>
+    {{ proposal.title }}
+    <a class="right" href="{% url edit_proposal proposal.need.community.slug proposal.need.slug proposal.number %}">EDIT</a>
+  </h3>
+
+</div>
+
+<br/><br/><br/><br/><br/><br/>
+
+Description: {{ proposal.description|safe }}<br/>
+Cost: {{ proposal.cost }}<br/>
+Report: {{ proposal.report }}<br/>
+Number: {{ proposal.number }}<br/>
+</br>
+Creation date: {{ proposal.creation_date }}<br/>
+Last Update: {{ proposal.last_update }}<br/>
+Need: {{ proposal.need.title }}<br/>
+Realizers: {{ proposal.realizers }}<br/>
+
+
+
 {% endblock %}

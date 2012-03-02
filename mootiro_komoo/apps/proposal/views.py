@@ -24,36 +24,30 @@ def edit(request, community_slug="", need_slug="", proposal_number=""):
     need = get_object_or_404(Need, slug=need_slug, community=community)
 
     if proposal_number:
-        proposal = get_object_or_404(Proposal, number=proposal_number)
+        proposal = get_object_or_404(Proposal, number=proposal_number, need=need)
     else:
         proposal = Proposal(need=need)
     if request.POST:
         form = ProposalForm(request.POST, instance=proposal)
         if form.is_valid():
-            need = form.save()
+            proposal = form.save()
             return redirect('view_proposal',
                     community_slug=proposal.need.community.slug,
-                    need_slug=need.slug, proposal_number=proposal.number)
+                    need_slug=proposal.need.slug, proposal_number=proposal.number)
         else:
             return {'form': form}
     else:
         return {'form': ProposalForm(instance=proposal)}
 
 
-@render_to('proposal_view.html')
-def view(request, need_slug, id):
+@render_to('proposal/view.html')
+def view(request, community_slug="", need_slug="", proposal_number=""):
     logger.debug('accessing proposal > view')
 
-    proposal = Proposal.objects.get(id=id)
+    community = get_object_or_404(Community, slug=community_slug)
+    need = get_object_or_404(Need, slug=need_slug, community=community)
+    proposal = get_object_or_404(Proposal, number=proposal_number, need=need)
     return dict(proposal=proposal)
-
-
-@render_to('proposal/proposal_edit.html')
-@login_required
-def new(request, need_slug):
-    logger.debug('accessing proposal > new')
-    return dict(form=ProposalForm(),
-                action=reverse('save_proposal', args=(need_slug,)))
 
 
 @render_to('proposal/proposal_edit.html')
