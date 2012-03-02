@@ -133,7 +133,8 @@ class MultipleAutocompleteBase(forms.TextInput):
         if not 'id' in self.attrs:
             final_attrs['id'] = 'id_%s' % name
         if value:
-            strings = [self.field_to_widget(v) for v in value]
+            strings = [v if type(v) == unicode else self.field_to_widget(v) \
+                        for v in value]
             final_attrs['value'] = ", ".join([escape(s) for s in strings])
 
         html = u"""
@@ -161,7 +162,7 @@ class Tagsinput(MultipleAutocompleteBase):
 
     def widget_to_field(self, tag_name):
         instance, created = self.model.objects.get_or_create(name=tag_name)
-        return instance
+        return instance.id
 
     def field_to_widget(self, tag_id):
         instance = self.model.objects.get(id=tag_id)
@@ -175,6 +176,7 @@ class TaggitWidget(MultipleAutocompleteBase):
         return tag_name
 
     def field_to_widget(self, instance):
+
         return unicode(instance.tag)
 
 
@@ -243,7 +245,6 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
             if has_id:
                 final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], i))
 
-            print "FINAL_ATTRS ===", final_attrs
             image_tick = self.get_image_tick(option_label)
             image_no_tick = self.get_image_no_tick(option_label)
             cb = ImageSwitch(image_tick, image_no_tick, attrs=final_attrs,

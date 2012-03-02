@@ -1,14 +1,9 @@
-{% extends "global.html" %}
-{% load crispy_forms_tags %}
+{% if redirect %}
+  <script>window.location = '{{redirect}}';</script>
+{% else %}
+  {% load crispy_forms_tags %}
+  {{ form.media.css }}
+  {{ form.media.js }}
 
-{% block title %}Need{% endblock %}
-
-{% block content %}
-
-<div id="main-content">
-  <div class="main-column">
-    {% crispy form form.helper %}
-  </div>
-</div>
-
-{% endblock %}
+  {% crispy form form.helper %}
+{% endif %}
