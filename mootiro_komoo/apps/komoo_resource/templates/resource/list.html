@@ -1,5 +1,20 @@
 {% extends 'global.html' %}
 
 {% block content %}
-    <h1>Resources:</h1>
+  <div class="resource-item resource-header">
+      <div class="resource-image"></div>
+      <div class="resource-name">Nome</div>
+      <div class="resource-type">Tipo</div>
+    </div>
+  {% for resource in resources %}
+    <div class="resource-item {% cycle 'odd' '' %}">
+      <div class="resource-image"><div></div></div>
+      <div class="resource-name"><a href="#">{{ resource.name }}</a></div>
+      <div class="resource-type">stuff</div>
+    </div>
+  {% endfor %}
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="/static/css/resource.css" >
 {% endblock %}

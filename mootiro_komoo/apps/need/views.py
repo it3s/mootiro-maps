@@ -3,9 +3,9 @@
 from __future__ import unicode_literals  # unicode by default
 import logging
 
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.shortcuts import redirect, get_object_or_404, render_to_response
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404
 from django.utils import simplejson
 
 from annoying.decorators import render_to
@@ -18,14 +18,9 @@ from need.forms import NeedForm
 logger = logging.getLogger(__name__)
 
 
+@render_to('need/edit.html')
 def edit(request, community_slug="", need_slug=""):
     logger.debug('acessing need > edit')
-
-    if request.is_ajax():
-        template_file = 'need/form.html'
-    else:
-        template_file = 'need/edit.html'
-
     community = get_object_or_404(Community, slug=community_slug)
     if need_slug:
         need = get_object_or_404(Need, slug=need_slug, community=community)
@@ -35,24 +30,15 @@ def edit(request, community_slug="", need_slug=""):
         form = NeedForm(request.POST, instance=need)
         if form.is_valid():
             need = form.save()
-            if not request.is_ajax():
-                return redirect('view_need', community_slug=need.community.slug,
-                        need_slug=need.slug)
-            return render_to_response(template_file,
-                    {'redirect': reverse('view_need',
-                                        args=(community.slug,))},
-                    context_instance=RequestContext(request))
+            return {'redirect': reverse('view_need',
+                    args=(need.community.slug, need.slug))}
         else:
-            return render_to_response(template_file,
-                    {'form': form},
-                    context_instance=RequestContext(request))
+            return {'form': form}
     else:
         form = NeedForm(instance=need)
         if need.id:
             form.fields.pop('community')
-        return render_to_response(template_file,
-                {'form': form},
-                context_instance=RequestContext(request))
+        return {'form': form}
 
 
 @render_to('need/view.html')

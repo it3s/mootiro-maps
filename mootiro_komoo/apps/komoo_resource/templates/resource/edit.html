@@ -3,6 +3,14 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    {#% crispy form_resource form_resource.helper %#}
-    {{ form_resource }}
+  <div id="main-content">
+    <div class="main-column">
+      {% crispy form_resource form_resource.helper %}
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="/static/css/resource.css" >
 {% endblock %}

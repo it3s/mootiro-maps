@@ -28,7 +28,9 @@
         {% endif %}
       </div>
       <div id="top">
-        <div id="logo"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></div>
+        <div id="logo">
+          <a href="{% url root %}"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></a>
+        </div>
         <div id="navigation">
           <ul id="menu">
             <li{% if current_item == 'map' %} class='selected'{% endif %}>Mapa</li>
