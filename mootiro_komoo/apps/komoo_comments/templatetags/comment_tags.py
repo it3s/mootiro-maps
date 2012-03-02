@@ -49,6 +49,14 @@ def comments(context, content_object, arg1='', arg2=''):
                 has_comments=has_comments)
 
 
+@register.inclusion_tag('comments/comments_summary_templatetag.html', takes_context=True)
+def comments_summary(context, content_object):
+    """Templatetags for embedded comments summary."""
+    num_comments = Comment.get_comments_for(content_object).count()
+    return dict(num_comments=num_comments)
+
+
+
 @register.inclusion_tag('comments/comments_staticfiles.html')
 def comments_staticfiles():
     """Static files (javascript/css) for the comments templatetag"""

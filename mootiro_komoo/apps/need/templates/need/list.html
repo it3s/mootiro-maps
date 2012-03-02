@@ -1,10 +1,11 @@
 {% extends "global.html" %}
+{% load comment_tags %}
 
 {% block title %}Needs for {{ community.name }}{% endblock %}
 
 {% block content %}
 <div id="main-content">
-  <div class="block">
+  <div>
     <a class="button" href="{% url new_need %}">New need</a>
     <div class="ajax-search"><input type="text"/></div>
   </div>
@@ -14,14 +15,17 @@
       {% for need in needs %}
       <div>
         <h4>
-          <a href="{% url view_need need.community.slug need.slug %}">{{ need.title }}</a>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="{% url view_need need.community.slug need.slug %}">
+            <span class="apart">{{ need.title }}</span>
+          </a>
           <a class="small" href="#">see on the map</a>
           <ul class="horizontal">
             {% for c in need.categories.all %}
             <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
             {% endfor %}
           </ul>
+          <div class="clear-both"></div>
+          {% comments_summary need %}
         </h4>
         <p class="clearBoth">
           target audience: {{ need.target_audiences.all|join:", " }}

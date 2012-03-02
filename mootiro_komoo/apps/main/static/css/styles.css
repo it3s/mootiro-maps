@@ -33,6 +33,7 @@ table { border-collapse: collapse }
 
 /* Reusable styles */
 .button {
+    display: inline-block;
     background-color: #3EBAC2;
     color: #fff;
     border: 1px solid #4092A9;
@@ -362,6 +363,9 @@ a.btnShowForm{
 }
 .comment-vote{
     margin-left: 10px;
+}
+.comment-summary {
+    display: block;
 }
 /* =========== end of COMMENT section ======= */
 

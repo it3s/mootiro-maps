@@ -49,7 +49,8 @@ class Need(models.Model):
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationships
-    community = models.ForeignKey(Community, related_name="needs")
+    #creator = models.ForeignKey(User, related_name='proposals_created')
+    community = models.ForeignKey(Community, related_name="needs", blank=False)
     categories = models.ManyToManyField(NeedCategory)
     target_audiences = models.ManyToManyField(TargetAudience, blank=False)
 
