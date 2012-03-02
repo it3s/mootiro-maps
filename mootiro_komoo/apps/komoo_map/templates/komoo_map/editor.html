@@ -49,7 +49,11 @@
                 var geojson = map.getGeoJSON({newOnly: true, geometryCollection: true});
                 console.log(geojson);
                 if (geojson.geometries.length > 0) {
-                    var url = overlayType.formURL.replace('community_slug', community_slug);
+                    if (window.community_slug) {
+                        var url = overlayType.formURL.replace('community_slug', community_slug);
+                    } else {
+                        var url = overlayType.formURL.replace('/community_slug', '');
+                    }
                     var context = $('#dinamic-form');
 
                     function onSubmit () {
