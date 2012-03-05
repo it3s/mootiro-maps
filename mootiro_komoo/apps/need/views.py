@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+
+import json
 import logging
 
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils import simplejson
+from django.contrib.gis.geos import Polygon
 
 from annoying.decorators import render_to
 from taggit.models import TaggedItem
@@ -74,3 +78,34 @@ def target_audience_search(request):
     target_audiences = [ta.name for ta in qset]
     return HttpResponse(simplejson.dumps(target_audiences),
                 mimetype="application/x-javascript")
+
+def needs_geojson(request):
+    bounds = request.GET.get('bounds', None)
+    x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
+
+    polygon = Polygon(((x1, y1), (x1, y2), (x2, y2), (x2, y1), (x1, y1)))
+    needs = Need.objects.filter(
+            Q(points__intersects=polygon) |
+            Q(lines__intersects=polygon)  |
+            Q(polys__intersects=polygon)
+    )
+    geojson = json.dumps({
+        'type': 'FeatureCollection',
+        'features': [
+            {
+                'type': 'Feature',
+                'geometry': json.loads(need.geometry.geojson)['geometries'][0],
+                'properties': {
+                    'type': 'need',
+                    'name': need.title,
+                    'community_slug': need.community.slug,
+                    'need_slug': need.slug
+                }
+            } for need in needs
+        ]
+    })
+
+    return HttpResponse(json.dumps(geojson),
+        mimetype="application/x-javascript")
+
+

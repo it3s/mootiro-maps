@@ -28,11 +28,11 @@ urlpatterns = patterns('',
     # user and CAS urls
     url(r'^user/', include('user_cas.urls')),
 
-    url(r'^$', include('main.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^markitup/', include('markitup.urls')),
     url(r'', include('need.urls')),
     url(r'', include('proposal.urls')),
+    url(r'', include('main.urls')),
     url(r'^comments/', include('komoo_comments.urls')),
     url(r'^vote/', include('vote.urls')),
     url(r'^resource/', include('komoo_resource.urls')),

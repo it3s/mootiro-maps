@@ -5,5 +5,6 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('main.views',
-    url(r'', 'root', name='root'),
+    url(r'^$', 'root', name='root'),
+    url(r'^get_geojson$', 'get_geojson', name='get_geojson'),
 )

@@ -232,26 +232,30 @@ komoo.Map = function (element, options) {
         }
     });
     /* Sends the ajax request when idle */
+    function getFromServer (url, optClear) {
+        // TODO: Load only overlays that were not loaded yet.
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'GET',
+            success: function (data, textStatus, jqXHR) {
+                if (optClear) komooMap.clear()
+                komooMap.loadGeoJSON(JSON.parse(data));
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error(textStatus);
+                alert('ERRO!!!11! - ' + url);
+            }
+        });
+    }
     google.maps.event.addListener(komooMap.googleMap, 'idle', function () {
         komooMap.saveLocation();
 
         if (!komooMap.boundsAwaiting.equals(komooMap.boundsLoaded)) {
-            var url = dutils.urls.resolve('communities_geojson') + '?bounds=' + komooMap.boundsAwaiting.toUrlValue();
             if (window.console) console.log('Loading overlays from server...');
-            // TODO: Load only overlays that were not loaded yet.
-            $.ajax({
-                url: url,
-                dataType: 'json',
-                type: 'GET',
-                success: function (data, textStatus, jqXHR) {
-                    komooMap.clear()
-                    komooMap.loadGeoJSON(JSON.parse(data));
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error(textStatus);
-                    alert('ERRO!!!11! - ' + url);
-                }
-            });
+            //getFromServer(dutils.urls.resolve('communities_geojson') + '?bounds=' + komooMap.boundsAwaiting.toUrlValue(), true);
+            //getFromServer(dutils.urls.resolve('needs_geojson') + '?bounds=' + komooMap.boundsAwaiting.toUrlValue());
+            getFromServer(dutils.urls.resolve('get_geojson') + '?bounds=' + komooMap.boundsAwaiting.toUrlValue(), true);
             komooMap.boundsLoaded.union(komooMap.boundsAwaiting);
         }
     });
@@ -679,11 +683,21 @@ komoo.Map.prototype = {
                     dutils.urls.resolve('view_community', {community_slug: overlay.properties.community_slug}));
             infoContentTitle.text(overlay.properties.name);
             infoContent.append(infoContentTitle);
+        } else {
+            // TODO: Add more info
+            var slugname = overlay.properties.type + '_slug';
+            var params = {'community_slug': overlay.properties.community_slug}
+            params[slugname] = overlay.properties[slugname];
+            var infoContentTitle = $('<a>').attr('href',
+                    dutils.urls.resolve('view_' + overlay.properties.type,
+                        params));
+            infoContentTitle.text(overlay.properties.name);
+            infoContent.append(infoContentTitle);
         }
         // TODO: Add timer
         var mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
-            if (komooMap.infoWindow.overlay &&
-                    komooMap.infoWindow.overlay == overlay) {
+            if ((komooMap.infoWindow.overlay && komooMap.infoWindow.overlay == overlay) ||
+                    komooMap.editMode) {
                 return;
             }
             overlay.mouseLatLng = e.latLng;
@@ -880,6 +894,7 @@ komoo.Map.prototype = {
             komooMap.editToolbar.append(deleteButton);
 
             komooMap.event.bind('editmode_changed', function(e, mode) {
+                komooMap.infoWindow.close(); // Close the popup window
                 /* Set the correct button style when editMode was changed */
                 addButton.removeClass('active');
                 cutOutButton.removeClass('active');

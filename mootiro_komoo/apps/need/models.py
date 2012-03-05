@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-from django.db import models
-from django.contrib.gis.db.models.fields import GeometryCollectionField
+from django.contrib.gis.db import models
 
 import reversion
 from taggit.managers import TaggableManager
@@ -11,6 +10,7 @@ from taggit.managers import TaggableManager
 
 from community.models import Community
 from main.utils import slugify
+from mootiro_komoo.lib.collection_from import CollectionFrom
 
 
 class NeedCategory(models.Model):
@@ -57,7 +57,13 @@ class Need(models.Model):
 
     tags = TaggableManager()
 
-    geometry = GeometryCollectionField()
+    # Geolocalization attributes
+    objects = models.GeoManager()
+
+    points = models.MultiPointField(null=True, blank=True, editable=False)
+    lines = models.MultiLineStringField(null=True, blank=True, editable=False)
+    polys = models.MultiPolygonField(null=True, blank=True, editable=False)
+    geometry = CollectionFrom(points='points', lines='lines', polys='polys')
 
     ### Needed to slugify items ###
     def slug_exists(self, slug):

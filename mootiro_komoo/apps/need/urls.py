@@ -14,4 +14,5 @@ urlpatterns = patterns('need.views',
     url(pr(r'^COMMUNITY_SLUG/needs$'), 'list', name='list_needs'),
     url(r'^need/tag_search$', 'tag_search', name='need_tag_search'),
     url(r'^need/target_audience_search$', 'target_audience_search', name='target_audience_search'),
+    url(r'^need/get_geojson$', 'needs_geojson', name='needs_geojson'),
 )
