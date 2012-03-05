@@ -1,28 +1,43 @@
 {% extends "global.html" %}
+{% load vote_tags %}
+{% load proposal_tags %}
+
 {% block title %}Proposal: {{proposal.name}} ― Komoo{% endblock %}
 
 {% block content %}
 
-<div class="main-column">
-  <h3>
-    {{ proposal.title }}
-    <a class="right" href="{% url edit_proposal proposal.need.community.slug proposal.need.slug proposal.number %}">EDIT</a>
-  </h3>
+<div id="main-content">
+  <div class="main-column">
+    <h3>
+      {{ proposal.title }} <span class="small">(<a href="#">{{ proposal.need.title }}</a>)</span>
+      <a class="right" href="{% url edit_proposal proposal.need.community.slug
+        proposal.need.slug proposal.number %}">EDIT</a>
+    </h3>
+    {% vote proposal %}
+    <p>
+      <span class="apart">created by FULANO on {{ proposal.creation_date }}</span>
+      <span class="apart">target audience: {{ need.target_audiences.all|join:", " }}</span>
+      <span class="apart">status:</span>
+    </p>
+    <p>{{ proposal.description|safe }}</p>
+    <p>Cost: {{ proposal.cost }}</p>
 
+  </div>
+  
+  <div class="right-bar">
+    <div class="block">
+      <h4>Proposals for <a href="#">{{ proposal.need.title }}</a></h4>
+      {% for p in proposal.need.proposals.all %}
+        {% if p != proposal %}
+          {% proposal_summary proposal %}
+        {% endif %}
+      {% endfor %}
+      <a class="button" href="{% url new_proposal proposal.need.community.slug proposal.need.slug %}">
+        New proposal
+      </a>
+    </div>
+
+  </div>
 </div>
-
-<br/><br/><br/><br/><br/><br/>
-
-Description: {{ proposal.description|safe }}<br/>
-Cost: {{ proposal.cost }}<br/>
-Report: {{ proposal.report }}<br/>
-Number: {{ proposal.number }}<br/>
-</br>
-Creation date: {{ proposal.creation_date }}<br/>
-Last Update: {{ proposal.last_update }}<br/>
-Need: {{ proposal.need.title }}<br/>
-Realizers: {{ proposal.realizers }}<br/>
-
-
 
 {% endblock %}
