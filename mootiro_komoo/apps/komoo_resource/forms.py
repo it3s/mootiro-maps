@@ -10,7 +10,7 @@ class FormResource(forms.ModelForm):
 
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'id']
+        fields = ['name', 'description', 'kind', 'id']
 
     def __init__(self, *args, **kwargs):
         # Crispy forms configuration
