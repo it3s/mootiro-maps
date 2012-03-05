@@ -119,6 +119,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.comments',
     'django.contrib.gis',
+    'django.contrib.markup',
     'tinymce',
     'lib.taggit',
     'lib.django_js_utils',
@@ -160,7 +161,6 @@ TINYMCE_DEFAULT_CONFIG = dict(
 
 # markiItUp
 MARKITUP_SET = 'markitup/sets/markdown'
-# MARKITUP_PREVIEW_FILTER = ('markdown.markdown', {'safe_mode': True})
 # MARKITUP_SKIN = 'markitup/skins/markitup'
 
 
