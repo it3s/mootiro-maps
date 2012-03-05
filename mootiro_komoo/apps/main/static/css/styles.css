@@ -315,7 +315,7 @@ div.list > div:last-child { padding-bottom: 20px }
 
 /* =========== COMMENT section ======= */
 #divFormComment{
-    margin-top: 20px;
+    margin-top: 10px;
 }
 .comment-container{
     margin:20px 0 15px 15px;

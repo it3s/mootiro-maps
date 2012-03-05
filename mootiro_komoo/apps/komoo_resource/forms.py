@@ -9,7 +9,7 @@ class FormResource(forms.ModelForm):
 
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'id', ]
+        fields = ['name', 'description', 'id']
 
     def __init__(self, *args, **kwargs):
         # Crispy forms configuration
@@ -18,5 +18,9 @@ class FormResource(forms.ModelForm):
 
         super(FormResource, self).__init__(*args, **kwargs)
 
-    def save(self, *args, **kwargs):
-        super(FormResource, self).save(*args, **kwargs)
+    def save(self, user=None, *args, **kwargs):
+        resource = super(FormResource, self).save(*args, **kwargs)
+        if user and not user.is_anonymous():
+            resource.creator_id = user.id
+            resource.save()
+        return resource

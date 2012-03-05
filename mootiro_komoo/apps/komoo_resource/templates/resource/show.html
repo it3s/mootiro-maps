@@ -6,8 +6,6 @@
 
 {% block content %}
   <div id="main-content">
-  <div class="main-column">
-
     <div class="resource">
       <div class="resource-header">
         <h1>{{ resource.name }}</h1>
@@ -15,9 +13,10 @@
           {% vote resource %}
         </div>
         <span>
-          criado por <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a> em {{ resource.creation_date }}
+          criado por <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
+          em {{ resource.creation_date|date:"d/m/Y" }}
         </span>
-        <span>tipo: stuff</span>
+        <span class="resource-type">tipo:&nbsp; <strong>stuff</strong></span>
       </div>
 
       <div class="resource-body">
@@ -31,7 +30,6 @@
       {% comments resource %}
 
     </div>
-  </div>
   </div>
 
 {% endblock %}

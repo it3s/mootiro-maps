@@ -49,7 +49,7 @@ class Edit(View):
         else:
             form_resource = FormResource(request.POST)
         if form_resource.is_valid():
-            form_resource.save()
+            form_resource.save(user=request.user)
             return HttpResponseRedirect(reverse(resource_list))
         else:
             logger.debug('Form erros: {}'.format(dict(form_resource.__errors)))

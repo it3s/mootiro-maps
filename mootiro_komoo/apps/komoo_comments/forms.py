@@ -23,7 +23,6 @@ class FormComment(forms.ModelForm):
         comment = super(FormComment, self).save(*args, **kwargs)
         update = False
         if user and not user.is_anonymous():
-            print 'USER: %s' % user
             comment.author_id = user.id
             update = True
         if self.cleaned_data.get('content_type_id', None):

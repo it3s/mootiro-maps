@@ -49,6 +49,9 @@
   width: 100%;
 }
 /* resource show */
-.resource {
-
+.resource-type{
+  margin-left: 40px;
+}
+.resource-header{
+  margin-bottom: 20px;
 }
