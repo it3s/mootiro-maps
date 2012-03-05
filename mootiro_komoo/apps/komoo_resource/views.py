@@ -4,6 +4,8 @@ import logging
 from django.views.generic import View
 from django.shortcuts import (render_to_response, RequestContext,
         HttpResponseRedirect, get_object_or_404)
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from annoying.decorators import render_to
 from komoo_resource.models import Resource
@@ -29,6 +31,8 @@ def show(request, id=None):
 
 class Edit(View):
     """ Class based view for editing a Resource """
+
+    @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         logger.debug('acessing komoo_resource > Edit with GET')
         if request.GET.get('id', None):

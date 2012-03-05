@@ -94,7 +94,8 @@ AUTHENTICATION_BACKENDS = (
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
 # Connect Mootiro Bar to django-cas:
-MOOTIRO_BAR_LOGIN_URL = '/user/login'
+LOGIN_URL = '/user/login'
+MOOTIRO_BAR_LOGIN_URL = LOGIN_URL
 MOOTIRO_BAR_LOGOUT_URL = '/user/logout'
 
 ROOT_URLCONF = 'mootiro_komoo.urls'
