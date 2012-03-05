@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+
+import json
 import re
+import collections
 
 from django.template.defaultfilters import slugify as simple_slugify
 
@@ -22,6 +25,40 @@ def slugify(term, slug_exists=lambda s: False):
         slug = original + '-' + str(n)
         n += 1
     return slug
+
+
+def create_geojson(objects, type_='FeatureCollection', convert=True):
+    if type_ == 'FeatureCollection':
+        geojson = {
+            'type': 'FeatureCollection',
+            'features': []
+        }
+
+        for obj in objects:
+            type_ = obj.__class__.__name__.lower()
+            geometry = json.loads(obj.geometry.geojson) if \
+                    type_ == 'community' else \
+                    json.loads(obj.geometry.geojson)['geometries'][0]
+            name = getattr(obj, 'name', getattr(obj, 'title', ''))
+            feature = {
+                'type': 'Feature',
+                'geometry': geometry,
+                'properties': {
+                    'type': type_,
+                    'name': name,
+                }
+            }
+            if hasattr(obj, 'community'):
+                feature['properties']['community_slug'] = getattr(obj.community, 'slug', '')
+            if hasattr(obj, 'slug'):
+                feature['properties']['{}_slug'.format(type_)] = obj.slug
+
+            geojson['features'].append(feature)
+
+    if convert:
+        return json.dumps(geojson)
+
+    return geojson
 
 
 class MooHelper(FormHelper):

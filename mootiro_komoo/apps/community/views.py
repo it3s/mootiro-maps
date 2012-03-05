@@ -15,6 +15,7 @@ from annoying.decorators import render_to
 
 from community.models import Community
 from community.forms import CommunityForm, CommunityMapForm
+from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
 
@@ -54,20 +55,7 @@ def view(request, community_slug):
             community_slug))
 
     community = get_object_or_404(Community, slug=community_slug)
-    geojson = json.dumps({
-        'type': 'FeatureCollection',
-        'features': [
-            {
-                'type': 'Feature',
-                'geometry': json.loads(community.geometry.geojson),
-                'properties': {
-                    'type': 'community',
-                    'name': community.name,
-                    'community_slug': community.slug
-                    }
-            }
-        ]
-    })
+    geojson = create_geojson([community])
     mapform = CommunityMapForm({'map': geojson})
     return {'community': community, 'form': mapform, 'current_item': 'map'}
 
@@ -76,31 +64,15 @@ def view(request, community_slug):
 def map(request):
     logger.debug('acessing Community > map')
     form = CommunityMapForm(request.POST)
-
     return dict(form=form)
 
 
 def communities_geojson(request):
     bounds = request.GET.get('bounds', None)
     x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
-
     polygon = Polygon(((x1, y1), (x1, y2), (x2, y2), (x2, y1), (x1, y1)))
     communities = Community.objects.filter(geometry__intersects=polygon)
-    geojson = json.dumps({
-        'type': 'FeatureCollection',
-        'features': [
-            {
-                'type': 'Feature',
-                'geometry': json.loads(community.geometry.geojson),
-                'properties': {
-                    'type': 'community',
-                    'name': community.name,
-                    'community_slug': community.slug
-                }
-            } for community in communities
-        ]
-    })
-
+    geojson = create_geojson(communities)
     return HttpResponse(json.dumps(geojson),
         mimetype="application/x-javascript")
 
