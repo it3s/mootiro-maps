@@ -124,6 +124,7 @@ INSTALLED_APPS = [
     'lib.django_js_utils',
     'crispy_forms',
     'reversion',
+    'markitup',
     'komoo_map',
     'community',
     'main',
@@ -156,6 +157,11 @@ TINYMCE_DEFAULT_CONFIG = dict(
     theme_advanced_buttons2="link,unlink,anchor,image,|,sub,sup,|,charmap,|,undo,redo,|,help,code,cleanup",
     theme_advanced_buttons3='',
 )
+
+# markiItUp
+MARKITUP_SET = 'markitup/sets/markdown'
+# MARKITUP_PREVIEW_FILTER = ('markdown.markdown', {'safe_mode': True})
+# MARKITUP_SKIN = 'markitup/skins/markitup'
 
 
 #CAS config

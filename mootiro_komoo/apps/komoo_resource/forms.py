@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django import forms
+from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
 from komoo_resource.models import Resource
 
 
 class FormResource(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
+    description = forms.CharField(widget=MarkItUpWidget())
 
     class Meta:
         model = Resource

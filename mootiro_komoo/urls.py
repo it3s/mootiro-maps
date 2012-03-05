@@ -30,6 +30,7 @@ urlpatterns = patterns('',
 
     url(r'^$', include('main.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^markitup/', include('markitup.urls')),
     url(r'', include('need.urls')),
     url(r'', include('proposal.urls')),
     url(r'^comments/', include('komoo_comments.urls')),
