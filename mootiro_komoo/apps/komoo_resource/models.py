@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.db import models
+from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 import reversion
 
@@ -23,9 +23,11 @@ class Resource(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     kind = models.IntegerField(choices=RESOURCE_CHOICES)
     description = models.TextField()
-    # location ?
+    location = models.GeometryCollectionField(null=True, blank=True)
 
     def kind_repr(self):
         return _resource_dict[self.kind]
+
+    objects = models.GeoManager()
 
 reversion.register(Resource)

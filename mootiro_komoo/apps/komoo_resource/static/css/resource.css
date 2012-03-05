@@ -55,3 +55,42 @@
 .resource-header{
   margin-bottom: 20px;
 }
+.resource-edit-btn{
+  display: inline-block;
+  float: right;
+}
+.resource{
+  display: inline-block;
+  width: 85%;
+}
+.resource-left-panel{
+  display: inline-block;
+  float: right;
+  min-height: 200px;
+}
+.similar-resources{
+  min-height: 100px;
+  background-color: rgb(112, 236, 244);
+  border-radius: 4px;
+  margin-top: 20px;
+}
+.similar-resources h1{
+  font-size:1.2em;
+  text-align: center;
+}
+.similar-resources p{
+  padding-left: 10px;
+  color: #666666;
+}
+.similar-resources a{
+  font-weight: bold;
+}
+.resource-follow-btns span{
+  color: #444444;
+  margin-left: 7px;
+}
+.resource-follow-btns img{
+  width: 12px;
+  height: 12px;
+  margin: 0 0 -1px -1px;
+}

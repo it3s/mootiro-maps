@@ -6,30 +6,41 @@
 
 {% block content %}
   <div id="main-content">
-    <div class="resource">
-      <div class="resource-header">
-        <h1>{{ resource.name }}</h1>
-        <div class="resource-votes">
-          {% vote resource %}
+    <div class="row">
+      <div class="resource">
+        <div class="resource-header">
+          <h1>{{ resource.name }}</h1>
+          <div class="resource-votes">
+            {% vote resource %}
+            <div class="resource-edit-btn"><a href="/resource/edit?id={{ resource.id}}" class="btn"><i class="icon-pencil"></i></a></div>
+          </div>
+          <span>
+            criado por <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
+            em {{ resource.creation_date|date:"d/m/Y" }}
+          </span>
+          <span class="resource-type">tipo:&nbsp; <strong>{{ resource.kind_repr }}</strong></span>
         </div>
-        <span>
-          criado por <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
-          em {{ resource.creation_date|date:"d/m/Y" }}
-        </span>
-        <span class="resource-type">tipo:&nbsp; <strong>{{ resource.kind_repr }}</strong></span>
+
+        <div class="resource-body">
+          <p>{{ resource.description }}</p>
+        </div>
+
+        <div class="resource-footer">
+        </div>
       </div>
-
-      <div class="resource-body">
-        <p>{{ resource.description }}</p>
+      <div class="resource-left-panel span3">
+        <img src="/static/img/komoo_map_img.png" width="240" height="320" />
+        <div class="similar-resources">
+          <h1>Recursos Parecidos:</h1>
+          <p><a href="#">Outro recurso</a> - local</p>
+        </div>
       </div>
-
-      <div class="resource-footer">
-
-      </div>
-
-      {% comments resource %}
-
     </div>
+    <div class="resource-follow-btns row">
+      <a class="btn" href="#"><img src="/static/img/glyphicons_327_rss.png"/><span>Assinar</span></a>
+      <a class="btn" href="#"><i class="icon-eye-open"></i><span>Observar</span></a>
+    </div>
+    {% comments resource %}
   </div>
 
 {% endblock %}
