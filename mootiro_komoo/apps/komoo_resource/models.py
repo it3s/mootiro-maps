@@ -4,6 +4,7 @@ from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 import reversion
+from community.models import Community
 
 
 class ResourceKind(models.Model):
@@ -28,6 +29,10 @@ class Resource(models.Model):
     kind = models.ForeignKey(ResourceKind)
     description = models.TextField()
     location = models.GeometryCollectionField(null=True, blank=True)
+
+    # resources belongs to community?
+    # community = models.ForeignKey(Community, related_name='resources',
+    #     null=True, blank=True)
 
     objects = models.GeoManager()
 
