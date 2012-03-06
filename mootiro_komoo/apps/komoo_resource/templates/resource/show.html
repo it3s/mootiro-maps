@@ -45,6 +45,12 @@
     </div>
   </div>
   <div class="resource-extras">
+    <div class="resource-tag-list">
+      Classificadores:
+      {% for tag in resource.tags.all %}
+        <span>{{ tag }}</span>
+      {% endfor %}
+    </div>
     <div class="resource-follow-btns">
       <a class="btn" href="#"><img src="/static/img/glyphicons_327_rss.png"/><span>Assinar</span></a>
       <a class="btn" href="#"><i class="icon-eye-open"></i><span>Observar</span></a>

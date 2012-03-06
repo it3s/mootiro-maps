@@ -34,8 +34,8 @@ class Resource(models.Model):
     tags = TaggableManager()
 
     # resources belongs to community?
-    # community = models.ForeignKey(Community, related_name='resources',
-    #     null=True, blank=True)
+    community = models.ForeignKey(Community, related_name='resources',
+        null=True, blank=True)
 
     objects = models.GeoManager()
 

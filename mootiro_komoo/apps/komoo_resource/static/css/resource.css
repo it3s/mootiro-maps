@@ -92,3 +92,15 @@
 .resource-extras{
   padding: 0 60px;
 }
+.resource-tag-list{
+  margin: 5px 0 15px 0;
+  font-weight: bold;
+}
+.resource-tag-list span{
+  color: #666666;
+  margin: 0 5px;
+  padding: 2px 5px;
+  font-weight: normal;
+  background-color: rgb(235, 249, 255);
+  border-radius: 3px;
+}
