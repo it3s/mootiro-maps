@@ -1,6 +1,9 @@
 {% extends "global.html" %}
+{% load navigation_tags %}
 
 {% block title %}{{ community.name }}{% endblock %}
+
+{% block menu %} {% menu community "map" %} {% endblock %}
 
 {% block content %}
 

@@ -1,17 +1,20 @@
 {% extends "global.html" %}
 {% load vote_tags %}
 {% load proposal_tags %}
+{% load navigation_tags %}
 
 {% block title %}Proposal: {{proposal.name}} ― Komoo{% endblock %}
+
+{% block menu %} {% menu proposal "need" %} {% endblock %}
 
 {% block content %}
 
 <div id="main-content">
   <div class="main-column">
     <h3>
-      {{ proposal.title }} <span class="small">(<a href="#">{{ proposal.need.title }}</a>)</span>
-      <a class="right" href="{% url edit_proposal proposal.need.community.slug
-        proposal.need.slug proposal.number %}">EDIT</a>
+      {{ proposal.title }}
+      <span class="small"> (<a href="{% url view_need proposal.need.community.slug proposal.need.slug %}"> {{ proposal.need.title }}</a>)</span>
+      <a class="right" href="{% url edit_proposal proposal.need.community.slug proposal.need.slug proposal.number %}">EDIT</a>
     </h3>
     {% vote proposal %}
     <p>
@@ -29,7 +32,7 @@
       <h4>Proposals for <a href="#">{{ proposal.need.title }}</a></h4>
       {% for p in proposal.need.proposals.all %}
         {% if p != proposal %}
-          {% proposal_summary proposal %}
+          {% proposal_summary p %}
         {% endif %}
       {% endfor %}
       <a class="button" href="{% url new_proposal proposal.need.community.slug proposal.need.slug %}">

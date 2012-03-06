@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 def root(request):
     logger.debug('acessing Root')
     form = CommunityMapForm(request.POST)
-    return dict(form=form, current_item='map')
+    return dict(form=form)
 
 
 def get_geojson(request):

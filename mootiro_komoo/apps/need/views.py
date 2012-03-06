@@ -37,12 +37,12 @@ def edit(request, community_slug="", need_slug=""):
             return {'redirect': reverse('view_need',
                     args=(need.community.slug, need.slug))}
         else:
-            return {'form': form}
+            return dict(form=form, community=community)
     else:
         form = NeedForm(instance=need)
         if community:
             form.fields.pop('community')
-        return {'form': form}
+        return dict(form=form, community=community)
 
 
 @render_to('need/view.html')
@@ -50,7 +50,7 @@ def view(request, community_slug, need_slug):
     logger.debug('acessing need > view')
     community = get_object_or_404(Community, slug=community_slug)
     need = get_object_or_404(Need, slug=need_slug, community=community)
-    return {'need': need}
+    return dict(need=need, community=community)
 
 
 @render_to('need/list.html')
@@ -58,7 +58,7 @@ def list(request, community_slug):
     logger.debug('acessing need > list')
     community = get_object_or_404(Community, slug=community_slug)
     needs = community.needs.all()
-    return {'community': community, 'needs': needs}
+    return dict(community=community, needs=needs)
 
 
 # DOES NOT SIMPLY WORK WITH @ajax_request, please test before commit!
@@ -92,5 +92,3 @@ def needs_geojson(request):
     geojson = create_geojson(needs)
     return HttpResponse(json.dumps(geojson),
         mimetype="application/x-javascript")
-
-

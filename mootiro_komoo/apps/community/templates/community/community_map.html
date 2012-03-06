@@ -1,6 +1,9 @@
 {% extends "global.html" %}
+{% load navigation_tags %}
 
 {% block title %}Community{% endblock %}
+
+{% block menu %} {% menu community "map" %} {% endblock %}
 
 {% block content %}
 <form method="post" id="map-form">

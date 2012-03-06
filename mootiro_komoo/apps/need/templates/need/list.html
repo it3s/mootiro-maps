@@ -1,7 +1,10 @@
 {% extends "global.html" %}
+{% load navigation_tags %}
 {% load comment_tags %}
 
 {% block title %}Needs for {{ community.name }}{% endblock %}
+
+{% block menu %} {% menu community "need" %} {% endblock %}
 
 {% block content %}
 <div id="main-content">

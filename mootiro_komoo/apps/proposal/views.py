@@ -17,6 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 @render_to('proposal/edit.html')
+@login_required
 def edit(request, community_slug="", need_slug="", proposal_number=""):
     logger.debug('acessing proposal > edit')
     # always receives all identifiers or none of them
@@ -35,9 +36,9 @@ def edit(request, community_slug="", need_slug="", proposal_number=""):
                     community_slug=proposal.need.community.slug,
                     need_slug=proposal.need.slug, proposal_number=proposal.number)
         else:
-            return {'form': form}
+            return dict(form=form, need=need)
     else:
-        return {'form': ProposalForm(instance=proposal)}
+        return dict(form=ProposalForm(instance=proposal), community=community)
 
 
 @render_to('proposal/view.html')
@@ -47,27 +48,4 @@ def view(request, community_slug="", need_slug="", proposal_number=""):
     community = get_object_or_404(Community, slug=community_slug)
     need = get_object_or_404(Need, slug=need_slug, community=community)
     proposal = get_object_or_404(Proposal, number=proposal_number, need=need)
-    return dict(proposal=proposal)
-
-
-@render_to('proposal/proposal_edit.html')
-@login_required
-def save(request, need_slug):
-    logger.debug('accessing proposal > save')
-    need = Need.objects.get(slug=need_slug)
-    proposal = Proposal(need=need, creator=request.user)
-    form = ProposalForm(request.POST, instance=proposal)
-    if form.is_valid():
-        proposal = form.save()
-        return redirect(view, need_slug, proposal.id)
-    else:
-        logger.debug('invalid form : {}'.format(form.errors))
-        return dict(form=form)
-
-
-#@render_to('proposal/proposal_edit.html')
-#@login_required
-#def edit0(request, need_slug, id):
-#    logger.debug('accessing proposal > edit')
-#    p = Proposal.objects.get(id=id)
-#    return dict(form=ProposalForm(instance=p), action=reverse('save_proposal', args=(need_slug,)))
+    return dict(proposal=proposal, community=community)

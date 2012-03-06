@@ -44,9 +44,10 @@ def edit(request, community_slug=""):
             return {'redirect': reverse('view_community',
                                         args=(community.slug,))}
         else:
-            return {'form': form, 'action': action}
+            return dict(form=form, action=action, community=community)
     else:
-        return {'form': CommunityForm(instance=community), 'action': action}
+        return dict(form=CommunityForm(instance=community), action=action,
+                    community=community)
 
 
 @render_to('community/community_view.html')
@@ -57,7 +58,7 @@ def view(request, community_slug):
     community = get_object_or_404(Community, slug=community_slug)
     geojson = create_geojson([community])
     mapform = CommunityMapForm({'map': geojson})
-    return {'community': community, 'form': mapform, 'current_item': 'map'}
+    return dict(community=community, form=mapform)
 
 
 @render_to('community/community_map.html')

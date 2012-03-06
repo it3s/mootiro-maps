@@ -2,8 +2,11 @@
 {% load comment_tags %}
 {% load vote_tags %}
 {% load proposal_tags %}
+{% load navigation_tags %}
 
 {% block title %}{{ need.title }} at {{ need.community.name }}{% endblock %}
+
+{% block menu %} {% menu need "need" %} {% endblock %}
 
 {% block content %}
 <div id="main-content">

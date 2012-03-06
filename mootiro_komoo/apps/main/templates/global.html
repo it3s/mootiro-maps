@@ -1,3 +1,5 @@
+{% load navigation_tags %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -20,26 +22,21 @@
   <body>
     <!-- Mootiro_bar goes here -->
     <div id="root">
-      <div id="tabs">
-        {% if community or need %}
-        <div class="tab">{% firstof community.name need.community.name %}</div>
-        {% else %}
-        <div class="tab placeholder"></div>
-        {% endif %}
-      </div>
+
+      {% with c=community %} {% community_tabs c %} {% endwith %}
+
       <div id="top">
         <div id="logo">
           <a href="{% url root %}"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></a>
         </div>
         <div id="navigation">
-          <ul id="menu">
-            <li{% if current_item == 'map' %} class='selected'{% endif %}>Mapa</li>
-            <li{% if current_item == 'communities' %} class='selected'{% endif %}>Comunidades</li>
-            <li{% if current_item == 'needs' %} class='selected'{% endif %}>Necessidades</li>
-            <li{% if current_item == 'orgs' %} class='selected'{% endif %}>Organizações</li>
-            <li{% if current_item == 'resources' %} class='selected'{% endif %}>Recursos</li>
-            <li{% if current_item == 'funders' %} class='selected'{% endif %}>Financiadores</li>
-          </ul>
+          
+          {% block menu %}
+            {% with obj=community selected_area="" %}
+              {% menu obj selected_area %}
+            {% endwith %}
+          {% endblock %}
+          
           <form id="search">
             <input type="text" id="search-bar"/>
             <input type="submit" id="search-button" class="button" value="Search"/>

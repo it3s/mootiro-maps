@@ -1,6 +1,11 @@
 {% extends "global.html" %}
+{% load navigation_tags %}
 
 {% block title %}Proposals{% endblock %}
+
+{% block menu %} 
+  {% with selected_area="need" %} {{ block.super }} {% endwith %}
+{% endblock %}
 
 {% block content %}
   <h1>Proposals</h1>

@@ -1,0 +1,38 @@
+<ul id="menu">
+  
+  <li{% if selected_area == 'map' %} class='selected'{% endif %}>
+    {% if community %}
+    <a href="{% url view_community community.slug %}">Map</a>
+    {% else %}
+    <a href="{% url root %}">Map 0</a>
+    {% endif %}
+  </li>
+  
+  <li{% if selected_area == 'community' %} class='selected'{% endif %}>
+    {% if community %}
+    <a href="{% url view_community community.slug %}">About the community</a>
+    {% else %}
+    <a href="{% url list_communities %}">Communities 0<a/>
+    {% endif %}
+  </li>
+  
+  <li{% if selected_area == 'need' %} class='selected'{% endif %}>
+    {% if community %}
+    <a href="{% url list_community_needs community.slug %}">Needs</a>
+    {% else %}
+    <a href="{% url list_all_needs %}">Needs 0</a>
+    {% endif %}
+  </li>
+
+  <li{% if selected_area == 'organization' %} class='selected'{% endif %}>Organizations</li>
+  
+  <li{% if selected_area == 'resource' %} class='selected'{% endif %}>
+    {% if community %}
+    <a href="#changeMe">Resources</a>
+    {% else %}
+    <a href="#changeMe">Resources 0</a>
+    {% endif %}
+  </li>
+  
+  <li{% if selected_area == 'funder' %} class='selected'{% endif %}>Funders</li>
+</ul>
