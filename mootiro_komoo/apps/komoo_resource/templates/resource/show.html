@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 {% load vote_tags %}
 {% load comment_tags %}
-{% load markup %}
+{% load markitup_tags %}
 
 {% block content %}
   <div id="main-content">
@@ -23,7 +23,7 @@
         </div>
 
         <div class="resource-body">
-          <p>{{ resource.description|markdown }}</p>
+          <p>{{ resource.description|render_markup }}</p>
         </div>
 
         <div class="resource-footer">

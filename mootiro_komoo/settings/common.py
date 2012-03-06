@@ -161,7 +161,8 @@ TINYMCE_DEFAULT_CONFIG = dict(
 
 # markiItUp
 MARKITUP_SET = 'markitup/sets/markdown'
-# MARKITUP_SKIN = 'markitup/skins/markitup'
+MARKITUP_FILTER = ('django.contrib.markup.templatetags.markup.markdown', {})
+MARKITUP_AUTO_PREVIEW = True
 
 
 #CAS config
