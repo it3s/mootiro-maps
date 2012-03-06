@@ -2,13 +2,14 @@
 from __future__ import unicode_literals
 import logging
 from django.views.generic import View
-from django.shortcuts import (render_to_response, RequestContext,
+from django.shortcuts import (render_to_response, RequestContext, HttpResponse,
         HttpResponseRedirect, get_object_or_404)
+from django.utils import simplejson
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from annoying.decorators import render_to
-from komoo_resource.models import Resource
+from annoying.decorators import render_to, ajax_request
+from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
 
 
@@ -60,3 +61,12 @@ class Edit(View):
             return render_to_response('resource/edit.html',
                 dict(form_resource=form_resource),
                 context_instance=RequestContext(request))
+
+
+def search_by_kind(request):
+    logger.debug('acessing komoo_resource > search_by_kind')
+    term = request.GET.get('term', '')
+    kinds = ResourceKind.objects.filter(name__icontains=term)
+    d = [{'value': k.id, 'label': k.name} for k in kinds]
+    return HttpResponse(simplejson.dumps(d),
+        mimetype="application/x-javascript")

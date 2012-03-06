@@ -60,9 +60,9 @@ class Autocomplete(forms.TextInput):
         html = u'''
         <input type="text" %(value_attrs)s />
         <input type="text" %(label_attrs)s />
-        <script type="text/javascript"><!--//
+        <script type="text/javascript">
           %(js)s
-        //--></script>
+        </script>
         ''' % {
             'value_attrs': flatatt(value_attrs),
             'label_attrs': flatatt(label_attrs),

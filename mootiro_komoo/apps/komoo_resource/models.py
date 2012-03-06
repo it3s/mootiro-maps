@@ -4,11 +4,6 @@ from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 import reversion
 
-RESOURCE_CHOICES = [
-
-]
-_resource_dict = dict(RESOURCE_CHOICES)
-
 
 class ResourceKind(models.Model):
     """Kind of Resources"""

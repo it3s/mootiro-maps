@@ -163,6 +163,7 @@ TINYMCE_DEFAULT_CONFIG = dict(
 MARKITUP_SET = 'markitup/sets/markdown'
 MARKITUP_FILTER = ('django.contrib.markup.templatetags.markup.markdown', {})
 MARKITUP_AUTO_PREVIEW = True
+JQUERY_URL = ''
 
 
 #CAS config

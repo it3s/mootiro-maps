@@ -9,4 +9,5 @@ urlpatterns = patterns('komoo_resource.views',
     url(r'^$', 'resource_list', name='resource_list'),
     url(r'^edit/?$', Edit.as_view(), name='resource_edit'),
     url(r'^(?P<id>\d+)/?$', 'show', name='resource_show'),
+    url(r'^search_by_kind/$', 'search_by_kind', name='resource_search_by_kind')
 )
