@@ -4,6 +4,7 @@ from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 import reversion
+from taggit.managers import TaggableManager
 from community.models import Community
 
 
@@ -29,6 +30,8 @@ class Resource(models.Model):
     kind = models.ForeignKey(ResourceKind)
     description = models.TextField()
     location = models.GeometryCollectionField(null=True, blank=True)
+
+    tags = TaggableManager()
 
     # resources belongs to community?
     # community = models.ForeignKey(Community, related_name='resources',

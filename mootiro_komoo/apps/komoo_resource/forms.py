@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django import forms
 from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
-from main.widgets import Autocomplete
+from main.widgets import Autocomplete, TaggitWidget
 from komoo_resource.models import Resource, ResourceKind
 
 
@@ -12,10 +12,14 @@ class FormResource(forms.ModelForm):
     description = forms.CharField(widget=MarkItUpWidget())
     kind = forms.CharField(
         widget=Autocomplete(ResourceKind, '/resource/search_by_kind/'))
+    tags = forms.Field(
+        widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
+        required=False
+    )
 
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'kind', 'id']
+        fields = ['name', 'description', 'kind', 'tags',  'id']
 
     def __init__(self, *args, **kwargs):
         # Crispy forms configuration

@@ -10,6 +10,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from annoying.decorators import render_to
+from taggit.models import TaggedItem
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
 
@@ -73,3 +74,12 @@ def search_by_kind(request):
     d = [{'value': k.id, 'label': k.name} for k in kinds]
     return HttpResponse(simplejson.dumps(d),
         mimetype="application/x-javascript")
+
+
+def search_by_tag(request):
+    logger.debug('acessing resource > search_by_tag')
+    term = request.GET['term']
+    qset = TaggedItem.tags_for(Resource).filter(name__istartswith=term)
+    tags = [t.name for t in qset]
+    return HttpResponse(simplejson.dumps(tags),
+                mimetype="application/x-javascript")
