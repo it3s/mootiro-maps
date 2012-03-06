@@ -19,7 +19,7 @@
             criado por <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
             em {{ resource.creation_date|date:"d/m/Y" }}
           </span>
-          <span class="resource-type">tipo:&nbsp; <strong>{{ resource.kind_repr }}</strong></span>
+          <span class="resource-type">tipo:&nbsp; <strong>{{ resource.kind }}</strong></span>
         </div>
 
         <div class="resource-body">

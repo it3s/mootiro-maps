@@ -5,14 +5,17 @@ from django.contrib.auth.models import User
 import reversion
 
 RESOURCE_CHOICES = [
-    (1, 'Veículo'),
-    (2, 'Equipamento'),
-    (3, 'Espaço'),
-    (4, 'Material Esportivo'),
-    (5, 'Material Educacional'),
-    (6, 'Outros'),
+
 ]
 _resource_dict = dict(RESOURCE_CHOICES)
+
+
+class ResourceKind(models.Model):
+    """Kind of Resources"""
+    name = models.CharField(max_length=128)
+
+    def __unicode__(self):
+        return self.name
 
 
 class Resource(models.Model):
@@ -21,12 +24,9 @@ class Resource(models.Model):
     creator = models.ForeignKey(User, null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
-    kind = models.IntegerField(choices=RESOURCE_CHOICES)
+    kind = models.ForeignKey(ResourceKind)
     description = models.TextField()
     location = models.GeometryCollectionField(null=True, blank=True)
-
-    def kind_repr(self):
-        return _resource_dict[self.kind]
 
     objects = models.GeoManager()
 
