@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import logging
 from django.views.generic import View
+from django.db.models.query_utils import Q
 from django.shortcuts import (render_to_response, RequestContext, HttpResponse,
         HttpResponseRedirect, get_object_or_404)
 from django.utils import simplejson
@@ -67,7 +68,8 @@ class Edit(View):
 def search_by_kind(request):
     logger.debug('acessing komoo_resource > search_by_kind')
     term = request.GET.get('term', '')
-    kinds = ResourceKind.objects.filter(name__icontains=term)
+    kinds = ResourceKind.objects.filter(Q(name__icontains=term) |
+        Q(slug__icontains=term))
     d = [{'value': k.id, 'label': k.name} for k in kinds]
     return HttpResponse(simplejson.dumps(d),
         mimetype="application/x-javascript")

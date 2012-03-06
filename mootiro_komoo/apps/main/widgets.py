@@ -35,6 +35,11 @@ class Autocomplete(forms.TextInput):
                 $("#%(label_id)s").val(ui.item.label);
                 $("#%(value_id)s").val(ui.item.value);
                 return false;
+            },
+            change: function(event, ui) {
+                if(!ui.item || !$("#%(label_id)s").val()){
+                    $("#%(value_id)s").val('');
+                }
             }
         });
         """ % {

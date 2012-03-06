@@ -3,42 +3,40 @@
     "model": "komoo_resource.resourcekind",
     "pk": 1,
     "fields": {
-      "name": "Material Educacional"
+      "name": "Espaço",
+      "slug": "espaco"
     }
   },
   {
     "model": "komoo_resource.resourcekind",
     "pk": 2,
     "fields": {
-      "name": "Material Esportivo"
+      "name": "Material",
+      "slug": "material"
     }
   },
   {
     "model": "komoo_resource.resourcekind",
     "pk": 3,
     "fields": {
-      "name": "Veículo"
+      "name": "Equipamento",
+      "slug": "equipamento"
     }
   },
   {
     "model": "komoo_resource.resourcekind",
     "pk": 4,
     "fields": {
-      "name": "Equipamento"
+      "name": "Veículo",
+      "slug": "veiculo"
     }
   },
   {
     "model": "komoo_resource.resourcekind",
     "pk": 5,
     "fields": {
-      "name": "Espaço"
-    }
-  },
-  {
-    "model": "komoo_resource.resourcekind",
-    "pk": 6,
-    "fields": {
-      "name": "Outros"
+      "name": "Outros",
+      "slug": "outros"
     }
   }
 ]
