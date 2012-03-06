@@ -8,7 +8,7 @@ from django.utils import simplejson
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from annoying.decorators import render_to, ajax_request
+from annoying.decorators import render_to
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
 
@@ -27,7 +27,8 @@ def resource_list(request):
 def show(request, id=None):
     logger.debug('acessing komoo_resource > show')
     resource = get_object_or_404(Resource, pk=id)
-    return dict(resource=resource)
+    similar = Resource.objects.filter(kind=resource.kind).exclude(pk=resource.id)[:5]
+    return dict(resource=resource, similar=similar)
 
 
 class Edit(View):
