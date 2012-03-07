@@ -39,6 +39,7 @@ class Autocomplete(forms.TextInput):
             change: function(event, ui) {
                 if(!ui.item || !$("#%(label_id)s").val()){
                     $("#%(value_id)s").val('');
+                    $("#%(label_id)s").val('');
                 }
             }
         });
@@ -63,11 +64,11 @@ class Autocomplete(forms.TextInput):
             label_attrs['id'] = label_id
 
         html = u'''
-        <input type="text" %(value_attrs)s />
+        <input type="hidden" %(value_attrs)s />
         <input type="text" %(label_attrs)s />
-        <script type="text/javascript">
+        <script type="text/javascript"><!--//
           %(js)s
-        </script>
+        //--></script>
         ''' % {
             'value_attrs': flatatt(value_attrs),
             'label_attrs': flatatt(label_attrs),
