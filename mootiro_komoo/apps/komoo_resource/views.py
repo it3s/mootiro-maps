@@ -29,7 +29,8 @@ def resource_list(request):
 def show(request, id=None):
     logger.debug('acessing komoo_resource > show')
     resource = get_object_or_404(Resource, pk=id)
-    similar = Resource.objects.filter(kind=resource.kind).exclude(pk=resource.id)[:5]
+    similar = Resource.objects.filter(Q(kind=resource.kind) |
+        Q(tags__in=resource.tags.all())).exclude(pk=resource.id)[:5]
     return dict(resource=resource, similar=similar)
 
 
