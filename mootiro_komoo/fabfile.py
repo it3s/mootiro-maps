@@ -5,35 +5,36 @@ from fabric.api import *
 
 #env.hosts = ['me@example.com:22']
 
+
 django_settings = {
     'dev': '--settings=settings.development',
     'stage': '--settings=settings.staging',
     'prod': '--settings=settings.production'
 }
-env = 'dev'
+env_ = 'dev'
 
 
 def dev():
-    """Set environment to development"""
-    global env
-    env = 'dev'
+    """Set env_ironment to development"""
+    global env_
+    env_ = 'dev'
 
 
 def test():
-    """Set environment to test"""
-    global env
-    env = 'test'
+    """Set env_ironment to test"""
+    global env_
+    env_ = 'test'
 
 
 def prod():
-    """Set environment to production"""
-    global env
-    env = 'prod'
+    """Set env_ironment to production"""
+    global env_
+    env_ = 'prod'
 
 
-def build_environment():
+def build_env_ironment():
     """
-    build environment: pip install everything + patch django for postgis
+    build env_ironment: pip install everything + patch django for postgis
     encoding problem on postgres 9.1
     """
     local("pip install -r settings/requirements.txt")
@@ -44,18 +45,18 @@ def build_environment():
 
 def run():
     """Runs django's development server"""
-    local('python manage.py runserver 8001 {}'.format(django_settings[env]))
+    local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
 
 
 def js_urls():
     """Creates a javascript file containing urls"""
-    local('python manage.py js_urls {}'.format(django_settings[env]))
+    local('python manage.py js_urls {}'.format(django_settings[env_]))
 
 
 def syncdb(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
     noinput = "" if create_superuser else "--noinput"
-    local('python manage.py syncdb {} {}'.format(noinput, django_settings[env]))
+    local('python manage.py syncdb {} {}'.format(noinput, django_settings[env_]))
     load_fixtures()
 
 
@@ -68,7 +69,7 @@ def recreate_db():
 
 def shell():
     """Launches Django interactive shell"""
-    local('python manage.py shell {}'.format(django_settings[env]))
+    local('python manage.py shell {}'.format(django_settings[env_]))
 
 
 def load_fixtures(type_='system'):
@@ -81,13 +82,13 @@ def load_fixtures(type_='system'):
     """
     if type_ == 'test':
         local('python manage.py loaddata fixtures/test_fixtures.json {}'.format(
-                django_settings[env]))
+                django_settings[env_]))
     else:
         import os
         for fixture in os.listdir('fixtures'):
             if fixture.endswith('_fixtures.json') and fixture != 'test_fixtures.json':
                 local('python manage.py loaddata fixtures/{} {}'.format(
-                    fixture, django_settings[env]))
+                    fixture, django_settings[env_]))
 
 
 def initial_revisions():
@@ -95,7 +96,7 @@ def initial_revisions():
     load initial revisions for django-revisions module
     should run only once when installed/or when loaded a new app/model
     """
-    local('python manage.py createinitialrevisions {}'.format(django_settings[env]))
+    local('python manage.py createinitialrevisions {}'.format(django_settings[env_]))
 
 
 def sync_all():
