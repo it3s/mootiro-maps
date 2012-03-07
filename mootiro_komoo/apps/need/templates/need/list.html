@@ -18,9 +18,12 @@
       {% for need in needs %}
       <div>
         <h4>
-          <a href="{% url view_need need.community.slug need.slug %}">
-            <span class="apart">{{ need.title }}</span>
-          </a>
+          <span class="apart">
+            <a href="{% url view_need need.community.slug need.slug %}"> {{ need.title }} </a>
+            {% if not community %}
+            at <a href="{% url view_community need.community.slug %}">{{ need.community.name }}</a>
+            {% endif %}
+          </span>
           <a class="small" href="#">see on the map</a>
           <ul class="horizontal">
             {% for c in need.categories.all %}
