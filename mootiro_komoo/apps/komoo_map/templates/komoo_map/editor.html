@@ -1,14 +1,6 @@
-{% with map.latitude|stringformat:"f" as lat %}
-{% with map.longitude|stringformat:"f" as long %}
-
 {% block html %}
     <!-- HTML map container -->
-    <div id="map-canvas-{{ map.pk }}"{% if width %} style="width: {{ width }}; height: {{ height }};"{% endif %} class="komoo-map-googlemap">
-         {% block noscript %}
-         <noscript>
-            <img alt="Map of {{ map.address }}" src="http://maps.google.com/maps/api/staticmap?center={{ lat }},{{ long }}&zoom={{ zoom }}&markers={{ lat }},{{ long }}&size={{ width }}x{{ height }}&sensor=false">
-         </noscript>
-         {% endblock noscript %}
+    <div id="map-canvas"{% if width %} style="width: {{ width }}; height: {{ height }};"{% endif %} class="komoo-map-googlemap">
     </div>
     <div id="dinamic-form"></div>
 {% endblock %}
@@ -17,16 +9,15 @@
     <!-- Map creation script -->
     <script type="text/javascript">
         var map;
-        function initialize_map_{{ map.pk }}() {
-            var latlng = new google.maps.LatLng({{ lat }}, {{ long }});
-            var mapElem = document.getElementById("map-canvas-{{ map.pk }}");
+        function initialize_map() {
+            var mapElem = document.getElementById("map-canvas");
 
             {% block map_options_js %}
             var mapOptions = {
                 editable: true,
+                autoSaveLocation: true,
                 googleMapOptions: {
                     zoom: {{ zoom }},
-                    center: latlng
                 }
             };
             {% endblock %}
@@ -45,7 +36,7 @@
             // Load the form when user click 'finish' button
             map.event.bind('finish_click', function (e, overlayType) {
                 console.log(overlayType);
-                $('#map-canvas-{{ map.pk }}').slideUp();
+                $('#map-canvas').slideUp();
                 var geojson = map.getGeoJSON({newOnly: true, geometryCollection: true});
                 console.log(geojson);
                 if (geojson.geometries.length > 0) {
@@ -108,10 +99,7 @@
 
         {% block map_loading_js %}
         // initialize the map after page loading
-        google.maps.event.addDomListener(window, 'load', initialize_map_{{ map.pk }});
+        google.maps.event.addDomListener(window, 'load', initialize_map);
         {% endblock %}
     </script>
 {% endblock %}
-
-{% endwith %}
-{% endwith %}

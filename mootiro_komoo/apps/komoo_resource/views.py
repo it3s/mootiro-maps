@@ -13,6 +13,7 @@ from annoying.decorators import render_to
 from taggit.models import TaggedItem
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
+from main.utils import create_geojson
 
 
 logger = logging.getLogger(__name__)
@@ -29,9 +30,10 @@ def resource_list(request):
 def show(request, id=None):
     logger.debug('acessing komoo_resource > show')
     resource = get_object_or_404(Resource, pk=id)
+    geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id)[:5]
-    return dict(resource=resource, similar=similar)
+    return dict(resource=resource, similar=similar, geojson=geojson)
 
 
 class Edit(View):

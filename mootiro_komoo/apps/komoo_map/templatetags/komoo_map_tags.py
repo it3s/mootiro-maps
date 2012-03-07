@@ -8,35 +8,29 @@ register = template.Library()
 def komoo_map(parser, token):
     """
     The syntax:
-        {% komoo_map <address> [<width> <height>] [<zoom>] [<geojson>] [using <template_name>] %}
+        {% komoo_map [<width> <height>] [<zoom>] [<geojson>] [using <template_name>] %}
     """
     params = token.split_contents()
 
-    if len(params) < 2:
-        raise template.TemplateSyntaxError('komoo_map tag requires address argument')
-
-    if len(params) == 3 or len(params) > 8:
+    if len(params) > 7:
         raise template.TemplateSyntaxError('komoo_map tag has the following syntax: '
-                   '{% komoo_map <address> <width> <height> [zoom] [using <template_name>] %}')
+                   '{% komoo_map <width> <height> [zoom] [using <template_name>] %}')
     return KomooMapNode(params)
 
 @register.tag
 def komoo_map_editor(parser, token):
     """
     The syntax:
-        {% komoo_map_editor <address> [<width> <height>] [<zoom>] [<geojson>] [<input_id>] [using <template_name>] %}
+        {% komoo_map_editor [<width> <height>] [<zoom>] [<geojson>] [using <template_name>] %}
     """
     params = token.split_contents()
 
     if not params[-2] == 'using':
         params = params + ['using', '"komoo_map/editor.html"']
 
-    if len(params) < 2:
-        raise template.TemplateSyntaxError('komoo_map_editor tag requires address argument')
-
-    if len(params) == 3 or len(params) > 9:
+    if len(params) > 7:
         raise template.TemplateSyntaxError('komoo_map_editor tag has the following syntax: '
-                   '{% komoo_map_editor <address> <width> <height> [zoom] [<geojson>] [<input_id>] [using <template_name>] %}')
+                   '{% komoo_map_editor <width> <height> [zoom] [<geojson>] [using <template_name>] %}')
     return KomooMapNode(params)
 
 class KomooMapNode(template.Node):
@@ -47,53 +41,39 @@ class KomooMapNode(template.Node):
             template_name = params[-1]
             params = params[:-2]
 
-        address = params[1]
-
-        if len(params) == 4:
-            width, height = params[2], params[3]
+        if len(params) == 3:
+            width, height = params[1:3]
+        elif len(params) == 4:
+            width, height, zoom = params[1:4]
         elif len(params) == 5:
-            width, height, zoom = params[2], params[3], params[4]
-        elif len(params) == 6:
-            width, height, zoom, geojson = params[2], params[3], params[4], params[5]
-        elif len(params) == 7:
-            width, height, zoom, geojson, input_id = params[2], params[3], params[4], params[5], params[6]
+            width, height, zoom, geojson = params[1:5]
 
-        self.address = template.Variable(address)
         self.width = template.Variable(width or '')
         self.height = template.Variable(height or '')
         self.zoom = template.Variable(zoom or 16)
         self.geojson = template.Variable(geojson or '{}')
-        self.input_id = template.Variable(input_id or '')
         self.template_name = template.Variable(template_name or '"komoo_map/map.html"')
 
     def render(self, context):
-        try:
-            address = self.address.resolve(context)
+        #try:
             template_name = self.template_name.resolve(context)
             width = self.width.resolve(context)
             height = self.height.resolve(context)
             zoom = self.zoom.resolve(context)
             geojson = self.geojson.resolve(context)
-            input_id = self.input_id.resolve(context)
 
             if not width.endswith('%') and not width.endswith('px'):
                 width = width + 'px'
             if not height.endswith('%') and not height.endswith('px'):
                 height = height + 'px'
 
-            map_, _ = Address.objects.get_or_create(address=address or '')
-            if not map_.latitude:
-                map_.latitude = -23.55
-                map_.longitude = -46.65
             context.update({
-                'map': map_,
                 'width': width,
                 'height': height,
                 'zoom': zoom,
                 'geojson': geojson,
-                'input_id': input_id,
                 'template_name': template_name
             })
             return render_to_string(template_name, context_instance=context)
-        except template.VariableDoesNotExist:
-            return ''
+        #except template.VariableDoesNotExist:
+        #    return 'ERRO'

@@ -76,6 +76,8 @@ komoo.RegionTypes = [
  * @property {boolean} [defaultDrawingControl=false]
  *           If true the controls from Google Drawing library are used.
  * @property {Object} regionTypes
+ * @property {boolean} autoSaveLocation
+ * @property {boolean} enableInfoWindow
  * @property {Object} overlayOptions
  * @property {google.maps.MapOptions} googleMapOptions The Google Maps map options.
  */
@@ -84,6 +86,8 @@ komoo.MapOptions = {
     useGeoLocation: false,
     defaultDrawingControl: false,
     regionTypes: komoo.RegionTypes,
+    autoSaveLocation: false,
+    enableInfoWindow: true,
     overlayOptions: {
         fillColor: '#ff0',
         fillOpacity: 0.45,
@@ -156,6 +160,28 @@ komoo.Map = function (element, options) {
 
     komooMap.editToolbar = $('<div>').addClass('map-toolbar').css('margin', '5px');
 
+    /* Create the infoWindow */
+    if (InfoBox) {
+        komooMap.infoWindow = new InfoBox({
+            pixelOffset: new google.maps.Size(0, -20),
+            closeBoxMargin: '10px',
+            boxStyle: {
+                background: 'url(/static/img/infowindow-arrow.png) no-repeat 0 10px', // TODO: Hardcode is evil
+                width: '200px',
+            }
+        });
+        /* Clear the overlay property from infowindow when close it */
+        google.maps.event.addDomListener(komooMap.infoWindow, 'domready', function (e) {
+            var closeBox = komooMap.infoWindow.div_.firstChild;
+            google.maps.event.addDomListener(closeBox, 'click', function (e) {
+                komooMap.infoWindow.overlay = undefined;
+            });
+        });
+    } else {
+        if (window.console) console.log('Using default info window.');
+        komooMap.infoWindow = new google.maps.InfoWindow();
+    }
+
     /* Adds drawing manager */
     komooMap.setEditable(options.editable);
 
@@ -163,6 +189,7 @@ komoo.Map = function (element, options) {
     if (!options.defaultDrawingControl) {
         /* Adds new HTML element to the map */
         komooMap.mainPanel = komooMap._createMainPanel();
+        if (!komooMap.editable) komooMap.mainPanel.hide();
         komooMap.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
                 komooMap.mainPanel.get(0));
         komooMap.addPanel = komooMap._createAddPanel();
@@ -186,28 +213,6 @@ komoo.Map = function (element, options) {
     //komooMap.googleMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
     //        controlSelector.get(0));
 
-
-    /* Create the infoWindow */
-    if (InfoBox) {
-        komooMap.infoWindow = new InfoBox({
-            pixelOffset: new google.maps.Size(0, -20),
-            closeBoxMargin: '10px',
-            boxStyle: {
-                background: 'url(/static/img/infowindow-arrow.png) no-repeat 0 10px', // TODO: Hardcode is evil
-                width: '200px',
-            }
-        });
-        /* Clear the overlay property from infowindow when close it */
-        google.maps.event.addDomListener(komooMap.infoWindow, 'domready', function (e) {
-            var closeBox = komooMap.infoWindow.div_.firstChild;
-            google.maps.event.addDomListener(closeBox, 'click', function (e) {
-                komooMap.infoWindow.overlay = undefined;
-            });
-        });
-    } else {
-        if (window.console) console.log('Using default info window.');
-        komooMap.infoWindow = new google.maps.InfoWindow();
-    }
 
     /* Uses HTML5 Geo Location */
     if (options.useGeoLocation) komooMap.goToUserLocation();
@@ -251,7 +256,7 @@ komoo.Map = function (element, options) {
         });
     }
     google.maps.event.addListener(komooMap.googleMap, 'idle', function () {
-        komooMap.saveLocation();
+        if (komooMap.options.autoSaveLocation) komooMap.saveLocation();
 
         if (!komooMap.boundsAwaiting.equals(komooMap.boundsLoaded)) {
             if (window.console) console.log('Loading overlays from server...');
@@ -385,6 +390,7 @@ komoo.Map.prototype = {
                 var pos = geometry.coordinates;
                 var latLng = new google.maps.LatLng(pos[0], pos[1]);
                 overlay.setPosition(latLng);
+                if (panTo) komooMap.googleMap.setCenter(latLng);
             }
             if (overlay) {
                 overlay.setMap(komooMap.googleMap);
@@ -512,13 +518,15 @@ komoo.Map.prototype = {
      */
     setEditable: function (editable) {
         var options;
+        this.editable = editable;
+        if (!this.drawingManager) this._initDrawingManager();
         if (editable) {  // Enable
-            if (!this.drawingManager) this._initDrawingManager();
             this.drawingManagerOptions.drawingMode = null;
             if (this.options.defaultDrawingControl)
                 this.drawingManagerOptions.drawingControl = true;
             this.setCurrentOverlay(this.currentOverlay);
             if (this.editToolbar) this.editToolbar.show();
+            if (this.mainPanel) this.mainPanel.show();
         } else {  // Disable
             this.drawingManagerOptions.drawingMode = null;
             if (this.options.defaultDrawingControl)
@@ -527,12 +535,12 @@ komoo.Map.prototype = {
                 this.currentOverlay.setEditable(false);
             }
             if (this.editToolbar) this.editToolbar.hide();
+            if (this.mainPanel) this.mainPanel.hide();
             this.setEditMode(null);
         }
         if (this.drawingManager) {
             this.drawingManager.setOptions(this.drawingManagerOptions);
         }
-        this.editable = editable;
     },
 
     /**
@@ -704,7 +712,7 @@ komoo.Map.prototype = {
         // TODO: Add timer
         var mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
             if ((komooMap.infoWindow.overlay && komooMap.infoWindow.overlay == overlay) ||
-                    komooMap.editMode) {
+                    komooMap.editMode || !komooMap.options.enableInfoWindow) {
                 return;
             }
             overlay.mouseLatLng = e.latLng;

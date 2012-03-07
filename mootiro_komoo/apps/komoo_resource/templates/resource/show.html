@@ -1,5 +1,6 @@
 {% extends 'global.html' %}
 
+{% load komoo_map_tags %}
 {% load crispy_forms_tags %}
 {% load vote_tags %}
 {% load comment_tags %}
@@ -29,8 +30,7 @@
       </div>
     </div>
     <div class="right-bar">
-      <img src="/static/img/komoo_map_img.png" width="240" height="320" />
-      <!-- TODO: DUMMY IMAGE ... replace by real content -->
+      <div id="map-preview">{% komoo_map '200' '200' 16 geojson %}</div>
       <a href="#">ver no mapa</a>
       <div class="similar-resources">
         <h1>Recursos Parecidos:</h1>

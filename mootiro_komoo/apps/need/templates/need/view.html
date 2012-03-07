@@ -1,4 +1,6 @@
 {% extends "global.html" %}
+
+{% load komoo_map_tags %}
 {% load comment_tags %}
 {% load vote_tags %}
 {% load proposal_tags %}
@@ -34,7 +36,7 @@
   </div>
 
   <div class="right-bar">
-    <img class="map-preview" alt="map preview" src=""/>
+    <div id="map-preview">{% komoo_map '200' '200' 16 geojson %}</div>
     <div class="block">
       <h3>Proposals</h3>
       {% for proposal in need.proposals.all %}

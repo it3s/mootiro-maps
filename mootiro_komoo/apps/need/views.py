@@ -50,7 +50,8 @@ def view(request, community_slug, need_slug):
     logger.debug('acessing need > view')
     community = get_object_or_404(Community, slug=community_slug)
     need = get_object_or_404(Need, slug=need_slug, community=community)
-    return dict(need=need, community=community)
+    geojson = create_geojson([need])
+    return dict(need=need, community=community, geojson=geojson)
 
 
 @render_to('need/list.html')
