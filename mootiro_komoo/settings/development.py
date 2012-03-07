@@ -115,8 +115,13 @@ LOGGING['loggers'].update({'{}.forms'.format(app): my_app_logger for app in os.l
 LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.listdir('apps/')})
 
 
+MIDDLEWARE_CLASSES += [
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
+]
+
+INSTALLED_APPS += [
+    'debug_toolbar'
+]
+
 # This for local_settings (user specific, like db access)
-try:
-    from local_settings import *
-except Exception:
-    pass
+from local_settings import *

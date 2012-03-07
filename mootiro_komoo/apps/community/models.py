@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.contrib.gis.db import models
+from django.contrib.auth.models import User
 import reversion
 from main.utils import slugify
 
@@ -12,6 +13,9 @@ class Community(models.Model):
     slug = models.SlugField(max_length=256, editable=False, blank=False)
     population = models.IntegerField(null=True, blank=True)  # number of inhabitants
     description = models.TextField(null=True, blank=True)
+
+    # Meta info
+    creator = models.ForeignKey(User, editable=False, related_name='created_communities')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 

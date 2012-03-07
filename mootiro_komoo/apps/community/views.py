@@ -6,6 +6,7 @@ import json
 import logging
 
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
@@ -21,6 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 @render_to('community/community_edit.html')
+@login_required
 def edit(request, community_slug=""):
     logger.debug('acessing Community > edit')
 
@@ -36,7 +38,9 @@ def edit(request, community_slug=""):
                 json.loads(POST['geometry'])['geometries'][0])
         form = CommunityForm(POST, instance=community)
         if form.is_valid():
-            community = form.save()
+            community = form.save(commit=False)
+            community.creator = request.user
+            community.save()
 
             if not request.is_ajax():
                 return redirect(view, community.slug)

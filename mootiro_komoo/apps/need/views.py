@@ -54,10 +54,14 @@ def view(request, community_slug, need_slug):
 
 
 @render_to('need/list.html')
-def list(request, community_slug):
+def list(request, community_slug=''):
     logger.debug('acessing need > list')
-    community = get_object_or_404(Community, slug=community_slug)
-    needs = community.needs.all()
+    if community_slug:
+        community = get_object_or_404(Community, slug=community_slug)
+        needs = community.needs.all()
+    else:
+        community = None
+        needs = Need.objects.all()
     return dict(community=community, needs=needs)
 
 
