@@ -46,6 +46,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
                 'properties': {
                     'type': type_,
                     'name': name,
+                    'id': obj.id
                 }
             }
             if hasattr(obj, 'community'):

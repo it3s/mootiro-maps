@@ -14,6 +14,7 @@
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.conf.urls.js"></script>
     <!-- Our utilities lib -->
+    <script type="text/javascript">var isAuthenticated = {{ user.is_authenticated|lower }};</script>
     <script type="text/javascript" src="/static/js/komoo_utils.js"></script>
 
     {{ form.media.js }}
@@ -30,13 +31,13 @@
           <a href="{% url root %}"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></a>
         </div>
         <div id="navigation">
-          
+
           {% block menu %}
             {% with obj=community selected_area="" %}
               {% menu obj selected_area %}
             {% endwith %}
           {% endblock %}
-          
+
           <form id="search">
             <input type="text" id="search-bar"/>
             <input type="submit" id="search-button" class="button" value="Search"/>

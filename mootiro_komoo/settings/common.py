@@ -90,6 +90,10 @@ MIDDLEWARE_CLASSES = [
     'lib.mootiro_bar.DjangoMiddleware',
 ]
 
+CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+)
+
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/

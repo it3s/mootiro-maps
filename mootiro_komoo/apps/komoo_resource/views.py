@@ -60,7 +60,7 @@ class Edit(View):
         if form_resource.is_valid():
             resource = form_resource.save(user=request.user)
             return render_to_response('resource/edit.html'.format(resource.id),
-                dict(redirect=reverse('resource_view', args=(resource.id,))),
+                dict(redirect=reverse('view_resource', args=(resource.id,))),
                 context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_resource.__errors)))

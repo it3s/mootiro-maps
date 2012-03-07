@@ -593,7 +593,6 @@ komoo.Map.prototype = {
                 }
                 komooMap.searchMarker.setPosition(latLng);
             }
-            console.log(komooMap.searchMarker);
         }
         if (typeof position == 'string') { // Got address
             var request = {
@@ -685,6 +684,12 @@ komoo.Map.prototype = {
                     dutils.urls.resolve('view_community', {community_slug: overlay.properties.community_slug}));
             infoContentTitle.text(overlay.properties.name);
             infoContent.append(infoContentTitle);
+        } else if (overlay.properties.type == 'resource') {
+            // TODO: Add more info
+            var infoContentTitle = $('<a>').attr('href',
+                    dutils.urls.resolve('view_resource', {id: overlay.properties.id}));
+            infoContentTitle.text(overlay.properties.name);
+            infoContent.append(infoContentTitle);
         } else {
             // TODO: Add more info
             var slugname = overlay.properties.type + '_slug';
@@ -709,7 +714,6 @@ komoo.Map.prototype = {
                 komooMap.infoWindow.setContent(infoContent.get(0));
                 komooMap.infoWindow.setPosition(e.latLng);
                 komooMap.infoWindow.open(komooMap.googleMap);
-                console.log(overlay.properties.name);
             }, 1000);
         });
 
@@ -946,45 +950,56 @@ komoo.Map.prototype = {
             {title: 'Adicionar', content: addMenu}
         ]);
 
-        $.each(komooMap.options.regionTypes, function (i, type) {
-            komooMap.overlayOptions[type.type] = type;
-            var item = $('<li>').addClass('map-menuitem').append($('<span>').text(type.title));
-            var submenu = komooMap.addItems.clone(true);
-            var submenuItems = $('div', submenu);
-            submenuItems.removeClass('map-button').addClass('map-menuitem').hide(); // Change the class
-            submenuItems.bind('click', function (){
-                submenu.hide();
-                $('.map-panel-title', komooMap.addPanel).text($(this).text())
-                $('.map-menuitem.selected', komooMap.mainPanel).removeClass('selected');
-                item.addClass('selected');
-                $('.map-menuitem:not(.selected)', komooMap.mainPanel).addClass('frozen');
+        // Only logged in users can add new items.
+        if (!isAuthenticated) {
+            var submenuItem = addMenu.append($('<li>').addClass('map-menuitem').text('Please log in.'));
+            submenuItem.bind('click', function (){
+                window.location = '/user/login';
             });
-            if (type.disabled) item.addClass('disabled');
-            item.css({
-                'position': 'relative'
+            $.each(komooMap.options.regionTypes, function (i, type) {
+                komooMap.overlayOptions[type.type] = type;
             });
-            submenu.css({
-                'position': 'absolute',
-                'top': '0',
-                'z-index': '999999'
-            });
-            item.append(submenu);
-            item.hover(
-                function () { // Over
-                    /* Menu should not work if 'add' panel is visible */
-                    if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
-                        komooMap.type = type.type;
-                        submenu.css({'left': item.outerWidth() + 'px'});
-                        $.each(type.overlayTypes, function (key, overlayType) { $('#map-add-' + overlayType, submenu).show(); });
-                        submenu.show();
-                    }
-                },
-                function () { // Out
+        } else {
+            $.each(komooMap.options.regionTypes, function (i, type) {
+                komooMap.overlayOptions[type.type] = type;
+                var item = $('<li>').addClass('map-menuitem').append($('<span>').text(type.title));
+                var submenu = komooMap.addItems.clone(true);
+                var submenuItems = $('div', submenu);
+                submenuItems.removeClass('map-button').addClass('map-menuitem').hide(); // Change the class
+                submenuItems.bind('click', function (){
                     submenu.hide();
+                    $('.map-panel-title', komooMap.addPanel).text($(this).text())
+                    $('.map-menuitem.selected', komooMap.mainPanel).removeClass('selected');
+                    item.addClass('selected');
+                    $('.map-menuitem:not(.selected)', komooMap.mainPanel).addClass('frozen');
                 });
-            addMenu.append(item);
-            type.selector = item;
-        });
+                if (type.disabled) item.addClass('disabled');
+                item.css({
+                    'position': 'relative'
+                });
+                submenu.css({
+                    'position': 'absolute',
+                    'top': '0',
+                    'z-index': '999999'
+                });
+                item.append(submenu);
+                item.hover(
+                    function () { // Over
+                        /* Menu should not work if 'add' panel is visible */
+                        if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
+                            komooMap.type = type.type;
+                            submenu.css({'left': item.outerWidth() + 'px'});
+                            $.each(type.overlayTypes, function (key, overlayType) { $('#map-add-' + overlayType, submenu).show(); });
+                            submenu.show();
+                        }
+                    },
+                    function () { // Out
+                        submenu.hide();
+                    });
+                addMenu.append(item);
+                type.selector = item;
+            });
+        }
 
         panel.css({
             'margin': '10px 5px 10px 10px',
@@ -1034,7 +1049,6 @@ komoo.Map.prototype = {
         });
         finishButton.bind('click', function () {
             button_click();
-            console.log('finish_click', komooMap.overlayOptions[komooMap.type]);
             komooMap.event.trigger('finish_click', komooMap.overlayOptions[komooMap.type]);
             komooMap.type = null;
         });

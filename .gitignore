@@ -1,6 +1,8 @@
 local_settings.py
 *.pyc
+*.*~
 *.egg-info
 .idea/
 .codeintel/
+build/
 logs/
