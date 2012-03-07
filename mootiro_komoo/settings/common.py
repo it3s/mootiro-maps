@@ -110,6 +110,7 @@ TEMPLATE_DIRS = [
 ]
 
 INSTALLED_APPS = [
+    # django apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -120,12 +121,14 @@ INSTALLED_APPS = [
     'django.contrib.comments',
     'django.contrib.gis',
     'django.contrib.markup',
+    # 3rd party apps
     'tinymce',
     'taggit',
     'django_js_utils',
     'crispy_forms',
     'reversion',
     'markitup',
+    # our apps
     'komoo_map',
     'community',
     'main',

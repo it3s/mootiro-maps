@@ -21,7 +21,7 @@ komoo.RegionTypes = [
         color: '#ff0',
         icon: '',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
-        formURL: dutils.urls.resolve('new_community')
+        formUrl: dutils.urls.resolve('new_community')
     },
     {
         type: 'need',
@@ -31,7 +31,7 @@ komoo.RegionTypes = [
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
                        google.maps.drawing.OverlayType.MARKER],
-        formURL: dutils.urls.resolve('new_need', {community_slug: 'community_slug'})
+        formUrl: dutils.urls.resolve('new_need', {community_slug: 'community_slug'})
         //disabled: true
     },
     {
@@ -48,9 +48,11 @@ komoo.RegionTypes = [
         title: 'Recurso',
         color: '#fff',
         icon: '',
-        overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
-        formUrl: '',
-        disabled: true
+        overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
+                       google.maps.drawing.OverlayType.POLYLINE,
+                       google.maps.drawing.OverlayType.MARKER],
+        formUrl: '/resource/edit/' //dutils.urls.resolve('resource_edit')
+        // disabled: false
     },
     {
         type: 'financing',

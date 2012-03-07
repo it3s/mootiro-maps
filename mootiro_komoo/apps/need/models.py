@@ -10,7 +10,7 @@ from taggit.managers import TaggableManager
 
 from community.models import Community
 from main.utils import slugify
-from mootiro_komoo.lib.collection_from import CollectionFrom
+from collection_from import CollectionFrom
 
 
 class NeedCategory(models.Model):

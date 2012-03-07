@@ -1,17 +1,15 @@
-{% extends 'global.html' %}
 
 {% load crispy_forms_tags %}
 
-{% block content %}
-  <div id="main-content">
-    <div class="main-column">
-      {% crispy form_resource form_resource.helper %}
-    </div>
+{{ form_resource.media }}
+
+<div id="main-content">
+  <div class="main-column">
+    {% crispy form_resource form_resource.helper %}
   </div>
+</div>
 
-{% endblock %}
 
-{% block css %}
-  <link rel="stylesheet" type="text/css" href="/static/css/resource.css" >
-  {{ form_resource.media }}
-{% endblock %}
+<link rel="stylesheet" type="text/css" href="/static/css/resource.css" >
+
+

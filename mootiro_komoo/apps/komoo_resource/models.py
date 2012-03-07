@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 import reversion
 from taggit.managers import TaggableManager
 from community.models import Community
+from collection_from import CollectionFrom
 
 
 class ResourceKind(models.Model):
@@ -29,7 +30,6 @@ class Resource(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     kind = models.ForeignKey(ResourceKind)
     description = models.TextField()
-    location = models.GeometryCollectionField(null=True, blank=True)
 
     tags = TaggableManager()
 
@@ -37,6 +37,12 @@ class Resource(models.Model):
     community = models.ForeignKey(Community, related_name='resources',
         null=True, blank=True)
 
+    # Geolocalization attributes
     objects = models.GeoManager()
+
+    points = models.MultiPointField(null=True, blank=True, editable=False)
+    lines = models.MultiLineStringField(null=True, blank=True, editable=False)
+    polys = models.MultiPolygonField(null=True, blank=True, editable=False)
+    geometry = CollectionFrom(points='points', lines='lines', polys='polys')
 
 reversion.register(Resource)
