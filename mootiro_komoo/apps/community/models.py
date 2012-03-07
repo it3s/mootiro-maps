@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
+
 import reversion
 from main.utils import slugify
 

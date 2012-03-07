@@ -39,7 +39,8 @@ def edit(request, community_slug=""):
         form = CommunityForm(POST, instance=community)
         if form.is_valid():
             community = form.save(commit=False)
-            community.creator = request.user
+            if community.id:  # was never saved
+                community.creator = request.user
             community.save()
 
             if not request.is_ajax():
