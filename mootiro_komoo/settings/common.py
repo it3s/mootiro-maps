@@ -86,7 +86,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'reversion.middleware.RevisionMiddleware',
-    'lib.mootiro_bar.DjangoMiddleware',
+    'mootiro_bar.DjangoMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = (
