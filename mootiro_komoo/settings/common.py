@@ -87,6 +87,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.transaction.TransactionMiddleware',
     'reversion.middleware.RevisionMiddleware',
     'mootiro_bar.DjangoMiddleware',
+    'lib.mootiro_bar.DjangoMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -135,7 +136,6 @@ INSTALLED_APPS = [
     'vote',
     'komoo_resource',
     'user_cas',
-
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500

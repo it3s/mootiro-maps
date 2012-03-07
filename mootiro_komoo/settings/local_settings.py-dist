@@ -12,3 +12,9 @@ DATABASES = {
         'PORT': '',    # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+PROFILE_DATABASE = 'localhost|profile|username|password'
+
+# Needed for debug toolbar
+INTERNAL_IPS = ('127.0.0.1',)
+
