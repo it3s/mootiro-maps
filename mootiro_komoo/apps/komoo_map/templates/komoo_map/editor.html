@@ -50,10 +50,11 @@
                 console.log(geojson);
                 if (geojson.geometries.length > 0) {
                     if (window.community_slug) {
-                        var url = overlayType.formURL.replace('community_slug', community_slug);
+                        var url = overlayType.formUrl.replace('community_slug', community_slug);
                     } else {
-                        var url = overlayType.formURL.replace('/community_slug', '');
+                        var url = overlayType.formUrl.replace('/community_slug', '');
                     }
+                    console.dir(overlayType);
                     var context = $('#dinamic-form');
 
                     function onSubmit () {

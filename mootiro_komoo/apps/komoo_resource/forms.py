@@ -16,10 +16,11 @@ class FormResource(forms.ModelForm):
         widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
         required=False
     )
+    geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'kind', 'tags',  'id']
+        fields = ['name', 'description', 'kind', 'tags',  'geometry', 'id']
 
     def __init__(self, *args, **kwargs):
         # Crispy forms configuration
