@@ -56,6 +56,7 @@
       "slug": "parquinho",
       "description": "Muita areia e brinquedos legais para a garotada!",
       "community": 1,
+      "creator": 1,
       "categories": [2, 3],
       "target_audiences": [2, 3, 4],
       "geometry": "GEOMETRYCOLLECTION (POINT (-23.5603167724382487 -46.7433837890624773))"
@@ -69,6 +70,7 @@
       "slug": "coleta-de-lixo",
       "description": "Ta fidido o bagulho aqui!!!",
       "community": 1,
+      "creator": 2,
       "categories": [3, 4, 5],
       "target_audiences": [1],
       "geometry": "GEOMETRYCOLLECTION (POINT (-23.5603167724382487 -46.7433837890624773))"
@@ -82,6 +84,7 @@
       "slug": "alfabetizacao-de-adultos",
       "description": "Temos muitas pessoas que não sabem ler e escrever.",
       "community": 2,
+      "creator": 1,
       "categories": [1],
       "target_audiences": [6, 7],
       "geometry": "GEOMETRYCOLLECTION (POINT (-23.5603167724382487 -46.7433837890624773))"
