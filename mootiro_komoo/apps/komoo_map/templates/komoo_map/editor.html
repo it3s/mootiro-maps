@@ -1,6 +1,8 @@
 {% block html %}
     <!-- HTML map container -->
-    <div id="map-canvas"{% if width %} style="width: {{ width }}; height: {{ height }};"{% endif %} class="komoo-map-googlemap">
+    <div id="map-container" style="overflow:hidden;">
+      <div id="map-canvas"{% if width %} style="width: {{ width }}; height: {{ height }};"{% endif %} class="komoo-map-googlemap">
+    </div>
     </div>
     <div id="dinamic-form"></div>
 {% endblock %}
@@ -36,7 +38,6 @@
             // Load the form when user click 'finish' button
             map.event.bind('finish_click', function (e, overlayType) {
                 console.log(overlayType);
-                $('#map-canvas').slideUp();
                 var geojson = map.getGeoJSON({newOnly: true, geometryCollection: true});
                 console.log(geojson);
                 if (geojson.geometries.length > 0) {
@@ -76,6 +77,7 @@
                             $(this).html(data);
                             $('form', $(this)).submit(onSubmit);
                             $('#id_geometry').val(JSON.stringify(geojson));
+                            $('#map-container').slideUp(600);
                         },
                         error: function (jqXHR, textStatus, errorThrown) {
                             alert('ERRO!!!11!');
