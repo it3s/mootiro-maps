@@ -11,6 +11,7 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
+from django.db.models.query_utils import Q
 
 from annoying.decorators import render_to
 
@@ -86,8 +87,10 @@ def communities_geojson(request):
 def search_by_name(request):
     logger.debug('acessing Community > search_by_name')
     term = request.GET['term']
-    rx = "^{0}|\s{0}".format(term)  # matches only beginning of words
-    communities = Community.objects.filter(name__iregex=rx)
+    # rx = "^{0}|\s{0}".format(term)  # matches only beginning of words
+    # communities = Community.objects.filter(Q(name__iregex=rx) | Q(slug__iregex=rx))
+    communities = Community.objects.filter(Q(name__icontains=term) |
+                                           Q(slug__icontains=term))
     d = [{'value': c.id, 'label': c.name} for c in communities]
     return HttpResponse(simplejson.dumps(d),
         mimetype="application/x-javascript")

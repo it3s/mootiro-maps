@@ -5,6 +5,7 @@ from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
 from main.widgets import Autocomplete, TaggitWidget
 from komoo_resource.models import Resource, ResourceKind
+from community.models import Community
 
 
 class FormResource(forms.ModelForm):
@@ -14,13 +15,15 @@ class FormResource(forms.ModelForm):
         widget=Autocomplete(ResourceKind, '/resource/search_by_kind/'))
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
-        required=False
-    )
+        required=False)
+    community = forms.CharField(
+        widget=Autocomplete(Community, '/community/search_by_name'))
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'kind', 'tags',  'geometry', 'id']
+        fields = ['name', 'description', 'kind', 'tags', 'community', 'id',
+                  'geometry']
 
     def __init__(self, *args, **kwargs):
         # Crispy forms configuration
@@ -38,3 +41,6 @@ class FormResource(forms.ModelForm):
 
     def clean_kind(self):
         return ResourceKind.objects.get(id=self.cleaned_data['kind'])
+
+    def clean_community(self):
+        return Community.objects.get(id=self.cleaned_data['community'])
