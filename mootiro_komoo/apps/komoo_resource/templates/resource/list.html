@@ -2,14 +2,18 @@
 
 {% block content %}
   <div class="resource-list-item resource-list-header">
-      <div class="resource-list-image"></div>
-      <div class="resource-list-name">Nome</div>
-      <div class="resource-list-type">Tipo</div>
-    </div>
+    <div class="resource-list-image"></div>
+    <div class="resource-list-name">Nome</div>
+    <div class="resource-list-type">Tipo</div>
+  </div>
   {% for resource in resources %}
     <div class="resource-list-item {% cycle 'odd' '' %}">
       <div class="resource-list-image"><div></div></div>
+      {% if community %}
+      <div class="resource-list-name"><a href="/{{ community.slug }}/resource/{{ resource.id }}">{{ resource.name }}</a></div>
+      {% else %}
       <div class="resource-list-name"><a href="/resource/{{ resource.id }}">{{ resource.name }}</a></div>
+      {% endif %}
       <div class="resource-list-type">{{ resource.kind }}</div>
     </div>
   {% endfor %}
