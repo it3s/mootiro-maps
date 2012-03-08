@@ -5,15 +5,20 @@
 {% load vote_tags %}
 {% load comment_tags %}
 {% load markitup_tags %}
+{% load navigation_tags %}
+
+{% block title %}{{ resource.name }} at {{ resource.community.name }}{% endblock %}
+
+{% block menu %} {% menu resource "resource" %} {% endblock %}
 
 {% block content %}
   <div id="main-content" class="resource-main">
     <div class="resource main-column">
       <div class="resource-header">
-        <h1>{{ resource.name }}</h1>
+        <h2>{{ resource.name }}</h2>
         <div class="resource-votes">
           {% vote resource %}
-          <div class="resource-edit-btn"><a href="/resource/edit?id={{ resource.id}}" class="btn"><i class="icon-pencil"></i></a></div>
+          <div class="resource-edit-btn"><a href="/resource/edit?id={{ resource.id }}" class="btn"><i class="icon-pencil"></i></a></div>
         </div>
         <span>
           criado por <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>

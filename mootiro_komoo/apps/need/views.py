@@ -33,7 +33,7 @@ def edit(request, community_slug="", need_slug=""):
     if request.POST:
         form = NeedForm(request.POST, instance=need)
         if form.is_valid():
-            need = form.save()
+            need = form.save(user=request.user)
             return {'redirect': reverse('view_need',
                     args=(need.community.slug, need.slug))}
         else:
