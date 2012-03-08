@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-08 16:49-0300\n"
-"PO-Revision-Date: 2012-03-08 16:54-0300\n"
+"POT-Creation-Date: 2012-03-08 17:33-0300\n"
+"PO-Revision-Date: 2012-03-08 17:34-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
 "Language: \n"
@@ -34,8 +34,8 @@ msgid "Resource"
 msgstr "Recurso"
 
 #: static/js/komoo_map.js:66
-msgid "Founder"
-msgstr "Investidor"
+msgid "Funder"
+msgstr "Financiador"
 
 #: static/js/komoo_map.js:846
 msgid "Add shape"
@@ -94,15 +94,15 @@ msgstr "Apagar uma região"
 msgid "Filter"
 msgstr "Filtrar"
 
-#: static/js/komoo_map.js:1044
+#: static/js/komoo_map.js:1050
 msgid "Title"
 msgstr "Título"
 
-#: static/js/komoo_map.js:1046
+#: static/js/komoo_map.js:1052
 msgid "Finish"
 msgstr "Concluir"
 
-#: static/js/komoo_map.js:1047
+#: static/js/komoo_map.js:1053
 msgid "Cancel"
 msgstr "Cancelar"
 

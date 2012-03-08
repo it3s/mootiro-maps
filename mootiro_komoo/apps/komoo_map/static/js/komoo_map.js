@@ -26,7 +26,7 @@ komoo.RegionTypes = [
         type: 'community',
         title: gettext('Community'),
         color: '#ff0',
-        icon: '',
+        icon: '/static/img/need.png', // TODO: Add the correct icon
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: dutils.urls.resolve('new_community')
     },
@@ -34,7 +34,7 @@ komoo.RegionTypes = [
         type: 'need',
         title: gettext('Needs'),
         color: '#f00',
-        icon: '',
+        icon: '/static/img/need-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
                        google.maps.drawing.OverlayType.MARKER],
@@ -45,7 +45,7 @@ komoo.RegionTypes = [
         type: 'organization',
         title: gettext('Organization'),
         color: '#00f',
-        icon: '',
+        icon: '/static/img/organization-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: '',
         disabled: true
@@ -54,7 +54,7 @@ komoo.RegionTypes = [
         type: 'resource',
         title: gettext('Resource'),
         color: '#fff',
-        icon: '',
+        icon: '/static/img/resource-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
                        google.maps.drawing.OverlayType.MARKER],
@@ -62,10 +62,10 @@ komoo.RegionTypes = [
         // disabled: false
     },
     {
-        type: 'financing',
-        title: gettext('Founder'),
+        type: 'funder',
+        title: gettext('Funder'),
         color: '#000',
-        icon: '',
+        icon: '/static/img/funder-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: '',
         disabled: true
@@ -981,7 +981,13 @@ komoo.Map.prototype = {
         } else {
             $.each(komooMap.options.regionTypes, function (i, type) {
                 komooMap.overlayOptions[type.type] = type;
-                var item = $('<li>').addClass('map-menuitem').append($('<span>').text(type.title));
+                var item = $('<li>').addClass('map-menuitem')
+                if (type.icon) {
+                    var icon = $('<img>').attr({src: type.icon}).css('float', 'left');
+                    if (type.disabled) icon.css('opacity', '0.3');
+                    item.append(icon);
+                }
+                item.append($('<div>').text(type.title).css('padding-left', '30px'));
                 var submenu = komooMap.addItems.clone(true);
                 var submenuItems = $('div', submenu);
                 submenuItems.removeClass('map-button').addClass('map-menuitem').hide(); // Change the class
