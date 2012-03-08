@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+
 from django.views.generic import View
 from django.db.models.query_utils import Q
 from django.shortcuts import (render_to_response, RequestContext, HttpResponse,
@@ -8,11 +9,13 @@ from django.shortcuts import (render_to_response, RequestContext, HttpResponse,
 from django.utils import simplejson
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django import forms
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
 from taggit.models import TaggedItem
+
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
 from main.utils import create_geojson
@@ -25,13 +28,25 @@ logger = logging.getLogger(__name__)
 @render_to('resource/list.html')
 def resource_list(request, community_slug=''):
     logger.debug('acessing komoo_resource > list')
+    page = request.GET.get('page', '')
+    size = request.GET.get('size', 10)
+
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_404(Community, slug=community_slug)
-        resources = Resource.objects.filter(community=community)
+        resources_list = Resource.objects.filter(community=community)
     else:
         community = None
-        resources = Resource.objects.all()
+        resources_list = Resource.objects.all()
+
+    paginator = Paginator(resources_list, size)
+    try:
+        resources = paginator.page(page)
+    except PageNotAnInteger:  # If page is not an integer, deliver first page.
+        resources = paginator.page(1)
+    except EmptyPage:  # If page is out of range, deliver last page
+        resources = paginator.page(paginator.num_pages)
+
     return dict(resources=resources, community=community)
 
 
