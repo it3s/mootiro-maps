@@ -92,5 +92,4 @@ def search_by_name(request):
     communities = Community.objects.filter(Q(name__icontains=term) |
                                            Q(slug__icontains=term))
     d = [{'value': c.id, 'label': c.name} for c in communities]
-    return HttpResponse(simplejson.dumps(d),
-        mimetype="application/x-javascript")
+    return HttpResponse(simplejson.dumps(d), mimetype="application/x-javascript")
