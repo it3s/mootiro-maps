@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.conf.urls.defaults import patterns, include, url
+from django.views.i18n import javascript_catalog
 
 
 # Some URL fragments to be reused throughout the application
@@ -9,6 +10,11 @@ COMMUNITY_SLUG = r'(?P<community_slug>[a-zA-Z0-9-]+)'
 NEED_SLUG = r'(?P<need_slug>[a-zA-Z0-9-]+)'
 PROPOSAL_NUMBER = r'(?P<proposal_number>\d+)'
 
+js_info_dict = {
+    'packages': (
+        'komoo_map',
+        )
+}
 
 def prepare_regex(regex):
     return regex.replace('COMMUNITY_SLUG', COMMUNITY_SLUG) \
@@ -21,6 +27,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
+    url(r'^jsi18n/$', javascript_catalog, js_info_dict, name='javascript_catalog'),
     # admin stuff
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),

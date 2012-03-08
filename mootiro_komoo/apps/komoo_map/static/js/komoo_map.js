@@ -8,6 +8,13 @@
  * @copyright (c) 2012 it3s
  */
 
+/* I18n */
+if (!window.gettext) {
+    var gettext = function (str) {
+        return str;
+    }
+}
+
 /** @namespace */
 var komoo = {};
 
@@ -17,7 +24,7 @@ var komoo = {};
 komoo.RegionTypes = [
     {
         type: 'community',
-        title: 'Comunidade',
+        title: gettext('Community'),
         color: '#ff0',
         icon: '',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
@@ -25,7 +32,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'need',
-        title: 'Necessidade',
+        title: gettext('Needs'),
         color: '#f00',
         icon: '',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
@@ -36,7 +43,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'organization',
-        title: 'Organização',
+        title: gettext('Organization'),
         color: '#00f',
         icon: '',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
@@ -45,7 +52,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'resource',
-        title: 'Recurso',
+        title: gettext('Resource'),
         color: '#fff',
         icon: '',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
@@ -56,7 +63,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'financing',
-        title: 'Financiamento',
+        title: gettext('Founder'),
         color: '#000',
         icon: '',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
@@ -428,7 +435,11 @@ komoo.Map.prototype = {
                 'features': []
             };
         }
-        var list = options.newOnly ? this.newOverlays : this.overlays;
+        if (options.newOnly) {
+            var list = this.newOverlays;
+        } else {
+            var list = this.overlays;
+        }
         $.each(list, function (i, overlay) {
             var subCoords = [];
             var coords = [];
@@ -672,7 +683,7 @@ komoo.Map.prototype = {
                         }
                     });
                 }
-                if (l == 0) {  // We had only one path, or the overlay wasn't a polygon.
+                if (l == 0) {  // We had only one path, or the overlay wasnt a polygon.
                     this.setMap(null);
                 } else {
                     komooMap.setCurrentOverlay(this);
@@ -834,7 +845,7 @@ komoo.Map.prototype = {
                         google.maps.drawing.OverlayType.CIRCLE);
             });
 
-            var polygonButton = komoo.createMapButton('Adicionar área', 'Draw a shape', function (e) {
+            var polygonButton = komoo.createMapButton(gettext('Add shape'), gettext('Draw a shape'), function (e) {
                 komooMap.setEditMode(null);
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
@@ -846,7 +857,7 @@ komoo.Map.prototype = {
                 }
             }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.POLYGON);
 
-            var lineButton = komoo.createMapButton('Adicionar linha', 'Draw a line', function (e) {
+            var lineButton = komoo.createMapButton(gettext('Add line'), gettext('Draw a line'), function (e) {
                 komooMap.setEditMode(null);
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
@@ -857,18 +868,18 @@ komoo.Map.prototype = {
                 }
             }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.POLYLINE);
 
-            var markerButton = komoo.createMapButton('Adicionar ponto', 'Add a marker', function (e) {
+            var markerButton = komoo.createMapButton(gettext('Add point'), gettext('Add a marker'), function (e) {
                 komooMap.setEditMode(null);
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.MARKER);
             }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.MARKER);
 
-            var addMenu = komoo.createMapMenu('Add new...', [polygonButton, lineButton, markerButton]);
+            var addMenu = komoo.createMapMenu(gettext('Add new...'), [polygonButton, lineButton, markerButton]);
             //komooMap.editToolbar.append(addMenu);
             komooMap.addItems = $('.map-container', addMenu);
 
-            var addButton = komoo.createMapButton('Adicionar', 'Add another region', function (e) {
+            var addButton = komoo.createMapButton(gettext('Add'), gettext('Add another region'), function (e) {
                 if (komooMap.editMode == 'add') {
                     komooMap.setEditMode(null);
                 } else {
@@ -881,7 +892,7 @@ komoo.Map.prototype = {
             addButton.attr('id', 'komoo-map-add-button');
             komooMap.editToolbar.append(addButton);
 
-            var cutOutButton = komoo.createMapButton('Cortar', 'Cut out a hole from a region', function (e) {
+            var cutOutButton = komoo.createMapButton(gettext('Cut out'), gettext('Cut out a hole from a region'), function (e) {
                 if (komooMap.editMode == 'cutout') {
                     komooMap.setEditMode(null);
                 } else {
@@ -894,7 +905,7 @@ komoo.Map.prototype = {
             cutOutButton.attr('id', 'komoo-map-cut-out-button');
             komooMap.editToolbar.append(cutOutButton);
 
-            var deleteButton = komoo.createMapButton('Apagar', 'Delete a region', function (e) {
+            var deleteButton = komoo.createMapButton(gettext('Delete'), gettext('Delete a region'), function (e) {
                 if (komooMap.editMode == 'delete') {
                     komooMap.setEditMode(null);
                 } else {
@@ -954,8 +965,8 @@ komoo.Map.prototype = {
         var addMenu = $('<ul>').addClass('map-menu');
 
         var tabs = komoo.createMapTab([
-            {title: 'Filtrar'},
-            {title: 'Adicionar', content: addMenu}
+            {title: gettext('Filter')},
+            {title: gettext('Add'), content: addMenu}
         ]);
 
         // Only logged in users can add new items.
@@ -1033,10 +1044,10 @@ komoo.Map.prototype = {
         var komooMap = this;
         var panel = $('<div>').addClass('map-panel');
         var content = $('<div>').addClass('content');
-        var title = $('<div>').text('Título').addClass('map-panel-title');
+        var title = $('<div>').text(gettext('Title')).addClass('map-panel-title');
         var buttons = $('<div>').addClass('map-panel-buttons');
-        var finishButton = $('<div>').text('Concluir').addClass('map-button');
-        var cancelButton = $('<div>').text('Cancelar').addClass('map-button');
+        var finishButton = $('<div>').text(gettext('Finish')).addClass('map-button');
+        var cancelButton = $('<div>').text(gettext('Cancel')).addClass('map-button');
 
         function button_click () {
             $('.map-menuitem.selected', komooMap.mainPanel).removeClass('selected');
