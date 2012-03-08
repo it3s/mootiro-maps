@@ -36,13 +36,15 @@ def resource_list(request, community_slug=''):
 
 
 @render_to('resource/show.html')
-def show(request, id=None):
+def show(request, community_slug=None, id=None):
     logger.debug('acessing komoo_resource > show')
     resource = get_object_or_404(Resource, pk=id)
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
-        Q(tags__in=resource.tags.all())).exclude(pk=resource.id)[:5]
-    return dict(resource=resource, similar=similar, geojson=geojson)
+        Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
+    community = get_object_or_None(Community, slug=community_slug)
+    return dict(resource=resource, similar=similar, geojson=geojson,
+                community=community)
 
 
 class Edit(View):
@@ -85,11 +87,13 @@ class Edit(View):
         if form_resource.is_valid():
             resource = form_resource.save(user=request.user)
 
+            prefix = '/{}'.format(community_slug) if community_slug else ''
+            _url = '{}/resource/{}'.format(prefix, resource.id)
             if _id:
-                return HttpResponseRedirect(reverse('view_resource', args=(resource.id,)))
+                return HttpResponseRedirect(_url)
             else:
                 return render_to_response('resource/new.html',
-                    dict(redirect=reverse('view_resource', args=(resource.id,))),
+                    dict(redirect=_url),
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_resource.__errors)))
