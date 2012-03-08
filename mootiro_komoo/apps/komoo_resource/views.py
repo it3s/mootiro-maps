@@ -14,16 +14,23 @@ from taggit.models import TaggedItem
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
 from main.utils import create_geojson
+from community.models import Community
 
 
 logger = logging.getLogger(__name__)
 
 
 @render_to('resource/list.html')
-def resource_list(request):
+def resource_list(request, community_slug=''):
     logger.debug('acessing komoo_resource > list')
-    resources = Resource.objects.all()
-    return dict(resources=resources)
+    if community_slug:
+        logger.debug('community_slug: {}'.format(community_slug))
+        community = get_object_or_404(Community, slug=community_slug)
+        resources = Resource.objects.filter(community=community)
+    else:
+        community = None
+        resources = Resource.objects.all()
+    return dict(resources=resources, community=community)
 
 
 @render_to('resource/show.html')
