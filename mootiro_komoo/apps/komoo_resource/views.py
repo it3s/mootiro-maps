@@ -108,7 +108,7 @@ class Edit(View):
                 return HttpResponseRedirect(_url)
             else:
                 return render_to_response('resource/new.html',
-                    dict(redirect=_url),
+                    dict(redirect=_url, community=community),
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_resource.__errors)))
