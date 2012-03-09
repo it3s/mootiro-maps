@@ -8,10 +8,11 @@ from mootiro_komoo.urls import prepare_regex as pr
 
 urlpatterns = patterns('community.views',
     url(r'^community/new$', 'edit', name='new_community'),
-    url(pr(r'^COMMUNITY_SLUG/edit$'), 'edit', name='edit_community'),
+    url(pr(r'^COMMUNITY_SLUG/edit/?$'), 'edit', name='edit_community'),
 
-    url(pr(r'^COMMUNITY_SLUG/?$'), 'view', name='view_community'),
+    url(pr(r'^COMMUNITY_SLUG/about/?$'), 'view', name='view_community'),
 
+    url(pr(r'^COMMUNITY_SLUG/?$'), 'on_map', name='community_on_map'),
     url(r'^communities$', 'map', name='list_communities'),
     url(r'^community/map$', 'map', name='map_community'),
 

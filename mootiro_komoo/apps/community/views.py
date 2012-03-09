@@ -22,7 +22,7 @@ from main.utils import create_geojson
 logger = logging.getLogger(__name__)
 
 
-@render_to('community/community_edit.html')
+@render_to('community/edit.html')
 @login_required
 def edit(request, community_slug=""):
     logger.debug('acessing Community > edit')
@@ -56,9 +56,9 @@ def edit(request, community_slug=""):
                     community=community)
 
 
-@render_to('community/community_view.html')
-def view(request, community_slug):
-    logger.debug('acessing Community > view : community_slug={}'.format(
+@render_to('community/on_map.html')
+def on_map(request, community_slug):
+    logger.debug('acessing Community > on_map : community_slug={}'.format(
             community_slug))
 
     community = get_object_or_404(Community, slug=community_slug)
@@ -67,7 +67,17 @@ def view(request, community_slug):
     return dict(community=community, form=mapform)
 
 
-@render_to('community/community_map.html')
+@render_to('community/view.html')
+def view(request, community_slug):
+    logger.debug('acessing Community > view : community_slug={}'.format(
+            community_slug))
+
+    community = get_object_or_404(Community, slug=community_slug)
+    geojson = create_geojson([community])
+    return dict(community=community, geojson=geojson)
+
+
+@render_to('community/map.html')
 def map(request):
     logger.debug('acessing Community > map')
     form = CommunityMapForm(request.POST)

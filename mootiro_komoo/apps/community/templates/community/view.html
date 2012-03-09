@@ -1,0 +1,28 @@
+{% extends "global.html" %}
+{% load navigation_tags %}
+
+{% block title %}{{ community.name }}{% endblock %}
+
+{% block menu %} {% menu community "community" %} {% endblock %}
+
+{% block content %}
+
+  <div id="main-content">
+    {{ community.name }}<br/>
+    {{ community.slug }}<br/>
+    {{ community.population }}<br/>
+    {{ community.description }}<br/>
+    {{ community.creation_date }}<br/>
+    {{ community.last_update }}<br/>
+    {{ community.address }}<br/>
+    <br/><br/>
+    <a href="{% url edit_community community.slug %}">EDIT</a>
+  </div>
+
+{% endblock %}
+
+{% block page_scripts %}
+  <script type="text/javascript">
+    var community_slug = '{{ community.slug }}';
+  </script>
+{% endblock %}

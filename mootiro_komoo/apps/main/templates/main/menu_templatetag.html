@@ -2,7 +2,7 @@
 
   <li{% if selected_area == 'map' %} class='selected'{% endif %}>
     {% if community %}
-    <a href="{% url view_community community.slug %}">Map</a>
+    <a href="{% url community_on_map community.slug %}">Map</a>
     {% else %}
     <a href="{% url root %}">Map</a>
     {% endif %}
