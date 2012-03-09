@@ -31,7 +31,11 @@ def edit(request, community_slug="", need_slug=""):
     need = get_object_or_404(Need, slug=need_slug, community=community) \
                 if need_slug else None
     if request.POST:
-        form = NeedForm(request.POST, instance=need)
+        post = request.POST
+        if community:
+            post = request.POST.copy()  # needed because request.POST is immutable
+            post['community'] = community.id
+        form = NeedForm(post, instance=need)
         if form.is_valid():
             need = form.save(user=request.user)
             return {'redirect': reverse('view_need',
