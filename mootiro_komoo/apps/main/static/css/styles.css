@@ -470,11 +470,11 @@ a.btnShowForm{
   height: 12px;
   margin: 0 0 -1px -1px;
 }
-.view-tag-list{
+.view-tag-list {
   margin: 5px 0 15px 0;
   font-weight: bold;
 }
-.view-tag-list span{
+.tag {
   color: #666666;
   margin: 0 5px;
   padding: 2px 5px;

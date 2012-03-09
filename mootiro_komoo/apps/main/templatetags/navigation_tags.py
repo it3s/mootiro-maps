@@ -29,3 +29,13 @@ def menu(obj=None, selected_area=''):
 def community_tabs(obj=None):
     community = _get_related_community(obj)
     return dict(community=community)
+
+
+@register.inclusion_tag('main/track_buttons_templatetag.html')
+def track_buttons():
+    return dict()
+
+
+@register.inclusion_tag('main/taglist_templatetag.html')
+def taglist(obj):
+    return dict(object=obj)

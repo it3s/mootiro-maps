@@ -43,19 +43,10 @@
   </div>
 
   <div class="view-extras">
-    <div class="view-tag-list">
-      Classificadores:
-      {% for tag in proposal.tags.all %}
-        <span>{{ tag }}</span>
-      {% endfor %}
-    </div>
-    <div class="view-follow-btns">
-      <a class="btn" href="#"><img src="/static/img/glyphicons_327_rss.png"/><span>Assinar</span></a>
-      <a class="btn" href="#"><i class="icon-eye-open"></i><span>Observar</span></a>
-    </div>
-    {% comments proposal %}
+    {% taglist community %}
+    {% track_buttons %}
+    {% comments community %}
   </div>
-</div>
 
 {% endblock %}
 

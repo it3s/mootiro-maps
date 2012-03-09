@@ -1,5 +1,8 @@
 {% extends "global.html" %}
+
+{% load komoo_map_tags %}
 {% load navigation_tags %}
+{% load comment_tags %}
 
 {% block title %}{{ community.name }}{% endblock %}
 
@@ -18,6 +21,25 @@
       <span class="meta-info">Type</span>NOT IMPLEMENTED<br/>
       <span class="meta-info">Population</span> {{ community.population }}
     </p>
+  </div>
+
+  <div class="right-bar">
+    <div id="map-preview">{% komoo_map '200' '200' 16 geojson %}</div>
+    <a href="#">ver no mapa</a>
+    <div class="block">
+      <h3>Nearby communities</h3>
+      <ul>
+        <li>Commu 1</li>
+        <li>Commu 2</li>
+        <li>Commu 3</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="view-extras">
+    {% taglist community %}
+    {% track_buttons %}
+    {% comments community %}
   </div>
 
 </div>
