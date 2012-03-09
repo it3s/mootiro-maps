@@ -4,7 +4,7 @@
     {% if community %}
     <a href="{% url view_community community.slug %}">Map</a>
     {% else %}
-    <a href="{% url root %}">Map 0</a>
+    <a href="{% url root %}">Map</a>
     {% endif %}
   </li>
 
@@ -12,7 +12,7 @@
     {% if community %}
     <a href="{% url view_community community.slug %}">About the community</a>
     {% else %}
-    <a href="{% url list_communities %}">Communities 0<a/>
+    <a href="{% url list_communities %}">Communities<a/>
     {% endif %}
   </li>
 
@@ -20,7 +20,7 @@
     {% if community %}
     <a href="{% url list_community_needs community.slug %}">Needs</a>
     {% else %}
-    <a href="{% url list_all_needs %}">Needs 0</a>
+    <a href="{% url list_all_needs %}">Needs</a>
     {% endif %}
   </li>
 
@@ -30,7 +30,7 @@
     {% if community %}
     <a href="{% url resource_list community.slug %}">Resources</a>
     {% else %}
-    <a href="{% url resource_list %}">Resources 0</a>
+    <a href="{% url resource_list %}">Resources</a>
     {% endif %}
   </li>
 

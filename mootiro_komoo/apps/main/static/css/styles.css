@@ -119,7 +119,6 @@ ul.horizontal li {
     margin-bottom: 5px;
 }
 #top #menu li {
-    display: inline-block;
     margin: 0;
     padding: 4px 15px;
     float: left;
@@ -128,7 +127,7 @@ ul.horizontal li {
     display: block;
     color: #000;
 }
-#top #menu li.selected a, #top #menu li a:hover { color: #fff }
+#top #menu li.selected a, #top #menu li:hover a { color: #fff }
 #top #menu li,
 .map-tab, .map-button {
     border: 1px solid #c7c7c7;
