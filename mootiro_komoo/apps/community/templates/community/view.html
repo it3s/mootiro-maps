@@ -7,17 +7,20 @@
 
 {% block content %}
 
-  <div id="main-content">
-    {{ community.name }}<br/>
-    {{ community.slug }}<br/>
-    {{ community.population }}<br/>
-    {{ community.description }}<br/>
-    {{ community.creation_date }}<br/>
-    {{ community.last_update }}<br/>
-    {{ community.address }}<br/>
-    <br/><br/>
-    <a href="{% url edit_community community.slug %}">EDIT</a>
+<div id="main-content">
+  <div class="main-column">
+    <div class="view-edit-btn right"><a href="{% url edit_community community.slug %}" class="btn"><i class="icon-pencil"></i></a></div>
+
+    <div class="clear-both"></div>
+    <p>{{ community.description }}</p>
+
+    <p>
+      <span class="meta-info">Type</span>NOT IMPLEMENTED<br/>
+      <span class="meta-info">Population</span> {{ community.population }}
+    </p>
   </div>
+
+</div>
 
 {% endblock %}
 

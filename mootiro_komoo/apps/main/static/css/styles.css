@@ -52,7 +52,11 @@ ul.horizontal li {
 .clear-both { clear: both }
 .right { float:right }
 .apart { margin-right: 3em }
-.meta-info { color: #000 }
+.meta-info {
+    font-weight: bold;
+    color: #000;
+    margin-right: 1em;
+}
 
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }
