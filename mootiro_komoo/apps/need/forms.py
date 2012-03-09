@@ -17,7 +17,8 @@ class NeedForm(forms.ModelForm):
     # FIXME: the urls below should not be hardcoded. They should be calculated
     # with reverse_lazy function, which is not implemented in Django 1.3 yet.
     community = forms.CharField(
-        widget=Autocomplete(Community, "/community/search_by_name")
+        widget=Autocomplete(Community, "/community/search_by_name"),
+        required=True
     )
 
     categories = forms.ModelMultipleChoiceField(

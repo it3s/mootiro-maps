@@ -75,13 +75,10 @@ class Need(models.Model):
         return Need.objects.filter(community=self.community, slug=slug).exists()
 
     def save(self, *args, **kwargs):
-        print "00000000000"
         old_title = Need.objects.get(id=self.id).title if self.id else None
         if not self.id or old_title != self.title:
             self.slug = slugify(self.title, self.slug_exists)
-        print "11111111111"
         super(Need, self).save(*args, **kwargs)
-        print "22222222222"
     ### END ###
 
 reversion.register(Need)
