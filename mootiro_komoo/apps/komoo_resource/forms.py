@@ -30,7 +30,7 @@ class FormResource(forms.ModelForm):
 
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'kind', 'tags', 'community', 'id',
+        fields = ['name', 'description', 'kind', 'tags', 'community', 'image', 'id',
                   'geometry']
 
     def __init__(self, *args, **kwargs):

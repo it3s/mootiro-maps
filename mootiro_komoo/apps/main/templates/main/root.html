@@ -3,10 +3,10 @@
 {% block title %}Mootiro Maps{% endblock %}
 
 {% block content %}
-<form method="post" id="map-form">
-  {% csrf_token %}
-  {{ form }}
-</form>
+    <form method="post" id="map-form" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form }}
+    </form>
 {% endblock %}
 
 {% block page_scripts %}
