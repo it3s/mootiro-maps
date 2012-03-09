@@ -1,5 +1,5 @@
 <div class="block">
   <h4><a href="{% url view_proposal proposal.need.community.slug proposal.need.slug proposal.number %}">
     {{ proposal.title|truncatewords:3 }}</a></h4>
-  <span class="meta-info">created by</span> <a href="#">{{ proposal.creator.name }}</a>
+  <span class="meta-info">created by</span> <a href="#">{{ proposal.creator }}</a>
 </div>

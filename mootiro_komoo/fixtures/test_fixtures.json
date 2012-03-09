@@ -89,5 +89,27 @@
       "target_audiences": [6, 7],
       "geometry": "GEOMETRYCOLLECTION (POINT (-23.5603167724382487 -46.7433837890624773))"
     }
+  },
+  {
+    "model": "proposal.proposal",
+    "pk": 1,
+    "fields": {
+      "title": "Mobral",
+      "number": 1,
+      "description": "Movimento Brasileiro de Alfabetização",
+      "need": 3,
+      "creator": 1
+    }
+  },
+  {
+    "model": "proposal.proposal",
+    "pk": 2,
+    "fields": {
+      "title": "Sobral",
+      "number": 2,
+      "description": "O que sobrou do Mobral vai para o sobral. :)",
+      "need": 3,
+      "creator": 2
+    }
   }
 ]
