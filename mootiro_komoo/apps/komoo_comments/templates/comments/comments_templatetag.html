@@ -1,7 +1,7 @@
-<h2 id="Comments" class="comment-title">Comentários: </h2>
+<h2 id="Comments" class="comment-title">Comments: </h2>
 
 <div id='divFormComment'>
-    <a href="#" class="btnShowForm">Novo Comentário</a>
+    <a href="#" class="btnShowForm">New Comment</a>
     <div class='comment-form'>
         <form method="post" id="formComment" class="stacked-form" action="{% url comments_add %}" >
             <fieldset>
@@ -21,7 +21,7 @@
 {% autoescape off %}
     {{ comments_list }}
     {% if has_comments %}
-    <a class="btnShowMore" href='#'>ver mais ...</a>
+    <a class="btnShowMore" href='#'>see more ...</a>
     {% endif %}
     <script type="text/javascript">
         load_info = {

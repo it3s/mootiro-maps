@@ -5,7 +5,7 @@
         {% if comment.sub_comments > 0 %}
             ({{ comment.sub_comments }} respostas)
         {% endif %}
-        <a href="#">Denunciar</a>
+        <a href="#">Report</a>
         <div class="comment-vote">
             {% vote comment %}
         </div>
@@ -15,9 +15,9 @@
         {{ comment.comment}}
     </div>
     <div class="comment-footer">
-        <a class="btnShowForm" href="#">Responder</a>
+        <a class="btnShowForm" href="#">Reply</a>
         {#% if comment.sub_comments > 0 %#}
-            <a class="link_subcomments" href="" comment-id="{{ comment.id }}">{{ comment.sub_comments }} resposta(s)</a>
+            <a class="link_subcomments" href="" comment-id="{{ comment.id }}">{{ comment.sub_comments }} answer(s)</a>
         {#% endif %#}
         <div class='comment-form'>
             <form method='post' class='stacked-form' action='/comments/add/' >
