@@ -1,4 +1,7 @@
 {% extends "global.html" %}
+
+{% load komoo_map_tags %}
+{% load comment_tags %}
 {% load vote_tags %}
 {% load proposal_tags %}
 {% load navigation_tags %}
@@ -8,23 +11,20 @@
 {% block menu %} {% menu proposal "need" %} {% endblock %}
 
 {% block content %}
-
 <div id="main-content">
   <div class="main-column">
     <h3>
       {{ proposal.title }}
       <span class="small"> (<a href="{% url view_need proposal.need.community.slug proposal.need.slug %}"> {{ proposal.need.title }}</a>)</span>
-      <a class="right" href="{% url edit_proposal proposal.need.community.slug proposal.need.slug proposal.number %}">EDIT</a>
+      <div class="view-edit-btn"><a href="{% url edit_proposal community.slug proposal.need.slug proposal.number %}" class="btn"><i class="icon-pencil"></i></a></div>
     </h3>
     {% vote proposal %}
     <p>
-      <span class="apart">created by FULANO on {{ proposal.creation_date }}</span>
-      <span class="apart">target audience: {{ need.target_audiences.all|join:", " }}</span>
+      <span class="apart">created by {{ proposal.creator }} on {{ proposal.creation_date }}</span>
       <span class="apart">status:</span>
     </p>
     <p>{{ proposal.description|safe }}</p>
     <p>Cost: {{ proposal.cost }}</p>
-
   </div>
   
   <div class="right-bar">
@@ -41,6 +41,24 @@
     </div>
 
   </div>
+
+  <div class="view-extras">
+    <div class="view-tag-list">
+      Classificadores:
+      {% for tag in proposal.tags.all %}
+        <span>{{ tag }}</span>
+      {% endfor %}
+    </div>
+    <div class="view-follow-btns">
+      <a class="btn" href="#"><img src="/static/img/glyphicons_327_rss.png"/><span>Assinar</span></a>
+      <a class="btn" href="#"><i class="icon-eye-open"></i><span>Observar</span></a>
+    </div>
+    {% comments proposal %}
+  </div>
 </div>
 
+{% endblock %}
+
+{% block page_scripts %}
+    {% comments_staticfiles %}
 {% endblock %}

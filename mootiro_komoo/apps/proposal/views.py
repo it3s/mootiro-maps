@@ -31,7 +31,10 @@ def edit(request, community_slug="", need_slug="", proposal_number=""):
     if request.POST:
         form = ProposalForm(request.POST, instance=proposal)
         if form.is_valid():
-            proposal = form.save()
+            proposal = form.save(commit=False)
+            if not proposal.id:  # was never saved
+                proposal.creator = request.user
+            proposal.save()
             return redirect('view_proposal',
                     community_slug=proposal.need.community.slug,
                     need_slug=proposal.need.slug, proposal_number=proposal.number)
