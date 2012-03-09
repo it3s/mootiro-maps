@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils import simplejson
+from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import Polygon
 
 from annoying.decorators import render_to
@@ -24,6 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 @render_to('need/edit.html')
+@login_required
 def edit(request, community_slug="", need_slug=""):
     logger.debug('acessing need > edit')
     community = get_object_or_404(Community, slug=community_slug) \
