@@ -49,12 +49,5 @@ class NeedForm(forms.ModelForm):
 
         super(NeedForm, self).__init__(*a, **kw)
 
-    def save(self, user=None, *args, **kwargs):
-        need = super(NeedForm, self).save(*args, **kwargs)
-        if user and not user.is_anonymous():
-            need.creator_id = user.id
-            need.save()
-        return need
-
     def clean_community(self):
         return Community.objects.get(id=self.cleaned_data['community'])
