@@ -16,7 +16,7 @@
       <h2>{{ need.title }}</h2>
       <div class="need-votes">
         {% vote need %}
-        <div class="view-edit-btn"><a href="{% url resource_edit need.slug %}" class="btn"><i class="icon-pencil"></i></a></div>
+        <div class="view-edit-btn"><a href="{% url edit_need community.slug need.slug %}" class="btn"><i class="icon-pencil"></i></a></div>
       </div>
       <ul class="horizontal">
         {% for c in need.categories.all %}

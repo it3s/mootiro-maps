@@ -40,7 +40,7 @@ def edit(request, community_slug=""):
         form = CommunityForm(POST, instance=community)
         if form.is_valid():
             community = form.save(commit=False)
-            if community.id:  # was never saved
+            if not community.id:  # was never saved
                 community.creator = request.user
             community.save()
 

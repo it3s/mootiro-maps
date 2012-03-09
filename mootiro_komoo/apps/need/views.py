@@ -37,8 +37,8 @@ def edit(request, community_slug="", need_slug=""):
             post['community'] = community.id
         form = NeedForm(post, instance=need)
         if form.is_valid():
-            need = form.save()
-            if need.id:  # was never saved
+            need = form.save(commit=False)
+            if not need.id:  # was never saved
                 need.creator = request.user
             need.save()
             return {'redirect': reverse('view_need',
