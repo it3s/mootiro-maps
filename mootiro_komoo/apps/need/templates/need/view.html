@@ -13,46 +13,44 @@
 {% block content %}
   <div id="main-content">
     <div class="need main-column">
-      <h2>{{ need.title }}</h2>
-      <div class="need-votes">
-        {% vote need %}
-        <div class="view-edit-btn"><a href="{% url edit_need community.slug need.slug %}" class="btn"><i class="icon-pencil"></i></a></div>
-      </div>
+      <h2>{{ need.title }} <div class="view-edit-btn right"><a href="{% url resource_edit need.slug %}" class="btn"><i class="icon-pencil"></i></a></div></h2>
       <ul class="horizontal">
         {% for c in need.categories.all %}
         <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
         {% endfor %}
       </ul>
       <div class="clear-both"></div>
+      {% vote need %}
+      <div class="clear-both"></div>
       <p>
-        <span class="apart">created by <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a></span>
+        <span class="apart">created by <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> on {{ need.creation_date|date:'j/n/Y' }}</span>
         <span class="apart">target audience: {{ need.target_audiences.all|join:", " }}</span>
         <span class="apart">status:</span>
       </p>
       <p>{{ need.description }}</p>
     </div>
 
-    <div class="right-bar">
-      <div id="map-preview">{% komoo_map '200' '200' 16 geojson %}</div>
-      <a href="#">ver no mapa</a>
-      <div class="block">
-        <h3>Proposals</h3>
-        {% for proposal in need.proposals.all %}
-          {% proposal_summary proposal %}
-        {% endfor %}
-        <a class="button" href="{% url new_proposal need.community.slug need.slug %}">
-          New proposal
-        </a>
-      </div>
-      <div class="block">
-        <h3>Related needs</h3>
-        <ul>
-          <li>Need 1</li>
-          <li>Need 2</li>
-          <li>Need 3</li>
-        </ul>
-      </div>
+  <div class="right-bar">
+    <div id="map-preview">{% komoo_map '200' '200' 16 geojson %}</div>
+    <a href="#">ver no mapa</a>
+    <div class="block">
+      <h3>Proposals</h3>
+      {% for proposal in need.proposals.all %}
+        {% proposal_summary proposal %}
+      {% endfor %}
+      <a class="button" href="{% url new_proposal need.community.slug need.slug %}">
+        New proposal
+      </a>
     </div>
+    <div class="block">
+      <h3>Related needs</h3>
+      <ul>
+        <li>Need 1</li>
+        <li>Need 2</li>
+        <li>Need 3</li>
+      </ul>
+    </div>
+  </div>
 
   <div class="view-extras">
     <div class="view-tag-list">
@@ -67,6 +65,8 @@
     </div>
     {% comments need %}
   </div>
+
+</div>
 {% endblock %}
 
 {% block page_scripts %}
