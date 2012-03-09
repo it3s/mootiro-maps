@@ -20,17 +20,9 @@ class FormResource(forms.ModelForm):
         widget=Autocomplete(Community, '/community/search_by_name'))
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
-    _field_labels = {
-        'name': 'Nome',
-        'description': 'Descrição',
-        'kind': 'Tipo',
-        'tags': 'Classificadores',
-        'community': 'Comunidade'
-    }
-
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'kind', 'tags', 'community', 'id',
+        fields = ['name', 'description', 'kind', 'tags', 'community', 'image', 'id',
                   'geometry']
 
     def __init__(self, *args, **kwargs):
@@ -39,9 +31,6 @@ class FormResource(forms.ModelForm):
         self.helper.form_id = 'form_resource'
 
         super(FormResource, self).__init__(*args, **kwargs)
-
-        [setattr(self.fields[field], 'label', label) \
-            for field, label in self._field_labels.iteritems()]
 
     def save(self, user=None, *args, **kwargs):
         resource = super(FormResource, self).save(*args, **kwargs)

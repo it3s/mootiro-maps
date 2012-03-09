@@ -30,7 +30,7 @@ class Resource(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     kind = models.ForeignKey(ResourceKind)
     description = models.TextField()
-
+    image = models.FileField(upload_to='resource/', null=True, blank=True)
     tags = TaggableManager()
 
     # resources belongs to community?

@@ -18,13 +18,21 @@
         <h2>{{ resource.name }}</h2>
         <div class="resource-votes">
           {% vote resource %}
-          <div class="resource-edit-btn"><a href="/resource/edit?id={{ resource.id }}" class="btn"><i class="icon-pencil"></i></a></div>
+          <div class="resource-edit-btn">
+            {% if community %}
+            <a href="/{{ community.slug }}/resource/edit?id={{ resource.id }}" class="btn">
+            {% else %}
+            <a href="/resource/edit?id={{ resource.id }}" class="btn">
+            {% endif %}
+              <i class="icon-pencil"></i>
+            </a>
+          </div>
         </div>
         <span>
-          criado por <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
-          em {{ resource.creation_date|date:"d/m/Y" }}
+          created by <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
+          in {{ resource.creation_date|date:"d/m/Y" }}
         </span>
-        <span class="resource-type">tipo:&nbsp; <strong>{{ resource.kind }}</strong></span>
+        <span class="resource-type">type:&nbsp; <strong>{{ resource.kind }}</strong></span>
       </div>
 
       <div class="resource-body">
@@ -36,29 +44,29 @@
     </div>
     <div class="right-bar">
       <div id="map-preview">{% komoo_map '200' '200' 16 geojson %}</div>
-      <a href="#">ver no mapa</a>
+      <a href="#">see on map</a>
       <div class="similar-resources">
-        <h1>Recursos Parecidos:</h1>
+        <h1>Similar Resources:</h1>
         {% if similar %}
           {% for s in similar %}
             <p><a href="/resource/{{ s.id }}/">{{s.name}}</a> - local</p>
           {% endfor %}
         {% else %}
-          <p>Nenhum recurso similar...</p>
+          <p>There is no similar resources...</p>
         {% endif %}
       </div>
     </div>
   </div>
   <div class="resource-extras">
     <div class="resource-tag-list">
-      Classificadores:
+      Classifiers:
       {% for tag in resource.tags.all %}
         <span>{{ tag }}</span>
       {% endfor %}
     </div>
     <div class="resource-follow-btns">
-      <a class="btn" href="#"><img src="/static/img/glyphicons_327_rss.png"/><span>Assinar</span></a>
-      <a class="btn" href="#"><i class="icon-eye-open"></i><span>Observar</span></a>
+      <a class="btn" href="#"><img src="/static/img/glyphicons_327_rss.png"/><span>Sign</span></a>
+      <a class="btn" href="#"><i class="icon-eye-open"></i><span>Follow</span></a>
     </div>
     {% comments resource %}
   </div>

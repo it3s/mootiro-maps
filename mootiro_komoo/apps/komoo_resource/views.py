@@ -76,6 +76,7 @@ class Edit(View):
             form_resource = FormResource(instance=resource)
         else:
             form_resource = FormResource()
+            form_resource.fields.pop('image', '')
 
         if community:
             print 'fields->community:\n%s' % dir(form_resource.fields['community'])
@@ -89,13 +90,13 @@ class Edit(View):
 
     def post(self, request, community_slug=None, *args, **kwargs):
         logger.debug('acessing komoo_resource > Edit with POST\n'
-                     'request : {}'.format(request.POST))
+                     'POST : {}\nFILES : {}'.format(request.POST, request.FILES))
         _id = request.POST.get('id', None)
         if _id:
             resource = get_object_or_404(Resource, pk=request.POST['id'])
-            form_resource = FormResource(request.POST, instance=resource)
+            form_resource = FormResource(request.POST, request.FILES, instance=resource)
         else:
-            form_resource = FormResource(request.POST)
+            form_resource = FormResource(request.POST, request.FILES)
 
         community = get_object_or_None(Community, slug=community_slug)
 
@@ -111,7 +112,7 @@ class Edit(View):
                     dict(redirect=_url, community=community),
                     context_instance=RequestContext(request))
         else:
-            logger.debug('Form erros: {}'.format(dict(form_resource.__errors)))
+            logger.debug('Form erros: {}'.format(dict(form_resource._errors)))
             tmplt = 'resource/edit.html' if _id else 'resource/new.html'
             return render_to_response(tmplt,
                 dict(form_resource=form_resource, community=community),

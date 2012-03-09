@@ -56,7 +56,6 @@ def comments_summary(context, content_object):
     return dict(num_comments=num_comments)
 
 
-
 @register.inclusion_tag('comments/comments_staticfiles.html')
 def comments_staticfiles():
     """Static files (javascript/css) for the comments templatetag"""
