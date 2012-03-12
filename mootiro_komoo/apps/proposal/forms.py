@@ -4,7 +4,7 @@ from __future__ import unicode_literals  # unicode by default
 
 from django.forms import ModelForm, CharField
 from annoying.decorators import autostrip
-from tinymce.widgets import TinyMCE
+from markitup.widgets import MarkItUpWidget
 
 from main.utils import MooHelper
 from proposal.models import Proposal
@@ -18,8 +18,8 @@ class ProposalForm(ModelForm):
         model = Proposal
         exclude = 'report creator realizers need'.split()
 
-    description = CharField(widget=TinyMCE())
-    report = CharField(widget=TinyMCE(), required=False)
+    description = CharField(widget=MarkItUpWidget())
+    report = CharField(widget=MarkItUpWidget(), required=False)
 
     def __init__(self, *a, **kw):
         # Crispy forms configuration

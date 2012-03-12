@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django import forms
+from markitup.widgets import MarkItUpWidget
 
 from main.utils import MooHelper
 from main.widgets import Autocomplete, Tagsinput, TaggitWidget, ImageSwitchMultiple
@@ -20,6 +21,8 @@ class NeedForm(forms.ModelForm):
         widget=Autocomplete(Community, "/community/search_by_name"),
         required=True
     )
+
+    description = forms.CharField(widget=MarkItUpWidget())
 
     categories = forms.ModelMultipleChoiceField(
         queryset=NeedCategory.objects.all(),
