@@ -79,7 +79,6 @@ class Edit(View):
             form_resource.fields.pop('image', '')
 
         if community:
-            print 'fields->community:\n%s' % dir(form_resource.fields['community'])
             form_resource.fields['community'].widget = forms.HiddenInput()
             form_resource.initial['community'] = community.id
 

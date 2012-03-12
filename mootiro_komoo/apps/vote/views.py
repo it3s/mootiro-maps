@@ -38,9 +38,7 @@ def vote(request):
             else None
         vote_obj, created = Vote.objects.get_or_create(content_type_id=content_type,
                                 object_id=object_id, author=request.user)
-        print 'vote: {}  created: {}'.format(vote_obj, created)
         vote_obj.like = True if vote == 'up' else False
         vote_obj.save()
-        print 'vote: {}   like: {}'.format(vote_obj, vote_obj.like)
         return {'success': True, 'created': created}
     return {'success': False, 'error': 'Usuario não logado ou anônimo'}

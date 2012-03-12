@@ -65,16 +65,8 @@
     </div>
   </div>
   <div class="resource-extras">
-    <div class="resource-tag-list">
-      Classifiers:
-      {% for tag in resource.tags.all %}
-        <span>{{ tag }}</span>
-      {% endfor %}
-    </div>
-    <div class="resource-follow-btns">
-      <a class="btn" href="#"><img src="/static/img/glyphicons_327_rss.png"/><span>Sign</span></a>
-      <a class="btn" href="#"><i class="icon-eye-open"></i><span>Follow</span></a>
-    </div>
+    {% taglist resource %}
+    {% track_buttons %}
     {% comments resource %}
   </div>
 

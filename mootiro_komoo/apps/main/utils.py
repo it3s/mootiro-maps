@@ -4,7 +4,6 @@ from __future__ import unicode_literals  # unicode by default
 
 import json
 import re
-import collections
 
 from django.template.defaultfilters import slugify as simple_slugify
 

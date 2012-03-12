@@ -99,6 +99,15 @@ def initial_revisions():
     local('python manage.py createinitialrevisions {}'.format(django_settings[env_]))
 
 
+def clean_media_files():
+    """
+    removes all media uploaded files
+    """
+    media_apps_list = ['resource', ]
+    for app in media_apps_list:
+        local('rm  media/{}/*'.format(app))
+
+
 def sync_all():
     """
     restart app and database from scratch.
@@ -109,6 +118,7 @@ def sync_all():
     syncdb()
     load_fixtures('test')
     initial_revisions()
+    clean_media_files()
 
 
 def help():
