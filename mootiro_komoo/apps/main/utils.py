@@ -35,6 +35,8 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
         }
 
         for obj in objects:
+            if not hasattr(obj, 'geometry'):
+                continue
             type_ = obj.__class__.__name__.lower()
             geometry = json.loads(obj.geometry.geojson) if \
                     type_ == 'community' else \
