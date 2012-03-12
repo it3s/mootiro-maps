@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="right-bar">
-      <div id="map-preview">{% komoo_map '200' '200' 16 geojson %}</div>
+      <div id="map-preview">{% komoo_map geojson %}</div>
       <a href="{% url show_on_map %}?type=Resource&id={{resource.id}}">see on map</a>
       <div class="similar-resources">
         <h1>Similar Resources:</h1>

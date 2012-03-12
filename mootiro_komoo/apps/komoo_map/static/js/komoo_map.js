@@ -25,6 +25,7 @@ komoo.RegionTypes = [
     {
         type: 'community',
         title: gettext('Community'),
+        tooltip: gettext('Add Community'),
         color: '#ff0',
         icon: '/static/img/need.png', // TODO: Add the correct icon
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
@@ -33,6 +34,7 @@ komoo.RegionTypes = [
     {
         type: 'need',
         title: gettext('Needs'),
+        tooltip: gettext('Add Need'),
         color: '#f00',
         icon: '/static/img/need-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
@@ -44,6 +46,7 @@ komoo.RegionTypes = [
     {
         type: 'organization',
         title: gettext('Organization'),
+        tooltip: gettext('Add Organization'),
         color: '#00f',
         icon: '/static/img/organization-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
@@ -53,6 +56,7 @@ komoo.RegionTypes = [
     {
         type: 'resource',
         title: gettext('Resource'),
+        tooltip: gettext('Add Resource'),
         color: '#fff',
         icon: '/static/img/resource-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
@@ -64,6 +68,7 @@ komoo.RegionTypes = [
     {
         type: 'funder',
         title: gettext('Funder'),
+        tooltip: gettext('Add Funder'),
         color: '#000',
         icon: '/static/img/funder-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
@@ -720,15 +725,18 @@ komoo.Map.prototype = {
             var infoContentTitle = $('<a>').attr('href',
                     dutils.urls.resolve('view_community', {community_slug: overlay.properties.community_slug}));
             infoContentTitle.text(overlay.properties.name);
+            var infoList = $('<ul>');
+            var msg = ngettext('%s resident', '%s residents', overlay.properties.population)
+            infoList.append($('<li>').html(interpolate(msg, [overlay.properties.population])));
+            //infoList.append($('<li>').html(interpolate('%s m<sup>2</sup>', [1])));
             infoContent.append(infoContentTitle);
+            infoContent.append(infoList);
         } else if (overlay.properties.type == 'resource') {
-            // TODO: Add more info
             var infoContentTitle = $('<a>').attr('href',
                     dutils.urls.resolve('view_resource', {id: overlay.properties.id}));
             infoContentTitle.text(overlay.properties.name);
             infoContent.append(infoContentTitle);
         } else {
-            // TODO: Add more info
             var slugname = overlay.properties.type + '_slug';
             var params = {'community_slug': overlay.properties.community_slug}
             params[slugname] = overlay.properties[slugname];
@@ -1002,13 +1010,13 @@ komoo.Map.prototype = {
         } else {
             $.each(komooMap.options.regionTypes, function (i, type) {
                 komooMap.overlayOptions[type.type] = type;
-                var item = $('<li>').addClass('map-menuitem')
+                var item = $('<li>').addClass('map-menuitem');
                 if (type.icon) {
                     var icon = $('<img>').attr({src: type.icon}).css('float', 'left');
                     if (type.disabled) icon.css('opacity', '0.3');
                     item.append(icon);
                 }
-                item.append($('<div>').text(type.title).css('padding-left', '30px'));
+                item.append($('<div>').text(type.title).attr('title', type.tooltip).css('padding-left', '30px'));
                 var submenu = komooMap.addItems.clone(true);
                 var submenuItems = $('div', submenu);
                 submenuItems.removeClass('map-button').addClass('map-menuitem').hide(); // Change the class

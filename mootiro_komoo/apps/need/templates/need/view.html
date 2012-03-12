@@ -24,7 +24,7 @@
 
       <div class="clear-both"></div>
       {% vote need %}
-      
+
       <div class="clear-both"></div>
       <p>
         <span class="apart">created by <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> on {{ need.creation_date|date:'j/n/Y' }}</span>
@@ -35,7 +35,7 @@
     </div>
 
   <div class="right-bar">
-    <div id="map-preview">{% komoo_map '200' '200' 16 geojson %}</div>
+    <div id="map-preview">{% komoo_map geojson %}</div>
     <a href="#">ver no mapa</a>
     <div class="block">
       <h3>Proposals</h3>

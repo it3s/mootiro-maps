@@ -14,12 +14,13 @@ class AddressWithMapWidget(HiddenInput):
 
     def render(self, name, value, attrs=None):
         default_html = super(AddressWithMapWidget, self).render(name, value, attrs)
-        map_template = Template('{% load komoo_map_tags %}{% komoo_map_editor width height zoom geojson %}')
+        map_template = Template('{% load komoo_map_tags %}{% komoo_map geojson editor width height zoom %}')
         #TODO: Make parameters configurable
         context = Context({
-            'width': '100%',
-            'height': '600',
-            'zoom': 13,
+            'editor': 'editable=True',
+            'width': 'width=100%',
+            'height': 'height=600',
+            'zoom': 'zoom=13',
             'geojson': value or '{}',
             'STATIC_URL': settings.STATIC_URL
         })
