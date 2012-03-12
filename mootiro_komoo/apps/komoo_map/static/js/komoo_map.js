@@ -397,6 +397,9 @@ komoo.Map.prototype = {
                 var pos = geometry.coordinates;
                 var latLng = new google.maps.LatLng(pos[0], pos[1]);
                 overlay.setPosition(latLng);
+                if (feature.properties.categories && feature.properties.categories[0]) {
+                    overlay.setIcon('/static/' + feature.properties.categories[0].image);
+                }
                 if (panTo) komooMap.googleMap.setCenter(latLng);
             }
             if (overlay) {
