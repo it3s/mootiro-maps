@@ -1,6 +1,9 @@
 {% if redirect %}
   <script>window.location = '{{redirect}}';</script>
 {% else %}
+
+  {{ form.media }}
+
   <form action="{{action}}" method="post">
     {% csrf_token %}
     <table>

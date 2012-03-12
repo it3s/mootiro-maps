@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django import forms
+from markitup.widgets import MarkItUpWidget
 
 from komoo_map.widgets import AddressWithMapWidget
 from community.models import Community
@@ -12,6 +13,7 @@ class CommunityForm(forms.ModelForm):
     class Meta:
         model = Community
 
+    description = forms.CharField(widget=MarkItUpWidget())
     geometry = forms.CharField(widget=forms.HiddenInput())
 
 
