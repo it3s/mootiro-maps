@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Picture(models.Model):
 
     # This is a small demo using FileField instead of ImageField, not

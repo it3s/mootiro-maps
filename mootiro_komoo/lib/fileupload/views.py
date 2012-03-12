@@ -7,11 +7,13 @@ from django.core.urlresolvers import reverse
 
 from django.conf import settings
 
+
 def response_mimetype(request):
     if "application/json" in request.META['HTTP_ACCEPT']:
         return "application/json"
     else:
         return "text/plain"
+
 
 class PictureCreateView(CreateView):
     model = Picture
@@ -39,8 +41,10 @@ class PictureDeleteView(DeleteView):
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
 
+
 class JSONResponse(HttpResponse):
     """JSON response class."""
-    def __init__(self,obj='',json_opts={},mimetype="application/json",*args,**kwargs):
-        content = simplejson.dumps(obj,**json_opts)
-        super(JSONResponse,self).__init__(content,mimetype,*args,**kwargs)
+    def __init__(self, obj='', json_opts={}, mimetype="application/json",
+                 *args, **kwargs):
+        content = simplejson.dumps(obj, **json_opts)
+        super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
