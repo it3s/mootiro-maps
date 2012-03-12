@@ -9,6 +9,7 @@ class AddressWithMapWidget(HiddenInput):
         js = ('http://maps.google.com/maps/api/js?sensor=false&libraries=drawing',
               'http://www.google.com/jsapi',
               'js/infobox_packed.js',
+              'js/markerclusterer_packed.js',
               'js/komoo_map.js')
 
     def render(self, name, value, attrs=None):

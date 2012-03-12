@@ -5,6 +5,7 @@
 {% load vote_tags %}
 {% load proposal_tags %}
 {% load navigation_tags %}
+{% load markitup_tags %}
 
 {% block title %}Proposal: {{proposal.name}} ― Komoo{% endblock %}
 
@@ -23,7 +24,9 @@
       <span class="apart">created by {{ proposal.creator }} on {{ proposal.creation_date }}</span>
       <span class="apart">status:</span>
     </p>
-    <p>{{ proposal.description|safe }}</p>
+
+    <div class="mark-down">{{ proposal.description|render_markup }}</div>
+    
     <p>Cost: {{ proposal.cost }}</p>
   </div>
   
