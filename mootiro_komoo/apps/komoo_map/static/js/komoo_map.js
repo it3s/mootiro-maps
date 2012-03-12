@@ -169,7 +169,7 @@ komoo.Map = function (element, options) {
     komooMap.googleMap = new google.maps.Map(element, googleMapOptions);
 
     /* Loads the marker cluster */
-    if (MarkerClusterer && komooMap.options.enableCluster) {
+    if (window.MarkerClusterer && komooMap.options.enableCluster) {
         komooMap.cluster = new MarkerClusterer(komooMap.googleMap, [], {
             gridSize: 20
         });
