@@ -3,6 +3,8 @@
 from __future__ import unicode_literals  # unicode by default
 from django.conf.urls.defaults import patterns, include, url
 from django.views.i18n import javascript_catalog
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 # Some URL fragments to be reused throughout the application
@@ -15,6 +17,7 @@ js_info_dict = {
         'komoo_map',
         )
 }
+
 
 def prepare_regex(regex):
     return regex.replace('COMMUNITY_SLUG', COMMUNITY_SLUG) \
@@ -47,3 +50,11 @@ urlpatterns = patterns('',
     # Community URLs go last because one of them can match anything
     url(r'', include('community.urls')),
 )
+
+if settings.DEBUG:
+    urlpatterns += staticfiles_urlpatterns()  # this servers static files and media files.
+    #in case media is not served correctly
+    urlpatterns += patterns('',
+        url(r'^' + settings.MEDIA_URL.lstrip('/') + r'(?P<path>.*)$',
+            'django.views.static.serve', {'document_root': settings.MEDIA_ROOT, }),
+    )

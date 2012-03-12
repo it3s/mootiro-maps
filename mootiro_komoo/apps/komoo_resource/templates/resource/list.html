@@ -11,7 +11,13 @@
   </div>
   {% for resource in resources.object_list %}
     <div class="resource-list-item {% cycle 'odd' '' %}">
-      <div class="resource-list-image"><div></div></div>
+      <div class="resource-list-image">
+        {% if resource.image %}
+        <img src="{{ resource.image.url }}" />
+        {% else %}
+        <div></div>
+        {% endif %}
+      </div>
       {% if community %}
       <div class="resource-list-name"><a href="/{{ community.slug }}/resource/{{ resource.id }}">{{ resource.name }}</a></div>
       {% else %}
