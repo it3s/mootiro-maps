@@ -2,8 +2,6 @@
   <script>window.location = '{{redirect}}';</script>
 {% else %}
   {% load crispy_forms_tags %}
-  {{ form.media.css }}
-  {{ form.media.js }}
-
+  {{ form.media }}
   {% crispy form form.helper %}
 {% endif %}
