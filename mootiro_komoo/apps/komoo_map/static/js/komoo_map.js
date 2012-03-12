@@ -409,6 +409,8 @@ komoo.Map.prototype = {
                 overlay.setPosition(latLng);
                 if (feature.properties.categories && feature.properties.categories[0]) {
                     overlay.setIcon('/static/' + feature.properties.categories[0].image);
+                } else {
+                    overlay.setIcon('/static/img/' + feature.properties.type + '-hover.png'); // FIXME: Hardcode is evil
                 }
                 if (panTo) komooMap.googleMap.setCenter(latLng);
                 // Adds to cluster
@@ -806,6 +808,9 @@ komoo.Map.prototype = {
 
             // Switch back to non-drawing mode after drawing a shape.
             komooMap.drawingManager.setDrawingMode(null);
+
+            // Sets the custom image
+            if (e.overlay.setIcon) e.overlay.setIcon('/static/img/' + komooMap.type + '-hover.png'); // FIXME: Hardcode is evil
 
             var path;
             if (e.overlay.getPath) path = e.overlay.getPath();
