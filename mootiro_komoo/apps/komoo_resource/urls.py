@@ -12,6 +12,8 @@ urlpatterns = patterns('komoo_resource.views',
     url(r'^resource/(?P<id>\d+)/?$', 'show', name='view_resource'),
     url(r'^resource/search_by_kind/$', 'search_by_kind', name='resource_search_by_kind'),
     url(r'^resource/search_by_tag/$', 'search_by_tag', name='resource_search_by_tag'),
+
+    # this probably should be placed somewhere else (and made generic)
     url(r'^show_on_map/$', 'show_on_map', name='show_on_map'),
 
     url(pr(r'^COMMUNITY_SLUG/resource/?$'), 'resource_list', name='resource_list'),
