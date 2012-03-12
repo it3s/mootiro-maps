@@ -136,3 +136,10 @@ def search_by_tag(request):
     tags = [t.name for t in qset]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
+
+
+@render_to('komoo_map/show.html')
+def show_on_map(request, geojson=''):
+    resource = get_object_or_404(Resource, pk=request.GET.get('id', ''))
+    geojson = create_geojson([resource])
+    return dict(geojson=geojson)

@@ -53,6 +53,8 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
                 feature['properties']['community_slug'] = getattr(obj.community, 'slug', '')
             if hasattr(obj, 'slug'):
                 feature['properties']['{}_slug'.format(type_)] = obj.slug
+            if hasattr(obj, 'categories'):
+                feature['properties']['categories'] = [{'name': c.name, 'image': c.image()} for c in obj.categories.all()]
 
             geojson['features'].append(feature)
 
