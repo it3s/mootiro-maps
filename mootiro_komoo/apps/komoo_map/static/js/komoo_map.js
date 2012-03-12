@@ -85,6 +85,7 @@ komoo.RegionTypes = [
  * @property {Object} regionTypes
  * @property {boolean} autoSaveLocation
  * @property {boolean} enableInfoWindow
+ * @property {boolean} enableCluster
  * @property {Object} overlayOptions
  * @property {google.maps.MapOptions} googleMapOptions The Google Maps map options.
  */
@@ -95,6 +96,7 @@ komoo.MapOptions = {
     regionTypes: komoo.RegionTypes,
     autoSaveLocation: false,
     enableInfoWindow: true,
+    enableCluster: false,
     overlayOptions: {
         fillColor: '#ff0',
         fillOpacity: 0.45,
@@ -142,6 +144,7 @@ komoo.MapOptions = {
  * @property {google.maps.Circle} radiusCircle
  * @property {Object} overlayOptions
  * @propert {InfoBox | google.maps.InfoWindow} infoWindow
+ * @propert {undefined | MarkerClusterer} cluster
  */
 komoo.Map = function (element, options) {
     var komooMap = this;
@@ -164,6 +167,13 @@ komoo.Map = function (element, options) {
 
     /* Creates the Google Maps object */
     komooMap.googleMap = new google.maps.Map(element, googleMapOptions);
+
+    /* Loads the marker cluster */
+    if (MarkerClusterer && komooMap.options.enableCluster) {
+        komooMap.cluster = new MarkerClusterer(komooMap.googleMap, [], {
+            gridSize: 20
+        });
+    }
 
     komooMap.editToolbar = $('<div>').addClass('map-toolbar').css('margin', '5px');
 
@@ -401,6 +411,8 @@ komoo.Map.prototype = {
                     overlay.setIcon('/static/' + feature.properties.categories[0].image);
                 }
                 if (panTo) komooMap.googleMap.setCenter(latLng);
+                // Adds to cluster
+                if (komooMap.cluster) komooMap.cluster.addMarker(overlay);
             }
             if (overlay) {
                 overlay.setMap(komooMap.googleMap);
@@ -496,6 +508,7 @@ komoo.Map.prototype = {
             overlay.setMap(null);
             delete overlay;
         });
+        if (komooMap.cluster) komooMap.cluster.clearMarkers();
         komooMap.overlays = [];
     },
 
