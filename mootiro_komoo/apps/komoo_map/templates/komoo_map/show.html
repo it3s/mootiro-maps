@@ -1,0 +1,10 @@
+{% extends 'global.html' %}
+{% load komoo_map_tags %}
+
+{% block content %}
+    <div id="main-content">
+        <div class="main-column">
+           {% komoo_map '800' '750' 16 geojson %}
+        </div>
+    </div>
+{% endblock %}

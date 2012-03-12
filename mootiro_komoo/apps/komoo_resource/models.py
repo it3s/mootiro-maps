@@ -11,7 +11,7 @@ from community.models import Community
 from collection_from import CollectionFrom
 
 
-def upload_resource(instance, filename):
+def resource_upload(instance, filename):
     ext = filename[filename.rindex('.'):]
     return os.path.join('resource', '{fname}{ext}'.format(
                             fname=int(time.time() * 1000), ext=ext))
@@ -38,7 +38,7 @@ class Resource(models.Model):
     last_update = models.DateTimeField(auto_now=True)
     kind = models.ForeignKey(ResourceKind)
     description = models.TextField()
-    image = models.FileField(upload_to=upload_resource, null=True, blank=True)
+    image = models.FileField(upload_to=resource_upload, null=True, blank=True)
     tags = TaggableManager()
 
     # resources belongs to community?
