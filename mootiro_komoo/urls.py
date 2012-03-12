@@ -40,6 +40,8 @@ urlpatterns = patterns('',
 
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^markitup/', include('markitup.urls')),
+    url(r'^upload/', include('fileupload.urls')),
+
     url(r'', include('need.urls')),
     url(r'', include('proposal.urls')),
     url(r'', include('main.urls')),

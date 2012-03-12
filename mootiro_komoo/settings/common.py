@@ -133,6 +133,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'markitup',
+    'fileupload',
     # our apps
     'komoo_map',
     'community',
