@@ -18,6 +18,8 @@
             <button type="reset" class="cancel">Cancel upload</button>
             <button type="button" class="delete">Delete files</button>
           </div>
+          <input type="hidden" name="content_type" value="{{ content_type }}">
+          <input type="hidden" name="object_id" value="{{ object_id }}">
         </form>
         <div class="fileupload-content">
           <table class="files"></table>

@@ -10,6 +10,7 @@ from django.utils import simplejson
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django import forms
+from django.contrib.contenttypes.models import ContentType
 
 from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
@@ -19,6 +20,7 @@ from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
 from main.utils import create_geojson, paginated_query
 from community.models import Community
+from fileupload.models import UploadedFile
 
 
 logger = logging.getLogger(__name__)
@@ -49,8 +51,9 @@ def show(request, community_slug=None, id=None):
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
     community = get_object_or_None(Community, slug=community_slug)
+    photos = UploadedFile.get_files_for(resource)
     return dict(resource=resource, similar=similar, geojson=geojson,
-                community=community)
+                community=community, photos=photos)
 
 
 class Edit(View):
@@ -66,6 +69,7 @@ class Edit(View):
             resource = get_object_or_404(Resource, pk=_id)
             form_resource = FormResource(instance=resource)
         else:
+            resource = None
             form_resource = FormResource()
             form_resource.fields.pop('image', '')
 
@@ -75,7 +79,10 @@ class Edit(View):
 
         tmplt = 'resource/edit.html' if _id else 'resource/new.html'
         return render_to_response(tmplt,
-            dict(form_resource=form_resource, community=community),
+            dict(form_resource=form_resource, community=community,
+                 object_id=resource.id if resource else '',
+                 content_type=ContentType.objects.get_for_model(resource).id \
+                                if resource else ''),
             context_instance=RequestContext(request))
 
     def post(self, request, community_slug=None, *args, **kwargs):
