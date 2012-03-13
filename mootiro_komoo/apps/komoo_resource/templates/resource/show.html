@@ -52,8 +52,8 @@
     <div class="right-bar">
       <div id="map-preview">{% komoo_map geojson %}</div>
       <a href="{% url show_on_map %}?type=Resource&id={{resource.id}}">see on map</a>
-      <div class="similar-resources">
-        <h1>Similar Resources:</h1>
+      <div class="block">
+        <h3>Similar Resources:</h3>
         {% if similar %}
           {% for s in similar %}
             <p><a href="/resource/{{ s.id }}/">{{s.name}}</a> - local</p>

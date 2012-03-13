@@ -276,6 +276,10 @@ ul.horizontal li {
     float: left;
     color: #3ebac2;
 }
+.right-bar h2 {
+    color: #3ebac2;
+    font-size: 18px;
+}
 .right-bar h3 {
     color: #3ebac2;
     font-size: 16px;
@@ -484,6 +488,109 @@ a.btnShowForm{
   font-weight: bold;
 }
 .tag {
+  color: #666666;
+  margin: 0 5px;
+  padding: 2px 5px;
+  font-weight: normal;
+  background-color: rgb(235, 249, 255);
+  border-radius: 3px;
+}
+/* ============= Resources ============== */
+/* resource list */
+.resource-list-item{
+  padding: 10px;
+  background-color: rgb(220, 239, 244);
+  margin: 0 50px;
+}
+.resource-list-item.odd{
+  background-color: rgb(235, 249, 255);
+}
+.resource-list-item div{
+  display: inline-block;
+}
+.resource-list-image{
+  width:5%;
+  min-width: 40px;
+}
+.resource-list-image div{
+  background-color: rgb(64, 146, 169);
+  width: 50px;
+  height: 50px;
+  border-radius: 1px;
+}
+.resource-list-image img{
+  /*background-color: rgb(64, 146, 169);*/
+  width: 50px;
+  height: 50px;
+  border-radius: 1px;
+}
+.resource-list-name{
+  width:50%;
+  min-width:500px;
+  vertical-align: 100%;
+}
+.resource-list-type{
+  width:10%;
+  min-width: 150px;
+  vertical-align: 100%;
+}
+.resource-list-header{
+  font-weight: bold;
+  color: #444444;
+}
+.resource-list-header div{
+  display: inline-block;
+  vertical-align: bottom;
+  margin-top:40px;
+}
+/* ### form ### */
+#form_resource {
+  width: 100%;
+}
+#form_resource input[type=text], #form_resource textarea{
+  width: 100%;
+}
+/* resource show */
+.resource-type{
+  margin-left: 40px;
+}
+.resource-header{
+  margin-bottom: 20px;
+}
+.resource-edit-btn{
+  display: inline-block;
+  float: right;
+}
+.resource-main{
+  display: inline-block;
+}
+.resource-follow-btns span{
+  color: #444444;
+  margin-left: 7px;
+}
+.resource-follow-btns img{
+  width: 12px;
+  height: 12px;
+  margin: 0 0 -1px -1px;
+}
+.resource-body li{
+  list-style: disc outside none;
+}
+.resource-footer div{
+  margin-top: 100px;
+}
+.resource-footer img{
+  width: 200px;
+  height: 160px;
+}
+.resource-extras{
+  padding: 0 60px;
+}
+.resource-tag-list{
+  margin: 5px 0 15px 0;
+  font-weight: bold;
+}
+.resource-tag-list span{
   color: #666666;
   margin: 0 5px;
   padding: 2px 5px;
