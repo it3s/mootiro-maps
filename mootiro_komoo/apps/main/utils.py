@@ -6,6 +6,7 @@ import json
 import re
 
 from django.template.defaultfilters import slugify as simple_slugify
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Reset
@@ -73,3 +74,27 @@ class MooHelper(FormHelper):
         self.add_input(Submit('submit', 'Submit'))
         self.add_input(Reset('reset', 'Reset'))
         return retorno
+
+
+def paginated_query(query, request):
+    """
+    Do the boring/repetitive pagination routine.
+    Expects a request with page and size attributes
+    params:
+        query: any queryset objects
+        request:  a django HttpRequest (GET)
+           page: page attr on request.GET (default: 1)
+           size: size attr on request.GET (default: 10)
+    """
+    page = request.GET.get('page', '')
+    size = request.GET.get('size', 10)
+
+    paginator = Paginator(query, size)
+    try:
+        _paginated_query = paginator.page(page)
+    except PageNotAnInteger:  # If page is not an integer, deliver first page.
+        _paginated_query = paginator.page(1)
+    except EmptyPage:  # If page is out of range, deliver last page
+        _paginated_query = paginator.page(paginator.num_pages)
+    return _paginated_query
+
