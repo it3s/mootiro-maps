@@ -4,7 +4,7 @@
 {% load comment_tags %}
 {% load vote_tags %}
 {% load proposal_tags %}
-{% load navigation_tags %}
+{% load komoo_tags %}
 {% load markitup_tags %}
 
 {% block title %}Proposal: {{proposal.name}} ― Komoo{% endblock %}
@@ -26,10 +26,10 @@
     </p>
 
     <div class="mark-down">{{ proposal.description|render_markup }}</div>
-    
+
     <p>Cost: {{ proposal.cost }}</p>
   </div>
-  
+
   <div class="right-bar">
     <div class="block">
       <h4>Proposals for <a href="#">{{ proposal.need.title }}</a></h4>
