@@ -76,7 +76,7 @@ class MooHelper(FormHelper):
         return retorno
 
 
-def paginated_query(query, request):
+def paginated_query(query, request=None, page=None, size=None):
     """
     Do the boring/repetitive pagination routine.
     Expects a request with page and size attributes
@@ -85,9 +85,11 @@ def paginated_query(query, request):
         request:  a django HttpRequest (GET)
            page: page attr on request.GET (default: 1)
            size: size attr on request.GET (default: 10)
+        size: size of each page
+        page: number of the current page
     """
-    page = request.GET.get('page', '')
-    size = request.GET.get('size', 10)
+    page = page or request.GET.get('page', '')
+    size = size or request.GET.get('size', 10)
 
     paginator = Paginator(query, size)
     try:
@@ -97,4 +99,3 @@ def paginated_query(query, request):
     except EmptyPage:  # If page is out of range, deliver last page
         _paginated_query = paginator.page(paginator.num_pages)
     return _paginated_query
-
