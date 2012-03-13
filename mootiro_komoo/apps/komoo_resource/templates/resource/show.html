@@ -43,9 +43,30 @@
         <!-- Photos here -->
         <div class="resource-photos">
           <h3>Photos:</h3>
-          {% for photo in photos %}
+          {% for photo in photos.object_list %}
             <a href="{{ photo.file.url }}"><img src="{{ photo.file.url }}"></a>
           {% endfor %}
+            <!-- TODO move this to a templatetag -->
+            <div class="pagination">
+              <span class="step-links">
+                  {% if photos.has_previous %}
+                    <span>
+                      <a href="?page={{ photos.previous_page_number }}">previous</a>
+                    </span>
+                  {% endif %}
+
+                  <span class="current">
+                      Page {{ photos.number }} of {{ photos.paginator.num_pages }}.
+                  </span>
+
+                  {% if photos.has_next %}
+                    <span>
+                      <a href="?page={{ photos.next_page_number }}">next</a>
+                    </span>
+                  {% endif %}
+              </span>
+            </div> <!--end pagination  -->
+
         </div>
 
       </div>

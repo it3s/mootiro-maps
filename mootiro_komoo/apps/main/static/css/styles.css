@@ -450,8 +450,8 @@ a.btnShowForm{
 
 /* ======= Pagination (it may clash/overlap with bootstrap) =========*/
 .pagination{
-  position:absolute;
-  left: 40%;
+  position:relative;
+  left: 35%;
 }
 .pagination .step-links span{
   display: inline-block;
@@ -576,7 +576,7 @@ a.btnShowForm{
 .resource-body li{
   list-style: disc outside none;
 }
-.resource-footer div{
+.resource-footer div:first-child{
   margin-top: 100px;
 }
 /*.resource-footer img{
