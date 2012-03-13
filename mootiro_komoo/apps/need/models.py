@@ -10,7 +10,7 @@ from taggit.managers import TaggableManager
 
 from community.models import Community
 from main.utils import slugify
-from collection_from import CollectionFrom
+from komoo_map.models import GeoRefModel
 
 
 class NeedCategory(models.Model):
@@ -39,7 +39,7 @@ class TargetAudience(models.Model):
         return self.name
 
 
-class Need(models.Model):
+class Need(GeoRefModel):
     """A need of a Community"""
 
     title = models.CharField(max_length=256, blank=False)
@@ -59,14 +59,6 @@ class Need(models.Model):
     target_audiences = models.ManyToManyField(TargetAudience, blank=False)
 
     tags = TaggableManager()
-
-    # Geolocalization attributes
-    objects = models.GeoManager()
-
-    points = models.MultiPointField(null=True, blank=True, editable=False)
-    lines = models.MultiLineStringField(null=True, blank=True, editable=False)
-    polys = models.MultiPolygonField(null=True, blank=True, editable=False)
-    geometry = CollectionFrom(points='points', lines='lines', polys='polys')
 
     ### Needed to slugify items ###
     def slug_exists(self, slug):
