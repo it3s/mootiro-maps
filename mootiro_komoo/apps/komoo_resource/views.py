@@ -77,13 +77,9 @@ class Edit(View):
             form_resource.fields['community'].widget = forms.HiddenInput()
             form_resource.initial['community'] = community.id
 
-        photos = UploadedFile.get_files_for(resource)
         tmplt = 'resource/edit.html' if _id else 'resource/new.html'
         return render_to_response(tmplt,
-            dict(form_resource=form_resource, community=community, photos=photos,
-                 object_id=resource.id if resource else '',
-                 content_type=ContentType.objects.get_for_model(resource).id \
-                                if resource else ''),
+            dict(form_resource=form_resource, community=community, resource=resource),
             context_instance=RequestContext(request))
 
     def post(self, request, community_slug=None, *args, **kwargs):

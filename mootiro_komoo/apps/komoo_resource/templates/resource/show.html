@@ -83,11 +83,13 @@
   <script type="text/javascript">
       $('.resource-footer img').each(function(idx, obj){
         if(obj.offsetHeight > obj.offsetWidth){
-          $(obj).css('height', '160px').css('width', 'auto').css(
-              'padding-left', Math.abs(obj.offsetWidth - 200) /2 );
+          $(obj).css('height', '160px').css('width', 'auto')
+                .css('padding-left', Math.abs(obj.offsetWidth - 200) /2 )
+                .css('padding-right', Math.abs(obj.offsetWidth - 200) /2 );
         } else {
-          $(obj).css('height', 'auto').css('width', '200px').css(
-              'padding-bottom', Math.abs(obj.offsetHeight - 200) /2 );
+          $(obj).css('height', 'auto').css('width', '200px')
+              .css('padding-bottom', Math.abs(obj.offsetHeight - 200) /2)
+              .css('padding-top', Math.abs(obj.offsetHeight - 200) /2);
         }
       });
   </script>

@@ -1,4 +1,8 @@
+# -*- coding: utf-8 -*-
 from django import template
+from django.contrib.contenttypes.models import ContentType
+from django.conf import settings
+from fileupload.models import UploadedFile
 
 register = template.Library()
 
@@ -68,3 +72,34 @@ def upload_js():
         </tr>
     </script>
     """
+
+
+@register.inclusion_tag('fileupload/fileuploader_templatetag.html', takes_context=True)
+def upload_widget(context, obj):
+    files = UploadedFile.get_files_for(obj)
+    content_type = ContentType.objects.get_for_model(obj)
+    return dict(files=files, object_id=obj.id, content_type=content_type.id)
+
+
+@register.simple_tag
+def upload_javascript():
+    return """
+        {upload_js}
+
+        <!--script src="{static_url}jquery-1.6.2.min.js"></script-->
+        <script src="{static_url}jquery-ui-1.8.14.custom.min.js"></script>
+        <script src="{static_url}jquery.templates/beta1/jquery.tmpl.min.js"></script>
+        <script src="{static_url}jquery.iframe-transport.js"></script>
+        <script src="{static_url}jquery.fileupload.js"></script>
+        <script src="{static_url}jquery.fileupload-ui.js"></script>
+        <script src="{static_url}application.js"></script>
+    """.format(upload_js=upload_js(), static_url=settings.STATIC_URL)
+
+
+@register.simple_tag
+def upload_css():
+    return """
+    <link rel="stylesheet" href="{static_url}jqueryui/1.8.14/themes/base/jquery.ui.all.css" id="theme">
+    <link rel="stylesheet" href="{static_url}jquery.fileupload-ui.css">
+    <link rel="stylesheet" href="{static_url}thumbnail-scaling.css">
+    """.format(static_url=settings.STATIC_URL)

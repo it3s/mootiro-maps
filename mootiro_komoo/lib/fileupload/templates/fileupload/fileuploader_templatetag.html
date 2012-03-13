@@ -1,0 +1,45 @@
+<!-- FILE UPLOADER -->
+<div id="fileupload">
+  <form method="post" action="{% url upload-new %}" enctype="multipart/form-data">
+    <div class="fileupload-buttonbar">
+      {% csrf_token %}
+      <label class="fileinput-button">
+          <span>Add files...</span>
+          <input type="file" name="file" multiple>
+      </label>
+      <button type="submit" class="start">Start upload</button>
+      <button type="reset" class="cancel">Cancel upload</button>
+      <button type="button" class="delete">Delete files</button>
+    </div>
+    <input type="hidden" name="content_type" value="{{ content_type }}">
+    <input type="hidden" name="object_id" value="{{ object_id }}">
+  </form>
+  <div class="fileupload-content">
+    <table class="files">
+      <tbody>
+      {% for f in files %}
+      <tr>
+        <td class="preview">
+          <a target="_blank" href="{{ f.file.url }}">
+            <img src="{{ f.file.url }}">
+          </a>
+        </td>
+        <td class="name">
+          <a target="_blank" href="{{ f.file.url }}">{{f.file.name}}</a>
+        </td>
+        <td class="size">{{ f.file.size }}</td>
+        <td colspan="2"></td>
+        <td class="delete">
+          <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-url="{% url upload-delete f.id %}" data-type="DELETE" role="button" title="Delete">
+            <span class="ui-button-icon-primary ui-icon ui-icon-trash"></span>
+            <span class="ui-button-text">Delete</span>
+          </buton>
+        </td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <div class="fileupload-progressbar"></div>
+  </div>
+</div>
+<!-- END of file Uploader -->
