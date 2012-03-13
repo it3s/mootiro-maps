@@ -6,6 +6,7 @@
     <div class="main-column">
       {% crispy form_resource form_resource.helper %}
 
+      <!-- FILE UPLOADER -->
       <div id="fileupload">
         <form method="post" action="{% url upload-new %}" enctype="multipart/form-data">
           <div class="fileupload-buttonbar">
@@ -22,10 +23,34 @@
           <input type="hidden" name="object_id" value="{{ object_id }}">
         </form>
         <div class="fileupload-content">
-          <table class="files"></table>
+          <table class="files">
+            <tbody>
+            {% for photo in photos %}
+            <tr>
+              <td class="preview">
+                <a target="_blank" href="{{ photo.file.url }}">
+                  <img src="{{ photo.file.url }}">
+                </a>
+              </td>
+              <td class="name">
+                <a target="_blank" href="{{ photo.file.url }}">{{photo.file.name}}</a>
+              </td>
+              <td class="size">{{ photo.file.size }}</td>
+              <td colspan="2"></td>
+              <td class="delete">
+                <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-url="{% url upload-delete photo.id %}" data-type="DELETE" role="button" title="Delete">
+                  <span class="ui-button-icon-primary ui-icon ui-icon-trash"></span>
+                  <span class="ui-button-text">Delete</span>
+                </buton>
+              </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
           <div class="fileupload-progressbar"></div>
         </div>
       </div>
+      <!-- END of file Uploader -->
 
     </div>
   </div>
@@ -34,18 +59,16 @@
 {% block css %}
   <link rel="stylesheet" href="{{ STATIC_URL }}jqueryui/1.8.14/themes/base/jquery.ui.all.css" id="theme">
   <link rel="stylesheet" href="{{ STATIC_URL }}jquery.fileupload-ui.css">
-  <link rel="stylesheet" href="{{ STATIC_URL }}style.css">
   <link rel="stylesheet" href="{{ STATIC_URL }}thumbnail-scaling.css">
 
   {{ form_resource.media }}
-  <link rel="stylesheet" type="text/css" href="/static/css/resource.css" >
 {% endblock %}
 
 
 {% block page_scripts %}
   {% load upload_tags %}
   {% upload_js %}
-  <script src="{{ STATIC_URL }}jquery-1.6.2.min.js"></script>
+  <!--script src="{{ STATIC_URL }}jquery-1.6.2.min.js"></script-->
   <script src="{{ STATIC_URL }}jquery-ui-1.8.14.custom.min.js"></script>
   <script src="{{ STATIC_URL }}jquery.templates/beta1/jquery.tmpl.min.js"></script>
   <script src="{{ STATIC_URL }}jquery.iframe-transport.js"></script>

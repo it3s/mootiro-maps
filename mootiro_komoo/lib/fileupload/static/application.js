@@ -39,4 +39,11 @@ $(function () {
             .appendTo('body');
     });
 
+    $('.delete button').live('click', function(evt){
+        var that = $(evt.target);
+        that.parent().parent().fadeOut(400, function(){
+            $(this).remove();
+        });
+    });
+
 });
