@@ -11,10 +11,10 @@ from community.models import Community
 from komoo_map.models import GeoRefModel
 
 
-def resource_upload(instance, filename):
-    ext = filename[filename.rindex('.'):]
-    return os.path.join('resource', '{fname}{ext}'.format(
-                            fname=int(time.time() * 1000), ext=ext))
+# def resource_upload(instance, filename):
+#     ext = filename[filename.rindex('.'):]
+#     return os.path.join('resource', '{fname}{ext}'.format(
+#                             fname=int(time.time() * 1000), ext=ext))
 
 
 class ResourceKind(models.Model):
@@ -38,7 +38,7 @@ class Resource(GeoRefModel):
     last_update = models.DateTimeField(auto_now=True)
     kind = models.ForeignKey(ResourceKind)
     description = models.TextField()
-    image = models.FileField(upload_to=resource_upload, null=True, blank=True)
+    # image = models.FileField(upload_to=resource_upload, null=True, blank=True)
     community = models.ForeignKey(Community, related_name='resources',
         null=True, blank=True)
     tags = TaggableManager()

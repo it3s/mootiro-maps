@@ -103,7 +103,7 @@ def clean_media_files():
     """
     removes all media uploaded files
     """
-    media_apps_list = ['resource', ]
+    media_apps_list = ['upload', ]
     for app in media_apps_list:
         local('rm  media/{}/*'.format(app))
 

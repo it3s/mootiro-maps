@@ -1,11 +1,9 @@
-from fileupload.models import Picture
+from fileupload.models import UploadedFile
 from django.views.generic import CreateView, DeleteView
 
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
-
-from django.conf import settings
 
 
 def response_mimetype(request):
@@ -15,20 +13,24 @@ def response_mimetype(request):
         return "text/plain"
 
 
-class PictureCreateView(CreateView):
-    model = Picture
+class FileCreateView(CreateView):
+    model = UploadedFile
 
     def form_valid(self, form):
         self.object = form.save()
         f = self.request.FILES.get('file')
-        data = [{'name': f.name, 'url': settings.MEDIA_URL + "pictures/" + f.name.replace(" ", "_"), 'thumbnail_url': settings.MEDIA_URL + "pictures/" + f.name.replace(" ", "_"), 'delete_url': reverse('upload-delete', args=[self.object.id]), 'delete_type': "DELETE"}]
+        data = [{'name': f.name,
+                 'url': self.object.file.url,
+                 'thumbnail_url': self.object.file.url,
+                 'delete_url': reverse('upload-delete', args=[self.object.id]),
+                 'delete_type': "DELETE"}]
         response = JSONResponse(data, {}, response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
 
 
-class PictureDeleteView(DeleteView):
-    model = Picture
+class FileDeleteView(DeleteView):
+    model = UploadedFile
 
     def delete(self, request, *args, **kwargs):
         """
