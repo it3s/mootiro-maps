@@ -27,26 +27,7 @@
     </div>
   {% endfor %}
 
-
-  <div class="pagination">
-    <span class="step-links">
-        {% if resources.has_previous %}
-          <span>
-            <a href="?page={{ resources.previous_page_number }}">previous</a>
-          </span>
-        {% endif %}
-
-        <span class="current">
-            Page {{ resources.number }} of {{ resources.paginator.num_pages }}.
-        </span>
-
-        {% if resources.has_next %}
-          <span>
-            <a href="?page={{ resources.next_page_number }}">next</a>
-          </span>
-        {% endif %}
-    </span>
-  </div>
+  {% pagination resources %}
 {% endblock %}
 
 {% block css %}

@@ -39,3 +39,8 @@ def track_buttons():
 @register.inclusion_tag('main/taglist_templatetag.html')
 def taglist(obj):
     return dict(object=obj)
+
+
+@register.inclusion_tag('main/pagination_templatetag.html')
+def pagination(collection):
+    return dict(collection=collection)
