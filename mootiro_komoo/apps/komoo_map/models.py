@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.utils.encoding import smart_str
 from geopy import geocoders
+from django.contrib.gis.db import models as geomodels
+from collection_from import CollectionFrom
 
 
 class Address(models.Model):
@@ -34,3 +36,17 @@ class Address(models.Model):
 
     def __unicode__(self):
         return self.address
+
+
+class GeoRefModel(geomodels.Model):
+    """Abstract class to use on any model we want geo spatial information"""
+    # Geolocalization attributes
+    objects = geomodels.GeoManager()
+
+    points = geomodels.MultiPointField(null=True, blank=True, editable=False)
+    lines = geomodels.MultiLineStringField(null=True, blank=True, editable=False)
+    polys = geomodels.MultiPolygonField(null=True, blank=True, editable=False)
+    geometry = CollectionFrom(points='points', lines='lines', polys='polys')
+
+    class Meta:
+        abstract = True

@@ -8,7 +8,7 @@ from django.template.defaultfilters import slugify
 import reversion
 from taggit.managers import TaggableManager
 from community.models import Community
-from collection_from import CollectionFrom
+from komoo_map.models import GeoRefModel
 
 
 def resource_upload(instance, filename):
@@ -30,7 +30,7 @@ class ResourceKind(models.Model):
         return super(ResourceKind, self).save(*args, **kwargs)
 
 
-class Resource(models.Model):
+class Resource(GeoRefModel):
     """Resources model"""
     name = models.CharField(max_length=256)
     creator = models.ForeignKey(User, null=True, blank=True)
@@ -39,18 +39,9 @@ class Resource(models.Model):
     kind = models.ForeignKey(ResourceKind)
     description = models.TextField()
     image = models.FileField(upload_to=resource_upload, null=True, blank=True)
-    tags = TaggableManager()
-
-    # resources belongs to community?
     community = models.ForeignKey(Community, related_name='resources',
         null=True, blank=True)
+    tags = TaggableManager()
 
-    # Geolocalization attributes
-    objects = models.GeoManager()
-
-    points = models.MultiPointField(null=True, blank=True, editable=False)
-    lines = models.MultiLineStringField(null=True, blank=True, editable=False)
-    polys = models.MultiPolygonField(null=True, blank=True, editable=False)
-    geometry = CollectionFrom(points='points', lines='lines', polys='polys')
 
 reversion.register(Resource)
