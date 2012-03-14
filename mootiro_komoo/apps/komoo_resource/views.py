@@ -10,7 +10,6 @@ from django.utils import simplejson
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django import forms
-from django.contrib.contenttypes.models import ContentType
 
 from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
