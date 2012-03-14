@@ -40,13 +40,11 @@ def edit(request, community_slug=""):
         form = CommunityForm(request.POST, instance=community)
         if form.is_valid():
             community = form.save()
-            community.save()
 
+            redirect_url = reverse('view_community', args=(community.slug,))
             if not request.is_ajax():
-                return redirect(view, community.slug)
-
-            rdict = dict(redirect=reverse('view_community',
-                                    args=(community.slug,)))
+                return redirect(redirect_url)
+            rdict = dict(redirect=redirect_url)
         else:
             rdict = dict(form=form, community=community)
     else:

@@ -8,7 +8,7 @@ import logging
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import Polygon
@@ -28,10 +28,22 @@ logger = logging.getLogger(__name__)
 @login_required
 def edit(request, community_slug="", need_slug=""):
     logger.debug('acessing need > edit')
+
+    if request.is_ajax():
+        template = "need/edit_ajax.html"
+    else:
+        template = "need/edit.html"
+
     community = get_object_or_404(Community, slug=community_slug) \
                     if community_slug else None
-    need = get_object_or_404(Need, slug=need_slug, community=community) \
-                if need_slug else None
+    if need_slug:
+        need = get_object_or_404(Need, slug=need_slug, community=community) \
+                if community else get_object_or_404(Need, slug=need_slug)
+    else:
+        need = Need(creator=request.user)
+        if community:
+            need.community = community
+
     if request.POST:
         post = request.POST
         if community:
@@ -39,19 +51,21 @@ def edit(request, community_slug="", need_slug=""):
             post['community'] = community.id
         form = NeedForm(post, instance=need)
         if form.is_valid():
-            need = form.save(commit=False)
-            if not need.id:  # was never saved
-                need.creator = request.user
-            need.save()
-            return {'redirect': reverse('view_need',
-                    args=(need.community.slug, need.slug))}
+            need = form.save()
+
+            redirect_url = reverse('view_need',
+                                args=(need.community.slug, need.slug))
+            if not request.is_ajax():
+                return redirect(redirect_url)
+            rdict = dict(redirect=redirect_url)
         else:
-            return dict(form=form, community=community)
+            rdict = dict(form=form, community=community)
     else:
         form = NeedForm(instance=need)
         if community:
             form.fields.pop('community')
-        return dict(form=form, community=community)
+        rdict = dict(form=form, community=community)
+    return render(request, template, rdict)
 
 
 @render_to('need/view.html')
@@ -94,13 +108,14 @@ def target_audience_search(request):
     return HttpResponse(simplejson.dumps(target_audiences),
                 mimetype="application/x-javascript")
 
+
 def needs_geojson(request):
     bounds = request.GET.get('bounds', None)
     x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
     polygon = Polygon(((x1, y1), (x1, y2), (x2, y2), (x2, y1), (x1, y1)))
     needs = Need.objects.filter(
             Q(points__intersects=polygon) |
-            Q(lines__intersects=polygon)  |
+            Q(lines__intersects=polygon) |
             Q(polys__intersects=polygon)
     )
     geojson = create_geojson(needs)

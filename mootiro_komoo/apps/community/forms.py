@@ -17,7 +17,7 @@ class GeoJSONField(forms.CharField):
 
     def to_python(self, value):
         value = json.loads(value)
-        if value.has_key('geometries'):
+        if 'geometries' in value:
             value = value['geometries'][0]
         return json.dumps(value)
 
