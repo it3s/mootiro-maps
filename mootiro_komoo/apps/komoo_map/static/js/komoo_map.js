@@ -118,7 +118,7 @@ komoo.MapOptions = {
         fillOpacity: 0.45,
         strokeColor: '#ff0',
         strokeWeight: 3,
-        strokeOpacity: 0.65
+        strokeOpacity: 1
     },
     googleMapOptions: {  // Our default options for Google Maps map object.
         center: new google.maps.LatLng(-23.55, -46.65),  // São Paulo, SP - Brasil
@@ -741,6 +741,10 @@ komoo.Map.prototype = {
                 margin: '0 0 0 15px'
             });
         }
+        if (overlay.getPaths) {
+            // Removes stroke from polygons.
+            overlay.setOptions({strokeOpacity: 0});
+        }
 
         google.maps.event.addListener(overlay, 'click', function (e) {
             if (window.console) console.log('Clicked on overlay');
@@ -805,6 +809,7 @@ komoo.Map.prototype = {
             infoContentTitle.text(overlay.properties.name);
             infoContent.append(infoContentTitle);
         }
+
         function openInfoWindow(e) {
             if (!komooMap.infoWindow.isMouseover) {
                 komooMap.infoWindow.overlay = overlay;
@@ -813,6 +818,11 @@ komoo.Map.prototype = {
                 komooMap.infoWindow.open(komooMap.googleMap);
             }
         }
+        var mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
+            if (overlay.getPaths) {
+                overlay.setOptions({strokeOpacity: 0.8});
+            }
+        });
         var mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
             if ((komooMap.infoWindow.overlay && komooMap.infoWindow.overlay == overlay) ||
                     komooMap.editMode || !komooMap.options.enableInfoWindow) {
@@ -828,6 +838,9 @@ komoo.Map.prototype = {
         });
 
         google.maps.event.addListener(overlay, 'mouseout', function (e) {
+            if (overlay.getPaths) {
+                overlay.setOptions({strokeOpacity: 0});
+            }
             clearTimeout(infoWindowTimer);
             if (!komooMap.infoWindow.isMouseover) {
                 infoWindowTimer = setTimeout(function () {
@@ -1091,7 +1104,7 @@ komoo.Map.prototype = {
         if (!isAuthenticated) {
             var submenuItem = addMenu.append($('<li>').addClass('map-menuitem').text('Please log in.'));
             submenuItem.bind('click', function (){
-                window.location = '/user/login';
+                window.location = '/user/login'; // FIXME: Hardcode is evil
             });
             $.each(komooMap.options.regionTypes, function (i, type) {
                 komooMap.overlayOptions[type.type] = type;
