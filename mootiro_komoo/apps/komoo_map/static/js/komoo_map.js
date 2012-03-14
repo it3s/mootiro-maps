@@ -210,6 +210,7 @@ komoo.Map.prototype = {
             });
             google.maps.event.addDomListener(komooMap.infoWindow, 'domready', function (e) {
                 var closeBox = komooMap.infoWindow.div_.firstChild;
+                $(closeBox).hide();  // Removes the close button.
                 google.maps.event.addDomListener(closeBox, 'click', function (e) {
                     // Detach the overlay from infowindow when close it.
                     komooMap.infoWindow.overlay = undefined;
@@ -804,6 +805,14 @@ komoo.Map.prototype = {
             infoContentTitle.text(overlay.properties.name);
             infoContent.append(infoContentTitle);
         }
+        function openInfoWindow(e) {
+            if (!komooMap.infoWindow.isMouseover) {
+                komooMap.infoWindow.overlay = overlay;
+                komooMap.infoWindow.setContent(infoContent.get(0));
+                komooMap.infoWindow.setPosition(e.latLng);
+                komooMap.infoWindow.open(komooMap.googleMap);
+            }
+        }
         var mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
             if ((komooMap.infoWindow.overlay && komooMap.infoWindow.overlay == overlay) ||
                     komooMap.editMode || !komooMap.options.enableInfoWindow) {
@@ -811,17 +820,40 @@ komoo.Map.prototype = {
             }
             overlay.mouseLatLng = e.latLng;
             clearTimeout(infoWindowTimer);
-            infoWindowTimer = setTimeout(function () {
-                komooMap.infoWindow.overlay = overlay;
-                komooMap.infoWindow.setContent(infoContent.get(0));
-                komooMap.infoWindow.setPosition(e.latLng);
-                komooMap.infoWindow.open(komooMap.googleMap);
-            }, 1000);
+            if (overlay.getPaths) {
+                infoWindowTimer = setTimeout(openInfoWindow, 800, e);
+            } else {
+                infoWindowTimer = setTimeout(openInfoWindow, 200, e);
+            }
         });
 
         google.maps.event.addListener(overlay, 'mouseout', function (e) {
             clearTimeout(infoWindowTimer);
+            if (!komooMap.infoWindow.isMouseover) {
+                infoWindowTimer = setTimeout(function () {
+                    if (!komooMap.infoWindow.isMouseover) {
+                        komooMap.infoWindow.close();
+                        komooMap.infoWindow.overlay = undefined;
+                    }
+                }, 200);
+            }
         });
+        infoContent.hover(
+            function (e) {
+                clearTimeout(infoWindowTimer);
+                komooMap.infoWindow.isMouseover = true;
+            },
+            function (e) {
+                clearTimeout(infoWindowTimer);
+                komooMap.infoWindow.isMouseover = false;
+                infoWindowTimer = setTimeout(function () {
+                    if (!komooMap.infoWindow.isMouseover) {
+                        komooMap.infoWindow.close();
+                        komooMap.infoWindow.overlay = undefined;
+                    }
+                }, 200);
+            }
+        );
     },
 
     /**
@@ -901,7 +933,7 @@ komoo.Map.prototype = {
                 paths.push(path);
                 komooMap.currentOverlay.setPaths(paths);
                 e.overlay.setMap(null);
-                komooMap.setEditMode(null);
+                komooMap.setEditMode('draw');
             } else {
                 komooMap.overlays.push(e.overlay);
                 komooMap.newOverlays.push(e.overlay);
@@ -925,14 +957,14 @@ komoo.Map.prototype = {
         if (!komooMap.options.defaultDrawingControl) {
             // Adds new HTML elements to the map.
             var radiusButton = komoo.createMapButton('Radius', '', function (e) {
-                komooMap.setEditMode(null);
+                komooMap.setEditMode('draw');
                 if (komooMap.radiusCircle) komooMap.radiusCircle.setMap(null);
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.CIRCLE);
             });
 
             var polygonButton = komoo.createMapButton(gettext('Add shape'), gettext('Draw a shape'), function (e) {
-                komooMap.setEditMode(null);
+                komooMap.setEditMode('draw');
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.POLYGON);
@@ -944,7 +976,7 @@ komoo.Map.prototype = {
             }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.POLYGON);
 
             var lineButton = komoo.createMapButton(gettext('Add line'), gettext('Draw a line'), function (e) {
-                komooMap.setEditMode(null);
+                komooMap.setEditMode('draw');
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.POLYLINE);
@@ -955,7 +987,7 @@ komoo.Map.prototype = {
             }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.POLYLINE);
 
             var markerButton = komoo.createMapButton(gettext('Add point'), gettext('Add a marker'), function (e) {
-                komooMap.setEditMode(null);
+                komooMap.setEditMode('draw');
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
                 komooMap.drawingManager.setDrawingMode(
                         google.maps.drawing.OverlayType.MARKER);
@@ -967,7 +999,7 @@ komoo.Map.prototype = {
 
             var addButton = komoo.createMapButton(gettext('Add'), gettext('Add another region'), function (e) {
                 if (komooMap.editMode == 'add') {
-                    komooMap.setEditMode(null);
+                    komooMap.setEditMode('draw');
                 } else {
                     komooMap.setEditMode('add');
                 }
@@ -980,7 +1012,7 @@ komoo.Map.prototype = {
 
             var cutOutButton = komoo.createMapButton(gettext('Cut out'), gettext('Cut out a hole from a region'), function (e) {
                 if (komooMap.editMode == 'cutout') {
-                    komooMap.setEditMode(null);
+                    komooMap.setEditMode('draw');
                 } else {
                     komooMap.setEditMode('cutout');
                 }
@@ -993,7 +1025,7 @@ komoo.Map.prototype = {
 
             var deleteButton = komoo.createMapButton(gettext('Delete'), gettext('Delete a region'), function (e) {
                 if (komooMap.editMode == 'delete') {
-                    komooMap.setEditMode(null);
+                    komooMap.setEditMode('draw');
                 } else {
                     komooMap.setEditMode('delete');
                 }
@@ -1158,11 +1190,13 @@ komoo.Map.prototype = {
             }
             komooMap.event.trigger('cancel_click');
             komooMap.type = null;
+            komooMap.setEditMode(undefined);
         });
         finishButton.bind('click', function () {
             button_click();
             komooMap.event.trigger('finish_click', komooMap.overlayOptions[komooMap.type]);
             komooMap.type = null;
+            komooMap.setEditMode(undefined);
         });
 
         content.css({'clear': 'both'});
