@@ -5,7 +5,7 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import logging
 
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -22,38 +22,37 @@ from main.utils import create_geojson
 logger = logging.getLogger(__name__)
 
 
-@render_to('community/edit.html')
 @login_required
 def edit(request, community_slug=""):
     logger.debug('acessing Community > edit')
 
+    if request.is_ajax():
+        template = "community/edit_ajax.html"
+    else:
+        template = "community/edit.html"
+
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
-        action = reverse('edit_community', args=(community_slug,))
     else:
-        community = None
-        action = reverse('new_community')
+        community = Community(creator=request.user)
+
     if request.POST:
-        POST = request.POST.copy()
-        POST['geometry'] = json.dumps(
-                json.loads(POST['geometry'])['geometries'][0])
-        form = CommunityForm(POST, instance=community)
+        form = CommunityForm(request.POST, instance=community)
         if form.is_valid():
-            community = form.save(commit=False)
-            if not community.id:  # was never saved
-                community.creator = request.user
+            community = form.save()
             community.save()
 
             if not request.is_ajax():
                 return redirect(view, community.slug)
 
-            return {'redirect': reverse('view_community',
-                                        args=(community.slug,))}
+            rdict = dict(redirect=reverse('view_community',
+                                    args=(community.slug,)))
         else:
-            return dict(form=form, action=action, community=community)
+            rdict = dict(form=form, community=community)
     else:
-        return dict(form=CommunityForm(instance=community), action=action,
-                    community=community)
+        form = CommunityForm(instance=community)
+        rdict = dict(form=form, community=community)
+    return render(request, template, rdict)
 
 
 @render_to('community/on_map.html')
