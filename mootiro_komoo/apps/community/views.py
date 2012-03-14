@@ -85,7 +85,11 @@ def communities_geojson(request):
     bounds = request.GET.get('bounds', None)
     x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
     polygon = Polygon(((x1, y1), (x1, y2), (x2, y2), (x2, y1), (x1, y1)))
-    communities = Community.objects.filter(geometry__intersects=polygon)
+    # communities = Community.objects.filter(geometry__intersects=polygon)
+    intersects_polygon = (Q(points__intersects=polygon) |
+                          Q(lines__intersects=polygon) |
+                          Q(polys__intersects=polygon))
+    communities = Community.objects.filter(intersects_polygon)
     geojson = create_geojson(communities)
     return HttpResponse(json.dumps(geojson),
         mimetype="application/x-javascript")

@@ -38,9 +38,10 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             if not hasattr(obj, 'geometry'):
                 continue
             type_ = obj.__class__.__name__.lower()
-            geometry = json.loads(obj.geometry.geojson) if \
-                    type_ == 'community' else \
-                    json.loads(obj.geometry.geojson)['geometries'][0]
+            # geometry = json.loads(obj.geometry.geojson) if \
+            #         type_ == 'community' else \
+            #         json.loads(obj.geometry.geojson)['geometries'][0]
+            geometry = json.loads(obj.geometry.geojson)['geometries'][0]
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
             feature = {
                 'type': 'Feature',

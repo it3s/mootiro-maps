@@ -3,12 +3,12 @@
 from __future__ import unicode_literals  # unicode by default
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
-
 import reversion
 from main.utils import slugify
+from komoo_map.models import GeoRefModel
 
 
-class Community(models.Model):
+class Community(GeoRefModel):
     name = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.SlugField(max_length=256, editable=False, blank=False)
@@ -16,13 +16,14 @@ class Community(models.Model):
     description = models.TextField(null=True, blank=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, related_name='created_communities')
+    creator = models.ForeignKey(User, editable=False,
+                        related_name='created_communities')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
     # Geolocalization attributes
-    objects = models.GeoManager()
-    geometry = models.PolygonField(srid=4326)
+    # objects = models.GeoManager()
+    # geometry = models.PolygonField(srid=4326)
 
     def __unicode__(self):
         return self.name
