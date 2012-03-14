@@ -15,8 +15,20 @@
 $(function () {
     'use strict';
 
-    // Initialize the jQuery File Upload widget:
-    $('#fileupload').fileupload();
+    var settings = {
+        maxNumberOfFiles : 10,
+        maxFileSize: 5000000,
+        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+    };
+
+    $.extend(settings, upload_settings);
+
+    $('#fileupload').fileupload({
+        // autoUpload: true,
+        maxNumberOfFiles: settings.maxNumberOfFiles,
+        maxFileSize: settings.maxFileSize,
+        acceptFileTypes: settings.acceptFileTypes
+    });
 
     // Load existing files:
     $.getJSON($('#fileupload form').prop('action'), function (files) {

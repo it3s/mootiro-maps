@@ -594,3 +594,7 @@ a.btnShowForm{
   background-color: rgb(235, 249, 255);
   border-radius: 3px;
 }
+/* ====== file uploader ======== */
+#fileupload{
+  font-size: 0.8em;
+}

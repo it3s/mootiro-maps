@@ -41,6 +41,7 @@
 
       <div class="resource-footer">
         <!-- Photos here -->
+        {% if photos.object_list %}
         <div class="resource-photos">
           <h3>Photos:</h3>
           {% for photo in photos.object_list %}
@@ -50,6 +51,7 @@
           {% pagination photos %}
 
         </div>
+        {% endif %}
 
       </div>
     </div>

@@ -3,6 +3,7 @@ from django import template
 from django.conf import settings
 register = template.Library()
 
+
 def _parse_args(*args):
     parsed_args = {}
     for arg in args:
@@ -18,8 +19,6 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4=''):
     The syntax:
         {% komoo_map <geojson> [<editable>] [<width>] [<height>] [<zoom>] %}
     """
-    print settings.STATIC_URL
-
     parsed_args = _parse_args(arg1, arg2, arg3, arg4)
     editable = parsed_args.get('editable', False)
     width = parsed_args.get('width', '200')
@@ -33,4 +32,3 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4=''):
 
     return dict(editable=editable, width=width, height=height, zoom=zoom,
             geojson=geojson, STATIC_URL=settings.STATIC_URL)
-
