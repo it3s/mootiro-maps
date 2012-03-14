@@ -39,29 +39,41 @@
         for(tmp = $(evt.target); !tmp.is('form'); tmp = tmp.parent());
         form = tmp;
 
-        $.post(form.attr('action'), form.serialize(), function(data){
-          var div_comments_container, div_comments_list;
-          if (data.success){
-            if (form.parent().parent().is('#divFormComment')){
-              $('.comments-list:first').prepend(data.comment);
-            }else {
-              for(; !tmp.is('.comment-container'); tmp=tmp.parent());
-              div_comments_container = tmp;
-              div_comments_list = div_comments_container.find('.comments-list');
-              div_comments_list.prepend(data.comment);
-              if (!div_comments_container.hasClass('odd')){
-                div_comments_list.find('.comment-container:first')
-                    .addClass('odd inner-comment');
-              } else {
-                div_comments_list.find('.comment-container:first')
-                    .addClass('inner-comment');
+        $.ajax({
+          url: form.attr('action'),
+          type: 'POST',
+          data: form.serialize(),
+          success: function(data){
+            var div_comments_container, div_comments_list;
+            if (data.success){
+              if (form.parent().parent().is('#divFormComment')){
+                $('.comments-list:first').prepend(data.comment);
+              }else {
+                for(; !tmp.is('.comment-container'); tmp=tmp.parent());
+                div_comments_container = tmp;
+                div_comments_list = div_comments_container.find('.comments-list');
+                div_comments_list.prepend(data.comment);
+                if (!div_comments_container.hasClass('odd')){
+                  div_comments_list.find('.comment-container:first')
+                      .addClass('odd inner-comment');
+                } else {
+                  div_comments_list.find('.comment-container:first')
+                      .addClass('inner-comment');
+                }
               }
-            }
 
-            form.parent().slideToggle('fast');
-            form.find('#id_comment').clearForm();
+              form.parent().slideToggle('fast');
+              form.find('#id_comment').clearForm();
+            }
+          },
+          dataType: 'json',
+          complete: function(xmlHttp) {
+            // xmlHttp is a XMLHttpRquest object
+            if (xmlHttp.status === 0 || xmlHttp.status === 302){
+              window.location.pathname = '/user/login?next=' + window.location.pathname;
+            }
           }
-        }, 'json');
+        });
       });
 
       $btnShowMore.live('click', function(evt){

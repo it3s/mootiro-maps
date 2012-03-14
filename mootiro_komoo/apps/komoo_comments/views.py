@@ -6,6 +6,7 @@ from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.decorators import login_required
 
 from annoying.decorators import render_to, ajax_request
 
@@ -23,6 +24,7 @@ def comments_index(request):
     # return {'content_object': None}
 
 
+@login_required
 @ajax_request
 def comments_add(request):
     logger.debug('accessing Comments > comments_add : POST={}'.format(request.POST))
