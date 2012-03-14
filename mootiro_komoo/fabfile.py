@@ -105,7 +105,10 @@ def clean_media_files():
     """
     media_apps_list = ['upload', ]
     for app in media_apps_list:
-        local('rm  media/{}/*'.format(app))
+        try:
+            local('rm  -rf media/{}/'.format(app))
+        except Exception as err:
+            print err
 
 
 def sync_all():
