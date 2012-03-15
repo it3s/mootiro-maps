@@ -831,9 +831,9 @@ komoo.Map.prototype = {
             overlay.mouseLatLng = e.latLng;
             clearTimeout(infoWindowTimer);
             if (overlay.getPaths) {
-                infoWindowTimer = setTimeout(openInfoWindow, 800, e);
+                infoWindowTimer = setTimeout(function () { openInfoWindow(e); }, 800);
             } else {
-                infoWindowTimer = setTimeout(openInfoWindow, 200, e);
+                infoWindowTimer = setTimeout(function () { openInfoWindow(e); }, 200);
             }
         });
 
