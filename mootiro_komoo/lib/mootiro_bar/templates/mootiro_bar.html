@@ -3,9 +3,9 @@
     xmlns:i18n="http://genshi.edgewall.org/i18n"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     py:strip=''>
-  <div class="mootiro_bar" style="height: 25px; background-color: #ececec; clear: both; position: relative; z-index: 10000; line-height: 16px;">
-    <ol class="services" style="float:left; display: block; list-style: none outside none; margin: 0; padding: 3px 0;">
-      <li style="display: inline-block; padding: 0 6px; margin: 0 10px; height: 22px; ${selected==main_link[0] and 'background: white;' or ''}">
+  <div class="mootiro_bar" style="height: 25px; background-color: white; clear: both; position: relative; z-index: 10000; line-height: 16px;">
+    <ol class="services" style="float:left; display: block; list-style: none outside none; margin: 0; padding: 3px 0 0;">
+      <li style="display: inline-block; padding: 0 6px; margin: 0 10px; height: 22px; ${selected==main_link[0] and 'background: #dceff4;' or ''}">
         <a href="${main_link[1]}">${main_link[0]}</a>
       </li>
       <py:if test="user and enable_notifications">
@@ -14,13 +14,13 @@
         </li>
       </py:if>
       <py:for each="service in services">
-        <li style="display: inline-block; padding: 0 6px; margin: 0 4px; height: 22px; ${selected==service[0] and 'background: white;' or ''}">
+        <li style="display: inline-block; padding: 0 6px; margin: 0 4px; height: 22px; ${selected==service[0] and 'background: #dceff4;' or ''}">
           <a href="${service[1]}">${service[0]}</a>
         </li>
       </py:for>
     </ol>
 
-    <ol class="userinfo" style="float:right; display: block; list-style: none outside none; margin: 0; padding: 3px 0;">
+    <ol class="userinfo" style="float:right; display: block; list-style: none outside none; margin: 0; padding: 3px 0 0;">
       <py:if test="user">
         <li style="display: inline; padding: 0 6px; margin: 0 4px; float: right;">
           <py:if test="logout_method == 'POST'">

@@ -21,29 +21,29 @@
     {{ form.media.js }}
     {% block css %}{% endblock %}
   </head>
-  <body>
+  <body class="{% if community %}community{% endif %}">
     <!-- Mootiro_bar goes here -->
     <div id="root">
-
-      {% with c=community %} {% community_tabs c %} {% endwith %}
-
       <div id="top">
         <div id="logo">
           <a href="{% url root %}"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></a>
         </div>
         <div id="navigation">
 
+          <form id="search">
+            <input type="text" id="search-bar"/>
+            <input type="submit" id="search-button" class="button" value="Search"/>
+          </form>
           {% block menu %}
             {% with obj=community selected_area="" %}
               {% menu obj selected_area %}
             {% endwith %}
           {% endblock %}
 
-          <form id="search">
-            <input type="text" id="search-bar"/>
-            <input type="submit" id="search-button" class="button" value="Search"/>
-          </form>
         </div>
+
+      {% with c=community %} {% community_tabs c %} {% endwith %}
+
       </div>
       <div id="content">
         {% block content %}{% endblock %}

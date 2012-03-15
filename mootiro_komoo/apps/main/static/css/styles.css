@@ -76,28 +76,28 @@ ul.horizontal li {
     min-height: 95%;
     display: inline-block;
     clear: both;
-    background-color: #dceff4;
 }
 #logo {
     display: inline-block;
     font-family: monospace;
     font-size: 30px;
     padding: 0 10px;
+    position: relative;
+    top: -25px;
+    left: 20px;
 }
 #tabs {
     position: relative;
     width: 100%;
-    min-height: 33px;
     background: #fff;
     display: block;
 }
 #content {
-    background: #dceff4;
     display: block;
 }
 #dinamic-form,
 #main-content {
-    padding: 15px 60px;
+    padding: 40px 60px 15px;
 }
 #dinamic-form {
     width: 700px;
@@ -108,20 +108,26 @@ ul.horizontal li {
     background: #eff8f9;
 }
 #tabs .tab {
+    z-index: 9999999;
     position: absolute;
-    bottom: 0;
     display: inline;
     background: #dceff4;
     padding: 4px 15px;
-    font-weight: bold;
-    border-radius        : 6px 6px 0 0;
-    -moz-border-radius   : 6px 6px 0 0;
-    -webkit-border-radius: 6px 6px 0 0;
+    border-radius        : 0 0 6px 6px;
+    -moz-border-radius   : 0 0 6px 6px;
+    -webkit-border-radius: 0 0 6px 6px;
+}
+#top, #tabs .tab {
+    -moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
 }
 #tabs .tab.placeholder { background: none }
-#tabs .tab:first-child { margin-left: 60px }
+#tabs .tab:first-child { margin-left: 10px }
 #top {
-    padding: 15px 0 0;
+    z-index: 9999;
+    position: relative;
+    padding: 20px 0 0;
     background: #dceff4;
 }
 #top #logo, #top #navigation {
@@ -129,11 +135,11 @@ ul.horizontal li {
 }
 #top #menu {
     display: inline-block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 #top #menu li {
     margin: 0;
-    padding: 4px 15px;
+    padding: 4px 20px;
     float: left;
 }
 #top #menu li a {
@@ -209,9 +215,9 @@ ul.horizontal li {
     background: #dceff4;
 }
 .map-infowindow-content {
-    -moz-box-shadow: 2px 2px 2px black;
-    -webkit-box-shadow: 2px 2px 2px black;
-    box-shadow: 2px 2px 2px black;
+    -moz-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
 }
 .map-panel, .map-button, .map-infowindow-content {
     border-radius        : 6px;
@@ -220,6 +226,9 @@ ul.horizontal li {
 }
 .map-panel {
     background: #dceff4;
+}
+body.community .map-panel {
+    margin-top: 35px !important;
 }
 .map-panel .map-panel-buttons,
 .map-panel .content {
@@ -248,11 +257,11 @@ ul.horizontal li {
     color: #aaa;
     background: #dceff4 !important;
 }
-#top #menu, #top #search { margin-left: 60px; }
+#top #menu, #top #search { margin-left: 40px; }
 #top #search { margin-bottom: 0px; }
 
 #search-bar {
-    width: 450px;
+    width: 585px;
     font-size: 16px;
 }
 #search-button { margin-left: 4px }
