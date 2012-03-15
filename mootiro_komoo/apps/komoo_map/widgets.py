@@ -19,7 +19,7 @@ class AddressWithMapWidget(HiddenInput):
         context = Context({
             'editor': 'editable=True',
             'width': 'width=100%',
-            'height': 'height=600',
+            'height': 'height=100%',
             'zoom': 'zoom=13',
             'geojson': value or '{}',
             'STATIC_URL': settings.STATIC_URL

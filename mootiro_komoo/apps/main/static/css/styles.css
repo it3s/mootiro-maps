@@ -204,6 +204,10 @@ ul.horizontal li {
 .map-button:hover, .map-button.selected {
     border: 1px solid #4092a9 !important;
 }
+#map-form {
+    margin: 0;
+    padding: 0;
+}
 .map-tab {
     cursor: pointer;
     text-align: center;

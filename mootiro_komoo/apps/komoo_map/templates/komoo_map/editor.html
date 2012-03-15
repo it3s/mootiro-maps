@@ -20,6 +20,7 @@
         var map;
         function initialize_map() {
             var mapElem = document.getElementById("map-canvas");
+            $('#dinamic-form').hide()
 
             {% block map_options_js %}
             {% if editable %}
@@ -48,6 +49,15 @@
             {% block extra_js %}
             var geojson = JSON.parse('{{ geojson|safe }}');
             map.loadGeoJSON(geojson, true);
+
+            {% if height == '100%' %}
+              function fixMapHeight() {
+                $('#map-canvas').height($('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight());
+                google.maps.event.trigger(map.googleMap, 'resize');
+              }
+              $(window).resize(fixMapHeight);
+              fixMapHeight();
+            {% endif %}
 
             {% if editable %}
               if ('{{input_id}}') {
@@ -80,6 +90,7 @@
                                type: 'POST',
                                success: function (data, textStatus, jqXHR) {
                                    $(this).html(data);
+                                   $(this).show();
                                    $('form', $(this)).submit(onSubmit);
                               },
                               error: function (jqXHR, textStatus, errorThrown) {
@@ -98,6 +109,7 @@
                               $(this).html(data);
                               $('form', $(this)).submit(onSubmit);
                               $('#id_geometry').val(JSON.stringify(geojson));
+                              $(this).show();
                               $('#map-container').slideUp(600);
                           },
                           error: function (jqXHR, textStatus, errorThrown) {
