@@ -28,6 +28,7 @@ except ImportError:
 DEFAULT_SERVICES = [
     ('Form', 'http://form.mootiro.org'),
     ('Vote', 'http://vote.mootiro.org'),
+    ('Maps', 'http://beta.maps.mootiro.org'),
     ('Wiki', 'http://wiki.mootiro.org'),
                     ]
 DEFAULT_MAIN_LINK = ('Mootiro', 'http://mootiro.org')
@@ -233,7 +234,7 @@ class DjangoMiddleware(object):
             'logout': getattr(settings, 'MOOTIRO_BAR_LOGOUT_URL', DEFAULT_LOGOUT_URL),
             'help': getattr(settings, 'MOOTIRO_BAR_HELP_URL', DEFAULT_HELP_URL)
         }
-        selected = getattr(settings, 'MOOTIRO_BAR_SELECTED', 'Vote')
+        selected = getattr(settings, 'MOOTIRO_BAR_SELECTED', 'Maps')
         self.bar = render(user=user, urls=urls, locale=locale,
             selected=selected,
             logout_method=getattr(settings,
