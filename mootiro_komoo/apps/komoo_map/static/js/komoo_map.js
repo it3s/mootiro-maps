@@ -37,6 +37,7 @@ komoo.RegionType = {};
 komoo.RegionTypes = [
     {
         type: 'community',
+        categories: [],
         title: gettext('Community'),
         tooltip: gettext('Add Community'),
         color: '#ff0',
@@ -47,6 +48,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'need',
+        categories: ['Education', 'Sport', 'Environment', 'Health', 'Housing', 'Local Economy', 'Social Service'], // FIXME: Hardcode is evil
         title: gettext('Needs'),
         tooltip: gettext('Add Need'),
         color: '#f00',
@@ -59,6 +61,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'organization',
+        categories: [],
         title: gettext('Organization'),
         tooltip: gettext('Add Organization'),
         color: '#00f',
@@ -69,6 +72,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'resource',
+        categories: [],
         title: gettext('Resource'),
         tooltip: gettext('Add Resource'),
         color: '#fff',
@@ -81,6 +85,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'funder',
+        categories: [],
         title: gettext('Funder'),
         tooltip: gettext('Add Funder'),
         color: '#000',
@@ -171,6 +176,8 @@ komoo.Map = function (element, options) {
     komooMap.drawingManagerOptions = {};
     komooMap.overlayOptions = {};
     komooMap.overlays = [];
+    komooMap.overlaysByType = {};
+    komooMap.initOverlaysByTypeObject();
     komooMap.newOverlays = [];
     komooMap.boundsLoaded = new google.maps.LatLngBounds();
     komooMap.boundsAwaiting = new google.maps.LatLngBounds();
@@ -251,6 +258,19 @@ komoo.Map.prototype = {
                 gridSize: 20
             });
         }
+    },
+
+    initOverlaysByTypeObject: function () {
+        var komooMap = this;
+        $.each(komooMap.options.regionTypes, function (i, type) {
+            komooMap.overlaysByType[type.type] = {};
+            komooMap.overlaysByType[type.type]['uncategorized'] = [];
+            if (type.categories.length) {
+                $.each(type.categories, function(j, category) {
+                    komooMap.overlaysByType[type.type][category] = [];
+                });
+            }
+        });
     },
 
     initStreetView: function () {
@@ -490,6 +510,17 @@ komoo.Map.prototype = {
                 overlay.properties = feature.properties;
                 komooMap._attachOverlayEvents(overlay);
                 komooMap.overlays.push(overlay);
+                var overlaysByType = komooMap.overlaysByType[overlay.properties.type];
+                var categories = overlay.properties.categories;
+                if (categories && categories.length) {
+                    $.each(categories, function(i, category) {
+                        if (overlaysByType[category.name]) {
+                            overlaysByType[category.name].push(overlay);
+                        }
+                    });
+                } else {
+                    overlaysByType['uncategorized'].push(overlay);
+                }
             }
         });
         if (panTo && bounds) {
@@ -573,11 +604,120 @@ komoo.Map.prototype = {
     },
 
     /**
+     * Gets a list of overlays of specific type.
+     * @property {String} type
+     * @property {Array} optCategories
+     * @property {boolean} optStrict
+     * @returns {Array} Overlays that matches the parameters.
+     */
+    getOverlaysByType: function (type, optCategories, optStrict) {
+        var komooMap = this;
+        var overlays = [];
+        var categories = optCategories;
+        if (!komooMap.overlaysByType[type]) {
+            return false;
+        }
+        if (!categories) {
+            categories = [];
+            $.each(komooMap.overlaysByType[type], function (category, overlays) {
+                categories.push(category);
+            });
+        } else if (categories.length == 0) {
+            categories = ['uncategorized'];
+        }
+        $.each(categories, function (key, category) {
+            if (komooMap.overlaysByType[type][category]) {
+                $.each(komooMap.overlaysByType[type][category], function (key, overlay) {
+                    if (!optStrict || !overlay.properties.categories || overlay.properties.categories.length == 1) {
+                        overlays.push(overlay);
+                    }
+                });
+            }
+        });
+        return overlays;
+    },
+
+    /**
+     * Hides some overlays.
+     * @property {Array} overlays
+     * @returns {Number} How many overlays were hidden.
+     */
+    hideOverlays: function (overlays) {
+        var komooMap = this;
+        var ret = 0;
+        $.each(overlays, function (key, overlay) {
+            overlay.setVisible(false);
+            ret++;
+        });
+        return ret;
+    },
+
+    /**
+     * Hides overlays of specific type.
+     * @property {String} type
+     * @property {Array} optCategories
+     * @property {boolean} optStrict
+     * @returns {Number} How many overlays were hidden.
+     */
+    hideOverlaysByType: function (type, optCategories, optStrict) {
+        var komooMap = this;
+        var overlays = komooMap.getOverlaysByType(type, optCategories, optStrict);
+        return komooMap.hideOverlays(overlays);
+    },
+
+    /**
+     * Hides all overlays.
+     * @returns {Number} How many overlays were hidden.
+     */
+    hideAllOverlays: function () {
+        var komooMap = this;
+        return komooMap.hideOverlays(komooMap.overlays);
+    },
+
+    /**
+     * Makes visible some overlays.
+     * @property {Array} overlays
+     * @returns {Number} How many overlays were displayed.
+     */
+    showOverlays: function (overlays) {
+        var komooMap = this;
+        var ret = 0;
+        $.each(overlays, function (key, overlay) {
+            overlay.setVisible(true);
+            ret++;
+        });
+        return ret;
+    },
+
+    /**
+     * Makes visible overlays of specific type.
+     * @property {String} type
+     * @property {Array} optCategories
+     * @property {boolean} optStrict
+     * @returns {Number} How many overlays were displayed.
+     */
+    showOverlaysByType: function (type, optCategories, optStrict) {
+        var komooMap = this;
+        var overlays = komooMap.getOverlaysByType(type, optCategories, optStrict);
+        return komooMap.showOverlays(overlays);
+    },
+
+    /**
+     * Makes visible all overlays.
+     * @returns {Number} How many overlays were displayed.
+     */
+    showAllOverlays: function () {
+        var komooMap = this;
+        return komooMap.showOverlays(komooMap.overlays);
+    },
+
+    /**
      * Remove all overlays from map.
      * @returns {void}
      */
     clear: function () {
         var komooMap = this;
+        komooMap.initOverlaysByTypeObject();
         $.each(komooMap.overlays, function (key, overlay) {
             overlay.setMap(null);
             delete overlay;
