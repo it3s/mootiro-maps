@@ -9,11 +9,6 @@ from community.models import Community
 from komoo_map.models import GeoRefModel
 from fileupload.models import UploadedFile
 
-# def resource_upload(instance, filename):
-#     ext = filename[filename.rindex('.'):]
-#     return os.path.join('resource', '{fname}{ext}'.format(
-#                             fname=int(time.time() * 1000), ext=ext))
-
 
 class ResourceKind(models.Model):
     """Kind of Resources"""

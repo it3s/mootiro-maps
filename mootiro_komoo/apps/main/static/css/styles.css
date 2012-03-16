@@ -267,6 +267,8 @@ body.community .map-panel {
 #search-bar {
     width: 585px;
     font-size: 16px;
+    background-color: #ffffff;
+    box-shadow: 1px 1px 1px #999999 inset;
 }
 #search-button { margin-left: 4px }
 .komoo-map-googlemap img { /* Revert bootstrap changes */
@@ -550,6 +552,7 @@ a.btnShowForm{
 .resource-list-header{
   font-weight: bold;
   color: #444444;
+  background-color: #ffffff;
 }
 .resource-list-header div{
   display: inline-block;
@@ -562,6 +565,10 @@ a.btnShowForm{
 }
 #form_resource input[type=text], #form_resource textarea{
   width: 100%;
+}
+#form_resource #div_id_tags .ui-autocomplete-input{
+  background: none repeat scroll 0% 0% rgba(215, 215, 215, 0.2);
+  box-shadow: 1px 1px 1px rgb(190, 189, 204) ;
 }
 /* resource show */
 .resource-type{
@@ -610,4 +617,17 @@ a.btnShowForm{
 /* ====== file uploader ======== */
 #fileupload{
   font-size: 0.8em;
+}
+/********************* CHANGES DEFAULT FORM APPEARANCE ****/
+form div.tagsinput{
+  border: none;
+}
+form div.tagsinput input{
+  border: 1px solid rgb(204, 204, 204);
+  background: none repeat scroll 0% 0% rgba(215, 215, 215, 0.2);
+  box-shadow: 1px 1px 1px rgb(190, 189, 204) ;
+}
+input[type=text], textarea{
+  background: none repeat scroll 0% 0% rgba(215, 215, 215, 0.2);
+  box-shadow: 1px 1px 1px rgb(190, 189, 204) ;
 }
