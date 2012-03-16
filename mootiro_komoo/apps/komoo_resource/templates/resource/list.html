@@ -12,8 +12,8 @@
   {% for resource in resources.object_list %}
     <div class="resource-list-item {% cycle 'odd' '' %}">
       <div class="resource-list-image">
-        {% if resource.image %}
-        <img src="{{ resource.image.url }}" />
+        {% if resource.files_set %}
+        <img src="{{ resource.files_set.0.file.url }}" />
         {% else %}
         <div></div>
         {% endif %}

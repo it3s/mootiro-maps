@@ -22,7 +22,7 @@ class UploadedFile(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
-        return self.file
+        return unicode(self.file.name).encode('utf-8')
 
     @models.permalink
     def get_absolute_url(self):
