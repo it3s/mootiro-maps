@@ -12,8 +12,7 @@
 {% block page_scripts %}
 <script type="text/javascript">
 google.maps.event.addDomListener(window, 'load', function () {
-    if (!map.goToLastLocation()) {
-      console.log('AAAAAA');
+    if (!map.goToSavedLocation()) {
       map.goToUserLocation();
     }
   });
