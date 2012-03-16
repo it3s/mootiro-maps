@@ -1063,9 +1063,7 @@ komoo.Map.prototype = {
                     deleteButton.addClass('active');
                 }
             });
-
         }
-
     },
 
     /**
@@ -1145,7 +1143,9 @@ komoo.Map.prototype = {
                         if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
                             komooMap.type = type.type;
                             submenu.css({'left': item.outerWidth() + 'px'});
-                            $.each(type.overlayTypes, function (key, overlayType) { $('#map-add-' + overlayType, submenu).show(); });
+                            $.each(type.overlayTypes, function (key, overlayType) {
+                                $('#map-add-' + overlayType, submenu).show();
+                            });
                             submenu.show();
                         }
                     },
@@ -1296,9 +1296,8 @@ komoo.createMapMenu = function (name, items) {
         item.bind('click', function () { container.hide(); });
     });
     selector.append(container);
-    selector.hover(
-            function () { container.show(); },
-            function () { container.hide(); });
+    selector.hover(function () { container.show(); },
+                   function () { container.hide(); });
     return selector;
 };
 
@@ -1319,17 +1318,15 @@ komoo.createMapTab = function (items) {
             containerSelector: $('<div>').addClass('map-tab-container').hide()
         };
         if (item.content) tab.containerSelector.append(item.content);
-        tab.tabSelector.click(
-            function () {
-                if (tabs.current && tabs.current != tab) {
-                    tabs.current.tabSelector.removeClass('selected');
-                    tabs.current.containerSelector.hide();
-                }
-                tabs.current = tab;
-                tab.tabSelector.toggleClass('selected');
-                tab.containerSelector.toggle();
+        tab.tabSelector.click(function () {
+            if (tabs.current && tabs.current != tab) {
+                tabs.current.tabSelector.removeClass('selected');
+                tabs.current.containerSelector.hide();
             }
-        );
+            tabs.current = tab;
+            tab.tabSelector.toggleClass('selected');
+            tab.containerSelector.toggle();
+        });
 
         tabs.items[item.title] = tab;
         tab.tabSelector.css({'width': 100 / items.length + '%'});
@@ -1347,13 +1344,13 @@ komoo.createMapTab = function (items) {
  * @returns {void}
  */
 komoo.createCookie = function (name, value, days) {
-        if (days) {
+    if (days) {
         var date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
     }
     else var expires = "";
-    document.cookie = name+"="+value+expires+"; path=/";
+    document.cookie = name + "=" + value + expires + "; path=/";
 }
 
 /**
@@ -1364,10 +1361,14 @@ komoo.createCookie = function (name, value, days) {
 komoo.readCookie = function (name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1, c.length);
+        }
+        if (c.indexOf(nameEQ) == 0) {
+            return c.substring(nameEQ.length, c.length);
+        }
     }
     return null;
 }
@@ -1378,5 +1379,5 @@ komoo.readCookie = function (name) {
  * @returns {void}
  */
 komoo.eraseCookie = function (name) {
-    createCookie(name,"",-1);
+    createCookie(name, "", -1);
 }
