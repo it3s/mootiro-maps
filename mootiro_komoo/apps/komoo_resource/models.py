@@ -36,7 +36,7 @@ class Resource(GeoRefModel):
     tags = TaggableManager()
 
     def files_set(self):
-        """ pseduo-reverse query for retrieving Resource Files"""
+        """ pseudo-reverse query for retrieving Resource Files"""
         return UploadedFile.get_files_for(self)
 
 

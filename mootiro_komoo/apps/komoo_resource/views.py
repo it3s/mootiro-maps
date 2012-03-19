@@ -51,7 +51,7 @@ def show(request, community_slug=None, id=None):
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
     community = get_object_or_None(Community, slug=community_slug)
-    photos = paginated_query(UploadedFile.get_files_for(resource), request, size=6)
+    photos = paginated_query(UploadedFile.get_files_for(resource), request, size=3)
     return dict(resource=resource, similar=similar, geojson=geojson,
                 community=community, photos=photos)
 

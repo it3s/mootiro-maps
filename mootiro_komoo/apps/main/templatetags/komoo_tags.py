@@ -1,10 +1,8 @@
 # -*- coding:utf-8 -*-
 from django import template
-from django.contrib.contenttypes.models import ContentType
 from community.models import Community
 from need.models import Need
 from proposal.models import Proposal
-from fileupload.models import UploadedFile
 
 register = template.Library()
 
