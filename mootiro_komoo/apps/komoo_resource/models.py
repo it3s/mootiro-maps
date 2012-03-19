@@ -39,5 +39,8 @@ class Resource(GeoRefModel):
         """ pseudo-reverse query for retrieving Resource Files"""
         return UploadedFile.get_files_for(self)
 
+    def __unicode__(self):
+        return unicode(self.name)
+
 
 reversion.register(Resource)
