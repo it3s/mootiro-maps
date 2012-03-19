@@ -1,5 +1,6 @@
+{% load i18n %}
 <div class="view-tag-list">
-  <span class="meta-info">Tags:</span>
+  <span class="meta-info">{% trans 'Tags:' %}</span>
   {% for tag in object.tags.all %}
     <span class="tag">{{ tag }}</span>
   {% endfor %}

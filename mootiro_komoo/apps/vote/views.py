@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 import logging
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from annoying.decorators import ajax_request, render_to
 
