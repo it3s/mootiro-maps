@@ -16,8 +16,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'mootiro_komoo',  # Or path to database file if using sqlite3.
-        'USER': 'user',         # Not used with sqlite3.
-        'PASSWORD': 'pass',   # Not used with sqlite3.
+        'USER': 'login',         # Not used with sqlite3.
+        'PASSWORD': '',   # Not used with sqlite3.
         'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',    # Set to empty string for default. Not used with sqlite3.
     }
@@ -37,6 +37,77 @@ TIME_ZONE = None  # 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'ycx!))zk0_w(557x3rwvw)okxb^iai$ldtzno&pv*6^^iz1q=x'
+SECRET_KEY = 'acw4rWH&E*ot&)_PHFGaw23pioj.,zs:,asewj3nbá3R#cAQQi'
 
 # staging LOG goes here
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'standard': {
+            'format': '[%(levelname)s] [%(name)s : %(funcName)s] - %(asctime)s :\n%(message)s'
+        },
+    },
+    'handlers': {
+        'null': {
+            'level': 'WARN',
+            'class': 'django.utils.log.NullHandler',
+        },
+        'log_file': {
+            'level': 'WARN',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(SITE_ROOT, 'logs/log_dev.log'),
+            'maxBytes': 1024 * 1024 * 5,  # 5 MB
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'console': {
+            'level': 'WARN',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'request_handler': {
+                'level': 'WARN',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'filename': os.path.join(SITE_ROOT, 'logs/django_request.log'),
+                'maxBytes': 1024 * 1024 * 5,  # 5 MB
+                'backupCount': 5,
+                'formatter': 'standard',
+        },
+    },
+    'loggers': {
+#        'django': {
+#            'handlers':['null'],
+#            'propagate': True,
+#            'level':'INFO',
+#        },
+        'django.request': {
+            'handlers': ['request_handler'],
+            'level': 'ERROR',
+            'propagate': False
+        },
+        'django.db.backends': {
+            'handlers': ['request_handler'],
+            'level': 'ERROR',
+            'propagate': False
+        },
+       'default': {
+           'handlers': ['console', 'log_file'],
+           'level': 'WARN',
+           'propagate': True
+       },
+    }
+}
+my_app_logger = {
+    'handlers': ['console', 'log_file'],
+    'level': 'WARN',
+    'propagate': True
+}
+LOGGING['loggers'].update({'{}.views'.format(app): my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.models'.format(app): my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.forms'.format(app): my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.listdir('apps/')})
+
+#CAS config
+PROFILE_DATABASE = 'localhost|mootiro_profile|mootiro_profile|.Pr0f1l3.'
+CAS_SERVER_URL = 'https://login.mootiro.org/'
