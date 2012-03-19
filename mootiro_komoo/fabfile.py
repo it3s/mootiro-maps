@@ -20,10 +20,10 @@ def dev():
     env_ = 'dev'
 
 
-def test():
+def stage():
     """Set env_ironment to test"""
     global env_
-    env_ = 'test'
+    env_ = 'stage'
 
 
 def prod():
