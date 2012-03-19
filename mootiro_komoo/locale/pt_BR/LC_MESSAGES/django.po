@@ -1,0 +1,189 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-19 11:49-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: apps/komoo_comments/views.py:43
+msgid "invalid form: {}"
+msgstr "Formulário Inváldo: {}"
+
+#: apps/komoo_comments/templates/comments/comment.html:7
+#: apps/komoo_comments/templates/comments/comment.html:21
+msgid "answer(s)"
+msgstr "Resposta(s)"
+
+#: apps/komoo_comments/templates/comments/comment.html:9
+msgid "Report"
+msgstr "Denunciar"
+
+#: apps/komoo_comments/templates/comments/comment.html:19
+msgid "Reply"
+msgstr "Responder"
+
+#: apps/komoo_comments/templates/comments/comments_templatetag.html:2
+msgid "Comments:"
+msgstr "Comentários:"
+
+#: apps/komoo_comments/templates/comments/comments_templatetag.html:5
+msgid "New Comment"
+msgstr "Novo Comentário"
+
+#: apps/komoo_comments/templates/comments/comments_templatetag.html:25
+msgid "see more ..."
+msgstr "ver mais ..."
+
+#: apps/komoo_resource/forms.py:33 lib/taggit/models.py:10
+msgid "Name"
+msgstr "Nome"
+
+#: apps/komoo_resource/forms.py:34
+msgid "Description"
+msgstr "Descrição"
+
+#: apps/komoo_resource/forms.py:35
+msgid "Kind"
+msgstr "Tipo"
+
+#: apps/komoo_resource/forms.py:36 lib/taggit/managers.py:39
+#: lib/taggit/models.py:57
+msgid "Tags"
+msgstr "Classificadores"
+
+#: apps/komoo_resource/forms.py:37
+msgid "Community"
+msgstr "Comunidade"
+
+#: apps/komoo_resource/templates/resource/show.html:33
+msgid "created by"
+msgstr "criado por"
+
+#: apps/komoo_resource/templates/resource/show.html:34
+msgid "in"
+msgstr "em"
+
+#: apps/komoo_resource/templates/resource/show.html:36
+msgid "type:"
+msgstr "tipo:"
+
+#: apps/komoo_resource/templates/resource/show.html:47
+msgid "Photos:"
+msgstr "Fotos:"
+
+#: apps/komoo_resource/templates/resource/show.html:61
+msgid "see on map"
+msgstr "ver no mapa"
+
+#: apps/komoo_resource/templates/resource/show.html:63
+msgid "Similar Resources:"
+msgstr "Recursos Similares:"
+
+#: apps/komoo_resource/templates/resource/show.html:69
+msgid "There is no similar resources..."
+msgstr "Não há recursos similares..."
+
+#: apps/main/templates/main/pagination_templatetag.html:7
+msgid "previous"
+msgstr "anterior"
+
+#: apps/main/templates/main/pagination_templatetag.html:12
+#, python-format
+msgid ""
+"\n"
+"          Page %(num)s of %(total)s.\n"
+"          "
+msgstr ""
+"\n"
+"          Página %(num)s de %(total)s.\n"
+"          "
+
+#: apps/main/templates/main/pagination_templatetag.html:19
+msgid "next"
+msgstr "próxima"
+
+#: apps/main/templates/main/taglist_templatetag.html:3
+msgid "Tags:"
+msgstr "Classificadores"
+
+#: apps/main/templates/main/track_buttons_templatetag.html:3
+msgid "Subscribe"
+msgstr "Assinar"
+
+#: apps/main/templates/main/track_buttons_templatetag.html:4
+msgid "Observe"
+msgstr "Seguir"
+
+#: apps/vote/views.py:46
+msgid "User not logged or anonymous"
+msgstr "Usuário não logado ou anônimo"
+
+#: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:8
+msgid "Add files..."
+msgstr "Adicionar arquivos..."
+
+#: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:11
+msgid "Start upload"
+msgstr "Iniciar upload"
+
+#: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:12
+msgid "Cancel upload"
+msgstr "Cancelar upload"
+
+#: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:13
+msgid "Delete files"
+msgstr "Deletar arquivos"
+
+#: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:36
+msgid "Delete"
+msgstr "Deletar"
+
+#: lib/taggit/forms.py:21
+msgid "Please provide a comma-separated list of tags."
+msgstr "Por favor forneça uma lista de tags, separada por vírgulas"
+
+#: lib/taggit/managers.py:40
+msgid "A comma-separated list of tags."
+msgstr "Lista de tags, separadas por vírgula"
+
+#: lib/taggit/models.py:11
+msgid "Slug"
+msgstr "Slug"
+
+#: lib/taggit/models.py:56
+msgid "Tag"
+msgstr "Classificador"
+
+#: lib/taggit/models.py:63
+#, python-format
+msgid "%(object)s tagged with %(tag)s"
+msgstr "%(object)s classificado com %(tag)s"
+
+#: lib/taggit/models.py:113
+msgid "Object id"
+msgstr "Id do Objeto"
+
+#: lib/taggit/models.py:117 lib/taggit/models.py:123
+msgid "Content type"
+msgstr "Tipo de Conteúdo"
+
+#: lib/taggit/models.py:159
+msgid "Tagged Item"
+msgstr "Item Classificado"
+
+#: lib/taggit/models.py:160
+msgid "Tagged Items"
+msgstr "Itens Classificados"

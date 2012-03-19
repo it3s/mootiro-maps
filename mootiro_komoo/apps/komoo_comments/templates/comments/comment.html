@@ -4,7 +4,7 @@
     <div class="comment-header">
         <a href="#">{% firstof comment.author.get_full_name comment.author.username 'anonymous' %}</a>  {{ comment.pub_date|date:'d/m/Y, H:i'}}
         {% if comment.sub_comments > 0 %}
-            ({{ comment.sub_comments }} {% trans 'respostas' %})
+            ({{ comment.sub_comments }} {% trans 'answer(s)' %})
         {% endif %}
         <a href="#">{% trans 'Report' %}</a>
         <div class="comment-vote">
