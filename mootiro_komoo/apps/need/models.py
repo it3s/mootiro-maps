@@ -60,6 +60,9 @@ class Need(GeoRefModel):
 
     tags = TaggableManager()
 
+    def __unicode__(self):
+        return unicode(self.title)
+
     ### Needed to slugify items ###
     def slug_exists(self, slug):
         """Answers if a given slug is valid in the needs namespace of the
