@@ -117,7 +117,10 @@ def haystack_index(option='update'):
     if not option in ['rebuild', 'update']:
         print 'You must pass rebuild or update as argument'
         return None
-    local('python manage.py {}_index {}'.format(option, django_settings[env_]))
+    local('python manage.py {}_index {} {}'.format(
+                option,
+                '--noinput' if option == 'rebuild' else '',
+                django_settings[env_]))
 
 
 def sync_all():
