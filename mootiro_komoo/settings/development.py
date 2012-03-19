@@ -42,6 +42,7 @@ TIME_ZONE = None  # 'America/Chicago'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'pt-br'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'ycx!))zk0_w(557x3rwvw)okxb^iai$ldtzno&pv*6^^iz1q=x'

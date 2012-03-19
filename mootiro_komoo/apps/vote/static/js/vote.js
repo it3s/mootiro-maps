@@ -35,7 +35,7 @@
 
           } else {
             /* holy crap, we have an error =( */
-            alert('falha : ' + data.error);
+            alert(gettext('error : ' + data.error));
           }
         }, 'json');
       });

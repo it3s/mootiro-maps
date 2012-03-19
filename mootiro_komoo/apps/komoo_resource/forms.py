@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django import forms
+from django.utils.translation import ugettext_lazy as _
+
 from markitup.widgets import MarkItUpWidget
+
 from main.utils import MooHelper
 from main.widgets import Autocomplete, TaggitWidget
 from komoo_resource.models import Resource, ResourceKind
@@ -10,7 +14,7 @@ from community.models import Community
 
 class FormResource(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
-    description = forms.CharField(widget=MarkItUpWidget())
+    description = forms.CharField('Description', widget=MarkItUpWidget())
     kind = forms.CharField(
         widget=Autocomplete(ResourceKind, '/resource/search_by_kind/'))
     tags = forms.Field(
@@ -25,12 +29,25 @@ class FormResource(forms.ModelForm):
         fields = ['name', 'description', 'kind', 'tags', 'community', 'id',
                   'geometry']
 
+    _field_labels = {
+        'name': _('Name'),
+        'description': _('Description'),
+        'kind': _('Kind'),
+        'tags': _('Tags'),
+        'community': _('Community')
+    }
+
     def __init__(self, *args, **kwargs):
         # Crispy forms configuration
         self.helper = MooHelper()
         self.helper.form_id = 'form_resource'
 
-        super(FormResource, self).__init__(*args, **kwargs)
+        r = super(FormResource, self).__init__(*args, **kwargs)
+
+        for field, label in self._field_labels.iteritems():
+            self.fields[field].label = label
+
+        return r
 
     def save(self, user=None, *args, **kwargs):
         resource = super(FormResource, self).save(*args, **kwargs)

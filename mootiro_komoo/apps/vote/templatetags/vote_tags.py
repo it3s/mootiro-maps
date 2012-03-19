@@ -29,7 +29,13 @@ def vote(context, content_object):
                 user_vote=user_vote)
 
 
-@register.inclusion_tag('vote/vote_staticfiles.html', takes_context=True)
+@register.simple_tag(takes_context=True)
 def vote_staticfiles(context):
-    """Static files (javascript/css) for the votes templatetag"""
-    return {}
+    print context
+    print context.get('csrf_token')
+    return """
+    <script type="text/javascript">
+        csrftoken = "{}";
+    </script>
+    <script type="text/javascript" src="/static/js/vote.js"></script>
+    """.format(context.get('csrf_token'))

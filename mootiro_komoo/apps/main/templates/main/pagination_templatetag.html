@@ -1,19 +1,22 @@
+{% load i18n %}
 {% if collection.paginator.num_pages > 1 %}
 <div class="pagination">
   <span class="step-links">
       {% if collection.has_previous %}
         <span>
-          <a href="?page={{ collection.previous_page_number }}">previous</a>
+          <a href="?page={{ collection.previous_page_number }}">{% trans 'previous' %}</a>
         </span>
       {% endif %}
 
       <span class="current">
-          Page {{ collection.number }} of {{ collection.paginator.num_pages }}.
+          {% blocktrans with num=collection.number total=collection.paginator.num_pages %}
+          Page {{ num }} of {{ total }}.
+          {% endblocktrans %}
       </span>
 
       {% if collection.has_next %}
         <span>
-          <a href="?page={{ collection.next_page_number }}">next</a>
+          <a href="?page={{ collection.next_page_number }}">{% trans 'next' %}</a>
         </span>
       {% endif %}
   </span>

@@ -1,15 +1,16 @@
 <!-- FILE UPLOADER -->
+{% load i18n %}
 <div id="fileupload">
   <form method="post" action="{% url upload-new %}" enctype="multipart/form-data">
     <div class="fileupload-buttonbar">
       {% csrf_token %}
       <label class="fileinput-button">
-          <span>Add files...</span>
+          <span>{% trans 'Add files...' %}</span>
           <input type="file" name="file" multiple>
       </label>
-      <button type="submit" class="start">Start upload</button>
-      <button type="reset" class="cancel">Cancel upload</button>
-      <button type="button" class="delete">Delete files</button>
+      <button type="submit" class="start">{% trans 'Start upload' %}</button>
+      <button type="reset" class="cancel">{% trans 'Cancel upload' %}</button>
+      <button type="button" class="delete">{% trans 'Delete files' %}</button>
     </div>
     <input type="hidden" name="content_type" value="{{ content_type }}">
     <input type="hidden" name="object_id" value="{{ object_id }}">
@@ -32,7 +33,7 @@
         <td class="delete">
           <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" data-url="{% url upload-delete f.id %}" data-type="DELETE" role="button" title="Delete">
             <span class="ui-button-icon-primary ui-icon ui-icon-trash"></span>
-            <span class="ui-button-text">Delete</span>
+            <span class="ui-button-text">{% trans 'Delete' %}</span>
           </buton>
         </td>
       </tr>

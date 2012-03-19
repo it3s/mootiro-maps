@@ -6,6 +6,7 @@
 {% load comment_tags %}
 {% load markitup_tags %}
 {% load komoo_tags %}
+{% load i18n %}
 
 {% block title %}{{ resource.name }} at {{ resource.community.name }}{% endblock %}
 
@@ -29,10 +30,10 @@
           </div>
         </div>
         <span>
-          created by <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
-          in {{ resource.creation_date|date:"d/m/Y" }}
+          {% trans 'created by' %} <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
+          {% trans 'in' %} {{ resource.creation_date|date:"d/m/Y" }}
         </span>
-        <span class="resource-type">type:&nbsp; <strong>{{ resource.kind }}</strong></span>
+        <span class="resource-type">{% trans 'type:' %} &nbsp;<strong>{{ resource.kind }}</strong></span>
       </div>
 
       <div class="resource-body">
@@ -43,7 +44,7 @@
         <!-- Photos here -->
         {% if photos.object_list %}
         <div class="resource-photos">
-          <h3>Photos:</h3>
+          <h3>{% trans 'Photos:' %}</h3>
           {% for photo in photos.object_list %}
             <a href="{{ photo.file.url }}"><img src="{{ photo.file.url }}"></a>
           {% endfor %}
@@ -57,15 +58,15 @@
     </div>
     <div class="right-bar">
       <div id="map-preview">{% komoo_map geojson %}</div>
-      <a href="{% url show_on_map %}?type=Resource&id={{resource.id}}">see on map</a>
+      <a href="{% url show_on_map %}?type=Resource&id={{resource.id}}">{% trans 'see on map' %}</a>
       <div class="block">
-        <h3>Similar Resources:</h3>
+        <h3>{% trans 'Similar Resources:' %}</h3>
         {% if similar %}
           {% for s in similar %}
-            <p><a href="/resource/{{ s.id }}/">{{s.name}}</a> - local</p>
+            <p><a href="/resource/{{ s.id }}/">{{s.name}}</a> - {% firstof s.community.name '' %}</p>
           {% endfor %}
         {% else %}
-          <p>There is no similar resources...</p>
+          <p>{% trans 'There is no similar resources...' %}</p>
         {% endif %}
       </div>
     </div>

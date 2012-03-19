@@ -92,7 +92,7 @@ def upload_javascript():
         <script src="{static_url}jquery.iframe-transport.js"></script>
         <script src="{static_url}jquery.fileupload.js"></script>
         <script src="{static_url}jquery.fileupload-ui.js"></script>
-        <script src="{static_url}application.js"></script>
+        <script src="{static_url}komoo_fileupload.js"></script>
     """.format(upload_js=upload_js(), static_url=settings.STATIC_URL)
 
 

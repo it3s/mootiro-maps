@@ -7,6 +7,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import ugettext_lazy as _
 
 from annoying.decorators import render_to, ajax_request
 
@@ -39,7 +40,7 @@ def comments_add(request):
                         context_instance=RequestContext(request)).content
         }
     else:
-        logger.debug('invalid form: {}'.format(form_comment.errors))
+        logger.debug(_('invalid form: {}'.format(form_comment.errors)))
         return {'success': False, 'errors': form_comment.errors}
 
 

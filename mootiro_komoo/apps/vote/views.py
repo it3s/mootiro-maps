@@ -2,6 +2,8 @@
 from __future__ import unicode_literals
 import logging
 
+from django.utils.translation import ugettext_lazy as _
+
 from annoying.decorators import ajax_request, render_to
 
 from vote.models import Vote
@@ -41,4 +43,4 @@ def vote(request):
         vote_obj.like = True if vote == 'up' else False
         vote_obj.save()
         return {'success': True, 'created': created}
-    return {'success': False, 'error': 'Usuario não logado ou anônimo'}
+    return {'success': False, 'error': _('User not logged or anonymous')}

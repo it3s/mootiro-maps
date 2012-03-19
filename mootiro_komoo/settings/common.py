@@ -31,6 +31,10 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
+LOCALE_PATHS = (
+    os.path.join(PROJECT_ROOT, 'locale'),
+)
+
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
@@ -127,6 +131,7 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'django.contrib.markup',
     # 3rd party apps
+    'haystack',
     'tinymce',
     'taggit',
     'django_js_utils',
@@ -181,6 +186,12 @@ CAS_SERVER_URL = 'https://localhost:8443/cas/'
 # KOMOO Comments settings
 KOMOO_COMMENTS_WIDTH = 3
 KOMOO_COMMENTS_HEIGHT = 20
+
+# HAYSTACK search configuration
+HAYSTACK_SITECONF = 'mootiro_komoo.search_sites'
+HAYSTACK_SEARCH_ENGINE = 'whoosh'
+HAYSTACK_WHOOSH_PATH = os.path.join(PROJECT_ROOT, 'komoo_index')
+HAYSTACK_DEFAULT_OPERATOR = 'OR'
 
 # # A sample logging configuration. The only tangible logging
 # # performed by this configuration is to send an email to

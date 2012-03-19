@@ -10,6 +10,7 @@ from django.utils import simplejson
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django import forms
+from django.db.models import Count
 
 from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
@@ -50,7 +51,7 @@ def show(request, community_slug=None, id=None):
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
     community = get_object_or_None(Community, slug=community_slug)
-    photos = paginated_query(UploadedFile.get_files_for(resource), request, size=6)
+    photos = paginated_query(UploadedFile.get_files_for(resource), request, size=3)
     return dict(resource=resource, similar=similar, geojson=geojson,
                 community=community, photos=photos)
 
@@ -125,7 +126,9 @@ def search_by_kind(request):
 def search_by_tag(request):
     logger.debug('acessing resource > search_by_tag')
     term = request.GET['term']
-    qset = TaggedItem.tags_for(Resource).filter(name__istartswith=term)
+    qset = TaggedItem.tags_for(Resource).filter(name__istartswith=term
+            ).annotate(count=Count('taggit_taggeditem_items__id')
+            ).order_by('-count', 'slug')[:10]
     tags = [t.name for t in qset]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")

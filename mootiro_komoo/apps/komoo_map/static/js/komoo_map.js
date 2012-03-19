@@ -37,6 +37,7 @@ komoo.RegionType = {};
 komoo.RegionTypes = [
     {
         type: 'community',
+        categories: [],
         title: gettext('Community'),
         tooltip: gettext('Add Community'),
         color: '#ff0',
@@ -47,6 +48,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'need',
+        categories: ['Education', 'Sport', 'Environment', 'Health', 'Housing', 'Local Economy', 'Social Service'], // FIXME: Hardcode is evil
         title: gettext('Needs'),
         tooltip: gettext('Add Need'),
         color: '#f00',
@@ -59,6 +61,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'organization',
+        categories: [],
         title: gettext('Organization'),
         tooltip: gettext('Add Organization'),
         color: '#00f',
@@ -69,6 +72,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'resource',
+        categories: [],
         title: gettext('Resource'),
         tooltip: gettext('Add Resource'),
         color: '#fff',
@@ -81,6 +85,7 @@ komoo.RegionTypes = [
     },
     {
         type: 'funder',
+        categories: [],
         title: gettext('Funder'),
         tooltip: gettext('Add Funder'),
         color: '#000',
@@ -171,6 +176,8 @@ komoo.Map = function (element, options) {
     komooMap.drawingManagerOptions = {};
     komooMap.overlayOptions = {};
     komooMap.overlays = [];
+    komooMap.overlaysByType = {};
+    komooMap.initOverlaysByTypeObject();
     komooMap.newOverlays = [];
     komooMap.boundsLoaded = new google.maps.LatLngBounds();
     komooMap.boundsAwaiting = new google.maps.LatLngBounds();
@@ -188,6 +195,7 @@ komoo.Map = function (element, options) {
     if (komooMap.options.useGeoLocation) {
         komooMap.goToUserLocation();
     }
+    komooMap.useSavedMapType();
     komooMap.handleEvents();
     // Geocoder is used to search locations by name/address.
     komooMap.geocoder = new google.maps.Geocoder();
@@ -250,6 +258,19 @@ komoo.Map.prototype = {
                 gridSize: 20
             });
         }
+    },
+
+    initOverlaysByTypeObject: function () {
+        var komooMap = this;
+        $.each(komooMap.options.regionTypes, function (i, type) {
+            komooMap.overlaysByType[type.type] = {};
+            komooMap.overlaysByType[type.type]['uncategorized'] = [];
+            if (type.categories.length) {
+                $.each(type.categories, function(j, category) {
+                    komooMap.overlaysByType[type.type][category] = [];
+                });
+            }
+        });
     },
 
     initStreetView: function () {
@@ -318,15 +339,22 @@ komoo.Map.prototype = {
                 komooMap.boundsLoaded.union(komooMap.boundsAwaiting);
             }
         });
+
+        google.maps.event.addListener(komooMap.googleMap, 'maptypeid_changed', function () {
+            komooMap.saveMapType();
+        });
     },
 
     /**
      * Saves the map location to cookie
+     * @property {google.maps.LatLng} center
      * @returns {void}
      */
-    saveLocation: function () {
+    saveLocation: function (center) {
         var komooMap = this;
-        var center = komooMap.googleMap.getCenter();
+        if (!center) {
+            center = komooMap.googleMap.getCenter();
+        }
         var zoom = komooMap.googleMap.getZoom();
         komoo.createCookie('lastLocation', center.toUrlValue(), 90);
         komoo.createCookie('lastZoom', zoom, 90);
@@ -337,15 +365,44 @@ komoo.Map.prototype = {
      * @see komoo.Map.saveLocation
      * @returns {boolean}
      */
-    goToLastLocation: function () {
+    goToSavedLocation: function () {
         var komooMap = this;
-        var lastLocation = komoo.readCookie('lastLocation')
+        var lastLocation = komoo.readCookie('lastLocation');
         var zoom = parseInt(komoo.readCookie('lastZoom'));
         if (lastLocation && zoom) {
             lastLocation = lastLocation.split(',');
             var center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
             komooMap.googleMap.setCenter(center);
             komooMap.googleMap.setZoom(zoom);
+            return true;
+        }
+        return false;
+    },
+
+    /**
+     * Saves the map type to cookie
+     * @property {google.maps.MapTypeId|String} mapType
+     * @returns {void}
+     */
+    saveMapType: function (mapType) {
+        var komooMap = this;
+        console.log(komooMap);
+        if (!mapType) {
+            mapType = komooMap.googleMap.getMapTypeId();
+        }
+        komoo.createCookie('mapType', mapType, 90);
+    },
+
+    /**
+     * Use the map type saved in a cookie.
+     * @see komoo.Map.saveMapType
+     * @returns {boolean}
+     */
+    useSavedMapType: function () {
+        var komooMap = this;
+        var mapType = komoo.readCookie('mapType');
+        if (mapType) {
+            komooMap.googleMap.setMapTypeId(mapType);
             return true;
         }
         return false;
@@ -453,6 +510,17 @@ komoo.Map.prototype = {
                 overlay.properties = feature.properties;
                 komooMap._attachOverlayEvents(overlay);
                 komooMap.overlays.push(overlay);
+                var overlaysByType = komooMap.overlaysByType[overlay.properties.type];
+                var categories = overlay.properties.categories;
+                if (categories && categories.length) {
+                    $.each(categories, function(i, category) {
+                        if (overlaysByType[category.name]) {
+                            overlaysByType[category.name].push(overlay);
+                        }
+                    });
+                } else {
+                    overlaysByType['uncategorized'].push(overlay);
+                }
             }
         });
         if (panTo && bounds) {
@@ -536,11 +604,120 @@ komoo.Map.prototype = {
     },
 
     /**
+     * Gets a list of overlays of specific type.
+     * @property {String} type
+     * @property {Array} optCategories
+     * @property {boolean} optStrict
+     * @returns {Array} Overlays that matches the parameters.
+     */
+    getOverlaysByType: function (type, optCategories, optStrict) {
+        var komooMap = this;
+        var overlays = [];
+        var categories = optCategories;
+        if (!komooMap.overlaysByType[type]) {
+            return false;
+        }
+        if (!categories) {
+            categories = [];
+            $.each(komooMap.overlaysByType[type], function (category, overlays) {
+                categories.push(category);
+            });
+        } else if (categories.length == 0) {
+            categories = ['uncategorized'];
+        }
+        $.each(categories, function (key, category) {
+            if (komooMap.overlaysByType[type][category]) {
+                $.each(komooMap.overlaysByType[type][category], function (key, overlay) {
+                    if (!optStrict || !overlay.properties.categories || overlay.properties.categories.length == 1) {
+                        overlays.push(overlay);
+                    }
+                });
+            }
+        });
+        return overlays;
+    },
+
+    /**
+     * Hides some overlays.
+     * @property {Array} overlays
+     * @returns {Number} How many overlays were hidden.
+     */
+    hideOverlays: function (overlays) {
+        var komooMap = this;
+        var ret = 0;
+        $.each(overlays, function (key, overlay) {
+            overlay.setVisible(false);
+            ret++;
+        });
+        return ret;
+    },
+
+    /**
+     * Hides overlays of specific type.
+     * @property {String} type
+     * @property {Array} optCategories
+     * @property {boolean} optStrict
+     * @returns {Number} How many overlays were hidden.
+     */
+    hideOverlaysByType: function (type, optCategories, optStrict) {
+        var komooMap = this;
+        var overlays = komooMap.getOverlaysByType(type, optCategories, optStrict);
+        return komooMap.hideOverlays(overlays);
+    },
+
+    /**
+     * Hides all overlays.
+     * @returns {Number} How many overlays were hidden.
+     */
+    hideAllOverlays: function () {
+        var komooMap = this;
+        return komooMap.hideOverlays(komooMap.overlays);
+    },
+
+    /**
+     * Makes visible some overlays.
+     * @property {Array} overlays
+     * @returns {Number} How many overlays were displayed.
+     */
+    showOverlays: function (overlays) {
+        var komooMap = this;
+        var ret = 0;
+        $.each(overlays, function (key, overlay) {
+            overlay.setVisible(true);
+            ret++;
+        });
+        return ret;
+    },
+
+    /**
+     * Makes visible overlays of specific type.
+     * @property {String} type
+     * @property {Array} optCategories
+     * @property {boolean} optStrict
+     * @returns {Number} How many overlays were displayed.
+     */
+    showOverlaysByType: function (type, optCategories, optStrict) {
+        var komooMap = this;
+        var overlays = komooMap.getOverlaysByType(type, optCategories, optStrict);
+        return komooMap.showOverlays(overlays);
+    },
+
+    /**
+     * Makes visible all overlays.
+     * @returns {Number} How many overlays were displayed.
+     */
+    showAllOverlays: function () {
+        var komooMap = this;
+        return komooMap.showOverlays(komooMap.overlays);
+    },
+
+    /**
      * Remove all overlays from map.
      * @returns {void}
      */
     clear: function () {
         var komooMap = this;
+        komooMap.initOverlaysByTypeObject();
         $.each(komooMap.overlays, function (key, overlay) {
             overlay.setMap(null);
             delete overlay;
@@ -1063,9 +1240,7 @@ komoo.Map.prototype = {
                     deleteButton.addClass('active');
                 }
             });
-
         }
-
     },
 
     /**
@@ -1145,7 +1320,9 @@ komoo.Map.prototype = {
                         if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
                             komooMap.type = type.type;
                             submenu.css({'left': item.outerWidth() + 'px'});
-                            $.each(type.overlayTypes, function (key, overlayType) { $('#map-add-' + overlayType, submenu).show(); });
+                            $.each(type.overlayTypes, function (key, overlayType) {
+                                $('#map-add-' + overlayType, submenu).show();
+                            });
                             submenu.show();
                         }
                     },
@@ -1296,9 +1473,8 @@ komoo.createMapMenu = function (name, items) {
         item.bind('click', function () { container.hide(); });
     });
     selector.append(container);
-    selector.hover(
-            function () { container.show(); },
-            function () { container.hide(); });
+    selector.hover(function () { container.show(); },
+                   function () { container.hide(); });
     return selector;
 };
 
@@ -1319,17 +1495,15 @@ komoo.createMapTab = function (items) {
             containerSelector: $('<div>').addClass('map-tab-container').hide()
         };
         if (item.content) tab.containerSelector.append(item.content);
-        tab.tabSelector.click(
-            function () {
-                if (tabs.current && tabs.current != tab) {
-                    tabs.current.tabSelector.removeClass('selected');
-                    tabs.current.containerSelector.hide();
-                }
-                tabs.current = tab;
-                tab.tabSelector.toggleClass('selected');
-                tab.containerSelector.toggle();
+        tab.tabSelector.click(function () {
+            if (tabs.current && tabs.current != tab) {
+                tabs.current.tabSelector.removeClass('selected');
+                tabs.current.containerSelector.hide();
             }
-        );
+            tabs.current = tab;
+            tab.tabSelector.toggleClass('selected');
+            tab.containerSelector.toggle();
+        });
 
         tabs.items[item.title] = tab;
         tab.tabSelector.css({'width': 100 / items.length + '%'});
@@ -1347,13 +1521,13 @@ komoo.createMapTab = function (items) {
  * @returns {void}
  */
 komoo.createCookie = function (name, value, days) {
-        if (days) {
+    if (days) {
         var date = new Date();
-        date.setTime(date.getTime()+(days*24*60*60*1000));
-        var expires = "; expires="+date.toGMTString();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        var expires = "; expires=" + date.toGMTString();
     }
     else var expires = "";
-    document.cookie = name+"="+value+expires+"; path=/";
+    document.cookie = name + "=" + value + expires + "; path=/";
 }
 
 /**
@@ -1364,10 +1538,14 @@ komoo.createCookie = function (name, value, days) {
 komoo.readCookie = function (name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1, c.length);
+        }
+        if (c.indexOf(nameEQ) == 0) {
+            return c.substring(nameEQ.length, c.length);
+        }
     }
     return null;
 }
@@ -1378,5 +1556,5 @@ komoo.readCookie = function (name) {
  * @returns {void}
  */
 komoo.eraseCookie = function (name) {
-    createCookie(name,"",-1);
+    createCookie(name, "", -1);
 }
