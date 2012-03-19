@@ -191,12 +191,14 @@ komoo.ServerFetchMapType.prototype = {
                 var overlays_ = [];
                 var overlays = serverFetchMapType.komooMap.loadGeoJSON(JSON.parse(data), false, false);
                 $.each(overlays, function (key, overlay) {
-                    if (!serverFetchMapType.loadedOverlays[zoom + '_' + overlay.properties.type + '_' + overlay.properties.id]) {
-                        console.log(overlay.properties.type + overlay.properties.id);
-                        overlay.setMap(serverFetchMapType.komooMap.googleMap);
-                        overlays_.push(overlay);
-                        serverFetchMapType.loadedOverlays[zoom + '_' + overlay.properties.type + '_' + overlay.properties.id] = true;
+                    if (serverFetchMapType.loadedOverlays[overlay.properties.type + '_' + overlay.properties.id]) {
+                        overlay = serverFetchMapType.loadedOverlays[overlay.properties.type + '_' + overlay.properties.id];
+                    } else {
+                        serverFetchMapType.loadedOverlays[overlay.properties.type + '_' + overlay.properties.id] = overlay;
                     }
+                    console.log(overlay.properties.type + overlay.properties.id);
+                    overlay.setMap(serverFetchMapType.komooMap.googleMap);
+                    overlays_.push(overlay);
                 });
                 serverFetchMapType.fetchedTiles[addr] = {
                     geojson: data,
