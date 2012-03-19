@@ -137,6 +137,16 @@ def sync_all():
     haystack_index('rebuild')
 
 
+def dumpdata():
+    """Dump DB data, for backup purposes """
+    import datetime
+    local('python manage.py dumpdata {} > backupdb_{}.txt'.format(
+        django_settings[env_],
+        datetime.datetime.now().strftime('%Y_%m_%d')
+        )
+    )
+
+
 def help():
     """Fabfile documentation"""
     local('python -c "import fabfile; help(fabfile)"')
