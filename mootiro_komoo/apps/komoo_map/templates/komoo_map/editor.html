@@ -48,7 +48,7 @@
 
             {% block extra_js %}
             var geojson = JSON.parse('{{ geojson|safe }}');
-            map.loadGeoJSON(geojson, true);
+            map.loadGeoJSON(geojson, true, false);
 
             {% if height == '100%' %}
               function fixMapHeight() {
