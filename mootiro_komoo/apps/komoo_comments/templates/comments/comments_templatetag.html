@@ -1,7 +1,8 @@
-<h2 id="Comments" class="comment-title">Comments: </h2>
+{% load i18n %}
+<h2 id="Comments" class="comment-title">{% trans 'Comments:' %}</h2>
 
 <div id='divFormComment'>
-    <a href="#" class="btnShowForm">New Comment</a>
+    <a href="#" class="btnShowForm">{% trans 'New Comment' %}</a>
     <div class='comment-form'>
         <form method="post" id="formComment" class="stacked-form" action="{% url comments_add %}" >
             <fieldset>
@@ -21,7 +22,7 @@
 {% autoescape off %}
     {{ comments_list }}
     {% if has_comments %}
-    <a class="btnShowMore" href='#'>see more ...</a>
+    <a class="btnShowMore" href='#'>{% trans 'see more ...' %}</a>
     {% endif %}
     <script type="text/javascript">
         load_info = {
