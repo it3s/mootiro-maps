@@ -37,4 +37,7 @@ class Proposal(models.Model):
             self.number = Proposal.objects.filter(need=self.need).count() + 1
         super(Proposal, self).save(*args, **kwargs)
 
+    def __unicode__(self):
+        return unicode(self.title)
+
 reversion.register(Proposal)
