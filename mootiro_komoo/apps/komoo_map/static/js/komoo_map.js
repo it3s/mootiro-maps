@@ -152,12 +152,13 @@ komoo.ServerFetchMapType = function (komooMap) {
 komoo.ServerFetchMapType.prototype = {
     releaseTile: function (tile) {
         var serverFetchMapType = this;
-        // tile.tileKey
+        /*
         if (serverFetchMapType.fetchedTiles[tile.tileKey]) {
             $.each(serverFetchMapType.fetchedTiles[tile.tileKey].overlays, function (key, overlay) {
                 overlay.setMap(null);
             });
         }
+        */
     },
 
     getTile: function (coord, zoom, ownerDocument) {
