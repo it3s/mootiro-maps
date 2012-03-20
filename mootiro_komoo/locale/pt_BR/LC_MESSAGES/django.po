@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-19 11:49-0300\n"
+"POT-Creation-Date: 2012-03-20 10:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,6 +95,39 @@ msgstr "Recursos Similares:"
 #: apps/komoo_resource/templates/resource/show.html:69
 msgid "There is no similar resources..."
 msgstr "Não há recursos similares..."
+
+#: apps/main/templates/main/menu_templatetag.html:6
+#: apps/main/templates/main/menu_templatetag.html:8
+msgid "Map"
+msgstr "Mapa"
+
+#: apps/main/templates/main/menu_templatetag.html:14
+msgid "About the community"
+msgstr "Sobre a Comunidade"
+
+#: apps/main/templates/main/menu_templatetag.html:16
+#, fuzzy
+msgid "Communities"
+msgstr "Comunidade"
+
+#: apps/main/templates/main/menu_templatetag.html:22
+#: apps/main/templates/main/menu_templatetag.html:24
+msgid "Needs"
+msgstr "Necessidades"
+
+#: apps/main/templates/main/menu_templatetag.html:28
+msgid "Organizations"
+msgstr "Organizações"
+
+#: apps/main/templates/main/menu_templatetag.html:32
+#: apps/main/templates/main/menu_templatetag.html:34
+#, fuzzy
+msgid "Resources"
+msgstr "Recursos Similares:"
+
+#: apps/main/templates/main/menu_templatetag.html:38
+msgid "Funders"
+msgstr "Financiadores"
 
 #: apps/main/templates/main/pagination_templatetag.html:7
 msgid "previous"

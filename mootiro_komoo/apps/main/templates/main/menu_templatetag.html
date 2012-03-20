@@ -1,38 +1,39 @@
+{% load i18n %}
 <ul id="menu">
 
   <li{% if selected_area == 'map' %} class='selected'{% endif %}>
     {% if community %}
-    <a href="{% url community_on_map community.slug %}">Map</a>
+    <a href="{% url community_on_map community.slug %}">{% trans 'Map' %}</a>
     {% else %}
-    <a href="{% url root %}">Map</a>
+    <a href="{% url root %}">{% trans 'Map' %}</a>
     {% endif %}
   </li>
 
   <li{% if selected_area == 'community' %} class='selected'{% endif %}>
     {% if community %}
-    <a href="{% url view_community community.slug %}">About the community</a>
+    <a href="{% url view_community community.slug %}">{% trans 'About the community' %}</a>
     {% else %}
-    <a href="{% url list_communities %}">Communities<a/>
+    <a href="{% url list_communities %}">{% trans 'Communities' %}<a/>
     {% endif %}
   </li>
 
   <li{% if selected_area == 'need' %} class='selected'{% endif %}>
     {% if community %}
-    <a href="{% url list_community_needs community.slug %}">Needs</a>
+    <a href="{% url list_community_needs community.slug %}">{% trans 'Needs' %}</a>
     {% else %}
-    <a href="{% url list_all_needs %}">Needs</a>
+    <a href="{% url list_all_needs %}">{% trans 'Needs' %}</a>
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'organization' %} class='selected'{% endif %}>Organizations</li>
+  <li{% if selected_area == 'organization' %} class='selected'{% endif %}>{% trans 'Organizations' %}</li>
 
   <li{% if selected_area == 'resource' %} class='selected'{% endif %}>
     {% if community %}
-    <a href="{% url resource_list community.slug %}">Resources</a>
+    <a href="{% url resource_list community.slug %}">{% trans 'Resources' %}</a>
     {% else %}
-    <a href="{% url resource_list %}">Resources</a>
+    <a href="{% url resource_list %}">{% trans 'Resources' %}</a>
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'funder' %} class='selected'{% endif %}>Funders</li>
+  <li{% if selected_area == 'funder' %} class='selected'{% endif %}>{% trans 'Funders' %}</li>
 </ul>
