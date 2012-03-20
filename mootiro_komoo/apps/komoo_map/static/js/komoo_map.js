@@ -906,8 +906,14 @@ komoo.Map.prototype = {
         var poly = komooMap.currentOverlay;
         var minDist = 512;
         var selectedIndex = -1;
-
-        var paths = poly.getPaths();
+        var paths;
+        if (poly.getPaths) {
+            paths = poly.getPaths();
+        } else if (poly.getPath) {
+            paths = new google.maps.MVCArray([poly.getPath()]);
+        } else {
+            return false;
+        }
         var nodeToDelete;
         var pathWithNode;
         paths.forEach(function (path, i) {
