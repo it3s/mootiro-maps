@@ -69,3 +69,13 @@ def radial_search(request):
         'resources': [model_to_dict(r, fields=['title', 'slug']) for r in d['resources']],
     }
     return HttpResponse(json.dumps(d), mimetype="application/x-javascript")
+
+
+@render_to('404.html')
+def test_404(request):
+    return {}
+
+
+@render_to('500.html')
+def test_500(request):
+    return {}

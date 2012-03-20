@@ -452,6 +452,21 @@ komoo.Map.prototype = {
             }
         });
 
+        google.maps.event.addListener(komooMap.googleMap, 'projection_changed', function () {
+            komooMap.projection = komooMap.googleMap.getProjection();
+            komooMap.overlayView = new google.maps.OverlayView();
+            komooMap.overlayView.draw = function () { };
+            komooMap.overlayView.onAdd = function (d) { console.log('onAdd', d); };
+            komooMap.overlayView.setMap(komooMap.googleMap);
+        });
+
+        google.maps.event.addListener(komooMap.googleMap, 'rightclick', function (e) {
+            var overlay = komooMap.currentOverlay;
+            if (overlay && overlay.properties &&
+                    overlay.properties.userCanEdit) {
+                komooMap.deleteNode(e, komooMap);
+            }
+        });
 
         google.maps.event.addListener(komooMap.googleMap, 'maptypeid_changed', function () {
             komooMap.saveMapType();
@@ -884,6 +899,48 @@ komoo.Map.prototype = {
         komooMap.overlays = [];
     },
 
+    deleteNode: function (e, komooMap) {
+        var nodeWidth = 6;
+        var proj = komooMap.googleMap.getProjection();
+        var clickPoint = proj.fromLatLngToPoint(e.latLng);
+        var poly = komooMap.currentOverlay;
+        var minDist = 512;
+        var selectedIndex = -1;
+        var paths;
+        if (poly.getPaths) {
+            paths = poly.getPaths();
+        } else if (poly.getPath) {
+            paths = new google.maps.MVCArray([poly.getPath()]);
+        } else {
+            return false;
+        }
+        var nodeToDelete;
+        var pathWithNode;
+        paths.forEach(function (path, i) {
+            for (var n = 0 ; n < path.getLength() ; n++) {
+                var nodePoint = proj.fromLatLngToPoint(path.getAt(n));
+                var dist = Math.sqrt(Math.pow(Math.abs(clickPoint.x - nodePoint.x), 2) + Math.pow(Math.abs(clickPoint.y - nodePoint.y), 2));
+                if (dist < minDist) {
+                    minDist = dist;
+                    selectedIndex = n;
+                    nodeToDelete = path.getAt(n);
+                    pathWithNode = path;
+                }
+            }
+        });
+        // Check if we're clicking inside the node
+        var ovProj = komooMap.overlayView.getProjection();
+        var clickPx = ovProj.fromLatLngToContainerPixel(e.latLng);
+        var nodePx = ovProj.fromLatLngToContainerPixel(nodeToDelete);
+        var xDist = Math.abs(nodePx.x - clickPx.x);
+        var yDist = Math.abs(nodePx.y - clickPx.y);
+        if( xDist < nodeWidth && yDist < nodeWidth) {
+            pathWithNode.removeAt(selectedIndex);
+            return true;
+        }
+        return false;
+    },
+
     /**
      * Set the current overlay and display the edit controls.
      * @param {google.maps.Polygon|google.maps.Polyline|null} overlay
@@ -1079,6 +1136,13 @@ komoo.Map.prototype = {
             // Removes stroke from polygons.
             overlay.setOptions({strokeOpacity: 0});
         }
+
+        google.maps.event.addListener(overlay, 'rightclick', function (e) {
+            if (this.properties && this.properties.userCanEdit &&
+                    this == komooMap.currentOverlay) {
+                komooMap.deleteNode(e, komooMap);
+            }
+        });
 
         google.maps.event.addListener(overlay, 'click', function (e) {
             if (window.console) console.log('Clicked on overlay');
