@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-20 16:35-0300\n"
+"POT-Creation-Date: 2012-03-20 16:53-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,19 +68,24 @@ msgstr "Classificadores"
 msgid "Community"
 msgstr "Comunidade"
 
-#: apps/komoo_resource/templates/resource/list.html:18
-#: apps/komoo_resource/templates/resource/list.html:33
+#: apps/komoo_resource/templates/resource/list.html:6
+#, fuzzy
+msgid "Resources for"
+msgstr "Recursos"
+
+#: apps/komoo_resource/templates/resource/list.html:20
+#: apps/komoo_resource/templates/resource/list.html:35
 #: apps/need/templates/need/list.html:25
 msgid "at"
 msgstr "em"
 
-#: apps/komoo_resource/templates/resource/list.html:21
-#: apps/komoo_resource/templates/resource/list.html:36
+#: apps/komoo_resource/templates/resource/list.html:23
+#: apps/komoo_resource/templates/resource/list.html:38
 #: apps/need/templates/need/list.html:28
 msgid "see on the map"
 msgstr "ver no mapa"
 
-#: apps/komoo_resource/templates/resource/list.html:44
+#: apps/komoo_resource/templates/resource/list.html:46
 msgid "Kind:"
 msgstr "Tipo:"
 

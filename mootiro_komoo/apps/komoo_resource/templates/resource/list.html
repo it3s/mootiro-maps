@@ -3,6 +3,8 @@
 {% load comment_tags %}
 {% load i18n %}
 
+{% block title %}{% trans 'Resources for' %} {{ community.name }}{% endblock %}
+
 {% block menu %} {% menu community "resource" %} {% endblock %}
 
 {% block content %}
@@ -41,7 +43,7 @@
       </h4>
 
       {% endif %}
-      <p class="clearBoth">{% trans 'Kind:' %}' {{ resource.kind }}</p>
+      <p class="clearBoth">{% trans 'Kind:' %} {{ resource.kind }}</p>
       <p>{{ resource.description }}</p>
 
       {% if resource.files_set.count %}
