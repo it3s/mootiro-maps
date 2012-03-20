@@ -44,7 +44,10 @@
 
       {% endif %}
       <p class="clearBoth">{% trans 'Kind:' %} {{ resource.kind }}</p>
-      <p>{{ resource.description }}</p>
+      <p>
+        {{ resource.description|slice:"250" }}
+        {% if resource.description|length|get_digit:"-1" > 250 %} ... {% endif %}
+      </p>
 
       {% if resource.files_set.count %}
         {% for f in resource.files_set|slice:"10" %}
