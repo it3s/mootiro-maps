@@ -102,7 +102,6 @@
       }
       // Load the form when user click 'finish' button
       map.event.bind('finish_click', function (e, overlayType) {
-        console.log(overlayType);
         var geojson = map.getGeoJSON({newOnly: true, geometryCollection: true});
         if (geojson.geometries.length > 0) {
           if (window.community_slug) {

@@ -599,6 +599,7 @@ komoo.Map.prototype = {
         var bounds;
         $.each(featureCollection, function (i, feature) {
             var geometry = feature.geometry;
+            if (!geometry) { return; }
             var overlay;
             var paths = [];
             bounds = null;

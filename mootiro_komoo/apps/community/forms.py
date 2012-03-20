@@ -14,7 +14,7 @@ from community.models import Community
 class CommunityForm(forms.ModelForm):
     class Meta:
         model = Community
-        fields = ('name', 'population', 'description')
+        fields = ('name', 'population', 'description', 'geometry')
 
     description = forms.CharField(widget=MarkItUpWidget())
     geometry = forms.CharField(widget=forms.HiddenInput())
