@@ -1,31 +1,60 @@
 {% extends 'global.html' %}
 {% load komoo_tags %}
+{% load comment_tags %}
 
 {% block menu %} {% menu community "resource" %} {% endblock %}
 
 {% block content %}
-  <div class="resource-list-item resource-list-header">
-    <div class="resource-list-image"></div>
-    <div class="resource-list-name">Nome</div>
-    <div class="resource-list-type">Tipo</div>
-  </div>
+  <div id="main-content">
   {% for resource in resources.object_list %}
+
     <div class="resource-list-item {% cycle 'odd' '' %}">
-      <div class="resource-list-image">
-        {% if resource.files_set %}
-        <img src="{{ resource.files_set.0.file.url }}" />
-        {% else %}
-        <div></div>
-        {% endif %}
-      </div>
       {% if community %}
-      <div class="resource-list-name"><a href="/{{ community.slug }}/resource/{{ resource.id }}">{{ resource.name }}</a></div>
+
+      <h4>
+        <span class="apart">
+          <a href="/{{ community.slug }}/resource/{{ resource.id }}">{{ resource.name }}</a>
+          at
+          <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
+        </span>
+        <a class="small" href="#">see on the map</a>
+        <div class="clear-both">
+          {% comments_summary resource %}
+        </div>
+
+      </h4>
+
       {% else %}
-      <div class="resource-list-name"><a href="/resource/{{ resource.id }}">{{ resource.name }}</a></div>
+
+      <h4 class="resource-list-name">
+        <span class="apart">
+          <a href="/resource/{{ resource.id }}">{{ resource.name }}</a>
+          at
+          <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
+        </span>
+        <a class="small" href="#">see on the map</a>
+        <div class="clear-both">
+          {% comments_summary resource %}
+        </div>
+
+      </h4>
+
       {% endif %}
-      <div class="resource-list-type">{{ resource.kind }}</div>
+      <p class="clearBoth">Kind: {{ resource.kind }}</p>
+      <p>{{ resource.description }}</p>
+
+      {% if resource.files_set.count %}
+        {% for f in resource.files_set|slice:"10" %}
+          <span><img src="{{ f.file.url }}" style="width:80px; height:60px;"></span>
+        {% endfor %}
+      {% endif %}
+
     </div>
+
   {% endfor %}
 
   {% pagination resources %}
+
+  </div>
+
 {% endblock %}
