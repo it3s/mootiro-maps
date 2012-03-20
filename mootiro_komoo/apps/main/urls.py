@@ -8,6 +8,7 @@ from django.conf import settings
 urlpatterns = patterns('main.views',
     url(r'^$', 'root', name='root'),
     url(r'^get_geojson$', 'get_geojson', name='get_geojson'),
+    url(r'^radial_search$', 'radial_search', name='radial_search'),
 )
 
 if settings.DEBUG:
