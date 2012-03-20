@@ -163,7 +163,7 @@ ul.horizontal li {
 }
 .button, .map-panel .content .map-button,
 #top #menu li:hover, #top #menu li.selected,
-.map-menuitem:hover, .map-menuitem.selected,
+/*.map-menuitem:hover,*/ .map-menuitem.selected,
 .map-tab:hover, .map-tab.selected,
 .map-button:hover, .map-button.selected {
     color: #fff;
@@ -208,11 +208,20 @@ ul.horizontal li {
     margin: 0;
     padding: 0;
 }
+.map-tabs { padding: 10px; }
 .map-tab {
     cursor: pointer;
     text-align: center;
     padding: 5px 0px;
     float: left;
+}
+.map-tab a {
+    color: black;
+    padding: 0 10px;
+}
+.map-tab:hover a,
+.map-tab.selected a {
+    color: white;
 }
 .map-tab-container {
     clear: both;
@@ -231,8 +240,8 @@ ul.horizontal li {
 .map-panel {
     background: #dceff4;
 }
-body.community .map-panel {
-    margin-top: 35px !important;
+body.community #map-panel-tabs {
+    padding-top: 35px !important;
 }
 .map-panel .map-panel-buttons,
 .map-panel .content {
@@ -253,13 +262,13 @@ body.community .map-panel {
     direction: ltr;
     position: relative;
     padding: 10px;
-    background: #dceff4 !important;
+    background: white !important;
     color: #000;
     white-space: nowrap;
 }
 .map-menuitem.disabled, .map-menuitem.disabled:hover {
     color: #aaa;
-    background: #dceff4 !important;
+    background: white !important;
 }
 #top #menu, #top #search { margin-left: 40px; }
 #top #search { margin-bottom: 0px; }

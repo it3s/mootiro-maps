@@ -28,6 +28,26 @@ function getCookie(name) {
     return cookieValue;
 }
 
+/* Easy to use, jQuery based, and elegant solution for tabs :) */
+function Tabs(tabs, contents) {
+    $(contents).hide();
+    var instance = this;
+    this.to = function (tab) { // Most important method, switches to a tab.
+        $(tabs).removeClass("selected");
+        $(contents).removeClass("selected").hide();
+
+        var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
+        $("*[href=" + tab_content + "]").parent().addClass("selected");
+        $(tab_content).addClass("selected").show();
+    };
+    $(tabs).click(function () {
+        instance.to(this);
+        return false; // in order not to follow the link
+    });
+    // first shown tab is the first matched element in DOM tree
+    this.to($(tabs)[0]);
+}
+
 /*
  * retrieve params from url
  */
