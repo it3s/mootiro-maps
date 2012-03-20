@@ -55,3 +55,13 @@ def get_geojson(request):
     geojson = json.dumps(geojson)
     return HttpResponse(json.dumps(geojson),
         mimetype="application/x-javascript")
+
+
+@render_to('404.html')
+def test_404(request):
+    return {}
+
+
+@render_to('500.html')
+def test_500(request):
+    return {}
