@@ -154,9 +154,15 @@ komoo.ServerFetchMapType.prototype = {
         var serverFetchMapType = this;
         if (serverFetchMapType.fetchedTiles[tile.tileKey]) {
             $.each(serverFetchMapType.fetchedTiles[tile.tileKey].overlays, function (key, overlay) {
-                if (!serverFetchMapType.komooMap.googleMap.getBounds().intersects(overlay.bounds)) {
-                    console.log('Escondendo', serverFetchMapType.komooMap.googleMap.getBounds().intersects(overlay.bounds));
-                    overlay.setMap(null);
+                bounds = serverFetchMapType.komooMap.googleMap.getBounds();
+                if (overlay.bounds) {
+                    if (!bounds.intersects(overlay.bounds)) {
+                        overlay.setMap(null);
+                    }
+                } else if (overlay.getPosition) {
+                    if (bounds.contains(overlay.getPosition())) {
+                        overlay.setMap(null);
+                    }
                 }
             });
         }
@@ -195,9 +201,9 @@ komoo.ServerFetchMapType.prototype = {
                     if (serverFetchMapType.loadedOverlays[overlay.properties.type + '_' + overlay.properties.id]) {
                         overlay = serverFetchMapType.loadedOverlays[overlay.properties.type + '_' + overlay.properties.id];
                     } else {
+                        console.log(overlay.properties.type + overlay.properties.id);
                         serverFetchMapType.loadedOverlays[overlay.properties.type + '_' + overlay.properties.id] = overlay;
                     }
-                    console.log(overlay.properties.type + overlay.properties.id);
                     overlay.setMap(serverFetchMapType.komooMap.googleMap);
                     overlays_.push(overlay);
                 });
