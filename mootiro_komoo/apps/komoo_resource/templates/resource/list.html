@@ -1,6 +1,7 @@
 {% extends 'global.html' %}
 {% load komoo_tags %}
 {% load comment_tags %}
+{% load i18n %}
 
 {% block menu %} {% menu community "resource" %} {% endblock %}
 
@@ -14,10 +15,10 @@
       <h4>
         <span class="apart">
           <a href="/{{ community.slug }}/resource/{{ resource.id }}">{{ resource.name }}</a>
-          at
+          {% trans 'at' %}
           <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
         </span>
-        <a class="small" href="#">see on the map</a>
+        <a class="small" href="#">{% trans 'see on the map' %}</a>
         <div class="clear-both">
           {% comments_summary resource %}
         </div>
@@ -29,10 +30,10 @@
       <h4 class="resource-list-name">
         <span class="apart">
           <a href="/resource/{{ resource.id }}">{{ resource.name }}</a>
-          at
+          {% trans 'at' %}
           <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
         </span>
-        <a class="small" href="#">see on the map</a>
+        <a class="small" href="#">{% trans 'see on the map' %}</a>
         <div class="clear-both">
           {% comments_summary resource %}
         </div>
@@ -40,7 +41,7 @@
       </h4>
 
       {% endif %}
-      <p class="clearBoth">Kind: {{ resource.kind }}</p>
+      <p class="clearBoth">{% trans 'Kind:' %}' {{ resource.kind }}</p>
       <p>{{ resource.description }}</p>
 
       {% if resource.files_set.count %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-20 10:55-0300\n"
+"POT-Creation-Date: 2012-03-20 16:35-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: apps/komoo_comments/views.py:43
 msgid "invalid form: {}"
-msgstr "Formulário Inváldo: {}"
+msgstr "Formulário Inválido: {}"
 
 #: apps/komoo_comments/templates/comments/comment.html:7
 #: apps/komoo_comments/templates/comments/comment.html:21
@@ -68,6 +68,22 @@ msgstr "Classificadores"
 msgid "Community"
 msgstr "Comunidade"
 
+#: apps/komoo_resource/templates/resource/list.html:18
+#: apps/komoo_resource/templates/resource/list.html:33
+#: apps/need/templates/need/list.html:25
+msgid "at"
+msgstr "em"
+
+#: apps/komoo_resource/templates/resource/list.html:21
+#: apps/komoo_resource/templates/resource/list.html:36
+#: apps/need/templates/need/list.html:28
+msgid "see on the map"
+msgstr "ver no mapa"
+
+#: apps/komoo_resource/templates/resource/list.html:44
+msgid "Kind:"
+msgstr "Tipo:"
+
 #: apps/komoo_resource/templates/resource/show.html:33
 msgid "created by"
 msgstr "criado por"
@@ -90,7 +106,7 @@ msgstr "ver no mapa"
 
 #: apps/komoo_resource/templates/resource/show.html:63
 msgid "Similar Resources:"
-msgstr "Recursos Similares:"
+msgstr "Recursos Similares"
 
 #: apps/komoo_resource/templates/resource/show.html:69
 msgid "There is no similar resources..."
@@ -106,7 +122,6 @@ msgid "About the community"
 msgstr "Sobre a Comunidade"
 
 #: apps/main/templates/main/menu_templatetag.html:16
-#, fuzzy
 msgid "Communities"
 msgstr "Comunidade"
 
@@ -121,9 +136,8 @@ msgstr "Organizações"
 
 #: apps/main/templates/main/menu_templatetag.html:32
 #: apps/main/templates/main/menu_templatetag.html:34
-#, fuzzy
 msgid "Resources"
-msgstr "Recursos Similares:"
+msgstr "Recursos"
 
 #: apps/main/templates/main/menu_templatetag.html:38
 msgid "Funders"
@@ -150,15 +164,27 @@ msgstr "próxima"
 
 #: apps/main/templates/main/taglist_templatetag.html:3
 msgid "Tags:"
-msgstr "Classificadores"
+msgstr "Classificadores:"
 
 #: apps/main/templates/main/track_buttons_templatetag.html:3
 msgid "Subscribe"
-msgstr "Assinar"
+msgstr "Seguir"
 
 #: apps/main/templates/main/track_buttons_templatetag.html:4
 msgid "Observe"
-msgstr "Seguir"
+msgstr "Observar"
+
+#: apps/need/templates/need/list.html:6
+msgid "Needs for"
+msgstr "Necessiadades para"
+
+#: apps/need/templates/need/list.html:13
+msgid "New need"
+msgstr "Nova necessidade"
+
+#: apps/need/templates/need/list.html:38
+msgid "target audience:"
+msgstr "público alvo:"
 
 #: apps/vote/views.py:46
 msgid "User not logged or anonymous"
@@ -186,11 +212,11 @@ msgstr "Deletar"
 
 #: lib/taggit/forms.py:21
 msgid "Please provide a comma-separated list of tags."
-msgstr "Por favor forneça uma lista de tags, separada por vírgulas"
+msgstr "Por favor forneça uma lista de tags separadas por vírgula."
 
 #: lib/taggit/managers.py:40
 msgid "A comma-separated list of tags."
-msgstr "Lista de tags, separadas por vírgula"
+msgstr "Uma lista de tags separada por vírgula"
 
 #: lib/taggit/models.py:11
 msgid "Slug"
@@ -198,7 +224,7 @@ msgstr "Slug"
 
 #: lib/taggit/models.py:56
 msgid "Tag"
-msgstr "Classificador"
+msgstr "Tag"
 
 #: lib/taggit/models.py:63
 #, python-format
@@ -211,12 +237,12 @@ msgstr "Id do Objeto"
 
 #: lib/taggit/models.py:117 lib/taggit/models.py:123
 msgid "Content type"
-msgstr "Tipo de Conteúdo"
+msgstr "Tipo do Conteúdo"
 
 #: lib/taggit/models.py:159
 msgid "Tagged Item"
-msgstr "Item Classificado"
+msgstr "Item Tageado"
 
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
-msgstr "Itens Classificados"
+msgstr "Itens Tageados"

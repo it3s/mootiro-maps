@@ -1,15 +1,16 @@
 {% extends "global.html" %}
 {% load komoo_tags %}
 {% load comment_tags %}
+{% load i18n %}
 
-{% block title %}Needs for {{ community.name }}{% endblock %}
+{% block title %}{% trans 'Needs for' %} {{ community.name }}{% endblock %}
 
 {% block menu %} {% menu community "need" %} {% endblock %}
 
 {% block content %}
 <div id="main-content">
   <div>
-    <a class="button" href="{% url new_need %}">New need</a>
+    <a class="button" href="{% url new_need %}">{% trans 'New need' %}</a>
     <div class="ajax-search"><input type="text"/></div>
   </div>
 
@@ -21,10 +22,10 @@
           <span class="apart">
             <a href="{% url view_need need.community.slug need.slug %}"> {{ need.title }} </a>
             {% if not community %}
-            at <a href="{% url view_community need.community.slug %}">{{ need.community.name }}</a>
+            {% trans 'at' %} <a href="{% url view_community need.community.slug %}">{{ need.community.name }}</a>
             {% endif %}
           </span>
-          <a class="small" href="#">see on the map</a>
+          <a class="small" href="#">{% trans 'see on the map' %}</a>
           <ul class="horizontal">
             {% for c in need.categories.all %}
             <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
@@ -34,7 +35,7 @@
           {% comments_summary need %}
         </h4>
         <p class="clearBoth">
-          target audience: {{ need.target_audiences.all|join:", " }}
+          {% trans 'target audience:' %} {{ need.target_audiences.all|join:", " }}
         </p>
         <p>{{ need.description }}</p>
       </div>
