@@ -46,7 +46,7 @@ def build_env_ironment():
 def run():
     """Runs django's development server"""
     local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
-    haystack_index()
+    search_index()
 
 
 def js_urls():
@@ -112,7 +112,7 @@ def clean_media_files():
             print err
 
 
-def haystack_index(option='update'):
+def search_index(option='update'):
     """Rebuilds haystack indexes."""
     if not option in ['rebuild', 'update']:
         print 'You must pass rebuild or update as argument'
@@ -134,7 +134,7 @@ def sync_all():
     load_fixtures('test')
     initial_revisions()
     clean_media_files()
-    haystack_index('rebuild')
+    search_index('rebuild')
 
 
 def dumpdata():

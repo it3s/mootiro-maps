@@ -5,11 +5,11 @@ from haystack import site
 from need.models import Need
 
 
-class NeedIndex(indexes.SearchIndex):
+class NeedIndex(indexes.RealTimeSearchIndex):
     text = indexes.CharField(document=True, use_template=True)
     title = indexes.EdgeNgramField(model_attr='title', boost=2.0)
     slug = indexes.EdgeNgramField(model_attr='slug', boost=2.0)
-    creator = indexes.CharField(model_attr='creator')
+    creator = indexes.CharField(model_attr='creator', null=True)
     creation_date = indexes.DateTimeField(model_attr='creation_date')
 
     def index_queryset(self):
