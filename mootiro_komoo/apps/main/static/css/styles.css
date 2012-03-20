@@ -521,6 +521,10 @@ a.btnShowForm{
 .resource-list-item.odd{
   background-color: rgb(220, 239, 244);
 }
+.resource-list-item .apart a:first-child{
+  font-size: 1.2em;
+  font-weight: bolder;
+}
 /* ### form ### */
 #form_resource {
   width: 100%;
