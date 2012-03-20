@@ -14,6 +14,8 @@ from community.models import Community
 class NeedForm(forms.ModelForm):
     class Meta:
         model = Need
+        fields = ('community', 'title', 'description', 'categories',
+                    'target_audiences', 'tags')
 
     # FIXME: the urls below should not be hardcoded. They should be calculated
     # with reverse_lazy function, which is not implemented in Django 1.3 yet.

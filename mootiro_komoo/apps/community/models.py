@@ -11,7 +11,7 @@ from komoo_map.models import GeoRefModel
 class Community(GeoRefModel):
     name = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.SlugField(max_length=256, editable=False, blank=False)
+    slug = models.SlugField(max_length=256, blank=False)
     population = models.IntegerField(null=True, blank=True)  # number of inhabitants
     description = models.TextField(null=True, blank=True)
 
