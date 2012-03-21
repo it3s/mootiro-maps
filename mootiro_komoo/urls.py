@@ -49,6 +49,7 @@ urlpatterns = patterns('',
     url(r'^comments/', include('komoo_comments.urls')),
     url(r'^vote/', include('vote.urls')),
     url(r'', include('komoo_resource.urls')),
+    url(r'^organization/', include('organization.urls')),
 
     # Community URLs go last because one of them can match anything
     url(r'', include('community.urls')),
