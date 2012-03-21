@@ -25,7 +25,13 @@
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'organization' %} class='selected'{% endif %}>{% trans 'Organizations' %}</li>
+  <li{% if selected_area == 'organization' %} class='selected'{% endif %}>
+    {% if community %}
+    <a href="{% url organization_list community.slug %}">{% trans 'Organizations' %}</a>
+    {% else %}
+    <a href="{% url organization_list %}">{% trans 'Organizations' %}</a>
+    {% endif %}
+  </li>
 
   <li{% if selected_area == 'resource' %} class='selected'{% endif %}>
     {% if community %}
