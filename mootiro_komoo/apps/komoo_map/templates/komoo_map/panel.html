@@ -14,7 +14,13 @@
   </div>
 
   <div class="panel" id="map-panel-filter">
-    {% geo_objects_listing 'subitems' %}
+    <form id="filter-form">
+      <div class="img-holder"><img src="{{STATIC_URL}}img/radius-hover.png"/></div> Radius
+      <span id="filter-radius"><input type="text" name="radius"/> m</span>
+
+      {% geo_objects_listing 'FALSE' %}
+      <input type="submit" value="Apply" class="button"/>
+    </form>
   </div>
 
   <div class="panel" id="map-panel-add">

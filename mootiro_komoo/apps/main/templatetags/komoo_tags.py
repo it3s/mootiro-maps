@@ -34,8 +34,7 @@ def community_tabs(obj=None):
 @register.inclusion_tag('main/geo_objects_listing.html')
 def geo_objects_listing(show_categories):
     show_categories = bool(show_categories)
-    nc = NeedCategory.objects.all()
-
+    nc = NeedCategory.objects.all() if show_categories else []
     return dict(community_categories=[], need_categories=nc)
 
 
