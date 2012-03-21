@@ -1202,6 +1202,11 @@ komoo.Map.prototype = {
                     dutils.urls.resolve('view_resource', {community_slug: overlay.properties.community_slug, id: overlay.properties.id}));
             infoContentTitle.text(overlay.properties.name);
             infoContent.append(infoContentTitle);
+        } else if (overlay.properties.type == 'organization') {
+            infoContentTitle = $('<a>').attr('href',
+                    dutils.urls.resolve('view_organization', {community_slug: overlay.properties.community_slug, id: overlay.properties.id}));
+            infoContentTitle.text(overlay.properties.name);
+            infoContent.append(infoContentTitle);
         } else {
             var slugname = overlay.properties.type + '_slug';
             var params = {'community_slug': overlay.properties.community_slug};

@@ -28,6 +28,11 @@ def organization_list(request, community_slug=''):
     return dict(community=community, organizations=organizations)
 
 
+@render_to('organization/show.html')
+def show(request, community_slug=''):
+    return {}
+
+
 class Edit(View):
     """Class based view for editing a Organization"""
 
@@ -59,7 +64,8 @@ class Edit(View):
         _id = request.POST.get('id', None)
 
         if _id:
-            organization = get_object_or_404(Organization, pk=request.POST['id'])
+            organization = get_object_or_404(Organization,
+                pk=request.POST['id'])
             form_org = FormOrganization(request.POST, instance=organization)
         else:
             form_org = FormOrganization(request.POST)

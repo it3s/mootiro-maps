@@ -6,11 +6,17 @@ from organization.views import Edit
 
 
 urlpatterns = patterns('organization.views',
-    url(r'^organization/?$', 'organization_list', name='organization_list'),
-    url(r'^organization/edit/?$', Edit.as_view(), name='organization_edit'),
+    url(r'^organization/?$', 'organization_list',
+            name='organization_list'),
+    url(r'^organization/edit/?$', Edit.as_view(),
+            name='organization_edit'),
+    url(r'^organization/(?P<id>\d+)/?$', 'show',
+            name='view_organization'),
 
     url(pr(r'^COMMUNITY_SLUG/organization/?$'), 'organization_list',
-                                                name='organization_list'),
+            name='organization_list'),
     url(pr(r'^COMMUNITY_SLUG/organization/edit/?$'), Edit.as_view(),
-                                                name='organization_edit'),
+            name='organization_edit'),
+    url(pr(r'^COMMUNITY_SLUG/organization/(?P<id>\d+)/?$'), 'show',
+            name='view_organization'),
 )

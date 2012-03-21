@@ -17,6 +17,7 @@ from community.forms import CommunityMapForm
 from community.models import Community
 from need.models import Need
 from komoo_resource.models import Resource
+from organization.models import Organization
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
@@ -33,7 +34,9 @@ def _fetch_geo_objects(Q):
     communities = Community.objects.filter(Q)
     needs = Need.objects.filter(Q)
     resources = Resource.objects.filter(Q)
-    return dict(communities=communities, needs=needs, resources=resources)
+    organizations = Organization.objects.filter(Q)
+    return dict(communities=communities, needs=needs, resources=resources,
+                organizations=organizations)
 
 
 def get_geojson(request):
