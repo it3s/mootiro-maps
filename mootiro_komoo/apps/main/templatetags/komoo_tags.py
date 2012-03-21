@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 from django import template
 from community.models import Community
-from need.models import Need
+from need.models import Need, NeedCategory
 from proposal.models import Proposal
 
 register = template.Library()
@@ -29,6 +29,14 @@ def menu(obj=None, selected_area=''):
 def community_tabs(obj=None):
     community = _get_related_community(obj)
     return dict(community=community)
+
+
+@register.inclusion_tag('main/geo_objects_listing.html')
+def geo_objects_listing(show_categories):
+    show_categories = bool(show_categories)
+    nc = NeedCategory.objects.all()
+
+    return dict(community_categories=[], need_categories=nc)
 
 
 @register.inclusion_tag('main/track_buttons_templatetag.html')

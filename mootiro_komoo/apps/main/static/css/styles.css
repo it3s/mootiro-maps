@@ -4,12 +4,12 @@ html {
     height: 100%;
 }
 body {
-  /* http://www.ms-studio.com/articles.html */
-  font-family: Ubuntu, Helvetica, 'Trebuchet MS', sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #fff;
-  height: 100%;
+    /* http://www.ms-studio.com/articles.html */
+    font-family: Ubuntu, Helvetica, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    height: 100%;
 }
 body, p { font-size: 14px }
 img { border: 0px }
@@ -66,6 +66,16 @@ ul.horizontal li {
 .mark-down ul ul { list-style-type: circle }
 .mark-down ul ul ul { list-style-type: square }
 .mark-down ol { list-style: decimal inside none }
+
+ul.geo-objects-listing li { padding: 4px 0 }
+ul.geo-objects-listing li ul { margin-left: 30px }
+ul.geo-objects-listing li div.img-holder {
+    width: 35px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+}
+
 
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }
@@ -208,6 +218,10 @@ ul.horizontal li {
     margin: 0;
     padding: 0;
 }
+
+#map-panel { padding: 0 10px }
+#map-panel .panel { margin-top: 10px }
+
 .map-tabs { padding: 10px; }
 .map-tab {
     cursor: pointer;
@@ -274,7 +288,7 @@ body.community #map-panel-tabs {
 #top #search { margin-bottom: 0px; }
 
 #search-bar {
-    width: 585px;
+    width: 585px; /* FIXME: this is dependent of the language */
     font-size: 16px;
     background-color: #ffffff;
     box-shadow: 1px 1px 1px #999999 inset;

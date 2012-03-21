@@ -20,16 +20,18 @@ class NeedCategory(models.Model):
         return self.name
 
     @classmethod
-    def get_image_tick(cls, name):
-        print slugify.__doc__
-        return "%s-tick.png" % slugify(name)
+    def get_image(cls, name):
+        return "need/%s.png" % slugify(name)
 
     @classmethod
-    def get_image_no_tick(cls, name):
-        return "%s-no-tick.png" % slugify(name)
+    def get_image_off(cls, name):
+        return "need/%s-off.png" % slugify(name)
 
     def image(self):
-        return self.get_image_tick(self.name)
+        return self.get_image(self.name)
+
+    def image_off(self):
+        return self.get_image_off(self.name)
 
 
 class TargetAudience(models.Model):

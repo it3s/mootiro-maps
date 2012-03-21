@@ -1,19 +1,27 @@
+{% load komoo_tags %}
+
 <div id="map-panel" style="width: 300px; position: absolute; overflow: auto;">
   <ul class="map-tabs" id="map-panel-tabs">
-    <li class="map-tab" id="map-panel-layers-tab" style="width: 30%;"><a href="#map-panel-layers">Layers</a></li>
     <li class="map-tab" id="map-panel-filter-tab" style="width: 30%;"><a href="#map-panel-filter">Filter</a></li>
+    <li class="map-tab" id="map-panel-layers-tab" style="width: 30%;"><a href="#map-panel-layers">Layers</a></li>
     <li class="map-tab" id="map-panel-add-tab" style="width: 30%;"><a href="#map-panel-add">Add</a></li>
   </ul>
+
   <div style="clear: both;"></div>
+
   <div class="panel" id="map-panel-layers">
     LAYERS CONTENT
   </div>
+
   <div class="panel" id="map-panel-filter">
-    FILTER CONTENT
+    {% geo_objects_listing 'subitems' %}
   </div>
+
   <div class="panel" id="map-panel-add">
   </div>
+  
   <div style="clear: both;"></div>
+
 </div>
 <script type="text/javascript">
   $(function() {
