@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
 from komoo_map.models import GeoRefModel
+from community.models import Community
 
 
 class Organization(GeoRefModel):
@@ -14,6 +15,8 @@ class Organization(GeoRefModel):
 
     creation_date = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User, null=True, blank=True)
+
+    community = models.ForeignKey(Community, null=True, blank=True)
 
     def __unicode__(self):
         return unicode(self.name)

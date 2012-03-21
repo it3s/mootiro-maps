@@ -29,7 +29,7 @@ def organization_list(request, community_slug=''):
 
 
 @render_to('organization/show.html')
-def show(request, community_slug=''):
+def show(request, id=None, community_slug=''):
     return {}
 
 
