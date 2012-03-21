@@ -65,6 +65,8 @@ def edit(request, community_slug="", need_slug=""):
         if community:
             form.fields.pop('community')
         rdict = dict(form=form, community=community)
+    geojson = create_geojson([need])
+    rdict['geojson'] = geojson
     return render(request, template, rdict)
 
 
