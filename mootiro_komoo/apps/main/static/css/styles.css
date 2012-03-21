@@ -509,16 +509,7 @@ a.btnShowForm{
 }
 /* ============= Resources ============== */
 /* resource list */
-.resource-list-item{
-  padding: 10px;
-  background-color: rgb(239, 248, 249);
-  margin-top: 10px;
-  clear: both;
-}
-.resource-list-item.odd{
-  background-color: rgb(220, 239, 244);
-}
-.resource-list-item .apart a:first-child{
+.view-list-item .apart a:first-child{
   font-size: 1.2em;
   font-weight: bolder;
 }
@@ -594,4 +585,13 @@ input[type=text], textarea{
   font-weight: normal;
   background-color: rgb(225, 239, 245);
   border-radius: 3px;
+}
+.view-list-item{
+  padding: 10px;
+  background-color: rgb(239, 248, 249);
+  margin-top: 10px;
+  clear: both;
+}
+.view-list-item.odd{
+  background-color: rgb(220, 239, 244);
 }

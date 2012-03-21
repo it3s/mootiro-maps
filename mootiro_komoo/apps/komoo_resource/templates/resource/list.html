@@ -11,27 +11,15 @@
   <div id="main-content">
   {% for resource in resources.object_list %}
 
-    <div class="resource-list-item {% cycle 'odd' '' %}">
-      {% if community %}
+    <div class="view-list-item {% cycle 'odd' '' %}">
 
       <h4>
         <span class="apart">
+          {% if community %}
           <a href="/{{ community.slug }}/resource/{{ resource.id }}">{{ resource.name }}</a>
-          {% trans 'at' %}
-          <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
-        </span>
-        <a class="small" href="#">{% trans 'see on the map' %}</a>
-        <div class="clear-both">
-          {% comments_summary resource %}
-        </div>
-
-      </h4>
-
-      {% else %}
-
-      <h4>
-        <span class="apart">
+          {% else %}
           <a href="/resource/{{ resource.id }}">{{ resource.name }}</a>
+          {% endif %}
           {% trans 'at' %}
           <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
         </span>
@@ -42,7 +30,6 @@
 
       </h4>
 
-      {% endif %}
       <p class="clearBoth">{% trans 'Kind:' %} {{ resource.kind }}</p>
       <p>
         {{ resource.description|slice:"250" }}
