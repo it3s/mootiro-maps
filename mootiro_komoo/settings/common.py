@@ -149,6 +149,7 @@ INSTALLED_APPS = [
     'vote',
     'komoo_resource',
     'user_cas',
+    'organization',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
