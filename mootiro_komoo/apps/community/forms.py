@@ -7,7 +7,6 @@ from django import forms
 from markitup.widgets import MarkItUpWidget
 
 from main.utils import MooHelper
-from komoo_map.widgets import AddressWithMapWidget
 from community.models import Community
 
 
@@ -25,7 +24,3 @@ class CommunityForm(forms.ModelForm):
         self.helper.form_id = "community_form"
 
         super(CommunityForm, self).__init__(*a, **kw)
-
-
-class CommunityMapForm(forms.Form):
-    map = forms.CharField(widget=AddressWithMapWidget, required=False)

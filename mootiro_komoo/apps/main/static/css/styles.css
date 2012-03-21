@@ -215,10 +215,6 @@ ul.geo-objects-listing li ul { margin-left: 30px }
 .map-button:hover, .map-button.selected {
     border: 1px solid #4092a9 !important;
 }
-#map-form {
-    margin: 0;
-    padding: 0;
-}
 
 #map-panel { padding: 0 10px }
 #map-panel .panel { margin-top: 10px }
