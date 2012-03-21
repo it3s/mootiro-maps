@@ -123,6 +123,7 @@ komoo.MapOptions = {
     enableInfoWindow: true,
     enableCluster: false,
     overlayOptions: {
+        visible: true,
         fillColor: '#ff0',
         fillOpacity: 0.45,
         strokeColor: '#ff0',
@@ -469,11 +470,15 @@ komoo.Map.prototype = {
         });
     },
 
-    visibleOverlays: function () {
+    getVisibleOverlays: function () {
         var komooMap = this;
         var bounds = komooMap.googleMap.getBounds();
         var overlays = [];
         $.each(komooMap.overlays, function (key, overlay) {
+            if (!overlay.getVisible()) {
+                // Dont verify the intersection if overlay is invisible.
+                return;
+            }
             if (overlay.bounds) {
                 if (bounds.intersects(overlay.bounds)) {
                     overlays.push(overlay);
@@ -1182,6 +1187,7 @@ komoo.Map.prototype = {
         var infoContentTitle;
         if (overlay.properties.type == 'community') {
             // TODO: Add more info
+            // FIXME: Move url to options object
             infoContentTitle = $('<a>').attr('href',
                     dutils.urls.resolve('view_community', {community_slug: overlay.properties.community_slug}));
             infoContentTitle.text(overlay.properties.name);
@@ -1193,7 +1199,7 @@ komoo.Map.prototype = {
             infoContent.append(infoList);
         } else if (overlay.properties.type == 'resource') {
             infoContentTitle = $('<a>').attr('href',
-                    dutils.urls.resolve('view_resource', {id: overlay.properties.id}));
+                    dutils.urls.resolve('view_resource', {community_slug: overlay.properties.community_slug, id: overlay.properties.id}));
             infoContentTitle.text(overlay.properties.name);
             infoContent.append(infoContentTitle);
         } else {
