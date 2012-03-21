@@ -48,7 +48,8 @@ komoo.RegionTypes = [
     },
     {
         type: 'need',
-        categories: ['Education', 'Sport', 'Environment', 'Health', 'Housing', 'Local Economy', 'Social Service'], // FIXME: Hardcode is evil
+        categories: ['Education', 'Sport', 'Environment', 'Health', 'Housing',
+                     'Local Economy', 'Social Service'], // FIXME: Hardcode is evil
         title: gettext('Needs'),
         tooltip: gettext('Add Need'),
         color: '#f00',
@@ -56,7 +57,8 @@ komoo.RegionTypes = [
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
                        google.maps.drawing.OverlayType.MARKER],
-        formUrl: dutils.urls.resolve('new_need', {community_slug: 'community_slug'}),
+        formUrl: dutils.urls.resolve('new_need',
+            {community_slug: 'community_slug'}),
         disabled: false
     },
     {
@@ -67,8 +69,9 @@ komoo.RegionTypes = [
         color: '#00f',
         icon: '/static/img/organization-hover.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
-        formUrl: '',
-        disabled: true
+        formUrl: dutils.urls.resolve('organization_edit',
+            {community_slug: 'community_slug'}),
+        disabled: false
     },
     {
         type: 'resource',
@@ -80,7 +83,8 @@ komoo.RegionTypes = [
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
                        google.maps.drawing.OverlayType.MARKER],
-        formUrl: dutils.urls.resolve('resource_edit', {community_slug: 'community_slug'}),
+        formUrl: dutils.urls.resolve('resource_edit',
+            {community_slug: 'community_slug'}),
         disabled: false
     },
     {

@@ -20,4 +20,4 @@ class Organization(GeoRefModel):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        return super(*args, **kwargs)
+        return super(Organization, self).save(*args, **kwargs)
