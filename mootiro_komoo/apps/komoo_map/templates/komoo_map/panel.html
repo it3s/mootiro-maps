@@ -2,9 +2,9 @@
 
 <div id="map-panel" style="width: 300px; position: absolute; overflow: auto;">
   <ul class="map-tabs" id="map-panel-tabs">
+    <li class="map-tab" id="map-panel-add-tab" style="width: 30%;"><a href="#map-panel-add">Add</a></li>
     <li class="map-tab" id="map-panel-filter-tab" style="width: 30%;"><a href="#map-panel-filter">Filter</a></li>
     <li class="map-tab" id="map-panel-layers-tab" style="width: 30%;"><a href="#map-panel-layers">Layers</a></li>
-    <li class="map-tab" id="map-panel-add-tab" style="width: 30%;"><a href="#map-panel-add">Add</a></li>
   </ul>
 
   <div style="clear: both;"></div>
@@ -18,7 +18,7 @@
       <div class="img-holder"><img src="{{STATIC_URL}}img/radius-hover.png"/></div>
       <a id="filter-center"  class="button">+ Center</a>
       <span id="filter-radius">Radius <input type="text" name="radius"/> m</span>
-      {% geo_objects_listing 'show_categories=True' 'enable_switch=True' %}
+      {% geo_objects_listing 'show_categories=True' %}
       <input type="submit" id="filter-submit" class="button" value="Apply"/>
     </form>
   </div>
