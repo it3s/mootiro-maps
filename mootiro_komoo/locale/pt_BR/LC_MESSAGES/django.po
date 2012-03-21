@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-20 16:53-0300\n"
+"POT-Creation-Date: 2012-03-21 17:28-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,11 +47,12 @@ msgstr "Novo Comentário"
 msgid "see more ..."
 msgstr "ver mais ..."
 
-#: apps/komoo_resource/forms.py:33 lib/taggit/models.py:10
+#: apps/komoo_resource/forms.py:33 apps/organization/forms.py:27
+#: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
-#: apps/komoo_resource/forms.py:34
+#: apps/komoo_resource/forms.py:34 apps/organization/forms.py:28
 msgid "Description"
 msgstr "Descrição"
 
@@ -64,7 +65,7 @@ msgstr "Tipo"
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/komoo_resource/forms.py:37
+#: apps/komoo_resource/forms.py:37 apps/organization/forms.py:29
 msgid "Community"
 msgstr "Comunidade"
 
@@ -73,47 +74,51 @@ msgstr "Comunidade"
 msgid "Resources for"
 msgstr "Recursos"
 
-#: apps/komoo_resource/templates/resource/list.html:20
-#: apps/komoo_resource/templates/resource/list.html:35
+#: apps/komoo_resource/templates/resource/list.html:23
 #: apps/need/templates/need/list.html:25
+#: apps/organization/templates/organization/list.html:23
+#: apps/organization/templates/organization/show.html:11
 msgid "at"
 msgstr "em"
 
-#: apps/komoo_resource/templates/resource/list.html:23
-#: apps/komoo_resource/templates/resource/list.html:38
+#: apps/komoo_resource/templates/resource/list.html:26
 #: apps/need/templates/need/list.html:28
+#: apps/organization/templates/organization/list.html:26
 msgid "see on the map"
 msgstr "ver no mapa"
 
-#: apps/komoo_resource/templates/resource/list.html:46
+#: apps/komoo_resource/templates/resource/list.html:33
 msgid "Kind:"
 msgstr "Tipo:"
 
-#: apps/komoo_resource/templates/resource/show.html:33
+#: apps/komoo_resource/templates/resource/show.html:34
+#: apps/organization/templates/organization/show.html:35
 msgid "created by"
 msgstr "criado por"
 
-#: apps/komoo_resource/templates/resource/show.html:34
+#: apps/komoo_resource/templates/resource/show.html:35
+#: apps/organization/templates/organization/show.html:36
 msgid "in"
 msgstr "em"
 
-#: apps/komoo_resource/templates/resource/show.html:36
+#: apps/komoo_resource/templates/resource/show.html:37
 msgid "type:"
 msgstr "tipo:"
 
-#: apps/komoo_resource/templates/resource/show.html:47
+#: apps/komoo_resource/templates/resource/show.html:48
 msgid "Photos:"
 msgstr "Fotos:"
 
-#: apps/komoo_resource/templates/resource/show.html:61
+#: apps/komoo_resource/templates/resource/show.html:63
+#: apps/organization/templates/organization/show.html:48
 msgid "see on map"
 msgstr "ver no mapa"
 
-#: apps/komoo_resource/templates/resource/show.html:63
+#: apps/komoo_resource/templates/resource/show.html:65
 msgid "Similar Resources:"
 msgstr "Recursos Similares"
 
-#: apps/komoo_resource/templates/resource/show.html:69
+#: apps/komoo_resource/templates/resource/show.html:71
 msgid "There is no similar resources..."
 msgstr "Não há recursos similares..."
 
@@ -135,16 +140,18 @@ msgstr "Comunidade"
 msgid "Needs"
 msgstr "Necessidades"
 
-#: apps/main/templates/main/menu_templatetag.html:28
+#: apps/main/templates/main/menu_templatetag.html:30
+#: apps/main/templates/main/menu_templatetag.html:32
+#: apps/organization/templates/organization/list.html:7
 msgid "Organizations"
 msgstr "Organizações"
 
-#: apps/main/templates/main/menu_templatetag.html:32
-#: apps/main/templates/main/menu_templatetag.html:34
+#: apps/main/templates/main/menu_templatetag.html:38
+#: apps/main/templates/main/menu_templatetag.html:40
 msgid "Resources"
 msgstr "Recursos"
 
-#: apps/main/templates/main/menu_templatetag.html:38
+#: apps/main/templates/main/menu_templatetag.html:44
 msgid "Funders"
 msgstr "Financiadores"
 
@@ -229,7 +236,7 @@ msgstr "Slug"
 
 #: lib/taggit/models.py:56
 msgid "Tag"
-msgstr "Tag"
+msgstr "Classificação"
 
 #: lib/taggit/models.py:63
 #, python-format
@@ -246,8 +253,8 @@ msgstr "Tipo do Conteúdo"
 
 #: lib/taggit/models.py:159
 msgid "Tagged Item"
-msgstr "Item Tageado"
+msgstr "Item Classificado"
 
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
-msgstr "Itens Tageados"
+msgstr "Itens Classificados"
