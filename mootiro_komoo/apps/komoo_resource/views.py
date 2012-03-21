@@ -46,12 +46,14 @@ def resource_list(request, community_slug=''):
 @render_to('resource/show.html')
 def show(request, community_slug=None, id=None):
     logger.debug('acessing komoo_resource > show')
+
     resource = get_object_or_404(Resource, pk=id)
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
     community = get_object_or_None(Community, slug=community_slug)
     photos = paginated_query(UploadedFile.get_files_for(resource), request, size=3)
+
     return dict(resource=resource, similar=similar, geojson=geojson,
                 community=community, photos=photos)
 

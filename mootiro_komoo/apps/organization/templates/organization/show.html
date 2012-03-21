@@ -1,0 +1,62 @@
+{% extends 'global.html' %}
+
+{% load komoo_tags %}
+{% load komoo_map_tags %}
+{% load i18n %}
+{% load comment_tags %}
+{% load vote_tags %}
+{% load markitup_tags %}
+
+{% block title %}
+    {{ organization.name }} {% trans 'at' %} {{ resource.community.name }}
+{% endblock %}
+
+{% block menu %} {% menu organization "organization" %} {% endblock %}
+
+{% block content %}
+  <div id="main-content" class="inline-block">
+    <div class="main-column">
+
+      <div class="view-header">
+        <h2>{{ organization.name }}</h2>
+        <div class="view-votes">
+          {% vote organization %}
+          <div class="view-edit-btn">
+            {% if community %}
+            <a href="/{{ community.slug }}/organization/edit?id={{ organization.id }}" class="btn">
+            {% else %}
+            <a href="/organization/edit?id={{ organization.id }}" class="btn">
+            {% endif %}
+              <i class="icon-pencil"></i>
+            </a>
+          </div>
+        </div>
+        <span>
+          {% trans 'created by' %} <a href="#">{% firstof organization.creator.get_full_name organization.creator.username 'someone' %}</a>
+          {% trans 'in' %} {{ organization.creation_date|date:"d/m/Y" }}
+        </span>
+      </div>
+
+      <div class="view-body">
+        <div class="mark-down">{{ organization.description|render_markup }}</div>
+      </div>
+
+    </div>
+
+    <div class="right-bar">
+      <div id="map-preview">{% komoo_map geojson %}</div>
+      <a href="#">{% trans 'see on map' %}</a>
+    </div>
+
+  </div>
+
+  <div class="view-extras">
+    {% track_buttons %}
+    {% comments organization %}
+  </div>
+{% endblock %}
+
+{% block page_scripts %}
+  {% vote_staticfiles %}
+  {% comments_staticfiles %}
+{% endblock %}

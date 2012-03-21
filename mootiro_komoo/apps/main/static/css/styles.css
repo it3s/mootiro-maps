@@ -507,35 +507,6 @@ a.btnShowForm{
   border:1px solid #ddd;
   border-left-width:0;
 }
-
-.view-edit-btn{
-  display: inline-block;
-  float: right;
-}
-.view-extras{
-  clear: both;
-}
-.view-follow-btns span{
-  color: #444444;
-  margin-left: 7px;
-}
-.view-follow-btns img{
-  width: 12px;
-  height: 12px;
-  margin: 0 0 -1px -1px;
-}
-.view-tag-list {
-  margin: 5px 0 15px 0;
-  font-weight: bold;
-}
-.tag {
-  color: #666666;
-  margin: 0 5px;
-  padding: 2px 5px;
-  font-weight: normal;
-  background-color: rgb(225, 239, 245);
-  border-radius: 3px;
-}
 /* ============= Resources ============== */
 /* resource list */
 .resource-list-item{
@@ -566,46 +537,6 @@ a.btnShowForm{
 .resource-type{
   margin-left: 40px;
 }
-.resource-header{
-  margin-bottom: 20px;
-}
-.resource-edit-btn{
-  display: inline-block;
-  float: right;
-}
-.resource-main{
-  display: inline-block;
-}
-.resource-follow-btns span{
-  color: #444444;
-  margin-left: 7px;
-}
-.resource-follow-btns img{
-  width: 12px;
-  height: 12px;
-  margin: 0 0 -1px -1px;
-}
-.resource-body li{
-  list-style: disc outside none;
-}
-.resource-footer div:first-child{
-  margin-top: 100px;
-}
-.resource-extras{
-  padding: 0 60px;
-}
-.resource-tag-list{
-  margin: 5px 0 15px 0;
-  font-weight: bold;
-}
-.resource-tag-list span{
-  color: #666666;
-  margin: 0 5px;
-  padding: 2px 5px;
-  font-weight: normal;
-  background-color: rgb(235, 249, 255);
-  border-radius: 3px;
-}
 /* ====== file uploader ======== */
 #fileupload{
   font-size: 0.8em;
@@ -622,4 +553,45 @@ form div.tagsinput input{
 input[type=text], textarea{
   background: none repeat scroll 0% 0% rgba(215, 215, 215, 0.2);
   box-shadow: 1px 1px 1px rgb(190, 189, 204) ;
+}
+.inline-block{
+  display: inline-block;
+}
+/* ========= Entity show ====== */
+.view-header{
+  margin-bottom: 20px;
+}
+.view-follow-btns span{
+  color: #444444;
+  margin-left: 7px;
+}
+.view-follow-btns img{
+  width: 12px;
+  height: 12px;
+  margin: 0 0 -1px -1px;
+}
+.view-footer div:first-child{
+  margin-top: 100px;
+}
+.view-extras{
+  padding: 0 60px;
+}
+.view-edit-btn{
+  display: inline-block;
+  float: right;
+}
+.view-extras{
+  clear: both;
+}
+.view-tag-list {
+  margin: 5px 0 15px 0;
+  font-weight: bold;
+}
+.tag {
+  color: #666666;
+  margin: 0 5px;
+  padding: 2px 5px;
+  font-weight: normal;
+  background-color: rgb(225, 239, 245);
+  border-radius: 3px;
 }

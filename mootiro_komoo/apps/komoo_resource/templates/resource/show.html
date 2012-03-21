@@ -13,13 +13,14 @@
 {% block menu %} {% menu community "resource" %} {% endblock %}
 
 {% block content %}
-  <div id="main-content" class="resource-main">
+  <div id="main-content" class="inline-block">
+
     <div class="resource main-column">
-      <div class="resource-header">
+      <div class="view-header">
         <h2>{{ resource.name }}</h2>
-        <div class="resource-votes">
+        <div class="view-votes">
           {% vote resource %}
-          <div class="resource-edit-btn">
+          <div class="view-edit-btn">
             {% if community %}
             <a href="/{{ community.slug }}/resource/edit?id={{ resource.id }}" class="btn">
             {% else %}
@@ -36,11 +37,11 @@
         <span class="resource-type">{% trans 'type:' %} &nbsp;<strong>{{ resource.kind }}</strong></span>
       </div>
 
-      <div class="resource-body">
+      <div class="view-body">
         <div class="mark-down">{{ resource.description|render_markup }}</div>
       </div>
 
-      <div class="resource-footer">
+      <div class="view-footer">
         <!-- Photos here -->
         {% if photos.object_list %}
         <div class="resource-photos">
@@ -56,6 +57,7 @@
 
       </div>
     </div>
+
     <div class="right-bar">
       <div id="map-preview">{% komoo_map geojson %}</div>
       <a href="{% url show_on_map %}?type=Resource&id={{resource.id}}">{% trans 'see on map' %}</a>
@@ -71,7 +73,7 @@
       </div>
     </div>
   </div>
-  <div class="resource-extras">
+  <div class="view-extras">
     {% taglist resource %}
     {% track_buttons %}
     {% comments resource %}
@@ -84,7 +86,7 @@
   {% vote_staticfiles %}
   {% comments_staticfiles %}
   <script type="text/javascript">
-      $('.resource-footer img').each(function(idx, obj){
+      $('.view-footer img').each(function(idx, obj){
         if(obj.offsetHeight > obj.offsetWidth){
           $(obj).css('height', '160px').css('width', 'auto')
                 .css('padding-left', Math.abs(obj.offsetWidth - 200) /2 )

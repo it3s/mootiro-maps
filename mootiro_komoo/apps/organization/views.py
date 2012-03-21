@@ -15,22 +15,37 @@ from annoying.functions import get_object_or_None
 from organization.models import Organization
 from organization.forms import FormOrganization
 from community.models import Community
-from main.utils import paginated_query
+from main.utils import paginated_query, create_geojson
 
 logger = logging.getLogger(__name__)
 
 
 @render_to('organization/list.html')
 def organization_list(request, community_slug=''):
-    community = get_object_or_None(Community, slug=community_slug)
-    organizations = paginated_query(Organization.objects.all(), request)
+    logging.debug('acessing organization > list')
 
+    if community_slug:
+        logger.debug('community_slug: {}'.format(community_slug))
+        community = get_object_or_None(Community, slug=community_slug)
+        organizations_list = Organization.objects.filter(community=community)
+    else:
+        community = None
+        organizations_list = Organization.objects.all()
+
+    organizations = paginated_query(organizations_list, request)
     return dict(community=community, organizations=organizations)
 
 
 @render_to('organization/show.html')
 def show(request, id=None, community_slug=''):
-    return {}
+    logger.debug('acessing organization > show')
+
+    organization = get_object_or_404(Organization, pk=id)
+    geojson = create_geojson([organization])
+    community = get_object_or_None(Community, slug=community_slug)
+
+    return dict(organization=organization, geojson=geojson,
+                community=community)
 
 
 class Edit(View):
