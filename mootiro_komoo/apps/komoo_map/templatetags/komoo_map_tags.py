@@ -13,7 +13,7 @@ def _parse_args(*args):
     return parsed_args
 
 
-@register.inclusion_tag('komoo_map/editor.html', takes_context=True)
+@register.inclusion_tag('komoo_map/komoo_map_templatetag.html', takes_context=True)
 def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4=''):
     """
     The syntax:
