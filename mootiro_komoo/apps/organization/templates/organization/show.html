@@ -16,7 +16,31 @@
 {% block content %}
   <div id="main-content" class="inline-block">
     <div class="main-column">
-      {{ organization }}
+
+      <div class="view-header">
+        <h2>{{ organization.name }}</h2>
+        <div class="view-votes">
+          {% vote organization %}
+          <div class="view-edit-btn">
+            {% if community %}
+            <a href="/{{ community.slug }}/organization/edit?id={{ organization.id }}" class="btn">
+            {% else %}
+            <a href="/organization/edit?id={{ organization.id }}" class="btn">
+            {% endif %}
+              <i class="icon-pencil"></i>
+            </a>
+          </div>
+        </div>
+        <span>
+          {% trans 'created by' %} <a href="#">{% firstof organization.creator.get_full_name organization.creator.username 'someone' %}</a>
+          {% trans 'in' %} {{ organization.creation_date|date:"d/m/Y" }}
+        </span>
+      </div>
+
+      <div class="view-body">
+        <div class="mark-down">{{ organization.description|render_markup }}</div>
+      </div>
+
     </div>
 
     <div class="right-bar">
@@ -26,8 +50,13 @@
 
   </div>
 
-  <div class="organization-extras">
+  <div class="view-extras">
     {% track_buttons %}
     {% comments organization %}
   </div>
+{% endblock %}
+
+{% block page_scripts %}
+  {% vote_staticfiles %}
+  {% comments_staticfiles %}
 {% endblock %}
