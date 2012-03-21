@@ -1,0 +1,20 @@
+{% extends 'global.html' %}
+
+{% load komoo_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'Organizations' %}{% endblock %}
+
+{% block menu %} {% menu community "organization" %} {% endblock %}
+
+{% block content %}
+    <div id="main-content">
+        {% for org in organizations.object_list %}
+            <div class="organization-list-item">
+                {{org}}
+            </div>
+        {% endfor %}
+
+        {% pagination organizations %}
+    </div>
+{% endblock %}

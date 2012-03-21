@@ -1,0 +1,14 @@
+{% extends 'global.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div id="main-content">
+        <div class="main-column">
+            {% crispy form_org form_org.helper %}
+        </div>
+  </div>
+{% endblock %}
+
+{% block css %}
+    {{ form_org.media }}
+{% endblock %}
