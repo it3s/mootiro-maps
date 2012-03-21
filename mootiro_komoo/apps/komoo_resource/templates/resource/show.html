@@ -13,7 +13,8 @@
 {% block menu %} {% menu community "resource" %} {% endblock %}
 
 {% block content %}
-  <div id="main-content" class="resource-main">
+  <div id="main-content" class="inline-block">
+
     <div class="resource main-column">
       <div class="resource-header">
         <h2>{{ resource.name }}</h2>
@@ -56,6 +57,7 @@
 
       </div>
     </div>
+
     <div class="right-bar">
       <div id="map-preview">{% komoo_map geojson %}</div>
       <a href="{% url show_on_map %}?type=Resource&id={{resource.id}}">{% trans 'see on map' %}</a>

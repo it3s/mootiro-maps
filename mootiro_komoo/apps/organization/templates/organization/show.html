@@ -1,0 +1,33 @@
+{% extends 'global.html' %}
+
+{% load komoo_tags %}
+{% load komoo_map_tags %}
+{% load i18n %}
+{% load comment_tags %}
+{% load vote_tags %}
+{% load markitup_tags %}
+
+{% block title %}
+    {{ organization.name }} {% trans 'at' %} {{ resource.community.name }}
+{% endblock %}
+
+{% block menu %} {% menu organization "organization" %} {% endblock %}
+
+{% block content %}
+  <div id="main-content" class="inline-block">
+    <div class="main-column">
+      {{ organization }}
+    </div>
+
+    <div class="right-bar">
+      <div id="map-preview">{% komoo_map geojson %}</div>
+      <a href="#">{% trans 'see on map' %}</a>
+    </div>
+
+  </div>
+
+  <div class="organization-extras">
+    {% track_buttons %}
+    {% comments organization %}
+  </div>
+{% endblock %}
