@@ -13,7 +13,6 @@ from django.forms.models import model_to_dict
 
 from annoying.decorators import render_to
 
-from community.forms import CommunityMapForm
 from community.models import Community
 from need.models import Need
 from komoo_resource.models import Resource
@@ -26,8 +25,7 @@ logger = logging.getLogger(__name__)
 @render_to('main/root.html')
 def root(request):
     logger.debug('acessing Root')
-    form = CommunityMapForm(request.POST)
-    return dict(form=form)
+    return dict(geojson={})
 
 
 def _fetch_geo_objects(Q):

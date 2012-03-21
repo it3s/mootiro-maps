@@ -16,7 +16,7 @@ from django.db.models.query_utils import Q
 from annoying.decorators import render_to
 
 from community.models import Community
-from community.forms import CommunityForm, CommunityMapForm
+from community.forms import CommunityForm
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
@@ -60,8 +60,7 @@ def on_map(request, community_slug):
 
     community = get_object_or_404(Community, slug=community_slug)
     geojson = create_geojson([community])
-    mapform = CommunityMapForm({'map': geojson})
-    return dict(community=community, form=mapform)
+    return dict(community=community, geojson=geojson)
 
 
 @render_to('community/view.html')
@@ -77,8 +76,7 @@ def view(request, community_slug):
 @render_to('community/map.html')
 def map(request):
     logger.debug('acessing Community > map')
-    form = CommunityMapForm(request.POST)
-    return dict(form=form)
+    return dict(geojson={})
 
 
 def communities_geojson(request):
