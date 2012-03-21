@@ -67,9 +67,10 @@ ul.horizontal li {
 .mark-down ul ul ul { list-style-type: square }
 .mark-down ol { list-style: decimal inside none }
 
+/* geo_object_listing templatetag */
 ul.geo-objects-listing li { padding: 4px 0 }
 ul.geo-objects-listing li ul { margin-left: 30px }
-ul.geo-objects-listing li div.img-holder {
+#map-panel-filter div.img-holder {
     width: 35px;
     text-align: center;
     display: inline-block;
@@ -221,6 +222,12 @@ ul.geo-objects-listing li div.img-holder {
 
 #map-panel { padding: 0 10px }
 #map-panel .panel { margin-top: 10px }
+#filter-radius { margin: 0 5px }
+#filter-radius input {
+    width: 3em;
+    vertical-align: baseline;
+    box-shadow: 1px 1px 1px #999999 inset;
+}
 
 .map-tabs { padding: 10px; }
 .map-tab {
