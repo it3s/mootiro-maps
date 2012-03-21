@@ -11,6 +11,6 @@ urlpatterns = patterns('organization.views',
 
     url(pr(r'^COMMUNITY_SLUG/organization/?$'), 'organization_list',
                                                 name='organization_list'),
-    url(pr(r'^COMMUNITY_SLUG/organization/?$'), Edit.as_view(),
+    url(pr(r'^COMMUNITY_SLUG/organization/edit/?$'), Edit.as_view(),
                                                 name='organization_edit'),
 )
