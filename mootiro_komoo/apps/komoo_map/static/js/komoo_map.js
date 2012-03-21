@@ -288,7 +288,7 @@ komoo.Map = function (element, options) {
     }
     // Join default option with custom options.
     var googleMapOptions = $.extend(komoo.MapOptions.googleMapOptions,
-                                    options.googleMapOptions)
+                                    options.googleMapOptions);
     // TODO: init overlay options
     // Initializing some properties.
     komooMap.options = $.extend(komoo.MapOptions, options);
@@ -323,7 +323,7 @@ komoo.Map = function (element, options) {
     if (komoo.onMapReady) {
         komoo.onMapReady(komooMap);
     }
-}
+};
 
 komoo.Map.prototype = {
     /**
@@ -338,7 +338,7 @@ komoo.Map.prototype = {
                 closeBoxMargin: '10px',
                 boxStyle: {
                     background: 'url(/static/img/infowindow-arrow.png) no-repeat 0 10px', // TODO: Hardcode is evil
-                    width: '200px',
+                    width: '200px'
                 }
             });
             google.maps.event.addDomListener(komooMap.infoWindow, 'domready', function (e) {
@@ -435,7 +435,7 @@ komoo.Map.prototype = {
             if (komooMap.addPanel.is(':hidden')) {
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
             }
-            komooMap._emit_mapclick(e)
+            komooMap._emit_mapclick(e);
         });
 
         google.maps.event.addListener(komooMap.googleMap, 'idle', function () {
@@ -506,7 +506,7 @@ komoo.Map.prototype = {
     goToSavedLocation: function () {
         var komooMap = this;
         var lastLocation = komoo.readCookie('lastLocation');
-        var zoom = parseInt(komoo.readCookie('lastZoom'));
+        var zoom = parseInt(komoo.readCookie('lastZoom'), 10);
         if (lastLocation && zoom) {
             lastLocation = lastLocation.split(',');
             var center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
@@ -561,7 +561,7 @@ komoo.Map.prototype = {
         var featureCollection;
         var overlays = [];
 
-        if (optAttach == undefined) {
+        if (optAttach === undefined) {
             optAttach = true;
         }
 
@@ -586,7 +586,7 @@ komoo.Map.prototype = {
         var s = null;
         var e = null;
         function getBounds(pos) {
-            if (n == null) {
+            if (n === null) {
                 n = s = pos[0];
                 w = e = pos[1];
             }
@@ -678,7 +678,7 @@ komoo.Map.prototype = {
                             new google.maps.LatLng(bounds[1][0], bounds[0][1]),
                             new google.maps.LatLng(bounds[0][0], bounds[1][1])
                     );
-                    n = null
+                    n = null;
                     w = null;
                     s = null;
                     e = null;
@@ -704,6 +704,7 @@ komoo.Map.prototype = {
         var komooMap = this;
         var geoJSON;
         var geoms = [];
+        var list;
         if (!options) {
             options = {};
         }
@@ -719,9 +720,9 @@ komoo.Map.prototype = {
             };
         }
         if (options.newOnly) {
-            var list = komooMap.newOverlays;
+            list = komooMap.newOverlays;
         } else {
-            var list = komooMap.overlays;
+            list = komooMap.overlays;
         }
         $.each(list, function (i, overlay) {
             var subCoords = [];
@@ -785,7 +786,7 @@ komoo.Map.prototype = {
             $.each(komooMap.overlaysByType[type], function (category, overlays) {
                 categories.push(category);
             });
-        } else if (categories.length == 0) {
+        } else if (categories.length === 0) {
             categories = ['uncategorized'];
         }
         $.each(categories, function (key, category) {
@@ -1037,13 +1038,14 @@ komoo.Map.prototype = {
      */
     goToUserLocation: function () {
         var komooMap = this;
+        var pos;
         if (google.loader.ClientLocation) { // Gets from google service
-            var pos = new google.maps.LatLng(google.loader.ClientLocation.latitude,
+            pos = new google.maps.LatLng(google.loader.ClientLocation.latitude,
                                              google.loader.ClientLocation.longitude);
         }
         if (navigator.geolocation) { // Uses "HTML5"
             navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = new google.maps.LatLng(position.coords.latitude,
+                pos = new google.maps.LatLng(position.coords.latitude,
                                                  position.coords.longitude);
                 komooMap.googleMap.setCenter(pos);
             }, function () { // User denied the "HTML5" access so use the info from google
@@ -1159,7 +1161,7 @@ komoo.Map.prototype = {
                         }
                     });
                 }
-                if (l == 0) {  // We had only one path, or the overlay wasnt a polygon.
+                if (l === 0) {  // We had only one path, or the overlay wasnt a polygon.
                     this.setMap(null);
                 } else {
                     komooMap.setCurrentOverlay(this);
@@ -1173,27 +1175,28 @@ komoo.Map.prototype = {
             }
         });
 
+        var infoContentTitle;
         if (overlay.properties.type == 'community') {
             // TODO: Add more info
-            var infoContentTitle = $('<a>').attr('href',
+            infoContentTitle = $('<a>').attr('href',
                     dutils.urls.resolve('view_community', {community_slug: overlay.properties.community_slug}));
             infoContentTitle.text(overlay.properties.name);
             var infoList = $('<ul>');
-            var msg = ngettext('%s resident', '%s residents', overlay.properties.population)
+            var msg = ngettext('%s resident', '%s residents', overlay.properties.population);
             infoList.append($('<li>').html(interpolate(msg, [overlay.properties.population])));
             //infoList.append($('<li>').html(interpolate('%s m<sup>2</sup>', [1])));
             infoContent.append(infoContentTitle);
             infoContent.append(infoList);
         } else if (overlay.properties.type == 'resource') {
-            var infoContentTitle = $('<a>').attr('href',
+            infoContentTitle = $('<a>').attr('href',
                     dutils.urls.resolve('view_resource', {id: overlay.properties.id}));
             infoContentTitle.text(overlay.properties.name);
             infoContent.append(infoContentTitle);
         } else {
             var slugname = overlay.properties.type + '_slug';
-            var params = {'community_slug': overlay.properties.community_slug}
+            var params = {'community_slug': overlay.properties.community_slug};
             params[slugname] = overlay.properties[slugname];
-            var infoContentTitle = $('<a>').attr('href',
+            infoContentTitle = $('<a>').attr('href',
                     dutils.urls.resolve('view_' + overlay.properties.type,
                         params));
             infoContentTitle.text(overlay.properties.name);
@@ -1208,12 +1211,13 @@ komoo.Map.prototype = {
                 komooMap.infoWindow.open(komooMap.googleMap);
             }
         }
-        var mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
+        var mousemoveHandler;
+        mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
             if (overlay.getPaths) {
                 overlay.setOptions({strokeOpacity: 0.8});
             }
         });
-        var mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
+        mousemoveHandler = google.maps.event.addListener(overlay, 'mousemove', function (e) {
             if ((komooMap.infoWindow.overlay && komooMap.infoWindow.overlay == overlay) ||
                     komooMap.editMode || !komooMap.options.enableInfoWindow) {
                 return;
@@ -1512,7 +1516,7 @@ komoo.Map.prototype = {
                 submenuItems.removeClass('map-button').addClass('map-menuitem').hide(); // Change the class
                 submenuItems.bind('click', function () {
                     $('.map-submenu', addMenu).hide();
-                    $('.map-panel-title', komooMap.addPanel).text($(this).text())
+                    $('.map-panel-title', komooMap.addPanel).text($(this).text());
                     $('.map-menuitem.selected', komooMap.mainPanel).removeClass('selected');
                     item.addClass('selected');
                     $('.map-menuitem:not(.selected)', komooMap.mainPanel).addClass('frozen');
@@ -1546,7 +1550,7 @@ komoo.Map.prototype = {
 
         panel.css({
             'margin': '10px 5px 10px 10px',
-            'width': '180px',
+            'width': '180px'
         });
 
         panel.append(tabs.selector);
@@ -1698,7 +1702,7 @@ komoo.createMapTab = function (items) {
         items: {},
         selector: $('<div>'),
         tabsSelector: $('<div>').addClass('map-tabs'),
-        containersSelector: $('<div>').addClass('map-container'),
+        containersSelector: $('<div>').addClass('map-container')
     };
     tabs.selector.append(tabs.tabsSelector, tabs.containersSelector);
     $.each(items, function (i, item) {
@@ -1723,7 +1727,7 @@ komoo.createMapTab = function (items) {
         tabs.containersSelector.append(tab.containerSelector);
     });
     return tabs;
-}
+};
 
 /**
  * Creates a cookie and save it.
@@ -1733,14 +1737,17 @@ komoo.createMapTab = function (items) {
  * @returns {void}
  */
 komoo.createCookie = function (name, value, days) {
+    var expires;
     if (days) {
         var date = new Date();
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        var expires = "; expires=" + date.toGMTString();
+        expires = "; expires=" + date.toGMTString();
     }
-    else var expires = "";
+    else {
+        expires = "";
+    }
     document.cookie = name + "=" + value + expires + "; path=/";
-}
+};
 
 /**
  * Reads a cookie.
@@ -1755,12 +1762,12 @@ komoo.readCookie = function (name) {
         while (c.charAt(0) == ' ') {
             c = c.substring(1, c.length);
         }
-        if (c.indexOf(nameEQ) == 0) {
+        if (c.indexOf(nameEQ) === 0) {
             return c.substring(nameEQ.length, c.length);
         }
     }
     return null;
-}
+};
 
 /**
  * Removes a cookie.
@@ -1769,4 +1776,4 @@ komoo.readCookie = function (name) {
  */
 komoo.eraseCookie = function (name) {
     createCookie(name, "", -1);
-}
+};
