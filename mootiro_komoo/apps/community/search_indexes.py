@@ -9,7 +9,7 @@ class CommunityIndex(indexes.RealTimeSearchIndex):
     text = indexes.CharField(document=True, use_template=True)
     name = indexes.EdgeNgramField(model_attr='name', boost=2.0)
     slug = indexes.EdgeNgramField(model_attr='slug', boost=2.0)
-    creator = indexes.CharField(model_attr='creator', null=True)
+    # creator = indexes.CharField(model_attr='creator', null=True)
     creation_date = indexes.DateTimeField(model_attr='creation_date')
 
     def index_queryset(self):
