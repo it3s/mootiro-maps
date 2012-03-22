@@ -9,8 +9,8 @@
 {% block page_scripts %}
 <script type="text/javascript">
 google.maps.event.addDomListener(window, 'load', function () {
-    if (!map.goToSavedLocation()) {
-      map.goToUserLocation();
+    if (!editor.goToSavedLocation()) {
+      editor.goToUserLocation();
     }
   });
 </script>

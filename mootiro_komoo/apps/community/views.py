@@ -50,8 +50,9 @@ def edit(request, community_slug=""):
     else:
         form = CommunityForm(instance=community)
         rdict = dict(form=form, community=community)
-    geojson = create_geojson([community])
-    rdict['geojson'] = geojson
+    geojson = create_geojson([community], convert=False)
+    geojson['features'][0]['properties']['userCanEdit'] = True
+    rdict['geojson'] = json.dumps(geojson)
     return render(request, template, rdict)
 
 
