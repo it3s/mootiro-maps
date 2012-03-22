@@ -37,7 +37,7 @@ TIME_ZONE = None  # 'America/Chicago'
 LANGUAGE_CODE = 'en-us'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'SDFGHLKJOIY#$fhgklkjyufc*#@$IUJO!lkjkjlkjsklam'
+SECRET_KEY = 'acwAJKSHKJSHKJS$%#%$#!!LKAJKSMLASMLMKAmkmlalkams'
 
 # staging LOG goes here
 LOGGING = {
