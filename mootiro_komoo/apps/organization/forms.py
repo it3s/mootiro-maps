@@ -5,6 +5,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from markitup.widgets import MarkItUpWidget
+from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from main.utils import MooHelper
 # from main.widgets import Autocomplete
@@ -15,8 +16,7 @@ from organization.models import Organization
 class FormOrganization(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField('Description', widget=MarkItUpWidget())
-    # community = forms.CharField(
-        # widget=Autocomplete(Community, '/community/search_by_name'))
+    community = AutoCompleteSelectMultipleField('community')
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:

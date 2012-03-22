@@ -3,6 +3,7 @@
 {% load komoo_tags %}
 {% load comment_tags %}
 {% load i18n %}
+{% load markitup_tags %}
 
 {% block title %}{% trans 'Organizations' %}{% endblock %}
 
@@ -35,8 +36,8 @@
           </div>
         </h4>
 
-        <p>
-          {{ org.description|slice:"250" }}
+        <p class="mark-down">
+          {{ org.description|slice:"250"|render_markup }}
           {% if org.description|length|get_digit:"-1" > 250 %} ... {% endif %}
         </p>
 

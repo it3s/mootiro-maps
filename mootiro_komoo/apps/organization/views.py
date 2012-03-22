@@ -7,7 +7,6 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import (render_to_response, RequestContext,
     get_object_or_404, HttpResponseRedirect)
-from django import forms
 
 from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
@@ -63,11 +62,11 @@ class Edit(View):
         else:
             form_org = FormOrganization()
 
-        form_org.initial['community'] = form_org.initial.get('community', [])
-        if community and not community.id in form_org.initial['community']:
-            form_org.initial['community'].append(community.id)
+        # form_org.initial['community'] = form_org.initial.get('community', [])
+        # if community and not community.id in form_org.initial['community']:
+            # form_org.initial['community'].append(community.id)
 
-        tmplt = 'organization/edit.html' if _id else 'organization/new.html'
+        tmplt = 'organization/edit.html'  if _id else 'organization/new.html'
         return render_to_response(tmplt,
             dict(form_org=form_org, community=community),
             context_instance=RequestContext(request))

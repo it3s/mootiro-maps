@@ -138,6 +138,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'markitup',
+    'ajax_select',
     'fileupload',
     # our apps
     'komoo_map',
@@ -194,25 +195,12 @@ HAYSTACK_SEARCH_ENGINE = 'whoosh'
 HAYSTACK_WHOOSH_PATH = os.path.join(PROJECT_ROOT, 'komoo_index')
 HAYSTACK_DEFAULT_OPERATOR = 'OR'
 
-# # A sample logging configuration. The only tangible logging
-# # performed by this configuration is to send an email to
-# # the site admins on every HTTP 500 error.
-# # See http://docs.djangoproject.com/en/dev/topics/logging for
-# # more details on how to customize your logging configuration.
-# LOGGING = {
-#     'version': 1,
-#     'disable_existing_loggers': False,
-#     'handlers': {
-#         'mail_admins': {
-#             'level': 'ERROR',
-#             'class': 'django.utils.log.AdminEmailHandler'
-#         }
-#     },
-#     'loggers': {
-#         'django.request': {
-#             'handlers': ['mail_admins'],
-#             'level': 'ERROR',
-#             'propagate': True,
-#         },
-#     }
-# }
+# AJAX-SELECT
+# define the lookup channels in use on the site
+AJAX_LOOKUP_CHANNELS = {
+    #   pass a dict with the model and the field to search against
+    'community': ('community.lookups', 'CommunityLookup')
+}
+# magically include jqueryUI/js/css
+AJAX_SELECT_BOOTSTRAP = False
+AJAX_SELECT_INLINES = 'inline'

@@ -5,7 +5,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.i18n import javascript_catalog
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-
+from ajax_select import urls as ajax_select_urls
 
 # Some URL fragments to be reused throughout the application
 COMMUNITY_SLUG = r'(?P<community_slug>[a-zA-Z0-9-]+)'
@@ -42,6 +42,7 @@ urlpatterns = patterns('',
     url(r'^markitup/', include('markitup.urls')),
     url(r'^upload/', include('fileupload.urls')),
     url(r'^search/', include('haystack.urls')),
+    url(r'^lookups/', include(ajax_select_urls)),
 
     url(r'', include('need.urls')),
     url(r'', include('proposal.urls')),
