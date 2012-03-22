@@ -27,7 +27,7 @@ def organization_list(request, community_slug=''):
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_None(Community, slug=community_slug)
-        organizations_list = Organization.objects.filter(community=community)
+        organizations_list = community.organization_set.all()
     else:
         community = None
         organizations_list = Organization.objects.all()
@@ -63,12 +63,11 @@ class Edit(View):
         else:
             form_org = FormOrganization()
 
-        if community:
-            form_org.fields['community'].widget = forms.HiddenInput()
-            form_org.initial['community'] = community.id
+        form_org.initial['community'] = form_org.initial.get('community', [])
+        if community and not community.id in form_org.initial['community']:
+            form_org.initial['community'].append(community.id)
 
         tmplt = 'organization/edit.html' if _id else 'organization/new.html'
-        # tmplt = 'organization/edit.html'
         return render_to_response(tmplt,
             dict(form_org=form_org, community=community),
             context_instance=RequestContext(request))
@@ -101,7 +100,6 @@ class Edit(View):
         else:
             logger.debug('Form erros: {}'.format(dict(form_org._errors)))
             tmplt = 'organization/edit.html' if _id else 'organization/new.html'
-            tmplt = 'organization/edit.html'
             return render_to_response(tmplt,
                 dict(form_org=form_org, community=community),
                 context_instance=RequestContext(request))

@@ -7,16 +7,16 @@ from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 
 from main.utils import MooHelper
-from main.widgets import Autocomplete
-from community.models import Community
+# from main.widgets import Autocomplete
+# from community.models import Community
 from organization.models import Organization
 
 
 class FormOrganization(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField('Description', widget=MarkItUpWidget())
-    community = forms.CharField(
-        widget=Autocomplete(Community, '/community/search_by_name'))
+    # community = forms.CharField(
+        # widget=Autocomplete(Community, '/community/search_by_name'))
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
@@ -47,5 +47,8 @@ class FormOrganization(forms.ModelForm):
             org.save()
         return org
 
-    def clean_community(self):
-        return Community.objects.get(id=self.cleaned_data['community'])
+    # def clean_community(self):
+    #     if self.cleaned_data.get('community', None):
+    #         return Community.objects.get(id=self.cleaned_data['community'])
+    #     else:
+    #         return []

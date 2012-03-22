@@ -16,7 +16,7 @@ class Organization(GeoRefModel):
     creation_date = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User, null=True, blank=True)
 
-    community = models.ForeignKey(Community, null=True, blank=True)
+    community = models.ManyToManyField(Community, null=True, blank=True)
 
     def __unicode__(self):
         return unicode(self.name)
