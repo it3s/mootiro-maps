@@ -564,9 +564,6 @@ input[type=text], textarea{
 .view-footer div:first-child{
   margin-top: 100px;
 }
-.view-extras{
-  padding: 0 60px;
-}
 .view-edit-btn{
   display: inline-block;
   float: right;
