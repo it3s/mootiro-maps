@@ -21,10 +21,6 @@ class Community(GeoRefModel):
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
-    # Geolocalization attributes
-    # objects = models.GeoManager()
-    # geometry = models.PolygonField(srid=4326)
-
     def __unicode__(self):
         return self.name
 

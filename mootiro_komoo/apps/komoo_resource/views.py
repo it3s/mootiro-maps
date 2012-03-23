@@ -58,6 +58,58 @@ def show(request, community_slug=None, id=None):
                 community=community, photos=photos)
 
 
+class New(View):
+    """ Class based view for editing a Resource """
+
+    @method_decorator(login_required)
+    def get(self, request, community_slug=None, *args, **kwargs):
+        logger.debug('acessing komoo_resource > New with GET')
+        community = get_object_or_None(Community, slug=community_slug)
+
+        form_resource = FormResource()
+        form_resource.fields.pop('image', '')
+
+        if request.GET.get('frommap', None) == 'false':
+            form_resource.fields.pop('geometry', '')
+            tmplt = 'resource/new.html'
+        else:
+            tmplt = 'resource/new_frommap.html'
+
+        if community:
+            logger.debug('community_slug: {}'.format(community_slug))
+            form_resource.fields['community'].widget = forms.HiddenInput()
+            form_resource.initial['community'] = community.id
+
+        return render_to_response(tmplt,
+            dict(form_resource=form_resource, community=community),
+            context_instance=RequestContext(request))
+
+    def post(self, request, community_slug=None, *args, **kwargs):
+        logger.debug('acessing komoo_resource > New with POST : {}'.format(
+                        request.POST))
+
+        form_resource = FormResource(request.POST)
+        community = get_object_or_None(Community, slug=community_slug)
+
+        if request.GET.get('frommap', None) == 'false':
+            form_resource.fields.pop('geometry', '')
+            tmplt = 'resource/new.html'
+        else:
+            tmplt = 'resource/new_frommap.html'
+
+        if form_resource.is_valid():
+            resource = form_resource.save(user=request.user)
+
+            prefix = '/{}'.format(community_slug) if community_slug else ''
+            _url = '{}/resource/{}'.format(prefix, resource.id)
+            return HttpResponseRedirect(_url)
+        else:
+            logger.debug('Form erros: {}'.format(dict(form_resource._errors)))
+            return render_to_response(tmplt,
+                dict(form_resource=form_resource, community=community),
+                context_instance=RequestContext(request))
+
+
 class Edit(View):
     """ Class based view for editing a Resource """
 
@@ -79,8 +131,7 @@ class Edit(View):
             form_resource.fields['community'].widget = forms.HiddenInput()
             form_resource.initial['community'] = community.id
 
-        tmplt = 'resource/edit.html' if _id else 'resource/new.html'
-        return render_to_response(tmplt,
+        return render_to_response('resource/edit.html',
             dict(form_resource=form_resource, community=community, resource=resource),
             context_instance=RequestContext(request))
 
@@ -104,13 +155,12 @@ class Edit(View):
             if _id:
                 return HttpResponseRedirect(_url)
             else:
-                return render_to_response('resource/new.html',
+                return render_to_response('resource/edit.html',
                     dict(redirect=_url, community=community),
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_resource._errors)))
-            tmplt = 'resource/edit.html' if _id else 'resource/new.html'
-            return render_to_response(tmplt,
+            return render_to_response('resource/edit.html',
                 dict(form_resource=form_resource, community=community),
                 context_instance=RequestContext(request))
 

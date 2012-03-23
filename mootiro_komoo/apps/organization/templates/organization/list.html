@@ -17,9 +17,9 @@
         <h4>
           <span class="apart">
             {% if community %}
-            <a href="/{{ community.slug }}/organization/{{ org.id }}">{{ org.name }}</a>
+            <a href="/{{ community.slug }}/organization/{{ org.slug }}">{{ org.name }}</a>
             {% else %}
-            <a href="/organization/{{ org.id }}">{{ org.name }}</a>
+            <a href="/organization/{{ org.slug }}">{{ org.name }}</a>
             {% endif %}
             {% trans 'at' %}
             {% with size=4 %}
