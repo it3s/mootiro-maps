@@ -58,7 +58,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             if hasattr(obj, 'slug'):
                 feature['properties']['{}_slug'.format(type_)] = obj.slug
             if hasattr(obj, 'categories'):
-                feature['properties']['categories'] = [{'name': c.name, 'image': c.image()} for c in obj.categories.all()]
+                feature['properties']['categories'] = [{'name': c.name, 'image': c.image} for c in obj.categories.all()]
             if hasattr(obj, 'population'):
                 feature['properties']['population'] = obj.population
 
