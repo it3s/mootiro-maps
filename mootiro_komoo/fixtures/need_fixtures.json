@@ -3,14 +3,14 @@
     "model": "need.needcategory",
     "pk": 1,
     "fields": {
-      "name": "Education"
+      "name": "Culture"
     }
   },
   {
     "model": "need.needcategory",
     "pk": 2,
     "fields": {
-      "name": "Sport"
+      "name": "Education"
     }
   },
   {
@@ -45,7 +45,21 @@
     "model": "need.needcategory",
     "pk": 7,
     "fields": {
+      "name": "Mobility"
+    }
+  },
+  {
+    "model": "need.needcategory",
+    "pk": 8,
+    "fields": {
       "name": "Social Service"
+    }
+  },
+  {
+    "model": "need.needcategory",
+    "pk": 9,
+    "fields": {
+      "name": "Sport"
     }
   },
   {
