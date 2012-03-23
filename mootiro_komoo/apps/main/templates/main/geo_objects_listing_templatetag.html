@@ -12,7 +12,9 @@
   <li>
     <div class="img-holder">{{ form.needs }}</div>
     <span>Needs</span>
-    {% if show_categories %}
+  </li>
+  {% if show_categories %}
+  <li class="need categories">
     <ul>
       {% for name, f in form.need_category_fields %}
         <li>
@@ -21,8 +23,8 @@
         </li>
       {% endfor %}
     </ul>
-    {% endif %}
   </li>
+  {% endif %}
   <li>
     <div class="img-holder">{{ form.organizations }}</div>
     <span>Organizations</span>
