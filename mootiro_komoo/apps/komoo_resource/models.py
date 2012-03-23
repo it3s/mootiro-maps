@@ -42,5 +42,8 @@ class Resource(GeoRefModel):
     def __unicode__(self):
         return unicode(self.name)
 
+    image = "img/resource.png"
+    image_off = "img/resource-off.png"
+
 
 reversion.register(Resource)

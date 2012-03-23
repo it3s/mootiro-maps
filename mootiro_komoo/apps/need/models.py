@@ -79,4 +79,7 @@ class Need(GeoRefModel):
         super(Need, self).save(*args, **kwargs)
     ### END ###
 
+    image = "img/need.png"
+    image_off = "img/need-off.png"
+
 reversion.register(Need)

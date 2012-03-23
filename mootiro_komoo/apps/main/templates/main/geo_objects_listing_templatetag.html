@@ -1,0 +1,56 @@
+{% block js %}{{ form.media.js }}{% endblock %}
+
+{% autoescape off %}
+<ul class="geo-objects-listing">
+  <li>
+    <div class="img-holder">{{ form.communities }}</div>
+    <span>Communities</span>
+    {% if show_categories %}
+      HERE GOES THE COMMUNITY CATEGORIES
+    {% endif %}
+  </li>
+  <li>
+    <div class="img-holder">{{ form.needs }}</div>
+    <span>Needs</span>
+    {% if show_categories %}
+      HERE GOES THE NEED CATEGORIES
+    {% endif %}
+  </li>
+  <li>
+    <div class="img-holder">{{ form.organizations }}</div>
+    <span>Organizations</span>
+  </li>
+  <li>
+    <div class="img-holder">{{ form.resources }}</div>
+    <span>Resources</span>
+  </li>
+</ul>
+{% endautoescape %}
+
+<!--!
+{% load static %}
+<ul class="geo-objects-listing">
+  <li>
+    <div class="img-holder"><img src="{% get_static_prefix %}img/need-hover.png"/></div>
+    <span>Needs</span>
+    {% if need_categories %}
+      <ul>
+        {% for nc in need_categories %}
+        <li>
+          <div class="img-holder"><img src="{% get_static_prefix %}{{ nc.image }}"/></div>
+          <span>{{ nc.name }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+  <li>
+    <div class="img-holder"><img src="{% get_static_prefix %}img/organization-hover.png"/></div>
+    <span>Organizations</span>
+  </li>
+  <li>
+    <div class="img-holder"><img src="{% get_static_prefix %}img/resource-hover.png"/></div>
+    <span>Resources</span>
+  </li>
+</ul>
+-->

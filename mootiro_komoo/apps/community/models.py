@@ -44,4 +44,8 @@ class Community(GeoRefModel):
         super(Community, self).save(*args, **kwargs)
     ### END ###
 
+    image = "img/community.png"
+    image_off = "img/community-off.png"
+
+
 reversion.register(Community)
