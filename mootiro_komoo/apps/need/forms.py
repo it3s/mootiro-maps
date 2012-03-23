@@ -27,7 +27,7 @@ class NeedForm(forms.ModelForm):
     description = forms.CharField(widget=MarkItUpWidget())
 
     categories = forms.ModelMultipleChoiceField(
-        queryset=NeedCategory.objects.all(),
+        queryset=NeedCategory.objects.all().order_by('name'),
         widget=ImageSwitchMultiple(
             get_image_tick=NeedCategory.get_image,
             get_image_no_tick=NeedCategory.get_image_off

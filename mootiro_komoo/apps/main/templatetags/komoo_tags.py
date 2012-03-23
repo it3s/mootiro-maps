@@ -4,7 +4,7 @@ from django import template
 from django import forms
 
 from main.utils import templatetag_args_parser
-from main.widgets import ImageSwitch
+from main.widgets import ImageSwitch, ImageSwitchMultiple
 from community.models import Community
 from need.models import Need, NeedCategory
 from organization.models import Organization
@@ -56,24 +56,42 @@ def geo_objects_listing(arg1='', arg2=''):
         'resources_off': Resource.image_off if switchable else Resource.image,
     }
 
+    image_field = lambda image, image_off: \
+        forms.BooleanField(
+            widget=ImageSwitch(image_tick=image, image_no_tick=image_off)
+        )
+
     class GeoObjectsForm(forms.Form):
-        communities = forms.BooleanField(widget=ImageSwitch(
-            image_tick=img['communities'], image_no_tick=img['communities_off']))
+        communities = image_field(img['communities'], img['communities_off'])
+        needs = image_field(img['needs'], img['needs_off'])
+        organizations = image_field(img['organizations'], img['organizations_off'])
+        resources = image_field(img['resources'], img['resources_off'])
 
-        needs = forms.BooleanField(widget=ImageSwitch(
-            image_tick=img['needs'], image_no_tick=img['needs_off']))
+        nc_prefix = "need_category_"
 
-        organizations = forms.BooleanField(widget=ImageSwitch(
-            image_tick=img['organizations'], image_no_tick=img['organizations_off']))
+        def __init__(self, *a, **kw):
+            super(GeoObjectsForm, self).__init__(*a, **kw)
 
-        resources = forms.BooleanField(widget=ImageSwitch(
-            image_tick=img['resources'], image_no_tick=img['resources_off']))
+            if show_categories:
+                self.need_categories = {}
+                for nc in NeedCategory.objects.all().order_by('name'):
+                    key = self.nc_prefix + nc.name.lower().replace(" ", "_")
+                    field = image_field(nc.image, nc.image_off)
+                    self.fields[key] = field
+                    self.need_categories[key] = field
 
+        @property
+        def need_category_fields(self):
+            """Kludge for rendering categories fields. Oo"""
+            s = []
+            for f_id, field in self.need_categories.iteritems():
+                name = f_id[len(self.nc_prefix):].replace("_", " ").title()
+                s.append((name, field.widget.render(f_id, "")))
+            return s
 
     form = GeoObjectsForm()
-    nc = NeedCategory.objects.all() if show_categories else []
 
-    return dict(form=form, community_categories=[], need_categories=nc)
+    return dict(form=form, show_categories=show_categories)
 
 
 @register.inclusion_tag('main/track_buttons_templatetag.html')

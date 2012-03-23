@@ -27,9 +27,11 @@ class NeedCategory(models.Model):
     def get_image_off(cls, name):
         return "need_categories/%s-off.png" % slugify(name)
 
+    @property
     def image(self):
         return self.get_image(self.name)
 
+    @property
     def image_off(self):
         return self.get_image_off(self.name)
 
