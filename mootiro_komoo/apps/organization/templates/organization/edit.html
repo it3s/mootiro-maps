@@ -2,8 +2,6 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
-    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
 
     <div id="main-content">
         <div class="main-column">
@@ -14,4 +12,6 @@
 
 {% block css %}
     {{ form_org.media }}
+    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
 {% endblock %}
