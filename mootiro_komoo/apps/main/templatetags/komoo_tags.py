@@ -76,7 +76,7 @@ def geo_objects_listing(arg1='', arg2=''):
                 self.need_categories = {}
                 for nc in NeedCategory.objects.all().order_by('name'):
                     key = self.nc_prefix + nc.name.lower().replace(" ", "_")
-                    field = image_field(nc.image, nc.image_off)
+                    field = image_field(nc.image, nc.image_off if switchable else nc.image)
                     self.fields[key] = field
                     self.need_categories[key] = field
 
