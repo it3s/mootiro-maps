@@ -226,7 +226,7 @@ komoo.ServerFetchMapType.prototype = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (window.console) console.error(textStatus);
-                alert('ERRO!!!22! - ' + url); // FIXME: Add an usefull message.
+                alert('ERRO!!!22! - ' + this.url); // FIXME: Add an usefull message.
             }
         });
         return div;
