@@ -138,7 +138,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     'markitup',
-    'ajax_select',
+    'lib.ajax_select',
     'fileupload',
     # our apps
     'komoo_map',
@@ -178,7 +178,7 @@ TINYMCE_DEFAULT_CONFIG = dict(
 MARKITUP_SET = 'markitup/sets/markdown'
 MARKITUP_FILTER = ('django.contrib.markup.templatetags.markup.markdown', {})
 MARKITUP_AUTO_PREVIEW = True
-JQUERY_URL = ''
+JQUERY_URL = 'dummy.js'
 
 
 #CAS config
@@ -203,4 +203,4 @@ AJAX_LOOKUP_CHANNELS = {
 }
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = False
-AJAX_SELECT_INLINES = 'inline'
+AJAX_SELECT_INLINES = False

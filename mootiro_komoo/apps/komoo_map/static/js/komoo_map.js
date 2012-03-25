@@ -54,7 +54,7 @@ komoo.RegionTypes = [
         title: gettext('Needs'),
         tooltip: gettext('Add Need'),
         color: '#f00',
-        icon: '/static/img/need-hover.png',
+        icon: '/static/img/need.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
                        google.maps.drawing.OverlayType.MARKER],
@@ -69,7 +69,7 @@ komoo.RegionTypes = [
         title: gettext('Organization'),
         tooltip: gettext('Add Organization'),
         color: '#00f',
-        icon: '/static/img/organization-hover.png',
+        icon: '/static/img/organization.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: dutils.urls.resolve('organization_edit',
             {community_slug: 'community_slug'}),
@@ -82,11 +82,11 @@ komoo.RegionTypes = [
         title: gettext('Resource'),
         tooltip: gettext('Add Resource'),
         color: '#fff',
-        icon: '/static/img/resource-hover.png',
+        icon: '/static/img/resource.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
                        google.maps.drawing.OverlayType.MARKER],
-        formUrl: dutils.urls.resolve('resource_edit',
+        formUrl: dutils.urls.resolve('resource_new',
             {community_slug: 'community_slug'}),
         viewUrl: '',
         disabled: false
@@ -97,7 +97,7 @@ komoo.RegionTypes = [
         title: gettext('Funder'),
         tooltip: gettext('Add Funder'),
         color: '#000',
-        icon: '/static/img/funder-hover.png',
+        icon: '/static/img/funder.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: '',
         viewUrl: '',
@@ -226,7 +226,7 @@ komoo.ServerFetchMapType.prototype = {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (window.console) console.error(textStatus);
-                alert('ERRO!!!22! - ' + url); // FIXME: Add an usefull message.
+                alert('ERRO!!!22! - ' + this.url); // FIXME: Add an usefull message.
             }
         });
         return div;
@@ -736,7 +736,7 @@ komoo.Map.prototype = {
                 if (feature.properties.categories && feature.properties.categories[0]) {
                     overlay.setIcon('/static/' + feature.properties.categories[0].image);
                 } else {
-                    overlay.setIcon('/static/img/' + feature.properties.type + '-hover.png'); // FIXME: Hardcode is evil
+                    overlay.setIcon('/static/img/' + feature.properties.type + '.png'); // FIXME: Hardcode is evil
                 }
                 if (panTo) komooMap.googleMap.setCenter(latLng);
                 // Adds to clusterer
@@ -1378,7 +1378,7 @@ komoo.Map.prototype = {
             komooMap.drawingManager.setDrawingMode(null);
 
             // Sets the custom image.
-            if (e.overlay.setIcon) e.overlay.setIcon('/static/img/' + komooMap.type + '-hover.png'); // FIXME: Hardcode is evil
+            if (e.overlay.setIcon) e.overlay.setIcon('/static/img/' + komooMap.type + '.png'); // FIXME: Hardcode is evil
 
             var path;
             if (e.overlay.getPath) path = e.overlay.getPath();

@@ -24,3 +24,6 @@ class Organization(GeoRefModel):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         return super(Organization, self).save(*args, **kwargs)
+
+    image = "img/organization.png"
+    image_off = "img/organization-off.png"

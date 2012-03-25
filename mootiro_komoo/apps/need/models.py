@@ -21,15 +21,17 @@ class NeedCategory(models.Model):
 
     @classmethod
     def get_image(cls, name):
-        return "need/%s.png" % slugify(name)
+        return "need_categories/%s.png" % slugify(name)
 
     @classmethod
     def get_image_off(cls, name):
-        return "need/%s-off.png" % slugify(name)
+        return "need_categories/%s-off.png" % slugify(name)
 
+    @property
     def image(self):
         return self.get_image(self.name)
 
+    @property
     def image_off(self):
         return self.get_image_off(self.name)
 
@@ -78,5 +80,8 @@ class Need(GeoRefModel):
             self.slug = slugify(self.title, self.slug_exists)
         super(Need, self).save(*args, **kwargs)
     ### END ###
+
+    image = "img/need.png"
+    image_off = "img/need-off.png"
 
 reversion.register(Need)

@@ -36,10 +36,10 @@ def organization_list(request, community_slug=''):
 
 
 @render_to('organization/show.html')
-def show(request, id=None, community_slug=''):
+def show(request, organization_slug='', community_slug=''):
     logger.debug('acessing organization > show')
 
-    organization = get_object_or_404(Organization, pk=id)
+    organization = get_object_or_404(Organization, slug=organization_slug)
     geojson = create_geojson([organization])
     community = get_object_or_None(Community, slug=community_slug)
 
@@ -66,7 +66,7 @@ class Edit(View):
         # if community and not community.id in form_org.initial['community']:
             # form_org.initial['community'].append(community.id)
 
-        tmplt = 'organization/edit.html'  if _id else 'organization/new.html'
+        tmplt = 'organization/edit.html' # if _id else 'organization/new.html'
         return render_to_response(tmplt,
             dict(form_org=form_org, community=community),
             context_instance=RequestContext(request))

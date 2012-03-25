@@ -1,0 +1,37 @@
+{% block js %}{{ form.media.js }}{% endblock %}
+
+{% autoescape off %}
+<ul class="geo-objects-listing" style="display: block; clear: both;">
+  <li>
+    <div class="img-holder">{{ form.communities }}</div>
+    <span>Communities</span>
+    {% if show_categories %}
+      {# HERE GOES THE COMMUNITY CATEGORIES #}
+    {% endif %}
+  </li>
+  <li>
+    <div class="img-holder">{{ form.needs }}</div>
+    <span>Needs</span>
+  </li>
+  {% if show_categories %}
+  <li class="need categories">
+    <ul>
+      {% for name, f in form.need_category_fields %}
+        <li>
+          <div class="img-holder">{{ f }}</div>
+          <span>{{name}}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endif %}
+  <li>
+    <div class="img-holder">{{ form.organizations }}</div>
+    <span>Organizations</span>
+  </li>
+  <li>
+    <div class="img-holder">{{ form.resources }}</div>
+    <span>Resources</span>
+  </li>
+</ul>
+{% endautoescape %}

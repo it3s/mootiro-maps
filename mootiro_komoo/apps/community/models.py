@@ -21,10 +21,6 @@ class Community(GeoRefModel):
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
-    # Geolocalization attributes
-    # objects = models.GeoManager()
-    # geometry = models.PolygonField(srid=4326)
-
     def __unicode__(self):
         return self.name
 
@@ -43,5 +39,9 @@ class Community(GeoRefModel):
             self.slug = slugify(self.name, self.slug_exists)
         super(Community, self).save(*args, **kwargs)
     ### END ###
+
+    image = "img/community.png"
+    image_off = "img/community-off.png"
+
 
 reversion.register(Community)

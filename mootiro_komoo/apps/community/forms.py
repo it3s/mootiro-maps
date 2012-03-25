@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-
 from django import forms
 from markitup.widgets import MarkItUpWidget
 

@@ -9,6 +9,16 @@
 
 {% block content %}
   <div id="main-content">
+
+  <div>
+    {% if community %}
+    <a class="button" href="{% url resource_new community.slug %}?frommap=false">{% trans 'New Resource' %}</a>
+    {% else %}
+    <a class="button" href="{% url resource_new %}?frommap=false">{% trans 'New Resource' %}</a>
+    {% endif %}
+    <div class="ajax-search"><input type="text"/></div>
+  </div>
+
   {% for resource in resources.object_list %}
 
     <div class="view-list-item {% cycle 'odd' '' %}">

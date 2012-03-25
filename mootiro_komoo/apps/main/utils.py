@@ -58,7 +58,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             if hasattr(obj, 'slug'):
                 feature['properties']['{}_slug'.format(type_)] = obj.slug
             if hasattr(obj, 'categories'):
-                feature['properties']['categories'] = [{'name': c.name, 'image': c.image()} for c in obj.categories.all()]
+                feature['properties']['categories'] = [{'name': c.name, 'image': c.image} for c in obj.categories.all()]
             if hasattr(obj, 'population'):
                 feature['properties']['population'] = obj.population
 
@@ -101,3 +101,27 @@ def paginated_query(query, request=None, page=None, size=None):
     except EmptyPage:  # If page is out of range, deliver last page
         _paginated_query = paginator.page(paginator.num_pages)
     return _paginated_query
+
+
+def templatetag_args_parser(*args):
+    """
+    Keyword-arguments like function parser. Designed to be used in templatetags.
+    Usage:
+
+    def mytemplatetag(..., arg1='', arg2='', arg3=''):
+        parsed_args = templatetag_args_parser(arg1, arg2, arg3)
+
+        label = parsed_args.get('label', 'Default')
+        use_border = parsed_args.get('use_border', False)
+        zoom = parsed_args.get('zoom', 16)
+
+    And in the template...
+        {% mytemplatetag 'zoom=12' 'label=Your name' %}
+
+    """
+    parsed_args = {}
+    for arg in args:
+        if arg:
+            a = arg.split('=')
+            parsed_args[a[0]] = a[1]
+    return parsed_args

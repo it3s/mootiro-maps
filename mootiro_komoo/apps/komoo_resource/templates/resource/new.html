@@ -1,14 +1,14 @@
-{% if redirect %}
-    <script>window.location = '{{redirect}}';</script>
-{% else %}
+{% extends 'global.html' %}
+{% load crispy_forms_tags %}
 
-    {% load crispy_forms_tags %}
-    {{ form_resource.media }}
-
-    <div id="main-content">
-      <div class="main-column">
-        {% crispy form_resource form_resource.helper %}
-      </div>
+{% block content %}
+  <div id="main-content">
+    <div class="main-column">
+      {% crispy form_resource form_resource.helper %}
     </div>
+  </div>
+{% endblock %}
 
-{% endif %}
+{% block css %}
+  {{ form_resource.media }}
+{% endblock %}
