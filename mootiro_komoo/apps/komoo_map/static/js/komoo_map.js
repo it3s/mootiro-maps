@@ -381,8 +381,7 @@ komoo.Map.prototype = {
                 komooMap.infoWindow.isMouseover = false;
                 komooMap.infoWindow.timer = setTimeout(function () {
                     if (!komooMap.infoWindow.isMouseover) {
-                        komooMap.infoWindow.close();
-                        komooMap.infoWindow.overlay = undefined;
+                        komooMap.closeInfoWindow();
                     }
                 }, 200);
             }
@@ -398,6 +397,18 @@ komoo.Map.prototype = {
     closeInfoWindow: function () {
         var komooMap = this;
         komooMap.infoWindow.close();
+        var overlay = komooMap.infoWindow.overlay;
+        if (overlay && overlay.highlighted) {
+            if (overlay.setIcon) {
+                if (overlay.properties.categories && overlay.properties.categories[0]) {
+                    overlay.setIcon('/static/img/near/' + overlay.properties.categories[0].name.toLowerCase() + '.png');
+                } else {
+                    overlay.setIcon('/static/img/near/' + overlay.properties.type + '.png'); // FIXME: Hardcode is evil
+                }
+            }
+            overlay.highlighted = false;
+        }
+        komooMap.infoWindow.overlay = undefined;
     },
 
     /**
@@ -737,9 +748,9 @@ komoo.Map.prototype = {
                 var latLng = new google.maps.LatLng(pos[0], pos[1]);
                 overlay.setPosition(latLng);
                 if (feature.properties.categories && feature.properties.categories[0]) {
-                    overlay.setIcon('/static/' + feature.properties.categories[0].image);
+                    overlay.setIcon('/static/img/near/' + feature.properties.categories[0].name.toLowerCase() + '.png');
                 } else {
-                    overlay.setIcon('/static/img/' + feature.properties.type + '.png'); // FIXME: Hardcode is evil
+                    overlay.setIcon('/static/img/near/' + feature.properties.type + '.png'); // FIXME: Hardcode is evil
                 }
                 if (panTo) komooMap.googleMap.setCenter(latLng);
                 // Adds to clusterer
@@ -1326,8 +1337,7 @@ komoo.Map.prototype = {
             if (!komooMap.infoWindow.isMouseover) {
                 komooMap.infoWindow.timer = setTimeout(function () {
                     if (!komooMap.infoWindow.isMouseover) {
-                        komooMap.infoWindow.close();
-                        komooMap.infoWindow.overlay = undefined;
+                        komooMap.closeInfoWindow();
                     }
                 }, 200);
             }
@@ -1515,7 +1525,7 @@ komoo.Map.prototype = {
             komooMap.editToolbar.append(deleteButton);
 
             komooMap.event.bind('editmode_changed', function(e, mode) {
-                komooMap.infoWindow.close(); // Close the popup window
+                komooMap.closeInfoWindow();
                 // Set the correct button style when editMode was changed.
                 addButton.removeClass('active');
                 cutOutButton.removeClass('active');
@@ -1705,20 +1715,64 @@ komoo.Map.prototype = {
     /**
      * Sets to the 'selectcenter' mode to user select the center point of radius filter.
      * Emits 'centerselected' event when done.
-     * @param {function} optCallBack optional callback function. The callback parameters are 'latLng' and 'circle'.
+     * @param {Number} optRadius
+     * @param {function} optCallBack Optional callback function. The callback parameters are 'latLng' and 'circle'.
      *                   'latLng' receives a google.maps.LatLng object. 'circle' receives google.maps.Circle object.
      * @returns {void}
      */
-    selectCenter: function (optCallBack) {
+    selectCenter: function (optRadius, optCallBack) {
         var komooMap = this;
-        this.setMode('selectcenter');
-        if (typeof optCallBack == 'function') {
-            var handler = function (e, latLng, circle) {
+        komooMap.setMode('selectcenter');
+        var handler = function (e, latLng, circle) {
+            if (typeof optRadius == 'number') {
+                circle.setRadius(optRadius);
+            }
+            if (typeof optCallBack == 'function') {
                 optCallBack(latLng, circle);
-                komooMap.event.unbind('centerselected', handler);
-            };
-            komooMap.event.bind('centerselected', handler);
+            }
+            komooMap.event.unbind('centerselected', handler);
+        };
+        komooMap.event.bind('centerselected', handler);
+    },
+
+    getOverlay: function (overlayType, id) {
+        var komooMap = this;
+        return komooMap.loadedOverlays[overlayType + '_' + id];
+    },
+
+    highlightOverlay: function (overlay, id) {
+        var komooMap = this;
+        var overlayType;
+        var overlayCenter;
+        if (typeof overlay == 'string') {
+            overlayType = overlay;
+            overlay = komooMap.getOverlay(overlayType, id);
         }
+        if (!overlay) {
+            return false;
+        }
+
+        if (overlay.getCenter) {
+            overlayCenter = overlay.getCenter();
+        } else if (overlay.getPosition) {
+            overlayCenter = overlay.getPosition();
+        } else if (overlay.bounds) {
+            overlayCenter = overlay.bounds.getCenter();
+        }
+
+        if (overlay.setIcon) {
+            if (overlay.properties.categories && overlay.properties.categories[0]) {
+                overlay.setIcon('/static/img/near/highlighted/' + overlay.properties.categories[0].name.toLowerCase() + '.png');
+            } else {
+                overlay.setIcon('/static/img/near/highlighted/' + overlay.properties.type + '.png'); // FIXME: Hardcode is evil
+            }
+        }
+        console.log(overlay, overlayCenter);
+        overlay.highlighted = true;
+        komooMap.closeInfoWindow();
+        komooMap.openInfoWindow(overlay, overlayCenter);
+
+        return true;
     },
 
     /**
@@ -1744,14 +1798,18 @@ komoo.Map.prototype = {
             komooMap.radiusCircle = new google.maps.Circle({
                     visible: true,
                     radius: 100,
-                    fillColor: 'none',
+                    fillColor: 'white',
+                    fillOpacity: 0.0,
                     strokeColor: '#ffbda8',
                     zIndex: 99999999999999999999
             });
             komooMap.radiusCircle.setMap(komooMap.googleMap);
         }
         if (!komooMap.centerMarker) {
-            komooMap.centerMarker = new google.maps.Marker({visible: true});
+            komooMap.centerMarker = new google.maps.Marker({
+                    visible: true,
+                    icon: '/static/img/marker.png' // FIXME: Add the correct icon
+            });
             komooMap.centerMarker.setMap(komooMap.googleMap);
         }
         komooMap.centerMarker.setPosition(latLng);
