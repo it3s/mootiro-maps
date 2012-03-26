@@ -14,4 +14,40 @@
     {{ form_org.media }}
     <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
     <script type="text/javascript" src="/static/js/ajax_select.js"></script>
+    <script type="text/javascript" src="/static/lib/shortcut.js"></script>
+    <script type="text/javascript">
+    $(function(){
+
+        shortcut.add('enter', function() {
+            var val = $('#id_community_text').val();
+            console.log(val);
+
+            var add = false;
+
+            $.get(dutils.urls.resolve('search_community_by_name'), {term: val}, function(data){
+                    if(!data.length){
+                        console.log('should add!!');
+
+                        var entry = '' +
+                            '<div id="id_community_on_deck_NUM">' +
+                                '<span id="kill_NUMid_community" class="ui-icon ui-icon-trash">X</span>' +
+                                '<div>' + val + '</div>' +
+                            '</div>'
+                        $('#id_community_on_deck').prepend(entry);
+                        $('#id_community_text').val('');
+
+                        $('#kill_NUMid_community').bind('click', function(){
+                            $('#id_community_on_deck_NUM').remove();
+                            // TODO REMOVE ID from hidden list
+                        });
+
+                        // TODO add ID to hidden list
+                    }
+                }, 'json');
+
+        }, {target:'id_community_text'});
+    });
+
+    </script>
 {% endblock %}
+
