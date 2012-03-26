@@ -108,7 +108,15 @@ def search_by_name(request):
 
 
 @ajax_request
-def add_new_from_autocomplete(request):
+def autocomplete_get_or_add(request):
     logger.debug('accessing community > add_new_from_autocomplete')
-    logger.debug(request.GET)
-    return {}
+    logger.debug(request.POST)
+    term = request.POST['name']
+    communities = Community.objects.filter(Q(name__icontains=term) |
+                                           Q(slug__icontains=term))
+    if not communities.count():
+        added = True
+        #ADD new community
+    else:
+        added = False
+    return dict(added=added)

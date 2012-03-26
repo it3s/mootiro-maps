@@ -24,9 +24,9 @@
 
             var add = false;
 
-            $.get(dutils.urls.resolve('search_community_by_name'), {term: val}, function(data){
-                    if(!data.length){
-                        console.log('should add!!');
+            $.post(dutils.urls.resolve('autocomplete_get_or_add'), {name: val}, function(data){
+                    if(data.added){
+                        console.log('add!!');
 
                         var entry = '' +
                             '<div id="id_community_on_deck_NUM">' +
