@@ -523,6 +523,9 @@ komoo.Map.prototype = {
             if (komooMap.addPanel.is(':hidden')) {
                 komooMap.setCurrentOverlay(null);  // Remove the overlay selection
             }
+            if (komooMap.mode == 'selectcenter') {
+                komooMap._emit_centerselected(e.latLng);
+            }
             komooMap._emit_mapclick(e);
         });
 
@@ -1258,6 +1261,10 @@ komoo.Map.prototype = {
 
         google.maps.event.addListener(overlay, 'click', function (e) {
             if (window.console) console.log('Clicked on overlay');
+            if (komooMap.mode == 'selectcenter') {
+                komooMap._emit_centerselected(e.latLng);
+                return;
+            }
             if (komooMap.addPanel.is(':visible') && this != komooMap.currentOverlay) {
                 if (window.console) console.log('Clicked on unselected overlay');
                 return;
@@ -1304,7 +1311,7 @@ komoo.Map.prototype = {
             }
             clearTimeout(komooMap.infoWindow.timer);
             komooMap.infoWindow.timer = setTimeout(function () {
-                if (komooMap.infoWindow.isMouseover || komooMap.addPanel.is(':visible')) {
+                if (komooMap.infoWindow.isMouseover || komooMap.addPanel.is(':visible') || komooMap.mode == 'selectcenter') {
                     return;
                 }
                 komooMap.openInfoWindow(overlay, e.latLng);
@@ -1696,6 +1703,25 @@ komoo.Map.prototype = {
     },
 
     /**
+     * Sets to the 'selectcenter' mode to user select the center point of radius filter.
+     * Emits 'centerselected' event when done.
+     * @param {function} optCallBack optional callback function. The callback parameters are 'latLng' and 'circle'.
+     *                   'latLng' receives a google.maps.LatLng object. 'circle' receives google.maps.Circle object.
+     * @returns {void}
+     */
+    selectCenter: function (optCallBack) {
+        var komooMap = this;
+        this.setMode('selectcenter');
+        if (typeof optCallBack == 'function') {
+            var handler = function (e, latLng, circle) {
+                optCallBack(latLng, circle);
+                komooMap.event.unbind('centerselected', handler);
+            };
+            komooMap.event.bind('centerselected', handler);
+        }
+    },
+
+    /**
      * @returns {void}
      */
     _emit_mapclick: function (e) {
@@ -1707,6 +1733,31 @@ komoo.Map.prototype = {
      */
     _emit_overlayclick: function (e) {
         this.event.trigger('overlayclick', e);
+    },
+
+    /**
+     * @returns {void}
+     */
+    _emit_centerselected: function (latLng) {
+        var komooMap = this;
+        if (!komooMap.radiusCircle) {
+            komooMap.radiusCircle = new google.maps.Circle({
+                    visible: true,
+                    radius: 100,
+                    fillColor: 'none',
+                    strokeColor: '#ffbda8',
+                    zIndex: 99999999999999999999
+            });
+            komooMap.radiusCircle.setMap(komooMap.googleMap);
+        }
+        if (!komooMap.centerMarker) {
+            komooMap.centerMarker = new google.maps.Marker({visible: true});
+            komooMap.centerMarker.setMap(komooMap.googleMap);
+        }
+        komooMap.centerMarker.setPosition(latLng);
+        komooMap.radiusCircle.setCenter(latLng);
+        komooMap.event.trigger('centerselected', [latLng, komooMap.radiusCircle]);
+        komooMap.setMode(null);
     },
 
     /**
