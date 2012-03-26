@@ -1,0 +1,13 @@
+[
+    {
+        "model": "organization.organization",
+        "pk": 1,
+        "fields": {
+          "name": "My Org",
+          "slug": "my-org",
+          "creation_date": "2012-03-21 15:04:58",
+          "geometry": "GEOMETRYCOLLECTION (POINT (-23.5620413602200180 -46.7429144317035821))",
+          "description": "Organizacao teste!!! "
+        }
+      }
+]

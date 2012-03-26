@@ -68,6 +68,7 @@ def radial_search(request):
         'communities': [model_to_dict(c, fields=['name', 'slug']) for c in d['communities']],
         'needs': [model_to_dict(n, fields=['title', 'slug']) for n in d['needs']],
         'resources': [model_to_dict(r, fields=['title', 'slug']) for r in d['resources']],
+        # 'organizations': [model_to_dict(o, fields=['name', 'slug']) for o in d['organizations']],
     }
     return HttpResponse(json.dumps(d), mimetype="application/x-javascript")
 

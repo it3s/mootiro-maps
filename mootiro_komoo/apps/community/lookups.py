@@ -30,3 +30,6 @@ class CommunityLookup(LookupChannel):
 
     def check_auth(self, request):
         return True
+
+    def can_add(self, user, argmodel):
+        return True

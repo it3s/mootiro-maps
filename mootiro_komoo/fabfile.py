@@ -5,6 +5,7 @@ from fabric.api import *
 
 #env.hosts = ['me@example.com:22']
 
+# SOUTH_APP_LIST = []
 
 django_settings = {
     'dev': '--settings=settings.development',
@@ -178,6 +179,65 @@ def add_superuser(email=''):
     user.save()
 
     print 'success'
+
+
+# def get_migrated_apps():
+#     """
+#     Returns a list if app folowed by south.
+#     Unfortunately its hard-coded because of the tables dependencies
+#     """
+# #    import os
+# #    app_list = [f for f in os.listdir('apps') if os.path.exists(os.path.join(os.getcwd(),'apps', f,'migrations'))]
+# #    return app_list
+#     return SOUTH_APP_LIST
+
+
+# def migrate_all(load=True):
+#     """
+#     Migrates all apps tracked by south
+#     if the environment is dev then it load the fixtures
+#     """
+#     with settings(warn_only=True):
+#         for app in get_migrated_apps():
+#             local('python manage.py migrate {} {}'.format(app, django_settings[env_]))
+#     if env_ in ['dev'] and load:
+#         load_fixtures()
+
+
+# def initial_migration(app):
+#     """
+#     Runs initial migration for a created app
+#     usage: fab initial_migrate:<app_name>
+#     OBS: the migrate is set to --fake. I'm assuming this will run after a syncdb,
+#          if's not the case, contact me.
+#     """
+#     local('python manage.py schemamigration {app} --initial {env} ; python manage.py migrate {app} --fake {env}'.format(app=app, env=django_settings[env_]))
+
+
+# def schemamigration(app):
+#     """
+#     Runs a regular a migration for a single app.
+#     usage: fab schemamigration:<app_name>
+#     """
+#     local('python manage.py schemamigration {app} --auto {env}; python manage.py migrate {app} {env}'.format(app=app, env=django_settings[env_]))
+
+
+# def full_schemamigration():
+#     """
+#     Runs a schemamigration for all apps
+#     usage: fab full_schemamigration
+#     """
+#     for app in get_migrated_apps():
+#         schemamigration(app)
+
+
+# def full_initial_schemamigration():
+#     """
+#     Runs a schemamigration for all apps
+#     usage: fab full_schemamigration
+#     """
+#     for app in get_migrated_apps():
+#         initial_migration(app)
 
 
 def help():

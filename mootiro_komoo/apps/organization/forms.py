@@ -8,20 +8,20 @@ from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from main.utils import MooHelper
-# from main.widgets import Autocomplete
-# from community.models import Community
 from organization.models import Organization
 
 
 class FormOrganization(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
-    description = forms.CharField('Description', widget=MarkItUpWidget())
-    community = AutoCompleteSelectMultipleField('community')
-    geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+    description = forms.CharField('Description', required=False,
+        widget=MarkItUpWidget())
+    community = AutoCompleteSelectMultipleField('community', help_text='',
+        required=False)
+    # geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Organization
-        fields = ['name', 'description', 'community', 'id', 'geometry']
+        fields = ['name', 'description', 'community', 'id', ]  # 'geometry']
 
     _field_labels = {
         'name': _('Name'),

@@ -31,8 +31,6 @@ def vote(context, content_object):
 
 @register.simple_tag(takes_context=True)
 def vote_staticfiles(context):
-    print context
-    print context.get('csrf_token')
     return """
     <script type="text/javascript">
         csrftoken = "{}";

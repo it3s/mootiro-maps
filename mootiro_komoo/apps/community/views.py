@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
 
-from annoying.decorators import render_to
+from annoying.decorators import render_to, ajax_request
 
 from community.models import Community
 from community.forms import CommunityForm
@@ -105,3 +105,10 @@ def search_by_name(request):
                                            Q(slug__icontains=term))
     d = [{'value': c.id, 'label': c.name} for c in communities]
     return HttpResponse(simplejson.dumps(d), mimetype="application/x-javascript")
+
+
+@ajax_request
+def add_new_from_autocomplete(request):
+    logger.debug('accessing community > add_new_from_autocomplete')
+    logger.debug(request.GET)
+    return {}
