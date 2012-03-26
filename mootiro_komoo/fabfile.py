@@ -240,7 +240,6 @@ def add_superuser(email=''):
 #         initial_migration(app)
 
 
-
 def help():
     """Fabfile documentation"""
     local('python -c "import fabfile; help(fabfile)"')

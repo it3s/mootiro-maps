@@ -89,7 +89,7 @@ class Edit(View):
             organization = form_org.save(user=request.user)
 
             prefix = '/{}'.format(community_slug) if community_slug else ''
-            _url = '{}/organization/{}'.format(prefix, organization.id)
+            _url = '{}/organization/{}'.format(prefix, organization.slug)
             if _id:
                 return HttpResponseRedirect(_url)
             else:
@@ -98,7 +98,7 @@ class Edit(View):
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_org._errors)))
-            tmplt = 'organization/edit.html' if _id else 'organization/new.html'
+            tmplt = 'organization/edit.html' #if _id else 'organization/new.html'
             return render_to_response(tmplt,
                 dict(form_org=form_org, community=community),
                 context_instance=RequestContext(request))

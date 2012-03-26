@@ -9,7 +9,7 @@ from community.models import Community
 
 
 class Organization(GeoRefModel):
-    name = models.CharField(max_length=320)
+    name = models.CharField(max_length=320, unique=True)
     slug = models.SlugField(max_length=320)
     description = models.TextField(null=True, blank=True)
 

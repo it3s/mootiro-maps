@@ -16,7 +16,7 @@ class Community(GeoRefModel):
     description = models.TextField(null=True, blank=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False,
+    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
                         related_name='created_communities')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
