@@ -67,27 +67,15 @@ def geo_objects_listing(arg1='', arg2=''):
         organizations = image_field(img['organizations'], img['organizations_off'])
         resources = image_field(img['resources'], img['resources_off'])
 
-        nc_prefix = "need_category_"
-
-        def __init__(self, *a, **kw):
-            super(GeoObjectsForm, self).__init__(*a, **kw)
-
-            if show_categories:
-                self.need_categories = {}
-                for nc in NeedCategory.objects.all().order_by('name'):
-                    key = self.nc_prefix + nc.name.lower().replace(" ", "_")
-                    field = image_field(nc.image, nc.image_off if switchable else nc.image)
-                    self.fields[key] = field
-                    self.need_categories[key] = field
-
-        @property
-        def need_category_fields(self):
-            """Kludge for rendering categories fields. Oo"""
-            s = []
-            for f_id, field in self.need_categories.iteritems():
-                name = f_id[len(self.nc_prefix):].replace("_", " ").title()
-                s.append((name, field.widget.render(f_id, "")))
-            return s
+        need_categories = forms.ModelMultipleChoiceField(
+            queryset=NeedCategory.objects.all().order_by('name'),
+            widget=ImageSwitchMultiple(
+                get_image_tick=NeedCategory.get_image,
+                get_image_no_tick=NeedCategory.get_image_off if switchable \
+                                    else NeedCategory.get_image,
+                show_names=True
+            )
+        )
 
     form = GeoObjectsForm()
 
