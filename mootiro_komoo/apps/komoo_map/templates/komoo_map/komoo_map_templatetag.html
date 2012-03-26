@@ -128,7 +128,7 @@
               $('#id_geometry').val(JSON.stringify(geojson));
               $(this).show();
               fixMapSize();
-              $('#' + mapcontainerId + ', #map-panel').slideUp(600);
+              $('#' + mapContainerId + ', #map-panel').slideUp(600);
             },
             error: function (jqXHR, textStatus, errorThrown) {
               alert('ERRO!!!11!');
@@ -141,6 +141,7 @@
       {% endif %}
 
       {% if editable %}
+      $('#map-panel-add').append(map.addMenu.show());
       // Connect the search input box
       $('#search').submit(function () {
         var query = $('#search-bar').val();
