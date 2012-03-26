@@ -1,8 +1,6 @@
-
 // Add center functionality
 $("#set-center").click(function () {
     editor.selectCenter(function (latLng, circle) {
-        console.log($("#filter-center"));
         $("#filter-center").val(latLng.toUrlValue());
         $("#filter-radius").on("change", function () {
             var radius = parseInt($(this).val());
@@ -10,6 +8,18 @@ $("#set-center").click(function () {
         });
     });
 });
+
+
+$("#filter-slider").slider({
+    range: "min",
+    min: 100,
+    max: 10000,
+    value: 1000,
+    slide: function( event, ui ) {
+        $("#filter-radius").val(ui.value).trigger("change");
+    }
+});
+$("#filter-radius").val($("#filter-slider").slider("value"));
 
 // $(".geo-objects-listing li div.img-holder").on('click', function (event) {
 //     event.preventDefault();

@@ -22,8 +22,9 @@
         <div class="img-holder"><img src="{{STATIC_URL}}img/radius.png"/></div>
         <a id="set-center"  class="button">+ Center</a>
         <span>Radius <input id="filter-radius" type="text" name="radius"/> m</span>
-        <br/><br/>
-        <input id="filter-center" type="text" name="center" style="width: 200px"/>
+        <input id="filter-center" type="hidden" name="center"/>
+        <br/>
+        <div id="filter-slider" style="width: 200px"></div>
       </div>
       {% geo_objects_listing 'show_categories=True' 'switchable=True' %}
     </form>
