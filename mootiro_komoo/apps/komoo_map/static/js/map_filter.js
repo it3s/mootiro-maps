@@ -1,6 +1,6 @@
 // Add center functionality
 $("#set-center").click(function () {
-    editor.selectCenter(function (latLng, circle) {
+    editor.selectCenter(parseInt($("#filter-radius").val()), function (latLng, circle) {
         $("#filter-center").val(latLng.toUrlValue());
         $("#filter-radius").on("change", function () {
             var radius = parseInt($(this).val());
@@ -44,7 +44,7 @@ $("#filter-form").on("submit", function (event) {
 
     var url = dutils.urls.resolve('radial_search');
     var data = $("#filter-form").serialize();
-    
+
     $.ajax({
         type: 'GET',
         url: dutils.urls.resolve('radial_search'),
@@ -52,6 +52,6 @@ $("#filter-form").on("submit", function (event) {
     }).success(function (data) {
         console.log(data);
     });
-    
+
     return false;
 });
