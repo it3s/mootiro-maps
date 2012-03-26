@@ -1,10 +1,17 @@
 
 // Add center functionality
-$("#filter-center").click(function () {
-    alert("Não clique aí!");
+$("#set-center").click(function () {
+    editor.selectCenter(function (latLng, circle) {
+        console.log($("#filter-center"));
+        $("#filter-center").val(latLng.toUrlValue());
+        $("#filter-radius").on("change", function () {
+            var radius = parseInt($(this).val());
+            circle.setRadius(radius);
+        });
+    });
 });
 
-// $(".geo-objects-listing li div.img_holder").on('click', function (event) {
+// $(".geo-objects-listing li div.img-holder").on('click', function (event) {
 //     event.preventDefault();
 // });
 // $(".geo-objects-listing li").bind('click', function () {
@@ -17,21 +24,21 @@ $("#filter-center").click(function () {
 //     return false;
 // });
 
+$(".needs div.img-holder").on("click", function (event) {
+    //$(".need.categories ul img")
+});
+
 
 $("#filter-form").on("submit", function (event) {
     event.preventDefault();
 
-    var radius = $("#filter-radius");
-    var center = "-23.56517,-46.773133";
     var url = dutils.urls.resolve('radial_search');
+    var data = $("#filter-form").serialize();
     
     $.ajax({
         type: 'GET',
         url: dutils.urls.resolve('radial_search'),
-        data: {
-            radius: radius,
-            center: "-23.56517,-46.773133"
-        }
+        data: data
     }).success(function (data) {
         console.log(data);
     });

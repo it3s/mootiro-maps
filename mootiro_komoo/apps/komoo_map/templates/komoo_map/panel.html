@@ -18,10 +18,12 @@
       <div class="centralizer">
         <input type="submit" id="filter-submit" class="button" value="Perform search"/>
       </div>
-      <div id="filter-radius">
+      <div id="filter-circle">
         <div class="img-holder"><img src="{{STATIC_URL}}img/radius.png"/></div>
-        <a id="filter-center"  class="button">+ Center</a>
-        <span>Radius <input type="text" name="radius"/> m</span>
+        <a id="set-center"  class="button">+ Center</a>
+        <span>Radius <input id="filter-radius" type="text" name="radius"/> m</span>
+        <br/><br/>
+        <input id="filter-center" type="text" name="center" style="width: 200px"/>
       </div>
       {% geo_objects_listing 'show_categories=True' 'switchable=True' %}
     </form>

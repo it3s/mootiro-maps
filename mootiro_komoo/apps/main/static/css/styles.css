@@ -226,7 +226,7 @@ ul.geo-objects-listing li ul { margin-left: 30px }
     display: inline-block;
     vertical-align: middle;
 }
-#map-panel-filter #filter-radius,
+#map-panel-filter #filter-cirle,
 #map-panel-filter ul.geo-objects-listing li {
     padding: 8px;
     border-bottom: 1px solid #e9e9e9;
@@ -240,8 +240,8 @@ ul.geo-objects-listing li ul { margin-left: 30px }
     padding-left: 2em;
     padding-right: 2em;
 }
-#filter-radius span { margin: 0 5px }
-#filter-radius input {
+#filter-circle span { margin: 0 5px }
+#filter-circle input {
     width: 3em;
     vertical-align: baseline;
     box-shadow: 1px 1px 1px #999999 inset;
