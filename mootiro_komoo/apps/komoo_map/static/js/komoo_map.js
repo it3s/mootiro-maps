@@ -425,13 +425,13 @@ komoo.Map.prototype = {
                         id: overlay.properties.id
                     })
             );
-        } else if (overlay.properties.type == 'organization') {
+        } /*else if (overlay.properties.type == 'organization') {
             komooMap.infoWindow.title.attr('href', dutils.urls.resolve('view_organization', {
                         community_slug: overlay.properties.community_slug,
-                        id: overlay.properties.id
+                        organization_slug: overlay.properties.organization_slug
                     })
             );
-        } else {
+        }*/ else {
             var slugname = overlay.properties.type + '_slug';
             var params = {'community_slug': overlay.properties.community_slug};
             params[slugname] = overlay.properties[slugname];

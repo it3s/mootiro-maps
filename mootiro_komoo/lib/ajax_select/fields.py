@@ -67,7 +67,7 @@ class AutoCompleteSelectWidget(forms.widgets.TextInput):
                 'add_link' : self.add_link,
                 }
         context.update(bootstrap())
-        
+
         return mark_safe(render_to_string(('autocompleteselect_%s.html' % self.channel, 'autocompleteselect.html'),context))
 
     def value_from_datadict(self, data, files, name):
@@ -92,7 +92,7 @@ class AutoCompleteSelectField(forms.fields.CharField):
     def __init__(self, channel, *args, **kwargs):
         self.channel = channel
         widget = kwargs.get("widget", False)
-        
+
         if not widget or not isinstance(widget, AutoCompleteSelectWidget):
             help_text = kwargs.get('help_text',_('Enter text to search.'))
             show_help_text = kwargs.pop('show_help_text',False)
@@ -134,7 +134,7 @@ class AutoCompleteSelectMultipleWidget(forms.widgets.SelectMultiple):
                  *args, **kwargs):
         super(AutoCompleteSelectMultipleWidget, self).__init__(*args, **kwargs)
         self.channel = channel
-        
+
         self.help_text = help_text or _('Enter text to search.')
         self.show_help_text = show_help_text
 
@@ -162,12 +162,12 @@ class AutoCompleteSelectMultipleWidget(forms.widgets.SelectMultiple):
             display = lookup.format_item_display(obj)
             current_repr_json.append( """new Array("%s",%s)""" % (escapejs(display),obj.pk) )
         current_reprs = mark_safe("new Array(%s)" % ",".join(current_repr_json))
-        
+
         if self.show_help_text:
             help_text = self.help_text
         else:
             help_text = ''
-        
+
         context = {
             'name':name,
             'html_id':self.html_id,
@@ -226,10 +226,10 @@ class AutoCompleteSelectMultipleField(forms.fields.CharField):
         # admin will also show help text, so by default do not show it in widget
         # if using in a normal form then set to True so the widget shows help
         show_help_text = kwargs.pop('show_help_text',False)
-        
+
         kwargs['widget'] = AutoCompleteSelectMultipleWidget(channel=channel,help_text=help_text,show_help_text=show_help_text)
         kwargs['help_text'] = help_text
-        
+
         super(AutoCompleteSelectMultipleField, self).__init__(*args, **kwargs)
 
     def clean(self, value):
@@ -257,13 +257,13 @@ class AutoCompleteWidget(forms.TextInput):
         self.channel = channel
         self.help_text = kwargs.pop('help_text', '')
         self.show_help_text = kwargs.pop('show_help_text',False)
-        
+
         super(AutoCompleteWidget, self).__init__(*args, **kwargs)
 
     def render(self, name, value, attrs=None):
 
         value = value or ''
-        
+
         final_attrs = self.build_attrs(attrs)
         self.html_id = final_attrs.pop('id', name)
 
@@ -315,10 +315,10 @@ class AutoCompleteField(forms.CharField):
 ####################################################################################
 
 def _check_can_add(self,user,model):
-    """ check if the user can add the model, deferring first to 
+    """ check if the user can add the model, deferring first to
         the channel if it implements can_add()
         else using django's default perm check.
-        if it can add, then enable the widget to show the + link 
+        if it can add, then enable the widget to show the + link
     """
     lookup = get_lookup(self.channel)
     if hasattr(lookup,'can_add'):

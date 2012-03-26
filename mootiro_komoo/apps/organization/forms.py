@@ -37,15 +37,6 @@ class FormOrganization(forms.ModelForm):
 
         org = super(FormOrganization, self).__init__(*args, **kwargs)
 
-        # TODO make this generic and work for any AutoCompleteSelectMultipleField
-        my_args = args[0] if args and len(args) > 0 else None
-        if my_args and 'community_text' in my_args:
-            community_text = my_args.get('community_text', '')
-            q = Community.objects.filter(Q(name__iexact=community_text) |
-                Q(slug__iexact=community_text))
-            if not q.count():
-                Community(name=community_text).save()
-
         for field, label in self._field_labels.iteritems():
             self.fields[field].label = label
 
