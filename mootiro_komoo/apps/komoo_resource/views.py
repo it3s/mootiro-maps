@@ -201,11 +201,13 @@ def show_on_map(request, geojson=''):
 
 @ajax_request
 def resource_get_or_add_by_kind(request):
-    term = request.GET.get('val', '')
-    kinds = ResourceKind.objects.filter(Q(name__icontains=term) |
-        Q(slug__icontains=term))
-    if not kinds.count():
-        r = ResourceKind(name=term).save()
+    term = request.POST.get('value', '')
+    print 'TERM: ', term
+    kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
+        Q(slug__iexact=term))
+    if not kinds.count() and term:
+        r = ResourceKind(name=term)
+        r.save()
         obj = dict(added=True, id=r.id, value=r.name)
     else:
         obj = dict(added=False, id=None, value=term)

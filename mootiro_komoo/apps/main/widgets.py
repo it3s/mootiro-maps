@@ -37,19 +37,24 @@ class Autocomplete(forms.TextInput):
                 $("#%(label_id)s").val(ui.item.label);
                 $("#%(value_id)s").val(ui.item.value);
                 return false;
-            },
-            change: function(event, ui) {
-                if(!ui.item || !$("#%(label_id)s").val()){
-                    $("#%(value_id)s").val('');
-                    $("#%(label_id)s").val('');
-                }
             }
-        });
         """ % {
             'source_url': self.source_url,
             'label_id': label_id,
             'value_id': value_id
         }
+        if not self.can_add:
+            js += """,
+            change: function(event, ui) {
+                if(!ui.item || !$("#%(label_id)s").val()){
+                    $("#%(value_id)s").val('');
+                    $("#%(label_id)s").val('');
+                }
+            }""" % {
+            'label_id': label_id,
+            'value_id': value_id
+        }
+        js += " });"
         return js
 
     def add_js(self, field_name='', label_id='', value_id='', url=''):
@@ -60,20 +65,24 @@ class Autocomplete(forms.TextInput):
 
                 var add = false;
 
-                /*$.post('%(url)s',
-                    {val: val},
+                $.post('%(url)s',
+                    {value: val},
                     function(data){
+                        console.dir(data);
                         if(data.added){
                            // Add new ID here!!
                            $('#%(value_id)s').val(data.id);
+                           $('#%(label_id)s').val(data.value);
                         }
-                    }, 'json');*/
+                    }, 'json');
 
             }, {target:'%(label_id)s'});
 
 
         ''' % {'field_name': field_name, 'label_id': label_id,
                'value_id': value_id, 'url': url}
+        print 'label_id', label_id
+        print 'value_id', value_id
         return js
 
     def render(self, name, value=None, attrs=None):
