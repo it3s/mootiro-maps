@@ -17,11 +17,11 @@ class FormOrganization(forms.ModelForm):
         widget=MarkItUpWidget())
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
-    # geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+    geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Organization
-        fields = ['name', 'description', 'community', 'id', ]  # 'geometry']
+        fields = ['name', 'description', 'community', 'id', 'geometry']
 
     _field_labels = {
         'name': _('Name'),
@@ -46,9 +46,3 @@ class FormOrganization(forms.ModelForm):
             org.creator_id = user.id
             org.save()
         return org
-
-    # def clean_community(self):
-    #     if self.cleaned_data.get('community', None):
-    #         return Community.objects.get(id=self.cleaned_data['community'])
-    #     else:
-    #         return []

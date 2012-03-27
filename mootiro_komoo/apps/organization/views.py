@@ -72,7 +72,7 @@ class Edit(View):
         # if community and not community.id in form_org.initial['community']:
             # form_org.initial['community'].append(community.id)
 
-        tmplt = 'organization/edit.html' # if _id else 'organization/new.html'
+        tmplt = 'organization/edit.html' if _id else 'organization/new.html'
         return render_to_response(tmplt,
             dict(form_org=form_org, community=community, geojson=geojson),
             context_instance=RequestContext(request))
@@ -104,7 +104,7 @@ class Edit(View):
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_org._errors)))
-            tmplt = 'organization/edit.html' #if _id else 'organization/new.html'
+            tmplt = 'organization/edit.html' if _id else 'organization/new.html'
             return render_to_response(tmplt,
                 dict(form_org=form_org, community=community),
                 context_instance=RequestContext(request))
