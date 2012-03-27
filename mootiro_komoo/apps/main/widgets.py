@@ -8,6 +8,7 @@ from django.forms.widgets import flatatt
 from django.utils.html import escape, conditional_escape
 from django.utils.encoding import force_unicode
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 from annoying.functions import get_config
 
@@ -276,11 +277,15 @@ class AutocompleteWithFavorites(forms.TextInput):
         label_id: html id of the visible autocomplete field
         value_id: html id of the hidden field that contains data to be persisted
     """
-    def __init__(self, model, source_url, favorites_query, *a, **kw):
+    def __init__(self, model, source_url, favorites_query, help_text=None,
+                 *args, **kwargs):
         self.model = model
         self.source_url = source_url
         self.query = favorites_query
-        super(AutocompleteWithFavorites, self).__init__(*a, **kw)
+        if not help_text:
+            help_text = _('You can type above or select here')
+        self.help_text = help_text
+        super(AutocompleteWithFavorites, self).__init__(*args, **kwargs)
 
     def render_js(self, label_id, value_id):
         js = u"""
@@ -333,9 +338,10 @@ class AutocompleteWithFavorites(forms.TextInput):
         for obj in self.query:
             select += u'<option value="%(id)s">%(label)s</option>' % {
                 'label': obj, 'id': obj.id}
-        select == u'''
+        select += u'''
         </select>
-        '''
+        <span style="color: #aaaaaa;">%(help_text)s</span>
+        ''' % dict(help_text=self.help_text)
         return select
 
     def render(self, name, value=None, attrs=None):
