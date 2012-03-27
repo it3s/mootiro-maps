@@ -23,7 +23,8 @@ class FileCreateView(CreateView):
                  'url': self.object.file.url,
                  'thumbnail_url': self.object.file.url,
                  'delete_url': reverse('upload-delete', args=[self.object.id]),
-                 'delete_type': "DELETE"}]
+                 'delete_type': "DELETE",
+                 'id': self.object.id}]
         response = JSONResponse(data, {}, response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
@@ -38,8 +39,9 @@ class FileDeleteView(DeleteView):
         that is easy to implement.
         """
         self.object = self.get_object()
+        _id = self.object.id
         self.object.delete()
-        response = JSONResponse(True, {}, response_mimetype(self.request))
+        response = JSONResponse({'deleted': True, 'id': _id}, {}, response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
 

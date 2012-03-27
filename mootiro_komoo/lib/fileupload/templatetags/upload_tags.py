@@ -32,7 +32,7 @@ def upload_js():
         </tr>
     </script>
     <script id="template-download" type="text/x-jquery-tmpl">
-        <tr class="template-download{{if error}} ui-state-error{{/if}}">
+        <tr file-id="${id}" class="template-download{{if error}} ui-state-error{{/if}}">
             {{if error}}
                 <td></td>
                 <td class="name">${name}</td>

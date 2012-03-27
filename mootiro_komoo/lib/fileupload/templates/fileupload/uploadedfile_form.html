@@ -19,7 +19,7 @@
     <table class="files">
       <tbody>
       {% for f in files %}
-      <tr file-id="{{ f.id }}">
+      <tr file-id="f.id">
         <td class="preview">
           <a target="_blank" href="{{ f.file.url }}">
             <img src="{{ f.file.url }}">

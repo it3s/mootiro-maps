@@ -11,6 +11,17 @@
 
 /*jslint nomen: true */
 /*global $ */
+getFilesIdList = function(){
+    var ids_list = [];
+    $('#fileupload table.files tr').each(
+        function(idx, item){
+            var id = $(item).attr('file-id');
+            console.log(id);
+            ids_list.push(id);
+        }
+    );
+    return ids_list;
+};
 
 $(function () {
     'use strict';
@@ -29,6 +40,13 @@ $(function () {
         maxFileSize: settings.maxFileSize,
         acceptFileTypes: settings.acceptFileTypes
     });
+
+    if (settings.fileuploaddone){
+        $('#fileupload').bind('fileuploaddone', settings.fileuploaddone);
+    }
+    if (settings.fileuploaddone){
+        $('#fileupload').bind('fileuploaddestroy', settings.fileuploaddestroy);
+    }
 
     // Load existing files:
     $.getJSON($('#fileupload form').prop('action'), function (files) {
@@ -57,5 +75,4 @@ $(function () {
             $(this).remove();
         });
     });
-
 });
