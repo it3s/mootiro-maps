@@ -283,6 +283,7 @@ ul.geo-objects-listing li ul { margin-left: 30px }
     top: -3px;
     margin-left: -3px;
 }
+#filter-results-container { display: none }
 
 .map-tabs { padding: 10px; }
 .map-tab {

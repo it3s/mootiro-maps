@@ -1,0 +1,47 @@
+<h3>Search results for this radius<i class="icon-remove right"></i></h3>
+<ul class="geo-objects-listing" style="display: block; clear: both;">
+  {% if communities %}
+  <li class="communities">
+    <div class="img-holder">{{ form.communities }}</div>
+    <span>Communities</span>
+  </li>
+  <li class="community categories">
+    <ul>
+      {% for c in communities %}
+        <li>
+          <div class="img-holder">{{ form.communities }}</div>
+          <span>{{ c.name }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endif %}
+  {% if needs %}
+  <li class="needs">
+    <div class="img-holder">{{ form.needs }}</div>
+    <span>Needs</span>
+  </li>
+  <li class="need categories">
+    <ul>
+      {% for n in needs %}
+        <li>
+          <div class="img-holder">{{ form.communities }}</div>
+          <span>{{ n.title }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  </li>
+  {% endif %}
+  {% if organizations %}
+  <li class="organizations">
+    <div class="img-holder">{{ form.organizations }}</div>
+    <span>Organizations</span>
+  </li>
+  {% endif %}
+  {% if resources %}
+  <li class="resources">
+    <div class="img-holder">{{ form.resources }}</div>
+    <span>Resources</span>
+  </li>
+  {% endif %}
+</ul>

@@ -65,6 +65,10 @@ $(".needs div.img-holder").on("click", function (event) {
     //$(".need.categories ul img")
 });
 
+$("#filter-back, #filter-results-container .icon-remove").on("click", function (event) {
+    $("#filter-results-container").hide();
+    $("#filter-form").show();
+});
 
 $("#filter-form").on("submit", function (event) {
     event.preventDefault();
@@ -76,9 +80,16 @@ $("#filter-form").on("submit", function (event) {
         type: 'GET',
         url: dutils.urls.resolve('radial_search'),
         data: data
-    }).success(function (data) {
-        console.log(data);
+    }).success(function (html) {
+        $("#filter-form").hide();
+        $("#filter-results-container").show();
+        $("#filter-results").html(html);
     });
-
     return false;
 });
+
+// $(function () {
+//     $("#filter-form input[type=checkbox]").attr('checked', true);
+//     $("#filter-center").val("-23.561233,-46.74922");
+//     $("#filter-form").submit();
+// });

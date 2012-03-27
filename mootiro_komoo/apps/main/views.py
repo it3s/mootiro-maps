@@ -55,6 +55,7 @@ def get_geojson(request):
         mimetype="application/x-javascript")
 
 
+@render_to("main/filter_results.html")
 def radial_search(request):
     center = Point(*[float(i) for i in request.GET['center'].split(',')])
     radius = Distance(m=float(request.GET['radius']))
@@ -81,7 +82,8 @@ def radial_search(request):
         d['resources'] = [model_to_dict(r, fields=['title', 'slug']) \
                             for r in objs['resources']]
 
-    return HttpResponse(json.dumps(d), mimetype="application/x-javascript")
+    #return HttpResponse(json.dumps(d), mimetype="application/x-javascript")
+    return objs
 
 
 @render_to('404.html')
