@@ -103,7 +103,10 @@ class New(View):
 
             prefix = '/{}'.format(community_slug) if community_slug else ''
             _url = '{}/resource/{}'.format(prefix, resource.id)
-            return HttpResponseRedirect(_url)
+            return render_to_response('resource/new_frommap.html',
+                dict(redirect=_url, form_resource=form_resource,
+                     community=community),
+                context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_resource._errors)))
             return render_to_response(tmplt,
