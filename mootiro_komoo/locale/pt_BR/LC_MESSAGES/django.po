@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-21 17:28-0300\n"
+"POT-Creation-Date: 2012-03-27 14:20-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,25 +47,25 @@ msgstr "Novo Comentário"
 msgid "see more ..."
 msgstr "ver mais ..."
 
-#: apps/komoo_resource/forms.py:33 apps/organization/forms.py:27
+#: apps/komoo_resource/forms.py:38 apps/organization/forms.py:27
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
-#: apps/komoo_resource/forms.py:34 apps/organization/forms.py:28
+#: apps/komoo_resource/forms.py:39 apps/organization/forms.py:28
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/komoo_resource/forms.py:35
+#: apps/komoo_resource/forms.py:40
 msgid "Kind"
 msgstr "Tipo"
 
-#: apps/komoo_resource/forms.py:36 lib/taggit/managers.py:39
+#: apps/komoo_resource/forms.py:41 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/komoo_resource/forms.py:37 apps/organization/forms.py:29
+#: apps/komoo_resource/forms.py:42 apps/organization/forms.py:29
 msgid "Community"
 msgstr "Comunidade"
 
@@ -74,20 +74,26 @@ msgstr "Comunidade"
 msgid "Resources for"
 msgstr "Recursos"
 
-#: apps/komoo_resource/templates/resource/list.html:23
+#: apps/komoo_resource/templates/resource/list.html:15
+#: apps/komoo_resource/templates/resource/list.html:17
+#, fuzzy
+msgid "New Resource"
+msgstr "Recursos"
+
+#: apps/komoo_resource/templates/resource/list.html:33
 #: apps/need/templates/need/list.html:25
-#: apps/organization/templates/organization/list.html:23
+#: apps/organization/templates/organization/list.html:24
 #: apps/organization/templates/organization/show.html:11
 msgid "at"
 msgstr "em"
 
-#: apps/komoo_resource/templates/resource/list.html:26
+#: apps/komoo_resource/templates/resource/list.html:36
 #: apps/need/templates/need/list.html:28
-#: apps/organization/templates/organization/list.html:26
+#: apps/organization/templates/organization/list.html:33
 msgid "see on the map"
 msgstr "ver no mapa"
 
-#: apps/komoo_resource/templates/resource/list.html:33
+#: apps/komoo_resource/templates/resource/list.html:43
 msgid "Kind:"
 msgstr "Tipo:"
 
@@ -109,18 +115,22 @@ msgstr "tipo:"
 msgid "Photos:"
 msgstr "Fotos:"
 
-#: apps/komoo_resource/templates/resource/show.html:63
+#: apps/komoo_resource/templates/resource/show.html:62
 #: apps/organization/templates/organization/show.html:48
 msgid "see on map"
 msgstr "ver no mapa"
 
-#: apps/komoo_resource/templates/resource/show.html:65
+#: apps/komoo_resource/templates/resource/show.html:64
 msgid "Similar Resources:"
 msgstr "Recursos Similares"
 
-#: apps/komoo_resource/templates/resource/show.html:71
+#: apps/komoo_resource/templates/resource/show.html:70
 msgid "There is no similar resources..."
 msgstr "Não há recursos similares..."
+
+#: apps/main/widgets.py:292
+msgid "You can type above or select here"
+msgstr "Você pode digitar acima ou selecionar algum aqui"
 
 #: apps/main/templates/main/menu_templatetag.html:6
 #: apps/main/templates/main/menu_templatetag.html:8
@@ -142,7 +152,7 @@ msgstr "Necessidades"
 
 #: apps/main/templates/main/menu_templatetag.html:30
 #: apps/main/templates/main/menu_templatetag.html:32
-#: apps/organization/templates/organization/list.html:7
+#: apps/organization/templates/organization/list.html:8
 msgid "Organizations"
 msgstr "Organizações"
 
@@ -201,6 +211,11 @@ msgstr "público alvo:"
 #: apps/vote/views.py:46
 msgid "User not logged or anonymous"
 msgstr "Usuário não logado ou anônimo"
+
+#: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
+#: lib/ajax_select/fields.py:303
+msgid "Enter text to search."
+msgstr "Entre um texto para buscar."
 
 #: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:8
 msgid "Add files..."
