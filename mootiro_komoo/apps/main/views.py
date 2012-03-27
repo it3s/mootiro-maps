@@ -10,6 +10,7 @@ from django.contrib.gis.measure import Distance
 from django.db.models import Q
 from django.http import HttpResponse
 from django.forms.models import model_to_dict
+from django.views.decorators.cache import cache_page
 
 from annoying.decorators import render_to
 
@@ -39,6 +40,7 @@ def _fetch_geo_objects(Q, zoom):
                 organizations=organizations)
 
 
+#@cache_page(54000)
 def get_geojson(request):
     bounds = request.GET.get('bounds', None)
     zoom = int(request.GET.get('zoom', 13))
