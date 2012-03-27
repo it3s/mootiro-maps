@@ -240,11 +240,48 @@ ul.geo-objects-listing li ul { margin-left: 30px }
     padding-left: 2em;
     padding-right: 2em;
 }
+#filter-circle .button .icon-plus { vertical-align: middle }
 #filter-circle span { margin: 0 5px }
 #filter-circle input {
     width: 3em;
     vertical-align: baseline;
     box-shadow: 1px 1px 1px #999999 inset;
+}
+#filter-circle .floating {
+    display: none;
+    padding: 15px;
+    background: #ffc1ae;
+    border-radius        : 7px;
+    -moz-border-radius   : 7px;
+    -webkit-border-radius: 7px;
+}
+#filter-slider { float: left }
+#filter-slider-container .icon-remove {
+    float: right;
+    margin-left: 0.4em;
+}
+#filter-slider-container {
+    position: absolute;
+    right: 5px;
+}
+#filter-helper {
+    position: fixed;
+    left: 220px;
+    top: 250px;
+    z-index: 10;
+}
+#filter-circle .ui-slider {
+    width: 130px;
+    height: 10px;
+    border-radius        : 7px;
+    -moz-border-radius   : 7px;
+    -webkit-border-radius: 7px;
+}
+#filter-circle .ui-slider-handle {
+    width: 6px;
+    height: 14px;
+    top: -3px;
+    margin-left: -3px;
 }
 
 .map-tabs { padding: 10px; }
