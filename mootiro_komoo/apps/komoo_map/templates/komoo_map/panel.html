@@ -20,11 +20,15 @@
       </div>
       <div id="filter-circle">
         <div class="img-holder"><img src="{{STATIC_URL}}img/radius.png"/></div>
-        <a id="set-center"  class="button">+ Center</a>
+        <a id="set-center" class="button"><i class="icon-plus icon-white"></i> Center</a>
         <span>Radius <input id="filter-radius" type="text" name="radius"/> m</span>
         <input id="filter-center" type="hidden" name="center"/>
-        <br/>
-        <div id="filter-slider" style="width: 200px"></div>
+        <div id="filter-slider-container" class="floating">
+          <div id="filter-slider"></div><i class="icon-remove"></i>
+        </div>
+        <div id="filter-helper" class="floating">
+          Pick a point on the map
+        </div>
       </div>
       {% geo_objects_listing 'show_categories=True' 'switchable=True' %}
     </form>

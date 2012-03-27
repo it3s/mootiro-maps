@@ -1,4 +1,4 @@
-// Add center functionality
+/* Add center functionality */
 $("#set-center").click(function () {
     editor.selectCenter(parseInt($("#filter-radius").val()), function (latLng, circle) {
         $("#filter-center").val(latLng.toUrlValue());
@@ -6,10 +6,14 @@ $("#set-center").click(function () {
             var radius = parseInt($(this).val());
             circle.setRadius(radius);
         });
+        $("#filter-helper").hide();
+        $("#filter-radius").focus();
     });
+    $("#filter-slider-container").hide();
+    $("#filter-helper").show();
 });
 
-
+/* Slider configuration */
 $("#filter-slider").slider({
     range: "min",
     min: 100,
@@ -20,6 +24,29 @@ $("#filter-slider").slider({
     }
 });
 $("#filter-radius").val($("#filter-slider").slider("value"));
+$("#filter-radius").on("change", function () {
+    // handles value consistence between slider and input field
+    var old_value = $("#filter-slider").slider("value");
+    var new_value = parseInt($(this).val());
+    var min = $("#filter-slider").slider("option", "min");
+    var max = $("#filter-slider").slider("option", "max");
+
+    if (isNaN(new_value)) {
+        new_value = old_value;
+    } else if (new_value < min) {
+        new_value = min;
+    } else if (new_value > max) {
+        new_value = max;
+    }
+    $("#filter-radius").val(new_value);
+    $("#filter-slider").slider("value", new_value);
+});
+$("#filter-radius").focus(function () {
+    $("#filter-slider-container").show();
+});
+$("#filter-slider-container .icon-remove").on("click", function () {
+    $("#filter-slider-container").hide();
+});
 
 // $(".geo-objects-listing li div.img-holder").on('click', function (event) {
 //     event.preventDefault();
