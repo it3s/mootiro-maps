@@ -334,24 +334,32 @@ class AutocompleteWithFavorites(forms.TextInput):
         """ % {'label_id': label_id, 'value_id': value_id}
 
         else:
-            pass
-            # js += u"""
-            # shortcut.add('enter', function() {
-            #     var val = $('#id_community_text').val();
-            #     console.log(val);
+            js += u"""
 
-            #     var add = false;
+            var get_or_add_callbalck = function(){
+                var val = $('#%(label_id)s').val();
 
-            #     $.post('%(add_url)s', {value: val}, function(data){
-            #         if(data.added){
-            #             console.log('add!!');
+                var add = false;
 
-            #             $('#%(value_id)s').val(data.id);
-            #         }
-            #     }, 'json');
+                $.ajax({
+                    type: 'POST',
+                    url: '%(add_url)s',
+                    data: {'value': val},
+                    success: function(data){
+                        if(data.added){
+                            $('#%(value_id)s').val(data.id);
+                        }
+                    },
+                    dataType: 'json'
+                });
+            };
 
-            # }, {target:'id_community_text'});
-            # """ % {'add_url': self.add_url, 'value_id': value_id}
+            shortcut.add('enter', get_or_add_callbalck,
+                {target:'%(label_id)s', propagate: false});
+            shortcut.add('tab', get_or_add_callbalck,
+                {target:'%(label_id)s', propagate: true});
+            """ % {'add_url': self.add_url, 'value_id': value_id,
+                   'label_id': label_id}
 
         # select field behavior
         js += u"""
