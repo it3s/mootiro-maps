@@ -16,9 +16,12 @@ class FormResource(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField('Description', widget=MarkItUpWidget())
     kind = forms.CharField(
-        widget=AutocompleteWithFavorites(ResourceKind,
+        widget=AutocompleteWithFavorites(
+            ResourceKind,
             '/resource/search_by_kind/',
-            ResourceKind.objects.all()[:10]))
+            ResourceKind.objects.all()[:10],
+            add_url='/resource/get_or_add_kind/')
+        )
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
         required=False)

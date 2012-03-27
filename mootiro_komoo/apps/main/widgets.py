@@ -280,6 +280,9 @@ class AutocompleteWithFavorites(forms.TextInput):
         label_id: html id of the visible autocomplete field
         value_id: html id of the hidden field that contains data to be persisted
     """
+    class Media:
+        js = ('/static/lib/shortcut.js',)
+
     def __init__(self, model, source_url, favorites_query, help_text=None,
                  add_url=None, *args, **kwargs):
         self.model = model
@@ -331,8 +334,24 @@ class AutocompleteWithFavorites(forms.TextInput):
         """ % {'label_id': label_id, 'value_id': value_id}
 
         else:
-            # TODO We should add the new entry
             pass
+            # js += u"""
+            # shortcut.add('enter', function() {
+            #     var val = $('#id_community_text').val();
+            #     console.log(val);
+
+            #     var add = false;
+
+            #     $.post('%(add_url)s', {value: val}, function(data){
+            #         if(data.added){
+            #             console.log('add!!');
+
+            #             $('#%(value_id)s').val(data.id);
+            #         }
+            #     }, 'json');
+
+            # }, {target:'id_community_text'});
+            # """ % {'add_url': self.add_url, 'value_id': value_id}
 
         # select field behavior
         js += u"""
@@ -377,14 +396,15 @@ class AutocompleteWithFavorites(forms.TextInput):
         <input type="text" %(label_attrs)s />
 
         %(select)s
+        ''' % {'value_attrs': flatatt(value_attrs),
+               'label_attrs': flatatt(label_attrs),
+               'select': self.render_select(value_id)}
 
+        html += u'''
         <script type="text/javascript"><!--//
-          %(js)s
+            $(document).ready(function(){
+                %(js)s
+            });
         //--></script>
-        ''' % {
-            'value_attrs': flatatt(value_attrs),
-            'label_attrs': flatatt(label_attrs),
-            'select': self.render_select(value_id),
-            'js': self.render_js(label_id, value_id),
-        }
+        ''' % {'js': self.render_js(label_id, value_id)}
         return html
