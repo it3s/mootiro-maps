@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+import json
 
 from django.views.generic import View
 from django.db.models.query_utils import Q
@@ -131,8 +132,13 @@ class Edit(View):
             form_resource.fields['community'].widget = forms.HiddenInput()
             form_resource.initial['community'] = community.id
 
+        geojson = create_geojson([resource], convert=False)
+        geojson['features'][0]['properties']['userCanEdit'] = True
+        geojson = json.dumps(geojson)
+
         return render_to_response('resource/edit.html',
-            dict(form_resource=form_resource, community=community, resource=resource),
+            dict(form_resource=form_resource, community=community,
+                resource=resource, geojson=geojson),
             context_instance=RequestContext(request))
 
     def post(self, request, community_slug=None, *args, **kwargs):
