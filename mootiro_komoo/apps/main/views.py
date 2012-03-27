@@ -28,17 +28,20 @@ def root(request):
     return dict(geojson={})
 
 
-def _fetch_geo_objects(Q):
+def _fetch_geo_objects(Q, zoom):
     communities = Community.objects.filter(Q)
-    needs = Need.objects.filter(Q)
-    resources = Resource.objects.filter(Q)
-    organizations = Organization.objects.filter(Q)
+    # Fetch anything else communities only if zoom is greater than min zoom
+    min_zoom = 13
+    needs = Need.objects.filter(Q) if zoom >= min_zoom else []
+    resources = Resource.objects.filter(Q) if zoom >= min_zoom else []
+    organizations = Organization.objects.filter(Q) if zoom >= min_zoom else []
     return dict(communities=communities, needs=needs, resources=resources,
                 organizations=organizations)
 
 
 def get_geojson(request):
     bounds = request.GET.get('bounds', None)
+    zoom = int(request.GET.get('zoom', 13))
     x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
     polygon = Polygon(((x1, y1), (x1, y2), (x2, y2), (x2, y1), (x1, y1)))
 
@@ -46,7 +49,7 @@ def get_geojson(request):
                           Q(lines__intersects=polygon) |
                           Q(polys__intersects=polygon))
 
-    d = _fetch_geo_objects(intersects_polygon)
+    d = _fetch_geo_objects(intersects_polygon, zoom)
     l = []
     for objs in d.values():
         l.extend(objs)
