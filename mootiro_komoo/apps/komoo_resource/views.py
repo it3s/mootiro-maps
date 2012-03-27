@@ -200,7 +200,7 @@ def show_on_map(request, geojson=''):
 
 
 @ajax_request
-def resource_get_or_add_by_kind(request):
+def resource_get_or_add_kind(request):
     term = request.POST.get('value', '')
     print 'TERM: ', term
     kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
