@@ -1,15 +1,27 @@
 {% extends 'global.html' %}
 {% load crispy_forms_tags %}
+{% load upload_tags %}
 
 {% block content %}
   <div id="main-content">
     <div class="main-column">
       {% crispy form_resource form_resource.helper %}
+
+      {% upload_widget %}
     </div>
   </div>
 {% endblock %}
 
 {% block css %}
+  {% upload_css %}
   {{ form_resource.media }}
 {% endblock %}
 
+{% block page_scripts %}
+    <script type="text/javascript">
+        upload_settings = {
+            maxNumberOfFiles: 5
+        };
+    </script>
+  {% upload_javascript %}
+{% endblock %}

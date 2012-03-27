@@ -75,10 +75,16 @@ def upload_js():
 
 
 @register.inclusion_tag('fileupload/fileuploader_templatetag.html', takes_context=True)
-def upload_widget(context, obj):
-    files = UploadedFile.get_files_for(obj)
-    content_type = ContentType.objects.get_for_model(obj)
-    return dict(files=files, object_id=obj.id, content_type=content_type.id)
+def upload_widget(context, obj=None):
+    if obj:
+        files = UploadedFile.get_files_for(obj)
+        object_id = obj.id
+        content_type = ContentType.objects.get_for_model(obj).id
+    else:
+        files = []
+        object_id = ''
+        content_type = ''
+    return dict(files=files, object_id=object_id, content_type=content_type)
 
 
 @register.simple_tag
