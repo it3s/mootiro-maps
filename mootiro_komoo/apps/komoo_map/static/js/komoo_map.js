@@ -10,7 +10,6 @@
 
 // TODO: Get from Django the static url to avoid hardcode some urls.
 // TODO: Create a generic function to attach events to open/close info window.
-// FIXME: Set better values to zIndex options.
 
 /** @namespace */
 var komoo = {};
@@ -52,7 +51,7 @@ komoo.RegionTypes = [
                      'Local Economy', 'Social Service'], // FIXME: Hardcode is evil
         title: gettext('Needs'),
         tooltip: gettext('Add Need'),
-        color: '#f00',
+        color: '#f42c5e',
         icon: '/static/img/need.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
@@ -66,7 +65,7 @@ komoo.RegionTypes = [
         categories: [],
         title: gettext('Organization'),
         tooltip: gettext('Add Organization'),
-        color: '#00f',
+        color: '#3a61d6',
         icon: '/static/img/organization.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: dutils.urls.resolve('organization_edit',
@@ -78,7 +77,7 @@ komoo.RegionTypes = [
         categories: [],
         title: gettext('Resource'),
         tooltip: gettext('Add Resource'),
-        color: '#fff',
+        color: '#009fe3',
         icon: '/static/img/resource.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
@@ -167,6 +166,7 @@ komoo.ServerFetchMapType = function (komooMap) {
 
 komoo.ServerFetchMapType.prototype = {
     releaseTile: function (tile) {
+        console.log('releaseTile');
         var serverFetchMapType = this;
         var komooMap = serverFetchMapType.komooMap;
         if (komooMap.fetchedTiles[tile.tileKey]) {
@@ -175,9 +175,9 @@ komoo.ServerFetchMapType.prototype = {
                 if (overlay.bounds) {
                     if (!bounds.intersects(overlay.bounds)) {
                         overlay.setMap(null);
-                        if (overlay.marker) {
-                            //overlay.marker.setMap(null);
-                        }
+                    } else {
+                        console.log('KEPT');
+                        komooMap.keptOverlays.push(overlay);
                     }
                 } else if (overlay.getPosition) {
                     if (bounds.contains(overlay.getPosition())) {
@@ -343,6 +343,7 @@ komoo.Map = function (element, options) {
     // Initializing some properties.
     komooMap.mode = null;
     komooMap.fetchedTiles = {};
+    komooMap.keptOverlays = [];
     komooMap.loadedOverlays = {};
     komooMap.options = $.extend(komoo.MapOptions, options);
     komooMap.drawingManagerOptions = {};
@@ -560,6 +561,7 @@ komoo.Map.prototype = {
                 imagePath: '/static/img/cluster/communities',
                 imageSizes: [27, 33, 38, 43, 49]
             });
+            /*
             google.maps.event.addListener(komooMap.clusterer, 'mouseover', function (c) {
                 if (komooMap.addPanel.is(':visible') || !komooMap.options.enableInfoWindow) {
                     return;
@@ -587,6 +589,7 @@ komoo.Map.prototype = {
                     }, 200);
                 }
             });
+            */
         }
     },
 
@@ -656,6 +659,12 @@ komoo.Map.prototype = {
             }
         });
 
+        google.maps.event.addListener(komooMap.googleMap, 'zoom_changed', function () {
+            $.each(komooMap.keptOverlays, function (key, overlay) {
+                overlay.setMap(null);
+            });
+            komooMap.keptOverlays = [];
+        });
         google.maps.event.addListener(komooMap.googleMap, 'projection_changed', function () {
             komooMap.projection = komooMap.googleMap.getProjection();
             komooMap.overlayView = new google.maps.OverlayView();
@@ -792,7 +801,8 @@ komoo.Map.prototype = {
         }, komooMap.options.overlayOptions);
         var polylineOptions = $.extend({
             clickable: true,
-            editable: false
+            editable: false,
+            zIndex: 3
         }, komooMap.options.overlayOptions);
         var markerOptions = {};
 
@@ -827,6 +837,7 @@ komoo.Map.prototype = {
                 var color = komooMap.overlayOptions[feature.properties.type].color;
                 polygonOptions.fillColor = color;
                 polygonOptions.strokeColor = color;
+                polygonOptions.zIndex = feature.properties.type == 'community' ? 1 : 2
                 polylineOptions.strokeColor = color;
             } else {
                 // TODO: set a default color
@@ -1498,7 +1509,7 @@ komoo.Map.prototype = {
                 fillColor: 'white',
                 fillOpacity: 0.15,
                 editable: true,
-                zIndex: -99999999999999
+                zIndex: -1
             },
             drawingMode: google.maps.drawing.OverlayType.POLYGON
         };
@@ -1957,7 +1968,7 @@ komoo.Map.prototype = {
                     fillColor: 'white',
                     fillOpacity: 0.0,
                     strokeColor: '#ffbda8',
-                    zIndex: -99999999999999999999
+                    zIndex: -1
             });
 
             google.maps.event.addListener(komooMap.radiusCircle, 'click', function(e) {
@@ -1971,7 +1982,7 @@ komoo.Map.prototype = {
             komooMap.centerMarker = new google.maps.Marker({
                     visible: true,
                     icon: '/static/img/marker.png',
-                    zIndex: 99999999999999999999
+                    zIndex: 4
             });
             komooMap.centerMarker.setMap(komooMap.googleMap);
         }
