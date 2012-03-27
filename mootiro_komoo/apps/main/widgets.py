@@ -18,11 +18,9 @@ class Autocomplete(forms.TextInput):
         label_id: html id of the visible autocomplete field
         value_id: html id of the hidden field that contains data to be persisted
     """
-    def __init__(self, model, source_url, can_add=False, add_url='', *a, **kw):
+    def __init__(self, model, source_url, *a, **kw):
         self.model = model
         self.source_url = source_url
-        self.can_add = can_add
-        self.add_url = add_url
         super(Autocomplete, self).__init__(*a, **kw)
 
     def render_js(self, label_id, value_id):
@@ -37,52 +35,19 @@ class Autocomplete(forms.TextInput):
                 $("#%(label_id)s").val(ui.item.label);
                 $("#%(value_id)s").val(ui.item.value);
                 return false;
-            }
-        """ % {
-            'source_url': self.source_url,
-            'label_id': label_id,
-            'value_id': value_id
-        }
-        if not self.can_add:
-            js += """,
+            },
             change: function(event, ui) {
                 if(!ui.item || !$("#%(label_id)s").val()){
                     $("#%(value_id)s").val('');
                     $("#%(label_id)s").val('');
                 }
-            }""" % {
+            }
+         });
+        """ % {
+            'source_url': self.source_url,
             'label_id': label_id,
             'value_id': value_id
         }
-        js += " });"
-        return js
-
-    def add_js(self, field_name='', label_id='', value_id='', url=''):
-        js = u'''
-            shortcut.add('enter', function() {
-                var val = $('#%(label_id)s').val();
-                console.log(val);
-
-                var add = false;
-
-                $.post('%(url)s',
-                    {value: val},
-                    function(data){
-                        console.dir(data);
-                        if(data.added){
-                           // Add new ID here!!
-                           $('#%(value_id)s').val(data.id);
-                           $('#%(label_id)s').val(data.value);
-                        }
-                    }, 'json');
-
-            }, {target:'%(label_id)s'});
-
-
-        ''' % {'field_name': field_name, 'label_id': label_id,
-               'value_id': value_id, 'url': url}
-        print 'label_id', label_id
-        print 'value_id', value_id
         return js
 
     def render(self, name, value=None, attrs=None):
@@ -109,13 +74,6 @@ class Autocomplete(forms.TextInput):
             'label_attrs': flatatt(label_attrs),
             'js': self.render_js(label_id, value_id),
         }
-        if self.can_add:
-            html += u'''
-            <script type="text/javascript" src="/static/lib/shortcut.js"></script>
-            <script type="text/javascript"><!--//
-                %(add_js)s
-            //--></script>
-            ''' % {'add_js': self.add_js(name, label_id, value_id, self.add_url)}
         return html
 
 
@@ -309,3 +267,103 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
             output.append(list_item)
         output.append(u'</ul>')
         return mark_safe(u'\n'.join(output))
+
+
+class AutocompleteWithFavorites(forms.TextInput):
+    """
+    Autocomplete field with favorites sugestion.
+    Usually to be used on ForeignKey fields.
+        label_id: html id of the visible autocomplete field
+        value_id: html id of the hidden field that contains data to be persisted
+    """
+    def __init__(self, model, source_url, favorites_query, *a, **kw):
+        self.model = model
+        self.source_url = source_url
+        self.query = favorites_query
+        super(AutocompleteWithFavorites, self).__init__(*a, **kw)
+
+    def render_js(self, label_id, value_id):
+        js = u"""
+        $("#%(label_id)s").autocomplete({
+            source: "%(source_url)s",
+            focus: function(event, ui) {
+                $("#%(label_id)s").val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui) {
+                $("#%(label_id)s").val(ui.item.label);
+                $("#%(value_id)s").val(ui.item.value);
+
+                var select_item = $("#%(value_id)s_select option[value=" + ui.item.value + "]");
+                if( select_item.length){
+                    select_item.attr('selected', 'selected');
+                }
+                else {
+                    $("#%(value_id)s_select option:selected").removeAttr('selected');
+                }
+
+                return false;
+            },
+            change: function(event, ui) {
+                if(!ui.item || !$("#%(label_id)s").val()){
+                    $("#%(value_id)s").val('');
+                    $("#%(label_id)s").val('');
+                }
+            }
+         });
+
+        $("#%(value_id)s_select").change(function(evt){
+            var opt = $(this).find('option:selected');
+            $('#%(label_id)s').val(opt.text());
+            $('#%(value_id)s').val(opt.val());
+        });
+
+        """ % {
+            'source_url': self.source_url,
+            'label_id': label_id,
+            'value_id': value_id
+        }
+        return js
+
+    def render_select(self, value_id=None):
+        count = self.query.count()
+        select = u'''
+        <select id="%(value_id)s_select" size="%(count)s">
+        ''' % dict(count=count, value_id=value_id)
+        for obj in self.query:
+            select += u'<option value="%(id)s">%(label)s</option>' % {
+                'label': obj, 'id': obj.id}
+        select == u'''
+        </select>
+        '''
+        return select
+
+    def render(self, name, value=None, attrs=None):
+        value_id = 'id_%s' % name  # id_fieldname
+        label_id = '%s_autocomplete' % value_id  # id_fieldname_autocomplete
+
+        value_attrs = dict(id=value_id, name=name, value=value)
+
+        # attrs is consumed by the label field (autocomplete)
+        label_attrs = self.build_attrs(attrs)  # must not have 'name' attribute
+        if value:
+            label_attrs['value'] = self.model.objects.get(id=value)
+        if not 'id' in self.attrs:
+            label_attrs['id'] = label_id
+
+        html = u'''
+        <input type="hidden" %(value_attrs)s />
+        <input type="text" %(label_attrs)s />
+
+        %(select)s
+
+        <script type="text/javascript"><!--//
+          %(js)s
+        //--></script>
+        ''' % {
+            'value_attrs': flatatt(value_attrs),
+            'label_attrs': flatatt(label_attrs),
+            'select': self.render_select(value_id),
+            'js': self.render_js(label_id, value_id),
+        }
+        return html

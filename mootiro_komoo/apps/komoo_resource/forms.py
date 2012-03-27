@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 
 from main.utils import MooHelper
-from main.widgets import Autocomplete, TaggitWidget
+from main.widgets import Autocomplete, TaggitWidget, AutocompleteWithFavorites
 from komoo_resource.models import Resource, ResourceKind
 from community.models import Community
 
@@ -16,8 +16,9 @@ class FormResource(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField('Description', widget=MarkItUpWidget())
     kind = forms.CharField(
-        widget=Autocomplete(ResourceKind, '/resource/search_by_kind/',
-            can_add=True, add_url='/resource/get_or_add_by_kind/'))
+        widget=AutocompleteWithFavorites(ResourceKind,
+            '/resource/search_by_kind/',
+            ResourceKind.objects.all()[:10]))
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
         required=False)
