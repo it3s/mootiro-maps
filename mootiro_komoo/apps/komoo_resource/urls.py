@@ -16,6 +16,8 @@ urlpatterns = patterns('komoo_resource.views',
             name='resource_search_by_kind'),
     url(r'^resource/search_by_tag/$', 'search_by_tag',
             name='resource_search_by_tag'),
+    url(r'^resource/get_or_add_by_kind/$', 'resource_get_or_add_by_kind',
+            name='resource_get_or_add_by_kind'),
 
     # this probably should be placed somewhere else (and made generic)
     url(r'^show_on_map/$', 'show_on_map', name='show_on_map'),

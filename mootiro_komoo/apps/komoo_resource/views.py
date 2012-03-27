@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django import forms
 from django.db.models import Count
 
-from annoying.decorators import render_to
+from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 from taggit.models import TaggedItem
 
@@ -191,3 +191,16 @@ def show_on_map(request, geojson=''):
     resource = get_object_or_404(Resource, pk=request.GET.get('id', ''))
     geojson = create_geojson([resource])
     return dict(geojson=geojson)
+
+
+@ajax_request
+def resource_get_or_add_by_kind(request):
+    term = request.GET.get('val', '')
+    kinds = ResourceKind.objects.filter(Q(name__icontains=term) |
+        Q(slug__icontains=term))
+    if not kinds.count():
+        r = ResourceKind(name=term).save()
+        obj = dict(added=True, id=r.id, value=r.name)
+    else:
+        obj = dict(added=False, id=None, value=term)
+    return obj

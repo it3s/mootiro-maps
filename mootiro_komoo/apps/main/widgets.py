@@ -18,9 +18,11 @@ class Autocomplete(forms.TextInput):
         label_id: html id of the visible autocomplete field
         value_id: html id of the hidden field that contains data to be persisted
     """
-    def __init__(self, model, source_url, *a, **kw):
+    def __init__(self, model, source_url, can_add=False, add_url='', *a, **kw):
         self.model = model
         self.source_url = source_url
+        self.can_add = can_add
+        self.add_url = add_url
         super(Autocomplete, self).__init__(*a, **kw)
 
     def render_js(self, label_id, value_id):
@@ -50,6 +52,30 @@ class Autocomplete(forms.TextInput):
         }
         return js
 
+    def add_js(self, field_name='', label_id='', value_id='', url=''):
+        js = u'''
+            shortcut.add('enter', function() {
+                var val = $('#%(label_id)s').val();
+                console.log(val);
+
+                var add = false;
+
+                /*$.post('%(url)s',
+                    {val: val},
+                    function(data){
+                        if(data.added){
+                           // Add new ID here!!
+                           $('#%(value_id)s').val(data.id);
+                        }
+                    }, 'json');*/
+
+            }, {target:'%(label_id)s'});
+
+
+        ''' % {'field_name': field_name, 'label_id': label_id,
+               'value_id': value_id, 'url': url}
+        return js
+
     def render(self, name, value=None, attrs=None):
         value_id = 'id_%s' % name  # id_fieldname
         label_id = '%s_autocomplete' % value_id  # id_fieldname_autocomplete
@@ -74,6 +100,13 @@ class Autocomplete(forms.TextInput):
             'label_attrs': flatatt(label_attrs),
             'js': self.render_js(label_id, value_id),
         }
+        if self.can_add:
+            html += u'''
+            <script type="text/javascript" src="/static/lib/shortcut.js"></script>
+            <script type="text/javascript"><!--//
+                %(add_js)s
+            //--></script>
+            ''' % {'add_js': self.add_js(name, label_id, value_id, self.add_url)}
         return html
 
 
