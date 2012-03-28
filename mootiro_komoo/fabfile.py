@@ -132,6 +132,7 @@ def sync_all():
     """
     recreate_db()
     syncdb()
+    load_fixtures()
     load_fixtures('test')
     initial_revisions()
     clean_media_files()
