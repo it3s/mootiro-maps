@@ -74,8 +74,23 @@ ul.horizontal li {
 
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
-ul.geo-objects-listing li { padding: 4px 0 }
+ul.geo-objects-listing li {
+    position: relative;
+    padding: 4px 0;
+}
 ul.geo-objects-listing li ul { margin-left: 30px }
+ul.geo-objects-listing li div.collapser {
+    width: 30px;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    right: 0;
+    text-align: center;
+    background-color: #fafafa;
+}
+ul.geo-objects-listing li div.collapser:hover { background: #dceff4 }
+ul.geo-objects-listing li div.collapser i { margin-top: 10px }
+ul.geo-objects-listing li.categories { display: none }
 
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }

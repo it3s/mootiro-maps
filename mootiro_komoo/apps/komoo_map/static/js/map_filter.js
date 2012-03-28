@@ -1,4 +1,4 @@
-/* Add center functionality */
+/******* Center *******/
 $("#set-center").click(function () {
     editor.selectCenter(parseInt($("#filter-radius").val()), function (latLng, circle) {
         $("#filter-center").val(latLng.toUrlValue());
@@ -13,7 +13,7 @@ $("#set-center").click(function () {
     $("#filter-helper").show();
 });
 
-/* Slider configuration */
+/******* Slider *******/
 $("#filter-slider").slider({
     range: "min",
     min: 100,
@@ -48,33 +48,18 @@ $("#filter-slider-container .icon-ok").on("click", function () {
     $("#filter-slider-container").hide();
 });
 
-// $(".geo-objects-listing li div.img-holder").on('click', function (event) {
-//     event.preventDefault();
-// });
-// $(".geo-objects-listing li").bind('click', function () {
-//     alert("li");
-//     // triggerHandler does not bubble the event
-//     var $img = $("img", this)
-//     console.log($img);
-//     var v = $img.triggerHandler('click');
-//     alert(v);
-//     return false;
-// });
-
+/******* List items behavior *******/
 function hierarchicalImageSwitchSelection (parent, children) {
     var $parent = $(parent);
     var $parent_img = $("#tick_img_" + $parent.attr("id"));
-
     var $children = $(children);
 
     $parent_img.on("click", function (event) {
         var parent_status = Boolean($parent.attr('checked'));
-
         $children.each(function (index, child) {
             var $child = $(child);
             var $child_img = $("#tick_img_" + $child.attr("id"));
             var status = Boolean($child.attr('checked'));
-
             if (status != parent_status) {
                 $child_img.click();
             }
@@ -82,19 +67,21 @@ function hierarchicalImageSwitchSelection (parent, children) {
 
     });
 }
-
 hierarchicalImageSwitchSelection("#id_needs", "input[name=need_categories]");
 
-$(".needs div.img-holder").on("click", function (event) {
-    var $sub_checkboxes = $();
-    //$(".need.categories ul img")
+$(".geo-objects-listing .needs .collapser").on("click", function (event) {
+    var $sublist = $(".need.categories");
+    $sublist.toggle();
+    $("i", this).toggleClass("icon-chevron-right icon-chevron-down");
 });
 
+/******* Navigation *******/
 $("#filter-back, #filter-results .icon-remove").live("click", function (event) {
     $("#filter-results-container").hide();
     $("#filter-form").show();
 });
 
+/******* Form submission *******/
 $("#filter-form").on("submit", function (event) {
     event.preventDefault();
 
@@ -128,4 +115,17 @@ $("#filter-form").on("submit", function (event) {
 //     $("#filter-form input[type=checkbox]").attr('checked', true);
 //     $("#filter-center").val("-23.561233,-46.74922");
 //     $("#filter-form").submit();
+// });
+
+// $(".geo-objects-listing li div.img-holder").on('click', function (event) {
+//     event.preventDefault();
+// });
+// $(".geo-objects-listing li").bind('click', function () {
+//     alert("li");
+//     // triggerHandler does not bubble the event
+//     var $img = $("img", this)
+//     console.log($img);
+//     var v = $img.triggerHandler('click');
+//     alert(v);
+//     return false;
 // });
