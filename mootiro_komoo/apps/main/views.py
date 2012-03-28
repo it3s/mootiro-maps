@@ -69,26 +69,22 @@ def radial_search(request):
                       Q(lines__distance_lte=(center, radius)) |
                       Q(polys__distance_lte=(center, radius)))
 
-    objs = _fetch_geo_objects(distance_query)
+    objs = _fetch_geo_objects(distance_query, 13)
     d = {}
     if 'communities' in request.GET:
-        d['communities'] = [model_to_dict(c, fields=['name', 'slug']) \
-                                for c in objs['communities']]
+        d['communities'] = objs['communities']
     if 'needs' in request.GET:
-        need_categories = request.GET['need_categories']
+        need_categories = request.GET['need_categories'].split(',')
         d['needs'] = []
         for n in objs['needs']:
             if [c for c in n.categories.all() if str(c.id) in need_categories]:
-                d['needs'].append(model_to_dict(n, fields=['title', 'slug']))
+                d['needs'].append(n)
     if 'organizations' in request.GET:
-        d['organizations'] = [model_to_dict(o, fields=['name', 'slug']) \
-                                for o in objs['organizations']]
+        d['organizations'] = objs['organizations']
     if 'resources' in request.GET:
-        d['resources'] = [model_to_dict(r, fields=['title', 'slug']) \
-                            for r in objs['resources']]
+        d['resources'] = objs['resources']
 
-    #return HttpResponse(json.dumps(d), mimetype="application/x-javascript")
-    return objs
+    return d
 
 
 @render_to('404.html')
