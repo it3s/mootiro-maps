@@ -17,7 +17,7 @@ from annoying.decorators import render_to
 from community.models import Community
 from need.models import Need
 from komoo_resource.models import Resource
-from organization.models import Organization
+from organization.models import OrganizationBranch
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
@@ -35,9 +35,9 @@ def _fetch_geo_objects(Q, zoom):
     min_zoom = 13
     needs = Need.objects.filter(Q) if zoom >= min_zoom else []
     resources = Resource.objects.filter(Q) if zoom >= min_zoom else []
-    organizations = Organization.objects.filter(Q) if zoom >= min_zoom else []
+    organizations_branchs = OrganizationBranch.objects.filter(Q) if zoom >= min_zoom else []
     return dict(communities=communities, needs=needs, resources=resources,
-                organizations=organizations)
+                organizations=organizations_branchs)
 
 
 #@cache_page(54000)

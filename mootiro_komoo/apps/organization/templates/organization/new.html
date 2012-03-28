@@ -1,17 +1,20 @@
-{% if redirect %}
-    <script type="text/javascript">window.location = '{{ redirect }}';</script>
-{% else %}
+{% extends 'global.html' %}
+{% load crispy_forms_tags %}
+{% load komoo_map_tags %}
 
-    {% load crispy_forms_tags %}
-    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
-    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
-    {{ form_org.media }}
-
+{% block content %}
     <div id="main-content">
         <div class="main-column">
             {% crispy form_org form_org.helper %}
         </div>
+
   </div>
+{% endblock %}
 
+{% block css %}
+    {{ form_org.media }}
+    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
 
-{% endif %}
+    </script>
+{% endblock %}

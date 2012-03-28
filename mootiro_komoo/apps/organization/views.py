@@ -48,6 +48,48 @@ def show(request, organization_slug='', community_slug=''):
                 community=community)
 
 
+class New(View):
+    """Class based view for adding a Organization"""
+
+    @method_decorator(login_required)
+    def get(self, request, community_slug=None, *args, **kwargs):
+        logger.debug('acessing organization > Edit with GET')
+        community = get_object_or_None(Community, slug=community_slug)
+
+        form_org = FormOrganization()
+
+        if request.GET.get('frommap', None) == 'false':
+            form_org.fields.pop('geometry', '')
+            tmplt = 'organization/new.html'
+        else:
+            tmplt = 'organization/new_frommap.html'
+
+        return render_to_response(tmplt,
+            dict(form_org=form_org, community=community),
+            context_instance=RequestContext(request))
+
+    def post(self, request, community_slug=None, *args, **kwargs):
+        logger.debug('acessing organization > Edit with POST: {}'.format(
+            request.POST))
+
+        form_org = FormOrganization(request.POST)
+        community = get_object_or_None(Community, slug=community_slug)
+
+        if form_org.is_valid():
+            organization = form_org.save(user=request.user)
+
+            prefix = '/{}'.format(community_slug) if community_slug else ''
+            _url = '{}/organization/{}'.format(prefix, organization.slug)
+            return render_to_response('organization/new.html',
+                dict(redirect=_url, community=community),
+                context_instance=RequestContext(request))
+        else:
+            logger.debug('Form erros: {}'.format(dict(form_org._errors)))
+            return render_to_response('organization/new.html',
+                dict(form_org=form_org, community=community),
+                context_instance=RequestContext(request))
+
+
 class Edit(View):
     """Class based view for editing a Organization"""
 
@@ -72,7 +114,7 @@ class Edit(View):
         # if community and not community.id in form_org.initial['community']:
             # form_org.initial['community'].append(community.id)
 
-        tmplt = 'organization/edit.html' if _id else 'organization/new.html'
+        tmplt = 'organization/edit.html'
         return render_to_response(tmplt,
             dict(form_org=form_org, community=community, geojson=geojson),
             context_instance=RequestContext(request))
@@ -104,7 +146,7 @@ class Edit(View):
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_org._errors)))
-            tmplt = 'organization/edit.html' if _id else 'organization/new.html'
+            tmplt = 'organization/edit.html'
             return render_to_response(tmplt,
                 dict(form_org=form_org, community=community),
                 context_instance=RequestContext(request))
