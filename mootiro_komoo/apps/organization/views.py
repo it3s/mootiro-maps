@@ -109,7 +109,8 @@ class Edit(View):
 
             form_org = FormOrganization(instance=organization)
             geojson = create_geojson([organization], convert=False)
-            geojson['features'][0]['properties']['userCanEdit'] = True
+            if geojson.get('featues'):
+                geojson['features'][0]['properties']['userCanEdit'] = True
             geojson = json.dumps(geojson)
         else:
             form_org = FormOrganization()
