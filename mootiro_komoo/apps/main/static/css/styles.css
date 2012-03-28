@@ -226,6 +226,7 @@ ul.geo-objects-listing li ul { margin-left: 30px }
     display: inline-block;
     vertical-align: middle;
 }
+#map-panel-filter ul.geo-objects-listing { margin: 10px 0 0 }
 #map-panel-filter #filter-cirle,
 #map-panel-filter ul.geo-objects-listing li {
     padding: 8px;
@@ -240,8 +241,9 @@ ul.geo-objects-listing li ul { margin-left: 30px }
     padding-left: 2em;
     padding-right: 2em;
 }
+#filter-circle .button { margin-left: 0em }
 #filter-circle .button .icon-plus { vertical-align: middle }
-#filter-circle span { margin: 0 5px }
+#filter-circle span { margin-left: 2em }
 #filter-circle input {
     width: 3em;
     vertical-align: baseline;
@@ -255,21 +257,6 @@ ul.geo-objects-listing li ul { margin-left: 30px }
     -moz-border-radius   : 7px;
     -webkit-border-radius: 7px;
 }
-#filter-slider { float: left }
-#filter-slider-container .icon-remove {
-    float: right;
-    margin-left: 0.4em;
-}
-#filter-slider-container {
-    position: absolute;
-    right: 5px;
-}
-#filter-helper {
-    position: fixed;
-    left: 220px;
-    top: 250px;
-    z-index: 10;
-}
 #filter-circle .ui-slider {
     width: 130px;
     height: 10px;
@@ -282,6 +269,21 @@ ul.geo-objects-listing li ul { margin-left: 30px }
     height: 14px;
     top: -3px;
     margin-left: -3px;
+}
+#filter-slider { float: left }
+#filter-slider-container .icon-ok {
+    float: right;
+    margin-left: 0.4em;
+}
+#filter-slider-container {
+    position: absolute;
+    right: 5px;
+}
+#filter-helper {
+    position: fixed;
+    left: 220px;
+    top: 250px;
+    z-index: 10;
 }
 #filter-results-container { display: none }
 

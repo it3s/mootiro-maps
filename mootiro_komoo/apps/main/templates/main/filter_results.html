@@ -1,15 +1,33 @@
-<h3>Search results for this radius<i class="icon-remove right"></i></h3>
+{% load i18n %}
+
 <ul class="geo-objects-listing" style="display: block; clear: both;">
+  <li>
+    <h4>
+      {% trans "Search results for this radius" %}
+      <i class="icon-remove right"></i>
+    </h4>
+  </li>
+  {% if not communities and not needs and not organizations and not resources %}
+  <li>
+    {% trans "No results found." %}
+  </li>
+  {% endif %}
   {% if communities %}
   <li class="communities">
-    <div class="img-holder">{{ form.communities }}</div>
-    <span>Communities</span>
+    <div class="img-holder"><img src="{{ STATIC_URL }}img/community.png"/></div>
+    <span>
+      {% blocktrans count counter=communities|length %}
+        {{ counter }} Community
+      {% plural %}
+        {{ counter }} Communities
+      {% endblocktrans %}
+    </span>
   </li>
   <li class="community categories">
     <ul>
       {% for c in communities %}
         <li>
-          <div class="img-holder">{{ form.communities }}</div>
+          <div class="img-holder"><img src="{{ STATIC_URL }}{{ c.image }}"/></div>
           <span>{{ c.name }}</span>
         </li>
       {% endfor %}
@@ -18,14 +36,20 @@
   {% endif %}
   {% if needs %}
   <li class="needs">
-    <div class="img-holder">{{ form.needs }}</div>
-    <span>Needs</span>
+    <div class="img-holder"><img src="{{ STATIC_URL }}img/need.png"/></div>
+    <span>
+      {% blocktrans count counter=needs|length %}
+        {{ counter }} Need
+      {% plural %}
+        {{ counter }} Needs
+      {% endblocktrans %}
+    </span>
   </li>
   <li class="need categories">
     <ul>
       {% for n in needs %}
         <li>
-          <div class="img-holder">{{ form.communities }}</div>
+          <div class="img-holder"><img src="{{ STATIC_URL }}{{ n.image }}"/></div>
           <span>{{ n.title }}</span>
         </li>
       {% endfor %}
@@ -34,14 +58,46 @@
   {% endif %}
   {% if organizations %}
   <li class="organizations">
-    <div class="img-holder">{{ form.organizations }}</div>
-    <span>Organizations</span>
+    <div class="img-holder"><img src="{{ STATIC_URL }}img/organization.png"/></div>
+    <span>
+      {% blocktrans count counter=organizations|length %}
+        {{ counter }} Organization
+      {% plural %}
+        {{ counter }} Organizations
+      {% endblocktrans %}
+    </span>
+  </li>
+  <li class="organization categories">
+    <ul>
+      {% for o in organizations %}
+        <li>
+          <div class="img-holder"><img src="{{ STATIC_URL }}{{ o.image }}"/></div>
+          <span>{{ o.name }}</span>
+        </li>
+      {% endfor %}
+    </ul>
   </li>
   {% endif %}
   {% if resources %}
   <li class="resources">
-    <div class="img-holder">{{ form.resources }}</div>
-    <span>Resources</span>
+    <div class="img-holder"><img src="{{ STATIC_URL }}img/resource.png"/></div>
+    <span>
+      {% blocktrans count counter=resources|length %}
+        {{ counter }} Resource
+      {% plural %}
+        {{ counter }} Resources
+      {% endblocktrans %}
+    </span>
+  </li>
+  <li class="resource categories">
+    <ul>
+      {% for r in resources %}
+        <li>
+          <div class="img-holder"><img src="{{ STATIC_URL }}{{ r.image }}"/></div>
+          <span>{{ r.name }}</span>
+        </li>
+      {% endfor %}
+    </ul>
   </li>
   {% endif %}
 </ul>

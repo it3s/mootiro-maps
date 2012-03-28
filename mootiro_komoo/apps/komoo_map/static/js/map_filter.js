@@ -44,7 +44,7 @@ $("#filter-radius").on("change", function () {
 $("#filter-radius").focus(function () {
     $("#filter-slider-container").show();
 });
-$("#filter-slider-container .icon-remove").on("click", function () {
+$("#filter-slider-container .icon-ok").on("click", function () {
     $("#filter-slider-container").hide();
 });
 
@@ -65,7 +65,7 @@ $(".needs div.img-holder").on("click", function (event) {
     //$(".need.categories ul img")
 });
 
-$("#filter-back, #filter-results-container .icon-remove").on("click", function (event) {
+$("#filter-back, #filter-results .icon-remove").live("click", function (event) {
     $("#filter-results-container").hide();
     $("#filter-form").show();
 });
@@ -73,8 +73,19 @@ $("#filter-back, #filter-results-container .icon-remove").on("click", function (
 $("#filter-form").on("submit", function (event) {
     event.preventDefault();
 
+    var $form = $("#filter-form");
+    var need_categories = $("input[name=need_categories]").serializeArray()
+        .map(function (item) {
+            return item.value;
+        }).join(',');
+
+    var data = ""
+    data += $("input[name=center], input[name=radius], " +
+              "input[name=communities], input[name=needs], " +
+              "input[name=organizations], input[name=resources]", $form).serialize();
+    data += "&need_categories=" +need_categories;
+
     var url = dutils.urls.resolve('radial_search');
-    var data = $("#filter-form").serialize();
 
     $.ajax({
         type: 'GET',
