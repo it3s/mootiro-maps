@@ -255,8 +255,13 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
         },
         error: function (jqXHR, textStatus, errorThrown) {
             if (window.console) console.error(textStatus);
-            var error = $('<div>').html(jqXHR.responseText)
-            $('body').append(error); // FIXME: This is not user friendly
+            var serverError = $('#server-error');
+            if (serverError.parent().length == 0) {
+                serverError = $('<div>').attr('id', 'server-error');
+                $('body').append(serverError);
+                var error = $('<div>').html(jqXHR.responseText)
+                serverError.append(error); // FIXME: This is not user friendly
+            }
         }
     });
     return div;
