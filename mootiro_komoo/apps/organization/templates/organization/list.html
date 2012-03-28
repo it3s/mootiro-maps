@@ -11,6 +11,16 @@
 
 {% block content %}
   <div id="main-content">
+
+    <div>
+      {% if community %}
+      <a class="button" href="{% url organization_new community.slug %}">{% trans 'New Organization' %}</a>
+      {% else %}
+      <a class="button" href="{% url organization_new %}">{% trans 'New Organization' %}</a>
+      {% endif %}
+      <div class="ajax-search"><input type="text"/></div>
+    </div>
+
     {% for org in organizations.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
 
