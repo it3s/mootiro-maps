@@ -40,6 +40,7 @@ class UploadedFile(models.Model):
         class method to binf a list of files to a given obj
         """
         for f in ids_list:
-            file_ = UploadedFile.objects.get(pk=f)
-            file_.content_object = obj_to_bind
-            file_.save()
+            if f:
+                file_ = UploadedFile.objects.get(pk=f)
+                file_.content_object = obj_to_bind
+                file_.save()
