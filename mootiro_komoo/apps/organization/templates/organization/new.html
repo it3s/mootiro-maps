@@ -5,7 +5,11 @@
 {% block content %}
     <div id="main-content">
         <div class="main-column">
-            {% crispy form_org form_org.helper %}
+            {{ form_verify }}
+
+            {#% crispy form_org form_org.helper %#}
+
+            {#{ form_branch }#}
         </div>
 
   </div>
@@ -16,5 +20,11 @@
     <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
     <script type="text/javascript" src="/static/js/ajax_select.js"></script>
 
+    </script>
+{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        $('#form_organization').hide();
     </script>
 {% endblock %}

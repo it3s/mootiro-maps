@@ -8,7 +8,13 @@ from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from main.utils import MooHelper
+from main.widgets import Autocomplete
 from organization.models import Organization, OrganizationBranch
+
+
+class FormVerifyOrganization(forms.Form):
+    name = forms.CharField(required=False,
+            widget=Autocomplete(Organization, '/organization/search_by_name'))
 
 
 class FormOrganization(forms.ModelForm):
@@ -53,3 +59,4 @@ class FormBranch(forms.ModelForm):
 
     class Meta:
         model = OrganizationBranch
+        excludes = ['organization']

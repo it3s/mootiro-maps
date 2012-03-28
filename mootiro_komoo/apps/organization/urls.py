@@ -15,6 +15,9 @@ urlpatterns = patterns('organization.views',
     url(r'^organization/(?P<organization_slug>[a-zA-Z0-9-]+)/?$', 'show',
             name='view_organization'),
 
+    url(r'^organization/search_by_name/$', 'search_by_name',
+            name='organizatio_search_by_name'),
+
     url(pr(r'^COMMUNITY_SLUG/organization/?$'), 'organization_list',
             name='organization_list'),
     url(pr(r'^COMMUNITY_SLUG/organization/new/?$'), New.as_view(),
