@@ -79,6 +79,15 @@ class Autocomplete(forms.TextInput):
         }
         return html
 
+    def clean(self, value, *a, **kw):
+        try:
+            if not value or value == 'None':
+                return self.model()
+            else:
+                return self.model.objects.get(id=value)
+        except:
+            raise forms.ValidationError(_('invalid data'))
+
 
 class MultipleAutocompleteBase(forms.TextInput):
     """User friendly text input for many to many relationship fields.

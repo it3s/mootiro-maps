@@ -71,16 +71,18 @@ class FormResource(forms.ModelForm):
 
     def clean_kind(self):
         try:
-            if self.cleaned_data['kind'] == 'None':
-                self.cleaned_data['kind'] = ''
-            return ResourceKind.objects.get(id=self.cleaned_data['kind'])
+            if not self.cleaned_data['kind'] or self.cleaned_data['kind'] == 'None':
+                return ResourceKind()
+            else:
+                return ResourceKind.objects.get(id=self.cleaned_data['kind'])
         except:
             raise forms.ValidationError(_('invalid kind data'))
 
     def clean_community(self):
         try:
-            if self.cleaned_data['community'] == 'None':
-                self.cleaned_data['community'] = ''
-            return Community.objects.get(id=self.cleaned_data['community'])
+            if not self.cleaned_data['community'] or self.cleaned_data['community'] == 'None':
+                return Community()
+            else:
+                return Community.objects.get(id=self.cleaned_data['community'])
         except:
             raise forms.ValidationError(_('invalid community data'))

@@ -29,7 +29,7 @@ class Resource(GeoRefModel):
     creator = models.ForeignKey(User, null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
-    kind = models.ForeignKey(ResourceKind)
+    kind = models.ForeignKey(ResourceKind, null=True, blank=True)
     description = models.TextField()
     community = models.ForeignKey(Community, related_name='resources',
         null=True, blank=True)
