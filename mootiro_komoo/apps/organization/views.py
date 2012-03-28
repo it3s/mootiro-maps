@@ -81,7 +81,7 @@ class New(View):
             prefix = '/{}'.format(community_slug) if community_slug else ''
             _url = '{}/organization/{}'.format(prefix, organization.slug)
             return render_to_response('organization/new.html',
-                dict(redirect=_url, community=community),
+                dict(redirect=_url, form_org=form_org, community=community),
                 context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_org._errors)))
