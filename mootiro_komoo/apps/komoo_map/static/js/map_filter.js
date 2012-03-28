@@ -61,7 +61,32 @@ $("#filter-slider-container .icon-ok").on("click", function () {
 //     return false;
 // });
 
+function hierarchicalImageSwitchSelection (parent, children) {
+    var $parent = $(parent);
+    var $parent_img = $("#tick_img_" + $parent.attr("id"));
+
+    var $children = $(children);
+
+    $parent_img.on("click", function (event) {
+        var parent_status = Boolean($parent.attr('checked'));
+
+        $children.each(function (index, child) {
+            var $child = $(child);
+            var $child_img = $("#tick_img_" + $child.attr("id"));
+            var status = Boolean($child.attr('checked'));
+
+            if (status != parent_status) {
+                $child_img.click();
+            }
+        });
+
+    });
+}
+
+hierarchicalImageSwitchSelection("#id_needs", "input[name=need_categories]");
+
 $(".needs div.img-holder").on("click", function (event) {
+    var $sub_checkboxes = $();
     //$(".need.categories ul img")
 });
 
