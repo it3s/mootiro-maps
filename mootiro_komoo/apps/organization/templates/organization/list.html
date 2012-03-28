@@ -14,9 +14,9 @@
 
     <div>
       {% if community %}
-      <a class="button" href="{% url organization_new community.slug %}">{% trans 'New Organization' %}</a>
+      <a class="button" href="{% url organization_new community.slug %}?frommap=false">{% trans 'New Organization' %}</a>
       {% else %}
-      <a class="button" href="{% url organization_new %}">{% trans 'New Organization' %}</a>
+      <a class="button" href="{% url organization_new %}?frommap=false">{% trans 'New Organization' %}</a>
       {% endif %}
       <div class="ajax-search"><input type="text"/></div>
     </div>
