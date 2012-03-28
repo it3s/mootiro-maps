@@ -33,3 +33,13 @@ class UploadedFile(models.Model):
         obj_content_type = ContentType.objects.get_for_model(obj)
         return UploadedFile.objects.filter(content_type=obj_content_type,
                                            object_id=obj.id)
+
+    @classmethod
+    def bind_files(cls, ids_list, obj_to_bind):
+        """
+        class method to binf a list of files to a given obj
+        """
+        for f in ids_list:
+            file_ = UploadedFile.objects.get(pk=f)
+            file_.content_object = obj_to_bind
+            file_.save()

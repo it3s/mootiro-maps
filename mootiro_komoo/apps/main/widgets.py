@@ -59,8 +59,10 @@ class Autocomplete(forms.TextInput):
 
         # attrs is consumed by the label field (autocomplete)
         label_attrs = self.build_attrs(attrs)  # must not have 'name' attribute
-        if value:
+        if value and value != 'None':
             label_attrs['value'] = self.model.objects.get(id=value)
+        else:
+            label_attrs['value'] = ''
         if not 'id' in self.attrs:
             label_attrs['id'] = label_id
 
@@ -394,7 +396,7 @@ class AutocompleteWithFavorites(forms.TextInput):
 
         # attrs is consumed by the label field (autocomplete)
         label_attrs = self.build_attrs(attrs)  # must not have 'name' attribute
-        if value:
+        if value and value != 'None':
             label_attrs['value'] = self.model.objects.get(id=value)
         if not 'id' in self.attrs:
             label_attrs['id'] = label_id

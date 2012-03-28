@@ -5,17 +5,19 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from markitup.widgets import MarkItUpWidget
+from fileupload.forms import FileuploadField
 
 from main.utils import MooHelper
 from main.widgets import Autocomplete, TaggitWidget, AutocompleteWithFavorites
 from komoo_resource.models import Resource, ResourceKind
 from community.models import Community
+from fileupload.models import UploadedFile
 
 
 class FormResource(forms.ModelForm):
     id = forms.CharField(required=False, widget=forms.HiddenInput())
     description = forms.CharField('Description', widget=MarkItUpWidget())
-    kind = forms.CharField(
+    kind = forms.CharField(required=False,
         widget=AutocompleteWithFavorites(
             ResourceKind,
             '/resource/search_by_kind/',
@@ -25,21 +27,23 @@ class FormResource(forms.ModelForm):
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
         required=False)
-    community = forms.CharField(
+    community = forms.CharField(required=False,
         widget=Autocomplete(Community, '/community/search_by_name'))
+    files = FileuploadField(required=False)
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Resource
         fields = ['name', 'description', 'kind', 'tags', 'community', 'id',
-                  'geometry']
+                  'geometry', 'files']
 
     _field_labels = {
         'name': _('Name'),
         'description': _('Description'),
         'kind': _('Kind'),
         'tags': _('Tags'),
-        'community': _('Community')
+        'community': _('Community'),
+        'files': ''
     }
 
     def __init__(self, *args, **kwargs):
@@ -59,10 +63,24 @@ class FormResource(forms.ModelForm):
         if user and not user.is_anonymous():
             resource.creator_id = user.id
             resource.save()
+
+        files_id_list = self.cleaned_data.get('files', '').split('|')
+        UploadedFile.bind_files(files_id_list, resource)
+
         return resource
 
     def clean_kind(self):
-        return ResourceKind.objects.get(id=self.cleaned_data['kind'])
+        try:
+            if self.cleaned_data['kind'] == 'None':
+                self.cleaned_data['kind'] = ''
+            return ResourceKind.objects.get(id=self.cleaned_data['kind'])
+        except:
+            raise forms.ValidationError(_('invalid kind data'))
 
     def clean_community(self):
-        return Community.objects.get(id=self.cleaned_data['community'])
+        try:
+            if self.cleaned_data['community'] == 'None':
+                self.cleaned_data['community'] = ''
+            return Community.objects.get(id=self.cleaned_data['community'])
+        except:
+            raise forms.ValidationError(_('invalid community data'))
