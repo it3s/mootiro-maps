@@ -37,12 +37,21 @@ class Organization(models.Model):
 
 
 class OrganizationBranch(GeoRefModel):
+    name = models.CharField(max_length=320, unique=True)
+    slug = models.SlugField(max_length=320)
+
     organization = models.ForeignKey(Organization)
-    description = models.TextField(null=True, blank=True)
-    contact = models.TextField(null=True, blank=True)
+    info = models.TextField(null=True, blank=True)
 
     creation_date = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User, null=True, blank=True)
+
+    def __unicode__(self):
+        return unicode(self.name)
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super(OrganizationBranch, self).save(*args, **kwargs)
 
     image = "img/organization.png"
     image_off = "img/organization-off.png"

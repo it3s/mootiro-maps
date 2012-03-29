@@ -97,9 +97,9 @@ class FormOrganizationEdit(forms.ModelForm):
 
 
 class FormBranchNew(forms.Form):
+    branch_name = forms.CharField()
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
-    branch_description = forms.CharField(required=False, widget=MarkItUpWidget())
-    branch_contact = forms.CharField(required=False, widget=MarkItUpWidget())
+    branch_info = forms.CharField(required=False, widget=MarkItUpWidget())
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -112,8 +112,8 @@ class FormBranchNew(forms.Form):
         if 'geometry' in self.fields:
             print 'GEOMTRY: ', self.cleaned_data['geometry']
             branch.geometry = self.cleaned_data.get('geometry', '')
-        branch.description = self.cleaned_data.get('branch_description', None)
-        branch.contact = self.cleaned_data.get('branch_contact', None)
+        branch.info = self.cleaned_data.get('branch_info', None)
+        branch.name = self.cleaned_data.get('branch_name', None)
         if user and not user.is_anonymous():
             branch.creator_id = user.id
         branch.organization = organization
