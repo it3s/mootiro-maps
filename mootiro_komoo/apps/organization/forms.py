@@ -97,7 +97,7 @@ class FormOrganizationEdit(forms.ModelForm):
 
 
 class FormBranchNew(forms.Form):
-    branch_geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+    geometry = forms.CharField(required=False, widget=forms.HiddenInput())
     branch_description = forms.CharField(required=False, widget=MarkItUpWidget())
     branch_contact = forms.CharField(required=False, widget=MarkItUpWidget())
 
@@ -109,8 +109,9 @@ class FormBranchNew(forms.Form):
 
     def save(self, user=None, organization=None, *args, **kwargs):
         branch = OrganizationBranch()
-        if 'branch_geometry' in self.fields:
-            branch.geometry = self.cleaned_data.get('branch_geometry', '')
+        if 'geometry' in self.fields:
+            print 'GEOMTRY: ', self.cleaned_data['geometry']
+            branch.geometry = self.cleaned_data.get('geometry', '')
         branch.description = self.cleaned_data.get('branch_description', None)
         branch.contact = self.cleaned_data.get('branch_contact', None)
         if user and not user.is_anonymous():

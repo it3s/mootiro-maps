@@ -63,7 +63,7 @@ class New(View):
         form_branch = FormBranchNew()
 
         if request.GET.get('frommap', None) == 'false':
-            form_branch.fields.pop('branch_geometry', '')
+            form_branch.fields.pop('geometry', '')
             tmplt = 'organization/new.html'
         else:
             tmplt = 'organization/new_frommap.html'
@@ -83,7 +83,7 @@ class New(View):
         community = get_object_or_None(Community, slug=community_slug)
 
         if request.GET.get('frommap', None) == 'false':
-            form_branch.fields.pop('branch_geometry', '')
+            form_branch.fields.pop('geometry', '')
 
         org_is_valid = not 'organization' in form_control or form_org.is_valid()
         branch_is_valid = not 'branch' in form_control or form_branch.is_valid()
