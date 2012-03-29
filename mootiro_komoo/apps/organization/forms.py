@@ -9,6 +9,7 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from crispy_forms.helper import FormHelper
 from organization.models import Organization, OrganizationBranch
+from community.models import Community
 
 
 class FormOrganization(forms.ModelForm):
@@ -33,8 +34,9 @@ class FormOrganization(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False
 
-        print 'ORG ARGS: ', args
-        print 'ORg KW: ', kwargs
+        post = args[0] if args and len(args) > 0 else None
+        if post:
+            self.org_name = post.get('org_name_text')
 
         org = super(FormOrganization, self).__init__(*args, **kwargs)
 
@@ -44,10 +46,20 @@ class FormOrganization(forms.ModelForm):
         return org
 
     def save(self, user=None, *args, **kwargs):
-        org = super(FormOrganization, self).save(*args, **kwargs)
+        org = Organization()
+        org.description = self.cleaned_data['description']
+        org.contact = self.cleaned_data['contact']
+        org.link = self.cleaned_data['link']
+        org.name = self.org_name
+
         if user and not user.is_anonymous():
             org.creator_id = user.id
-            org.save()
+
+        org.save()
+
+        for com in self.cleaned_data['community']:
+            org.community.add(Community.objects.get(pk=com))
+
         return org
 
 
@@ -64,8 +76,8 @@ class FormBranch(forms.Form):
 
     def save(self, user=None, organization=None, *args, **kwargs):
         branch = OrganizationBranch()
-        # if 'branch_geometry' in self.fields:
-            # branch.geometry = self.cleaned_data.get('branch_geometry', '')
+        if 'branch_geometry' in self.fields:
+            branch.geometry = self.cleaned_data.get('branch_geometry', '')
         branch.description = self.cleaned_data.get('branch_description', None)
         branch.contact = self.cleaned_data.get('branch_contact', None)
         if user and not user.is_anonymous():
