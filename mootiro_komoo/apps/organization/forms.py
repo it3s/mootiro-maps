@@ -8,7 +8,7 @@ from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from crispy_forms.helper import FormHelper
-from organization.models import Organization
+from organization.models import Organization, OrganizationBranch
 
 
 class FormOrganization(forms.ModelForm):
@@ -16,12 +16,11 @@ class FormOrganization(forms.ModelForm):
     description = forms.CharField(required=False, widget=MarkItUpWidget())
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
-    geometry = forms.CharField(required=False, widget=forms.HiddenInput())
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
 
     class Meta:
         model = Organization
-        fields = ['description', 'community', 'link', 'contact', 'id', 'geometry']
+        fields = ['description', 'community', 'link', 'contact', 'id']
 
     _field_labels = {
         # 'name': _('Name'),
@@ -33,6 +32,9 @@ class FormOrganization(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_tag = False
+
+        print 'ORG ARGS: ', args
+        print 'ORg KW: ', kwargs
 
         org = super(FormOrganization, self).__init__(*args, **kwargs)
 
@@ -60,5 +62,14 @@ class FormBranch(forms.Form):
 
         return super(FormBranch, self).__init__(*args, **kwargs)
 
-    def save(self, *args, **kwargs):
-        return super(FormBranch, *args, **kwargs)
+    def save(self, user=None, organization=None, *args, **kwargs):
+        branch = OrganizationBranch()
+        # if 'branch_geometry' in self.fields:
+            # branch.geometry = self.cleaned_data.get('branch_geometry', '')
+        branch.description = self.cleaned_data.get('branch_description', None)
+        branch.contact = self.cleaned_data.get('branch_contact', None)
+        if user and not user.is_anonymous():
+            branch.creator_id = user.id
+        branch.organization = organization
+        branch.save()
+        return branch

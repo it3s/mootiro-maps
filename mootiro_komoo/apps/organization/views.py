@@ -62,6 +62,7 @@ class New(View):
         form_branch = FormBranch()
 
         if request.GET.get('frommap', None) == 'false':
+            form_branch.fields.pop('branch_geometry', '')
             tmplt = 'organization/new.html'
         else:
             tmplt = 'organization/new_frommap.html'
@@ -74,21 +75,34 @@ class New(View):
         logger.debug('acessing organization > Edit with POST: {}'.format(
             request.POST))
 
+        form_control = request.POST.get('form_control', '').split('|')
+
         form_org = FormOrganization(request.POST)
+        form_branch = FormBranch(request.POST)
         community = get_object_or_None(Community, slug=community_slug)
 
-        if form_org.is_valid():
-            organization = form_org.save(user=request.user)
+        org_is_valid = not 'organization' in form_control or form_org.is_valid()
+        branch_is_valid = not 'branch' in form_control or form_branch.is_valid()
+
+        if org_is_valid and branch_is_valid:
+            if 'organization' in form_control:
+                organization = form_org.save(user=request.user)
+            else:
+                organization = Organization.objects.get(pk=request.POST.get('org_name'))
+            form_branch.save(user=request.user, organization=organization)
 
             prefix = '/{}'.format(community_slug) if community_slug else ''
             _url = '{}/organization/{}'.format(prefix, organization.slug)
-            return render_to_response('organization/new.html',
-                dict(redirect=_url, form_org=form_org, community=community),
+            return render_to_response('organization/new_frommap.html',
+                dict(redirect=_url, form_org=form_org, form_branch=form_branch,
+                     community=community),
                 context_instance=RequestContext(request))
         else:
-            logger.debug('Form erros: {}'.format(dict(form_org._errors)))
+            logger.debug('Form erros: {}'.format(dict(form_org._errors
+                            ).update(dict(form_branch._errors))))
             return render_to_response('organization/new.html',
-                dict(form_org=form_org, community=community),
+                dict(form_org=form_org, form_branch=form_branch,
+                     community=community),
                 context_instance=RequestContext(request))
 
 
