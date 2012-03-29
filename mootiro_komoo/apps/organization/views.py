@@ -44,7 +44,8 @@ def show(request, organization_slug='', community_slug=''):
     logger.debug('acessing organization > show')
 
     organization = get_object_or_404(Organization, slug=organization_slug)
-    geojson = create_geojson([organization])
+    branches = organization.organizationbranch_set.all()
+    geojson = create_geojson(branches)
     community = get_object_or_None(Community, slug=community_slug)
 
     return dict(organization=organization, geojson=geojson,
