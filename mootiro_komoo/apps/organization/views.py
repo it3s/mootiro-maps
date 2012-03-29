@@ -93,7 +93,8 @@ class New(View):
                 organization = form_org.save(user=request.user)
             else:
                 organization = Organization.objects.get(pk=request.POST.get('org_name'))
-            form_branch.save(user=request.user, organization=organization)
+            if 'branch' in form_control:
+                form_branch.save(user=request.user, organization=organization)
 
             prefix = '/{}'.format(community_slug) if community_slug else ''
             _url = '{}/organization/{}'.format(prefix, organization.slug)

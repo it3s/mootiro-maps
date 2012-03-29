@@ -7,10 +7,14 @@ var $submit_btn = $('#submit_btn');
 var $id_form_control = $('#id_form_control');
 var forms;
 
+/* checks if we are acessing the map from the button, or the map */
+var btn_mode = Boolean(getUrlVars().frommap);
 
+if ( ! btn_mode ){
 $organization_fields.hide();
 $branch_fields.hide();
 $form_organization_btns.hide();
+
 
 $id_org_name_autocomplete.autocomplete({
     source: "/organization/search_by_name/",
@@ -44,3 +48,9 @@ $id_org_name_autocomplete.autocomplete({
 $submit_btn.click(function(evt){
     $id_form_control.val(forms.join('|'));
 });
+
+} else {
+
+    $branch_fields.hide();
+    $id_form_control.val('organization');
+}

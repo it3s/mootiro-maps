@@ -35,9 +35,9 @@ def _fetch_geo_objects(Q, zoom):
     min_zoom = 13
     needs = Need.objects.filter(Q) if zoom >= min_zoom else []
     resources = Resource.objects.filter(Q) if zoom >= min_zoom else []
-    organizations_branchs = OrganizationBranch.objects.filter(Q) if zoom >= min_zoom else []
+    organization_branches = OrganizationBranch.objects.filter(Q) if zoom >= min_zoom else []
     return dict(communities=communities, needs=needs, resources=resources,
-                organizations=organizations_branchs)
+                organizations=organization_branches)
 
 
 #@cache_page(54000)
