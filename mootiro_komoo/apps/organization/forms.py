@@ -8,12 +8,12 @@ from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from crispy_forms.helper import FormHelper
+from main.utils import MooHelper
 from organization.models import Organization, OrganizationBranch
 from community.models import Community
 
 
-class FormOrganization(forms.ModelForm):
-    id = forms.CharField(required=False, widget=forms.HiddenInput())
+class FormOrganizationNew(forms.ModelForm):
     description = forms.CharField(required=False, widget=MarkItUpWidget())
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
@@ -21,10 +21,9 @@ class FormOrganization(forms.ModelForm):
 
     class Meta:
         model = Organization
-        fields = ['description', 'community', 'link', 'contact', 'id']
+        fields = ['description', 'community', 'link', 'contact']
 
     _field_labels = {
-        # 'name': _('Name'),
         'description': _('Description'),
         'community': _('Community'),
         'contact': _('Contact'),
@@ -38,7 +37,7 @@ class FormOrganization(forms.ModelForm):
         if post:
             self.org_name = post.get('org_name_text')
 
-        org = super(FormOrganization, self).__init__(*args, **kwargs)
+        org = super(FormOrganizationNew, self).__init__(*args, **kwargs)
 
         for field, label in self._field_labels.iteritems():
             self.fields[field].label = label
@@ -51,19 +50,53 @@ class FormOrganization(forms.ModelForm):
         org.contact = self.cleaned_data['contact']
         org.link = self.cleaned_data['link']
         org.name = self.org_name
-
         if user and not user.is_anonymous():
             org.creator_id = user.id
-
         org.save()
-
         for com in self.cleaned_data['community']:
             org.community.add(Community.objects.get(pk=com))
 
         return org
 
 
-class FormBranch(forms.Form):
+class FormOrganizationEdit(forms.ModelForm):
+    id = forms.CharField(required=False, widget=forms.HiddenInput())
+    description = forms.CharField(required=False, widget=MarkItUpWidget())
+    community = AutoCompleteSelectMultipleField('community', help_text='',
+        required=False)
+    contact = forms.CharField(required=False, widget=MarkItUpWidget())
+
+    class Meta:
+        model = Organization
+        fields = ['name', 'description', 'community', 'link', 'contact', 'id']
+
+    _field_labels = {
+        'name': _('Name'),
+        'description': _('Description'),
+        'community': _('Community'),
+        'contact': _('Contact'),
+    }
+
+    def __init__(self, *args, **kwargs):
+        self.helper = MooHelper()
+        self.helper.form_id = 'form_organization'
+
+        org = super(FormOrganizationEdit, self).__init__(*args, **kwargs)
+        for field, label in self._field_labels.iteritems():
+            self.fields[field].label = label
+
+        return org
+
+    def save(self, user=None, *args, **kwargs):
+        org = super(FormOrganizationEdit, self).save(*args, **kwargs)
+
+        if user and not user.is_anonymous():
+            org.creator_id = user.id
+            org.save()
+        return org
+
+
+class FormBranchNew(forms.Form):
     branch_geometry = forms.CharField(required=False, widget=forms.HiddenInput())
     branch_description = forms.CharField(required=False, widget=MarkItUpWidget())
     branch_contact = forms.CharField(required=False, widget=MarkItUpWidget())
@@ -72,7 +105,7 @@ class FormBranch(forms.Form):
         self.helper = FormHelper()
         self.helper.form_tag = False
 
-        return super(FormBranch, self).__init__(*args, **kwargs)
+        return super(FormBranchNew, self).__init__(*args, **kwargs)
 
     def save(self, user=None, organization=None, *args, **kwargs):
         branch = OrganizationBranch()

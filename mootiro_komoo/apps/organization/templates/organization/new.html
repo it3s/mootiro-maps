@@ -1,13 +1,14 @@
 {% extends 'global.html' %}
 {% load crispy_forms_tags %}
 {% load komoo_map_tags %}
+{% load i18m %}
 
 {% block content %}
     <div id="main-content">
         <div class="main-column">
             <form method="POST" id="form_organization">
                 <div id="verify_field">
-                    <label for="id_org_name">Name:</label>
+                    <label for="id_org_name">{% trans 'Organization Name:' %}</label>
                     <input type="hidden"  name="org_name" value="" id="id_org_name" />
                     <input type="text"  id="id_org_name_autocomplete" name="org_name_text" value="" />
 

@@ -15,7 +15,8 @@ from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
 
 from organization.models import Organization
-from organization.forms import FormOrganization, FormBranch
+from organization.forms import FormOrganizationNew, FormBranchNew, \
+                               FormOrganizationEdit
 from community.models import Community
 from main.utils import paginated_query, create_geojson
 
@@ -58,8 +59,8 @@ class New(View):
         logger.debug('acessing organization > Edit with GET')
         community = get_object_or_None(Community, slug=community_slug)
 
-        form_org = FormOrganization()
-        form_branch = FormBranch()
+        form_org = FormOrganizationNew()
+        form_branch = FormBranchNew()
 
         if request.GET.get('frommap', None) == 'false':
             form_branch.fields.pop('branch_geometry', '')
@@ -77,8 +78,8 @@ class New(View):
 
         form_control = request.POST.get('form_control', '').split('|')
 
-        form_org = FormOrganization(request.POST)
-        form_branch = FormBranch(request.POST)
+        form_org = FormOrganizationNew(request.POST)
+        form_branch = FormBranchNew(request.POST)
         community = get_object_or_None(Community, slug=community_slug)
 
         if request.GET.get('frommap', None) == 'false':
@@ -121,13 +122,13 @@ class Edit(View):
         if _id:
             organization = get_object_or_404(Organization, pk=_id)
 
-            form_org = FormOrganization(instance=organization)
+            form_org = FormOrganizationEdit(instance=organization)
             geojson = create_geojson([organization], convert=False)
             if geojson.get('featues'):
                 geojson['features'][0]['properties']['userCanEdit'] = True
             geojson = json.dumps(geojson)
         else:
-            form_org = FormOrganization()
+            form_org = FormOrganizationEdit()
             geojson = '{}'
 
         # form_org.initial['community'] = form_org.initial.get('community', [])
@@ -147,9 +148,9 @@ class Edit(View):
         if _id:
             organization = get_object_or_404(Organization,
                 pk=request.POST['id'])
-            form_org = FormOrganization(request.POST, instance=organization)
+            form_org = FormOrganizationEdit(request.POST, instance=organization)
         else:
-            form_org = FormOrganization(request.POST)
+            form_org = FormOrganizationEdit(request.POST)
 
         community = get_object_or_None(Community, slug=community_slug)
 
@@ -161,7 +162,7 @@ class Edit(View):
             if _id:
                 return HttpResponseRedirect(_url)
             else:
-                return render_to_response('organization/new.html',
+                return render_to_response('organization/edit.html',
                     dict(redirect=_url, community=community),
                     context_instance=RequestContext(request))
         else:
