@@ -670,3 +670,16 @@ input[type=text], textarea{
 .view-list-item.odd{
   background-color: rgb(220, 239, 244);
 }
+
+/* == Organization === */
+.branches-list {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.branch-link{
+    margin: 10px 0 10px 0;
+}
+.branch-info{
+    background-color: rgb(239, 248, 249);
+    padding: 15px;
+}

@@ -39,6 +39,18 @@
 
         <div class="view-body">
             <div class="mark-down">{{ organization.description|render_markup }}</div>
+
+            <div class="branches-list">
+                {% if organization.organizationbranch_set.all.count %}
+                <h3>{% trans 'Organization Branches: ' %}</h3>
+                {% for branch in organization.organizationbranch_set.all %}
+                    <div class="branch-link">
+                        <a href="#"> &raquo; {{ branch.name }}</a>
+                        <div class="branch-info" style="display: none;">{{ branch.info|render_markup }}</div>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
         </div>
 
     </div>
@@ -61,4 +73,10 @@
 {% block page_scripts %}
     {% vote_staticfiles %}
     {% comments_staticfiles %}
+    <script type="text/javascript">
+        $('.branch-link a').click(function(evt){
+            evt.preventDefault();
+            $(this).parent().find('.branch-info').slideToggle();
+        })
+    </script>
 {% endblock %}
