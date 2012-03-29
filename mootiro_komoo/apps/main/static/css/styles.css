@@ -680,6 +680,11 @@ input[type=text], textarea{
     margin: 10px 0 10px 0;
 }
 .branch-info{
+    /*background-color: rgb(220, 239, 244); /*rgb(239, 248, 249);* /*/
     background-color: rgb(239, 248, 249);
-    padding: 15px;
+    padding: 10px;
+    border-radius: 0 5px 5px 7px;
+    border-color: rgb(62, 186, 194);
+    border-style: solid;
+    border-width: 1px;
 }
