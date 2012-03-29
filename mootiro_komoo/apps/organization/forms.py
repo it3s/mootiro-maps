@@ -7,14 +7,8 @@ from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
-from main.utils import MooHelper
-from main.widgets import Autocomplete
-from organization.models import Organization, OrganizationBranch
-
-
-class FormVerifyOrganization(forms.Form):
-    name = forms.CharField(required=False,
-            widget=Autocomplete(Organization, '/organization/search_by_name'))
+from crispy_forms.helper import FormHelper
+from organization.models import Organization
 
 
 class FormOrganization(forms.ModelForm):
@@ -27,18 +21,18 @@ class FormOrganization(forms.ModelForm):
 
     class Meta:
         model = Organization
-        fields = ['name', 'description', 'community', 'link', 'contact', 'id', 'geometry']
+        fields = ['description', 'community', 'link', 'contact', 'id', 'geometry']
 
     _field_labels = {
-        'name': _('Name'),
+        # 'name': _('Name'),
         'description': _('Description'),
         'community': _('Community'),
         'contact': _('Contact'),
     }
 
     def __init__(self, *args, **kwargs):
-        self.helper = MooHelper()
-        self.helper.form_id = 'form_organization'
+        self.helper = FormHelper()
+        self.helper.form_tag = False
 
         org = super(FormOrganization, self).__init__(*args, **kwargs)
 
@@ -55,8 +49,16 @@ class FormOrganization(forms.ModelForm):
         return org
 
 
-class FormBranch(forms.ModelForm):
+class FormBranch(forms.Form):
+    branch_geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+    branch_description = forms.CharField(required=False, widget=MarkItUpWidget())
+    branch_contact = forms.CharField(required=False, widget=MarkItUpWidget())
 
-    class Meta:
-        model = OrganizationBranch
-        excludes = ['organization']
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_tag = False
+
+        return super(FormBranch, self).__init__(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        return super(FormBranch, *args, **kwargs)

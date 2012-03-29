@@ -15,7 +15,7 @@ from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
 
 from organization.models import Organization
-from organization.forms import FormOrganization, FormBranch, FormVerifyOrganization
+from organization.forms import FormOrganization, FormBranch
 from community.models import Community
 from main.utils import paginated_query, create_geojson
 
@@ -59,18 +59,15 @@ class New(View):
         community = get_object_or_None(Community, slug=community_slug)
 
         form_org = FormOrganization()
-        form_verify = FormVerifyOrganization()
         form_branch = FormBranch()
 
         if request.GET.get('frommap', None) == 'false':
-            form_org.fields.pop('geometry', '')
             tmplt = 'organization/new.html'
         else:
             tmplt = 'organization/new_frommap.html'
 
         return render_to_response(tmplt,
-            dict(form_org=form_org, form_verify=form_verify,
-                 form_branch=form_branch, community=community),
+            dict(form_org=form_org, form_branch=form_branch, community=community),
             context_instance=RequestContext(request))
 
     def post(self, request, community_slug=None, *args, **kwargs):

@@ -5,11 +5,28 @@
 {% block content %}
     <div id="main-content">
         <div class="main-column">
-            {{ form_verify }}
+            <form method="POST" id="form_organization">
+                <div id="verify_field">
+                    <label for="id_name">Name:</label>
+                    <input type="hidden"  name="name" value="" id="id_name" />
+                    <input type="text"  id="id_name_autocomplete" value="" />
 
-            {#% crispy form_org form_org.helper %#}
-
-            {#{ form_branch }#}
+                    <input type="hidden"  name="name" value="" id="id_form_control" />
+                </div>
+                <div id="organization_fields">
+                    <hr>
+                    <h3>Form Organization</h3>
+                    {% crispy form_org %}
+                </div>
+                <div id="branch_fields">
+                    <hr>
+                    <h3>Form Branch</h3>
+                    {% crispy form_branch %}
+                </div>
+                <div id="form_organization_btns">
+                    <input type='submit' value='submit' id='submit_btn'/>
+                </div>
+            </form>
         </div>
 
   </div>
@@ -25,6 +42,52 @@
 
 {% block page_scripts %}
     <script type="text/javascript">
-        $('#form_organization').hide();
+
+        var $id_name_autocomplete = $('#id_name_autocomplete');
+        var $id_name = $('#id_name');
+        var $organization_fields = $('#organization_fields');
+        var $branch_fields = $('#branch_fields');
+        var $form_organization_btns = $('#form_organization_btns');
+        var $submit_btn = $('#submit_btn');
+        var $id_form_control = $('#id_form_control');
+        var forms;
+
+
+        $organization_fields.hide();
+        $branch_fields.hide();
+        $form_organization_btns.hide();
+
+        $("#id_name_autocomplete").autocomplete({
+            source: "{% url organization_search_by_name  %}",
+            focus: function(event, ui) {
+                $("#id_name_autocomplete").val(ui.item.label);
+                return false;
+            },
+            select: function(event, ui) {
+                $("#id_name_autocomplete").val(ui.item.label);
+                $("#id_name").val(ui.item.value);
+
+                // org ja exite -> somente branch
+                $branch_fields.fadeIn('slow');
+                $.form_organization_btns.fadeIn('slow')
+                forms = ['branch'];
+
+                return false;
+            },
+            change: function(event, ui) {
+                if(!ui.item || !$("#id_name_autocomplete").val()){
+                    // Nova org ->  (branch + org)
+                    $organization_fields.fadeIn('slow');
+                    $branch_fields.fadeIn('slow');
+                    $form_organization_btns.fadeIn('slow');
+                    forms = ['organization', 'branch']
+                }
+            }
+         });
+
+        $submit_btn.click(function(evt){
+            evt.preventDefault();
+            $id_form_control.val(forms.join('|'));
+        });
     </script>
 {% endblock %}
