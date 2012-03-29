@@ -101,16 +101,25 @@ class FormBranchNew(forms.Form):
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
     branch_info = forms.CharField(required=False, widget=MarkItUpWidget())
 
+    _field_labels = {
+        'branch_name': _('Branch Name'),
+        'branch_info': _('Info'),
+    }
+
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_tag = False
 
-        return super(FormBranchNew, self).__init__(*args, **kwargs)
+        b = super(FormBranchNew, self).__init__(*args, **kwargs)
+
+        for field, label in self._field_labels.iteritems():
+            self.fields[field].label = label
+
+        return b
 
     def save(self, user=None, organization=None, *args, **kwargs):
         branch = OrganizationBranch()
         if 'geometry' in self.fields:
-            print 'GEOMTRY: ', self.cleaned_data['geometry']
             branch.geometry = self.cleaned_data.get('geometry', '')
         branch.info = self.cleaned_data.get('branch_info', None)
         branch.name = self.cleaned_data.get('branch_name', None)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-27 14:20-0300\n"
+"POT-Creation-Date: 2012-03-29 17:15-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,49 +47,59 @@ msgstr "Novo Comentário"
 msgid "see more ..."
 msgstr "ver mais ..."
 
-#: apps/komoo_resource/forms.py:38 apps/organization/forms.py:27
+#: apps/komoo_resource/forms.py:41 apps/organization/forms.py:74
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
-#: apps/komoo_resource/forms.py:39 apps/organization/forms.py:28
+#: apps/komoo_resource/forms.py:42 apps/organization/forms.py:27
+#: apps/organization/forms.py:75
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/komoo_resource/forms.py:40
+#: apps/komoo_resource/forms.py:43
 msgid "Kind"
 msgstr "Tipo"
 
-#: apps/komoo_resource/forms.py:41 lib/taggit/managers.py:39
+#: apps/komoo_resource/forms.py:44 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/komoo_resource/forms.py:42 apps/organization/forms.py:29
+#: apps/komoo_resource/forms.py:45 apps/organization/forms.py:28
+#: apps/organization/forms.py:76
 msgid "Community"
 msgstr "Comunidade"
+
+#: apps/komoo_resource/forms.py:79
+msgid "invalid kind data"
+msgstr "dados de 'tipo' inválidos"
+
+#: apps/komoo_resource/forms.py:88
+msgid "invalid community data"
+msgstr "dados de 'comunidade' inválidos"
 
 #: apps/komoo_resource/templates/resource/list.html:6
 #, fuzzy
 msgid "Resources for"
-msgstr "Recursos"
+msgstr "Recursos para"
 
 #: apps/komoo_resource/templates/resource/list.html:15
 #: apps/komoo_resource/templates/resource/list.html:17
 #, fuzzy
 msgid "New Resource"
-msgstr "Recursos"
+msgstr "Novo Recurso"
 
 #: apps/komoo_resource/templates/resource/list.html:33
 #: apps/need/templates/need/list.html:25
-#: apps/organization/templates/organization/list.html:24
+#: apps/organization/templates/organization/list.html:34
 #: apps/organization/templates/organization/show.html:11
 msgid "at"
 msgstr "em"
 
 #: apps/komoo_resource/templates/resource/list.html:36
 #: apps/need/templates/need/list.html:28
-#: apps/organization/templates/organization/list.html:33
+#: apps/organization/templates/organization/list.html:43
 msgid "see on the map"
 msgstr "ver no mapa"
 
@@ -128,9 +138,73 @@ msgstr "Recursos Similares"
 msgid "There is no similar resources..."
 msgstr "Não há recursos similares..."
 
-#: apps/main/widgets.py:292
+#: apps/main/widgets.py:89
+msgid "invalid data"
+msgstr "dados inválidos"
+
+#: apps/main/widgets.py:303
 msgid "You can type above or select here"
 msgstr "Você pode digitar acima ou selecionar algum aqui"
+
+#: apps/main/templates/main/filter_results.html:6
+msgid "Search results for this radius"
+msgstr "Resultados de Busca para este raio"
+
+#: apps/main/templates/main/filter_results.html:12
+msgid "No results found."
+msgstr "Nenhum resultado encontrado."
+
+#: apps/main/templates/main/filter_results.html:19
+#, python-format
+msgid ""
+"\n"
+"        %(counter)s Community\n"
+"      "
+msgid_plural ""
+"\n"
+"        %(counter)s Communities\n"
+"      "
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/main/templates/main/filter_results.html:41
+#, python-format
+msgid ""
+"\n"
+"        %(counter)s Need\n"
+"      "
+msgid_plural ""
+"\n"
+"        %(counter)s Needs\n"
+"      "
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/main/templates/main/filter_results.html:63
+#, python-format
+msgid ""
+"\n"
+"        %(counter)s Organization\n"
+"      "
+msgid_plural ""
+"\n"
+"        %(counter)s Organizations\n"
+"      "
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/main/templates/main/filter_results.html:85
+#, python-format
+msgid ""
+"\n"
+"        %(counter)s Resource\n"
+"      "
+msgid_plural ""
+"\n"
+"        %(counter)s Resources\n"
+"      "
+msgstr[0] ""
+msgstr[1] ""
 
 #: apps/main/templates/main/menu_templatetag.html:6
 #: apps/main/templates/main/menu_templatetag.html:8
@@ -208,6 +282,30 @@ msgstr "Nova necessidade"
 msgid "target audience:"
 msgstr "público alvo:"
 
+#: apps/organization/forms.py:29 apps/organization/forms.py:77
+msgid "Contact"
+msgstr "Contato"
+
+#: apps/organization/forms.py:105
+msgid "Branch Name"
+msgstr "Nome da Sede"
+
+#: apps/organization/forms.py:106
+msgid "Info"
+msgstr "Informações"
+
+#: apps/organization/templates/organization/list.html:17
+#: apps/organization/templates/organization/list.html:19
+#, fuzzy
+msgid "New Organization"
+msgstr "Nova Organização"
+
+#: apps/organization/templates/organization/new.html:10
+#: apps/organization/templates/organization/new_frommap.html:16
+#, fuzzy
+msgid "Organization Name:"
+msgstr "Nome da Organização:"
+
 #: apps/vote/views.py:46
 msgid "User not logged or anonymous"
 msgstr "Usuário não logado ou anônimo"
@@ -218,22 +316,27 @@ msgid "Enter text to search."
 msgstr "Entre um texto para buscar."
 
 #: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:8
+#: lib/fileupload/templates/fileupload/uploadedfile_form.html:8
 msgid "Add files..."
 msgstr "Adicionar arquivos..."
 
 #: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:11
+#: lib/fileupload/templates/fileupload/uploadedfile_form.html:11
 msgid "Start upload"
 msgstr "Iniciar upload"
 
 #: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:12
+#: lib/fileupload/templates/fileupload/uploadedfile_form.html:12
 msgid "Cancel upload"
 msgstr "Cancelar upload"
 
 #: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:13
+#: lib/fileupload/templates/fileupload/uploadedfile_form.html:13
 msgid "Delete files"
 msgstr "Deletar arquivos"
 
 #: lib/fileupload/templates/fileupload/fileuploader_templatetag.html:36
+#: lib/fileupload/templates/fileupload/uploadedfile_form.html:36
 msgid "Delete"
 msgstr "Deletar"
 
