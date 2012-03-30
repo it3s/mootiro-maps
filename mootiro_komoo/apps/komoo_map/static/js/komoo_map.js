@@ -64,7 +64,7 @@ komoo.RegionTypes = [
         disabled: false
     },
     {
-        type: 'organization',
+        type: 'organizationbranch',
         categories: [],
         title: gettext('Organization'),
         tooltip: gettext('Add Organization'),
@@ -669,6 +669,12 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
             url = dutils.urls.resolve('view_resource', {
                         community_slug: overlay.properties.community_slug,
                         id: overlay.properties.id
+                    }).replace('//', '/');
+            this.infoWindow.title.attr('href', url);
+        }  else if (overlay.properties.type == 'organizationbranch') {
+            url = dutils.urls.resolve('view_organization', {
+                        community_slug: overlay.properties.community_slug,
+                        organization_slug: overlay.properties.slug
                     }).replace('//', '/');
             this.infoWindow.title.attr('href', url);
         }  else {
