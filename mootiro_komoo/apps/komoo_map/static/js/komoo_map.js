@@ -128,6 +128,7 @@ komoo.MapOptions = {
     autoSaveLocation: false,
     enableInfoWindow: true,
     enableCluster: true,
+    fetchOverlays: true,
     debug: false,
     overlayOptions: {
         visible: true,
@@ -140,6 +141,7 @@ komoo.MapOptions = {
     googleMapOptions: {  // Our default options for Google Maps map object.
         center: new google.maps.LatLng(-23.55, -46.65),  // São Paulo, SP - Brasil
         zoom: 13,
+        disableDefaultUI: false,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         streetViewControl: false,
         scaleControl: true,
@@ -230,47 +232,49 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
         });
         return div;
     }
-    $.ajax({
-        url: "/get_geojson?" + addr,
-        dataType: 'json',
-        type: 'GET',
-        success: function (data, textStatus, jqXHR) {
-            var overlays_ = [];
-            var overlays = me.komooMap.loadGeoJSON(JSON.parse(data), false);
-            me.komooMap.fetchedTiles[addr] = {
-                geojson: data,
-                overlays: overlays
-            };
-            if (me.komooMap.options.debug) {
-                // Display debug info.
-                div.innerHTML = data;
-                $(div).css('border', 'solid 1px #F00');
-            }
-            $.each(overlays, function (key, overlay) {
-                overlay.setMap(me.komooMap.googleMap);
-                if (overlay.setIcon) {
-                    overlay.setIcon(me.komooMap.getOverlayIcon(overlay));
+    if (this.komooMap.options.fetchOverlays != false) {
+        $.ajax({
+            url: "/get_geojson?" + addr,
+            dataType: 'json',
+            type: 'GET',
+            success: function (data, textStatus, jqXHR) {
+                var overlays_ = [];
+                var overlays = me.komooMap.loadGeoJSON(JSON.parse(data), false);
+                me.komooMap.fetchedTiles[addr] = {
+                    geojson: data,
+                    overlays: overlays
+                };
+                if (me.komooMap.options.debug) {
+                    // Display debug info.
+                    div.innerHTML = data;
+                    $(div).css('border', 'solid 1px #F00');
                 }
-                if (overlay.marker) {
-                    if (zoom < 13) {
-                        overlay.setMap(null);
-                    } else {
-                        overlay.setMap(me.komooMap.googleMap);
+                $.each(overlays, function (key, overlay) {
+                    overlay.setMap(me.komooMap.googleMap);
+                    if (overlay.setIcon) {
+                        overlay.setIcon(me.komooMap.getOverlayIcon(overlay));
                     }
+                    if (overlay.marker) {
+                        if (zoom < 13) {
+                            overlay.setMap(null);
+                        } else {
+                            overlay.setMap(me.komooMap.googleMap);
+                        }
+                    }
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (window.console) console.error(textStatus);
+                var serverError = $('#server-error');
+                if (serverError.parent().length == 0) {
+                    serverError = $('<div>').attr('id', 'server-error');
+                    $('body').append(serverError);
+                    var error = $('<div>').html(jqXHR.responseText)
+                    serverError.append(error); // FIXME: This is not user friendly
                 }
-            });
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            if (window.console) console.error(textStatus);
-            var serverError = $('#server-error');
-            if (serverError.parent().length == 0) {
-                serverError = $('<div>').attr('id', 'server-error');
-                $('body').append(serverError);
-                var error = $('<div>').html(jqXHR.responseText)
-                serverError.append(error); // FIXME: This is not user friendly
             }
-        }
-    });
+        });
+    }
     return div;
 };
 
@@ -384,7 +388,6 @@ komoo.MultiMarker.prototype.addMarker = function (marker, opt_keep) {
      * @event
      */
     google.maps.event.addListener(marker, 'mouseover', function (e) {
-        console.log('mouseover', e);
         google.maps.event.trigger(me, 'mouseover', e, marker);
     });
     /**
@@ -392,7 +395,6 @@ komoo.MultiMarker.prototype.addMarker = function (marker, opt_keep) {
      * @event
      */
     google.maps.event.addListener(marker, 'mouseout', function (e) {
-        console.log('mouseout', e);
         google.maps.event.trigger(me, 'mouseout', e, marker);
     });
     /**
@@ -1142,6 +1144,8 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                 new google.maps.LatLng(bounds[1][0], bounds[1][1])
         ));
     }
+
+    this._emit_geojson_loaded(geoJSON);
     return overlays;
 };
 
@@ -2171,6 +2175,15 @@ komoo.Map.prototype.highlightOverlay = function (overlay, id) {
     this.openInfoWindow(overlay, overlayCenter);
 
     return true;
+};
+
+
+komoo.Map.prototype._emit_geojson_loaded = function (e) {
+    /**
+     * @name komoo.Map#geojson_loaded
+     * @event
+     */
+    this.event.trigger('geojson_loaded', e);
 };
 
 
