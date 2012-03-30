@@ -11,6 +11,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 
 from annoying.decorators import render_to, ajax_request
+from haystack.query import SearchQuerySet
 
 from community.models import Community
 from need.models import Need
@@ -97,5 +98,13 @@ def test_500(request):
 
 @ajax_request
 def komoo_search(request):
-    print 'KOMO SEARCH: ', request.POST
-    return request.POST
+    logger.debug('Komoo_search: {}'.format(request.POST))
+
+    qs = SearchQuerySet().auto_query(request.POST.get('query', ''))
+
+    r = {'result': [{
+        'name': o.name,
+        'model': o.model_name,
+        'id': o.object.id
+    } for o in qs]}
+    return r
