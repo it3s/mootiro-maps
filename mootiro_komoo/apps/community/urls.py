@@ -9,8 +9,7 @@ from mootiro_komoo.urls import prepare_regex as pr
 urlpatterns = patterns('community.views',
     url(r'^community/new$', 'edit', name='new_community'),
 
-    url(r'^communities$', 'map', name='list_communities'),
-    url(r'^community/map$', 'map', name='map_community'),
+    url(r'^communities$', 'list', name='list_communities'),
 
     url(r'^community/search_by_name$', 'search_by_name',
         name='search_community_by_name'),

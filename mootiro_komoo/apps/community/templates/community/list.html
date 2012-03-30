@@ -1,0 +1,34 @@
+{% extends "global.html" %}
+{% load komoo_tags %}
+{% load comment_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'Communities list' %}{% endblock %}
+
+{% block menu %} {% menu "community" %} {% endblock %}
+
+{% block content %}
+<div id="main-content">
+  <div class="highlight">
+    <div class="list">
+      {% for community in communities %}
+      <div>
+        <h4>
+          <span class="apart">
+            <a href="{% url view_community community.slug %}">{{ community.name }}</a>
+          </span>
+          <a href="{% url community_on_map community.slug %}">{% trans 'see on the map' %}</a>
+          <div class="clear-both"></div>
+          {% comments_summary community %}
+        </h4>
+        <p class="clearBoth">
+          {% trans 'population:' %} {{ community.population }}
+        </p>
+        <p>{{ community.description }}</p>
+      </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

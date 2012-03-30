@@ -82,6 +82,13 @@ def map(request):
     return dict(geojson={})
 
 
+@render_to('community/list.html')
+def list(request):
+    logger.debug('acessing community > list')
+    communities = Community.objects.all()
+    return dict(communities=communities)
+
+
 def communities_geojson(request):
     bounds = request.GET.get('bounds', None)
     x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
