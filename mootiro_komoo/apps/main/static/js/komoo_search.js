@@ -16,17 +16,20 @@
             dataType: 'json',
             success: function(data){
                 console.dir(data);
-                search_results.find('ul').remove();
+                search_results.find('div').remove();
 
                 lis = '';
                 data.result.forEach(function(obj){
-                    lis += '<li>' + obj.name +  '</li>';
+                    lis += '<li> &raquo;&nbsp;' + obj.name +  '</li>';
                 });
 
                 search_results.append('' +
-                    '<ul>' +
-                        lis +
-                    '</ul>'
+                    '<div>' +
+                        '<h3>' + gettext('Search Results:') + '</h3>' +
+                        '<ul>' +
+                            lis +
+                        '</ul>' +
+                    '</div>'
                 );
 
             }
