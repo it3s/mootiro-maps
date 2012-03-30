@@ -60,16 +60,27 @@
     <div class="right-bar">
         <div id="map-preview">{% komoo_map geojson %}</div>
         <a href="{% url show_on_map %}?type=Resource&id={{resource.id}}">{% trans 'see on map' %}</a>
-        <div class="block">
-            <h3>{% trans 'Similar Resources:' %}</h3>
-            {% if similar %}
-                {% for s in similar %}
-                    <p><a href="/resource/{{ s.id }}/">{{s.name}}</a> - {% firstof s.community.name '' %}</p>
-                {% endfor %}
-            {% else %}
-                <p>{% trans 'There is no similar resources...' %}</p>
+
+        {% with similar_resources=resource.tags.similar_objects %}
+            {% if similar_resources %}
+            <div class="block">
+                <h3>Related resources</h3>
+                <ul>
+                    {% for r in similar_resources %}
+                    <li>
+                        {% if r.community %}
+                            <a href="{% url view_resource r.community.slug r.id %}"> {{ r.name }} </a>
+                            {% trans 'at' %} {{ r.community.name }}
+                        {% else %}
+                            <a href="{% url view_resource r.id %}"> {{ r.name }} </a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
             {% endif %}
-        </div>
+        {% endwith %}
+
     </div>
 
     <div class="view-extras">

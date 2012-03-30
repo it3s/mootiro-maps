@@ -46,19 +46,25 @@
         New proposal
       </a>
     </div>
-    {% if need.tags.similar_objects %}
-    <div class="block">
-      <h3>Related needs</h3>
-      <ul>
-        {% for n in need.tags.similar_objects %}
-        <li>
-          <a href="{% url view_need n.community.slug n.slug %}"> {{ n.title }} </a>
-          {% trans 'at' %} {{ n.community.name }}
-        </li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
+    {% with similar_needs=need.tags.similar_objects %}
+      {% if similar_needs %}
+      <div class="block">
+        <h3>Related needs</h3>
+        <ul>
+          {% for n in similar_needs %}
+          <li>
+            {% if n.community %}
+              <a href="{% url view_need n.community.slug n.slug %}"> {{ n.title }} </a>
+              {% trans 'at' %} {{ n.community.name }}
+            {% else %}
+              <a href="{% url view_need n.community.slug n.slug %}"> {{ n.title }} </a>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    {% endwith %}
   </div>
 
   <div class="view-extras">
