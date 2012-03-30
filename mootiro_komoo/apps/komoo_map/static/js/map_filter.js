@@ -70,8 +70,7 @@ function hierarchicalImageSwitchSelection (parent, children) {
 hierarchicalImageSwitchSelection("#id_needs", "input[name=need_categories]");
 
 $(".geo-objects-listing .needs .collapser").on("click", function (event) {
-    var $sublist = $(".need.categories");
-    $sublist.toggle();
+    $(".need.sublist").toggle();
     $("i", this).toggleClass("icon-chevron-right icon-chevron-down");
 });
 

@@ -90,7 +90,7 @@ ul.geo-objects-listing li div.collapser {
 }
 ul.geo-objects-listing li div.collapser:hover { background: #dceff4 }
 ul.geo-objects-listing li div.collapser i { margin-top: 10px }
-ul.geo-objects-listing li.categories { display: none }
+ul.geo-objects-listing li.sublist { display: none }
 
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }
@@ -248,9 +248,9 @@ ul.geo-objects-listing li.categories { display: none }
     border-bottom: 1px solid #e9e9e9;
 }
 #map-panel-filter ul.geo-objects-listing li:hover { background: #dceff4 }
-#map-panel-filter ul.geo-objects-listing li.categories { padding: 0 }
-#map-panel-filter ul.geo-objects-listing li.categories:hover { background: transparent }
-#map-panel-filter ul.geo-objects-listing li.categories ul li:last-child { border-bottom: none }
+#map-panel-filter ul.geo-objects-listing li.sublist { padding: 0 }
+#map-panel-filter ul.geo-objects-listing li.sublist:hover { background: transparent }
+#map-panel-filter ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
 #map-panel .panel { margin-top: 10px }
 #filter-submit {
     padding-left: 2em;
@@ -293,6 +293,7 @@ ul.geo-objects-listing li.categories { display: none }
 #filter-slider-container {
     position: absolute;
     right: 5px;
+    z-index: 1;
 }
 #filter-helper {
     position: fixed;
