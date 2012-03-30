@@ -42,7 +42,20 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             #         type_ == 'community' else \
             #         json.loads(obj.geometry.geojson)['geometries'][0]
             geometry_json = json.loads(obj.geometry.geojson)
-            geometry = geometry_json['geometries'][0] if geometry_json['geometries'] else ''
+            #geometry = geometry_json['geometries'][0] if geometry_json['geometries'] else ''
+            geometries = geometry_json['geometries']
+            geometry = {}
+            if geometries:
+                if len(geometries) == 1:
+                    geometry = geometries[0]
+                else:
+                    geometry_type = geometries[0]['type']
+                    geometry['type'] = 'Multi{}'.format(geometry_type)
+                    coord = []
+                    for geom in geometries:
+                        if geom['type'] == geometry_type:
+                            coord.append(geom['coordinates'])
+                    geometry['coordinates'] = coord
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
             feature = {
                 'type': 'Feature',
