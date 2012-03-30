@@ -80,13 +80,11 @@ msgid "invalid community data"
 msgstr "dados de 'comunidade' inválidos"
 
 #: apps/komoo_resource/templates/resource/list.html:6
-#, fuzzy
 msgid "Resources for"
 msgstr "Recursos para"
 
 #: apps/komoo_resource/templates/resource/list.html:15
 #: apps/komoo_resource/templates/resource/list.html:17
-#, fuzzy
 msgid "New Resource"
 msgstr "Novo Recurso"
 
@@ -296,13 +294,11 @@ msgstr "Informações"
 
 #: apps/organization/templates/organization/list.html:17
 #: apps/organization/templates/organization/list.html:19
-#, fuzzy
 msgid "New Organization"
 msgstr "Nova Organização"
 
 #: apps/organization/templates/organization/new.html:10
 #: apps/organization/templates/organization/new_frommap.html:16
-#, fuzzy
 msgid "Organization Name:"
 msgstr "Nome da Organização:"
 
