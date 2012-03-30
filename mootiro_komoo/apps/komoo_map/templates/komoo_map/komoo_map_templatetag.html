@@ -152,11 +152,11 @@
         {% if editable %}
         $('#map-panel-add').append(map.addMenu.show());
         // Connect the search input box
-        $('#search').submit(function () {
-          var query = $('#search-bar').val();
-          map.goTo(query);
-          return false;
-        });
+        // $('#search').submit(function () {
+        //   var query = $('#search-bar').val();
+        //   map.goTo(query);
+        //   return false;
+        // });
         {% endif %}
       }
       {% if edit_button %}

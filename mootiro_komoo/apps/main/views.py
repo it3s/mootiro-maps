@@ -9,10 +9,8 @@ from django.contrib.gis.geos import Polygon, Point
 from django.contrib.gis.measure import Distance
 from django.db.models import Q
 from django.http import HttpResponse
-from django.forms.models import model_to_dict
-from django.views.decorators.cache import cache_page
 
-from annoying.decorators import render_to
+from annoying.decorators import render_to, ajax_request
 
 from community.models import Community
 from need.models import Need
@@ -95,3 +93,9 @@ def test_404(request):
 @render_to('500.html')
 def test_500(request):
     return {}
+
+
+@ajax_request
+def komoo_search(request):
+    print 'KOMO SEARCH: ', request.POST
+    return request.POST
