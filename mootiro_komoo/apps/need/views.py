@@ -53,8 +53,8 @@ def edit(request, community_slug="", need_slug=""):
         if form.is_valid():
             need = form.save()
 
-            redirect_url = reverse('view_need',
-                                args=(need.community.slug, need.slug))
+            args = (need.community.slug, need.slug) if need.community else (need.slug,)
+            redirect_url = reverse('view_need', args=args)
             if not request.is_ajax():
                 return redirect(redirect_url)
             rdict = dict(redirect=redirect_url)
@@ -72,12 +72,15 @@ def edit(request, community_slug="", need_slug=""):
 
 
 @render_to('need/view.html')
-def view(request, community_slug, need_slug):
+def view(request, community_slug=None, need_slug=None):
+    # if the need has no community pass an empty string
     logger.debug('acessing need > view')
-    community = get_object_or_404(Community, slug=community_slug)
-    need = get_object_or_404(Need, slug=need_slug, community=community)
+    filters = dict(slug=need_slug)
+    if community_slug:
+        filters['community__slug'] = community_slug
+    need = get_object_or_404(Need, **filters)
     geojson = create_geojson([need])
-    return dict(need=need, community=community, geojson=geojson)
+    return dict(need=need, community=need.community, geojson=geojson)
 
 
 @render_to('need/list.html')

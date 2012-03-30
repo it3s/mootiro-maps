@@ -15,7 +15,7 @@
 {% block content %}
   <div id="main-content">
     <div class="need main-column">
-      <h2>{{ need.title }} <div class="view-edit-btn right"><a href="{% url edit_need community.slug need.slug %}" class="btn"><i class="icon-pencil"></i></a></div></h2>
+      <h2>{{ need.title }} <div class="view-edit-btn right"><a href="{% if need.community %}{% url edit_need need.community.slug need.slug %}{% else %}{% url edit_need need.slug %}{% endif %}" class="btn"><i class="icon-pencil"></i></a></div></h2>
 
       <ul class="horizontal">
         {% for c in need.categories.all %}
@@ -42,7 +42,7 @@
       {% for proposal in need.proposals.all %}
         {% proposal_summary proposal %}
       {% endfor %}
-      <a class="button" href="{% url new_proposal need.community.slug need.slug %}">
+      <a class="button" href="{% if need.community %}{% url new_proposal need.community.slug need.slug %}{% else %}{% url new_proposal need.slug %}{% endif %}">
         New proposal
       </a>
     </div>
@@ -57,7 +57,7 @@
               <a href="{% url view_need n.community.slug n.slug %}"> {{ n.title }} </a>
               {% trans 'at' %} {{ n.community.name }}
             {% else %}
-              <a href="{% url view_need n.community.slug n.slug %}"> {{ n.title }} </a>
+              <a href="{% url view_need n.slug %}"> {{ n.title }} </a>
             {% endif %}
           </li>
           {% endfor %}

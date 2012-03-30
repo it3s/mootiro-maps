@@ -19,9 +19,14 @@ class NeedForm(forms.ModelForm):
 
     # FIXME: the urls below should not be hardcoded. They should be calculated
     # with reverse_lazy function, which is not implemented in Django 1.3 yet.
-    community = forms.CharField(
+    # community = forms.CharField(
+    #     widget=Autocomplete(Community, "/community/search_by_name"),
+    #     required=False
+    # )
+    community = forms.ModelChoiceField(
+        queryset=Community.objects.all(),
         widget=Autocomplete(Community, "/community/search_by_name"),
-        required=True
+        required=False
     )
 
     description = forms.CharField(widget=MarkItUpWidget())
@@ -54,5 +59,6 @@ class NeedForm(forms.ModelForm):
 
         super(NeedForm, self).__init__(*a, **kw)
 
-    def clean_community(self):
-        return Community.objects.get(id=self.cleaned_data['community'])
+    # def clean_community(self):
+    #     value = self.cleaned_data['community']
+    #     return Community.objects.get(id=value) if value else value

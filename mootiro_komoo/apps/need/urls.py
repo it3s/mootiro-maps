@@ -7,11 +7,13 @@ from mootiro_komoo.urls import prepare_regex as pr
 
 
 urlpatterns = patterns('need.views',
-    url(pr(r'^need/new$'), 'edit', name='new_need'),
-    url(pr(r'^COMMUNITY_SLUG/need/new$'), 'edit', name='new_need'),
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/edit$'), 'edit', name='edit_need'),
+    url(pr(r'^need/new/?$'), 'edit', name='new_need'),
+    url(pr(r'^need/NEED_SLUG/edit/?$'), 'edit', name='edit_need'),
+    url(pr(r'^COMMUNITY_SLUG/need/new/?$'), 'edit', name='new_need'),
+    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/edit/?$'), 'edit', name='edit_need'),
 
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG$'), 'view', name='view_need'),
+    url(pr(r'^need/NEED_SLUG/?$'), 'view', name='view_need'),
+    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/?$'), 'view', name='view_need'),
 
     url(pr(r'^needs$'), 'list', name='list_all_needs'),
     url(pr(r'^COMMUNITY_SLUG/needs$'), 'list', name='list_community_needs'),

@@ -16,8 +16,8 @@
   <div class="main-column">
     <h3>
       {{ proposal.title }}
-      <span class="small"> (<a href="{% url view_need proposal.need.community.slug proposal.need.slug %}"> {{ proposal.need.title }}</a>)</span>
-      <div class="view-edit-btn"><a href="{% url edit_proposal community.slug proposal.need.slug proposal.number %}" class="btn"><i class="icon-pencil"></i></a></div>
+      <span class="small"> (<a href="{% if community %}{% url view_need proposal.need.community.slug proposal.need.slug %}{% else %}{% url view_need proposal.need.slug %}{% endif %}"> {{ proposal.need.title }}</a>)</span>
+      <div class="view-edit-btn"><a href="{% if community %}{% url edit_proposal community.slug proposal.need.slug proposal.number %}{% else %}{% url edit_proposal proposal.need.slug proposal.number %}{% endif %}" class="btn"><i class="icon-pencil"></i></a></div>
     </h3>
     {% vote proposal %}
     <p>
@@ -32,13 +32,13 @@
 
   <div class="right-bar">
     <div class="block">
-      <h4>Proposals for <a href="#">{{ proposal.need.title }}</a></h4>
+      <h4>Proposals for <a href="{% if community %}{% url view_need proposal.need.community.slug proposal.need.slug %}{% else %}{% url view_need proposal.need.slug %}{% endif %}"> {{ proposal.need.title }}</a></h4>
       {% for p in proposal.need.proposals.all %}
         {% if p != proposal %}
           {% proposal_summary p %}
         {% endif %}
       {% endfor %}
-      <a class="button" href="{% url new_proposal proposal.need.community.slug proposal.need.slug %}">
+      <a class="button" href="{% if community %}{% url new_proposal proposal.need.community.slug proposal.need.slug %}{% else %}{% url new_proposal proposal.need.slug %}{% endif %}">
         New proposal
       </a>
     </div>
@@ -46,9 +46,9 @@
   </div>
 
   <div class="view-extras">
-    {% taglist community %}
+    {% taglist proposal %}
     {% track_buttons %}
-    {% comments community %}
+    {% comments proposal %}
   </div>
 
 {% endblock %}

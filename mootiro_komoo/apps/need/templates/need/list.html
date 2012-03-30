@@ -20,8 +20,8 @@
       <div>
         <h4>
           <span class="apart">
-            <a href="{% url view_need need.community.slug need.slug %}"> {{ need.title }} </a>
-            {% if not community %}
+            <a href="{% if need.community %}{% url view_need need.community.slug need.slug %}{% else %}{% url view_need need.slug %}{% endif %}"> {{ need.title }} </a>
+            {% if not community and need.community %}
             {% trans 'at' %} <a href="{% url view_community need.community.slug %}">{{ need.community.name }}</a>
             {% endif %}
           </span>

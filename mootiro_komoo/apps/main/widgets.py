@@ -55,6 +55,9 @@ class Autocomplete(forms.TextInput):
         value_id = 'id_%s' % name  # id_fieldname
         label_id = '%s_autocomplete' % value_id  # id_fieldname_autocomplete
 
+        if not value:
+            value = ""
+
         value_attrs = dict(id=value_id, name=name, value=value)
 
         # attrs is consumed by the label field (autocomplete)
