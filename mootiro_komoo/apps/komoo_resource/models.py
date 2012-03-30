@@ -4,7 +4,7 @@ from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 import reversion
-from taggit.managers import TaggableManager
+from lib.taggit.managers import TaggableManager
 from community.models import Community
 from komoo_map.models import GeoRefModel
 from fileupload.models import UploadedFile

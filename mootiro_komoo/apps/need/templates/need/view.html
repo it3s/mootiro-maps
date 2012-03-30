@@ -1,5 +1,6 @@
 {% extends "global.html" %}
 
+{% load i18n %}
 {% load komoo_map_tags %}
 {% load comment_tags %}
 {% load vote_tags %}
@@ -45,14 +46,19 @@
         New proposal
       </a>
     </div>
+    {% if need.tags.similar_objects %}
     <div class="block">
       <h3>Related needs</h3>
       <ul>
-        <li>Need 1</li>
-        <li>Need 2</li>
-        <li>Need 3</li>
+        {% for n in need.tags.similar_objects %}
+        <li>
+          <a href="{% url view_need n.community.slug n.slug %}"> {{ n.title }} </a>
+          {% trans 'at' %} {{ n.community.name }}
+        </li>
+        {% endfor %}
       </ul>
     </div>
+    {% endif %}
   </div>
 
   <div class="view-extras">

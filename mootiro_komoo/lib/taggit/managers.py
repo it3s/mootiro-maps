@@ -193,7 +193,20 @@ class _TaggableManager(models.Manager):
         ).order_by('-num_times')
 
     @require_instance_manager
-    def similar_objects(self):
+    def similar_objects(self, use_all_models=False):
+        """Modified version of the original similar_objects (now
+        _similar_objects) for improving flexibility. It could be more efficient
+        but depends on the original taggit implementation.
+        """
+        similar = self._similar_objects()  # similar objects from all tagged classes
+        if not use_all_models:
+            # filter objects of the same class
+            similar = [s for s in similar if s.__class__ == self.model]
+
+        return similar
+
+    @require_instance_manager
+    def _similar_objects(self):
         lookup_kwargs = self._lookup_kwargs()
         lookup_keys = sorted(lookup_kwargs)
         qs = self.through.objects.values(*lookup_kwargs.keys())

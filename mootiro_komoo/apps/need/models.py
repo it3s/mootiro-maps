@@ -6,7 +6,7 @@ from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 
 import reversion
-from taggit.managers import TaggableManager
+from lib.taggit.managers import TaggableManager
 
 from community.models import Community
 from main.utils import slugify
