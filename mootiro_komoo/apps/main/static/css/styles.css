@@ -90,7 +90,6 @@ ul.geo-objects-listing li div.collapser {
 }
 ul.geo-objects-listing li div.collapser:hover { background: #dceff4 }
 ul.geo-objects-listing li div.collapser i { margin-top: 10px }
-ul.geo-objects-listing li.sublist { display: none }
 
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }
@@ -249,6 +248,7 @@ ul.geo-objects-listing li.sublist { display: none }
 }
 #map-panel-filter ul.geo-objects-listing li:hover { background: #dceff4 }
 #map-panel-filter ul.geo-objects-listing li.sublist { padding: 0 }
+#filter-form ul.geo-objects-listing li.sublist { display: none }
 #map-panel-filter ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel-filter ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
 #map-panel .panel { margin-top: 10px }

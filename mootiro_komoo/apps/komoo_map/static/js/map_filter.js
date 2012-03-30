@@ -94,7 +94,7 @@ $("#filter-form").on("submit", function (event) {
     data += $("input[name=center], input[name=radius], " +
               "input[name=communities], input[name=needs], " +
               "input[name=organizations], input[name=resources]", $form).serialize();
-    data += "&need_categories=" +need_categories;
+    data += "&need_categories=" + need_categories;
 
     var url = dutils.urls.resolve('radial_search');
 
@@ -108,6 +108,11 @@ $("#filter-form").on("submit", function (event) {
         $("#filter-results").html(html);
     });
     return false;
+});
+
+/******* Results viewing *******/
+$("#filter-results .sublist ul li").live("click", function (event) {
+    // DESTACAR ÍCONE NO MAPA
 });
 
 // $(function () {
