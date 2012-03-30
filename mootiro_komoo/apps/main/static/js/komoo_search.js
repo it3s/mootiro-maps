@@ -1,7 +1,8 @@
 // alert('search js');
 (function($){
     var form_search = $('#search'),
-        search_field = $('#search-bar');
+        search_field = $('#search-bar'),
+        search_results = $('#search-results');
         csrftoken= getCookie('csrftoken');
 
     form_search.submit(function(evt){
@@ -15,6 +16,19 @@
             dataType: 'json',
             success: function(data){
                 console.dir(data);
+                search_results.find('ul').remove();
+
+                lis = '';
+                data.result.forEach(function(obj){
+                    lis += '<li>' + obj.name +  '</li>';
+                });
+
+                search_results.append('' +
+                    '<ul>' +
+                        lis +
+                    '</ul>'
+                );
+
             }
         });
     });
