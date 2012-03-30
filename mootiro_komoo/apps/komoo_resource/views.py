@@ -15,7 +15,7 @@ from django.db.models import Count
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
-from taggit.models import TaggedItem
+from lib.taggit.models import TaggedItem
 
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource

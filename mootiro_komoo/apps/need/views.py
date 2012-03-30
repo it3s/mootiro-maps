@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import Polygon
 
 from annoying.decorators import render_to
-from taggit.models import TaggedItem
+from lib.taggit.models import TaggedItem
 
 from community.models import Community
 from need.models import Need, TargetAudience
