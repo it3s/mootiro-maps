@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.db.models import Count
 import reversion
 from taggit.managers import TaggableManager
 from community.models import Community
@@ -21,6 +22,12 @@ class ResourceKind(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         return super(ResourceKind, self).save(*args, **kwargs)
+
+    @classmethod
+    def favorites(cls, number=10):
+        return ResourceKind.objects.all(
+            ).annotate(count=Count('resource__id')
+            ).order_by('-count', 'slug')[:number]
 
 
 class Resource(GeoRefModel):

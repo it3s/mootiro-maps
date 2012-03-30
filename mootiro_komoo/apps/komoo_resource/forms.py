@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.query_utils import Q
 
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
@@ -20,7 +21,7 @@ class FormResource(forms.ModelForm):
     kind = forms.CharField(required=False,
         widget=AutocompleteWithFavorites(
             ResourceKind, '/resource/search_by_kind/',
-            ResourceKind.objects.all()[:10], can_add=True))
+            ResourceKind.favorites(number=10), can_add=True))
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
         required=False)
@@ -74,8 +75,10 @@ class FormResource(forms.ModelForm):
 
             elif self.fields['kind'].widget.can_add and 'kind_autocomplete' in self.args:
                 name = self.args['kind_autocomplete']
-                rk = ResourceKind(name=name)
-                rk.save()
+                if not ResourceKind.objects.filter(
+                        Q(name__iexact=name) | Q(slug__iexact=name)).count():
+                    rk = ResourceKind(name=name)
+                    rk.save()
                 return rk
         except Exception as err:
             print 'ERR: ', err
