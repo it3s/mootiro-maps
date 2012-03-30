@@ -19,11 +19,8 @@ class FormResource(forms.ModelForm):
     description = forms.CharField('Description', widget=MarkItUpWidget())
     kind = forms.CharField(required=False,
         widget=AutocompleteWithFavorites(
-            ResourceKind,
-            '/resource/search_by_kind/',
-            ResourceKind.objects.all()[:10],
-            add_url='/resource/get_or_add_kind/')
-        )
+            ResourceKind, '/resource/search_by_kind/',
+            ResourceKind.objects.all()[:10], can_add=True))
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
         required=False)
@@ -52,6 +49,7 @@ class FormResource(forms.ModelForm):
         self.helper.form_id = 'form_resource'
 
         r = super(FormResource, self).__init__(*args, **kwargs)
+        self.args = args[0] if args else {}
 
         for field, label in self._field_labels.iteritems():
             self.fields[field].label = label
@@ -71,11 +69,16 @@ class FormResource(forms.ModelForm):
 
     def clean_kind(self):
         try:
-            if not self.cleaned_data['kind'] or self.cleaned_data['kind'] == 'None':
-                return ResourceKind()
-            else:
+            if self.cleaned_data['kind']:
                 return ResourceKind.objects.get(id=self.cleaned_data['kind'])
-        except:
+
+            elif self.fields['kind'].widget.can_add and 'kind_autocomplete' in self.args:
+                name = self.args['kind_autocomplete']
+                rk = ResourceKind(name=name)
+                rk.save()
+                return rk
+        except Exception as err:
+            print 'ERR: ', err
             raise forms.ValidationError(_('invalid kind data'))
 
     def clean_community(self):
