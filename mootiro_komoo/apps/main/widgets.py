@@ -286,8 +286,6 @@ class AutocompleteWithFavorites(forms.TextInput):
     Autocomplete field with favorites sugestion.
     Usually to be used on ForeignKey fields.
     If you provide a ad_url argument it can add a new entry.
-    The view on add_url should verify if shoul add (entry is not duplicated
-    and then add it... on the return obj provide added: True/False, id, and label)
         label_id: html id of the visible autocomplete field
         value_id: html id of the hidden field that contains data to be persisted
     """
@@ -295,14 +293,14 @@ class AutocompleteWithFavorites(forms.TextInput):
         js = ('/static/lib/shortcut.js',)
 
     def __init__(self, model, source_url, favorites_query, help_text=None,
-                 add_url=None, *args, **kwargs):
+                 can_add=False, *args, **kwargs):
         self.model = model
         self.source_url = source_url
         self.query = favorites_query
         if not help_text:
             help_text = _('You can type above or select here')
         self.help_text = help_text
-        self.add_url = add_url
+        self.can_add = can_add
         super(AutocompleteWithFavorites, self).__init__(*args, **kwargs)
 
     def render_js(self, label_id, value_id):
@@ -331,7 +329,7 @@ class AutocompleteWithFavorites(forms.TextInput):
         """ % {'source_url': self.source_url, 'label_id': label_id,
                'value_id': value_id}
 
-        if not self.add_url:
+        if not self.can_add:
             #  if we can not add new values, the autocomplete should be
             #  cleaned when not selected
             js += u"""
@@ -344,33 +342,33 @@ class AutocompleteWithFavorites(forms.TextInput):
             });
         """ % {'label_id': label_id, 'value_id': value_id}
 
-        else:
-            js += u"""
+        # else:
+        #     js += u"""
 
-            var get_or_add_callbalck = function(){
-                var val = $('#%(label_id)s').val();
+        #     var get_or_add_callbalck = function(){
+        #         var val = $('#%(label_id)s').val();
 
-                var add = false;
+        #         var add = false;
 
-                $.ajax({
-                    type: 'POST',
-                    url: '%(add_url)s',
-                    data: {'value': val},
-                    success: function(data){
-                        if(data.added){
-                            $('#%(value_id)s').val(data.id);
-                        }
-                    },
-                    dataType: 'json'
-                });
-            };
+        #         $.ajax({
+        #             type: 'POST',
+        #             url: '%(add_url)s',
+        #             data: {'value': val},
+        #             success: function(data){
+        #                 if(data.added){
+        #                     $('#%(value_id)s').val(data.id);
+        #                 }
+        #             },
+        #             dataType: 'json'
+        #         });
+        #     };
 
-            shortcut.add('enter', get_or_add_callbalck,
-                {target:'%(label_id)s', propagate: false});
-            shortcut.add('tab', get_or_add_callbalck,
-                {target:'%(label_id)s', propagate: true});
-            """ % {'add_url': self.add_url, 'value_id': value_id,
-                   'label_id': label_id}
+        #     shortcut.add('enter', get_or_add_callbalck,
+        #         {target:'%(label_id)s', propagate: false});
+        #     shortcut.add('tab', get_or_add_callbalck,
+        #         {target:'%(label_id)s', propagate: true});
+        #     """ % {'add_url': self.add_url, 'value_id': value_id,
+        #            'label_id': label_id}
 
         # select field behavior
         js += u"""
@@ -398,17 +396,48 @@ class AutocompleteWithFavorites(forms.TextInput):
         return select
 
     def render(self, name, value=None, attrs=None):
+        # value_id = 'id_%s' % name  # id_fieldname
+        # label_id = '%s_autocomplete' % value_id  # id_fieldname_autocomplete
+
+        # value_attrs = dict(id=value_id, name=name, value=value)
+
+        # # attrs is consumed by the label field (autocomplete)
+        # label_attrs = self.build_attrs(attrs)  # must not have 'name' attribute
+        # if value and value != 'None':
+        #     label_attrs['value'] = self.model.objects.get(id=value)
+        # else:
+        #     label_attrs['value'] = ''
+        # if not 'id' in self.attrs:
+        #     label_attrs['id'] = label_id
+
+        # html = u'''
+        # <input type="hidden" %(value_attrs)s />
+        # <input type="text" %(label_attrs)s />
+
+        # %(select)s
+        # ''' % {'value_attrs': flatatt(value_attrs),
+        #        'label_attrs': flatatt(label_attrs),
+        #        'select': self.render_select(value_id)}
+
+        # html += u'''
+        # <script type="text/javascript"><!--//
+        #     $(document).ready(function(){
+        #         %(js)s
+        #     });
+        # //--></script>
+        # ''' % {'js': self.render_js(label_id, value_id)}
+
         value_id = 'id_%s' % name  # id_fieldname
         label_id = '%s_autocomplete' % value_id  # id_fieldname_autocomplete
 
-        value_attrs = dict(id=value_id, name=name, value=value)
+        value_attrs = dict(id=value_id, name=name, value=value or '')
 
         # attrs is consumed by the label field (autocomplete)
-        label_attrs = self.build_attrs(attrs)  # must not have 'name' attribute
-        if value and value != 'None':
-            label_attrs['value'] = self.model.objects.get(id=value)
-        if not 'id' in self.attrs:
-            label_attrs['id'] = label_id
+        if value:
+            label_value = str(self.model.objects.get(pk=value))
+        else:
+            label_value = ''
+        label_attrs = dict(id=label_id, name='%s_autocomplete' % name, value=label_value)
 
         html = u'''
         <input type="hidden" %(value_attrs)s />
