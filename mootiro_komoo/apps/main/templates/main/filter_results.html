@@ -26,7 +26,7 @@
   <li class="community sublist">
     <ul>
       {% for c in communities %}
-        <li>
+        <li id="community-{{c.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ c.image }}"/></div>
           <span>{{ c.name }}</span>
         </li>
@@ -48,7 +48,7 @@
   <li class="need sublist">
     <ul>
       {% for n in needs %}
-        <li>
+        <li id="need-{{n.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ n.image }}"/></div>
           <span>{{ n.title }}</span>
         </li>
@@ -70,7 +70,7 @@
   <li class="organization sublist">
     <ul>
       {% for o in organizations %}
-        <li>
+        <li id="organization-{{o.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ o.image }}"/></div>
           <span>{{ o.name }}</span>
         </li>
@@ -92,7 +92,7 @@
   <li class="resource sublist">
     <ul>
       {% for r in resources %}
-        <li>
+        <li id="resource-{{r.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ r.image }}"/></div>
           <span>{{ r.name }}</span>
         </li>
