@@ -18,23 +18,28 @@
     <div class="main-column">
 
         <div class="view-header">
-            <h2>{{ organization.name }}</h2>
-            <div class="view-votes">
-                {% vote organization %}
-                <div class="view-edit-btn">
-                    {% if community %}
-                    <a href="/{{ community.slug }}/organization/edit?id={{ organization.id }}" class="btn">
-                    {% else %}
-                    <a href="/organization/edit?id={{ organization.id }}" class="btn">
-                    {% endif %}
-                        <i class="icon-pencil"></i>
-                    </a>
+            <div class="inline-block organization-logo">
+            </div>
+            <div class="inline-block">
+                <h2>{{ organization.name }}</h2>
+                <div class="view-votes">
+                    {% vote organization %}
                 </div>
             </div>
-            <span>
+            <div class="view-edit-btn">
+                {% if community %}
+                <a href="/{{ community.slug }}/organization/edit?id={{ organization.id }}" class="btn">
+                {% else %}
+                <a href="/organization/edit?id={{ organization.id }}" class="btn">
+                {% endif %}
+                    <i class="icon-pencil"></i>
+                </a>
+            </div>
+
+            <!-- <span>
                 {% trans 'created by' %} <a href="#">{% firstof organization.creator.get_full_name organization.creator.username 'someone' %}</a>
                 {% trans 'in' %} {{ organization.creation_date|date:"d/m/Y" }}
-            </span>
+            </span> -->
         </div>
 
         <div class="view-body">
@@ -42,11 +47,16 @@
 
             <div class="branches-list">
                 {% if organization.organizationbranch_set.all.count %}
-                <h3>{% trans 'Organization Branches: ' %}</h3>
                 {% for branch in organization.organizationbranch_set.all %}
-                    <div class="branch-link">
-                        <a href="#"> &raquo; {{ branch.name }}</a>
-                        <div class="branch-info" style="display: none;">{{ branch.info|render_markup }}</div>
+                    <div class="branch-link {% cycle 'odd' '' %}">
+
+                        <a href="#">
+                            <div>
+                                {{ branch.name }}
+                                <span class="branch-link-btn"> > </span>
+                            </div>
+                        </a>
+                        <div class="branch-info {% cycle 'odd' '' %}" style="display: none;">{{ branch.info|render_markup }}</div>
                     </div>
                 {% endfor %}
                 {% endif %}
@@ -55,13 +65,25 @@
 
     </div>
 
-    <div class="right-bar">
+    <div class="right-bar organization-right-bar">
         <div id="map-preview">{% komoo_map geojson %}</div>
         <a href="#">{% trans 'see on map' %}</a>
+
+        <div class="block">
+          <h4>{% trans 'Operation Field' %}</h4>
+          <p>Área de atuação goes here!</p>
+
+          <h4>{% trans 'Audience' %}</h4>
+          <p>Público alvo!</p>
+
+          <h4>{% trans 'Contact' %}</h4>
+          <p>endereço aqui</p>
+
+        </div>
     </div>
 
     <div class="view-extras">
-        {% track_buttons %}
+        {#% track_buttons %#}
         {% comments organization %}
     </div>
 
@@ -77,6 +99,14 @@
         $('.branch-link a').click(function(evt){
             evt.preventDefault();
             $(this).parent().find('.branch-info').slideToggle();
+
+            // toggle branch button
+            var branch_btn = $(this).find('.branch-link-btn')
+            if (branch_btn.is('.btn-active')){
+                branch_btn.removeClass('btn-active');
+            } else {
+                branch_btn.addClass('btn-active');
+            }
         })
     </script>
 {% endblock %}
