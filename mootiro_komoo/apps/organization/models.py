@@ -22,8 +22,7 @@ class Organization(models.Model):
     link = models.CharField(max_length=250, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
 
-    # logotipo ?
-    # area de atuacao
+    # operation_field = models.ForeignKey(OrganizationField)
     target_audiences = models.ManyToManyField(TargetAudience, null=True, blank=True)
 
     def __unicode__(self):

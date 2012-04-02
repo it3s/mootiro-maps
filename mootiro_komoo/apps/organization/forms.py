@@ -53,6 +53,7 @@ class FormOrganizationNew(forms.ModelForm):
 
     def save(self, user=None, *args, **kwargs):
         org = Organization()
+        print 'CLEANED DATA: ', self.cleaned_data
         org.description = self.cleaned_data['description']
         org.contact = self.cleaned_data['contact']
         org.link = self.cleaned_data['link']
@@ -61,8 +62,9 @@ class FormOrganizationNew(forms.ModelForm):
             org.creator_id = user.id
         org.save()
         for com in self.cleaned_data['community']:
-            org.community.add(Community.objects.get(pk=com))
-
+            org.community.add(com)
+        for target_aud in self.cleaned_data['target_audiences']:
+            org.target_audiences.add(target_aud)
         return org
 
 
@@ -72,16 +74,23 @@ class FormOrganizationEdit(forms.ModelForm):
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
+    target_audiences = forms.Field(
+        widget=Tagsinput(
+            TargetAudience,
+            autocomplete_url="/need/target_audience_search")
+    )
 
     class Meta:
         model = Organization
-        fields = ['name', 'description', 'community', 'link', 'contact', 'id']
+        fields = ['name', 'description', 'community', 'link', 'contact',
+                  'target_audiences', 'id']
 
     _field_labels = {
         'name': _('Name'),
         'description': _('Description'),
         'community': _('Community'),
         'contact': _('Contact'),
+        'target_audiences': _('Target Audiences'),
     }
 
     def __init__(self, *args, **kwargs):
