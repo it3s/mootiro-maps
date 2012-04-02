@@ -193,7 +193,8 @@ KOMOO_COMMENTS_HEIGHT = 20
 # define the lookup channels in use on the site
 AJAX_LOOKUP_CHANNELS = {
     #   pass a dict with the model and the field to search against
-    'community': ('community.lookups', 'CommunityLookup')
+    'community': ('community.lookups', 'CommunityLookup'),
+    'organizationcategory': ('organization.lookups', 'OrganizationCategoryLookup'),
 }
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = False

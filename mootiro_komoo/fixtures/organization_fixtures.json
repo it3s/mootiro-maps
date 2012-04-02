@@ -1,3 +1,75 @@
 [
+  {
+    "model": "organization.organizationcategory",
+    "pk": 1,
+    "fields": {
+      "name": "Culture",
+      "slug": "culture"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 2,
+    "fields": {
+      "name": "Education",
+      "slug": "education"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 3,
+    "fields": {
+      "name": "Environment",
+      "slug": "environment"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 4,
+    "fields": {
+      "name": "Health",
+      "slug": "health"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 5,
+    "fields": {
+      "name": "Housing",
+      "slug": "housing"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 6,
+    "fields": {
+      "name": "Local Economy",
+      "slug": "local-economy"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 7,
+    "fields": {
+      "name": "Mobility",
+      "slug": "mobility"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 8,
+    "fields": {
+      "name": "Social Service",
+      "slug": "social-service"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 9,
+    "fields": {
+      "name": "Sport",
+      "slug": "sport"
+    }
+  }
 
 ]

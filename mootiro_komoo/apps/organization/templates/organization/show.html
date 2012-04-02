@@ -71,7 +71,19 @@
 
         <div class="block">
           <h4>{% trans 'Operation Field' %}</h4>
-          <p>Área de atuação goes here!</p>
+          <p>
+            {% for c in organization.categories.all %}
+                <span>
+                    {{ c.name }}
+                    {% if not forloop.last %}
+                    &nbsp;|&nbsp;
+                    {% endif %}
+                </span>
+            {% empty %}
+                {% trans 'No categories provided' %}
+            {% endfor %}
+
+          </p>
 
           <h4>{% trans 'Audience' %}</h4>
           <p>

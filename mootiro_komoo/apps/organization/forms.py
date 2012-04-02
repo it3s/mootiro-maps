@@ -11,7 +11,6 @@ from crispy_forms.helper import FormHelper
 from main.utils import MooHelper
 from main.widgets import Tagsinput
 from organization.models import Organization, OrganizationBranch
-from community.models import Community
 from need.models import TargetAudience
 
 
@@ -20,20 +19,25 @@ class FormOrganizationNew(forms.ModelForm):
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
-    target_audiences = forms.Field(
+    target_audiences = forms.Field(required=False,
         widget=Tagsinput(
             TargetAudience,
             autocomplete_url="/need/target_audience_search")
     )
+    categories = AutoCompleteSelectMultipleField('organizationcategory',
+        help_text='', required=False)
 
     class Meta:
         model = Organization
-        fields = ['description', 'community', 'link', 'contact', 'target_audiences']
+        fields = ['description', 'community', 'link', 'contact',
+        'target_audiences', 'categories']
 
     _field_labels = {
         'description': _('Description'),
         'community': _('Community'),
         'contact': _('Contact'),
+        'target_audiences': _('Target Audience'),
+        'categories': _('Categories'),
     }
 
     def __init__(self, *args, **kwargs):
@@ -53,7 +57,6 @@ class FormOrganizationNew(forms.ModelForm):
 
     def save(self, user=None, *args, **kwargs):
         org = Organization()
-        print 'CLEANED DATA: ', self.cleaned_data
         org.description = self.cleaned_data['description']
         org.contact = self.cleaned_data['contact']
         org.link = self.cleaned_data['link']
@@ -65,6 +68,8 @@ class FormOrganizationNew(forms.ModelForm):
             org.community.add(com)
         for target_aud in self.cleaned_data['target_audiences']:
             org.target_audiences.add(target_aud)
+        for c in self.cleaned_data['categories']:
+            org.categories.add(c)
         return org
 
 
@@ -79,11 +84,13 @@ class FormOrganizationEdit(forms.ModelForm):
             TargetAudience,
             autocomplete_url="/need/target_audience_search")
     )
+    categories = AutoCompleteSelectMultipleField('organizationcategory',
+        help_text='', required=False)
 
     class Meta:
         model = Organization
         fields = ['name', 'description', 'community', 'link', 'contact',
-                  'target_audiences', 'id']
+                  'target_audiences', 'categories', 'id']
 
     _field_labels = {
         'name': _('Name'),
@@ -91,6 +98,7 @@ class FormOrganizationEdit(forms.ModelForm):
         'community': _('Community'),
         'contact': _('Contact'),
         'target_audiences': _('Target Audiences'),
+        'categories': _('Categories')
     }
 
     def __init__(self, *args, **kwargs):
