@@ -9,18 +9,6 @@ from community.models import Community
 from need.models import TargetAudience
 
 
-class OrganizationCategory(models.Model):
-    name = models.CharField(max_length=320, unique=True)
-    slug = models.CharField(max_length=320, unique=True, blank=True)
-
-    def __unicode__(self):
-        return unicode(self.name)
-
-    def save(self, *a, **kw):
-        self.slug = slugify(self.name)
-        return super(OrganizationCategory, self).save(*a, **kw)
-
-
 class Organization(models.Model):
     name = models.CharField(max_length=320, unique=True)
     slug = models.SlugField(max_length=320)
@@ -34,7 +22,7 @@ class Organization(models.Model):
     link = models.CharField(max_length=250, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
 
-    categories = models.ManyToManyField(OrganizationCategory, null=True, blank=True)
+    categories = models.ManyToManyField('OrganizationCategory', null=True, blank=True)
     target_audiences = models.ManyToManyField(TargetAudience, null=True, blank=True)
 
     def __unicode__(self):
@@ -67,3 +55,15 @@ class OrganizationBranch(GeoRefModel):
 
     image = "img/organization.png"
     image_off = "img/organization-off.png"
+
+
+class OrganizationCategory(models.Model):
+    name = models.CharField(max_length=320, unique=True)
+    slug = models.CharField(max_length=320, unique=True, blank=True)
+
+    def __unicode__(self):
+        return unicode(self.name)
+
+    def save(self, *a, **kw):
+        self.slug = slugify(self.name)
+        return super(OrganizationCategory, self).save(*a, **kw)
