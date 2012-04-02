@@ -131,7 +131,6 @@ INSTALLED_APPS = [
     'django.contrib.gis',
     'django.contrib.markup',
     # 3rd party apps
-    'haystack',
     'tinymce',
     'taggit',
     'django_js_utils',
@@ -140,6 +139,7 @@ INSTALLED_APPS = [
     'markitup',
     'lib.ajax_select',
     'fileupload',
+    'gunicorn',
     # our apps
     'komoo_map',
     'community',
@@ -188,12 +188,6 @@ CAS_SERVER_URL = 'https://localhost:8443/cas/'
 # KOMOO Comments settings
 KOMOO_COMMENTS_WIDTH = 3
 KOMOO_COMMENTS_HEIGHT = 20
-
-# HAYSTACK search configuration
-HAYSTACK_SITECONF = 'mootiro_komoo.search_sites'
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = os.path.join(PROJECT_ROOT, 'komoo_index')
-HAYSTACK_DEFAULT_OPERATOR = 'OR'
 
 # AJAX-SELECT
 # define the lookup channels in use on the site

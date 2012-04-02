@@ -33,7 +33,7 @@ def prod():
     env_ = 'prod'
 
 
-def build_env_ironment():
+def build_environment():
     """
     build env_ironment: pip install everything + patch django for postgis
     encoding problem on postgres 9.1
@@ -46,8 +46,10 @@ def build_env_ironment():
 
 def run():
     """Runs django's development server"""
-    local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
-    search_index()
+    if env_ == 'stage':
+        local('python manage.py run_gunicorn --workers=2 --bind=127.0.0.1:8001 {}'.format(django_settings[env_]))
+    else:
+        local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
 
 
 def js_urls():
@@ -113,17 +115,6 @@ def clean_media_files():
             print err
 
 
-def search_index(option='update'):
-    """Rebuilds haystack indexes."""
-    if not option in ['rebuild', 'update']:
-        print 'You must pass rebuild or update as argument'
-        return None
-    local('python manage.py {}_index {} {}'.format(
-                option,
-                '--noinput' if option == 'rebuild' else '',
-                django_settings[env_]))
-
-
 def sync_all():
     """
     restart app and database from scratch.
@@ -136,7 +127,6 @@ def sync_all():
     load_fixtures('test')
     initial_revisions()
     clean_media_files()
-    search_index('rebuild')
 
 
 def dumpdata():

@@ -1,4 +1,3 @@
-// alert('search js');
 (function($){
     var form_search = $('#search'),
         search_field = $('#search-bar'),
@@ -12,7 +11,7 @@
         $.ajax({
             type: 'POST',
             url: dutils.urls.resolve('komoo_search'),
-            data: {query: search_field.val(), 'csrfmiddlewaretoken': csrftoken},
+            data: {term: search_field.val(), 'csrfmiddlewaretoken': csrftoken},
             dataType: 'json',
             success: function(data){
                 console.dir(data);

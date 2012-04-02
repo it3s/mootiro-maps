@@ -11,12 +11,11 @@ from django.db.models import Q
 from django.http import HttpResponse
 
 from annoying.decorators import render_to, ajax_request
-from haystack.query import SearchQuerySet
 
 from community.models import Community
 from need.models import Need
 from komoo_resource.models import Resource
-from organization.models import OrganizationBranch
+from organization.models import OrganizationBranch, Organization
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
@@ -96,15 +95,63 @@ def test_500(request):
     return {}
 
 
+def _query_model(model, term, fields):
+    query = Q()
+    for field in fields:
+        query_field = {'{}__icontains'.format(field): term}
+        query |= Q(**query_field)
+    return model.objects.filter(query)
+
+queries = {
+    'organization': {
+        'model': Organization,
+        'query_fields': [
+            'name',
+            'slug',
+            'description'
+        ],
+        'repr': 'name'
+    },
+    'resource': {
+        'model': Resource,
+        'query_fields': [
+            'name',
+            'description'
+        ],
+        'repr': 'name'
+    },
+    'need': {
+        'model': Need,
+        'query_fields': [
+            'title',
+            'slug',
+            'description'
+        ],
+        'repr': 'title'
+    },
+    'organization': {
+        'model': Organization,
+        'query_fields': [
+            'name',
+            'slug',
+            'description'
+        ],
+        'repr': 'name'
+    }
+}
+
+
 @ajax_request
 def komoo_search(request):
     logger.debug('Komoo_search: {}'.format(request.POST))
+    term = request.POST.get('term', '')
 
-    qs = SearchQuerySet().auto_query(request.POST.get('query', ''))
+    result = []
+    for key, model in queries.iteritems():
+        for o in _query_model(model.get('model'), term, model.get('query_fields')):
+            dados = {'id': o.id,
+                     'name': getattr(o, model.get('repr')),
+                     'model': key}
+            result.append(dados)
 
-    r = {'result': [{
-        'name': o.name,
-        'model': o.model_name,
-        'id': o.object.id
-    } for o in qs]}
-    return r
+    return {'result': result}
