@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-03-29 17:15-0300\n"
+"POT-Creation-Date: 2012-04-02 15:58-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,21 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: apps/community/templates/community/list.html:6
+msgid "Communities list"
+msgstr "Lista de Comunidades"
+
+#: apps/community/templates/community/list.html:20
+#: apps/komoo_resource/templates/resource/list.html:36
+#: apps/need/templates/need/list.html:28
+#: apps/organization/templates/organization/list.html:43
+msgid "see on the map"
+msgstr "ver no mapa"
+
+#: apps/community/templates/community/list.html:25
+msgid "population:"
+msgstr "população:"
 
 #: apps/komoo_comments/views.py:43
 msgid "invalid form: {}"
@@ -47,35 +62,35 @@ msgstr "Novo Comentário"
 msgid "see more ..."
 msgstr "ver mais ..."
 
-#: apps/komoo_resource/forms.py:41 apps/organization/forms.py:74
+#: apps/komoo_resource/forms.py:39 apps/organization/forms.py:81
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
-#: apps/komoo_resource/forms.py:42 apps/organization/forms.py:27
-#: apps/organization/forms.py:75
+#: apps/komoo_resource/forms.py:40 apps/organization/forms.py:34
+#: apps/organization/forms.py:82
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/komoo_resource/forms.py:43
+#: apps/komoo_resource/forms.py:41
 msgid "Kind"
 msgstr "Tipo"
 
-#: apps/komoo_resource/forms.py:44 lib/taggit/managers.py:39
+#: apps/komoo_resource/forms.py:42 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/komoo_resource/forms.py:45 apps/organization/forms.py:28
-#: apps/organization/forms.py:76
+#: apps/komoo_resource/forms.py:43 apps/organization/forms.py:35
+#: apps/organization/forms.py:83
 msgid "Community"
 msgstr "Comunidade"
 
-#: apps/komoo_resource/forms.py:79
+#: apps/komoo_resource/forms.py:85
 msgid "invalid kind data"
 msgstr "dados de 'tipo' inválidos"
 
-#: apps/komoo_resource/forms.py:88
+#: apps/komoo_resource/forms.py:94
 msgid "invalid community data"
 msgstr "dados de 'comunidade' inválidos"
 
@@ -89,29 +104,24 @@ msgid "New Resource"
 msgstr "Novo Recurso"
 
 #: apps/komoo_resource/templates/resource/list.html:33
-#: apps/need/templates/need/list.html:25
+#: apps/komoo_resource/templates/resource/show.html:73
+#: apps/need/templates/need/list.html:25 apps/need/templates/need/view.html:58
 #: apps/organization/templates/organization/list.html:34
 #: apps/organization/templates/organization/show.html:11
 msgid "at"
 msgstr "em"
-
-#: apps/komoo_resource/templates/resource/list.html:36
-#: apps/need/templates/need/list.html:28
-#: apps/organization/templates/organization/list.html:43
-msgid "see on the map"
-msgstr "ver no mapa"
 
 #: apps/komoo_resource/templates/resource/list.html:43
 msgid "Kind:"
 msgstr "Tipo:"
 
 #: apps/komoo_resource/templates/resource/show.html:34
-#: apps/organization/templates/organization/show.html:35
+#: apps/organization/templates/organization/show.html:40
 msgid "created by"
 msgstr "criado por"
 
 #: apps/komoo_resource/templates/resource/show.html:35
-#: apps/organization/templates/organization/show.html:36
+#: apps/organization/templates/organization/show.html:41
 msgid "in"
 msgstr "em"
 
@@ -124,23 +134,15 @@ msgid "Photos:"
 msgstr "Fotos:"
 
 #: apps/komoo_resource/templates/resource/show.html:62
-#: apps/organization/templates/organization/show.html:48
+#: apps/organization/templates/organization/show.html:70
 msgid "see on map"
 msgstr "ver no mapa"
 
-#: apps/komoo_resource/templates/resource/show.html:64
-msgid "Similar Resources:"
-msgstr "Recursos Similares"
-
-#: apps/komoo_resource/templates/resource/show.html:70
-msgid "There is no similar resources..."
-msgstr "Não há recursos similares..."
-
-#: apps/main/widgets.py:89
+#: apps/main/widgets.py:92
 msgid "invalid data"
 msgstr "dados inválidos"
 
-#: apps/main/widgets.py:303
+#: apps/main/widgets.py:304
 msgid "You can type above or select here"
 msgstr "Você pode digitar acima ou selecionar algum aqui"
 
@@ -256,9 +258,13 @@ msgstr ""
 msgid "next"
 msgstr "próxima"
 
-#: apps/main/templates/main/taglist_templatetag.html:3
+#: apps/main/templates/main/taglist_templatetag.html:4
 msgid "Tags:"
 msgstr "Classificadores:"
+
+#: apps/main/templates/main/taglist_templatetag.html:9
+msgid "No tags"
+msgstr "Sem tags"
 
 #: apps/main/templates/main/track_buttons_templatetag.html:3
 msgid "Subscribe"
@@ -280,15 +286,16 @@ msgstr "Nova necessidade"
 msgid "target audience:"
 msgstr "público alvo:"
 
-#: apps/organization/forms.py:29 apps/organization/forms.py:77
+#: apps/organization/forms.py:36 apps/organization/forms.py:84
+#: apps/organization/templates/organization/show.html:90
 msgid "Contact"
 msgstr "Contato"
 
-#: apps/organization/forms.py:105
+#: apps/organization/forms.py:112
 msgid "Branch Name"
 msgstr "Nome da Sede"
 
-#: apps/organization/forms.py:106
+#: apps/organization/forms.py:113
 msgid "Info"
 msgstr "Informações"
 
@@ -301,6 +308,22 @@ msgstr "Nova Organização"
 #: apps/organization/templates/organization/new_frommap.html:16
 msgid "Organization Name:"
 msgstr "Nome da Organização:"
+
+#: apps/organization/templates/organization/show.html:73
+msgid "Operation Field"
+msgstr "Área de atuação"
+
+#: apps/organization/templates/organization/show.html:76
+msgid "Audience"
+msgstr "Público"
+
+#: apps/organization/templates/organization/show.html:86
+msgid "No target audience provided"
+msgstr "Público alvo não fornecido"
+
+#: apps/organization/templates/organization/show.html:95
+msgid "No contact info provided"
+msgstr "Informações de contato não fornecidas"
 
 #: apps/vote/views.py:46
 msgid "User not logged or anonymous"
@@ -372,3 +395,9 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
+
+#~ msgid "Similar Resources:"
+#~ msgstr "Recursos Similares"
+
+#~ msgid "There is no similar resources..."
+#~ msgstr "Não há recursos similares..."
