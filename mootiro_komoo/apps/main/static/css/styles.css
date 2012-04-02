@@ -693,6 +693,9 @@ input[type=text], textarea{
 .branch-info.odd{
     background-color: rgb(220, 239, 244); /*rgb(166, 229, 238);*/
 }
+.organization-header{
+    max-width: 500px;
+}
 .organization-logo{
     /* placeholder for logo TODO: remove this and replace by img */
     background-color: rgb(215, 215, 245);
@@ -705,7 +708,7 @@ input[type=text], textarea{
     color: #000000;
 }
 .organization-right-bar p{
-    color: #333333;
+    color: #555555;
 }
 .branch-link-btn{
     float: right;

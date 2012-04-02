@@ -20,7 +20,7 @@
         <div class="view-header">
             <div class="inline-block organization-logo">
             </div>
-            <div class="inline-block">
+            <div class="inline-block organization-header">
                 <h2>{{ organization.name }}</h2>
                 <div class="view-votes">
                     {% vote organization %}
@@ -74,10 +74,27 @@
           <p>Área de atuação goes here!</p>
 
           <h4>{% trans 'Audience' %}</h4>
-          <p>Público alvo!</p>
+          <p>
+            {% for t in organization.target_audiences.all %}
+                <span>
+                    {{ t.name }}
+                    {% if not forloop.last %}
+                    &nbsp;|&nbsp;
+                    {% endif %}
+                </span>
+            {% empty %}
+                {% trans 'No target audience provided' %}
+            {% endfor %}
+          </p>
 
           <h4>{% trans 'Contact' %}</h4>
-          <p>endereço aqui</p>
+          <p>
+            {% if organization.contact %}
+                {{ organization.contact|render_markup }}
+            {% else %}
+                {% trans 'No contact info provided' %}
+            {% endif %}
+          </p>
 
         </div>
     </div>

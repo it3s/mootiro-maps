@@ -9,8 +9,10 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from crispy_forms.helper import FormHelper
 from main.utils import MooHelper
+from main.widgets import Tagsinput
 from organization.models import Organization, OrganizationBranch
 from community.models import Community
+from need.models import TargetAudience
 
 
 class FormOrganizationNew(forms.ModelForm):
@@ -18,10 +20,15 @@ class FormOrganizationNew(forms.ModelForm):
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
+    target_audiences = forms.Field(
+        widget=Tagsinput(
+            TargetAudience,
+            autocomplete_url="/need/target_audience_search")
+    )
 
     class Meta:
         model = Organization
-        fields = ['description', 'community', 'link', 'contact']
+        fields = ['description', 'community', 'link', 'contact', 'target_audiences']
 
     _field_labels = {
         'description': _('Description'),

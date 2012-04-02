@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 
 from komoo_map.models import GeoRefModel
 from community.models import Community
+from need.models import TargetAudience
 
 
 class Organization(models.Model):
@@ -21,9 +22,9 @@ class Organization(models.Model):
     link = models.CharField(max_length=250, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
 
-    # logo ?
+    # logotipo ?
     # area de atuacao
-    # publico alvo
+    target_audiences = models.ManyToManyField(TargetAudience, null=True, blank=True)
 
     def __unicode__(self):
         return unicode(self.name)
