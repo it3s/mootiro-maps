@@ -1031,11 +1031,13 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
     var bounds;
     $.each(featureCollection, function (i, feature) {
         var geometry = feature.geometry;
-        if (!geometry) { return; }
-        var overlay;
+        if (!geometry) {
+            return;
+        }
+        var overlay = null;
         var paths = [];
         bounds = null;
-        if (feature.properties.type && komooMap.overlayOptions[feature.properties.type]) {
+        if (feature.properties && feature.properties.type && komooMap.overlayOptions[feature.properties.type]) {
             var color = komooMap.overlayOptions[feature.properties.type].color;
             polygonOptions.fillColor = color;
             polygonOptions.strokeColor = color;
@@ -1045,6 +1047,10 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
             // TODO: set a default color
         }
         if (geometry.type == 'Polygon') {
+            if (geometry.coordinates[0].length == 0) {
+                // Empty polygon.
+                return;
+            }
             overlay = new google.maps.Polygon(polygonOptions);
             $.each(geometry.coordinates, function (j, coord) {
                 var path = [];
@@ -1058,6 +1064,10 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
             });
             overlay.setPaths(paths);
         } else if (geometry.type == 'LineString') {
+            if (geometry.coordinates.length == 0) {
+                // Empty line.
+                return;
+            }
             overlay = new google.maps.Polyline(polylineOptions);
             var path = [];
             $.each(geometry.coordinates, function (k, pos) {
@@ -1076,6 +1086,10 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                 komooMap.googleMap.setCenter(latLng);
             }
         */} else if (geometry.type == 'MultiPoint' || geometry.type == 'Point') {
+            if (geometry.coordinates.length == 0) {
+                // Empty multipoint.
+                return;
+            }
             overlay = new komoo.MultiMarker();
             var markers = [];
             var coordinates = geometry.type == 'MultiPoint' ? geometry.coordinates : [geometry.coordinates];
@@ -1192,38 +1206,47 @@ komoo.Map.prototype.getGeoJSON = function (options) {
             }
         };
         // Gets coordinates.
-        if (overlay.getPaths) { // Overlay have multiple paths
-            overlay.getPaths().forEach(function (path, j) {
-                subCoords = [];
-                path.forEach(function (pos, k) {
-                    subCoords.push([pos.lat(), pos.lng()]);
+        if (overlay) {
+            if (overlay.getPaths) { // Overlay have multiple paths
+                overlay.getPaths().forEach(function (path, j) {
+                    subCoords = [];
+                    path.forEach(function (pos, k) {
+                        subCoords.push([pos.lat(), pos.lng()]);
+                    });
+                    subCoords.push(subCoords[0]);  // Copy the first point as the last one to close the loop
+                    coords.push(subCoords);
+                    feature.geometry.type = 'Polygon';
                 });
-                subCoords.push(subCoords[0]);  // Copy the first point as the last one to close the loop
-                coords.push(subCoords);
-                feature.geometry.type = 'Polygon';
-            });
-        } else if (overlay.getPath) { // Overlay have only one path
-            overlay.getPath().forEach(function (pos, j) {
-                coords.push([pos.lat(), pos.lng()]);
-            });
-            if (overlay instanceof google.maps.Polyline){
-                feature.geometry.type = 'LineString';
+            } else if (overlay.getPath) { // Overlay have only one path
+                overlay.getPath().forEach(function (pos, j) {
+                    coords.push([pos.lat(), pos.lng()]);
+                });
+                if (overlay instanceof google.maps.Polyline){
+                    feature.geometry.type = 'LineString';
+                }
+            } else if (overlay.getPosition) { // Overlay is a point
+                var pos = overlay.getPosition();
+                feature.geometry.type = 'Point';
+                coords.push(pos.lat());
+                coords.push(pos.lng());
+            } else if (overlay.getPositions) { // Overlay isa a multipoint
+                feature.geometry.type = 'MultiPoint';
+                overlay.getPositions().forEach(function (pos, j) {
+                    coords.push([pos.lat(), pos.lng()]);
+                });
             }
-        } else if (overlay.getPosition) { // Overlay is a point
-            var pos = overlay.getPosition();
-            feature.geometry.type = 'Point';
-            coords.push(pos.lat());
-            coords.push(pos.lng());
-        } else if (overlay.getPositions) { // Overlay isa a multipoint
-            feature.geometry.type = 'MultiPoint';
-            overlay.getPositions().forEach(function (pos, j) {
-                coords.push([pos.lat(), pos.lng()]);
-            });
-        }
-        feature.properties = overlay.properties;
+            feature.properties = overlay.properties;
+        } else {
+            feature.geometry.type = 'Polygon';
+            coords.push([]);
+        };
         if (feature.geometry.coordinates.length)  {
-            if (geoJSON.features) geoJSON.features.push(feature);
-            if (geoJSON.geometries) geoJSON.geometries.push(feature.geometry);
+            if (geoJSON.features) {
+                geoJSON.features.push(feature);
+            }
+            if (geoJSON.geometries) {
+                geoJSON.geometries.push(feature.geometry);
+            }
         }
     });
     return geoJSON;
@@ -1587,7 +1610,7 @@ komoo.Map.prototype.panTo = function (position) {
 
 
 komoo.Map.prototype.editOverlay = function (overlay) {
-    if (!overlay.properties || !overlay.properties.userCanEdit) {
+    if (!overlay || !overlay.properties || !overlay.properties.userCanEdit) {
         return false;
     }
     if (overlay.setEditable) {

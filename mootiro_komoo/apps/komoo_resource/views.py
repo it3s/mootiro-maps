@@ -136,7 +136,8 @@ class Edit(View):
             form_resource.initial['community'] = community.id
 
         geojson = create_geojson([resource], convert=False)
-        geojson['features'][0]['properties']['userCanEdit'] = True
+        if geojson and geojson.get('features'):
+            geojson['features'][0]['properties']['userCanEdit'] = True
         geojson = json.dumps(geojson)
 
         return render_to_response('resource/edit.html',

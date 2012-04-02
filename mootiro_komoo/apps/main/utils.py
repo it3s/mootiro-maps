@@ -56,6 +56,8 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
                         if geom['type'] == geometry_type:
                             coord.append(geom['coordinates'])
                     geometry['coordinates'] = coord
+            else:
+                continue
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
             feature = {
                 'type': 'Feature',
