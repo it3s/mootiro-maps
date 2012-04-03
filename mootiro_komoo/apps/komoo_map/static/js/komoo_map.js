@@ -729,6 +729,27 @@ komoo.Map.prototype.getOverlayIcon = function (overlay, opt_highlighted, opt_zoo
 
 
 /**
+ * Gets ovelay categories icons.
+ * @param {google.maps.MVCObject} overlay
+ * @param {boolean} [opt_highlighted=false]
+ * @param {number} [opt_zoom=15]
+ * @returns {String[]} The icons urls
+ */
+komoo.Map.prototype.getCategoriesIcons = function (overlay, opt_highlighted, opt_zoom) {
+    var icons = [];
+    var highlighted =  (opt_highlighted !== undefined) ? opt_highlighted : false;
+    var zoom = (opt_zoom !== undefined) ? opt_zoom : 15;
+    var url = '/static/img/' + ((zoom >= 15) ? 'near' : 'far') + '/' + (highlighted ? 'highlighted/' : '');
+
+    $.each(overlay.properties.categories, function (key, category) {
+        icons.push(url + category.name.toLowerCase() + '.png');
+    });
+
+    return icons;
+};
+
+
+/**
  * Closes the information window.
  */
 komoo.Map.prototype.closeInfoWindow = function () {
@@ -786,6 +807,16 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
             params[slugname] = overlay.properties[slugname];
             url = dutils.urls.resolve('view_' + overlay.properties.type, params).replace('//', '/');
             this.infoWindow.title.attr('href', url);
+        }
+
+        if (overlay.properties.categories) {
+            var categoriesIcons = this.getCategoriesIcons(overlay);
+            var icons = "<div class=\"categories-icons\">";
+            $.each(categoriesIcons, function (key, icon) {
+                icons += "<img src=\"" + icon + "\">";
+            });
+            icons += "</div>";
+            this.infoWindow.body.html(this.infoWindow.body.html() + icons);
         }
 
         this.infoWindow.overlay = overlay;

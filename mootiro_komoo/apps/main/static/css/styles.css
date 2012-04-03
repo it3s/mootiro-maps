@@ -304,6 +304,9 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 #filter-results-container { display: none }
 #filter-results { background: #f2f2f2 }
 
+.categories-icons img {
+    margin: 10px 2px 0;
+}
 .map-tabs { padding: 10px; }
 .map-tab {
     cursor: pointer;
