@@ -70,6 +70,95 @@
       "name": "Sport",
       "slug": "sport"
     }
+  },
+    {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 1,
+    "fields": {
+      "name": "Cultura",
+      "slug": "cultura",
+      "lang" : "pt-br",
+      "category" : 1
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 2,
+    "fields": {
+      "name": "Educação",
+      "slug": "educacao",
+      "lang" : "pt-br",
+      "category" : 2
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 3,
+    "fields": {
+      "name": "Meio Ambiente",
+      "slug": "meio-ambiente",
+      "lang" : "pt-br",
+      "category" : 3
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 4,
+    "fields": {
+      "name": "Saúde",
+      "slug": "saude",
+      "lang" : "pt-br",
+      "category" : 4
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 5,
+    "fields": {
+      "name": "Habitação",
+      "slug": "habitacao",
+      "lang" : "pt-br",
+      "category" : 5
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 6,
+    "fields": {
+      "name": "Econômia Local",
+      "slug": "economia-local",
+      "lang" : "pt-br",
+      "category" : 6
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 7,
+    "fields": {
+      "name": "Mobilidade",
+      "slug": "mobilidade",
+      "lang" : "pt-br",
+      "category" : 7
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 8,
+    "fields": {
+      "name": "Serviço Social",
+      "slug": "servico-social",
+      "lang" : "pt-br",
+      "category" : 8
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 9,
+    "fields": {
+      "name": "Esporte",
+      "slug": "esporte",
+      "lang" : "pt-br",
+      "category" : 9
+    }
   }
-
 ]

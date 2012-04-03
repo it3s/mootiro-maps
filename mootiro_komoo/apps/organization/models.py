@@ -67,3 +67,17 @@ class OrganizationCategory(models.Model):
     def save(self, *a, **kw):
         self.slug = slugify(self.name)
         return super(OrganizationCategory, self).save(*a, **kw)
+
+
+class OrganizationCategoryTranslation(models.Model):
+    name = models.CharField(max_length=320)
+    slug = models.CharField(max_length=320)
+    lang = models.CharField(max_length=10)
+    category = models.ForeignKey(OrganizationCategory)
+
+    def __unicode__(self):
+        return self.name
+
+    def save(self, *a, **kw):
+        self.slug = slugify(self.name)
+        return super(OrganizationCategoryTranslation, self).save(*a, **kw)

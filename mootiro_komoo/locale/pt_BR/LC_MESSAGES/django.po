@@ -303,7 +303,7 @@ msgstr "Saúde"
 
 #: apps/need/models.py:26
 msgid "Housing"
-msgstr "Habitação "
+msgstr "Habitação"
 
 #: apps/need/models.py:27
 msgid "Local Economy"

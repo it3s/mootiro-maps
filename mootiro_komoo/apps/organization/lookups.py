@@ -11,6 +11,14 @@ class OrganizationCategoryLookup(LookupChannel):
     def get_query(self, q, request):
         return OrganizationCategory.objects.filter(
             Q(name__icontains=q) | Q(slug__icontains=q))
+        # org_trans = OrganizationCategoryTranslation.objects.filter(
+        #     Q(lang=settings.LANGUAGE_CODE) & (
+        #     Q(name__icontains=q) | Q(slug__icontains=q)))
+
+        # orgs = []
+        # for o in org_trans:
+        #     orgs.append(o.category)
+        # return orgs
 
     def get_result(self, obj):
         u"""
