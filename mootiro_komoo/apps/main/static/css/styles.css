@@ -717,10 +717,8 @@ input[type=text], textarea{
 }
 .organization-logo{
     /* placeholder for logo TODO: remove this and replace by img */
-    background-color: rgb(215, 215, 245);
-    border-radius: 3px;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 60px;
     margin-right: 20px;
 }
 .organization-right-bar{

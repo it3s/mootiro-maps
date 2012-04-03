@@ -131,6 +131,7 @@ class Edit(View):
             geojson = json.dumps(geojson)
         else:
             form_org = FormOrganizationEdit()
+            organization = Organization()
             geojson = '{}'
 
         # form_org.initial['community'] = form_org.initial.get('community', [])
@@ -139,7 +140,8 @@ class Edit(View):
 
         tmplt = 'organization/edit.html'
         return render_to_response(tmplt,
-            dict(form_org=form_org, community=community, geojson=geojson),
+            dict(form_org=form_org, community=community,
+                 organization=organization, geojson=geojson),
             context_instance=RequestContext(request))
 
     def post(self, request, community_slug=None, *args, **kwargs):
@@ -170,7 +172,8 @@ class Edit(View):
                 return HttpResponseRedirect(_url)
             else:
                 return render_to_response('organization/edit.html',
-                    dict(redirect=_url, community=community, geojson=geojson),
+                    dict(redirect=_url, community=community, geojson=geojson,
+                         organization=organization),
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_org._errors)))

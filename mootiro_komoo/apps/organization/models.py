@@ -8,6 +8,7 @@ from django.conf import settings
 from komoo_map.models import GeoRefModel
 from community.models import Community
 from need.models import TargetAudience
+from fileupload.models import UploadedFile
 
 
 class Organization(models.Model):
@@ -32,6 +33,10 @@ class Organization(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         return super(Organization, self).save(*args, **kwargs)
+
+    def files_set(self):
+        """ pseudo-reverse query for retrieving Resource Files"""
+        return UploadedFile.get_files_for(self)
 
     image = "img/organization.png"
     image_off = "img/organization-off.png"

@@ -18,9 +18,9 @@
     <div class="main-column">
 
         <div class="view-header" >
-            <!-- TODO: logo goes here! -->
-            <!-- <div class="inline-block organization-logo">
-            </div> -->
+            {% if organization.files_set.count %}
+            <img src="{{ organization.files_set.all.0.file.url }}" class="inline-block organization-logo">
+            {% endif %}
             <div class="inline-block organization-header">
                 <h2>{{ organization.name }}</h2>
                 <div class="view-votes">

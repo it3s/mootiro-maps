@@ -12,6 +12,8 @@ from main.utils import MooHelper
 from main.widgets import Tagsinput
 from organization.models import Organization, OrganizationBranch
 from need.models import TargetAudience
+from fileupload.forms import FileuploadField
+from fileupload.models import UploadedFile
 
 
 class FormOrganizationNew(forms.ModelForm):
@@ -26,11 +28,12 @@ class FormOrganizationNew(forms.ModelForm):
     )
     categories = AutoCompleteSelectMultipleField('organizationcategory',
         help_text='', required=False)
+    files = FileuploadField(required=False)
 
     class Meta:
         model = Organization
         fields = ['description', 'community', 'link', 'contact',
-        'target_audiences', 'categories']
+        'target_audiences', 'categories', 'files']
 
     _field_labels = {
         'description': _('Description'),
@@ -38,6 +41,7 @@ class FormOrganizationNew(forms.ModelForm):
         'contact': _('Contact'),
         'target_audiences': _('Target Audience'),
         'categories': _('Categories'),
+        'files': _(' ')
     }
 
     def __init__(self, *args, **kwargs):
@@ -64,12 +68,19 @@ class FormOrganizationNew(forms.ModelForm):
         if user and not user.is_anonymous():
             org.creator_id = user.id
         org.save()
+
         for com in self.cleaned_data['community']:
             org.community.add(com)
+
         for target_aud in self.cleaned_data['target_audiences']:
             org.target_audiences.add(target_aud)
+
         for c in self.cleaned_data['categories']:
             org.categories.add(c)
+
+        files_id_list = self.cleaned_data.get('files', '').split('|')
+        UploadedFile.bind_files(files_id_list, org)
+
         return org
 
 
@@ -86,6 +97,7 @@ class FormOrganizationEdit(forms.ModelForm):
     )
     categories = AutoCompleteSelectMultipleField('organizationcategory',
         help_text='', required=False)
+    files = FileuploadField(required=False)
 
     class Meta:
         model = Organization
@@ -98,7 +110,8 @@ class FormOrganizationEdit(forms.ModelForm):
         'community': _('Community'),
         'contact': _('Contact'),
         'target_audiences': _('Target Audiences'),
-        'categories': _('Categories')
+        'categories': _('Categories'),
+        'files': _(' ')
     }
 
     def __init__(self, *args, **kwargs):
@@ -117,6 +130,10 @@ class FormOrganizationEdit(forms.ModelForm):
         if user and not user.is_anonymous():
             org.creator_id = user.id
             org.save()
+
+        files_id_list = self.cleaned_data.get('files', '').split('|')
+        UploadedFile.bind_files(files_id_list, org)
+
         return org
 
 
