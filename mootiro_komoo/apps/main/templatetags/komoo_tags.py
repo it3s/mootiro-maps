@@ -95,3 +95,9 @@ def taglist(obj):
 @register.inclusion_tag('main/pagination_templatetag.html')
 def pagination(collection):
     return dict(collection=collection)
+
+
+@register.filter
+def with_http(link):
+    """prepends http:// to a given link if it does not already have"""
+    return 'http://{link}'.format(link=link) if not 'http://' in link else link

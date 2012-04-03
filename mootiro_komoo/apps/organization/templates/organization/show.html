@@ -108,6 +108,13 @@
             {% endif %}
           </p>
 
+          {% if organization.link %}
+          <h4>Link</h4>
+          <p>
+            <a href="{{ organization.link|with_http }}">{{ organization.link }}</a>
+          </p>
+          {% endif %}
+
         </div>
     </div>
 

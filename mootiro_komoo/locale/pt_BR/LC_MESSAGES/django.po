@@ -359,7 +359,7 @@ msgstr "Público Alvo"
 
 #: apps/organization/forms.py:129
 msgid "Branch Name"
-msgstr "Nome da Sede"
+msgstr "Nome da Unidade"
 
 #: apps/organization/forms.py:130
 msgid "Info"
@@ -374,6 +374,16 @@ msgstr "Nova Organização"
 #: apps/organization/templates/organization/new_frommap.html:16
 msgid "Organization Name:"
 msgstr "Nome da Organização:"
+
+#: apps/organization/templates/organization/new.html:18
+#: apps/organization/templates/organization/new_frommap.html:24
+msgid "Organization Data"
+msgstr "Dados da Organização:"
+
+#: apps/organization/templates/organization/new.html:23
+#: apps/organization/templates/organization/new_frommap.html:29
+msgid "Branch Data"
+msgstr "Dados da Unidade"
 
 #: apps/organization/templates/organization/show.html:73
 msgid "Operation Field"

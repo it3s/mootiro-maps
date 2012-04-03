@@ -79,7 +79,7 @@ class FormOrganizationEdit(forms.ModelForm):
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
-    target_audiences = forms.Field(
+    target_audiences = forms.Field(required=False,
         widget=Tagsinput(
             TargetAudience,
             autocomplete_url="/need/target_audience_search")

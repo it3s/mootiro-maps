@@ -159,19 +159,24 @@ class Edit(View):
         if form_org.is_valid():
             organization = form_org.save(user=request.user)
 
+            geojson = create_geojson([organization], convert=False)
+            if geojson and geojson.get('features'):
+                geojson['features'][0]['properties']['userCanEdit'] = True
+            geojson = json.dumps(geojson)
+
             prefix = '/{}'.format(community_slug) if community_slug else ''
             _url = '{}/organization/{}'.format(prefix, organization.slug)
             if _id:
                 return HttpResponseRedirect(_url)
             else:
                 return render_to_response('organization/edit.html',
-                    dict(redirect=_url, community=community),
+                    dict(redirect=_url, community=community, geojson=geojson),
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_org._errors)))
             tmplt = 'organization/edit.html'
             return render_to_response(tmplt,
-                dict(form_org=form_org, community=community),
+                dict(form_org=form_org, community=community, geojson='{}'),
                 context_instance=RequestContext(request))
 
 
