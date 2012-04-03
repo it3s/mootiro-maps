@@ -1,10 +1,11 @@
+{% load i18n %}
 {% load komoo_tags %}
 
 <div id="map-panel" style="width: 300px; position: absolute; overflow: auto;">
   <ul class="map-tabs" id="map-panel-tabs">
-    <li class="map-tab" id="map-panel-filter-tab" style="width: 30%;"><a href="#map-panel-filter">Filter</a></li>
-    <li class="map-tab" id="map-panel-add-tab" style="width: 30%;"><a href="#map-panel-add">Add</a></li>
-    <li class="map-tab" id="map-panel-layers-tab" style="width: 30%;"><a href="#map-panel-layers">Layers</a></li>
+    <li class="map-tab" id="map-panel-filter-tab" style="width: 30%;"><a href="#map-panel-filter">{% trans "Filter" %}</a></li>
+    <li class="map-tab" id="map-panel-add-tab" style="width: 30%;"><a href="#map-panel-add">{% trans "Add" %}</a></li>
+    <li class="map-tab" id="map-panel-layers-tab" style="width: 30%;"><a href="#map-panel-layers">{% trans "Layers" %}</a></li>
   </ul>
 
   <div style="clear: both;"></div>
@@ -16,18 +17,18 @@
   <div class="panel" id="map-panel-filter">
     <form id="filter-form" method="GET" action="{% url radial_search %}">
       <div class="centralizer">
-        <input type="submit" id="filter-submit" class="button" value="Perform search"/>
+        <input type="submit" id="filter-submit" class="button" value="{% trans "Perform search" %}"/>
       </div>
       <div id="filter-circle">
         <div class="img-holder"><img src="{{STATIC_URL}}img/radius.png"/></div>
-        <a id="set-center" class="button"><i class="icon-plus icon-white"></i> Center</a>
-        <span>Radius <input id="filter-radius" type="text" name="radius"/> m</span>
+        <a id="set-center" class="button"><i class="icon-plus icon-white"></i> {% trans "Center" %}</a>
+        <span>{% trans "Radius" %} <input id="filter-radius" type="text" name="radius"/> m</span>
         <input id="filter-center" type="hidden" name="center"/>
         <div id="filter-slider-container" class="floating">
           <div id="filter-slider"></div><i class="icon-ok"></i>
         </div>
         <div id="filter-helper" class="floating">
-          Pick a point on the map
+          {% trans "Pick a point on the map" %}
         </div>
       </div>
       {% geo_objects_listing 'show_categories=True' 'switchable=True' %}
@@ -35,7 +36,7 @@
 
     <div id="filter-results-container">
       <div class="centralizer">
-        <button id="filter-back" class="button">Change parameters</button>
+        <button id="filter-back" class="button">{% trans "Change parameters" %}</button>
       </div>
       <div id="filter-results"></div>
     </div>

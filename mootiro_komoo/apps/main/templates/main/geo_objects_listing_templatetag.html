@@ -1,14 +1,15 @@
+{% load i18n %}
 {% block js %}{{ form.media.js }}{% endblock %}
 
 {% autoescape off %}
 <ul class="geo-objects-listing" style="display: block; clear: both;">
   <li class="communities">
     <div class="img-holder">{{ form.communities }}</div>
-    <span>Communities</span>
+    <span>{% trans "Communities" %}</span>
   </li>
   <li class="needs">
     <div class="img-holder">{{ form.needs }}</div>
-    <span>Needs</span>
+    <span>{% trans "Needs" %}</span>
     <div class="collapser"><i class="icon-chevron-right"></i></div>
   </li>
   {% if show_categories %}
@@ -18,11 +19,11 @@
   {% endif %}
   <li class="organizations">
     <div class="img-holder">{{ form.organizations }}</div>
-    <span>Organizations</span>
+    <span>{% trans "Organizations" %}</span>
   </li>
   <li class="resources">
     <div class="img-holder">{{ form.resources }}</div>
-    <span>Resources</span>
+    <span>{% trans "Resources" %}</span>
   </li>
 </ul>
 {% endautoescape %}

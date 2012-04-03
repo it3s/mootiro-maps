@@ -247,11 +247,12 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
     class Media:
         js = ('lib/jquery.imagetick.min.js',)
 
-    def __init__(self, get_image_tick, get_image_no_tick, show_names=False, *a, **kw):
+    def __init__(self, get_image_tick, get_image_no_tick, show_names=False, i18n=True, *a, **kw):
         super(ImageSwitchMultiple, self).__init__(*a, **kw)
         self.get_image_tick = get_image_tick
         self.get_image_no_tick = get_image_no_tick
         self.show_names = show_names
+        self.i18n = i18n
 
     def render(self, name, value, attrs=None, choices=()):
         if value is None:
@@ -275,8 +276,9 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
             rendered_cb = cb.render(name, option_value)
             option_label = conditional_escape(force_unicode(option_label))
             if self.show_names:
+                label = _(option_label) if self.i18n else option_label
                 list_item = u'<li><div title="{0}" class="img-holder">{1}</div><span>{0}</span></li>' \
-                    .format(option_label, rendered_cb)
+                    .format(label, rendered_cb)
             else:
                 list_item = u'<li title="%s">%s</li>' % (option_label, rendered_cb)
             output.append(list_item)

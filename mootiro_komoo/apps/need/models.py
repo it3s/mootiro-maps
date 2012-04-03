@@ -4,6 +4,7 @@ from __future__ import unicode_literals  # unicode by default
 
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext_lazy as _
 
 import reversion
 from lib.taggit.managers import TaggableManager
@@ -15,6 +16,18 @@ from komoo_map.models import GeoRefModel
 
 class NeedCategory(models.Model):
     name = models.CharField(max_length=64, blank=False)
+
+    # Adding categories to be translated.
+    # Probably there are a better way to do this.
+    _('Culture')
+    _('Education')
+    _('Environment')
+    _('Health')
+    _('Housing')
+    _('Local Economy')
+    _('Mobility')
+    _('Social Service')
+    _('Sport')
 
     def __unicode__(self):
         return self.name

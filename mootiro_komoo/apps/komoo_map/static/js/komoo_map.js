@@ -167,6 +167,7 @@ komoo.MapOptions = {
  */
 komoo.ServerFetchMapType = function (komooMap) {
     this.komooMap = komooMap;
+    this.addrLatLngCache = {};
     this.tileSize = new google.maps.Size(256, 256);
     this.maxZoom = 32;
     this.name = 'Server Data';
@@ -287,7 +288,10 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
  * @returns {String} The url params to get the data from server.
  */
 komoo.ServerFetchMapType.prototype.getAddrLatLng = function (coord, zoom) {
-    var serverFetchMapType = this;
+    var key = "x=" + coord.x + ",y=" + coord.y + ",z=" + zoom
+    if (this.addrLatLngCache[key]) {
+        return this.addrLatLngCache[key];
+    }
     var numTiles = 1 << zoom;
     var projection = this.komooMap.googleMap.getProjection();
     var point1 = new google.maps.Point(
@@ -298,7 +302,8 @@ komoo.ServerFetchMapType.prototype.getAddrLatLng = function (coord, zoom) {
             (coord.y + 1) * this.tileSize.width / numTiles);
     var ne = projection.fromPointToLatLng(point1);
     var sw = projection.fromPointToLatLng(point2);
-    return "bounds=" + ne.toUrlValue() + "," + sw.toUrlValue() + "&zoom=" + zoom;
+    this.addrLatLngCache[key] = "bounds=" + ne.toUrlValue() + "," + sw.toUrlValue() + "&zoom=" + zoom;
+    return this.addrLatLngCache[key];
 };
 
 
@@ -561,6 +566,18 @@ komoo.Map = function (element, options) {
     this.googleMap = new google.maps.Map(element, googleMapOptions);
     // Uses Tiles to get data from server.
     this.serverFetchMapType = new komoo.ServerFetchMapType(this);
+    /*
+    // April Fools Day Joke
+    var eightbitMapType = new google.maps.ImageMapType({
+        getTileUrl: function (coord, zoom) {
+            return "http://mt1.google.com/vt/lyrs=8bit,m@174000000&hl=en&src=app&s=Galil&" +
+            "z=" + zoom + "&x=" + coord.x + "&y=" + coord.y;
+        },
+        tileSize: new google.maps.Size(256, 256),
+        isPng: true
+    });
+    this.googleMap.overlayMapTypes.insertAt(0, eightbitMapType);
+    */
     this.googleMap.overlayMapTypes.insertAt(0, this.serverFetchMapType);
     this.initMarkerClusterer();
     // Create the simple version of toolbar.
@@ -1536,6 +1553,7 @@ komoo.Map.prototype.setStreetView = function (flag, position) {
  * Use the HTML5 GeoLocation to set the user location as the map center.
  */
 komoo.Map.prototype.goToUserLocation = function () {
+    var komooMap = this;
     var pos;
     if (google.loader.ClientLocation) { // Gets from google service
         pos = new google.maps.LatLng(google.loader.ClientLocation.latitude,
@@ -1545,10 +1563,10 @@ komoo.Map.prototype.goToUserLocation = function () {
         navigator.geolocation.getCurrentPosition(function(position) {
             pos = new google.maps.LatLng(position.coords.latitude,
                                              position.coords.longitude);
-            this.googleMap.setCenter(pos);
+            komooMap.googleMap.setCenter(pos);
         }, function () { // User denied the "HTML5" access so use the info from google
             if (pos) {
-                this.googleMap.setCenter(pos);
+                komooMap.googleMap.setCenter(pos);
             }
         });
     } else { // Dont support "HTML5" so use info from google
