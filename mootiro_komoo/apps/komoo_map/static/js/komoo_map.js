@@ -740,15 +740,11 @@ komoo.Map.prototype.getOverlayIcon = function (overlay, opt_highlighted, opt_zoo
 /**
  * Gets ovelay categories icons.
  * @param {google.maps.MVCObject} overlay
- * @param {boolean} [opt_highlighted=false]
- * @param {number} [opt_zoom=15]
  * @returns {String[]} The icons urls
  */
-komoo.Map.prototype.getCategoriesIcons = function (overlay, opt_highlighted, opt_zoom) {
+komoo.Map.prototype.getCategoriesIcons = function (overlay) {
     var icons = [];
-    var highlighted =  (opt_highlighted !== undefined) ? opt_highlighted : false;
-    var zoom = (opt_zoom !== undefined) ? opt_zoom : 15;
-    var url = '/static/img/' + ((zoom >= 15) ? 'near' : 'far') + '/' + (highlighted ? 'highlighted/' : '');
+    var url = '/static/need_categories/';
 
     $.each(overlay.properties.categories, function (key, category) {
         icons.push(url + category.name.toLowerCase() + '.png');
@@ -2112,7 +2108,7 @@ komoo.Map.prototype._createMainPanel = function () {
 
     // Only logged in users can add new items.
     if (!isAuthenticated) {
-        var submenuItem = addMenu.append($('<li>').addClass('map-menuitem').text('Please log in.'));
+        var submenuItem = addMenu.append($('<li>').addClass('map-menuitem').text(gettext('Please log in.')));
         submenuItem.bind('click', function (){
             window.location = '/user/login'; // FIXME: Hardcode is evil
         });
@@ -2153,6 +2149,7 @@ komoo.Map.prototype._createMainPanel = function () {
                 submenuItems.hide();
                 item.bind('click', function () {
                     if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
+                        komooMap.type = type.type;
                         submenuItems.trigger('click');
                     }
                 });
