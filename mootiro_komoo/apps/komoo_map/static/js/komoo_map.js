@@ -44,7 +44,8 @@ komoo.RegionTypes = [
         categories: [],
         title: gettext('Community'),
         tooltip: gettext('Add Community'),
-        color: '#ffdd22',
+        color: '#ffc166',
+        border: '#ff2e2e',
         icon: '/static/img/community.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: dutils.urls.resolve('new_community'),
@@ -57,6 +58,7 @@ komoo.RegionTypes = [
         title: gettext('Needs'),
         tooltip: gettext('Add Need'),
         color: '#f42c5e',
+        border: '#d31e52',
         icon: '/static/img/need.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
@@ -71,6 +73,7 @@ komoo.RegionTypes = [
         title: gettext('Organization'),
         tooltip: gettext('Add Organization'),
         color: '#3a61d6',
+        border: '#1f49b2',
         icon: '/static/img/organization.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: dutils.urls.resolve('organization_new',
@@ -83,6 +86,7 @@ komoo.RegionTypes = [
         title: gettext('Resource'),
         tooltip: gettext('Add Resource'),
         color: '#009fe3',
+        border: '#0282af',
         icon: '/static/img/resource.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
                        google.maps.drawing.OverlayType.POLYLINE,
@@ -96,7 +100,8 @@ komoo.RegionTypes = [
         categories: [],
         title: gettext('Funder'),
         tooltip: gettext('Add Funder'),
-        color: '#000',
+        color: '#aa9f18',
+        border: '#897d12',
         icon: '/static/img/funder.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: '',
@@ -135,10 +140,10 @@ komoo.MapOptions = {
     overlayOptions: {
         visible: true,
         fillColor: '#ff0',
-        fillOpacity: 0.45,
+        fillOpacity: 0.70,
         strokeColor: '#ff0',
         strokeWeight: 3,
-        strokeOpacity: 1
+        strokeOpacity: 0.70
     },
     googleMapOptions: {  // Our default options for Google Maps map object.
         center: new google.maps.LatLng(-23.55, -46.65),  // São Paulo, SP - Brasil
@@ -1137,10 +1142,11 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
         bounds = null;
         if (feature.properties && feature.properties.type && komooMap.overlayOptions[feature.properties.type]) {
             var color = komooMap.overlayOptions[feature.properties.type].color;
+            var border = komooMap.overlayOptions[feature.properties.type].border;
             polygonOptions.fillColor = color;
-            polygonOptions.strokeColor = color;
+            polygonOptions.strokeColor = border;
             polygonOptions.zIndex = feature.properties.type == 'community' ? 1 : 2
-            polylineOptions.strokeColor = color;
+            polylineOptions.strokeColor = border;
         } else {
             // TODO: set a default color
         }
@@ -1735,7 +1741,7 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
     var komooMap = this;
     if (overlay.getPaths) {
         // Removes stroke from polygons.
-        overlay.setOptions({strokeOpacity: 0});
+        overlay.setOptions({strokeWeight: 1});
     }
 
     google.maps.event.addListener(overlay, 'rightclick', function (e) {
@@ -1805,7 +1811,7 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
 
     google.maps.event.addListener(overlay, 'mousemove', function (e) {
         if (overlay.getPaths) {
-            overlay.setOptions({strokeOpacity: 0.8});
+            overlay.setOptions({strokeWeight: 2.5});
         }
 
         if (komooMap.infoWindow.overlay == overlay || komooMap.addPanel.is(':visible') ||
@@ -1823,7 +1829,7 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
 
     google.maps.event.addListener(overlay, 'mouseout', function (e) {
         if (overlay.getPaths) {
-            overlay.setOptions({strokeOpacity: 0});
+            overlay.setOptions({strokeWeight: 1});
         }
         clearTimeout(komooMap.infoWindow.timer);
         if (!komooMap.infoWindow.isMouseover) {
@@ -1962,8 +1968,9 @@ komoo.Map.prototype._initDrawingManager = function () {
             komooMap.drawingManager.setDrawingMode(komooMap.drawingMode_);
             if (komooMap.overlayOptions[komooMap.type]) {
                 var color = komooMap.overlayOptions[komooMap.type].color;
+                var border = komooMap.overlayOptions[komooMap.type].border;
                 komooMap.drawingManagerOptions.polygonOptions.fillColor = color;
-                komooMap.drawingManagerOptions.polygonOptions.strokeColor = color;
+                komooMap.drawingManagerOptions.polygonOptions.strokeColor = border;
             }
         }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.POLYGON);
 
@@ -1973,8 +1980,8 @@ komoo.Map.prototype._initDrawingManager = function () {
             komooMap.drawingMode_ = google.maps.drawing.OverlayType.POLYLINE;
             komooMap.drawingManager.setDrawingMode(komooMap.drawingMode_);
             if (komooMap.overlayOptions[komooMap.type]) {
-                var color = komooMap.overlayOptions[komooMap.type].color;
-                komooMap.drawingManagerOptions.polylineOptions.strokeColor = color;
+                var border = komooMap.overlayOptions[komooMap.type].border;
+                komooMap.drawingManagerOptions.polylineOptions.strokeColor = border;
             }
         }).attr('id', 'map-add-' + google.maps.drawing.OverlayType.POLYLINE);
 
