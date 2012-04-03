@@ -39,11 +39,12 @@ def community_tabs(obj=None):
 
 
 @register.inclusion_tag('main/geo_objects_listing_templatetag.html')
-def geo_objects_listing(arg1='', arg2=''):
-    """Usage: {% geo_objects_listing [show_categories] [switchable] %}"""
-    parsed_args = templatetag_args_parser(arg1, arg2)
+def geo_objects_listing(arg1='', arg2='', arg3=''):
+    """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] %}"""
+    parsed_args = templatetag_args_parser(arg1, arg2, arg3)
     show_categories = parsed_args.get('show_categories', False)
     switchable = parsed_args.get('switchable', False)
+    prefix = parsed_args.get('prefix', '')
 
     img = {
         'communities': Community.image,
@@ -58,7 +59,7 @@ def geo_objects_listing(arg1='', arg2=''):
 
     image_field = lambda image, image_off: \
         forms.BooleanField(
-            widget=ImageSwitch(image_tick=image, image_no_tick=image_off)
+            widget=ImageSwitch(image_tick=image, image_no_tick=image_off, prefix=prefix)
         )
 
     class GeoObjectsForm(forms.Form):
@@ -73,7 +74,8 @@ def geo_objects_listing(arg1='', arg2=''):
                 get_image_tick=NeedCategory.get_image,
                 get_image_no_tick=NeedCategory.get_image_off if switchable \
                                     else NeedCategory.get_image,
-                show_names=True
+                show_names=True,
+                prefix=prefix
             )
         )
 

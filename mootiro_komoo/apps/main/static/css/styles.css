@@ -234,23 +234,23 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     background: #fafafa;
     padding: 0;
 }
-#map-panel-filter div.img-holder {
+#map-panel div.img-holder {
     width: 35px;
     text-align: center;
     display: inline-block;
     vertical-align: middle;
 }
-#map-panel-filter ul.geo-objects-listing { margin: 10px 0 0 }
-#map-panel-filter #filter-cirle,
-#map-panel-filter ul.geo-objects-listing li {
+#map-panel ul.geo-objects-listing { margin: 10px 0 0 }
+#map-panel #filter-cirle,
+#map-panel ul.geo-objects-listing li {
     padding: 8px;
     border-bottom: 1px solid #e9e9e9;
 }
-#map-panel-filter ul.geo-objects-listing li:hover { background: #dceff4 }
-#map-panel-filter ul.geo-objects-listing li.sublist { padding: 0 }
+#map-panel ul.geo-objects-listing li:hover { background: #dceff4 }
+#map-panel ul.geo-objects-listing li.sublist { padding: 0 }
 #filter-form ul.geo-objects-listing li.sublist { display: none }
-#map-panel-filter ul.geo-objects-listing li.sublist:hover { background: transparent }
-#map-panel-filter ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
+#map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
+#map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
 #map-panel .panel { margin-top: 10px }
 #filter-submit {
     padding-left: 2em;

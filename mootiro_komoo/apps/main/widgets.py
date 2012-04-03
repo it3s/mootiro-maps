@@ -206,10 +206,11 @@ class ImageSwitch(forms.CheckboxInput):
     class Media:
         js = ('lib/jquery.imagetick.min.js',)
 
-    def __init__(self, image_tick, image_no_tick, attrs=None, *a, **kw):
+    def __init__(self, image_tick, image_no_tick, attrs=None, prefix='', *a, **kw):
         super(ImageSwitch, self).__init__(attrs, *a, **kw)
         self.image_tick = get_config("STATIC_URL", "") + image_tick
         self.image_no_tick = get_config("STATIC_URL", "") + image_no_tick
+        self.prefix = prefix + '_' if prefix else ''
 
     def render_js(self, checkbox_id):
         js = u"""
@@ -228,7 +229,7 @@ class ImageSwitch(forms.CheckboxInput):
         final_attrs = self.build_attrs(attrs, name=name)
 
         if not 'id' in self.attrs:
-            final_attrs['id'] = 'id_%s' % name
+            final_attrs['id'] = '%sid_%s' % (self.prefix, name)
 
         html = u"""
         %(checkbox)s
@@ -247,16 +248,18 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
     class Media:
         js = ('lib/jquery.imagetick.min.js',)
 
-    def __init__(self, get_image_tick, get_image_no_tick, show_names=False, i18n=True, *a, **kw):
+    def __init__(self, get_image_tick, get_image_no_tick, show_names=False, prefix='', i18n=True, *a, **kw):
         super(ImageSwitchMultiple, self).__init__(*a, **kw)
         self.get_image_tick = get_image_tick
         self.get_image_no_tick = get_image_no_tick
         self.show_names = show_names
         self.i18n = i18n
+        self.prefix = prefix + '_' if prefix else ''
 
     def render(self, name, value, attrs=None, choices=()):
         if value is None:
             value = []
+        name = '%s%s' % (self.prefix, name)
         has_id = attrs and 'id' in attrs
         final_attrs = self.build_attrs(attrs, name=name)
         output = [u'<ul>']
@@ -266,7 +269,7 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
             # If an ID attribute was given, add a numeric index as a suffix,
             # so that the checkboxes don't all have the same ID attribute.
             if has_id:
-                final_attrs = dict(final_attrs, id='%s_%s' % (attrs['id'], i))
+                final_attrs = dict(final_attrs, id='%s%s_%s' % (self.prefix, attrs['id'], i))
 
             image_tick = self.get_image_tick(option_label)
             image_no_tick = self.get_image_no_tick(option_label)
