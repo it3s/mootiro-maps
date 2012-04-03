@@ -15,6 +15,8 @@
 var komoo = {};
 
 
+komoo.CLEAN_MAPTYPE_ID = 'clean';
+
 
 
 /**
@@ -142,7 +144,12 @@ komoo.MapOptions = {
         center: new google.maps.LatLng(-23.55, -46.65),  // São Paulo, SP - Brasil
         zoom: 13,
         disableDefaultUI: false,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP,
+                         komoo.CLEAN_MAPTYPE_ID,
+                         google.maps.MapTypeId.HYBRID]
+        },
+        mapTypeId: komoo.CLEAN_MAPTYPE_ID,
         streetViewControl: false,
         scaleControl: true,
         panControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},
@@ -596,6 +603,49 @@ komoo.Map = function (element, options) {
     if (komoo.onMapReady) {
         komoo.onMapReady(this);
     }
+
+    this.cleanMapType = new google.maps.StyledMapType([
+        {
+            featureType: "poi",
+            elementType: "all",
+            stylers: [
+                {visibility: 'off'}
+            ]
+        },
+        {
+            featureType: "road",
+            elementType: "all",
+            stylers: [
+                {lightness: 70}
+            ]
+        },
+        {
+            featureType: "transit",
+            elementType: "all",
+            stylers: [
+                {lightness: 50}
+            ]
+        },
+        {
+            featureType: "water",
+            elementType: "all",
+            stylers: [
+                {lightness: 50}
+            ]
+        },
+        {
+            featureType: "administrative",
+            elementType: "labels",
+            stylers: [
+                {lightness: 30}
+            ]
+        }
+    ], {
+        name: "Clean"
+    });
+
+    this.googleMap.mapTypes.set(komoo.CLEAN_MAPTYPE_ID, this.cleanMapType);
+
 };
 
 
@@ -2036,10 +2086,20 @@ komoo.Map.prototype._createMainPanel = function () {
                 if (type.disabled) icon.css('opacity', '0.3');
                 item.append(icon);
             }
-            item.append($('<div>').text(type.title).attr('title', type.tooltip).css('padding-left', '30px'));
+            item.append($('<div>').addClass('title').text(type.title).attr('title', type.tooltip));
             var submenu = komooMap.addItems.clone(true).addClass('map-submenu');
-            var submenuItems = $('div', submenu);
-            submenuItems.removeClass('map-button').addClass('map-menuitem').hide(); // Change the class
+            $('div', submenu).hide();
+            $.each(type.overlayTypes, function (key, overlayType) {
+                $('#map-add-' + overlayType, submenu).addClass("enabled").show();
+            });
+            var submenuItems = $('div.enabled', submenu);
+            if (type.disabled) {
+                item.addClass('disabled');
+            }
+            item.css({
+                'position': 'relative'
+            });
+            submenuItems.removeClass('map-button').addClass('map-menuitem'); // Change the class
             submenuItems.bind('click', function () {
                 $('.map-submenu', addMenu).hide();
                 $('.map-panel-title', komooMap.addPanel).text($(this).text());
@@ -2047,28 +2107,29 @@ komoo.Map.prototype._createMainPanel = function () {
                 item.addClass('selected');
                 $('.map-menuitem:not(.selected)', komooMap.mainPanel).addClass('frozen');
             });
-            if (type.disabled) item.addClass('disabled');
-            item.css({
-                'position': 'relative'
-            });
+            if (submenuItems.length == 1) {
+                submenuItems.hide();
+                item.bind('click', function () {
+                    if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
+                        submenuItems.trigger('click');
+                    }
+                });
+            } else {
+                item.bind('click', function () {
+                    // Menu should not work if 'add' panel is visible.
+                    if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
+                        komooMap.type = type.type;
+                        submenu.css({'left': item.outerWidth() + 'px'});
+                        submenu.toggle();
+                    }
+                });
+            }
             submenu.css({
                 //'position': 'absolute',
                 'top': '0',
                 'z-index': '999999'
             });
             item.append(submenu);
-            item.click(
-                function () { // Over
-                    // Menu should not work if 'add' panel is visible.
-                    if (komooMap.addPanel.is(':hidden') && !$(this).hasClass('disabled')) {
-                        komooMap.type = type.type;
-                        submenu.css({'left': item.outerWidth() + 'px'});
-                        $.each(type.overlayTypes, function (key, overlayType) {
-                            $('#map-add-' + overlayType, submenu).show();
-                        });
-                        submenu.toggle();
-                    }
-                });
             addMenu.append(item);
             type.selector = item;
         });

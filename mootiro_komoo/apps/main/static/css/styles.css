@@ -357,14 +357,30 @@ body.community #map-panel-tabs {
     cursor: default;
     direction: ltr;
     position: relative;
-    padding: 10px;
-    background: white !important;
+    padding: 0;
     color: #000;
     white-space: nowrap;
+    border-bottom: 1px solid #e9e9e9;
+    background: #fafafa;
+    clear: both;
+}
+.map-menuitem .title,
+.map-submenu .map-menuitem {
+    padding: 12px;
+}
+.map-menuitem img {
+    padding: 10px 10px 0 15px;
+}
+.map-submenu .map-menuitem {
+    border-top: 1px solid #e9e9e9;
+    border-bottom: none;
+    padding-left: 30px;
+}
+.map-menuitem:hover {
+    background: #dceff4
 }
 .map-menuitem.disabled, .map-menuitem.disabled:hover {
     color: #aaa;
-    background: white !important;
 }
 #top #menu, #top #search { margin-left: 40px; }
 #top #search { margin-bottom: 0px; }
