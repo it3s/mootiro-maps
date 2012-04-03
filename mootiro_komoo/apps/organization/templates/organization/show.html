@@ -72,31 +72,26 @@
         <div class="block">
           <h4>{% trans 'Operation Field' %}</h4>
           <p>
+            <ul>
             {% for c in organization.categories.all %}
-                <span>
-                    {{ c.name }}
-                    {% if not forloop.last %}
-                    &nbsp;|&nbsp;
-                    {% endif %}
-                </span>
+                <li>
+                    {{ c.get_translated_name }}
+                </li>
             {% empty %}
                 {% trans 'No categories provided' %}
             {% endfor %}
-
+            </ul>
           </p>
 
           <h4>{% trans 'Audience' %}</h4>
           <p>
+            <ul>
             {% for t in organization.target_audiences.all %}
-                <span>
-                    {{ t.name }}
-                    {% if not forloop.last %}
-                    &nbsp;|&nbsp;
-                    {% endif %}
-                </span>
+                <li>{{ t.name }}</li>
             {% empty %}
                 {% trans 'No target audience provided' %}
             {% endfor %}
+            </ul>
           </p>
 
           <h4>{% trans 'Contact' %}</h4>

@@ -724,10 +724,10 @@ input[type=text], textarea{
     margin-right: 20px;
 }
 .organization-right-bar{
-    color: #000000;
-}
-.organization-right-bar p{
     color: #555555;
+}
+.organization-right-bar h4{
+    color: #000000;
 }
 .branch-link-btn{
     float: right;

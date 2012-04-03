@@ -125,7 +125,7 @@
     "model": "organization.organizationcategorytranslation",
     "pk": 6,
     "fields": {
-      "name": "Econômia Local",
+      "name": "Economia Local",
       "slug": "economia-local",
       "lang" : "pt-br",
       "category" : 6

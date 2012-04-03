@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from django.conf import settings
 
 from komoo_map.models import GeoRefModel
 from community.models import Community
@@ -67,6 +68,13 @@ class OrganizationCategory(models.Model):
     def save(self, *a, **kw):
         self.slug = slugify(self.name)
         return super(OrganizationCategory, self).save(*a, **kw)
+
+    def get_translated_name(self):
+        if settings.LANGUAGE_CODE == 'en-us':
+            return self.name
+        else:
+            return OrganizationCategoryTranslation.objects.get(
+                lang=settings.LANGUAGE_CODE, category=self).name
 
 
 class OrganizationCategoryTranslation(models.Model):
