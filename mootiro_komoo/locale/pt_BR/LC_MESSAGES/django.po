@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-03 16:07-0300\n"
+"POT-Creation-Date: 2012-04-03 16:48-0300\n"
 "PO-Revision-Date: 2012-04-03 16:12-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -93,14 +93,12 @@ msgstr "Selecione um ponto no mapa"
 msgid "Change parameters"
 msgstr "Alterar parâmetros"
 
-#: apps/komoo_resource/forms.py:39
-#: apps/organization/forms.py:96
+#: apps/komoo_resource/forms.py:39 apps/organization/forms.py:96
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
-#: apps/komoo_resource/forms.py:40
-#: apps/organization/forms.py:36
+#: apps/komoo_resource/forms.py:40 apps/organization/forms.py:36
 #: apps/organization/forms.py:97
 msgid "Description"
 msgstr "Descrição"
@@ -109,14 +107,12 @@ msgstr "Descrição"
 msgid "Kind"
 msgstr "Tipo"
 
-#: apps/komoo_resource/forms.py:42
-#: lib/taggit/managers.py:39
+#: apps/komoo_resource/forms.py:42 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/komoo_resource/forms.py:43
-#: apps/organization/forms.py:37
+#: apps/komoo_resource/forms.py:43 apps/organization/forms.py:37
 #: apps/organization/forms.py:98
 msgid "Community"
 msgstr "Comunidade"
@@ -140,8 +136,7 @@ msgstr "Novo Recurso"
 
 #: apps/komoo_resource/templates/resource/list.html:33
 #: apps/komoo_resource/templates/resource/show.html:73
-#: apps/need/templates/need/list.html:25
-#: apps/need/templates/need/view.html:58
+#: apps/need/templates/need/list.html:25 apps/need/templates/need/view.html:58
 #: apps/organization/templates/organization/list.html:34
 #: apps/organization/templates/organization/show.html:11
 msgid "at"
@@ -338,8 +333,7 @@ msgstr "Nova necessidade"
 msgid "target audience:"
 msgstr "público alvo:"
 
-#: apps/organization/forms.py:38
-#: apps/organization/forms.py:99
+#: apps/organization/forms.py:38 apps/organization/forms.py:99
 #: apps/organization/templates/organization/show.html:102
 msgid "Contact"
 msgstr "Contato"
@@ -348,8 +342,7 @@ msgstr "Contato"
 msgid "Target Audience"
 msgstr "Público Alvo"
 
-#: apps/organization/forms.py:40
-#: apps/organization/forms.py:101
+#: apps/organization/forms.py:40 apps/organization/forms.py:101
 msgid "Categories"
 msgstr "Categorias"
 
@@ -409,8 +402,7 @@ msgstr "Informações de contato não fornecidas"
 msgid "User not logged or anonymous"
 msgstr "Usuário não logado ou anônimo"
 
-#: lib/ajax_select/fields.py:97
-#: lib/ajax_select/fields.py:138
+#: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
 #: lib/ajax_select/fields.py:303
 msgid "Enter text to search."
 msgstr "Entre um texto para buscar."
@@ -465,8 +457,7 @@ msgstr "%(object)s classificado com %(tag)s"
 msgid "Object id"
 msgstr "Id do Objeto"
 
-#: lib/taggit/models.py:117
-#: lib/taggit/models.py:123
+#: lib/taggit/models.py:117 lib/taggit/models.py:123
 msgid "Content type"
 msgstr "Tipo do Conteúdo"
 

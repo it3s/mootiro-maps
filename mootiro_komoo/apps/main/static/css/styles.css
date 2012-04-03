@@ -721,3 +721,9 @@ input[type=text], textarea{
     -ms-transform:rotate(90deg);
     filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1.5);
 }
+textarea.markItUpEditor{
+    height: 250px;
+}
+#form_organization #div_id_contact .markItUpEditor{
+    height: 80px;
+}
