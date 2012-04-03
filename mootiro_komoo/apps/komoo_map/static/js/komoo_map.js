@@ -725,10 +725,14 @@ komoo.Map.prototype.getOverlayIcon = function (overlay, opt_highlighted, opt_zoo
     var url = '/static/img/' + ((zoom >= 15) ? 'near' : 'far') + '/' + (highlighted ? 'highlighted/' : '');
 
     if (overlay.properties.categories && overlay.properties.categories[0]) {
-        url += overlay.properties.categories[0].name.toLowerCase() + '.png';
+        url += overlay.properties.categories[0].name.toLowerCase();
+        if (overlay.properties.categories.length > 1) {
+            url += '-plus';
+        }
     } else {
-        url += overlay.properties.type + '.png';
+        url += overlay.properties.type;
     }
+    url += '.png';
     return url;
 };
 
@@ -866,7 +870,7 @@ komoo.Map.prototype.initMarkerClusterer = function () {
             gridSize: 20,
             maxZoom: 13,
             imagePath: '/static/img/cluster/communities',
-            imageSizes: [27, 33, 38, 43, 49]
+            imageSizes: [24, 29, 35, 41, 47]
         });
         /*
         google.maps.event.addListener(this.clusterer, 'mouseover', function (c) {
@@ -1741,7 +1745,7 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
     var komooMap = this;
     if (overlay.getPaths) {
         // Removes stroke from polygons.
-        overlay.setOptions({strokeWeight: 1});
+        overlay.setOptions({strokeWeight: 1.5});
     }
 
     google.maps.event.addListener(overlay, 'rightclick', function (e) {
@@ -1829,7 +1833,7 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
 
     google.maps.event.addListener(overlay, 'mouseout', function (e) {
         if (overlay.getPaths) {
-            overlay.setOptions({strokeWeight: 1});
+            overlay.setOptions({strokeWeight: 1.5});
         }
         clearTimeout(komooMap.infoWindow.timer);
         if (!komooMap.infoWindow.isMouseover) {
