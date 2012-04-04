@@ -1,0 +1,13 @@
+# -*- coding: utf-8 -*-
+from django import template
+from django.shortcuts import get_object_or_404
+from ..models import OrganizationBranch
+
+register = template.Library()
+
+
+@register.inclusion_tag('organization/branch_form.html', takes_context=True)
+def branch_edit_form(context, id):
+    branch = get_object_or_404(OrganizationBranch, pk=id)
+    info_id = 'id_info_{}'.format(id)
+    return dict(branch=branch, info_id=info_id)

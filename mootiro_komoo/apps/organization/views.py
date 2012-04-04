@@ -11,7 +11,7 @@ from django.shortcuts import (render_to_response, RequestContext,
 from django.db.models.query_utils import Q
 from django.utils import simplejson
 
-from annoying.decorators import render_to
+from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 
 from organization.models import Organization
@@ -134,10 +134,6 @@ class Edit(View):
             organization = Organization()
             geojson = '{}'
 
-        # form_org.initial['community'] = form_org.initial.get('community', [])
-        # if community and not community.id in form_org.initial['community']:
-            # form_org.initial['community'].append(community.id)
-
         tmplt = 'organization/edit.html'
         return render_to_response(tmplt,
             dict(form_org=form_org, community=community,
@@ -181,6 +177,12 @@ class Edit(View):
             return render_to_response(tmplt,
                 dict(form_org=form_org, community=community, geojson='{}'),
                 context_instance=RequestContext(request))
+
+
+@ajax_request
+def branch_edit(request):
+    # TODO implement me \o/
+    return {}
 
 
 def search_by_name(request):

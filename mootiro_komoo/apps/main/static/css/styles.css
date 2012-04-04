@@ -704,10 +704,16 @@ input[type=text], textarea{
 .branch-link.odd{
     background-color: rgb(220, 239, 244); /*rgb(166, 229, 238);*/
 }
+.branch-name{
+    font-weight: bold;
+    margin-left: 5px;
+}
 .branch-info{
     /*background-color: rgb(220, 239, 244); /*rgb(239, 248, 249);* /*/
     background-color: rgb(239, 248, 249);
     padding: 10px;
+    display: inline-block;
+    width:97%;
 }
 .branch-info.odd{
     background-color: rgb(220, 239, 244); /*rgb(166, 229, 238);*/
@@ -737,6 +743,21 @@ input[type=text], textarea{
     -o-transform:rotate(90deg);
     -ms-transform:rotate(90deg);
     filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1.5);
+}
+.branch-edit-btn{
+    float: right;
+}
+.form-branch-edit .markItUpEditor{
+    height: 120px;
+    width: 650px;
+    background-color: #ffffff;
+    margin-left: 20px;
+}
+.form-branch-edit .markItUpHeader{
+    margin-left: 20px;
+}
+.form-branch-edit-btn{
+    margin-left: 20px;
 }
 textarea.markItUpEditor{
     height: 250px;

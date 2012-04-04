@@ -6,6 +6,7 @@
 {% load comment_tags %}
 {% load vote_tags %}
 {% load markitup_tags %}
+{% load organization_tags %}
 
 {% block title %}
         {{ organization.name }} {% trans 'at' %} {{ resource.community.name }}
@@ -37,10 +38,6 @@
                 </a>
             </div>
 
-            <!-- <span>
-                {% trans 'created by' %} <a href="#">{% firstof organization.creator.get_full_name organization.creator.username 'someone' %}</a>
-                {% trans 'in' %} {{ organization.creation_date|date:"d/m/Y" }}
-            </span> -->
         </div>
 
         <div class="view-body">
@@ -52,12 +49,22 @@
                     <div class="branch-link {% cycle 'odd' '' %}">
 
                         <a href="#">
-                            <div>
+                            <div class="branch-name">
                                 {{ branch.name }}
                                 <span class="branch-link-btn"> > </span>
                             </div>
                         </a>
-                        <div class="branch-info {% cycle 'odd' '' %}" style="display: none;">{{ branch.info|render_markup }}</div>
+                        <div class="branch-info {% cycle 'odd' '' %}" style="display: none;">
+                            <div>
+                                <a href="#" class="branch-edit-btn btn">
+                                    <i class="icon-pencil"></i>
+                                </a>
+                            </div>
+                            {{ branch.info|render_markup }}
+                        </div>
+                        <div class="branch-form" style="display: none;">
+                            {% branch_edit_form branch.id %}
+                        </div>
                     </div>
                 {% endfor %}
                 {% endif %}
@@ -130,15 +137,32 @@
     <script type="text/javascript">
         $('.branch-link a').click(function(evt){
             evt.preventDefault();
-            $(this).parent().find('.branch-info').slideToggle();
 
             // toggle branch button
             var branch_btn = $(this).find('.branch-link-btn')
             if (branch_btn.is('.btn-active')){
                 branch_btn.removeClass('btn-active');
+                $(this).parent().find('.branch-info').slideUp();
+                $(this).parent().find('.branch-form').slideUp();
             } else {
                 branch_btn.addClass('btn-active');
+                $(this).parent().find('.branch-info').slideDown();
             }
-        })
+        });
+
+        $('.branch-edit-btn').click(function(evt){
+            var branch = $(this).parent().parent().parent()
+            var form = branch.find('.branch-form');
+            var info = branch.find('.branch-info');
+
+            info.fadeOut(400, function(){
+                form.fadeIn(400);
+            });
+        });
+
+        $('.form-branch-edit').submit(function(evt){
+            evt.preventDefault();
+            console.log('submit form!!!1');
+        });
     </script>
 {% endblock %}

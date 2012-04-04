@@ -14,6 +14,8 @@ urlpatterns = patterns('organization.views',
             name='organization_edit'),
     url(r'^organization/(?P<organization_slug>[a-zA-Z0-9-]+)/?$', 'show',
             name='view_organization'),
+    url(r'^organization/branch/edit/$', 'branch_edit',
+            name='branch_edit'),
 
     url(r'^organization/search_by_name/$', 'search_by_name',
             name='organization_search_by_name'),
