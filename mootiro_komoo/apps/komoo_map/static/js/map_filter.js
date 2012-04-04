@@ -49,10 +49,6 @@ $("#filter-slider-container .icon-ok").on("click", function () {
 });
 
 /******* List items behavior *******/
-/**
- * Receives an element
- * parent is a <li>
- */
 function geoObjectsSelection (parent, children) {
     var status = function (elem, value) {
         st = Boolean($("input", $(elem)).attr('checked'));
@@ -86,6 +82,7 @@ function geoObjectsSelection (parent, children) {
 
     if (children) {
         var $children = $(children);
+        var $selectedChildren = $children; // starts manipulating all subitems
 
         /* Children setup */
         $children.on("click", function (event) {
