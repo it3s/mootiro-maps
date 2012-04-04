@@ -42,11 +42,68 @@
 
         <div class="view-body">
             <div class="mark-down">{{ organization.description|render_markup }}</div>
+            <div class="organization-buttons row">
+                <div class="org-btn span3 selected" panel="branches-list">
+                    <img src="{{ STATIC_URL }}img/marker.png" />
+                    <div class="inline-block">
+                    {% blocktrans with organization.organizationbranch_set.count as num %}
+                        {{ num }} points on map
+                    {% endblocktrans %}
+                    </div>
+                </div>
+                <!-- <div class="org-btn span3">
+                    <img src="{{ STATIC_URL }}img/organization.png" />
+                    <div class="inline-block">
+                    {% blocktrans with 'X' as num %}
+                        supports {{ num }} organizations
+                    {% endblocktrans %}
+                    </div>
+                </div> -->
+                <div class="org-btn span3" panel="communities-list">
+                    <img src="{{ STATIC_URL }}img/community.png" />
+                    <div class="inline-block">
+                    {% blocktrans with organization.community.count as num %}
+                        on {{ num }} communities
+                    {% endblocktrans %}
+                    </div>
+                </div>
+                <!-- <div class="org-btn span3">
+                    <img src="{{ STATIC_URL }}img/need.png" />
+                    <div class="inline-block">
+                    {% blocktrans with 'Z' as num %}
+                        supported {{ num }} proposals
+                    {% endblocktrans %}
+                    </div>
+                </div>
+                <div class="org-btn span3">
+                    <img src="{{ STATIC_URL }}img/resource.png" />
+                    <div class="inline-block">
+                    {% blocktrans with 'X' as num %}
+                        supported {{ num }} resources
+                    {% endblocktrans %}
+                    <br>
+                    {% blocktrans with 'Y' as num %}
+                        offered {{ num }} resources
+                    {% endblocktrans %}
+                    </div>
+                </div>
+                <div class="org-btn span3">
+                    <img src="{{ STATIC_URL }}img/funding.png" />
+                    <div class="inline-block">
+                    {% blocktrans with 'X' as num %}
+                        realized {{ num }} investments
+                    {% endblocktrans %}
+                    <br>
+                    {% blocktrans with 'Y' as num %}
+                        received {{ num }} investments
+                    {% endblocktrans %}
+                    </div>
+                </div> -->
+            </div>
 
-            <div class="branches-list">
-                {% if organization.organizationbranch_set.all.count %}
+            <div class="org-info-panel branches-list">
                 {% for branch in organization.organizationbranch_set.all %}
-                    <div class="branch-link {% cycle 'odd' '' %}">
+                    <div class="branch-link org-info-div {% cycle 'odd' '' %}">
 
                         <a href="#">
                             <div class="branch-name">
@@ -54,7 +111,7 @@
                                 <span class="branch-link-btn"> > </span>
                             </div>
                         </a>
-                        <div class="branch-info {% cycle 'odd' '' %}" style="display: none;">
+                        <div class="branch-info org-info-div {% cycle 'odd' '' %}" style="display: none;">
                             <div>
                                 <a href="#" class="branch-edit-btn btn">
                                     <i class="icon-pencil"></i>
@@ -70,7 +127,16 @@
                         </div>
                     </div>
                 {% endfor %}
-                {% endif %}
+            </div>
+
+            <div class="org-info-panel communities-list" style="display: none;">
+                {% for com in organization.community.all %}
+                    <div class="org-info-div {% cycle 'odd' '' %}">
+                        <a href="/{{ com.slug }}/about/">{{ com.name }}</a>
+                    </div>
+                {% empty %}
+                    {% trans 'No communities bound to this organization'}
+                {% endfor %}
             </div>
         </div>
 
@@ -184,6 +250,14 @@
 
                 }, 'json'
             );
+        });
+
+        $('.org-btn').click(function(evt){
+            $('.org-btn.selected').removeClass('selected');
+            $('.org-info-panel').hide();
+            var $this = $(this);
+            $this.addClass('selected');
+            $('.' + $this.attr('panel')).fadeIn();
         });
     </script>
 {% endblock %}

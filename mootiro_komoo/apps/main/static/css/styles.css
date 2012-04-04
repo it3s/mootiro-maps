@@ -172,7 +172,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 }
 #top #menu li.selected a, #top #menu li:hover a { color: #fff }
 #top #menu li,
-.map-tab, .map-button {
+.map-tab, .map-button ,
+.organization-buttons .org-btn{
     border: 1px solid #c7c7c7;
 
     background-color: #ededed;
@@ -189,7 +190,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 #top #menu li:hover, #top #menu li.selected,
 /*.map-menuitem:hover,*/ .map-menuitem.selected,
 .map-tab:hover, .map-tab.selected,
-.map-button:hover, .map-button.selected {
+.map-button:hover, .map-button.selected,
+.organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected  {
     color: #fff;
     background-color: #3EBAC2;
     /* Generated from: http://gradients.glrzad.com/ */
@@ -695,33 +697,13 @@ input[type=text], textarea{
 }
 
 /* ====== Organization ======== */
-.branches-list {
+.org-info-panel {
     margin-top: 30px;
     margin-bottom: 20px;
-}
-.branch-link{
-    margin: 10px 0 10px 0;
-    /*background-color: rgb(239, 248, 249);*/
-    background-color: rgb(166, 229, 238);
-    padding: 10px 0;
-}
-.branch-link.odd{
-    background-color: rgb(220, 239, 244); /*rgb(166, 229, 238);*/
 }
 .branch-name{
     font-weight: bold;
     margin-left: 5px;
-}
-.branch-info{
-    /*background-color: rgb(220, 239, 244); */
-    /*background-color: rgb(239, 248, 249);*/
-    background-color: rgb(166, 229, 238);
-    padding: 10px;
-    display: inline-block;
-    width:97%;
-}
-.branch-info.odd{
-    background-color: rgb(220, 239, 244); /*rgb(166, 229, 238);*/
 }
 .organization-header{
     max-width: 500px;
@@ -769,4 +751,38 @@ textarea.markItUpEditor{
 }
 #form_organization #div_id_contact .markItUpEditor{
     height: 80px;
+}
+.organization-buttons{
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.org-btn{
+    padding: 10px;
+    border-radius: 7px;
+    width: 195px;
+    margin-top: 10px;
+    min-height: 36px;
+}
+.org-btn div{
+    max-width: 160px;
+    vertical-align:  bottom;
+}
+.org-btn img{
+    padding-right: 10px;
+    vertical-align: top;
+    padding-top: 6px;
+    max-width: 20px;
+    max-height: 20px;
+}
+.org-info-div{
+    background-color: rgb(166, 229, 238);
+    padding: 10px;
+    display: inline-block;
+    width:97%;
+    margin: 10px 0 10px 0;
+    border-radius: 7px;
+}
+.org-info-div.odd{
+    background-color: rgb(220, 239, 244);
 }

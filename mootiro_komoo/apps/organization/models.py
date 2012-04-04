@@ -38,6 +38,12 @@ class Organization(models.Model):
         """ pseudo-reverse query for retrieving Resource Files"""
         return UploadedFile.get_files_for(self)
 
+    @property
+    def branch_count(self):
+        count = OrganizationBranch.objects.filter(organization=self).count()
+        print '\n\nCOUNT: %s\n\n' % count
+        return count
+
     image = "img/organization.png"
     image_off = "img/organization-off.png"
 
