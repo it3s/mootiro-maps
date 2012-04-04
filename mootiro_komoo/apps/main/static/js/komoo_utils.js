@@ -178,3 +178,78 @@ function getUrlVars(){
         });
     };
 })(jQuery);
+
+/*
+ * Configure behaviour of geo objects listing
+ */
+function geoObjectsSelection (parent, children) {
+    var status = function (elem, value) {
+        st = Boolean($("input", $(elem)).attr('checked'));
+        if (value == undefined) return st;
+        if (value != st)
+            $("div.img-holder img", $(elem)).trigger("click");
+        return value;
+    };
+    /* Parent setup */
+    var $parent = $(parent);
+    var $selectedChildren = [];
+    $parent.on('click', function (event) {
+        $("div.img-holder img", $(this)).trigger("click");
+
+        /* Children behaviour related to parent */
+        if (children) {
+            if (status($parent) == false) {
+                // save selected children
+                $selectedChildren = $children.filter(function (index) {
+                    return status(this);
+                });
+            };
+            $.each($selectedChildren, function (index, child) {
+                $(child).click();
+            });
+        };
+    });
+    $("div.img-holder, .collapser", $parent).on('click', function (event) {
+        return false; // prevent event bubbling
+    });
+
+    if (children) {
+        var $children = $(children);
+        var $selectedChildren = $children; // starts manipulating all subitems
+
+        /* Children setup */
+        $children.on("click", function (event) {
+            $("div.img-holder img", $(this)).trigger("click");
+
+            /* Parent behaviour related to children */
+            var numSelectedChildrens = $children.filter(function (index) {
+                    return status(this);
+                }).length;
+            if (numSelectedChildrens == 0) {
+                status($parent, false);
+            } else {
+                status($parent, true);
+            };
+        });
+        $("div.img-holder, .collapser", $children).on('click', function (event) {
+            return false; // prevent event bubbling
+        });
+    }
+};
+function geoObjectsListing (ul) {
+    var $ul = $(ul);
+
+    /* Setup collapsers */
+    $(".collapser", $ul).on("click", function (event) {
+        var $this = $(this);
+        $("i", $this).toggleClass("icon-chevron-right icon-chevron-down");
+        $this.parent().next().toggle();
+    });
+
+    /* Setup behaviour */
+    geoObjectsSelection($("li.communities", $ul));
+    geoObjectsSelection($("li.needs", $ul), $("li.need.sublist ul li", $ul));
+    geoObjectsSelection($("li.organizations", $ul));
+    geoObjectsSelection($("li.resources", $ul));
+
+}

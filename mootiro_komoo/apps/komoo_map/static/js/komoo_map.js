@@ -96,13 +96,13 @@ komoo.RegionTypes = [
         disabled: false
     },
     {
-        type: 'funder',
+        type: 'investment',
         categories: [],
-        title: gettext('Funder'),
-        tooltip: gettext('Add Funder'),
+        title: gettext('Investment'),
+        tooltip: gettext('Add Investment'),
         color: '#aa9f18',
         border: '#897d12',
-        icon: '/static/img/funder.png',
+        icon: '/static/img/investment.png',
         overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
         formUrl: '',
         disabled: true
