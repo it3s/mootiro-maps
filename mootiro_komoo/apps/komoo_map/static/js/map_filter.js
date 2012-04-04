@@ -1,3 +1,8 @@
+/******* Configure geo objects listing behaviours *******/
+$(function () {
+    geoObjectsListing("#map-panel-filter ul.geo-objects-listing");
+});
+
 /******* Center *******/
 $("#set-center").click(function () {
     editor.selectCenter(parseInt($("#filter-radius").val()), function (latLng, circle) {
@@ -46,72 +51,6 @@ $("#filter-radius").focus(function () {
 });
 $("#filter-slider-container .icon-ok").on("click", function () {
     $("#filter-slider-container").hide();
-});
-
-/******* List items behavior *******/
-function geoObjectsSelection (parent, children) {
-    var status = function (elem, value) {
-        st = Boolean($("input", $(elem)).attr('checked'));
-        if (value == undefined) return st;
-        if (value != st)
-            $("div.img-holder img", $(elem)).trigger("click");
-        return value;
-    };
-    /* Parent setup */
-    var $parent = $(parent);
-    var $selectedChildren = [];
-    $parent.on('click', function (event) {
-        $("div.img-holder img", $(this)).trigger("click");
-
-        /* Children behaviour related to parent */
-        if (children) {
-            if (status($parent) == false) {
-                // save selected children
-                $selectedChildren = $children.filter(function (index) {
-                    return status(this);
-                });
-            };
-            $.each($selectedChildren, function (index, child) {
-                $(child).click();
-            });
-        };
-    });
-    $("div.img-holder, .collapser", $parent).on('click', function (event) {
-        return false; // prevent event bubbling
-    });
-
-    if (children) {
-        var $children = $(children);
-        var $selectedChildren = $children; // starts manipulating all subitems
-
-        /* Children setup */
-        $children.on("click", function (event) {
-            $("div.img-holder img", $(this)).trigger("click");
-
-            /* Parent behaviour related to children */
-            var numSelectedChildrens = $children.filter(function (index) {
-                    return status(this);
-                }).length;
-            if (numSelectedChildrens == 0) {
-                status($parent, false);
-            } else {
-                status($parent, true);
-            };
-        });
-        $("div.img-holder, .collapser", $children).on('click', function (event) {
-            return false; // prevent event bubbling
-        });
-    }
-
-};
-geoObjectsSelection("#map-panel-filter li.communities");
-geoObjectsSelection("#map-panel-filter li.needs", "li.need.sublist ul li");
-geoObjectsSelection("#map-panel-filter li.organizations");
-geoObjectsSelection("#map-panel-filter li.resources");
-
-$(".geo-objects-listing .needs .collapser").on("click", function (event) {
-    $(".need.sublist").toggle();
-    $("i", this).toggleClass("icon-chevron-right icon-chevron-down");
 });
 
 /******* Navigation *******/
