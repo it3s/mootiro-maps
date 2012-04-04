@@ -13,7 +13,7 @@
     {% if community %}
     <a href="{% url view_community community.slug %}">{% trans 'About the community' %}</a>
     {% else %}
-    <a href="{% url list_communities %}">{% trans 'Communities' %}<a/>
+    <a href="{% url list_communities %}">{% trans 'Communities' %}</a>
     {% endif %}
   </li>
 
@@ -41,5 +41,7 @@
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'funder' %} class='selected'{% endif %}>{% trans 'Funders' %}</li>
+  <li{% if selected_area == 'funder' %} class='selected'{% endif %}>
+    <a href="#">{% trans 'Funders' %}</a>
+  </li>
 </ul>

@@ -163,10 +163,10 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 }
 #top #menu li {
     margin: 0;
-    padding: 4px 20px;
     float: left;
 }
 #top #menu li a {
+    padding: 4px 20px;
     display: block;
     color: #000;
 }
