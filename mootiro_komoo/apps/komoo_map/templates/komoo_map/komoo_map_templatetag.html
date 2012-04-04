@@ -53,7 +53,9 @@
         {% if editable %}
         var mapOptions = {
           editable: true,
+          {% if panel %}
           autoSaveLocation: true,
+          {% endif %}
           googleMapOptions: {
             zoom: {{ zoom }},
             mapTypeId: google.maps.MapTypeId.ROADMAP,
