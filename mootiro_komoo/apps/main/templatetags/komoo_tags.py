@@ -103,3 +103,8 @@ def pagination(collection):
 def with_http(link):
     """prepends http:// to a given link if it does not already have"""
     return 'http://{link}'.format(link=link) if not 'http://' in link else link
+
+
+@register.filter
+def split(entry, splitter):
+    return entry.split(splitter)
