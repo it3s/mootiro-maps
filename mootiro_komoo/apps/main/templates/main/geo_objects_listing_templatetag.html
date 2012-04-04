@@ -4,11 +4,11 @@
 {% autoescape off %}
 <ul class="geo-objects-listing" style="display: block; clear: both;">
   <li class="communities">
-    <div class="img-holder">{{ form.communities }}</div>
+    <div class="img-holder" data-object-type="community">{{ form.communities }}</div>
     <span>{% trans "Communities" %}</span>
   </li>
   <li class="needs">
-    <div class="img-holder">{{ form.needs }}</div>
+    <div class="img-holder" data-object-type="need">{{ form.needs }}</div>
     <span>{% trans "Needs" %}</span>
     <div class="collapser"><i class="icon-chevron-right"></i></div>
   </li>
@@ -18,11 +18,11 @@
   </li>
   {% endif %}
   <li class="organizations">
-    <div class="img-holder">{{ form.organizations }}</div>
+    <div class="img-holder" data-object-type="organizationbranch">{{ form.organizations }}</div>
     <span>{% trans "Organizations" %}</span>
   </li>
   <li class="resources">
-    <div class="img-holder">{{ form.resources }}</div>
+    <div class="img-holder" data-object-type="resource">{{ form.resources }}</div>
     <span>{% trans "Resources" %}</span>
   </li>
 </ul>

@@ -1,6 +1,7 @@
 /******* Configure geo objects listing behaviours *******/
 $(function () {
     geoObjectsListing("#map-panel-filter ul.geo-objects-listing");
+    geoObjectsListing("#map-panel-layers ul.geo-objects-listing");
 });
 
 /******* Center *******/
@@ -102,3 +103,23 @@ $("#filter-results .sublist ul li").live("mouseover", function (event) {
 //     $("#filter-center").val("-23.561233,-46.74922");
 //     $("#filter-form").submit();
 // });
+
+/******* Layers *******/
+// Starts with all layers checked
+$("#map-panel-layers div.img-holder > img").trigger("click");
+$("#map-panel-layers div.img-holder input[type=checkbox]").attr("checked", "checked");
+
+$("#map-panel-layers > ul > li > div.img-holder > img").bind("click", function () {
+    var $this = $(this);
+    var $parent = $this.parent();
+    var objectType = $parent.attr("data-object-type");
+
+    if (objectType) {
+        // TODO: Get needs categories
+        if ($("input[type=checkbox]", $parent).attr("checked")) {
+            editor.showOverlaysByType(objectType);
+        } else {
+            editor.hideOverlaysByType(objectType);
+        }
+    }
+});

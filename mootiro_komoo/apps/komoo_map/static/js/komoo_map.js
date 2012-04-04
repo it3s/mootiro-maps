@@ -54,7 +54,7 @@ komoo.RegionTypes = [
     {
         type: 'need',
         categories: ['Education', 'Sport', 'Environment', 'Health', 'Housing',
-                     'Local Economy', 'Social Service'], // FIXME: Hardcode is evil
+                     'Culture', 'Local Economy', 'Social Service'], // FIXME: Hardcode is evil
         title: gettext('Needs'),
         tooltip: gettext('Add Need'),
         color: '#f42c5e',
@@ -500,6 +500,13 @@ komoo.MultiMarker.prototype.getIcon = function () {
 };
 
 
+komoo.MultiMarker.prototype.setVisible = function (flag) {
+    console.log('foi', this, flag);
+    for (var i=0; i<this.markers_.getLength(); i++) {
+        this.markers_.getAt(i).setVisible(flag);
+    }
+    this.visible_ = flag;
+};
 
 
 /** @namespace */
