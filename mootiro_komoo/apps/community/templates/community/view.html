@@ -26,15 +26,15 @@
 
   <div class="right-bar">
     <div id="map-preview">{% komoo_map geojson %}</div>
-    <a href="#">ver no mapa</a>
-    <!-- <div class="block">
+    <a href="{% url community_on_map community.slug %}">ver no mapa</a>
+    <div class="block">
       <h3>Nearby communities</h3>
       <ul>
-        <li>Commu 1</li>
-        <li>Commu 2</li>
-        <li>Commu 3</li>
+        {% for c in community.closest_communities %}
+        <li><a href="{% url view_community c.slug %}">{{ c.name }}</a></li>
+        {% endfor %}
       </ul>
-    </div> -->
+    </div>
   </div>
 
   <div class="view-extras">
