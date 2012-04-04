@@ -778,6 +778,7 @@ textarea.markItUpEditor{
     display: inline-block;
     width:97%;
     margin: 10px 0 10px 0;
+    border-radius: 7px;
 }
 .org-info-div.odd{
     background-color: rgb(220, 239, 244);
