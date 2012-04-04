@@ -60,7 +60,10 @@
                                     <i class="icon-pencil"></i>
                                 </a>
                             </div>
-                            {{ branch.info|render_markup }}
+                            <div class="entry">
+                                {{ branch.info|render_markup }}
+                            </div>
+
                         </div>
                         <div class="branch-form" style="display: none;">
                             {% branch_edit_form branch.id %}
@@ -162,7 +165,25 @@
 
         $('.form-branch-edit').submit(function(evt){
             evt.preventDefault();
-            console.log('submit form!!!1');
+            var that = this;
+            $.post($(this).attr('action'), $(this).serialize(),
+                function(data){
+                    if (data.success){
+                        console.dir(data);
+                        var branch = $(that).parent().parent();
+                        var form = branch.find('.branch-form');
+                        var info = branch.find('.branch-info');
+                        info.find('.entry').html(data.info);
+                        form.fadeOut(400, function(){
+                            info.fadeIn(400)
+                        });
+
+                    } else {
+                        console.log('Error!');
+                    }
+
+                }, 'json'
+            );
         });
     </script>
 {% endblock %}

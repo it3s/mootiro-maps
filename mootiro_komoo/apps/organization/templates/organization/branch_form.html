@@ -1,7 +1,8 @@
 {% load markitup_tags %}
 {% markitup_media %}
 
-<form class="form-branch-edit" action="{% url branch_edit %}">
+<form class="form-branch-edit" action="{% url branch_edit %}" method="post">
+    {% csrf_token %}
     <input type="hidden" name="id" value="{{ branch.id }}" >
     <textarea name="info" rows="4" cols="20" id="{{ info_id }}">{{branch.info}}</textarea>
     {% markitup_editor info_id %}

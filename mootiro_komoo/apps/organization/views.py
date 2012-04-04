@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import logging
 import json
+import markdown
 
 from django.views.generic import View
 from django.utils.decorators import method_decorator
@@ -10,11 +11,12 @@ from django.shortcuts import (render_to_response, RequestContext,
     get_object_or_404, HttpResponseRedirect, HttpResponse)
 from django.db.models.query_utils import Q
 from django.utils import simplejson
+from django.utils.html import escape
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 
-from organization.models import Organization
+from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganizationNew, FormBranchNew, \
                                FormOrganizationEdit
 from community.models import Community
@@ -181,8 +183,18 @@ class Edit(View):
 
 @ajax_request
 def branch_edit(request):
-    # TODO implement me \o/
-    return {}
+    logger.debug('acessing organization > branch_edit: POST={}'.format(
+            request.POST))
+
+    if request.POST.get('id', None) and request.POST.get('info', None):
+        branch = get_object_or_404(OrganizationBranch, pk=request.POST.get('id', ''))
+        branch.info = escape(request.POST['info'])
+        info = markdown.markdown(escape(request.POST['info']))
+        branch.save()
+        success = True
+    else:
+        success, info = False, ''
+    return dict(success=success, info=info)
 
 
 def search_by_name(request):
