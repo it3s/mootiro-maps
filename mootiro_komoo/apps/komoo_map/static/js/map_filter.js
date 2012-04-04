@@ -49,25 +49,68 @@ $("#filter-slider-container .icon-ok").on("click", function () {
 });
 
 /******* List items behavior *******/
-function hierarchicalImageSwitchSelection (parent, children) {
+/**
+ * Receives an element
+ * parent is a <li>
+ */
+function geoObjectsSelection (parent, children) {
+    var status = function (elem, value) {
+        st = Boolean($("input", $(elem)).attr('checked'));
+        if (value == undefined) return st;
+        if (value != st)
+            $("div.img-holder img", $(elem)).trigger("click");
+        return value;
+    };
+    /* Parent setup */
     var $parent = $(parent);
-    var $parent_img = $("#tick_img_" + $parent.attr("id"));
-    var $children = $(children);
+    var $selectedChildren = [];
+    $parent.on('click', function (event) {
+        $("div.img-holder img", $(this)).trigger("click");
 
-    $parent_img.on("click", function (event) {
-        var parent_status = Boolean($parent.attr('checked'));
-        $children.each(function (index, child) {
-            var $child = $(child);
-            var $child_img = $("#tick_img_" + $child.attr("id"));
-            var status = Boolean($child.attr('checked'));
-            if (status != parent_status) {
-                $child_img.click();
-            }
-        });
-
+        /* Children behaviour related to parent */
+        if (children) {
+            if (status($parent) == false) {
+                // save selected children
+                $selectedChildren = $children.filter(function (index) {
+                    return status(this);
+                });
+            };
+            $.each($selectedChildren, function (index, child) {
+                $(child).click();
+            });
+        };
     });
-}
-hierarchicalImageSwitchSelection("#id_needs", "input[name=need_categories]");
+    $("div.img-holder, .collapser", $parent).on('click', function (event) {
+        return false; // prevent event bubbling
+    });
+
+    if (children) {
+        var $children = $(children);
+
+        /* Children setup */
+        $children.on("click", function (event) {
+            $("div.img-holder img", $(this)).trigger("click");
+
+            /* Parent behaviour related to children */
+            var numSelectedChildrens = $children.filter(function (index) {
+                    return status(this);
+                }).length;
+            if (numSelectedChildrens == 0) {
+                status($parent, false);
+            } else {
+                status($parent, true);
+            };
+        });
+        $("div.img-holder, .collapser", $children).on('click', function (event) {
+            return false; // prevent event bubbling
+        });
+    }
+
+};
+geoObjectsSelection("#map-panel-filter li.communities");
+geoObjectsSelection("#map-panel-filter li.needs", "li.need.sublist ul li");
+geoObjectsSelection("#map-panel-filter li.organizations");
+geoObjectsSelection("#map-panel-filter li.resources");
 
 $(".geo-objects-listing .needs .collapser").on("click", function (event) {
     $(".need.sublist").toggle();
@@ -122,17 +165,4 @@ $("#filter-results .sublist ul li").live("mouseover", function (event) {
 //     $("#filter-form input[type=checkbox]").attr('checked', true);
 //     $("#filter-center").val("-23.561233,-46.74922");
 //     $("#filter-form").submit();
-// });
-
-// $(".geo-objects-listing li div.img-holder").on('click', function (event) {
-//     event.preventDefault();
-// });
-// $(".geo-objects-listing li").bind('click', function () {
-//     alert("li");
-//     // triggerHandler does not bubble the event
-//     var $img = $("img", this)
-//     console.log($img);
-//     var v = $img.triggerHandler('click');
-//     alert(v);
-//     return false;
 // });

@@ -204,7 +204,7 @@ class TaggitWidget(MultipleAutocompleteBase):
 class ImageSwitch(forms.CheckboxInput):
 
     class Media:
-        js = ('lib/jquery.imagetick.min.js',)
+        js = ('lib/jquery.imagetick.js',)
 
     def __init__(self, image_tick, image_no_tick, attrs=None, prefix='', *a, **kw):
         super(ImageSwitch, self).__init__(attrs, *a, **kw)
@@ -246,7 +246,7 @@ class ImageSwitch(forms.CheckboxInput):
 class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
 
     class Media:
-        js = ('lib/jquery.imagetick.min.js',)
+        js = ('lib/jquery.imagetick.js',)
 
     def __init__(self, get_image_tick, get_image_no_tick, show_names=False, prefix='', i18n=True, *a, **kw):
         super(ImageSwitchMultiple, self).__init__(*a, **kw)
