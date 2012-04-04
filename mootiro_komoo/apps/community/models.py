@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.contrib.gis.db import models
+from django.contrib.gis.measure import Distance
 from django.contrib.auth.models import User
 import reversion
 from main.utils import slugify
@@ -43,5 +44,11 @@ class Community(GeoRefModel):
     image = "img/community.png"
     image_off = "img/community-off.png"
 
+    # TODO: order communities from the database
+    def closest_communities(self, max=3, radius=Distance(km=25)):
+        center = self.geometry.centroid
+        unordered = Community.objects.filter(polys__distance_lte=(center, radius))
+        closest = sorted(unordered, key=lambda c: c.geometry.distance(center))
+        return closest[1:(max + 1)]
 
 reversion.register(Community)

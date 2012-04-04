@@ -431,6 +431,9 @@ body.community #map-panel-tabs {
     -moz-border-radius   : 6px;
     -webkit-border-radius: 6px;
 }
+.right-bar > .block ul li {
+    margin-bottom: 5px;
+}
 .right-bar > .block > .block {
     display: block;
     background-color: #dceff4;
