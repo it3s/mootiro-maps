@@ -619,7 +619,6 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
                     }).replace('//', '/');
             this.infoWindow.title.attr('href', url);
         }  else if (overlay.properties.type == 'organizationbranch') {
-            console.log(overlay.properties);
             url = dutils.urls.resolve('view_organization', {
                         community_slug: overlay.properties.community_slug || '',
                         organization_slug: overlay.properties.organization_slug || ''
