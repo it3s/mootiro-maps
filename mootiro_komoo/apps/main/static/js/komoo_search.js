@@ -17,16 +17,30 @@
                 console.dir(data);
                 search_results.find('div').remove();
 
-                lis = '';
-                data.result.forEach(function(obj){
-                    lis += '<li> &raquo;&nbsp;' + obj.name +  '</li>';
+                results_list = '';
+                $.each(data.result, function(key, val){
+                    if (val.length){
+                        results_list += '<li><div class="search-header">' +
+                            '<img src="/static/img/' + key + '.png" >' +
+                            '<div class="search-type-header" >' +
+                                key +
+                                '<span class="search-results-count"> ' +
+                                    val.length + ' ' + gettext("results") +
+                                '</span>' +
+                            '</div>' +
+                       ' </div><ul class="search-result-entries">';
+                        val.forEach(function(obj){
+                            results_list += '<li>' + obj.name +  '</li>';
+                        });
+                        results_list += '</ul></li>';
+                    }
                 });
 
                 search_results.append('' +
                     '<div>' +
-                        '<h3>' + gettext('Search Results:') + '</h3>' +
+                        '<span class="search-title button">' + gettext('Search Results:') + '</span>' +
                         '<ul>' +
-                            lis +
+                        results_list +
                         '</ul>' +
                     '</div>'
                 );
@@ -36,3 +50,16 @@
     });
 
 })(jQuery);
+// <span class="search-title button">Search Results: </span>
+// <ul>
+    // <li>
+        // <div class="search-header">
+            // <img src='/static/img/need.png'>
+            // <div class='inline-block'>Need</div>
+        // </div>
+        // <ul class="search-result-entries">
+            // <li>Uma entrada</li>
+            // <li>Outra</li>
+        // </ul>
+    // </li>
+// </ul>

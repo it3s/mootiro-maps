@@ -786,3 +786,33 @@ textarea.markItUpEditor{
 .org-info-div.odd{
     background-color: rgb(220, 239, 244);
 }
+.search-header{
+    background-color: #dceff4; ;
+    font-weight: bold;
+    padding: 10px;
+}
+.search-header img{
+    max-height: 50px;
+    max-width: 50px;
+    margin-right: 20px;
+}
+.search-result-entries li{
+    margin-left: 20px;
+    padding: 10px;
+    border-bottom: 1px solid rgb(233, 233, 233);
+}
+.search-title{
+    margin-top: 20px;
+    width: 100%;
+    font-weight: bolder;
+    font-size: 1.1em;
+}
+.search-type-header{
+    display: inline-block;
+    width: 80%;
+}
+.search-results-count{
+    float: right;
+    margin-right:10px;
+    font-weight: normal;
+}

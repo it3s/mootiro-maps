@@ -146,12 +146,13 @@ def komoo_search(request):
     logger.debug('Komoo_search: {}'.format(request.POST))
     term = request.POST.get('term', '')
 
-    result = []
+    result = {}
     for key, model in queries.iteritems():
+        result[key] = []
         for o in _query_model(model.get('model'), term, model.get('query_fields')):
             dados = {'id': o.id,
                      'name': getattr(o, model.get('repr')),
                      'model': key}
-            result.append(dados)
+            result[key].append(dados)
 
     return {'result': result}
