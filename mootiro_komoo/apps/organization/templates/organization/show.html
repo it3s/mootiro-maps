@@ -9,7 +9,11 @@
 {% load organization_tags %}
 
 {% block title %}
-        {{ organization.name }} {% trans 'at' %} {{ resource.community.name }}
+  {% if community %}
+    {% blocktrans with organization.name as organization and community as community %}{{organization}} at {{community}}{% endblocktrans %}
+  {% else %}
+    {{ organization.name }}
+  {% endif %}
 {% endblock %}
 
 {% block menu %} {% menu organization "organization" %} {% endblock %}
@@ -46,64 +50,48 @@
                 <div class="org-btn span3 selected" panel="branches-list">
                     <img src="{{ STATIC_URL }}img/marker.png" />
                     <div class="inline-block">
-                    {% blocktrans with organization.organizationbranch_set.count as num %}
-                        {{ num }} points on map
-                    {% endblocktrans %}
+                      {% blocktrans count num=organization.organizationbranch_set.count %}{{ num }} point on map{% plural %}{{ num }} points on map{% endblocktrans %}
                     </div>
                 </div>
                 <!-- <div class="org-btn span3">
                     <img src="{{ STATIC_URL }}img/organization.png" />
                     <div class="inline-block">
-                    {% blocktrans with 'X' as num %}
-                        supports {{ num }} organizations
-                    {% endblocktrans %}
+                      {% blocktrans count num=0 %}supports {{ num }} organization{% plural %}supports {{ num }} organizations{% endblocktrans %}
                     </div>
                 </div> -->
                 <div class="org-btn span3" panel="communities-list">
                     <img src="{{ STATIC_URL }}img/community.png" />
                     <div class="inline-block">
-                    {% blocktrans with organization.community.count as num %}
-                        on {{ num }} communities
-                    {% endblocktrans %}
+                      {% blocktrans count num=organization.community.count %}on {{ num }} community{% plural %}on {{ num }} communities{% endblocktrans %}
                     </div>
                 </div>
                 <!-- <div class="org-btn span3">
                     <img src="{{ STATIC_URL }}img/need.png" />
                     <div class="inline-block">
-                    {% blocktrans with 'Z' as num %}
-                        supported {{ num }} proposals
-                    {% endblocktrans %}
+                      {% blocktrans count num=0 %}supported {{ num }} proposal{% plural %}supported {{ num }} proposals{% endblocktrans %}
                     </div>
                 </div>
                 <div class="org-btn span3">
                     <img src="{{ STATIC_URL }}img/resource.png" />
                     <div class="inline-block">
-                    {% blocktrans with 'X' as num %}
-                        supported {{ num }} resources
-                    {% endblocktrans %}
+                      {% blocktrans count num=0 %}supported {{ num }} resource{% plural %}supported {{ num }} resources{% endblocktrans %}
                     <br>
-                    {% blocktrans with 'Y' as num %}
-                        offered {{ num }} resources
-                    {% endblocktrans %}
+                    {% blocktrans count num=0 %}offered {{ num }} resource{% plural %}offered {{ num }} resources{% endblocktrans %}
                     </div>
                 </div>
                 <div class="org-btn span3">
                     <img src="{{ STATIC_URL }}img/funding.png" />
                     <div class="inline-block">
-                    {% blocktrans with 'X' as num %}
-                        realized {{ num }} investments
-                    {% endblocktrans %}
+                      {% blocktrans count num=0 %}realized {{ num }} investment{% plural %}realized {{ num }} investments{% endblocktrans %}
                     <br>
-                    {% blocktrans with 'Y' as num %}
-                        received {{ num }} investments
-                    {% endblocktrans %}
+                    {% blocktrans count num=0 %}received {{ num }} investment{% plural %}received {{ num }} investments{% endblocktrans %}
                     </div>
                 </div> -->
             </div>
 
             <div class="org-info-panel branches-list">
                 {% for branch in organization.organizationbranch_set.all %}
-                    <div class="branch-link org-info-div {% cycle 'odd' '' %}">
+                <div class="branch-link org-info-div {% cycle 'odd' '' %}" data-branch-id="{{ branch.id }}">
 
                         <a href="#">
                             <div class="branch-name">
@@ -208,7 +196,7 @@
             evt.preventDefault();
 
             // toggle branch button
-            var branch_btn = $(this).find('.branch-link-btn')
+            var branch_btn = $(this).find('.branch-link-btn');
             if (branch_btn.is('.btn-active')){
                 branch_btn.removeClass('btn-active');
                 $(this).parent().find('.branch-info').slideUp();
@@ -217,6 +205,11 @@
                 branch_btn.addClass('btn-active');
                 $(this).parent().find('.branch-info').slideDown();
             }
+        });
+
+        $('.branch-link').bind('mouseover', function(evt){
+            var branch_id = $(this).attr('data-branch-id');
+            preview.centerOverlay('organizationbranch', branch_id);
         });
 
         $('.branch-edit-btn').click(function(evt){

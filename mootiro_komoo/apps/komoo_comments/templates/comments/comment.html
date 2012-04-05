@@ -4,7 +4,7 @@
     <div class="comment-header">
         <a href="#">{% firstof comment.author.get_full_name comment.author.username 'anonymous' %}</a>  {{ comment.pub_date|date:'d/m/Y, H:i'}}
         {% if comment.sub_comments > 0 %}
-            ({{ comment.sub_comments }} {% trans 'answer(s)' %})
+            {% blocktrans count num=comment.sub_comments %}{{ num }} answer{% plural %}{{ num }} answers{% endblocktrans %}
         {% endif %}
         <a href="#">{% trans 'Report' %}</a>
         <div class="comment-vote">
@@ -18,7 +18,9 @@
     <div class="comment-footer">
         <a class="btnShowForm" href="#">{% trans 'Reply' %}</a>
         {#% if comment.sub_comments > 0 %#}
-            <a class="link_subcomments" href="" comment-id="{{ comment.id }}">{{ comment.sub_comments }} {% trans 'answer(s)' %}</a>
+        <a class="link_subcomments" href="" comment-id="{{ comment.id }}">
+          {% blocktrans count num=comment.sub_comments %}{{ num }} answer{% plural %}{{ num }} answers{% endblocktrans %}
+        </a>
         {#% endif %#}
         <div class='comment-form'>
             <form method='post' class='stacked-form' action='/comments/add/' >
