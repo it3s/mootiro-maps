@@ -9,7 +9,7 @@ under version control, and specializes it for staging environment
 from __future__ import unicode_literals  # unicode by default
 from common import *
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
@@ -34,7 +34,7 @@ TIME_ZONE = None  # 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'acwAJKSHKJSHKJS$%#%$#!!LKAJKSMLASMLMKAmkmlalkams'
