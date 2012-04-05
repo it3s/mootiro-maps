@@ -37,4 +37,4 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
 
     return dict(editable=editable, width=width, height=height, zoom=zoom,
             panel=panel, lazy=lazy, geojson=geojson, edit_button=edit_button,
-            STATIC_URL=settings.STATIC_URL)
+            STATIC_URL=settings.STATIC_URL, LANGUAGE_CODE=settings.LANGUAGE_CODE)

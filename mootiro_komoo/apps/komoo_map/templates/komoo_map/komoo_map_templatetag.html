@@ -2,12 +2,12 @@
 {% block api_js %}
   <!-- Google Maps API javascript -->
   <!-- FIXME: Dont load twice -->
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing&language={{ LANGUAGE_CODE }}"></script>
   <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-  <script type="text/javascript" src="{{STATIC_URL}}/js/infobox_packed.js"></script>
-  <script type="text/javascript" src="{{STATIC_URL}}/js/markerclusterer_packed.js"></script>
-  <script type="text/javascript" src="{{STATIC_URL}}/js/multimarker.js"></script>
-  <script type="text/javascript" src="{{STATIC_URL}}/js/komoo_map.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}/js/infobox_packed.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}/js/markerclusterer_packed.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}/js/multimarker.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}/js/komoo_map.js"></script>
 {% endblock %}
 {% block html %}
   <!-- HTML map container -->

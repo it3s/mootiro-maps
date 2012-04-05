@@ -1,0 +1,191 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: MootiroMap 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-05 19:53-0300\n"
+"PO-Revision-Date: 2012-04-05 19:51-0300\n"
+"Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
+"Language-Team: it3s team <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: apps/komoo_map/static/js/komoo_map.js:44
+msgid "Community"
+msgstr "Comunidade"
+
+#: apps/komoo_map/static/js/komoo_map.js:45
+msgid "Add Community"
+msgstr "Adicionar comunidade"
+
+#: apps/komoo_map/static/js/komoo_map.js:57
+msgid "Need"
+msgstr "Necessidade"
+
+#: apps/komoo_map/static/js/komoo_map.js:58
+msgid "Add Need"
+msgstr "Adicionar necessidade"
+
+#: apps/komoo_map/static/js/komoo_map.js:72
+msgid "Organization"
+msgstr "Organização"
+
+#: apps/komoo_map/static/js/komoo_map.js:73
+msgid "Add Organization"
+msgstr "Adicionar organização"
+
+#: apps/komoo_map/static/js/komoo_map.js:85
+msgid "Resource"
+msgstr "Recurso"
+
+#: apps/komoo_map/static/js/komoo_map.js:86
+msgid "Add Resource"
+msgstr "Adicionar recurso"
+
+#: apps/komoo_map/static/js/komoo_map.js:100
+msgid "Investment"
+msgstr "Investimento"
+
+#: apps/komoo_map/static/js/komoo_map.js:101
+msgid "Add Investment"
+msgstr "Adicionar Investimento"
+
+#: apps/komoo_map/static/js/komoo_map.js:453
+msgid "Clean"
+msgstr "Limpo"
+
+#: apps/komoo_map/static/js/komoo_map.js:608
+#, perl-format
+msgid "%s resident"
+msgid_plural "%s residents"
+msgstr[0] "%s habitante"
+msgstr[1] "%s habitantes"
+
+#: apps/komoo_map/static/js/komoo_map.js:1511
+msgid "Edit"
+msgstr "Editar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1752
+msgid "Add shape"
+msgstr "Adicionar área"
+
+#: apps/komoo_map/static/js/komoo_map.js:1752
+msgid "Draw a shape"
+msgstr "Desenhar uma área"
+
+#: apps/komoo_map/static/js/komoo_map.js:1765
+msgid "Add line"
+msgstr "Adicionar linha"
+
+#: apps/komoo_map/static/js/komoo_map.js:1765
+msgid "Draw a line"
+msgstr "Desenhar uma linha"
+
+#: apps/komoo_map/static/js/komoo_map.js:1776
+msgid "Add point"
+msgstr "Adicionar ponto"
+
+#: apps/komoo_map/static/js/komoo_map.js:1776
+msgid "Add a marker"
+msgstr "Adicionar um marcador"
+
+#: apps/komoo_map/static/js/komoo_map.js:1783
+msgid "Add new..."
+msgstr "Adicionar..."
+
+#: apps/komoo_map/static/js/komoo_map.js:1787
+#: apps/komoo_map/static/js/komoo_map.js:1894
+msgid "Add"
+msgstr "Adicionar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1787
+msgid "Add another region"
+msgstr "Adicionar outra região"
+
+#: apps/komoo_map/static/js/komoo_map.js:1799
+msgid "Cut out"
+msgstr "Cortar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1799
+msgid "Cut out a hole from a region"
+msgstr "Adicionar um buraco a região"
+
+#: apps/komoo_map/static/js/komoo_map.js:1811
+msgid "Delete"
+msgstr "Apagar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1811
+msgid "Delete a region"
+msgstr "Apagar uma região"
+
+#: apps/komoo_map/static/js/komoo_map.js:1893
+msgid "Filter"
+msgstr "Filtrar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1898
+msgid "Please log in."
+msgstr "Por favor, entre no sistema."
+
+#: apps/komoo_map/static/js/komoo_map.js:1990
+msgid "Title"
+msgstr "Título"
+
+#: apps/komoo_map/static/js/komoo_map.js:1992
+msgid "Finish"
+msgstr "Concluir"
+
+#: apps/komoo_map/static/js/komoo_map.js:1993
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: apps/main/static/js/komoo_search.js:8
+msgid "Communities"
+msgstr "Comunidades"
+
+#: apps/main/static/js/komoo_search.js:9
+msgid "Needs"
+msgstr "Necessidades"
+
+#: apps/main/static/js/komoo_search.js:10
+msgid "Organizations"
+msgstr "Organizações"
+
+#: apps/main/static/js/komoo_search.js:11
+msgid "Resources"
+msgstr "Recursos"
+
+#: apps/main/static/js/komoo_search.js:12
+msgid "Investments"
+msgstr "Investimentos"
+
+#: apps/main/static/js/komoo_search.js:36
+#, perl-format
+msgid "%s result"
+msgid_plural "%s results"
+msgstr[0] "%s resultado"
+msgstr[1] "%s resultados"
+
+#: apps/main/static/js/komoo_search.js:53
+msgid "No results found!"
+msgstr "Nenhum resultado encontrado!"
+
+#: apps/main/static/js/komoo_search.js:58
+msgid "Search Results:"
+msgstr "Resultados da Busca:"
+
+#: apps/vote/static/js/vote.js:38
+msgid "error : "
+msgstr "erro: "
+
+#~ msgid "Funder"
+#~ msgstr "Financiador"
+
+#~ msgid "Add Funder"
+#~ msgstr "Adicionar financiador"

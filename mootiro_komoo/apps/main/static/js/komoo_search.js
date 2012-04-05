@@ -4,6 +4,14 @@
         search_results = $('#search-results');
         csrftoken= getCookie('csrftoken');
 
+    var titles = {
+        'community': gettext('Communities'),
+        'need': gettext('Needs'),
+        'organization': gettext('Organizations'),
+        'resource': gettext('Resources'),
+        'investiment': gettext('Investments')
+    };
+
     form_search.submit(function(evt){
         evt.preventDefault();
 
@@ -22,10 +30,12 @@
                         results_list += '<li><div class="search-header">' +
                             '<img src="/static/img/' + key + '.png" >' +
                             '<div class="search-type-header" >' +
-                                key +
+                                titles[key] +
                                 '<span class="search-results-count"> ' +
-                                    val.length + ' ' +
-                                    ngettext("result", "results", val.length) +
+                                    interpolate(
+                                        ngettext("%s result", "%s results", val.length),
+                                        [val.length]
+                                    ) +
                                 '</span>' +
                             '</div>' +
                        ' </div><ul class="search-result-entries">';

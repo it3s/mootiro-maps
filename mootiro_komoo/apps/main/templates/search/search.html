@@ -1,8 +1,9 @@
 {% extends 'global.html' %}
+{% load i18n %}
 {% load highlight %}
 
 {% block content %}
-    <h2>Search</h2>
+<h2>{% trans 'Search' %}</h2>
 
     <form method="get" action=".">
         <table>
@@ -10,7 +11,7 @@
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <input type="submit" value="Search">
+                  <input type="submit" value="{% trans 'Search' %}">
                 </td>
             </tr>
         </table>

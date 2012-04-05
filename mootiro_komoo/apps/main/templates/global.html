@@ -1,3 +1,4 @@
+{% load i18n %}
 {% load komoo_tags %}
 
 <!DOCTYPE html>
@@ -32,7 +33,7 @@
 
           <form id="search" action=".">
             <input type="text" id="search-bar"/>
-            <input type="submit" id="search-button" class="button" value="Search"/>
+            <input type="submit" id="search-button" class="button" value="{% trans 'Search' %}"/>
           </form>
           {% block menu %}
             {% with obj=community selected_area="" %}

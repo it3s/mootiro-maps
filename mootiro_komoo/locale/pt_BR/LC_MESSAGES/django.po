@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-05 18:03-0300\n"
-"PO-Revision-Date: 2012-04-05 18:04-0300\n"
+"POT-Creation-Date: 2012-04-05 19:53-0300\n"
+"PO-Revision-Date: 2012-04-05 19:54-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
 "Language: \n"
@@ -185,6 +185,12 @@ msgstr "dados inválidos"
 #: apps/main/widgets.py:309
 msgid "You can type above or select here"
 msgstr "Você pode digitar acima ou selecionar algum aqui"
+
+#: apps/main/templates/global.html:36
+#: apps/main/templates/search/search.html:6
+#: apps/main/templates/search/search.html:14
+msgid "Search"
+msgstr "Buscar"
 
 #: apps/main/templates/main/filter_results.html:6
 msgid "Search results for this radius"
