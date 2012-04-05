@@ -77,6 +77,10 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             if hasattr(obj, 'population'):
                 feature['properties']['population'] = obj.population
 
+            if type_ == 'organizationbranch':
+                feature['properties']['organization_slug'] = obj.organization.slug
+                feature['properties']['organization_name'] = obj.organization.name
+
             geojson['features'].append(feature)
 
     if convert:

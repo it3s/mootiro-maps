@@ -614,16 +614,18 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
             this.infoWindow.body.html('<ul><li>' + interpolate(msg, [overlay.properties.population]) + '</li></ul>');
         } else if (overlay.properties.type == 'resource') {
             url = dutils.urls.resolve('view_resource', {
-                        community_slug: overlay.properties.community_slug,
+                        community_slug: overlay.properties.community_slug || '',
                         id: overlay.properties.id
                     }).replace('//', '/');
             this.infoWindow.title.attr('href', url);
         }  else if (overlay.properties.type == 'organizationbranch') {
+            console.log(overlay.properties);
             url = dutils.urls.resolve('view_organization', {
-                        community_slug: overlay.properties.community_slug,
-                        organization_slug: overlay.properties.slug
+                        community_slug: overlay.properties.community_slug || '',
+                        organization_slug: overlay.properties.organization_slug || ''
                     }).replace('//', '/');
             this.infoWindow.title.attr('href', url);
+            this.infoWindow.title.text(overlay.properties.organization_name + ' - ' + overlay.properties.name);
         }  else {
             var slugname = overlay.properties.type + '_slug';
             var params = {'community_slug': overlay.properties.community_slug};
