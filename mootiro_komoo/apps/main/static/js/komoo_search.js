@@ -33,6 +33,8 @@
                             results_list += '<li><a href="' +  obj.link + '" >' + obj.name +  '</a></li>';
                         });
                         results_list += '</ul></li>';
+                    } else {
+                        results_list = '<div class="search-no-results">' + gettext('No results found!') + '</div>';
                     }
                 });
 

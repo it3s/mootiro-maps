@@ -816,3 +816,8 @@ textarea.markItUpEditor{
     margin-right:10px;
     font-weight: normal;
 }
+.search-no-results{
+    margin-left: 20px;
+    padding: 10px;
+    border-bottom: 1px solid rgb(233, 233, 233);
+}

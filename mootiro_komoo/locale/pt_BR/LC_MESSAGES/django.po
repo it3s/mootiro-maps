@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 18:54-0300\n"
+"POT-Creation-Date: 2012-04-05 14:12-0300\n"
 "PO-Revision-Date: 2012-04-04 15:44-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -386,6 +386,7 @@ msgid "Organization Logo:"
 msgstr "Logo da Organização:"
 
 #: apps/organization/templates/organization/show.html:49
+#, python-format
 msgid ""
 "\n"
 "                        %(num)s points on map\n"
@@ -418,6 +419,7 @@ msgstr ""
 "                    "
 
 #: apps/organization/templates/organization/show.html:73
+#, python-format
 msgid ""
 "\n"
 "                        supported %(num)s proposals\n"
