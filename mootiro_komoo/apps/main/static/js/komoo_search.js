@@ -30,7 +30,7 @@
                             '</div>' +
                        ' </div><ul class="search-result-entries">';
                         val.forEach(function(obj){
-                            results_list += '<li>' + obj.name +  '</li>';
+                            results_list += '<li><a href="' +  obj.link + '" >' + obj.name +  '</a></li>';
                         });
                         results_list += '</ul></li>';
                     }

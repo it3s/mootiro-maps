@@ -9,6 +9,7 @@ from django.contrib.gis.geos import Polygon, Point
 from django.contrib.gis.measure import Distance
 from django.db.models import Q
 from django.http import HttpResponse
+from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
 
@@ -110,7 +111,9 @@ queries = {
             'slug',
             'description'
         ],
-        'repr': 'name'
+        'repr': 'name',
+        'link': lambda o: reverse('view_organization',
+                                  kwargs={'organization_slug': o.slug})
     },
     'resource': {
         'model': Resource,
@@ -118,7 +121,9 @@ queries = {
             'name',
             'description'
         ],
-        'repr': 'name'
+        'repr': 'name',
+        'link': lambda o: reverse('view_resource',
+                                  kwargs={'id': o.id})
     },
     'need': {
         'model': Need,
@@ -127,16 +132,20 @@ queries = {
             'slug',
             'description'
         ],
-        'repr': 'title'
+        'repr': 'title',
+        'link': lambda o: reverse('view_need',
+                                  kwargs={'need_slug': o.slug})
     },
-    'organization': {
-        'model': Organization,
+    'community': {
+        'model': Community,
         'query_fields': [
             'name',
             'slug',
             'description'
         ],
-        'repr': 'name'
+        'repr': 'name',
+        'link': lambda o: reverse('view_community',
+                                  kwargs={'community_slug': o.slug})
     }
 }
 
@@ -152,6 +161,7 @@ def komoo_search(request):
         for o in _query_model(model.get('model'), term, model.get('query_fields')):
             dados = {'id': o.id,
                      'name': getattr(o, model.get('repr')),
+                     'link': model.get('link')(o),
                      'model': key}
             result[key].append(dados)
 
