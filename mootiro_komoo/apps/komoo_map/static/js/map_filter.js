@@ -108,18 +108,40 @@ $("#filter-results .sublist ul li").live("mouseover", function (event) {
 // Starts with all layers checked
 $("#map-panel-layers div.img-holder > img").trigger("click");
 $("#map-panel-layers div.img-holder input[type=checkbox]").attr("checked", "checked");
+$("#map-panel-layers .need.sublist").hide();
 
-$("#map-panel-layers > ul > li > div.img-holder > img").bind("click", function () {
+$("#map-panel-layers > ul > li:not(.needs) > div.img-holder > img").bind("click", function () {
     var $this = $(this);
     var $parent = $this.parent();
     var objectType = $parent.attr("data-object-type");
 
     if (objectType) {
-        // TODO: Get needs categories
         if ($("input[type=checkbox]", $parent).attr("checked")) {
             editor.showOverlaysByType(objectType);
         } else {
             editor.hideOverlaysByType(objectType);
         }
     }
+});
+
+$("#map-panel-layers > ul > li.sublist > ul > li > div.img-holder > img").bind("click", function () {
+    var $this = $(this);
+    var $parent = $this.parent();
+    var objectType = "need";
+    var category = $parent.attr("data-original-label");
+    var enabledCategories = [];
+    $.each($("input:checked", $parent.parent().parent()).parent(), function (key, element) {
+        var e = $(element);
+        if (e) {
+            enabledCategories.push(e.attr("data-original-label"));
+        }
+    });
+
+    if ($("input[type=checkbox]", $parent).attr("checked")) {
+        editor.showOverlaysByType(objectType, [category]);
+    } else {
+        editor.hideOverlaysByType(objectType, [category]);
+    }
+
+    editor.showOverlaysByType(objectType, enabledCategories);
 });

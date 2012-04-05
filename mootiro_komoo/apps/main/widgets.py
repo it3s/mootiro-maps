@@ -280,8 +280,8 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
             option_label = conditional_escape(force_unicode(option_label))
             if self.show_names:
                 label = _(option_label) if self.i18n else option_label
-                list_item = u'<li><div title="{0}" class="img-holder" data-category="{2}">{1}</div><span>{0}</span></li>' \
-                    .format(label, rendered_cb, option_label.lower())
+                list_item = u'<li><div title="{0}" class="img-holder" data-original-label="{2}">{1}</div><span>{0}</span></li>' \
+                    .format(label, rendered_cb, option_label)
             else:
                 list_item = u'<li title="%s">%s</li>' % (option_label, rendered_cb)
             output.append(list_item)
