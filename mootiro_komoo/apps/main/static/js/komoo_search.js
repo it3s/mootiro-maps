@@ -16,6 +16,7 @@
                 search_results.find('div').remove();
 
                 results_list = '';
+                has_results = false;
                 $.each(data.result, function(key, val){
                     if (val.length){
                         results_list += '<li><div class="search-header">' +
@@ -32,10 +33,15 @@
                             results_list += '<li><a href="' +  obj.link + '" >' + obj.name +  '</a></li>';
                         });
                         results_list += '</ul></li>';
+                        has_results |= true;
                     } else {
-                        results_list = '<div class="search-no-results">' + gettext('No results found!') + '</div>';
+                        // results_list = '<div class="search-no-results">' + gettext('No results found!') + '</div>';
+                        has_results |= false;
                     }
                 });
+                if (! has_results) {
+                    results_list = '<div class="search-no-results">' + gettext('No results found!') + '</div>';
+                }
 
                 search_results.append('' +
                     '<div>' +
