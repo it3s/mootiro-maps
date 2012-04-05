@@ -2100,11 +2100,50 @@ komoo.Map.prototype.selectCenter = function (opt_radius, opt_callBack) {
 };
 
 
+/**
+ * @param {string} overlayType
+ * @param {number} id
+ * @returns {overlay}
+ */
 komoo.Map.prototype.getOverlay = function (overlayType, id) {
     return this.loadedOverlays[overlayType + '_' + id];
 };
 
 
+/**
+ * @param {overlay | string} overlay
+ * @param {number} id
+ * @returns {boolean}
+ */
+komoo.Map.prototype.centerOverlay = function (overlay, id) {
+    var overlayType;
+    var overlayCenter;
+    if (typeof overlay == 'string') {
+        overlayType = overlay;
+        overlay = this.getOverlay(overlayType, id);
+    }
+    if (!overlay) {
+        return false;
+    }
+
+    if (overlay.getCenter) {
+        overlayCenter = overlay.getCenter();
+    } else if (overlay.getPosition) {
+        overlayCenter = overlay.getPosition();
+    } else if (overlay.bounds) {
+        overlayCenter = overlay.bounds.getCenter();
+    }
+
+    this.googleMap.panTo(overlayCenter);
+    return true;
+}
+
+
+/**
+ * @param {Overlay | string} overlay
+ * @param {number} id
+ * @returns {boolean}
+ */
 komoo.Map.prototype.highlightOverlay = function (overlay, id) {
     var overlayType;
     var overlayCenter;
