@@ -103,6 +103,7 @@ def _query_model(model, term, fields):
         query |= Q(**query_field)
     return model.objects.filter(query)
 
+
 queries = {
     'organization': {
         'model': Organization,
@@ -152,6 +153,11 @@ queries = {
 
 @ajax_request
 def komoo_search(request):
+    """
+    search view for the index page.
+    It uses the parameters from the 'queries' dict to perform specific
+    queries on the database
+    """
     logger.debug('Komoo_search: {}'.format(request.POST))
     term = request.POST.get('term', '')
 

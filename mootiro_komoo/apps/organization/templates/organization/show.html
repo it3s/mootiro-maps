@@ -235,7 +235,6 @@
             $.post($(this).attr('action'), $(this).serialize(),
                 function(data){
                     if (data.success){
-                        console.dir(data);
                         var branch = $(that).parent().parent();
                         var form = branch.find('.branch-form');
                         var info = branch.find('.branch-info');

@@ -6,7 +6,6 @@
 
     form_search.submit(function(evt){
         evt.preventDefault();
-        console.log('searching for: ' + search_field.val());
 
         $.ajax({
             type: 'POST',
@@ -14,7 +13,6 @@
             data: {term: search_field.val(), 'csrfmiddlewaretoken': csrftoken},
             dataType: 'json',
             success: function(data){
-                console.dir(data);
                 search_results.find('div').remove();
 
                 results_list = '';
@@ -25,7 +23,8 @@
                             '<div class="search-type-header" >' +
                                 key +
                                 '<span class="search-results-count"> ' +
-                                    val.length + ' ' + gettext("results") +
+                                    val.length + ' ' +
+                                    ngettext("result", "results", val.length) +
                                 '</span>' +
                             '</div>' +
                        ' </div><ul class="search-result-entries">';

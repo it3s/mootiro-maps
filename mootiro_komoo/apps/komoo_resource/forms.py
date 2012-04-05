@@ -80,8 +80,7 @@ class FormResource(forms.ModelForm):
                     rk = ResourceKind(name=name)
                     rk.save()
                 return rk
-        except Exception as err:
-            print 'ERR: ', err
+        except Exception:
             raise forms.ValidationError(_('invalid kind data'))
 
     def clean_community(self):

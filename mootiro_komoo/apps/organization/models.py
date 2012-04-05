@@ -12,9 +12,9 @@ from fileupload.models import UploadedFile
 
 
 class Organization(models.Model):
-    name = models.CharField(max_length=320, unique=True)
-    slug = models.SlugField(max_length=320)
-    description = models.TextField(null=True, blank=True)
+    name = models.CharField(max_length=320, unique=True, db_index=True)
+    slug = models.SlugField(max_length=320, db_index=True)
+    description = models.TextField(null=True, blank=True, db_index=True)
 
     creation_date = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User, null=True, blank=True)
@@ -41,7 +41,6 @@ class Organization(models.Model):
     @property
     def branch_count(self):
         count = OrganizationBranch.objects.filter(organization=self).count()
-        print '\n\nCOUNT: %s\n\n' % count
         return count
 
     image = "img/organization.png"

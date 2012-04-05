@@ -16,7 +16,6 @@ getFilesIdList = function(){
     $('#fileupload table.files tr').each(
         function(idx, item){
             var id = $(item).attr('file-id');
-            console.log(id);
             ids_list.push(id);
         }
     );

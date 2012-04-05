@@ -10,11 +10,11 @@ from komoo_map.models import GeoRefModel
 
 
 class Community(GeoRefModel):
-    name = models.CharField(max_length=256, blank=False)
+    name = models.CharField(max_length=256, blank=False, db_index=True)
     # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.SlugField(max_length=256, blank=False)
+    slug = models.SlugField(max_length=256, blank=False, db_index=True)
     population = models.IntegerField(null=True, blank=True)  # number of inhabitants
-    description = models.TextField(null=True, blank=True)
+    description = models.TextField(null=True, blank=True, db_index=True)
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True, blank=True,
