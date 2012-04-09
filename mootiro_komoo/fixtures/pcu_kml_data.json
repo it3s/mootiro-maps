@@ -17,8 +17,8 @@
       "info": "R. Armando de Albuquerque, 30&nbsp;- Vila Isabel - Rio de Janeiro - RJ",
       "organization" : "20",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.262035 -22.915373))",
-      "points": "MULTIPOINT (-43.262035 -22.915373)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.915373 -43.262035))",
+      "points": "MULTIPOINT (-22.915373 -43.262035)"
     }
   }  ,
   {
@@ -39,8 +39,8 @@
       "info": "Av. Hipólito da Costa, 158 - Vila Isabel - Rio de Janeiro - RJ",
       "organization" : "21",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.241306 -22.913649))",
-      "points": "MULTIPOINT (-43.241306 -22.913649)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.913649 -43.241306))",
+      "points": "MULTIPOINT (-22.913649 -43.241306)"
     }
   }  ,
   {
@@ -61,8 +61,8 @@
       "info": "<br>",
       "organization" : "22",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.286198 -22.820353))",
-      "points": "MULTIPOINT (-43.286198 -22.820353)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.820353 -43.286198))",
+      "points": "MULTIPOINT (-22.820353 -43.286198)"
     }
   }  ,
   {
@@ -83,8 +83,8 @@
       "info": "<div dir='ltr'>Praia da Rosa<br></div>",
       "organization" : "23",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.161613 -22.789021))",
-      "points": "MULTIPOINT (-43.161613 -22.789021)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.789021 -43.161613))",
+      "points": "MULTIPOINT (-22.789021 -43.161613)"
     }
   }  ,
   {
@@ -105,8 +105,8 @@
       "info": "R. César do Rêgo Monteiro Filho - Engenho da Rainha, número 107- bloco 7/206&nbsp; - Rio de Janeiro - RJ<br>",
       "organization" : "24",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.298599 -22.86784))",
-      "points": "MULTIPOINT (-43.298599 -22.86784)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.86784 -43.298599))",
+      "points": "MULTIPOINT (-22.86784 -43.298599)"
     }
   }  ,
   {
@@ -127,8 +127,8 @@
       "info": "Av. Ilha do Fundão, 03 - Rio de Janeiro - RJ",
       "organization" : "25",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.185539 -22.78546))",
-      "points": "MULTIPOINT (-43.185539 -22.78546)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.78546 -43.185539))",
+      "points": "MULTIPOINT (-22.78546 -43.185539)"
     }
   }  ,
   {
@@ -149,8 +149,8 @@
       "info": "R. Gregório de Castro Morais, 334 - Jardim Guanabara - Rio de Janeiro - RJ, 21931-350<br>",
       "organization" : "26",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.20385 -22.807919))",
-      "points": "MULTIPOINT (-43.20385 -22.807919)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.807919 -43.20385))",
+      "points": "MULTIPOINT (-22.807919 -43.20385)"
     }
   }  ,
   {
@@ -171,8 +171,8 @@
       "info": "Estr. da Água Grande,&nbsp;1525 - apt 302 bloco 20 -&nbsp;Vista AlegreRio de Janeiro - RJ",
       "organization" : "27",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.314713 -22.82605))",
-      "points": "MULTIPOINT (-43.314713 -22.82605)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.82605 -43.314713))",
+      "points": "MULTIPOINT (-22.82605 -43.314713)"
     }
   }  ,
   {
@@ -193,8 +193,8 @@
       "info": "R. Soldado Bernardino da Silva,&nbsp;80, Vila Kosmos - Rio de Janeiro<BR>",
       "organization" : "28",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.305923 -22.851196))",
-      "points": "MULTIPOINT (-43.305923 -22.851196)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.851196 -43.305923))",
+      "points": "MULTIPOINT (-22.851196 -43.305923)"
     }
   }  ,
   {
@@ -215,8 +215,8 @@
       "info": "R. Humboldt, 322 - Bonsucesso - Rio de Janeiro - RJ<br>",
       "organization" : "29",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.254845 -22.870609))",
-      "points": "MULTIPOINT (-43.254845 -22.870609)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.870609 -43.254845))",
+      "points": "MULTIPOINT (-22.870609 -43.254845)"
     }
   }  ,
   {
@@ -237,8 +237,8 @@
       "info": "R. Silva Feijó - Pilares, 28 - Rio de Janeiro - RJ<br>",
       "organization" : "30",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.301041 -22.875381))",
-      "points": "MULTIPOINT (-43.301041 -22.875381)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.875381 -43.301041))",
+      "points": "MULTIPOINT (-22.875381 -43.301041)"
     }
   }  ,
   {
@@ -259,8 +259,8 @@
       "info": "R. Vicente Caneco, 324 - bloco: 23/ apartamento: 302&nbsp; - Brás de PinaRio de Janeiro - RJ",
       "organization" : "31",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.29932 -22.834196))",
-      "points": "MULTIPOINT (-43.29932 -22.834196)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.834196 -43.29932))",
+      "points": "MULTIPOINT (-22.834196 -43.29932)"
     }
   }  ,
   {
@@ -281,8 +281,8 @@
       "info": "R. São Dagoberto - Realengo - Rio de Janeiro - RJ<br>",
       "organization" : "32",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.428322 -22.861549))",
-      "points": "MULTIPOINT (-43.428322 -22.861549)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.861549 -43.428322))",
+      "points": "MULTIPOINT (-22.861549 -43.428322)"
     }
   }  ,
   {
@@ -303,8 +303,8 @@
       "info": "R. Francisco Fajardo, 32 - Realengo - Rio de Janeiro - RJ",
       "organization" : "33",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.434105 -22.88776))",
-      "points": "MULTIPOINT (-43.434105 -22.88776)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.88776 -43.434105))",
+      "points": "MULTIPOINT (-22.88776 -43.434105)"
     }
   }  ,
   {
@@ -325,8 +325,8 @@
       "info": "Rua: 59 – casa 4. Quadra 68. Nova Sepetiba - Paciência - Rio de Janeiro - RJ",
       "organization" : "34",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.652527 -22.912472))",
-      "points": "MULTIPOINT (-43.652527 -22.912472)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.912472 -43.652527))",
+      "points": "MULTIPOINT (-22.912472 -43.652527)"
     }
   }  ,
   {
@@ -347,8 +347,8 @@
       "info": "R. Prof. Charley Lachmund, 290&nbsp;- Guaratiba - Rio de Janeiro - RJ",
       "organization" : "35",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.653679 -22.970997))",
-      "points": "MULTIPOINT (-43.653679 -22.970997)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.970997 -43.653679))",
+      "points": "MULTIPOINT (-22.970997 -43.653679)"
     }
   }  ,
   {
@@ -369,8 +369,8 @@
       "info": "Estr. Roberto Burle Max de Guaratiba, 201 - Rio de Janeiro - RJ<br>",
       "organization" : "36",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.552425 -23.02491))",
-      "points": "MULTIPOINT (-43.552425 -23.02491)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-23.02491 -43.552425))",
+      "points": "MULTIPOINT (-23.02491 -43.552425)"
     }
   }  ,
   {
@@ -391,8 +391,8 @@
       "info": "R. Prof. Plínio Olinto, 377&nbsp;- Bangu - Rio de Janeiro - RJ",
       "organization" : "37",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.459015 -22.867069))",
-      "points": "MULTIPOINT (-43.459015 -22.867069)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.867069 -43.459015))",
+      "points": "MULTIPOINT (-22.867069 -43.459015)"
     }
   }  ,
   {
@@ -413,8 +413,8 @@
       "info": "R. José Sílton Pinheiro - Paciência - Rio de Janeiro - RJ<br>",
       "organization" : "38",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.656727 -22.913633))",
-      "points": "MULTIPOINT (-43.656727 -22.913633)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.913633 -43.656727))",
+      "points": "MULTIPOINT (-22.913633 -43.656727)"
     }
   }  ,
   {
@@ -435,8 +435,8 @@
       "info": "R. Pocinhos, 140 - Cosmos - Rio de Janeiro - RJ",
       "organization" : "39",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.603947 -22.887556))",
-      "points": "MULTIPOINT (-43.603947 -22.887556)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.887556 -43.603947))",
+      "points": "MULTIPOINT (-22.887556 -43.603947)"
     }
   }  ,
   {
@@ -457,8 +457,8 @@
       "info": "R. Antenor Correia, 01&nbsp;- Sen. Camará - Rio de Janeiro - RJ",
       "organization" : "40",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.482449 -22.875225))",
-      "points": "MULTIPOINT (-43.482449 -22.875225)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.875225 -43.482449))",
+      "points": "MULTIPOINT (-22.875225 -43.482449)"
     }
   }  ,
   {
@@ -479,8 +479,8 @@
       "info": "R. Cândido Benício, 2935/ Rua Um, 115&nbsp;- Praça Seca - Rio de Janeiro - RJ<BR>",
       "organization" : "41",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.357288 -22.905451))",
-      "points": "MULTIPOINT (-43.357288 -22.905451)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.905451 -43.357288))",
+      "points": "MULTIPOINT (-22.905451 -43.357288)"
     }
   }  ,
   {
@@ -501,8 +501,8 @@
       "info": "R. Sd. Ramis Mendes - Paciência - Rio de Janeiro - RJ<br>",
       "organization" : "42",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.63736 -22.889833))",
-      "points": "MULTIPOINT (-43.63736 -22.889833)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.889833 -43.63736))",
+      "points": "MULTIPOINT (-22.889833 -43.63736)"
     }
   }  ,
   {
@@ -523,8 +523,8 @@
       "info": "Estr. do Quafá - Vila Kenedy - Rio de Janeiro - RJ",
       "organization" : "43",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.486916 -22.853279))",
-      "points": "MULTIPOINT (-43.486916 -22.853279)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.853279 -43.486916))",
+      "points": "MULTIPOINT (-22.853279 -43.486916)"
     }
   }  ,
   {
@@ -545,8 +545,8 @@
       "info": "<div dir='ltr'>Estr. da Matriz - Rua da Covanca, número 637 - Ilha de Guaratiba - Rio de Janeiro</div>",
       "organization" : "44",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.575512 -22.986002))",
-      "points": "MULTIPOINT (-43.575512 -22.986002)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.986002 -43.575512))",
+      "points": "MULTIPOINT (-22.986002 -43.575512)"
     }
   }  ,
   {
@@ -567,8 +567,8 @@
       "info": "Barro Vermelho",
       "organization" : "45",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.6589611849 -22.9159618008))",
-      "points": "MULTIPOINT (-43.6589611849 -22.9159618008)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.9159618008 -43.6589611849))",
+      "points": "MULTIPOINT (-22.9159618008 -43.6589611849)"
     }
   }  ,
   {
@@ -589,8 +589,8 @@
       "info": "Cidade de Deus",
       "organization" : "46",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.3601601146 -22.951679293))",
-      "points": "MULTIPOINT (-43.3601601146 -22.951679293)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.951679293 -43.3601601146))",
+      "points": "MULTIPOINT (-22.951679293 -43.3601601146)"
     }
   }  ,
   {
@@ -611,8 +611,8 @@
       "info": "",
       "organization" : "47",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.5758834254 -22.9579056381))",
-      "points": "MULTIPOINT (-43.5758834254 -22.9579056381)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.9579056381 -43.5758834254))",
+      "points": "MULTIPOINT (-22.9579056381 -43.5758834254)"
     }
   }  ,
   {
@@ -633,8 +633,8 @@
       "info": "",
       "organization" : "48",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.5408563306 -23.0067012475))",
-      "points": "MULTIPOINT (-43.5408563306 -23.0067012475)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-23.0067012475 -43.5408563306))",
+      "points": "MULTIPOINT (-23.0067012475 -43.5408563306)"
     }
   }  ,
   {
@@ -655,8 +655,8 @@
       "info": "Vargem Pequena",
       "organization" : "49",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.4325146707 -22.9905426492))",
-      "points": "MULTIPOINT (-43.4325146707 -22.9905426492)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.9905426492 -43.4325146707))",
+      "points": "MULTIPOINT (-22.9905426492 -43.4325146707)"
     }
   }  ,
   {
@@ -677,8 +677,8 @@
       "info": "Nova Sepetiba",
       "organization" : "50",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.6839223558 -22.9584837405))",
-      "points": "MULTIPOINT (-43.6839223558 -22.9584837405)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.9584837405 -43.6839223558))",
+      "points": "MULTIPOINT (-22.9584837405 -43.6839223558)"
     }
   }  ,
   {
@@ -699,8 +699,8 @@
       "info": "",
       "organization" : "51",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.6988370749 -22.9735662476))",
-      "points": "MULTIPOINT (-43.6988370749 -22.9735662476)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.9735662476 -43.6988370749))",
+      "points": "MULTIPOINT (-22.9735662476 -43.6988370749)"
     }
   }  ,
   {
@@ -721,8 +721,8 @@
       "info": "Estr. Tijuaçu, 32&nbsp;- Alto da Boa Vista - Rio de Janeiro - RJ",
       "organization" : "52",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.2833132878 -22.9721164937))",
-      "points": "MULTIPOINT (-43.2833132878 -22.9721164937)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.9721164937 -43.2833132878))",
+      "points": "MULTIPOINT (-22.9721164937 -43.2833132878)"
     }
   }  ,
   {
@@ -743,8 +743,8 @@
       "info": "R. Teixeira Júnior, 239, apt 102&nbsp;- São Cristóvão - Rio de Janeiro - RJ<BR>",
       "organization" : "53",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.226269 -22.893787))",
-      "points": "MULTIPOINT (-43.226269 -22.893787)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.893787 -43.226269))",
+      "points": "MULTIPOINT (-22.893787 -43.226269)"
     }
   }  ,
   {
@@ -765,8 +765,8 @@
       "info": "R. São Miguel, 500 - Tijuca - Rio de Janeiro - RJ",
       "organization" : "54",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.253437 -22.93998))",
-      "points": "MULTIPOINT (-43.253437 -22.93998)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.93998 -43.253437))",
+      "points": "MULTIPOINT (-22.93998 -43.253437)"
     }
   }  ,
   {
@@ -787,8 +787,8 @@
       "info": "R. Geová Barbosa,&nbsp; 07 -&nbsp;Tijuca - Rio de Janeiro",
       "organization" : "55",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.219498 -22.925447))",
-      "points": "MULTIPOINT (-43.219498 -22.925447)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.925447 -43.219498))",
+      "points": "MULTIPOINT (-22.925447 -43.219498)"
     }
   }  ,
   {
@@ -809,8 +809,8 @@
       "info": "R. Circular da Quinta do Caju - Caju - Rio de Janeiro - RJ",
       "organization" : "56",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.212311 -22.873581))",
-      "points": "MULTIPOINT (-43.212311 -22.873581)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.873581 -43.212311))",
+      "points": "MULTIPOINT (-22.873581 -43.212311)"
     }
   }  ,
   {
@@ -831,8 +831,8 @@
       "info": "R. Gen. Roca, 07 - Tijuca - Rio de Janeiro - RJ",
       "organization" : "57",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.227917 -22.929216))",
-      "points": "MULTIPOINT (-43.227917 -22.929216)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.929216 -43.227917))",
+      "points": "MULTIPOINT (-22.929216 -43.227917)"
     }
   }  ,
   {
@@ -853,8 +853,8 @@
       "info": "R. Araújo Leitão, 925 - Rio de Janeiro - RJ<br>",
       "organization" : "58",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.272121 -22.9137))",
-      "points": "MULTIPOINT (-43.272121 -22.9137)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.9137 -43.272121))",
+      "points": "MULTIPOINT (-22.9137 -43.272121)"
     }
   }  ,
   {
@@ -875,8 +875,8 @@
       "info": "R. Andaraí, 401&nbsp;- Andaraí - Rio de Janeiro - RJ<br>",
       "organization" : "59",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.257561 -22.933241))",
-      "points": "MULTIPOINT (-43.257561 -22.933241)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.933241 -43.257561))",
+      "points": "MULTIPOINT (-22.933241 -43.257561)"
     }
   }  ,
   {
@@ -897,8 +897,8 @@
       "info": "R. Gomes Lopes, 12&nbsp;- Rio Comprido - Rio de Janeiro - RJ<BR>",
       "organization" : "60",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.202869 -22.93251))",
-      "points": "MULTIPOINT (-43.202869 -22.93251)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.93251 -43.202869))",
+      "points": "MULTIPOINT (-22.93251 -43.202869)"
     }
   }  ,
   {
@@ -919,8 +919,8 @@
       "info": "Estr. da Gávea, 486&nbsp;- Rocinha -Rio de Janeiro - RJ<BR>",
       "organization" : "61",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.248222 -22.987991))",
-      "points": "MULTIPOINT (-43.248222 -22.987991)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.987991 -43.248222))",
+      "points": "MULTIPOINT (-22.987991 -43.248222)"
     }
   }  ,
   {
@@ -941,8 +941,8 @@
       "info": "<div dir='ltr'>Vila Cruzeiro<br></div>",
       "organization" : "62",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.28056 -22.848009))",
-      "points": "MULTIPOINT (-43.28056 -22.848009)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.848009 -43.28056))",
+      "points": "MULTIPOINT (-22.848009 -43.28056)"
     }
   }  ,
   {
@@ -963,8 +963,8 @@
       "info": "R. Maturaca, 366 - Penha, Rio de Janeiro - RJ, Brasil",
       "organization" : "63",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.297965 -22.84607))",
-      "points": "MULTIPOINT (-43.297965 -22.84607)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.84607 -43.297965))",
+      "points": "MULTIPOINT (-22.84607 -43.297965)"
     }
   }  ,
   {
@@ -985,8 +985,8 @@
       "info": "R. Frederico de Albuquerque, 15 - Higienópolis - Rio de Janeiro - RJ",
       "organization" : "64",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.259171 -22.877188))",
-      "points": "MULTIPOINT (-43.259171 -22.877188)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.877188 -43.259171))",
+      "points": "MULTIPOINT (-22.877188 -43.259171)"
     }
   }  ,
   {
@@ -1007,8 +1007,8 @@
       "info": "R. Tangará, 445 - Bonsucesso - Rio de Janeiro - RJ",
       "organization" : "65",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.25779 -22.864162))",
-      "points": "MULTIPOINT (-43.25779 -22.864162)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.864162 -43.25779))",
+      "points": "MULTIPOINT (-22.864162 -43.25779)"
     }
   }  ,
   {
@@ -1029,8 +1029,8 @@
       "info": "R. Srg. Silva Nunes, 1012&nbsp; -Nova Holanda&nbsp;- Ramos - Rio de Janeiro - RJ<BR>",
       "organization" : "66",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.247478 -22.854958))",
-      "points": "MULTIPOINT (-43.247478 -22.854958)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.854958 -43.247478))",
+      "points": "MULTIPOINT (-22.854958 -43.247478)"
     }
   }  ,
   {
@@ -1051,8 +1051,8 @@
       "info": "R. Sonora, 408&nbsp;- Bonsucesso - Rio de Janeiro - RJ",
       "organization" : "67",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.275631 -22.86466))",
-      "points": "MULTIPOINT (-43.275631 -22.86466)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.86466 -43.275631))",
+      "points": "MULTIPOINT (-22.86466 -43.275631)"
     }
   }  ,
   {
@@ -1073,8 +1073,8 @@
       "info": "R. Canitar, 626&nbsp;- Inhaúma -Rio de Janeiro - RJ",
       "organization" : "68",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.285938 -22.86463))",
-      "points": "MULTIPOINT (-43.285938 -22.86463)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.86463 -43.285938))",
+      "points": "MULTIPOINT (-22.86463 -43.285938)"
     }
   }  ,
   {
@@ -1095,7 +1095,7 @@
       "info": "R. Francisco Menescal, 94&nbsp;- Pavuna - Rio de Janeiro",
       "organization" : "69",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (-43.343571 -22.81723))",
-      "points": "MULTIPOINT (-43.343571 -22.81723)"
+      "geometry": "GEOMETRYCOLLECTION (POINT (-22.81723 -43.343571))",
+      "points": "MULTIPOINT (-22.81723 -43.343571)"
     }
   }]

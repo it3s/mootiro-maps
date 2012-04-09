@@ -33,20 +33,20 @@ def generate_fixture():
       "info": "%(desc)s",
       "organization" : "%(num)s",
       "creation_date": "2012-03-21 15:04:58",
-      "geometry": "GEOMETRYCOLLECTION (POINT (%(x)s %(y)s))",
-      "points": "MULTIPOINT (%(x)s %(y)s)"
+      "geometry": "GEOMETRYCOLLECTION (POLYGON ((%(x)s %(y)s, %(x1)s %(y1)s, %(x2)s %(y2)s, %(x)s %(y)s)))",
+      "points": "MULTIPOLYGON (((%(x)s %(y)s, %(x1)s %(y1)s, %(x2)s %(y2)s, %(x)s %(y)s)))"
     }
   }""" % dict(
             num=20 + i,
             name=obj['name'],
             slug=slugify(obj['name']),
             desc=obj['description'].replace("\"", "'"),
-            x=float(obj['point'][0]),
-            y=float(obj['point'][1]),
-            x1=float(obj['point'][0]) + 0.000001,
-            y1=float(obj['point'][1]) + 0.000001,
-            x2=float(obj['point'][0]) + 0.000001,
-            y2=float(obj['point'][1]) - 0.000001,
+            x=float(obj['point'][1]),
+            y=float(obj['point'][0]),
+            x1=float(obj['point'][1]) + 0.001,
+            y1=float(obj['point'][0]) + 0.001,
+            x2=float(obj['point'][1]) + 0.001,
+            y2=float(obj['point'][0]) - 0.001,
             ))
         f.write(']')
 
