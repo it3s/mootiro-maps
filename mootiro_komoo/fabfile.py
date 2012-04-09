@@ -132,7 +132,7 @@ def sync_all():
 def dumpdata():
     """Dump DB data, for backup purposes """
     import datetime
-    local('python manage.py dumpdata {} > backupdb_{}.txt'.format(
+    local('python manage.py dumpdata {} > backupdb_{}.json'.format(
         django_settings[env_],
         datetime.datetime.now().strftime('%Y_%m_%d')
         )
