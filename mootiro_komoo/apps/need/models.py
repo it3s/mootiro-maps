@@ -18,7 +18,7 @@ class NeedCategory(models.Model):
     name = models.CharField(max_length=64, blank=False)
 
     # Adding categories to be translated.
-    # Probably there are a better way to do this.
+    # Probably there is a better way to do this.
     _('Culture')
     _('Education')
     _('Environment')
