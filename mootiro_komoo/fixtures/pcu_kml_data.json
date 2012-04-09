@@ -5,6 +5,7 @@
     "fields": {
       "name": "Sempre Unidos 1",
       "slug": "sempre-unidos-1",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Armando de Albuquerque, 30&nbsp;- Vila Isabel - Rio de Janeiro - RJ"
     }
   },
@@ -15,7 +16,8 @@
       "name": "Sempre Unidos 1 - sede",
       "info": "R. Armando de Albuquerque, 30&nbsp;- Vila Isabel - Rio de Janeiro - RJ",
       "organization" : "20",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.262035 -22.915373))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.262035 -22.915373))",
       "points": "MULTIPOINT (-43.262035 -22.915373)"
     }
   }  ,
@@ -25,6 +27,7 @@
     "fields": {
       "name": "Sempre Unidos 2",
       "slug": "sempre-unidos-2",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Av. Hipólito da Costa, 158 - Vila Isabel - Rio de Janeiro - RJ"
     }
   },
@@ -35,7 +38,8 @@
       "name": "Sempre Unidos 2 - sede",
       "info": "Av. Hipólito da Costa, 158 - Vila Isabel - Rio de Janeiro - RJ",
       "organization" : "21",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.241306 -22.913649))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.241306 -22.913649))",
       "points": "MULTIPOINT (-43.241306 -22.913649)"
     }
   }  ,
@@ -45,7 +49,8 @@
     "fields": {
       "name": "Palavra e Ação",
       "slug": "palavra-e-acao",
-      "description": ""
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "<br>"
     }
   },
     {
@@ -53,9 +58,10 @@
     "pk" : "22",
     "fields": {
       "name": "Palavra e Ação - sede",
-      "info": "",
+      "info": "<br>",
       "organization" : "22",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.286198 -22.820353))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.286198 -22.820353))",
       "points": "MULTIPOINT (-43.286198 -22.820353)"
     }
   }  ,
@@ -65,7 +71,8 @@
     "fields": {
       "name": "Juventude Feliz",
       "slug": "juventude-feliz",
-      "description": "Praia da Rosa"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "<div dir='ltr'>Praia da Rosa<br></div>"
     }
   },
     {
@@ -73,10 +80,11 @@
     "pk" : "23",
     "fields": {
       "name": "Juventude Feliz - sede",
-      "info": "Praia da Rosa",
+      "info": "<div dir='ltr'>Praia da Rosa<br></div>",
       "organization" : "23",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.161613 -22.78902100000001))",
-      "points": "MULTIPOINT (-43.161613 -22.78902100000001)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.161613 -22.789021))",
+      "points": "MULTIPOINT (-43.161613 -22.789021)"
     }
   }  ,
   {
@@ -85,7 +93,8 @@
     "fields": {
       "name": "Força do Amanhã",
       "slug": "forca-do-amanha",
-      "description": "R. César do Rêgo Monteiro Filho - Engenho da Rainha, número 107- bloco 7/206&nbsp; - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. César do Rêgo Monteiro Filho - Engenho da Rainha, número 107- bloco 7/206&nbsp; - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -93,9 +102,10 @@
     "pk" : "24",
     "fields": {
       "name": "Força do Amanhã - sede",
-      "info": "R. César do Rêgo Monteiro Filho - Engenho da Rainha, número 107- bloco 7/206&nbsp; - Rio de Janeiro - RJ",
+      "info": "R. César do Rêgo Monteiro Filho - Engenho da Rainha, número 107- bloco 7/206&nbsp; - Rio de Janeiro - RJ<br>",
       "organization" : "24",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.298599 -22.86784))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.298599 -22.86784))",
       "points": "MULTIPOINT (-43.298599 -22.86784)"
     }
   }  ,
@@ -105,6 +115,7 @@
     "fields": {
       "name": "Estrelinha dourada",
       "slug": "estrelinha-dourada",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Av. Ilha do Fundão, 03 - Rio de Janeiro - RJ"
     }
   },
@@ -115,7 +126,8 @@
       "name": "Estrelinha dourada - sede",
       "info": "Av. Ilha do Fundão, 03 - Rio de Janeiro - RJ",
       "organization" : "25",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.185539 -22.78546))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.185539 -22.78546))",
       "points": "MULTIPOINT (-43.185539 -22.78546)"
     }
   }  ,
@@ -125,7 +137,8 @@
     "fields": {
       "name": "Taus",
       "slug": "taus",
-      "description": "R. Gregório de Castro Morais, 334 - Jardim Guanabara - Rio de Janeiro - RJ, 21931-350"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Gregório de Castro Morais, 334 - Jardim Guanabara - Rio de Janeiro - RJ, 21931-350<br>"
     }
   },
     {
@@ -133,9 +146,10 @@
     "pk" : "26",
     "fields": {
       "name": "Taus - sede",
-      "info": "R. Gregório de Castro Morais, 334 - Jardim Guanabara - Rio de Janeiro - RJ, 21931-350",
+      "info": "R. Gregório de Castro Morais, 334 - Jardim Guanabara - Rio de Janeiro - RJ, 21931-350<br>",
       "organization" : "26",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.20385 -22.807919))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.20385 -22.807919))",
       "points": "MULTIPOINT (-43.20385 -22.807919)"
     }
   }  ,
@@ -145,6 +159,7 @@
     "fields": {
       "name": "Amigos do meio ambiente",
       "slug": "amigos-do-meio-ambiente",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Estr. da Água Grande,&nbsp;1525 - apt 302 bloco 20 -&nbsp;Vista AlegreRio de Janeiro - RJ"
     }
   },
@@ -155,7 +170,8 @@
       "name": "Amigos do meio ambiente - sede",
       "info": "Estr. da Água Grande,&nbsp;1525 - apt 302 bloco 20 -&nbsp;Vista AlegreRio de Janeiro - RJ",
       "organization" : "27",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.314713 -22.82605))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.314713 -22.82605))",
       "points": "MULTIPOINT (-43.314713 -22.82605)"
     }
   }  ,
@@ -165,7 +181,8 @@
     "fields": {
       "name": "Sonhos",
       "slug": "sonhos",
-      "description": "R. Soldado Bernardino da Silva,&nbsp;80, Vila Kosmos - Rio de Janeiro"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Soldado Bernardino da Silva,&nbsp;80, Vila Kosmos - Rio de Janeiro<BR>"
     }
   },
     {
@@ -173,9 +190,10 @@
     "pk" : "28",
     "fields": {
       "name": "Sonhos - sede",
-      "info": "R. Soldado Bernardino da Silva,&nbsp;80, Vila Kosmos - Rio de Janeiro",
+      "info": "R. Soldado Bernardino da Silva,&nbsp;80, Vila Kosmos - Rio de Janeiro<BR>",
       "organization" : "28",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.305923 -22.851196))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.305923 -22.851196))",
       "points": "MULTIPOINT (-43.305923 -22.851196)"
     }
   }  ,
@@ -185,7 +203,8 @@
     "fields": {
       "name": "Transformando Pelo Esporte",
       "slug": "transformando-pelo-esporte",
-      "description": "R. Humboldt, 322 - Bonsucesso - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Humboldt, 322 - Bonsucesso - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -193,9 +212,10 @@
     "pk" : "29",
     "fields": {
       "name": "Transformando Pelo Esporte - sede",
-      "info": "R. Humboldt, 322 - Bonsucesso - Rio de Janeiro - RJ",
+      "info": "R. Humboldt, 322 - Bonsucesso - Rio de Janeiro - RJ<br>",
       "organization" : "29",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.254845 -22.870609))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.254845 -22.870609))",
       "points": "MULTIPOINT (-43.254845 -22.870609)"
     }
   }  ,
@@ -205,7 +225,8 @@
     "fields": {
       "name": "Vivendo e Aprendendo",
       "slug": "vivendo-e-aprendendo",
-      "description": "R. Silva Feijó - Pilares, 28 - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Silva Feijó - Pilares, 28 - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -213,9 +234,10 @@
     "pk" : "30",
     "fields": {
       "name": "Vivendo e Aprendendo - sede",
-      "info": "R. Silva Feijó - Pilares, 28 - Rio de Janeiro - RJ",
+      "info": "R. Silva Feijó - Pilares, 28 - Rio de Janeiro - RJ<br>",
       "organization" : "30",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.301041 -22.875381))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.301041 -22.875381))",
       "points": "MULTIPOINT (-43.301041 -22.875381)"
     }
   }  ,
@@ -225,6 +247,7 @@
     "fields": {
       "name": "Atitude",
       "slug": "atitude",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Vicente Caneco, 324 - bloco: 23/ apartamento: 302&nbsp; - Brás de PinaRio de Janeiro - RJ"
     }
   },
@@ -235,7 +258,8 @@
       "name": "Atitude - sede",
       "info": "R. Vicente Caneco, 324 - bloco: 23/ apartamento: 302&nbsp; - Brás de PinaRio de Janeiro - RJ",
       "organization" : "31",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.29932 -22.834196))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.29932 -22.834196))",
       "points": "MULTIPOINT (-43.29932 -22.834196)"
     }
   }  ,
@@ -245,7 +269,8 @@
     "fields": {
       "name": "Tatiane Lima",
       "slug": "tatiane-lima",
-      "description": "R. São Dagoberto - Realengo - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. São Dagoberto - Realengo - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -253,9 +278,10 @@
     "pk" : "32",
     "fields": {
       "name": "Tatiane Lima - sede",
-      "info": "R. São Dagoberto - Realengo - Rio de Janeiro - RJ",
+      "info": "R. São Dagoberto - Realengo - Rio de Janeiro - RJ<br>",
       "organization" : "32",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.428322 -22.861549))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.428322 -22.861549))",
       "points": "MULTIPOINT (-43.428322 -22.861549)"
     }
   }  ,
@@ -265,6 +291,7 @@
     "fields": {
       "name": "Gera Ação",
       "slug": "gera-acao",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Francisco Fajardo, 32 - Realengo - Rio de Janeiro - RJ"
     }
   },
@@ -275,7 +302,8 @@
       "name": "Gera Ação - sede",
       "info": "R. Francisco Fajardo, 32 - Realengo - Rio de Janeiro - RJ",
       "organization" : "33",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.434105 -22.88776))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.434105 -22.88776))",
       "points": "MULTIPOINT (-43.434105 -22.88776)"
     }
   }  ,
@@ -285,6 +313,7 @@
     "fields": {
       "name": "RECRIFE",
       "slug": "recrife",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Rua: 59 – casa 4. Quadra 68. Nova Sepetiba - Paciência - Rio de Janeiro - RJ"
     }
   },
@@ -295,7 +324,8 @@
       "name": "RECRIFE - sede",
       "info": "Rua: 59 – casa 4. Quadra 68. Nova Sepetiba - Paciência - Rio de Janeiro - RJ",
       "organization" : "34",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.652527 -22.912472))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.652527 -22.912472))",
       "points": "MULTIPOINT (-43.652527 -22.912472)"
     }
   }  ,
@@ -305,6 +335,7 @@
     "fields": {
       "name": "Educar para Renovar",
       "slug": "educar-para-renovar",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Prof. Charley Lachmund, 290&nbsp;- Guaratiba - Rio de Janeiro - RJ"
     }
   },
@@ -315,7 +346,8 @@
       "name": "Educar para Renovar - sede",
       "info": "R. Prof. Charley Lachmund, 290&nbsp;- Guaratiba - Rio de Janeiro - RJ",
       "organization" : "35",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.653679 -22.970997))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.653679 -22.970997))",
       "points": "MULTIPOINT (-43.653679 -22.970997)"
     }
   }  ,
@@ -325,7 +357,8 @@
     "fields": {
       "name": "Cidadão do Futuro",
       "slug": "cidadao-do-futuro",
-      "description": "Estr. Roberto Burle Max de Guaratiba, 201 - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "Estr. Roberto Burle Max de Guaratiba, 201 - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -333,9 +366,10 @@
     "pk" : "36",
     "fields": {
       "name": "Cidadão do Futuro - sede",
-      "info": "Estr. Roberto Burle Max de Guaratiba, 201 - Rio de Janeiro - RJ",
+      "info": "Estr. Roberto Burle Max de Guaratiba, 201 - Rio de Janeiro - RJ<br>",
       "organization" : "36",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.552425 -23.02491))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.552425 -23.02491))",
       "points": "MULTIPOINT (-43.552425 -23.02491)"
     }
   }  ,
@@ -345,6 +379,7 @@
     "fields": {
       "name": "Jovem Participação Social",
       "slug": "jovem-participacao-social",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Prof. Plínio Olinto, 377&nbsp;- Bangu - Rio de Janeiro - RJ"
     }
   },
@@ -355,7 +390,8 @@
       "name": "Jovem Participação Social - sede",
       "info": "R. Prof. Plínio Olinto, 377&nbsp;- Bangu - Rio de Janeiro - RJ",
       "organization" : "37",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.459015 -22.867069))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.459015 -22.867069))",
       "points": "MULTIPOINT (-43.459015 -22.867069)"
     }
   }  ,
@@ -365,7 +401,8 @@
     "fields": {
       "name": "União Para o Futuro",
       "slug": "uniao-para-o-futuro",
-      "description": "R. José Sílton Pinheiro - Paciência - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. José Sílton Pinheiro - Paciência - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -373,9 +410,10 @@
     "pk" : "38",
     "fields": {
       "name": "União Para o Futuro - sede",
-      "info": "R. José Sílton Pinheiro - Paciência - Rio de Janeiro - RJ",
+      "info": "R. José Sílton Pinheiro - Paciência - Rio de Janeiro - RJ<br>",
       "organization" : "38",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.656727 -22.913633))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.656727 -22.913633))",
       "points": "MULTIPOINT (-43.656727 -22.913633)"
     }
   }  ,
@@ -385,6 +423,7 @@
     "fields": {
       "name": "Cuidar é Crescer",
       "slug": "cuidar-e-crescer",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Pocinhos, 140 - Cosmos - Rio de Janeiro - RJ"
     }
   },
@@ -395,7 +434,8 @@
       "name": "Cuidar é Crescer - sede",
       "info": "R. Pocinhos, 140 - Cosmos - Rio de Janeiro - RJ",
       "organization" : "39",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.603947 -22.887556))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.603947 -22.887556))",
       "points": "MULTIPOINT (-43.603947 -22.887556)"
     }
   }  ,
@@ -405,6 +445,7 @@
     "fields": {
       "name": "Nossa História",
       "slug": "nossa-historia",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Antenor Correia, 01&nbsp;- Sen. Camará - Rio de Janeiro - RJ"
     }
   },
@@ -415,7 +456,8 @@
       "name": "Nossa História - sede",
       "info": "R. Antenor Correia, 01&nbsp;- Sen. Camará - Rio de Janeiro - RJ",
       "organization" : "40",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.482449 -22.875225))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.482449 -22.875225))",
       "points": "MULTIPOINT (-43.482449 -22.875225)"
     }
   }  ,
@@ -425,7 +467,8 @@
     "fields": {
       "name": "Semente do bem",
       "slug": "semente-do-bem",
-      "description": "R. Cândido Benício, 2935/ Rua Um, 115&nbsp;- Praça Seca - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Cândido Benício, 2935/ Rua Um, 115&nbsp;- Praça Seca - Rio de Janeiro - RJ<BR>"
     }
   },
     {
@@ -433,9 +476,10 @@
     "pk" : "41",
     "fields": {
       "name": "Semente do bem - sede",
-      "info": "R. Cândido Benício, 2935/ Rua Um, 115&nbsp;- Praça Seca - Rio de Janeiro - RJ",
+      "info": "R. Cândido Benício, 2935/ Rua Um, 115&nbsp;- Praça Seca - Rio de Janeiro - RJ<BR>",
       "organization" : "41",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.357288 -22.905451))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.357288 -22.905451))",
       "points": "MULTIPOINT (-43.357288 -22.905451)"
     }
   }  ,
@@ -445,7 +489,8 @@
     "fields": {
       "name": "Berço dos Sonhos",
       "slug": "berco-dos-sonhos",
-      "description": "R. Sd. Ramis Mendes - Paciência - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Sd. Ramis Mendes - Paciência - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -453,9 +498,10 @@
     "pk" : "42",
     "fields": {
       "name": "Berço dos Sonhos - sede",
-      "info": "R. Sd. Ramis Mendes - Paciência - Rio de Janeiro - RJ",
+      "info": "R. Sd. Ramis Mendes - Paciência - Rio de Janeiro - RJ<br>",
       "organization" : "42",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.63736 -22.889833))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.63736 -22.889833))",
       "points": "MULTIPOINT (-43.63736 -22.889833)"
     }
   }  ,
@@ -465,6 +511,7 @@
     "fields": {
       "name": "Fênix",
       "slug": "fenix",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Estr. do Quafá - Vila Kenedy - Rio de Janeiro - RJ"
     }
   },
@@ -475,7 +522,8 @@
       "name": "Fênix - sede",
       "info": "Estr. do Quafá - Vila Kenedy - Rio de Janeiro - RJ",
       "organization" : "43",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.486916 -22.853279))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.486916 -22.853279))",
       "points": "MULTIPOINT (-43.486916 -22.853279)"
     }
   }  ,
@@ -485,7 +533,8 @@
     "fields": {
       "name": "Esperança Jovem",
       "slug": "esperanca-jovem",
-      "description": "Estr. da Matriz - Rua da Covanca, número 637 - Ilha de Guaratiba - Rio de Janeiro"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "<div dir='ltr'>Estr. da Matriz - Rua da Covanca, número 637 - Ilha de Guaratiba - Rio de Janeiro</div>"
     }
   },
     {
@@ -493,9 +542,10 @@
     "pk" : "44",
     "fields": {
       "name": "Esperança Jovem - sede",
-      "info": "Estr. da Matriz - Rua da Covanca, número 637 - Ilha de Guaratiba - Rio de Janeiro",
+      "info": "<div dir='ltr'>Estr. da Matriz - Rua da Covanca, número 637 - Ilha de Guaratiba - Rio de Janeiro</div>",
       "organization" : "44",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.575512 -22.986002))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.575512 -22.986002))",
       "points": "MULTIPOINT (-43.575512 -22.986002)"
     }
   }  ,
@@ -505,6 +555,7 @@
     "fields": {
       "name": "Criado",
       "slug": "criado",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Barro Vermelho"
     }
   },
@@ -515,8 +566,9 @@
       "name": "Criado - sede",
       "info": "Barro Vermelho",
       "organization" : "45",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.65896118492218 -22.91596180075239))",
-      "points": "MULTIPOINT (-43.65896118492218 -22.91596180075239)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.6589611849 -22.9159618008))",
+      "points": "MULTIPOINT (-43.6589611849 -22.9159618008)"
     }
   }  ,
   {
@@ -525,6 +577,7 @@
     "fields": {
       "name": "ACOPROVI",
       "slug": "acoprovi",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Cidade de Deus"
     }
   },
@@ -535,8 +588,9 @@
       "name": "ACOPROVI - sede",
       "info": "Cidade de Deus",
       "organization" : "46",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.3601601145549 -22.95167929297135))",
-      "points": "MULTIPOINT (-43.3601601145549 -22.95167929297135)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.3601601146 -22.951679293))",
+      "points": "MULTIPOINT (-43.3601601146 -22.951679293)"
     }
   }  ,
   {
@@ -545,6 +599,7 @@
     "fields": {
       "name": "Resgatando a Inocência",
       "slug": "resgatando-a-inocencia",
+      "creation_date": "2012-03-21 15:04:58",
       "description": ""
     }
   },
@@ -555,8 +610,9 @@
       "name": "Resgatando a Inocência - sede",
       "info": "",
       "organization" : "47",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.57588342537665 -22.95790563813231))",
-      "points": "MULTIPOINT (-43.57588342537665 -22.95790563813231)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.5758834254 -22.9579056381))",
+      "points": "MULTIPOINT (-43.5758834254 -22.9579056381)"
     }
   }  ,
   {
@@ -565,6 +621,7 @@
     "fields": {
       "name": "Unindo Forças",
       "slug": "unindo-forcas",
+      "creation_date": "2012-03-21 15:04:58",
       "description": ""
     }
   },
@@ -575,8 +632,9 @@
       "name": "Unindo Forças - sede",
       "info": "",
       "organization" : "48",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.54085633059565 -23.00670124745323))",
-      "points": "MULTIPOINT (-43.54085633059565 -23.00670124745323)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.5408563306 -23.0067012475))",
+      "points": "MULTIPOINT (-43.5408563306 -23.0067012475)"
     }
   }  ,
   {
@@ -585,6 +643,7 @@
     "fields": {
       "name": "Educando com Arte",
       "slug": "educando-com-arte",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Vargem Pequena"
     }
   },
@@ -595,8 +654,9 @@
       "name": "Educando com Arte - sede",
       "info": "Vargem Pequena",
       "organization" : "49",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.43251467073889 -22.99054264915618))",
-      "points": "MULTIPOINT (-43.43251467073889 -22.99054264915618)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.4325146707 -22.9905426492))",
+      "points": "MULTIPOINT (-43.4325146707 -22.9905426492)"
     }
   }  ,
   {
@@ -605,6 +665,7 @@
     "fields": {
       "name": "Ensinando e Aprendendo",
       "slug": "ensinando-e-aprendendo",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Nova Sepetiba"
     }
   },
@@ -615,8 +676,9 @@
       "name": "Ensinando e Aprendendo - sede",
       "info": "Nova Sepetiba",
       "organization" : "50",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.68392235577111 -22.95848374049333))",
-      "points": "MULTIPOINT (-43.68392235577111 -22.95848374049333)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.6839223558 -22.9584837405))",
+      "points": "MULTIPOINT (-43.6839223558 -22.9584837405)"
     }
   }  ,
   {
@@ -625,6 +687,7 @@
     "fields": {
       "name": "Vitrine de Talentos",
       "slug": "vitrine-de-talentos",
+      "creation_date": "2012-03-21 15:04:58",
       "description": ""
     }
   },
@@ -635,8 +698,9 @@
       "name": "Vitrine de Talentos - sede",
       "info": "",
       "organization" : "51",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.69883707485083 -22.97356624764728))",
-      "points": "MULTIPOINT (-43.69883707485083 -22.97356624764728)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.6988370749 -22.9735662476))",
+      "points": "MULTIPOINT (-43.6988370749 -22.9735662476)"
     }
   }  ,
   {
@@ -645,6 +709,7 @@
     "fields": {
       "name": "Tijuaçu",
       "slug": "tijuacu",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "Estr. Tijuaçu, 32&nbsp;- Alto da Boa Vista - Rio de Janeiro - RJ"
     }
   },
@@ -655,8 +720,9 @@
       "name": "Tijuaçu - sede",
       "info": "Estr. Tijuaçu, 32&nbsp;- Alto da Boa Vista - Rio de Janeiro - RJ",
       "organization" : "52",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.28331328784079 -22.97211649369242))",
-      "points": "MULTIPOINT (-43.28331328784079 -22.97211649369242)"
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.2833132878 -22.9721164937))",
+      "points": "MULTIPOINT (-43.2833132878 -22.9721164937)"
     }
   }  ,
   {
@@ -665,7 +731,8 @@
     "fields": {
       "name": "Mobilização",
       "slug": "mobilizacao",
-      "description": "R. Teixeira Júnior, 239, apt 102&nbsp;- São Cristóvão - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Teixeira Júnior, 239, apt 102&nbsp;- São Cristóvão - Rio de Janeiro - RJ<BR>"
     }
   },
     {
@@ -673,9 +740,10 @@
     "pk" : "53",
     "fields": {
       "name": "Mobilização - sede",
-      "info": "R. Teixeira Júnior, 239, apt 102&nbsp;- São Cristóvão - Rio de Janeiro - RJ",
+      "info": "R. Teixeira Júnior, 239, apt 102&nbsp;- São Cristóvão - Rio de Janeiro - RJ<BR>",
       "organization" : "53",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.226269 -22.893787))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.226269 -22.893787))",
       "points": "MULTIPOINT (-43.226269 -22.893787)"
     }
   }  ,
@@ -685,6 +753,7 @@
     "fields": {
       "name": "O futuro é agora",
       "slug": "o-futuro-e-agora",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. São Miguel, 500 - Tijuca - Rio de Janeiro - RJ"
     }
   },
@@ -695,7 +764,8 @@
       "name": "O futuro é agora - sede",
       "info": "R. São Miguel, 500 - Tijuca - Rio de Janeiro - RJ",
       "organization" : "54",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.253437 -22.93998))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.253437 -22.93998))",
       "points": "MULTIPOINT (-43.253437 -22.93998)"
     }
   }  ,
@@ -705,6 +775,7 @@
     "fields": {
       "name": "Renovação",
       "slug": "renovacao",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Geová Barbosa,&nbsp; 07 -&nbsp;Tijuca - Rio de Janeiro"
     }
   },
@@ -715,7 +786,8 @@
       "name": "Renovação - sede",
       "info": "R. Geová Barbosa,&nbsp; 07 -&nbsp;Tijuca - Rio de Janeiro",
       "organization" : "55",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.219498 -22.925447))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.219498 -22.925447))",
       "points": "MULTIPOINT (-43.219498 -22.925447)"
     }
   }  ,
@@ -725,6 +797,7 @@
     "fields": {
       "name": "República Imperial",
       "slug": "republica-imperial",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Circular da Quinta do Caju - Caju - Rio de Janeiro - RJ"
     }
   },
@@ -735,7 +808,8 @@
       "name": "República Imperial - sede",
       "info": "R. Circular da Quinta do Caju - Caju - Rio de Janeiro - RJ",
       "organization" : "56",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.212311 -22.873581))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.212311 -22.873581))",
       "points": "MULTIPOINT (-43.212311 -22.873581)"
     }
   }  ,
@@ -745,6 +819,7 @@
     "fields": {
       "name": "Desenvolver",
       "slug": "desenvolver",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Gen. Roca, 07 - Tijuca - Rio de Janeiro - RJ"
     }
   },
@@ -755,7 +830,8 @@
       "name": "Desenvolver - sede",
       "info": "R. Gen. Roca, 07 - Tijuca - Rio de Janeiro - RJ",
       "organization" : "57",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.227917 -22.929216))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.227917 -22.929216))",
       "points": "MULTIPOINT (-43.227917 -22.929216)"
     }
   }  ,
@@ -765,7 +841,8 @@
     "fields": {
       "name": "Harmonia",
       "slug": "harmonia",
-      "description": "R. Araújo Leitão, 925 - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Araújo Leitão, 925 - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -773,9 +850,10 @@
     "pk" : "58",
     "fields": {
       "name": "Harmonia - sede",
-      "info": "R. Araújo Leitão, 925 - Rio de Janeiro - RJ",
+      "info": "R. Araújo Leitão, 925 - Rio de Janeiro - RJ<br>",
       "organization" : "58",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.272121 -22.9137))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.272121 -22.9137))",
       "points": "MULTIPOINT (-43.272121 -22.9137)"
     }
   }  ,
@@ -785,7 +863,8 @@
     "fields": {
       "name": "União",
       "slug": "uniao",
-      "description": "R. Andaraí, 401&nbsp;- Andaraí - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Andaraí, 401&nbsp;- Andaraí - Rio de Janeiro - RJ<br>"
     }
   },
     {
@@ -793,9 +872,10 @@
     "pk" : "59",
     "fields": {
       "name": "União - sede",
-      "info": "R. Andaraí, 401&nbsp;- Andaraí - Rio de Janeiro - RJ",
+      "info": "R. Andaraí, 401&nbsp;- Andaraí - Rio de Janeiro - RJ<br>",
       "organization" : "59",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.257561 -22.933241))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.257561 -22.933241))",
       "points": "MULTIPOINT (-43.257561 -22.933241)"
     }
   }  ,
@@ -805,7 +885,8 @@
     "fields": {
       "name": "Mosaico",
       "slug": "mosaico",
-      "description": "R. Gomes Lopes, 12&nbsp;- Rio Comprido - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Gomes Lopes, 12&nbsp;- Rio Comprido - Rio de Janeiro - RJ<BR>"
     }
   },
     {
@@ -813,9 +894,10 @@
     "pk" : "60",
     "fields": {
       "name": "Mosaico - sede",
-      "info": "R. Gomes Lopes, 12&nbsp;- Rio Comprido - Rio de Janeiro - RJ",
+      "info": "R. Gomes Lopes, 12&nbsp;- Rio Comprido - Rio de Janeiro - RJ<BR>",
       "organization" : "60",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.202869 -22.93251))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.202869 -22.93251))",
       "points": "MULTIPOINT (-43.202869 -22.93251)"
     }
   }  ,
@@ -825,7 +907,8 @@
     "fields": {
       "name": "Estrela Dalva",
       "slug": "estrela-dalva",
-      "description": "Estr. da Gávea, 486&nbsp;- Rocinha -Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "Estr. da Gávea, 486&nbsp;- Rocinha -Rio de Janeiro - RJ<BR>"
     }
   },
     {
@@ -833,9 +916,10 @@
     "pk" : "61",
     "fields": {
       "name": "Estrela Dalva - sede",
-      "info": "Estr. da Gávea, 486&nbsp;- Rocinha -Rio de Janeiro - RJ",
+      "info": "Estr. da Gávea, 486&nbsp;- Rocinha -Rio de Janeiro - RJ<BR>",
       "organization" : "61",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.248222 -22.987991))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.248222 -22.987991))",
       "points": "MULTIPOINT (-43.248222 -22.987991)"
     }
   }  ,
@@ -845,7 +929,8 @@
     "fields": {
       "name": "Em Construção",
       "slug": "em-construcao",
-      "description": "Vila Cruzeiro"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "<div dir='ltr'>Vila Cruzeiro<br></div>"
     }
   },
     {
@@ -853,9 +938,10 @@
     "pk" : "62",
     "fields": {
       "name": "Em Construção - sede",
-      "info": "Vila Cruzeiro",
+      "info": "<div dir='ltr'>Vila Cruzeiro<br></div>",
       "organization" : "62",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.28056 -22.848009))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.28056 -22.848009))",
       "points": "MULTIPOINT (-43.28056 -22.848009)"
     }
   }  ,
@@ -865,6 +951,7 @@
     "fields": {
       "name": "Viver Melhor",
       "slug": "viver-melhor",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Maturaca, 366 - Penha, Rio de Janeiro - RJ, Brasil"
     }
   },
@@ -875,7 +962,8 @@
       "name": "Viver Melhor - sede",
       "info": "R. Maturaca, 366 - Penha, Rio de Janeiro - RJ, Brasil",
       "organization" : "63",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.297965 -22.84607))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.297965 -22.84607))",
       "points": "MULTIPOINT (-43.297965 -22.84607)"
     }
   }  ,
@@ -885,6 +973,7 @@
     "fields": {
       "name": "Movimento é vida",
       "slug": "movimento-e-vida",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Frederico de Albuquerque, 15 - Higienópolis - Rio de Janeiro - RJ"
     }
   },
@@ -895,7 +984,8 @@
       "name": "Movimento é vida - sede",
       "info": "R. Frederico de Albuquerque, 15 - Higienópolis - Rio de Janeiro - RJ",
       "organization" : "64",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.259171 -22.877188))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.259171 -22.877188))",
       "points": "MULTIPOINT (-43.259171 -22.877188)"
     }
   }  ,
@@ -905,6 +995,7 @@
     "fields": {
       "name": "Transformando minha vida",
       "slug": "transformando-minha-vida",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Tangará, 445 - Bonsucesso - Rio de Janeiro - RJ"
     }
   },
@@ -915,7 +1006,8 @@
       "name": "Transformando minha vida - sede",
       "info": "R. Tangará, 445 - Bonsucesso - Rio de Janeiro - RJ",
       "organization" : "65",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.25779 -22.864162))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.25779 -22.864162))",
       "points": "MULTIPOINT (-43.25779 -22.864162)"
     }
   }  ,
@@ -925,7 +1017,8 @@
     "fields": {
       "name": "Rede Rotas",
       "slug": "rede-rotas",
-      "description": "R. Srg. Silva Nunes, 1012&nbsp; -Nova Holanda&nbsp;- Ramos - Rio de Janeiro - RJ"
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "R. Srg. Silva Nunes, 1012&nbsp; -Nova Holanda&nbsp;- Ramos - Rio de Janeiro - RJ<BR>"
     }
   },
     {
@@ -933,9 +1026,10 @@
     "pk" : "66",
     "fields": {
       "name": "Rede Rotas - sede",
-      "info": "R. Srg. Silva Nunes, 1012&nbsp; -Nova Holanda&nbsp;- Ramos - Rio de Janeiro - RJ",
+      "info": "R. Srg. Silva Nunes, 1012&nbsp; -Nova Holanda&nbsp;- Ramos - Rio de Janeiro - RJ<BR>",
       "organization" : "66",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.247478 -22.854958))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.247478 -22.854958))",
       "points": "MULTIPOINT (-43.247478 -22.854958)"
     }
   }  ,
@@ -945,6 +1039,7 @@
     "fields": {
       "name": "Vida",
       "slug": "vida",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Sonora, 408&nbsp;- Bonsucesso - Rio de Janeiro - RJ"
     }
   },
@@ -955,7 +1050,8 @@
       "name": "Vida - sede",
       "info": "R. Sonora, 408&nbsp;- Bonsucesso - Rio de Janeiro - RJ",
       "organization" : "67",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.275631 -22.86466))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.275631 -22.86466))",
       "points": "MULTIPOINT (-43.275631 -22.86466)"
     }
   }  ,
@@ -965,6 +1061,7 @@
     "fields": {
       "name": "Crescer e viver",
       "slug": "crescer-e-viver",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Canitar, 626&nbsp;- Inhaúma -Rio de Janeiro - RJ"
     }
   },
@@ -975,7 +1072,8 @@
       "name": "Crescer e viver - sede",
       "info": "R. Canitar, 626&nbsp;- Inhaúma -Rio de Janeiro - RJ",
       "organization" : "68",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.285938 -22.86463))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.285938 -22.86463))",
       "points": "MULTIPOINT (-43.285938 -22.86463)"
     }
   }  ,
@@ -985,6 +1083,7 @@
     "fields": {
       "name": "Ação",
       "slug": "acao",
+      "creation_date": "2012-03-21 15:04:58",
       "description": "R. Francisco Menescal, 94&nbsp;- Pavuna - Rio de Janeiro"
     }
   },
@@ -995,7 +1094,8 @@
       "name": "Ação - sede",
       "info": "R. Francisco Menescal, 94&nbsp;- Pavuna - Rio de Janeiro",
       "organization" : "69",
-      "geometry": "GEOMETRYCOLLECTION ( POINT(-43.343571 -22.81723))",
+      "creation_date": "2012-03-21 15:04:58",
+      "geometry": "GEOMETRYCOLLECTION (POINT (-43.343571 -22.81723))",
       "points": "MULTIPOINT (-43.343571 -22.81723)"
     }
   }]
