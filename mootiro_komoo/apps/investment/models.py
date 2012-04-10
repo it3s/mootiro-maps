@@ -5,6 +5,8 @@ from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 import reversion
 from lib.taggit.managers import TaggableManager
@@ -29,12 +31,24 @@ from lib.taggit.managers import TaggableManager
 
 
 class Grantee(models.Model):
-    """Abstract (but mapped to a table) class that represents the benefited part
-    on a investment. All classes that may receive an investment must inherit
-    from grantee."""
+    """Abstract (but mapped to a table) class that works as proxy for the
+    benefited part on a investment.
+        Usage examples:
+            investment.grantee = Grantee(proposal)
+            investment.grantee = Grantee(organization)
+            investment.grantee = Grantee(resource)
+    """
 
-    def __new__(cls):
-        raise RuntimeError('Grantee is an abstract class.')
+    # Proxy configuration
+    # def __init__(self, content_object):
+    #     self.content_object = content_object
+
+    def __getattr__(self, name):
+        return getattr(self.content_object, name)
+
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
 
 
 class Investment(models.Model):
@@ -54,7 +68,7 @@ class Investment(models.Model):
     currency = models.CharField(null=True, max_length=3, choices=CURRENCIES_CHOICES)
 
     date = models.DateField(null=False)
-    over_period = models.Boolean(default=False, null=False)
+    over_period = models.BooleanField(default=False, null=False)
     end_date = models.DateField(null=True)
 
     # Meta info
@@ -64,7 +78,8 @@ class Investment(models.Model):
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationship
-    grantee = models.ForeignKey(Grantee, related_name="investments", null=False, blank=False)
+    grantee = models.ForeignKey(Grantee, related_name="investments",
+                    null=False, editable=False, blank=False)
 
     tags = TaggableManager()
 

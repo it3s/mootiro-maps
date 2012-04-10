@@ -4,7 +4,9 @@ from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from django.contrib.auth.models import User
 import reversion
+
 from need.models import Need
+from investment.models import Grantee
 
 
 class Proposal(models.Model):
