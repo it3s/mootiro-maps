@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from xml.dom import minidom
-import csv, codecs, cStringIO
+import csv
+import codecs
+import cStringIO
+
 
 class UTF8Recoder:
     """
@@ -16,6 +19,7 @@ class UTF8Recoder:
 
     def next(self):
         return self.reader.next().encode("utf-8")
+
 
 class UnicodeReader:
     """
@@ -33,6 +37,7 @@ class UnicodeReader:
 
     def __iter__(self):
         return self
+
 
 class UnicodeWriter:
     """
@@ -62,6 +67,7 @@ class UnicodeWriter:
     def writerows(self, rows):
         for row in rows:
             self.writerow(row)
+
 
 def generate_csv(obj_list):
     with codecs.open('pcu_csv.csv', 'w', 'utf-8') as f:

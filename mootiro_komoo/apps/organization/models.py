@@ -48,7 +48,7 @@ class Organization(models.Model):
 
 
 class OrganizationBranch(GeoRefModel):
-    name = models.CharField(max_length=320, unique=True)
+    name = models.CharField(max_length=320)
     slug = models.SlugField(max_length=320)
 
     organization = models.ForeignKey(Organization)
