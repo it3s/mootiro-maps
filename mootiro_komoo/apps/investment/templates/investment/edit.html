@@ -1,0 +1,18 @@
+{% extends "global.html" %}
+{% load crispy_forms_tags %}
+{% load komoo_tags %}
+
+{% block title %}Investment{% endblock %}
+
+{% block menu %} {% menu community "investment" %} {% endblock %}
+
+{% block content %}
+
+<div id="main-content">
+  <div class="main-column">
+    {#% crispy form form.helper %#}
+    {{ grantee }}
+  </div>
+</div>
+
+{% endblock %}

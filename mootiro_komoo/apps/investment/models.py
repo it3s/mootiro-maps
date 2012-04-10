@@ -54,7 +54,7 @@ class Investment(models.Model):
     currency = models.CharField(null=True, max_length=3, choices=CURRENCIES_CHOICES)
 
     date = models.DateField(null=False)
-    over_period = models.Boolean(default=False, null=False)
+    over_period = models.BooleanField(default=False, null=False)
     end_date = models.DateField(null=True)
 
     # Meta info
