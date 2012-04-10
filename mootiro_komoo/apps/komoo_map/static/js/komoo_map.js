@@ -75,7 +75,8 @@ komoo.RegionTypes = [
         color: "#3a61d6",
         border: "#1f49b2",
         icon: "/static/img/organization.png",
-        overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
+        overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
+                       google.maps.drawing.OverlayType.MARKER],
         formUrl: dutils.urls.resolve("organization_new",
             {community_slug: "community_slug"}),
         disabled: false
