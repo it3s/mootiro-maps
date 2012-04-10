@@ -75,7 +75,8 @@ komoo.RegionTypes = [
         color: "#3a61d6",
         border: "#1f49b2",
         icon: "/static/img/organization.png",
-        overlayTypes: [google.maps.drawing.OverlayType.POLYGON],
+        overlayTypes: [google.maps.drawing.OverlayType.POLYGON,
+                       google.maps.drawing.OverlayType.MARKER],
         formUrl: dutils.urls.resolve("organization_new",
             {community_slug: "community_slug"}),
         disabled: false
@@ -148,6 +149,7 @@ komoo.MapOptions = {
     googleMapOptions: {  // Our default options for Google Maps map object.
         center: new google.maps.LatLng(-23.55, -46.65),  // São Paulo, SP - Brasil
         zoom: 13,
+        minZoom: 2,
         disableDefaultUI: false,
         mapTypeControlOptions: {
             mapTypeIds: [google.maps.MapTypeId.ROADMAP,
@@ -607,8 +609,14 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
                         community_slug: overlay.properties.community_slug
                     })
             );
-            var msg = ngettext("%s resident", "%s residents", overlay.properties.population);
-            this.infoWindow.body.html("<ul><li>" + interpolate(msg, [overlay.properties.population]) + "</li></ul>");
+            var population;
+            if (overlay.properties.population) {
+                var msg = ngettext("%s resident", "%s residents", overlay.properties.population);
+                population = interpolate(msg, [overlay.properties.population])
+            } else {
+                population = gettext("No population provided");
+            }
+            this.infoWindow.body.html("<ul><li>" + population + "</li></ul>");
         } else if (overlay.properties.type == "resource") {
             url = dutils.urls.resolve("view_resource", {
                         community_slug: overlay.properties.community_slug || "",
@@ -681,6 +689,7 @@ komoo.Map.prototype.initMarkerClusterer = function () {
         this.clusterer = new MarkerClusterer(this.googleMap, [], {
             gridSize: 20,
             maxZoom: 13,
+            minimumClusterSize: 1,
             imagePath: "/static/img/cluster/communities",
             imageSizes: [24, 29, 35, 41, 47]
         });
@@ -832,6 +841,7 @@ komoo.Map.prototype.goToSavedLocation = function () {
         var center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
         this.googleMap.setCenter(center);
         this.googleMap.setZoom(zoom);
+        if (window.console) console.log("Getting location from cookie...");
         return true;
     }
     return false;
@@ -1431,21 +1441,18 @@ komoo.Map.prototype.goToUserLocation = function () {
     if (google.loader.ClientLocation) { // Gets from google service
         pos = new google.maps.LatLng(google.loader.ClientLocation.latitude,
                                          google.loader.ClientLocation.longitude);
+        this.googleMap.setCenter(pos);
+        if (window.console) console.log("Getting location from Google...");
     }
     if (navigator.geolocation) { // Uses HTML5
         navigator.geolocation.getCurrentPosition(function(position) {
             pos = new google.maps.LatLng(position.coords.latitude,
                                              position.coords.longitude);
             komooMap.googleMap.setCenter(pos);
-        }, function () { // User denied the HTML5 access so use the info from google
-            if (pos) {
-                komooMap.googleMap.setCenter(pos);
-            }
+            if (window.console) console.log("Getting location from navigator.geolocation...");
+        }, function () {
+            if (window.console) console.log("User denied access to navigator.geolocation...");
         });
-    } else { // Dont support HTML5 so use info from google
-        if (pos) {
-            this.googleMap.setCenter(pos);
-        }
     }
 };
 
