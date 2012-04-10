@@ -1,5 +1,6 @@
 {% extends "global.html" %}
 {% load komoo_tags %}
+{% load komoo_map_tags %}
 {% load comment_tags %}
 {% load i18n %}
 
@@ -25,7 +26,7 @@
             {% trans 'at' %} <a href="{% url view_community need.community.slug %}">{{ need.community.name }}</a>
             {% endif %}
           </span>
-          <a class="small" href="#">{% trans 'see on the map' %}</a>
+          <a class="small preview-on-map" href="#" data-geojson="{% geojson need %}">{% trans 'see on the map' %}</a>
           <ul class="horizontal">
             {% for c in need.categories.all %}
             <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
@@ -44,4 +45,5 @@
 
   </div>
 </div>
+{% komoo_map_tooltip %}
 {% endblock %}

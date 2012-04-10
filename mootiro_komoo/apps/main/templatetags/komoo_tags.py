@@ -3,7 +3,7 @@ from __future__ import unicode_literals  # unicode by default
 from django import template
 from django import forms
 
-from main.utils import templatetag_args_parser
+from main.utils import templatetag_args_parser, create_geojson
 from main.widgets import ImageSwitch, ImageSwitchMultiple
 from community.models import Community
 from need.models import Need, NeedCategory
@@ -24,6 +24,12 @@ def _get_related_community(obj):
     else:
         community = None
     return community
+
+
+@register.simple_tag
+def geojson(obj=None):
+    """Returns a geojson with obj data"""
+    return create_geojson([obj]).replace("'", "\\'").replace('"', "'")
 
 
 @register.inclusion_tag('main/menu_templatetag.html')

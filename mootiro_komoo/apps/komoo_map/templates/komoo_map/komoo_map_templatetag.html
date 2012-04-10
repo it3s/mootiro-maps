@@ -57,9 +57,11 @@
           editable: true,
           {% if panel %}
           autoSaveLocation: true,
+          autoSaveMapType: true,
           {% endif %}
           googleMapOptions: {
             zoom: {{ zoom }},
+            maxZoom: null,
             mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: false,
             streetViewControl: false,

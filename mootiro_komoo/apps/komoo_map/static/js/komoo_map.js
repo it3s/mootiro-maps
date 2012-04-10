@@ -134,6 +134,7 @@ komoo.MapOptions = {
     defaultDrawingControl: false,
     regionTypes: komoo.RegionTypes,
     autoSaveLocation: false,
+    autoSaveMapType: false,
     enableInfoWindow: true,
     enableCluster: true,
     fetchOverlays: true,
@@ -409,7 +410,9 @@ komoo.Map = function (element, options) {
     if (this.options.useGeoLocation) {
         this.goToUserLocation();
     }
-    this.useSavedMapType();
+    if (this.options.autoSaveMapType) {
+        this.useSavedMapType();
+    }
     this.handleEvents();
     // Geocoder is used to search locations by name/address.
     this.geocoder = new google.maps.Geocoder();
@@ -786,9 +789,11 @@ komoo.Map.prototype.handleEvents = function () {
         }
     });
 
-    google.maps.event.addListener(this.googleMap, "maptypeid_changed", function () {
-        komooMap.saveMapType();
-    });
+    if (this.options.autoSaveMapType) {
+        google.maps.event.addListener(this.googleMap, "maptypeid_changed", function () {
+            komooMap.saveMapType();
+        });
+    }
 };
 
 
