@@ -148,6 +148,7 @@ komoo.MapOptions = {
     googleMapOptions: {  // Our default options for Google Maps map object.
         center: new google.maps.LatLng(-23.55, -46.65),  // São Paulo, SP - Brasil
         zoom: 13,
+        minZoom: 2,
         disableDefaultUI: false,
         mapTypeControlOptions: {
             mapTypeIds: [google.maps.MapTypeId.ROADMAP,
