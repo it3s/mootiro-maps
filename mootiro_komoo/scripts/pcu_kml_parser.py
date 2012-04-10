@@ -71,24 +71,24 @@ class UnicodeWriter:
 
 def generate_csv(obj_list):
     with codecs.open('pcu_csv.csv', 'w', 'utf-8') as f:
-        writer = UnicodeWriter(f)
-        writer.writerow(('name', 'description', 'folder', 'type', 'geometry'))
-        # f.write('name,description,folder,type,geometry\n')
+        # writer = UnicodeWriter(f)
+        # writer.writerow(('name', 'description', 'folder', 'type', 'geometry'))
+        f.write('name,description,folder,type,geometry\n')
         for o in obj_list:
-            # f.write('"{name}","{description}","{folder}","{type}","{geometry}"\n'.format(
-            #     name=unicode(o.get('name', '')),
-            #     description=unicode(o.get('description', '')),
-            #     folder=unicode(o.get('folder', '')),
-            #     type=unicode(o.get('type', '')),
-            #     geometry=unicode(o.get('geometry', '')).decode('utf-8')
-            # ))
-            writer.writerow((
-                unicode(o['name']),
-                unicode(o['description']),
-                unicode(o['folder']),
-                unicode(o['type']),
-                unicode(o['geometry'])
+            f.write('"{name}","{description}","{folder}","{type}","{geometry}"\n'.format(
+                name=unicode(o.get('name', '').replace("\"", "'")),
+                description=unicode(o.get('description', '').replace("\"", "'")),
+                folder=unicode(o.get('folder', '').replace("\"", "'")),
+                type=unicode(o.get('type', '').replace("\"", "'")),
+                geometry=unicode(o.get('geometry', '')).replace("\"", "'")
             ))
+            # writer.writerow((
+            #     o['name'],
+            #     o['description'],
+            #     o['folder'],
+            #     o['type'],
+            #     unicode(o['geometry'])
+            # ))
 
 
 def _get_val(node, name):
