@@ -683,6 +683,7 @@ komoo.Map.prototype.initMarkerClusterer = function () {
         this.clusterer = new MarkerClusterer(this.googleMap, [], {
             gridSize: 20,
             maxZoom: 13,
+            minimumClusterSize: 1,
             imagePath: "/static/img/cluster/communities",
             imageSizes: [24, 29, 35, 41, 47]
         });
