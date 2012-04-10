@@ -609,8 +609,14 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
                         community_slug: overlay.properties.community_slug
                     })
             );
-            var msg = ngettext("%s resident", "%s residents", overlay.properties.population);
-            this.infoWindow.body.html("<ul><li>" + interpolate(msg, [overlay.properties.population]) + "</li></ul>");
+            var population;
+            if (overlay.properties.population) {
+                var msg = ngettext("%s resident", "%s residents", overlay.properties.population);
+                population = interpolate(msg, [overlay.properties.population])
+            } else {
+                population = gettext("No population provided");
+            }
+            this.infoWindow.body.html("<ul><li>" + population + "</li></ul>");
         } else if (overlay.properties.type == "resource") {
             url = dutils.urls.resolve("view_resource", {
                         community_slug: overlay.properties.community_slug || "",
