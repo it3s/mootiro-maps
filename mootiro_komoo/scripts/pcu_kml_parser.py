@@ -126,7 +126,7 @@ def parse_kml(kml_file):
             o = {}
             name = _get_val(node, 'name')
             geometry = _get_geometry(node)
-            if name and geometry[0] and geometry[1]:
+            if geometry[0] and geometry[1]:
                 o['name'] = name
                 o['description'] = _get_val(node, 'description')
                 o['type'], o['geometry'] = geometry[0], geometry[1]
