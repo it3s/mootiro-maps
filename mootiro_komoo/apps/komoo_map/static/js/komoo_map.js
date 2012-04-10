@@ -835,6 +835,7 @@ komoo.Map.prototype.goToSavedLocation = function () {
         var center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
         this.googleMap.setCenter(center);
         this.googleMap.setZoom(zoom);
+        if (window.console) console.log("Getting location from cookie...");
         return true;
     }
     return false;
@@ -1434,21 +1435,18 @@ komoo.Map.prototype.goToUserLocation = function () {
     if (google.loader.ClientLocation) { // Gets from google service
         pos = new google.maps.LatLng(google.loader.ClientLocation.latitude,
                                          google.loader.ClientLocation.longitude);
+        this.googleMap.setCenter(pos);
+        if (window.console) console.log("Getting location from Google...");
     }
     if (navigator.geolocation) { // Uses HTML5
         navigator.geolocation.getCurrentPosition(function(position) {
             pos = new google.maps.LatLng(position.coords.latitude,
                                              position.coords.longitude);
             komooMap.googleMap.setCenter(pos);
-        }, function () { // User denied the HTML5 access so use the info from google
-            if (pos) {
-                komooMap.googleMap.setCenter(pos);
-            }
+            if (window.console) console.log("Getting location from navigator.geolocation...");
+        }, function () {
+            if (window.console) console.log("User denied access to navigator.geolocation...");
         });
-    } else { // Dont support HTML5 so use info from google
-        if (pos) {
-            this.googleMap.setCenter(pos);
-        }
     }
 };
 
