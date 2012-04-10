@@ -56,6 +56,19 @@ def js_urls():
     """Creates a javascript file containing urls"""
     local('python manage.py js_urls {}'.format(django_settings[env_]))
 
+    # remove trailing interrogations
+    print 'removing trailing "?" from urls'
+    import os
+    s = ''
+    with open(os.path.abspath('./apps/main/static/lib/django-js-utils/dutils.conf.urls.js'),
+              'r') as f:
+        s = f.read()
+        s = s.replace('?', '')
+    with open(os.path.abspath('./apps/main/static/lib/django-js-utils/dutils.conf.urls.js'),
+              'w') as f:
+        f.write(s)
+
+
 
 def syncdb(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
