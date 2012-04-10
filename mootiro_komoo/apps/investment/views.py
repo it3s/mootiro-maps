@@ -2,12 +2,14 @@
 from __future__ import unicode_literals  # unicode by default
 import logging
 
-# from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
 from annoying.decorators import render_to
+from annoying.functions import get_object_or_None
 
+from community.models import Community
 from proposal.views import prepare_proposal_objects
+from investment.forms import InvestmentForm
 
 logger = logging.getLogger(__name__)
 
@@ -36,8 +38,10 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
         organization_slug="", resource_slug="", investment_slug=""):
     logger.debug('acessing investment > edit_proposal_investment')
 
-    d = _determine_grantee(community_slug, need_slug, proposal_number,
-        organization_slug, resource_slug, investment_slug)
+    community = get_object_or_None(Community, slug=community_slug)
+
+    # d = _determine_grantee(community_slug, need_slug, proposal_number,
+    #     organization_slug, resource_slug, investment_slug)
 
     # first of all, determine grantee based on url
-    return d
+    return dict(form=InvestmentForm(), community=community)
