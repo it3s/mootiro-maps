@@ -60,12 +60,14 @@ def js_urls():
     print 'removing trailing "?" from urls'
     import os
     s = ''
-    with open(os.path.abspath('./apps/main/static/lib/django-js-utils/dutils.conf.urls.js'),
-              'r') as f:
+    with open(os.path.abspath(
+                './apps/main/static/lib/django-js-utils/dutils.conf.urls.js'),
+                'r') as f:
         s = f.read()
         s = s.replace('?', '')
-    with open(os.path.abspath('./apps/main/static/lib/django-js-utils/dutils.conf.urls.js'),
-              'w') as f:
+    with open(os.path.abspath(
+                './apps/main/static/lib/django-js-utils/dutils.conf.urls.js'),
+                'w') as f:
         f.write(s)
 
 

@@ -792,8 +792,8 @@ textarea.markItUpEditor{
     padding: 10px;
 }
 .search-header img{
-    max-height: 50px;
-    max-width: 50px;
+    max-height: 22px;
+    max-width: 22px;
     margin-right: 20px;
 }
 .search-result-entries li{

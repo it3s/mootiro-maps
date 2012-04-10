@@ -12,6 +12,7 @@ from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
+import requests
 
 from community.models import Community
 from need.models import Need
@@ -171,4 +172,14 @@ def komoo_search(request):
                      'model': key}
             result[key].append(dados)
 
+    # Google search
+    url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={}&sensor=false&types=geocode&key=AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM'.format(term)
+    # url = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input={input}&sensor={sensor}&types={types}&key={key}'.format(
+                # input=term, sensor=False, types='geocode',
+                # key='AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM')
+    google_results = requests.get(url)
+    print 'url', url
+    print google_results
+    print google_results.content
+    result['google'] = google_results.content
     return {'result': result}
