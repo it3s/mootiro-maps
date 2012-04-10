@@ -17,21 +17,28 @@ from proposal.forms import ProposalForm
 logger = logging.getLogger(__name__)
 
 
-@render_to('proposal/edit.html')
-@login_required
-def edit(request, community_slug="", need_slug="", proposal_number=""):
-    logger.debug('acessing proposal > edit')
-    # always receives all identifiers or none of them
+def prepare_proposal_objects(community_slug="", need_slug="", proposal_number=""):
+    """Retrieves a tuple (proposal, need, community). According to given
+    parameters may raise an 404. Creates a new proposal if proposal_number is
+    evaluated as false."""
     community = get_object_or_None(Community, slug=community_slug)
     filters = dict(slug=need_slug)
     if community:
         filters["community"] = community
     need = get_object_or_404(Need, **filters)
-
     if proposal_number:
         proposal = get_object_or_404(Proposal, number=proposal_number, need=need)
     else:
         proposal = Proposal(need=need)
+    return proposal, need, community
+
+
+@render_to('proposal/edit.html')
+@login_required
+def edit(request, community_slug="", need_slug="", proposal_number=""):
+    logger.debug('acessing proposal > edit')
+    proposal, need, community = prepare_proposal_objects(community_slug,
+        need_slug, proposal_number)
     if request.POST:
         form = ProposalForm(request.POST, instance=proposal)
         if form.is_valid():

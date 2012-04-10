@@ -64,7 +64,8 @@ class Investment(models.Model):
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationship
-    grantee = models.ForeignKey(Grantee, related_name="investments", null=False, blank=False)
+    grantee = models.ForeignKey(Grantee, related_name="investments",
+                    null=False, editable=False, blank=False)
 
     tags = TaggableManager()
 
