@@ -38,8 +38,10 @@ def prepare_investment_objects(community_slug="", need_slug="",
 
     if investment_slug:
         # FIXME: probably grantee must be filtered by its content_object
-        investment = get_object_or_404(Investment, slug=investment_slug,
-                        grantee)
+        #investment = get_object_or_404(Investment, slug=investment_slug,
+        #                grantee_content_type=,
+        #                grantee_object_id=grantee.id)
+        pass
     else:
         investment = Investment(grantee=grantee)
 
