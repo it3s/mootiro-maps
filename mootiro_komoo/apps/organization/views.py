@@ -189,12 +189,15 @@ def branch_edit(request):
     if request.POST.get('id', None) and request.POST.get('info', None):
         branch = get_object_or_404(OrganizationBranch, pk=request.POST.get('id', ''))
         branch.info = escape(request.POST['info'])
+        name = escape(request.POST.get('name', ''))
+        if name:
+            branch.name = name
         info = markdown.markdown(escape(request.POST['info']))
         branch.save()
         success = True
     else:
-        success, info = False, ''
-    return dict(success=success, info=info)
+        success, info, name = False, '', ''
+    return dict(success=success, info=info, name=name)
 
 
 def search_by_name(request):

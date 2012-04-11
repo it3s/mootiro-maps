@@ -95,7 +95,7 @@
 
                         <a href="#">
                             <div class="branch-name">
-                                {{ branch.name }}
+                                <span class="entry">{{ branch.name }}</span>
                                 <span class="branch-link-btn"> > </span>
                             </div>
                         </a>
@@ -216,7 +216,9 @@
             var branch = $(this).parent().parent().parent()
             var form = branch.find('.branch-form');
             var info = branch.find('.branch-info');
+            var branch_name = branch.find('.branch-name')
 
+            branch_name.fadeOut(400); //TDO KEEP from
             info.fadeOut(400, function(){
                 form.fadeIn(400);
             });
@@ -231,9 +233,12 @@
                         var branch = $(that).parent().parent();
                         var form = branch.find('.branch-form');
                         var info = branch.find('.branch-info');
+                        var branch_name = branch.find('.branch-name');
                         info.find('.entry').html(data.info);
+                        branch_name.find('.entry').html(data.name);
                         form.fadeOut(400, function(){
-                            info.fadeIn(400)
+                            info.fadeIn(400);
+                            branch_name.fadeIn(400);
                         });
 
                     } else {

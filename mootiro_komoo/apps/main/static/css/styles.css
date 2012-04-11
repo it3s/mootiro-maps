@@ -770,13 +770,17 @@ input[type=text], textarea{
     height: 120px;
     width: 650px;
     background-color: #ffffff;
-    margin-left: 20px;
+    margin-left: 15px;
 }
 .form-branch-edit .markItUpHeader{
-    margin-left: 20px;
+    margin-left: 15px;
 }
 .form-branch-edit-btn{
-    margin-left: 20px;
+    margin-left: 15px;
+}
+.form-branch-edit input{
+    margin-left: 15px;
+    background-color: #ffffff;
 }
 textarea.markItUpEditor{
     height: 250px;
