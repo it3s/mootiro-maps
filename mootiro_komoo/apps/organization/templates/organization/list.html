@@ -4,6 +4,7 @@
 {% load comment_tags %}
 {% load i18n %}
 {% load markitup_tags %}
+{% load vote_tags %}
 
 {% block title %}{% trans 'Organizations' %}{% endblock %}
 
@@ -24,7 +25,7 @@
     {% for org in organizations.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
 
-        <h4>
+        <!-- <h4>
           <span class="apart">
             {% if community %}
             <a href="/{{ community.slug }}/organization/{{ org.slug }}">{{ org.name }}</a>
@@ -46,7 +47,66 @@
           <div class="clear-both">
             {% comments_summary org %}
           </div>
-        </h4>
+        </h4> -->
+
+        <div>
+          <div class="inline-block org-list-log">
+            {% if org.files_set.count %}
+              <img src="{{ org.files_set.all.0.file.url }}" class="org-list-img"/>
+            {% endif %}
+          </div>
+          <div class="inline-block org-list-header">
+            <div>
+              {% if community %}
+                <a href="/{{ community.slug }}/organization/{{ org.slug }}" class="org-name">
+                  {{ org.name }}
+                </a>
+              {% else %}
+                <a href="/organization/{{ org.slug }}" class="org-list-name">
+                  {{ org.name }}
+                </a>
+              {% endif %}
+               <a class="small" href="#">{% trans 'see on the map' %}</a>
+            </div>
+            <div>
+              {% vote org %}
+            </div>
+            <div>
+              <div class="inline-block org-list-extra-info">
+                <div class="org-list-extra-info-entry">
+                  <span class="org-extra-info-name">
+                    {% trans 'Operation Field' %}:
+                  </span>
+                  {% for cat in org.categories.all %}
+                    {{ cat.name }}
+                    {% if not forloop.last %} | {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="org-list-extra-info-entry">
+                  <span class="org-extra-info-name">
+                    {% trans 'Public' %}:
+                  </span>
+                  {% for aud in org.target_audiences.all %}
+                    {{ aud.name }}
+                    {% if not forloop.last %} | {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="inline-block org-list-extra-info">
+                <div class="org-list-extra-info-entry">
+                  <span class="org-extra-info-name">
+                    {% trans 'Attended Communities' %}:
+                  </span>
+                  {% for com in org.community.all %}
+                    <a href="/{{ com.slug }}/about/">{{ com.name }}</a>
+                    {% if not forloop.last %} | {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
 
         <p class="mark-down">
           {{ org.description|slice:"250"|render_markup }}
@@ -60,4 +120,8 @@
 
   </div>
 
+{% endblock %}
+
+{% block page_scripts %}
+  {% vote_staticfiles %}
 {% endblock %}

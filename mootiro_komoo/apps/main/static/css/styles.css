@@ -823,6 +823,29 @@ textarea.markItUpEditor{
 .org-info-div.odd{
     background-color: rgb(220, 239, 244);
 }
+.org-list-header{
+    vertical-align: top;
+}
+.org-list-name{
+    font-weight: bold;
+    font-size: 1.1em;
+    padding-right: 20px;
+}
+.org-list-img{
+    padding-right: 10px;
+    width: 80px;
+    height: 60px;
+}
+.org-list-extra-info{
+    width: 300px;
+    vertical-align: top;
+}
+.org-extra-info-name{
+    font-weight: bold;
+}
+.org-list-extra-info-entry{
+    padding-bottom: 5px;
+}
 .search-header{
     background-color: #dceff4; ;
     font-weight: bold;
