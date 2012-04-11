@@ -1,6 +1,6 @@
 {% load komoo_map_tags %}
 
-<div id="map-preview" class="map-tooltip">{% komoo_map '{"features": [{}, {}]}' 'width=400px' 'height=400px'%}<div class="close-bttn"><i class="icon-remove"></i></div></div>
+<div id="map-preview" class="map-tooltip">{% komoo_map '{"features": [{}, {}]}' 'type=preview' 'width=400px' 'height=400px'%}<div class="close-bttn"><i class="icon-remove"></i></div></div>
 <script type="text/javascript" charset="utf-8">
   $(function () {
       var $mapTooltip = $(".map-tooltip").hide();
