@@ -45,8 +45,8 @@
       var mapContainerId = "map-container-{{ type }}";
       var mapElem = document.getElementById(mapCanvasId);
 
-      var geojson_ = '{{ geojson|safe }}';
-      var geojson = JSON.parse(geojson_);
+      var geojson = {{ geojson|safe }};
+      //var geojson = JSON.parse(geojson_);
 
       // Dont display the preview map if the geometry is empty.
       if ((geojson.features && geojson.features.length > 0) || mapCanvasId != 'map-canvas-preview') {
