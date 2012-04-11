@@ -58,7 +58,7 @@ class Investment(models.Model):
     title = models.CharField(max_length=256)
     description = models.TextField()
     value = models.DecimalField(decimal_places=2, max_digits=14, null=True)
-    currency = models.CharField(null=True, max_length=3, choices=CURRENCIES_CHOICES)
+    currency = models.CharField(null=True, max_length=3, choices=CURRENCIES_CHOICES, default='BRL')
 
     date = models.DateField(null=False)
     over_period = models.BooleanField(default=False, null=False)

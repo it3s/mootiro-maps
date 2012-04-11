@@ -448,6 +448,14 @@ form .form-actions {
     background: none;
     border: none;
 }
+form .formRow > div {
+    float: left;
+    clear: none;
+    margin-right: 5px;
+}
+form .datepicker {
+    width: 7em;
+}
 
 #need_form { width: 100% }
 #need_form input[type=text], #need_form textarea { width: 100% }
@@ -457,6 +465,8 @@ form .form-actions {
     margin: 0 2px;
 }
 #need_form #div_id_community input { width: 150px }
+
+#investment_form #id_currency { width: 7em }
 
 /* Ajax Search */
 .ajax-search { float: right }
