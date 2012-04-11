@@ -28,6 +28,9 @@
           <div class="inline-block org-list-log">
             {% if org.files_set.count %}
               <img src="{{ org.files_set.all.0.file.url }}" class="org-list-img"/>
+
+            {% else %}
+              <div class="org-list-img-placeholder"></div>
             {% endif %}
           </div>
           <div class="inline-block org-list-header">
