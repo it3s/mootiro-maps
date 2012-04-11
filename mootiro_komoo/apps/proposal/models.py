@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 import reversion
 
 from need.models import Need
-from investment.models import Grantee
 
 
 class Proposal(models.Model):
@@ -41,5 +40,14 @@ class Proposal(models.Model):
 
     def __unicode__(self):
         return unicode(self.title)
+
+    def home_url():
+        pass
+
+    def home_url_params(self):
+        d = dict(proposal_number=self.number, need_slug=self.need.slug)
+        if self.need.community:
+            d['community_slug'] = self.need.community.slug
+        return d
 
 reversion.register(Proposal)

@@ -21,9 +21,11 @@ class InvestmentForm(ModelForm):
         model = Investment
 
     description = forms.CharField(widget=MarkItUpWidget())
-    date = forms.Field(widget=Datepicker(format="%d-%m-%Y"))
-    end_date = forms.Field(widget=Datepicker(format="%d-%m-%Y"))
-    over_period = forms.BooleanField(widget=ConditionalField("#div_id_end_date"))
+    date = forms.DateField(widget=Datepicker())
+    end_date = forms.DateField(widget=Datepicker(), required=False)
+    over_period = forms.BooleanField(
+        widget=ConditionalField("#div_id_end_date"),
+        required=False)
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/need/tag_search"),
         required=False

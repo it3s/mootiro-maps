@@ -11,6 +11,8 @@ from django.contrib.contenttypes import generic
 import reversion
 from lib.taggit.managers import TaggableManager
 
+from main.utils import slugify
+
 
 # class Grantor(models.Model):
 #     """The giver part on an investment."""
@@ -34,9 +36,9 @@ class Grantee(models.Model):
     """Abstract (but mapped to a table) class that works as proxy for the
     benefited part on a investment.
         Usage examples:
-            investment.grantee = proposal
-            investment.grantee = organization
-            investment.grantee = resource
+            investment.grantee = Grantee(proposal)
+            investment.grantee = Grantee(organization)
+            investment.grantee = Grantee(resource)
     """
 
     content_type = models.ForeignKey(ContentType)
@@ -56,36 +58,62 @@ class Investment(models.Model):
     )
 
     title = models.CharField(max_length=256)
+    # Auto-generated url slug. It's not editable via ModelForm.
+    slug = models.CharField(max_length=256, null=False, blank=False, db_index=True, editable=False)
     description = models.TextField()
     value = models.DecimalField(decimal_places=2, max_digits=14, null=True)
-    currency = models.CharField(null=True, max_length=3, choices=CURRENCIES_CHOICES, default='BRL')
+    currency = models.CharField(null=True, max_length=3, choices=CURRENCIES_CHOICES)
 
     date = models.DateField(null=False)
     over_period = models.BooleanField(default=False, null=False)
     end_date = models.DateField(null=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
+    creator = models.ForeignKey(User, editable=False, null=False, blank=False,
                 related_name='created_investments')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationship
-    _grantee = models.ForeignKey(Grantee, related_name="investments",
-                    null=False, editable=False, blank=False)
+    grantee_content_type = models.ForeignKey(ContentType, editable=False)
+    grantee_object_id = models.PositiveIntegerField(editable=False)
+    grantee = generic.GenericForeignKey('grantee_content_type', 'grantee_object_id')
 
-    # Investment.grantee is a proxy for Grantee content_object
-    @property
-    def grantee(self):
-        return self._grantee.content_object
+    # grantee_object = models.ForeignKey(Grantee, related_name="investments",
+    #             null=False, editable=False, blank=False)
 
-    @grantee.setter
-    def grantee(self, obj):
-        self._grantee = Grantee(content_object=obj)
+    # # Investment.grantee is a proxy for Grantee content_object
+    # @property
+    # def grantee(self):
+    #     return self.grantee_object.content_object
+
+    # @grantee.setter
+    # def grantee(self, obj):
+    #     self.grantee_object = Grantee(content_object=obj)
 
     tags = TaggableManager()
 
     def __unicode__(self):
         return unicode(self.title)
+
+    ### Needed to slugify items ###
+    def slug_exists(self, slug):
+        """Answers if a given slug is valid in grantee investment namespace."""
+        return Investment.objects.filter(slug=slug).exists()
+
+    def save(self, *args, **kwargs):
+        old_title = Investment.objects.get(id=self.id).title if self.id else None
+        if not self.id or old_title != self.title:
+            self.slug = slugify(self.title, self.slug_exists)
+        super(Investment, self).save(*args, **kwargs)
+    ### END ###
+
+    def home_url():
+        pass
+
+    def home_url_params(self):
+        d = dict(investment_slug=self.slug)
+        d.update(self.grantee.home_url_params())
+        return d
 
 reversion.register(Investment)
