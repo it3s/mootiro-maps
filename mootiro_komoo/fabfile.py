@@ -71,7 +71,6 @@ def js_urls():
         f.write(s)
 
 
-
 def syncdb(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
     noinput = "" if create_superuser else "--noinput"
@@ -108,6 +107,23 @@ def load_fixtures(type_='system'):
             if fixture.endswith('_fixtures.json') and fixture != 'test_fixtures.json':
                 local('python manage.py loaddata fixtures/{} {}'.format(
                     fixture, django_settings[env_]))
+
+
+def loaddata(fixture_file=None):
+    """
+    load a single fixture file
+    usage:
+        fab loaddata:fixture_file_path -> loads the given fixture file to db
+    """
+    if fixture_file:
+        local('python manage.py loaddata {} {}'.format(
+                    fixture_file, django_settings[env_]))
+    else:
+        print """
+        Please provide a fixture file
+        usage:
+            fab loaddata:fixture_file_path -> loads the given fixture file to db
+        """
 
 
 def initial_revisions():
