@@ -1,0 +1,19 @@
+{% extends "global.html" %}
+
+{% load i18n %}
+{% load komoo_map_tags %}
+{% load comment_tags %}
+{% load vote_tags %}
+{% load proposal_tags %}
+{% load komoo_tags %}
+{% load markitup_tags %}
+
+{% block title %}{{ investment.title }} on GRANTEE{% endblock %}
+
+{% block menu %} {% menu community "investment" %} {% endblock %}
+
+{% block content %}
+  <div id="main-content">
+    {{ investment }}
+  </div>
+{% endblock %}
