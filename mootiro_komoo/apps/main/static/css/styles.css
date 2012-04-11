@@ -432,6 +432,8 @@ body.community #map-panel-tabs {
     border-radius        : 6px;
     -moz-border-radius   : 6px;
     -webkit-border-radius: 6px;
+    /*display: inline-block;*/
+    word-wrap: break-word;
 }
 .right-bar > .block ul li {
     margin-bottom: 5px;
