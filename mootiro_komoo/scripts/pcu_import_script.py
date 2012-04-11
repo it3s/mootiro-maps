@@ -46,6 +46,7 @@ def save_obj(vals):
     geom = eval(geom)
     print type(geom)
     print 'saving: ', vals
+
     if transf == 'sim':
         tipo = 'polys'
         x,y, z = map(float, geom[0].split(','))
@@ -69,7 +70,6 @@ def save_obj(vals):
         geo_ref = 'GEOMETRYCOLLECTION ( POINT ( %s %s))' % (y, x)
 
 
-    print geo_ref
     if imp == 'R':
         r = Resource()
         r.name = name
@@ -88,7 +88,7 @@ def save_obj(vals):
             c = Community.objects.get(slug=comunidade)
             n.community = c
         n.geometry = geo_ref
-        n.target_audiences.add(1)
+        # n.target_audiences.add(1)
         n.save()
 
     elif imp == 'O':
@@ -119,7 +119,7 @@ with codecs.open('scripts/pcu_importacao.csv', 'r', 'utf-8') as f:
     f.readline()
 
     buff = ''
-    count = 0
+    count = {'O': 0, 'N': 0, 'R': 0}
     for l in f:
         line = buff + l
         vals = re.split(''';(?=(?:[^'"]|'[^']*'|"[^"]*")*$)''', line)
@@ -131,7 +131,7 @@ with codecs.open('scripts/pcu_importacao.csv', 'r', 'utf-8') as f:
             imp, tranf, comunidade, name, desc, folder, tipo, geom, junk = vals
             if imp in ['O', 'N', 'R']:
                 # print_hit(line, vals)
+                count[imp] += 1
                 save_obj(vals)
-                count += 1
 
     print 'count', count
