@@ -34,17 +34,10 @@ class Grantee(models.Model):
     """Abstract (but mapped to a table) class that works as proxy for the
     benefited part on a investment.
         Usage examples:
-            investment.grantee = Grantee(proposal)
-            investment.grantee = Grantee(organization)
-            investment.grantee = Grantee(resource)
+            investment.grantee = proposal
+            investment.grantee = organization
+            investment.grantee = resource
     """
-
-    # Proxy configuration
-    # def __init__(self, content_object):
-    #     self.content_object = content_object
-
-    def __getattr__(self, name):
-        return getattr(self.content_object, name)
 
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -78,8 +71,17 @@ class Investment(models.Model):
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationship
-    grantee = models.ForeignKey(Grantee, related_name="investments",
+    _grantee = models.ForeignKey(Grantee, related_name="investments",
                     null=False, editable=False, blank=False)
+
+    # Investment.grantee is a proxy for Grantee content_object
+    @property
+    def grantee(self):
+        return self._grantee.content_object
+
+    @grantee.setter
+    def grantee(self, obj):
+        self._grantee = Grantee(content_object=obj)
 
     tags = TaggableManager()
 
