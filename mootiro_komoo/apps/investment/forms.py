@@ -11,7 +11,7 @@ from crispy_forms.layout import *
 from main.utils import MooHelper
 from investment.models import Investment
 
-from main.widgets import TaggitWidget, Datepicker
+from main.widgets import TaggitWidget, Datepicker, ConditionalField
 
 
 @autostrip
@@ -23,6 +23,7 @@ class InvestmentForm(ModelForm):
     description = forms.CharField(widget=MarkItUpWidget())
     date = forms.Field(widget=Datepicker(format="%d-%m-%Y"))
     end_date = forms.Field(widget=Datepicker(format="%d-%m-%Y"))
+    over_period = forms.BooleanField(widget=ConditionalField("#div_id_end_date"))
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/need/tag_search"),
         required=False
@@ -35,11 +36,11 @@ class InvestmentForm(ModelForm):
         self.helper.layout = Layout(
             "title",
             "description",
+            "over_period",
             Row(
                 "date",
                 "end_date",
             ),
-            "over_period",
             Row(
                 "currency",
                 "value",

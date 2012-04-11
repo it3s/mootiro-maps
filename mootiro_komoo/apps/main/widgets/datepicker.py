@@ -31,3 +31,46 @@ class Datepicker(forms.DateInput):
             'js': self.render_js(final_attrs['id'])
         }
         return html
+
+
+class ConditionalField(forms.CheckboxInput):
+
+    def __init__(self, selector='', *a, **kw):
+        self.selector = selector
+        super(ConditionalField, self).__init__(*a, **kw)
+
+    def render_js(self, checkbox_id):
+        js = u"""
+        $("#%(checkbox_id)s").on("click", function (event) {
+            var st = Boolean($(this).attr('checked'));
+            if (st) {
+                $("%(selector)s").show();
+            } else {
+                $("%(selector)s").hide();
+            }
+        });
+        $(function () {
+            $("#%(checkbox_id)s").triggerHandler("click");
+        });
+        """ % {
+            'selector': self.selector,
+            'checkbox_id': checkbox_id,
+        }
+        return js
+
+    def render(self, name, value, **attrs):
+        final_attrs = self.build_attrs(attrs, name=name)
+
+        if not 'id' in self.attrs:
+            final_attrs['id'] = 'id_%s' % name
+
+        html = u"""
+        %(checkbox)s
+        <script type="text/javascript"><!--//
+          %(js)s
+        //--></script>
+        """ % {
+            'checkbox': super(ConditionalField, self).render(name, value, final_attrs),
+            'js': self.render_js(final_attrs['id'])
+        }
+        return html

@@ -450,14 +450,13 @@ form .form-actions {
     background: none;
     border: none;
 }
+form .formRow { clear: both }
 form .formRow > div {
     float: left;
     clear: none;
     margin-right: 5px;
 }
-form .datepicker {
-    width: 7em;
-}
+form .datepicker { width: 7em }
 
 #need_form { width: 100% }
 #need_form input[type=text], #need_form textarea { width: 100% }
