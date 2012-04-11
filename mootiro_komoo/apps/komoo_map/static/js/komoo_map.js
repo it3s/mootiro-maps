@@ -136,6 +136,7 @@ komoo.MapOptions = {
     autoSaveLocation: false,
     autoSaveMapType: false,
     enableInfoWindow: true,
+    displayClosePanel: false,
     enableCluster: true,
     fetchOverlays: true,
     debug: false,
@@ -664,6 +665,10 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
 komoo.Map.prototype.initCustomControl = function () {
     // Draw our custom control.
     if (!this.options.defaultDrawingControl) {
+        this.closePanel = this._createClosePanel();
+        if (this.options.displayClosePanel) {
+            this.closePanel.show();
+        }
         this.mainPanel = this._createMainPanel();
         if (!this.editable) {
             this.mainPanel.hide();
@@ -673,6 +678,8 @@ komoo.Map.prototype.initCustomControl = function () {
         this.addPanel = this._createAddPanel();
         this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
                 this.addPanel.get(0));
+        this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
+                this.closePanel.get(0));
         // Adds editor toolbar.
         //this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
         //        this.editToolbar.get(0));
@@ -1994,6 +2001,34 @@ komoo.Map.prototype._createMainPanel = function () {
 
     this.addMenu = addMenu;
     return panel;
+};
+
+
+komoo.Map.prototype._createClosePanel = function () {
+    var komooMap = this;
+    var panel = $("<div>").addClass("map-panel");
+    var content = $("<div>").addClass("content");
+    var buttons = $("<div>").addClass("map-panel-buttons");
+    var closeButton = $("<div>").addClass("map-button");
+
+    closeButton.append($("<i>").addClass("icon-remove"));
+    closeButton.append($("<span>").text(gettext("Close")));
+
+    content.css({"clear": "both"});
+    buttons.css({"clear": "both"});
+    panel.append(content);
+    panel.append(buttons);
+    buttons.append(closeButton);
+
+    panel.css({
+        "margin": "10px",
+        "width": "220px"
+    });
+
+    closeButton.click(function (e) {
+        komooMap.event.trigger("close_click");
+    });
+    return panel.hide();
 };
 
 
