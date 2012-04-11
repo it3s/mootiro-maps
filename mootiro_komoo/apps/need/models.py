@@ -61,7 +61,7 @@ class Need(GeoRefModel):
 
     title = models.CharField(max_length=256, blank=False, db_index=True)
     # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.CharField(max_length=256, unique=True, blank=False, db_index=True)
+    slug = models.CharField(max_length=256, blank=False, db_index=True)
     description = models.TextField(db_index=True)
 
     # Meta info

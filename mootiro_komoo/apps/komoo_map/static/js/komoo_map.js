@@ -136,6 +136,7 @@ komoo.MapOptions = {
     autoSaveLocation: false,
     autoSaveMapType: false,
     enableInfoWindow: true,
+    displayClosePanel: false,
     enableCluster: true,
     fetchOverlays: true,
     debug: false,
@@ -323,6 +324,110 @@ komoo.ServerFetchMapType.prototype.getAddrLatLng = function (coord, zoom) {
 
 
 
+komoo.WikimapiaMapType = function (komooMap) {
+    this.komooMap = komooMap;
+    this.addrLatLngCache = {};
+    this.loadedOverlays = {};
+    this.tileSize = new google.maps.Size(256, 256);
+    this.maxZoom = 32;
+    this.name = "Wikimapia Data";
+    this.alt = "Wikimapia Data Tile Map Type";
+    this.key = "Add here your wikimapia key";
+};
+
+komoo.WikimapiaMapType.prototype.getAddrLatLng = function (coord, zoom) {
+    var key = "x=" + coord.x + ",y=" + coord.y
+    if (this.addrLatLngCache[key]) {
+        return this.addrLatLngCache[key];
+    }
+    var numTiles = 1 << zoom;
+    var projection = this.komooMap.googleMap.getProjection();
+    var point1 = new google.maps.Point(
+            (coord.x + 1) * this.tileSize.width / numTiles,
+            coord.y * this.tileSize.width / numTiles);
+    var point2 = new google.maps.Point(
+            coord.x * this.tileSize.width / numTiles,
+            (coord.y + 1) * this.tileSize.width / numTiles);
+    var ne = projection.fromPointToLatLng(point1);
+    var sw = projection.fromPointToLatLng(point2);
+    this.addrLatLngCache[key] = sw.lng() + "," + sw.lat() + "," + ne.lng() + "," + ne.lat();
+    return this.addrLatLngCache[key];
+};
+
+komoo.WikimapiaMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
+
+    function createOverlays(json) {
+        var overlays = []
+        var folder = json.folder;
+        $.each(folder, function (i, item) {
+            var coords = [];
+            $.each(item.polygon, function (j, point) {
+                coords.push(new google.maps.LatLng(point.y, point.x));
+            });
+            var polygon = new google.maps.Polygon({paths: [coords], fillColor: 'gray'});
+            polygon.wikimapia_id = item.id;
+            polygon.wikimapia_name = item.name;
+            overlays.push(polygon)
+        });
+        return overlays;
+    }
+
+    var me = this;
+    var div = ownerDocument.createElement("DIV");
+    var addr = this.getAddrLatLng(coord, zoom);
+    var url = "http://api.wikimapia.org/?function=box&bbox=" + addr + "&format=json&key=" + this.key;
+    div.tileKey = addr;
+    //if (this.komooMap.options.debug) {
+        // Display debug info.
+        $(div).css({
+            "width": this.tileSize.width + "px",
+            "height": this.tileSize.height + "px",
+            "border": "solid 1px #AAAAAA",
+            "overflow": "hidden",
+            "font-size": "9px"
+        });
+    //}
+
+    // Verify if we already loaded this block.
+    if (this.komooMap.fetchedTiles[addr]) {
+        //if (this.komooMap.options.debug) {
+            // Display debug info.
+            div.innerHTML = JSON.stringify(this.komooMap.fetchedTiles[addr].geojson);
+        //}
+        return div;
+    }
+    if (this.komooMap.options.fetchOverlays != false) {
+        $.ajax({
+            url: url,
+            dataType: "json",
+            type: "GET",
+            success: function (data, textStatus, jqXHR) {
+                var overlays = createOverlays(data);
+                me.komooMap.fetchedTiles[addr] = {
+                    json: data,
+                    overlays: overlays
+                };
+                $.each(overlays, function (key, overlay) {
+                    console.log(overlay.wikimapia_id);
+                    if (!me.loadedOverlays[overlay.wikimapia_id]) {
+                        overlay.setMap(me.komooMap.googleMap);
+                        me.loadedOverlays[overlay.wikimapia_id] = overlay;
+                    }
+                });
+                //if (me.komooMap.options.debug) {
+                    // Display debug info.
+                    div.innerHTML = JSON.stringify(data);
+                    $(div).css("border", "solid 1px #F00");
+                //}
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (window.console) console.error(textStatus);
+            }
+        });
+    }
+    return div;
+};
+
 /** @namespace */
 komoo.Mode = {};
 /***/ komoo.Mode.NAVIGATE = "navigate";
@@ -400,6 +505,8 @@ komoo.Map = function (element, options) {
     // Uses Tiles to get data from server.
     this.serverFetchMapType = new komoo.ServerFetchMapType(this);
     this.googleMap.overlayMapTypes.insertAt(0, this.serverFetchMapType);
+    this.wikimapiaMapType = new komoo.WikimapiaMapType(this);
+    //this.googleMap.overlayMapTypes.insertAt(0, this.wikimapiaMapType);
     this.initMarkerClusterer();
     // Create the simple version of toolbar.
     this.editToolbar = $("<div>").addClass("map-toolbar").css("margin", "5px");
@@ -664,6 +771,10 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
 komoo.Map.prototype.initCustomControl = function () {
     // Draw our custom control.
     if (!this.options.defaultDrawingControl) {
+        this.closePanel = this._createClosePanel();
+        if (this.options.displayClosePanel) {
+            this.closePanel.show();
+        }
         this.mainPanel = this._createMainPanel();
         if (!this.editable) {
             this.mainPanel.hide();
@@ -673,6 +784,8 @@ komoo.Map.prototype.initCustomControl = function () {
         this.addPanel = this._createAddPanel();
         this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
                 this.addPanel.get(0));
+        this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
+                this.closePanel.get(0));
         // Adds editor toolbar.
         //this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
         //        this.editToolbar.get(0));
@@ -1994,6 +2107,34 @@ komoo.Map.prototype._createMainPanel = function () {
 
     this.addMenu = addMenu;
     return panel;
+};
+
+
+komoo.Map.prototype._createClosePanel = function () {
+    var komooMap = this;
+    var panel = $("<div>").addClass("map-panel");
+    var content = $("<div>").addClass("content");
+    var buttons = $("<div>").addClass("map-panel-buttons");
+    var closeButton = $("<div>").addClass("map-button");
+
+    closeButton.append($("<i>").addClass("icon-remove"));
+    closeButton.append($("<span>").text(gettext("Close")));
+
+    content.css({"clear": "both"});
+    buttons.css({"clear": "both"});
+    panel.append(content);
+    panel.append(buttons);
+    buttons.append(closeButton);
+
+    panel.css({
+        "margin": "10px",
+        "width": "220px"
+    });
+
+    closeButton.click(function (e) {
+        komooMap.event.trigger("close_click");
+    });
+    return panel.hide();
 };
 
 

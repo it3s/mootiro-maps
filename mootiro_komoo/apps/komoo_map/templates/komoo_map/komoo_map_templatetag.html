@@ -11,12 +11,12 @@
 {% endblock %}
 {% block html %}
   <!-- HTML map container -->
-  <div id="map-container{% if editable %}-editor{% endif %}" style="overflow:hidden;">
-    {% if editable and panel %}
+  <div id="map-container-{{ type }}" style="overflow:hidden;">
+    {% if panel %}
       {% include "komoo_map/panel.html" %}
       <script type="text/javascript" src="{{STATIC_URL}}/js/map_filter.js"></script>
     {% endif %}
-    <div id="map-canvas{% if editable %}-editor{% endif %}"
+    <div id="map-canvas-{{ type }}"
       style="
       {% if width %}width: {{ width }}; height: {{ height }};
       {% endif %}
@@ -39,30 +39,33 @@
     {% if editable %}
     var editor;
     {% endif %}
-    function initialize_map{% if editable %}_editor{% endif %}() {
+    function initialize_map_{{ type }}() {
       var map;
-      var mapCanvasId = "map-canvas{% if editable %}-editor{% endif %}";
-      var mapContainerId = "map-container{% if editable %}-editor{% endif %}";
+      var mapCanvasId = "map-canvas-{{ type }}";
+      var mapContainerId = "map-container-{{ type }}";
       var mapElem = document.getElementById(mapCanvasId);
 
-      var geojson_ = '{{ geojson|safe }}';
-      var geojson = JSON.parse(geojson_);
+      var geojson = {{ geojson|safe }};
+      //var geojson = JSON.parse(geojson_);
 
       // Dont display the preview map if the geometry is empty.
-      if ((geojson.features && geojson.features.length > 0) || mapCanvasId == 'map-canvas-editor') {
+      if ((geojson.features && geojson.features.length > 0) || mapCanvasId != 'map-canvas-preview') {
         $('#dinamic-form').hide()
         // Options.
-        {% if editable %}
+        {% if type != 'preview' %}
         var mapOptions = {
           editable: true,
+          fetchOverlays: true,
+          autoSaveMapType: true,
           {% if panel %}
           autoSaveLocation: true,
-          autoSaveMapType: true,
+          {% endif %}
+          {% if type == 'view' %}
+          displayClosePanel: true,
           {% endif %}
           googleMapOptions: {
             zoom: {{ zoom }},
             maxZoom: null,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
             disableDefaultUI: false,
             streetViewControl: false,
             scaleControl: true,
@@ -86,13 +89,10 @@
         };
         {% endif %}
 
+          console.log('--->', mapOptions);
         // Initialize the komoo.map.
         map = new komoo.Map(mapElem, mapOptions);
-        {% if editable %}
-        editor = map;
-        {% else %}
-        preview = map;
-        {% endif %}
+        {{ type }} = map;
 
         // Fill the screen.
         function fixMapSize() {
@@ -190,12 +190,12 @@
             editor.event.bind('cancel_click', function () {
               $('#map-container-editor, #map-panel').slideUp(600);
               $('#main-content').show();
-              google.maps.event.trigger(map, 'resize');
+              google.maps.event.trigger(map.googleMap, 'resize');
             });
             editor.event.bind('finish_click', function () {
               $('#map-container-editor, #map-panel').slideUp(600);
               $('#main-content').show();
-              google.maps.event.trigger(map, 'resize');
+              google.maps.event.trigger(map.googleMap, 'resize');
               var newGeojson = editor.getGeoJSON({currentOnly: true, geometryCollection: true});
               $('#id_geometry').val(JSON.stringify(newGeojson));
               map.clear();
@@ -205,7 +205,7 @@
             }
           editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
           editor.googleMap.setZoom(editor.googleMap.getZoom()-1)
-          google.maps.event.trigger(editor, 'resize');
+          google.maps.event.trigger(editor.googleMap, 'resize');
           editor.editOverlay(editor.overlays[0]);
           setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
       });
@@ -213,7 +213,31 @@
     }
     // Initialize the map after page loading.
     {% if not lazy %}
-    google.maps.event.addDomListener(window, 'load', initialize_map{% if editable %}_editor{% endif %});
+    google.maps.event.addDomListener(window, 'load', initialize_map_{{ type }});
+    {% endif %}
+    {% if type == 'view' %}
+    // Handle "see on map" links.
+    google.maps.event.addDomListener(window, 'load', function () {
+        var map;
+        $('.see-on-map').click(function () {
+          $('#map-container-{{ type }}').show();
+          $('#main-content').hide();
+          // TODO: Save a overlay copy to revert edition on cancel click.
+          if (!window.{{ type }}) {
+            initialize_map_{{ type }}();
+            map = {{ type }};
+            map.event.bind('close_click', function () {
+              $('#map-container-{{ type }}, #map-panel').slideUp(600);
+              $('#main-content').show();
+            });
+          }
+          map = {{ type }};
+          map.googleMap.setZoom(map.googleMap.getZoom()+1);
+          map.googleMap.setZoom(map.googleMap.getZoom()-1);
+          map.centerOverlay(map.overlays[0]);
+          google.maps.event.trigger(map.googleMap, 'resize');
+        });
+      });
     {% endif %}
   </script>
 {% endblock %}

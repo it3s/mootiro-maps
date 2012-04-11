@@ -11,6 +11,7 @@ COMMUNITY_SLUG = r'(?P<community_slug>[a-zA-Z0-9-]+)'
 NEED_SLUG = r'(?P<need_slug>[a-zA-Z0-9-]+)'
 PROPOSAL_NUMBER = r'(?P<proposal_number>\d+)'
 ORGANIZATION_SLUG = r'(?P<organization_slug>[a-zA-Z0-9-]+)'
+INVESTMENT_SLUG = r'(?P<investment_slug>[a-zA-Z0-9-]+)'
 
 js_info_dict = {
     'packages': (
@@ -23,7 +24,8 @@ def prepare_regex(regex):
     return regex.replace('COMMUNITY_SLUG', COMMUNITY_SLUG) \
                 .replace('NEED_SLUG', NEED_SLUG) \
                 .replace('PROPOSAL_NUMBER', PROPOSAL_NUMBER) \
-                .replace('ORGANIZATION_SLUG', ORGANIZATION_SLUG)
+                .replace('ORGANIZATION_SLUG', ORGANIZATION_SLUG) \
+                .replace('INVESTMENT_SLUG', INVESTMENT_SLUG)
 
 
 # Uncomment the next two lines to enable the admin:

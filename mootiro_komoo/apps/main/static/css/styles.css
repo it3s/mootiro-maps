@@ -341,6 +341,9 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 .map-panel {
     background: #dceff4;
 }
+body.community .map-panel {
+    margin-top: 35px !important;
+}
 body.community #map-panel-tabs {
     padding-top: 35px !important;
 }
@@ -450,14 +453,13 @@ form .form-actions {
     background: none;
     border: none;
 }
+form .formRow { clear: both }
 form .formRow > div {
     float: left;
     clear: none;
     margin-right: 5px;
 }
-form .datepicker {
-    width: 7em;
-}
+form .datepicker { width: 7em }
 
 #need_form { width: 100% }
 #need_form input[type=text], #need_form textarea { width: 100% }
@@ -497,7 +499,7 @@ div.list > div:last-child { padding-bottom: 20px }
     padding: 0 0 0 15px;
     background: url("/static/img/infowindow-arrow.png") no-repeat 0 50%;
 }
-.map-tooltip #map-container {
+.map-tooltip #map-container-preview {
     background: white;
     padding: 10px;
     border-radius: 5px;
