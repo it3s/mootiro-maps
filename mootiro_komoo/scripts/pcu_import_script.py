@@ -108,12 +108,6 @@ def save_obj(vals):
             b.save()
 
 
-
-
-
-
-
-
 with codecs.open('scripts/pcu_importacao.csv', 'r', 'utf-8') as f:
     # consume first line
     f.readline()
@@ -129,7 +123,7 @@ with codecs.open('scripts/pcu_importacao.csv', 'r', 'utf-8') as f:
         else:
             buff = ''
             imp, tranf, comunidade, name, desc, folder, tipo, geom, junk = vals
-            if imp in ['O', 'N', 'R']:
+            if imp in ['O', 'N', 'R'] and comunidade == 'cidade-de-deus':
                 # print_hit(line, vals)
                 count[imp] += 1
                 save_obj(vals)
