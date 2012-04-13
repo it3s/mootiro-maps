@@ -115,6 +115,7 @@
         {% if editable and panel %}
         // Load the form when user click 'finish' button
         map.event.bind('finish_click', function (e, overlayType) {
+          $.ajaxSetup({ cache: true });
           var geojson = map.getGeoJSON({newOnly: true, geometryCollection: true});
           if (geojson.geometries.length > 0) {
             if (window.community_slug) {
@@ -129,6 +130,7 @@
               var serialized = $(this).serialize();
               $.ajax({
                 url: url,
+                cache: true,
                 context: context,
                 data: serialized,
                 dataType: 'html',
@@ -147,6 +149,7 @@
 
             $.ajax({
               url: url,
+              cache: true,
               context: context,
               dataType: 'html',
               type: 'GET',
