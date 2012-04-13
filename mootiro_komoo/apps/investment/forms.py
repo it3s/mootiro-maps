@@ -10,23 +10,47 @@ from crispy_forms.layout import *
 
 from main.utils import MooHelper
 from investment.models import Investment
+from organization.models import Organization
 
-from main.widgets import TaggitWidget, Datepicker, ConditionalField
+from main.widgets import TaggitWidget, Datepicker, ConditionalField, \
+    Autocomplete
 
 
 @autostrip
-class InvestmentForm(ModelForm):
+class InvestmentForm(forms.Form):
 
     class Meta:
         model = Investment
+        initial = {'intestor_type': 'ORG'}
 
     description = forms.CharField(widget=MarkItUpWidget())
+
+    investor_type = forms.ChoiceField(
+        choices=Investment.INVESTOR_TYPE_CHOICES,
+        initial='ORG',
+        widget=forms.RadioSelect,
+        required=True
+    )
+    anonymous_investor = forms.BooleanField(
+        # widget=ConditionalField(hide_on_active="#div_"),
+        required=False
+    )
+
+    # FIXME: the urls below should not be hardcoded. They should be calculated
+    # with reverse_lazy function, which is not implemented in Django 1.3 yet.
+    investor = forms.ModelChoiceField(
+        queryset=Organization.objects.all(),
+        widget=Autocomplete(Organization, "/organization/search_by_name"),
+        required=False
+    )
+
     date = forms.DateField(widget=Datepicker())
     end_date = forms.DateField(widget=Datepicker(), required=False)
     over_period = forms.BooleanField(
-        widget=ConditionalField("#div_id_end_date"),
+        widget=ConditionalField(show_on_active="#div_id_end_date"),
         required=False
     )
+
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/need/tag_search"),
         required=False
@@ -41,6 +65,9 @@ class InvestmentForm(ModelForm):
         self.helper.layout = Layout(
             "title",
             "description",
+            "investor_type",
+            "anonymous_investor",
+            "investor",
             "over_period",
             Row(
                 "date",
@@ -54,3 +81,5 @@ class InvestmentForm(ModelForm):
         )
 
         super(InvestmentForm, self).__init__(*a, **kw)
+
+        print type(self.fields['investor_type'])

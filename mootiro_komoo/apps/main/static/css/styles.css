@@ -472,6 +472,12 @@ form .datepicker { width: 7em }
 #need_form #div_id_community input { width: 150px }
 
 #investment_form #id_currency { width: 7em }
+#investment_form #div_id_investor_type .radio {
+    float: left;
+    margin-right: 1em;
+    padding-top: 0;
+}
+#investment_form #div_id_investor_type .radio input { margin-top: 0 }
 
 /* Ajax Search */
 .ajax-search { float: right }

@@ -35,8 +35,9 @@ class Datepicker(forms.DateInput):
 
 class ConditionalField(forms.CheckboxInput):
 
-    def __init__(self, selector='', *a, **kw):
-        self.selector = selector
+    def __init__(self, show_on_active='', hide_on_active='', *a, **kw):
+        self.show_on_active = show_on_active
+        self.hide_on_active = hide_on_active
         super(ConditionalField, self).__init__(*a, **kw)
 
     def render_js(self, checkbox_id):
@@ -44,16 +45,19 @@ class ConditionalField(forms.CheckboxInput):
         $("#%(checkbox_id)s").on("click", function (event) {
             var st = Boolean($(this).attr('checked'));
             if (st) {
-                $("%(selector)s").show();
+                $("%(show_on_active)s").show();
+                $("%(hide_on_active)s").hide();
             } else {
-                $("%(selector)s").hide();
+                $("%(show_on_active)s").hide();
+                $("%(hide_on_active)s").show();
             }
         });
         $(function () {
             $("#%(checkbox_id)s").triggerHandler("click");
         });
         """ % {
-            'selector': self.selector,
+            'show_on_active': self.show_on_active,
+            'hide_on_active': self.hide_on_active,
             'checkbox_id': checkbox_id,
         }
         return js

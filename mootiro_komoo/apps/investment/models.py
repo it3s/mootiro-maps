@@ -57,6 +57,11 @@ class Investment(models.Model):
         ('EUR', _('Euro')),
     )
 
+    INVESTOR_TYPE_CHOICES = (
+        ('ORG', _('Organization')),
+        ('PER', _('Person')),
+    )
+
     title = models.CharField(max_length=256)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.CharField(max_length=256, null=False, blank=False, db_index=True, editable=False)
@@ -75,22 +80,22 @@ class Investment(models.Model):
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
-    # Relationship
-    grantee_content_type = models.ForeignKey(ContentType, editable=False)
+    # Relationships
+
+    # Grantee generic relationship
+    grantee_content_type = models.ForeignKey(ContentType, editable=False,
+                related_name="investment_grantee")
     grantee_object_id = models.PositiveIntegerField(editable=False)
     grantee = generic.GenericForeignKey('grantee_content_type', 'grantee_object_id')
 
-    # grantee_object = models.ForeignKey(Grantee, related_name="investments",
-    #             null=False, editable=False, blank=False)
-
-    # # Investment.grantee is a proxy for Grantee content_object
-    # @property
-    # def grantee(self):
-    #     return self.grantee_object.content_object
-
-    # @grantee.setter
-    # def grantee(self, obj):
-    #     self.grantee_object = Grantee(content_object=obj)
+    # Investor generic relationship
+    investor_content_type = models.ForeignKey(ContentType, editable=False,
+                related_name="investment_investor")
+    investor_object_id = models.PositiveIntegerField(editable=False)
+    investor = generic.GenericForeignKey('investor_content_type', 'investor_object_id')
+    investor_type = models.CharField(max_length=3, null=True, blank=True,
+                choices=INVESTOR_TYPE_CHOICES)
+    anonymous_investor = models.BooleanField(default=False, null=False)
 
     tags = TaggableManager()
 
@@ -103,6 +108,9 @@ class Investment(models.Model):
         return Investment.objects.filter(slug=slug).exists()
 
     def save(self, *args, **kwargs):
+        # TODO: validate grantee as either a Proposal, a Resource or an Organization
+        # TODO: validate investor as either a User or an Organization
+
         old_title = Investment.objects.get(id=self.id).title if self.id else None
         if not self.id or old_title != self.title:
             self.slug = slugify(self.title, self.slug_exists)

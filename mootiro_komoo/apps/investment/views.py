@@ -70,7 +70,7 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
         else:
             return dict(form=form, community=community)
     else:
-        return dict(form=InvestmentForm(instance=investment),
+        return dict(form=InvestmentForm(),
                         community=community)
 
 
