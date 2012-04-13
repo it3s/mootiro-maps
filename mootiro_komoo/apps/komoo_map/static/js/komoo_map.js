@@ -128,6 +128,7 @@ komoo.RegionTypes = [
  * @property {google.maps.MapOptions} [googleMapOptions] The Google Maps map options.
  */
 komoo.MapOptions = {
+    clustererMaxZoom: 13,
     fetchUrl: "/get_geojson?",
     editable: true,
     useGeoLocation: false,
@@ -194,12 +195,12 @@ komoo.ServerFetchMapType = function (komooMap) {
 komoo.ServerFetchMapType.prototype.releaseTile = function (tile) {
     var serverFetchMapType = this;
     if (this.komooMap.fetchedTiles[tile.tileKey]) {
+        bounds = serverFetchMapType.komooMap.googleMap.getBounds();
         $.each(this.komooMap.fetchedTiles[tile.tileKey].overlays, function (key, overlay) {
-            bounds = serverFetchMapType.komooMap.googleMap.getBounds();
             if (overlay.bounds) {
                 if (!bounds.intersects(overlay.bounds)) {
                     overlay.setMap(null);
-                } else {
+                } else if (!bounds.contains(overlay.bounds.getNorthEast()) || !bounds.contains(overlay.bounds.getSouthWest())){
                     serverFetchMapType.komooMap.keptOverlays.push(overlay);
                 }
             } else if (overlay.getPosition) {
@@ -240,7 +241,7 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
                 overlay.setIcon(me.komooMap.getOverlayIcon(overlay));
             }
             if (overlay.marker) {
-                if (zoom < 13) {
+                if (zoom < me.komooMap.options.clustererMaxZoom) {
                     overlay.setMap(null);
                 } else {
                     overlay.setMap(me.komooMap.googleMap);
@@ -802,7 +803,7 @@ komoo.Map.prototype.initMarkerClusterer = function () {
         if (window.console) console.log("Initializing Marker Clusterer support.");
         this.clusterer = new MarkerClusterer(this.googleMap, [], {
             gridSize: 20,
-            maxZoom: 13,
+            maxZoom: this.options.clustererMaxZoom,
             minimumClusterSize: 1,
             imagePath: "/static/img/cluster/communities",
             imageSizes: [24, 29, 35, 41, 47]
@@ -844,11 +845,7 @@ komoo.Map.prototype.updateClusterers = function () {
     // FIXME: This is not the best way to do the cluster feature.
     var zoom = this.googleMap.getZoom();
     if (this.clusterer) {
-        if (zoom < 13) {
-            $.each(this.keptOverlays, function (key, overlay) {
-                overlay.setMap(null);
-            });
-            this.keptOverlays = [];
+        if (zoom < this.options.clustererMaxZoom) {
             this.clusterer.addMarkers(this.clusterMarkers);
         } else {
             this.clusterer.clearMarkers();
@@ -874,14 +871,30 @@ komoo.Map.prototype.handleEvents = function () {
     });
 
     google.maps.event.addListener(this.googleMap, "idle", function () {
+        var bounds = komooMap.googleMap.getBounds();
         if (komooMap.options.autoSaveLocation) {
             komooMap.saveLocation();
         }
+        $.each(komooMap.keptOverlays, function (key, overlay) {
+            if (!bounds.intersects(overlay.bounds)) {
+                overlay.setMap(null);
+            }
+        });
+        komooMap.keptOverlays = [];
     });
 
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
         komooMap.closeInfoWindow(); // Closes info window when zoom changed
         komooMap.updateClusterers();
+        var zoom = komooMap.googleMap.getZoom();
+        if (zoom < komooMap.options.clustererMaxZoom) {
+            var overlays = komooMap.getVisibleOverlays();
+            $.each(overlays, function (key, overlay) {
+                if (!overlay.marker) {
+                    overlay.setMap(null);
+                }
+            });
+        }
     });
 
     google.maps.event.addListener(this.googleMap, "projection_changed", function () {
@@ -915,7 +928,7 @@ komoo.Map.prototype.getVisibleOverlays = function () {
     var bounds = this.googleMap.getBounds();
     var overlays = [];
     $.each(this.overlays, function (key, overlay) {
-        if (!overlay.getVisible()) {
+        if (!overlay.getMap() && (overlay.marker && !overlay.marker.getVisible())) {
             // Dont verify the intersection if overlay is invisible.
             return;
         }
@@ -1104,7 +1117,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                 // Empty multipoint.
                 return;
             }
-            overlay = new MultiMarker();
+            overlay = new MultiMarker({visible: true, clickable: true});
             var markers = [];
             var coordinates;
             if (geometry.type == "MultiPoint") {
