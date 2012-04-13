@@ -70,17 +70,11 @@ class FormResource(forms.ModelForm):
 
     def clean_kind(self):
         try:
-            if self.cleaned_data['kind']:
+            if not self.cleaned_data['kind'] or self.cleaned_data['kind'] == 'None':
+                return ResourceKind()
+            else:
                 return ResourceKind.objects.get(id=self.cleaned_data['kind'])
-
-            elif self.fields['kind'].widget.can_add and 'kind_autocomplete' in self.args:
-                name = self.args['kind_autocomplete']
-                if not ResourceKind.objects.filter(
-                        Q(name__iexact=name) | Q(slug__iexact=name)).count():
-                    rk = ResourceKind(name=name)
-                    rk.save()
-                return rk
-        except Exception:
+        except:
             raise forms.ValidationError(_('invalid kind data'))
 
     def clean_community(self):

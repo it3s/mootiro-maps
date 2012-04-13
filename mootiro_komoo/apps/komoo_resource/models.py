@@ -4,6 +4,7 @@ from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.db.models import Count
+from django.utils.translation import gettext_lazy as _
 import reversion
 from lib.taggit.managers import TaggableManager
 from community.models import Community
@@ -32,7 +33,7 @@ class ResourceKind(models.Model):
 
 class Resource(GeoRefModel):
     """Resources model"""
-    name = models.CharField(max_length=256, db_index=True)
+    name = models.CharField(max_length=256, default=_('Resource without name'), db_index=True)
     creator = models.ForeignKey(User, null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)

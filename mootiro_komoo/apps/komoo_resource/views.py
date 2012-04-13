@@ -149,11 +149,11 @@ class Edit(View):
         logger.debug('acessing komoo_resource > Edit with POST\n'
                      'POST : {}\nFILES : {}'.format(request.POST, request.FILES))
         _id = request.POST.get('id', None)
-        if _id:
-            resource = get_object_or_404(Resource, pk=request.POST['id'])
-            form_resource = FormResource(request.POST, request.FILES, instance=resource)
-        else:
-            form_resource = FormResource(request.POST, request.FILES)
+        # if _id:
+        resource = get_object_or_404(Resource, pk=request.POST['id'])
+        form_resource = FormResource(request.POST, request.FILES, instance=resource)
+        # else:
+        #     form_resource = FormResource(request.POST, request.FILES)
 
         community = get_object_or_None(Community, slug=community_slug)
 
@@ -170,8 +170,15 @@ class Edit(View):
                     context_instance=RequestContext(request))
         else:
             logger.debug('Form erros: {}'.format(dict(form_resource._errors)))
+
+            geojson = create_geojson([resource], convert=False)
+            if geojson and geojson.get('features'):
+                geojson['features'][0]['properties']['userCanEdit'] = True
+            geojson = json.dumps(geojson)
+
             return render_to_response('resource/edit.html',
-                dict(form_resource=form_resource, community=community),
+                dict(form_resource=form_resource, community=community,
+                     geojson=geojson, resource=resource),
                 context_instance=RequestContext(request))
 
 
