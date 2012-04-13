@@ -567,7 +567,6 @@ komoo.Map = function (element, options) {
     });
 
     this.googleMap.mapTypes.set(komoo.CLEAN_MAPTYPE_ID, this.cleanMapType);
-
 };
 
 
@@ -841,6 +840,22 @@ komoo.Map.prototype.initStreetView = function () {
 };
 
 
+komoo.Map.prototype.updateClusterers = function () {
+    // FIXME: This is not the best way to do the cluster feature.
+    var zoom = this.googleMap.getZoom();
+    if (this.clusterer) {
+        if (zoom < 13) {
+            $.each(this.keptOverlays, function (key, overlay) {
+                overlay.setMap(null);
+            });
+            this.keptOverlays = [];
+            this.clusterer.addMarkers(this.clusterMarkers);
+        } else {
+            this.clusterer.clearMarkers();
+        }
+    }
+}
+
 /**
  * Connects some important events. Should not be called externally.
  */
@@ -864,25 +879,11 @@ komoo.Map.prototype.handleEvents = function () {
         }
     });
 
-    google.maps.event.addListener(this.googleMap, "idle", function () {
-        // FIXME: This is not the best way to do the cluster feature.
-        var zoom = komooMap.googleMap.getZoom();
-        if (komooMap.clusterer) {
-            if (zoom < 13) {
-                $.each(komooMap.keptOverlays, function (key, overlay) {
-                    overlay.setMap(null);
-                });
-                komooMap.keptOverlays = [];
-                komooMap.clusterer.addMarkers(komooMap.clusterMarkers);
-            } else {
-                komooMap.clusterer.clearMarkers();
-            }
-        }
-    });
-
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
         komooMap.closeInfoWindow(); // Closes info window when zoom changed
+        komooMap.updateClusterers();
     });
+
     google.maps.event.addListener(this.googleMap, "projection_changed", function () {
         komooMap.projection = komooMap.googleMap.getProjection();
         komooMap.overlayView = new google.maps.OverlayView();
@@ -2307,6 +2308,7 @@ komoo.Map.prototype._emit_geojson_loaded = function (e) {
      * @name komoo.Map#geojson_loaded
      * @event
      */
+    this.updateClusterers();
     this.event.trigger("geojson_loaded", e);
 };
 
