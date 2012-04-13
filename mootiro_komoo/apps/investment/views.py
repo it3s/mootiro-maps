@@ -11,6 +11,7 @@ from annoying.decorators import render_to
 from proposal.views import prepare_proposal_objects
 from investment.models import Investment
 from investment.forms import InvestmentForm
+from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
 
@@ -81,5 +82,6 @@ def view(request, community_slug="", need_slug="", proposal_number="",
     kw = locals()
     kw.pop('request')
     investment, community = prepare_investment_objects(**kw)
+    geojson = create_geojson([investment.grantee.need])
 
-    return dict(investment=investment, community=community)
+    return dict(investment=investment, community=community, geojson=geojson)

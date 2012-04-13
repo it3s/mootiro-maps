@@ -56,7 +56,8 @@ ul.horizontal li {
 }
 .centralizer * { display: inline-block }
 .right { float:right }
-.apart { margin-right: 3em }
+span.apart { margin-right: 3em }
+div.apart { margin-top: 1em }
 .meta-info {
     font-weight: bold;
     color: #000;

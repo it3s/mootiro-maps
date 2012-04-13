@@ -25,11 +25,14 @@ class InvestmentForm(ModelForm):
     end_date = forms.DateField(widget=Datepicker(), required=False)
     over_period = forms.BooleanField(
         widget=ConditionalField("#div_id_end_date"),
-        required=False)
+        required=False
+    )
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/need/tag_search"),
         required=False
     )
+
+    # TODO: value just validates if currency is set
 
     def __init__(self, *a, **kw):
         # Crispy forms configuration

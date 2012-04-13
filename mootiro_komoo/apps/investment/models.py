@@ -65,6 +65,7 @@ class Investment(models.Model):
     currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES, null=True, blank=True)
 
     date = models.DateField(null=False)
+    # TODO: remove over_period. Get this info by existence of an end_date
     over_period = models.BooleanField(default=False, null=False)
     end_date = models.DateField(null=True)
 
