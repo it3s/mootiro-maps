@@ -14,6 +14,58 @@
 
 {% block content %}
   <div id="main-content">
-    {{ investment }}
+    <div class="investment main-column">
+      <h2>{{ investment.title }} <div class="view-edit-btn right"><a href="{#% edit_investment **investment.url_params %#}" class="btn"><i class="icon-pencil"></i></a></div></h2>
+
+      {% vote investment %}
+
+      <div class="clear-both"></div>
+
+      <div class="apart">
+        <span class="meta-info">{% trans "Investor" %}</span> <a href="#">NOT IMPLEMENTED</a><br/>
+        {% if investment.end_date %}
+        <span class="meta-info">{% trans "Period" %}</span> {{ investment.date|date:"SHORT_DATE_FORMAT" }} - {{ investment.end_date|date:"SHORT_DATE_FORMAT" }}
+        {% else %}
+        <span class="meta-info">{% trans "Date" %}</span> {{ investment.date|date:"SHORT_DATE_FORMAT" }}
+        {% endif %}
+        {% if investment.value %}
+        <span class="meta-info">{% trans "Value" %}</span> {{ investment.currency }} {{ investment.value }}
+        {% endif %}
+      </div>
+
+      <div class="mark-down apart">
+        {{ investment.description|render_markup }}
+      </div>
+    </div>
+
+  <div class="right-bar">
+    <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
+    <a class="see-on-map" href="#">{% trans "see on map" %}</a>
+    {% with similar_investments=investment.tags.similar_objects %}
+      {% if similar_investments %}
+      <div class="block">
+        <h3>{% trans "Similar investments" %}</h3>
+        <ul>
+          {% for i in similar_investments %}
+          <li>
+              <a href="{#% url view_investment i.url_params %#}"> {{ i.title }} </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    {% endwith %}
   </div>
+
+  <div class="view-extras">
+    {% taglist investment %}
+    {% track_buttons %}
+    {% comments investment %}
+  </div>
+
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+    {% comments_staticfiles %}
 {% endblock %}
