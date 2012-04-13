@@ -851,7 +851,21 @@ komoo.Map.prototype.updateClusterers = function () {
             this.clusterer.clearMarkers();
         }
     }
-}
+};
+
+
+komoo.Map.prototype.hideOverlaysByZoom = function () {
+    var zoom = this.googleMap.getZoom();
+    if (zoom < this.options.clustererMaxZoom) {
+        var overlays = this.getVisibleOverlays();
+        $.each(overlays, function (key, overlay) {
+            if (!overlay.marker) {
+                overlay.setMap(null);
+            }
+        });
+    }
+};
+
 
 /**
  * Connects some important events. Should not be called externally.
@@ -872,6 +886,7 @@ komoo.Map.prototype.handleEvents = function () {
 
     google.maps.event.addListener(this.googleMap, "idle", function () {
         var bounds = komooMap.googleMap.getBounds();
+        komooMap.hideOverlaysByZoom();
         if (komooMap.options.autoSaveLocation) {
             komooMap.saveLocation();
         }
@@ -884,17 +899,9 @@ komoo.Map.prototype.handleEvents = function () {
     });
 
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
+        komooMap.hideOverlaysByZoom();
         komooMap.closeInfoWindow(); // Closes info window when zoom changed
         komooMap.updateClusterers();
-        var zoom = komooMap.googleMap.getZoom();
-        if (zoom < komooMap.options.clustererMaxZoom) {
-            var overlays = komooMap.getVisibleOverlays();
-            $.each(overlays, function (key, overlay) {
-                if (!overlay.marker) {
-                    overlay.setMap(null);
-                }
-            });
-        }
     });
 
     google.maps.event.addListener(this.googleMap, "projection_changed", function () {
