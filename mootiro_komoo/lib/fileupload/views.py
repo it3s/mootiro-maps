@@ -4,6 +4,7 @@ from django.views.generic import CreateView, DeleteView
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response, RequestContext
 
 
 def response_mimetype(request):
@@ -52,3 +53,12 @@ class JSONResponse(HttpResponse):
                  *args, **kwargs):
         content = simplejson.dumps(obj, **json_opts)
         super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
+
+
+def upload_poc(request):
+    return render_to_response('plupload_poc.html',
+                               context_instance=RequestContext(request))
+
+
+def upload_poc_form(request):
+    return JSONResponse()
