@@ -18,7 +18,6 @@ var komoo = {};
 komoo.CLEAN_MAPTYPE_ID = "clean";
 
 
-
 /**
  * @name komoo.RegionType
  * @class Object that represents a item on Add tab of main panel.
@@ -129,6 +128,7 @@ komoo.RegionTypes = [
  * @property {google.maps.MapOptions} [googleMapOptions] The Google Maps map options.
  */
 komoo.MapOptions = {
+    fetchUrl: "/get_geojson?",
     editable: true,
     useGeoLocation: false,
     defaultDrawingControl: false,
@@ -251,7 +251,7 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
     }
     if (this.komooMap.options.fetchOverlays != false) {
         $.ajax({
-            url: "/get_geojson?" + addr,
+            url: this.komooMap.options.fetchUrl + addr,
             dataType: "json",
             type: "GET",
             success: function (data, textStatus, jqXHR) {
@@ -408,7 +408,6 @@ komoo.WikimapiaMapType.prototype.getTile = function (coord, zoom, ownerDocument)
                     overlays: overlays
                 };
                 $.each(overlays, function (key, overlay) {
-                    console.log(overlay.wikimapia_id);
                     if (!me.loadedOverlays[overlay.wikimapia_id]) {
                         overlay.setMap(me.komooMap.googleMap);
                         me.loadedOverlays[overlay.wikimapia_id] = overlay;
@@ -870,6 +869,10 @@ komoo.Map.prototype.handleEvents = function () {
         var zoom = komooMap.googleMap.getZoom();
         if (komooMap.clusterer) {
             if (zoom < 13) {
+                $.each(komooMap.keptOverlays, function (key, overlay) {
+                    overlay.setMap(null);
+                });
+                komooMap.keptOverlays = [];
                 komooMap.clusterer.addMarkers(komooMap.clusterMarkers);
             } else {
                 komooMap.clusterer.clearMarkers();
@@ -878,10 +881,7 @@ komoo.Map.prototype.handleEvents = function () {
     });
 
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
-        $.each(komooMap.keptOverlays, function (key, overlay) {
-            overlay.setMap(null);
-        });
-        komooMap.keptOverlays = [];
+        komooMap.closeInfoWindow(); // Closes info window when zoom changed
     });
     google.maps.event.addListener(this.googleMap, "projection_changed", function () {
         komooMap.projection = komooMap.googleMap.getProjection();
