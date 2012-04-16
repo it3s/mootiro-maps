@@ -10,7 +10,9 @@
   <li class="needs">
     <div class="img-holder" data-object-type="need">{{ form.needs }}</div>
     <span>{% trans "Needs" %}</span>
+    {% if show_categories %}
     <div class="collapser"><i class="icon-chevron-right"></i></div>
+    {% endif %}
   </li>
   {% if show_categories %}
   <li class="need sublist">

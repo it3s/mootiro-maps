@@ -2,6 +2,7 @@
 from __future__ import unicode_literals  # unicode by default
 from django import template
 from django import forms
+from django.conf import settings
 
 from main.utils import templatetag_args_parser, create_geojson
 from main.widgets import ImageSwitch, ImageSwitchMultiple
@@ -48,8 +49,8 @@ def community_tabs(obj=None):
 def geo_objects_listing(arg1='', arg2='', arg3=''):
     """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] %}"""
     parsed_args = templatetag_args_parser(arg1, arg2, arg3)
-    show_categories = parsed_args.get('show_categories', False)
-    switchable = parsed_args.get('switchable', False)
+    show_categories = parsed_args.get('show_categories', 'False').lower() == 'true'
+    switchable = parsed_args.get('switchable', 'False').lower() == 'true'
     prefix = parsed_args.get('prefix', '')
 
     img = {
@@ -89,6 +90,21 @@ def geo_objects_listing(arg1='', arg2='', arg3=''):
 
     return dict(form=form, show_categories=show_categories)
 
+
+@register.inclusion_tag('main/geo_objects_add_templatetag.html')
+def geo_objects_add(arg1='', arg2='', arg3=''):
+    """Usage: {% geo_objects_add [prefix] %}"""
+    parsed_args = templatetag_args_parser(arg1, arg2, arg3)
+    prefix = parsed_args.get('prefix', '')
+
+    img = {
+        'communities': Community.image,
+        'needs': Need.image,
+        'organizations': Organization.image,
+        'resources': Resource.image,
+    }
+
+    return dict(img=img, STATIC_URL=settings.STATIC_URL)
 
 @register.inclusion_tag('main/track_buttons_templatetag.html')
 def track_buttons():
