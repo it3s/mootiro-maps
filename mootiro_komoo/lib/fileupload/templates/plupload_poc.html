@@ -47,20 +47,18 @@
     </head>
     <body>
         <form method="post" action="/upload/poc/form/">
-            <div>
-                <label for="id_name">Name: </label>
-                <input type="text" id="id_name" name="name" >
-            </div>
-            <div>
-                <label for="id_desc">Description:</label>
-                <textarea id="id_desc" name="desc" rows="10" cols="43"></textarea>
-            </div>
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div>
+                    {% if not is_hidden %}<div>{{ field.label }}</div> {% endif %}
+                    {{ field }}
+                </div>
+            {% endfor %}
             <div id="uploader">
                 <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
             </div>
-            <div>
-                <input type="hidden" name="files_list" id="id_files_list" value="">
-            </div>
+
             <div id="files-list"></div>
             <input type="submit" value="send">
         </form>
@@ -97,9 +95,13 @@
 
             $('.file-delete').live('click', function(){
                 var delete_url = $(this).attr('delete-url');
-                $.post(delete_url, {}, function(data){
-                    console.log(data);
-                }, 'json');
+                $.post(
+                    delete_url,
+                    {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                    function(data){
+                        console.log(data);
+                    },
+                    'json');
 
                 $(this).parent().fadeOut()
             });
@@ -135,6 +137,11 @@
                 drop_element: 'uploader',
                 sortable: true,
 
+                multipart_params : {
+                    "csrfmiddlewaretoken" : "{{ csrf_token }}"
+                },
+
+
                 preinit: {
                     'Init' : function(){
                         $('.plupload_header_title').text('Upload de Arquivos');
@@ -157,7 +164,7 @@
                     },
                     FileUploaded: function(up, file, response) {
                         var resp = JSON.parse(response.response);
-                        on_add_file(resp.file);
+                        on_add_file(resp);
                     }
                 }
 

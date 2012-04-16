@@ -30,3 +30,7 @@ class FileuploadInputWidget(forms.TextInput):
 class FileuploadField(forms.CharField):
     widget = FileuploadInputWidget
 
+
+# TODO cretae plupload widget
+class Pluploadwidget(forms.TextInput):
+    pass
