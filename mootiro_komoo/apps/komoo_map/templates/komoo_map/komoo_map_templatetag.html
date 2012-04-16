@@ -55,7 +55,11 @@
         {% if type != 'preview' %}
         var mapOptions = {
           editable: true,
+          {% if type == 'editor' %}
+          fetchOverlays: false,
+          {% else %}
           fetchOverlays: true,
+          {% endif %}
           autoSaveMapType: true,
           {% if panel %}
           autoSaveLocation: true,
@@ -92,7 +96,11 @@
           console.log('--->', mapOptions);
         // Initialize the komoo.map.
         map = new komoo.Map(mapElem, mapOptions);
+        {% if type == 'main' %}
+        editor = map;
+        {% else %}
         {{ type }} = map;
+        {% endif %}
 
         // Fill the screen.
         function fixMapSize() {
