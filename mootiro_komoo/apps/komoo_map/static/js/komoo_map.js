@@ -149,7 +149,7 @@ komoo.MapOptions = {
     displayClosePanel: false,
     enableCluster: true,
     fetchOverlays: true,
-    debug: false,
+    debug: true,
     overlayOptions: {
         visible: true,
         fillColor: "#ff0",
@@ -282,11 +282,30 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
                         overlay.setIcon(me.komooMap.getOverlayIcon(overlay));
                     }
                     if (overlay.marker) {
+                        // Display polygons as a point depending the zoom level
                         if (zoom < 13) {
                             overlay.setMap(null);
                         } else {
                             overlay.setMap(me.komooMap.googleMap);
                         }
+                    }
+                    if (overlay.getPaths) {
+                        // Brings small polygons to front
+                        var zIndex = overlay.zIndex;
+                        $.each(overlays, function (key, overlayToTest) {
+                            var bounds = overlayToTest.bounds;
+                            if (overlay == overlayToTest || !bounds){
+                                return;
+                            }
+                            if (bounds.contains(overlay.bounds.getNorthEast()) || bounds.contains(overlay.bounds.getSouthWest())) {
+                                var zIndexToTest = overlayToTest.zIndex;
+                                if (zIndexToTest >= zIndex) {
+                                    console.log(overlay, overlayToTest, zIndex);
+                                    zIndex = zIndexToTest + 1;
+                                    overlay.zIndex = zIndex;
+                                }
+                            };
+                        });
                     }
                 });
             },
