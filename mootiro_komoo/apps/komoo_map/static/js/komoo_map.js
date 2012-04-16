@@ -149,7 +149,7 @@ komoo.MapOptions = {
     displayClosePanel: false,
     enableCluster: true,
     fetchOverlays: true,
-    debug: true,
+    debug: false,
     overlayOptions: {
         visible: true,
         fillColor: "#ff0",
