@@ -39,7 +39,7 @@ def prepare_investment_objects(community_slug="", need_slug="",
         investment = get_object_or_404(Investment, slug=investment_slug,
             grantee_content_type=ContentType.objects.get_for_model(grantee),
             grantee_object_id=grantee.id)
-        pass
+        print "INVESTMENT = = =", investment
     else:
         investment = Investment(grantee=grantee)
 
@@ -59,7 +59,7 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
     if request.POST:
 
         post = request.POST.copy()  # needed because request.POST is immutable
-        investor = post.pop("investor")
+        #investor = post.pop("investor")
 
         form = InvestmentForm(post, instance=investment)
         if form.is_valid():
@@ -79,7 +79,9 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
         else:
             return dict(form=form, community=community)
     else:
-        return dict(form=InvestmentForm(), community=community)
+        print "GEEEEET", investment
+        return dict(form=InvestmentForm(instance=investment),
+                        community=community)
 
 
 @render_to('investment/view.html')
