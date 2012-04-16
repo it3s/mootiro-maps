@@ -9,7 +9,7 @@ from django.shortcuts import redirect, get_object_or_404
 from annoying.decorators import render_to
 
 from proposal.views import prepare_proposal_objects
-from investment.models import Investment
+from investment.models import Investment, Investor
 from investment.forms import InvestmentForm
 from main.utils import create_geojson
 
@@ -57,11 +57,20 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
     investment, community = prepare_investment_objects(**kw)
 
     if request.POST:
-        form = InvestmentForm(request.POST, instance=investment)
+
+        post = request.POST.copy()  # needed because request.POST is immutable
+        investor = post.pop("investor")
+
+        form = InvestmentForm(post, instance=investment)
         if form.is_valid():
             investment = form.save(commit=False)
+            # TODO: save the investor popped above
+            investor = Investor(content_object=request.user)
+            investor.save()
+            investment.investor = investor
             if not investment.id:  # was never saved
                 investment.creator = request.user
+
             investment.save()
 
             # FIXME: this only works for Proposals
@@ -70,8 +79,7 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
         else:
             return dict(form=form, community=community)
     else:
-        return dict(form=InvestmentForm(),
-                        community=community)
+        return dict(form=InvestmentForm(), community=community)
 
 
 @render_to('investment/view.html')

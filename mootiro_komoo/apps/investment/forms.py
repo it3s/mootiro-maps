@@ -9,7 +9,7 @@ from markitup.widgets import MarkItUpWidget
 from crispy_forms.layout import *
 
 from main.utils import MooHelper
-from investment.models import Investment
+from investment.models import Investment, Investor
 from organization.models import Organization
 
 from main.widgets import TaggitWidget, Datepicker, ConditionalField, \
@@ -17,7 +17,7 @@ from main.widgets import TaggitWidget, Datepicker, ConditionalField, \
 
 
 @autostrip
-class InvestmentForm(forms.Form):
+class InvestmentForm(ModelForm):
 
     class Meta:
         model = Investment
@@ -26,7 +26,7 @@ class InvestmentForm(forms.Form):
     description = forms.CharField(widget=MarkItUpWidget())
 
     investor_type = forms.ChoiceField(
-        choices=Investment.INVESTOR_TYPE_CHOICES,
+        choices=Investor.TYPE_CHOICES,
         initial='ORG',
         widget=forms.RadioSelect,
         required=True
@@ -81,5 +81,3 @@ class InvestmentForm(forms.Form):
         )
 
         super(InvestmentForm, self).__init__(*a, **kw)
-
-        print type(self.fields['investor_type'])

@@ -22,11 +22,11 @@
       <div class="clear-both"></div>
 
       <div class="apart">
-        <span class="meta-info">{% trans "Investor" %}</span> <a href="#">NOT IMPLEMENTED</a><br/>
+        <span class="meta-info">{% trans "Investor" %}</span> {{ investment.investor }}<br/>
         {% if investment.end_date %}
-        <span class="meta-info">{% trans "Period" %}</span> {{ investment.date|date:"SHORT_DATE_FORMAT" }} - {{ investment.end_date|date:"SHORT_DATE_FORMAT" }}
+        <span class="meta-info">{% trans "Period" %}</span> {{ investment.date }} - {{ investment.end_date }}<br/>
         {% else %}
-        <span class="meta-info">{% trans "Date" %}</span> {{ investment.date|date:"SHORT_DATE_FORMAT" }}
+        <span class="meta-info">{% trans "Date" %}</span> {{ investment.date }}<br/>
         {% endif %}
         {% if investment.value %}
         <span class="meta-info">{% trans "Value" %}</span> {{ investment.currency }} {{ investment.value }}

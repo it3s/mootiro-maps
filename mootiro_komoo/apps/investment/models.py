@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
@@ -14,36 +13,40 @@ from lib.taggit.managers import TaggableManager
 from main.utils import slugify
 
 
-# class Grantor(models.Model):
-#     """The giver part on an investment."""
+class Investor(models.Model):
+    """The giver part on an investment."""
 
-#     name = models.CharField(max_length=256)
-#     TYPE_CHOICES = (
-#         ('P', _('Person')),
-#         ('O', _('Organization')),
-#     )
-#     typ = models.CharField(verbose_name=_("type"), max_length=1, null=False,
-#                             choices=TYPE_CHOICES)
-#     is_anonymous = models.Boolean(default=False, null=False)
+    TYPE_CHOICES = (
+        ('ORG', _('Organization')),
+        ('PER', _('Person')),
+    )
 
-#     def __unicode__(self):
-#         if self.is_anonymous:
-#             return _("anonimous")
-#         return unicode(self.name)
+    _name = models.CharField(max_length=256, null=True, blank=True)
+    typ = models.CharField(max_length=3, null=False, verbose_name="type",
+                    choices=TYPE_CHOICES)
+    is_anonymous = models.BooleanField(default=False, null=False)
 
-
-class Grantee(models.Model):
-    """Abstract (but mapped to a table) class that works as proxy for the
-    benefited part on a investment.
-        Usage examples:
-            investment.grantee = Grantee(proposal)
-            investment.grantee = Grantee(organization)
-            investment.grantee = Grantee(resource)
-    """
-
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
+    # Relationship
+    content_type = models.ForeignKey(ContentType, editable=False, null=True)
+    object_id = models.PositiveIntegerField(editable=False, null=True)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    @property
+    def name(self):
+        if self.is_anonymous:
+            return "Anonymous"
+        elif self.content_object:
+            return unicode(self.content_object)
+        else:
+            return self._name
+
+    @name.setter
+    def name(self, value):
+        if not self.content_object and not self.is_anonymous:
+            self._name = value
+
+    def __unicode__(self):
+        return self.name
 
 
 class Investment(models.Model):
@@ -55,11 +58,6 @@ class Investment(models.Model):
         ('BRL', _('Real')),
         ('USD', _('Dollar')),
         ('EUR', _('Euro')),
-    )
-
-    INVESTOR_TYPE_CHOICES = (
-        ('ORG', _('Organization')),
-        ('PER', _('Person')),
     )
 
     title = models.CharField(max_length=256)
@@ -81,21 +79,13 @@ class Investment(models.Model):
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationships
-
+    investor = models.ForeignKey(Investor, related_name="investments",
+                    null=True, blank=True)
     # Grantee generic relationship
     grantee_content_type = models.ForeignKey(ContentType, editable=False,
                 related_name="investment_grantee")
     grantee_object_id = models.PositiveIntegerField(editable=False)
     grantee = generic.GenericForeignKey('grantee_content_type', 'grantee_object_id')
-
-    # Investor generic relationship
-    investor_content_type = models.ForeignKey(ContentType, editable=False,
-                related_name="investment_investor")
-    investor_object_id = models.PositiveIntegerField(editable=False)
-    investor = generic.GenericForeignKey('investor_content_type', 'investor_object_id')
-    investor_type = models.CharField(max_length=3, null=True, blank=True,
-                choices=INVESTOR_TYPE_CHOICES)
-    anonymous_investor = models.BooleanField(default=False, null=False)
 
     tags = TaggableManager()
 
