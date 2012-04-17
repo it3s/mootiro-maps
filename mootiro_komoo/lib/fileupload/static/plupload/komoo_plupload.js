@@ -1,5 +1,4 @@
 $(function() {
-    alert('Loaded??');
 
 window.get_files_list = function(){
     var ids_list = '';
@@ -36,7 +35,7 @@ $('.file-delete').live('click', function(){
 $("#uploader").pluploadQueue({
     // General settings
     runtimes : 'html5,flash,gears,silverlight,browserplus',
-    url : '{% url upload-new %}',
+    url : '/upload/new/',
     max_file_size : '10mb',
     chunk_size : '1mb',
     unique_names : true,
@@ -64,7 +63,7 @@ $("#uploader").pluploadQueue({
     sortable: true,
 
     multipart_params : {
-        "csrfmiddlewaretoken" : "{{ csrf_token }}"
+        "csrfmiddlewaretoken" : getCookie('csrftoken')
     },
 
 
@@ -114,6 +113,6 @@ $('form').submit(function(e) {
     } /*else {
         alert('You must queue at least one file.');
     }*/
-    return false;
+    // return false;
 });
 });

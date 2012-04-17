@@ -31,19 +31,19 @@ class FileuploadField(forms.CharField):
     widget = FileuploadInputWidget
 
 
-class PluploadWidget(forms.TextInput):
+class PluploadWidget(forms.Widget):
     """Plupload widget"""
     class Media:
         js = (
-            '/static/lib/jquery-1.7.1.js',
-            '/static/plupload/browserplus-min.js',
-            '/static/plupload/js/plupload.full.js',
-            '/static/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js',
-            '/static/plupload/komoo_plupload.js',
+            'lib/jquery-1.7.1.js',
+            'plupload/browserplus-min.js',
+            'plupload/js/plupload.full.js',
+            'plupload/js/jquery.plupload.queue/jquery.plupload.queue.js',
+            'plupload/komoo_plupload.js',
         )
-        css = (
-            '/static/plupload/komoo_plupload.css',
-        )
+        css = {
+            'all': ('plupload/komoo_plupload.css',)
+        }
 
     def render(self, name, value=None, attrs=None):
         html = u"""
