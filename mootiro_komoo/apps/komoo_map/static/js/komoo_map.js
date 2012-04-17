@@ -1042,6 +1042,39 @@ komoo.Map.prototype.useSavedMapType = function () {
 };
 
 
+komoo.Map.prototype.updateOverlay = function (overlay, geojson) {
+    var geometry;
+
+    // if we got only the geojson, as first parameter, we will try to get the
+    // correct overlay
+    if (!geojson) {
+        geojson = overlay;
+        var feature = geojson.features[0];
+        overlay = this.getOverlay(feature.properties.type, feature.properties.id);
+    }
+
+    // Get the geometry from geojson
+    if (geojson.type == "FeatureCollection") {
+        geometry = geojson.features[0].geometry;
+    } else if (geojson.type == "GeometryCollection") {
+        geometry = geojson.geometries[0];
+    }
+
+    // Update the overlay geometry
+    if (overlay.getPaths && geometry.type == "Polygon") {
+        var paths = overlay.getPaths()
+        paths.forEach(function (path, i) {
+            path.clear(); // Remove all points from polygon path
+            $.each(geometry.coordinates[i], function (j, coord) {
+                var latLng = new google.maps.LatLng(coord[0], coord[1]);
+                path.push(latLng); // Add point to path
+            });
+            path.pop(); // Removes the last point that closes the loop
+        });
+    }
+};
+
+
 /**
  * Load the features from geoJSON into the map.
  * @param {json} geoJSON The json that will be loaded.
