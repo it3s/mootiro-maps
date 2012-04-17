@@ -17,7 +17,7 @@
     <h3>
       {{ proposal.title }}
       <span class="small"> (<a href="{% if community %}{% url view_need proposal.need.community.slug proposal.need.slug %}{% else %}{% url view_need proposal.need.slug %}{% endif %}"> {{ proposal.need.title }}</a>)</span>
-      <div class="view-edit-btn"><a href="{% if community %}{% url edit_proposal community.slug proposal.need.slug proposal.number %}{% else %}{% url edit_proposal proposal.need.slug proposal.number %}{% endif %}" class="btn"><i class="icon-pencil"></i></a></div>
+      <div class="view-edit-btn"><a href="{% if community %}{% url edit_proposal community.slug proposal.need.slug proposal.number %}{% else %}{% url edit_proposal proposal.need.slug proposal.number %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a></div>
     </h3>
     {% vote proposal %}
     <p>

@@ -52,6 +52,9 @@
       <div id="content">
         {% block content %}{% endblock %}
       </div>
+      {% if not user.is_authenticated %}
+        {% include "main/login_box.html" %}
+      {% endif %}
     </div>
     {% block page_scripts %}{% endblock %}
   </body>

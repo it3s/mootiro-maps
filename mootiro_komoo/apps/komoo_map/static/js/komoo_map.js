@@ -1476,6 +1476,9 @@ komoo.Map.prototype.clear = function () {
     this.fetchedTiles = {};
     $.each(this.overlays, function (key, overlay) {
         overlay.setMap(null);
+        if (overlay.marker) {
+            overlay.marker.setMap(null);
+        }
         delete overlay;
     });
     if (this.clusterer) {
