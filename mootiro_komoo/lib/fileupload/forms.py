@@ -35,7 +35,7 @@ class PluploadWidget(forms.Widget):
     """Plupload widget"""
     class Media:
         js = (
-            'lib/jquery-1.7.1.js',
+            # 'lib/jquery-1.7.1.js',
             'plupload/browserplus-min.js',
             'plupload/js/plupload.full.js',
             'plupload/js/jquery.plupload.queue/jquery.plupload.queue.js',
@@ -51,9 +51,9 @@ class PluploadWidget(forms.Widget):
                 <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
             </div>
             <div>
-                <input type="hidden" id="id_files_ids_list" name="files_ids_list" >
+                <input type="hidden" id="id_files_ids_list" name="%(name)s" >
             </div>
 
             <div id="files-list"></div>
-        """
+        """ % {'name': name}
         return html

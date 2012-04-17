@@ -3,16 +3,15 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.db.models.query_utils import Q
 
 from markitup.widgets import MarkItUpWidget
-from fileupload.forms import FileuploadField
+from fileupload.forms import PluploadWidget
+from fileupload.models import UploadedFile
 
 from main.utils import MooHelper
 from main.widgets import Autocomplete, TaggitWidget, AutocompleteWithFavorites
 from komoo_resource.models import Resource, ResourceKind
 from community.models import Community
-from fileupload.models import UploadedFile
 
 
 class FormResource(forms.ModelForm):
@@ -27,7 +26,7 @@ class FormResource(forms.ModelForm):
         required=False)
     community = forms.CharField(required=False,
         widget=Autocomplete(Community, '/community/search_by_name'))
-    files = FileuploadField(required=False)
+    files = forms.CharField(widget=PluploadWidget())
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:

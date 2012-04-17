@@ -18,32 +18,32 @@ def response_mimetype(request):
 class FileCreateView(CreateView):
     model = UploadedFile
 
-    def form_valid(self, form):
-        self.object = form.save()
-        f = self.request.FILES.get('file')
-        data = [{'name': f.name,
-                 'url': self.object.file.url,
-                 'thumbnail_url': self.object.file.url,
-                 'delete_url': reverse('upload-delete', args=[self.object.id]),
-                 'delete_type': "DELETE",
-                 'id': self.object.id}]
-        response = JSONResponse(data, {}, response_mimetype(self.request))
-        response['Content-Disposition'] = 'inline; filename=files.json'
-        return response
-
-    # PLUPLOAD
     # def form_valid(self, form):
     #     self.object = form.save()
-    #     # f = self.request.FILES.get('file')
-    #     data = {'name': self.object.file.name.split('/')[-1],
+    #     f = self.request.FILES.get('file')
+    #     data = [{'name': f.name,
     #              'url': self.object.file.url,
     #              'thumbnail_url': self.object.file.url,
     #              'delete_url': reverse('upload-delete', args=[self.object.id]),
     #              'delete_type': "DELETE",
-    #              'id': self.object.id}
+    #              'id': self.object.id}]
     #     response = JSONResponse(data, {}, response_mimetype(self.request))
     #     response['Content-Disposition'] = 'inline; filename=files.json'
     #     return response
+
+    # PLUPLOAD
+    def form_valid(self, form):
+        self.object = form.save()
+        # f = self.request.FILES.get('file')
+        data = {'name': self.object.file.name.split('/')[-1],
+                 'url': self.object.file.url,
+                 'thumbnail_url': self.object.file.url,
+                 'delete_url': reverse('upload-delete', args=[self.object.id]),
+                 'delete_type': "DELETE",
+                 'id': self.object.id}
+        response = JSONResponse(data, {}, response_mimetype(self.request))
+        response['Content-Disposition'] = 'inline; filename=files.json'
+        return response
 
 
 class FileDeleteView(DeleteView):
@@ -71,7 +71,6 @@ class JSONResponse(HttpResponse):
 
 
 from forms import PluploadWidget
-
 
 class DummyForm(forms.Form):
     name = forms.CharField()

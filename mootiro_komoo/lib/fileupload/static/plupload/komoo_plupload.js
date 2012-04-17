@@ -8,7 +8,7 @@ window.get_files_list = function(){
     return ids_list;
 };
 
-var on_add_file = function(file){
+window.add_file = function(file){
     $('#files-list').append('' +
         '<div class="file-entry" file-id="' + file.id + '">' +
             '<img class="file-img" src="' + file.url + '">' +
@@ -89,7 +89,7 @@ $("#uploader").pluploadQueue({
         },
         FileUploaded: function(up, file, response) {
             var resp = JSON.parse(response.response);
-            on_add_file(resp);
+            add_file(resp);
         }
     }
 
