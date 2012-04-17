@@ -913,11 +913,12 @@ textarea.markItUpEditor{
     box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
 }
 #login-box {
+    width: 665px !important;
     display: none;
     margin: -20px 23px 10px;
 }
 #login-box li.option {
-    width: 290px;
+    width: 300px;
     display: inline-block;
     padding: 10px 15px;
     text-align: center;
