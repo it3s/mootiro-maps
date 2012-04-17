@@ -1,12 +1,50 @@
+{% load i18n %}
 {% load markitup_tags %}
 {% markitup_media %}
 
 <form class="form-branch-edit" action="{% url branch_edit %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="id" value="{{ branch.id }}" >
+    <input type="hidden" name="geometry" id="branch-geometry-{{ branch.id }}" value="{{ branch.geojson }}" >
     <input type="text" name="name" value="{{ branch.name }}">
     <textarea name="info" rows="4" cols="20" id="{{ info_id }}">{{branch.info}}</textarea>
     {% markitup_editor info_id %}
 
     <input type="submit" value="update" class="btn form-branch-edit-btn" >
+    <div style="clear: both;"><a href="#" id="map-edit-button-{{ branch.id }}">{% trans "Edit" %}</a></div>
+    <script type="text/javascript">
+      $("#map-edit-button-{{ branch.id }}").click(function (e) {
+          // FIXME: DRY
+          $('#map-container-editor').show();
+          $('#main-content').hide();
+          geometryInputId = '#branch-geometry-{{ branch.id }}';
+          // TODO: Save a overlay copy to revert edition on cancel click.
+          var geojson = JSON.parse($("#branch-geometry-{{ branch.id }}").val())
+          if (!editor) {
+            initialize_map_editor();
+            editor.event.bind('cancel_click', function () {
+              $('#map-container-editor, #map-panel').slideUp(600);
+              $('#main-content').show();
+              google.maps.event.trigger(editor.googleMap, 'resize');
+            });
+            editor.event.bind('finish_click', function () {
+              $('#map-container-editor, #map-panel').slideUp(600);
+              $('#main-content').show();
+              google.maps.event.trigger(editor.googleMap, 'resize');
+              var newGeojson = editor.getGeoJSON({currentOnly: true, geometryCollection: true});
+              $(geometryInputId).val(JSON.stringify(newGeojson));
+              preview.clear();
+              var newGeojson_ = editor.getGeoJSON({currentOnly: true});
+              preview.loadGeoJSON(newGeojson_);
+            });
+            }
+          editor.clear();
+          editor.loadGeoJSON(geojson);
+          editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
+          editor.googleMap.setZoom(editor.googleMap.getZoom()-1)
+          google.maps.event.trigger(editor.googleMap, 'resize');
+          editor.editOverlay(editor.overlays[0]);
+          setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
+      });
+    </script>
 </form>

@@ -19,6 +19,7 @@
 {% block menu %} {% menu organization "organization" %} {% endblock %}
 
 {% block content %}
+{% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'lazy=True' %}
 <div id="main-content" class="inline-block">
     <div class="main-column">
 
