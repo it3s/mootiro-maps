@@ -110,6 +110,7 @@ $('form').submit(function(e) {
         });
 
         uploader.start();
+
     } /*else {
         alert('You must queue at least one file.');
     }*/
