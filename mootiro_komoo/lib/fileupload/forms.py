@@ -31,6 +31,29 @@ class FileuploadField(forms.CharField):
     widget = FileuploadInputWidget
 
 
-# TODO cretae plupload widget
-class Pluploadwidget(forms.TextInput):
-    pass
+class PluploadWidget(forms.TextInput):
+    """Plupload widget"""
+    class Media:
+        js = (
+            '/static/lib/jquery-1.7.1.js',
+            '/static/plupload/browserplus-min.js',
+            '/static/plupload/js/plupload.full.js',
+            '/static/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js',
+            '/static/plupload/komoo_plupload.js',
+        )
+        css = (
+            '/static/plupload/komoo_plupload.css',
+        )
+
+    def render(self, name, value=None, attrs=None):
+        html = u"""
+            <div id="uploader">
+                <p>You browser doesn't have Flash, Silverlight, Gears, BrowserPlus or HTML5 support.</p>
+            </div>
+            <div>
+                <input type="hidden" id="id_files_ids_list" name="files_ids_list" >
+            </div>
+
+            <div id="files-list"></div>
+        """
+        return html

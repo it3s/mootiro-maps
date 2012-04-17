@@ -70,10 +70,13 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
 
 
+from forms import PluploadWidget
+
+
 class DummyForm(forms.Form):
     name = forms.CharField()
     desc = forms.CharField(widget=forms.Textarea())
-    files_list = forms.CharField(widget=forms.HiddenInput())
+    files_list = forms.CharField(widget=PluploadWidget())
 
 
 def upload_poc(request):
