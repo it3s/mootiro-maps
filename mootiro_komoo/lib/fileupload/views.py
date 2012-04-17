@@ -4,8 +4,6 @@ from django.views.generic import CreateView, DeleteView
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response, RequestContext
-from django import forms
 
 
 def response_mimetype(request):
@@ -17,19 +15,6 @@ def response_mimetype(request):
 
 class FileCreateView(CreateView):
     model = UploadedFile
-
-    # def form_valid(self, form):
-    #     self.object = form.save()
-    #     f = self.request.FILES.get('file')
-    #     data = [{'name': f.name,
-    #              'url': self.object.file.url,
-    #              'thumbnail_url': self.object.file.url,
-    #              'delete_url': reverse('upload-delete', args=[self.object.id]),
-    #              'delete_type': "DELETE",
-    #              'id': self.object.id}]
-    #     response = JSONResponse(data, {}, response_mimetype(self.request))
-    #     response['Content-Disposition'] = 'inline; filename=files.json'
-    #     return response
 
     # PLUPLOAD
     def form_valid(self, form):
@@ -68,22 +53,3 @@ class JSONResponse(HttpResponse):
                  *args, **kwargs):
         content = simplejson.dumps(obj, **json_opts)
         super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
-
-
-from forms import PluploadWidget
-
-class DummyForm(forms.Form):
-    name = forms.CharField()
-    desc = forms.CharField(widget=forms.Textarea())
-    files_list = forms.CharField(widget=PluploadWidget())
-
-
-def upload_poc(request):
-    form = DummyForm()
-    return render_to_response('plupload_poc.html', {'form': form},
-                               context_instance=RequestContext(request))
-
-
-def upload_poc_form(request):
-    print 'POST: ', request.POST, '\n\n'
-    return JSONResponse()

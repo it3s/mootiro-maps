@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
 
 from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField

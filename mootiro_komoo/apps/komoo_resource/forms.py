@@ -5,7 +5,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from markitup.widgets import MarkItUpWidget
-from fileupload.forms import PluploadWidget
+from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 
 from main.utils import MooHelper
@@ -26,7 +26,7 @@ class FormResource(forms.ModelForm):
         required=False)
     community = forms.CharField(required=False,
         widget=Autocomplete(Community, '/community/search_by_name'))
-    files = forms.CharField(widget=PluploadWidget())
+    files = FileuploadField()
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
