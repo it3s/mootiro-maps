@@ -1,6 +1,7 @@
+import os
 from fileupload.models import UploadedFile
 from django.views.generic import CreateView, DeleteView
-
+from django.conf import settings
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
@@ -40,8 +41,11 @@ class FileDeleteView(DeleteView):
         that is easy to implement.
         """
         self.object = self.get_object()
+        path = os.path.join(os.path.join(settings.PROJECT_ROOT,
+                                     self.object.file.url[1:]))
         _id = self.object.id
         self.object.delete()
+        os.remove(path)
         response = JSONResponse({'deleted': True, 'id': _id}, {}, response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
