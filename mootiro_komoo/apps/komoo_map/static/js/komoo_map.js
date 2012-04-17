@@ -283,7 +283,7 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
                     }
                     if (overlay.marker) {
                         // Display polygons as a point depending the zoom level
-                        if (zoom < 13) {
+                        if (zoom < me.komooMap.options.clustererMaxZoom) {
                             overlay.setMap(null);
                         } else {
                             overlay.setMap(me.komooMap.googleMap);
@@ -1232,17 +1232,20 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                         new google.maps.LatLng(bounds[1][0], bounds[0][1]),
                         new google.maps.LatLng(bounds[0][0], bounds[1][1])
                 );
-                if (overlay.properties.type == "community" && !overlay.marker) {
+                if (overlay.getPaths && !overlay.marker) {
                     overlay.marker = new google.maps.Marker({
                             visible: true,
                             clickable: true
                     });
+                    overlay.marker.setMap(komooMap.googleMap)
                     overlay.marker.setPosition(overlay.bounds.getCenter());
                     overlay.marker.setIcon(komooMap.getOverlayIcon(overlay));
                     google.maps.event.addListener(overlay.marker, "click", function () {
                         komooMap.googleMap.fitBounds(overlay.bounds);
                     });
-                    komooMap.clusterMarkers.push(overlay.marker);
+                    if (overlay.properties.type == "community") {
+                        komooMap.clusterMarkers.push(overlay.marker);
+                    }
                     // TODO: Add mouseover handler to open info window
                 }
                 n = null;
