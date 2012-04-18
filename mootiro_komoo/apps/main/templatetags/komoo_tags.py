@@ -30,6 +30,8 @@ def _get_related_community(obj):
 @register.simple_tag
 def geojson(obj=None):
     """Returns a geojson with obj data"""
+    if obj.geometry.empty:
+        return '{}'
     return create_geojson([obj]).replace("'", "\\'").replace('"', "'")
 
 

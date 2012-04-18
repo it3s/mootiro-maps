@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-18 17:40-0300\n"
-"PO-Revision-Date: 2012-04-18 17:45-0300\n"
+"POT-Creation-Date: 2012-04-18 19:00-0300\n"
+"PO-Revision-Date: 2012-04-18 19:00-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
 "Language: \n"
@@ -17,20 +17,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: apps/community/templates/community/list.html:6
+#: apps/community/templates/community/list.html:7
 msgid "Communities list"
 msgstr "Lista de Comunidades"
 
-#: apps/community/templates/community/list.html:20
+#: apps/community/templates/community/list.html:21
 #: apps/komoo_resource/templates/resource/list.html:39
 #: apps/need/templates/need/list.html:29
 #: apps/organization/templates/organization/list.html:47
 msgid "see on the map"
 msgstr "ver no mapa"
 
-#: apps/community/templates/community/list.html:25
+#: apps/community/templates/community/list.html:26
 msgid "population:"
 msgstr "população:"
+
+#: apps/community/templates/community/view.html:24
+msgid "Population"
+msgstr "População"
+
+#: apps/community/templates/community/view.html:32
+msgid "Nearby communities"
+msgstr "Comunidades próximas"
 
 #: apps/investment/models.py:20
 msgid "Organization"
@@ -71,7 +79,7 @@ msgstr "Valor"
 #: apps/investment/templates/investment/view.html:43
 #: apps/komoo_resource/templates/resource/show.html:63
 #: apps/need/templates/need/view.html:40
-#: apps/organization/templates/organization/show.html:138
+#: apps/organization/templates/organization/show.html:154
 msgid "see on map"
 msgstr "ver no mapa"
 
@@ -149,14 +157,14 @@ msgid "Change parameters"
 msgstr "Alterar parâmetros"
 
 #: apps/komoo_resource/forms.py:38
-#: apps/organization/forms.py:124
+#: apps/organization/forms.py:137
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
 #: apps/komoo_resource/forms.py:39
-#: apps/organization/forms.py:52
-#: apps/organization/forms.py:125
+#: apps/organization/forms.py:53
+#: apps/organization/forms.py:138
 msgid "Description"
 msgstr "Descrição"
 
@@ -171,8 +179,8 @@ msgid "Tags"
 msgstr "Classificadores"
 
 #: apps/komoo_resource/forms.py:42
-#: apps/organization/forms.py:53
-#: apps/organization/forms.py:126
+#: apps/organization/forms.py:54
+#: apps/organization/forms.py:139
 msgid "Community"
 msgstr "Comunidade"
 
@@ -221,6 +229,7 @@ msgid "type:"
 msgstr "tipo:"
 
 #: apps/komoo_resource/templates/resource/show.html:49
+#: apps/organization/templates/organization/show.html:138
 msgid "Photos:"
 msgstr "Fotos:"
 
@@ -446,35 +455,43 @@ msgstr "Nova proposta"
 msgid "Related needs"
 msgstr "Necessidades relacionadas"
 
-#: apps/organization/forms.py:54
-#: apps/organization/forms.py:127
-#: apps/organization/templates/organization/show.html:165
+#: apps/organization/forms.py:55
+#: apps/organization/forms.py:140
+#: apps/organization/templates/organization/show.html:181
 msgid "Contact"
 msgstr "Contato"
 
-#: apps/organization/forms.py:55
+#: apps/organization/forms.py:56
 msgid "Target Audience"
 msgstr "Público Alvo"
 
-#: apps/organization/forms.py:56
-#: apps/organization/forms.py:129
+#: apps/organization/forms.py:57
+#: apps/organization/forms.py:142
 msgid "Categories"
 msgstr "Categorias"
 
-#: apps/organization/forms.py:57
-#: apps/organization/forms.py:130
+#: apps/organization/forms.py:58
+#: apps/organization/forms.py:59
+#: apps/organization/forms.py:143
+#: apps/organization/forms.py:144
 msgid " "
 msgstr " "
 
-#: apps/organization/forms.py:128
+#: apps/organization/forms.py:109
+#: apps/organization/forms.py:176
+#, fuzzy
+msgid "invalid logo data"
+msgstr "dados inválidos"
+
+#: apps/organization/forms.py:141
 msgid "Target Audiences"
 msgstr "Público Alvo"
 
-#: apps/organization/forms.py:162
+#: apps/organization/forms.py:185
 msgid "Branch Name"
 msgstr "Nome da Unidade"
 
-#: apps/organization/forms.py:163
+#: apps/organization/forms.py:186
 msgid "Info"
 msgstr "Informações"
 
@@ -484,7 +501,7 @@ msgid "New Organization"
 msgstr "Nova Organização"
 
 #: apps/organization/templates/organization/list.html:56
-#: apps/organization/templates/organization/show.html:141
+#: apps/organization/templates/organization/show.html:157
 msgid "Operation Field"
 msgstr "Área de atuação"
 
@@ -576,19 +593,19 @@ msgstr[1] "recebeu %(num)s investimentos"
 msgid "No communities bound to this organization"
 msgstr "Nenhuma comunidade vínculada a esta organização"
 
-#: apps/organization/templates/organization/show.html:149
+#: apps/organization/templates/organization/show.html:165
 msgid "No categories provided"
 msgstr "Categorias não fornecidas"
 
-#: apps/organization/templates/organization/show.html:154
+#: apps/organization/templates/organization/show.html:170
 msgid "Audience"
 msgstr "Público"
 
-#: apps/organization/templates/organization/show.html:160
+#: apps/organization/templates/organization/show.html:176
 msgid "No target audience provided"
 msgstr "Público alvo não fornecido"
 
-#: apps/organization/templates/organization/show.html:170
+#: apps/organization/templates/organization/show.html:186
 msgid "No contact info provided"
 msgstr "Informações de contato não fornecidas"
 

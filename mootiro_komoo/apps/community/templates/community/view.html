@@ -1,5 +1,6 @@
 {% extends "global.html" %}
 
+{% load i18n %}
 {% load komoo_map_tags %}
 {% load komoo_tags %}
 {% load comment_tags %}
@@ -20,7 +21,7 @@
 
     <p>
       <!-- <span class="meta-info">Type</span>NOT IMPLEMENTED<br/> -->
-      <span class="meta-info">Population</span> {% firstof community.population '-' %}
+      <span class="meta-info">{% trans "Population" %}</span> {% firstof community.population '-' %}
     </p>
   </div>
 
@@ -28,7 +29,7 @@
     <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
     <a href="{% url community_on_map community.slug %}">ver no mapa</a>
     <div class="block">
-      <h3>Nearby communities</h3>
+      <h3>{% trans "Nearby communities" %}</h3>
       <ul>
         {% for c in community.closest_communities %}
         <li><a href="{% url view_community c.slug %}">{{ c.name }}</a></li>

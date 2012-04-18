@@ -32,6 +32,9 @@ ul {
 table { border-collapse: collapse }
 
 /* Reusable styles */
+.disabled {
+    opacity: 0.3;
+}
 .button {
     display: inline-block;
     background-color: #3EBAC2;
