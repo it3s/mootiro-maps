@@ -138,6 +138,7 @@ komoo.RegionTypes = [
  */
 komoo.MapOptions = {
     clustererMaxZoom: 13,
+    polygonIconsMinZoom: 17,
     fetchUrl: "/get_geojson?",
     editable: true,
     useGeoLocation: false,
@@ -883,15 +884,23 @@ komoo.Map.prototype.updateClusterers = function () {
 
 
 komoo.Map.prototype.hideOverlaysByZoom = function () {
+    // TODO: Test the performance
+    var me = this;
     var zoom = this.googleMap.getZoom();
-    if (zoom < this.options.clustererMaxZoom) {
-        var overlays = this.getVisibleOverlays();
-        $.each(overlays, function (key, overlay) {
-            if (!overlay.marker) {
+    var overlays = this.getVisibleOverlays();
+    $.each(overlays, function (key, overlay) {
+        if (overlay.marker) {
+            if (zoom <  me.options.polygonIconsMinZoom) {
+                overlay.marker.setMap(null);
+            } else if (overlay.properties.type != "community") {
+                overlay.marker.setMap(me.googleMap);
+            }
+        } else {
+            if (zoom < me.options.clustererMaxZoom) {
                 overlay.setMap(null);
             }
-        });
-    }
+        }
+    });
 };
 
 
@@ -927,7 +936,7 @@ komoo.Map.prototype.handleEvents = function () {
     });
 
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
-        komooMap.hideOverlaysByZoom();
+        //komooMap.hideOverlaysByZoom();
         komooMap.closeInfoWindow(); // Closes info window when zoom changed
         komooMap.updateClusterers();
     });
@@ -1237,7 +1246,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                             visible: true,
                             clickable: true
                     });
-                    overlay.marker.setMap(komooMap.googleMap)
+                    //overlay.marker.setMap(komooMap.googleMap)
                     overlay.marker.setPosition(overlay.bounds.getCenter());
                     overlay.marker.setIcon(komooMap.getOverlayIcon(overlay));
                     google.maps.event.addListener(overlay.marker, "click", function () {
