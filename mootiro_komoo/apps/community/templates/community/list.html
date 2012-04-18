@@ -1,6 +1,7 @@
 {% extends "global.html" %}
 {% load komoo_tags %}
 {% load comment_tags %}
+{% load markitup_tags %}
 {% load i18n %}
 
 {% block title %}{% trans 'Communities list' %}{% endblock %}
@@ -24,7 +25,7 @@
         <p class="clearBoth">
           {% trans 'population:' %} {% firstof community.population '-' %}
         </p>
-        <p>{{ community.description }}</p>
+        <p class="mark-down">{{ community.description|render_markup }}</p>
       </div>
       {% endfor %}
     </div>
