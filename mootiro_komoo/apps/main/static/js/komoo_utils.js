@@ -277,3 +277,27 @@ $(function () {
         }
     });
 });
+
+function errorMessage(title, message, imageUrl, buttons) {
+    if (!buttons) {
+        buttons = [
+            {
+                text: "Ok",
+                class: "button",
+                click: function() { $(this).dialog("close"); }
+            }
+        ];
+    }
+    var box = $("#error-box");
+    $(".message", box).text(message);
+    box.dialog({
+        dialogClass: "error-dialog",
+        title: title,
+        modal: true,
+        buttons: buttons,
+        resizable: false,
+        draggable: false,
+        width: 400
+    });
+    return box;
+}
