@@ -52,7 +52,7 @@ class InvestmentForm(ModelForm):
     )
 
     tags = forms.Field(
-        widget=TaggitWidget(autocomplete_url="/need/tag_search"),
+        widget=TaggitWidget(),
         required=False
     )
 
@@ -67,7 +67,7 @@ class InvestmentForm(ModelForm):
             "description",
             "investor_type",
             "anonymous_investor",
-            "investor",
+            #"investor",
             "over_period",
             Row(
                 "date",
