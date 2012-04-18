@@ -844,7 +844,8 @@ textarea.markItUpEditor{
 .org-list-img-placeholder{
     padding-right: 10px;
     width: 80px;
-    height: 45px;
+    height: 38px;
+    padding-top: 10px;
 }
 .org-list-extra-info{
     width: 300px;
