@@ -301,7 +301,6 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
                             if (bounds.contains(overlay.bounds.getNorthEast()) || bounds.contains(overlay.bounds.getSouthWest())) {
                                 var zIndexToTest = overlayToTest.zIndex;
                                 if (zIndexToTest >= zIndex) {
-                                    console.log(overlay, overlayToTest, zIndex);
                                     zIndex = zIndexToTest + 1;
                                     overlay.zIndex = zIndex;
                                 }
@@ -1862,7 +1861,6 @@ komoo.Map.prototype.setDrawingMode = function (type, overlayType) {
         overlayType = type;
         type = this.type;
     }
-    console.log(type, overlayType);
     this.type = type;
     this.setEditMode(komoo.EditMode.DRAW);
     this.setCurrentOverlay(null);  // Remove the overlay selection

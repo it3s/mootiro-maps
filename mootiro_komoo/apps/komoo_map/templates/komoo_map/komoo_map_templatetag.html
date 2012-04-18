@@ -55,7 +55,7 @@
         {% if type != 'preview' %}
         var mapOptions = {
           editable: true,
-          {% if type == 'editor' %}
+          {% if type == 'editor' and not panel %}
           fetchOverlays: false,
           {% else %}
           fetchOverlays: true,
