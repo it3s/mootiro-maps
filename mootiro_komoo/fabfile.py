@@ -203,6 +203,29 @@ def add_superuser(email=''):
     print 'success'
 
 
+def fix_contenttypes():
+    """ remove auto added contenttypes from django for loading data """
+    import os
+    import sys
+    PROJ_DIR = os.path.abspath(os.path.dirname(__file__))
+    SITE_ROOT = os.path.abspath(os.path.join(PROJ_DIR, '..'))
+    sys.path.append(PROJ_DIR)
+    sys.path.append(SITE_ROOT)
+    from django.core.management import setup_environ
+    env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    environ = None
+    exec 'from settings import {} as environ'.format(env_name)
+    setup_environ(environ)
+
+    from django.contrib.contenttypes.models import ContentType
+
+    print 'cleaning contenttypes ... '
+    ContentType.objects.all().delete()
+    print '', unicode(ContentType.objects.all())
+
+    loaddata('fixtures/contenttypes_fixtures.json')
+
+
 # def get_migrated_apps():
 #     """
 #     Returns a list if app folowed by south.
