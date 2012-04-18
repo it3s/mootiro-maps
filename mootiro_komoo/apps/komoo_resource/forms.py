@@ -26,7 +26,7 @@ class FormResource(forms.ModelForm):
         required=False)
     community = forms.CharField(required=False,
         widget=Autocomplete(Community, '/community/search_by_name'))
-    files = FileuploadField()
+    files = FileuploadField(required=False)
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
