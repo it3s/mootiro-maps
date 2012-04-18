@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
@@ -10,10 +11,19 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 from crispy_forms.helper import FormHelper
 from main.utils import MooHelper
 from main.widgets import Tagsinput
-from organization.models import Organization, OrganizationBranch
+from organization.models import (Organization, OrganizationBranch,
+                OrganizationCategory, OrganizationCategoryTranslation)
 from need.models import TargetAudience
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
+
+if settings.LANGUAGE_CODE == 'en-us':
+    CATEGORIES = [(cat.id, cat.name) \
+                    for cat in OrganizationCategory.objects.all()]
+else:
+    CATEGORIES = [(cat.category_id, cat.name)\
+                    for cat in OrganizationCategoryTranslation.objects.filter(
+                        lang=settings.LANGUAGE_CODE)]
 
 
 class FormOrganizationNew(forms.ModelForm):
@@ -26,8 +36,11 @@ class FormOrganizationNew(forms.ModelForm):
             TargetAudience,
             autocomplete_url="/need/target_audience_search")
     )
-    categories = AutoCompleteSelectMultipleField('organizationcategory',
-        help_text='', required=False)
+    # categories = AutoCompleteSelectMultipleField('organizationcategory',
+    #     help_text='', required=False)
+    categories = forms.MultipleChoiceField(required=False, choices=CATEGORIES,
+        widget=forms.CheckboxSelectMultiple(
+                    attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
 
     class Meta:
@@ -95,8 +108,11 @@ class FormOrganizationEdit(forms.ModelForm):
             TargetAudience,
             autocomplete_url="/need/target_audience_search")
     )
-    categories = AutoCompleteSelectMultipleField('organizationcategory',
-        help_text='', required=False)
+    # categories = AutoCompleteSelectMultipleField('organizationcategory',
+    #     help_text='', required=False)
+    categories = forms.MultipleChoiceField(required=False, choices=CATEGORIES,
+        widget=forms.CheckboxSelectMultiple(
+                    attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
 
     class Meta:

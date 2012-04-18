@@ -794,6 +794,14 @@ textarea.markItUpEditor{
 #form_organization #div_id_contact .markItUpEditor{
     height: 80px;
 }
+.org-widget-categories .controls{
+    height: 300px;
+}
+.org-widget-categories .checkbox{
+    display: inline-block;
+    width: 200px;
+    padding-right: 10px;
+}
 .organization-buttons{
     margin-top: 20px;
     font-weight: bold;
