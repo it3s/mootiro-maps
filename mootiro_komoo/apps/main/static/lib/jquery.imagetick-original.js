@@ -183,9 +183,11 @@
                 $input_id.trigger("click");
                 // Apparently it is not enough to trigger click() for a
                 // checkbox to change its state. - André Casimiro
-                if (type == "checkbox") {
-                    $input_id.attr('checked', !$input_id.attr('checked'));
-                }
+                // if (type == "checkbox") {
+                //     alert($input_id.attr('checked'));
+                //     var val = ($input_id.attr('checked') == undefined) ? false : true;
+                //     $input_id.attr('checked', !$input_id.attr('checked'));
+                // }
                 
                 handleClickType.call(this, using_custom_btn, type, $input_id);
             });

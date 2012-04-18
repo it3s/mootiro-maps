@@ -62,9 +62,9 @@ def edit(request, community_slug="", need_slug=""):
             rdict = dict(form=form, community=community)
     else:
         form = NeedForm(instance=need)
-        if community:
-            form.fields.pop('community')
         rdict = dict(form=form, community=community)
+    if community:
+        form.fields.pop('community')
     geojson = create_geojson([need], convert=False)
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
