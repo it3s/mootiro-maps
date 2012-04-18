@@ -34,10 +34,11 @@ def resource_list(request, community_slug=''):
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_404(Community, slug=community_slug)
-        resources_list = Resource.objects.filter(community=community)
+        resources_list = Resource.objects.filter(
+                            community=community).order_by('name')
     else:
         community = None
-        resources_list = Resource.objects.all()
+        resources_list = Resource.objects.all().order_by('name')
 
     resources = paginated_query(resources_list, request)
 

@@ -97,7 +97,9 @@
                         <a href="#">
                             <div class="branch-name">
                                 <span class="entry">{{ branch.name }}</span>
-                                <span class="branch-link-btn"> > </span>
+                                <span class="branch-link-btn">
+                                    <i class="icon-chevron-right"></i>
+                                </span>
                             </div>
                         </a>
                         <div class="branch-info org-info-div {% cycle 'odd' '' %}" style="display: none;">
@@ -198,12 +200,15 @@
 
             // toggle branch button
             var branch_btn = $(this).find('.branch-link-btn');
-            if (branch_btn.is('.btn-active')){
-                branch_btn.removeClass('btn-active');
+            var branch_btn_icon = branch_btn.find('i');
+            if (branch_btn_icon.is('.icon-chevron-down')){
+                branch_btn_icon.removeClass('icon-chevron-down');
+                branch_btn_icon.addClass('icon-chevron-right');
                 $(this).parent().find('.branch-info').slideUp();
                 $(this).parent().find('.branch-form').slideUp();
             } else {
-                branch_btn.addClass('btn-active');
+                branch_btn_icon.removeClass('icon-chevron-right');
+                branch_btn_icon.addClass('icon-chevron-down');
                 $(this).parent().find('.branch-info').slideDown();
             }
         });

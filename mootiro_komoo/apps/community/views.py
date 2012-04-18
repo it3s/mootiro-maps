@@ -86,7 +86,7 @@ def map(request):
 @render_to('community/list.html')
 def list(request):
     logger.debug('acessing community > list')
-    communities = Community.objects.all()
+    communities = Community.objects.all().order_by('name')
     return dict(communities=communities)
 
 
