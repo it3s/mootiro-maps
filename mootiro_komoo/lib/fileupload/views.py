@@ -1,10 +1,14 @@
 import os
+import logging
 from fileupload.models import UploadedFile
 from django.views.generic import CreateView, DeleteView
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
+
+
+logger = logging.getLogger(__name__)
 
 
 def response_mimetype(request):
@@ -45,7 +49,10 @@ class FileDeleteView(DeleteView):
                                      self.object.file.url[1:]))
         _id = self.object.id
         self.object.delete()
-        os.remove(path)
+        try:
+            os.remove(path)
+        except Exception as err:
+            logger.warning('Failed to remove file: %s' % err)
         response = JSONResponse({'deleted': True, 'id': _id}, {}, response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response

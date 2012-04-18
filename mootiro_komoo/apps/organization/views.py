@@ -15,6 +15,7 @@ from django.utils.html import escape
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
+from fileupload.models import UploadedFile
 
 from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganizationNew, FormBranchNew, \
@@ -49,9 +50,11 @@ def show(request, organization_slug='', community_slug=''):
     branches = organization.organizationbranch_set.all().order_by('name')
     geojson = create_geojson(branches)
     community = get_object_or_None(Community, slug=community_slug)
+    photos = paginated_query(UploadedFile.get_files_for(organization),
+                             request, size=3)
 
     return dict(organization=organization, geojson=geojson,
-                community=community)
+                community=community, photos=photos)
 
 
 class New(View):

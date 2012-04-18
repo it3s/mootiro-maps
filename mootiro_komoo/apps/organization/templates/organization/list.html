@@ -26,8 +26,8 @@
       <div class="view-list-item {% cycle 'odd' '' %}">
         <div>
           <div class="inline-block org-list-log">
-            {% if org.files_set.count %}
-              <img src="{{ org.files_set.all.0.file.url }}" class="org-list-img"/>
+            {% if org.logo %}
+              <img src="{{ org.logo.file.url }}" class="org-list-img"/>
 
             {% else %}
               <img src="{{ STATIC_URL }}img/logo.png" class="org-list-img-placeholder" />

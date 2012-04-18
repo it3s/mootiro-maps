@@ -42,11 +42,12 @@ class FormOrganizationNew(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
+    logo = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Organization
         fields = ['description', 'community', 'link', 'contact',
-        'target_audiences', 'categories', 'files']
+        'target_audiences', 'categories', 'files',  'logo']
 
     _field_labels = {
         'description': _('Description'),
@@ -54,7 +55,8 @@ class FormOrganizationNew(forms.ModelForm):
         'contact': _('Contact'),
         'target_audiences': _('Target Audience'),
         'categories': _('Categories'),
-        'files': _(' ')
+        'files': _(' '),
+        'logo': _(' ')
     }
 
     def __init__(self, *args, **kwargs):
@@ -78,6 +80,7 @@ class FormOrganizationNew(forms.ModelForm):
         org.contact = self.cleaned_data['contact']
         org.link = self.cleaned_data['link']
         org.name = self.org_name
+        org.logo_id = self.cleaned_data.get('logo', None)
         if user and not user.is_anonymous():
             org.creator_id = user.id
         org.save()
@@ -95,6 +98,15 @@ class FormOrganizationNew(forms.ModelForm):
         UploadedFile.bind_files(files_id_list, org)
 
         return org
+
+    def clean_logo(self):
+        try:
+            if not self.cleaned_data['logo'] or self.cleaned_data['logo'] == 'None':
+                return UploadedFile()
+            else:
+                return UploadedFile.objects.get(id=self.cleaned_data['logo'])
+        except:
+            raise forms.ValidationError(_('invalid logo data'))
 
 
 class FormOrganizationEdit(forms.ModelForm):
@@ -114,11 +126,12 @@ class FormOrganizationEdit(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
+    logo = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Organization
         fields = ['name', 'description', 'community', 'link', 'contact',
-                  'target_audiences', 'categories', 'id']
+                  'target_audiences', 'categories', 'id', 'logo']
 
     _field_labels = {
         'name': _('Name'),
@@ -127,7 +140,8 @@ class FormOrganizationEdit(forms.ModelForm):
         'contact': _('Contact'),
         'target_audiences': _('Target Audiences'),
         'categories': _('Categories'),
-        'files': _(' ')
+        'files': _(' '),
+        'logo': _(' ')
     }
 
     def __init__(self, *args, **kwargs):
@@ -151,6 +165,15 @@ class FormOrganizationEdit(forms.ModelForm):
         UploadedFile.bind_files(files_id_list, org)
 
         return org
+
+    def clean_logo(self):
+        try:
+            if not self.cleaned_data['logo'] or self.cleaned_data['logo'] == 'None':
+                return UploadedFile()
+            else:
+                return UploadedFile.objects.get(id=self.cleaned_data['logo'])
+        except:
+            raise forms.ValidationError(_('invalid logo data'))
 
 
 class FormBranchNew(forms.Form):

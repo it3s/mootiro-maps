@@ -24,8 +24,8 @@
     <div class="main-column">
 
         <div class="view-header" >
-            {% if organization.files_set.count %}
-            <img src="{{ organization.files_set.all.0.file.url }}" class="inline-block organization-logo">
+            {% if organization.logo %}
+            <img src="{{ organization.logo.file.url }}" class="inline-block organization-logo">
             {% endif %}
             <div class="inline-block organization-header">
                 <h2>{{ organization.name }}</h2>
@@ -129,6 +129,22 @@
                     {% trans 'No communities bound to this organization' %}
                 {% endfor %}
             </div>
+        </div>
+
+        <div class="view-footer">
+            <!-- Photos here -->
+            {% if photos.object_list %}
+            <div class="organization-photos">
+                <h3>{% trans 'Photos:' %}</h3>
+                {% for photo in photos.object_list %}
+                    <a href="{{ photo.file.url }}">
+                        <img src="{{ photo.file.url }}">
+                    </a>
+                {% endfor %}
+
+                {% pagination photos %}
+            </div>
+            {% endif %}
         </div>
 
     </div>
@@ -261,6 +277,20 @@
             var $this = $(this);
             $this.addClass('selected');
             $('.' + $this.attr('panel')).fadeIn();
+        });
+    </script>
+
+    <script type="text/javascript">
+        $('.view-footer img').each(function(idx, obj){
+            if(obj.offsetHeight > obj.offsetWidth){
+                $(obj).css('height', '160px').css('width', 'auto')
+                            .css('padding-left', Math.abs(obj.offsetWidth - 200) /2 )
+                            .css('padding-right', Math.abs(obj.offsetWidth - 200) /2 );
+            } else {
+                $(obj).css('height', 'auto').css('width', '200px')
+                        .css('padding-bottom', Math.abs(obj.offsetHeight - 200) /2)
+                        .css('padding-top', Math.abs(obj.offsetHeight - 200) /2);
+            }
         });
     </script>
 {% endblock %}
