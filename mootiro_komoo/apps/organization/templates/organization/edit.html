@@ -21,51 +21,6 @@
 {% block page_scripts %}
     {{ form_org.media }}
     {% load_files organization %}
+    {% image_picker 'logo' %}
 
-    <script type="text/javascript">
-        $(function(){
-            $('#files-list').prepend("" +
-                "<div id='logo-advise'>" +
-                    gettext('Choose a image below to be the logo') +
-                "</div>"
-            );
-
-            if ($('#id_logo').val()) {
-                $('.file-entry[file-id=' + $('#id_logo').val() + ']').addClass('file-entry-main');
-            }
-
-            $('.file-entry').live('click', function(){
-                $('.file-entry-main').removeClass('file-entry-main');
-                $(this).addClass('file-entry-main');
-            });
-
-            $('form').submit(function(evt){
-                var id = $('.file-entry-main').attr('file-id');
-                $('#id_logo').val(id);
-            })
-        });
-
-    </script>
-    <style type="text/css">
-        .file-entry:hover{
-            background-color: rgb(64, 146, 169);
-            color: #cccccc;
-        }
-        .file-entry:hover span{
-            color: #cccccc;
-        }
-        .file-entry-main{
-            background-color: rgb(64, 146, 169);
-            color: #cccccc;
-        }
-        .file-entry-main span{
-            color: #cccccc;
-        }
-        #logo-advise{
-            text-align: center;
-            color: #999999;
-            padding: 10px;
-            font-weight: bold;
-        }
-    </style>
 {% endblock %}
