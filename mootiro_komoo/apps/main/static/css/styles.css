@@ -907,9 +907,9 @@ textarea.markItUpEditor{
 .ui-widget-overlay { z-index: 99999 !important; }
 .ui-dialog {
     z-index: 100000 !important;
-    border-radius        : 15px;
-    -moz-border-radius   : 15px;
-    -webkit-border-radius: 15px;
+    border-radius        : 10px;
+    -moz-border-radius   : 10px;
+    -webkit-border-radius: 10px;
     -moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
     -webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
     box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
@@ -920,10 +920,24 @@ textarea.markItUpEditor{
     margin: -20px 23px 10px;
 }
 #login-box li.option {
-    width: 300px;
+    width: 320px;
     display: inline-block;
-    padding: 10px 15px;
+    padding: 10px 5px;
     text-align: center;
+}
+#login-box li.option a {
+    color: black;
+    padding: 10px 10px 20px;
+    display: block;
+    border-radius        : 5px;
+    -moz-border-radius   : 5px;
+    -webkit-border-radius: 5px;
+}
+#login-box li.option a:focus {
+    outline: none;
+}
+#login-box li.option a:hover {
+    background-color: #ffdb85;
 }
 #login-box li.option div {
     padding: 10px;

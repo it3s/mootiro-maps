@@ -1,17 +1,22 @@
+{% load i18n %}
 <div id="login-box">
   <h2>
-    Você precisa estar logado
+    {% trans "You must be logged in" %}
   </h2>
   <ul>
     <li id="login-option" class="option">
-      <div>Faça login no MootiroMaps!</div>
-      <div><img src="{{STATIC_URL}}img/login_guy.png"></div>
-      <div><a href="/user/login" id="login-button" class="button">Fazer login</a></div>
+      <a href="/user/login" id="login-button">
+        <div>{% trans "Log in to MootiroMaps!" %}</div>
+        <div><img src="{{STATIC_URL}}img/login_guy.png"></div>
+        <div class="button">{% trans "Login" %}</div>
+      </a>
     </li>
     <li id="signup_option" class="option">
-      <div>Não possui uma conta? Registre-se!</div>
-      <div><img src="{{STATIC_URL}}img/signup_guy.png"></div>
-      <div><a href="http://www.mootiro.org/user/new" class="button">Criar uma conta</a></div>
+      <a href="http://www.mootiro.org/user/new">
+        <div>{% trans "Don't have an account? Sign up!" %}</div>
+        <div><img src="{{STATIC_URL}}img/signup_guy.png"></div>
+        <div class="button">{% trans "Create an account" %}</div>
+      </a>
     </li>
   </ul>
 </div>
