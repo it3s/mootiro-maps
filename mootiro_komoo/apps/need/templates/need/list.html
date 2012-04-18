@@ -11,7 +11,7 @@
 {% block content %}
 <div id="main-content">
   <div>
-    <a class="button" href="{% if community %}{% url new_need community.slug %}{% else %}{% url new_need %}{% endif %}">{% trans 'New need' %}</a>
+    <a class="button login-required" href="{% if community %}{% url new_need community.slug %}{% else %}{% url new_need %}{% endif %}">{% trans 'New need' %}</a>
     <div class="ajax-search"><input type="text"/></div>
   </div>
 

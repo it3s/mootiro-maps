@@ -68,6 +68,7 @@ class New(View):
         community = get_object_or_None(Community, slug=community_slug)
 
         form_resource = FormResource()
+        form_resource.fields['name'].initial = ''
         form_resource.fields.pop('image', '')
 
         if request.GET.get('frommap', None) == 'false':

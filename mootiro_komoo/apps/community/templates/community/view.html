@@ -13,14 +13,14 @@
 
 <div id="main-content">
   <div class="main-column">
-    <div class="view-edit-btn right"><a href="{% url edit_community community.slug %}" class="btn"><i class="icon-pencil"></i></a></div>
+    <div class="view-edit-btn right"><a href="{% url edit_community community.slug %}" class="btn login-required"><i class="icon-pencil"></i></a></div>
 
     <div class="clear-both"></div>
     <div class="mark-down">{{ community.description|render_markup }}</div>
 
     <p>
       <!-- <span class="meta-info">Type</span>NOT IMPLEMENTED<br/> -->
-      <span class="meta-info">Population</span> {{ community.population }}
+      <span class="meta-info">Population</span> {% firstof community.population '-' %}
     </p>
   </div>
 

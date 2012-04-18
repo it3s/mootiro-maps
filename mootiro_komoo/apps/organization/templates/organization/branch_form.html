@@ -1,12 +1,58 @@
+{% load i18n %}
 {% load markitup_tags %}
 {% markitup_media %}
 
 <form class="form-branch-edit" action="{% url branch_edit %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="id" value="{{ branch.id }}" >
+    <input type="hidden" name="geometry" id="branch-geometry-{{ branch.id }}" value="{{ branch.geometry }}" data-feature-collection="{{ branch.geojson }}">
+    <div style="float:right;">
+      <a href="#" class="button" id="map-edit-button-{{ branch.id }}">{% trans "Open the map editor" %}</a>
+    </div>
     <input type="text" name="name" value="{{ branch.name }}">
     <textarea name="info" rows="4" cols="20" id="{{ info_id }}">{{branch.info}}</textarea>
     {% markitup_editor info_id %}
 
     <input type="submit" value="update" class="btn form-branch-edit-btn" >
+    <script type="text/javascript">
+      $("#map-edit-button-{{ branch.id }}").click(function (e) {
+          // FIXME: DRY
+          scrollTop = $("html").scrollTop() || $("body").scrollTop();
+          $('#map-container-editor').show();
+          $("body, html").animate({scrollTop: 0}, function () {
+            $('#main-content').hide();
+            $(window).resize();
+          });
+          geometryInputId = '#branch-geometry-{{ branch.id }}';
+          var geojson = JSON.parse($("#branch-geometry-{{ branch.id }}").attr("data-feature-collection"))
+          if (!editor) {
+            initialize_map_editor();
+            editor.event.bind('cancel_click', function () {
+              $('#map-container-editor, #map-panel').slideUp(600);
+              $("body, html").animate({scrollTop: scrollTop});
+              $('#main-content').show();
+              $(window).resize();
+            });
+            editor.event.bind('finish_click', function () {
+              $('#map-container-editor, #map-panel').slideUp(600);
+              $("body, html").animate({scrollTop: scrollTop});
+              $('#main-content').show();
+              $(window).resize();
+              var newGeojson = editor.getGeoJSON({currentOnly: true, geometryCollection: true});
+              $(geometryInputId).val(JSON.stringify(newGeojson));
+              var newGeojson_ = editor.getGeoJSON({currentOnly: true});
+              preview.updateOverlay(newGeojson_);
+              newGeojson = editor.getGeoJSON({currentOnly: true});
+              $(geometryInputId).attr("data-feature-collection", JSON.stringify(newGeojson));
+            });
+            }
+          editor.clear();
+          editor.loadGeoJSON(geojson, true);
+          editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
+          editor.googleMap.setZoom(editor.googleMap.getZoom()-1)
+          $(window).resize();
+          editor.editOverlay(editor.overlays[0]);
+          setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
+      });
+    </script>
 </form>

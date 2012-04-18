@@ -19,6 +19,7 @@
 {% block menu %} {% menu organization "organization" %} {% endblock %}
 
 {% block content %}
+{% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'lazy=True' %}
 <div id="main-content" class="inline-block">
     <div class="main-column">
 
@@ -34,9 +35,9 @@
             </div>
             <div class="view-edit-btn">
                 {% if community %}
-                <a href="/{{ community.slug }}/organization/edit?id={{ organization.id }}" class="btn">
+                <a href="/{{ community.slug }}/organization/edit?id={{ organization.id }}" class="btn login-required">
                 {% else %}
-                <a href="/organization/edit?id={{ organization.id }}" class="btn">
+                <a href="/organization/edit?id={{ organization.id }}" class="btn login-required">
                 {% endif %}
                     <i class="icon-pencil"></i>
                 </a>
@@ -101,7 +102,7 @@
                         </a>
                         <div class="branch-info org-info-div {% cycle 'odd' '' %}" style="display: none;">
                             <div>
-                                <a href="#" class="branch-edit-btn btn">
+                                <a href="#" class="branch-edit-btn btn login-required">
                                     <i class="icon-pencil"></i>
                                 </a>
                             </div>

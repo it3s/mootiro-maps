@@ -43,6 +43,7 @@ table { border-collapse: collapse }
     cursor: pointer;
     padding: 5px 8px;
 }
+.button:active { background: #2E6167 !important; }
 a.button { color: #fff;}
 .small { font-size: 80%; }
 ul.horizontal li {
@@ -171,9 +172,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     display: block;
     color: #000;
 }
-#top #menu li.selected a, #top #menu li:hover a { color: #fff }
-#top #menu li,
-.map-tab, .map-button ,
+#top #menu li a,
+.map-tab a, .map-button ,
 .organization-buttons .org-btn{
     border: 1px solid #c7c7c7;
 
@@ -188,9 +188,9 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CECECE, endColorstr=#EDEDED)";
 }
 .button, .map-panel .content .map-button,
-#top #menu li:hover, #top #menu li.selected,
+#top #menu li a:hover, #top #menu li.selected a,
 /*.map-menuitem:hover,*/ .map-menuitem.selected,
-.map-tab:hover, .map-tab.selected,
+.map-tab a:hover, .map-tab.selected a,
 .map-button:hover, .map-button.selected,
 .organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected  {
     color: #fff;
@@ -205,19 +205,21 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4092A9, endColorstr=#3EBAC2)";
 }
 #komoo-map-add-button,
-#top #menu li:first-child,
-.map-tab:first-child {
+#top #menu li:first-child a,
+.map-tab:first-child a {
     border-radius        : 6px 0 0 6px;
     -moz-border-radius   : 6px 0 0 6px;
     -webkit-border-radius: 6px 0 0 6px;
 }
 #komoo-map-cut-out-button,
-#top #menu li:last-child,
-.map-tab:last-child {
+#top #menu li:last-child a,
+.map-tab:last-child a {
     border-radius        : 0 6px 6px 0;
     -moz-border-radius   : 0 6px 6px 0;
     -webkit-border-radius: 0 6px 6px 0;
 }
+#top #menu li a:active,
+.map-tab a:active { background: #2E6167 !important; }
 #komoo-map-delete-button {
     margin: 0 5px;
 }
@@ -314,14 +316,14 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 .map-tab {
     cursor: pointer;
     text-align: center;
-    padding: 5px 0px;
     float: left;
 }
 .map-tab a {
     color: black;
-    padding: 0 10px;
+    display: block;
+    padding: 5px 0px;
 }
-.map-tab:hover a,
+.map-tab a:hover,
 .map-tab.selected a {
     color: white;
 }
@@ -896,4 +898,31 @@ textarea.markItUpEditor{
     margin-left: 20px;
     padding: 10px;
     border-bottom: 1px solid rgb(233, 233, 233);
+}
+
+/* ====== Login box ======== */
+.ui-dialog-titlebar { background: none; !important; border: none !important; }
+.ui-widget-overlay { z-index: 99999 !important; }
+.ui-dialog {
+    z-index: 100000 !important;
+    border-radius        : 15px;
+    -moz-border-radius   : 15px;
+    -webkit-border-radius: 15px;
+    -moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+}
+#login-box {
+    width: 665px !important;
+    display: none;
+    margin: -20px 23px 10px;
+}
+#login-box li.option {
+    width: 300px;
+    display: inline-block;
+    padding: 10px 15px;
+    text-align: center;
+}
+#login-box li.option div {
+    padding: 10px;
 }

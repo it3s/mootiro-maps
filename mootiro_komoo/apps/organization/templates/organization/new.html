@@ -1,7 +1,6 @@
 {% extends 'global.html' %}
 {% load crispy_forms_tags %}
 {% load i18n %}
-{% load upload_tags %}
 
 {% block content %}
     <div id="main-content">
@@ -28,30 +27,17 @@
                     <input type='submit' value='submit' id='submit_btn'/>
                 </div>
             </form>
-            <div class="organization_fields">
-                <h3>{% trans 'Organization Logo:' %}</h3>
-                {% upload_widget %}
-            </div>
         </div>
 
   </div>
 {% endblock %}
 
 {% block css %}
-    {% upload_css %}
-    {{ form_org.media }}
     <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
     <script type="text/javascript" src="/static/js/ajax_select.js"></script>
-
 {% endblock %}
 
 {% block page_scripts %}
+    {{ form.media }}
     <script type="text/javascript" src='{{ STATIC_URL }}js/new_organization.js'> </script>
-    <script type="text/javascript">
-        upload_settings = {
-            maxNumberOfFiles: 1
-        };
-    </script>
-    {% upload_javascript %}
-
 {% endblock %}

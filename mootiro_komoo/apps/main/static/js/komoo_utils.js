@@ -253,3 +253,27 @@ function geoObjectsListing (ul) {
     geoObjectsSelection($("li.resources", $ul));
 
 }
+
+$(function () {
+    // Intercepts all links that have the class /authenticate/
+    $("a.login-required").click(function (ev) {
+        if (!isAuthenticated) {
+            // TODO: request status from server
+            var url = $(this).attr("href");
+            if (url == "/vote/add/") {
+                url = document.location.pathname;
+            } else if (url.charAt(0) == "#") {
+                url = document.location.pathname + url;
+            }
+            $("#login-box #login-button").attr("href", "/user/login?next=" + url);
+            $("#login-box").dialog({
+                width: 745,
+                modal: true,
+                resizable: false,
+                draggable: false,
+            });
+            ev.stopPropagation();
+            return false;
+        }
+    });
+});

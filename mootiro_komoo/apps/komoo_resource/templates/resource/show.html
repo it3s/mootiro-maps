@@ -23,9 +23,9 @@
                 {% vote resource %}
                 <div class="view-edit-btn">
                     {% if community %}
-                    <a href="/{{ community.slug }}/resource/edit?id={{ resource.id }}" class="btn">
+                    <a href="/{{ community.slug }}/resource/edit?id={{ resource.id }}" class="btn login-required">
                     {% else %}
-                    <a href="/resource/edit?id={{ resource.id }}" class="btn">
+                    <a href="/resource/edit?id={{ resource.id }}" class="btn login-required">
                     {% endif %}
                         <i class="icon-pencil"></i>
                     </a>

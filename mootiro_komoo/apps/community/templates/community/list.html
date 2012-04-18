@@ -22,7 +22,7 @@
           {% comments_summary community %}
         </h4>
         <p class="clearBoth">
-          {% trans 'population:' %} {{ community.population }}
+          {% trans 'population:' %} {% firstof community.population '-' %}
         </p>
         <p>{{ community.description }}</p>
       </div>

@@ -3,16 +3,15 @@ from __future__ import unicode_literals
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.db.models.query_utils import Q
 
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
+from fileupload.models import UploadedFile
 
 from main.utils import MooHelper
 from main.widgets import Autocomplete, TaggitWidget, AutocompleteWithFavorites
 from komoo_resource.models import Resource, ResourceKind
 from community.models import Community
-from fileupload.models import UploadedFile
 
 
 class FormResource(forms.ModelForm):

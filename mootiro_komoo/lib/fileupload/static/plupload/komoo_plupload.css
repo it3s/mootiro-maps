@@ -1,0 +1,37 @@
+@import url(/static/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);
+.plupload_header_content{
+    background: none;
+    min-height: 36px;
+}
+.plupload_container{
+    width: 700px;
+    height: 200px;
+}
+#uploader_filelist.plupload_filelist{
+    height: 85px;
+}
+li.plupload_droptext{
+    line-height: 65px;
+}
+.file-entry{
+    background-color: #cccccc;
+    border-radius: 5px;
+    padding: 20px;
+    font-weight: bold;
+    vertical-align: middle;
+    color: #555555;
+    margin: 10px;
+    width: 660px;
+}
+.file-img{
+    width: 54px;
+    height: 40px;
+    padding-right: 30px;
+    vertical-align: middle;
+}
+.file-delete{
+    font-weight: bolder;
+    float: right;
+    vertical-align: top;
+    color: #777777;
+}

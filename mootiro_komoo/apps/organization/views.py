@@ -192,6 +192,9 @@ def branch_edit(request):
         name = escape(request.POST.get('name', ''))
         if name:
             branch.name = name
+        geometry = request.POST.get('geometry', '')
+        if geometry:
+            branch.geometry = geometry
         info = markdown.markdown(escape(request.POST['info']))
         branch.save()
         success = True

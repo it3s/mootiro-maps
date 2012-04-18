@@ -146,34 +146,6 @@ class AutocompleteWithFavorites(forms.TextInput):
             });
         """ % {'label_id': label_id, 'value_id': value_id}
 
-        # else:
-        #     js += u"""
-
-        #     var get_or_add_callbalck = function(){
-        #         var val = $('#%(label_id)s').val();
-
-        #         var add = false;
-
-        #         $.ajax({
-        #             type: 'POST',
-        #             url: '%(add_url)s',
-        #             data: {'value': val},
-        #             success: function(data){
-        #                 if(data.added){
-        #                     $('#%(value_id)s').val(data.id);
-        #                 }
-        #             },
-        #             dataType: 'json'
-        #         });
-        #     };
-
-        #     shortcut.add('enter', get_or_add_callbalck,
-        #         {target:'%(label_id)s', propagate: false});
-        #     shortcut.add('tab', get_or_add_callbalck,
-        #         {target:'%(label_id)s', propagate: true});
-        #     """ % {'add_url': self.add_url, 'value_id': value_id,
-        #            'label_id': label_id}
-
         # select field behavior
         js += u"""
         $("#%(value_id)s_select").change(function(evt){
@@ -200,37 +172,6 @@ class AutocompleteWithFavorites(forms.TextInput):
         return select
 
     def render(self, name, value=None, attrs=None):
-        # value_id = 'id_%s' % name  # id_fieldname
-        # label_id = '%s_autocomplete' % value_id  # id_fieldname_autocomplete
-
-        # value_attrs = dict(id=value_id, name=name, value=value)
-
-        # # attrs is consumed by the label field (autocomplete)
-        # label_attrs = self.build_attrs(attrs)  # must not have 'name' attribute
-        # if value and value != 'None':
-        #     label_attrs['value'] = self.model.objects.get(id=value)
-        # else:
-        #     label_attrs['value'] = ''
-        # if not 'id' in self.attrs:
-        #     label_attrs['id'] = label_id
-
-        # html = u'''
-        # <input type="hidden" %(value_attrs)s />
-        # <input type="text" %(label_attrs)s />
-
-        # %(select)s
-        # ''' % {'value_attrs': flatatt(value_attrs),
-        #        'label_attrs': flatatt(label_attrs),
-        #        'select': self.render_select(value_id)}
-
-        # html += u'''
-        # <script type="text/javascript"><!--//
-        #     $(document).ready(function(){
-        #         %(js)s
-        #     });
-        # //--></script>
-        # ''' % {'js': self.render_js(label_id, value_id)}
-
         value_id = 'id_%s' % name  # id_fieldname
         label_id = '%s_autocomplete' % value_id  # id_fieldname_autocomplete
 

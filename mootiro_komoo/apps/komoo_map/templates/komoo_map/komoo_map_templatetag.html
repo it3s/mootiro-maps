@@ -26,7 +26,7 @@
     <div style="clear: both;"></div>
     </div>
       {% if edit_button %}
-      <div style="clear: both;"><a href="#" id="map-edit-button">{% trans "Edit" %}</a></div>
+      <div><a style="width:91%; margin-top:5px;" href="#" class="button" id="map-edit-button">{% trans "Open the map editor" %}</a></div>
       {% endif %}
     {% if editable %}
     <div id="dinamic-form"></div>
@@ -55,7 +55,11 @@
         {% if type != 'preview' %}
         var mapOptions = {
           editable: true,
+          {% if type == 'editor' and not panel %}
+          fetchOverlays: false,
+          {% else %}
           fetchOverlays: true,
+          {% endif %}
           autoSaveMapType: true,
           {% if panel %}
           autoSaveLocation: true,
@@ -92,7 +96,11 @@
           console.log('--->', mapOptions);
         // Initialize the komoo.map.
         map = new komoo.Map(mapElem, mapOptions);
+        {% if type == 'main' %}
+        editor = map;
+        {% else %}
         {{ type }} = map;
+        {% endif %}
 
         // Fill the screen.
         function fixMapSize() {

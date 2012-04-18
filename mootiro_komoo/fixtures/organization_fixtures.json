@@ -3,8 +3,8 @@
     "model": "organization.organizationcategory",
     "pk": 1,
     "fields": {
-      "name": "Culture",
-      "slug": "culture"
+      "name": "Culture and Arts",
+      "slug": "culture-and-arts"
     }
   },
   {
@@ -43,40 +43,136 @@
     "model": "organization.organizationcategory",
     "pk": 6,
     "fields": {
-      "name": "Local Economy",
-      "slug": "local-economy"
+      "name": "Research",
+      "slug": "research"
     }
   },
   {
     "model": "organization.organizationcategory",
     "pk": 7,
     "fields": {
-      "name": "Mobility",
-      "slug": "mobility"
+      "name": "Self-help",
+      "slug": "self-help"
     }
   },
   {
     "model": "organization.organizationcategory",
     "pk": 8,
     "fields": {
-      "name": "Social Service",
-      "slug": "social-service"
+      "name": "Social Services",
+      "slug": "social-services"
     }
   },
   {
     "model": "organization.organizationcategory",
     "pk": 9,
     "fields": {
-      "name": "Sport",
-      "slug": "sport"
+      "name": "Sports and Recreation",
+      "slug": "sports-and-recreation"
     }
   },
-    {
+  {
+    "model": "organization.organizationcategory",
+    "pk": 10,
+    "fields": {
+      "name": "Emergency aid/Disaster relief",
+      "slug": "emergency-aid-disaster-relief"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 11,
+    "fields": {
+      "name": "Animal protection",
+      "slug": "animal-protection"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 12,
+    "fields": {
+      "name": "Community development",
+      "slug": "community-development"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 13,
+    "fields": {
+      "name": "Income generation",
+      "slug": "income-generation"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 14,
+    "fields": {
+      "name": "Civic and advocacy organizations",
+      "slug": "civid-and-advocacy-organizations"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 15,
+    "fields": {
+      "name": "Law and legal services",
+      "slug": "law-and-legal-services"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 16,
+    "fields": {
+      "name": "Voluntarism promotion",
+      "slug": "voluntarism-promotion"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 17,
+    "fields": {
+      "name": "Promotion of civil society organizations",
+      "slug": "promotion-of-civil-society-organizations"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 18,
+    "fields": {
+      "name": "Fundraising and grant-making organization",
+      "slug": "fundraising-and-grant-making-organization"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 19,
+    "fields": {
+      "name": "Human rights and peace",
+      "slug": "human-rights-and-peace"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 20,
+    "fields": {
+      "name": "Cultural exchange",
+      "slug": "cultural-exchange"
+    }
+  },
+  {
+    "model": "organization.organizationcategory",
+    "pk": 21,
+    "fields": {
+      "name": "Development assistance",
+      "slug": "development-assistance"
+    }
+  },
+  {
     "model": "organization.organizationcategorytranslation",
     "pk": 1,
     "fields": {
-      "name": "Cultura",
-      "slug": "cultura",
+      "name": "Cultura e Arte",
+      "slug": "cultura-e-arte",
       "lang" : "pt-br",
       "category" : 1
     }
@@ -115,8 +211,8 @@
     "model": "organization.organizationcategorytranslation",
     "pk": 5,
     "fields": {
-      "name": "Habitação",
-      "slug": "habitacao",
+      "name": "Moradias",
+      "slug": "moradias",
       "lang" : "pt-br",
       "category" : 5
     }
@@ -125,8 +221,8 @@
     "model": "organization.organizationcategorytranslation",
     "pk": 6,
     "fields": {
-      "name": "Economia Local",
-      "slug": "economia-local",
+      "name": "Pesquisa",
+      "slug": "pesquisa",
       "lang" : "pt-br",
       "category" : 6
     }
@@ -135,8 +231,8 @@
     "model": "organization.organizationcategorytranslation",
     "pk": 7,
     "fields": {
-      "name": "Mobilidade",
-      "slug": "mobilidade",
+      "name": "Auto-ajuda",
+      "slug": "auto-ajuda",
       "lang" : "pt-br",
       "category" : 7
     }
@@ -145,8 +241,8 @@
     "model": "organization.organizationcategorytranslation",
     "pk": 8,
     "fields": {
-      "name": "Serviço Social",
-      "slug": "servico-social",
+      "name": "Assistência Social",
+      "slug": "assistencia-social",
       "lang" : "pt-br",
       "category" : 8
     }
@@ -155,10 +251,130 @@
     "model": "organization.organizationcategorytranslation",
     "pk": 9,
     "fields": {
-      "name": "Esporte",
-      "slug": "esporte",
+      "name": "Esporte e Recreação",
+      "slug": "esporte-e-recreacao",
       "lang" : "pt-br",
       "category" : 9
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 10,
+    "fields": {
+      "name": "Apoio emergencial devido a catástrofes naturais",
+      "slug": "apoio-emergencial-devido-a-catastrofes-naturais",
+      "lang" : "pt-br",
+      "category" : 10
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 11,
+    "fields": {
+      "name": "Proteção de animais",
+      "slug": "protecao-de-animais",
+      "lang" : "pt-br",
+      "category" : 11
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 12,
+    "fields": {
+      "name": "Desenvolvimento comunitário",
+      "slug": "desenvolvimento-comunitario",
+      "lang" : "pt-br",
+      "category" : 12
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 13,
+    "fields": {
+      "name": "Geração de renda",
+      "slug": "geracao-de-renda",
+      "lang" : "pt-br",
+      "category" : 13
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 14,
+    "fields": {
+      "name": "Promoção de direitos",
+      "slug": "promocao-de-direitos",
+      "lang" : "pt-br",
+      "category" : 14
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 15,
+    "fields": {
+      "name": "Direitos e assuntos legais",
+      "slug": "direitos-e-assuntos-legais",
+      "lang" : "pt-br",
+      "category" : 15
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 16,
+    "fields": {
+      "name": "Fomento ao voluntariado",
+      "slug": "fomento-ao-voluntariado",
+      "lang" : "pt-br",
+      "category" : 16
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 17,
+    "fields": {
+      "name": "Apoio a organizações de sociedade civil",
+      "slug": "apoio-a-organizacoes-de-sociedade-civil",
+      "lang" : "pt-br",
+      "category" : 17
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 18,
+    "fields": {
+      "name": "Filantropia/investimento social",
+      "slug": "filantropia-investimento-social",
+      "lang" : "pt-br",
+      "category" : 18
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 19,
+    "fields": {
+      "name": "Promoção de direitos humanos e da paz",
+      "slug": "promocao de direitos humanos e da paz",
+      "lang" : "pt-br",
+      "category" : 19
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 20,
+    "fields": {
+      "name": "Intercâmbio cultural",
+      "slug": "intercambio-cultural",
+      "lang" : "pt-br",
+      "category" : 20
+    }
+  },
+  {
+    "model": "organization.organizationcategorytranslation",
+    "pk": 21,
+    "fields": {
+      "name": "Fomento ao desenvolvimento de países menos desenvolvidos",
+      "slug": "fomento-ao-desenvolvimento-de-paises-menos-desenvolvidos",
+      "lang" : "pt-br",
+      "category" : 21
     }
   }
 ]

@@ -56,7 +56,9 @@ class MultipleAutocompleteBase(forms.TextInput):
             options_str = ""
 
         js = u"""
-        $('#%(elem_id)s').tagsInput(%(options)s);
+        $(function(){
+            $('#%(elem_id)s').tagsInput(%(options)s);
+        });
         """ % {
             'elem_id': elem_id,
             'options': options_str,

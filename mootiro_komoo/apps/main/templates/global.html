@@ -13,13 +13,14 @@
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />
     <script type="text/javascript" src="{% url javascript_catalog %}"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.conf.urls.js"></script>
     <!-- Our utilities lib -->
     <script type="text/javascript">var isAuthenticated = {{ user.is_authenticated|lower }};</script>
-    <script type="text/javascript" src="/static/js/komoo_utils.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/shortcut.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/komoo_utils.js"></script>
 
     {{ form.media.js }}
     {% block css %}{% endblock %}
@@ -51,6 +52,9 @@
       <div id="content">
         {% block content %}{% endblock %}
       </div>
+      {% if not user.is_authenticated %}
+        {% include "main/login_box.html" %}
+      {% endif %}
     </div>
     {% block page_scripts %}{% endblock %}
   </body>
