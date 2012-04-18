@@ -27,7 +27,9 @@
                 search_results.find('div').remove();
                 results_list = '';
                 has_results = false;
-                $.each(data.result, function(key, val){
+                result_order = ['community', 'organization', 'need', 'resource'];
+                $.each(result_order, function(idx, key){
+                    var val = data.result[key];
                     if (val.length && key !== 'google'){
                         results_list += '<li><div class="search-header">' +
                             '<img src="/static/img/' + key + '.png" >' +

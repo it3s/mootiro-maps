@@ -32,10 +32,10 @@ def organization_list(request, community_slug=''):
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_None(Community, slug=community_slug)
-        organizations_list = community.organization_set.all()
+        organizations_list = community.organization_set.all().order_by('name')
     else:
         community = None
-        organizations_list = Organization.objects.all()
+        organizations_list = Organization.objects.all().order_by('name')
 
     organizations = paginated_query(organizations_list, request)
     return dict(community=community, organizations=organizations)
@@ -46,7 +46,7 @@ def show(request, organization_slug='', community_slug=''):
     logger.debug('acessing organization > show')
 
     organization = get_object_or_404(Organization, slug=organization_slug)
-    branches = organization.organizationbranch_set.all()
+    branches = organization.organizationbranch_set.all().order_by('name')
     geojson = create_geojson(branches)
     community = get_object_or_None(Community, slug=community_slug)
 

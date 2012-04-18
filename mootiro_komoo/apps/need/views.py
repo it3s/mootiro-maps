@@ -89,10 +89,10 @@ def list(request, community_slug=''):
     logger.debug('acessing need > list')
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
-        needs = community.needs.all()
+        needs = community.needs.all().order_by('title')
     else:
         community = None
-        needs = Need.objects.all()
+        needs = Need.objects.all().order_by('title')
     return dict(community=community, needs=needs)
 
 

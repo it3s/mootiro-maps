@@ -769,13 +769,6 @@ input[type=text], textarea{
     float: right;
     margin-right: 10px;
 }
-.branch-link-btn.btn-active{
-    -moz-transform:rotate(90deg);
-    -webkit-transform:rotate(90deg);
-    -o-transform:rotate(90deg);
-    -ms-transform:rotate(90deg);
-    filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1.5);
-}
 .branch-edit-btn{
     float: right;
 }

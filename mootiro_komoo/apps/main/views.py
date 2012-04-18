@@ -102,7 +102,7 @@ def _query_model(model, term, fields):
     for field in fields:
         query_field = {'{}__icontains'.format(field): term}
         query |= Q(**query_field)
-    return model.objects.filter(query)
+    return model.objects.filter(query).order_by(fields[0])
 
 
 queries = {
