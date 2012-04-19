@@ -235,15 +235,17 @@
         });
 
         $('.branch-edit-btn').click(function(evt){
-            var branch = $(this).parent().parent().parent()
-            var form = branch.find('.branch-form');
-            var info = branch.find('.branch-info');
-            var branch_name = branch.find('.branch-name')
+            if (isAuthenticated){
+                var branch = $(this).parent().parent().parent()
+                var form = branch.find('.branch-form');
+                var info = branch.find('.branch-info');
+                var branch_name = branch.find('.branch-name')
 
-            branch_name.fadeOut(400); //TDO KEEP from
-            info.fadeOut(400, function(){
-                form.fadeIn(400);
-            });
+                branch_name.fadeOut(400);
+                info.fadeOut(400, function(){
+                    form.fadeIn(400);
+                });
+            }
         });
 
         $('.form-branch-edit').submit(function(evt){

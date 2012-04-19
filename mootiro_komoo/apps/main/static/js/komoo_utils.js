@@ -198,16 +198,16 @@ function geoObjectsSelection (parent, children) {
 
         /* Children behaviour related to parent */
         if (children) {
-            if (status($parent) == false) {
+            if (status($parent) === false) {
                 // save selected children
                 $selectedChildren = $children.filter(function (index) {
                     return status(this);
                 });
-            };
+            }
             $.each($selectedChildren, function (index, child) {
                 $(child).click();
             });
-        };
+        }
     });
     $("div.img-holder, .collapser", $parent).on('click', function (event) {
         return false; // prevent event bubbling
@@ -225,17 +225,17 @@ function geoObjectsSelection (parent, children) {
             var numSelectedChildrens = $children.filter(function (index) {
                     return status(this);
                 }).length;
-            if (numSelectedChildrens == 0) {
+            if (numSelectedChildrens === 0) {
                 status($parent, false);
             } else {
                 status($parent, true);
-            };
+            }
         });
         $("div.img-holder, .collapser", $children).on('click', function (event) {
             return false; // prevent event bubbling
         });
     }
-};
+}
 function geoObjectsListing (ul) {
     var $ul = $(ul);
 
@@ -270,7 +270,7 @@ $(function () {
                 width: 745,
                 modal: true,
                 resizable: false,
-                draggable: false,
+                draggable: false
             });
             ev.stopPropagation();
             return false;
@@ -283,7 +283,7 @@ function errorMessage(title, message, imageUrl, buttons) {
         buttons = [
             {
                 text: "Ok",
-                class: "button",
+                'class': "button",
                 click: function() { $(this).dialog("close"); }
             }
         ];
