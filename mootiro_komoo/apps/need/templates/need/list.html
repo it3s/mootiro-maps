@@ -16,9 +16,9 @@
   </div>
 
   <div class="highlight">
-    <div class="list">
+    <div class="view-list">
       {% for need in needs %}
-      <div>
+      <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
           <span class="apart">
             <a href="{% if need.community %}{% url view_need need.community.slug need.slug %}{% else %}{% url view_need need.slug %}{% endif %}"> {{ need.title }} </a>

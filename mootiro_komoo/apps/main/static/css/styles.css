@@ -493,9 +493,9 @@ form .datepicker { width: 7em }
 }
 
 /* Object Listing */
-div.list > div { padding: 5px 20px }
-div.list > div:first-child { padding-top: 20px }
-div.list > div:last-child { padding-bottom: 20px }
+/*div.list > div { padding: 5px 20px }*/
+/*div.list > div:first-child { padding-top: 20px }*/
+/*div.list > div:last-child { padding-bottom: 20px }*/
 
 /* Objects Viewing */
 .map-preview {
@@ -735,13 +735,14 @@ input[type=text], textarea{
   background-color: rgb(225, 239, 245);
   border-radius: 3px;
 }
-.view-list-item{
-  padding: 10px;
-  background-color: rgb(239, 248, 249);
-  margin-top: 10px;
+div.view-list-item{
+  padding: 20px 10px 10px 20px;
+  /*background-color: rgb(239, 248, 249);*/
+  background-color: #b2dffb;
+  /*margin-top: 10px;*/
   clear: both;
 }
-.view-list-item.odd{
+div.view-list-item.odd{
   background-color: rgb(220, 239, 244);
 }
 

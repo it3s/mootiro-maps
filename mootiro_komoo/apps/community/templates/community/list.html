@@ -13,7 +13,7 @@
   <div class="highlight">
     <div class="list">
       {% for community in communities %}
-      <div>
+      <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
           <span class="apart">
             <a href="{% url view_community community.slug %}">{{ community.name }}</a>
