@@ -77,7 +77,7 @@ $("#uploader").pluploadQueue({
         FilesAdded: function(up, files) {
             var max = up.settings.max_file_count;
             if ((up.files.length + files.length) > max){
-                alert('Max number of files: ' + max);
+                errorMessage('Max number of files: ' + max);
             }
         },
         QueueChanged: function(up){
@@ -112,7 +112,7 @@ $('form').submit(function(e) {
         uploader.start();
 
     } /*else {
-        alert('You must queue at least one file.');
+        errorMessage('You must queue at least one file.');
     }*/
     // return false;
 });
