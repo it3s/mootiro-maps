@@ -17,6 +17,8 @@
 
   <div class="highlight">
     <div class="view-list">
+      {% pagination needs %}
+
       {% for need in needs.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>

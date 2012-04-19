@@ -22,6 +22,9 @@
       <div class="ajax-search"><input type="text"/></div>
     </div>
 
+    <div class="highlight">
+    {% pagination organizations %}
+
     {% for org in organizations.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <div>
@@ -95,6 +98,7 @@
     {% endfor %}
 
     {% pagination organizations %}
+    </div>
 
   </div>
 

@@ -966,6 +966,12 @@ textarea.markItUpEditor{
 .error-dialog .ui-dialog-titlebar {
     /* TODO */
 }
+.komoo-pagination-wrapper{
+    background-color: #ffffff;
+}
+.komoo-pagination{
+    display: inline-block;
+}
 .komoo-pagination span{
     padding: 3px;
 }

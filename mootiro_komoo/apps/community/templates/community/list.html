@@ -12,6 +12,8 @@
 <div id="main-content">
   <div class="highlight">
     <div class="list">
+      {% pagination communities %}
+
       {% for community in communities.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>

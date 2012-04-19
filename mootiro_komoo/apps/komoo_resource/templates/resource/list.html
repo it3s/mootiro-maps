@@ -20,6 +20,9 @@
     <div class="ajax-search"><input type="text"/></div>
   </div>
 
+  <div class="highlight">
+  {% pagination resources %}
+
   {% for resource in resources.object_list %}
 
     <div class="view-list-item {% cycle 'odd' '' %}">
@@ -60,6 +63,7 @@
   {% endfor %}
 
   {% pagination resources %}
+  </div>
 
   </div>
 
