@@ -17,7 +17,7 @@
 
   <div class="highlight">
     <div class="view-list">
-      {% for need in needs %}
+      {% for need in needs.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
           <span class="apart">
@@ -41,6 +41,8 @@
         <p>{{ need.description }}</p>
       </div>
       {% endfor %}
+
+      {% pagination needs %}
     </div>
 
   </div>

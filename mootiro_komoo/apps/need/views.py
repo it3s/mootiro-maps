@@ -19,7 +19,7 @@ from lib.taggit.models import TaggedItem
 from community.models import Community
 from need.models import Need, TargetAudience
 from need.forms import NeedForm
-from main.utils import create_geojson
+from main.utils import create_geojson, paginated_query
 
 logger = logging.getLogger(__name__)
 
@@ -93,6 +93,7 @@ def list(request, community_slug=''):
     else:
         community = None
         needs = Need.objects.all().order_by('title')
+    needs = paginated_query(needs, request=request, size=10)
     return dict(community=community, needs=needs)
 
 
