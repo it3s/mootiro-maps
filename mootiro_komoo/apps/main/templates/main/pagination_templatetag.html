@@ -1,7 +1,11 @@
 {% load i18n %}
 {% if collection.paginator.num_pages > 1 %}
-<div class="pagination">
-  <span class="step-links">
+
+{% with num=collection.number total=collection.paginator.num_pages %}
+<div class="komoo-pagination" title='pag {{ num }} de {{ total }}'>
+{% endwith %}
+
+  <!-- <span class="step-links">
       {% if collection.has_previous %}
         <span>
           <a href="?page={{ collection.previous_page_number }}">{% trans 'previous' %}</a>
@@ -19,6 +23,49 @@
           <a href="?page={{ collection.next_page_number }}">{% trans 'next' %}</a>
         </span>
       {% endif %}
+  </span> -->
+  {% if collection.has_previous %}
+    <span>
+      <a href="?page={{ collection.previous_page_number }}">
+        < {% trans 'previous' %}
+      </a>
+    </span>
+  {% endif %}
+  <span>
+    {% if collection.previous_page_number > 1 and collection.paginator.num_pages > 3 %} ... {% endif %}
   </span>
+  {% if not collection.has_next and collection.paginator.num_pages > 2 %}
+    <span>
+      <a href="?page={{ collection.previous_page_number|add:"-1" }}">{{ collection.previous_page_number|add:"-1" }}</a>
+    </span>
+  {% endif %}
+  {% if collection.has_previous %}
+  <span>
+    <a href="?page={{ collection.previous_page_number }}">{{ collection.previous_page_number }}</a>
+  </span>
+  {% endif %}
+  <span class="current-page">
+    {{ collection.number }}
+  </span>
+  {% if collection.has_next %}
+  <span>
+    <a href="?page={{ collection.next_page_number }}">{{ collection.next_page_number }}</a>
+  </span>
+  {% endif %}
+  {% if not collection.has_previous and collection.paginator.num_pages > 2 %}
+    <span>
+      <a href="?page={{ collection.next_page_number|add:"1" }}">{{ collection.next_page_number|add:"1" }}</a>
+    </span>
+  {% endif %}
+  <span>
+    {% if collection.next_page_number < collection.paginator.num_pages and collection.paginator.num_pages > 3 %} ... {% endif %}
+  </span>
+  {% if collection.has_next %}
+    <span>
+      <a href="?page={{ collection.next_page_number }}">
+        {% trans 'next' %} >
+      </a>
+    </span>
+  {% endif %}
 </div>
 {% endif %}
