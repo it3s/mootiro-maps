@@ -12,7 +12,7 @@
 <div id="main-content">
   <div class="highlight">
     <div class="list">
-      {% for community in communities %}
+      {% for community in communities.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
           <span class="apart">
@@ -28,6 +28,8 @@
         <p class="mark-down">{{ community.description|render_markup }}</p>
       </div>
       {% endfor %}
+
+      {% pagination communities %}
     </div>
 
   </div>

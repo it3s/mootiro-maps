@@ -17,7 +17,7 @@ from annoying.decorators import render_to, ajax_request
 
 from community.models import Community
 from community.forms import CommunityForm
-from main.utils import create_geojson
+from main.utils import create_geojson, paginated_query
 
 logger = logging.getLogger(__name__)
 
@@ -87,6 +87,7 @@ def map(request):
 def list(request):
     logger.debug('acessing community > list')
     communities = Community.objects.all().order_by('name')
+    communities = paginated_query(communities, request)
     return dict(communities=communities)
 
 
