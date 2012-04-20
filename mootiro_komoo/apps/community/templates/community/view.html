@@ -23,6 +23,21 @@
       <!-- <span class="meta-info">Type</span>NOT IMPLEMENTED<br/> -->
       <span class="meta-info">{% trans "Population" %}</span> {% firstof community.population '-' %}
     </p>
+
+    <div class="view-footer">
+        {% if photos.object_list %}
+        <div class="view-photos">
+            <h3>{% trans 'Photos:' %}</h3>
+            {% for photo in photos.object_list %}
+                <a href="{{ photo.file.url }}">
+                    <img src="{{ photo.file.url }}">
+                </a>
+            {% endfor %}
+        </div>
+        {% pagination photos %}
+        {% endif %}
+    </div>
+
   </div>
 
   <div class="right-bar">
@@ -51,6 +66,18 @@
 {% block page_scripts %}
   <script type="text/javascript">
     var community_slug = '{{ community.slug }}';
+
+    $('.view-footer img').each(function(idx, obj){
+      if(obj.offsetHeight > obj.offsetWidth){
+        $(obj).css('height', '160px').css('width', 'auto')
+              .css('padding-left', Math.abs(obj.offsetWidth - 200) /2 )
+              .css('padding-right', Math.abs(obj.offsetWidth - 200) /2 );
+      } else {
+        $(obj).css('height', 'auto').css('width', '200px')
+              .css('padding-bottom', Math.abs(obj.offsetHeight - 200) /2)
+              .css('padding-top', Math.abs(obj.offsetHeight - 200) /2);
+      }
+    });
   </script>
   {% comments_staticfiles %}
 {% endblock %}

@@ -14,6 +14,7 @@ from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
 
 from annoying.decorators import render_to, ajax_request
+from fileupload.models import UploadedFile
 
 from community.models import Community
 from community.forms import CommunityForm
@@ -74,7 +75,10 @@ def view(request, community_slug):
 
     community = get_object_or_404(Community, slug=community_slug)
     geojson = create_geojson([community])
-    return dict(community=community, geojson=geojson)
+
+    photos = paginated_query(UploadedFile.get_files_for(community),
+                             request, size=3)
+    return dict(community=community, geojson=geojson, photos=photos)
 
 
 @render_to('community/map.html')
@@ -89,7 +93,7 @@ def list(request):
     communities = Community.objects.all().order_by('name')
     communities_count = communities.count()
     communities = paginated_query(communities, request)
-    return dict(communities=communities, communities_count=communities_count)
+    return dict(communities=communities,)
 
 
 def communities_geojson(request):
