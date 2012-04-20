@@ -70,7 +70,10 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
             kw = investment.home_url_params()
             return redirect('view_investment', **kw)
     else:
-        form = InvestmentForm(instance=investment)
+        data = {}
+        if investment.investor:
+            data = investment.investor.to_dict()
+        form = InvestmentForm(instance=investment, initial=data)
 
     return dict(form=form, community=community)
 

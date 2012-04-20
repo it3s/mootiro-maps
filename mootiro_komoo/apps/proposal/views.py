@@ -52,7 +52,7 @@ def edit(request, community_slug="", need_slug="", proposal_number=""):
                 kw["community_slug"] = proposal.need.community.slug
             return redirect('view_proposal', **kw)
         else:
-            return dict(form=form, need=need)
+            return dict(form=form, need=need, community=community)
     else:
         return dict(form=ProposalForm(instance=proposal), community=community)
 

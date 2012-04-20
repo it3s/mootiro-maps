@@ -48,6 +48,12 @@ class InvestmentForm(forms.ModelForm):
     )
     investor_person = forms.CharField(label="Investor", required=False)
 
+    # this field is needed to avoid creating duplicated instances
+    investor = forms.ModelChoiceField(
+        queryset=Investor.objects.all(),
+        required=False
+    )
+
     date = forms.DateField(widget=Datepicker())
     end_date = forms.DateField(widget=Datepicker(), required=False)
     over_period = forms.BooleanField(
@@ -94,6 +100,7 @@ class InvestmentForm(forms.ModelForm):
         cleaned_data = super(InvestmentForm, self).clean()
 
         # investor validation
+        current_investor = cleaned_data.pop("investor")
         anonymous_investor = cleaned_data.pop("anonymous_investor")
         investor_type = cleaned_data.pop("investor_type")
         investor_organization = cleaned_data.pop("investor_organization")
@@ -111,9 +118,12 @@ class InvestmentForm(forms.ModelForm):
             investor = investor_organization
         elif investor_type == 'PER':
             investor = investor_person
-        investor, created = Investor.get_or_create_for(investor)
+
+        investor, created = Investor.get_or_create_for(investor,
+                                current=current_investor)
         if created:
             investor.save()
+
         cleaned_data['investor'] = investor
 
         return cleaned_data

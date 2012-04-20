@@ -12,7 +12,7 @@ class Autocomplete(forms.TextInput):
         label_id: html id of the visible autocomplete field
         value_id: html id of the hidden field that contains data to be persisted
     """
-    def __init__(self, model, source_url, *a, **kw):
+    def __init__(self, model, source_url, label_field="name", *a, **kw):
         self.model = model
         self.source_url = source_url
         super(Autocomplete, self).__init__(*a, **kw)
