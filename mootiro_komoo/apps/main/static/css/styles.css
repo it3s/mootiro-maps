@@ -723,6 +723,7 @@ input[type=text], textarea{
 }
 .view-extras{
   clear: both;
+  padding-top: 40px;
 }
 .view-tag-list {
   margin: 5px 0 15px 0;

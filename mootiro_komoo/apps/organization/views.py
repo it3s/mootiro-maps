@@ -52,8 +52,10 @@ def show(request, organization_slug='', community_slug=''):
     branches = organization.organizationbranch_set.all().order_by('name')
     geojson = create_geojson(branches)
     community = get_object_or_None(Community, slug=community_slug)
-    photos = paginated_query(UploadedFile.get_files_for(organization),
-                             request, size=3)
+    files = UploadedFile.get_files_for(organization)
+    if organization.logo_id:
+        files = files.exclude(pk=organization.logo_id)
+    photos = paginated_query(files, request, size=3)
 
     return dict(organization=organization, geojson=geojson,
                 community=community, photos=photos)
