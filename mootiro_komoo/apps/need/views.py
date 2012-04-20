@@ -15,6 +15,7 @@ from django.contrib.gis.geos import Polygon
 
 from annoying.decorators import render_to
 from lib.taggit.models import TaggedItem
+from fileupload.models import UploadedFile
 
 from community.models import Community
 from need.models import Need, TargetAudience
@@ -59,10 +60,10 @@ def edit(request, community_slug="", need_slug=""):
                 return redirect(redirect_url)
             rdict = dict(redirect=redirect_url)
         else:
-            rdict = dict(form=form, community=community)
+            rdict = dict(form=form, community=community, need=need)
     else:
         form = NeedForm(instance=need)
-        rdict = dict(form=form, community=community)
+        rdict = dict(form=form, community=community, need=need)
     if community:
         form.fields.pop('community')
     geojson = create_geojson([need], convert=False)
@@ -81,7 +82,9 @@ def view(request, community_slug=None, need_slug=None):
         filters['community__slug'] = community_slug
     need = get_object_or_404(Need, **filters)
     geojson = create_geojson([need])
-    return dict(need=need, community=need.community, geojson=geojson)
+    photos = paginated_query(UploadedFile.get_files_for(need), request, size=3)
+    return dict(need=need, community=need.community, geojson=geojson,
+                photos=photos)
 
 
 @render_to('need/list.html')

@@ -4,6 +4,8 @@ from __future__ import unicode_literals  # unicode by default
 
 from django import forms
 from markitup.widgets import MarkItUpWidget
+from fileupload.forms import FileuploadField
+from fileupload.models import UploadedFile
 
 from main.utils import MooHelper
 from main.widgets import Autocomplete, Tagsinput, TaggitWidget, ImageSwitchMultiple
@@ -15,7 +17,7 @@ class NeedForm(forms.ModelForm):
     class Meta:
         model = Need
         fields = ('community', 'title', 'description', 'categories',
-                    'target_audiences', 'tags', 'geometry')
+                    'target_audiences', 'tags', 'geometry', 'files')
 
     class Media:
         js = ('lib/jquery.imagetick-original.js',)
@@ -51,6 +53,8 @@ class NeedForm(forms.ModelForm):
 
     geometry = forms.CharField(widget=forms.HiddenInput())
 
+    files = FileuploadField(required=False)
+
     def __init__(self, *a, **kw):
         # Crispy forms configuration
         self.helper = MooHelper()
@@ -61,3 +65,9 @@ class NeedForm(forms.ModelForm):
     # def clean_community(self):
     #     value = self.cleaned_data['community']
     #     return Community.objects.get(id=value) if value else value
+
+    def save(self, *args, **kwargs):
+        need = super(NeedForm, self).save(*args, **kwargs)
+        files_id_list = self.cleaned_data.get('files', '').split('|')
+        UploadedFile.bind_files(files_id_list, need)
+        return need
