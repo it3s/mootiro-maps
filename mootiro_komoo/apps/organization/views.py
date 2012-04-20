@@ -191,7 +191,7 @@ def branch_edit(request):
     logger.debug('acessing organization > branch_edit: POST={}'.format(
             request.POST))
 
-    if request.POST.get('id', None) and request.POST.get('info', None):
+    if request.POST.get('id', None):
         branch = get_object_or_404(OrganizationBranch, pk=request.POST.get('id', ''))
         branch.info = escape(request.POST['info'])
         name = escape(request.POST.get('name', ''))
