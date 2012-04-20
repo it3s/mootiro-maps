@@ -17,7 +17,10 @@ from main.widgets import TaggitWidget, Datepicker, ConditionalField, \
 
 
 @autostrip
-class InvestmentForm(forms.Form):
+class InvestmentForm(forms.ModelForm):
+
+    class Meta:
+        model = Investment
 
     title = forms.CharField()
     description = forms.CharField(widget=MarkItUpWidget())
@@ -109,6 +112,8 @@ class InvestmentForm(forms.Form):
         elif investor_type == 'PER':
             investor = investor_person
         investor, created = Investor.get_or_create_for(investor)
+        if created:
+            investor.save()
         cleaned_data['investor'] = investor
 
         return cleaned_data

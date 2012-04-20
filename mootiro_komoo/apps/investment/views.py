@@ -56,12 +56,12 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
     investment, community = prepare_investment_objects(**kw)
 
     if request.POST:
-        form = InvestmentForm(request.POST)
+        form = InvestmentForm(request.POST, instance=investment)
         if form.is_valid():
-            data = form.cleaned_data
-            investment = Investment(**data)
-            investment.save()
-
+            investor = form.cleaned_data['investor']
+            investment = form.save(commit=False)
+            investor.save()
+            investment.investor = investor
             if not investment.id:  # was never saved
                 investment.creator = request.user
             investment.save()
@@ -70,8 +70,7 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
             kw = investment.home_url_params()
             return redirect('view_investment', **kw)
     else:
-        print "GEEEET = = =", investment.investor
-        form = InvestmentForm()
+        form = InvestmentForm(instance=investment)
 
     return dict(form=form, community=community)
 
