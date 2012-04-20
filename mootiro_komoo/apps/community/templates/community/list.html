@@ -12,7 +12,12 @@
 <div id="main-content">
   <div class="highlight">
     <div class="list">
-      {% pagination communities %}
+      <div class="view-list-top">
+        {% pagination communities %}
+        <div class="view-list-count">
+          ({{ communities_count }} communities available)
+        </div>
+      </div>
 
       {% for community in communities.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">

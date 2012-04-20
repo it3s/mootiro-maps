@@ -18,7 +18,12 @@
 
   <div class="highlight">
     <div class="view-list">
-      {% pagination needs %}
+      <div class="view-list-top">
+        {% pagination needs %}
+        <div class="view-list-count">
+          ({{ needs_count }} needs available)
+        </div>
+      </div>
 
       {% for need in needs.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">

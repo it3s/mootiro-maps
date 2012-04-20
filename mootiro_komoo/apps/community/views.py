@@ -87,8 +87,9 @@ def map(request):
 def list(request):
     logger.debug('acessing community > list')
     communities = Community.objects.all().order_by('name')
+    communities_count = communities.count()
     communities = paginated_query(communities, request)
-    return dict(communities=communities)
+    return dict(communities=communities, communities_count=communities_count)
 
 
 def communities_geojson(request):

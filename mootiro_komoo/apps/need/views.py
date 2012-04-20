@@ -93,8 +93,9 @@ def list(request, community_slug=''):
     else:
         community = None
         needs = Need.objects.all().order_by('title')
+    needs_count = needs.count()
     needs = paginated_query(needs, request=request)
-    return dict(community=community, needs=needs)
+    return dict(community=community, needs=needs, needs_count=needs_count)
 
 
 # DOES NOT SIMPLY WORK WITH @ajax_request, please test before commit!
