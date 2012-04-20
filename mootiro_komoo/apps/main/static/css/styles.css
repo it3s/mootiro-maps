@@ -55,6 +55,7 @@ ul.horizontal li {
     margin: 0 2px;
 }
 .clear-both { clear: both }
+.hidden { display: none }
 .centralizer {
     width: 100%;
     text-align: center;

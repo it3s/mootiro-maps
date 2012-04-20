@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.forms.models import model_to_dict
+
+from annoying.functions import get_object_or_None
 
 import reversion
 from lib.taggit.managers import TaggableManager
@@ -21,9 +24,10 @@ class Investor(models.Model):
         ('PER', _('Person')),
     )
 
+    anonymous_name = _("Anonymous")
+
     _name = models.CharField(max_length=256, null=True, blank=True)
-    typ = models.CharField(max_length=3, null=False, verbose_name="type",
-                    choices=TYPE_CHOICES)
+    typ = models.CharField(max_length=3, null=False, choices=TYPE_CHOICES)
     is_anonymous = models.BooleanField(default=False, null=False)
 
     # Relationship
@@ -34,7 +38,7 @@ class Investor(models.Model):
     @property
     def name(self):
         if self.is_anonymous:
-            return "Anonymous"
+            return unicode(self.anonymous_name)
         elif self.content_object:
             return unicode(self.content_object)
         else:
@@ -47,6 +51,28 @@ class Investor(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.is_anonymous or self.name == "":
+            self.is_anonymous = True
+            self.name = ""
+        super(Investor, self).save(*args, **kwargs)
+
+    @classmethod
+    def get_or_create_for(cls, value):
+        if isinstance(value, basestring):
+            investor = cls(name=value)
+            created = True
+        else:
+            investor = get_object_or_None(Investor, object_id=value.id,
+                content_type=ContentType.objects.get_for_model(value))
+            if not investor:
+                investor = Investor()
+                investor.content_object = value
+                created = True
+            else:
+                created = False
+        return investor, created
 
 
 class Investment(models.Model):
@@ -81,6 +107,7 @@ class Investment(models.Model):
     # Relationships
     investor = models.ForeignKey(Investor, related_name="investments",
                     null=True, blank=True)
+
     # Grantee generic relationship
     grantee_content_type = models.ForeignKey(ContentType, editable=False,
                 related_name="investment_grantee")
@@ -106,6 +133,16 @@ class Investment(models.Model):
             self.slug = slugify(self.title, self.slug_exists)
         super(Investment, self).save(*args, **kwargs)
     ### END ###
+
+    def to_dict(self):
+        fields = ["title", "description", "value", "currency", "date",
+            "over_period", "end_date", "tags"]
+        d = model_to_dict(self, fields=fields)
+        if self.investor:
+            d["investor_type"] = self.investor.typ
+            d["anonymous_investor"] = self.investor.is_anonymous
+            d["investor"] = self.investor.name
+        return d
 
     def home_url():
         pass
