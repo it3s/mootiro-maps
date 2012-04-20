@@ -9,4 +9,6 @@ logs/
 media/
 komoo_index/
 backups/
+*.csv
+*.kml
 
