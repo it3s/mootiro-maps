@@ -42,7 +42,7 @@ class FormOrganizationNew(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
-    logo = forms.CharField(widget=forms.HiddenInput())
+    logo = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Organization
@@ -126,7 +126,7 @@ class FormOrganizationEdit(forms.ModelForm):
         widget=forms.CheckboxSelectMultiple(
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
-    logo = forms.CharField(widget=forms.HiddenInput())
+    logo = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Organization

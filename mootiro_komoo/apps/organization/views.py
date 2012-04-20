@@ -182,7 +182,8 @@ class Edit(View):
             logger.debug('Form erros: {}'.format(dict(form_org._errors)))
             tmplt = 'organization/edit.html'
             return render_to_response(tmplt,
-                dict(form_org=form_org, community=community, geojson='{}'),
+                dict(form_org=form_org, community=community, geojson='{}',
+                     organization=organization),
                 context_instance=RequestContext(request))
 
 
