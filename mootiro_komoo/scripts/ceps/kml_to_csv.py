@@ -7,7 +7,7 @@ import codecs
 
 
 def sanitize(text):
-    return unicode(text).replace("\"", "'").replace("\n","<br>").replace(";", ",")
+    return unicode(text).replace("\"", "'").replace("\n","<br>").replace("\r","<br>").replace(";", ",")
 
 
 def generate_csv(obj_list):
