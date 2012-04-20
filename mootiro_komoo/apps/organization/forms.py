@@ -80,7 +80,7 @@ class FormOrganizationNew(forms.ModelForm):
         org.contact = self.cleaned_data['contact']
         org.link = self.cleaned_data['link']
         org.name = self.org_name
-        org.logo_id = self.cleaned_data.get('logo', None)
+        org.logo = self.cleaned_data.get('logo', None)
         if user and not user.is_anonymous():
             org.creator_id = user.id
         org.save()
