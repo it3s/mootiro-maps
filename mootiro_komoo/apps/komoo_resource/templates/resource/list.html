@@ -25,7 +25,11 @@
 
   <div class="view-list-top">
     {% pagination resources %}
-    <div class="view-list-count">({{ resources_count }} resources available)</div>
+    <div class="view-list-count">
+      {% if resources_count > 2 %}
+        ({{ resources_count }} resources available)
+      {% endif %}
+      </div>
   </div>
 
 

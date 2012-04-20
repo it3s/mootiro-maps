@@ -146,22 +146,16 @@ def clean_media_files():
             print err
 
 
-def sync_all():
+def sync_all(data_fixtures='fixtures/backupdb.json'):
     """
     restart app and database from scratch.
     It: drops the DB, recreates it, syncdb, load_fixtures and call initial_revisions,
     also makes coffee and give you a hug
     """
-    # recreate_db()
-    # syncdb()
-    # load_fixtures()
-    # load_fixtures('test')
-    # initial_revisions()
-    # clean_media_files()
     recreate_db()
     syncdb()
     fix_contenttypes()
-    loaddata('fixtures/backupdb.json')
+    loaddata(data_fixtures)
 
 
 def dumpdata():

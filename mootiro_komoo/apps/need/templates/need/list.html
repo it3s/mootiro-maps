@@ -21,7 +21,9 @@
       <div class="view-list-top">
         {% pagination needs %}
         <div class="view-list-count">
-          ({{ needs_count }} needs available)
+          {% if needs_count > 2 %}
+            ({{ needs_count }} needs available)
+          {% endif %}
         </div>
       </div>
 

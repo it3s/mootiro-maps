@@ -15,7 +15,9 @@
       <div class="view-list-top">
         {% pagination communities %}
         <div class="view-list-count">
-          ({{ communities_count }} communities available)
+          {% if communities_count > 2 %}
+            ({{ communities_count }} communities available)
+          {% endif %}
         </div>
       </div>
 

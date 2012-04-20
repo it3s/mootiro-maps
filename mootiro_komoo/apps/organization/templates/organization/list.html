@@ -26,7 +26,11 @@
 
     <div class="view-list-top">
       {% pagination organizations %}
-      <div class="view-list-count">({{ organizations_count }} organizations available)</div>
+      <div class="view-list-count">
+        {% if organizations_count > 2 %}
+          ({{ organizations_count }} organizations available)
+        {% endif %}
+      </div>
     </div>
     {% for org in organizations.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
