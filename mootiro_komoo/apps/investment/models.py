@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.forms.models import model_to_dict
+
+from annoying.functions import get_object_or_None
 
 import reversion
 from lib.taggit.managers import TaggableManager
@@ -21,12 +24,21 @@ class Investor(models.Model):
         ('PER', _('Person')),
     )
 
+    @property
+    def is_organization(self):
+        return (self.typ == "ORG")
+
+    @property
+    def is_person(self):
+        return (self.typ == "PER")
+
+    # Fields
+    anonymous_name = _("Anonymous")
     _name = models.CharField(max_length=256, null=True, blank=True)
-    typ = models.CharField(max_length=3, null=False, verbose_name="type",
-                    choices=TYPE_CHOICES)
+    typ = models.CharField(max_length=3, null=False, blank=False, choices=TYPE_CHOICES)
     is_anonymous = models.BooleanField(default=False, null=False)
 
-    # Relationship
+    # Generic Relationship
     content_type = models.ForeignKey(ContentType, editable=False, null=True)
     object_id = models.PositiveIntegerField(editable=False, null=True)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
@@ -34,7 +46,7 @@ class Investor(models.Model):
     @property
     def name(self):
         if self.is_anonymous:
-            return "Anonymous"
+            return unicode(self.anonymous_name)
         elif self.content_object:
             return unicode(self.content_object)
         else:
@@ -47,6 +59,53 @@ class Investor(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.is_anonymous or self.name == "":
+            self.is_anonymous = True
+            self.name = ""
+        super(Investor, self).save(*args, **kwargs)
+
+    def to_dict(self):
+        d = {
+            "investor_type": self.typ,
+            "anonymous_investor": self.is_anonymous,
+        }
+        if self.is_organization:
+            d["investor_organization"] = self.content_object.id
+        elif self.is_person:
+            d["investor_person"] = self.name
+        return d
+
+    @classmethod
+    def get_or_create_for(cls, value, current=None):
+        """Always ask this class method to build you a inventor based on what
+        your investment already has."""
+        if isinstance(value, basestring):
+            if current:
+                if current.name == value:
+                    created = False
+                    return current, created  # no changes
+                else:
+                    pass
+                    current.investments.clear()
+                    current.delete()  # new name
+            investor = cls(name=value)
+            investor.typ = "PER"
+            created = True
+        else:
+            investor = get_object_or_None(Investor, object_id=value.id,
+                content_type=ContentType.objects.get_for_model(value))
+            if not investor:
+                investor = Investor()
+                investor.content_object = value
+                # TODO: when add support to User must check content_object type
+                #       before setting self typ below.
+                investor.typ = "ORG"
+                created = True
+            else:
+                created = False
+        return investor, created
 
 
 class Investment(models.Model):
@@ -81,6 +140,7 @@ class Investment(models.Model):
     # Relationships
     investor = models.ForeignKey(Investor, related_name="investments",
                     null=True, blank=True)
+
     # Grantee generic relationship
     grantee_content_type = models.ForeignKey(ContentType, editable=False,
                 related_name="investment_grantee")
@@ -102,6 +162,7 @@ class Investment(models.Model):
         # TODO: validate investor as either a User or an Organization
 
         old_title = Investment.objects.get(id=self.id).title if self.id else None
+
         if not self.id or old_title != self.title:
             self.slug = slugify(self.title, self.slug_exists)
         super(Investment, self).save(*args, **kwargs)

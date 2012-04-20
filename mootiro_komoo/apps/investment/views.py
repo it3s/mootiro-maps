@@ -9,7 +9,7 @@ from django.shortcuts import redirect, get_object_or_404
 from annoying.decorators import render_to
 
 from proposal.views import prepare_proposal_objects
-from investment.models import Investment, Investor
+from investment.models import Investment
 from investment.forms import InvestmentForm
 from main.utils import create_geojson
 
@@ -39,7 +39,6 @@ def prepare_investment_objects(community_slug="", need_slug="",
         investment = get_object_or_404(Investment, slug=investment_slug,
             grantee_content_type=ContentType.objects.get_for_model(grantee),
             grantee_object_id=grantee.id)
-        print "INVESTMENT = = =", investment
     else:
         investment = Investment(grantee=grantee)
 
@@ -57,31 +56,26 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
     investment, community = prepare_investment_objects(**kw)
 
     if request.POST:
-
-        post = request.POST.copy()  # needed because request.POST is immutable
-        #investor = post.pop("investor")
-
-        form = InvestmentForm(post, instance=investment)
+        form = InvestmentForm(request.POST, instance=investment)
         if form.is_valid():
+            investor = form.cleaned_data['investor']
             investment = form.save(commit=False)
-            # TODO: save the investor popped above
-            investor = Investor(content_object=request.user)
             investor.save()
             investment.investor = investor
             if not investment.id:  # was never saved
                 investment.creator = request.user
-
             investment.save()
 
             # FIXME: this only works for Proposals
             kw = investment.home_url_params()
             return redirect('view_investment', **kw)
-        else:
-            return dict(form=form, community=community)
     else:
-        print "GEEEEET", investment
-        return dict(form=InvestmentForm(instance=investment),
-                        community=community)
+        data = {}
+        if investment.investor:
+            data = investment.investor.to_dict()
+        form = InvestmentForm(instance=investment, initial=data)
+
+    return dict(form=form, community=community)
 
 
 @render_to('investment/view.html')

@@ -15,3 +15,24 @@
 </div>
 
 {% endblock %}
+
+{% block page_scripts %}
+<script type="text/javascript">
+    var $form = $("#investment_form");
+
+    // Investor field configuration
+    $("input[name=investor_type]", $form).on("change", function (event) {
+        var t = $(this).val();
+        if (t == "ORG") {
+            $("#div_id_investor_person", $form).hide();
+            $("#div_id_investor_organization", $form).show();
+        } else if (t == "PER") {
+            $("#div_id_investor_organization", $form).hide();
+            $("#div_id_investor_person", $form).show();
+        }
+    });
+    $(function (event) {
+        $("input[name=investor_type]:checked", $form).change();
+    });
+</script>
+{% endblock %}
