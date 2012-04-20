@@ -116,6 +116,7 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     position: relative;
     top: -25px;
     left: 20px;
+    min-width: 110px;
 }
 #tabs {
     position: relative;
@@ -128,7 +129,7 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 }
 #dinamic-form,
 #main-content {
-    padding: 40px 60px 15px;
+    padding: 0px 60px 15px;
 }
 #dinamic-form {
     width: 700px;
@@ -355,6 +356,9 @@ body.community .map-panel {
 }
 body.community #map-panel-tabs {
     padding-top: 35px !important;
+}
+body.community #main-content {
+    margin: 40px 0 0;
 }
 .map-panel .map-panel-buttons,
 .map-panel .content {
@@ -741,13 +745,13 @@ input[type=text], textarea{
 div.view-list-item{
   padding: 20px 10px 10px 20px;
   /*background-color: rgb(239, 248, 249);*/
-  background-color: #b2dffb;
+  background-color: #cae9f0;
   /*margin-top: 10px;*/
   clear: both;
-  width: 900px;
+  width: 870px;
 }
 div.view-list-item.odd{
-  background-color: rgb(220, 239, 244);
+  background-color: #dceff4;
 }
 .view-list-top{
     background-color: #ffffff;
@@ -755,8 +759,11 @@ div.view-list-item.odd{
     max-width: 900px;
 }
 .view-list-count{
-    display: inline-block;
-    margin-left: 50px;
+    /* display: inline-block;
+    margin-left: 50px; */
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 0 10px;
 }
 /* ====== Organization ======== */
 .org-info-panel {
@@ -980,7 +987,8 @@ textarea.markItUpEditor{
 }
 .komoo-pagination{
     display: inline-block;
-    float: left;
+    margin: 5px 0;
+    /* float: left; */
 }
 .komoo-pagination span{
     padding: 3px;
@@ -988,3 +996,4 @@ textarea.markItUpEditor{
 .komoo-pagination span.current-page{
     font-weight: bold;
 }
+.button-new { float: right; }

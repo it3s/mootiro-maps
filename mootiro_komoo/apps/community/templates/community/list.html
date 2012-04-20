@@ -13,12 +13,10 @@
   <div class="highlight">
     <div class="list">
       <div class="view-list-top">
-        {% pagination communities %}
         <div class="view-list-count">
-          {% if communities_count > 2 %}
-            ({{ communities_count }} communities available)
-          {% endif %}
+          {% blocktrans count counter=communities_count %}{{ counter }} Community{% plural %}{{ counter }} Communities{% endblocktrans %}
         </div>
+        {% pagination communities %}
       </div>
 
       {% for community in communities.object_list %}
@@ -37,10 +35,8 @@
         <p class="mark-down">{{ community.description|render_markup }}</p>
       </div>
       {% endfor %}
-
-      {% pagination communities %}
     </div>
-
   </div>
+  {% pagination communities %}
 </div>
 {% endblock %}

@@ -11,20 +11,16 @@
 
 {% block content %}
 <div id="main-content">
-  <div>
-    <a class="button login-required" href="{% if community %}{% url new_need community.slug %}{% else %}{% url new_need %}{% endif %}">{% trans 'New need' %}</a>
-    <div class="ajax-search"><input type="text"/></div>
-  </div>
-
   <div class="highlight">
+    <div class="button-new">
+      <a class="button login-required" href="{% if community %}{% url new_need community.slug %}{% else %}{% url new_need %}{% endif %}">{% trans 'New need' %}</a>
+    </div>
     <div class="view-list">
       <div class="view-list-top">
-        {% pagination needs %}
         <div class="view-list-count">
-          {% if needs_count > 2 %}
-            ({{ needs_count }} needs available)
-          {% endif %}
+          {% blocktrans count counter=needs_count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}
         </div>
+        {% pagination needs %}
       </div>
 
       {% for need in needs.object_list %}
@@ -51,11 +47,9 @@
         <p>{{ need.description|render_markup }}</p>
       </div>
       {% endfor %}
-
-      {% pagination needs %}
     </div>
-
   </div>
+  {% pagination needs %}
 </div>
 {% komoo_map_tooltip %}
 {% endblock %}

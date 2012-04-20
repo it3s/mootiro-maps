@@ -13,24 +13,21 @@
 {% block content %}
   <div id="main-content">
 
-    <div>
-      {% if community %}
-      <a class="button login-required" href="{% url organization_new community.slug %}?frommap=false">{% trans "New Organization" %}</a>
-      {% else %}
-      <a class="button login-required" href="{% url organization_new %}?frommap=false">{% trans "New Organization" %}</a>
-      {% endif %}
-      <div class="ajax-search"><input type="text"/></div>
-    </div>
-
     <div class="highlight">
 
-    <div class="view-list-top">
-      {% pagination organizations %}
-      <div class="view-list-count">
-        {% if organizations_count > 2 %}
-          ({{ organizations_count }} organizations available)
+      <div class="button-new">
+        {% if community %}
+        <a class="button login-required" href="{% url organization_new community.slug %}?frommap=false">{% trans "New Organization" %}</a>
+        {% else %}
+        <a class="button login-required" href="{% url organization_new %}?frommap=false">{% trans "New Organization" %}</a>
         {% endif %}
       </div>
+
+    <div class="view-list-top">
+      <div class="view-list-count">
+        {% blocktrans count counter=organizations_count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
+      </div>
+      {% pagination organizations %}
     </div>
     {% for org in organizations.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
@@ -103,10 +100,8 @@
 
       </div>
     {% endfor %}
-
-    {% pagination organizations %}
     </div>
-
+    {% pagination organizations %}
   </div>
 
 {% endblock %}
