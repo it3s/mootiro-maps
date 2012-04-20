@@ -40,9 +40,11 @@ def resource_list(request, community_slug=''):
         community = None
         resources_list = Resource.objects.all().order_by('name')
 
+    resources_count = resources_list.count()
     resources = paginated_query(resources_list, request)
 
-    return dict(resources=resources, community=community)
+    return dict(resources=resources, community=community,
+                resources_count=resources_count)
 
 
 @render_to('resource/show.html')
