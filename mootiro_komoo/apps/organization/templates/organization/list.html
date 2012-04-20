@@ -23,8 +23,11 @@
     </div>
 
     <div class="highlight">
-    {% pagination organizations %}
 
+    <div class="view-list-top">
+      {% pagination organizations %}
+      <div class="view-list-count">({{ organizations_count }} organizations available)</div>
+    </div>
     {% for org in organizations.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <div>

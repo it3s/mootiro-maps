@@ -38,8 +38,10 @@ def organization_list(request, community_slug=''):
         community = None
         organizations_list = Organization.objects.all().order_by('name')
 
+    organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
-    return dict(community=community, organizations=organizations)
+    return dict(community=community, organizations=organizations,
+                organizations_count=organizations_count)
 
 
 @render_to('organization/show.html')
