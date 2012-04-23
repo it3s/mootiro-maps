@@ -12,6 +12,8 @@ from django.shortcuts import (render_to_response, RequestContext,
 from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
+from main.widgets import Tagsinput
+from organization.models import TargetAudience
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
@@ -38,10 +40,16 @@ def organization_list(request, community_slug=''):
         community = None
         organizations_list = Organization.objects.all().order_by('name')
 
+    widget = Tagsinput(TargetAudience,
+        autocomplete_url="/need/target_audience_search")
+    audience_tags = str(widget.media)
+    audience_tags += widget.render('audience_tags')
+
     organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
     return dict(community=community, organizations=organizations,
-                organizations_count=organizations_count)
+                organizations_count=organizations_count,
+                audience_tags=audience_tags)
 
 
 @render_to('organization/show.html')

@@ -28,11 +28,22 @@
         {% blocktrans count counter=organizations_count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
       </div>
       {% pagination organizations %}
+
+      <div class="view-list-filters">
+        <strong>{% trans 'Sort by:' %}</strong>
+        <div class="view-list-filter-btn selected">{% trans 'Name' %}</div>
+        <div class="view-list-filter-btn">{% trans 'Operation Field' %}</div>
+        <div class="view-list-filter-btn" id="tag-filter">{% trans 'Target Audience' %}</div>
+        <div id="tag-filter-input" style="display: none;">
+          {{ audience_tags|safe }}
+          <div class="inline-block btn" id="tag-search"><i class="icon-search"></i></div>
+        </div>
+      </div>
     </div>
     {% for org in organizations.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <div>
-          <div class="inline-block org-list-log">
+          <div class="inline-block org-list-logo">
             {% if org.logo %}
               <img src="{{ org.logo.file.url }}" class="org-list-img"/>
 
@@ -108,4 +119,17 @@
 
 {% block page_scripts %}
   {% vote_staticfiles %}
+  <script type="text/javascript">
+  $(function(){
+    $('#tag-filter-input .tagsinput').attr('style', '');
+    $('#tag-filter').click(function(){
+      $('#tag-filter-input').show();
+    });
+    $('.view-list-filter-btn').click(function(){
+      $('.view-list-filter-btn.selected').removeClass('selected');
+      $(this).addClass('selected');
+    });
+  });
+
+  </script>
 {% endblock %}
