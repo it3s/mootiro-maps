@@ -48,17 +48,17 @@ class FileDeleteView(DeleteView):
         path = os.path.join(os.path.join(settings.PROJECT_ROOT,
                                      self.object.file.url[1:]))
         _id = self.object.id
-        if hasattr(self.object, 'file'):  # I'm being redundant here on purpose
-            self.object.delete()
-            try:
-                os.remove(path)
-            except Exception as err:
-                logger.warning('Failed to remove file: %s' % err)
-            response = JSONResponse({'deleted': True, 'id': _id}, {},
-                                    response_mimetype(self.request))
-        else:
-            response = JSONResponse({'deleted': False, 'id': ''}, {},
-                                    response_mimetype(self.request))
+        if hasattr(self.object.content_object, 'logo') and \
+                self.object.content_object.logo == self.object:
+            self.object.content_object.logo = None
+            self.object.content_object.save()
+        self.object.delete()
+        try:
+            os.remove(path)
+        except Exception as err:
+            logger.warning('Failed to remove file: %s' % err)
+        response = JSONResponse({'deleted': True, 'id': _id}, {},
+                                response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
 
