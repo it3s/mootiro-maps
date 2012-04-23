@@ -21,6 +21,9 @@ class InvestmentForm(forms.ModelForm):
 
     class Meta:
         model = Investment
+        fields = ('title', 'description', 'investor_type', 'anonymous_investor',
+            'investor_organization', 'investor_person', 'over_period', 'date',
+            'end_date', 'currency', 'value', 'tags')
 
     title = forms.CharField()
     description = forms.CharField(widget=MarkItUpWidget())
@@ -62,7 +65,7 @@ class InvestmentForm(forms.ModelForm):
     )
 
     tags = forms.Field(
-        widget=TaggitWidget(),
+        widget=TaggitWidget(autocomplete_url="/investment/tag_search"),
         required=False
     )
 
