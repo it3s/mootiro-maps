@@ -114,5 +114,4 @@ class TaggitWidget(MultipleAutocompleteBase):
         return tag_name
 
     def field_to_widget(self, instance):
-
         return unicode(instance.tag)

@@ -101,7 +101,6 @@ def list(request, community_slug=''):
     return dict(community=community, needs=needs, needs_count=needs_count)
 
 
-# DOES NOT SIMPLY WORK WITH @ajax_request, please test before commit!
 def tag_search(request):
     logger.debug('acessing need > tag_search')
     term = request.GET['term']
@@ -111,7 +110,6 @@ def tag_search(request):
                 mimetype="application/x-javascript")
 
 
-# DOES NOT SIMPLY WORK WITH @ajax_request, please test before commit!
 def target_audience_search(request):
     logger.debug('acessing need > target_audience_search')
     term = request.GET['term']

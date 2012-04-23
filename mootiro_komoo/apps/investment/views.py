@@ -5,8 +5,11 @@ import logging
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import redirect, get_object_or_404
+from django.http import HttpResponse
+from django.utils import simplejson
 
 from annoying.decorators import render_to
+from lib.taggit.models import TaggedItem
 
 from proposal.views import prepare_proposal_objects
 from investment.models import Investment
@@ -59,6 +62,9 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
         form = InvestmentForm(request.POST, instance=investment)
         if form.is_valid():
             investor = form.cleaned_data['investor']
+            # why need to explicit save tags here?
+            tags = form.cleaned_data['tags']
+            investment.tags.set(*tags)
             investment = form.save(commit=False)
             investor.save()
             investment.investor = investor
@@ -89,3 +95,12 @@ def view(request, community_slug="", need_slug="", proposal_number="",
     geojson = create_geojson([investment.grantee.need])
 
     return dict(investment=investment, community=community, geojson=geojson)
+
+
+def tag_search(request):
+    logger.debug('acessing investment > tag_search')
+    term = request.GET['term']
+    qset = TaggedItem.tags_for(Investment).filter(name__istartswith=term)
+    tags = [t.name for t in qset]
+    return HttpResponse(simplejson.dumps(tags),
+                mimetype="application/x-javascript")
