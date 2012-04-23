@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
+from django.forms import ValidationError
 
 from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
@@ -73,6 +74,13 @@ class FormOrganizationNew(forms.ModelForm):
             self.fields[field].label = label
 
         return org
+
+    def clean(self, *a, **kw):
+        r = super(FormOrganizationNew, self).clean(*a, **kw)
+        if not self.org_name:
+            self._errors['name'] = _('Name is required')
+            raise ValidationError(_('Name is required'))
+        return r
 
     def save(self, user=None, *args, **kwargs):
         org = Organization()

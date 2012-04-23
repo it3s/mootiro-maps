@@ -113,8 +113,12 @@ class New(View):
                      community=community),
                 context_instance=RequestContext(request))
         else:
-            logger.debug('Form erros: {}'.format(dict(form_org._errors
-                            ).update(dict(form_branch._errors))))
+            if form_org and form_org._errors:
+                logger.debug('Form Org errors: {}'.format(
+                                                    dict(form_org._errors)))
+            if form_branch and form_branch._errors:
+                logger.debug('Form Org errors: {}'.format(
+                                                    dict(form_branch._errors)))
             return render_to_response('organization/new.html',
                 dict(form_org=form_org, form_branch=form_branch,
                      community=community),
