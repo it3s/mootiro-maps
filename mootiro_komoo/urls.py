@@ -28,6 +28,27 @@ def prepare_regex(regex):
                 .replace('INVESTMENT_SLUG', INVESTMENT_SLUG)
 
 
+def multiurls(prefixes, view_defs):
+    """Generates a list of django urls from the cartesian product of prefixes
+    and suffixes.
+    Usage example:
+        multirurls(
+            prefixes=[r'^COMMUNITY_SLUG/', r''],
+            view_defs=[
+                (r'need/NEED_SLUG', 'view', 'view_need'),
+                (r'need/new', 'edit', 'new_need'),
+                (r'need/NEED_SLUG/edit', 'edit', 'edit_need')
+            ]
+        )
+    """
+    urls = []
+    for p in prefixes:
+        for vd in view_defs:
+            regexp = prepare_regex(p + vd[0])
+            urls.append(url(regexp, vd[1], name=vd[2]))
+    return urls
+
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()

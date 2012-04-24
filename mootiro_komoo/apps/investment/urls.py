@@ -2,31 +2,38 @@
 from __future__ import unicode_literals
 from django.conf.urls.defaults import patterns, url
 
-from mootiro_komoo.urls import prepare_regex as pr
+from mootiro_komoo.urls import multiurls
 
+
+from proposal.urls import home_urls as prop_prefs
+# from organization.urls import home_urls as org_prefs
+org_prefs = []
+# from resource.urls import home_urls as res_prefs
+res_prefs = []
+
+pref_urls = prop_prefs + org_prefs + res_prefs
+home_urls = [p + "investment/INVESTMENT_SLUG/" for p in pref_urls]
+
+prop_views = [
+    (r'investment/new/?$', 'edit', 'new_proposal_investment'),
+    (r'investment/INVESTMENT_SLUG/edit/?$', 'edit', 'edit_proposal_investment'),
+    (r'investment/INVESTMENT_SLUG/?$', 'view', 'view_proposal_investment'),
+]
+org_views = [
+    (r'investment/new/?$', 'edit', 'new_organization_investment'),
+    (r'investment/INVESTMENT_SLUG/edit/?$', 'edit', 'edit_organization_investment'),
+    (r'investment/INVESTMENT_SLUG/?$', 'view', 'view_organization_investment'),
+]
+res_views = [
+    (r'investment/new/?$', 'edit', 'new_resource_investment'),
+    (r'investment/INVESTMENT_SLUG/edit/?$', 'edit', 'edit_resource_investment'),
+    (r'investment/INVESTMENT_SLUG/?$', 'view', 'view_resource_investment'),
+]
 
 urlpatterns = patterns('investment.views',
-    # editing
-    # url(pr(r'^organization/ORGANIZATION_SLUG/investment/new/?$'),
-    #         'edit', name='view_organization'),
-    # url(pr(r'^COMMUNITY_SLUG/organization/ORGANIZATION_SLUG/investment/new?$'),
-    #         'edit', name='view_organization'),
-
     url(r'^investment/tag_search$', 'tag_search', name='investment_tag_search'),
 
-    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER/'
-        r'investment/new/?$'), 'edit', name='new_proposal_investment'),
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/PROPOSAL_NUMBER/'
-        r'investment/INVESTMENT_SLUG/edit/?$'), 'edit', name='edit_investment'),
-
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/PROPOSAL_NUMBER/'
-        r'investment/new/?$'), 'edit', name='new_proposal_investment'),
-    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER/'
-        r'investment/INVESTMENT_SLUG/edit/?$'), 'edit', name='edit_investment'),
-
-    # viewing
-    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER/investment/INVESTMENT_SLUG/?$'),
-            'view', name='view_investment'),
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/PROPOSAL_NUMBER/investment/INVESTMENT_SLUG/?$'),
-            'view', name='view_investment'),
+    * (multiurls(pref_urls, prop_views) +
+       multiurls(pref_urls, org_views) + \
+       multiurls(pref_urls, res_views))
 )
