@@ -87,15 +87,32 @@ def view(request, community_slug=None, need_slug=None):
                 photos=photos)
 
 
+view_list_sort_order = {k: i for i, k in enumerate(['creation_date', 'title'])}
+
+
+def _get_ordered_need_list(query_set, sorters):
+    if sorters:
+        return query_set.all().order_by(*sorters)
+    else:
+        return query_set.all().order_by('title')
+
+
 @render_to('need/list.html')
 def list(request, community_slug=''):
     logger.debug('acessing need > list')
+
+    sorters = request.GET.get('sorters', '')
+    if sorters:
+        sorters = sorters.replace('date', 'creation_date').replace('name', 'title')
+        sorters = sorted(sorters.split(','),
+                         key=lambda val: view_list_sort_order[val])
+
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
-        needs = community.needs.all().order_by('title')
+        needs = _get_ordered_need_list(community.needs, sorters)
     else:
         community = None
-        needs = Need.objects.all().order_by('title')
+        needs = _get_ordered_need_list(Need.objects, sorters)
     needs_count = needs.count()
     needs = paginated_query(needs, request=request)
     return dict(community=community, needs=needs, needs_count=needs_count)

@@ -21,6 +21,8 @@
           {% blocktrans count counter=needs_count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}
         </div>
         {% pagination needs %}
+
+        {% include 'main/list_view_sorters.html' %}
       </div>
 
       {% for need in needs.object_list %}
@@ -45,6 +47,18 @@
           {% trans 'target audience:' %} {{ need.target_audiences.all|join:", " }}
         </p>
         <p>{{ need.description|render_markup }}</p>
+
+        <div class="view-list-footer">
+          <div class="created-by">
+            {% trans 'created by' %}
+            <strong>
+              {% firstof resource.creator.get_full_name resource.creator.username '--' %}
+            </strong>
+            {% trans 'at' %}
+            <strong>{%firstof resource.creation_date '--' %}</strong>
+          </div>
+        </div>
+
       </div>
       {% endfor %}
     </div>
@@ -52,4 +66,8 @@
   {% pagination needs %}
 </div>
 {% komoo_map_tooltip %}
+{% endblock %}
+
+{% block page_scripts %}
+  {% include 'main/list_view_sorters_js.html' %}
 {% endblock %}

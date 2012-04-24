@@ -118,10 +118,10 @@
           <div class="created-by">
             {% trans 'created by' %}
             <strong>
-              {% firstof org.creator.get_full_name org.creator.username 'someone' %}
+              {% firstof org.creator.get_full_name org.creator.username '--' %}
             </strong>
             {% trans 'at' %}
-            <strong>{{ org.creation_date }}</strong>
+            <strong>{% firstof org.creation_date '--' %}</strong>
           </div>
         </div>
 
