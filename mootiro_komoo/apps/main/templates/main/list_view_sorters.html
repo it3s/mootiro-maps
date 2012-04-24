@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="view-list-sorters">
-  <div class="view-list-filter-title">{% trans 'Sort by:' %}</div>
+  <div class="view-list-filter-title">{% trans 'Sort by' %}:</div>
   <div class="view-list-sorter-btn" filter-name="name">
     {% trans 'Name' %}
   </div>
@@ -12,7 +12,7 @@
     {#% trans 'Votes' %#}
   </div> -->
   <div class="view-list-doSort btn" id="doSort">
-        <i class="icon-search"></i><span>Sort</span>
+        <i class="icon-search"></i><span>{% trans 'Sort' %}</span>
       </div>
   <hr>
 </div>

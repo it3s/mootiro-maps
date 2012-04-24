@@ -783,7 +783,7 @@ div.view-list-item.odd{
 .view-list-filter-title{
     display: inline-block;
     font-weight: bold;
-    width: 60px;
+    width: 100px;
 }
 .view-list-filters{
     padding: 10px 10px 0px 20px;
