@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.core.urlresolvers import reverse
 
 from annoying.functions import get_object_or_None
 
@@ -13,6 +14,9 @@ import reversion
 from lib.taggit.managers import TaggableManager
 
 from main.utils import slugify
+from proposal.models import Proposal
+from organization.models import Organization
+from komoo_resource.models import Resource
 
 
 class Investor(models.Model):
@@ -167,8 +171,11 @@ class Investment(models.Model):
         super(Investment, self).save(*args, **kwargs)
     ### END ###
 
-    def home_url():
-        pass
+    def view_url(self):
+        return reverse('view_investment', kwargs=self.home_url_params())
+
+    def edit_url(self):
+        return reverse('edit_investment', kwargs=self.home_url_params())
 
     def home_url_params(self):
         d = dict(investment_slug=self.slug)

@@ -15,7 +15,9 @@
 {% block content %}
   <div id="main-content">
     <div class="investment main-column">
-      <h2>{{ investment.title }} <div class="view-edit-btn right"><a href="{#% edit_investment **investment.url_params %#}" class="btn login-required"><i class="icon-pencil"></i></a></div></h2>
+      <h2>{{ investment.title }} <div class="view-edit-btn right">
+        <a class="btn login-required" href="{{ investment.edit_url }}" ><i class="icon-pencil"></i></a>
+      </div></h2>
 
       {% vote investment %}
 
