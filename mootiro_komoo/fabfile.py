@@ -134,6 +134,24 @@ def initial_revisions():
     local('python manage.py createinitialrevisions {}'.format(django_settings[env_]))
 
 
+def makemessages(lang='pt_BR'):
+    """
+    create translations messages file
+    """
+    local('python manage.py makemessages -l {} {}'.format(
+        lang, django_settings[env_]))
+    local('python manage.py makemessages -d djangojs -l {} {}'.format(
+        lang, django_settings[env_]))
+
+
+def compilemessages():
+    """
+    compile messages file
+    """
+    local('python manage.py compilemessages {}'.format(
+        django_settings[env_]))
+
+
 def clean_media_files():
     """
     removes all media uploaded files
