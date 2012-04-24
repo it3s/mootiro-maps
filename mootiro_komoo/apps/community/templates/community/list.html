@@ -17,6 +17,8 @@
           {% blocktrans count counter=communities_count %}{{ counter }} Community{% plural %}{{ counter }} Communities{% endblocktrans %}
         </div>
         {% pagination communities %}
+
+        {% include 'main/list_view_sorters.html' %}
       </div>
 
       {% for community in communities.object_list %}
@@ -33,10 +35,26 @@
           {% trans 'population:' %} {% firstof community.population '-' %}
         </p>
         <p class="mark-down">{{ community.description|render_markup }}</p>
+
+        <div class="view-list-footer">
+          <div class="created-by">
+            {% trans 'created by' %}
+            <strong>
+              {% firstof community.creator.get_full_name community.creator.username 'someone' %}
+            </strong>
+            {% trans 'at' %}
+            <strong>{{ community.creation_date }}</strong>
+          </div>
+        </div>
+
       </div>
       {% endfor %}
     </div>
   </div>
   {% pagination communities %}
 </div>
+{% endblock %}
+
+{% block page_scripts %}
+  {% include 'main/list_view_sorters_js.html' %}
 {% endblock %}
