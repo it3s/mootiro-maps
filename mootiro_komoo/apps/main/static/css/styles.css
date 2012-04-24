@@ -357,6 +357,9 @@ body.community .map-panel {
 body.community #map-panel-tabs {
     padding-top: 35px !important;
 }
+#main-content {
+    margin: 20px 0 0;
+}
 body.community #main-content {
     margin: 40px 0 0;
 }
