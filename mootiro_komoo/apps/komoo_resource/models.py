@@ -27,7 +27,7 @@ class ResourceKind(models.Model):
     @classmethod
     def favorites(cls, number=10):
         return ResourceKind.objects.all(
-            ).annotate(count=Count('resource__id')
+            ).exclude(name='').annotate(count=Count('resource__id')
             ).order_by('-count', 'slug')[:number]
 
 

@@ -801,6 +801,22 @@ div.view-list-item.odd{
     background-color: #ff8a00 ;
     color: #ffffff;
 }
+.view-list-doSort{
+    display: inline-block;
+    float: right;
+}
+.view-list-doSort span{
+    font-weight: bold;
+    margin-left: 5px;
+}
+.view-list-footer{
+    min-height: 1em;
+}
+.view-list-footer .created-by{
+    display: inline-block;
+    float: right;
+    color: #777777;
+}
 .view-list-filter-btn{
     display: inline-block;
     margin-left: 20px;

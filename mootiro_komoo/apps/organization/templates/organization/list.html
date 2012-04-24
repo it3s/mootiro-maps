@@ -31,15 +31,18 @@
 
       <div class="view-list-sorters">
         <div class="view-list-filter-title">{% trans 'Sort by:' %}</div>
-        <div class="view-list-sorter-btn selected" filter-name="name">
+        <div class="view-list-sorter-btn" filter-name="name">
           {% trans 'Name' %}
         </div>
         <div class="view-list-sorter-btn" filter-name="date">
           {% trans 'Date' %}
         </div>
-        <div class="view-list-sorter-btn" filter-name="votes">
-          {% trans 'Votes' %}
-        </div>
+        <!-- <div class="view-list-sorter-btn" filter-name="votes">
+          {#% trans 'Votes' %#}
+        </div> -->
+        <div class="view-list-doSort btn" id="doSort">
+              <i class="icon-search"></i><span>Sort</span>
+            </div>
         <hr>
       </div>
       <!-- <div class="view-list-filters">
@@ -126,6 +129,17 @@
           {% if org.description|length|get_digit:"-1" > 250 %} ... {% endif %}
         </p>
 
+        <div class="view-list-footer">
+          <div class="created-by">
+            {% trans 'created by' %}
+            <strong>
+              {% firstof org.creator.get_full_name org.creator.username 'someone' %}
+            </strong>
+            {% trans 'at' %}
+            <strong>{{ org.creation_date }}</strong>
+          </div>
+        </div>
+
       </div>
     {% endfor %}
     </div>
@@ -147,20 +161,40 @@
       // $('#tag-filter-input').fadeIn();
     // });
 
+    // get sorters state
+    var _sorters = getUrlVars()['sorters'];
+    if (_sorters){
+      _sorters = _sorters.split(',');
+    }
+    if (_sorters && _sorters.length > 0 && _sorters[0]){
+      $.each(_sorters, function(idx, val){
+        $('.view-list-sorter-btn[filter-name=' + val + ']').addClass('selected');
+      });
+    } else {
+      $('.view-list-sorter-btn[filter-name=name]').addClass('selected');
+    }
+
+
     // click on btn change classes.
     $('.view-list-sorter-btn').click(function(){
       var that = $(this);
       that.toggleClass('selected');
     });
 
-    window.getFilters = function(){
-      var filters = [];
+    window.getSorters = function(){
+      var sorters = [];
       $('.view-list-sorter-btn.selected').each(function(idx, val){
-        filters.push($(val).attr('filter-name'));
+        sorters.push($(val).attr('filter-name'));
       });
 
-      return filters;
+      return sorters.join();
     };
+
+    // sort button
+    $('#doSort').click(function(){
+      window.location = location.pathname + '?sorters=' + getSorters();
+    });
+
   });
 
   </script>

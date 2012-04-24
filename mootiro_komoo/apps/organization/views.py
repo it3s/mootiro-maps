@@ -43,18 +43,34 @@ def prepare_organization_objects(community_slug="", organization_slug=""):
         organization = Organization(community=community)
     return organization, community
 
+org_sort_order = {k: i for i, k in enumerate(['creation_date', 'name'])}
+
+
+def _get_ordered_organization_list(org_set, sorters):
+    if sorters:
+        return org_set.all().order_by(*sorters)
+    else:
+        return org_set.all().order_by('name')
+
 
 @render_to('organization/list.html')
 def organization_list(request, community_slug=''):
     logging.debug('acessing organization > list')
 
+    sorters = request.GET.get('sorters', '')
+    if sorters:
+        sorters = sorters.replace('date', 'creation_date')
+        sorters = sorted(sorters.split(','), key=lambda val: org_sort_order[val])
+
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_None(Community, slug=community_slug)
-        organizations_list = community.organization_set.all().order_by('name')
+        organizations_list = _get_ordered_organization_list(
+            community.organization_set, sorters)
     else:
         community = None
-        organizations_list = Organization.objects.all().order_by('name')
+        organizations_list = _get_ordered_organization_list(
+            Organization.objects, sorters)
 
     widget = Tagsinput(TargetAudience,
         autocomplete_url="/need/target_audience_search")
