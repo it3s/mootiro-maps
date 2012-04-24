@@ -26,19 +26,35 @@ from fileupload.models import UploadedFile
 
 logger = logging.getLogger(__name__)
 
+view_list_sort_order = {k: i for i, k in enumerate(['creation_date', 'name'])}
+
+
+def _get_ordered_resource_list(query_set, sorters):
+    if sorters:
+        return query_set.all().order_by(*sorters)
+    else:
+        return query_set.all().order_by('name')
+
 
 @render_to('resource/list.html')
 def resource_list(request, community_slug=''):
     logger.debug('acessing komoo_resource > list')
 
+    sorters = request.GET.get('sorters', '')
+    if sorters:
+        sorters = sorters.replace('date', 'creation_date')
+        sorters = sorted(sorters.split(','),
+                         key=lambda val: view_list_sort_order[val])
+
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_404(Community, slug=community_slug)
-        resources_list = Resource.objects.filter(
-                            community=community).order_by('name')
+        resources_list = _get_ordered_resource_list(
+                Resource.objects.filter(community=community), sorters)
     else:
         community = None
-        resources_list = Resource.objects.all().order_by('name')
+        resources_list = _get_ordered_resource_list(
+                Resource.objects, sorters)
 
     resources_count = resources_list.count()
     resources = paginated_query(resources_list, request)
