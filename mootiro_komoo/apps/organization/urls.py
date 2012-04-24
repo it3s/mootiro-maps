@@ -4,6 +4,10 @@ from django.conf.urls.defaults import patterns, url
 from mootiro_komoo.urls import prepare_regex as pr
 from organization.views import Edit, New
 
+home_urls = [
+    r'^organization/ORGANIZATION_SLUG/',
+    r'^COMMUNITY_SLUG/organization/ORGANIZATION_SLUG/'
+]
 
 urlpatterns = patterns('organization.views',
     url(r'^organization/?$', 'organization_list',

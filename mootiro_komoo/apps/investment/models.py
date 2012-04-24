@@ -171,15 +171,27 @@ class Investment(models.Model):
         super(Investment, self).save(*args, **kwargs)
     ### END ###
 
-    def view_url(self):
-        return reverse('view_investment', kwargs=self.home_url_params())
+    # Url aliases configuration
+    @property
+    def base_url_params(self):
+        return self.grantee.home_url_params
 
-    def edit_url(self):
-        return reverse('edit_investment', kwargs=self.home_url_params())
-
+    @property
     def home_url_params(self):
-        d = dict(investment_slug=self.slug)
-        d.update(self.grantee.home_url_params())
+        d = self.base_url_params
+        d.update(dict(investment_slug=self.slug))
         return d
+
+    @property
+    def new_url(self):
+        return reverse('new_investment', kwargs=self.grantee.home_url_params)
+
+    @property
+    def view_url(self):
+        return reverse('view_investment', kwargs=self.home_url_params)
+
+    @property
+    def edit_url(self):
+        return reverse('edit_investment', kwargs=self.home_url_params)
 
 reversion.register(Investment)

@@ -5,6 +5,10 @@ from django.conf.urls.defaults import patterns, url
 from komoo_resource.views import Edit, New
 from mootiro_komoo.urls import prepare_regex as pr
 
+home_urls = [
+    r'^resource/(?P<id>\d+)/',
+    r'^COMMUNITY_SLUG/resource/(?P<id>\d+)/',
+]
 
 urlpatterns = patterns('komoo_resource.views',
     url(r'^resource/?$', 'resource_list', name='resource_list'),

@@ -6,9 +6,9 @@ from mootiro_komoo.urls import multiurls
 
 
 from proposal.urls import home_urls as prop_prefs
-# from organization.urls import home_urls as org_prefs
-org_prefs = []
+from organization.urls import home_urls as org_prefs
 # from resource.urls import home_urls as res_prefs
+# org_prefs = []
 res_prefs = []
 
 pref_urls = prop_prefs + org_prefs + res_prefs

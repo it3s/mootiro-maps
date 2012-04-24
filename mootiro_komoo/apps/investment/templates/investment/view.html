@@ -8,7 +8,7 @@
 {% load komoo_tags %}
 {% load markitup_tags %}
 
-{% block title %}{{ investment.title }} on GRANTEE{% endblock %}
+{% block title %}{{ investment.title }} on {{ investment.grantee }}{% endblock %}
 
 {% block menu %} {% menu community "investment" %} {% endblock %}
 
@@ -41,7 +41,6 @@
     </div>
 
   <div class="right-bar">
-    <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
     <a class="see-on-map" href="#">{% trans "see on map" %}</a>
     {% with similar_investments=investment.tags.similar_objects %}
       {% if similar_investments %}

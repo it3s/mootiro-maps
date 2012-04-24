@@ -47,6 +47,12 @@ class Organization(models.Model):
     image = "img/organization.png"
     image_off = "img/organization-off.png"
 
+    # url aliases
+    @property
+    def home_url_params(self):
+        d = dict(organization_slug=self.slug)
+        return d
+
 
 class OrganizationBranch(GeoRefModel):
     name = models.CharField(max_length=320)

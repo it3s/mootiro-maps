@@ -28,6 +28,22 @@ from main.utils import paginated_query, create_geojson
 logger = logging.getLogger(__name__)
 
 
+def prepare_organization_objects(community_slug="", organization_slug=""):
+    """Retrieves a tuple (organization, community). According to given
+    parameters may raise an 404. Creates a new organization if organization_slug
+    is evaluated as false."""
+    community = get_object_or_None(Community, slug=community_slug)
+    filters = dict(slug=organization_slug)
+    if community:
+        filters["community"] = community
+    organization = get_object_or_404(Organization, **filters)
+    if organization_slug:
+        organization = get_object_or_404(Organization, **filters)
+    else:
+        organization = Organization(community=community)
+    return organization, community
+
+
 @render_to('organization/list.html')
 def organization_list(request, community_slug=''):
     logging.debug('acessing organization > list')

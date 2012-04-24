@@ -12,6 +12,7 @@ from annoying.decorators import render_to
 from lib.taggit.models import TaggedItem
 
 from proposal.views import prepare_proposal_objects
+from organization.views import prepare_organization_objects
 from investment.models import Investment
 from investment.forms import InvestmentForm
 from main.utils import create_geojson
@@ -30,7 +31,8 @@ def prepare_investment_objects(community_slug="", need_slug="",
             need_slug, proposal_number)
     elif organization_slug:
         # grantee is an organization
-        pass
+        grantee, community = prepare_organization_objects(community_slug,
+            organization_slug)
     elif resource_slug:
         # grantee is a resource
         pass
@@ -61,20 +63,22 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
     if request.POST:
         form = InvestmentForm(request.POST, instance=investment)
         if form.is_valid():
-            investor = form.cleaned_data['investor']
-            # why need to explicit save tags here?
-            tags = form.cleaned_data['tags']
-            investment.tags.set(*tags)
             investment = form.save(commit=False)
+            investor = form.cleaned_data['investor']
             investor.save()
             investment.investor = investor
             if not investment.id:  # was never saved
                 investment.creator = request.user
             investment.save()
 
+            # why need to explicit save tags here?
+            investment = form.save(commit=False)
+            tags = form.cleaned_data['tags']
+            investment.tags.set(*tags)
+            investment.save()
+
             # FIXME: this only works for Proposals
-            kw = investment.home_url_params()
-            return redirect('view_investment', **kw)
+            return redirect(investment.view_url)
     else:
         data = {}
         if investment.investor:
@@ -92,9 +96,8 @@ def view(request, community_slug="", need_slug="", proposal_number="",
     kw = locals()
     kw.pop('request')
     investment, community = prepare_investment_objects(**kw)
-    geojson = create_geojson([investment.grantee.need])
 
-    return dict(investment=investment, community=community, geojson=geojson)
+    return dict(investment=investment, community=community)
 
 
 def tag_search(request):
