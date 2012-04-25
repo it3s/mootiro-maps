@@ -19,42 +19,28 @@ from lib.taggit.models import TaggedItem
 
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
-from main.utils import create_geojson, paginated_query
+from main.utils import create_geojson, paginated_query, sorted_query
 from community.models import Community
 from fileupload.models import UploadedFile
 
 
 logger = logging.getLogger(__name__)
 
-view_list_sort_order = {k: i for i, k in enumerate(['creation_date', 'name'])}
-
-
-def _get_ordered_resource_list(query_set, sorters):
-    if sorters:
-        return query_set.all().order_by(*sorters)
-    else:
-        return query_set.all().order_by('name')
-
 
 @render_to('resource/list.html')
 def resource_list(request, community_slug=''):
     logger.debug('acessing komoo_resource > list')
 
-    sorters = request.GET.get('sorters', '')
-    if sorters:
-        sorters = sorters.replace('date', 'creation_date')
-        sorters = sorted(sorters.split(','),
-                         key=lambda val: view_list_sort_order[val])
+    sort_order = ['creation_date', 'name']
 
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_404(Community, slug=community_slug)
-        resources_list = _get_ordered_resource_list(
-                Resource.objects.filter(community=community), sorters)
+        resources_list = sorted_query(
+            Resource.objects.filter(community=community), sort_order, request)
     else:
         community = None
-        resources_list = _get_ordered_resource_list(
-                Resource.objects, sorters)
+        resources_list = sorted_query(Resource.objects, sort_order, request)
 
     resources_count = resources_list.count()
     resources = paginated_query(resources_list, request)

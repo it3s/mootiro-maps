@@ -20,7 +20,7 @@ from fileupload.models import UploadedFile
 from community.models import Community
 from need.models import Need, TargetAudience
 from need.forms import NeedForm
-from main.utils import create_geojson, paginated_query
+from main.utils import create_geojson, paginated_query, sorted_query
 
 logger = logging.getLogger(__name__)
 
@@ -87,32 +87,20 @@ def view(request, community_slug=None, need_slug=None):
                 photos=photos)
 
 
-view_list_sort_order = {k: i for i, k in enumerate(['creation_date', 'title'])}
-
-
-def _get_ordered_need_list(query_set, sorters):
-    if sorters:
-        return query_set.all().order_by(*sorters)
-    else:
-        return query_set.all().order_by('title')
-
-
 @render_to('need/list.html')
 def list(request, community_slug=''):
     logger.debug('acessing need > list')
 
-    sorters = request.GET.get('sorters', '')
-    if sorters:
-        sorters = sorters.replace('date', 'creation_date').replace('name', 'title')
-        sorters = sorted(sorters.split(','),
-                         key=lambda val: view_list_sort_order[val])
+    sort_fields = ['creation_date', 'title']
 
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
-        needs = _get_ordered_need_list(community.needs, sorters)
+        needs = sorted_query(community.needs, sort_fields, request,
+                             default_order='title')
     else:
         community = None
-        needs = _get_ordered_need_list(Need.objects, sorters)
+        needs = sorted_query(Need.objects, sort_fields, request,
+                             default_order='title')
     needs_count = needs.count()
     needs = paginated_query(needs, request=request)
     return dict(community=community, needs=needs, needs_count=needs_count)

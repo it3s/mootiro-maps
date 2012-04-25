@@ -18,7 +18,7 @@ from fileupload.models import UploadedFile
 
 from community.models import Community
 from community.forms import CommunityForm
-from main.utils import create_geojson, paginated_query
+from main.utils import create_geojson, paginated_query, sorted_query
 
 logger = logging.getLogger(__name__)
 
@@ -87,25 +87,13 @@ def map(request):
     return dict(geojson={})
 
 
-view_list_sort_order = {k: i for i, k in enumerate(['creation_date', 'name'])}
-
-def _get_ordered_community_list(query_set, sorters):
-    if sorters:
-        return query_set.all().order_by(*sorters)
-    else:
-        return query_set.all().order_by('name')
-
 @render_to('community/list.html')
 def list(request):
     logger.debug('acessing community > list')
 
-    sorters = request.GET.get('sorters', '')
-    if sorters:
-        sorters = sorters.replace('date', 'creation_date')
-        sorters = sorted(sorters.split(','),
-                         key=lambda val: view_list_sort_order[val])
+    sort_order = ['creation_date', 'name']
 
-    communities = _get_ordered_community_list(Community.objects, sorters)
+    communities = sorted_query(Community.objects, sort_order, request)
     communities_count = communities.count()
     communities = paginated_query(communities, request)
     return dict(communities=communities, communities_count=communities_count)

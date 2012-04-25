@@ -148,6 +148,7 @@ def sorters(context, sort_fields):
     sort_fields = ast.literal_eval(sort_fields)
     field_labels = {
         'name': _('Name'),
+        'title': _('Name'),
         'creation_date': _('Date'),
         'vote': _('Vote')
     }
@@ -172,7 +173,11 @@ def sorters_js(context):
             $('.view-list-sorter-btn[filter-name=' + val + ']').addClass('selected');
           });
         } else {
-          $('.view-list-sorter-btn[filter-name=name]').addClass('selected');
+          var main_field = $('.view-list-sorter-btn[filter-name=name]');
+          if (!main_field.length) {
+            main_field = $('.view-list-sorter-btn[filter-name=title]');
+          }
+          main_field.addClass('selected');
         }
 
 

@@ -28,7 +28,7 @@
     </div>
     {% pagination resources %}
 
-    {% include 'main/list_view_sorters.html' %}
+    {% sorters "['name', 'creation_date']" %}
   </div>
 
 
@@ -90,5 +90,5 @@
 {% endblock %}
 
 {% block page_scripts %}
-  {% include 'main/list_view_sorters_js.html' %}
+  {% sorters_js %}
 {% endblock %}

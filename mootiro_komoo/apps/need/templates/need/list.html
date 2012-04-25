@@ -22,7 +22,7 @@
         </div>
         {% pagination needs %}
 
-        {% sorters "[('Name', 'name'), ('Date', 'creation_date')]" %}
+        {% sorters "['title', 'creation_date']" %}
       </div>
 
       {% for need in needs.object_list %}
