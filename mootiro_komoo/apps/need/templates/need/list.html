@@ -26,7 +26,7 @@
       {% for need in needs.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
-          <span class="apart">
+          <span class="apart big">
             <a href="{% if need.community %}{% url view_need need.community.slug need.slug %}{% else %}{% url view_need need.slug %}{% endif %}"> {{ need.title }} </a>
             {% if not community and need.community %}
             {% trans 'at' %} <a href="{% url view_community need.community.slug %}">{{ need.community.name }}</a>
@@ -41,7 +41,7 @@
           <div class="clear-both"></div>
           {% comments_summary need %}
         </h4>
-        <p class="clearBoth">
+        <p>
           {% trans 'target audience:' %} {{ need.target_audiences.all|join:", " }}
         </p>
         <p>{{ need.description|render_markup }}</p>

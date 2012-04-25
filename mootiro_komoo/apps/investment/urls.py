@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 from django.conf.urls.defaults import patterns, url
 
+from mootiro_komoo.urls import prepare_regex as pr
 from mootiro_komoo.urls import multiurls
-
 
 from proposal.urls import home_urls as prop_prefs
 from organization.urls import home_urls as org_prefs
@@ -19,6 +19,8 @@ view_defs = [
 ]
 
 urlpatterns = patterns('investment.views',
+    url(pr(r'^COMMUNITY_SLUG/investments/?$'), 'list', name='investment_list'),
+    url(r'^investments/?$', 'list', name='investment_list'),
     url(r'^investment/tag_search$', 'tag_search', name='investment_tag_search'),
     * (multiurls(pref_urls, view_defs))
 )

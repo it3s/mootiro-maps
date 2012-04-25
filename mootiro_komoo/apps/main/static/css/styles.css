@@ -62,6 +62,7 @@ ul.horizontal li {
 }
 .centralizer * { display: inline-block }
 .right { float:right }
+span.big { font-size: 120% }
 span.apart { margin-right: 3em }
 div.apart { margin-top: 1em }
 .meta-info {
@@ -667,11 +668,6 @@ a.btnShowForm{
   border-left-width:0;
 }
 /* ============= Resources ============== */
-/* resource list */
-.view-list-item .apart a:first-child{
-  font-size: 1.2em;
-  font-weight: bolder;
-}
 /* ### form ### */
 #form_resource {
   width: 100%;
@@ -743,15 +739,18 @@ input[type=text], textarea{
   background-color: rgb(225, 239, 245);
   border-radius: 3px;
 }
-div.view-list-item{
+div.view-list-item {
   padding: 20px 10px 10px 20px;
   /*background-color: rgb(239, 248, 249);*/
   background-color: #cae9f0;
-  /*margin-top: 10px;*/
   clear: both;
   width: 870px;
 }
-div.view-list-item.odd{
+div.view-list-item .apart a:first-child{
+  font-size: 120%;
+  font-weight: bolder;
+}
+div.view-list-item.odd {
   background-color: #dceff4;
 }
 .view-list-top{

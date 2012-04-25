@@ -16,7 +16,8 @@ from organization.views import prepare_organization_objects
 from komoo_resource.views import prepare_resource_objects
 from investment.models import Investment
 from investment.forms import InvestmentForm
-from main.utils import create_geojson
+from community.models import Community
+from main.utils import paginated_query
 
 logger = logging.getLogger(__name__)
 
@@ -100,6 +101,19 @@ def view(request, community_slug="", need_slug="", proposal_number="",
     investment, community = prepare_investment_objects(**kw)
 
     return dict(investment=investment, community=community)
+
+
+@render_to('investment/list.html')
+def list(request, community_slug=''):
+    logger.debug('acessing investment > list')
+    if community_slug:
+        community = get_object_or_404(Community, slug=community_slug)
+        investments = Investment.objects.all().order_by('title')
+    else:
+        community = None
+        investments = Investment.objects.all().order_by('title')
+    investments = paginated_query(investments, request=request)
+    return dict(investments=investments, community=community)
 
 
 def tag_search(request):

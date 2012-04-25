@@ -63,7 +63,7 @@
                 <div class="org-btn span3" panel="communities-list">
                     <img src="{{ STATIC_URL }}img/community.png" />
                     <div class="inline-block">
-                      {% blocktrans count num=organization.community.count %}on {{ num }} community{% plural %}on {{ num }} communities{% endblocktrans %}
+                      {% blocktrans count num=organization.community.count %}On {{ num }} community{% plural %}On {{ num }} communities{% endblocktrans %}
                     </div>
                 </div>
                 <!-- <div class="org-btn span3">
@@ -79,21 +79,22 @@
                     <br>
                     {% blocktrans count num=0 %}offered {{ num }} resource{% plural %}offered {{ num }} resources{% endblocktrans %}
                     </div>
-                </div>
-                <div class="org-btn span3">
-                    <img src="{{ STATIC_URL }}img/funding.png" />
-                    <div class="inline-block">
-                      {% blocktrans count num=0 %}realized {{ num }} investment{% plural %}realized {{ num }} investments{% endblocktrans %}
-                    <br>
-                    {% blocktrans count num=0 %}received {{ num }} investment{% plural %}received {{ num }} investments{% endblocktrans %}
-                    </div>
                 </div> -->
+                <div class="org-btn span3" panel="investments-list">
+                    <img src="{{ STATIC_URL }}img/investment.png" />
+                    <div class="inline-block">
+                      {% blocktrans count num=0 %}Realized {{ num }} investment
+                      {% plural %}Realized {{ num }} investments{% endblocktrans %}
+                    <br>
+                    {% blocktrans count num=0 %}Received {{ num }} investment
+                    {% plural %}Received {{ num }} investments{% endblocktrans %}
+                    </div>
+                </div>
             </div>
 
             <div class="org-info-panel branches-list">
                 {% for branch in organization.organizationbranch_set.all %}
                 <div class="branch-link org-info-div {% cycle 'odd' '' %}" data-branch-id="{{ branch.id }}">
-
                         <a href="#">
                             <div class="branch-name">
                                 <span class="entry">{{ branch.name }}</span>
@@ -128,6 +129,10 @@
                 {% empty %}
                     {% trans 'No communities bound to this organization' %}
                 {% endfor %}
+            </div>
+
+            <div class="org-info-panel investments-list" style="display: none;">
+                SHOW INVESTMENTS LIST HERE
             </div>
         </div>
 

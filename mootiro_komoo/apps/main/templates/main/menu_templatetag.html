@@ -42,6 +42,10 @@
   </li>
 
   <li{% if selected_area == 'investment' %} class='selected'{% endif %}>
-    <a href="#">{% trans 'Investments' %}</a>
+    {% if community %}
+    <a href="{% url investment_list community.slug %}">{% trans 'Investments' %}</a>
+    {% else %}
+    <a href="{% url investment_list %}">{% trans 'Investments' %}</a>
+    {% endif %}
   </li>
 </ul>
