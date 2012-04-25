@@ -13,7 +13,7 @@
 {% block menu %} {% menu community "resource" %} {% endblock %}
 
 {% block content %}
-  {% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'ajax=True' 'lazy=True' %}
+  {#% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'ajax=True' 'lazy=True' %#}
 <div id="main-content" class="inline-block">
     <div class="main-column">
 
@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="right-bar">
-        <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
+        <div id="map-preview">{#% komoo_map geojson 'type=preview' %#}</div>
         <a class="see-on-map" href="#">{% trans 'see on map' %}</a>
 
         {% with similar_resources=resource.tags.similar_objects %}
@@ -69,11 +69,9 @@
                 <ul>
                     {% for r in similar_resources %}
                     <li>
+                        <a href="{{ r.view_url }}"> {{ r.name }} </a>
                         {% if r.community %}
-                            <a href="{% url view_resource r.community.slug r.id %}"> {{ r.name }} </a>
-                            {% trans 'at' %} {{ r.community.name }}
-                        {% else %}
-                            <a href="{% url view_resource r.id %}"> {{ r.name }} </a>
+                          {% trans 'at' %} {{ r.community.name }}
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -81,6 +79,10 @@
             </div>
             {% endif %}
         {% endwith %}
+
+        <div class="centralizer apart">
+          <a class="button" href="{{ resource.new_investment_url }}">Add investment</a>
+        </div>
 
     </div>
 

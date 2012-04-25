@@ -22,12 +22,12 @@
     {% vote proposal %}
     <p>
       <span class="apart">created by {{ proposal.creator }} on {{ proposal.creation_date }}</span>
-      <span class="apart">status:</span>
     </p>
 
     <div class="mark-down">{{ proposal.description|render_markup }}</div>
 
     <p>Cost: {{ proposal.cost }}</p>
+
   </div>
 
   <div class="right-bar">
@@ -41,6 +41,10 @@
       <a class="button" href="{% if community %}{% url new_proposal proposal.need.community.slug proposal.need.slug %}{% else %}{% url new_proposal proposal.need.slug %}{% endif %}">
         New proposal
       </a>
+    </div>
+
+    <div class="centralizer apart">
+      <a class="button" href="{{ proposal.new_investment_url }}">Add investment</a>
     </div>
 
   </div>

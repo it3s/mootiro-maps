@@ -55,4 +55,8 @@ class Proposal(models.Model):
     def view_url(self):
         return reverse('view_proposal', kwargs=self.home_url_params)
 
+    @property
+    def new_investment_url(self):
+        return reverse('new_investment', kwargs=self.home_url_params)
+
 reversion.register(Proposal)

@@ -58,6 +58,10 @@ class Organization(models.Model):
     def view_url(self):
         return reverse('view_organization', kwargs=self.home_url_params)
 
+    @property
+    def new_investment_url(self):
+        return reverse('new_investment', kwargs=self.home_url_params)
+
 
 class OrganizationBranch(GeoRefModel):
     name = models.CharField(max_length=320)

@@ -65,4 +65,8 @@ class Resource(GeoRefModel):
     def view_url(self):
         return reverse('view_resource', kwargs=self.home_url_params)
 
+    @property
+    def new_investment_url(self):
+        return reverse('new_investment', kwargs=self.home_url_params)
+
 reversion.register(Resource)

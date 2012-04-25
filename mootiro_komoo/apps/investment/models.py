@@ -180,10 +180,6 @@ class Investment(models.Model):
         return d
 
     @property
-    def new_url(self):
-        return reverse('new_investment', kwargs=self.base_url_params)
-
-    @property
     def view_url(self):
         return reverse('view_investment', kwargs=self.home_url_params)
 
