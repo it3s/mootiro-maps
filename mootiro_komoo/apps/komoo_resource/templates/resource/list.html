@@ -117,6 +117,23 @@
       $('.view-list-filter-widget[widget-for=' + filter_name + ']').slideToggle();
     });
 
+    window.getFilters = function(){
+      var filters = [];
+      var filter_fields = '';
+      $('.view-list-filter-btn.selected').each(function(idx, val){
+        var filter_name = $(val).attr('filter-name');
+        filters.push(filter_name);
+        filter_fields += '&' + filter_name + '=' + escape($('.view-list-filter-widget input').val());
+      });
+
+      return 'filters=' + filters.join() + filter_fields;
+    };
+
+
+    $('#doFilter').click(function(){
+        window.location = location.pathname + '?sorters=' + getSorters() +
+                          '&' + getFilters();
+      });
 
 
   });

@@ -37,12 +37,17 @@ def resource_list(request, community_slug=''):
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_404(Community, slug=community_slug)
-        resources_list = sorted_query(
-            Resource.objects.filter(community=community), sort_order, request)
+        query_set = Resource.objects.filter(community=community)
     else:
         community = None
-        resources_list = sorted_query(Resource.objects, sort_order, request)
+        query_set = Resource.objects
 
+    tags = request.GET.get('tags', '')
+    if tags:
+        tags = tags.split(',')
+        query_set = query_set.filter(tags__name__in=tags)
+
+    resources_list = sorted_query(query_set, sort_order, request)
     resources_count = resources_list.count()
     resources = paginated_query(resources_list, request)
 

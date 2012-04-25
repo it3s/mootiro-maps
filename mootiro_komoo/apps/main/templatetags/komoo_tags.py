@@ -211,7 +211,7 @@ def filters(context, object, filters):
     """
     Templatetage for filters
     usage:
-        {% filters ??? %}
+        {% filters object ['list', 'of', 'filters'] %}
     """
     filters = ast.literal_eval(filters)
     field_labels = {
@@ -223,7 +223,6 @@ def filters(context, object, filters):
     field_widgets = {
         'tags': tag_widget
     }
-    print '\n\n %s \n\n' % field_widgets['tags']
     filters_tuples = [(field, field_labels[field], field_widgets[field]) \
                         for field in filters]
     return dict(filters=filters_tuples)
