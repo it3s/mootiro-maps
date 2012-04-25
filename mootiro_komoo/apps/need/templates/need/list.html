@@ -22,7 +22,7 @@
         </div>
         {% pagination needs %}
 
-        {% include 'main/list_view_sorters.html' %}
+        {% sorters "[('Name', 'name'), ('Date', 'creation_date')]" %}
       </div>
 
       {% for need in needs.object_list %}
@@ -69,5 +69,5 @@
 {% endblock %}
 
 {% block page_scripts %}
-  {% include 'main/list_view_sorters_js.html' %}
+  {% sorters_js %}
 {% endblock %}

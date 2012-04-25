@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+import ast
 from django import template
 from django import forms
 from django.conf import settings
@@ -108,6 +109,7 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 
     return dict(img=img, STATIC_URL=settings.STATIC_URL)
 
+
 @register.inclusion_tag('main/track_buttons_templatetag.html')
 def track_buttons():
     return dict()
@@ -132,3 +134,60 @@ def with_http(link):
 @register.filter
 def split(entry, splitter):
     return entry.split(splitter)
+
+
+@register.inclusion_tag('main/sorters_tag.html', takes_context=True)
+def sorters(context, sort_fields):
+    """
+    Templatetage for sorters
+    usage:
+        {% sorters ['fields', 'list'] %}
+    """
+    sort_fields = ast.literal_eval(sort_fields)
+    return dict(sort_fields=sort_fields)
+
+
+@register.simple_tag(takes_context=True)
+def sorters_js(context):
+    return """
+    <script type="text/javascript">
+
+      $(function(){
+
+        // get sorters state
+        var _sorters = getUrlVars()['sorters'];
+        if (_sorters){
+          _sorters = _sorters.split(',');
+        }
+        if (_sorters && _sorters.length > 0 && _sorters[0]){
+          $.each(_sorters, function(idx, val){
+            $('.view-list-sorter-btn[filter-name=' + val + ']').addClass('selected');
+          });
+        } else {
+          $('.view-list-sorter-btn[filter-name=name]').addClass('selected');
+        }
+
+
+        // click on btn change classes.
+        $('.view-list-sorter-btn').click(function(){
+          var that = $(this);
+          that.toggleClass('selected');
+        });
+
+        window.getSorters = function(){
+          var sorters = [];
+          $('.view-list-sorter-btn.selected').each(function(idx, val){
+            sorters.push($(val).attr('filter-name'));
+          });
+
+          return sorters.join();
+        };
+
+        // sort button
+        $('#doSort').click(function(){
+          window.location = location.pathname + '?sorters=' + getSorters();
+        });
+
+      });
+    </script>
+    """

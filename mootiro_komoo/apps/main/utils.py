@@ -122,6 +122,24 @@ def paginated_query(query, request=None, page=None, size=None):
     return _paginated_query
 
 
+def sorted_query(query_set, sort_fields, request, default_order='name'):
+    """
+    Used for handle listing sorters
+    params:
+        query_set: any query set object or manager
+        request: the HttpRequest obejct
+    """
+    sort_order = {k: i for i, k in enumerate(sort_fields)}
+    sorters = request.GET.get('sorters', '')
+    if sorters:
+        sorters = sorted(sorters.split(','), key=lambda val: sort_order[val])
+
+    if sorters:
+        return query_set.all().order_by(*sorters)
+    else:
+        return query_set.all().order_by(default_order)
+
+
 def templatetag_args_parser(*args):
     """
     Keyword-arguments like function parser. Designed to be used in templatetags.

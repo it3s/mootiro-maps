@@ -29,7 +29,7 @@
       </div>
       {% pagination organizations %}
 
-      {% include 'main/list_view_sorters.html' %}
+      {% sorters "[('Name', 'name'), ('Date', 'creation_date')]" %}
       <!-- <div class="view-list-filters">
         <div class="view-list-filter-title">{% trans 'Filter by:' %}</div>
         <div class="view-list-filter-btn">{% trans 'Operation Field' %}</div>
@@ -135,7 +135,7 @@
 
 {% block page_scripts %}
   {% vote_staticfiles %}
-  {% include 'main/list_view_sorters_js.html' %}
+  {% sorters_js %}
 
   <script type="text/javascript">
   // reset element styles

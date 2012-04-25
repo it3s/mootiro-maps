@@ -1,0 +1,14 @@
+{% load i18n %}
+
+<div class="view-list-sorters">
+  <div class="view-list-filter-title">{% trans 'Sort by' %}:</div>
+  {% for field in sort_fields %}
+  <div class="view-list-sorter-btn" filter-name="{{ field.1 }}">
+    {{ field.0 }}
+  </div>
+  {% endfor %}
+  <div class="view-list-doSort btn" id="doSort">
+    <i class="icon-search"></i><span>{% trans 'Sort' %}</span>
+  </div>
+  <hr>
+</div>
