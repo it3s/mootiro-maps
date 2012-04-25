@@ -26,7 +26,13 @@
       <div class="apart">
         <span class="meta-info">{% trans "Grantee" %}</span>
           <a href="{{ investment.grantee.view_url }}">{{ investment.grantee }}</a><br/>
-        <span class="meta-info">{% trans "Investor" %}</span> {{ investment.investor }}<br/>
+        <span class="meta-info">{% trans "Investor" %}</span>
+          {% if investment.investor.view_url %}
+          <a href="{{ investment.investor.view_url }}">{{ investment.investor }}</a>
+          {% else %}
+          {{ investment.investor }}
+          {% endif %}
+          <br/>
         {% if investment.end_date %}
         <span class="meta-info">{% trans "Period" %}</span> {{ investment.date }} - {{ investment.end_date }}<br/>
         {% else %}

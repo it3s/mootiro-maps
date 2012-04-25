@@ -107,6 +107,10 @@ class Investor(models.Model):
                 created = False
         return investor, created
 
+    @property
+    def view_url(self):
+        return self.content_object.view_url
+
 
 class Investment(models.Model):
     """A donation of money (or any other stuff) for either an Organization, a
