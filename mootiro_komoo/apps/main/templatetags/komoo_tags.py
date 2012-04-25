@@ -1,9 +1,11 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 import ast
+
 from django import template
 from django import forms
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 from main.utils import templatetag_args_parser, create_geojson
 from main.widgets import ImageSwitch, ImageSwitchMultiple
@@ -144,6 +146,12 @@ def sorters(context, sort_fields):
         {% sorters ['fields', 'list'] %}
     """
     sort_fields = ast.literal_eval(sort_fields)
+    field_labels = {
+        'name': _('Name'),
+        'creation_date': _('Date'),
+        'vote': _('Vote')
+    }
+    sort_fields = [(field_labels[field], field) for field in sort_fields]
     return dict(sort_fields=sort_fields)
 
 
