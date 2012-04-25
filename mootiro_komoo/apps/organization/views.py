@@ -60,16 +60,10 @@ def organization_list(request, community_slug=''):
         organizations_list = sorted_query(Organization.objects, org_sort_order,
                                          request)
 
-    widget = Tagsinput(TargetAudience,
-        autocomplete_url="/need/target_audience_search")
-    audience_tags = str(widget.media)
-    audience_tags += widget.render('audience_tags')
-
     organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
     return dict(community=community, organizations=organizations,
-                organizations_count=organizations_count,
-                audience_tags=audience_tags)
+                organizations_count=organizations_count)
 
 
 @render_to('organization/show.html')

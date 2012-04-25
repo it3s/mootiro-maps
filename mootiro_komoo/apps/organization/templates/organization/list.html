@@ -29,21 +29,7 @@
       </div>
       {% pagination organizations %}
 
-
       {% sorters "['name', 'creation_date']" %}
-      <!-- <div class="view-list-filters">
-        <div class="view-list-filter-title">{% trans 'Filter by:' %}</div>
-        <div class="view-list-filter-btn">{% trans 'Operation Field' %}</div>
-        <div class="view-list-filter-btn" id="tag-filter">{% trans 'Target Audience' %}
-          <div id="tag-filter-input" style="display: none;">
-            {#{ audience_tags|safe }#}
-            <div class="inline-block btn" id="tag-search">
-              <i class="icon-search"></i>
-            </div>
-          </div>
-        </div>
-        <hr>
-      </div> -->
 
     </div>
     {% for org in organizations.object_list %}
@@ -137,16 +123,4 @@
 {% block page_scripts %}
   {% vote_staticfiles %}
   {% sorters_js %}
-
-  <script type="text/javascript">
-  // reset element styles
-    // $('#tag-filter-input .tagsinput').attr('style', '');
-
-    // if we click on tag, show the input field
-    // $('#tag-filter').click(function(){
-      // $('#tag-filter-input').fadeIn();
-    // });
-  </script>
-
-
 {% endblock %}

@@ -1,0 +1,22 @@
+{% load i18n %}
+
+<div class="view-list-filters">
+  <div class="view-list-filter-title">{% trans 'Filter by' %}:</div>
+  {% for filter in filters %}
+  <div class="view-list-filter-btn" filter-name="{{ filter.0 }}">
+    <div class="view-list-filter-name">{{ filter.1 }}</div>
+  </div>
+  {% endfor %}
+  <div class="view-list-doFilter btn" id="doFilter">
+    <i class="icon-search"></i><span>{% trans 'Filter' %}</span>
+  </div>
+  <div class="view-list-filter-input">
+    {% for filter in filters %}
+    <div class="view-list-filter-widget" widget-for="{{ filter.0 }}" style="display: none;">
+      {{ filter.2|safe }}
+    </div>
+    {% endfor %}
+  </div>
+  <hr>
+</div>
+

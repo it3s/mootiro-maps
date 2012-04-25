@@ -29,6 +29,8 @@
     {% pagination resources %}
 
     {% sorters "['name', 'creation_date']" %}
+
+    {% filters 'resource' "['tags']" %}
   </div>
 
 
@@ -91,4 +93,32 @@
 
 {% block page_scripts %}
   {% sorters_js %}
+
+  <script type="text/javascript">
+  $(function(){
+    // get sorters state
+    // var _filters = getUrlVars()['filters'];
+    // if (_filters){
+    //   _filters = _filters.split(',');
+    // }
+    // if (_filters && _filters.length > 0 && _filters[0]){
+    //   $.each(_filters, function(idx, val){
+    //     $('.view-list-filter-btn[filter-name=' + val + ']').addClass('selected');
+    //   });
+    // }
+
+    $('.view-list-filter-widget .tagsinput').attr('style', '');
+
+    // click on btn change classes.
+    $('.view-list-filter-btn').click(function(){
+      var that = $(this);
+      that.toggleClass('selected');
+      var filter_name = that.attr('filter-name');
+      $('.view-list-filter-widget[widget-for=' + filter_name + ']').slideToggle();
+    });
+
+
+
+  });
+  </script>
 {% endblock %}

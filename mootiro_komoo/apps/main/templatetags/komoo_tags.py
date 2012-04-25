@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from main.utils import templatetag_args_parser, create_geojson
-from main.widgets import ImageSwitch, ImageSwitchMultiple
+from main.widgets import ImageSwitch, ImageSwitchMultiple, TaggitWidget
 from community.models import Community
 from need.models import Need, NeedCategory
 from organization.models import Organization
@@ -170,12 +170,12 @@ def sorters_js(context):
         }
         if (_sorters && _sorters.length > 0 && _sorters[0]){
           $.each(_sorters, function(idx, val){
-            $('.view-list-sorter-btn[filter-name=' + val + ']').addClass('selected');
+            $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
           });
         } else {
-          var main_field = $('.view-list-sorter-btn[filter-name=name]');
+          var main_field = $('.view-list-sorter-btn[sorter-name=name]');
           if (!main_field.length) {
-            main_field = $('.view-list-sorter-btn[filter-name=title]');
+            main_field = $('.view-list-sorter-btn[sorter-name=title]');
           }
           main_field.addClass('selected');
         }
@@ -190,7 +190,7 @@ def sorters_js(context):
         window.getSorters = function(){
           var sorters = [];
           $('.view-list-sorter-btn.selected').each(function(idx, val){
-            sorters.push($(val).attr('filter-name'));
+            sorters.push($(val).attr('sorter-name'));
           });
 
           return sorters.join();
@@ -204,3 +204,26 @@ def sorters_js(context):
       });
     </script>
     """
+
+
+@register.inclusion_tag('main/filters_tag.html', takes_context=True)
+def filters(context, object, filters):
+    """
+    Templatetage for filters
+    usage:
+        {% filters ??? %}
+    """
+    filters = ast.literal_eval(filters)
+    field_labels = {
+        'tags': _('Tags')
+    }
+
+    tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
+    tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
+    field_widgets = {
+        'tags': tag_widget
+    }
+    print '\n\n %s \n\n' % field_widgets['tags']
+    filters_tuples = [(field, field_labels[field], field_widgets[field]) \
+                        for field in filters]
+    return dict(filters=filters_tuples)

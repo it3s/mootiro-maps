@@ -812,6 +812,15 @@ div.view-list-item.odd{
     font-weight: bold;
     margin-left: 5px;
 }
+.view-list-doFilter{
+    display: inline-block;
+    float: right;
+    width: 70px;
+}
+.view-list-doFilter span{
+    font-weight: bold;
+    margin-left: 5px;
+}
 .view-list-footer{
     min-height: 1em;
 }
@@ -832,25 +841,19 @@ div.view-list-item.odd{
     background-color: #ff8a00 ;
     color: #ffffff;
 }
-#tag-filter-input .tagsinput{
+.view-list-filter-widget .tagsinput{
     margin-top: 5px;
-    margin-left: 82px;
+    margin-left: 112px;
     width: 600px;
     height: auto;
     display: inline-block;
     background-color: #dceff4;
     border: none;
 }
-#tag-filter-input div.tagsinput input{
+.view-list-filter-widget .tagsinput input{
     border: 1px solid #CCCCCC;
     margin-left: 4px;
-}
-#tag-filter-input input{
     background: #ffffff;
-}
-#tag-search{
-    vertical-align: top;
-    margin-top: 10px;
 }
 /* ====== Organization ======== */
 .org-info-panel {
