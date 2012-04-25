@@ -13,6 +13,7 @@ from lib.taggit.models import TaggedItem
 
 from proposal.views import prepare_proposal_objects
 from organization.views import prepare_organization_objects
+from komoo_resource.views import prepare_resource_objects
 from investment.models import Investment
 from investment.forms import InvestmentForm
 from main.utils import create_geojson
@@ -21,21 +22,22 @@ logger = logging.getLogger(__name__)
 
 
 def prepare_investment_objects(community_slug="", need_slug="",
-        proposal_number="", organization_slug="", resource_slug="",
+        proposal_number="", organization_slug="", resource_id="",
         investment_slug=""):
 
     # determine the grantee to find the
     if proposal_number:
-        # grantee is a need proposal
+        # grantee is a proposal
         grantee, need, community = prepare_proposal_objects(community_slug,
             need_slug, proposal_number)
     elif organization_slug:
         # grantee is an organization
         grantee, community = prepare_organization_objects(community_slug,
             organization_slug)
-    elif resource_slug:
+    elif resource_id:
         # grantee is a resource
-        pass
+        grantee, community = prepare_resource_objects(community_slug,
+            resource_id)
     else:
         grantee = community = None
 
@@ -53,7 +55,7 @@ def prepare_investment_objects(community_slug="", need_slug="",
 @render_to('investment/edit.html')
 @login_required
 def edit(request, community_slug="", need_slug="", proposal_number="",
-        organization_slug="", resource_slug="", investment_slug=""):
+        organization_slug="", resource_id="", investment_slug=""):
     logger.debug('acessing investment > edit_<grantee>_investment')
 
     kw = locals()
@@ -90,7 +92,7 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
 
 @render_to('investment/view.html')
 def view(request, community_slug="", need_slug="", proposal_number="",
-        organization_slug="", resource_slug="", investment_slug=""):
+        organization_slug="", resource_id="", investment_slug=""):
     logger.debug('acessing investment > view_<grantee>_investment')
 
     kw = locals()

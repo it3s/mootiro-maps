@@ -53,5 +53,9 @@ class Resource(GeoRefModel):
     image = "img/resource.png"
     image_off = "img/resource-off.png"
 
+    @property
+    def home_url_params(self):
+        d = dict(resource_id=self.id)
+        return d
 
 reversion.register(Resource)

@@ -11,6 +11,7 @@ COMMUNITY_SLUG = r'(?P<community_slug>[a-zA-Z0-9-]+)'
 NEED_SLUG = r'(?P<need_slug>[a-zA-Z0-9-]+)'
 PROPOSAL_NUMBER = r'(?P<proposal_number>\d+)'
 ORGANIZATION_SLUG = r'(?P<organization_slug>[a-zA-Z0-9-]+)'
+RESOURCE_ID = r'(?P<resource_id>\d+)'
 INVESTMENT_SLUG = r'(?P<investment_slug>[a-zA-Z0-9-]+)'
 
 js_info_dict = {
@@ -25,6 +26,7 @@ def prepare_regex(regex):
                 .replace('NEED_SLUG', NEED_SLUG) \
                 .replace('PROPOSAL_NUMBER', PROPOSAL_NUMBER) \
                 .replace('ORGANIZATION_SLUG', ORGANIZATION_SLUG) \
+                .replace('RESOURCE_ID', RESOURCE_ID) \
                 .replace('INVESTMENT_SLUG', INVESTMENT_SLUG)
 
 

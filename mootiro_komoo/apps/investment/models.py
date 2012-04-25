@@ -146,7 +146,7 @@ class Investment(models.Model):
 
     # Grantee generic relationship
     grantee_content_type = models.ForeignKey(ContentType, editable=False,
-                related_name="investment_grantee")
+                related_name="investments_received")
     grantee_object_id = models.PositiveIntegerField(editable=False)
     grantee = generic.GenericForeignKey('grantee_content_type', 'grantee_object_id')
 

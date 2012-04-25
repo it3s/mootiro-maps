@@ -6,15 +6,15 @@ from komoo_resource.views import Edit, New
 from mootiro_komoo.urls import prepare_regex as pr
 
 home_urls = [
-    r'^resource/(?P<id>\d+)/',
-    r'^COMMUNITY_SLUG/resource/(?P<id>\d+)/',
+    r'^resource/RESOURCE_ID/',
+    r'^COMMUNITY_SLUG/resource/RESOURCE_ID/',
 ]
 
 urlpatterns = patterns('komoo_resource.views',
     url(r'^resource/?$', 'resource_list', name='resource_list'),
     url(r'^resource/new/$', New.as_view(), name='resource_new'),
     url(r'^resource/edit/?$', Edit.as_view(), name='resource_edit'),
-    url(r'^resource/(?P<id>\d+)/?$', 'show', name='view_resource'),
+    url(pr(r'^resource/RESOURCE_ID/?$'), 'show', name='view_resource'),
 
     url(r'^resource/search_by_kind/$', 'search_by_kind',
             name='resource_search_by_kind'),
@@ -32,6 +32,6 @@ urlpatterns = patterns('komoo_resource.views',
                 name='resource_edit'),
     url(pr(r'^COMMUNITY_SLUG/resource/new/$'), New.as_view(),
                 name='resource_new'),
-    url(pr(r'^COMMUNITY_SLUG/resource/(?P<id>\d+)/?$'), 'show',
+    url(pr(r'^COMMUNITY_SLUG/resource/RESOURCE_ID/?$'), 'show',
                 name='view_resource'),
 )

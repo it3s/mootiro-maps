@@ -27,6 +27,21 @@ from fileupload.models import UploadedFile
 logger = logging.getLogger(__name__)
 
 
+def prepare_resource_objects(community_slug="", resource_id=""):
+    """Retrieves a tuple (resource, community). According to given
+    parameters may raise an 404. Creates a new resource if resource_id is
+    evaluated as false."""
+    community = get_object_or_None(Community, slug=community_slug)
+    if resource_id:
+        filters = dict(id=resource_id)
+        if community:
+            filters["community"] = community
+        resource = get_object_or_404(Resource, **filters)
+    else:
+        resource = Resource(community=community)
+    return resource, community
+
+
 @render_to('resource/list.html')
 def resource_list(request, community_slug=''):
     logger.debug('acessing komoo_resource > list')
@@ -48,10 +63,10 @@ def resource_list(request, community_slug=''):
 
 
 @render_to('resource/show.html')
-def show(request, community_slug=None, id=None):
+def show(request, community_slug=None, resource_id=None):
     logger.debug('acessing komoo_resource > show')
 
-    resource = get_object_or_404(Resource, pk=id)
+    resource = get_object_or_404(Resource, pk=resource_id)
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
