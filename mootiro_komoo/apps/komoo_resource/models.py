@@ -5,8 +5,11 @@ from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
+from django.core.urlresolvers import reverse
+
 import reversion
 from lib.taggit.managers import TaggableManager
+
 from community.models import Community
 from komoo_map.models import GeoRefModel
 from fileupload.models import UploadedFile
@@ -57,5 +60,9 @@ class Resource(GeoRefModel):
     def home_url_params(self):
         d = dict(resource_id=self.id)
         return d
+
+    @property
+    def view_url(self):
+        return reverse('view_resource', kwargs=self.home_url_params)
 
 reversion.register(Resource)

@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from komoo_map.models import GeoRefModel
 from community.models import Community
@@ -52,6 +53,10 @@ class Organization(models.Model):
     def home_url_params(self):
         d = dict(organization_slug=self.slug)
         return d
+
+    @property
+    def view_url(self):
+        return reverse('view_organization', kwargs=self.home_url_params)
 
 
 class OrganizationBranch(GeoRefModel):

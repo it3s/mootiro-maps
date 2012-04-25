@@ -3,6 +3,8 @@
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
 import reversion
 
 from need.models import Need
@@ -48,5 +50,9 @@ class Proposal(models.Model):
         if self.need.community:
             d['community_slug'] = self.need.community.slug
         return d
+
+    @property
+    def view_url(self):
+        return reverse('view_proposal', kwargs=self.home_url_params)
 
 reversion.register(Proposal)

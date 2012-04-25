@@ -24,6 +24,8 @@
       <div class="clear-both"></div>
 
       <div class="apart">
+        <span class="meta-info">{% trans "Grantee" %}</span>
+          <a href="{{ investment.grantee.view_url }}">{{ investment.grantee }}</a><br/>
         <span class="meta-info">{% trans "Investor" %}</span> {{ investment.investor }}<br/>
         {% if investment.end_date %}
         <span class="meta-info">{% trans "Period" %}</span> {{ investment.date }} - {{ investment.end_date }}<br/>
@@ -49,7 +51,7 @@
         <ul>
           {% for i in similar_investments %}
           <li>
-              <a href="{#% url view_investment i.url_params %#}"> {{ i.title }} </a>
+              <a href="{{ i.view_url }}"> {{ i.title }} </a>
           </li>
           {% endfor %}
         </ul>

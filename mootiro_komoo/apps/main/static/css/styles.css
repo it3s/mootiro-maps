@@ -129,6 +129,7 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 }
 #dinamic-form,
 #main-content {
+    margin-top: 20px;
     padding: 0px 60px 15px;
 }
 #dinamic-form {

@@ -14,9 +14,6 @@ import reversion
 from lib.taggit.managers import TaggableManager
 
 from main.utils import slugify
-from proposal.models import Proposal
-from organization.models import Organization
-from komoo_resource.models import Resource
 
 
 class Investor(models.Model):
@@ -184,7 +181,7 @@ class Investment(models.Model):
 
     @property
     def new_url(self):
-        return reverse('new_investment', kwargs=self.grantee.home_url_params)
+        return reverse('new_investment', kwargs=self.base_url_params)
 
     @property
     def view_url(self):
