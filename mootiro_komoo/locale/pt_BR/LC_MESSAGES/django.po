@@ -336,11 +336,11 @@ msgstr "Recursos"
 
 #: apps/main/templates/main/list_view_sorters.html:4
 msgid "Sort by"
-msgstr "Organizar por"
+msgstr "Ordenar por"
 
 #: apps/main/templates/main/list_view_sorters.html:15
 msgid "Sort"
-msgstr "Organizar"
+msgstr "Ordenar"
 
 #: apps/main/templates/main/login_box.html:4
 msgid "You must be logged in"
