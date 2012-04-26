@@ -24,7 +24,8 @@ from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganizationNew, FormBranchNew, \
                                FormOrganizationEdit
 from community.models import Community
-from main.utils import paginated_query, create_geojson, sorted_query
+from main.utils import (paginated_query, create_geojson, sorted_query,
+                        filter_by_tags_query)
 
 logger = logging.getLogger(__name__)
 
@@ -54,13 +55,14 @@ def organization_list(request, community_slug=''):
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_None(Community, slug=community_slug)
-        organizations_list = sorted_query(community.organization_set,
-                                          org_sort_order, request)
+        query_set = community.organization_set
     else:
         community = None
-        organizations_list = sorted_query(Organization.objects, org_sort_order,
-                                         request)
+        query_set = Organization.objects
 
+    query_set = filter_by_tags_query(query_set, request)
+    organizations_list = sorted_query(query_set, org_sort_order,
+                                         request)
     organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
     return dict(community=community, organizations=organizations,

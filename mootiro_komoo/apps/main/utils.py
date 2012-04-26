@@ -140,6 +140,14 @@ def sorted_query(query_set, sort_fields, request, default_order='name'):
         return query_set.all().order_by(default_order)
 
 
+def filter_by_tags_query(query_set, request):
+    tags = request.GET.get('tags', '')
+    if tags:
+        tags = tags.split(',')
+        query_set = query_set.filter(tags__name__in=tags)
+    return query_set
+
+
 def templatetag_args_parser(*args):
     """
     Keyword-arguments like function parser. Designed to be used in templatetags.

@@ -19,7 +19,8 @@ from lib.taggit.models import TaggedItem
 
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
-from main.utils import create_geojson, paginated_query, sorted_query
+from main.utils import (create_geojson, paginated_query, sorted_query,
+                        filter_by_tags_query)
 from community.models import Community
 from fileupload.models import UploadedFile
 
@@ -41,10 +42,7 @@ def resource_list(request, community_slug=''):
         community = None
         query_set = Resource.objects
 
-    tags = request.GET.get('tags', '')
-    if tags:
-        tags = tags.split(',')
-        query_set = query_set.filter(tags__name__in=tags)
+    query_set = filter_by_tags_query(query_set, request)
 
     resources_list = sorted_query(query_set, sort_order, request)
     resources_count = resources_list.count()
