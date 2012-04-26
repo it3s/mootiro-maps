@@ -20,7 +20,7 @@
           {% pagination communities %}
         </div>
 
-        {% visualization_opts 'community' "sorters=['name','creation_date']" %}
+        {% visualization_opts 'community' "sorters=['name','creation_date']" "filters=['tags']" %}
       </div>
 
       {% for community in communities.object_list %}
