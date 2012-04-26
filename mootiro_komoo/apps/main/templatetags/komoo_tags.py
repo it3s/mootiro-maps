@@ -138,91 +138,137 @@ def split(entry, splitter):
     return entry.split(splitter)
 
 
-@register.inclusion_tag('main/sorters_tag.html', takes_context=True)
-def sorters(context, sort_fields):
+# @register.inclusion_tag('main/sorters_tag.html', takes_context=True)
+# def sorters(context, sort_fields):
+#     """
+#     Templatetage for sorters
+#     usage:
+#         {% sorters ['fields', 'list'] %}
+#     """
+#     sort_fields = ast.literal_eval(sort_fields)
+#     field_labels = {
+#         'name': _('Name'),
+#         'title': _('Name'),
+#         'creation_date': _('Date'),
+#         'vote': _('Vote')
+#     }
+#     sort_fields = [(field_labels[field], field) for field in sort_fields]
+#     return dict(sort_fields=sort_fields)
+
+
+# @register.simple_tag(takes_context=True)
+# def sorters_js(context):
+#     return """
+#     <script type="text/javascript">
+
+#       $(function(){
+
+#         // get sorters state
+#         var _sorters = getUrlVars()['sorters'];
+#         if (_sorters){
+#           _sorters = _sorters.split(',');
+#         }
+#         if (_sorters && _sorters.length > 0 && _sorters[0]){
+#           $.each(_sorters, function(idx, val){
+#             $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
+#           });
+#         } else {
+#           var main_field = $('.view-list-sorter-btn[sorter-name=name]');
+#           if (!main_field.length) {
+#             main_field = $('.view-list-sorter-btn[sorter-name=title]');
+#           }
+#           main_field.addClass('selected');
+#         }
+
+
+#         // click on btn change classes.
+#         $('.view-list-sorter-btn').click(function(){
+#           var that = $(this);
+#           that.toggleClass('selected');
+#         });
+
+#         window.getSorters = function(){
+#           var sorters = [];
+#           $('.view-list-sorter-btn.selected').each(function(idx, val){
+#             sorters.push($(val).attr('sorter-name'));
+#           });
+
+#           return sorters.join();
+#         };
+
+#         // sort button
+#         $('#doSort').click(function(){
+#           window.location = location.pathname + '?sorters=' + getSorters();
+#         });
+
+#       });
+#     </script>
+#     """
+
+
+# @register.inclusion_tag('main/filters_tag.html', takes_context=True)
+# def filters(context, object, filters):
+#     """
+#     Templatetage for filters
+#     usage:
+#         {% filters object ['list', 'of', 'filters'] %}
+#     """
+#     filters = ast.literal_eval(filters)
+#     field_labels = {
+#         'tags': _('Tags')
+#     }
+
+#     tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
+#     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
+#     field_widgets = {
+#         'tags': tag_widget
+#     }
+#     filters_tuples = [(field, field_labels[field], field_widgets[field]) \
+#                         for field in filters]
+#     return dict(filters=filters_tuples)
+
+
+@register.inclusion_tag('main/visualization_opts_tag.html', takes_context=True)
+def visualization_opts(context, object, arg1='', arg2=''):
     """
-    Templatetage for sorters
+    Templatetag for visualization options (sorters and filters)
     usage:
-        {% sorters ['fields', 'list'] %}
+        {% visualization_opts 'resource' "filters=['tags']" "sorters=['name', 'creation_date']" %}
+        {% visualization_opts 'organization' "sorters=['name', 'creation_date']"}
     """
-    sort_fields = ast.literal_eval(sort_fields)
+    # parse options
+    opts = {}
+    for arg in [arg1, arg2]:
+        if arg and '=' in arg:
+            k, v = arg.split('=')
+            v = ast.literal_eval(v)
+            opts[k] = v
+
     field_labels = {
+        'tags': _('Tags'),
         'name': _('Name'),
         'title': _('Name'),
         'creation_date': _('Date'),
         'vote': _('Vote')
     }
-    sort_fields = [(field_labels[field], field) for field in sort_fields]
-    return dict(sort_fields=sort_fields)
 
+    # sorters
+    sort_fields = [(field_labels[field], field) for field in opts.get('sorters', [])]
 
-@register.simple_tag(takes_context=True)
-def sorters_js(context):
-    return """
-    <script type="text/javascript">
-
-      $(function(){
-
-        // get sorters state
-        var _sorters = getUrlVars()['sorters'];
-        if (_sorters){
-          _sorters = _sorters.split(',');
-        }
-        if (_sorters && _sorters.length > 0 && _sorters[0]){
-          $.each(_sorters, function(idx, val){
-            $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
-          });
-        } else {
-          var main_field = $('.view-list-sorter-btn[sorter-name=name]');
-          if (!main_field.length) {
-            main_field = $('.view-list-sorter-btn[sorter-name=title]');
-          }
-          main_field.addClass('selected');
-        }
-
-
-        // click on btn change classes.
-        $('.view-list-sorter-btn').click(function(){
-          var that = $(this);
-          that.toggleClass('selected');
-        });
-
-        window.getSorters = function(){
-          var sorters = [];
-          $('.view-list-sorter-btn.selected').each(function(idx, val){
-            sorters.push($(val).attr('sorter-name'));
-          });
-
-          return sorters.join();
-        };
-
-        // sort button
-        $('#doSort').click(function(){
-          window.location = location.pathname + '?sorters=' + getSorters();
-        });
-
-      });
-    </script>
-    """
-
-
-@register.inclusion_tag('main/filters_tag.html', takes_context=True)
-def filters(context, object, filters):
-    """
-    Templatetage for filters
-    usage:
-        {% filters object ['list', 'of', 'filters'] %}
-    """
-    filters = ast.literal_eval(filters)
-    field_labels = {
-        'tags': _('Tags')
-    }
-
+    # filters
     tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
     field_widgets = {
         'tags': tag_widget
     }
-    filters_tuples = [(field, field_labels[field], field_widgets[field]) \
-                        for field in filters]
-    return dict(filters=filters_tuples)
+    filter_fields = [(field, field_labels[field], field_widgets[field]) \
+                        for field in opts.get('filters', [])]
+
+    return  dict(filters=filter_fields, sorters=sort_fields)
+
+
+@register.simple_tag(takes_context=True)
+def visualization_opts_js(context):
+    return """
+
+    """

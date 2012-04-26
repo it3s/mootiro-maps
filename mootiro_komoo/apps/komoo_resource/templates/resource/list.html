@@ -35,9 +35,7 @@
         {% trans 'Visualization options' %}<i class="icon-chevron-right"></i>
       </div>
       <div class="view-list-visualization-options" style="display: none;">
-        {% sorters "['name', 'creation_date']" %}
-
-        {% filters 'resource' "['tags']" %}
+        {% visualization_opts 'resource' "filters=['tags']" "sorters=['name', 'creation_date']" %}
       </div>
     </div>
 
@@ -105,60 +103,100 @@
 {% endblock %}
 
 {% block page_scripts %}
-  {% sorters_js %}
-
   <script type="text/javascript">
-  $(function(){
 
-    /* Visualization Option */
-    $('.view-list-visualization-header').click(function(){
-      $('.view-list-visualization-options').slideToggle();
-      $('.view-list-visualization-header i').toggleClass('icon-chevron-right');
-      $('.view-list-visualization-header i').toggleClass('icon-chevron-down');
-    });
+    $(function(){
 
 
-    /* Filters */
-
-    // get sorters state
-    // var _filters = getUrlVars()['filters'];
-    // if (_filters){
-    //   _filters = _filters.split(',');
-    // }
-    // if (_filters && _filters.length > 0 && _filters[0]){
-    //   $.each(_filters, function(idx, val){
-    //     $('.view-list-filter-btn[filter-name=' + val + ']').addClass('selected');
-    //   });
-    // }
-
-    $('.view-list-filter-widget .tagsinput').attr('style', '');
-
-    // click on btn change classes.
-    $('.view-list-filter-btn').click(function(){
-      var that = $(this);
-      that.toggleClass('selected');
-      var filter_name = that.attr('filter-name');
-      $('.view-list-filter-widget[widget-for=' + filter_name + ']').slideToggle();
-    });
-
-    window.getFilters = function(){
-      var filters = [];
-      var filter_fields = '';
-      $('.view-list-filter-btn.selected').each(function(idx, val){
-        var filter_name = $(val).attr('filter-name');
-        filters.push(filter_name);
-        filter_fields += '&' + filter_name + '=' + escape($('.view-list-filter-widget input').val());
+      /* Visualization Option */
+      $('.view-list-visualization-header').click(function(){
+        $('.view-list-visualization-options').slideToggle();
+        $('.view-list-visualization-header i').toggleClass('icon-chevron-right');
+        $('.view-list-visualization-header i').toggleClass('icon-chevron-down');
       });
 
-      return 'filters=' + filters.join() + filter_fields;
-    };
+      // if we made a query, open selectors
+      if(getUrlVars()['sorters'] || getUrlVars()['filters']){
+        $('.view-list-visualization-options').show();
+        $('.view-list-visualization-header i').removeClass('icon-chevron-right');
+        $('.view-list-visualization-header i').addClass('icon-chevron-down');
+        $.each( getUrlVars()['filters'].split(',') ,function(idx, field){
+          $('.view-list-filter-widget[widget-for='+ field + ']').show();
+        });
+      }
 
+      // get sorters state
+      var _sorters = getUrlVars()['sorters'];
+      if (_sorters){
+        _sorters = _sorters.split(',');
+      }
+      if (_sorters && _sorters.length > 0 && _sorters[0]){
+        $.each(_sorters, function(idx, val){
+          $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
+        });
+      } else {
+        var main_field = $('.view-list-sorter-btn[sorter-name=name]');
+        if (!main_field.length) {
+          main_field = $('.view-list-sorter-btn[sorter-name=title]');
+        }
+        main_field.addClass('selected');
+      }
+      // get filters state
+      var _filters = getUrlVars()['filters'];
+      if (_filters){
+        _filters = _filters.split(',');
+      }
+      if (_filters && _filters.length > 0 && _filters[0]){
+        $.each(_filters, function(idx, val){
+          $('.view-list-filter-btn[filter-name=' + val + ']').addClass('selected');
+          if (val == 'tags'){
+            var tags = unescape(getUrlVars()['tags']);
+            tags = tags.split(',');
+            $.each(tags, function(idx, tag){
+              $('#id_tags').addTag(tag);
+            });
+          }
+        });
+      }
 
-    $('#doFilter').click(function(){
-        window.location = location.pathname + '?sorters=' + getSorters() +
-                          '&' + getFilters();
+      // reset tagsinput styles
+      $('.view-list-filter-widget .tagsinput').attr('style', '');
+
+      // click on btn change classes.
+      $('.view-list-sorter-btn').click(function(){
+        var that = $(this);
+        that.toggleClass('selected');
+      });
+      $('.view-list-filter-btn').click(function(){
+        var that = $(this);
+        that.toggleClass('selected');
+        var filter_name = that.attr('filter-name');
+        $('.view-list-filter-widget[widget-for=' + filter_name + ']').slideToggle();
       });
 
+      // get filters
+      window.getFilters = function(){
+
+        var sorters = [],
+            filters = [],
+            filter_fields = '';
+
+        $('.view-list-sorter-btn.selected').each(function(idx, val){
+          sorters.push($(val).attr('sorter-name'));
+        });
+
+        $('.view-list-filter-btn.selected').each(function(idx, val){
+          var filter_name = $(val).attr('filter-name');
+          filters.push(filter_name);
+          filter_fields += '&' + filter_name + '=' + escape($('.view-list-filter-widget input').val());
+        });
+
+        return 'sorters=' + sorters.join() + '&filters=' + filters.join() + filter_fields;
+      };
+
+      $('#doFilter').click(function(){
+        window.location = location.pathname + '?' + getFilters();
+      });
 
   });
   </script>

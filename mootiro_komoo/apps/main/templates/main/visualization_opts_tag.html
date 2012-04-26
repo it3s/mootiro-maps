@@ -1,5 +1,14 @@
 {% load i18n %}
 
+<div class="view-list-sorters">
+  <div class="view-list-filter-title">{% trans 'Sort by' %}:</div>
+  {% for field in sorters %}
+  <div class="view-list-sorter-btn" sorter-name="{{ field.1 }}">
+    {{ field.0 }}
+  </div>
+  {% endfor %}
+</div>
+
 <div class="view-list-filters">
   <div class="view-list-filter-title">{% trans 'Filter by' %}:</div>
   {% for filter in filters %}
@@ -16,4 +25,9 @@
     {% endfor %}
   </div>
 </div>
-
+<div class="doFilter-wrapper">
+    <div class="btn" id="doFilter">
+        <i class="icon-search"></i>
+        {% trans 'Filter' %}
+    </div>
+</div>

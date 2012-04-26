@@ -807,6 +807,7 @@ div.view-list-item.odd{
     font-weight: bold;
     padding: 2px 10px;
     border-radius: 2px;
+    background-color: #cae9f0 ;
 }
 .view-list-sorter-btn.selected, .view-list-sorter-btn:hover{
     background-color: #ff8a00 ;
@@ -827,6 +828,7 @@ div.view-list-item.odd{
     font-weight: bold;
     padding: 2px 10px;
     border-radius: 2px;
+    background-color: #cae9f0 ;
 }
 .view-list-filter-btn.selected, .view-list-filter-btn:hover{
     background-color: #ff8a00 ;
@@ -852,17 +854,34 @@ div.view-list-item.odd{
 }
 .view-list-visualization{
     background-color: #cae9f0;
-    padding: 10px 20px;
+    padding: 10px 20px 0 20px;
+
 }
 .view-list-visualization-header{
     background-color: #dceff4;
     padding: 10px;
+    color: #555555;
+    font-weight: bold;
 }
 .view-list-visualization-header i{
     margin-left: 20px;
 }
 .view-list-pagination{
     min-height: 2em;
+}
+.view-list-visualization-options{
+    padding-bottom: 10px;
+    background-color: #dceff4;
+}
+.doFilter-wrapper{
+    min-height: 2em;
+    background-color: #dceff4;
+    padding: 0 20px;
+}
+#doFilter{
+    float: right;
+    min-width: 50px;
+    font-weight: bold;
 }
 /* ====== Organization ======== */
 .org-info-panel {
