@@ -39,9 +39,11 @@
         <p class="mark-down">{{ community.description|render_markup }}</p>
 
         <div class="view-list-footer">
-          <!-- <div class="view-list-item-tags">
-            {#% taglist community %#}
-          </div> -->
+          {% if community.tags.count %}
+          <div class="view-list-item-tags">
+            {% taglist community %}
+          </div>
+          {% endif %}
           <div class="created-by">
             {% trans 'created by' %}
             <strong>

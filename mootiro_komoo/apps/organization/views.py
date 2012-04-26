@@ -12,12 +12,13 @@ from django.shortcuts import (render_to_response, RequestContext,
 from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
-from main.widgets import Tagsinput
-from organization.models import TargetAudience
+from django.db.models import Count
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
+from lib.taggit.models import TaggedItem
+
 
 from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganizationNew, FormBranchNew, \
@@ -245,3 +246,14 @@ def search_by_name(request):
     d = [{'value': o.id, 'label': o.name} for o in orgs]
     return HttpResponse(simplejson.dumps(d),
         mimetype="application/x-javascript")
+
+
+def search_by_tag(request):
+    logger.debug('acessing organization > search_by_tag')
+    term = request.GET['term']
+    qset = TaggedItem.tags_for(Organization).filter(name__istartswith=term
+            ).annotate(count=Count('taggit_taggeditem_items__id')
+            ).order_by('-count', 'slug')[:10]
+    tags = [t.name for t in qset]
+    return HttpResponse(simplejson.dumps(tags),
+                mimetype="application/x-javascript")

@@ -72,9 +72,11 @@
       {% endif %}
 
       <div class="view-list-footer">
+        {% if resource.tags.count %}
         <div class="view-list-item-tags">
           {% taglist resource %}
         </div>
+        {% endif %}
         <div class="created-by">
           {% trans 'created by' %}
           <strong>

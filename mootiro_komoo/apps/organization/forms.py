@@ -11,7 +11,7 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from crispy_forms.helper import FormHelper
 from main.utils import MooHelper
-from main.widgets import Tagsinput
+from main.widgets import Tagsinput, TaggitWidget
 from organization.models import (Organization, OrganizationBranch,
                 OrganizationCategory, OrganizationCategoryTranslation)
 from need.models import TargetAudience
@@ -44,16 +44,20 @@ class FormOrganizationNew(forms.ModelForm):
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
     logo = forms.CharField(required=False, widget=forms.HiddenInput())
+    tags = forms.Field(
+        widget=TaggitWidget(autocomplete_url="/organization/search_by_tag/"),
+        required=False)
 
     class Meta:
         model = Organization
         fields = ['description', 'community', 'link', 'contact',
-        'target_audiences', 'categories', 'files',  'logo']
+        'target_audiences', 'categories', 'tags', 'files',  'logo']
 
     _field_labels = {
         'description': _('Description'),
         'community': _('Community'),
         'contact': _('Contact'),
+        'tags': _('Tags'),
         'target_audiences': _('Target Audience'),
         'categories': _('Categories'),
         'files': _(' '),
@@ -102,6 +106,9 @@ class FormOrganizationNew(forms.ModelForm):
         for c in self.cleaned_data['categories']:
             org.categories.add(c)
 
+        for t in self.cleaned_data['tags']:
+            org.tags.add(t)
+
         files_id_list = self.cleaned_data.get('files', '').split('|')
         UploadedFile.bind_files(files_id_list, org)
 
@@ -135,17 +142,21 @@ class FormOrganizationEdit(forms.ModelForm):
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
     logo = forms.CharField(required=False, widget=forms.HiddenInput())
+    tags = forms.Field(
+        widget=TaggitWidget(autocomplete_url="/organization/search_by_tag/"),
+        required=False)
 
     class Meta:
         model = Organization
         fields = ['name', 'description', 'community', 'link', 'contact',
-                  'target_audiences', 'categories', 'id', 'logo']
+                  'target_audiences', 'categories', 'tags', 'id', 'logo']
 
     _field_labels = {
         'name': _('Name'),
         'description': _('Description'),
         'community': _('Community'),
         'contact': _('Contact'),
+        'tags': _('Tags'),
         'target_audiences': _('Target Audiences'),
         'categories': _('Categories'),
         'files': _(' '),

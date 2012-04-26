@@ -54,9 +54,11 @@
         <p>{{ need.description|render_markup }}</p>
 
         <div class="view-list-footer">
+          {% if need.tags.count %}
           <div class="view-list-item-tags">
             {% taglist need %}
           </div>
+          {% endif %}
           <div class="created-by">
             {% trans 'created by' %}
             <strong>

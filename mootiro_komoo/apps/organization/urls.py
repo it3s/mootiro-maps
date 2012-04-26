@@ -23,6 +23,8 @@ urlpatterns = patterns('organization.views',
 
     url(r'^organization/search_by_name/$', 'search_by_name',
             name='organization_search_by_name'),
+    url(r'^organization/search_by_tag/$', 'search_by_tag',
+            name='organization_search_by_tag'),
 
     url(pr(r'^COMMUNITY_SLUG/organization/?$'), 'organization_list',
             name='organization_list'),
