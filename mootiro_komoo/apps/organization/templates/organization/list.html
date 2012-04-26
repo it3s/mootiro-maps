@@ -27,9 +27,11 @@
       <div class="view-list-count">
         {% blocktrans count counter=organizations_count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
       </div>
-      {% pagination organizations %}
+      <div class="view-list-pagination">
+        {% pagination organizations %}
+      </div>
 
-      {% sorters "['name', 'creation_date']" %}
+      {% visualization_opts 'organization' "sorters=['name','creation_date']" %}
 
     </div>
     {% for org in organizations.object_list %}
@@ -125,5 +127,5 @@
 
 {% block page_scripts %}
   {% vote_staticfiles %}
-  {% sorters_js %}
+  {% visualization_opts_js %}
 {% endblock %}

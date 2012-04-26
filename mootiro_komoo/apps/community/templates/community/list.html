@@ -16,9 +16,11 @@
         <div class="view-list-count">
           {% blocktrans count counter=communities_count %}{{ counter }} Community{% plural %}{{ counter }} Communities{% endblocktrans %}
         </div>
-        {% pagination communities %}
+        <div class="view-list-pagination">
+          {% pagination communities %}
+        </div>
 
-        {% sorters "['name', 'creation_date']" %}
+        {% visualization_opts 'community' "sorters=['name','creation_date']" %}
       </div>
 
       {% for community in communities.object_list %}
@@ -59,5 +61,5 @@
 {% endblock %}
 
 {% block page_scripts %}
-  {% sorters_js %}
+  {% visualization_opts_js %}
 {% endblock %}

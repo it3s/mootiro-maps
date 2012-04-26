@@ -20,7 +20,6 @@ from lib.taggit.models import TaggedItem
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
 from main.utils import create_geojson, paginated_query, sorted_query
-from main.widgets.multiple_autocomplete import TaggitWidget
 from community.models import Community
 from fileupload.models import UploadedFile
 

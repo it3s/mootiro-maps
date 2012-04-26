@@ -17,12 +17,17 @@
     </div>
     <div class="view-list">
       <div class="view-list-top">
+
         <div class="view-list-count">
           {% blocktrans count counter=needs_count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}
         </div>
-        {% pagination needs %}
 
-        {% sorters "['title', 'creation_date']" %}
+        <div class="view-list-pagination">
+          {% pagination needs %}
+        </div>
+
+        {% visualization_opts 'need' "sorters=['name','creation_date']" %}
+
       </div>
 
       {% for need in needs.object_list %}
@@ -72,5 +77,5 @@
 {% endblock %}
 
 {% block page_scripts %}
-  {% sorters_js %}
+  {% visualization_opts_js %}
 {% endblock %}
