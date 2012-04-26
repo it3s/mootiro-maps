@@ -107,6 +107,8 @@ LOGIN_URL = '/user/login'
 MOOTIRO_BAR_LOGIN_URL = LOGIN_URL
 MOOTIRO_BAR_LOGOUT_URL = '/user/logout'
 
+DELETE_HOURS = 24
+
 ROOT_URLCONF = 'mootiro_komoo.urls'
 
 TEMPLATE_DIRS = [
@@ -152,6 +154,7 @@ INSTALLED_APPS = [
     'user_cas',
     'organization',
     'investment',
+    'moderation',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500

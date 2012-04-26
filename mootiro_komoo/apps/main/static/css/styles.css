@@ -713,6 +713,13 @@ input[type=text], textarea{
 .view-header{
   margin-bottom: 20px;
 }
+.delete-content,
+.report-content,
+.view-follow-btns {
+    display: inline-block;
+}
+.delete-content span,
+.report-content span,
 .view-follow-btns span{
   color: #444444;
   margin-left: 7px;
@@ -1098,6 +1105,9 @@ textarea.markItUpEditor{
 }
 
 /* ====== Error box ======== */
+.error-dialog {
+    border: solid 1px red;
+}
 .error-dialog,
 .error-dialog .ui-widget-content,
 .error-dialog .ui-dialog-titlebar {
@@ -1130,4 +1140,11 @@ textarea.markItUpEditor{
 .alert-message ol{
     list-style: none;
     margin: 0px;
+}
+.report-content-box {
+    display: none;
+}
+#report-content-comment {
+    width: 360px;
+    height: 80px;
 }

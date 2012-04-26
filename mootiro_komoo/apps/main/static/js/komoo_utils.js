@@ -256,8 +256,11 @@ function geoObjectsListing (ul) {
 
 $(function () {
     // Intercepts all links that have the class /authenticate/
-    $("a.login-required").click(function (ev) {
+    $("a.login-required").bind("click.loginrequierd", function (ev) {
         if (!isAuthenticated) {
+            ev.stopPropagation();
+            ev.stopImmediatePropagation();
+            ev.preventDefault();
             // TODO: request status from server
             var url = $(this).attr("href");
             if (url == "/vote/add/") {
@@ -272,7 +275,6 @@ $(function () {
                 resizable: false,
                 draggable: false
             });
-            ev.stopPropagation();
             return false;
         }
     });
