@@ -758,13 +758,15 @@ input[type=text], textarea{
 div.view-list-item{
   padding: 20px 10px 10px 20px;
   /*background-color: rgb(239, 248, 249);*/
-  background-color: #cae9f0;
+  /*background-color: #cae9f0;*/
+  background-color: #dceff4;
   /*margin-top: 10px;*/
   clear: both;
   width: 870px;
 }
 div.view-list-item.odd{
-  background-color: #dceff4;
+  /*background-color: #dceff4;*/
+  background-color: #cae9f0;
 }
 .view-list-top{
     background-color: #ffffff;
@@ -783,12 +785,8 @@ div.view-list-item.odd{
     padding: 10px 10px 0px 20px;
     background-color: #dceff4;
     clear: both;
-    width: 870px;
+    /*width: 870px;*/
     /*border-bottom: solid 1px #4092A9;*/
-}
-.highlight hr{
-    margin: 18px 0 0;
-    border-color: #4092A9;
 }
 .view-list-filter-title{
     display: inline-block;
@@ -799,7 +797,7 @@ div.view-list-item.odd{
     padding: 10px 10px 0px 20px;
     background-color: #dceff4;
     clear: both;
-    width: 870px;
+    /*width: 870px;*/
     /*border-bottom: solid 1px #4092A9;*/
 }
 .view-list-sorter-btn{
@@ -813,23 +811,6 @@ div.view-list-item.odd{
 .view-list-sorter-btn.selected, .view-list-sorter-btn:hover{
     background-color: #ff8a00 ;
     color: #ffffff;
-}
-.view-list-doSort{
-    display: inline-block;
-    float: right;
-}
-.view-list-doSort span{
-    font-weight: bold;
-    margin-left: 5px;
-}
-.view-list-doFilter{
-    display: inline-block;
-    float: right;
-    width: 70px;
-}
-.view-list-doFilter span{
-    font-weight: bold;
-    margin-left: 5px;
 }
 .view-list-footer{
     min-height: 1em;
@@ -868,6 +849,20 @@ div.view-list-item.odd{
 .view-list-item-tags{
     display: inline-block;
     width: 500px;
+}
+.view-list-visualization{
+    background-color: #cae9f0;
+    padding: 10px 20px;
+}
+.view-list-visualization-header{
+    background-color: #dceff4;
+    padding: 10px;
+}
+.view-list-visualization-header i{
+    margin-left: 20px;
+}
+.view-list-pagination{
+    min-height: 2em;
 }
 /* ====== Organization ======== */
 .org-info-panel {

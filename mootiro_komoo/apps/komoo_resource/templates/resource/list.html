@@ -26,11 +26,21 @@
     <div class="view-list-count">
           {% blocktrans count counter=resources_count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}
     </div>
-    {% pagination resources %}
+    <div class="view-list-pagination">
+      {% pagination resources %}
+    </div>
 
-    {% sorters "['name', 'creation_date']" %}
+    <div class="view-list-visualization">
+      <div class="view-list-visualization-header">
+        {% trans 'Visualization options' %}<i class="icon-chevron-right"></i>
+      </div>
+      <div class="view-list-visualization-options" style="display: none;">
+        {% sorters "['name', 'creation_date']" %}
 
-    {% filters 'resource' "['tags']" %}
+        {% filters 'resource' "['tags']" %}
+      </div>
+    </div>
+
   </div>
 
 
@@ -99,6 +109,17 @@
 
   <script type="text/javascript">
   $(function(){
+
+    /* Visualization Option */
+    $('.view-list-visualization-header').click(function(){
+      $('.view-list-visualization-options').slideToggle();
+      $('.view-list-visualization-header i').toggleClass('icon-chevron-right');
+      $('.view-list-visualization-header i').toggleClass('icon-chevron-down');
+    });
+
+
+    /* Filters */
+
     // get sorters state
     // var _filters = getUrlVars()['filters'];
     // if (_filters){

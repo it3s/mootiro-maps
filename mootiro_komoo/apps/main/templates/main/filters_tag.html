@@ -7,9 +7,7 @@
     <div class="view-list-filter-name">{{ filter.1 }}</div>
   </div>
   {% endfor %}
-  <div class="view-list-doFilter btn" id="doFilter">
-    <i class="icon-search"></i><span>{% trans 'Filter' %}</span>
-  </div>
+
   <div class="view-list-filter-input">
     {% for filter in filters %}
     <div class="view-list-filter-widget" widget-for="{{ filter.0 }}" style="display: none;">
@@ -17,6 +15,5 @@
     </div>
     {% endfor %}
   </div>
-  <hr>
 </div>
 
