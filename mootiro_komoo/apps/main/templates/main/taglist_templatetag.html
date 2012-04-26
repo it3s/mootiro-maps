@@ -1,11 +1,14 @@
 {% load i18n %}
 <div class="view-tag-list">
   {% if object.tags.all %}
-  <span class="meta-info">{% trans 'Tags:' %}</span>
+  <span class="inline-block meta-info">{% trans 'Tags:' %}</span>
+  <div class="view-tag-list-tags">
   {% for tag in object.tags.all %}
-    <span class="tag">{{ tag }}</span>
+    <span class="inline-block tag">{{ tag }}</span>
   {% endfor %}
+  </div>
   {% else %}
-  <span class="meta-info">{% trans 'No tags' %}</span>
+  <span class="inline-block meta-info">{% trans 'No tags' %}</span>
   {% endif %}
+
 </div>

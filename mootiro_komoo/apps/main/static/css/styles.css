@@ -737,13 +737,23 @@ input[type=text], textarea{
   margin: 5px 0 15px 0;
   font-weight: bold;
 }
+.view-tag-list-tags{
+    display: inline-block;
+}
 .tag {
   color: #666666;
-  margin: 0 5px;
+  margin: 2px 5px;
   padding: 2px 5px;
   font-weight: normal;
   background-color: rgb(225, 239, 245);
   border-radius: 3px;
+  border: solid 1px #cccccc;
+}
+.view-list-item-tags .view-tag-list-tags{
+    width: 350px;
+}
+.view-tag-list .meta-info{
+    vertical-align: top;
 }
 div.view-list-item{
   padding: 20px 10px 10px 20px;
@@ -854,6 +864,10 @@ div.view-list-item.odd{
     border: 1px solid #CCCCCC;
     margin-left: 4px;
     background: #ffffff;
+}
+.view-list-item-tags{
+    display: inline-block;
+    width: 500px;
 }
 /* ====== Organization ======== */
 .org-info-panel {
