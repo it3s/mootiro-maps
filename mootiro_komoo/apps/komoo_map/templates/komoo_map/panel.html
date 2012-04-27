@@ -63,6 +63,8 @@
   $(function() {
     tabs = new Tabs('.map-tab', '.panel');
   });
+  window.csrf_token = '{{ csrf_token }}';
+
 </script>
 
 <script type="text/javascript" src="{{ STATIC_URL }}js/komoo_search.js"></script>

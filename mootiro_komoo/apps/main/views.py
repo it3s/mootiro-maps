@@ -125,7 +125,7 @@ queries = {
         ],
         'repr': 'name',
         'link': lambda o: reverse('view_resource',
-                                  kwargs={'id': o.id})
+                                  kwargs={'resource_id': o.id})
     },
     'need': {
         'model': Need,

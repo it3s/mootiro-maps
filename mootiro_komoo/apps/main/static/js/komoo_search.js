@@ -2,7 +2,7 @@
     var form_search = $('#search'),
         search_field = $('#search-bar'),
         search_results = $('#search-results');
-        csrftoken= getCookie('csrftoken');
+        csrftoken= getCookie('csrftoken') || window.csrf_token;
 
     var titles = {
         'community': gettext('Communities'),
