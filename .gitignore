@@ -11,4 +11,4 @@ komoo_index/
 backups/
 *.csv
 *.kml
-
+.ropeproject/
