@@ -6,6 +6,7 @@ from django.contrib.gis.measure import Distance
 from django.contrib.auth.models import User
 import reversion
 from main.utils import slugify
+from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel
 
 
@@ -21,6 +22,7 @@ class Community(GeoRefModel):
                         related_name='created_communities')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
+    tags = TaggableManager()
 
     def __unicode__(self):
         return self.name

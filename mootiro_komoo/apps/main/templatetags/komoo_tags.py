@@ -1,11 +1,14 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+import ast
+
 from django import template
 from django import forms
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 from main.utils import templatetag_args_parser, create_geojson
-from main.widgets import ImageSwitch, ImageSwitchMultiple
+from main.widgets import ImageSwitch, ImageSwitchMultiple, TaggitWidget
 from community.models import Community
 from need.models import Need, NeedCategory
 from organization.models import Organization
@@ -108,6 +111,7 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 
     return dict(img=img, STATIC_URL=settings.STATIC_URL)
 
+
 @register.inclusion_tag('main/track_buttons_templatetag.html')
 def track_buttons():
     return dict()
@@ -132,3 +136,235 @@ def with_http(link):
 @register.filter
 def split(entry, splitter):
     return entry.split(splitter)
+
+
+# @register.inclusion_tag('main/sorters_tag.html', takes_context=True)
+# def sorters(context, sort_fields):
+#     """
+#     Templatetage for sorters
+#     usage:
+#         {% sorters ['fields', 'list'] %}
+#     """
+#     sort_fields = ast.literal_eval(sort_fields)
+#     field_labels = {
+#         'name': _('Name'),
+#         'title': _('Name'),
+#         'creation_date': _('Date'),
+#         'vote': _('Vote')
+#     }
+#     sort_fields = [(field_labels[field], field) for field in sort_fields]
+#     return dict(sort_fields=sort_fields)
+
+
+# @register.simple_tag(takes_context=True)
+# def sorters_js(context):
+#     return """
+#     <script type="text/javascript">
+
+#       $(function(){
+
+#         // get sorters state
+#         var _sorters = getUrlVars()['sorters'];
+#         if (_sorters){
+#           _sorters = _sorters.split(',');
+#         }
+#         if (_sorters && _sorters.length > 0 && _sorters[0]){
+#           $.each(_sorters, function(idx, val){
+#             $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
+#           });
+#         } else {
+#           var main_field = $('.view-list-sorter-btn[sorter-name=name]');
+#           if (!main_field.length) {
+#             main_field = $('.view-list-sorter-btn[sorter-name=title]');
+#           }
+#           main_field.addClass('selected');
+#         }
+
+
+#         // click on btn change classes.
+#         $('.view-list-sorter-btn').click(function(){
+#           var that = $(this);
+#           that.toggleClass('selected');
+#         });
+
+#         window.getSorters = function(){
+#           var sorters = [];
+#           $('.view-list-sorter-btn.selected').each(function(idx, val){
+#             sorters.push($(val).attr('sorter-name'));
+#           });
+
+#           return sorters.join();
+#         };
+
+#         // sort button
+#         $('#doSort').click(function(){
+#           window.location = location.pathname + '?sorters=' + getSorters();
+#         });
+
+#       });
+#     </script>
+#     """
+
+
+# @register.inclusion_tag('main/filters_tag.html', takes_context=True)
+# def filters(context, object, filters):
+#     """
+#     Templatetage for filters
+#     usage:
+#         {% filters object ['list', 'of', 'filters'] %}
+#     """
+#     filters = ast.literal_eval(filters)
+#     field_labels = {
+#         'tags': _('Tags')
+#     }
+
+#     tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
+#     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
+#     field_widgets = {
+#         'tags': tag_widget
+#     }
+#     filters_tuples = [(field, field_labels[field], field_widgets[field]) \
+#                         for field in filters]
+#     return dict(filters=filters_tuples)
+
+
+@register.inclusion_tag('main/visualization_opts_tag.html', takes_context=True)
+def visualization_opts(context, object, arg1='', arg2=''):
+    """
+    Templatetag for visualization options (sorters and filters)
+    usage:
+        {% visualization_opts 'resource' "filters=['tags']" "sorters=['name', 'creation_date']" %}
+        {% visualization_opts 'organization' "sorters=['name', 'creation_date']"}
+    """
+    # parse options
+    opts = {}
+    for arg in [arg1, arg2]:
+        if arg and '=' in arg:
+            k, v = arg.split('=')
+            v = ast.literal_eval(v)
+            opts[k] = v
+
+    field_labels = {
+        'tags': _('Tags'),
+        'name': _('Name'),
+        'title': _('Name'),
+        'creation_date': _('Date'),
+        'vote': _('Vote')
+    }
+
+    # sorters
+    sort_fields = [(field_labels[field], field) for field in opts.get('sorters', [])]
+
+    # filters
+    tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
+    tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
+    field_widgets = {
+        'tags': tag_widget
+    }
+    filter_fields = [(field, field_labels[field], field_widgets[field]) \
+                        for field in opts.get('filters', [])]
+
+    return  dict(filters=filter_fields, sorters=sort_fields)
+
+
+@register.simple_tag(takes_context=True)
+def visualization_opts_js(context):
+    return """
+    <script type="text/javascript">
+
+        $(function(){
+
+
+          /* Visualization Option */
+          $('.view-list-visualization-header').click(function(){
+            $('.view-list-visualization-options').slideToggle();
+            $('.view-list-visualization-header i').toggleClass('icon-chevron-right');
+            $('.view-list-visualization-header i').toggleClass('icon-chevron-down');
+          });
+
+          // if we made a query, open selectors
+          if(getUrlVars()['sorters'] || getUrlVars()['filters']){
+            $('.view-list-visualization-options').show();
+            $('.view-list-visualization-header i').removeClass('icon-chevron-right');
+            $('.view-list-visualization-header i').addClass('icon-chevron-down');
+            $.each( getUrlVars()['filters'].split(',') ,function(idx, field){
+              $('.view-list-filter-widget[widget-for='+ field + ']').show();
+            });
+          }
+
+          // get sorters state
+          var _sorters = getUrlVars()['sorters'];
+          if (_sorters){
+            _sorters = _sorters.split(',');
+          }
+          if (_sorters && _sorters.length > 0 && _sorters[0]){
+            $.each(_sorters, function(idx, val){
+              $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
+            });
+          } else {
+            var main_field = $('.view-list-sorter-btn[sorter-name=name]');
+            if (!main_field.length) {
+              main_field = $('.view-list-sorter-btn[sorter-name=title]');
+            }
+            main_field.addClass('selected');
+          }
+          // get filters state
+          var _filters = getUrlVars()['filters'];
+          if (_filters){
+            _filters = _filters.split(',');
+          }
+          if (_filters && _filters.length > 0 && _filters[0]){
+            $.each(_filters, function(idx, val){
+              $('.view-list-filter-btn[filter-name=' + val + ']').addClass('selected');
+              if (val == 'tags'){
+                var tags = unescape(getUrlVars()['tags']);
+                tags = tags.split(',');
+                $.each(tags, function(idx, tag){
+                  $('#id_tags').addTag(tag);
+                });
+              }
+            });
+          }
+
+          // reset tagsinput styles
+          $('.view-list-filter-widget .tagsinput').attr('style', '');
+
+          // click on btn change classes.
+          $('.view-list-sorter-btn').click(function(){
+            var that = $(this);
+            that.toggleClass('selected');
+          });
+          $('.view-list-filter-btn').click(function(){
+            var that = $(this);
+            that.toggleClass('selected');
+            var filter_name = that.attr('filter-name');
+            $('.view-list-filter-widget[widget-for=' + filter_name + ']').slideToggle();
+          });
+
+          // get filters
+          window.getFilters = function(){
+
+            var sorters = [],
+                filters = [],
+                filter_fields = '';
+
+            $('.view-list-sorter-btn.selected').each(function(idx, val){
+              sorters.push($(val).attr('sorter-name'));
+            });
+
+            $('.view-list-filter-btn.selected').each(function(idx, val){
+              var filter_name = $(val).attr('filter-name');
+              filters.push(filter_name);
+              filter_fields += '&' + filter_name + '=' + escape($('.view-list-filter-widget input').val());
+            });
+
+            return 'sorters=' + sorters.join() + '&filters=' + filters.join() + filter_fields;
+          };
+
+          $('#doFilter').click(function(){
+            window.location = location.pathname + '?' + getFilters();
+          });
+
+      });
+      </script>
+    """

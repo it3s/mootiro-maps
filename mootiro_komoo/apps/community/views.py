@@ -12,13 +12,16 @@ from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
+from django.db.models import Count
 
 from annoying.decorators import render_to, ajax_request
 from fileupload.models import UploadedFile
+from lib.taggit.models import TaggedItem
 
 from community.models import Community
 from community.forms import CommunityForm
-from main.utils import create_geojson, paginated_query
+from main.utils import (create_geojson, paginated_query, sorted_query,
+                        filter_by_tags_query)
 
 logger = logging.getLogger(__name__)
 
@@ -90,7 +93,11 @@ def map(request):
 @render_to('community/list.html')
 def list(request):
     logger.debug('acessing community > list')
-    communities = Community.objects.all().order_by('name')
+
+    sort_order = ['creation_date', 'name']
+
+    query_set = filter_by_tags_query(Community.objects, request)
+    communities = sorted_query(query_set, sort_order, request)
     communities_count = communities.count()
     communities = paginated_query(communities, request)
     return dict(communities=communities, communities_count=communities_count)
@@ -119,6 +126,17 @@ def search_by_name(request):
                                            Q(slug__icontains=term))
     d = [{'value': c.id, 'label': c.name} for c in communities]
     return HttpResponse(simplejson.dumps(d), mimetype="application/x-javascript")
+
+
+def search_by_tag(request):
+    logger.debug('acessing resource > search_by_tag')
+    term = request.GET['term']
+    qset = TaggedItem.tags_for(Community).filter(name__istartswith=term
+            ).annotate(count=Count('taggit_taggeditem_items__id')
+            ).order_by('-count', 'slug')[:10]
+    tags = [t.name for t in qset]
+    return HttpResponse(simplejson.dumps(tags),
+                mimetype="application/x-javascript")
 
 
 @ajax_request

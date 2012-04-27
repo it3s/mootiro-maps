@@ -1,0 +1,48 @@
+{% load i18n %}
+<div class="view-list-visualization">
+  <div class="view-list-visualization-header">
+    {% trans 'Visualization options' %}<i class="icon-chevron-right"></i>
+  </div>
+  <div class="view-list-visualization-options" style="display: none;">
+      {% if sorters %}
+      <div class="view-list-sorters">
+        <div class="view-list-filter-title">{% trans 'Sort by' %}:</div>
+        {% for field in sorters %}
+        <div class="view-list-sorter-btn" sorter-name="{{ field.1 }}">
+          {{ field.0 }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if filters %}
+      <div class="view-list-filters">
+        <div class="view-list-filter-title">{% trans 'Filter by' %}:</div>
+        {% for filter in filters %}
+        <div class="view-list-filter-btn" filter-name="{{ filter.0 }}">
+          <div class="view-list-filter-name">{{ filter.1 }}</div>
+        </div>
+        {% endfor %}
+
+        <div class="view-list-filter-input">
+          {% for filter in filters %}
+          <div class="view-list-filter-widget" widget-for="{{ filter.0 }}" style="display: none;">
+            {{ filter.2|safe }}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if sorters or filters %}
+      <div class="doFilter-wrapper">
+          <div class="btn" id="doFilter">
+              <i class="icon-search"></i>
+              {% trans 'Filter' %}
+          </div>
+      </div>
+      {% endif %}
+  </div>
+</div>
+
+

@@ -20,7 +20,8 @@ from fileupload.models import UploadedFile
 from community.models import Community
 from need.models import Need, TargetAudience
 from need.forms import NeedForm
-from main.utils import create_geojson, paginated_query
+from main.utils import (create_geojson, paginated_query, sorted_query,
+                        filter_by_tags_query)
 
 logger = logging.getLogger(__name__)
 
@@ -90,12 +91,18 @@ def view(request, community_slug=None, need_slug=None):
 @render_to('need/list.html')
 def list(request, community_slug=''):
     logger.debug('acessing need > list')
+
+    sort_fields = ['creation_date', 'title']
+
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
-        needs = community.needs.all().order_by('title')
+        query_set = community.needs
     else:
         community = None
-        needs = Need.objects.all().order_by('title')
+        query_set = Need.objects
+
+    query_set = filter_by_tags_query(query_set, request)
+    needs = sorted_query(query_set, sort_fields, request, default_order='title')
     needs_count = needs.count()
     needs = paginated_query(needs, request=request)
     return dict(community=community, needs=needs, needs_count=needs_count)

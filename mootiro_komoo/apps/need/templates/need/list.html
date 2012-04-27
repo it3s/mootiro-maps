@@ -17,10 +17,17 @@
     </div>
     <div class="view-list">
       <div class="view-list-top">
+
         <div class="view-list-count">
           {% blocktrans count counter=needs_count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}
         </div>
-        {% pagination needs %}
+
+        <div class="view-list-pagination">
+          {% pagination needs %}
+        </div>
+
+        {% visualization_opts 'need' "sorters=['title','creation_date']" "filters=['tags']"%}
+
       </div>
 
       {% for need in needs.object_list %}
@@ -45,6 +52,23 @@
           {% trans 'target audience:' %} {{ need.target_audiences.all|join:", " }}
         </p>
         <p>{{ need.description|render_markup }}</p>
+
+        <div class="view-list-footer">
+          {% if need.tags.count %}
+          <div class="view-list-item-tags">
+            {% taglist need %}
+          </div>
+          {% endif %}
+          <div class="created-by">
+            {% trans 'created by' %}
+            <strong>
+              {% firstof resource.creator.get_full_name resource.creator.username '--' %}
+            </strong>
+            {% trans 'at' %}
+            <strong>{%firstof resource.creation_date '--' %}</strong>
+          </div>
+        </div>
+
       </div>
       {% endfor %}
     </div>
@@ -52,4 +76,8 @@
   {% pagination needs %}
 </div>
 {% komoo_map_tooltip %}
+{% endblock %}
+
+{% block page_scripts %}
+  {% visualization_opts_js %}
 {% endblock %}

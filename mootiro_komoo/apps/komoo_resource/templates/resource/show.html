@@ -67,7 +67,7 @@
             <div class="block">
                 <h3>Related resources</h3>
                 <ul>
-                    {% for r in similar_resources %}
+                    {% for r in similar_resources|slice:'5' %}
                     <li>
                         <a href="{{ r.view_url }}"> {{ r.name }} </a>
                         {% if r.community %}

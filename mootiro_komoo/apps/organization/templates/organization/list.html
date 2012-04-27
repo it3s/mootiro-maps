@@ -27,34 +27,11 @@
       <div class="view-list-count">
         {% blocktrans count counter=organizations_count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
       </div>
-      {% pagination organizations %}
-
-      <div class="view-list-sorters">
-        <div class="view-list-filter-title">{% trans 'Sort by:' %}</div>
-        <div class="view-list-sorter-btn selected" filter-name="name">
-          {% trans 'Name' %}
-        </div>
-        <div class="view-list-sorter-btn" filter-name="date">
-          {% trans 'Date' %}
-        </div>
-        <div class="view-list-sorter-btn" filter-name="votes">
-          {% trans 'Votes' %}
-        </div>
-        <hr>
+      <div class="view-list-pagination">
+        {% pagination organizations %}
       </div>
-      <!-- <div class="view-list-filters">
-        <div class="view-list-filter-title">{% trans 'Filter by:' %}</div>
-        <div class="view-list-filter-btn">{% trans 'Operation Field' %}</div>
-        <div class="view-list-filter-btn" id="tag-filter">{% trans 'Target Audience' %}
-          <div id="tag-filter-input" style="display: none;">
-            {#{ audience_tags|safe }#}
-            <div class="inline-block btn" id="tag-search">
-              <i class="icon-search"></i>
-            </div>
-          </div>
-        </div>
-        <hr>
-      </div> -->
+
+      {% visualization_opts 'organization' "sorters=['name','creation_date']" "filters=['tags']" %}
 
     </div>
     {% for org in organizations.object_list %}
@@ -126,6 +103,22 @@
           {% if org.description|length|get_digit:"-1" > 250 %} ... {% endif %}
         </p>
 
+        <div class="view-list-footer">
+          {% if org.tags.count %}
+          <div class="view-list-item-tags">
+            {% taglist org %}
+          </div>
+          {% endif %}
+          <div class="created-by">
+            {% trans 'created by' %}
+            <strong>
+              {% firstof org.creator.get_full_name org.creator.username '--' %}
+            </strong>
+            {% trans 'at' %}
+            <strong>{% firstof org.creation_date '--' %}</strong>
+          </div>
+        </div>
+
       </div>
     {% endfor %}
     </div>
@@ -136,32 +129,5 @@
 
 {% block page_scripts %}
   {% vote_staticfiles %}
-  <script type="text/javascript">
-
-  $(function(){
-    // reset element styles
-    // $('#tag-filter-input .tagsinput').attr('style', '');
-
-    // if we click on tag, show the input field
-    // $('#tag-filter').click(function(){
-      // $('#tag-filter-input').fadeIn();
-    // });
-
-    // click on btn change classes.
-    $('.view-list-sorter-btn').click(function(){
-      var that = $(this);
-      that.toggleClass('selected');
-    });
-
-    window.getFilters = function(){
-      var filters = [];
-      $('.view-list-sorter-btn.selected').each(function(idx, val){
-        filters.push($(val).attr('filter-name'));
-      });
-
-      return filters;
-    };
-  });
-
-  </script>
+  {% visualization_opts_js %}
 {% endblock %}

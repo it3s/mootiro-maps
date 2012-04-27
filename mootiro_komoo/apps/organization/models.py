@@ -10,6 +10,7 @@ from komoo_map.models import GeoRefModel
 from community.models import Community
 from need.models import TargetAudience
 from fileupload.models import UploadedFile
+from lib.taggit.managers import TaggableManager
 
 
 class Organization(models.Model):
@@ -28,6 +29,8 @@ class Organization(models.Model):
 
     categories = models.ManyToManyField('OrganizationCategory', null=True, blank=True)
     target_audiences = models.ManyToManyField(TargetAudience, null=True, blank=True)
+
+    tags = TaggableManager()
 
     def __unicode__(self):
         return unicode(self.name)

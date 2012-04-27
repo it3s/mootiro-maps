@@ -77,6 +77,7 @@ urlpatterns = patterns('',
     url(r'', include('komoo_resource.urls')),
     url(r'', include('organization.urls')),
     url(r'', include('investment.urls')),
+    url(r'^hotsite/', include('hotsite.urls')),
 
     # Community URLs go last because one of them can match anything
     url(r'', include('community.urls')),

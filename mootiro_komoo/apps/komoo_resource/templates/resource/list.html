@@ -26,7 +26,11 @@
     <div class="view-list-count">
           {% blocktrans count counter=resources_count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}
     </div>
-    {% pagination resources %}
+    <div class="view-list-pagination">
+      {% pagination resources %}
+    </div>
+
+    {% visualization_opts 'resource' "filters=['tags']" "sorters=['name', 'creation_date']" %}
   </div>
 
 
@@ -67,6 +71,21 @@
         {% endfor %}
       {% endif %}
 
+      <div class="view-list-footer">
+        {% if resource.tags.count %}
+        <div class="view-list-item-tags">
+          {% taglist resource %}
+        </div>
+        {% endif %}
+        <div class="created-by">
+          {% trans 'created by' %}
+          <strong>
+            {% firstof resource.creator.get_full_name resource.creator.username '--' %}
+          </strong>
+          {% trans 'at' %}
+          <strong>{% firstof resource.creation_date '--' %}</strong>
+        </div>
+      </div>
     </div>
   {% endfor %}
   </div>
@@ -75,4 +94,8 @@
 </div>
 
 {% komoo_map_tooltip %}
+{% endblock %}
+
+{% block page_scripts %}
+  {% visualization_opts_js %}
 {% endblock %}

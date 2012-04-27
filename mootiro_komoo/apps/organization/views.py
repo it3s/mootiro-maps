@@ -12,18 +12,20 @@ from django.shortcuts import (render_to_response, RequestContext,
 from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
-from main.widgets import Tagsinput
-from organization.models import TargetAudience
+from django.db.models import Count
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
+from lib.taggit.models import TaggedItem
+
 
 from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganizationNew, FormBranchNew, \
                                FormOrganizationEdit
 from community.models import Community
-from main.utils import paginated_query, create_geojson
+from main.utils import (paginated_query, create_geojson, sorted_query,
+                        filter_by_tags_query)
 
 logger = logging.getLogger(__name__)
 
@@ -47,24 +49,23 @@ def prepare_organization_objects(community_slug="", organization_slug=""):
 def organization_list(request, community_slug=''):
     logging.debug('acessing organization > list')
 
+    org_sort_order = ['creation_date', 'name']
+
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
         community = get_object_or_None(Community, slug=community_slug)
-        organizations_list = community.organization_set.all().order_by('name')
+        query_set = community.organization_set
     else:
         community = None
-        organizations_list = Organization.objects.all().order_by('name')
+        query_set = Organization.objects
 
-    widget = Tagsinput(TargetAudience,
-        autocomplete_url="/need/target_audience_search")
-    audience_tags = str(widget.media)
-    audience_tags += widget.render('audience_tags')
-
+    query_set = filter_by_tags_query(query_set, request)
+    organizations_list = sorted_query(query_set, org_sort_order,
+                                         request)
     organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
     return dict(community=community, organizations=organizations,
-                organizations_count=organizations_count,
-                audience_tags=audience_tags)
+                organizations_count=organizations_count)
 
 
 @render_to('organization/show.html')
@@ -246,3 +247,14 @@ def search_by_name(request):
     d = [{'value': o.id, 'label': o.name} for o in orgs]
     return HttpResponse(simplejson.dumps(d),
         mimetype="application/x-javascript")
+
+
+def search_by_tag(request):
+    logger.debug('acessing organization > search_by_tag')
+    term = request.GET['term']
+    qset = TaggedItem.tags_for(Organization).filter(name__istartswith=term
+            ).annotate(count=Count('taggit_taggeditem_items__id')
+            ).order_by('-count', 'slug')[:10]
+    tags = [t.name for t in qset]
+    return HttpResponse(simplejson.dumps(tags),
+                mimetype="application/x-javascript")

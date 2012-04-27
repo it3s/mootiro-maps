@@ -6,7 +6,7 @@
 
 {% block title %}{% trans 'Communities list' %}{% endblock %}
 
-{% block menu %} {% menu "community" %} {% endblock %}
+{% block menu %} {% menu "" "community" %} {% endblock %}
 
 {% block content %}
 <div id="main-content">
@@ -16,7 +16,11 @@
         <div class="view-list-count">
           {% blocktrans count counter=communities_count %}{{ counter }} Community{% plural %}{{ counter }} Communities{% endblocktrans %}
         </div>
-        {% pagination communities %}
+        <div class="view-list-pagination">
+          {% pagination communities %}
+        </div>
+
+        {% visualization_opts 'community' "sorters=['name','creation_date']" "filters=['tags']" %}
       </div>
 
       {% for community in communities.object_list %}
@@ -33,10 +37,31 @@
           {% trans 'population:' %} {% firstof community.population '-' %}
         </p>
         <p class="mark-down">{{ community.description|render_markup }}</p>
+
+        <div class="view-list-footer">
+          {% if community.tags.count %}
+          <div class="view-list-item-tags">
+            {% taglist community %}
+          </div>
+          {% endif %}
+          <div class="created-by">
+            {% trans 'created by' %}
+            <strong>
+              {% firstof community.creator.get_full_name community.creator.username 'someone' %}
+            </strong>
+            {% trans 'at' %}
+            <strong>{{ community.creation_date }}</strong>
+          </div>
+        </div>
+
       </div>
       {% endfor %}
     </div>
   </div>
   {% pagination communities %}
 </div>
+{% endblock %}
+
+{% block page_scripts %}
+  {% visualization_opts_js %}
 {% endblock %}

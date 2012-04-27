@@ -8,17 +8,22 @@ from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 
 from main.utils import MooHelper
+from main.widgets import TaggitWidget
 from community.models import Community
 
 
 class CommunityForm(forms.ModelForm):
     class Meta:
         model = Community
-        fields = ('name', 'population', 'description', 'geometry', 'files')
+        fields = ('name', 'population', 'description', 'tags', 'geometry',
+                  'files')
 
     description = forms.CharField(widget=MarkItUpWidget())
     geometry = forms.CharField(widget=forms.HiddenInput())
     files = FileuploadField(required=False)
+    tags = forms.Field(
+        widget=TaggitWidget(autocomplete_url="/community/search_by_tag/"),
+        required=False)
 
     def __init__(self, *a, **kw):
         # Crispy forms configuration

@@ -13,6 +13,8 @@ urlpatterns = patterns('community.views',
 
     url(r'^community/search_by_name$', 'search_by_name',
         name='search_community_by_name'),
+    url(r'^community/search_by_tag/$', 'search_by_tag',
+            name='community_search_by_tag'),
     url(r'^community/get_geojson$', 'communities_geojson',
         name='communities_geojson'),
 

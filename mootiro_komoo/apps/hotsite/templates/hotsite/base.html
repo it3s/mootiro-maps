@@ -1,0 +1,69 @@
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>{% block title %}Mootiro Maps{% endblock %}</title>
+    <link rel="image_src" href="{{STATIC_URL}}img/logo.png" />
+    {{ form.media.css }}
+    <link rel="shortcut icon" HREF="{{STATIC_URL}}img/favicon.png" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/hotsite.css" />
+    <script type="text/javascript" src="{% url javascript_catalog %}"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.conf.urls.js"></script>
+    <!-- Our utilities lib -->
+    <script type="text/javascript">var isAuthenticated = {{ user.is_authenticated|lower }};</script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/komoo_utils.js"></script>
+
+    {{ form.media.js }}
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <!-- Mootiro_bar goes here -->
+    <div id="hotsite">
+      <div id="hotsite-top">
+        <div id="logo">
+          <a href="{% url root %}"><img src='{{STATIC_URL}}img/hotsite/logo.png' alt='Mootiro Maps'/></a>
+        </div>
+        <ul id="hotsite-navigation">
+          <li><a href="">Colabore</a></li>
+          <li><a href="">Motivação</a></li>
+          <li><a href="">Ajude a mapear</a></li>
+          <li><a href="">Ajuda</a></li>
+        </ul>
+
+      </div>
+      <div id="content">
+        {% block content %}{% endblock %}
+      </div>
+      {% if not user.is_authenticated %}
+        {% include "main/login_box.html" %}
+      {% endif %}
+      {% include "main/error_box.html" %}
+    </div>
+    {% block page_scripts %}{% endblock %}
+
+    <!-- Google Analytics -->
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-31165229-1']);
+      _gaq.push(['_setDomainName', 'mootiro.org']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </body>
+</html>
