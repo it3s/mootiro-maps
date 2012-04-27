@@ -1,0 +1,39 @@
+{% extends "hotsite/base.html" %}
+{% block title %}Mootiro Maps{% endblock %}
+
+{% block content %}
+  <div class="hotsite-box">
+    <span id="hotsite-highlight-description">
+      MootiroMaps é uma aplicação livre que permite o mapeamento colaborativo de comunidades, organizações, necessidades, recursos e investimentos de um determinado território.
+    </span>
+    <a href="" id="hotsite-start-btn" class="button">Comece a mapear</a>
+  </div>
+  <ul id="hotsite-steps">
+    <li id="hotsite-step-map" class="step active"><i class="icon-map"></i><span class="step-label">Mapeie</span></li>
+    <li id="hotsite-step-discuss" class="step"><i class="icon-discuss"></i><span class="step-label">Discuta e proponha</span></li>
+    <li id="hotsite-step-resolve" class="step"><i class="icon-resolve"></i><span class="step-label">Resolva</span></li>
+  </ul>
+  <div id="hotsite-slides">
+    <div id="slide-1-5" class="slide map-slide">
+      <ul class="slide-tabs">
+        <li id="slide-1-5-tab-1" class="slide-tab"><i class="icon-community"></i><span class="tab-label">Comunidades</span></li>
+        <li id="slide-1-5-tab-2" class="slide-tab"><i class="icon-need"></i><span class="tab-label">Necessidades</span></li>
+        <li id="slide-1-5-tab-3" class="slide-tab"><i class="icon-organization"></i><span class="tab-label">Organizações</span></li>
+        <li id="slide-1-5-tab-4" class="slide-tab"><i class="icon-resource"></i><span class="tab-label">Recursos</span></li>
+        <li id="slide-1-5-tab-5" class="slide-tab"><i class="icon-investment"></i><span class="tab-label">Investimentos</span></li>
+      </ul>
+    </div>
+    <div id="hotsite-slides-controls">
+      <a href="#" class="icon-previous control"></a>
+      <span id="hotsite-slides-controls-counter">
+        <span id="hotsite-slides-controls-page">%d</span> de <span id="hotsite-slides-controls-total">%d</span>
+      </span>
+      <a href="#" class="icon-next control"></a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_scripts %}
+<script type="text/javascript">
+</script>
+{% endblock %}

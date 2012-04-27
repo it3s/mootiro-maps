@@ -1,0 +1,194 @@
+#hotsite {
+    width: 900px;
+    margin: 20px;
+}
+#hotsite-top #logo {
+    top: 0;
+    left: 0;
+    margin: 20px 0;
+}
+#hotsite-navigation {
+    display: inline-block;
+    width: 400px;
+    margin: 0 0 7px 60px;
+}
+#hotsite-navigation > li {
+    float: left;
+    width: 200px;
+    line-height: 150%;
+}
+.hotsite-box {
+    background: #eff8fb;
+    border: solid 3px #e2eaed;
+    border-radius: 10px;
+    padding: 10px;
+}
+#hotsite-highlight-description {
+    display: inline-block;
+    width: 735px;
+    margin: 12px 0;
+    vertical-align: top;
+}
+#hotsite-start-btn {
+    font-size: 150%;
+    text-align: center;
+    line-height: 110%;
+    width: 100px;
+    padding: 5px 15px 12px;
+}
+#hotsite-steps {
+    margin: 20px 0 7px;
+    height: 75px;
+}
+#hotsite-steps .step {
+    font-size: 170%;
+    font-weight: bold;
+    height: 46px;
+    padding: 15px 50px;
+    float: left;
+    text-align: center;
+    vertical-align: middle;
+}
+#hotsite-steps .step-label {
+    display: inline-block;
+    width: 110px;
+    vertical-align: middle;
+    text-align: left;
+    padding: 5px 0 10px; /* IE7 fix */
+}
+#hotsite-step-map {
+    color: #ff3d2e;
+    background: url("../img/hotsite/steps/map.png") no-repeat;
+    width: 209px;
+    margin-right: -9px;
+}
+#hotsite-step-map:hover {
+    background: url("../img/hotsite/steps/map-hover.png") no-repeat;
+}
+#hotsite-step-map.active {
+    background: url("../img/hotsite/steps/map-active.png") no-repeat;
+}
+#hotsite-step-discuss {
+    color: #fcac2b;
+    background: url("../img/hotsite/steps/discuss.png") no-repeat;
+    width: 217px;
+    margin-left: -9px;
+    margin-right: -9px;
+}
+#hotsite-step-discuss:hover {
+    background: url("../img/hotsite/steps/discuss-hover.png") no-repeat;
+}
+#hotsite-step-discuss.active {
+    background: url("../img/hotsite/steps/discuss-active.png") no-repeat;
+}
+#hotsite-step-resolve {
+    color: #26a56b;
+    background: url("../img/hotsite/steps/resolve.png") no-repeat;
+    width: 209px;
+    margin-left: -9px;
+}
+#hotsite-step-resolve:hover {
+    background: url("../img/hotsite/steps/resolve-hover.png") no-repeat;
+}
+#hotsite-step-resolve.active {
+    background: url("../img/hotsite/steps/resolve-active.png") no-repeat;
+}
+.icon-map, .icon-discuss, .icon-resolve {
+    position: relative;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.icon-map {
+    width: 25px;
+    height: 41px;
+    background: url("../img/hotsite/icons/map.png");
+}
+.icon-discuss {
+    width: 41px;
+    height: 41px;
+    background: url("../img/hotsite/icons/discuss.png");
+}
+.icon-resolve {
+    width: 52px;
+    height: 37px;
+    background: url("../img/hotsite/icons/resolve.png");
+}
+#hotsite-slides .slide {
+    height: 300px;
+    border-radius: 10px;
+}
+#hotsite-slides .map-slide {
+    background: #facab2;
+}
+.slide-tabs {
+    padding: 20px 0;
+}
+.slide-tab {
+    margin: 10px 0 10px 20px;
+    padding: 5px 0 5px 40px;
+}
+.tab-label {
+    font-size: 122%;
+    vertical-align: middle;
+    margin: 10px;
+}
+.icon-community,
+.icon-need,
+.icon-organization,
+.icon-resource,
+.icon-investment {
+    vertical-align: middle;
+}
+.icon-community {
+    background: url("../img/community.png");
+    margin: 0 2px 0 3px;
+    width: 21px;
+    height: 24px;
+}
+.icon-need {
+    background: url("../img/need.png");
+    margin: 3px 2px 3px 3px;
+    width: 21px;
+    height: 18px;
+}
+.icon-organization {
+    background: url("../img/organization.png");
+    margin: 2px 3px 2px 3px;
+    width: 20px;
+    height: 20px;
+}
+.icon-resource {
+    background: url("../img/resource.png");
+    margin: 3px 0 4px 0;
+    width: 26px;
+    height: 17px;
+}
+.icon-investment {
+    background: url("../img/investment.png");
+    margin: 4px 3px 4px 3px;
+    width: 20px;
+    height: 16px;
+}
+#hotsite-slides-controls-counter {
+    font-size: 120%;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px;
+}
+#hotsite-slides-controls {
+    position: relative;
+    top: -38px;
+    text-align: center;
+}
+.control {
+    width: 33px;
+    height: 33px;
+    vertical-align: middle;
+}
+.control.icon-previous {
+    background: url("../img/hotsite/controls/previous.png");
+}
+.control.icon-next {
+    background: url("../img/hotsite/controls/next.png");
+}

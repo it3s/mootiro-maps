@@ -152,6 +152,7 @@ INSTALLED_APPS = [
     'user_cas',
     'organization',
     'investment',
+    'hotsite',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
