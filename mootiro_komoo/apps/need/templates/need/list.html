@@ -62,10 +62,10 @@
           <div class="created-by">
             {% trans 'created by' %}
             <strong>
-              {% firstof resource.creator.get_full_name resource.creator.username '--' %}
+              {% firstof need.creator.get_full_name need.creator.username '--' %}
             </strong>
             {% trans 'at' %}
-            <strong>{%firstof resource.creation_date '--' %}</strong>
+            <strong>{%firstof need.creation_date '--' %}</strong>
           </div>
         </div>
 
