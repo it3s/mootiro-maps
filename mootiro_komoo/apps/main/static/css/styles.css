@@ -1042,10 +1042,10 @@ textarea.markItUpEditor{
     padding: 10px;
     border-bottom: 1px solid rgb(233, 233, 233);
 }
-div.investments .view-list .view-list-item {
+div.investments-list .view-list .view-list-item {
     width: 670px;
 }
-div.investments .tab {
+div.investments-list .tab {
     border-radius        : 5px 5px 0 0;
     -moz-border-radius   : 5px 5px 0 0;
     -webkit-border-radius: 5px 5px 0 0;
@@ -1054,9 +1054,8 @@ div.investments .tab {
     background: #eaf6f9;
     font-weight: bold;
 }
-div.investments .tab.selected { background: #dceff4 }
-div.investments .tab.selected a { color: #000 }
-}
+div.investments-list .tab.selected { background: #dceff4 }
+div.investments-list .tab.selected a { color: #000 }
 
 /* ====== JQuery UI ======== */
 .ui-dialog-titlebar {

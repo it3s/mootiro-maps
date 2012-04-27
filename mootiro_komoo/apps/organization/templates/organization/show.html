@@ -54,45 +54,43 @@
                       {% blocktrans count num=organization.organizationbranch_set.count %}{{ num }} point on map{% plural %}{{ num }} points on map{% endblocktrans %}
                     </div>
                 </div>
-                <!-- <div class="org-btn span3">
+                <div class="org-btn span3" panel="supported-organizations-list">
                     <img src="{{ STATIC_URL }}img/organization.png" />
                     <div class="inline-block">
-                      {% blocktrans count num=0 %}supports {{ num }} organization{% plural %}supports {{ num }} organizations{% endblocktrans %}
+                      {% blocktrans count num=organization.supported_organizations|length %}Supported {{ num }} organization{% plural %}Supported {{ num }} organizations{% endblocktrans %}
                     </div>
-                </div> -->
+                </div>
                 <div class="org-btn span3" panel="communities-list">
                     <img src="{{ STATIC_URL }}img/community.png" />
                     <div class="inline-block">
                       {% blocktrans count num=organization.community.count %}On {{ num }} community{% plural %}On {{ num }} communities{% endblocktrans %}
                     </div>
                 </div>
-                <!-- <div class="org-btn span3">
+                <div class="org-btn span3" panel="supported-proposals-list">
                     <img src="{{ STATIC_URL }}img/need.png" />
                     <div class="inline-block">
-                      {% blocktrans count num=0 %}supported {{ num }} proposal{% plural %}supported {{ num }} proposals{% endblocktrans %}
+                      {% blocktrans count num=organization.supported_proposals|length %}Supported {{ num }} proposal{% plural %}Supported {{ num }} proposals{% endblocktrans %}
                     </div>
                 </div>
-                <div class="org-btn span3">
+                <div class="org-btn span3" panel="supported-resources-list">
                     <img src="{{ STATIC_URL }}img/resource.png" />
                     <div class="inline-block">
-                      {% blocktrans count num=0 %}supported {{ num }} resource{% plural %}supported {{ num }} resources{% endblocktrans %}
-                    <br>
-                    {% blocktrans count num=0 %}offered {{ num }} resource{% plural %}offered {{ num }} resources{% endblocktrans %}
+                      {% blocktrans count num=organization.supported_resources|length %}Supported {{ num }} resource{% plural %}Supported {{ num }} resources{% endblocktrans %}
                     </div>
-                </div> -->
+                </div>
                 <div class="org-btn span3" panel="investments-list">
                     <img src="{{ STATIC_URL }}img/investment.png" />
                     <div class="inline-block">
-                      {% blocktrans count num=0 %}Realized {{ num }} investment
+                      {% blocktrans count num=organization.realized_investments.count %}Realized {{ num }} investment
                       {% plural %}Realized {{ num }} investments{% endblocktrans %}
                     <br>
-                    {% blocktrans count num=0 %}Received {{ num }} investment
+                    {% blocktrans count num=organization.investments.count %}Received {{ num }} investment
                     {% plural %}Received {{ num }} investments{% endblocktrans %}
                     </div>
                 </div>
             </div>
 
-            <div class="org-info-panel branches-list" style="display: none;">
+            <div class="org-info-panel branches-list">
                 {% for branch in organization.organizationbranch_set.all %}
                 <div class="branch-link org-info-div {% cycle 'odd' '' %}" data-branch-id="{{ branch.id }}">
                         <a href="#">
@@ -114,14 +112,24 @@
                             </div>
 
                         </div>
-                        <div class="branch-form" style="display: none;">
+                        <div class="branch-form hidden">
                             {% branch_edit_form branch.id %}
                         </div>
                     </div>
                 {% endfor %}
             </div>
 
-            <div class="org-info-panel communities-list" style="display: none;">
+            <div class="org-info-panel supported-organizations-list hidden">
+                {% for org in organization.supported_organizations %}
+                    <div class="org-info-div {% cycle 'odd' '' %}">
+                        <a href="{{ org.view_url }}">{{ org.name }}</a>
+                    </div>
+                {% empty %}
+                    {% trans 'No organizations supported.' %}
+                {% endfor %}
+            </div>
+
+            <div class="org-info-panel communities-list hidden">
                 {% for com in organization.community.all %}
                     <div class="org-info-div {% cycle 'odd' '' %}">
                         <a href="/{{ com.slug }}/about/">{{ com.name }}</a>
@@ -131,7 +139,27 @@
                 {% endfor %}
             </div>
 
-            <div class="org-info-panel investments" style="display: #none;">
+            <div class="org-info-panel supported-proposals-list hidden">
+                {% for prop in organization.supported_proposals %}
+                    <div class="org-info-div {% cycle 'odd' '' %}">
+                        <a href="{{ prop.view_url }}">{{ prop.title }}</a>
+                    </div>
+                {% empty %}
+                    {% trans 'No proposals supported.' %}
+                {% endfor %}
+            </div>
+
+            <div class="org-info-panel supported-resources-list hidden">
+                {% for res in organization.supported_resources %}
+                    <div class="org-info-div {% cycle 'odd' '' %}">
+                        <a href="{{ res.view_url }}">{{ res.name }}</a>
+                    </div>
+                {% empty %}
+                    {% trans 'No resources supported.' %}
+                {% endfor %}
+            </div>
+
+            <div class="org-info-panel investments-list hidden">
                 <ul class="horizontal">
                     <li class="tab" id="realizedTab"><a href="#realizedPanel">{% trans "Realized" %}</a></li>
                     <li class="tab" id="receivedTab"><a href="#receivedPanel">{% trans "Received" %}</a></li>

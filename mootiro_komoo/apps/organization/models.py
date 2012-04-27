@@ -10,6 +10,8 @@ from django.core.urlresolvers import reverse
 from komoo_map.models import GeoRefModel
 from community.models import Community
 from need.models import TargetAudience
+from proposal.models import Proposal
+from komoo_resource.models import Resource
 from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
@@ -39,9 +41,28 @@ class Organization(models.Model):
                         object_id_field='grantee_object_id')
 
     @property
-    def realized_investments(self):
+    def as_investor(self):
         investor, created = Investor.get_or_create_for(self)
-        return investor.investments
+        return investor
+
+    @property
+    def realized_investments(self):
+        return self.as_investor.investments.all()
+
+    @property
+    def supported_organizations(self):
+        return [i.grantee for i in self.realized_investments \
+                    if isinstance(i.grantee, Organization)]
+
+    @property
+    def supported_proposals(self):
+        return [i.grantee for i in self.realized_investments \
+                    if isinstance(i.grantee, Proposal)]
+
+    @property
+    def supported_resources(self):
+        return [i.grantee for i in self.realized_investments \
+                    if isinstance(i.grantee, Resource)]
 
     def __unicode__(self):
         return unicode(self.name)
