@@ -1,3 +1,10 @@
+ul.disc {
+    list-style: disc;
+    margin: 0 0 0 20px;
+}
+ul.disc li {
+    margin-bottom: 10px;
+}
 #hotsite {
     width: 900px;
     margin: 20px;
@@ -39,58 +46,69 @@
 #hotsite-steps {
     margin: 20px 0 7px;
     height: 75px;
+    white-space: nowrap;
 }
 #hotsite-steps .step {
     font-size: 170%;
     font-weight: bold;
     height: 46px;
     padding: 15px 50px;
-    float: left;
     text-align: center;
     vertical-align: middle;
+    white-space: normal;
+}
+#hotsite-steps .step-wrapper {
+    display: inline-block;
+    zoom: 1; /* IE7 fix */
+    *display: inline; /* IE7 fix */
 }
 #hotsite-steps .step-label {
     display: inline-block;
     width: 110px;
     vertical-align: middle;
     text-align: left;
-    padding: 5px 0 10px; /* IE7 fix */
+    *padding: 5px 0 10px; /* IE7 fix */
 }
-#hotsite-step-map {
+#hotsite-step-map a {
+    display: inline-block;
     color: #ff3d2e;
     background: url("../img/hotsite/steps/map.png") no-repeat;
     width: 209px;
-    margin-right: -9px;
+    margin-right: -12px;
+    *margin-right: -9px; /* IE7 fix */
 }
-#hotsite-step-map:hover {
+#hotsite-step-map a:hover {
     background: url("../img/hotsite/steps/map-hover.png") no-repeat;
 }
-#hotsite-step-map.active {
+#hotsite-step-map.selected a {
     background: url("../img/hotsite/steps/map-active.png") no-repeat;
 }
-#hotsite-step-discuss {
+#hotsite-step-discuss a {
+    display: inline-block;
     color: #fcac2b;
     background: url("../img/hotsite/steps/discuss.png") no-repeat;
     width: 217px;
     margin-left: -9px;
-    margin-right: -9px;
+    margin-right: -12px;
+    *margin-right: -9px; /* IE7 fix */
 }
-#hotsite-step-discuss:hover {
+#hotsite-step-discuss a:hover {
     background: url("../img/hotsite/steps/discuss-hover.png") no-repeat;
 }
-#hotsite-step-discuss.active {
+#hotsite-step-discuss.selected a {
     background: url("../img/hotsite/steps/discuss-active.png") no-repeat;
 }
-#hotsite-step-resolve {
+#hotsite-step-resolve a {
+    display: inline-block;
     color: #26a56b;
     background: url("../img/hotsite/steps/resolve.png") no-repeat;
     width: 209px;
     margin-left: -9px;
 }
-#hotsite-step-resolve:hover {
+#hotsite-step-resolve a:hover {
     background: url("../img/hotsite/steps/resolve-hover.png") no-repeat;
 }
-#hotsite-step-resolve.active {
+#hotsite-step-resolve.selected a {
     background: url("../img/hotsite/steps/resolve-active.png") no-repeat;
 }
 .icon-map, .icon-discuss, .icon-resolve {
@@ -117,15 +135,26 @@
     height: 300px;
     border-radius: 10px;
 }
-#hotsite-slides .map-slide {
-    background: #facab2;
-}
 .slide-tabs {
+    display: inline-block;
     padding: 20px 0;
+    white-space: nowrap;
+    width: 280px;
+    *float: left;
 }
 .slide-tab {
-    margin: 10px 0 10px 20px;
-    padding: 5px 0 5px 40px;
+    margin: 0 0 0 30px;
+}
+.slide-tab a {
+    padding: 10px 0 11px 50px;
+    border-radius: 10px 0 0 10px;
+    width: 210px;
+    display: inline-block;
+}
+.slide-tab.selected a {
+    color: black;
+    font-weight: bold;
+    background: #fcd9ca;
 }
 .tab-label {
     font-size: 122%;
@@ -169,6 +198,60 @@
     width: 20px;
     height: 16px;
 }
+.slide-content {
+    margin: 20px;
+    padding: 15px 0 15px 25px;
+    height: 195px;
+    border-radius: 10px;
+    display: inline-block;
+    *float; rigth;
+}
+.slide-content img {
+    display: inline-block;
+}
+.slide-content .text {
+    font-size: 115%;
+    display: inline-block;
+    vertical-align: top;
+    width: 260px;
+}
+.slide-title {
+    display: none;
+}
+#hotsite-slides .slide .slide-content {
+    vertical-align: top;
+    display: inline-block;
+}
+#hotsite-slides .map-slide {
+    background-color: #facab2;
+}
+#hotsite-slides .map-slide .slide-content {
+    background: #fcd9ca;
+    width: 569px;
+    margin: 20px 0 0 0;
+}
+#hotsite-slides .discuss-slide {
+    background: url("../img/hotsite/art/discuss.png") no-repeat 460px bottom;
+    background-color: #ffe2a9;
+}
+#hotsite-slides .discuss-slide .slide-content {
+    background: #fff0d6;
+    width: 380px;
+    height: 188px;
+    padding: 20px;
+    font-size: 135%;
+}
+#hotsite-slides .resolve-slide {
+    background: url("../img/hotsite/art/resolve.png") no-repeat 520px bottom;
+    background-color: #c1dfc4;
+}
+#hotsite-slides .resolve-slide .slide-content {
+    background: #e1efe3;
+    width: 380px;
+    height: 185px;
+    padding: 20px;
+    font-size: 135%;
+}
 #hotsite-slides-controls-counter {
     font-size: 120%;
     font-weight: bold;
@@ -178,7 +261,7 @@
 }
 #hotsite-slides-controls {
     position: relative;
-    top: -38px;
+    top: -42px;
     text-align: center;
 }
 .control {

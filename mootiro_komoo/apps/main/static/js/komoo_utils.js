@@ -29,7 +29,7 @@ function getCookie(name) {
 }
 
 /* Easy to use, jQuery based, and elegant solution for tabs :) */
-function Tabs(tabs, contents) {
+function Tabs(tabs, contents, onChange) {
     $(contents).hide();
     var instance = this;
     this.to = function (tab) { // Most important method, switches to a tab.
@@ -39,13 +39,23 @@ function Tabs(tabs, contents) {
         var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
         $("*[href=" + tab_content + "]").parent().addClass("selected");
         $(tab_content).addClass("selected").show();
+
+        instance.current = tab;
+        if (onChange && instance.initialized) {
+            onChange(instance);
+        }
+    };
+    this.getCurrentTabIndex = function () {
+        return $(tabs).index(instance.current);
     };
     $(tabs).click(function () {
         instance.to(this);
         return false; // in order not to follow the link
     });
     // first shown tab is the first matched element in DOM tree
+    this.length = $(tabs).length;
     this.to($(tabs)[0]);
+    this.initialized = true;
 }
 
 /*
