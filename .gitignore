@@ -4,6 +4,7 @@ local_settings.py
 *.egg-info
 .idea/
 .codeintel/
+mootiro_komoo/.ropeproject/
 build/
 logs/
 media/

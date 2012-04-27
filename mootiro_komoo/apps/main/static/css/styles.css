@@ -754,7 +754,7 @@ input[type=text], textarea{
 }
 div.view-list-item {
   padding: 20px 10px 10px 20px;
-  background-color: #cae9f0;
+  background-color: #dceff4;
   clear: both;
   width: 870px;
 }
@@ -1041,6 +1041,21 @@ textarea.markItUpEditor{
     margin-left: 20px;
     padding: 10px;
     border-bottom: 1px solid rgb(233, 233, 233);
+}
+div.investments .view-list .view-list-item {
+    width: 670px;
+}
+div.investments .tab {
+    border-radius        : 5px 5px 0 0;
+    -moz-border-radius   : 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    padding: 4px 8px;
+    margin: 0;
+    background: #eaf6f9;
+    font-weight: bold;
+}
+div.investments .tab.selected { background: #dceff4 }
+div.investments .tab.selected a { color: #000 }
 }
 
 /* ====== JQuery UI ======== */

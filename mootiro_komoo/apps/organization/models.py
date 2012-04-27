@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -9,6 +10,7 @@ from django.core.urlresolvers import reverse
 from komoo_map.models import GeoRefModel
 from community.models import Community
 from need.models import TargetAudience
+from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 
@@ -31,6 +33,15 @@ class Organization(models.Model):
     target_audiences = models.ManyToManyField(TargetAudience, null=True, blank=True)
 
     tags = TaggableManager()
+
+    investments = generic.GenericRelation(Investment,
+                        content_type_field='grantee_content_type',
+                        object_id_field='grantee_object_id')
+
+    @property
+    def realized_investments(self):
+        investor, created = Investor.get_or_create_for(self)
+        return investor.investments
 
     def __unicode__(self):
         return unicode(self.name)
