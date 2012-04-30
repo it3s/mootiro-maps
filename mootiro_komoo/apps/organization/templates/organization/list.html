@@ -31,7 +31,7 @@
         {% pagination organizations %}
       </div>
 
-      {% visualization_opts 'organization' "sorters=['name','creation_date']" "filters=['tags']" %}
+      {% visualization_opts 'organization' "sorters=['name','creation_date']" "filters=['tags','community']" %}
 
     </div>
     {% for org in organizations.object_list %}

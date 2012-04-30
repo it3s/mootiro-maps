@@ -298,6 +298,15 @@ def visualization_opts_js(context):
             window.location = location.pathname + '?' + getFilters();
           });
 
+          $('.komoo-pagination a').click(function(evt){
+            var that = $(evt.target);
+            // if selectors are open
+            if ($('.view-list-visualization-header i').hasClass('icon-chevron-down')){
+              evt.preventDefault();
+              window.location = that.attr('href') + '&' + getFilters();
+            }
+          });
+
       });
       </script>
     """
