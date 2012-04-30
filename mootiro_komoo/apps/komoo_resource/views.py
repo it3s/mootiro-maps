@@ -20,7 +20,7 @@ from lib.taggit.models import TaggedItem
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query)
+                        filtered_query, fix_community_url)
 from community.models import Community
 from fileupload.models import UploadedFile
 
@@ -44,6 +44,7 @@ def prepare_resource_objects(community_slug="", resource_id=""):
 
 
 @render_to('resource/list.html')
+@fix_community_url('resource_list')
 def resource_list(request, community_slug=''):
     logger.debug('acessing komoo_resource > list')
 

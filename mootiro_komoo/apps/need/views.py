@@ -21,7 +21,7 @@ from community.models import Community
 from need.models import Need, TargetAudience
 from need.forms import NeedForm
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query)
+                        filtered_query, fix_community_url)
 
 logger = logging.getLogger(__name__)
 
@@ -89,6 +89,7 @@ def view(request, community_slug=None, need_slug=None):
 
 
 @render_to('need/list.html')
+@fix_community_url('list_community_needs')
 def list(request, community_slug=''):
     logger.debug('acessing need > list')
 
