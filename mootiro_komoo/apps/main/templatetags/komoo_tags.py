@@ -245,7 +245,13 @@ def visualization_opts_js(context):
                 $.each(tags, function(idx, tag){
                   $('#id_tags').addTag(tag);
                 });
-              } else {
+              } else if(val == 'community'){
+                var id = unescape(getUrlVars()[val]);
+                $.get('/community/get_name_for/'+ id +'/', {}, function(data){
+                  $('#id_community_autocomplete').val(data.name);
+                  $('#id_community').val(id);
+                });
+              }else {
                 var filter_val = unescape(getUrlVars()[val]);
                 $('.view-list-filter-widget[widget-for=' + val + '] input').val(filter_val);
               }

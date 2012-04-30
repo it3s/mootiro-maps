@@ -17,6 +17,8 @@ urlpatterns = patterns('community.views',
             name='community_search_by_tag'),
     url(r'^community/get_geojson$', 'communities_geojson',
         name='communities_geojson'),
+    url(r'^community/get_name_for/(?P<id>\d+)/$', 'get_name_for',
+        name='get_name_for'),
 
     url(r'^community/autocomplete_get_or_add/$', 'autocomplete_get_or_add',
         name='autocomplete_get_or_add'),

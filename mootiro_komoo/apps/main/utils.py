@@ -151,7 +151,7 @@ def filtered_query(query_set, request):
         if f == 'community':
             community = request.GET.get('community', '')
             if community:
-                query_set = query_set.filter(community=community)  # TODO m2m?
+                query_set = query_set.filter(community=community)
     return query_set
 
 
