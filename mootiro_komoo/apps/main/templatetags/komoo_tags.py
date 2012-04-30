@@ -258,6 +258,21 @@ def visualization_opts_js(context):
             });
           }
 
+          // auto-fill community
+          var comm = {id: %(comm_id)s, name: "%(comm_name)s"};
+          console.dir(comm);
+          if (comm.id){
+            $('#id_community').val(comm.id);
+            $('#id_community_autocomplete').val(comm.name);
+
+            $('.view-list-visualization-options').show();
+            $('.view-list-visualization-header i').removeClass('icon-chevron-right');
+            $('.view-list-visualization-header i').addClass('icon-chevron-down');
+
+            $('.view-list-filter-btn[filter-name=community]').addClass('selected');
+            $('.view-list-filter-widget-wrapper[widget-for=community]').show();
+          }
+
           // reset tagsinput styles
           $('.view-list-filter-widget .tagsinput').attr('style', '');
 
@@ -309,4 +324,6 @@ def visualization_opts_js(context):
 
       });
       </script>
-    """
+    """ % {
+      'comm_id': context['community'].id if context.get('community', None) else '',
+      'comm_name': context['community'].name if context.get('community', None) else ''}

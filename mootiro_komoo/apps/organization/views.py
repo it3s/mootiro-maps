@@ -13,6 +13,7 @@ from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
 from django.db.models import Count
+from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
@@ -45,7 +46,38 @@ def prepare_organization_objects(community_slug="", organization_slug=""):
     return organization, community
 
 
+
+try:
+    from functools import wraps
+except ImportError:
+    def wraps(wrapped, assigned=('__module__', '__name__', '__doc__'),
+              updated=('__dict__',)):
+        def inner(wrapper):
+            for attr in assigned:
+                setattr(wrapper, attr, getattr(wrapped, attr))
+            for attr in updated:
+                getattr(wrapper, attr).update(getattr(wrapped, attr, {}))
+            return wrapper
+        return inner
+
+def fix_community_url(view_name):
+    def renderer(function):
+        @wraps(function)
+        def wrapper(request, community_slug='', *args, **kwargs):
+            comm_id = request.GET.get('community', '')
+            comm = Community.objects.get(pk=comm_id) if comm_id else None
+            if (community_slug and comm and comm.slug != community_slug) or (not community_slug and comm):
+                current_url = request.get_full_path()
+                url = reverse(view_name, kwargs={'community_slug': comm.slug})
+                url += current_url[current_url.index('?'):]
+                return HttpResponseRedirect(url)
+
+            return function(request, community_slug=community_slug, *args, **kwargs)
+        return wrapper
+    return renderer
+
 @render_to('organization/list.html')
+@fix_community_url('organization_list')
 def organization_list(request, community_slug=''):
     logging.debug('acessing organization > list')
 

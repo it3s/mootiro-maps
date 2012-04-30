@@ -23,7 +23,6 @@
             data: {term: search_field.val(), 'csrfmiddlewaretoken': csrftoken},
             dataType: 'json',
             success: function(data){
-                console.dir(data);
                 search_results.find('div').remove();
                 results_list = '';
                 has_results = false;
