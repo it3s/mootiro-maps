@@ -833,9 +833,21 @@ div.view-list-item.odd {
     background-color: #ff8a00 ;
     color: #ffffff;
 }
+.view-list-filter-widget-label{
+    display: inline-block;
+    vertical-align: middle;
+    width: 100px;
+}
+.view-list-filter-widget{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 20px;
+}
+.view-list-filter-wrapper{
+    margin-bottom: 20px;
+}
 .view-list-filter-widget .tagsinput{
-    margin-top: 5px;
-    margin-left: 112px;
+    margin-left: -8px;
     width: 600px;
     height: auto;
     display: inline-block;
@@ -846,6 +858,9 @@ div.view-list-item.odd {
     border: 1px solid #CCCCCC;
     margin-left: 4px;
     background: #ffffff;
+}
+.view-list-filter-widget .ui-autocomplete-input{
+    background-color: #ffffff;
 }
 .view-list-item-tags{
     display: inline-block;

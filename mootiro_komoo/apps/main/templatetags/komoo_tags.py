@@ -8,7 +8,8 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from main.utils import templatetag_args_parser, create_geojson
-from main.widgets import ImageSwitch, ImageSwitchMultiple, TaggitWidget
+from main.widgets import (ImageSwitch, ImageSwitchMultiple, TaggitWidget,
+                          Autocomplete)
 from community.models import Community
 from need.models import Need, NeedCategory
 from organization.models import Organization
@@ -138,98 +139,23 @@ def split(entry, splitter):
     return entry.split(splitter)
 
 
-# @register.inclusion_tag('main/sorters_tag.html', takes_context=True)
-# def sorters(context, sort_fields):
-#     """
-#     Templatetage for sorters
-#     usage:
-#         {% sorters ['fields', 'list'] %}
-#     """
-#     sort_fields = ast.literal_eval(sort_fields)
-#     field_labels = {
-#         'name': _('Name'),
-#         'title': _('Name'),
-#         'creation_date': _('Date'),
-#         'vote': _('Vote')
-#     }
-#     sort_fields = [(field_labels[field], field) for field in sort_fields]
-#     return dict(sort_fields=sort_fields)
+def _get_widgets_dict(obj):
+    tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % obj)
+    tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
 
+    community_widget = Autocomplete(Community, '/community/search_by_name')
+    community_widget = "%s \n %s" % (str(community_widget.media),
+                                     community_widget.render('community'))
 
-# @register.simple_tag(takes_context=True)
-# def sorters_js(context):
-#     return """
-#     <script type="text/javascript">
-
-#       $(function(){
-
-#         // get sorters state
-#         var _sorters = getUrlVars()['sorters'];
-#         if (_sorters){
-#           _sorters = _sorters.split(',');
-#         }
-#         if (_sorters && _sorters.length > 0 && _sorters[0]){
-#           $.each(_sorters, function(idx, val){
-#             $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
-#           });
-#         } else {
-#           var main_field = $('.view-list-sorter-btn[sorter-name=name]');
-#           if (!main_field.length) {
-#             main_field = $('.view-list-sorter-btn[sorter-name=title]');
-#           }
-#           main_field.addClass('selected');
-#         }
-
-
-#         // click on btn change classes.
-#         $('.view-list-sorter-btn').click(function(){
-#           var that = $(this);
-#           that.toggleClass('selected');
-#         });
-
-#         window.getSorters = function(){
-#           var sorters = [];
-#           $('.view-list-sorter-btn.selected').each(function(idx, val){
-#             sorters.push($(val).attr('sorter-name'));
-#           });
-
-#           return sorters.join();
-#         };
-
-#         // sort button
-#         $('#doSort').click(function(){
-#           window.location = location.pathname + '?sorters=' + getSorters();
-#         });
-
-#       });
-#     </script>
-#     """
-
-
-# @register.inclusion_tag('main/filters_tag.html', takes_context=True)
-# def filters(context, object, filters):
-#     """
-#     Templatetage for filters
-#     usage:
-#         {% filters object ['list', 'of', 'filters'] %}
-#     """
-#     filters = ast.literal_eval(filters)
-#     field_labels = {
-#         'tags': _('Tags')
-#     }
-
-#     tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
-#     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
-#     field_widgets = {
-#         'tags': tag_widget
-#     }
-#     filters_tuples = [(field, field_labels[field], field_widgets[field]) \
-#                         for field in filters]
-#     return dict(filters=filters_tuples)
+    # filters
+    return {
+        'tags': tag_widget,
+        'community': community_widget
+    }
 
 
 @register.inclusion_tag('main/visualization_opts_tag.html', takes_context=True)
-def visualization_opts(context, object, arg1='', arg2=''):
+def visualization_opts(context, obj, arg1='', arg2=''):
     """
     Templatetag for visualization options (sorters and filters)
     usage:
@@ -249,18 +175,15 @@ def visualization_opts(context, object, arg1='', arg2=''):
         'name': _('Name'),
         'title': _('Name'),
         'creation_date': _('Date'),
-        'vote': _('Vote')
+        'vote': _('Vote'),
+        'community': _('Community')
     }
 
     # sorters
     sort_fields = [(field_labels[field], field) for field in opts.get('sorters', [])]
 
     # filters
-    tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
-    tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
-    field_widgets = {
-        'tags': tag_widget
-    }
+    field_widgets = _get_widgets_dict(obj)
     filter_fields = [(field, field_labels[field], field_widgets[field]) \
                         for field in opts.get('filters', [])]
 
@@ -288,7 +211,7 @@ def visualization_opts_js(context):
             $('.view-list-visualization-header i').removeClass('icon-chevron-right');
             $('.view-list-visualization-header i').addClass('icon-chevron-down');
             $.each( getUrlVars()['filters'].split(',') ,function(idx, field){
-              $('.view-list-filter-widget[widget-for='+ field + ']').show();
+              $('.view-list-filter-widget-wrapper[widget-for='+ field + ']').show();
             });
           }
 
@@ -322,6 +245,9 @@ def visualization_opts_js(context):
                 $.each(tags, function(idx, tag){
                   $('#id_tags').addTag(tag);
                 });
+              } else {
+                var filter_val = unescape(getUrlVars()[val]);
+                $('.view-list-filter-widget[widget-for=' + val + '] input').val(filter_val);
               }
             });
           }
@@ -338,7 +264,7 @@ def visualization_opts_js(context):
             var that = $(this);
             that.toggleClass('selected');
             var filter_name = that.attr('filter-name');
-            $('.view-list-filter-widget[widget-for=' + filter_name + ']').slideToggle();
+            $('.view-list-filter-widget-wrapper[widget-for=' + filter_name + ']').slideToggle();
           });
 
           // get filters
@@ -355,7 +281,8 @@ def visualization_opts_js(context):
             $('.view-list-filter-btn.selected').each(function(idx, val){
               var filter_name = $(val).attr('filter-name');
               filters.push(filter_name);
-              filter_fields += '&' + filter_name + '=' + escape($('.view-list-filter-widget input').val());
+              filter_fields += '&' + filter_name + '=' +
+                escape($('.view-list-filter-widget[widget-for=' + filter_name + '] input').val());
             });
 
             return 'sorters=' + sorters.join() + '&filters=' + filters.join() + filter_fields;
