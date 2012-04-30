@@ -140,11 +140,18 @@ def sorted_query(query_set, sort_fields, request, default_order='name'):
         return query_set.all().order_by(default_order)
 
 
-def filter_by_tags_query(query_set, request):
-    tags = request.GET.get('tags', '')
-    if tags:
-        tags = tags.split(',')
-        query_set = query_set.filter(tags__name__in=tags)
+def filtered_query(query_set, request):
+    filters = request.GET.get('filters', '')
+    for f in filters.split(','):
+        if f == 'tags':
+            tags = request.GET.get('tags', '')
+            if tags:
+                tags = tags.split(',')
+                query_set = query_set.filter(tags__name__in=tags)
+        if f == 'community':
+            community = request.GET.get('community', '')
+            if community:
+                query_set = query_set.filter(community=community)  # TODO m2m?
     return query_set
 
 

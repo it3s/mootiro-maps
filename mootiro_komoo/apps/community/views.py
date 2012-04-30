@@ -21,7 +21,7 @@ from lib.taggit.models import TaggedItem
 from community.models import Community
 from community.forms import CommunityForm
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filter_by_tags_query)
+                        filtered_query)
 
 logger = logging.getLogger(__name__)
 
@@ -96,7 +96,7 @@ def list(request):
 
     sort_order = ['creation_date', 'name']
 
-    query_set = filter_by_tags_query(Community.objects, request)
+    query_set = filtered_query(Community.objects, request)
     communities = sorted_query(query_set, sort_order, request)
     communities_count = communities.count()
     communities = paginated_query(communities, request)

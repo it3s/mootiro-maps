@@ -21,7 +21,7 @@ from community.models import Community
 from need.models import Need, TargetAudience
 from need.forms import NeedForm
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filter_by_tags_query)
+                        filtered_query)
 
 logger = logging.getLogger(__name__)
 
@@ -101,7 +101,7 @@ def list(request, community_slug=''):
         community = None
         query_set = Need.objects
 
-    query_set = filter_by_tags_query(query_set, request)
+    query_set = filtered_query(query_set, request)
     needs = sorted_query(query_set, sort_fields, request, default_order='title')
     needs_count = needs.count()
     needs = paginated_query(needs, request=request)
