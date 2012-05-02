@@ -68,7 +68,7 @@
                     {% trans 'Operation Field' %}:
                   </span>
                   {% for cat in org.categories.all %}
-                    {{ cat.name }}
+                    {{ cat.get_translated_name }}
                     {% if not forloop.last %} | {% endif %}
                   {% endfor %}
                 </div>
