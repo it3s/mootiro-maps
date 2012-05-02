@@ -53,9 +53,9 @@ def desc_localization(vals):
 
 {R} fica no distrito de {J} na cidade de São Paulo. Pertence à Delegacia do Ensino {H}.
 
-""".format(R=get_field(vals, 'R'),
-           J=get_field(vals, 'J'),
-           H=get_field(vals, 'H'))
+""".format(R=get_field(vals, 'R').title(),
+           J=get_field(vals, 'J').title(),
+           H=get_field(vals, 'H').title())
 
 
 def desc_atendimento(vals):
@@ -76,8 +76,7 @@ def desc_atendimento(vals):
 
     for i, mapper in enumerate(mapper_fields):
         if int(get_field(vals, mapper[1])):
-            st += """
-- **{tipo}**: {num_cl} classes com {num_al} alunos
+            st += """- **{tipo}**: {num_cl} classes com {num_al} alunos
 """.format(tipo=mapper[0], num_cl=get_field(vals, mapper[1]),
            num_al=get_field(vals, mapper[2]))
     if st:
