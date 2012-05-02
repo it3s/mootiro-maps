@@ -45,7 +45,7 @@
               newGeojson = editor.getGeoJSON({currentOnly: true});
               $(geometryInputId).attr("data-feature-collection", JSON.stringify(newGeojson));
             });
-            }
+          }
           editor.clear();
           editor.loadGeoJSON(geojson, true);
           editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
@@ -53,6 +53,7 @@
           $(window).resize();
           editor.editOverlay(editor.overlays[0]);
           setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
+          return false;
       });
     </script>
 </form>
