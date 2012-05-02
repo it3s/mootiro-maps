@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-26 18:22-0300\n"
+"POT-Creation-Date: 2012-05-02 20:26-0300\n"
 "PO-Revision-Date: 2012-04-05 19:51-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -180,19 +180,19 @@ msgstr "Investimentos"
 msgid "Google Results"
 msgstr "Resultados do Google"
 
-#: apps/main/static/js/komoo_search.js:39
-#: apps/main/static/js/komoo_search.js:65
+#: apps/main/static/js/komoo_search.js:38
+#: apps/main/static/js/komoo_search.js:64
 #, perl-format
 msgid "%s result"
 msgid_plural "%s results"
 msgstr[0] "%s resultado"
 msgstr[1] "%s resultados"
 
-#: apps/main/static/js/komoo_search.js:82
+#: apps/main/static/js/komoo_search.js:81
 msgid "No results found!"
 msgstr "Nenhum resultado encontrado!"
 
-#: apps/main/static/js/komoo_search.js:87
+#: apps/main/static/js/komoo_search.js:86
 msgid "Search Results:"
 msgstr "Resultados da Busca:"
 

@@ -6,7 +6,7 @@
 {% load i18n %}
 
 {% block title %}
-  {% trans 'Investments' %}{% if community %} {% trans "for" %} {{ community.name }}{% endif %}
+{% if community %} {% blocktrans %}Investiments for {{ community }}{% endblocktrans %}{% else %}{% trans 'Investments' %}{% endif %}
 {% endblock %}
 
 {% block menu %} {% menu community "investment" %} {% endblock %}

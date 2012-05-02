@@ -15,9 +15,7 @@
       {% endif %}
 
       <span class="current">
-          {% blocktrans with num=collection.number total=collection.paginator.num_pages %}
-          Page {{ num }} of {{ total }}.
-          {% endblocktrans %}
+          {% blocktrans with num=collection.number total=collection.paginator.num_pages %}Page {{ num }} of {{ total }}.{% endblocktrans %}
       </span>
 
       {% if collection.has_next %}
