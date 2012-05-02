@@ -259,7 +259,7 @@ def visualization_opts_js(context):
           }
 
           // auto-fill community
-          var comm = {id: %(comm_id)s, name: "%(comm_name)s"};
+          var comm = {id: "%(comm_id)s", name: "%(comm_name)s"};
           console.dir(comm);
           if (comm.id){
             $('#id_community').val(comm.id);
