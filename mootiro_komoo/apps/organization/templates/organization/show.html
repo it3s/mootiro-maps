@@ -163,7 +163,7 @@
                 <ul class="horizontal">
                     <li class="tab" id="realizedTab"><a href="#realizedPanel">{% trans "Realized" %}</a></li>
                     <li class="tab" id="receivedTab"><a href="#receivedPanel">{% trans "Received" %}</a></li>
-                <ul>
+                </ul>
                 <div class="clear-both"></div>
                 <div id="receivedPanel" class="view-list panel">
                     {% for i in organization.investments.all %}
@@ -221,7 +221,7 @@
 
     <div class="right-bar organization-right-bar">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
-        <a href="#">{% trans 'see on map' %}</a>
+        <a href="#" class="see-on-map">{% trans 'see on map' %}</a>
 
         <div class="block">
           <h4>{% trans 'Operation Field' %}</h4>
