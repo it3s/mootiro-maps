@@ -223,6 +223,10 @@ def visualization_opts_js(context):
           if (_sorters && _sorters.length > 0 && _sorters[0]){
             $.each(_sorters, function(idx, val){
               $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
+              if (val.indexOf('date') !== -1){
+                date_order = getUrlVars()[val];
+                $('.date-sorter-order div[order=' + date_order + '] i').addClass('icon-active');
+              }
             });
           } else {
             var main_field = $('.view-list-sorter-btn[sorter-name=name]');
@@ -231,6 +235,7 @@ def visualization_opts_js(context):
             }
             main_field.addClass('selected');
           }
+
           // get filters state
           var _filters = getUrlVars()['filters'];
           if (_filters){
@@ -280,6 +285,15 @@ def visualization_opts_js(context):
           $('.view-list-sorter-btn').click(function(){
             var that = $(this);
             that.toggleClass('selected');
+            if ( that.attr('sorter-name').indexOf('date') !== -1) {
+              if (that.hasClass('selected')) {
+                date_order = 'desc';
+                $('.date-sorter-order div[order=desc] i').addClass('icon-active');
+              } else {
+                date_order = '';
+                $('.date-sorter-order i').removeClass('icon-active');
+              }
+            }
           });
           $('.view-list-filter-btn').click(function(){
             var that = $(this);
@@ -296,7 +310,11 @@ def visualization_opts_js(context):
                 filter_fields = '';
 
             $('.view-list-sorter-btn.selected').each(function(idx, val){
-              sorters.push($(val).attr('sorter-name'));
+              var sorter_name = $(val).attr('sorter-name');
+              sorters.push(sorter_name);
+              if ( sorter_name.indexOf('date') != -1) {
+                filter_fields += '&' + sorter_name + '=' + date_order;
+              }
             });
 
             $('.view-list-filter-btn.selected').each(function(idx, val){
