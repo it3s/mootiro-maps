@@ -322,6 +322,12 @@ def visualization_opts_js(context):
             }
           });
 
+          $('.date-sorter-order div').bind('click', function(){
+            $('.date-sorter-order div .icon-active').removeClass('icon-active');
+            $(this).find('i').toggleClass('icon-active');
+            date_order = $(this).attr('order');
+          });
+
       });
       </script>
     """ % {

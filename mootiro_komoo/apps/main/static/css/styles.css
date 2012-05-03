@@ -897,6 +897,17 @@ div.view-list-item.odd {
     min-width: 50px;
     font-weight: bold;
 }
+.date-sorter-order{
+    display: inline-block;
+    height: 1em;
+    vertical-align: top;
+    margin-top: -3px;
+}
+.date-sorter-order div{
+    height: 0.5em;
+    margin-bottom: 3px;
+}
+.icon-active{background-image:url(../img/glyphicons-halflings-orange.png);}
 /* ====== Organization ======== */
 .org-info-panel {
     margin-top: 30px;
