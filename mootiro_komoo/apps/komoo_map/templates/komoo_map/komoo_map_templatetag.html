@@ -112,6 +112,10 @@
         // Initialize the komoo.map.
         {{ type }} = new komoo.Map(mapElem, mapOptions);
 
+        {% if type == 'main' %}
+        editor = main;
+        {% endif %}
+
         // Fill the screen.
         function fixMapSize() {
           {% if height == '100%' %}

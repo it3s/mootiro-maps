@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="right-bar">
-        <div id="map-preview">{#% komoo_map geojson 'type=preview' %#}</div>
+        <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
         <a class="see-on-map" href="#">{% trans 'see on map' %}</a>
 
         {% with similar_resources=resource.tags.similar_objects %}
