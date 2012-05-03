@@ -199,10 +199,13 @@ class FormBranchNew(forms.Form):
     branch_name = forms.CharField()
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
     branch_info = forms.CharField(required=False, widget=MarkItUpWidget())
+    branch_community = AutoCompleteSelectMultipleField('community', help_text='',
+        required=False)
 
     _field_labels = {
         'branch_name': _('Branch Name'),
         'branch_info': _('Info'),
+        'branch_community': _('Community')
     }
 
     def __init__(self, *args, **kwargs):
@@ -226,4 +229,6 @@ class FormBranchNew(forms.Form):
             branch.creator_id = user.id
         branch.organization = organization
         branch.save()
+        for comm in self.cleaned_data.get('branch_community', []):
+            branch.community.add(comm)
         return branch

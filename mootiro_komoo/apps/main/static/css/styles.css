@@ -941,6 +941,18 @@ div.view-list-item.odd {
     float: right;
     margin-right: 10px;
 }
+.branch-communities {
+    padding-top: 5px;
+}
+.branch-communities span{
+    font-weight: bold;
+    margin-right: 10px;
+}
+.branch-communities div{
+    display: inline-block;
+    color: rgb(64, 146, 169);
+    padding: 0 5px;
+}
 .branch-edit-btn{
     float: right;
 }
@@ -965,6 +977,9 @@ textarea.markItUpEditor{
 }
 #form_organization #div_id_contact .markItUpEditor{
     height: 80px;
+}
+.form-branch-edit .results_on_deck{
+    margin-left: 15px;
 }
 .org-widget-categories .controls{
     height: 300px;

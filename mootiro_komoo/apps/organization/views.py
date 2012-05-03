@@ -13,7 +13,6 @@ from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
 from django.db.models import Count
-from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
@@ -234,11 +233,24 @@ def branch_edit(request):
         if geometry:
             branch.geometry = geometry
         info = markdown.markdown(escape(request.POST['info']))
+
+        communities = request.POST.get('branch_community',
+            '').rstrip('|').lstrip('|').split('|')
         branch.save()
+
+        if communities:
+            branch.community.clear()
+            for comm in communities:
+                branch.community.add(comm)
+        branch.save()
+        communities = render_to_response(
+            'organization/branch_communities_list.html', {'branch': branch},
+            context_instance=RequestContext(request)).content
+
         success = True
     else:
         success, info, name = False, '', ''
-    return dict(success=success, info=info, name=name)
+    return dict(success=success, info=info, name=name, communities=communities)
 
 
 def search_by_name(request):

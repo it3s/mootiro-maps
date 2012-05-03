@@ -110,6 +110,7 @@
                             <div class="entry">
                                 {{ branch.info|render_markup }}
                             </div>
+                            {% include 'organization/branch_communities_list.html' %}
 
                         </div>
                         <div class="branch-form hidden">
@@ -285,6 +286,7 @@
 {% block page_scripts %}
     {% vote_staticfiles %}
     {% comments_staticfiles %}
+    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
     <script type="text/javascript">
         $('.branch-link a').click(function(evt){
             evt.preventDefault();
@@ -335,13 +337,17 @@
                         var branch_name = branch.find('.branch-name');
                         info.find('.entry').html(data.info);
                         branch_name.find('.entry').html(data.name);
+                        if ($('.branch-info .branch-communities').length){
+                            $('.branch-info .branch-communities').remove();
+                        }
+                        $('.branch-info').append(data.communities);
                         form.fadeOut(400, function(){
                             info.fadeIn(400);
                             branch_name.fadeIn(400);
                         });
 
                     } else {
-                        console.log('Error!');
+                        errorMessage('Error ao tentar salvar dados!');
                     }
 
                 }, 'json'
@@ -372,4 +378,9 @@
             }
         });
     </script>
+{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
 {% endblock %}

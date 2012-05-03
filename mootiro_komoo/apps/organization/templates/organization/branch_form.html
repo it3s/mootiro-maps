@@ -13,6 +13,7 @@
     <textarea name="info" rows="4" cols="20" id="{{ info_id }}">{{branch.info}}</textarea>
     {% markitup_editor info_id %}
 
+    {{ comm_widget }}
     <input type="submit" value="update" class="btn form-branch-edit-btn" >
     <script type="text/javascript">
       $("#map-edit-button-{{ branch.id }}").click(function (e) {
