@@ -1,0 +1,111 @@
+/*
+Theme Name: komoo
+Description: Child theme for the twentyeleven theme
+Author: it3s team
+Template: twentyeleven
+*/
+
+@import url("../twentyeleven/style.css");
+
+body {
+    background-color: #fff;
+    font-family: Ubuntu, Helvetica, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body, p {
+    font-size: 14px;
+}
+
+a {
+    color: #0088cc;
+    text-decoration: none;
+}
+a:visited {
+    color: #4092A9;
+}
+a:link {
+    color: #4092A9;
+}
+a:hover {
+    color: #333;
+    text-decoration: none !important;
+}
+
+#page {
+    width: 900px;
+    margin: 17px 20px 20px;
+}
+
+#main {
+    padding: 0;
+}
+
+#access { display: none; }
+
+#logo {
+    display: inline-block;
+    margin: 20px 0;
+    padding: 0 10px;
+}
+
+#logo img {
+    width: auto;
+}
+
+#branding {
+    border: none;
+    padding-bottom: 2px;
+}
+#branding #searchform { display: none; }
+
+#komoo-menu {
+    display: inline-block;
+    width: 400px;
+    margin: 0 0 25px 60px;
+    vertical-align: bottom;
+}
+
+#komoo-menu ul {
+    width: 400px;
+    list-style: none;
+    margin: 0;
+}
+
+#komoo-menu li {
+    float: left;
+    width: 200px;
+    line-height: 150%;
+}
+
+
+.widget-title {
+    color: black;
+    font: inherit;
+    font-weight: bold;
+}
+
+.widget ul {
+    list-style: none;
+}
+
+#content {
+    width: 70%;
+    margin: 0;
+}
+
+.blog article.post {
+    background-color: #eff8fb;
+    border: solid 3px #e2eaed;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.entry-title {
+    padding: 0;
+}
+
+.entry-header .comments-link {
+    display: none;
+}
