@@ -907,7 +907,12 @@ div.view-list-item.odd {
     height: 0.5em;
     margin-bottom: 3px;
 }
-.icon-active{background-image:url(../img/glyphicons-halflings-orange.png);}
+.icon-blue{
+    background-image:url(../img/glyphicons-halflings-blue.png);
+}
+.icon-active{
+    background-image:url(../img/glyphicons-halflings-orange.png);
+}
 /* ====== Organization ======== */
 .org-info-panel {
     margin-top: 30px;
