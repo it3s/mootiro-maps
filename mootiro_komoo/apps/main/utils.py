@@ -137,6 +137,12 @@ def paginated_query(query, request=None, page=None, size=None):
     return _paginated_query
 
 
+date_order_map = {
+    'desc': '-',
+    'asc': ''
+}
+
+
 def sorted_query(query_set, sort_fields, request, default_order='name'):
     """
     Used for handle listing sorters
@@ -148,6 +154,11 @@ def sorted_query(query_set, sort_fields, request, default_order='name'):
     sorters = request.GET.get('sorters', '')
     if sorters:
         sorters = sorted(sorters.split(','), key=lambda val: sort_order[val])
+
+    for i, sorter in enumerate(sorters):
+        if 'date' in sorter:
+            date_order = request.GET.get(sorter, '-')
+            sorters[i] = date_order_map[date_order] + sorter
 
     if sorters:
         return query_set.all().order_by(*sorters)
