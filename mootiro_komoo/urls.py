@@ -63,6 +63,7 @@ urlpatterns = patterns('',
 
     # user and CAS urls
     url(r'^user/', include('user_cas.urls')),
+    url(r'', include('social_auth.urls')),
 
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^markitup/', include('markitup.urls')),

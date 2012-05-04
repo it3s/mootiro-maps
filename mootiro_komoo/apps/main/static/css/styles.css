@@ -1155,7 +1155,9 @@ div.investments-list .tab.selected a { color: #000 }
 #login-box li.option div {
     padding: 10px;
 }
-
+.social-login-btns{
+    padding-left: 5px;
+}
 /* ====== Error box ======== */
 .error-dialog,
 .error-dialog .ui-widget-content,

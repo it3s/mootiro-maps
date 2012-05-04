@@ -99,12 +99,15 @@ CONTEXT_PROCESSORS = (
 )
 
 AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.facebook.FacebookBackend',
     'django.contrib.auth.backends.ModelBackend',
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
 # Connect Mootiro Bar to django-cas:
 LOGIN_URL = '/user/login'
-MOOTIRO_BAR_LOGIN_URL = LOGIN_URL
+# LOGIN_REDIRECT_URL = '/'
+# LOGIN_ERROR_URL    = '/login-error/'
+MOOTIRO_BAR_LOGIN_URL = '#'  # LOGIN_URL
 MOOTIRO_BAR_LOGOUT_URL = '/user/logout'
 
 ROOT_URLCONF = 'mootiro_komoo.urls'
@@ -140,6 +143,7 @@ INSTALLED_APPS = [
     'lib.ajax_select',
     'fileupload',
     'gunicorn',
+    'social_auth',
     # our apps
     'komoo_map',
     'community',
@@ -186,6 +190,16 @@ JQUERY_URL = 'dummy.js'
 #CAS config
 PROFILE_DATABASE = 'localhost|profile|username|password'
 CAS_SERVER_URL = 'https://localhost:8443/cas/'
+
+FACEBOOK_APP_ID = '428903733789454'
+FACEBOOK_API_SECRET = 'f286aad6b17af279e622d4350b077081'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+# FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'pt_BR'}
+
+SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
+SOCIAL_AUTH_UUID_LENGTH = 16
+SOCIAL_AUTH_EXPIRATION = 'expires'
+SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 
 # KOMOO Comments settings
 KOMOO_COMMENTS_WIDTH = 3

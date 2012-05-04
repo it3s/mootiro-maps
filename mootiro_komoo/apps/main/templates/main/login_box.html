@@ -18,5 +18,18 @@
         <div class="button">{% trans "Create an account" %}</div>
       </a>
     </li>
+    <div class="social-login-btns">
+      <a rel="nofollow" class="social-link" social-app="facebook" href="#facebook"><img src="http://static.ak.fbcdn.net/images/fbconnect/login-buttons/connect_light_large_long.gif" /></a>
+    </div>
+
   </ul>
 </div>
+<script type="text/javascript">
+  $(function(){
+    $('.social-link').click(function(){
+      var social_app = $(this).attr('social-app');
+      window.location = '/login/'+ social_app +'?next=' + location.pathname;
+      return false;
+    })
+  });
+</script>
