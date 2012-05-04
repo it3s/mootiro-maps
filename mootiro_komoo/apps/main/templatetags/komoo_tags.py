@@ -39,19 +39,19 @@ def geojson(obj=None):
     return create_geojson([obj]).replace("'", "\\'").replace('"', "'")
 
 
-@register.inclusion_tag('main/menu_templatetag.html')
+@register.inclusion_tag('main/templatetags/menu.html')
 def menu(obj=None, selected_area=''):
     community = _get_related_community(obj)
     return dict(community=community, selected_area=selected_area)
 
 
-@register.inclusion_tag('main/community_tabs_templatetag.html')
+@register.inclusion_tag('main/templatetags/community_tabs.html')
 def community_tabs(obj=None):
     community = _get_related_community(obj)
     return dict(community=community)
 
 
-@register.inclusion_tag('main/geo_objects_listing_templatetag.html')
+@register.inclusion_tag('main/templatetags/geo_objects_listing.html')
 def geo_objects_listing(arg1='', arg2='', arg3=''):
     """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] %}"""
     parsed_args = templatetag_args_parser(arg1, arg2, arg3)
@@ -97,7 +97,7 @@ def geo_objects_listing(arg1='', arg2='', arg3=''):
     return dict(form=form, show_categories=show_categories)
 
 
-@register.inclusion_tag('main/geo_objects_add_templatetag.html')
+@register.inclusion_tag('main/templatetags/geo_objects_add.html')
 def geo_objects_add(arg1='', arg2='', arg3=''):
     """Usage: {% geo_objects_add [prefix] %}"""
     parsed_args = templatetag_args_parser(arg1, arg2, arg3)
@@ -113,17 +113,17 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
     return dict(img=img, STATIC_URL=settings.STATIC_URL)
 
 
-@register.inclusion_tag('main/track_buttons_templatetag.html')
+@register.inclusion_tag('main/templatetags/track_buttons.html')
 def track_buttons():
     return dict()
 
 
-@register.inclusion_tag('main/taglist_templatetag.html')
+@register.inclusion_tag('main/templatetags/taglist.html')
 def taglist(obj):
     return dict(object=obj)
 
 
-@register.inclusion_tag('main/pagination_templatetag.html')
+@register.inclusion_tag('main/templatetags/pagination.html')
 def pagination(collection):
     return dict(collection=collection)
 
@@ -154,7 +154,7 @@ def _get_widgets_dict(obj):
     }
 
 
-@register.inclusion_tag('main/visualization_opts_tag.html', takes_context=True)
+@register.inclusion_tag('main/templatetags/visualization_opts.html', takes_context=True)
 def visualization_opts(context, obj, arg1='', arg2=''):
     """
     Templatetag for visualization options (sorters and filters)
@@ -350,3 +350,14 @@ def visualization_opts_js(context):
     """ % {
       'comm_id': context['community'].id if context.get('community', None) else '',
       'comm_name': context['community'].name if context.get('community', None) else ''}
+
+
+@register.inclusion_tag('main/templatetags/beautiful_list.html')
+def beautiful_list(objects, arg1='', arg2=''):
+    """Usage: """
+    parsed_args = templatetag_args_parser(arg1, arg2)
+    entity_type = parsed_args.get('entity_type').lower()
+    item_template = parsed_args.get('item_template').lower()
+
+    return dict(objects=objects, entity_type=entity_type,
+                    item_template=item_template)
