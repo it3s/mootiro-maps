@@ -2,6 +2,8 @@
 {% load markitup_tags %}
 {% load i18n %}
 
+<h3>Investments</h3>
+
 {% if both %}
 <ul class="horizontal">
     <li class="tab-investment"><a href="#realized-investments-panel">{% trans "Realized" %}</a></li>
@@ -14,7 +16,7 @@
     {% for i in received %}
     <div class="view-list-item {% cycle '' 'odd' %}">
         <h4>
-            <span class="apart big">{{ i.title }}</span>
+            <a href="{{ i.view_url }}"><span class="apart big">{{ i.title }}</span></a>
             <a class="small preview-on-map" href="#" data-geojson="">{% trans 'see on the map' %}</a>
             <div class="clear-both"></div>
             {% comments_summary i %}
@@ -33,7 +35,7 @@
     {% for i in realized %}
     <div class="view-list-item {% cycle '' 'odd' %}">
         <h4>
-            <span class="apart big">{{ i.title }}</span>
+            <a href="{{ i.view_url }}"><span class="apart big">{{ i.title }}</span></a>
             <a class="small preview-on-map" href="#" data-geojson="">{% trans 'see on the map' %}</a>
             <div class="clear-both"></div>
             {% comments_summary i %}

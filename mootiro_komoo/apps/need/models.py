@@ -100,9 +100,16 @@ class Need(GeoRefModel):
 
     # Url aliases
     @property
+    def base_url_params(self):
+        d = dict()
+        if self.community:
+            d['community_slug'] = self.community.slug
+        return d
+
+    @property
     def home_url_params(self):
         d = self.base_url_params
-        d.update(dict(investment_slug=self.slug))
+        d.update(dict(need_slug=self.slug))
         return d
 
     @property
