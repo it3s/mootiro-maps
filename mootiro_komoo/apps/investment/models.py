@@ -171,7 +171,7 @@ class Investment(models.Model):
         super(Investment, self).save(*args, **kwargs)
     ### END ###
 
-    # Url aliases configuration
+    # Url aliases
     @property
     def base_url_params(self):
         return self.grantee.home_url_params
