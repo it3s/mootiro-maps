@@ -7,6 +7,7 @@
 {% load vote_tags %}
 {% load markitup_tags %}
 {% load organization_tags %}
+{% load investment_tags %}
 
 {% block title %}
   {% if community %}
@@ -161,45 +162,7 @@
             </div>
 
             <div class="org-info-panel investments-list hidden">
-                <ul class="horizontal">
-                    <li class="tab" id="realizedTab"><a href="#realizedPanel">{% trans "Realized" %}</a></li>
-                    <li class="tab" id="receivedTab"><a href="#receivedPanel">{% trans "Received" %}</a></li>
-                </ul>
-                <div class="clear-both"></div>
-                <div id="receivedPanel" class="view-list panel">
-                    {% for i in organization.investments.all %}
-                    <div class="view-list-item {% cycle '' 'odd' %}">
-                        <h4>
-                            <span class="apart big">{{ i.title }}</span>
-                            <a class="small preview-on-map" href="#" data-geojson="">{% trans 'see on the map' %}</a>
-                            <div class="clear-both"></div>
-                            {% comments_summary i %}
-                        </h4>
-                        <p>{{ i.description|render_markup }}</p>
-                    </div>
-                    {% empty %}
-                    <div class="view-list-item">
-                        <li>{% trans "No investments received." %}</li>
-                    </div>
-                    {% endfor%}
-                </div>
-                <div id="realizedPanel" class="view-list panel hidden">
-                    {% for i in organization.realized_investments.all %}
-                    <div class="view-list-item {% cycle '' 'odd' %}">
-                        <h4>
-                            <span class="apart big">{{ i.title }}</span>
-                            <a class="small preview-on-map" href="#" data-geojson="">{% trans 'see on the map' %}</a>
-                            <div class="clear-both"></div>
-                            {% comments_summary i %}
-                        </h4>
-                        <p>{{ i.description|render_markup }}</p>
-                    </div>
-                    {% empty %}
-                    <div class="view-list-item">
-                        {% trans "No investments realized." %}
-                    </div>
-                    {% endfor%}
-                </div>
+                {% investments_list organization.investments.all organization.realized_investments.all  %}
             </div>
         </div>
 
@@ -361,8 +324,6 @@
             $this.addClass('selected');
             $('.' + $this.attr('panel')).fadeIn();
         });
-
-        var investment_tabs = new Tabs('.tab', '.panel');
     </script>
 
     <script type="text/javascript">

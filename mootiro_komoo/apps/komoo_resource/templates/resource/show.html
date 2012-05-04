@@ -1,6 +1,7 @@
 {% extends 'global.html' %}
 
 {% load komoo_map_tags %}
+{% load investment_tags %}
 {% load crispy_forms_tags %}
 {% load vote_tags %}
 {% load comment_tags %}
@@ -57,6 +58,15 @@
             {% pagination photos %}
             {% endif %}
         </div>
+
+        {% investments_list resource.investments.all %}  
+
+        <div class="view-extras">
+                {% taglist resource %}
+                {% track_buttons %}
+                {% comments resource %}
+        </div>
+
     </div>
     <div class="right-bar">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
@@ -84,12 +94,6 @@
           <a class="button" href="{{ resource.new_investment_url }}">Add investment</a>
         </div>
 
-    </div>
-
-    <div class="view-extras">
-            {% taglist resource %}
-            {% track_buttons %}
-            {% comments resource %}
     </div>
 
 </div>

@@ -350,14 +350,3 @@ def visualization_opts_js(context):
     """ % {
       'comm_id': context['community'].id if context.get('community', None) else '',
       'comm_name': context['community'].name if context.get('community', None) else ''}
-
-
-@register.inclusion_tag('main/templatetags/beautiful_list.html')
-def beautiful_list(objects, arg1='', arg2=''):
-    """Usage: """
-    parsed_args = templatetag_args_parser(arg1, arg2)
-    entity_type = parsed_args.get('entity_type').lower()
-    item_template = parsed_args.get('item_template').lower()
-
-    return dict(objects=objects, entity_type=entity_type,
-                    item_template=item_template)
