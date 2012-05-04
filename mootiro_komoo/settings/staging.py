@@ -111,3 +111,10 @@ LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.l
 #CAS config
 PROFILE_DATABASE = 'localhost|mootiro_profile|mootiro_profile|.Pr0f1l3.'
 CAS_SERVER_URL = 'https://login.mootiro.org/'
+
+GOOGLE_OAUTH2_CLIENT_ID = '778199195797.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'j00dS0i-XQB--ookP98r2q1L'
+
+
+FACEBOOK_APP_ID = '401285966577597'
+FACEBOOK_API_SECRET = 'dc974ed41ddd0acc9b71f94d4907160e'

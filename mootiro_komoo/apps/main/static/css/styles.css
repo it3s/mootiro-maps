@@ -1128,35 +1128,56 @@ div.investments-list .tab.selected a { color: #000 }
 
 /* ====== Login box ======== */
 #login-box {
-    width: 665px !important;
+    width: 825px !important;
     display: none;
     margin: -20px 23px 10px;
+    display: inline-block;
 }
-#login-box li.option {
-    width: 320px;
+#login-box .option {
+    width: 400px;
     display: inline-block;
     padding: 10px 5px;
     text-align: center;
+    min-height: 410px;
+    vertical-align: top;
 }
-#login-box li.option a {
+#login-box #signup_option {
+    width: 320px;
+}
+#login-box .option:hover {
+    background-color: #ffdb85;
+}
+#login-box .option .login-btns a {
     color: black;
-    padding: 10px 10px 20px;
-    display: block;
+    padding: 0px 10px 20px;
+    display: inline-block;
     border-radius        : 5px;
     -moz-border-radius   : 5px;
     -webkit-border-radius: 5px;
+    vertical-align: middle;
 }
-#login-box li.option a:focus {
+#login-box .option a:focus {
     outline: none;
 }
-#login-box li.option a:hover {
-    background-color: #ffdb85;
-}
-#login-box li.option div {
+#login-box .option div {
     padding: 10px;
 }
 .social-login-btns{
+    display: inline-block;
     padding-left: 5px;
+    text-align: center;
+}
+.login-btns a .button{
+    height:12px;
+    vertical-align: top;
+}
+.login-btns a .button img{
+    vertical-align: top;
+    max-width: 14px;
+}
+.login-btns a .button b{
+    margin-left: 5px;
+    vertical-align: top;
 }
 /* ====== Error box ======== */
 .error-dialog,

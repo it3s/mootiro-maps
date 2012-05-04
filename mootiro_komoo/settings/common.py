@@ -100,6 +100,7 @@ CONTEXT_PROCESSORS = (
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
@@ -196,9 +197,12 @@ FACEBOOK_API_SECRET = 'f286aad6b17af279e622d4350b077081'
 FACEBOOK_EXTENDED_PERMISSIONS = ['email']
 # FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'pt_BR'}
 
+GOOGLE_OAUTH2_CLIENT_ID = '37410049822.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'VYPUXk4GraHit4n72nh5CwhX'
+
 SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
 SOCIAL_AUTH_UUID_LENGTH = 16
-SOCIAL_AUTH_EXPIRATION = 'expires'
+SOCIAL_AUTH_EXPIRATION = 3600
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 
 # KOMOO Comments settings

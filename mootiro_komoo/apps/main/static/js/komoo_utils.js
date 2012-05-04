@@ -277,7 +277,7 @@ $(function () {
             }
             $("#login-box #login-button").attr("href", "/user/login?next=" + url);
             $("#login-box").dialog({
-                width: 745,
+                width: 850,
                 modal: true,
                 resizable: false,
                 draggable: false
