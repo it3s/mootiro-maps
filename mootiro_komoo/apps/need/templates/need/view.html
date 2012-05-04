@@ -47,6 +47,12 @@
           {% pagination photos %}
           {% endif %}
       </div>
+
+      <div class="view-extras">
+        {% taglist need %}
+        {% track_buttons %}
+        {% comments need %}
+      </div>
     </div>
 
   <div class="right-bar">
@@ -63,29 +69,26 @@
     </div>
     {% with similar_needs=need.tags.similar_objects %}
       {% if similar_needs %}
-      <div class="block">
+      <div id="related-needs" class="block">
         <h3>{% trans "Related needs" %}</h3>
         <ul>
           {% for n in similar_needs %}
-          <li>
+          <li {% if forloop.counter > 5 %}class="overflow hidden"{% endif %}>
+            <a href="{{ n.view_url }}"> {{ n.title }} </a>
             {% if n.community %}
-              <a href="{% url view_need n.community.slug n.slug %}"> {{ n.title }} </a>
               {% trans 'at' %} {{ n.community.name }}
-            {% else %}
-              <a href="{% url view_need n.slug %}"> {{ n.title }} </a>
             {% endif %}
           </li>
+          {% empty %}
+          <li>{% trans "No related needs." %}</li>
           {% endfor %}
         </ul>
+        <div class="centralizer"><span class="show-more clickable">See more</span></div>
+        <div class="centralizer hidden"><span class="show-less clickable">See less</span></div>
+        <div class="clear-both"></div>
       </div>
       {% endif %}
     {% endwith %}
-  </div>
-
-  <div class="view-extras">
-    {% taglist need %}
-    {% track_buttons %}
-    {% comments need %}
   </div>
 
 </div>
@@ -107,5 +110,10 @@
         }
       });
 
+      $('#related-needs .show-more, #related-needs .show-less').on("click", function (e) {
+        $('#related-needs li.overflow').toggle();
+        $('#related-needs .show-more').parent().toggle();
+        $('#related-needs .show-less').parent().toggle();
+      });
     </script>
 {% endblock %}

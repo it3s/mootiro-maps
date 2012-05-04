@@ -5,6 +5,7 @@ from __future__ import unicode_literals  # unicode by default
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 import reversion
 from lib.taggit.managers import TaggableManager
@@ -96,5 +97,21 @@ class Need(GeoRefModel):
 
     image = "img/need.png"
     image_off = "img/need-off.png"
+
+    # Url aliases
+    @property
+    def home_url_params(self):
+        d = self.base_url_params
+        d.update(dict(investment_slug=self.slug))
+        return d
+
+    @property
+    def view_url(self):
+        return reverse('view_need', kwargs=self.home_url_params)
+
+    @property
+    def edit_url(self):
+        return reverse('edit_need', kwargs=self.home_url_params)
+
 
 reversion.register(Need)

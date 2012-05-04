@@ -43,12 +43,15 @@ class Proposal(models.Model):
     def __unicode__(self):
         return unicode(self.title)
 
-    # url aliases
+    # Url aliases
+    @property
+    def base_url_params(self):
+        return self.need.home_url_params
+
     @property
     def home_url_params(self):
-        d = dict(proposal_number=self.number, need_slug=self.need.slug)
-        if self.need.community:
-            d['community_slug'] = self.need.community.slug
+        d = self.base_url_params
+        d.update(dict(proposal_number=self.number))
         return d
 
     @property
