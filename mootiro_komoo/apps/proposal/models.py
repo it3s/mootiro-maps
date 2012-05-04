@@ -4,10 +4,13 @@ from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes import generic
+
 
 import reversion
 
 from need.models import Need
+from investment.models import Investment
 
 
 class Proposal(models.Model):
@@ -33,6 +36,10 @@ class Proposal(models.Model):
     # TODO: Also: organizations = model.ManyToManyField(Organization)
     cost = models.DecimalField(decimal_places=2, max_digits=14, null=True)
     report = models.TextField()
+
+    investments = generic.GenericRelation(Investment,
+                        content_type_field='grantee_content_type',
+                        object_id_field='grantee_object_id')
 
     def save(self, *args, **kwargs):
         if not self.id:

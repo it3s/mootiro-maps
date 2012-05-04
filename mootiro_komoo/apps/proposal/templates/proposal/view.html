@@ -4,6 +4,7 @@
 {% load comment_tags %}
 {% load vote_tags %}
 {% load proposal_tags %}
+{% load investment_tags %}
 {% load komoo_tags %}
 {% load markitup_tags %}
 
@@ -28,6 +29,14 @@
 
     <p>Cost: {{ proposal.cost }}</p>
 
+    {% investments_list proposal.investments.all %}  
+
+    <div class="view-extras">
+      {% taglist proposal %}
+      {% track_buttons %}
+      {% comments proposal %}
+    </div>
+
   </div>
 
   <div class="right-bar">
@@ -47,12 +56,6 @@
       <a class="button" href="{{ proposal.new_investment_url }}">Add investment</a>
     </div>
 
-  </div>
-
-  <div class="view-extras">
-    {% taglist proposal %}
-    {% track_buttons %}
-    {% comments proposal %}
   </div>
 
 {% endblock %}
