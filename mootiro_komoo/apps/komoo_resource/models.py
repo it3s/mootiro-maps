@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 from django.template.defaultfilters import slugify
 from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
@@ -12,6 +13,7 @@ from lib.taggit.managers import TaggableManager
 
 from community.models import Community
 from komoo_map.models import GeoRefModel
+from investment.models import Investment
 from fileupload.models import UploadedFile
 
 
@@ -45,6 +47,10 @@ class Resource(GeoRefModel):
     community = models.ForeignKey(Community, related_name='resources',
         null=True, blank=True)
     tags = TaggableManager()
+
+    investments = generic.GenericRelation(Investment,
+                        content_type_field='grantee_content_type',
+                        object_id_field='grantee_object_id')
 
     def files_set(self):
         """ pseudo-reverse query for retrieving Resource Files"""
