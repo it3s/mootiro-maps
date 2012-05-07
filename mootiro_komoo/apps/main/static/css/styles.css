@@ -572,6 +572,12 @@ a.btnShowForm{
 }
 .comment-form{
     display: none;
+    margin-left: 15px;
+}
+.comment-form textarea.markItUpEditor{
+    background-color: #ffffff;
+    height: 100px;
+    max-width: 675px;
 }
 .inner-comment{
    margin-right: -1px;

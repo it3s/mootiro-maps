@@ -248,7 +248,9 @@ def visualization_opts_js(context):
                 var tags = unescape(getUrlVars()['tags']);
                 tags = tags.split(',');
                 $.each(tags, function(idx, tag){
-                  $('#id_tags').addTag(tag);
+                  if($.inArray(tag, $('#id_tags').val().split(',') ) == -1){
+                    $('#id_tags').addTag(tag);
+                  }
                 });
               } else if(val == 'community'){
                 var id = unescape(getUrlVars()[val]);

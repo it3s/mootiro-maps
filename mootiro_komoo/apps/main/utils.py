@@ -170,6 +170,7 @@ def filtered_query(query_set, request):
     filters = request.GET.get('filters', '')
     for f in filters.split(','):
         if f == 'tags':
+            request.encoding = 'latin-1'
             tags = request.GET.get('tags', '')
             if tags:
                 tags = tags.split(',')
