@@ -221,6 +221,14 @@ article.post {
     -webkit-box-shadow: 1px 1px 1px rgb(190, 189, 204) !important;
     -moz-box-shadow: 1px 1px 1px rgb(190, 189, 204) !important;
     box-shadow: 1px 1px 1px rgb(190, 189, 204) !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border linear 0.2s,box-shadow linear 0.2s;
+    -moz-transition: border linear 0.2s,box-shadow linear 0.2s;
+    -ms-transition: border linear 0.2s,box-shadow linear 0.2s;
+    -o-transition: border linear 0.2s,box-shadow linear 0.2s;
+    transition: border linear 0.2s,box-shadow linea
 }
 
 #respond input[type="text"]:focus, #respond textarea:focus {
