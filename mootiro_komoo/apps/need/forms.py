@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
@@ -18,6 +19,16 @@ class NeedForm(forms.ModelForm):
         model = Need
         fields = ('community', 'title', 'description', 'categories',
                     'target_audiences', 'tags', 'geometry', 'files')
+
+    _field_labels = {
+        'community': _('Community'),
+        'title': _('Title'),
+        'description': _('Description'),
+        'categories': _('Categories'),
+        'target_audiences': _('Target audiences'),
+        'tags': _('Tags'),
+        'files': _(' '),
+    }
 
     class Media:
         js = ('lib/jquery.imagetick-original.js',)
@@ -60,7 +71,10 @@ class NeedForm(forms.ModelForm):
         self.helper = MooHelper()
         self.helper.form_id = "need_form"
 
-        super(NeedForm, self).__init__(*a, **kw)
+        n = super(NeedForm, self).__init__(*a, **kw)
+        for field, label in self._field_labels.iteritems():
+            self.fields[field].label = label
+        return n
 
     # def clean_community(self):
     #     value = self.cleaned_data['community']

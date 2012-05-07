@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
@@ -18,6 +19,14 @@ class CommunityForm(forms.ModelForm):
         fields = ('name', 'population', 'description', 'tags', 'geometry',
                   'files')
 
+    _field_labels = {
+        'name': _('Name'),
+        'description': _('Description'),
+        'population': _('Population'),
+        'tags': _('Tags'),
+        'files': _(' '),
+    }
+
     description = forms.CharField(widget=MarkItUpWidget())
     geometry = forms.CharField(widget=forms.HiddenInput())
     files = FileuploadField(required=False)
@@ -30,7 +39,10 @@ class CommunityForm(forms.ModelForm):
         self.helper = MooHelper()
         self.helper.form_id = "community_form"
 
-        super(CommunityForm, self).__init__(*a, **kw)
+        com = super(CommunityForm, self).__init__(*a, **kw)
+        for field, label in self._field_labels.iteritems():
+            self.fields[field].label = label
+        return com
 
     def save(self, *args, **kwargs):
         comm = super(CommunityForm, self).save(*args, **kwargs)
