@@ -84,6 +84,9 @@ class FormOrganizationNew(forms.ModelForm):
         if not self.org_name:
             self._errors['name'] = _('Name is required')
             raise ValidationError(_('Name is required'))
+        elif Organization.objects.filter(name=self.org_name).count():
+            self._errors['name'] = _('Name must be unique')
+            raise ValidationError(_('Name must be unique'))
         return r
 
     def save(self, user=None, *args, **kwargs):
