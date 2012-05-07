@@ -64,6 +64,7 @@
 
               form.parent().slideToggle('fast');
               form.find('#id_comment').clearForm();
+              form.find('.comment_markdown').clearForm();
             }
           },
           dataType: 'json',

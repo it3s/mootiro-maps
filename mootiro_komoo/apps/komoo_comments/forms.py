@@ -3,6 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 from django import forms
 from django.forms import fields
+from markitup.widgets import MarkItUpWidget
 
 from komoo_comments.models import Comment
 
@@ -15,9 +16,18 @@ class FormComment(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['comment', 'content_type_id', 'object_id']
-        widgets = {
-            'comment': forms.Textarea(attrs={'cols': 80, 'rows': 5, 'class': 'span8'}),
-        }
+        # widgets = {
+        #     # 'comment': forms.Textarea(attrs={'cols': 80, 'rows': 5, 'class': 'span8'}),
+        #     'comment': MarkItUpWidget()
+        # }
+
+    def __init__(self, *a, **kw):
+        retorno = super(FormComment, self).__init__(*a, **kw)
+
+        id_ = self.instance.id if self.instance else ''
+
+        self.fields['comment'].widget = MarkItUpWidget()
+        return retorno
 
     def save(self, user=None, *args, **kwargs):
         comment = super(FormComment, self).save(*args, **kwargs)

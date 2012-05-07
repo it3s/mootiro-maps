@@ -1,4 +1,5 @@
 {% load vote_tags %}
+{% load markitup_tags %}
 {% load i18n %}
 <div class="comment-container {{ comment_class }}" commentID="{{ comment.id }}">
     <div class="comment-header">
@@ -12,8 +13,8 @@
         </div>
     </div>
 
-    <div class="comment" >
-        {{ comment.comment}}
+    <div class="comment mark-down" >
+        {{ comment.comment|render_markup }}
     </div>
     <div class="comment-footer">
         <a class="btnShowForm" href="#">{% trans 'Reply' %}</a>
@@ -26,7 +27,7 @@
             <form method='post' class='stacked-form' action='/comments/add/' >
                 <fieldset>
                     {% csrf_token %}
-                    <!--label>Comment:</label--><textarea rows='5' cols='80' id="id_comment" name='comment' class='span8'></textarea>
+                    <!--label>Comment:</label--><textarea rows='5' cols='80' id="id_comment_{{ comment.id }}" name='comment' class='span8 comment_markdown'></textarea>
                     <input type="hidden" name="content_type_id" value="{{ comment.content_type_id }}" id="id_content_type_id" />
                     <input type="hidden" name="object_id" value="{{ comment.object_id }}" id="id_object_id" />
                     <input type='hidden' name='parent_id' value="{{comment.id}}" id="id_parent_id" />
@@ -35,6 +36,13 @@
                     </div>
                 </fieldset>
             </form>
+            <script type="text/javascript">
+                (function($) {
+                    $(document).ready(function() {
+                        $("#id_comment_{{ comment.id }}").markItUp(mySettings);
+                        $('a[title="Preview"]').trigger('mouseup'); });
+                })(jQuery)
+            </script>
         </div>
     </div>
     {% if comment.sub_comments > 0 %}
