@@ -58,12 +58,14 @@ function Tabs(tabs, contents, onChange) {
     this.initialized = true;
 }
 
+
 /*
  * retrieve params from url
  */
 function getUrlVars(){
     var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    var hashes = window.location.href.slice(
+        window.location.href.indexOf('?') + 1).split('&');
     for(var i = 0; i < hashes.length; i++)
     {
         hash = hashes[i].split('=');
