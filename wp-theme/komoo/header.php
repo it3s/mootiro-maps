@@ -78,8 +78,8 @@
 					<ul>
 						<li><a href=""><?php _e('Colabore', 'komoo'); ?></a></li>
 						<li><a href=""><?php _e('Motivação', 'komoo'); ?></a></li>
-						<li><a href=""><?php _e('Ajude a mapear', 'komoo'); ?></a></li>
-						<li><a href=""><?php _e('Ajuda', 'komoo'); ?></a></li>
+						<li><a class="" href=""><?php _e('Ajude a mapear', 'komoo'); ?></a></li>
+						<li><a class="selected" href=""><?php _e('Blog', 'komoo'); ?></a></li>
 					</ul>
 				</div>
 			</nav>
