@@ -22,10 +22,10 @@ logger = logging.getLogger(__name__)
 
 class FormResource(AjaxModelForm):
     description = forms.CharField(widget=MarkItUpWidget())
-    kind = forms.CharField(required=False, widget=AutocompleteWithFavorites(
+    kind = forms.CharField(required=True, widget=AutocompleteWithFavorites(
             ResourceKind, '/resource/search_by_kind/',
             ResourceKind.favorites(number=10), can_add=True))
-    tags = forms.Field(required=False, widget=TaggitWidget(
+    tags = forms.Field(required=True, widget=TaggitWidget(
             autocomplete_url="/resource/search_by_tag/"))
     community = forms.CharField(required=False, widget=Autocomplete(
             Community, '/community/search_by_name'))

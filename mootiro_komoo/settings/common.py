@@ -163,6 +163,8 @@ INSTALLED_APPS = [
 
 COMMENT_MAX_LENGTH = 80 * 500
 
+FILE_UPLOAD_MAX_MEMORY_SIZE  = 10 * 1024 * 1024
+
 # https://github.com/aljosa/django-tinymce/blob/master/docs/installation.rst
 # TINYMCE_COMPRESSOR = True
 TINYMCE_SPELLCHECKER = False

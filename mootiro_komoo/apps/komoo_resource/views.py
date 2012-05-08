@@ -87,9 +87,7 @@ def show(request, community_slug=None, resource_id=None):
 
 @ajax_form('resource/new.html', FormResource, 'form_resource')
 def new_resource(request, community_slug='', *arg, **kwargs):
-    logger.debug('acessing komoo_resource > new_resource : \n{}'.format(
-        getattr(request, request.method)
-    ))
+    logger.debug('acessing komoo_resource > new_resource')
     community = get_object_or_None(Community, slug=community_slug)
 
     def on_get(request, form_resource):

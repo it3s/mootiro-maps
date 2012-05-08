@@ -686,7 +686,7 @@ a.btnShowForm{
   width: 100%;
 }
 #form_resource #div_id_tags .ui-autocomplete-input{
-  background: none repeat scroll 0% 0% rgba(215, 215, 215, 0.2);
+  background: none repeat scroll 0% 0% #fbfbfb; /*rgba(215, 215, 215, 0.2);*/
   box-shadow: 1px 1px 1px rgb(190, 189, 204) ;
 }
 /* resource show */
@@ -1191,6 +1191,34 @@ div.investments-list .tab-investment.selected a { color: #000 }
 .error-dialog .ui-widget-content,
 .error-dialog .ui-dialog-titlebar {
     /* TODO */
+}
+.control-group.error{
+    background-color: #f2dede;
+    margin: -10px -30px 20px -20px;
+    padding: 10px 30px 0 20px;
+    border-radius: 4px;
+}
+.control-group.error input, .control-group.error textarea{
+    background-color: #fbfbfb;
+}
+.control-group.error .tagsinput{
+    background-color: #f2dede;
+}
+.control-group.error .tagsinput input{
+    background-color: #fbfbfb;
+}
+.error-field{
+    padding: 5px 10px 10px 10px;
+}
+.error-field .error-notice{
+    font-weight: bold;
+    color: #ee3333;
+    padding-right: 10px;
+}
+.error-field img{
+    /*max-width: 16px;*/
+    max-height: 16px;
+    padding-right: 5px;
 }
 .komoo-pagination{
     display: inline-block;
