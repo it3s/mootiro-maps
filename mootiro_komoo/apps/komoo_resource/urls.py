@@ -13,6 +13,9 @@ home_urls = [
 urlpatterns = patterns('komoo_resource.views',
     url(r'^resource/?$', 'resource_list', name='resource_list'),
     url(r'^resource/new/$', New.as_view(), name='resource_new'),
+
+    url(r'^resource/new_resource/$', 'new_resource', name='new_resource'),
+
     url(r'^resource/edit/?$', Edit.as_view(), name='resource_edit'),
     url(pr(r'^resource/RESOURCE_ID/?$'), 'show', name='view_resource'),
 

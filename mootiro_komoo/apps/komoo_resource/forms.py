@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import traceback
+import logging
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -7,32 +9,42 @@ from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
+from ajaxforms import AjaxModelForm
 
-from main.utils import MooHelper
+from main.utils import MooHelper, clean_autocomplete_field
 from main.widgets import Autocomplete, TaggitWidget, AutocompleteWithFavorites
 from komoo_resource.models import Resource, ResourceKind
 from community.models import Community
 
+logger = logging.getLogger(__name__)
 
-class FormResource(forms.ModelForm):
-    id = forms.CharField(required=False, widget=forms.HiddenInput())
-    description = forms.CharField('Description', widget=MarkItUpWidget())
+
+class FormResource(AjaxModelForm):
+    description = forms.CharField(
+        widget=MarkItUpWidget()
+    )
     kind = forms.CharField(required=False,
-        widget=AutocompleteWithFavorites(
-            ResourceKind, '/resource/search_by_kind/',
-            ResourceKind.favorites(number=10), can_add=True))
-    tags = forms.Field(
-        widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/"),
-        required=False)
+        widget=AutocompleteWithFavorites(ResourceKind,
+                    '/resource/search_by_kind/',
+                     ResourceKind.favorites(number=10), can_add=True)
+    )
+    tags = forms.Field(required=False,
+        widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/")
+    )
     community = forms.CharField(required=False,
-        widget=Autocomplete(Community, '/community/search_by_name'))
-    files = FileuploadField(required=False)
-    geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+        widget=Autocomplete(Community, '/community/search_by_name')
+    )
+    # geometry = forms.CharField(required=False,
+    #     widget=forms.HiddenInput()
+    # )
+    # files = FileuploadField(required=False)
 
     class Meta:
         model = Resource
-        fields = ['name', 'description', 'kind', 'tags', 'community', 'id',
-                  'geometry', 'files']
+        fields = (
+            'name', 'description', 'kind', 'tags', 'community', 'id',
+            # 'geometry', 'files'
+        )
 
     _field_labels = {
         'name': _('Name'),
@@ -40,21 +52,24 @@ class FormResource(forms.ModelForm):
         'kind': _('Kind'),
         'tags': _('Tags'),
         'community': _('Community'),
-        'files': ''
+        # 'files': ''
     }
 
     def __init__(self, *args, **kwargs):
-        # Crispy forms configuration
-        self.helper = MooHelper()
-        self.helper.form_id = 'form_resource'
+        self.helper = MooHelper(form_id='form_resource')
+        self.helper.form_action = '/resource/new_resource/'
+        return super(FormResource, self).__init__(*args, **kwargs)
 
-        r = super(FormResource, self).__init__(*args, **kwargs)
-        self.args = args[0] if args else {}
-
-        for field, label in self._field_labels.iteritems():
-            self.fields[field].label = label
-
-        return r
+    def clean(self):
+        super(FormResource, self).clean()
+        try:
+            self.validation('description', u'BLA',
+                            True)
+        except Exception as err:
+            logger.error('Erro de validacao: {}\n{}'.format(err,
+                traceback.format_exc()))
+        finally:
+            return self.cleaned_data
 
     def save(self, user=None, *args, **kwargs):
         resource = super(FormResource, self).save(*args, **kwargs)
@@ -68,19 +83,7 @@ class FormResource(forms.ModelForm):
         return resource
 
     def clean_kind(self):
-        try:
-            if not self.cleaned_data['kind'] or self.cleaned_data['kind'] == 'None':
-                return ResourceKind()
-            else:
-                return ResourceKind.objects.get(id=self.cleaned_data['kind'])
-        except:
-            raise forms.ValidationError(_('invalid kind data'))
+        return clean_autocomplete_field(self.cleaned_data['kind'], ResourceKind)
 
     def clean_community(self):
-        try:
-            if not self.cleaned_data['community'] or self.cleaned_data['community'] == 'None':
-                return Community()
-            else:
-                return Community.objects.get(id=self.cleaned_data['community'])
-        except:
-            raise forms.ValidationError(_('invalid community data'))
+        return clean_autocomplete_field(self.cleaned_data['community'], Community)

@@ -16,6 +16,7 @@ from django.db.models import Count
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 from lib.taggit.models import TaggedItem
+from ajaxforms import ajax_form
 
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource
@@ -81,6 +82,11 @@ def show(request, community_slug=None, resource_id=None):
 
     return dict(resource=resource, similar=similar, geojson=geojson,
                 community=community, photos=photos)
+
+
+@ajax_form('resource/new.html', FormResource)
+def new_resource(request):
+    return {}
 
 
 class New(View):

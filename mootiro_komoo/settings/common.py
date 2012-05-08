@@ -145,6 +145,7 @@ INSTALLED_APPS = [
     'fileupload',
     'gunicorn',
     'social_auth',
+    'ajaxforms',
     # our apps
     'komoo_map',
     'community',
