@@ -48,35 +48,20 @@ class AjaxModelForm(forms.ModelForm):
 
         return r
 
-    def _field_label(self, field):
-        if field == '__all__':
-            return '__all__'
-        return self.fields[field].label or field.title()
-
     def validation(self, field, msg, condition):
         if condition:
-            label = self._field_label(field)
+            label = field
             self.errors[label] = unicode(msg)
-
-    def is_valid(self):
-        _is_valid = super(AjaxModelForm, self).is_valid()
-        for field in self.fields:
-            if field in self.errors:
-                label = self._field_label(field)
-                msg = self.errors[field]
-                del self.errors[field]
-                self.errors[label] = msg
-        return _is_valid
 
     def add_user(self, request):
         self.user = request.user
 
     def save(self, *args, **kwargs):
-        if self.user:
-            self.instance.user = self.user
-        elif 'user' in self.cleaned_data:
-            self.instance.user = self.cleaned_data['user']
-        return super(AjaxModelForm, self).save(*args, **kwargs)
+        obj = super(AjaxModelForm, self).save(*args, **kwargs)
+        if self.user and hasattr(obj, 'creator'):
+            obj.creator_id = self.user.id
+            obj.save()
+        return obj
 
 
 #
@@ -105,7 +90,9 @@ def ajax_form(template=None, form_class=None, form_name="form"):
                 return output
             #tmpl = output.pop('TEMPLATE', template)
 
-            logger.debug('request via {}'.format(request.method))
+            logger.debug('request via {}\n{}'.format(request.method,
+                getattr(request, request.method)
+            ))
             if request.method == 'GET':
                 logger.debug('[ajaxforms] acesso via GET')
                 form = form_class()
@@ -113,7 +100,9 @@ def ajax_form(template=None, form_class=None, form_name="form"):
                 # callback on_get
                 if 'on_get' in output:
                     logger.debug('[ajaxforms] callback on_get:')
-                    output.pop('on_get')(request)
+                    r_get = output.pop('on_get')(request, form)
+                    if isinstance(r_get, form_class):
+                        form = r_get
 
                 retorno = {form_name: form}
                 retorno.update(output)
@@ -146,22 +135,28 @@ def ajax_form(template=None, form_class=None, form_name="form"):
 
                     obj = form.save()
 
+                    r_dict = {}
                     # callback after save
                     if 'on_after_save' in output:
                         try:
                             logger.debug('[ajaxforms] callback on_after_save:')
-                            output.pop('on_after_save')(request, obj)
+                            r_save = output.pop('on_after_save')(request, obj)
+                            if isinstance(r_save, dict):
+                                r_dict.update(r_save)
+
                         except Exception as err:
                             logger.error('[utils.py] Erro no on_after_save: {}'
                                 ''.format(err))
                             traceback.print_exc()
+
                     try:
-                        obj_serialized = json_serializer(model_to_dict(obj))
-                        obj_serialized['repr'] = unicode(obj)
-                        json_ = simplejson.dumps({
+                        # obj_serialized = json_serializer(model_to_dict(obj))
+                        # obj_serialized['repr'] = unicode(obj)
+                        r_dict.update({
                             'success': 'true',
-                            'obj': obj_serialized
+                            # 'obj': obj_serialized
                         })
+                        json_ = simplejson.dumps(r_dict)
                     except Exception as err:
                         logger.error('Erro ao parsear json: {} \n{}'
                             ''.format(err, traceback.format_exc()))

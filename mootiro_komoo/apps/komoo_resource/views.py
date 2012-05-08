@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.db.models import Count
+from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
@@ -84,8 +85,32 @@ def show(request, community_slug=None, resource_id=None):
                 community=community, photos=photos)
 
 
-@ajax_form('resource/new.html', FormResource)
-def new_resource(request):
+@ajax_form('resource/new.html', FormResource, 'form_resource')
+def new_resource(request, community_slug='', *arg, **kwargs):
+    logger.debug('acessing komoo_resource > new_resource : \n{}'.format(
+        getattr(request, request.method)
+    ))
+    community = get_object_or_None(Community, slug=community_slug)
+
+    def on_get(request, form_resource):
+        if community:
+            logger.debug('community_slug: {}'.format(community_slug))
+            form_resource.fields['community'].widget = forms.HiddenInput()
+            form_resource.initial['community'] = community.id
+        form_resource.helper.form_action = reverse('new_resource')
+        return form_resource
+
+    def on_after_save(request, obj):
+        prefix = '/{}'.format(community_slug) if community_slug else ''
+        _url = '{}/resource/{}'.format(prefix, obj.id)
+        return {'redirect': _url}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save,
+            'community': community}
+
+
+@ajax_form('resource/new_frommap.html', FormResource)
+def new_resource_from_map(request):
     return {}
 
 

@@ -73,38 +73,60 @@
                         var validation_div;
                         /* em caso de sucesso limpa forma e chama callback */
                         if (data.success === "true"){
+                            // clean form
                             $form.clearForm();
-                            validation_div = $('#validation-error');
-                            if(validation_div.length){
-                                validation_div.remove();
-                            }
+                            // clean error messages
+                            $('#validation-error').remove();
+                            $('div.alert-message.error').remove();
+                            $('.control-group.error').removeClass('error');
+
+
                             if ($form.onSuccess){
                                 $form.onSuccess(data);
                             }
+                            if (data.redirect){
+                                window.location = data.redirect;
+                            }
                         /* em caso de erro, trata os erros */
                         } else if (data.success === "false") {
-                            var message = '<br/>';
+                            // clean error messages
+                            $('#validation-error').remove();
+                            $('div.alert-message.error').remove();
+                            $('.control-group.error').removeClass('error');
+
                             $.each(data.errors, function(key,val){
+                                console.log(key)
                                 if( key === "__all__"){
-                                    message += '<span class="error-field" style="color: #cc2222;">Erro</span> &nbsp; - &nbsp; '+ val + '<br/>';
-                                }else{
-                                    message += '<span class="error-field" style="color: #cc2222;">' + key + '</span> &nbsp; - &nbsp; '+ val + '<br/>';
+                                    message = '<span class="error-field" style="color: #cc2222;">Erro</span> &nbsp; - &nbsp; '+ val + '<br/>';
+                                    validation_div = $('#validation-error');
+                                    if (validation_div.length){
+                                        validation_div.remove();
+                                    }
+                                    $form.append('' +
+                                        '<div id="validation-error" class="alert-message block-message error fade in" data-alert="alert" >' +
+                                        '<a class="btnClose" style="float:right;color:#000000;font-size:20px;font-weight:bold;' +
+                                        'line-height:13.5px;text-shadow:0 1px 0 #ffffff;filter:alpha(opacity=25);'+
+                                        '-khtml-opacity:0.25;-moz-opacity:0.25;opacity:0.25;"' +
+                                        'href="#">&times;</a>'+ message + '</div>');
                                 }
-                            });
-                            message += '<br/>';
-                            validation_div = $('#validation-error');
-                            if (validation_div.length){
-                                validation_div.remove();
-                            }
-                            $form.append('' +
-                                '<div id="validation-error" class="alert-message block-message error fade in" data-alert="alert" >' +
+
+                                // new validation style
+                                var node = $('#id_' + key);
+                                console.log('#id_' + key);
+                                for (i=0; ! node.is('.controls') && i < 5; node = node.parent(), i++);
+                                // node.append('<span class="inline-help">'+ val + '</span>')
+                                node.append('' +
+                                '<div class="alert-message block-message error fade in" data-alert="alert" >' +
                                 '<a class="btnClose" style="float:right;color:#000000;font-size:20px;font-weight:bold;' +
                                 'line-height:13.5px;text-shadow:0 1px 0 #ffffff;filter:alpha(opacity=25);'+
                                 '-khtml-opacity:0.25;-moz-opacity:0.25;opacity:0.25;"' +
-                                'href="#">&times;</a>'+ message + '</div>');
+                                'href="#">&times;</a>'+ val + '</div>')
+                                node.parent().addClass('error');
+                            });
+
                             $('.btnClose').live('click', function(e){
                                 e.preventDefault();
-                                $('#validation-error').alert('close');
+                                $(this).parent().slideUp();
 
                             });
                             if ($form.onError){

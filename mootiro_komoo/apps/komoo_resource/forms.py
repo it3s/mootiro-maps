@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import traceback
 import logging
+import traceback
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
@@ -20,31 +21,20 @@ logger = logging.getLogger(__name__)
 
 
 class FormResource(AjaxModelForm):
-    description = forms.CharField(
-        widget=MarkItUpWidget()
-    )
-    kind = forms.CharField(required=False,
-        widget=AutocompleteWithFavorites(ResourceKind,
-                    '/resource/search_by_kind/',
-                     ResourceKind.favorites(number=10), can_add=True)
-    )
-    tags = forms.Field(required=False,
-        widget=TaggitWidget(autocomplete_url="/resource/search_by_tag/")
-    )
-    community = forms.CharField(required=False,
-        widget=Autocomplete(Community, '/community/search_by_name')
-    )
-    # geometry = forms.CharField(required=False,
-    #     widget=forms.HiddenInput()
-    # )
-    # files = FileuploadField(required=False)
+    description = forms.CharField(widget=MarkItUpWidget())
+    kind = forms.CharField(required=False, widget=AutocompleteWithFavorites(
+            ResourceKind, '/resource/search_by_kind/',
+            ResourceKind.favorites(number=10), can_add=True))
+    tags = forms.Field(required=False, widget=TaggitWidget(
+            autocomplete_url="/resource/search_by_tag/"))
+    community = forms.CharField(required=False, widget=Autocomplete(
+            Community, '/community/search_by_name'))
+    files = FileuploadField(required=False)
 
     class Meta:
         model = Resource
-        fields = (
-            'name', 'description', 'kind', 'tags', 'community', 'id',
-            # 'geometry', 'files'
-        )
+        fields = ('name', 'description', 'kind', 'tags', 'community', 'id',
+            'files')
 
     _field_labels = {
         'name': _('Name'),
@@ -52,38 +42,46 @@ class FormResource(AjaxModelForm):
         'kind': _('Kind'),
         'tags': _('Tags'),
         'community': _('Community'),
-        # 'files': ''
-    }
+        'files': '', }
 
     def __init__(self, *args, **kwargs):
         self.helper = MooHelper(form_id='form_resource')
-        self.helper.form_action = '/resource/new_resource/'
-        return super(FormResource, self).__init__(*args, **kwargs)
+        r = super(FormResource, self).__init__(*args, **kwargs)
+        self.fields['name'].initial = ''
+        return r
 
     def clean(self):
         super(FormResource, self).clean()
         try:
-            self.validation('description', u'BLA',
-                            True)
+            self.validation('description', u'Must have more tha n 5 characters',
+                            len(self.cleaned_data['description']) < 5)
         except Exception as err:
             logger.error('Erro de validacao: {}\n{}'.format(err,
                 traceback.format_exc()))
         finally:
             return self.cleaned_data
 
-    def save(self, user=None, *args, **kwargs):
+    def save(self, *args, **kwargs):
         resource = super(FormResource, self).save(*args, **kwargs)
-        if user and not user.is_anonymous():
-            resource.creator_id = user.id
-            resource.save()
-
-        files_id_list = self.cleaned_data.get('files', '').split('|')
-        UploadedFile.bind_files(files_id_list, resource)
-
+        UploadedFile.bind_files(
+            self.cleaned_data.get('files', '').split('|'),
+            resource
+        )
         return resource
 
     def clean_kind(self):
-        return clean_autocomplete_field(self.cleaned_data['kind'], ResourceKind)
+        return clean_autocomplete_field(
+            self.cleaned_data['kind'], ResourceKind)
 
     def clean_community(self):
-        return clean_autocomplete_field(self.cleaned_data['community'], Community)
+        return clean_autocomplete_field(
+            self.cleaned_data['community'], Community)
+
+
+class FormResourceGeoRef(FormResource):
+    geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+
+    class Meta:
+        model = Resource
+        fields = ('name', 'description', 'kind', 'tags', 'community', 'id',
+            'geometry', 'files')

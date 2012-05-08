@@ -110,10 +110,10 @@ my_app_logger = {
     'level': 'DEBUG',
     'propagate': True
 }
-LOGGING['loggers'].update({'{}.views'.format(app): my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.models'.format(app): my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.forms'.format(app): my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.listdir('apps/')})
+LOGGING['loggers'].update({'{}.views'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
+LOGGING['loggers'].update({'{}.models'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
+LOGGING['loggers'].update({'{}.forms'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
+LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
 
 
 MIDDLEWARE_CLASSES += [
