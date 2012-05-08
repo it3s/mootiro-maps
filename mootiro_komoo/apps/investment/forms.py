@@ -25,6 +25,21 @@ class InvestmentForm(forms.ModelForm):
             'investor_organization', 'investor_person', 'over_period', 'date',
             'end_date', 'currency', 'value', 'tags')
 
+    _field_labels = {
+        'title': _('Title'),
+        'description': _('Description'),
+        'investor_type': _('Investor type'),
+        'anonymous_investor': _('Anonymous investor'),
+        'investor_organization': _('Investor organization'),
+        'investor_person': _('Investor person'),
+        'over_period': _('Over period'),
+        'date': _('Date'),
+        'end_date': _('End date'),
+        'currency': _('Currency'),
+        'value': _('Value'),
+        'tags': _('Tags'),
+    }
+
     title = forms.CharField()
     description = forms.CharField(widget=MarkItUpWidget())
 
@@ -97,7 +112,10 @@ class InvestmentForm(forms.ModelForm):
             "tags",
         )
 
-        super(InvestmentForm, self).__init__(*a, **kw)
+        inv = super(InvestmentForm, self).__init__(*a, **kw)
+        for field, label in self._field_labels.iteritems():
+            self.fields[field].label = label
+        return inv
 
     def clean(self):
         cleaned_data = super(InvestmentForm, self).clean()
