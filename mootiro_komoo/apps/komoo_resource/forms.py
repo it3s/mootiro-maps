@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
-import traceback
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
 
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
@@ -22,10 +20,10 @@ logger = logging.getLogger(__name__)
 
 class FormResource(AjaxModelForm):
     description = forms.CharField(widget=MarkItUpWidget())
-    kind = forms.CharField(required=True, widget=AutocompleteWithFavorites(
+    kind = forms.CharField(required=False, widget=AutocompleteWithFavorites(
             ResourceKind, '/resource/search_by_kind/',
             ResourceKind.favorites(number=10), can_add=True))
-    tags = forms.Field(required=True, widget=TaggitWidget(
+    tags = forms.Field(required=False, widget=TaggitWidget(
             autocomplete_url="/resource/search_by_tag/"))
     community = forms.CharField(required=False, widget=Autocomplete(
             Community, '/community/search_by_name'))
@@ -49,17 +47,6 @@ class FormResource(AjaxModelForm):
         r = super(FormResource, self).__init__(*args, **kwargs)
         self.fields['name'].initial = ''
         return r
-
-    def clean(self):
-        super(FormResource, self).clean()
-        try:
-            self.validation('description', u'Must have more tha n 5 characters',
-                            len(self.cleaned_data['description']) < 5)
-        except Exception as err:
-            logger.error('Erro de validacao: {}\n{}'.format(err,
-                traceback.format_exc()))
-        finally:
-            return self.cleaned_data
 
     def save(self, *args, **kwargs):
         resource = super(FormResource, self).save(*args, **kwargs)
