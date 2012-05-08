@@ -241,7 +241,8 @@ def branch_edit(request):
         if communities:
             branch.community.clear()
             for comm in communities:
-                branch.community.add(comm)
+                if comm:
+                    branch.community.add(comm)
         branch.save()
         communities = render_to_response(
             'organization/branch_communities_list.html', {'branch': branch},
