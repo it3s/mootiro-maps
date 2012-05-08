@@ -20,7 +20,7 @@ def dev():
 
 
 def stage():
-    """Set env_ironment to test"""
+    """Set env_ironment to staging"""
     global env_
     env_ = 'stage'
 
@@ -48,6 +48,12 @@ def run():
         local('python manage.py run_gunicorn --workers=2 --bind=127.0.0.1:8001 {}'.format(django_settings[env_]))
     else:
         local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
+
+
+def test(apps="community"):
+    """Run application tests"""
+    print "Apps being tested:", apps
+    local('python manage.py test {} {}'.format(apps, django_settings[env_]))
 
 
 def js_urls():
