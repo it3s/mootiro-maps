@@ -13,7 +13,6 @@ under version control, and specializes it for development environment
 
 '''
 
-from __future__ import unicode_literals  # unicode by default
 from common import *
 
 DEBUG = True
@@ -29,6 +28,9 @@ DATABASES = {
         'PORT': '',    # Set to empty string for default. Not used with sqlite3.
     }
 }
+
+INSTALLED_APPS.append('django_nose')
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
