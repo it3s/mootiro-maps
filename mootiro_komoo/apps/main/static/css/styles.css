@@ -16,14 +16,22 @@ img { border: 0px }
 h1, h2, h3, h4, h5, h6 { margin-bottom: 1em 0 }
 
 /* Link pattern */
-a { text-decoration: none }
-a:link    { color: #4092A9 }
-a:visited { color: #4092A9 }
-a:hover   {
-    color: #333;
+a {
     text-decoration: none;
 }
-a:active { background-color: #eee }
+a:link {
+    color: #009cb4;
+}
+a:visited {
+    color: #1e8290;
+}
+a:hover {
+    color: #009cb4;
+    text-decoration: underline;
+}
+a:active {
+    color: #000;
+}
 ul {
     list-style-type: none;
     margin: 0px;
@@ -49,6 +57,9 @@ table { border-collapse: collapse }
 .button span { color: white; }
 .button:active { background: #2E6167 !important; }
 a.button { color: #fff;}
+a.button:hover {
+    text-decoration: none;
+}
 .small { font-size: 80%; }
 ul.horizontal li {
     float: left;
@@ -84,6 +95,7 @@ div.apart { margin-top: 1em }
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
 ul.geo-objects-listing li {
+    cursor: pointer;
     position: relative;
     padding: 4px 0;
 }
@@ -204,6 +216,7 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 .map-button:hover, .map-button.selected,
 .organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected  {
     color: #fff;
+    text-decoration: none;
     background-color: #3EBAC2;
     /* Generated from: http://gradients.glrzad.com/ */
     background-image: linear-gradient(bottom, #4092A9 0%, #3EBAC2 100%) !important;
@@ -525,7 +538,7 @@ body.community #main-content {
 }
 .map-menuitem,
 .map-menuitem.frozen:hover {
-    cursor: default;
+    cursor: pointer;
     direction: ltr;
     position: relative;
     padding: 0;
@@ -926,7 +939,7 @@ div.view-list-item.odd {
 .view-list-count{
     /* display: inline-block;
     margin-left: 50px; */
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0 0 10px;
 }
