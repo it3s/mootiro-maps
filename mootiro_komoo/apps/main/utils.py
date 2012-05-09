@@ -5,10 +5,12 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import re
 
+from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.shortcuts import HttpResponseRedirect
+from django.utils.translation import ugettext_lazy as _
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Reset
@@ -105,8 +107,10 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
 
 
 class MooHelper(FormHelper):
-    def __init__(self, *a, **kw):
+    def __init__(self, form_id=None, *a, **kw):
         retorno = super(MooHelper, self).__init__(*a, **kw)
+        if form_id:
+            self.form_id = form_id
         self.add_input(Submit('submit', 'Submit'))
         self.add_input(Reset('reset', 'Reset'))
         return retorno
@@ -223,3 +227,13 @@ def fix_community_url(view_name):
             return function(request, community_slug=community_slug, *args, **kwargs)
         return wrapper
     return renderer
+
+
+def clean_autocomplete_field(field_data, model):
+    try:
+        if not field_data or field_data == 'None':
+            return model()
+        else:
+            return model.objects.get(pk=field_data)
+    except:
+        raise forms.ValidationError(_('invalid field data'))
