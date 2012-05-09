@@ -50,10 +50,12 @@ def run():
         local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
 
 
-def test(apps="community"):
+def test(apps="community need"):
     """Run application tests"""
     print "Apps being tested:", apps
-    local('python manage.py test {} {}'.format(apps, django_settings[env_]))
+    command = 'python manage.py test {} {} --verbosity=1'.format(apps, django_settings[env_])
+    print command
+    local(command)
 
 
 def js_urls():
@@ -83,8 +85,7 @@ def syncdb(create_superuser=""):
 
 
 def recreate_db():
-    """Drops komoo database, recreates it with postgis template and runs syncdb
-    """
+    """Drops komoo database and recreates it with postgis template."""
     print "Recreating database 'komoo'"
     local('dropdb mootiro_komoo && createdb -T template_postgis mootiro_komoo')
 
@@ -107,6 +108,7 @@ def load_fixtures(type_='system'):
                 django_settings[env_]))
     else:
         import os
+        print "CARREGAR INITIAL DATA = = = = = ="
         for fixture in os.listdir('fixtures'):
             if fixture.endswith('_fixtures.json') and fixture != 'test_fixtures.json':
                 local('python manage.py loaddata fixtures/{} {}'.format(
@@ -172,7 +174,7 @@ def sync_all(data_fixtures='fixtures/backupdb.json'):
     """
     restart app and database from scratch.
     It: drops the DB, recreates it, syncdb, load_fixtures and call initial_revisions,
-    also makes coffee and give you a hug
+    also makes coffee and hugs you. :)
     """
     recreate_db()
     syncdb()
