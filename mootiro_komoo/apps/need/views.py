@@ -9,7 +9,7 @@ from django import forms
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import Polygon

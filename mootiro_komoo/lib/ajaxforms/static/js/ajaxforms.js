@@ -13,16 +13,16 @@
                 return $(':input',this).clearForm();
             }
             if (type == 'text' || type == 'password' || tag == 'textarea'){
-                jQuery(this).val('');/*this.value = '';*/
+                jQuery(this).val('');
             }
             else if(type == 'hidden' && this.name !== "csrfmiddlewaretoken"){
-                jQuery(this).val('');/*this.value = '';*/
+                jQuery(this).val('');
             }
             else if (type == 'checkbox' || type == 'radio'){
-                jQuery(this).attr('checked', false);/*this.checked = false;*/
+                jQuery(this).attr('checked', false);
             }
             else if (tag == 'select'){
-                jQuery(this).val('');/*this.selectedIndex = -1;*/
+                jQuery(this).val('');
             }
         });
     };
