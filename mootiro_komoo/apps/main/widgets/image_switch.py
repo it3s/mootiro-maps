@@ -74,7 +74,7 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
         name = '%s%s' % (self.prefix, name)
         has_id = attrs and 'id' in attrs
         final_attrs = self.build_attrs(attrs, name=name)
-        output = [u'<ul>']
+        output = [u'<ul><span id="%s"></span>' % final_attrs['id']]
         # Normalize to strings
         str_values = set([force_unicode(v) for v in value])
         for i, (option_value, option_label) in enumerate(chain(self.choices, choices)):

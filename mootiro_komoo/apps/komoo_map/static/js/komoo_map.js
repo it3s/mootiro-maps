@@ -71,7 +71,7 @@ komoo.RegionTypes = [
         overlayTypes: [komoo.OverlayType.POLYGON,
                        komoo.OverlayType.POLYLINE,
                        komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("new_need",
+        formUrl: dutils.urls.resolve("new_need_from_map",
             {community_slug: "community_slug"}),
         disabled: false
     },

@@ -5,7 +5,7 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import logging
 
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -25,41 +25,6 @@ from main.utils import (create_geojson, paginated_query, sorted_query,
                         filtered_query)
 
 logger = logging.getLogger(__name__)
-
-
-# @login_required
-# def edit(request, community_slug=""):
-#     logger.debug('acessing Community > edit')
-
-#     if request.is_ajax():
-#         template = "community/edit_ajax.html"
-#     else:
-#         template = "community/edit.html"
-
-#     if community_slug:
-#         community = get_object_or_404(Community, slug=community_slug)
-#     else:
-#         community = Community(creator=request.user)
-
-#     if request.POST:
-#         form = CommunityForm(request.POST, instance=community)
-#         if form.is_valid():
-#             community = form.save()
-
-#             redirect_url = reverse('view_community', args=(community.slug,))
-#             if not request.is_ajax():
-#                 return redirect(redirect_url)
-#             rdict = dict(redirect=redirect_url)
-#         else:
-#             rdict = dict(form=form, community=community)
-#     else:
-#         form = CommunityForm(instance=community)
-#         rdict = dict(form=form, community=community)
-#     geojson = create_geojson([community], convert=False)
-#     if geojson and geojson.get('features'):
-#         geojson['features'][0]['properties']['userCanEdit'] = True
-#     rdict['geojson'] = json.dumps(geojson)
-#     return render(request, template, rdict)
 
 
 @login_required
