@@ -133,10 +133,15 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     min-width: 110px;
 }
 #tabs {
+    font-size: 16px;
+    font-weight: bold;
     position: relative;
     width: 100%;
     background: #fff;
     display: block;
+}
+#tabs a {
+    vertical-align: middle;
 }
 #content {
     display: block;
@@ -591,6 +596,13 @@ body.community #main-content {
     margin-right: 30px;
     float: left;
 }
+.title {
+    font-size: 20px;
+    font-weight: bold;
+}
+#categories li {
+    margin-bottom: 10px;
+}
 .right-bar {
     width: 200px;
     float: left;
@@ -602,17 +614,21 @@ body.community #main-content {
 }
 .right-bar h3 {
     color: #3ebac2;
-    font-size: 16px;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 .block {
     padding: 5px;
-    background: #a6e5ee;
+    background: #dceff4;
     margin-top: 10px;
     border-radius        : 6px;
     -moz-border-radius   : 6px;
     -webkit-border-radius: 6px;
     /*display: inline-block;*/
     word-wrap: break-word;
+}
+.block h3 {
+    color: #000;
 }
 .right-bar > .block ul li {
     margin-bottom: 5px;
@@ -764,7 +780,7 @@ a.btnShowForm{
 
 .vote{
     display: inline-block;
-    margin: 5px 0 0px 0;
+    margin: 5px 0 20px 0;
 }
 .vote a{
     margin: 0 5px;
@@ -873,6 +889,12 @@ input[type=text], textarea{
 /* ========= Entity show ====== */
 .view-header{
   margin-bottom: 20px;
+}
+.view-follow-btns {
+  margin-bottom: 30px;
+}
+.view-follow-btns .btn{
+    margin-right: 10px;
 }
 .view-follow-btns span{
   color: #444444;
