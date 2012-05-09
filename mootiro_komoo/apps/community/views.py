@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
 from django.db.models import Count
+from ajaxforms import ajax_form
 
 from annoying.decorators import render_to, ajax_request
 from fileupload.models import UploadedFile
@@ -26,39 +27,81 @@ from main.utils import (create_geojson, paginated_query, sorted_query,
 logger = logging.getLogger(__name__)
 
 
-@login_required
-def edit(request, community_slug=""):
-    logger.debug('acessing Community > edit')
+# @login_required
+# def edit(request, community_slug=""):
+#     logger.debug('acessing Community > edit')
 
-    if request.is_ajax():
-        template = "community/edit_ajax.html"
-    else:
-        template = "community/edit.html"
+#     if request.is_ajax():
+#         template = "community/edit_ajax.html"
+#     else:
+#         template = "community/edit.html"
+
+#     if community_slug:
+#         community = get_object_or_404(Community, slug=community_slug)
+#     else:
+#         community = Community(creator=request.user)
+
+#     if request.POST:
+#         form = CommunityForm(request.POST, instance=community)
+#         if form.is_valid():
+#             community = form.save()
+
+#             redirect_url = reverse('view_community', args=(community.slug,))
+#             if not request.is_ajax():
+#                 return redirect(redirect_url)
+#             rdict = dict(redirect=redirect_url)
+#         else:
+#             rdict = dict(form=form, community=community)
+#     else:
+#         form = CommunityForm(instance=community)
+#         rdict = dict(form=form, community=community)
+#     geojson = create_geojson([community], convert=False)
+#     if geojson and geojson.get('features'):
+#         geojson['features'][0]['properties']['userCanEdit'] = True
+#     rdict['geojson'] = json.dumps(geojson)
+#     return render(request, template, rdict)
+
+
+@login_required
+@ajax_form('community/edit_ajax.html', CommunityForm)
+def new_community(request, *args, **kwargs):
+    logger.debug('acessing community > new_community')
+
+    def on_get(request,  form_community):
+        form_community.helper.form_action = reverse('new_community')
+        return form_community
+
+    def on_after_save(request, obj):
+        return {'redirect': reverse('view_community', args=(obj.slug,))}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save}
+
+
+@login_required
+@ajax_form('community/edit.html', CommunityForm)
+def edit_community(request, community_slug='', *args, **kwargs):
+    logger.debug('acessing community > edit_community : community_slug={}'
+        ''.format(community_slug))
 
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
     else:
-        community = Community(creator=request.user)
+        community = Community()
 
-    if request.POST:
-        form = CommunityForm(request.POST, instance=community)
-        if form.is_valid():
-            community = form.save()
-
-            redirect_url = reverse('view_community', args=(community.slug,))
-            if not request.is_ajax():
-                return redirect(redirect_url)
-            rdict = dict(redirect=redirect_url)
-        else:
-            rdict = dict(form=form, community=community)
-    else:
-        form = CommunityForm(instance=community)
-        rdict = dict(form=form, community=community)
     geojson = create_geojson([community], convert=False)
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
-    rdict['geojson'] = json.dumps(geojson)
-    return render(request, template, rdict)
+    geojson = json.dumps(geojson)
+
+    def on_get(request, form_community):
+        return CommunityForm(instance=community)
+
+    def on_after_save(request, obj):
+        url = reverse('view_community', args=(obj.slug,))
+        return {'redirect': url}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save, 'community': community,
+            'geojson': geojson}
 
 
 @render_to('community/on_map.html')

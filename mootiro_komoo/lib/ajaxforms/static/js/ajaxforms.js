@@ -70,7 +70,6 @@
                 $form.attr('action'),  /* url */
                 $form.serialize(),        /* dados */
                 function(data){           /* callback */
-                    console.dir(data);
                     if (data){
                         var validation_div;
                         /* em caso de sucesso limpa forma e chama callback */
@@ -78,7 +77,6 @@
                             // clean form
                             $form.clearForm();
                             // clean error messages
-                            // $('#validation-error').remove();
                             $('.error-field').remove();
                             $('.control-group.error').removeClass('error');
 
@@ -92,12 +90,10 @@
                         /* em caso de erro, trata os erros */
                         } else if (data.success === "false") {
                             // clean error messages
-                            // $('#validation-error').remove();
                             $('.error-field').remove();
                             $('.control-group.error').removeClass('error');
 
                             $.each(data.errors, function(key,val){
-                                console.log(key)
                                 if( key === "__all__"){
                                     validation_div = $('#validation-error');
                                     if (validation_div.length){
@@ -113,9 +109,7 @@
 
                                 // new validation style
                                 var node = $('#id_' + key);
-                                console.log('#id_' + key);
                                 for (i=0; ! node.is('.controls') && i < 5; node = node.parent(), i++);
-                                // node.append('<span class="inline-help">'+ val + '</span>')
                                 node.append('' +
                                 '<div class="error-field">' +
                                     '<img src="/static/img/erro.png" />'+
