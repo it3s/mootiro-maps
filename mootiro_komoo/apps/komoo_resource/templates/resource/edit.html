@@ -18,4 +18,10 @@
 {% block page_scripts %}
     {{ form_resource.media }}
     {% load_files resource %}
+    <script type="text/javascript">
+    $(function(){
+        $('#form_resource').ajaxform();
+    });
+
+  </script>
 {% endblock %}

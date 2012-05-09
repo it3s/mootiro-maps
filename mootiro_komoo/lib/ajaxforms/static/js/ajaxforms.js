@@ -44,6 +44,8 @@
     $.fn.ajaxform = function(config) {
         var $form =  this;
 
+        $form.data('is_ajaxform', true);
+
         /*  callback configs  */
         if (config && config.onSubmit){
             $form.onSubmit = config.onSubmit;

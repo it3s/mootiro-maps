@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.conf.urls.defaults import patterns, url
-from komoo_resource.views import Edit
 from mootiro_komoo.urls import prepare_regex as pr
 
 home_urls = [
@@ -14,12 +13,10 @@ urlpatterns = patterns('komoo_resource.views',
     url(r'^resource/?$', 'resource_list', name='resource_list'),
     url(r'^resource/new/$', 'new_resource',
             name='new_resource'),
-
-
+    url(r'^resource/edit/?$', 'edit_resource',
+            name='edit_resource'),
     url(r'^resource/new/from_map/$', 'new_resource_from_map',
             name='new_resource_from_map'),
-    url(r'^resource/edit/?$', Edit.as_view(),
-            name='resource_edit'),
 
     url(pr(r'^resource/RESOURCE_ID/?$'), 'show', name='view_resource'),
 
@@ -33,12 +30,13 @@ urlpatterns = patterns('komoo_resource.views',
 
     url(pr(r'^COMMUNITY_SLUG/resource/?$'), 'resource_list',
                 name='resource_list'),
-        url(pr(r'^COMMUNITY_SLUG/resource/new/$'), 'new_resource',
+    url(pr(r'^COMMUNITY_SLUG/resource/new/$'), 'new_resource',
                 name='new_resource'),
+    url(pr(r'^COMMUNITY_SLUG/resource/edit/?$'), 'edit_resource',
+                name='edit_resource'),
+    url(pr(r'^COMMUNITY_SLUG/resource/new/from_map/$'), 'new_resource_from_map',
+            name='new_resource_from_map'),
 
-
-    url(pr(r'^COMMUNITY_SLUG/resource/edit/?$'), Edit.as_view(),
-                name='resource_edit'),
     url(pr(r'^COMMUNITY_SLUG/resource/RESOURCE_ID/?$'), 'show',
                 name='view_resource'),
 )

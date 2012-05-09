@@ -42,7 +42,7 @@ class AjaxModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         r = super(AjaxModelForm, self).__init__(*args, **kwargs)
 
-        if hasattr(self, 'field_labels'):
+        if hasattr(self, '_field_labels'):
             for field, label in self._field_labels.iteritems():
                 self.fields[field].label = label
 
