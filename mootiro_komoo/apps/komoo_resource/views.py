@@ -85,6 +85,7 @@ def show(request, community_slug=None, resource_id=None):
                 community=community, photos=photos)
 
 
+@login_required
 @ajax_form('resource/new.html', FormResource, 'form_resource')
 def new_resource(request, community_slug='', *arg, **kwargs):
     logger.debug('acessing komoo_resource > new_resource')
@@ -107,6 +108,7 @@ def new_resource(request, community_slug='', *arg, **kwargs):
             'community': community}
 
 
+@login_required
 @ajax_form('resource/new_frommap.html', FormResourceGeoRef, 'form_resource')
 def new_resource_from_map(request, community_slug='', *args, **kwargs):
     logger.debug('acessing komoo_resource > new_resource_from_map')
@@ -129,6 +131,7 @@ def new_resource_from_map(request, community_slug='', *args, **kwargs):
             'community': community}
 
 
+@login_required
 @ajax_form('resource/edit.html', FormResourceGeoRef, 'form_resource')
 def edit_resource(request, community_slug='', *arg, **kwargs):
     logger.debug('acessing komoo_resource > edit_resource')
@@ -160,130 +163,6 @@ def edit_resource(request, community_slug='', *arg, **kwargs):
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
             'community': community, 'geojson': geojson, 'resource': resource}
-
-
-class New(View):
-    """ Class based view for editing a Resource """
-
-    @method_decorator(login_required)
-    def get(self, request, community_slug=None, *args, **kwargs):
-        logger.debug('acessing komoo_resource > New with GET')
-        community = get_object_or_None(Community, slug=community_slug)
-
-        form_resource = FormResource()
-        form_resource.fields['name'].initial = ''
-        form_resource.fields.pop('image', '')
-
-        if request.GET.get('frommap', None) == 'false':
-            form_resource.fields.pop('geometry', '')
-            tmplt = 'resource/new.html'
-        else:
-            tmplt = 'resource/new_frommap.html'
-
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form_resource.fields['community'].widget = forms.HiddenInput()
-            form_resource.initial['community'] = community.id
-
-        return render_to_response(tmplt,
-            dict(form_resource=form_resource, community=community),
-            context_instance=RequestContext(request))
-
-    def post(self, request, community_slug=None, *args, **kwargs):
-        logger.debug('acessing komoo_resource > New with POST : {}'.format(
-                        request.POST))
-
-        form_resource = FormResource(request.POST)
-        community = get_object_or_None(Community, slug=community_slug)
-
-        if request.GET.get('frommap', None) == 'false':
-            form_resource.fields.pop('geometry', '')
-            tmplt = 'resource/new.html'
-        else:
-            tmplt = 'resource/new_frommap.html'
-
-        if form_resource.is_valid():
-            resource = form_resource.save(user=request.user)
-
-            prefix = '/{}'.format(community_slug) if community_slug else ''
-            _url = '{}/resource/{}'.format(prefix, resource.id)
-            return render_to_response('resource/new_frommap.html',
-                dict(redirect=_url, form_resource=form_resource,
-                     community=community),
-                context_instance=RequestContext(request))
-        else:
-            logger.debug('Form erros: {}'.format(dict(form_resource._errors)))
-            return render_to_response(tmplt,
-                dict(form_resource=form_resource, community=community),
-                context_instance=RequestContext(request))
-
-
-# class Edit(View):
-#     """ Class based view for editing a Resource """
-
-#     @method_decorator(login_required)
-#     def get(self, request, community_slug=None, *args, **kwargs):
-#         logger.debug('acessing komoo_resource > Edit with GET')
-#         community = get_object_or_None(Community, slug=community_slug)
-
-#         _id = request.GET.get('id', None)
-#         if _id:
-#             resource = get_object_or_404(Resource, pk=_id)
-#             form_resource = FormResource(instance=resource)
-#         else:
-#             resource = None
-#             form_resource = FormResource()
-#             form_resource.fields.pop('image', '')
-
-#         if community:
-#             form_resource.fields['community'].widget = forms.HiddenInput()
-#             form_resource.initial['community'] = community.id
-
-#         geojson = create_geojson([resource], convert=False)
-#         if geojson and geojson.get('features'):
-#             geojson['features'][0]['properties']['userCanEdit'] = True
-#         geojson = json.dumps(geojson)
-
-#         return render_to_response('resource/edit.html',
-#             dict(form_resource=form_resource, community=community,
-#                 resource=resource, geojson=geojson),
-#             context_instance=RequestContext(request))
-
-#     def post(self, request, community_slug=None, *args, **kwargs):
-#         logger.debug('acessing komoo_resource > Edit with POST\n'
-#                      'POST : {}\nFILES : {}'.format(request.POST, request.FILES))
-#         _id = request.POST.get('id', None)
-#         # if _id:
-#         resource = get_object_or_404(Resource, pk=request.POST['id'])
-#         form_resource = FormResource(request.POST, request.FILES, instance=resource)
-#         # else:
-#         #     form_resource = FormResource(request.POST, request.FILES)
-
-#         community = get_object_or_None(Community, slug=community_slug)
-
-#         if form_resource.is_valid():
-#             resource = form_resource.save(user=request.user)
-
-#             prefix = '/{}'.format(community_slug) if community_slug else ''
-#             _url = '{}/resource/{}'.format(prefix, resource.id)
-#             if _id:
-#                 return HttpResponseRedirect(_url)
-#             else:
-#                 return render_to_response('resource/edit.html',
-#                     dict(redirect=_url, community=community),
-#                     context_instance=RequestContext(request))
-#         else:
-#             logger.debug('Form erros: {}'.format(dict(form_resource._errors)))
-
-#             geojson = create_geojson([resource], convert=False)
-#             if geojson and geojson.get('features'):
-#                 geojson['features'][0]['properties']['userCanEdit'] = True
-#             geojson = json.dumps(geojson)
-
-#             return render_to_response('resource/edit.html',
-#                 dict(form_resource=form_resource, community=community,
-#                      geojson=geojson, resource=resource),
-#                 context_instance=RequestContext(request))
 
 
 def search_by_kind(request):
