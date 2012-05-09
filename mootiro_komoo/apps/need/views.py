@@ -29,54 +29,6 @@ from main.utils import (create_geojson, paginated_query, sorted_query,
 logger = logging.getLogger(__name__)
 
 
-# @render_to('need/edit.html')
-# @login_required
-# def edit(request, community_slug="", need_slug=""):
-#     logger.debug('acessing need > edit')
-
-#     if request.is_ajax():
-#         template = "need/edit_ajax.html"
-#     else:
-#         template = "need/edit.html"
-
-#     community = get_object_or_404(Community, slug=community_slug) \
-#                     if community_slug else None
-#     if need_slug:
-#         need = get_object_or_404(Need, slug=need_slug, community=community) \
-#                 if community else get_object_or_404(Need, slug=need_slug)
-#     else:
-#         need = Need(creator=request.user)
-#         if community:
-#             need.community = community
-
-#     if request.POST:
-#         post = request.POST
-#         if community:
-#             post = request.POST.copy()  # needed because request.POST is immutable
-#             post['community'] = community.id
-#         form = NeedForm(post, instance=need)
-#         if form.is_valid():
-#             need = form.save()
-
-#             args = (need.community.slug, need.slug) if need.community else (need.slug,)
-#             redirect_url = reverse('view_need', args=args)
-#             if not request.is_ajax():
-#                 return redirect(redirect_url)
-#             rdict = dict(redirect=redirect_url)
-#         else:
-#             rdict = dict(form=form, community=community, need=need)
-#     else:
-#         form = NeedForm(instance=need)
-#         rdict = dict(form=form, community=community, need=need)
-#     if community:
-#         form.fields.pop('community')
-#     geojson = create_geojson([need], convert=False)
-#     if geojson and geojson.get('features'):
-#         geojson['features'][0]['properties']['userCanEdit'] = True
-#     rdict['geojson'] = json.dumps(geojson)
-#     return render(request, template, rdict)
-
-
 @login_required
 @ajax_form('need/edit.html', NeedForm)
 def new_need(request, community_slug="", need_slug=""):
