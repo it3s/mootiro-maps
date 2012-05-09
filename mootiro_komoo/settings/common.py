@@ -146,9 +146,9 @@ INSTALLED_APPS = [
     'gunicorn',
     'social_auth',
     # our apps
+    'main',
     'komoo_map',
     'community',
-    'main',
     'need',
     'proposal',
     'komoo_comments',

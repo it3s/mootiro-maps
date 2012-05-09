@@ -53,9 +53,7 @@ def run():
 def test(apps="community need"):
     """Run application tests"""
     print "Apps being tested:", apps
-    command = 'python manage.py test {} {} --verbosity=1'.format(apps, django_settings[env_])
-    print command
-    local(command)
+    local('python manage.py test {} {} --verbosity=2'.format(apps, django_settings[env_]))
 
 
 def js_urls():
