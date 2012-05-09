@@ -55,7 +55,7 @@ def test(REUSE_DB='1', apps="community need main"):
     REUSE_DB = int(REUSE_DB)
     if REUSE_DB:
         print "Reusing old last test DB..."
-    local('REUSE_DB={} python manage.py test {} {} --verbosity=3' \
+    local('REUSE_DB={} python manage.py test {} {} --verbosity=1' \
             .format(REUSE_DB, apps, django_settings[env_]))
 
 
