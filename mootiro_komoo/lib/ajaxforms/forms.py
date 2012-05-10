@@ -53,8 +53,7 @@ class AjaxModelForm(forms.ModelForm):
 
     def validation(self, field, msg, condition):
         if condition:
-            label = field
-            self.errors[label] = unicode(msg)
+            self.errors[field] = unicode(msg)
 
     def add_user(self, request):
         self.user = request.user

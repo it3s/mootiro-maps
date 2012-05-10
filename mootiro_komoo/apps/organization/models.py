@@ -19,7 +19,7 @@ from lib.taggit.managers import TaggableManager
 
 class Organization(models.Model):
     name = models.CharField(max_length=320, unique=True, db_index=True)
-    slug = models.SlugField(max_length=320, db_index=True)
+    slug = models.SlugField(max_length=320, unique=True, db_index=True)
     description = models.TextField(null=True, blank=True, db_index=True)
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 

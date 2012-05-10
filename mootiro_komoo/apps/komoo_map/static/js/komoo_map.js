@@ -85,7 +85,7 @@ komoo.RegionTypes = [
         icon: "/static/img/organization.png",
         overlayTypes: [komoo.OverlayType.POLYGON,
                        komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("organization_new",
+        formUrl: dutils.urls.resolve("new_organization_from_map",
             {community_slug: "community_slug"}),
         disabled: false
     },

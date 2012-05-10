@@ -4,6 +4,7 @@ import logging
 import json
 import markdown
 
+from django import forms
 from django.views.generic import View
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -13,16 +14,17 @@ from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
 from django.db.models import Count
+from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
 from lib.taggit.models import TaggedItem
+from ajaxforms import ajax_form
 
 
 from organization.models import Organization, OrganizationBranch
-from organization.forms import FormOrganizationNew, FormBranchNew, \
-                               FormOrganizationEdit
+from organization.forms import FormOrganization, FormBranch
 from community.models import Community
 from main.utils import (paginated_query, create_geojson, sorted_query,
                         filtered_query, fix_community_url)
@@ -86,141 +88,227 @@ def show(request, organization_slug='', community_slug=''):
                 community=community, photos=photos)
 
 
-class New(View):
-    """Class based view for adding a Organization"""
+@login_required
+@ajax_form('organization/new.html', FormOrganization, 'form_organization')
+def new_organization(request, community_slug='', *arg, **kwargs):
+    logger.debug('acessing organization > new_organization')
+    community = get_object_or_None(Community, slug=community_slug)
 
-    @method_decorator(login_required)
-    def get(self, request, community_slug=None, *args, **kwargs):
-        logger.debug('acessing organization > Edit with GET')
-        community = get_object_or_None(Community, slug=community_slug)
-
-        form_org = FormOrganizationNew()
-        form_branch = FormBranchNew()
-
-        if request.GET.get('frommap', None) == 'false':
-            form_branch.fields.pop('geometry', '')
-            tmplt = 'organization/new.html'
+    def on_get(request, form):
+        if community:
+            logger.debug('community_slug: {}'.format(community_slug))
+            form.fields['community'].widget = forms.HiddenInput()
+            form.initial['community'] = community.id
+        if community_slug:
+            form.helper.form_action = reverse('new_organization',
+                    kwargs={'community_slug': community_slug})
         else:
-            tmplt = 'organization/new_frommap.html'
+            form.helper.form_action = reverse('new_organization')
+        return form
 
-        return render_to_response(tmplt,
-            dict(form_org=form_org, form_branch=form_branch, community=community),
-            context_instance=RequestContext(request))
+    def on_after_save(request, obj):
+        _url = reverse('view_organization',
+                    kwargs={'organization_slug': obj.slug,
+                            'community_slug': community_slug})
+        return {'redirect': _url}
 
-    def post(self, request, community_slug=None, *args, **kwargs):
-        logger.debug('acessing organization > Edit with POST: {}'.format(
-            request.POST))
-
-        form_control = request.POST.get('form_control', '').split('|')
-
-        form_org = FormOrganizationNew(request.POST)
-        form_branch = FormBranchNew(request.POST)
-        community = get_object_or_None(Community, slug=community_slug)
-
-        if request.GET.get('frommap', None) == 'false':
-            form_branch.fields.pop('geometry', '')
-
-        org_is_valid = not 'organization' in form_control or form_org.is_valid()
-        branch_is_valid = not 'branch' in form_control or form_branch.is_valid()
-
-        if org_is_valid and branch_is_valid:
-            if 'organization' in form_control:
-                organization = form_org.save(user=request.user)
-            else:
-                organization = Organization.objects.get(pk=request.POST.get('org_name'))
-            if 'branch' in form_control:
-                form_branch.save(user=request.user, organization=organization)
-
-            prefix = '/{}'.format(community_slug) if community_slug else ''
-            _url = '{}/organization/{}'.format(prefix, organization.slug)
-            return render_to_response('organization/new_frommap.html',
-                dict(redirect=_url, form_org=form_org, form_branch=form_branch,
-                     community=community),
-                context_instance=RequestContext(request))
-        else:
-            if form_org and form_org._errors:
-                logger.debug('Form Org errors: {}'.format(
-                                                    dict(form_org._errors)))
-            if form_branch and form_branch._errors:
-                logger.debug('Form Org errors: {}'.format(
-                                                    dict(form_branch._errors)))
-            return render_to_response('organization/new.html',
-                dict(form_org=form_org, form_branch=form_branch,
-                     community=community),
-                context_instance=RequestContext(request))
+    return {'on_get': on_get, 'on_after_save': on_after_save,
+            'community': community}
 
 
-class Edit(View):
-    """Class based view for editing a Organization"""
+@login_required
+def new_organization_from_map(request, community_slug='', *args, **kwargs):
+    logger.debug('acessing organization > new_organization_from_map')
+    # TODO IMPLEMENT ME
+    community = get_object_or_None(Community, slug=community_slug)
+    return {'community': community}
 
-    @method_decorator(login_required)
-    def get(self, request, community_slug=None, *args, **kwargs):
-        logger.debug('acessing organization > Edit with GET')
-        community = get_object_or_None(Community, slug=community_slug)
 
-        _id = request.GET.get('id', None)
-        if _id:
-            organization = get_object_or_404(Organization, pk=_id)
+@login_required
+@ajax_form('organization/edit.html', FormOrganization, 'form_organization')
+def edit_organization(request, community_slug='', organization_slug='',
+                      *arg, **kwargs):
+    logger.debug('acessing organization > edit_organization')
+    community = get_object_or_None(Community, slug=community_slug)
+    organization = get_object_or_None(Organization, pk=request.GET.get('id', 0))
 
-            form_org = FormOrganizationEdit(instance=organization)
-            geojson = create_geojson([organization], convert=False)
-            if geojson and geojson.get('features'):
-                geojson['features'][0]['properties']['userCanEdit'] = True
-            geojson = json.dumps(geojson)
-        else:
-            form_org = FormOrganizationEdit()
-            organization = Organization()
-            geojson = '{}'
+    geojson = create_geojson([organization], convert=False)
+    if geojson and geojson.get('features'):
+        geojson['features'][0]['properties']['userCanEdit'] = True
+    geojson = json.dumps(geojson)
 
-        tmplt = 'organization/edit.html'
-        return render_to_response(tmplt,
-            dict(form_org=form_org, community=community,
-                 organization=organization, geojson=geojson),
-            context_instance=RequestContext(request))
+    def on_get(request, form):
+        form = FormOrganization(instance=organization)
+        if community:
+            logger.debug('community_slug: {}'.format(community_slug))
+            form.fields['community'].widget = forms.HiddenInput()
+            form.initial['community'] = community.id
+        form.helper.form_action = reverse('edit_organization',
+                kwargs={'community_slug': community_slug})
+        return form
 
-    def post(self, request, community_slug=None, *args, **kwargs):
-        logger.debug('acessing organization > Edit with POST: {}'.format(
-            request.POST))
-        _id = request.POST.get('id', None)
+    def on_after_save(request, obj):
+        _url = reverse('view_organization',
+                    kwargs={'organization_slug': obj.slug,
+                            'community_slug': community_slug})
+        return {'redirect': _url}
 
-        if _id:
-            organization = get_object_or_404(Organization,
-                pk=request.POST['id'])
-            form_org = FormOrganizationEdit(request.POST, instance=organization)
-        else:
-            form_org = FormOrganizationEdit(request.POST)
+    return {'on_get': on_get, 'on_after_save': on_after_save,
+            'community': community, 'geojson': geojson,
+            'organization': organization}
 
-        community = get_object_or_None(Community, slug=community_slug)
 
-        if form_org.is_valid():
-            organization = form_org.save(user=request.user)
+@login_required
+def edit_branch(request, community_slug='', *arg, **kwargs):
+    logger.debug('acessing organization > edit_branch')
+    community = get_object_or_None(Community, slug=community_slug)
+    # TODO IMPLEMENT ME
+    return {'community': community}
 
-            geojson = create_geojson([organization], convert=False)
-            if geojson and geojson.get('features'):
-                geojson['features'][0]['properties']['userCanEdit'] = True
-            geojson = json.dumps(geojson)
 
-            prefix = '/{}'.format(community_slug) if community_slug else ''
-            _url = '{}/organization/{}'.format(prefix, organization.slug)
-            if _id:
-                return HttpResponseRedirect(_url)
-            else:
-                return render_to_response('organization/edit.html',
-                    dict(redirect=_url, community=community, geojson=geojson,
-                         organization=organization),
-                    context_instance=RequestContext(request))
-        else:
-            logger.debug('Form erros: {}'.format(dict(form_org._errors)))
-            tmplt = 'organization/edit.html'
-            return render_to_response(tmplt,
-                dict(form_org=form_org, community=community, geojson='{}',
-                     organization=organization),
-                context_instance=RequestContext(request))
+@login_required
+def edit_org(request, community_slug='', *arg, **kwargs):
+    logger.debug('acessing organization > edit_org')
+    community = get_object_or_None(Community, slug=community_slug)
+    # TODO IMPLEMENT ME
+    return {'community': community}
+
+
+# class New(View):
+#     """Class based view for adding a Organization"""
+
+#     @method_decorator(login_required)
+#     def get(self, request, community_slug=None, *args, **kwargs):
+#         logger.debug('acessing organization > Edit with GET')
+#         community = get_object_or_None(Community, slug=community_slug)
+
+#         form_org = FormOrganizationNew()
+#         form_branch = FormBranchNew()
+
+#         if request.GET.get('frommap', None) == 'false':
+#             form_branch.fields.pop('geometry', '')
+#             tmplt = 'organization/new.html'
+#         else:
+#             tmplt = 'organization/new_frommap.html'
+
+#         return render_to_response(tmplt,
+#             dict(form_org=form_org, form_branch=form_branch, community=community),
+#             context_instance=RequestContext(request))
+
+#     def post(self, request, community_slug=None, *args, **kwargs):
+#         logger.debug('acessing organization > Edit with POST: {}'.format(
+#             request.POST))
+
+#         form_control = request.POST.get('form_control', '').split('|')
+
+#         form_org = FormOrganizationNew(request.POST)
+#         form_branch = FormBranchNew(request.POST)
+#         community = get_object_or_None(Community, slug=community_slug)
+
+#         if request.GET.get('frommap', None) == 'false':
+#             form_branch.fields.pop('geometry', '')
+
+#         org_is_valid = not 'organization' in form_control or form_org.is_valid()
+#         branch_is_valid = not 'branch' in form_control or form_branch.is_valid()
+
+#         if org_is_valid and branch_is_valid:
+#             if 'organization' in form_control:
+#                 organization = form_org.save(user=request.user)
+#             else:
+#                 organization = Organization.objects.get(pk=request.POST.get('org_name'))
+#             if 'branch' in form_control:
+#                 form_branch.save(user=request.user, organization=organization)
+
+#             prefix = '/{}'.format(community_slug) if community_slug else ''
+#             _url = '{}/organization/{}'.format(prefix, organization.slug)
+#             return render_to_response('organization/new_frommap.html',
+#                 dict(redirect=_url, form_org=form_org, form_branch=form_branch,
+#                      community=community),
+#                 context_instance=RequestContext(request))
+#         else:
+#             if form_org and form_org._errors:
+#                 logger.debug('Form Org errors: {}'.format(
+#                                                     dict(form_org._errors)))
+#             if form_branch and form_branch._errors:
+#                 logger.debug('Form Org errors: {}'.format(
+#                                                     dict(form_branch._errors)))
+#             return render_to_response('organization/new.html',
+#                 dict(form_org=form_org, form_branch=form_branch,
+#                      community=community),
+#                 context_instance=RequestContext(request))
+
+
+# class Edit(View):
+#     """Class based view for editing a Organization"""
+
+#     @method_decorator(login_required)
+#     def get(self, request, community_slug=None, *args, **kwargs):
+#         logger.debug('acessing organization > Edit with GET')
+#         community = get_object_or_None(Community, slug=community_slug)
+
+#         _id = request.GET.get('id', None)
+#         if _id:
+#             organization = get_object_or_404(Organization, pk=_id)
+
+#             form_org = FormOrganizationEdit(instance=organization)
+#             geojson = create_geojson([organization], convert=False)
+#             if geojson and geojson.get('features'):
+#                 geojson['features'][0]['properties']['userCanEdit'] = True
+#             geojson = json.dumps(geojson)
+#         else:
+#             form_org = FormOrganizationEdit()
+#             organization = Organization()
+#             geojson = '{}'
+
+#         tmplt = 'organization/edit.html'
+#         return render_to_response(tmplt,
+#             dict(form_org=form_org, community=community,
+#                  organization=organization, geojson=geojson),
+#             context_instance=RequestContext(request))
+
+#     def post(self, request, community_slug=None, *args, **kwargs):
+#         logger.debug('acessing organization > Edit with POST: {}'.format(
+#             request.POST))
+#         _id = request.POST.get('id', None)
+
+#         if _id:
+#             organization = get_object_or_404(Organization,
+#                 pk=request.POST['id'])
+#             form_org = FormOrganizationEdit(request.POST, instance=organization)
+#         else:
+#             form_org = FormOrganizationEdit(request.POST)
+
+#         community = get_object_or_None(Community, slug=community_slug)
+
+#         if form_org.is_valid():
+#             organization = form_org.save(user=request.user)
+
+#             geojson = create_geojson([organization], convert=False)
+#             if geojson and geojson.get('features'):
+#                 geojson['features'][0]['properties']['userCanEdit'] = True
+#             geojson = json.dumps(geojson)
+
+#             prefix = '/{}'.format(community_slug) if community_slug else ''
+#             _url = '{}/organization/{}'.format(prefix, organization.slug)
+#             if _id:
+#                 return HttpResponseRedirect(_url)
+#             else:
+#                 return render_to_response('organization/edit.html',
+#                     dict(redirect=_url, community=community, geojson=geojson,
+#                          organization=organization),
+#                     context_instance=RequestContext(request))
+#         else:
+#             logger.debug('Form erros: {}'.format(dict(form_org._errors)))
+#             tmplt = 'organization/edit.html'
+#             return render_to_response(tmplt,
+#                 dict(form_org=form_org, community=community, geojson='{}',
+#                      organization=organization),
+#                 context_instance=RequestContext(request))
 
 
 @ajax_request
-def branch_edit(request):
-    logger.debug('acessing organization > branch_edit: POST={}'.format(
+def edit_inline_branch(request):
+    logger.debug('acessing organization > edit_inline_branch: POST={}'.format(
             request.POST))
 
     if request.POST.get('id', None):

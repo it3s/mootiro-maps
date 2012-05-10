@@ -5,30 +5,8 @@
 {% block content %}
     <div id="main-content">
         <div class="main-column">
-            <form method="POST" id="form_organization">
-                <div id="verify_field">
-                    <label for="id_org_name">{% trans 'Organization Name:' %}</label>
-                    <input type="hidden"  name="org_name" value="" id="id_org_name" />
-                    <input type="text"  id="id_org_name_autocomplete" name="org_name_text" value="" />
-
-                    <input type="hidden"  name="form_control" value="" id="id_form_control" />
-                </div>
-                <div class="organization_fields">
-                    <hr>
-                    <h3>{% trans 'Organization Data' %}</h3>
-                    {% crispy form_org %}
-                </div>
-                <div class="branch_fields">
-                    <hr>
-                    <h3>{% trans 'Branch Data' %}</h3>
-                    {% crispy form_branch %}
-                </div>
-                <div id="form_organization_btns">
-                    <input type='submit' value='submit' id='submit_btn'/>
-                </div>
-            </form>
+            {% crispy form_organization %}
         </div>
-
   </div>
 {% endblock %}
 
@@ -38,6 +16,10 @@
 {% endblock %}
 
 {% block page_scripts %}
-    {{ form.media }}
-    <script type="text/javascript" src='{{ STATIC_URL }}js/new_organization.js'> </script>
+    {{ form_organization.media }}
+    <script type="text/javascript">
+        $(function(){
+            $('#form_organization').ajaxform();
+        });
+    </script>
 {% endblock %}
