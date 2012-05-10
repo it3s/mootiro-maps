@@ -407,9 +407,58 @@ a:hover .icon-investment, li.selected .icon-investment {
 }
 
 /* Map panels */
+#collapse-panel {
+    background: url("../img/collapse-horizontal.png") no-repeat center center;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    cursor: pointer;
+    z-index: 1000;
+}
+#collapse-panel:hover {
+    background-image: url("../img/collapse-horizontal-hover.png");
+}
+.collapsed #collapse-panel {
+    background-image: url("../img/expand-horizontal.png");
+}
+.collapsed #collapse-panel:hover {
+    background-image: url("../img/expand-horizontal-hover.png");
+}
 #map-panel {
+    transition: left 1s;
+    -moz-transition: left 1s; /* Firefox 4 */
+    -webkit-transition: left 1s; /* Safari and Chrome */
+    -o-transition: left 1s; /* Opera */
     background: #fafafa;
-    padding: 0;
+    padding: 0 30px 0 0;
+    position: relative;
+    left: 0px;
+}
+.collapsed #map-panel {
+    left: -300px !important;
+}
+.collapsed #map-panel-content {
+    transition: opacity 1s;
+    -moz-transition: opacity 1s; /* Firefox 4 */
+    -webkit-transition: opacity 1s; /* Safari and Chrome */
+    -o-transition: opacity 1s; /* Opera */
+    opacity: 0;
+}
+#map-canvas-main {
+    transition: margin-left 1s;
+    -moz-transition: margin-left 1s; /* Firefox 4 */
+    -webkit-transition: margin-left 1s; /* Safari and Chrome */
+    -o-transition: margin-left 1s; /* Opera */
+    margin-left: 330px !important;
+}
+.collapsed #map-canvas-main {
+    margin-left: 30px !important;
+    width: auto !important;
+}
+#map-panel-content {
+    margin-right: -30px;
 }
 #map-panel div.img-holder {
     width: 35px;

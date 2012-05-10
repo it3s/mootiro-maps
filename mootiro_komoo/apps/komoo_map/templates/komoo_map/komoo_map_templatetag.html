@@ -7,10 +7,10 @@
       document.write("<s" + "cript type=\"text/javascript\" src=\"http://www.google.com/jsapi\"" + "><" + "/script>");
     }
     if (!window.komoo) {
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/infobox_packed.js\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/markerclusterer_packed.js\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/multimarker.js\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/infobox_packed.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/markerclusterer_packed.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/multimarker.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
     }
   </script>
 {% endblock %}
@@ -119,13 +119,15 @@
         // Fill the screen.
         function fixMapSize() {
           {% if height == '100%' %}
-          var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 3;
+          var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
           $('#' + mapCanvasId).height(height);
           $('#map-panel').height(height);
           {% endif %}
           {% if width == '100%' %}
           var panelWidth = $('#map-panel').innerWidth();
-          $('#' + mapCanvasId).width($('body').innerWidth() - panelWidth).css('margin-left', panelWidth);
+          var panelLeft = $('#map-panel').position().left;
+          //$('#' + mapCanvasId).width($('body').innerWidth() - panelWidth - panelLeft).css('margin-left', panelWidth + panelLeft);
+          $('#' + mapCanvasId).css({marginLeft: panelWidth + panelLeft, width: 'auto'});
           {% endif %}
           google.maps.event.trigger({{ type }}.googleMap, 'resize');
         }
