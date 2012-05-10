@@ -6,7 +6,6 @@ import logging
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
-from django.forms import model_to_dict
 
 from annoying.functions import get_object_or_None
 from annoying.decorators import render_to
@@ -34,30 +33,6 @@ def prepare_proposal_objects(community_slug="", need_slug="", proposal_number=""
     else:
         proposal = Proposal(need=need)
     return proposal, need, community
-
-
-# @render_to('proposal/edit.html')
-# @login_required
-# def edit(request, community_slug="", need_slug="", proposal_number=""):
-#     logger.debug('acessing proposal > edit')
-#     proposal, need, community = prepare_proposal_objects(community_slug,
-#         need_slug, proposal_number)
-#     if request.POST:
-#         form = ProposalForm(request.POST, instance=proposal)
-#         if form.is_valid():
-#             proposal = form.save(commit=False)
-#             if not proposal.id:  # was never saved
-#                 proposal.creator = request.user
-#             proposal.save()
-
-#             kw = dict(need_slug=proposal.need.slug, proposal_number=proposal.number)
-#             if proposal.need.community:
-#                 kw["community_slug"] = proposal.need.community.slug
-#             return redirect('view_proposal', **kw)
-#         else:
-#             return dict(form=form, need=need, community=community)
-#     else:
-#         return dict(form=ProposalForm(instance=proposal), community=community)
 
 
 @login_required
