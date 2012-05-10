@@ -42,6 +42,9 @@ class AjaxModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         r = super(AjaxModelForm, self).__init__(*args, **kwargs)
 
+        if 'instance' in kwargs:
+            self.fields['id'].initial = kwargs['instance'].pk
+
         if hasattr(self, '_field_labels'):
             for field, label in self._field_labels.iteritems():
                 self.fields[field].label = label
@@ -58,7 +61,7 @@ class AjaxModelForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         obj = super(AjaxModelForm, self).save(*args, **kwargs)
-        if self.user and hasattr(obj, 'creator'):
+        if (not self.cleaned_data['id']) and self.user and hasattr(obj, 'creator'):
             obj.creator_id = self.user.id
             obj.save()
         return obj
@@ -111,11 +114,6 @@ def ajax_form(template=None, form_class=None, form_name="form"):
 
             request.POST = request.POST.copy()
 
-            # callback on_before_validation
-            if 'on_before_validation' in output:
-                logger.debug('[ajaxforms] callback on_before_validation:')
-                output.pop('on_before_validation')(request)
-
             logger.debug('[ajaxforms] post data: %s' % request.POST)
             id_ = request.POST.get('id', '') or \
                   request.POST.get('pk', '') or None
@@ -125,6 +123,14 @@ def ajax_form(template=None, form_class=None, form_name="form"):
             else:
                 form = form_class(request.POST)
             form.add_user(request)
+
+            # callback on_before_validation
+            if 'on_before_validation' in output:
+                logger.debug('[ajaxforms] callback on_before_validation:')
+                r_bval = output.pop('on_before_validation')(request, form)
+                if isinstance(r_bval, form_class):
+                    form = r_bval
+
             json_ = {}
             if form.is_valid():
                 try:

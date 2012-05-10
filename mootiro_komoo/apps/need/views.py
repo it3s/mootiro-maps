@@ -86,8 +86,7 @@ def edit_need(request, community_slug="", need_slug=""):
     logger.debug('acessing need > new_need')
 
     community = get_object_or_None(Community, slug=community_slug)
-    if need_slug:
-        need = get_object_or_404(Need, slug=need_slug, community=community) \
+    need = get_object_or_404(Need, slug=need_slug, community=community) \
                 if community else get_object_or_404(Need, slug=need_slug)
 
     geojson = create_geojson([need], convert=False)
