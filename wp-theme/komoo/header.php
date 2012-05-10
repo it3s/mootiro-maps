@@ -68,6 +68,15 @@
 </head>
 
 <body <?php body_class(); ?>>
+<nav id="mootiro-bar">
+	<ul>
+		<li><a href="http://mootiro.org/">Mootiro</a></li>
+		<li><a href="http://form.mootiro.org/">Form</a></li>
+		<li><a href="http://vote.mootiro.org/">Vote</a></li>
+		<li><a href="http://maps.mootiro.org/">Maps</a></li>
+		<li><a href="http://wiki.mootiro.org/">Wiki</a></li>
+	</ul>
+</nav>
 <div id="page" class="hfeed">
 	<header id="branding" role="banner">
 			<div id="logo">
