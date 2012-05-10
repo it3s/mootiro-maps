@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Mootiro Map blog theme\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-05-10 16:44-0300\n"
-"PO-Revision-Date: 2012-05-10 17:24-0300\n"
+"PO-Revision-Date: 2012-05-10 17:31-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
 "Language: \n"
@@ -75,17 +75,17 @@ msgstr "Editar"
 #: content-single.php:38
 #, php-format
 msgid "<span class=\"post-date\">%7$s</span> %1$s and tagged %2$s. <a href=\"%3$s\" title=\"Permalink to %4$s\" class=\"permalink\" rel=\"bookmark\">Permalink</a>"
-msgstr "<span class=\"post-date\">%7$s</span> %1$s e marcado %2$s. Guardar <a href=\"%3$s\" title=\"Link permanente para %4$s\" rel=\"bookmark\">link permanente</a>."
+msgstr "<span class=\"post-date\">%7$s</span> %1$s e marcado %2$s. Guardar <a href=\"%3$s\" title=\"Link permanente para %4$s\" class=\"permalink\" rrel=\"bookmark\">link permanente</a>."
 
 #: content-single.php:40
 #, php-format
 msgid "<span class=\"post-date\">%7$s</span> %1$s <a href=\"%3$s\" title=\"Permalink to %4$s\" class=\"permalink\" rel=\"bookmark\">Permalink</a>"
-msgstr "<span class=\"post-date\">%7$s</span> %1$s <a href=\"%3$s\" title=\"Link permanente para %4$s\" rel=\"bookmark\">link permanente</a>."
+msgstr "<span class=\"post-date\">%7$s</span> %1$s <a href=\"%3$s\" title=\"Link permanente para %4$s\" class=\"permalink\" rel=\"bookmark\">link permanente</a>."
 
 #: content-single.php:42
 #, php-format
 msgid "<span class=\"post-date\">%7$s</span> <a href=\"%3$s\" title=\"Permalink to %4$s\" class=\"permalink\" rel=\"bookmark\">permalink</a>"
-msgstr "<span class=\"post-date\">%7$s</span> <a href=\"%3$s\" title=\"Link permanente para %4$s\" rel=\"bookmark\">link permanente</a>."
+msgstr "<span class=\"post-date\">%7$s</span> <a href=\"%3$s\" title=\"Link permanente para %4$s\" class=\"permalink\" rel=\"bookmark\">link permanente</a>."
 
 #: content-single.php:64
 #, php-format
