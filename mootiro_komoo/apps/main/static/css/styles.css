@@ -178,7 +178,7 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     float: left;
 }
 #top #menu li a {
-    padding: 4px 20px;
+    padding: 4px 15px;
     display: block;
     color: #000;
 }
@@ -189,17 +189,17 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 
     background-color: #ededed;
     /* Generated from: http://gradients.glrzad.com/ */
-    background-image: linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -o-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -moz-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -webkit-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -ms-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #CECECE), color-stop(1, #EDEDED)) !important;
+    background-image: linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -o-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -moz-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -webkit-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -ms-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #CECECE), color-stop(1, #EDEDED));
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CECECE, endColorstr=#EDEDED)";
 }
 .button, .map-panel .content .map-button,
-#top #menu li a:hover, #top #menu li.selected a,
 /*.map-menuitem:hover,*/ .map-menuitem.selected,
+#top #menu li a:hover, #top #menu li.selected a,
 .map-tab a:hover, .map-tab.selected a,
 .map-button:hover, .map-button.selected,
 .organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected  {
@@ -233,6 +233,150 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 #komoo-map-delete-button {
     margin: 0 5px;
 }
+
+#top #menu [class^="icon-"] {
+    background-position: 0 0;
+    margin-right: 5px;
+}
+
+#top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -o-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #E84239), color-stop(1, #EA5D4E)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#E84239, endColorstr=#EA5D4E))";
+}
+#top #menu #menu-map a:active {
+    background: #E84239 !important;
+}
+
+#top #menu #menu-community a:hover, #top #menu #menu-community.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -o-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #F08138), color-stop(1, #F59C56)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F08138, endColorstr=#F59C56))";
+}
+#top #menu #menu-community a:active {
+    background: #F08138 !important;
+}
+
+#top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -o-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #E83361), color-stop(1, #EA5172)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=, endColorstr= #EA5172))";
+}
+#top #menu #menu-need a:active {
+    background: #E83361 !important;
+}
+
+#top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -o-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #3E5FA9), color-stop(1, #5573B7)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#3E5FA9, endColorstr=#5573B7))";
+}
+#top #menu #menu-organization a:active {
+    background: #3E5FA9 important;
+}
+
+#top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -o-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #1D9DD9), color-stop(1, #51AEE2)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#1D9DD9, endColorstr=#51AEE2))";
+}
+#top #menu #menu-resource a:active {
+    background: #1D9DD9 !important;
+}
+
+#top #menu #menu-investment a:hover, #top #menu #menu-investment.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
+    background-image: -o-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%)) !important;
+    background-image: -ms-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%)) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #AB9E15), color-stop(1, #CABE2C)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#AB9E15, endColorstr=#CABE2C))";
+}
+#top #menu #menu-investment a:active {
+    background: #AB9E15 !important;
+}
+
+.icon-map {
+    background-image: url("../img/menu/map.png");
+    width: 10px;
+    height: 15px;
+}
+a:hover .icon-map, li.selected .icon-map {
+    background-image: url("../img/menu/map-active.png");
+}
+
+.icon-community {
+    background-image: url("../img/menu/community.png");
+    width: 15px;
+    height: 17px;
+}
+a:hover .icon-community, li.selected .icon-community {
+    background-image: url("../img/menu/community-active.png");
+}
+
+.icon-need {
+    background-image: url("../img/menu/need.png");
+    width: 18px;
+    height: 16px;
+}
+a:hover .icon-need, li.selected .icon-need {
+    background-image: url("../img/menu/need-active.png");
+}
+
+.icon-organization {
+    background-image: url("../img/menu/organization.png");
+    width: 16px;
+    height: 15px;
+}
+a:hover .icon-organization, li.selected .icon-organization {
+    background-image: url("../img/menu/organization-active.png");
+}
+
+.icon-resource {
+    background-image: url("../img/menu/resource.png");
+    width: 23px;
+    height: 15px;
+}
+a:hover .icon-resource, li.selected .icon-resource {
+    background-image: url("../img/menu/resource-active.png");
+}
+
+.icon-investment {
+    background-image: url("../img/menu/investment.png");
+    width: 20px;
+    height: 15px;
+}
+a:hover .icon-investment, li.selected .icon-investment {
+    background-image: url("../img/menu/investment-active.png");
+}
+
 .map-button {
     cursor: pointer;
     float: left;

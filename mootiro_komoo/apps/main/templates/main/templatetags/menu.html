@@ -1,51 +1,51 @@
 {% load i18n %}
 <ul id="menu">
 
-  <li{% if selected_area == 'map' %} class='selected'{% endif %}>
+  <li{% if selected_area == 'map' %} class='selected'{% endif %} id="menu-map">
     {% if community %}
-    <a href="{% url community_on_map community.slug %}">{% trans 'Map' %}</a>
+    <a href="{% url community_on_map community.slug %}"><i class="icon-map"></i>{% trans 'Map' %}</a>
     {% else %}
-    <a href="{% url root %}">{% trans 'Map' %}</a>
+    <a href="{% url root %}"><i class="icon-map"></i>{% trans 'Map' %}</a>
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'community' %} class='selected'{% endif %}>
+  <li{% if selected_area == 'community' %} class='selected'{% endif %} id="menu-community">
     {% if community %}
-    <a href="{% url view_community community.slug %}">{% trans 'About the community' %}</a>
+    <a href="{% url view_community community.slug %}"><i class="icon-community"></i>{% trans 'About the community' %}</a>
     {% else %}
-    <a href="{% url list_communities %}">{% trans 'Communities' %}</a>
+    <a href="{% url list_communities %}"><i class="icon-community"></i>{% trans 'Communities' %}</a>
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'need' %} class='selected'{% endif %}>
+  <li{% if selected_area == 'need' %} class='selected'{% endif %} id="menu-need">
     {% if community %}
-    <a href="{% url list_community_needs community.slug %}">{% trans 'Needs' %}</a>
+    <a href="{% url list_community_needs community.slug %}"><i class="icon-need"></i>{% trans 'Needs' %}</a>
     {% else %}
-    <a href="{% url list_all_needs %}">{% trans 'Needs' %}</a>
+    <a href="{% url list_all_needs %}"><i class="icon-need"></i>{% trans 'Needs' %}</a>
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'organization' %} class='selected'{% endif %}>
+  <li{% if selected_area == 'organization' %} class='selected'{% endif %} id="menu-organization">
     {% if community %}
-    <a href="{% url organization_list community.slug %}">{% trans 'Organizations' %}</a>
+    <a href="{% url organization_list community.slug %}"><i class="icon-organization"></i>{% trans 'Organizations' %}</a>
     {% else %}
-    <a href="{% url organization_list %}">{% trans 'Organizations' %}</a>
+    <a href="{% url organization_list %}"><i class="icon-organization"></i>{% trans 'Organizations' %}</a>
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'resource' %} class='selected'{% endif %}>
+  <li{% if selected_area == 'resource' %} class='selected'{% endif %} id="menu-resource">
     {% if community %}
-    <a href="{% url resource_list community.slug %}">{% trans 'Resources' %}</a>
+    <a href="{% url resource_list community.slug %}"><i class="icon-resource"></i>{% trans 'Resources' %}</a>
     {% else %}
-    <a href="{% url resource_list %}">{% trans 'Resources' %}</a>
+    <a href="{% url resource_list %}"><i class="icon-resource"></i>{% trans 'Resources' %}</a>
     {% endif %}
   </li>
 
-  <li{% if selected_area == 'investment' %} class='selected'{% endif %}>
+  <li{% if selected_area == 'investment' %} class='selected'{% endif %} id="menu-investment">
     {% if community %}
-    <a href="{% url investment_list community.slug %}">{% trans 'Investments' %}</a>
+    <a href="{% url investment_list community.slug %}"><i class="icon-investment"></i>{% trans 'Investments' %}</a>
     {% else %}
-    <a href="{% url investment_list %}">{% trans 'Investments' %}</a>
+    <a href="{% url investment_list %}"><i class="icon-investment"></i>{% trans 'Investments' %}</a>
     {% endif %}
   </li>
 </ul>
