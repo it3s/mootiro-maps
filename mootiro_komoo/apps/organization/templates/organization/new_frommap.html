@@ -1,43 +1,43 @@
-{% if redirect %}
-    <script type="text/javascript">window.location = '{{ redirect }}';</script>
-{% else %}
+{% extends 'global.html' %}
 
-    {% load crispy_forms_tags %}
-    {% load i18n %}
+{% load crispy_forms_tags %}
+{% load i18n %}
 
-    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
-    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
-    {{ form_org.media }}
-    <script type="text/javascript" src='{{ STATIC_URL }}js/new_organization.js'> </script>
-
+{% block content %}
     <div id="main-content">
         <div class="main-column">
-            <form method="POST" id="form_organization">
-                <div id="verify_field">
-                    <label for="id_org_name">{% trans 'Organization Name:' %}</label>
-                    <input type="hidden"  name="org_name" value="" id="id_org_name" />
-                    <input type="text"  id="id_org_name_autocomplete" name="org_name_text" value="" />
-
-                    <input type="hidden"  name="form_control" value="" id="id_form_control" />
+            <div id="div-progress">
+                <div class="progress">
+                    <div class="bar" style="width: 20%;"></div>
                 </div>
-                <div class="organization_fields">
-                    <hr>
-                    <h3>{% trans 'Organization Data' %}</h3>
-                    {% crispy form_org %}
+                <div class="alert alert-info" data-alert="info">
+                    <button class="close" data-dismiss="alert">×</button>
+                    <strong>step x of y</strong> (w% completo)
                 </div>
-                <div class="branch_fields">
-                    <hr>
-                    <h3>{% trans 'Branch Data' %}</h3>
-                    {% crispy form_branch %}
-                </div>
-                <div id="form_organization_btns">
-                    <input type='submit' value='submit' id='submit_btn'/>
-                </div>
-            </form>
-
+            </div>
+            <div id="div-form-organization">
+                {% crispy form_org %}
+            </div>
+            <div id="div-form-branch">
+                {% crispy form_branch %}
+            </div>
         </div>
     </div>
 
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
+
+{% endblock %}
+
+{% block page_scripts %}
+    {{ form_org.media }}
+    <script type="text/javascript">
 
 
-{% endif %}
+    </script>
+
+{% endblock %}
+

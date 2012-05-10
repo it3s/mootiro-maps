@@ -117,11 +117,14 @@ def new_organization(request, community_slug='', *arg, **kwargs):
 
 
 @login_required
+@render_to('organization/new_frommap.html')
 def new_organization_from_map(request, community_slug='', *args, **kwargs):
     logger.debug('acessing organization > new_organization_from_map')
-    # TODO IMPLEMENT ME
     community = get_object_or_None(Community, slug=community_slug)
-    return {'community': community}
+    form_org = FormOrganization()
+    form_branch = FormBranch()
+    return {'community': community, 'form_org': form_org,
+            'form_branch': form_branch}
 
 
 @login_required

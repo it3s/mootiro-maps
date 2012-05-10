@@ -623,7 +623,6 @@ form .formRow > div {
     margin-right: 5px;
 }
 form .datepicker { width: 7em }
-
 #need_form { width: 100% }
 #need_form input[type=text], #need_form textarea { width: 100% }
 #need_form #div_id_categories ul { display: inline-block }
@@ -856,6 +855,23 @@ input[type=text], textarea{
 }
 .inline-block{
   display: inline-block;
+}
+form .control-group .controls input{
+    width: 99%;
+}
+ul.ui-autocomplete.ui-menu{
+   border: solid 1px #BCE8F1;
+}
+ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all{
+    background-color: #D9EDF7;
+    border: none;
+    border-radius: 0;
+}
+ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
+    background-image: none;
+    background-color: #BCE8F1;
+    color: #3A87AD;
+    font-weight: bold;
 }
 /* ========= Entity show ====== */
 .view-header{

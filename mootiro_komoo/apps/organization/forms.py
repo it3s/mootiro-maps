@@ -117,8 +117,7 @@ class FormBranch(AjaxModelForm):
     }
 
     def __init__(self, *args, **kwargs):
-        self.helper = FormHelper(form_id='form_branch')
-        self.helper.form_tag = False
+        self.helper = MooHelper(form_id='form_branch')
         return super(FormBranch, self).__init__(*args, **kwargs)
 
     # def save(self, organization=None, *args, **kwargs):
