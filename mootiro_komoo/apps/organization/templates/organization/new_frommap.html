@@ -8,17 +8,20 @@
         <div class="main-column">
             <div id="div-progress">
                 <div class="progress">
-                    <div class="bar" style="width: 20%;"></div>
+                    <div class="bar" style="width: 0%;"></div>
                 </div>
                 <div class="alert alert-info" data-alert="info">
-                    <button class="close" data-dismiss="alert">×</button>
+                    <a class="close" data-dismiss="alert">×</a>
                     <strong>step x of y</strong> (w% completo)
                 </div>
             </div>
-            <div id="div-form-organization">
+            <div id="div-name-verify" class="step_1" style="display: none;">
+                <input type="text" name="org_name" id="org_name" />
+            </div>
+            <div id="div-form-organization" class="step_2" style="display: none;">
                 {% crispy form_org %}
             </div>
-            <div id="div-form-branch">
+            <div id="div-form-branch" class="step_3" style="display: none;">
                 {% crispy form_branch %}
             </div>
         </div>
@@ -35,7 +38,30 @@
 {% block page_scripts %}
     {{ form_org.media }}
     <script type="text/javascript">
+        var step = 1;
 
+        var step_1 = function(){
+            $('.step_1').show();
+            $('.progress .bar').css('width', '0%');
+        }
+        var step_2 = function(){
+            $('.step_1').hide();
+            $('.step_2').show();
+            $('.progress .bar').css('width', '33%');
+        }
+        var step_3 = function(){
+            $('.step_2').hide();
+            $('.step_3').show();
+            $('.progress .bar').css('width', '67%');
+        }
+        var step_4 = function(){
+            $('.step_3').hide();
+            $('.progress .bar').css('width', '100%');
+        }
+
+        $(function(){
+            step_1();
+        })
 
     </script>
 
