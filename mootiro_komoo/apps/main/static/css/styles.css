@@ -553,7 +553,7 @@ body.community #main-content {
     background: #fafafa;
     clear: both;
 }
-.map-menuitem .title,
+.map-menuitem .item-title,
 .map-submenu .map-menuitem {
     padding: 12px;
 }
