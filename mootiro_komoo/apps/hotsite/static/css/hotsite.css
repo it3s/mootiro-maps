@@ -111,25 +111,25 @@ ul.disc li {
 #hotsite-step-resolve.selected a {
     background: url("../img/hotsite/steps/resolve-active.png") no-repeat;
 }
-.icon-map, .icon-discuss, .icon-resolve {
+.icon-map.big, .icon-discuss.big, .icon-resolve.big {
     position: relative;
     vertical-align: middle;
     margin-right: 10px;
 }
-.icon-map {
+.icon-map.big {
     width: 25px;
     height: 41px;
-    background: url("../img/hotsite/icons/map.png");
+    background: url("../img/hotsite/icons/map.png") !important;
 }
-.icon-discuss {
+.icon-discuss.big {
     width: 41px;
     height: 41px;
-    background: url("../img/hotsite/icons/discuss.png");
+    background: url("../img/hotsite/icons/discuss.png") !important;
 }
-.icon-resolve {
+.icon-resolve.big {
     width: 52px;
     height: 37px;
-    background: url("../img/hotsite/icons/resolve.png");
+    background: url("../img/hotsite/icons/resolve.png") !important;
 }
 #hotsite-slides .slide {
     height: 300px;
@@ -161,39 +161,39 @@ ul.disc li {
     vertical-align: middle;
     margin: 10px;
 }
-.icon-community,
-.icon-need,
-.icon-organization,
-.icon-resource,
-.icon-investment {
+.icon-community.big,
+.icon-need.big,
+.icon-organization.big,
+.icon-resource.big,
+.icon-investment.big {
     vertical-align: middle;
 }
-.icon-community {
-    background: url("../img/community.png");
+.icon-community.big {
+    background: url("../img/community.png") !important;
     margin: 0 2px 0 3px;
     width: 21px;
     height: 24px;
 }
-.icon-need {
-    background: url("../img/need.png");
+.icon-need.big {
+    background: url("../img/need.png") !important;
     margin: 3px 2px 3px 3px;
     width: 21px;
     height: 18px;
 }
-.icon-organization {
-    background: url("../img/organization.png");
+.icon-organization.big {
+    background: url("../img/organization.png") !important;
     margin: 2px 3px 2px 3px;
     width: 20px;
     height: 20px;
 }
-.icon-resource {
-    background: url("../img/resource.png");
+.icon-resource.big {
+    background: url("../img/resource.png") !important;
     margin: 3px 0 4px 0;
     width: 26px;
     height: 17px;
 }
-.icon-investment {
-    background: url("../img/investment.png");
+.icon-investment.big {
+    background: url("../img/investment.png") !important;
     margin: 4px 3px 4px 3px;
     width: 20px;
     height: 16px;
