@@ -31,6 +31,8 @@ urlpatterns = patterns('organization.views',
             name='view_organization'),
     url(r'^organization/branch/edit/$', 'edit_inline_branch',
             name='edit_inline_branch'),
+    url(r'^organization/verify_name/$', 'verify_org_name',
+            name='verify_org_name'),
 
     url(r'^organization/search_by_name/$', 'search_by_name',
             name='organization_search_by_name'),

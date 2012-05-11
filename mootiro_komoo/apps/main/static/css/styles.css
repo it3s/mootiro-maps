@@ -856,7 +856,7 @@ input[type=text], textarea{
 .inline-block{
   display: inline-block;
 }
-form .control-group .controls input{
+.control-group .controls input{
     width: 99%;
 }
 ul.ui-autocomplete.ui-menu{
