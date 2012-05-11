@@ -27,6 +27,7 @@ polib==0.7.0
 psycopg2==2.4.4
 pycrypto==2.5
 python-openid==2.2.5
+rednose==0.3.2
 requests==0.11.1
 simplejson==2.5.0
 ssh==1.7.12

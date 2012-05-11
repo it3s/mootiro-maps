@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
 #  Global Settings
-from __future__ import unicode_literals  # unicode by default
 import os
 import sys
 
@@ -145,6 +144,7 @@ INSTALLED_APPS = [
     'fileupload',
     'gunicorn',
     'social_auth',
+    'django_nose',
     # our apps
     'main',
     'komoo_map',
@@ -219,3 +219,10 @@ AJAX_LOOKUP_CHANNELS = {
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = False
+
+# TESTS CONFIGURATION
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = ['--rednose']
+if 'test' in sys.argv:
+    import logging
+    logging.disable(logging.CRITICAL)
