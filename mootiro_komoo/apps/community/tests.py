@@ -10,11 +10,8 @@ class CommunityViewsTestCase(TestCase):
         self.assertEqual(http_resp.status_code, 200)
 
     def test_new_community_page_is_up(self):
-        # FIXME: bypass CAS user atuhentication
-        # https://docs.djangoproject.com/en/1.0/topics/testing/#django.test.client.Client.login
-        a = self.client.login(username="tester")
-        print a
-        http_resp = self.client.get('/community/new')
+        self.client.login(username="noobzin", password="testpass")
+        http_resp = self.client.get('/need/new')
         self.assertEqual(http_resp.status_code, 200)
 
     def test_communities_list_page_is_up(self):

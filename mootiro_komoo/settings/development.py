@@ -31,6 +31,10 @@ DATABASES = {
 
 INSTALLED_APPS.append('django_nose')
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+import sys
+if 'test' in sys.argv:
+    import logging
+    logging.disable(logging.CRITICAL)
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
