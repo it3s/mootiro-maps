@@ -499,6 +499,7 @@ komoo.EditMode = {};
  * @property {google.maps.Geocoder} geocoder  Google service to get addresses locations.
  * @property {google.maps.Map} googleMap The Google Maps map object.
  * @property {InfoBox | google.maps.InfoWindow} infoWindow
+ * @property {InfoBox | google.maps.InfoWindow} tooltip
  * @property {Object} loadedOverlays Cache all overlays
  * @property {komoo.Mode} mode Possible values are null, new, edit
  * @property {google.maps.MVCObject[]} newOverlays Array containing new overlays added by user.
@@ -612,55 +613,71 @@ komoo.Map = function (element, options) {
 komoo.Map.prototype.initInfoWindow = function () {
     var komooMap = this;
     if (window.InfoBox) {  // Uses infoBox if available.
-        this.infoWindow = new InfoBox({
+        var infoWindowOptions = {
             pixelOffset: new google.maps.Size(0, -20),
             closeBoxMargin: "10px",
             boxStyle: {
+                cursor: "pointer",
                 background: "url(/static/img/infowindow-arrow.png) no-repeat 0 10px", // TODO: Hardcode is evil
                 width: "200px"
             }
-        });
-        google.maps.event.addDomListener(this.infoWindow, "domready", function (e) {
-            var closeBox = komooMap.infoWindow.div_.firstChild;
+        };
+        this.tooltip = new InfoBox(infoWindowOptions);
+        this.infoWindow = new InfoBox(infoWindowOptions);
+        google.maps.event.addDomListener(this.tooltip, "domready", function (e) {
+            var closeBox = komooMap.tooltip.div_.firstChild;
             $(closeBox).hide();  // Removes the close button.
             google.maps.event.addDomListener(closeBox, "click", function (e) {
                 // Detach the overlay from infowindow when close it.
-                komooMap.infoWindow.overlay = undefined;
+                komooMap.tooltip.overlay = undefined;
+            });
+            google.maps.event.addDomListener(komooMap.tooltip.div_, "click", function (e) {
+                google.maps.event.trigger(komooMap.tooltip.overlay, "click", {latLng: komooMap.tooltip.getPosition()});
             });
         });
     } else {  // Otherwise uses the default InfoWindow.
         if (window.console) console.log("Using default info window.");
+        this.tooltip = new google.maps.InfoWindow();
         this.infoWindow = new google.maps.InfoWindow();
     }
+
+    this.tooltip.title = $("<span>");
+    this.tooltip.content = $("<div>").addClass("map-infowindow-content");
+    this.tooltip.content.append(this.tooltip.title);
 
     this.infoWindow.title = $("<a>");
     this.infoWindow.body = $("<div>");
     this.infoWindow.content = $("<div>").addClass("map-infowindow-content");
     this.infoWindow.content.append(this.infoWindow.title);
     this.infoWindow.content.append(this.infoWindow.body);
-    if (InfoBox) {
-        this.infoWindow.content.css({
+    if (window.InfoBox) {
+        var css = {
             background: "white",
             padding: "10px",
             margin: "0 0 0 15px"
-        });
+        };
+        this.tooltip.content.css(css);
+        this.infoWindow.content.css(css);
     }
     this.infoWindow.content.hover(
         function (e) {
-            clearTimeout(komooMap.infoWindow.timer);
+            //clearTimeout(komooMap.infoWindow.timer);
+            komooMap.closeTooltip();
             komooMap.infoWindow.isMouseover = true;
         },
         function (e) {
-            clearTimeout(komooMap.infoWindow.timer);
+            //clearTimeout(komooMap.infoWindow.timer);
             komooMap.infoWindow.isMouseover = false;
-            komooMap.infoWindow.timer = setTimeout(function () {
-                if (!komooMap.infoWindow.isMouseover) {
-                    komooMap.closeInfoWindow();
-                }
-            }, 200);
+            //komooMap.infoWindow.timer = setTimeout(function () {
+            //    if (!komooMap.infoWindow.isMouseover) {
+            //        komooMap.closeInfoWindow();
+            //    }
+            //}, 200);
         }
     );
+    this.tooltip.setContent(this.tooltip.content.get(0));
     this.infoWindow.setContent(this.infoWindow.content.get(0));
+
 };
 
 
@@ -732,27 +749,58 @@ komoo.Map.prototype.closeInfoWindow = function () {
 
 
 /**
+ * Closes the tooltip.
+ */
+komoo.Map.prototype.closeTooltip = function () {
+    this.tooltip.close();
+    this.tooltip.overlay = undefined;
+};
+
+
+komoo.Map.prototype.getOverlayUrl = function (overlay) {
+    var url;
+    if (overlay.properties.type == "community") {
+        url = dutils.urls.resolve("view_community", {community_slug: overlay.properties.community_slug});
+    } else if (overlay.properties.type == "resource") {
+        url = dutils.urls.resolve("view_resource", {
+                    community_slug: overlay.properties.community_slug || "",
+                    id: overlay.properties.id
+                }).replace("//", "/");
+    }  else if (overlay.properties.type == "organizationbranch") {
+        url = dutils.urls.resolve("view_organization", {
+                    community_slug: overlay.properties.community_slug || "",
+                    organization_slug: overlay.properties.organization_slug || ""
+                }).replace("//", "/");
+    }  else {
+        var slugname = overlay.properties.type + "_slug";
+        var params = {"community_slug": overlay.properties.community_slug};
+        params[slugname] = overlay.properties[slugname];
+        url = dutils.urls.resolve("view_" + overlay.properties.type, params).replace("//", "/");
+        this.infoWindow.title.attr("href", url);
+    }
+    return url;
+};
+
+/**
  * Display the information window.
  * @param {google.maps.MVCObject} overlay
  * @param {google.maps.LatLng} latLng
  * @param {String} [opt_content]
  */
 komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
+    this.closeTooltip();
     var url;
     if (opt_content) {
         this.infoWindow.title.attr("href", "#");
         this.infoWindow.title.text("");
         this.infoWindow.body.html(opt_content);
     } else if (overlay) {
+        url = this.getOverlayUrl(overlay);
         this.infoWindow.title.attr("href", "#");
         this.infoWindow.title.text(overlay.properties.name);
         this.infoWindow.body.html("");
         if (overlay.properties.type == "community") {
             // FIXME: Move url to options object
-            this.infoWindow.title.attr("href", dutils.urls.resolve("view_community", {
-                        community_slug: overlay.properties.community_slug
-                    })
-            );
             var population;
             if (overlay.properties.population) {
                 var msg = ngettext("%s resident", "%s residents", overlay.properties.population);
@@ -761,26 +809,10 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
                 population = gettext("No population provided");
             }
             this.infoWindow.body.html("<ul><li>" + population + "</li></ul>");
-        } else if (overlay.properties.type == "resource") {
-            url = dutils.urls.resolve("view_resource", {
-                        community_slug: overlay.properties.community_slug || "",
-                        id: overlay.properties.id
-                    }).replace("//", "/");
-            this.infoWindow.title.attr("href", url);
         }  else if (overlay.properties.type == "organizationbranch") {
-            url = dutils.urls.resolve("view_organization", {
-                        community_slug: overlay.properties.community_slug || "",
-                        organization_slug: overlay.properties.organization_slug || ""
-                    }).replace("//", "/");
-            this.infoWindow.title.attr("href", url);
             this.infoWindow.title.text(overlay.properties.organization_name + " - " + overlay.properties.name);
-        }  else {
-            var slugname = overlay.properties.type + "_slug";
-            var params = {"community_slug": overlay.properties.community_slug};
-            params[slugname] = overlay.properties[slugname];
-            url = dutils.urls.resolve("view_" + overlay.properties.type, params).replace("//", "/");
-            this.infoWindow.title.attr("href", url);
         }
+        this.infoWindow.title.attr("href", url);
 
         if (overlay.properties.categories) {
             var categoriesIcons = this.getCategoriesIcons(overlay);
@@ -796,6 +828,25 @@ komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
     }
     this.infoWindow.setPosition(latLng);
     this.infoWindow.open(this.googleMap);
+};
+
+
+/**
+ * Display the tooltip.
+ * @param {google.maps.MVCObject} overlay
+ * @param {google.maps.LatLng} latLng
+ * @param {String} [optContent]
+ */
+komoo.Map.prototype.openTooltip = function (overlay, latLng, optContent) {
+    if (overlay == this.infoWindow.overlay || this.infoWindow.isMouseover) {
+        return;
+    }
+    if (overlay) {
+        this.tooltip.title.text(optContent || overlay.properties.name);
+        this.tooltip.overlay = overlay;
+    }
+    this.tooltip.setPosition(latLng);
+    this.tooltip.open(this.googleMap);
 };
 
 
@@ -943,7 +994,7 @@ komoo.Map.prototype.handleEvents = function () {
 
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
         //komooMap.hideOverlaysByZoom();
-        komooMap.closeInfoWindow(); // Closes info window when zoom changed
+        komooMap.closeTooltip();
         komooMap.updateClusterers();
     });
 
@@ -1752,7 +1803,6 @@ komoo.Map.prototype.editOverlay = function (overlay) {
  * @param {google.maps.Polygon|google.maps.Polyline} overlay
  */
 komoo.Map.prototype._attachOverlayEvents = function (overlay) {
-    // FIXME: InfoWindow configuration should not be done here because this is called n times (n = number of overlays loaded)
     var komooMap = this;
     if (overlay.getPaths) {
         // Removes stroke from polygons.
@@ -1821,6 +1871,16 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
         } else {
             komooMap.setEditMode(null);
             komooMap.setCurrentOverlay(overlay_);  // Select the clicked overlay
+            komooMap.closeTooltip();
+            setTimeout(function () { komooMap.openInfoWindow(overlay_, e.latLng) }, 200);
+        }
+    });
+
+    google.maps.event.addListener(overlay, "dblclick", function (e, o) {
+        e.stop();
+        var url = komooMap.getOverlayUrl(this);
+        if (url) {
+            window.location = url;
         }
     });
 
@@ -1829,22 +1889,20 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
             overlay.setOptions({strokeWeight: 2.5});
         }
 
-        if (komooMap.infoWindow.overlay == overlay || komooMap.addPanel.is(":visible") ||
+        if (komooMap.tooltip.overlay == overlay || komooMap.addPanel.is(":visible") ||
                 !komooMap.options.enableInfoWindow) {
             return;
         }
-        clearTimeout(komooMap.infoWindow.timer);
-        var delay;
-        if (overlay.getPaths) {
-            delay = 800;
-        } else {
-            delay = 200;
+        clearTimeout(komooMap.tooltip.timer);
+        var delay = 0;
+        if (overlay.properties.type == "community") {
+            delay = 400;
         }
-        komooMap.infoWindow.timer = setTimeout(function () {
-            if (komooMap.infoWindow.isMouseover || komooMap.addPanel.is(":visible") || komooMap.mode == komoo.Mode.SELECT_CENTER) {
+        komooMap.tooltip.timer = setTimeout(function () {
+            if (komooMap.tooltip.isMouseover || komooMap.addPanel.is(":visible") || komooMap.mode == komoo.Mode.SELECT_CENTER) {
                 return;
             }
-            komooMap.openInfoWindow(overlay, e.latLng);
+            komooMap.openTooltip(overlay, e.latLng);
         }, delay);
     });
 
@@ -1852,16 +1910,29 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
         if (overlay.getPaths) {
             overlay.setOptions({strokeWeight: 1.5});
         }
-        clearTimeout(komooMap.infoWindow.timer);
-        if (!komooMap.infoWindow.isMouseover) {
-            komooMap.infoWindow.timer = setTimeout(function () {
-                if (!komooMap.infoWindow.isMouseover) {
-                    komooMap.closeInfoWindow();
-                }
-            }, 200);
-        }
+        var delay = 0;
+        clearTimeout(komooMap.tooltip.timer);
+        //if (!komooMap.tooltip.isMouseover) {
+            //komooMap.tooltip.timer = setTimeout(function () {
+                //if (!komooMap.tooltip.isMouseover) {
+                    komooMap.closeTooltip();
+                //}
+            //}, delay);
+        //}
     });
 };
+
+komoo.Map.prototype.getOverlayCenter = function (overlay) {
+    var overlayCenter;
+    if (overlay.getCenter) {
+        overlayCenter = overlay.getCenter();
+    } else if (overlay.getPosition) {
+        overlayCenter = overlay.getPosition();
+    } else if (overlay.bounds) {
+        overlayCenter = overlay.bounds.getCenter();
+    }
+    return overlayCenter;
+}
 
 
 komoo.Map.prototype.setDrawingMode = function (type, overlayType) {
@@ -2063,6 +2134,7 @@ komoo.Map.prototype._initDrawingManager = function () {
 
         this.event.bind("editmode_changed", function(e, mode) {
             komooMap.closeInfoWindow();
+            komooMap.closeTooltip();
             // Set the correct button style when editMode was changed.
             addButton.removeClass("active");
             cutOutButton.removeClass("active");
@@ -2381,7 +2453,6 @@ komoo.Map.prototype.centerOverlay = function (overlay, id) {
  */
 komoo.Map.prototype.highlightOverlay = function (overlay, id) {
     var overlayType;
-    var overlayCenter;
     if (typeof overlay == "string") {
         overlayType = overlay;
         overlay = this.getOverlay(overlayType, id);
@@ -2393,20 +2464,12 @@ komoo.Map.prototype.highlightOverlay = function (overlay, id) {
         return true;
     }
 
-    if (overlay.getCenter) {
-        overlayCenter = overlay.getCenter();
-    } else if (overlay.getPosition) {
-        overlayCenter = overlay.getPosition();
-    } else if (overlay.bounds) {
-        overlayCenter = overlay.bounds.getCenter();
-    }
-
     if (overlay.setIcon) {
         overlay.setIcon(this.getOverlayIcon(overlay, true));
     }
     overlay.highlighted = true;
     this.closeInfoWindow();
-    this.openInfoWindow(overlay, overlayCenter);
+    this.openInfoWindow(overlay, this.getOverlayCenter(overlay));
 
     return true;
 };
