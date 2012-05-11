@@ -37,6 +37,12 @@
                 </div>
 
                 <div id="org-div-form-branch" class="step_3" style="display: none;">
+                    <div class="step_3 clearfix control-group ">
+                        <label>Filial de</label>
+                        <div class="controls">
+                            <input id="id_filial_org_name" class="textinput textInput" type="text" maxlength="320" disabled='true' >
+                        </div>
+                    </div>
                     {% crispy form_branch %}
                 </div>
             </div>
@@ -49,6 +55,10 @@
                     </div>
                     <div class="step_1_row_2" style="display: none;">
                         <span id="btn_add_filial" class="button">Adicionar Filial</span>
+                        <span class="btn">Cancelar</span>
+                    </div>
+                    <div class="step_1_row_3" style="display: none;">
+                        <span id="btn_add_org" class="button">Cadastrar Organização</span>
                         <span class="btn">Cancelar</span>
                     </div>
 
@@ -103,6 +113,7 @@
 
 {% block page_scripts %}
     {{ form_org.media }}
+    {{ form_branch.media }}
     <script type="text/javascript">
 
         var change_msg = function(msg){
@@ -155,10 +166,9 @@
                             $('.step_1_row_1').hide();
                             $('.step_1_row_2').show();
                         } else {
-                            msg = '';
-                            step = 2;
-                            // auto fill name
-                            // warn user
+                            change_msg('Esta organização ainda não foi cadastrada. Deseja adicionar esta organização?');
+                            $('.step_1_row_1').hide();
+                            $('.step_1_row_3').show();
                         }
 
                     },
@@ -167,7 +177,16 @@
 
             $('#btn_add_filial').click(function(){
                 change_step(3);
-                change_msg('Entre com os dados da filial que você marcou no mapa')
+                change_msg('Entre com os dados da filial que você marcou no mapa');
+                var name = $('#id_org_name').val();
+                $('#id_filial_org_name').val(name);
+            });
+
+            $('#btn_add_org').click(function(){
+                change_step(2);
+                change_msg('Entre com os dados da Organização a qual pertence a filial que você marcou no mapa.')
+                var name = $('#id_org_name').val();
+                $('#form_organization #id_name').val(name);
             });
         })
 

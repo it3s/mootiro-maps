@@ -100,10 +100,10 @@ class FormOrganization(AjaxModelForm):
 
 
 class FormBranch(AjaxModelForm):
-    branch_name = forms.CharField()
+    name = forms.CharField()
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
-    branch_info = forms.CharField(required=False, widget=MarkItUpWidget())
-    branch_community = AutoCompleteSelectMultipleField('community', help_text='',
+    info = forms.CharField(required=False, widget=MarkItUpWidget())
+    community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
 
     class Meta:
@@ -111,9 +111,9 @@ class FormBranch(AjaxModelForm):
         fields = ['id', 'name', 'geometry', 'info', 'community']
 
     _field_labels = {
-        'branch_name': _('Branch Name'),
-        'branch_info': _('Info'),
-        'branch_community': _('Community')
+        'name': _('Branch Name'),
+        'info': _('Info'),
+        'community': _('Community')
     }
 
     def __init__(self, *args, **kwargs):

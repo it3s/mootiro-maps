@@ -121,7 +121,7 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
     logger.debug('acessing organization > new_organization_from_map')
     community = get_object_or_None(Community, slug=community_slug)
     form_org = FormOrganization()
-    form_branch = FormBranch()
+    form_branch = FormBranch(auto_id='id_branch_%s')
     return {'community': community, 'form_org': form_org,
             'form_branch': form_branch}
 
