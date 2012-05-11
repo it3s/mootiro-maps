@@ -16,14 +16,22 @@ img { border: 0px }
 h1, h2, h3, h4, h5, h6 { margin-bottom: 1em 0 }
 
 /* Link pattern */
-a { text-decoration: none }
-a:link    { color: #4092A9 }
-a:visited { color: #4092A9 }
-a:hover   {
-    color: #333;
+a {
     text-decoration: none;
 }
-a:active { background-color: #eee }
+a:link {
+    color: #009cb4;
+}
+a:visited {
+    color: #1e8290;
+}
+a:hover {
+    color: #009cb4;
+    text-decoration: underline;
+}
+a:active {
+    color: #000;
+}
 ul {
     list-style-type: none;
     margin: 0px;
@@ -49,6 +57,9 @@ table { border-collapse: collapse }
 .button span { color: white; }
 .button:active { background: #2E6167 !important; }
 a.button { color: #fff;}
+a.button:hover {
+    text-decoration: none;
+}
 .small { font-size: 80%; }
 ul.horizontal li {
     float: left;
@@ -84,6 +95,7 @@ div.apart { margin-top: 1em }
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
 ul.geo-objects-listing li {
+    cursor: pointer;
     position: relative;
     padding: 4px 0;
 }
@@ -121,10 +133,15 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     min-width: 110px;
 }
 #tabs {
+    font-size: 16px;
+    font-weight: bold;
     position: relative;
     width: 100%;
     background: #fff;
     display: block;
+}
+#tabs a {
+    vertical-align: middle;
 }
 #content {
     display: block;
@@ -178,7 +195,7 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     float: left;
 }
 #top #menu li a {
-    padding: 4px 20px;
+    padding: 4px 15px;
     display: block;
     color: #000;
 }
@@ -189,21 +206,22 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 
     background-color: #ededed;
     /* Generated from: http://gradients.glrzad.com/ */
-    background-image: linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -o-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -moz-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -webkit-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -ms-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #CECECE), color-stop(1, #EDEDED)) !important;
+    background-image: linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -o-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -moz-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -webkit-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -ms-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #CECECE), color-stop(1, #EDEDED));
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CECECE, endColorstr=#EDEDED)";
 }
 .button, .map-panel .content .map-button,
-#top #menu li a:hover, #top #menu li.selected a,
 /*.map-menuitem:hover,*/ .map-menuitem.selected,
+#top #menu li a:hover, #top #menu li.selected a,
 .map-tab a:hover, .map-tab.selected a,
 .map-button:hover, .map-button.selected,
 .organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected  {
     color: #fff;
+    text-decoration: none;
     background-color: #3EBAC2;
     /* Generated from: http://gradients.glrzad.com/ */
     background-image: linear-gradient(bottom, #4092A9 0%, #3EBAC2 100%) !important;
@@ -233,6 +251,150 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 #komoo-map-delete-button {
     margin: 0 5px;
 }
+
+#top #menu [class^="icon-"] {
+    background-position: 0 0;
+    margin-right: 5px;
+}
+
+#top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -o-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #E84239), color-stop(1, #EA5D4E)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#E84239, endColorstr=#EA5D4E))";
+}
+#top #menu #menu-map a:active {
+    background: #E84239 !important;
+}
+
+#top #menu #menu-community a:hover, #top #menu #menu-community.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -o-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #F08138), color-stop(1, #F59C56)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F08138, endColorstr=#F59C56))";
+}
+#top #menu #menu-community a:active {
+    background: #F08138 !important;
+}
+
+#top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -o-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #E83361), color-stop(1, #EA5172)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=, endColorstr= #EA5172))";
+}
+#top #menu #menu-need a:active {
+    background: #E83361 !important;
+}
+
+#top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -o-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #3E5FA9), color-stop(1, #5573B7)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#3E5FA9, endColorstr=#5573B7))";
+}
+#top #menu #menu-organization a:active {
+    background: #3E5FA9 important;
+}
+
+#top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -o-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #1D9DD9), color-stop(1, #51AEE2)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#1D9DD9, endColorstr=#51AEE2))";
+}
+#top #menu #menu-resource a:active {
+    background: #1D9DD9 !important;
+}
+
+#top #menu #menu-investment a:hover, #top #menu #menu-investment.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
+    background-image: -o-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%)) !important;
+    background-image: -ms-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%)) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #AB9E15), color-stop(1, #CABE2C)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#AB9E15, endColorstr=#CABE2C))";
+}
+#top #menu #menu-investment a:active {
+    background: #AB9E15 !important;
+}
+
+.icon-map {
+    background-image: url("../img/menu/map.png");
+    width: 10px;
+    height: 15px;
+}
+a:hover .icon-map, li.selected .icon-map {
+    background-image: url("../img/menu/map-active.png");
+}
+
+.icon-community {
+    background-image: url("../img/menu/community.png");
+    width: 15px;
+    height: 17px;
+}
+a:hover .icon-community, li.selected .icon-community {
+    background-image: url("../img/menu/community-active.png");
+}
+
+.icon-need {
+    background-image: url("../img/menu/need.png");
+    width: 18px;
+    height: 16px;
+}
+a:hover .icon-need, li.selected .icon-need {
+    background-image: url("../img/menu/need-active.png");
+}
+
+.icon-organization {
+    background-image: url("../img/menu/organization.png");
+    width: 16px;
+    height: 15px;
+}
+a:hover .icon-organization, li.selected .icon-organization {
+    background-image: url("../img/menu/organization-active.png");
+}
+
+.icon-resource {
+    background-image: url("../img/menu/resource.png");
+    width: 23px;
+    height: 15px;
+}
+a:hover .icon-resource, li.selected .icon-resource {
+    background-image: url("../img/menu/resource-active.png");
+}
+
+.icon-investment {
+    background-image: url("../img/menu/investment.png");
+    width: 20px;
+    height: 15px;
+}
+a:hover .icon-investment, li.selected .icon-investment {
+    background-image: url("../img/menu/investment-active.png");
+}
+
 .map-button {
     cursor: pointer;
     float: left;
@@ -245,9 +407,58 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 }
 
 /* Map panels */
+#collapse-panel {
+    background: url("../img/collapse-horizontal.png") no-repeat center center;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 5px;
+    top: 15px;
+    cursor: pointer;
+    z-index: 1000;
+}
+#collapse-panel:hover {
+    background-image: url("../img/collapse-horizontal-hover.png");
+}
+.collapsed #collapse-panel {
+    background-image: url("../img/expand-horizontal.png");
+}
+.collapsed #collapse-panel:hover {
+    background-image: url("../img/expand-horizontal-hover.png");
+}
 #map-panel {
+    transition: left 1s;
+    -moz-transition: left 1s; /* Firefox 4 */
+    -webkit-transition: left 1s; /* Safari and Chrome */
+    -o-transition: left 1s; /* Opera */
     background: #fafafa;
-    padding: 0;
+    padding: 0 30px 0 0;
+    position: relative;
+    left: 0px;
+}
+.collapsed #map-panel {
+    left: -300px !important;
+}
+.collapsed #map-panel-content {
+    transition: opacity 1s;
+    -moz-transition: opacity 1s; /* Firefox 4 */
+    -webkit-transition: opacity 1s; /* Safari and Chrome */
+    -o-transition: opacity 1s; /* Opera */
+    opacity: 0;
+}
+#map-canvas-main {
+    transition: margin-left 1s;
+    -moz-transition: margin-left 1s; /* Firefox 4 */
+    -webkit-transition: margin-left 1s; /* Safari and Chrome */
+    -o-transition: margin-left 1s; /* Opera */
+    margin-left: 330px !important;
+}
+.collapsed #map-canvas-main {
+    margin-left: 30px !important;
+    width: auto !important;
+}
+#map-panel-content {
+    margin-right: -30px;
 }
 #map-panel div.img-holder {
     width: 35px;
@@ -381,7 +592,7 @@ body.community #main-content {
 }
 .map-menuitem,
 .map-menuitem.frozen:hover {
-    cursor: default;
+    cursor: pointer;
     direction: ltr;
     position: relative;
     padding: 0;
@@ -391,7 +602,7 @@ body.community #main-content {
     background: #fafafa;
     clear: both;
 }
-.map-menuitem .title,
+.map-menuitem .item-title,
 .map-submenu .map-menuitem {
     padding: 12px;
 }
@@ -434,6 +645,13 @@ body.community #main-content {
     margin-right: 30px;
     float: left;
 }
+.title {
+    font-size: 20px;
+    font-weight: bold;
+}
+#categories li {
+    margin-bottom: 10px;
+}
 .right-bar {
     width: 200px;
     float: left;
@@ -445,17 +663,21 @@ body.community #main-content {
 }
 .right-bar h3 {
     color: #3ebac2;
-    font-size: 16px;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 .block {
     padding: 5px;
-    background: #a6e5ee;
+    background: #dceff4;
     margin-top: 10px;
     border-radius        : 6px;
     -moz-border-radius   : 6px;
     -webkit-border-radius: 6px;
     /*display: inline-block;*/
     word-wrap: break-word;
+}
+.block h3 {
+    color: #000;
 }
 .right-bar > .block ul li {
     margin-bottom: 5px;
@@ -607,7 +829,7 @@ a.btnShowForm{
 
 .vote{
     display: inline-block;
-    margin: 5px 0 0px 0;
+    margin: 5px 0 20px 0;
 }
 .vote a{
     margin: 0 5px;
@@ -717,6 +939,12 @@ input[type=text], textarea{
 .view-header{
   margin-bottom: 20px;
 }
+.view-follow-btns {
+  margin-bottom: 30px;
+}
+.view-follow-btns .btn{
+    margin-right: 10px;
+}
 .view-follow-btns span{
   color: #444444;
   margin-left: 7px;
@@ -782,7 +1010,7 @@ div.view-list-item.odd {
 .view-list-count{
     /* display: inline-block;
     margin-left: 50px; */
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0 0 10px;
 }

@@ -2142,7 +2142,7 @@ komoo.Map.prototype._createMainPanel = function () {
                 if (type.disabled) icon.css("opacity", "0.3");
                 item.append(icon);
             }
-            item.append($("<div>").addClass("title").text(type.title).attr("title", type.tooltip));
+            item.append($("<div>").addClass("item-title").text(type.title).attr("title", type.tooltip));
             var submenu = komooMap.addItems.clone(true).addClass("map-submenu");
             $("div", submenu).hide();
             $.each(type.overlayTypes, function (key, overlayType) {

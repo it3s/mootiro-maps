@@ -78,7 +78,7 @@
 			<?php if ( comments_open() ) : ?>
 			<?php if ( $show_sep ) : ?>
 			<?php endif; // End if $show_sep ?>
-			<span class="comments-link"><?php comments_popup_link( '<i class="icon-comments"></i><span class="leave-reply">' . __( 'Leave a comment', 'twentyeleven' ) . '</span>', __( '<i class="icon-comments"></i>Comment (<b>1</b>)', 'komoo' ), __( '<i class="icon-comments"></i>Comments (<b>%</b>)', 'komoo' ) ); ?></span>
+			<span class="comments-link"><?php comments_popup_link( '<i class="icon-comments"></i><span class="leave-reply">' . __( 'Leave a comment', 'komoo' ) . '</span>', __( '<i class="icon-comments"></i>Comment (<b>1</b>)', 'komoo' ), __( '<i class="icon-comments"></i>Comments (<b>%</b>)', 'komoo' ) ); ?></span>
 			<?php endif; // End if comments_open() ?>
 
 			<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>

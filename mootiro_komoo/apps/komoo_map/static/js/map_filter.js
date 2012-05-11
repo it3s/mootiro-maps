@@ -177,3 +177,11 @@ $(function () {
         }
     });
 });
+
+/******* Collapse *******/
+$("#collapse-panel").click(function (ev) {
+    $("#map-container-main").toggleClass("collapsed");
+    google.maps.event.trigger(editor.googleMap, 'resize');
+    var interval = setInterval("google.maps.event.trigger(editor.googleMap, 'resize');", 500)
+    setTimeout(function () { clearInterval(interval); }, 1000)
+});

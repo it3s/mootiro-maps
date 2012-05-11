@@ -1,0 +1,110 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-05-10 16:44-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: content.php:24 content-single.php:17
+#, php-format
+msgid "By <a href=\"%2$s\">%1$s</a>"
+msgstr ""
+
+#: content.php:33
+msgid "Reply"
+msgstr ""
+
+#: content.php:44
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: content.php:45 content-single.php:27
+msgid "Pages:"
+msgstr ""
+
+#: content.php:54 content.php:66 content-single.php:33 content-single.php:36
+msgid ", "
+msgstr ""
+
+#: content.php:60
+#, php-format
+msgid "<i class=\"%1$s\"></i> %2$s"
+msgstr ""
+
+#: content.php:72
+#, php-format
+msgid "<span class=\"%1$s\">Tagged</span> %2$s"
+msgstr ""
+
+#: content.php:81
+msgid "Leave a comment"
+msgstr ""
+
+#: content.php:81
+msgid "<i class=\"icon-comments\"></i>Comment (<b>1</b>)"
+msgstr ""
+
+#: content.php:81
+msgid "<i class=\"icon-comments\"></i>Comments (<b>%</b>)"
+msgstr ""
+
+#: content.php:84 content-single.php:56
+msgid "Edit"
+msgstr ""
+
+#: content-single.php:38
+#, php-format
+msgid ""
+"<span class=\"post-date\">%7$s</span> %1$s and tagged %2$s. <a href=\"%3$s\" "
+"title=\"Permalink to %4$s\" class=\"permalink\" rel=\"bookmark\">Permalink</"
+"a>"
+msgstr ""
+
+#: content-single.php:40
+#, php-format
+msgid ""
+"<span class=\"post-date\">%7$s</span> %1$s <a href=\"%3$s\" title="
+"\"Permalink to %4$s\" class=\"permalink\" rel=\"bookmark\">Permalink</a>"
+msgstr ""
+
+#: content-single.php:42
+#, php-format
+msgid ""
+"<span class=\"post-date\">%7$s</span> <a href=\"%3$s\" title=\"Permalink to "
+"%4$s\" class=\"permalink\" rel=\"bookmark\">permalink</a>"
+msgstr ""
+
+#: content-single.php:64
+#, php-format
+msgid "About %s"
+msgstr ""
+
+#: content-single.php:68
+#, php-format
+msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: header.php:45
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#: single.php:19
+msgid "<span class=\"meta-nav\">&larr;</span> Previous"
+msgstr ""
+
+#: single.php:20
+msgid "Next <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
