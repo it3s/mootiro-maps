@@ -57,6 +57,7 @@ komoo.RegionTypes = [
         icon: "/static/img/community.png",
         overlayTypes: [komoo.OverlayType.POLYGON],
         formUrl: dutils.urls.resolve("new_community"),
+        zIndex: 1,
         disabled: false
     },
     {
@@ -73,6 +74,7 @@ komoo.RegionTypes = [
                        komoo.OverlayType.POINT],
         formUrl: dutils.urls.resolve("new_need",
             {community_slug: "community_slug"}),
+        zIndex: 100,
         disabled: false
     },
     {
@@ -87,6 +89,7 @@ komoo.RegionTypes = [
                        komoo.OverlayType.POINT],
         formUrl: dutils.urls.resolve("organization_new",
             {community_slug: "community_slug"}),
+        zIndex: 100,
         disabled: false
     },
     {
@@ -102,6 +105,7 @@ komoo.RegionTypes = [
                        komoo.OverlayType.POINT],
         formUrl: dutils.urls.resolve("resource_new",
             {community_slug: "community_slug"}),
+        zIndex: 100,
         disabled: false
     },
     {
@@ -114,6 +118,7 @@ komoo.RegionTypes = [
         icon: "/static/img/investment.png",
         overlayTypes: [komoo.OverlayType.POLYGON],
         formUrl: "",
+        zIndex: 100,
         disabled: true
     }
 ];
@@ -291,6 +296,7 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
                         }
                     }
                     if (overlay.getPaths) {
+                        /*
                         // Brings small polygons to front
                         var zIndex = overlay.zIndex;
                         $.each(overlays, function (key, overlayToTest) {
@@ -306,6 +312,7 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
                                 }
                             };
                         });
+                        */
                     }
                 });
             },
@@ -1151,9 +1158,10 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
         if (feature.properties && feature.properties.type && komooMap.overlayOptions[feature.properties.type]) {
             var color = komooMap.overlayOptions[feature.properties.type].color;
             var border = komooMap.overlayOptions[feature.properties.type].border;
+            var zIndex = komooMap.overlayOptions[feature.properties.type].zIndex;
             polygonOptions.fillColor = color;
             polygonOptions.strokeColor = border;
-            polygonOptions.zIndex = feature.properties.type == "community" ? 1 : 2
+            polygonOptions.zIndex = zIndex; //feature.properties.type == "community" ? 1 : 2
             polylineOptions.strokeColor = border;
         } else {
             // TODO: set a default color
@@ -1874,9 +1882,11 @@ komoo.Map.prototype.setDrawingMode = function (type, overlayType) {
     if (this.overlayOptions[this.type]) {
         var color = this.overlayOptions[this.type].color;
         var border = this.overlayOptions[this.type].border;
+        var zIndex = this.overlayOptions[this.type].zIndex;
         this.drawingManagerOptions.polylineOptions.strokeColor = border;
         this.drawingManagerOptions.polygonOptions.fillColor = color;
         this.drawingManagerOptions.polygonOptions.strokeColor = border;
+        this.drawingManagerOptions.polygonOptions.zIndex = zIndex;
     }
 };
 
