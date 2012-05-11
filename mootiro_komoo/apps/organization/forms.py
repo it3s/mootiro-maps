@@ -108,7 +108,9 @@ class FormBranch(AjaxModelForm):
 
     class Meta:
         model = OrganizationBranch
-        fields = ['id', 'name', 'geometry', 'info', 'community']
+        fields = ['id', 'name',
+            # 'geometry',
+            'info', 'community']
 
     _field_labels = {
         'name': _('Branch Name'),

@@ -188,6 +188,18 @@
                 var name = $('#id_org_name').val();
                 $('#form_organization #id_name').val(name);
             });
+
+            $('#form_organization').ajaxform({
+                success: function(data){
+                    change_step(3);
+                    change_msg('Parabéns, sua organização foi salva corretamente. Por favor, agora preencha os dados para a filial que você marcou no mapa');
+                }
+            });
+            $('#form_branch').ajaxform({
+                success: function(data){
+                    change_step(4);
+                }
+            });
         })
 
     </script>

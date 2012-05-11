@@ -13,18 +13,15 @@ urlpatterns = patterns('organization.views',
             name='organization_list'),
     url(r'^organization/new/?$', 'new_organization',
             name='new_organization'),
-
-    # verify
     url(r'^organization/new/from_map/?$', 'new_organization_from_map',
             name='new_organization_from_map'),
     url(r'^organization/edit/?$', 'edit_organization',
             name='edit_organization'),
 
-    url(r'^organization/edit_org/?$', 'edit_org',
-            name='edit_org'),
-    url(r'^organization/edit_branch/?$', 'edit_branch',
-            name='edit_branch'),
-    # end
+    url(r'^organization/add_org_from_map/?$', 'add_org_from_map',
+            name='add_org_from_map'),
+    url(r'^organization/add_branch_from_map/?$', 'add_branch_from_map',
+            name='add_branch_from_map'),
 
 
     url(pr(r'^organization/ORGANIZATION_SLUG/?$'), 'show',
@@ -41,15 +38,12 @@ urlpatterns = patterns('organization.views',
 
     url(pr(r'^COMMUNITY_SLUG/organization/?$'), 'organization_list',
             name='organization_list'),
-
-    # verify
     url(pr(r'^COMMUNITY_SLUG/organization/new/?$'), 'new_organization',
             name='new_organization'),
     url(pr(r'^COMMUNITY_SLUG/organization/new/from_map/?$'), 'new_organization_from_map',
             name='new_organization_from_map'),
     url(pr(r'^COMMUNITY_SLUG/organization/edit/?$'), 'edit_organization',
             name='edit_organization'),
-    # end
 
     url(pr(r'^COMMUNITY_SLUG/organization/ORGANIZATION_SLUG/?$'), 'show',
             name='view_organization'),

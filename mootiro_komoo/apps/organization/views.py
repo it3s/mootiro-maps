@@ -106,10 +106,12 @@ def new_organization(request, community_slug='', *arg, **kwargs):
         return form
 
     def on_after_save(request, obj):
-        _url = reverse('view_organization',
-                    kwargs={'organization_slug': obj.slug,
-                            'community_slug': community_slug})
-        return {'redirect': _url}
+        if community_slug:
+            kwargs_ = {'organization_slug': obj.slug,
+                      'community_slug': community_slug}
+        else:
+            kwargs_ = {'organization_slug': obj.slug}
+        return {'redirect': reverse('view_organization', kwargs=kwargs_)}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
             'community': community}
@@ -121,7 +123,10 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
     logger.debug('acessing organization > new_organization_from_map')
     community = get_object_or_None(Community, slug=community_slug)
     form_org = FormOrganization()
+    form_org.helper.form_action = reverse('add_org_from_map')
     form_branch = FormBranch(auto_id='id_branch_%s')
+    form_branch.helper.form_action = reverse('add_branch_from_map')
+    # form_branch.fields['geometry'].widget.attrs['id'] = 'id_geometry'
     return {'community': community, 'form_org': form_org,
             'form_branch': form_branch}
 
@@ -161,19 +166,17 @@ def edit_organization(request, community_slug='', organization_slug='',
 
 
 @login_required
-def edit_branch(request, community_slug='', *arg, **kwargs):
-    logger.debug('acessing organization > edit_branch')
-    community = get_object_or_None(Community, slug=community_slug)
-    # TODO IMPLEMENT ME
-    return {'community': community}
+@ajax_form(form_class=FormBranch)
+def add_branch_from_map(request):
+    logger.debug('acessing organization > add_branch_from_map')
+    return {'here?': True}
 
 
 @login_required
-def edit_org(request, community_slug='', *arg, **kwargs):
-    logger.debug('acessing organization > edit_org')
-    community = get_object_or_None(Community, slug=community_slug)
-    # TODO IMPLEMENT ME
-    return {'community': community}
+@ajax_form(form_class=FormOrganization)
+def add_org_from_map(request):
+    logger.debug('acessing organization > add_org_from_map')
+    return {}
 
 
 @ajax_request
