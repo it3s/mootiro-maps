@@ -450,6 +450,9 @@ div.collapser i.icon-chevron-down {
     cursor: pointer;
     z-index: 1000;
 }
+body.community #collapse-panel {
+    top: 40px
+}
 #collapse-panel:hover {
     background-image: url("../img/collapse-horizontal-hover.png");
 }
@@ -479,6 +482,7 @@ div.collapser i.icon-chevron-down {
     -o-transition: opacity 1s; /* Opera */
     opacity: 0;
 }
+#map-canvas-editor,
 #map-canvas-main {
     transition: margin-left 1s;
     -moz-transition: margin-left 1s; /* Firefox 4 */
@@ -486,6 +490,7 @@ div.collapser i.icon-chevron-down {
     -o-transition: margin-left 1s; /* Opera */
     margin-left: 330px !important;
 }
+.collapsed #map-canvas-editor,
 .collapsed #map-canvas-main {
     margin-left: 30px !important;
     width: auto !important;
