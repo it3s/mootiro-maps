@@ -77,14 +77,6 @@
           {% taglist resource %}
         </div>
         {% endif %}
-        <div class="created-by">
-          {% trans 'created by' %}
-          <strong>
-            {% firstof resource.creator.get_full_name resource.creator.username '--' %}
-          </strong>
-          {% trans 'at' %}
-          <strong>{% firstof resource.creation_date '--' %}</strong>
-        </div>
       </div>
     </div>
   {% endfor %}

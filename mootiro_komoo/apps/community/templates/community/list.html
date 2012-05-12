@@ -44,14 +44,6 @@
             {% taglist community %}
           </div>
           {% endif %}
-          <div class="created-by">
-            {% trans 'created by' %}
-            <strong>
-              {% firstof community.creator.get_full_name community.creator.username 'someone' %}
-            </strong>
-            {% trans 'at' %}
-            <strong>{{ community.creation_date }}</strong>
-          </div>
         </div>
 
       </div>

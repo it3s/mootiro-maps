@@ -109,14 +109,6 @@
             {% taglist org %}
           </div>
           {% endif %}
-          <div class="created-by">
-            {% trans 'created by' %}
-            <strong>
-              {% firstof org.creator.get_full_name org.creator.username '--' %}
-            </strong>
-            {% trans 'at' %}
-            <strong>{% firstof org.creation_date '--' %}</strong>
-          </div>
         </div>
 
       </div>

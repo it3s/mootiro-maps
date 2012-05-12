@@ -97,9 +97,15 @@ ul.geo-objects-listing { margin-bottom: 10px }
 ul.geo-objects-listing li {
     cursor: pointer;
     position: relative;
-    padding: 4px 0;
+}
+ul.geo-objects-listing .sublist li {
+    padding: 8px;
 }
 ul.geo-objects-listing li ul { margin-left: 30px }
+ul.geo-objects-listing .item {
+    height: 100%;
+    padding: 8px;
+}
 ul.geo-objects-listing li div.collapser {
     width: 30px;
     height: 100%;
@@ -111,6 +117,15 @@ ul.geo-objects-listing li div.collapser {
 }
 ul.geo-objects-listing li div.collapser:hover { background: #dceff4 }
 ul.geo-objects-listing li div.collapser i { margin-top: 10px }
+div.collapser i.icon-chevron-right {
+    background: url("../img/icons/arrow.png") no-repeat 5px 5px;
+}
+div.collapser:hover i.icon-chevron-right {
+    background: url("../img/icons/arrow-hover.png") no-repeat 5px 5px;
+}
+div.collapser i.icon-chevron-down {
+    background: url("../img/icons/arrow-active.png") no-repeat 2px 5px;
+}
 
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }
@@ -257,6 +272,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     margin-right: 5px;
 }
 
+.organization-buttons .org-btn[panel='branches-list']:hover,
+.organization-buttons .org-btn[panel='branches-list'].selected,
 #top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
@@ -271,6 +288,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     background: #E84239 !important;
 }
 
+.organization-buttons .org-btn[panel='communities-list']:hover,
+.organization-buttons .org-btn[panel='communities-list'].selected,
 #top #menu #menu-community a:hover, #top #menu #menu-community.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
@@ -285,6 +304,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     background: #F08138 !important;
 }
 
+.organization-buttons .org-btn[panel='supported-proposals-list']:hover,
+.organization-buttons .org-btn[panel='supported-proposals-list'].selected,
 #top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
@@ -299,6 +320,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     background: #E83361 !important;
 }
 
+.organization-buttons .org-btn[panel='supported-organizations-list']:hover,
+.organization-buttons .org-btn[panel='supported-organizations-list'].selected,
 #top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
@@ -313,6 +336,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     background: #3E5FA9 important;
 }
 
+.organization-buttons .org-btn[panel='supported-resources-list']:hover,
+.organization-buttons .org-btn[panel='upported-resources-list'].selected,
 #top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
@@ -327,6 +352,8 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
     background: #1D9DD9 !important;
 }
 
+.organization-buttons .org-btn[panel='investments-list']:hover,
+.organization-buttons .org-btn[panel='investments-list'].selected,
 #top #menu #menu-investment a:hover, #top #menu #menu-investment.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
@@ -343,55 +370,61 @@ ul.geo-objects-listing li div.collapser i { margin-top: 10px }
 
 .icon-map {
     background-image: url("../img/menu/map.png");
+    background-position: 0 0;
     width: 10px;
     height: 15px;
 }
-a:hover .icon-map, li.selected .icon-map {
+*:hover > .icon-map, .selected .icon-map {
     background-image: url("../img/menu/map-active.png");
 }
 
 .icon-community {
     background-image: url("../img/menu/community.png");
+    background-position: 0 0;
     width: 15px;
     height: 17px;
 }
-a:hover .icon-community, li.selected .icon-community {
+*:hover > .icon-community, .selected .icon-community {
     background-image: url("../img/menu/community-active.png");
 }
 
 .icon-need {
     background-image: url("../img/menu/need.png");
+    background-position: 0 0;
     width: 18px;
     height: 16px;
 }
-a:hover .icon-need, li.selected .icon-need {
+*:hover > .icon-need, .selected .icon-need {
     background-image: url("../img/menu/need-active.png");
 }
 
 .icon-organization {
     background-image: url("../img/menu/organization.png");
+    background-position: 0 0;
     width: 16px;
     height: 15px;
 }
-a:hover .icon-organization, li.selected .icon-organization {
+*:hover > .icon-organization, .selected .icon-organization {
     background-image: url("../img/menu/organization-active.png");
 }
 
 .icon-resource {
     background-image: url("../img/menu/resource.png");
+    background-position: 0 0;
     width: 23px;
     height: 15px;
 }
-a:hover .icon-resource, li.selected .icon-resource {
+*:hover > .icon-resource, .selected .icon-resource {
     background-image: url("../img/menu/resource-active.png");
 }
 
 .icon-investment {
     background-image: url("../img/menu/investment.png");
+    background-position: 0 0;
     width: 20px;
     height: 15px;
 }
-a:hover .icon-investment, li.selected .icon-investment {
+*:hover > .icon-investment, .selected .icon-investment {
     background-image: url("../img/menu/investment-active.png");
 }
 
@@ -466,13 +499,12 @@ a:hover .icon-investment, li.selected .icon-investment {
     display: inline-block;
     vertical-align: middle;
 }
-#map-panel ul.geo-objects-listing { margin: 10px 0 0 }
 #map-panel #filter-cirle,
 #map-panel ul.geo-objects-listing li {
-    padding: 8px;
     border-bottom: 1px solid #e9e9e9;
 }
-#map-panel ul.geo-objects-listing li:hover { background: #dceff4 }
+#map-panel ul.geo-objects-listing .sublist li:hover,
+#map-panel ul.geo-objects-listing li .item:hover { background: #dceff4 }
 #map-panel ul.geo-objects-listing li.sublist { padding: 0 }
 #filter-form ul.geo-objects-listing li.sublist { display: none }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
@@ -482,6 +514,7 @@ a:hover .icon-investment, li.selected .icon-investment {
     padding-left: 2em;
     padding-right: 2em;
 }
+#filter-circle { padding: 8px; }
 #filter-circle .button { margin-left: 0em }
 #filter-circle .button .icon-plus { vertical-align: middle }
 #filter-circle span { margin-left: 2em }
@@ -994,7 +1027,7 @@ div.view-list-item {
   width: 870px;
 }
 div.view-list-item .apart a:first-child{
-  font-size: 120%;
+  font-size: 16px;
   font-weight: bolder;
 }
 div.view-list-item.odd {
@@ -1012,11 +1045,12 @@ div.view-list-item.odd {
     margin-left: 50px; */
     font-size: 20px;
     font-weight: bold;
-    margin: 0 0 10px;
+    margin: 0 0 30px;
 }
 /* View list Sort|Filter */
+.view-list-filters,
 .view-list-sorters{
-    padding: 10px 10px 0px 20px;
+    padding: 10px 10px 0px 10px;
     background-color: #dceff4;
     clear: both;
     /*width: 870px;*/
@@ -1026,13 +1060,6 @@ div.view-list-item.odd {
     display: inline-block;
     font-weight: bold;
     width: 100px;
-}
-.view-list-filters{
-    padding: 10px 10px 0px 20px;
-    background-color: #dceff4;
-    clear: both;
-    /*width: 870px;*/
-    /*border-bottom: solid 1px #4092A9;*/
 }
 .view-list-sorter-btn{
     display: inline-block;
@@ -1119,16 +1146,16 @@ div.view-list-item.odd {
     min-height: 2em;
 }
 .view-list-visualization-options{
+    font-size: 12px;
     padding-bottom: 10px;
     background-color: #dceff4;
 }
 .doFilter-wrapper{
     min-height: 2em;
     background-color: #dceff4;
-    padding: 0 20px;
+    padding: 0 10px;
 }
 #doFilter{
-    float: right;
     min-width: 50px;
     font-weight: bold;
 }
@@ -1232,20 +1259,24 @@ textarea.markItUpEditor{
 .org-btn{
     padding: 10px;
     border-radius: 7px;
-    width: 195px;
+    width: 208px;
     margin-top: 10px;
-    min-height: 36px;
+    margin-left: 10px;
+    min-height: 26px;
+    cursor: pointer;
+}
+.org-btn.multiline{
+    padding: 4px 10px;
+    min-height: 38px;
 }
 .org-btn div{
+    display: inline-block;
     max-width: 160px;
-    vertical-align:  bottom;
+    vertical-align: middle;
 }
-.org-btn img{
-    padding-right: 10px;
-    vertical-align: top;
-    padding-top: 6px;
-    max-width: 20px;
-    max-height: 20px;
+.org-btn i{
+    margin-right: 5px;
+    vertical-align: middle;
 }
 .org-info-div{
     background-color: rgb(166, 229, 238);
@@ -1422,7 +1453,6 @@ div.investments-list .tab-investment.selected a { color: #000 }
 }
 .komoo-pagination{
     display: inline-block;
-    margin: 5px 0;
     /* float: left; */
 }
 .komoo-pagination span{

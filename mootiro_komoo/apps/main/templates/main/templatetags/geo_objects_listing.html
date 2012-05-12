@@ -4,12 +4,16 @@
 {% autoescape off %}
 <ul class="geo-objects-listing" style="display: block; clear: both;">
   <li class="communities">
-    <div class="img-holder" data-object-type="community">{{ form.communities }}</div>
-    <span>{% trans "Communities" %}</span>
+    <div class="item">
+      <div class="img-holder" data-object-type="community">{{ form.communities }}</div>
+      <span>{% trans "Communities" %}</span>
+    </div>
   </li>
   <li class="needs">
-    <div class="img-holder" data-object-type="need">{{ form.needs }}</div>
-    <span>{% trans "Needs" %}</span>
+    <div class="item">
+      <div class="img-holder" data-object-type="need">{{ form.needs }}</div>
+      <span>{% trans "Needs" %}</span>
+    </div>
     {% if show_categories %}
     <div class="collapser"><i class="icon-chevron-right"></i></div>
     {% endif %}
@@ -20,12 +24,16 @@
   </li>
   {% endif %}
   <li class="organizations">
-    <div class="img-holder" data-object-type="organizationbranch">{{ form.organizations }}</div>
-    <span>{% trans "Organizations" %}</span>
+    <div class="item">
+      <div class="img-holder" data-object-type="organizationbranch">{{ form.organizations }}</div>
+      <span>{% trans "Organizations" %}</span>
+    </div>
   </li>
   <li class="resources">
-    <div class="img-holder" data-object-type="resource">{{ form.resources }}</div>
-    <span>{% trans "Resources" %}</span>
+    <div class="item">
+      <div class="img-holder" data-object-type="resource">{{ form.resources }}</div>
+      <span>{% trans "Resources" %}</span>
+    </div>
   </li>
 </ul>
 {% endautoescape %}

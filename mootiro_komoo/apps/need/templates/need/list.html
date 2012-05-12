@@ -59,14 +59,6 @@
             {% taglist need %}
           </div>
           {% endif %}
-          <div class="created-by">
-            {% trans 'created by' %}
-            <strong>
-              {% firstof need.creator.get_full_name need.creator.username '--' %}
-            </strong>
-            {% trans 'at' %}
-            <strong>{%firstof need.creation_date '--' %}</strong>
-          </div>
         </div>
 
       </div>

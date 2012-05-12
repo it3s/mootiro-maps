@@ -27,7 +27,7 @@
   {% if collection.previous_page_number > 1 and collection.paginator.num_pages > 3 %}
     <span>
       <a href="?page=1">
-        &laquo; {% trans 'first' %}
+        &lt;&lt; {% trans 'first' %}
       </a>
     </span>
   {% endif %}
@@ -35,7 +35,7 @@
   {% if collection.has_previous %}
     <span>
       <a href="?page={{ collection.previous_page_number }}">
-        < {% trans 'previous' %}
+        &lt; {% trans 'previous' %}
       </a>
     </span>
   {% endif %}
@@ -89,7 +89,7 @@
   {% if collection.has_next %}
     <span>
       <a href="?page={{ collection.next_page_number }}">
-        {% trans 'next' %} >
+        {% trans 'next' %} &gt;
       </a>
     </span>
   {% endif %}
@@ -97,7 +97,7 @@
   {% if collection.next_page_number < collection.paginator.num_pages and collection.paginator.num_pages > 3 %}
   <span>
     <a href="?page={{ collection.paginator.num_pages }}">
-      {% trans 'last' %} &raquo;
+      {% trans 'last' %} &gt;&gt;
     </a>
   </span>
   {% endif %}

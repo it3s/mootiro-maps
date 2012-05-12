@@ -50,37 +50,37 @@
             <div class="mark-down">{{ organization.description|render_markup }}</div>
             <div class="organization-buttons row">
                 <div class="org-btn span3 selected" panel="branches-list">
-                    <img src="{{ STATIC_URL }}img/marker.png" />
+                    <i class="icon-map"></i>
                     <div class="inline-block">
                       {% blocktrans count num=organization.organizationbranch_set.count %}{{ num }} point on map{% plural %}{{ num }} points on map{% endblocktrans %}
                     </div>
                 </div>
                 <div class="org-btn span3" panel="supported-organizations-list">
-                    <img src="{{ STATIC_URL }}img/organization.png" />
+                    <i class="icon-organization"></i>
                     <div class="inline-block">
                       {% blocktrans count num=organization.supported_organizations|length %}Supported {{ num }} organization{% plural %}Supported {{ num }} organizations{% endblocktrans %}
                     </div>
                 </div>
                 <div class="org-btn span3" panel="communities-list">
-                    <img src="{{ STATIC_URL }}img/community.png" />
+                    <i class="icon-community"></i>
                     <div class="inline-block">
                       {% blocktrans count num=organization.community.count %}On {{ num }} community{% plural %}On {{ num }} communities{% endblocktrans %}
                     </div>
                 </div>
                 <div class="org-btn span3" panel="supported-proposals-list">
-                    <img src="{{ STATIC_URL }}img/need.png" />
+                    <i class="icon-need"></i>
                     <div class="inline-block">
                       {% blocktrans count num=organization.supported_proposals|length %}Supported {{ num }} proposal{% plural %}Supported {{ num }} proposals{% endblocktrans %}
                     </div>
                 </div>
                 <div class="org-btn span3" panel="supported-resources-list">
-                    <img src="{{ STATIC_URL }}img/resource.png" />
+                    <i class="icon-resource"></i>
                     <div class="inline-block">
                       {% blocktrans count num=organization.supported_resources|length %}Supported {{ num }} resource{% plural %}Supported {{ num }} resources{% endblocktrans %}
                     </div>
                 </div>
-                <div class="org-btn span3" panel="investments-list">
-                    <img src="{{ STATIC_URL }}img/investment.png" />
+                <div class="org-btn span3 multiline" panel="investments-list">
+                    <i class="icon-investment"></i>
                     <div class="inline-block">
                       {% blocktrans count num=organization.realized_investments.count %}Realized {{ num }} investment
                       {% plural %}Realized {{ num }} investments{% endblocktrans %}
