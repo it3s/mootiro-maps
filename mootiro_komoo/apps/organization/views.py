@@ -223,7 +223,7 @@ def verify_org_name(request):
             Q(name__iexact=name) | Q(slug=slugify(name))
         )
     if q.count():
-        r_dict = {'exists': True, 'id': q[0].id}
+        r_dict = {'exists': True, 'id': q[0].id, 'slug': q[0].slug}
     else:
         r_dict = {'exists': False}
     return r_dict

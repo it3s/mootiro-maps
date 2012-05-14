@@ -1220,6 +1220,38 @@ textarea.markItUpEditor{
 .org-list-extra-info-entry{
     padding-bottom: 5px;
 }
+.org-div-form-header{
+    margin: 20px 0;
+}
+.org-div-form-header h1{
+    font-size: 20px;
+    font-weight: bold;
+}
+#org-div-progress{
+    margin-bottom: 40px;
+}
+#org-div-progress .alert .percent{
+    font-weight: bold;
+    display: inline-block;
+    width: 120px;
+    min-height: 1em;
+    vertical-align: top;
+}
+#org-div-progress .alert .msg{
+    display: inline-block;
+    width: 510px;
+    min-height: 1em;
+}
+#org-div-progress .alert .vertical-splitter{
+    min-height: 1.5em;
+    margin-right: 5px;
+    height: 100%;
+    border-left: solid 1px #3A87AD ;
+    border-right: solid 1px #fefefe;
+    display: inline-block;
+    vertical-align: top;
+}
+/* == serach ==*/
 .search-header{
     background-color: #dceff4; ;
     font-weight: bold;
