@@ -635,6 +635,13 @@ komoo.Map.prototype.initInfoWindow = function () {
                 google.maps.event.trigger(komooMap.tooltip.overlay, "click", {latLng: komooMap.tooltip.getPosition()});
             });
         });
+        google.maps.event.addDomListener(this.infoWindow, "domready", function (e) {
+            var closeBox = komooMap.infoWindow.div_.firstChild;
+            google.maps.event.addDomListener(closeBox, "click", function (e) {
+                // Detach the overlay from infowindow when close it.
+                komooMap.infoWindow.overlay = undefined;
+            });
+        });
     } else {  // Otherwise uses the default InfoWindow.
         if (window.console) console.log("Using default info window.");
         this.tooltip = new google.maps.InfoWindow();

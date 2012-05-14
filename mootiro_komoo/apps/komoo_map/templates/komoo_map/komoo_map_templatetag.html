@@ -1,6 +1,7 @@
 {% load i18n %}
 {% block api_js %}
   <!-- Google Maps API javascript -->
+  {% if type != 'disabled' %}
   <script type="text/javascript">
     if (!window.google || !window.google.maps) {
       document.write("<s" + "cript type=\"text/javascript\" src=\"http://maps.google.com/maps/api/js?sensor=false&libraries=drawing&language={{ LANGUAGE_CODE }}\" " + "><" + "/script>");
@@ -13,6 +14,7 @@
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
     }
   </script>
+  {% endif %}
 {% endblock %}
 {% block html %}
   <!-- HTML map container -->
@@ -27,6 +29,7 @@
       {% endif %}
       "
       class="komoo-map-googlemap">
+        {% if type == 'disabled' %} MAP DISABLED {% endif %}
     </div>
     <div style="clear: both;"></div>
     </div>
@@ -49,6 +52,7 @@
       var mapContainerId = "map-container-{{ type }}";
       var mapElem = document.getElementById(mapCanvasId);
 
+  {% if type != 'disabled' %}
       var geojson = {{ geojson|safe }};
       //var geojson = JSON.parse(geojson_);
 
@@ -115,6 +119,7 @@
         {% if type == 'main' %}
         editor = main;
         {% endif %}
+  {% endif %}
 
         // Fill the screen.
         function fixMapSize() {
@@ -129,11 +134,12 @@
           //$('#' + mapCanvasId).width($('body').innerWidth() - panelWidth - panelLeft).css('margin-left', panelWidth + panelLeft);
           $('#' + mapCanvasId).css({marginLeft: panelWidth + panelLeft, width: 'auto'});
           {% endif %}
-          google.maps.event.trigger({{ type }}.googleMap, 'resize');
+          if (window.google) google.maps.event.trigger({{ type }}.googleMap, 'resize');
         }
         $(window).resize(fixMapSize);
         fixMapSize();
 
+  {% if type != 'disabled' %}
         {{ type }}.loadGeoJSON(geojson, true);
 
         {% if editable and panel %}
@@ -230,7 +236,9 @@
           setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
       });
       {% endif %}
+  {% endif %}
     }
+  {% if type != 'disabled' %}
     // Initialize the map after page loading.
     {% if not lazy %}
     google.maps.event.addDomListener(window, 'load', initialize_map_{{ type }});
@@ -258,5 +266,8 @@
         });
       });
     {% endif %}
+  {% else %}
+    initialize_map_disabled();
+  {% endif %}
   </script>
 {% endblock %}

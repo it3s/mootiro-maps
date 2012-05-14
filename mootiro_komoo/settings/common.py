@@ -209,6 +209,9 @@ SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 KOMOO_COMMENTS_WIDTH = 3
 KOMOO_COMMENTS_HEIGHT = 20
 
+# KOMOO Map settings
+KOMOO_DISABLE_MAP = False
+
 # AJAX-SELECT
 # define the lookup channels in use on the site
 AJAX_LOOKUP_CHANNELS = {
