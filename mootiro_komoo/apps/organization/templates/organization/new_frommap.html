@@ -165,6 +165,7 @@
                             change_msg('Esta organização já existe. Deseja adicionar uma filial?');
                             $('.step_1_row_1').hide();
                             $('.step_1_row_2').show();
+                            $('#form_branch #id_branch_organization').val(data.id);
                         } else {
                             change_msg('Esta organização ainda não foi cadastrada. Deseja adicionar esta organização?');
                             $('.step_1_row_1').hide();
@@ -187,16 +188,19 @@
                 change_msg('Entre com os dados da Organização a qual pertence a filial que você marcou no mapa.')
                 var name = $('#id_org_name').val();
                 $('#form_organization #id_name').val(name);
+                $('#id_filial_org_name').val(name);
             });
 
             $('#form_organization').ajaxform({
-                success: function(data){
+                onSuccess: function(data){
                     change_step(3);
                     change_msg('Parabéns, sua organização foi salva corretamente. Por favor, agora preencha os dados para a filial que você marcou no mapa');
+                    $('#form_branch #id_branch_organization').val(data.obj.id);
+                    $('#id_filial_org_name').val(data.obj.name);
                 }
             });
             $('#form_branch').ajaxform({
-                success: function(data){
+                onSuccess: function(data){
                     change_step(4);
                 }
             });

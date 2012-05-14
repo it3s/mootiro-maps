@@ -108,7 +108,11 @@
                                 }
 
                                 // new validation style
-                                var node = $('#id_' + key);
+                                var node = $form.find('#id_' + key);
+                                if (! node.length) {
+                                    node = $form.find('input[name=' + key + ']');
+                                }
+                                console.log(node);
                                 for (i=0; ! node.is('.controls') && i < 5; node = node.parent(), i++);
                                 node.append('' +
                                 '<div class="error-field">' +

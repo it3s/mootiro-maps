@@ -22,11 +22,14 @@ def json_serializer(objeto):
     obj = dict()
     for field, value in objeto.iteritems():
         if not field.startswith('_'):
-            if isinstance(value, datetime.datetime
-                ) or isinstance(value, datetime.date):
-                obj[field] = value.strftime("%d/%m/%Y")
-            else:
-                obj[field] = value or ''
+            try:
+                if isinstance(value, datetime.datetime
+                    ) or isinstance(value, datetime.date):
+                    obj[field] = value.strftime("%d/%m/%Y")
+                else:
+                    obj[field] = unicode(value) or ''
+            except Exception:
+                pass
     return obj
 
 
@@ -155,11 +158,11 @@ def ajax_form(template=None, form_class=None, form_name="form"):
                             traceback.print_exc()
 
                     try:
-                        # obj_serialized = json_serializer(model_to_dict(obj))
-                        # obj_serialized['repr'] = unicode(obj)
+                        obj_serialized = json_serializer(model_to_dict(obj))
+                        obj_serialized['repr'] = unicode(obj)
                         r_dict.update({
                             'success': 'true',
-                            # 'obj': obj_serialized
+                            'obj': obj_serialized
                         })
                         json_ = simplejson.dumps(r_dict)
                     except Exception as err:

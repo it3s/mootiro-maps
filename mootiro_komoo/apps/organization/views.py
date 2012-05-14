@@ -169,6 +169,7 @@ def edit_organization(request, community_slug='', organization_slug='',
 @ajax_form(form_class=FormBranch)
 def add_branch_from_map(request):
     logger.debug('acessing organization > add_branch_from_map')
+    print '\n\nPOST DATA: %s\n\n' % request.POST
     return {'here?': True}
 
 
@@ -222,9 +223,9 @@ def verify_org_name(request):
             Q(name__iexact=name) | Q(slug=slugify(name))
         )
     if q.count():
-        r_dict = {'exists': True, 'aditional_data': '???'}
+        r_dict = {'exists': True, 'id': q[0].id}
     else:
-        r_dict = {'exists': False, 'aditional_data': '???'}
+        r_dict = {'exists': False}
     return r_dict
 
 

@@ -105,31 +105,25 @@ class FormBranch(AjaxModelForm):
     info = forms.CharField(required=False, widget=MarkItUpWidget())
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
+    organization = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = OrganizationBranch
         fields = ['id', 'name',
             # 'geometry',
-            'info', 'community']
+            'info', 'community', 'organization']
 
     _field_labels = {
         'name': _('Branch Name'),
         'info': _('Info'),
-        'community': _('Community')
+        'community': _('Community'),
+        'organization': _(' ')
     }
 
     def __init__(self, *args, **kwargs):
         self.helper = MooHelper(form_id='form_branch')
         return super(FormBranch, self).__init__(*args, **kwargs)
 
-    # def save(self, organization=None, *args, **kwargs):
-    #     branch = OrganizationBranch()
-    #     if 'geometry' in self.fields:
-    #         branch.geometry = self.cleaned_data.get('geometry', '')
-    #     branch.info = self.cleaned_data.get('branch_info', None)
-    #     branch.name = self.cleaned_data.get('branch_name', None)
-    #     branch.organization = organization
-    #     branch.save()
-    #     for comm in self.cleaned_data.get('branch_community', []):
-    #         branch.community.add(comm)
-    #     return branch
+    def clean_organization(self):
+        return clean_autocomplete_field(
+            self.cleaned_data['organization'], Organization)
