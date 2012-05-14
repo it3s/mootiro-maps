@@ -46,7 +46,7 @@ $(function(){
     $('#name_verify').click(function(){
         $.post(
             '/organization/verify_name/',
-            {'org_name': $('#id_org_name').val()},
+            {'org_name': $('#id_org_name_autocomplete').val()},
             function(data){
                 var msg, step;
                 if (data.exists){
@@ -71,7 +71,7 @@ $(function(){
         change_step(3);
         // change_msg('Entre com os dados da filial que você marcou no mapa');
         change_msg(gettext('Enter with the data from the branch you have marked on map'));
-        var name = $('#id_org_name').val();
+        var name = $('#id_org_name_autocomplete').val();
         $('#id_filial_org_name').val(name);
     });
 
@@ -79,7 +79,8 @@ $(function(){
         change_step(2);
         // change_msg('Entre com os dados da Organização que detém a unidade que você marcou no mapa.')
         change_msg(gettext('Enter with the data from the Organization which owns the branch you have marked on map.'));
-        var name = $('#id_org_name').val();
+        var name = $('#id_org_name_autocomplete').val();
+        console.log('name: ' + name)
         $('#form_organization #id_name').val(name);
         $('#id_filial_org_name').val(name);
     });

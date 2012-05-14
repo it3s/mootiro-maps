@@ -27,6 +27,7 @@ from organization.forms import FormOrganization, FormBranch
 from community.models import Community
 from main.utils import (paginated_query, create_geojson, sorted_query,
                         filtered_query, fix_community_url)
+from main.widgets import Autocomplete
 
 logger = logging.getLogger(__name__)
 
@@ -127,8 +128,10 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
     form_branch = FormBranch(auto_id='id_branch_%s')
     form_branch.helper.form_action = reverse('add_branch_from_map')
     form_branch.fields['geometry'].widget.attrs['id'] = 'id_geometry'
+    org_name_widget = Autocomplete(Organization,
+        "/organization/search_by_name", clean_on_change=False).render('org_name')
     return {'community': community, 'form_org': form_org,
-            'form_branch': form_branch}
+            'form_branch': form_branch, 'org_name_widget': org_name_widget}
 
 
 @login_required

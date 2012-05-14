@@ -32,7 +32,8 @@
                     {%trans 'Name' %}<span class="asteriskField">*</span>
                 </label>
                 <div class="controls">
-                    <input id="id_org_name" class="textinput textInput" type="text" maxlength="320" name="org_name">
+                    <!-- <input id="id_org_name" class="textinput textInput" type="text" maxlength="320" name="org_name"> -->
+                    {{ org_name_widget|safe }}
                 </div>
             </div>
 
