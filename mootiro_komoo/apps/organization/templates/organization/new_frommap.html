@@ -1,90 +1,79 @@
-{% extends 'global.html' %}
-
 {% load crispy_forms_tags %}
 {% load i18n %}
 
-{% block content %}
-    <div id="main-content">
-        <div class="main-column">
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ajax_select.css" />
+<script type="text/javascript" src="{{ STATIC_URL }}js/ajax_select.js"></script>
+{{ form_org.media }}
+{{ form_branch.media }}
+<script type="text/javascript" src="{{ STATIC_URL }}js/organization_new.js"></script>
 
-            <div class="org-div-form-header">
-                <h1>{% trans 'New Organization' %}</h1>
+
+<div id="main-content">
+    <div class="main-column">
+
+        <div class="org-div-form-header">
+            <h1>{% trans 'New Organization' %}</h1>
+        </div>
+
+        <div id="org-div-progress">
+            <div class="progress">
+                <div class="bar" style="width: 0%;"></div>
+            </div>
+            <div class="alert alert-info" data-alert="info">
+                <a class="close" data-dismiss="alert">×</a>
+                <div class="msg"></div><div class="vertical-splitter"></div><div class="percent"></div>
+            </div>
+        </div>
+
+        <div class="org-div-forms">
+
+            <div id="org-div-name-verify" class="step_1 clearfix control-group " style="display: none;">
+                <label class="requiredField" for="id_name">
+                    {%trans 'Name' %}<span class="asteriskField">*</span>
+                </label>
+                <div class="controls">
+                    <input id="id_org_name" class="textinput textInput" type="text" maxlength="320" name="org_name">
+                </div>
             </div>
 
-            <div id="org-div-progress">
-                <div class="progress">
-                    <div class="bar" style="width: 0%;"></div>
-                </div>
-                <div class="alert alert-info" data-alert="info">
-                    <a class="close" data-dismiss="alert">×</a>
-                    <div class="msg"></div><div class="vertical-splitter"></div><div class="percent"></div>
-                </div>
+            <div id="org-div-form-organization" class="step_2" style="display: none;">
+                {% crispy form_org %}
             </div>
 
-            <div class="org-div-forms">
-
-                <div id="org-div-name-verify" class="step_1 clearfix control-group " style="display: none;">
-                    <label class="requiredField" for="id_name">
-                        {%trans 'Name' %}<span class="asteriskField">*</span>
-                    </label>
+            <div id="org-div-form-branch" class="step_3" style="display: none;">
+                <div class="step_3 clearfix control-group ">
+                    <label>{% trans 'Branch of'%}:</label>
                     <div class="controls">
-                        <input id="id_org_name" class="textinput textInput" type="text" maxlength="320" name="org_name">
+                        <input id="id_filial_org_name" class="textinput textInput" type="text" maxlength="320" disabled='true' >
                     </div>
                 </div>
+                {% crispy form_branch %}
+            </div>
+        </div>
 
-                <div id="org-div-form-organization" class="step_2" style="display: none;">
-                    {% crispy form_org %}
+        <div class="org-div-buttons">
+            <div class="step_1">
+                <div class="step_1_row_1">
+                    <span id="name_verify" class="button">{% trans 'Verify' %}</span>
+                    <!-- <span class="btn">Cancelar</span> -->
+                </div>
+                <div class="step_1_row_2" style="display: none;">
+                    <span id="btn_add_filial" class="button">{% trans 'Add Branch' %}</span>
+                    <span class="btn step_1_cancel">{% trans 'Cancel' %}</span>
+                </div>
+                <div class="step_1_row_3" style="display: none;">
+                    <span id="btn_add_org" class="button">{% trans 'Subscribe Organization' %}</span>
+                    <span class="btn step_1_cancel">{% trans 'Cancel' %}</span>
                 </div>
 
-                <div id="org-div-form-branch" class="step_3" style="display: none;">
-                    <div class="step_3 clearfix control-group ">
-                        <label>{% trans 'Branch of'%}:</label>
-                        <div class="controls">
-                            <input id="id_filial_org_name" class="textinput textInput" type="text" maxlength="320" disabled='true' >
-                        </div>
-                    </div>
-                    {% crispy form_branch %}
-                </div>
             </div>
 
-            <div class="org-div-buttons">
-                <div class="step_1">
-                    <div class="step_1_row_1">
-                        <span id="name_verify" class="button">{% trans 'Verify' %}</span>
-                        <!-- <span class="btn">Cancelar</span> -->
-                    </div>
-                    <div class="step_1_row_2" style="display: none;">
-                        <span id="btn_add_filial" class="button">{% trans 'Add Branch' %}</span>
-                        <span class="btn step_1_cancel">{% trans 'Cancel' %}</span>
-                    </div>
-                    <div class="step_1_row_3" style="display: none;">
-                        <span id="btn_add_org" class="button">{% trans 'Subscribe Organization' %}</span>
-                        <span class="btn step_1_cancel">{% trans 'Cancel' %}</span>
-                    </div>
-
-                </div>
-
-                <div class="step_4" style="display: none;">
-                    <span id="btn_concluir" class="button" slug="">{% trans 'Finish' %}</span>
-                </div>
-
-
+            <div class="step_4" style="display: none;">
+                <span id="btn_concluir" class="button" slug="">{% trans 'Finish' %}</span>
             </div>
+
 
         </div>
+
     </div>
-
-{% endblock %}
-
-{% block css %}
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ajax_select.css" />
-    <script type="text/javascript" src="{{ STATIC_URL }}js/ajax_select.js"></script>
-
-{% endblock %}
-
-{% block page_scripts %}
-    {{ form_org.media }}
-    {{ form_branch.media }}
-    <script type="text/javascript" src="{{ STATIC_URL }}js/organization_new.js"></script>
-{% endblock %}
-
+</div>

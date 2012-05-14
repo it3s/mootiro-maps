@@ -126,7 +126,7 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
     form_org.helper.form_action = reverse('add_org_from_map')
     form_branch = FormBranch(auto_id='id_branch_%s')
     form_branch.helper.form_action = reverse('add_branch_from_map')
-    # form_branch.fields['geometry'].widget.attrs['id'] = 'id_geometry'
+    form_branch.fields['geometry'].widget.attrs['id'] = 'id_geometry'
     return {'community': community, 'form_org': form_org,
             'form_branch': form_branch}
 
