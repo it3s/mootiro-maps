@@ -852,6 +852,11 @@ komoo.Map.prototype.openTooltip = function (overlay, latLng, optContent) {
         this.tooltip.title.text(optContent || overlay.properties.name);
         this.tooltip.overlay = overlay;
     }
+    if (overlay.properties.type == "organizationbranch") {
+        this.tooltip.title.text(overlay.properties.organization_name + " - " + overlay.properties.name);
+    } else {
+        this.tooltip.title.text(overlay.properties.name);
+    }
     this.tooltip.setPosition(latLng);
     this.tooltip.open(this.googleMap);
 };

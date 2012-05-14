@@ -45,7 +45,7 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
     if not height.endswith('%') and not height.endswith('px'):
         height = height + 'px'
 
-    if settings.KOMOO_DISABLE_MAP:
+    if getattr(settings, 'KOMOO_DISABLE_MAP', False):
         type = 'disabled'
 
     return dict(type=type, width=width, height=height, zoom=zoom,
