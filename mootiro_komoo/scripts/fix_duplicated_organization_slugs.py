@@ -7,9 +7,7 @@ import sys
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJ_DIR = os.path.abspath(os.path.join(HERE, '../'))
 SITE_ROOT = os.path.abspath(os.path.join(PROJ_DIR, '../'))
-env_ = 'dev'
-
-print PROJ_DIR
+env_ = os.environ.get('KOMOO_ENV', 'dev')
 
 sys.path.append(PROJ_DIR)
 sys.path.append(SITE_ROOT)
