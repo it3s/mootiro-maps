@@ -153,15 +153,20 @@ def edit_organization(request, community_slug='', organization_slug='',
             logger.debug('community_slug: {}'.format(community_slug))
             form.fields['community'].widget = forms.HiddenInput()
             form.initial['community'] = community.id
-        form.helper.form_action = reverse('edit_organization',
-                kwargs={'community_slug': community_slug})
+        if community_slug:
+            form.helper.form_action = reverse('edit_organization',
+                    kwargs={'community_slug': community_slug})
+        else:
+            form.helper.form_action = reverse('edit_organization')
         return form
 
     def on_after_save(request, obj):
-        _url = reverse('view_organization',
-                    kwargs={'organization_slug': obj.slug,
-                            'community_slug': community_slug})
-        return {'redirect': _url}
+        if community_slug:
+            kwargs_ = {'organization_slug': obj.slug,
+                      'community_slug': community_slug}
+        else:
+            kwargs_ = {'organization_slug': obj.slug}
+        return {'redirect': reverse('view_organization', kwargs=kwargs_)}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
             'community': community, 'geojson': geojson,
