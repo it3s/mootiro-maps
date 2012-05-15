@@ -10,6 +10,7 @@ class PluploadWidget(forms.Widget):
             'plupload/js/plupload.full.js',
             'plupload/js/jquery.plupload.queue/jquery.plupload.queue.js',
             'plupload/komoo_plupload.js',
+            'plupload/js/i18n/pt-br.js',
         )
         css = {
             'all': ('plupload/komoo_plupload.css',)
