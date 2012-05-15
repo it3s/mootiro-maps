@@ -22,7 +22,7 @@ class Proposal(models.Model):
 
     title = models.CharField(max_length=256)
     description = models.TextField()
-    number = models.IntegerField(null=False, editable=False)
+    number = models.IntegerField(null=False, blank=True, editable=False)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
@@ -35,7 +35,7 @@ class Proposal(models.Model):
     realizers = models.ManyToManyField(User)
     # TODO: Also: organizations = model.ManyToManyField(Organization)
     cost = models.DecimalField(decimal_places=2, max_digits=14, null=True)
-    report = models.TextField()
+    report = models.TextField(null=True, blank=True)
 
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',

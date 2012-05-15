@@ -10,12 +10,18 @@ home_urls = [
 ]
 
 urlpatterns = patterns('proposal.views',
-    url(pr(r'^need/NEED_SLUG/proposal/new$'), 'edit', name='new_proposal'),
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/new$'), 'edit', name='new_proposal'),
+    url(pr(r'^need/NEED_SLUG/proposal/new$'), 'edit',
+            name='new_proposal'),
+    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/new$'), 'edit',
+            name='new_proposal'),
 
-    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER/edit$'), 'edit', name='edit_proposal'),
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/PROPOSAL_NUMBER/edit$'), 'edit', name='edit_proposal'),
+    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER/edit$'), 'edit',
+            name='edit_proposal'),
+    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/PROPOSAL_NUMBER/edit$'), 'edit',
+            name='edit_proposal'),
 
-    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER$'), 'view', name='view_proposal'),
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/PROPOSAL_NUMBER$'), 'view', name='view_proposal'),
+    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER$'), 'view',
+            name='view_proposal'),
+    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/proposal/PROPOSAL_NUMBER$'), 'view',
+            name='view_proposal'),
 )

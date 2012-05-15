@@ -7,13 +7,14 @@ from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
+from ajaxforms import AjaxModelForm
 
 from main.utils import MooHelper
 from main.widgets import TaggitWidget
 from community.models import Community
 
 
-class CommunityForm(forms.ModelForm):
+class CommunityForm(AjaxModelForm):
     class Meta:
         model = Community
         fields = ('name', 'population', 'description', 'tags', 'geometry',
@@ -35,17 +36,11 @@ class CommunityForm(forms.ModelForm):
         required=False)
 
     def __init__(self, *a, **kw):
-        # Crispy forms configuration
-        self.helper = MooHelper()
-        self.helper.form_id = "community_form"
-
-        com = super(CommunityForm, self).__init__(*a, **kw)
-        for field, label in self._field_labels.iteritems():
-            self.fields[field].label = label
-        return com
+        self.helper = MooHelper(form_id="community_form")
+        return super(CommunityForm, self).__init__(*a, **kw)
 
     def save(self, *args, **kwargs):
         comm = super(CommunityForm, self).save(*args, **kwargs)
-        files_id_list = self.cleaned_data.get('files', '').split('|')
-        UploadedFile.bind_files(files_id_list, comm)
+        UploadedFile.bind_files(
+            self.cleaned_data.get('files', '').split('|'), comm)
         return comm

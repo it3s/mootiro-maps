@@ -11,4 +11,10 @@
 
 {% block css %}
   {{ form_resource.media }}
+  <script type="text/javascript">
+    $(function(){
+        $('#form_resource').ajaxform();
+    });
+
+  </script>
 {% endblock %}

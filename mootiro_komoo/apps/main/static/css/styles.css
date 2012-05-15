@@ -739,7 +739,6 @@ form .formRow > div {
     margin-right: 5px;
 }
 form .datepicker { width: 7em }
-
 #need_form { width: 100% }
 #need_form input[type=text], #need_form textarea { width: 100% }
 #need_form #div_id_categories ul { display: inline-block }
@@ -946,7 +945,7 @@ a.btnShowForm{
   width: 100%;
 }
 #form_resource #div_id_tags .ui-autocomplete-input{
-  background: none repeat scroll 0% 0% rgba(215, 215, 215, 0.2);
+  background: none repeat scroll 0% 0% #fbfbfb; /*rgba(215, 215, 215, 0.2);*/
   box-shadow: 1px 1px 1px rgb(190, 189, 204) ;
 }
 /* resource show */
@@ -972,6 +971,23 @@ input[type=text], textarea{
 }
 .inline-block{
   display: inline-block;
+}
+.control-group .controls input{
+    width: 99%;
+}
+ul.ui-autocomplete.ui-menu{
+   border: solid 1px #BCE8F1;
+}
+ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all{
+    background-color: #D9EDF7;
+    border: none;
+    border-radius: 0;
+}
+ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
+    background-image: none;
+    background-color: #BCE8F1;
+    color: #3A87AD;
+    font-weight: bold;
 }
 /* ========= Entity show ====== */
 .view-header{
@@ -1324,6 +1340,29 @@ textarea.markItUpEditor{
 .org-list-extra-info-entry{
     padding-bottom: 5px;
 }
+.org-div-form-header{
+    margin: 20px 0;
+}
+.org-div-form-header h1{
+    font-size: 20px;
+    font-weight: bold;
+}
+#org-div-progress{
+    margin-bottom: 40px;
+}
+#org-div-progress .alert .msg{
+    display: inline-block;
+    width: 510px;
+    min-height: 1em;
+}
+.bar p.percent {
+    color: #ffffff ;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0px -1px 0px rgba(15, 15, 15, 0.65);
+}
+/* == serach ==*/
 .search-header{
     background-color: #dceff4; ;
     font-weight: bold;
@@ -1455,6 +1494,34 @@ div.investments-list .tab-investment.selected a { color: #000 }
 .error-dialog .ui-widget-content,
 .error-dialog .ui-dialog-titlebar {
     /* TODO */
+}
+.control-group.error{
+    background-color: #f2dede;
+    margin: -10px -30px 20px -20px;
+    padding: 10px 30px 0 20px;
+    border-radius: 4px;
+}
+.control-group.error input, .control-group.error textarea{
+    background-color: #fbfbfb;
+}
+.control-group.error .tagsinput{
+    background-color: #f2dede;
+}
+.control-group.error .tagsinput input{
+    background-color: #fbfbfb;
+}
+.error-field{
+    padding: 5px 10px 10px 10px;
+}
+.error-field .error-notice{
+    font-weight: bold;
+    color: #ee3333;
+    padding-right: 10px;
+}
+.error-field img{
+    /*max-width: 16px;*/
+    max-height: 16px;
+    padding-right: 5px;
 }
 .komoo-pagination{
     display: inline-block;
