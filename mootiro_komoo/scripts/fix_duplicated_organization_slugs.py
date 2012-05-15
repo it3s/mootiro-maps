@@ -7,7 +7,6 @@ import sys
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJ_DIR = os.path.abspath(os.path.join(HERE, '../'))
 SITE_ROOT = os.path.abspath(os.path.join(PROJ_DIR, '../'))
-
 env_ = os.environ.get('KOMOO_ENV', 'dev')
 
 sys.path.append(PROJ_DIR)
@@ -24,14 +23,16 @@ exec 'from settings import {} as environ'.format(env_name)
 setup_environ(environ)
 
 # ======= script ====== ##
-from organization.models import OrganizationCategoryTranslation
+from organization.models import Organization
+
+os = []
+for o in Organization.objects.all():
+    if Organization.objects.filter(slug=o.slug).count() > 1:
+        os.append(o)
+        # print o.slug, ': ', o.id, ' -> ', o.name, ' => ', o.community.all()[0].name
 
 
-o = OrganizationCategoryTranslation.objects.get(pk=14)
-o.name = 'Promoção de direitos humanos'
-o.save()
-
-o = OrganizationCategoryTranslation.objects.get(pk=19)
-o.name = 'Promoção da paz'
-o.save()
-
+for o in os:
+    o.name = o.name + ' - ' + o.community.all()[0].name
+    o.save()
+    # print o.slug

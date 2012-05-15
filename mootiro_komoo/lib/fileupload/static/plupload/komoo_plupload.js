@@ -69,10 +69,10 @@ $("#uploader").pluploadQueue({
 
     preinit: {
         'Init' : function(){
-            $('.plupload_header_title').text('Upload de Arquivos');
+            // $('.plupload_header_title').text('Upload de Arquivos');
             $('.plupload_header_text').text('');
-            $('.plupload_buttons .plupload_add').text('Adicionar Arquivos');
-            $('.plupload_buttons .plupload_start').text('Iniciar Upload');
+            // $('.plupload_buttons .plupload_add').text('Adicionar Arquivos');
+            // $('.plupload_buttons .plupload_start').text('Iniciar Upload');
         },
         FilesAdded: function(up, files) {
             var max = up.settings.max_file_count;
