@@ -234,7 +234,7 @@ div.collapser i.icon-chevron-down {
 #top #menu li a:hover, #top #menu li.selected a,
 .map-tab a:hover, .map-tab.selected a,
 .map-button:hover, .map-button.selected,
-.organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected  {
+.organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected{
     color: #fff;
     text-decoration: none;
     background-color: #3EBAC2;
@@ -246,6 +246,18 @@ div.collapser i.icon-chevron-down {
     background-image: -ms-linear-gradient(bottom, #4092A9 0%, #3EBAC2 100%) !important;
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #4092A9), color-stop(1, #3EBAC2)) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#4092A9, endColorstr=#3EBAC2)";
+}
+.btn.button{
+    text-shadow: 1px 1px 1px #333333;
+    box-shadow: 1px 1px 1px #333333;
+    font-weight: bold;
+}
+.btn.button:hover{
+    background-position: 0 0;
+    color: #ffffff;
+    box-shadow: none;
+    text-shadow: none;
+    background-color: rgba(62, 186, 194, 0.2);
 }
 #komoo-map-add-button,
 #top #menu li:first-child a,
