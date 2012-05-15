@@ -488,6 +488,9 @@ body.community #collapse-panel {
     -moz-transition: margin-left 1s; /* Firefox 4 */
     -webkit-transition: margin-left 1s; /* Safari and Chrome */
     -o-transition: margin-left 1s; /* Opera */
+}
+.with-panel #map-canvas-editor,
+#map-canvas-main {
     margin-left: 330px !important;
 }
 .collapsed #map-canvas-editor,

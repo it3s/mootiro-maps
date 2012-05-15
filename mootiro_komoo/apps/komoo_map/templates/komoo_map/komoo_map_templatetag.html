@@ -18,7 +18,7 @@
 {% endblock %}
 {% block html %}
   <!-- HTML map container -->
-  <div id="map-container-{{ type }}" style="overflow:hidden;">
+  <div id="map-container-{{ type }}" class="{% if panel %}with-panel{% endif %}" style="overflow:hidden;">
     {% if panel %}
       {% include "komoo_map/panel.html" %}
       <script type="text/javascript" src="{{STATIC_URL}}/js/map_filter.js"></script>
@@ -123,11 +123,18 @@
 
         // Fill the screen.
         function fixMapSize() {
+          fixMapHeight();
+          fixMapWidth();
+          if (window.google) google.maps.event.trigger({{ type }}.googleMap, 'resize');
+        }
+        function fixMapHeight() {
           {% if height == '100%' %}
           var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
           $('#' + mapCanvasId).height(height);
           $('#map-panel').height(height);
           {% endif %}
+        }
+        function fixMapWidth() {
           {% if width == '100%' %}
           var panelWidth = $('#map-panel').innerWidth();
           try {
@@ -136,9 +143,9 @@
             var panelLeft = 0;
           }
           //$('#' + mapCanvasId).width($('body').innerWidth() - panelWidth - panelLeft).css('margin-left', panelWidth + panelLeft);
+          console.log(panelWidth + panelLeft);
           $('#' + mapCanvasId).css({marginLeft: panelWidth + panelLeft, width: 'auto'});
           {% endif %}
-          if (window.google) google.maps.event.trigger({{ type }}.googleMap, 'resize');
         }
         $(window).resize(fixMapSize);
         fixMapSize();
