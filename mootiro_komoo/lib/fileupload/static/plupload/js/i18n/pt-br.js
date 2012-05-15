@@ -14,7 +14,7 @@ plupload.addI18n({
    'Start upload' : 'Iniciar o envio',
    'Uploaded %d/%d files': 'Enviado(s) %d/%d arquivo(s)',
    'N/A' : 'N/D',
-   'Drag files here.' : 'Arraste os arquivos pra cá',
+   'Drag files here.' : 'Arraste aqui os arquivos',
    'File extension error.': 'Tipo de arquivo não permitido.',
    'File size error.': 'Tamanho de arquivo não permitido.',
    'File count error.': 'Erro na contagem dos arquivos',
