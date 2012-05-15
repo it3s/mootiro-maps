@@ -39,9 +39,11 @@ def geojson(obj=None):
     return create_geojson([obj]).replace("'", "\\'").replace('"', "'")
 
 
-@register.inclusion_tag('main/templatetags/menu.html')
-def menu(obj=None, selected_area=''):
+@register.inclusion_tag('main/templatetags/menu.html', takes_context=True)
+def menu(context, obj=None, selected_area=''):
     community = _get_related_community(obj)
+    if not community:
+      community = context.get('community', None)
     return dict(community=community, selected_area=selected_area)
 
 
