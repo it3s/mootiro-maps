@@ -2,7 +2,7 @@
 {% load markitup_tags %}
 {% markitup_media %}
 
-<form class="form-branch-edit" action="{% url branch_edit %}" method="post">
+<form class="form-branch-edit" action="{% url edit_inline_branch %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="id" value="{{ branch.id }}" >
     <input type="hidden" name="geometry" id="branch-geometry-{{ branch.id }}" value="{{ branch.geometry }}" data-feature-collection="{{ branch.geojson }}">

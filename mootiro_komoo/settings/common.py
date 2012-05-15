@@ -145,6 +145,7 @@ INSTALLED_APPS = [
     'gunicorn',
     'social_auth',
     'django_nose',
+    'ajaxforms',
     # our apps
     'main',
     'komoo_map',
@@ -161,6 +162,8 @@ INSTALLED_APPS = [
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
+
+FILE_UPLOAD_MAX_MEMORY_SIZE  = 10 * 1024 * 1024
 
 # https://github.com/aljosa/django-tinymce/blob/master/docs/installation.rst
 # TINYMCE_COMPRESSOR = True

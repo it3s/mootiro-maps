@@ -72,7 +72,7 @@ komoo.RegionTypes = [
         overlayTypes: [komoo.OverlayType.POLYGON,
                        komoo.OverlayType.POLYLINE,
                        komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("new_need",
+        formUrl: dutils.urls.resolve("new_need_from_map",
             {community_slug: "community_slug"}),
         zIndex: 100,
         disabled: false
@@ -87,7 +87,7 @@ komoo.RegionTypes = [
         icon: "/static/img/organization.png",
         overlayTypes: [komoo.OverlayType.POLYGON,
                        komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("organization_new",
+        formUrl: dutils.urls.resolve("new_organization_from_map",
             {community_slug: "community_slug"}),
         zIndex: 100,
         disabled: false
@@ -103,7 +103,7 @@ komoo.RegionTypes = [
         overlayTypes: [komoo.OverlayType.POLYGON,
                        komoo.OverlayType.POLYLINE,
                        komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("resource_new",
+        formUrl: dutils.urls.resolve("new_resource_from_map",
             {community_slug: "community_slug"}),
         zIndex: 100,
         disabled: false

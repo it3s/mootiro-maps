@@ -1,14 +1,16 @@
-{% if redirect %}
-    <script>window.location = '{{redirect}}';</script>
-{% else %}
+{% load crispy_forms_tags %}
+{{ form_resource.media }}
 
-    {% load crispy_forms_tags %}
-    {{ form_resource.media }}
+<div id="main-content">
+  <div class="main-column">
+    {% crispy form_resource form_resource.helper %}
+  </div>
+</div>
 
-    <div id="main-content">
-      <div class="main-column">
-        {% crispy form_resource form_resource.helper %}
-      </div>
-    </div>
+<script type="text/javascript">
+    $(function(){
+        $('#form_resource').ajaxform();
+    });
+</script>
 
-{% endif %}
+

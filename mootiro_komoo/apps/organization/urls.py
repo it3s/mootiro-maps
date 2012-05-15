@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 from django.conf.urls.defaults import patterns, url
 from mootiro_komoo.urls import prepare_regex as pr
-from organization.views import Edit, New
 
 home_urls = [
     r'^organization/ORGANIZATION_SLUG/',
@@ -12,14 +11,25 @@ home_urls = [
 urlpatterns = patterns('organization.views',
     url(r'^organization/?$', 'organization_list',
             name='organization_list'),
-    url(r'^organization/new/?$', New.as_view(),
-            name='organization_new'),
-    url(r'^organization/edit/?$', Edit.as_view(),
-            name='organization_edit'),
+    url(r'^organization/new/?$', 'new_organization',
+            name='new_organization'),
+    url(r'^organization/new/from_map/?$', 'new_organization_from_map',
+            name='new_organization_from_map'),
+    url(r'^organization/edit/?$', 'edit_organization',
+            name='edit_organization'),
+
+    url(r'^organization/add_org_from_map/?$', 'add_org_from_map',
+            name='add_org_from_map'),
+    url(r'^organization/add_branch_from_map/?$', 'add_branch_from_map',
+            name='add_branch_from_map'),
+
+
     url(pr(r'^organization/ORGANIZATION_SLUG/?$'), 'show',
             name='view_organization'),
-    url(r'^organization/branch/edit/$', 'branch_edit',
-            name='branch_edit'),
+    url(r'^organization/branch/edit/$', 'edit_inline_branch',
+            name='edit_inline_branch'),
+    url(r'^organization/verify_name/$', 'verify_org_name',
+            name='verify_org_name'),
 
     url(r'^organization/search_by_name/$', 'search_by_name',
             name='organization_search_by_name'),
@@ -28,10 +38,13 @@ urlpatterns = patterns('organization.views',
 
     url(pr(r'^COMMUNITY_SLUG/organization/?$'), 'organization_list',
             name='organization_list'),
-    url(pr(r'^COMMUNITY_SLUG/organization/new/?$'), New.as_view(),
-            name='organization_new'),
-    url(pr(r'^COMMUNITY_SLUG/organization/edit/?$'), Edit.as_view(),
-            name='organization_edit'),
+    url(pr(r'^COMMUNITY_SLUG/organization/new/?$'), 'new_organization',
+            name='new_organization'),
+    url(pr(r'^COMMUNITY_SLUG/organization/new/from_map/?$'), 'new_organization_from_map',
+            name='new_organization_from_map'),
+    url(pr(r'^COMMUNITY_SLUG/organization/edit/?$'), 'edit_organization',
+            name='edit_organization'),
+
     url(pr(r'^COMMUNITY_SLUG/organization/ORGANIZATION_SLUG/?$'), 'show',
             name='view_organization'),
 )

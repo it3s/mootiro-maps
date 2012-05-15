@@ -18,4 +18,9 @@
 
 {% block page_scripts %}
     {% load_files need %}
+    <script type="text/javascript">
+      $(function(){
+        $('#need_form').ajaxform();
+      })
+    </script>
 {% endblock %}

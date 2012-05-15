@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
+from ajaxforms import AjaxModelForm
 
 from main.utils import MooHelper
 from main.widgets import Autocomplete, Tagsinput, TaggitWidget, ImageSwitchMultiple
@@ -14,11 +15,11 @@ from need.models import Need, NeedCategory, TargetAudience
 from community.models import Community
 
 
-class NeedForm(forms.ModelForm):
+class NeedForm(AjaxModelForm):
     class Meta:
         model = Need
         fields = ('community', 'title', 'description', 'categories',
-                    'target_audiences', 'tags', 'geometry', 'files')
+                    'target_audiences', 'tags', 'files')
 
     _field_labels = {
         'community': _('Community'),
@@ -62,19 +63,11 @@ class NeedForm(forms.ModelForm):
         required=False
     )
 
-    geometry = forms.CharField(widget=forms.HiddenInput())
-
     files = FileuploadField(required=False)
 
     def __init__(self, *a, **kw):
-        # Crispy forms configuration
-        self.helper = MooHelper()
-        self.helper.form_id = "need_form"
-
-        n = super(NeedForm, self).__init__(*a, **kw)
-        for field, label in self._field_labels.iteritems():
-            self.fields[field].label = label
-        return n
+        self.helper = MooHelper(form_id="need_form")
+        return super(NeedForm, self).__init__(*a, **kw)
 
     # def clean_community(self):
     #     value = self.cleaned_data['community']
@@ -82,6 +75,25 @@ class NeedForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         need = super(NeedForm, self).save(*args, **kwargs)
-        files_id_list = self.cleaned_data.get('files', '').split('|')
-        UploadedFile.bind_files(files_id_list, need)
+        UploadedFile.bind_files(
+            self.cleaned_data.get('files', '').split('|'), need)
         return need
+
+
+class NeedFormGeoRef(NeedForm):
+    class Meta:
+        model = Need
+        fields = ('community', 'title', 'description', 'categories',
+                    'target_audiences', 'tags', 'geometry', 'files')
+
+    _field_labels = {
+        'community': _('Community'),
+        'title': _('Title'),
+        'description': _('Description'),
+        'categories': _('Categories'),
+        'target_audiences': _('Target audiences'),
+        'tags': _('Tags'),
+        'files': _(' '),
+    }
+
+    geometry = forms.CharField(widget=forms.HiddenInput())

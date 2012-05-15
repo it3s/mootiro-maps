@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-07 17:28-0300\n"
+"POT-Creation-Date: 2012-05-14 13:41-0300\n"
 "PO-Revision-Date: 2012-05-02 20:27-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -17,35 +17,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: apps/community/forms.py:23 apps/komoo_resource/forms.py:38
+#: apps/community/forms.py:24 apps/komoo_resource/forms.py:38
 #: apps/main/templatetags/komoo_tags.py:175
-#: apps/main/templatetags/komoo_tags.py:176 apps/organization/forms.py:158
+#: apps/main/templatetags/komoo_tags.py:176 apps/organization/forms.py:61
+#: apps/organization/templates/organization/new_frommap.html:28
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
-#: apps/community/forms.py:24 apps/investment/forms.py:30
-#: apps/komoo_resource/forms.py:39 apps/need/forms.py:26
-#: apps/organization/forms.py:57 apps/organization/forms.py:159
-#: apps/proposal/forms.py:24
+#: apps/community/forms.py:25 apps/investment/forms.py:30
+#: apps/komoo_resource/forms.py:39 apps/need/forms.py:27 apps/need/forms.py:92
+#: apps/organization/forms.py:62 apps/proposal/forms.py:25
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/community/forms.py:25 apps/community/templates/community/view.html:24
+#: apps/community/forms.py:26 apps/community/templates/community/view.html:24
 msgid "Population"
 msgstr "População"
 
-#: apps/community/forms.py:26 apps/investment/forms.py:40
+#: apps/community/forms.py:27 apps/investment/forms.py:40
 #: apps/komoo_resource/forms.py:41 apps/main/templatetags/komoo_tags.py:174
-#: apps/need/forms.py:29 apps/organization/forms.py:60
-#: apps/organization/forms.py:162 lib/taggit/managers.py:39
-#: lib/taggit/models.py:57
+#: apps/need/forms.py:30 apps/need/forms.py:95 apps/organization/forms.py:65
+#: lib/taggit/managers.py:39 lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/community/forms.py:27 apps/need/forms.py:30
-#: apps/organization/forms.py:63 apps/organization/forms.py:64
-#: apps/organization/forms.py:165 apps/organization/forms.py:166
+#: apps/community/forms.py:28 apps/need/forms.py:31 apps/need/forms.py:96
+#: apps/organization/forms.py:68 apps/organization/forms.py:69
+#: apps/organization/forms.py:120
 msgid " "
 msgstr " "
 
@@ -103,7 +102,8 @@ msgstr "Fotos:"
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
-#: apps/investment/forms.py:29 apps/need/forms.py:25 apps/proposal/forms.py:23
+#: apps/investment/forms.py:29 apps/need/forms.py:26 apps/need/forms.py:91
+#: apps/proposal/forms.py:24
 msgid "Title"
 msgstr "Título"
 
@@ -300,18 +300,10 @@ msgid "Kind"
 msgstr "Tipo"
 
 #: apps/komoo_resource/forms.py:42 apps/main/templatetags/komoo_tags.py:179
-#: apps/need/forms.py:24 apps/organization/forms.py:58
-#: apps/organization/forms.py:160 apps/organization/forms.py:211
+#: apps/need/forms.py:25 apps/need/forms.py:90 apps/organization/forms.py:63
+#: apps/organization/forms.py:119
 msgid "Community"
 msgstr "Comunidade"
-
-#: apps/komoo_resource/forms.py:77
-msgid "invalid kind data"
-msgstr "dados de 'tipo' inválidos"
-
-#: apps/komoo_resource/forms.py:86
-msgid "invalid community data"
-msgstr "dados de 'comunidade' inválidos"
 
 #: apps/komoo_resource/models.py:41
 msgid "Resource without name"
@@ -346,7 +338,11 @@ msgstr "em"
 msgid "type:"
 msgstr "tipo:"
 
-#: apps/main/templates/global.html:39
+#: apps/main/utils.py:239
+msgid "invalid field data"
+msgstr "campo com dados inválidos"
+
+#: apps/main/templates/global.html:40
 msgid "Search"
 msgstr "Buscar"
 
@@ -509,12 +505,11 @@ msgstr "dados inválidos"
 msgid "You can type above or select here"
 msgstr "Você pode digitar acima ou selecionar algum aqui"
 
-#: apps/need/forms.py:27 apps/organization/forms.py:62
-#: apps/organization/forms.py:164
+#: apps/need/forms.py:28 apps/need/forms.py:93 apps/organization/forms.py:67
 msgid "Categories"
 msgstr "Categorias"
 
-#: apps/need/forms.py:28
+#: apps/need/forms.py:29 apps/need/forms.py:94
 msgid "Target audiences"
 msgstr "Públicos-alvo"
 
@@ -582,41 +577,26 @@ msgstr "Necessidades relacionadas"
 msgid "No related needs."
 msgstr "Nenhuma necessidade relacionada."
 
-#: apps/organization/forms.py:59 apps/organization/forms.py:161
+#: apps/organization/forms.py:64
 #: apps/organization/templates/organization/show.html:215
 msgid "Contact"
 msgstr "Contato"
 
-#: apps/organization/forms.py:61
-msgid "Target Audience"
-msgstr "Público Alvo"
-
-#: apps/organization/forms.py:85 apps/organization/forms.py:86
-msgid "Name is required"
-msgstr "Nome é requerido"
-
-#: apps/organization/forms.py:88 apps/organization/forms.py:89
-msgid "Name must be unique"
-msgstr "Já existe uma organização com este nome"
-
-#: apps/organization/forms.py:127 apps/organization/forms.py:198
-msgid "invalid logo data"
-msgstr "dados de 'logo' inválidos"
-
-#: apps/organization/forms.py:163
+#: apps/organization/forms.py:66
 msgid "Target Audiences"
 msgstr "Público Alvo"
 
-#: apps/organization/forms.py:209
+#: apps/organization/forms.py:117
 msgid "Branch Name"
 msgstr "Nome da Unidade"
 
-#: apps/organization/forms.py:210
+#: apps/organization/forms.py:118
 msgid "Info"
 msgstr "Informações"
 
 #: apps/organization/templates/organization/list.html:20
 #: apps/organization/templates/organization/list.html:22
+#: apps/organization/templates/organization/new_frommap.html:11
 msgid "New Organization"
 msgstr "Nova Organização"
 
@@ -633,20 +613,30 @@ msgstr "Público"
 msgid "Attended Communities"
 msgstr "Comunidades Atendidas"
 
-#: apps/organization/templates/organization/new.html:10
-#: apps/organization/templates/organization/new_frommap.html:17
-msgid "Organization Name:"
-msgstr "Nome da Organização:"
+#: apps/organization/templates/organization/new_frommap.html:41
+msgid "Branch of"
+msgstr "Unidade de"
 
-#: apps/organization/templates/organization/new.html:18
-#: apps/organization/templates/organization/new_frommap.html:25
-msgid "Organization Data"
-msgstr "Dados da Organização:"
+#: apps/organization/templates/organization/new_frommap.html:53
+msgid "Verify"
+msgstr "Verificar"
 
-#: apps/organization/templates/organization/new.html:23
-#: apps/organization/templates/organization/new_frommap.html:30
-msgid "Branch Data"
-msgstr "Dados da Unidade"
+#: apps/organization/templates/organization/new_frommap.html:57
+msgid "Add Branch"
+msgstr "Adicionar Unidade"
+
+#: apps/organization/templates/organization/new_frommap.html:58
+#: apps/organization/templates/organization/new_frommap.html:62
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: apps/organization/templates/organization/new_frommap.html:61
+msgid "Subscribe Organization"
+msgstr "Cadastrar Organização"
+
+#: apps/organization/templates/organization/new_frommap.html:68
+msgid "Finish"
+msgstr "Concluir"
 
 #: apps/organization/templates/organization/show.html:14
 #, python-format
@@ -742,7 +732,7 @@ msgstr "Informações de contato não fornecidas"
 msgid "Add investment"
 msgstr "Adicionar investimento"
 
-#: apps/proposal/forms.py:25
+#: apps/proposal/forms.py:26
 msgid "Cost"
 msgstr "Custo"
 
@@ -792,15 +782,35 @@ msgstr "Item Classificado"
 msgid "Tagged Items"
 msgstr "Itens Classificados"
 
+#~ msgid "invalid community data"
+#~ msgstr "dados de 'comunidade' inválidos"
+
+#~ msgid "Target Audience"
+#~ msgstr "Público Alvo"
+
+#~ msgid "Name is required"
+#~ msgstr "Nome é requerido"
+
+#~ msgid "Name must be unique"
+#~ msgstr "Já existe uma organização com este nome"
+
+#~ msgid "invalid logo data"
+#~ msgstr "dados de 'logo' inválidos"
+
+#~ msgid "Organization Name:"
+#~ msgstr "Nome da Organização:"
+
+#~ msgid "Organization Data"
+#~ msgstr "Dados da Organização:"
+
+#~ msgid "Branch Data"
+#~ msgstr "Dados da Unidade"
+
 #~ msgid "Log in to MootiroMaps!"
 #~ msgstr "Faça login no MootiroMaps!"
 
 #~ msgid "Login"
 #~ msgstr "Fazer login"
-
-#, fuzzy
-#~ msgid "see   on the map"
-#~ msgstr "ver no mapa"
 
 #~ msgid "offered %(num)s resource"
 #~ msgid_plural "offered %(num)s resources"

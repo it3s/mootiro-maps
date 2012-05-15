@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 
 
 def file_upload(instance, filename):
-    ext = filename[filename.rindex('.'):]
+    ext = filename[filename.rindex('.'):] if filename.rindex('.') else ''
     return os.path.join('upload', '{fname}{ext}'.format(
                             fname=int(time.time() * 1000), ext=ext))
 

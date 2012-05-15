@@ -17,9 +17,9 @@
 
       <div class="button-new">
         {% if community %}
-        <a class="button login-required" href="{% url organization_new community.slug %}?frommap=false">{% trans "New Organization" %}</a>
+        <a class="button login-required" href="{% url new_organization community.slug %}">{% trans "New Organization" %}</a>
         {% else %}
-        <a class="button login-required" href="{% url organization_new %}?frommap=false">{% trans "New Organization" %}</a>
+        <a class="button login-required" href="{% url new_organization %}">{% trans "New Organization" %}</a>
         {% endif %}
       </div>
 
