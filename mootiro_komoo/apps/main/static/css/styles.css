@@ -1230,26 +1230,17 @@ textarea.markItUpEditor{
 #org-div-progress{
     margin-bottom: 40px;
 }
-#org-div-progress .alert .percent{
-    font-weight: bold;
-    display: inline-block;
-    width: 120px;
-    min-height: 1em;
-    vertical-align: top;
-}
 #org-div-progress .alert .msg{
     display: inline-block;
     width: 510px;
     min-height: 1em;
 }
-#org-div-progress .alert .vertical-splitter{
-    min-height: 1.5em;
-    margin-right: 5px;
-    height: 100%;
-    border-left: solid 1px #3A87AD ;
-    border-right: solid 1px #fefefe;
-    display: inline-block;
-    vertical-align: top;
+.bar p.percent {
+    color: #ffffff ;
+    font-size: 12px;
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0px -1px 0px rgba(15, 15, 15, 0.65);
 }
 /* == serach ==*/
 .search-header{

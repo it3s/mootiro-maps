@@ -10,8 +10,8 @@ var change_msg = function(msg){
 };
 
 var change_percent = function(percent){
-    $('#org-div-progress .alert .percent').html('(' +
-        percent + '% ' + gettext('complete') + ')');
+    $('#org-div-progress .percent').html(
+        percent + '% ' + gettext('complete'));
 };
 
 var change_step = function(step){
@@ -21,7 +21,7 @@ var change_step = function(step){
         $('.step_' + i).hide();
     }
     $('.step_' + step).show();
-    percent = Math.ceil(step * 33.33 - 33.33);
+    percent = Math.round(step * 33.33 - 33.33);
     $('.progress .bar').css('width', '' + percent + '%');
 
     if (step === 1){
@@ -33,6 +33,7 @@ var change_step = function(step){
         change_msg(gettext('Congratulations, you have concluded the organization/branch addition process'));
     }
     change_percent(percent);
+    window.scrollTo(0, 0);
 };
 
 $(function(){
