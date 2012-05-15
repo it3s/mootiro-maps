@@ -185,7 +185,7 @@ TINYMCE_DEFAULT_CONFIG = dict(
 )
 
 # markiItUp
-MARKITUP_SET = 'markitup/sets/markdown'
+MARKITUP_SET = 'markitup/sets/markdown_pt_BR'
 MARKITUP_FILTER = ('django.contrib.markup.templatetags.markup.markdown', {})
 MARKITUP_AUTO_PREVIEW = True
 JQUERY_URL = 'dummy.js'

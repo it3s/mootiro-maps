@@ -130,7 +130,11 @@
           {% endif %}
           {% if width == '100%' %}
           var panelWidth = $('#map-panel').innerWidth();
-          var panelLeft = $('#map-panel').position().left;
+          try {
+            var panelLeft = $('#map-panel').position().left;
+          } catch (err) {
+            var panelLeft = 0;
+          }
           //$('#' + mapCanvasId).width($('body').innerWidth() - panelWidth - panelLeft).css('margin-left', panelWidth + panelLeft);
           $('#' + mapCanvasId).css({marginLeft: panelWidth + panelLeft, width: 'auto'});
           {% endif %}
