@@ -1234,7 +1234,8 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                 // Empty polygon.
                 return;
             }
-            overlay = new google.maps.Polygon(polygonOptions);
+            //overlay = new google.maps.Polygon(polygonOptions);
+            overlay = new komoo.Overlays.Polygon(polygonOptions);
             $.each(geometry.coordinates, function (j, coord) {
                 var path = [];
                 $.each(coord, function (k, pos) {
