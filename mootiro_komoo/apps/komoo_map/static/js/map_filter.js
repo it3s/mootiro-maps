@@ -111,7 +111,8 @@ $("#map-panel-layers div.img-holder > img").trigger("click");
 $("#map-panel-layers div.img-holder input[type=checkbox]").attr("checked", "checked");
 $("#map-panel-layers .need.sublist").hide();
 
-$("#map-panel-layers > ul > li:not(.needs) > div.img-holder > img").bind("click", function () {
+$("#map-panel-layers > ul > li:not(.needs) div.img-holder > img").bind("click", function () {
+    alert
     var $this = $(this);
     var $parent = $this.parent();
     var objectType = $parent.attr("data-object-type");
