@@ -111,8 +111,8 @@ class MooHelper(FormHelper):
         retorno = super(MooHelper, self).__init__(*a, **kw)
         if form_id:
             self.form_id = form_id
-        self.add_input(Submit('submit', 'Submit'))
-        self.add_input(Reset('reset', 'Reset'))
+        self.add_input(Submit('submit', _('Submit'), css_class='button'))
+        # self.add_input(Reset('reset', 'Reset'))
         return retorno
 
 

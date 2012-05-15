@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-14 13:41-0300\n"
+"POT-Creation-Date: 2012-05-15 15:29-0300\n"
 "PO-Revision-Date: 2012-05-02 20:27-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: apps/community/forms.py:24 apps/komoo_resource/forms.py:38
 #: apps/main/templatetags/komoo_tags.py:175
 #: apps/main/templatetags/komoo_tags.py:176 apps/organization/forms.py:61
-#: apps/organization/templates/organization/new_frommap.html:28
+#: apps/organization/templates/organization/new_frommap.html:34
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
@@ -31,7 +31,7 @@ msgstr "Nome"
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/community/forms.py:26 apps/community/templates/community/view.html:24
+#: apps/community/forms.py:26 apps/community/templates/community/view.html:25
 msgid "Population"
 msgstr "População"
 
@@ -44,7 +44,7 @@ msgstr "Classificadores"
 
 #: apps/community/forms.py:28 apps/need/forms.py:31 apps/need/forms.py:96
 #: apps/organization/forms.py:68 apps/organization/forms.py:69
-#: apps/organization/forms.py:120
+#: apps/organization/forms.py:118
 msgid " "
 msgstr " "
 
@@ -73,32 +73,14 @@ msgstr "ver no mapa"
 msgid "population:"
 msgstr "população:"
 
-#: apps/community/templates/community/list.html:48
-#: apps/komoo_resource/templates/resource/list.html:81
-#: apps/komoo_resource/templates/resource/show.html:36
-#: apps/need/templates/need/list.html:63
-#: apps/organization/templates/organization/list.html:113
-msgid "created by"
-msgstr "criado por"
-
-#: apps/community/templates/community/list.html:52
-#: apps/komoo_resource/templates/resource/list.html:49
-#: apps/komoo_resource/templates/resource/list.html:85
-#: apps/komoo_resource/templates/resource/show.html:84
-#: apps/need/templates/need/list.html:39 apps/need/templates/need/list.html:67
-#: apps/need/templates/need/view.html:79
-#: apps/organization/templates/organization/list.html:117
-msgid "at"
-msgstr "em"
-
-#: apps/community/templates/community/view.html:30
+#: apps/community/templates/community/view.html:31
 #: apps/komoo_resource/templates/resource/show.html:50
 #: apps/need/templates/need/view.html:40
 #: apps/organization/templates/organization/show.html:173
 msgid "Photos:"
 msgstr "Fotos:"
 
-#: apps/community/templates/community/view.html:47
+#: apps/community/templates/community/view.html:48
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
@@ -257,41 +239,40 @@ msgstr "Novo Comentário"
 msgid "see more ..."
 msgstr "ver mais ..."
 
-#: apps/komoo_map/templates/komoo_map/komoo_map_templatetag.html:34
+#: apps/komoo_map/templates/komoo_map/komoo_map_templatetag.html:37
 #: apps/organization/templates/organization/branch_form.html:10
 msgid "Open the map editor"
 msgstr "Abrir o editor de mapas"
 
-#: apps/komoo_map/templates/komoo_map/panel.html:6
-#: apps/main/templates/main/templatetags/visualization_opts.html:54
+#: apps/komoo_map/templates/komoo_map/panel.html:8
 msgid "Filter"
 msgstr "Filtro"
 
-#: apps/komoo_map/templates/komoo_map/panel.html:7
+#: apps/komoo_map/templates/komoo_map/panel.html:9
 msgid "Add"
 msgstr "Adicionar"
 
-#: apps/komoo_map/templates/komoo_map/panel.html:8
+#: apps/komoo_map/templates/komoo_map/panel.html:10
 msgid "Layers"
 msgstr "Camadas"
 
-#: apps/komoo_map/templates/komoo_map/panel.html:20
+#: apps/komoo_map/templates/komoo_map/panel.html:22
 msgid "Perform search"
 msgstr "Realizar busca"
 
-#: apps/komoo_map/templates/komoo_map/panel.html:24
+#: apps/komoo_map/templates/komoo_map/panel.html:26
 msgid "Center"
 msgstr "Centro"
 
-#: apps/komoo_map/templates/komoo_map/panel.html:25
+#: apps/komoo_map/templates/komoo_map/panel.html:27
 msgid "Radius"
 msgstr "Raio"
 
-#: apps/komoo_map/templates/komoo_map/panel.html:31
+#: apps/komoo_map/templates/komoo_map/panel.html:33
 msgid "Pick a point on the map"
 msgstr "Selecione um ponto no mapa"
 
-#: apps/komoo_map/templates/komoo_map/panel.html:39
+#: apps/komoo_map/templates/komoo_map/panel.html:41
 msgid "Change parameters"
 msgstr "Alterar parâmetros"
 
@@ -301,7 +282,7 @@ msgstr "Tipo"
 
 #: apps/komoo_resource/forms.py:42 apps/main/templatetags/komoo_tags.py:179
 #: apps/need/forms.py:25 apps/need/forms.py:90 apps/organization/forms.py:63
-#: apps/organization/forms.py:119
+#: apps/organization/forms.py:117
 msgid "Community"
 msgstr "Comunidade"
 
@@ -326,9 +307,19 @@ msgid_plural "%(counter)s Resources"
 msgstr[0] "%(counter)s Recurso"
 msgstr[1] "%(counter)s Recursos"
 
+#: apps/komoo_resource/templates/resource/list.html:49
+#: apps/komoo_resource/templates/resource/show.html:84
+#: apps/need/templates/need/list.html:39 apps/need/templates/need/view.html:79
+msgid "at"
+msgstr "em"
+
 #: apps/komoo_resource/templates/resource/list.html:61
 msgid "Kind:"
 msgstr "Tipo:"
+
+#: apps/komoo_resource/templates/resource/show.html:36
+msgid "created by"
+msgstr "criado por"
 
 #: apps/komoo_resource/templates/resource/show.html:37
 msgid "in"
@@ -337,6 +328,10 @@ msgstr "em"
 #: apps/komoo_resource/templates/resource/show.html:39
 msgid "type:"
 msgstr "tipo:"
+
+#: apps/main/utils.py:114
+msgid "Submit"
+msgstr "Enviar"
 
 #: apps/main/utils.py:239
 msgid "invalid field data"
@@ -387,14 +382,14 @@ msgid "Create an account"
 msgstr "Criar uma conta"
 
 #: apps/main/templates/main/templatetags/geo_objects_add.html:7
-#: apps/main/templates/main/templatetags/geo_objects_listing.html:8
+#: apps/main/templates/main/templatetags/geo_objects_listing.html:9
 #: apps/main/templates/main/templatetags/menu.html:16
 #: apps/organization/templates/organization/branch_communities_list.html:6
 msgid "Communities"
 msgstr "Comunidades"
 
 #: apps/main/templates/main/templatetags/geo_objects_add.html:11
-#: apps/main/templates/main/templatetags/geo_objects_listing.html:12
+#: apps/main/templates/main/templatetags/geo_objects_listing.html:15
 #: apps/main/templates/main/templatetags/menu.html:22
 #: apps/main/templates/main/templatetags/menu.html:24
 msgid "Needs"
@@ -419,7 +414,7 @@ msgid "Add point"
 msgstr "Adicionar ponto"
 
 #: apps/main/templates/main/templatetags/geo_objects_add.html:23
-#: apps/main/templates/main/templatetags/geo_objects_listing.html:24
+#: apps/main/templates/main/templatetags/geo_objects_listing.html:29
 #: apps/main/templates/main/templatetags/menu.html:30
 #: apps/main/templates/main/templatetags/menu.html:32
 #: apps/organization/templates/organization/list.html:9
@@ -427,7 +422,7 @@ msgid "Organizations"
 msgstr "Organizações"
 
 #: apps/main/templates/main/templatetags/geo_objects_add.html:35
-#: apps/main/templates/main/templatetags/geo_objects_listing.html:28
+#: apps/main/templates/main/templatetags/geo_objects_listing.html:35
 #: apps/main/templates/main/templatetags/menu.html:38
 #: apps/main/templates/main/templatetags/menu.html:40
 msgid "Resources"
@@ -493,15 +488,19 @@ msgstr "Ordenar por"
 msgid "Filter by"
 msgstr "Filtrar por"
 
+#: apps/main/templates/main/templatetags/visualization_opts.html:53
+msgid "Apply"
+msgstr "Aplicar"
+
 #: apps/main/templatetags/komoo_tags.py:178
 msgid "Vote"
 msgstr "Voto"
 
-#: apps/main/widgets/autocomplete.py:85
+#: apps/main/widgets/autocomplete.py:94
 msgid "invalid data"
 msgstr "dados inválidos"
 
-#: apps/main/widgets/autocomplete.py:105
+#: apps/main/widgets/autocomplete.py:114
 msgid "You can type above or select here"
 msgstr "Você pode digitar acima ou selecionar algum aqui"
 
@@ -586,17 +585,17 @@ msgstr "Contato"
 msgid "Target Audiences"
 msgstr "Público Alvo"
 
-#: apps/organization/forms.py:117
+#: apps/organization/forms.py:115
 msgid "Branch Name"
 msgstr "Nome da Unidade"
 
-#: apps/organization/forms.py:118
+#: apps/organization/forms.py:116
 msgid "Info"
 msgstr "Informações"
 
 #: apps/organization/templates/organization/list.html:20
 #: apps/organization/templates/organization/list.html:22
-#: apps/organization/templates/organization/new_frommap.html:11
+#: apps/organization/templates/organization/new_frommap.html:15
 msgid "New Organization"
 msgstr "Nova Organização"
 
@@ -613,28 +612,28 @@ msgstr "Público"
 msgid "Attended Communities"
 msgstr "Comunidades Atendidas"
 
-#: apps/organization/templates/organization/new_frommap.html:41
+#: apps/organization/templates/organization/new_frommap.html:48
 msgid "Branch of"
 msgstr "Unidade de"
 
-#: apps/organization/templates/organization/new_frommap.html:53
+#: apps/organization/templates/organization/new_frommap.html:60
 msgid "Verify"
 msgstr "Verificar"
 
-#: apps/organization/templates/organization/new_frommap.html:57
+#: apps/organization/templates/organization/new_frommap.html:64
 msgid "Add Branch"
 msgstr "Adicionar Unidade"
 
-#: apps/organization/templates/organization/new_frommap.html:58
-#: apps/organization/templates/organization/new_frommap.html:62
+#: apps/organization/templates/organization/new_frommap.html:65
+#: apps/organization/templates/organization/new_frommap.html:69
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: apps/organization/templates/organization/new_frommap.html:61
+#: apps/organization/templates/organization/new_frommap.html:68
 msgid "Subscribe Organization"
 msgstr "Cadastrar Organização"
 
-#: apps/organization/templates/organization/new_frommap.html:68
+#: apps/organization/templates/organization/new_frommap.html:75
 msgid "Finish"
 msgstr "Concluir"
 
