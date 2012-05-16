@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import simplejson
+
 from main.tests import KomooTestCase
 from main.tests import logged_and_unlogged
 
@@ -64,3 +66,11 @@ class CommunityViewsTestCase(KomooTestCase):
     @logged_and_unlogged
     def test_communities_list_page_is_up(self):
         self.assert_get_is_up('/communities')
+
+    # searches
+    @logged_and_unlogged
+    def test_community_search_by_name_is_up(self):
+        http_resp = self.client.get('/community/search_by_name?term=Higi')
+        d = simplejson.loads(http_resp.content)
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(d, {})
