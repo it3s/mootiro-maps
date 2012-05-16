@@ -126,7 +126,7 @@ def communities_geojson(request):
 
 
 def search_by_name(request):
-    logger.debug('acessing Community > search_by_name')
+    logger.debug('acessing community > search_by_name')
     term = request.GET['term']
     # rx = "^{0}|\s{0}".format(term)  # matches only beginning of words
     # communities = Community.objects.filter(Q(name__iregex=rx) | Q(slug__iregex=rx))
@@ -137,7 +137,7 @@ def search_by_name(request):
 
 
 def search_by_tag(request):
-    logger.debug('acessing resource > search_by_tag')
+    logger.debug('acessing community > search_by_tag')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Community).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')

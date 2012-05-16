@@ -232,3 +232,4 @@ NOSE_ARGS = ['--rednose']
 if 'test' in sys.argv:
     import logging
     logging.disable(logging.CRITICAL)
+    FIXTURE_DIRS = ('fixtures/test/',)

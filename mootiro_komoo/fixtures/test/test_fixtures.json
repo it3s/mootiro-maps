@@ -4,7 +4,8 @@
     "pk": 1,
     "fields": {
       "username": "tester",
-      "email": "tester@test.com"
+      "email": "tester@test.com",
+      "password": "sha1$1a882$8f5a80cb32426102b8a2bab4398d045a082dff0b"
     }
   },
   {
@@ -12,14 +13,15 @@
     "pk": 2,
     "fields": {
       "username": "noobzin",
-      "email": "noobzin@test.com"
+      "email": "noobzin@test.com",
+      "password": "sha1$1a882$8f5a80cb32426102b8a2bab4398d045a082dff0b"
     }
   },
   {
     "model": "community.community",
     "pk": 1,
     "fields": {
-      "name": "São Remo",
+      "name": "Sao Remo",
       "slug": "sao-remo",
       "creator": 1,
       "creation_date": "2012-03-21 15:04:58",
@@ -65,7 +67,7 @@
     "model": "community.community",
     "pk": 4,
     "fields": {
-      "name": "Parque Jurássico",
+      "name": "Parque Jurassico",
       "slug": "parque-jurassico",
       "creator": 1,
       "creation_date": "2012-03-21 15:04:58",
