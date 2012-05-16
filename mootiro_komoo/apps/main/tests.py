@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
+from django.contrib.contenttypes.models import ContentType
 from functools import wraps
 
 
@@ -16,7 +17,12 @@ def logged_and_unlogged(test_method):
 
 
 class KomooTestCase(TestCase):
-    fixtures = ['test_fixtures.json']
+    fixtures = ['test_fixtures.json', 'contenttypes_fixtures.json']
+
+    @classmethod
+    def setUpClass(cls):
+        """Called before all tests of a class"""
+        ContentType.objects.all().delete()
 
     def login_user(self, username="tester"):
         """Logs a user in assuming its password is 'testpass'. The
