@@ -9,7 +9,7 @@
 {% load komoo_tags %}
 {% load i18n %}
 
-{% block title %}{{ resource.name }} at {{ resource.community.name }}{% endblock %}
+{% block title %}{{ resource.name }} at {{ community.name }}{% endblock %}
 
 {% block menu %} {% menu community "resource" %} {% endblock %}
 
@@ -59,7 +59,7 @@
             {% endif %}
         </div>
 
-        {% investments_list resource.investments.all %}  
+        {% investments_list resource.investments.all %}
 
         <div class="view-extras">
                 {% taglist resource %}
@@ -80,8 +80,11 @@
                     {% for r in similar_resources|slice:'5' %}
                     <li>
                         <a href="{{ r.view_url }}"> {{ r.name }} </a>
-                        {% if r.community %}
-                          {% trans 'at' %} {{ r.community.name }}
+                        {% if r.community.count %}
+                          {% trans 'at' %}
+                          {% for comm in r.community.all %}
+                            {{ r.community.name }} &nbsp;|&nbsp;
+                          {% endfor %}
                         {% endif %}
                     </li>
                     {% endfor %}

@@ -45,9 +45,14 @@
           {% else %}
           <a href="/resource/{{ resource.id }}">{{ resource.name }}</a>
           {% endif %}
-          {% if resource.community %}
-          &nbsp;{% trans 'at' %}&nbsp;
-          <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
+          {% if resource.community.count %}
+            &nbsp;{% trans 'at' %}&nbsp;
+            {% for comm in resource.community.all %}
+              <a href="/{{ comm.slug }}/about/">{{ comm.name }}</a>
+              {% if not forloop.last %}
+                &nbsp;|&nbsp;
+              {% endif %}
+            {% endfor %}
           {% endif %}
         </span>
         <a class="small preview-on-map" href="#" data-geojson="{% geojson resource %}">{% trans 'see on the map' %}</a>

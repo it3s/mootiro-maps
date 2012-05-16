@@ -72,7 +72,8 @@ class Need(GeoRefModel):
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationships
-    community = models.ForeignKey(Community, related_name="needs", null=True, blank=True)
+    # community = models.ForeignKey(Community, related_name="needs", null=True, blank=True)
+    community = models.ManyToManyField(Community, related_name="needs", null=True, blank=True)
     categories = models.ManyToManyField(NeedCategory)
     target_audiences = models.ManyToManyField(TargetAudience, blank=False)
 

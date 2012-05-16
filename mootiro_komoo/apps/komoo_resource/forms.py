@@ -11,9 +11,9 @@ from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
 
 from main.utils import MooHelper, clean_autocomplete_field
-from main.widgets import Autocomplete, TaggitWidget, AutocompleteWithFavorites
+from main.widgets import TaggitWidget, AutocompleteWithFavorites
+from ajax_select.fields import AutoCompleteSelectMultipleField
 from komoo_resource.models import Resource, ResourceKind
-from community.models import Community
 
 logger = logging.getLogger(__name__)
 
@@ -25,8 +25,10 @@ class FormResource(AjaxModelForm):
             ResourceKind.favorites(number=10), can_add=True))
     tags = forms.Field(required=False, widget=TaggitWidget(
             autocomplete_url="/resource/search_by_tag/"))
-    community = forms.CharField(required=False, widget=Autocomplete(
-            Community, '/community/search_by_name'))
+    # community = forms.CharField(required=False, widget=Autocomplete(
+    #         Community, '/community/search_by_name'))
+    community = AutoCompleteSelectMultipleField('community', help_text='',
+        required=False)
     files = FileuploadField(required=False)
 
     class Meta:
@@ -60,9 +62,9 @@ class FormResource(AjaxModelForm):
         return clean_autocomplete_field(
             self.cleaned_data['kind'], ResourceKind)
 
-    def clean_community(self):
-        return clean_autocomplete_field(
-            self.cleaned_data['community'], Community)
+    # def clean_community(self):
+    #     return clean_autocomplete_field(
+    #         self.cleaned_data['community'], Community)
 
 
 class FormResourceGeoRef(FormResource):

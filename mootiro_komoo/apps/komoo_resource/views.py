@@ -3,12 +3,9 @@ from __future__ import unicode_literals
 import logging
 import json
 
-from django.views.generic import View
 from django.db.models.query_utils import Q
-from django.shortcuts import (render_to_response, RequestContext, HttpResponse,
-        HttpResponseRedirect, get_object_or_404)
+from django.shortcuts import HttpResponse, get_object_or_404
 from django.utils import simplejson
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django import forms
 from django.db.models import Count
@@ -92,10 +89,10 @@ def new_resource(request, community_slug='', *arg, **kwargs):
     community = get_object_or_None(Community, slug=community_slug)
 
     def on_get(request, form_resource):
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form_resource.fields['community'].widget = forms.HiddenInput()
-            form_resource.initial['community'] = community.id
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form_resource.fields['community'].widget = forms.HiddenInput()
+            # form_resource.initial['community'] = community.id
         form_resource.helper.form_action = reverse('new_resource')
         return form_resource
 
@@ -115,10 +112,10 @@ def new_resource_from_map(request, community_slug='', *args, **kwargs):
     community = get_object_or_None(Community, slug=community_slug)
 
     def on_get(request, form_resource):
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form_resource.fields['community'].widget = forms.HiddenInput()
-            form_resource.initial['community'] = community.id
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form_resource.fields['community'].widget = forms.HiddenInput()
+            # form_resource.initial['community'] = community.id
         form_resource.helper.form_action = reverse('new_resource_from_map')
         return form_resource
 
@@ -148,10 +145,10 @@ def edit_resource(request, community_slug='', *arg, **kwargs):
 
     def on_get(request, form_resource):
         form_resource = FormResourceGeoRef(instance=resource)
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form_resource.fields['community'].widget = forms.HiddenInput()
-            form_resource.initial['community'] = community.id
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form_resource.fields['community'].widget = forms.HiddenInput()
+            # form_resource.initial['community'] = community.id
         form_resource.helper.form_action = reverse('edit_resource')
 
         return form_resource

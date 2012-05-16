@@ -39,15 +39,16 @@ def new_need(request, community_slug="", need_slug=""):
     need = None
 
     def on_get(request, form):
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form.fields['community'].widget = forms.HiddenInput()
-            form.initial['community'] = community.id
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form.fields['community'].widget = forms.HiddenInput()
+            # form.initial['community'] = community.id
         form.helper.form_action = reverse('new_need')
         return form
 
     def on_after_save(request, need):
-        args = (need.community.slug, need.slug) if need.community else (need.slug,)
+        # args = (need.community.slug, need.slug) if need.community else (need.slug,)
+        args = (need.slug, )
         redirect_url = reverse('view_need', args=args)
         return {'redirect': redirect_url}
 
@@ -64,15 +65,16 @@ def new_need_from_map(request, community_slug="", need_slug=""):
     geojson, need = {}, None
 
     def on_get(request, form):
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form.fields['community'].widget = forms.HiddenInput()
-            form.initial['community'] = community.id
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form.fields['community'].widget = forms.HiddenInput()
+            # form.initial['community'] = community.id
         form.helper.form_action = reverse('new_need_from_map')
         return form
 
     def on_after_save(request, need):
-        args = (need.community.slug, need.slug) if need.community else (need.slug,)
+        # args = (need.community.slug, need.slug) if need.community else (need.slug,)
+        args = (need.slug,)
         redirect_url = reverse('view_need', args=args)
         return {'redirect': redirect_url}
 
@@ -96,23 +98,21 @@ def edit_need(request, community_slug="", need_slug=""):
 
     def on_get(request, form):
         form = NeedFormGeoRef(instance=need)
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form.fields['community'].widget = forms.HiddenInput()
-            form.initial['community'] = community.id
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form.fields['community'].widget = forms.HiddenInput()
+            # form.initial['community'] = community.id
         form.helper.form_action = reverse('new_need')
         return form
 
     def on_after_save(request, need):
-        args = (need.community.slug, need.slug) if need.community else (need.slug,)
+        # args = (need.community.slug, need.slug) if need.community else (need.slug,)
+        args = (need.slug,)
         redirect_url = reverse('view_need', args=args)
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
             'community': community, 'geojson': geojson, 'need': need}
-
-    return {'on_get': on_get, 'on_after_save': on_after_save, 'need': need,
-            'community': community, 'geojson': geojson}
 
 
 @render_to('need/view.html')
@@ -125,8 +125,8 @@ def view(request, community_slug=None, need_slug=None):
     need = get_object_or_404(Need, **filters)
     geojson = create_geojson([need])
     photos = paginated_query(UploadedFile.get_files_for(need), request, size=3)
-    return dict(need=need, community=need.community, geojson=geojson,
-                photos=photos)
+    comm = need.community.all()[0] if need.community.all().count() else None
+    return dict(need=need, community=comm, geojson=geojson, photos=photos)
 
 
 @render_to('need/list.html')

@@ -11,7 +11,6 @@ from django.db.models.query_utils import Q
 from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
-from crispy_forms.helper import FormHelper
 from main.utils import MooHelper, clean_autocomplete_field
 from main.widgets import Tagsinput, TaggitWidget
 from organization.models import (Organization, OrganizationBranch,
