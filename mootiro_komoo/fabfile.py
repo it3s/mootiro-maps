@@ -109,7 +109,6 @@ def load_fixtures(type_='system'):
                 django_settings[env_]))
     else:
         import os
-        print "CARREGAR INITIAL DATA = = = = = ="
         for fixture in os.listdir('fixtures'):
             if fixture.endswith('_fixtures.json') and fixture != 'test_fixtures.json':
                 local('python manage.py loaddata fixtures/{} {}'.format(

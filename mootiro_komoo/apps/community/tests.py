@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from unittest import skip
-
 from main.tests import KomooTestCase
 from main.tests import logged_and_unlogged
 
@@ -10,7 +8,6 @@ from community.models import Community
 class CommunityViewsTestCase(KomooTestCase):
 
     # new_community
-    @skip('FIXME: Raises error on template rendering.')
     def test_new_community_page_is_up(self):
         self.login_user()
         self.assert_get_is_up('/community/new')
@@ -33,6 +30,24 @@ class CommunityViewsTestCase(KomooTestCase):
     def test_community_edit_page_is_up(self):
         self.login_user()
         self.assert_get_is_up('/sao-remo/edit')
+
+    def test_community_edition(self):
+        self.login_user()
+        c = Community.objects.get(slug='sao-remo')
+        data = {
+            'id': c.id,  # must set with ajax_form decorator
+            'name': 'Sao Removski',
+            'population': c.population + 200,
+            'description': c.description,
+            'tags': 'favela, usp',
+            'geometry': str(c.geometry),
+        }
+        http_resp = self.client.post('/sao-remo/edit', data)
+        self.assertEqual(http_resp.status_code, 200)
+        c2 = Community.objects.get(slug='sao-removski')
+        self.assertEquals(c.id, c2.id)
+        with self.assertRaises(Exception):
+            Community.objects.get(slug='sao-remo')
 
     # on_map
     @logged_and_unlogged

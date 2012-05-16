@@ -21,7 +21,7 @@
     "model": "community.community",
     "pk": 1,
     "fields": {
-      "name": "São Remo",
+      "name": "Sao Remo",
       "slug": "sao-remo",
       "creator": 1,
       "creation_date": "2012-03-21 15:04:58",
@@ -67,7 +67,7 @@
     "model": "community.community",
     "pk": 4,
     "fields": {
-      "name": "Parque Jurássico",
+      "name": "Parque Jurassico",
       "slug": "parque-jurassico",
       "creator": 1,
       "creation_date": "2012-03-21 15:04:58",
