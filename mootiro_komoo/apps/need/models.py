@@ -87,13 +87,14 @@ class Need(GeoRefModel):
         """Answers if a given slug is valid in the needs namespace of the
         community.
         """
-        return Need.objects.filter(community=self.community, slug=slug).exists()
+        bool
+        return Need.objects.filter(slug=slug).exists()
 
     def save(self, *args, **kwargs):
         old_title = Need.objects.get(id=self.id).title if self.id else None
         if not self.id or old_title != self.title:
             self.slug = slugify(self.title, self.slug_exists)
-        super(Need, self).save(*args, **kwargs)
+        return super(Need, self).save(*args, **kwargs)
     ### END ###
 
     image = "img/need.png"

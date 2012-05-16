@@ -125,8 +125,8 @@ def view(request, community_slug=None, need_slug=None):
     need = get_object_or_404(Need, **filters)
     geojson = create_geojson([need])
     photos = paginated_query(UploadedFile.get_files_for(need), request, size=3)
-    comm = need.community.all()[0] if need.community.all().count() else None
-    return dict(need=need, community=comm, geojson=geojson, photos=photos)
+    community = get_object_or_None(Community, slug=community_slug)
+    return dict(need=need, community=community, geojson=geojson, photos=photos)
 
 
 @render_to('need/list.html')

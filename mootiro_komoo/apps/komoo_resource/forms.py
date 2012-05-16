@@ -53,9 +53,7 @@ class FormResource(AjaxModelForm):
     def save(self, *args, **kwargs):
         resource = super(FormResource, self).save(*args, **kwargs)
         UploadedFile.bind_files(
-            self.cleaned_data.get('files', '').split('|'),
-            resource
-        )
+            self.cleaned_data.get('files', '').split('|'), resource)
         return resource
 
     def clean_kind(self):

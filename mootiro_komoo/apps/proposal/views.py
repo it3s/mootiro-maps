@@ -54,8 +54,8 @@ def edit(request, community_slug="", need_slug="", proposal_number=""):
 
     def on_after_save(request, proposal):
         kw = dict(need_slug=proposal.need.slug, proposal_number=proposal.number)
-        if proposal.need.community:
-            kw["community_slug"] = proposal.need.community.slug
+        if proposal.need.community.count():
+            kw["community_slug"] = proposal.need.community.all()[0].slug
         return {'redirect': reverse('view_proposal', kwargs=kw)}
 
     return {'on_get': on_get, 'on_before_validation': on_before_validation,

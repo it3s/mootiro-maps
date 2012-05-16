@@ -34,9 +34,13 @@
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
           <span class="apart big">
-            <a href="{% if need.community %}{% url view_need need.community.slug need.slug %}{% else %}{% url view_need need.slug %}{% endif %}"> {{ need.title }} </a>
-            {% if not community and need.community %}
-            {% trans 'at' %} <a href="{% url view_community need.community.slug %}">{{ need.community.name }}</a>
+            <a href="{% if community %}{% url view_need community.slug need.slug %}{% else %}{% url view_need need.slug %}{% endif %}"> {{ need.title }} </a>
+            {% if not community and need.community.all.count %}
+            {% trans 'at' %}
+            {% for comm in need.community.all %}
+              <a href="{% url view_community comm.slug %}">{{ comm.name }}</a>
+              {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
+            {% endfor %}
             {% endif %}
           </span>
           <a class="small preview-on-map" href="#" data-geojson="{% geojson need %}">{% trans 'see on the map' %}</a>
