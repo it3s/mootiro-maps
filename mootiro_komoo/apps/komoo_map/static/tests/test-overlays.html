@@ -2,6 +2,7 @@
   <head>
     <script src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing&language=pt-br"></script>
     <script src="/static/lib/jquery-1.7.1.min.js"></script>
+      <script type="text/javascript" src="/static/js/multimarker.js"></script>
       <script type="text/javascript" src="/static/js/overlays.js"></script>
     <link rel="stylesheet" href="/static/lib/qunit/qunit.css" type="text/css" media="screen" />
     <script type="text/javascript" src="/static/lib/qunit/qunit.js"></script>
@@ -86,6 +87,15 @@
           ok(google.maps.Polygon.prototype.isPrototypeOf(simplePolygon.googleObject_),
               "googleObject should be a google.maps.Polygon object");
           equal(simplePolygon.getGeometryType(), "Polygon", "Geometry type should be \"Polygon\"");
+        });
+
+        test("Create multipoint overlay with MultiMarker object", function () {
+          expect(3);
+          var simpleMultiPoint = new komoo.Overlays.MultiPoint();
+          ok(simpleMultiPoint.googleObject_, "Should create googleObject");
+          ok(MultiMarker.prototype.isPrototypeOf(simpleMultiPoint.googleObject_),
+              "googleObject should be a MultiMarker object");
+          equal(simpleMultiPoint.getGeometryType(), "MultiPoint", "Geometry type should be \"MultiPoint\"");
         });
 
         test("Set coordinates to point overlay", function () {
@@ -199,6 +209,44 @@
           var geometry = {"type": "Polygon", "coordinates": coordinates};
           polygon.setCoordinates(coordinates);
           deepEqual(polygon.getGeometry(), geometry,
+              "Should return the geometry containing the coordinates it received");
+        });
+
+        test("Set coordinates to multpoint overlay", function () {
+          expect(4);
+          var multiPoint = new komoo.Overlays.MultiPoint();
+          var coordinates = [[0,1], [3,4]];
+          multiPoint.setCoordinates(coordinates);
+          var positions = multiPoint.getPositions();
+          equal(positions[0].lat(), coordinates[0][0]);
+          equal(positions[0].lng(), coordinates[0][1]);
+          equal(positions[1].lat(), coordinates[1][0]);
+          equal(positions[1].lng(), coordinates[1][1]);
+        });
+
+        test("Get coordinates from multipoint overlay", function () {
+          expect(1);
+          var multiPoint = new komoo.Overlays.MultiPoint();
+          var coordinates = [[0,1], [3,4]];
+          multiPoint.setCoordinates(coordinates);
+          deepEqual(multiPoint.getCoordinates(), coordinates,
+              "Should return the same coordinates it received");
+        });
+
+        test("Get coordinates from empty multipoint overlay", function () {
+          expect(1);
+          var multiPoint = new komoo.Overlays.MultiPoint();
+          deepEqual(multiPoint.getCoordinates(), [],
+              "Should return an empty array");
+        });
+
+        test("Get geometry from multipoint overlay", function () {
+          expect(1);
+          var multiPoint = new komoo.Overlays.MultiPoint();
+          var coordinates = [[1,2], [3,4]];
+          var geometry = {"type": "MultiPoint", "coordinates": coordinates};
+          multiPoint.setCoordinates(coordinates);
+          deepEqual(multiPoint.getGeometry(), geometry,
               "Should return the geometry containing the coordinates it received");
         });
 

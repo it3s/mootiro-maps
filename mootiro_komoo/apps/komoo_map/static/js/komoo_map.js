@@ -1234,53 +1234,22 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                 // Empty polygon.
                 return;
             }
-            //overlay = new google.maps.Polygon(polygonOptions);
             overlay = new komoo.Overlays.Polygon(polygonOptions);
-            $.each(geometry.coordinates, function (j, coord) {
-                var path = [];
-                $.each(coord, function (k, pos) {
-                    var latLng = new google.maps.LatLng(pos[0], pos[1]);
-                    path.push(latLng);
-                    bounds = getBounds(pos);
-                });
-                path.pop(); // Removes the last point that closes the loop
-                paths.push(path);
-            });
-            overlay.setPaths(paths);
+            overlay.setCoordinates(geometry.coordinates);
         } else if (geometry.type == "LineString") {
             if (geometry.coordinates.length == 0) {
                 // Empty line.
                 return;
             }
-            overlay = new google.maps.Polyline(polylineOptions);
-            var path = [];
-            $.each(geometry.coordinates, function (k, pos) {
-                var latLng = new google.maps.LatLng(pos[0], pos[1]);
-                path.push(latLng);
-                bounds = getBounds(pos);
-            });
-            overlay.setPath(path);
+            overlay = new komoo.Overlays.Polyline(polylineOptions);
+            overlay.setCoordinates(geometry.coordinates);
         } else if (geometry.type == "MultiPoint" || geometry.type == "Point") {
             if (geometry.coordinates.length == 0) {
                 // Empty multipoint.
                 return;
             }
-            overlay = new MultiMarker({visible: true, clickable: true});
-            var markers = [];
-            var coordinates;
-            if (geometry.type == "MultiPoint") {
-                coordinates = geometry.coordinates;
-            } else {
-                coordinates = [geometry.coordinates];
-            }
-            $.each(coordinates, function (key, pos) {
-                var marker = new google.maps.Marker(markerOptions);
-                var latLng = new google.maps.LatLng(pos[0], pos[1]);
-                marker.setPosition(latLng);
-                markers.push(marker);
-                bounds = getBounds(pos);
-            });
-            overlay.addMarkers(markers);
+            overlay = new komoo.Overlays.MultiPoint({visible: true, clickable: true});
+            overlay.setCoordinates(geometry.coordinates);
             overlay.setIcon(komooMap.getOverlayIcon(feature));
         }
         // Dont attach or return the overlays already loaded

@@ -35,6 +35,8 @@ komoo.Overlays.makeOverlay = function (feature) {
     var overlay;
     if (geometryType == "Point") {
         overlay = new komoo.Overlays.Point();
+    } else if (geometryType == "MultiPoint") {
+        overlay = new komoo.Overlays.MultiPoint();
     } else if (geometryType == "LineString") {
         overlay = new komoo.Overlays.Polyline();
     } else if (geometryType == "Polygon") {
@@ -235,6 +237,87 @@ komoo.Overlays.Point.prototype.getDraggable = function () {
 };
 
 
+/** Multipoint Overlay **/
+
+komoo.Overlays.MultiPoint = function (opts) {
+    komoo.Overlays.Overlay.call(this, opts);
+    this.geometryType_ = "MultiPoint";
+};
+
+komoo.Overlays.MultiPoint.prototype = Object.create(komoo.Overlays.Overlay.prototype);
+
+komoo.Overlays.MultiPoint.prototype.initGoogleObject = function (opts) {
+    var options = opts || {
+        clickable: true,
+        visible: true,
+        zIndex: this.getDefaultZIndex(),
+    };
+    this.googleObject_ = new MultiMarker(options);
+};
+
+komoo.Overlays.MultiPoint.prototype.setPoints = function (points) {
+    this.googleObject_.addMarkers(points);
+};
+
+komoo.Overlays.MultiPoint.prototype.getPoints = function () {
+    return this.googleObject_.getMarkers().getArray();
+};
+
+komoo.Overlays.MultiPoint.prototype._guaranteePoints = function (len) {
+    var points = this.googleObject_.getMarkers();
+    var missing;
+    if (points.length > len) {
+        missing = points.length - len;
+        console.log(missing);
+        for (var i=0; i < missing; i++) {
+             points.pop();
+        }
+    } else if (points.length < len) {
+        missing = len - points.length;
+        for (var i=0; i < missing; i++) {
+            this.googleObject_.addMarker(new komoo.Overlays.Point());
+        }
+    }
+};
+
+komoo.Overlays.MultiPoint.prototype.setCoordinates = function (coordinates) {
+    var that = this;
+    var coords = coordinates;
+    if (!coords[0].pop) coords = [coords];
+    console.log(coords);
+    this._guaranteePoints(coords.length);
+    $.each(this.getPoints(), function (i, point) {
+        point.setPosition(that.getLatLngFromArray(coords[i]));
+    });
+};
+
+komoo.Overlays.MultiPoint.prototype.getCoordinates = function () {
+    var that = this;
+    var coords = [];
+    $.each(this.getPoints(), function (i, point) {
+        coords.push(that.getArrayFromLatLng(point.getPosition()));
+    });
+    return coords;
+};
+
+komoo.Overlays.MultiPoint.prototype.getPositions = function () {
+    return this.googleObject_.getPositions().getArray();
+};
+
+/* Delegations */
+komoo.Overlays.MultiPoint.prototype.addMarkers = function (markers) {
+    this.googleObject_.addMarkers(markers);
+};
+
+komoo.Overlays.MultiPoint.prototype.setIcon = function (icon) {
+    return this.googleObject_.setIcon(icon);
+};
+
+komoo.Overlays.MultiPoint.prototype.getIcon = function () {
+    return this.googleObject_.getIcon();
+};
+
+
 /** Polyline Overlay **/
 
 komoo.Overlays.Polyline = function (opts) {
@@ -301,7 +384,7 @@ komoo.Overlays.Polyline.prototype.getPath = function () {
 /** Polygon Overlay **/
 
 komoo.Overlays.Polygon = function (opts) {
-    komoo.Overlays.Overlay.call(this, opts);
+    komoo.Overlays.Polyline.call(this, opts);
     this.geometryType_ = "Polygon";
 };
 
