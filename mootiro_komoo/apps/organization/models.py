@@ -139,6 +139,22 @@ class OrganizationCategory(models.Model):
             return OrganizationCategoryTranslation.objects.get(
                 lang=settings.LANGUAGE_CODE, category=self).name
 
+    @classmethod
+    def get_image(cls, name):
+        return "img/org_categories/%s.png" % slugify(name)
+
+    @classmethod
+    def get_image_off(cls, name):
+        return "img/org_categories/%s-off.png" % slugify(name)
+
+    @property
+    def image(self):
+        return self.get_image(self.name)
+
+    @property
+    def image_off(self):
+        return self.get_image_off(self.name)
+
 
 class OrganizationCategoryTranslation(models.Model):
     name = models.CharField(max_length=320)
