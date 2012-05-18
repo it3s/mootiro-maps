@@ -24,7 +24,6 @@ setup_environ(environ)
 
 # ======= script ====== ##
 from vote.models import Vote
-from django.db.models import F
 
 for v in Vote.objects.all():
     obj = v.content_object

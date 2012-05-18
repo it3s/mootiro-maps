@@ -13,6 +13,7 @@ from lib.taggit.managers import TaggableManager
 from community.models import Community
 from main.utils import slugify
 from komoo_map.models import GeoRefModel
+from vote.models import VotableModel
 
 
 class NeedCategory(models.Model):
@@ -57,7 +58,7 @@ class TargetAudience(models.Model):
         return self.name
 
 
-class Need(GeoRefModel):
+class Need(GeoRefModel, VotableModel):
     """A need of a Community"""
 
     title = models.CharField(max_length=256, blank=False, db_index=True)

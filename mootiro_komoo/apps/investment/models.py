@@ -12,6 +12,7 @@ from annoying.functions import get_object_or_None
 
 import reversion
 from lib.taggit.managers import TaggableManager
+from vote.models import VotableModel
 
 from main.utils import slugify
 
@@ -112,7 +113,7 @@ class Investor(models.Model):
         return self.content_object.view_url
 
 
-class Investment(models.Model):
+class Investment(VotableModel):
     """A donation of money (or any other stuff) for either an Organization, a
     Proposal or a Resource in the system.
     """
