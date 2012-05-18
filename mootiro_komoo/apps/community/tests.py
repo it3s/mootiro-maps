@@ -8,6 +8,16 @@ from main.tests import A_POLYGON_GEOMETRY
 from .models import Community
 
 
+def A_COMMUNITY_DATA():
+    return {
+        'name': 'Vila do Tanque',
+        'population': 20000,
+        'description': 'Lava roupa todo dia sem perder a alegria!',
+        'tags': 'sbc, prédio, condomínio',
+        'geometry': A_POLYGON_GEOMETRY,
+    }.copy()
+
+
 class CommunityViewsTestCase(KomooTestCase):
 
     # new_community
@@ -63,6 +73,20 @@ class CommunityViewsTestCase(KomooTestCase):
                 'name': ['This field is required.'],
                 'description': ['This field is required.'],
                 'geometry': ['This field is required.'],
+            },
+        }
+        self.assertEquals(json, expected)
+
+    def test_community_population_is_number(self):
+        self.login_user()
+        data = A_COMMUNITY_DATA()
+        data['population'] = 'this is not a number'
+        http_resp = self.client.post('/community/new', data=data)
+        json = simplejson.loads(http_resp.content)
+        expected = {
+            'success': 'false',
+            'errors': {
+                'population': ['Enter a whole number.'],
             },
         }
         self.assertEquals(json, expected)
