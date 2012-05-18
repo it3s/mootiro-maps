@@ -73,4 +73,11 @@ class CommunityViewsTestCase(KomooTestCase):
         http_resp = self.client.get('/community/search_by_name?term=Higi')
         d = simplejson.loads(http_resp.content)
         self.assertEqual(http_resp.status_code, 200)
-        self.assertNotEquals(d, {})
+        self.assertNotEquals(d, [])
+
+    @logged_and_unlogged
+    def test_community_search_by_tag_is_up(self):
+        http_resp = self.client.get('/community/search_by_tag/?term=fave')
+        self.assertEqual(http_resp.status_code, 200)
+        d = simplejson.loads(http_resp.content)
+        self.assertNotEquals(d, [])
