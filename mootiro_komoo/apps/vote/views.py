@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 import logging
 
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import F
+from django.contrib.contenttypes.models import ContentType
 
 from annoying.decorators import ajax_request, render_to
 
@@ -42,5 +44,16 @@ def vote(request):
                                 object_id=object_id, author=request.user)
         vote_obj.like = True if vote == 'up' else False
         vote_obj.save()
+
+        # now denormalize everything
+        obj = ContentType.objects.get(pk=content_type
+                    ).model_class().objects.get(pk=object_id)
+        if not created:
+            old_vote = {'up': 'down', 'down': 'up'}
+            if getattr(obj, 'votes_' + old_vote[vote]) > 0:
+                setattr(obj, 'votes_' + old_vote[vote],
+                            F('votes_' + old_vote[vote]) - 1)
+        setattr(obj, 'votes_' + vote, F('votes_' + vote) + 1)
+        obj.save()
         return {'success': True, 'created': created}
     return {'success': False, 'error': _('User not logged or anonymous')}

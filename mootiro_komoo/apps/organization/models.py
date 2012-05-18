@@ -15,9 +15,10 @@ from komoo_resource.models import Resource
 from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
+from vote.models import VotableModel
 
 
-class Organization(models.Model):
+class Organization(VotableModel):
     name = models.CharField(max_length=320, unique=True, db_index=True)
     slug = models.SlugField(max_length=320, db_index=True)
     description = models.TextField(null=True, blank=True, db_index=True)
@@ -98,7 +99,7 @@ class Organization(models.Model):
         return reverse('new_investment', kwargs=self.home_url_params)
 
 
-class OrganizationBranch(GeoRefModel):
+class OrganizationBranch(GeoRefModel, VotableModel):
     name = models.CharField(max_length=320)
     slug = models.SlugField(max_length=320)
 
