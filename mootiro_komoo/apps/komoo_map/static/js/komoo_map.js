@@ -718,6 +718,7 @@ komoo.Map.prototype.getOverlayIcon = function (overlay, opt_highlighted, opt_zoo
         url += overlay.properties.type;
     }
     url += ".png";
+    url = url.replace(" ", "-");
     return url;
 };
 
