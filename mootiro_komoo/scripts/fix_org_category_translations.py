@@ -30,8 +30,13 @@ from organization.models import OrganizationCategoryTranslation
 o = OrganizationCategoryTranslation.objects.get(pk=14)
 o.name = 'Promoção de direitos humanos'
 o.save()
+o.category.name = 'Human rights promotion'
+o.category.save()
+
 
 o = OrganizationCategoryTranslation.objects.get(pk=19)
 o.name = 'Promoção da paz'
 o.save()
+o.category.name = 'Peace promotion'
+o.category.save()
 

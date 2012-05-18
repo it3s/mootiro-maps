@@ -5,7 +5,6 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import logging
 
-from django import forms
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse

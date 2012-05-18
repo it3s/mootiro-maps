@@ -13,7 +13,6 @@ from main.utils import MooHelper
 from main.widgets import Tagsinput, TaggitWidget, ImageSwitchMultiple
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from need.models import Need, NeedCategory, TargetAudience
-from community.models import Community
 
 
 class NeedForm(AjaxModelForm):
@@ -35,13 +34,6 @@ class NeedForm(AjaxModelForm):
     class Media:
         js = ('lib/jquery.imagetick-original.js',)
 
-    # FIXME: the urls below should not be hardcoded. They should be calculated
-    # with reverse_lazy function, which is not implemented in Django 1.3 yet.
-    # community = forms.ModelChoiceField(
-    #     queryset=Community.objects.all(),
-    #     widget=Autocomplete(Community, "/community/search_by_name"),
-    #     required=False
-    # )
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
 
