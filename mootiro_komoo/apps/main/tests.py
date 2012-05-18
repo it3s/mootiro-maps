@@ -4,6 +4,9 @@ from django.contrib.contenttypes.models import ContentType
 from functools import wraps
 
 
+A_POLYGON_GEOMETRY = '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0],[1,1],[2,2],[0,0]]]}]}'
+
+
 def logged_and_unlogged(test_method):
     @wraps(test_method)
     def test_wrapper(self):

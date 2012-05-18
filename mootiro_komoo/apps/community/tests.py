@@ -3,8 +3,9 @@ import simplejson
 
 from main.tests import KomooTestCase
 from main.tests import logged_and_unlogged
+from main.tests import A_POLYGON_GEOMETRY
 
-from community.models import Community
+from .models import Community
 
 
 class CommunityViewsTestCase(KomooTestCase):
@@ -22,7 +23,7 @@ class CommunityViewsTestCase(KomooTestCase):
             'population': 20000,
             'description': 'Lava roupa todo dia sem perder a alegria!',
             'tags': 'sbc, prédio, condomínio',
-            'geometry': '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0],[1,1],[2,2],[0,0]]]}]}'
+            'geometry': A_POLYGON_GEOMETRY,
         }
         self.client.post('/community/new', data)
         if not Community.objects.filter(slug='vila-do-tanque'):
@@ -39,7 +40,7 @@ class CommunityViewsTestCase(KomooTestCase):
         data = {
             'id': c.id,  # must set with ajax_form decorator
             'name': 'Sao Removski',
-            'population': c.population + 200,
+            'population': c.population + 1234,
             'description': c.description,
             'tags': 'favela, usp',
             'geometry': str(c.geometry),
@@ -50,6 +51,21 @@ class CommunityViewsTestCase(KomooTestCase):
         self.assertEquals(c.id, c2.id)
         with self.assertRaises(Exception):
             Community.objects.get(slug='sao-remo')
+
+    # form validation
+    def test_community_empty_form_validation(self):
+        self.login_user()
+        http_resp = self.client.post('/community/new', data={})
+        json = simplejson.loads(http_resp.content)
+        expected = {
+            'success': 'false',
+            'errors': {
+                'name': ['This field is required.'],
+                'description': ['This field is required.'],
+                'geometry': ['This field is required.'],
+            },
+        }
+        self.assertEquals(json, expected)
 
     # on_map
     @logged_and_unlogged

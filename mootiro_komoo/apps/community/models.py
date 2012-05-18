@@ -53,4 +53,5 @@ class Community(GeoRefModel):
         closest = sorted(unordered, key=lambda c: c.geometry.distance(center))
         return closest[1:(max + 1)]
 
-reversion.register(Community)
+if not reversion.is_registered(Community):
+    reversion.register(Community)
