@@ -2,142 +2,155 @@
   <head>
     <script src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing&language=pt-br"></script>
     <script src="/static/lib/jquery-1.7.1.min.js"></script>
-      <script type="text/javascript" src="/static/js/multimarker.js"></script>
-      <script type="text/javascript" src="/static/js/overlays.js"></script>
+    <script type="text/javascript" src="/static/js/multimarker.js"></script>
+    <script type="text/javascript" src="/static/js/overlays.js"></script>
     <link rel="stylesheet" href="/static/lib/qunit/qunit.css" type="text/css" media="screen" />
     <script type="text/javascript" src="/static/lib/qunit/qunit.js"></script>
 
     <script type="text/javascript">
       $(document).ready(function (){
 
-        test("Basic requirements", function () {
+        test('Basic requirements', function () {
           expect(4);
-          ok(Function.call, "Function.call()");
-          ok(Object.create, "Object.create()");
-          ok(google.maps, "Google maps API");
-          ok($, "JQuery");
+          ok(Function.call, 'Function.call()');
+          ok(Object.create, 'Object.create()');
+          ok(google.maps, 'Google maps API');
+          ok($, 'JQuery');
         });
 
-        test("Get overlay default properties", function () {
+        test('Get overlay default properties', function () {
           expect(6);
-          var simpleOverlay = new komoo.Overlays.Polygon();
-          equal(simpleOverlay.getBackgroundColor(), komoo.Overlays.defaults.BACKGROUND_COLOR,
-              "Should return the default background color");
-          equal(simpleOverlay.getBackgroundOpacity(), komoo.Overlays.defaults.BACKGROUND_OPACITY,
-              "Should return the default background opacity");
-          equal(simpleOverlay.getBorderColor(), komoo.Overlays.defaults.BORDER_COLOR,
-              "Should return the default border color");
-          equal(simpleOverlay.getBorderOpacity(), komoo.Overlays.defaults.BORDER_OPACITY,
-              "Should return the default border opacity");
-          equal(simpleOverlay.getBorderSize(), komoo.Overlays.defaults.BORDER_SIZE,
-              "Should return the default border size");
-          equal(simpleOverlay.getDefaultZIndex(), komoo.Overlays.defaults.ZINDEX,
-              "Should return the default z-index");
+          var simpleOverlay = new komoo.overlays.Polygon();
+          equal(simpleOverlay.getBackgroundColor(),
+              komoo.overlays.defaults.BACKGROUND_COLOR,
+              'Should return the default background color');
+          equal(simpleOverlay.getBackgroundOpacity(),
+              komoo.overlays.defaults.BACKGROUND_OPACITY,
+              'Should return the default background opacity');
+          equal(simpleOverlay.getBorderColor(),
+              komoo.overlays.defaults.BORDER_COLOR,
+              'Should return the default border color');
+          equal(simpleOverlay.getBorderOpacity(),
+              komoo.overlays.defaults.BORDER_OPACITY,
+              'Should return the default border opacity');
+          equal(simpleOverlay.getBorderSize(),
+              komoo.overlays.defaults.BORDER_SIZE,
+              'Should return the default border size');
+          equal(simpleOverlay.getDefaultZIndex(),
+              komoo.overlays.defaults.ZINDEX,
+              'Should return the default z-index');
         });
 
-        test("Get overlay properties from type", function () {
+        test('Get overlay properties from type', function () {
           expect(6);
-          var simpleOverlay = new komoo.Overlays.Polygon();
+          var simpleOverlay = new komoo.overlays.Polygon();
           var fakeType = {
-            getBackgroundColor: function () { return "#fff"; },
+            getBackgroundColor: function () { return '#fff'; },
             getBackgroundOpacity: function () { return 0.5; },
-            getBorderColor: function () { return "#ccc"; },
+            getBorderColor: function () { return '#ccc'; },
             getBorderOpacity: function () { return 0.8; },
             getBorderSize: function () { return 10; },
             getDefaultZIndex: function () { return 100; }
           };
           simpleOverlay.setType(fakeType);
 
-          equal(simpleOverlay.getBackgroundColor(), "#fff",
-              "Should return the background color from type");
+          equal(simpleOverlay.getBackgroundColor(), '#fff',
+              'Should return the background color from type');
           equal(simpleOverlay.getBackgroundOpacity(), 0.5,
-              "Should return the background opacity from type");
-          equal(simpleOverlay.getBorderColor(), "#ccc",
-              "Should return the border color from type");
+              'Should return the background opacity from type');
+          equal(simpleOverlay.getBorderColor(), '#ccc',
+              'Should return the border color from type');
           equal(simpleOverlay.getBorderOpacity(), 0.8,
-              "Should return the border opacity from type");
+              'Should return the border opacity from type');
           equal(simpleOverlay.getBorderSize(), 10,
-              "Should return the border size from type");
+              'Should return the border size from type');
           equal(simpleOverlay.getDefaultZIndex(), 100,
-              "Should return the z-index from type");
+              'Should return the z-index from type');
         });
 
-        test("Create point overlay with google's marker object", function () {
+        test('Create point overlay with googles marker object', function () {
           expect(3);
-          var simplePoint = new komoo.Overlays.Point();
-          ok(simplePoint.googleObject_, "Should create googleObject");
-          ok(google.maps.Marker.prototype.isPrototypeOf(simplePoint.googleObject_),
-              "googleObject should be a google.maps.Marker object")
-          equal(simplePoint.getGeometryType(), "Point", "Geometry type should be \"Point\"");
+          var simplePoint = new komoo.overlays.Point();
+          ok(simplePoint.googleObject_, 'Should create googleObject');
+          ok(google.maps.Marker.prototype.isPrototypeOf(
+                simplePoint.googleObject_),
+              'googleObject should be a google.maps.Marker object')
+          equal(simplePoint.getGeometryType(), 'Point',
+              'Geometry type should be "Point"');
         });
 
-        test("Create polyline overlay with google's polyline object", function () {
+        test('Create polyline overlay with googles polyline object', function () {
           expect(3);
-          var simplePolyline = new komoo.Overlays.Polyline();
-          ok(simplePolyline.googleObject_, "Should create googleObject");
-          ok(google.maps.Polyline.prototype.isPrototypeOf(simplePolyline.googleObject_),
-              "googleObject should be a google.maps.Polyline object");
-          equal(simplePolyline.getGeometryType(), "LineString", "Geometry type should be \"LineString\"");
+          var simplePolyline = new komoo.overlays.Polyline();
+          ok(simplePolyline.googleObject_, 'Should create googleObject');
+          ok(google.maps.Polyline.prototype.isPrototypeOf(
+                simplePolyline.googleObject_),
+              'googleObject should be a google.maps.Polyline object');
+          equal(simplePolyline.getGeometryType(), 'LineString',
+              'Geometry type should be "LineString"');
         });
 
-        test("Create polygon overlay with google's polygon object", function () {
+        test('Create polygon overlay with googles polygon object', function () {
           expect(3);
-          var simplePolygon = new komoo.Overlays.Polygon();
-          ok(simplePolygon.googleObject_, "Should create googleObject");
-          ok(google.maps.Polygon.prototype.isPrototypeOf(simplePolygon.googleObject_),
-              "googleObject should be a google.maps.Polygon object");
-          equal(simplePolygon.getGeometryType(), "Polygon", "Geometry type should be \"Polygon\"");
+          var simplePolygon = new komoo.overlays.Polygon();
+          ok(simplePolygon.googleObject_, 'Should create googleObject');
+          ok(google.maps.Polygon.prototype.isPrototypeOf(
+                simplePolygon.googleObject_),
+              'googleObject should be a google.maps.Polygon object');
+          equal(simplePolygon.getGeometryType(), 'Polygon',
+              'Geometry type should be "Polygon"');
         });
 
-        test("Create multipoint overlay with MultiMarker object", function () {
+        test('Create multipoint overlay with MultiMarker object', function () {
           expect(3);
-          var simpleMultiPoint = new komoo.Overlays.MultiPoint();
-          ok(simpleMultiPoint.googleObject_, "Should create googleObject");
+          var simpleMultiPoint = new komoo.overlays.MultiPoint();
+          ok(simpleMultiPoint.googleObject_, 'Should create googleObject');
           ok(MultiMarker.prototype.isPrototypeOf(simpleMultiPoint.googleObject_),
-              "googleObject should be a MultiMarker object");
-          equal(simpleMultiPoint.getGeometryType(), "MultiPoint", "Geometry type should be \"MultiPoint\"");
+              'googleObject should be a MultiMarker object');
+          equal(simpleMultiPoint.getGeometryType(), 'MultiPoint',
+              'Geometry type should be "MultiPoint"');
         });
 
-        test("Set coordinates to point overlay", function () {
+        test('Set coordinates to point overlay', function () {
           expect(2);
-          var point = new komoo.Overlays.Point();
-          var coordinates = [0,1];
+          var point = new komoo.overlays.Point();
+          var coordinates = [0, 1];
           point.setCoordinates(coordinates);
           var position = point.googleObject_.getPosition();
           equal(position.lat(), coordinates[0]);
           equal(position.lng(), coordinates[1]);
         });
 
-        test("Get coordinates from point overlay", function () {
+        test('Get coordinates from point overlay', function () {
           expect(1);
-          var point = new komoo.Overlays.Point();
-          var coordinates = [1,2];
+          var point = new komoo.overlays.Point();
+          var coordinates = [1, 2];
           point.setCoordinates(coordinates);
           deepEqual(point.getCoordinates(), coordinates,
-              "Should return the same coordinates it received");
+              'Should return the same coordinates it received');
         });
 
-        test("Get coordinates from empty point overlay", function () {
+        test('Get coordinates from empty point overlay', function () {
           expect(1);
-          var point = new komoo.Overlays.Point();
+          var point = new komoo.overlays.Point();
           deepEqual(point.getCoordinates(), null,
-              "Should return null");
+              'Should return null');
         });
 
-        test("Get geometry from point overlay", function () {
+        test('Get geometry from point overlay', function () {
           expect(1);
-          var point = new komoo.Overlays.Point();
-          var coordinates = [1,2];
-          var geometry = {"type": "Point", "coordinates": coordinates};
+          var point = new komoo.overlays.Point();
+          var coordinates = [1, 2];
+          var geometry = {'type': 'Point', 'coordinates': coordinates};
           point.setCoordinates(coordinates);
           deepEqual(point.getGeometry(), geometry,
-              "Should return the geometry containing the coordinates it received");
+              'Should return the geometry containing the coordinates it received');
         });
 
-        test("Set coordinates to polyline overlay", function () {
+        test('Set coordinates to polyline overlay', function () {
           expect(10);
-          var polyline = new komoo.Overlays.Polyline();
-          var coordinates = [[0,0], [0,1], [1,1], [1,0], [1,2]];
+          var polyline = new komoo.overlays.Polyline();
+          var coordinates = [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]];
           polyline.setCoordinates(coordinates);
           var googlePath = polyline.googleObject_.getPath();
           googlePath.forEach(function(pos, i) {
@@ -146,36 +159,38 @@
           });
         });
 
-        test("Get coordinates from polyline overlay", function () {
+        test('Get coordinates from polyline overlay', function () {
           expect(1);
-          var polyline = new komoo.Overlays.Polyline();
-          var coordinates = [[0,0], [0,1], [1,1], [1,0], [1,2]];
+          var polyline = new komoo.overlays.Polyline();
+          var coordinates = [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]];
           polyline.setCoordinates(coordinates);
           deepEqual(polyline.getCoordinates(), coordinates,
-              "Should return the same coordinates it received");
+              'Should return the same coordinates it received');
         });
 
-        test("Get coordinates from empty polyline overlay", function () {
+        test('Get coordinates from empty polyline overlay', function () {
           expect(1);
-          var polyline = new komoo.Overlays.Polyline();
+          var polyline = new komoo.overlays.Polyline();
           deepEqual(polyline.getCoordinates(), [],
-              "Should return an empty array");
+              'Should return an empty array');
         });
 
-        test("Get geometry from polyline overlay", function () {
+        test('Get geometry from polyline overlay', function () {
           expect(1);
-          var polyline = new komoo.Overlays.Polyline();
+          var polyline = new komoo.overlays.Polyline();
           var coordinates = [[0,0], [0,1], [1,1], [1,0], [1,2]];
-          var geometry = {"type": "LineString", "coordinates": coordinates};
+          var geometry = {'type': 'LineString', 'coordinates': coordinates};
           polyline.setCoordinates(coordinates);
           deepEqual(polyline.getGeometry(), geometry,
-              "Should return the geometry containing the coordinates it received");
+              'Should return the geometry containing the coordinates it received');
         });
 
-        test("Set coordinates to polygon overlay", function () {
+        test('Set coordinates to polygon overlay', function () {
           expect(16);
-          var polygon = new komoo.Overlays.Polygon();
-          var coordinates = [[[0,0], [0,1], [1,1], [1,0], [0,0]], [[2,2], [2,3], [3,3], [3,2], [2,2]]];
+          var polygon = new komoo.overlays.Polygon();
+          var coordinates = [
+            [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]],
+            [[2, 2], [2, 3], [3, 3], [3, 2], [2, 2]]];
           polygon.setCoordinates(coordinates);
           var googlePaths = polygon.googleObject_.getPaths();
           googlePaths.forEach(function (path, i) {
@@ -186,35 +201,39 @@
           });
         });
 
-        test("Get coordinates from polygon overlay", function () {
+        test('Get coordinates from polygon overlay', function () {
           expect(1);
-          var polygon = new komoo.Overlays.Polygon();
-          var coordinates = [[[0,0], [0,1], [1,1], [1,0], [0,0]], [[2,2], [2,3], [3,3], [3,2], [2,2]]];
+          var polygon = new komoo.overlays.Polygon();
+          var coordinates = [
+            [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]],
+            [[2, 2], [2, 3], [3, 3], [3, 2], [2, 2]]];
           polygon.setCoordinates(coordinates);
           deepEqual(polygon.getCoordinates(), coordinates,
-              "Should return the same coordinates it received");
+              'Should return the same coordinates it received');
         });
 
-        test("Get coordinates from empty polygon overlay", function () {
+        test('Get coordinates from empty polygon overlay', function () {
           expect(1);
-          var polygon = new komoo.Overlays.Polygon();
+          var polygon = new komoo.overlays.Polygon();
           deepEqual(polygon.getCoordinates(), [[]],
-              "Should return an array containing an empty array");
+              'Should return an array containing an empty array');
         });
 
-        test("Get geometry from polygon overlay", function () {
+        test('Get geometry from polygon overlay', function () {
           expect(1);
-          var polygon = new komoo.Overlays.Polygon();
-          var coordinates = [[[0,0], [0,1], [1,1], [1,0], [0,0]], [[2,2], [2,3], [3,3], [3,2], [2,2]]];
-          var geometry = {"type": "Polygon", "coordinates": coordinates};
+          var polygon = new komoo.overlays.Polygon();
+          var coordinates = [
+            [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]],
+            [[2, 2], [2, 3], [3, 3], [3, 2], [2, 2]]];
+          var geometry = {'type': 'Polygon', 'coordinates': coordinates};
           polygon.setCoordinates(coordinates);
           deepEqual(polygon.getGeometry(), geometry,
-              "Should return the geometry containing the coordinates it received");
+              'Should return the geometry containing the coordinates it received');
         });
 
-        test("Set coordinates to multpoint overlay", function () {
+        test('Set coordinates to multpoint overlay', function () {
           expect(4);
-          var multiPoint = new komoo.Overlays.MultiPoint();
+          var multiPoint = new komoo.overlays.MultiPoint();
           var coordinates = [[0,1], [3,4]];
           multiPoint.setCoordinates(coordinates);
           var positions = multiPoint.getPositions();
@@ -224,69 +243,69 @@
           equal(positions[1].lng(), coordinates[1][1]);
         });
 
-        test("Get coordinates from multipoint overlay", function () {
+        test('Get coordinates from multipoint overlay', function () {
           expect(1);
-          var multiPoint = new komoo.Overlays.MultiPoint();
-          var coordinates = [[0,1], [3,4]];
+          var multiPoint = new komoo.overlays.MultiPoint();
+          var coordinates = [[0, 1], [3, 4]];
           multiPoint.setCoordinates(coordinates);
           deepEqual(multiPoint.getCoordinates(), coordinates,
-              "Should return the same coordinates it received");
+              'Should return the same coordinates it received');
         });
 
-        test("Get coordinates from empty multipoint overlay", function () {
+        test('Get coordinates from empty multipoint overlay', function () {
           expect(1);
-          var multiPoint = new komoo.Overlays.MultiPoint();
+          var multiPoint = new komoo.overlays.MultiPoint();
           deepEqual(multiPoint.getCoordinates(), [],
-              "Should return an empty array");
+              'Should return an empty array');
         });
 
-        test("Get geometry from multipoint overlay", function () {
+        test('Get geometry from multipoint overlay', function () {
           expect(1);
-          var multiPoint = new komoo.Overlays.MultiPoint();
-          var coordinates = [[1,2], [3,4]];
-          var geometry = {"type": "MultiPoint", "coordinates": coordinates};
+          var multiPoint = new komoo.overlays.MultiPoint();
+          var coordinates = [[1, 2], [3, 4]];
+          var geometry = {'type': 'MultiPoint', 'coordinates': coordinates};
           multiPoint.setCoordinates(coordinates);
           deepEqual(multiPoint.getGeometry(), geometry,
-              "Should return the geometry containing the coordinates it received");
+              'Should return the geometry containing the coordinates it received');
         });
 
-        test("Overlay factory", function () {
+        test('Overlay factory', function () {
           expect(3);
           var pointFeature = {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [1, 2]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [1, 2]
             },
-            "properties": null
+            'properties': null
           };
-          var point = komoo.Overlays.makeOverlay(pointFeature);
-          ok(point instanceof komoo.Overlays.Point,
-              "Overlay object shoud be an instance of komoo.Overlays.Point");
+          var point = komoo.overlays.makeOverlay(pointFeature);
+          ok(point instanceof komoo.overlays.Point,
+              'Overlay object shoud be an instance of komoo.overlays.Point');
 
           var polylineFeature = {
-            "type": "Feature",
-            "geometry": {
-              "type": "LineString",
-              "coordinates": [[0,0],[1, 1],[1, 2]]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'LineString',
+              'coordinates': [[0, 0], [1, 1], [1, 2]]
             },
-            "properties": null
+            'properties': null
           };
-          var polyline = komoo.Overlays.makeOverlay(polylineFeature);
-          ok(polyline instanceof komoo.Overlays.Polyline,
-              "Overlay object shoud be an instance of komoo.Overlays.Polyline");
+          var polyline = komoo.overlays.makeOverlay(polylineFeature);
+          ok(polyline instanceof komoo.overlays.Polyline,
+              'Overlay object shoud be an instance of komoo.overlays.Polyline');
 
           var polygonFeature = {
-            "type": "Feature",
-            "geometry": {
-              "type": "Polygon",
-              "coordinates": [[[0,0],[1, 1],[1, 2],[0,0]]]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Polygon',
+              'coordinates': [[[0, 0], [1, 1], [1, 2], [0, 0]]]
             },
-            "properties": null
+            'properties': null
           };
-          var polygon = komoo.Overlays.makeOverlay(polygonFeature);
-          ok(polygon instanceof komoo.Overlays.Polygon,
-              "Overlay object shoud be an instance of komoo.Overlays.Polygon");
+          var polygon = komoo.overlays.makeOverlay(polygonFeature);
+          ok(polygon instanceof komoo.overlays.Polygon,
+              'Overlay object shoud be an instance of komoo.overlays.Polygon');
         });
 
       });
@@ -294,7 +313,7 @@
 
   </head>
   <body>
-    <h1 id="qunit-header">komoo.Overlays</h1>
+    <h1 id="qunit-header">komoo.overlays</h1>
     <h2 id="qunit-banner"></h2>
     <div id="qunit-testrunner-toolbar"></div>
     <h2 id="qunit-userAgent"></h2>

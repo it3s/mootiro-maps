@@ -22,68 +22,67 @@
     <script type="text/javascript">
       var isAuthenticated = true;
       var simpleGeoJson = {
-        "type": "FeatureCollection",
-        "features": [
+        'type': 'FeatureCollection',
+        'features': [
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Polygon",
-              "coordinates": [[[0,0], [0,1], [1,1], [1,0], [0,0]]]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Polygon',
+              'coordinates': [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]]
             },
-            "properties": {
-              "type": "community"
+            'properties': {
+              'type': 'community'
             }
           }
         ]
       };
       var completeGeoJson = {
-        "type": "FeatureCollection",
-        "features": [
+        'type': 'FeatureCollection',
+        'features': [
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Polygon",
-              "coordinates": [[[0,0], [0,1], [1,1], [1,2], [0,0]]]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Polygon',
+              'coordinates': [[[0, 0], [0, 1], [1, 1], [1, 2], [0, 0]]]
             },
-            "properties": {
-              "type": "community"
+            'properties': {
+              'type': 'community'
             }
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "LineString",
-              "coordinates": [[0,0], [0,1], [1,1], [1,0], [1,2]]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'LineString',
+              'coordinates': [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]]
             },
-            "properties": {
-              "type": "need"
+            'properties': {
+              'type': 'need'
             }
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [1,2]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [1, 2]
             },
-            "properties": {
-              "type": "resource"
+            'properties': {
+              'type': 'resource'
             }
           },
           {
-            "type": "Feature",
-            "geometry": {
-              "type": "MultiPoint",
-              "coordinates": [[0,0], [0,1], [1,1], [1,0], [1,2]]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'MultiPoint',
+              'coordinates': [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]]
             },
-            "properties": {
-              "type": "investment"
+            'properties': {
+              'type': 'investment'
             }
           }
         ]
       };
       var map;
-      $(document).ready(function (){
-
+      $(document).ready(function () {
         var mapOptions = {
           editable: true,
           fetchOverlays: false,
@@ -95,10 +94,16 @@
             disableDefaultUI: false,
             streetViewControl: false,
             scaleControl: true,
-            panControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},
-            zoomControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},
-            scaleControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM,
-                                  style: google.maps.ScaleControlStyle.DEFAULT},
+            panControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            zoomControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            scaleControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_BOTTOM,
+              style: google.maps.ScaleControlStyle.DEFAULT
+            },
             mapTypeControlOptions: {
                 mapTypeIds: [google.maps.MapTypeId.ROADMAP,
                              komoo.CLEAN_MAPTYPE_ID,
@@ -110,36 +115,36 @@
 
 
         setUp = function () {
-          map = new komoo.Map($("#map-canvas").get(0), mapOptions);
+          map = new komoo.Map($('#map-canvas').get(0), mapOptions);
         };
 
-        test("Basic requirements", function () {
+        test('Basic requirements', function () {
           expect(8);
-          ok(Function.call, "Function.call()");
-          ok(Object.create, "Object.create()");
-          ok($, "JQuery");
-          ok(gettext, "gettext");
-          ok(google.maps, "Google maps API");
-          ok(komoo.Map, "Komoo Maps");
-          ok(komoo.Overlays, "Komoo Overlays");
-          ok(InfoBox, "InfoBox");
+          ok(Function.call, 'Function.call()');
+          ok(Object.create, 'Object.create()');
+          ok($, 'JQuery');
+          ok(gettext, 'gettext');
+          ok(google.maps, 'Google maps API');
+          ok(komoo.Map, 'Komoo Maps');
+          ok(komoo.Overlays, 'Komoo Overlays');
+          ok(InfoBox, 'InfoBox');
         });
 
-        test("Loading GeoJSON", function () {
+        test('Loading GeoJSON', function () {
           setUp();
           var overlays = map.loadGeoJSON(simpleGeoJson);
-          equal(overlays.length, 1, "Wrong collection size");
-          equal(overlays[0].getPaths().getLength(), 1, "Wrong paths size");
-          equal(overlays[0].getPath().getLength(), 4, "Wrong path size");
-          equal(map.overlays.length, 1, "Added wrong overlays to map");
+          equal(overlays.length, 1, 'Wrong collection size');
+          equal(overlays[0].getPaths().getLength(), 1, 'Wrong paths size');
+          equal(overlays[0].getPath().getLength(), 4, 'Wrong path size');
+          equal(map.overlays.length, 1, 'Added wrong overlays to map');
           var moreOverlays = map.loadGeoJSON(completeGeoJson);
-          equal(moreOverlays.length, 4, "Wrong collection size");
-          equal(moreOverlays[0].getPaths().getLength(), 1, "Wrong paths size");
-          equal(moreOverlays[0].getPath().getLength(), 4, "Wrong path size");
-          equal(moreOverlays[1].getPath().getLength(), 5, "Wrong path size");
-          equal(moreOverlays[2].getPositions()[0].lat(), 1, "Wrong latitude");
-          equal(moreOverlays[2].getPositions()[0].lng(), 2, "Wrong longitude");
-          equal(map.overlays.length, 4, "Added wrong overlays to map");
+          equal(moreOverlays.length, 4, 'Wrong collection size');
+          equal(moreOverlays[0].getPaths().getLength(), 1, 'Wrong paths size');
+          equal(moreOverlays[0].getPath().getLength(), 4, 'Wrong path size');
+          equal(moreOverlays[1].getPath().getLength(), 5, 'Wrong path size');
+          equal(moreOverlays[2].getPositions()[0].lat(), 1, 'Wrong latitude');
+          equal(moreOverlays[2].getPositions()[0].lng(), 2, 'Wrong longitude');
+          equal(map.overlays.length, 4, 'Added wrong overlays to map');
         });
 
       });
