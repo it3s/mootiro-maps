@@ -12,7 +12,7 @@
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/markerclusterer_packed.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/multimarker.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/overlays.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/geometries.js\" defer=\"defer\"" + "><" + "/script>");
     }
   </script>
   {% endif %}
@@ -80,7 +80,7 @@
             zoom: {{ zoom }},
             maxZoom: null,
             disableDefaultUI: false,
-            streetViewControl: false,
+            streetViewControl: true,
             scaleControl: true,
             panControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},
             zoomControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},

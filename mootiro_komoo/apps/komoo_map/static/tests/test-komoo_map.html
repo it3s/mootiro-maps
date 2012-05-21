@@ -62,8 +62,8 @@
           {
             'type': 'Feature',
             'geometry': {
-              'type': 'Point',
-              'coordinates': [1, 2]
+              'type': 'MultiPoint',
+              'coordinates': [[1, 2]]
             },
             'properties': {
               'type': 'resource'
@@ -145,6 +145,24 @@
           equal(moreGeometries[2].getPositions()[0].lat(), 1, 'Wrong latitude');
           equal(moreGeometries[2].getPositions()[0].lng(), 2, 'Wrong longitude');
           equal(map.overlays.length, 4, 'Added wrong geometries to map');
+        });
+
+        test('Get GeoJSON', function () {
+          setUp();
+          var geometries = map.loadGeoJSON(completeGeoJson);
+          var geoJson = map.getGeoJSON();
+          deepEqual(geoJson, completeGeoJson);
+          var geoJson = map.getGeoJSON({geometryCollection: true});
+          var geometryGeoJson = {
+            "type": "GeometryCollection",
+            "geometries": [
+              completeGeoJson.features[0].geometry,
+              completeGeoJson.features[1].geometry,
+              completeGeoJson.features[2].geometry,
+              completeGeoJson.features[3].geometry
+            ]
+          };
+          deepEqual(geoJson, geometryGeoJson);
         });
 
       });

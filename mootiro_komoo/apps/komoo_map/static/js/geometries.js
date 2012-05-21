@@ -23,7 +23,7 @@ komoo.geometries.defaults.BACKGROUND_COLOR = '#000';
 komoo.geometries.defaults.BACKGROUND_OPACITY = 0.6;
 komoo.geometries.defaults.BORDER_COLOR = '#000';
 komoo.geometries.defaults.BORDER_OPACITY = 0.6;
-komoo.geometries.defaults.BORDER_SIZE = 5;
+komoo.geometries.defaults.BORDER_SIZE = 1.5;
 komoo.geometries.defaults.ZINDEX = 1;
 
 /** Geometry Factory **/
@@ -31,14 +31,17 @@ komoo.geometries.defaults.ZINDEX = 1;
 komoo.geometries.makeGeometry = function (feature) {
     var geometryType = feature.geometry.type;
     var geometry;
-    if (geometryType == 'Point') {
-        geometry = new komoo.geometries.Point();
-    } else if (geometryType == 'MultiPoint') {
+    if (geometryType == 'Point' || geometryType == 'MultiPoint') {
         geometry = new komoo.geometries.MultiPoint();
     } else if (geometryType == 'LineString') {
         geometry = new komoo.geometries.Polyline();
     } else if (geometryType == 'Polygon') {
         geometry = new komoo.geometries.Polygon();
+    }
+
+    if (geometry) {
+        geometry.setProperties(feature.properties);
+        geometry.setCoordinates(feature.geometry.coordinates);
     }
     return geometry;
 };
@@ -63,19 +66,133 @@ komoo.geometries.Geometry.prototype.initEvents = function () {
     });
 };
 
+komoo.geometries.Geometry.prototype.calculateBounds = function () {
+    var that = this;
+    var bounds;
+    var n = null;
+    var w = null;
+    var s = null;
+    var e = null;
+    var getBounds = function (pos) {
+        if (n === null) {
+            n = s = pos[0];
+            w = e = pos[1];
+        }
+        n = Math.max(pos[0], n);
+        s = Math.min(pos[0], s);
+        w = Math.max(pos[1], w);
+        e = Math.min(pos[1], e);
+        return [[s, w], [n, e]];
+    };
+    var coordinates = this.getCoordinates();
+    if (this.getGeometryType() != 'Polygon')
+        coordinates = [coordinates];
+    $.each(coordinates, function (i, path) {
+        $.each(path, function (j, pos) {
+            bounds = getBounds(pos);
+        });
+    });
+    this.bounds = new google.maps.LatLngBounds(
+            this.getLatLngFromArray(bounds[0]),
+            this.getLatLngFromArray(bounds[1])
+        );
+    return this.bounds;
+};
+
+komoo.geometries.Geometry.prototype.getBounds = function () {
+    if (this.bounds == undefined)
+        this.calculateBounds();
+    return this.bounds;
+};
+
+komoo.geometries.Geometry.prototype.getCenter = function () {
+    var overlayCenter;
+    if (this.object_.getCenter) {
+        overlayCenter = this.object_.getCenter();
+    } else if (this.object_.getPosition) {
+        overlayCenter = this.object_.getPosition();
+    } else if (this.getBounds) {
+        overlayCenter = this.getBounds().getCenter();
+    }
+    return overlayCenter;
+};
+
 komoo.geometries.Geometry.prototype.initGoogleObject = function () {
+};
+
+komoo.geometries.Geometry.prototype.getUrl = function () {
+    var url;
+    if (this.properties_.type == "community") {
+        url = dutils.urls.resolve("view_community",
+                {community_slug: this.properties_.community_slug});
+    } else if (this.properties_.type == "resource") {
+        url = dutils.urls.resolve("view_resource", {
+                    community_slug: this.properties_.community_slug || "",
+                    id: this.properties.id
+                }).replace("//", "/");
+    }  else if (this.properties_.type == "organizationbranch") {
+        url = dutils.urls.resolve("view_organization", {
+                    community_slug: this.properties_.community_slug || "",
+                    organization_slug: this.properties_.organization_slug || ""
+                }).replace("//", "/");
+    }  else {
+        var slugname = this.properties_.type + "_slug";
+        var params = {"community_slug": this.properties_.community_slug};
+        params[slugname] = this.properties_[slugname];
+        url = dutils.urls.resolve("view_" + this.properties_.type, params).replace("//", "/");
+    }
+    return url;
+};
+
+komoo.geometries.Geometry.prototype.isHighlighted = function () {
+    return this.highlighted;
+};
+
+komoo.geometries.Geometry.prototype.setHighlight = function (flag) {
+    this.highlighted = flag;
+    this.updateIcon();
+};
+
+komoo.geometries.Geometry.prototype.getIconUrl = function (optZoom) {
+    if (!this.getProperties()) return;
+    var zoom = optZoom || 10;
+    var url = "/static/img/";
+    if (zoom >= 15) {
+        url += "near";
+    } else {
+        url += "far";
+    }
+    url += "/";
+    if (this.isHighlighted()) {
+        url += "highlighted/";
+    }
+
+    if (this.getProperties().categories && this.getProperties().categories[0]) {
+        url += this.getProperties().categories[0].name.toLowerCase();
+        if (this.getProperties().categories.length > 1) {
+            url += "-plus";
+        }
+    } else {
+        url += this.getProperties().type;
+    }
+    url += ".png";
+    return url;
+};
+
+komoo.geometries.Geometry.prototype.updateIcon = function (optZoom) {
+    this.setIcon(this.getIconUrl(optZoom));
 };
 
 komoo.geometries.Geometry.prototype.setObject = function (object) {
     this.object_ = object;
 };
 
-komoo.geometries.Geometry.prototype.setType = function (type) {
-    this.type_ = type;
+komoo.geometries.Geometry.prototype.setFeature = function (feature) {
+    this.feature_ = feature;
 };
 
-komoo.geometries.Geometry.prototype.getType = function () {
-    return this.type_;
+komoo.geometries.Geometry.prototype.getFeature = function () {
+    return this.feature_;
 };
 
 komoo.geometries.Geometry.prototype.getGeometryType = function () {
@@ -89,14 +206,15 @@ komoo.geometries.Geometry.prototype.getGeometry = function () {
     };
 };
 
-komoo.geometries.Geometry.prototype.getProperties = function () {
-    return null;
-};
-
 komoo.geometries.Geometry.prototype.setProperties = function (properties) {
+    this.properties_ = properties;
 };
 
-komoo.geometries.Geometry.prototype.getFeature = function () {
+komoo.geometries.Geometry.prototype.getProperties = function () {
+    return this.properties_;
+};
+
+komoo.geometries.Geometry.prototype.getGeoJsonFeature = function () {
     return {
         'type': 'Feature',
         'geometry': this.getGeometry(),
@@ -105,7 +223,7 @@ komoo.geometries.Geometry.prototype.getFeature = function () {
 };
 
 komoo.geometries.Geometry.prototype.getDefaultZIndex = function () {
-    return this.type_ ? this.type_.getDefaultZIndex() :
+    return this.feature_ ? this.feature_.getDefaultZIndex() :
         komoo.geometries.defaults.ZINDEX;
 };
 
@@ -183,6 +301,7 @@ komoo.geometries.Point.prototype.initEvents = function () {
 };
 
 komoo.geometries.Point.prototype.setCoordinates = function (coordinates) {
+    this.bounds_ = undefined;
     this.setPosition(this.getLatLngFromArray(coordinates));
 };
 
@@ -248,7 +367,6 @@ komoo.geometries.MultiPoint.prototype._guaranteePoints = function (len) {
     var missing;
     if (points.length > len) {
         missing = points.length - len;
-        console.log(missing);
         for (var i=0; i<missing; i++) {
              points.pop();
         }
@@ -264,11 +382,12 @@ komoo.geometries.MultiPoint.prototype.setCoordinates = function (coordinates) {
     var that = this;
     var coords = coordinates;
     if (!coords[0].pop) coords = [coords];
-    console.log(coords);
     this._guaranteePoints(coords.length);
+    this.bounds_ = undefined;
     $.each(this.getPoints(), function (i, point) {
         point.setPosition(that.getLatLngFromArray(coords[i]));
     });
+    this.updateIcon();
 };
 
 komoo.geometries.MultiPoint.prototype.getCoordinates = function () {
@@ -326,6 +445,7 @@ komoo.geometries.Polyline.prototype.initGoogleObject = function (opts) {
 komoo.geometries.Polyline.prototype.setCoordinates = function (coordinates) {
     var that = this;
     var path = [];
+    this.bounds_ = undefined;
     $.each(coordinates, function (k, pos) {
         path.push(that.getLatLngFromArray(pos));
     });
@@ -342,18 +462,23 @@ komoo.geometries.Polyline.prototype.getCoordinates = function () {
 };
 
 komoo.geometries.Polyline.prototype.getBorderColor = function () {
-    return this.type_ ? this.type_.getBorderColor() :
+    return this.feature_ ? this.feature_.getBorderColor() :
         komoo.geometries.defaults.BORDER_COLOR;
 };
 
 komoo.geometries.Polyline.prototype.getBorderOpacity = function () {
-    return this.type_ ? this.type_.getBorderOpacity() :
+    return this.feature_ ? this.feature_.getBorderOpacity() :
         komoo.geometries.defaults.BORDER_OPACITY;
 }
 
 komoo.geometries.Polyline.prototype.getBorderSize = function () {
-    return this.type_ ? this.type_.getBorderSize() :
+    return this.feature_ ? this.feature_.getBorderSize() :
         komoo.geometries.defaults.BORDER_SIZE;
+};
+
+
+komoo.geometries.Polyline.prototype.setIcon = function (icon) {
+    this.marker.setIcon(icon);
 };
 
 /* Delegations */
@@ -365,12 +490,17 @@ komoo.geometries.Polyline.prototype.getPath = function () {
     return this.object_.getPath();
 }
 
+komoo.geometries.Polyline.prototype.setEditable = function (flag) {
+    return this.object_.setEditable(flag);
+}
+
 
 /** Polygon Geometry **/
 
 komoo.geometries.Polygon = function (opts) {
     komoo.geometries.Polyline.call(this, opts);
     this.geometryType_ = 'Polygon';
+    this.handleEvents();
 };
 
 komoo.geometries.Polygon.prototype = Object.create(
@@ -389,25 +519,36 @@ komoo.geometries.Polygon.prototype.initGoogleObject = function (opts) {
     this.object_ = new google.maps.Polygon(options);
 };
 
+komoo.geometries.Polygon.prototype.handleEvents = function () {
+    var that = this;
+    google.maps.event.addListener(this, "mousemove", function (e) {
+        that.setOptions({strokeWeight: 2.5});
+    });
+    google.maps.event.addListener(this, "mouseout", function (e) {
+        that.setOptions({strokeWeight: that.getBorderSize()});
+    });
+};
+
 komoo.geometries.Polygon.prototype.getBackgroundColor = function () {
-    return this.type_ ? this.type_.getBackgroundColor() :
+    return this.feature_ ? this.feature_.getBackgroundColor() :
         komoo.geometries.defaults.BACKGROUND_COLOR;
 };
 
 komoo.geometries.Polygon.prototype.getBackgroundOpacity = function () {
-    return this.type_ ? this.type_.getBackgroundOpacity() :
+    return this.feature_ ? this.feature_.getBackgroundOpacity() :
         komoo.geometries.defaults.BACKGROUND_OPACITY;
 };
 
 komoo.geometries.Polygon.prototype.setCoordinates = function (coordinates) {
     var that = this;
     var paths = [];
+    this.bounds_ = undefined;
     $.each(coordinates, function (i, coord) {
         var path = [];
         $.each(coord, function (j, pos) {
             path.push(that.getLatLngFromArray(pos));
         });
-        // Removes the last point that closes the loop
+        // Removes the last point that closes th
         // This point is not used by google maps
         path.pop()
         paths.push(path);

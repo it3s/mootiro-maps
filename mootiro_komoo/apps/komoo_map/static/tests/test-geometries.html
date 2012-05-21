@@ -41,10 +41,10 @@
               'Should return the default z-index');
         });
 
-        test('Get geometry properties from type', function () {
+        test('Get geometry properties from "feature"', function () {
           expect(6);
           var simpleGeometry = new komoo.geometries.Polygon();
-          var fakeType = {
+          var fakeFeature = {
             getBackgroundColor: function () { return '#fff'; },
             getBackgroundOpacity: function () { return 0.5; },
             getBorderColor: function () { return '#ccc'; },
@@ -52,20 +52,20 @@
             getBorderSize: function () { return 10; },
             getDefaultZIndex: function () { return 100; }
           };
-          simpleGeometry.setType(fakeType);
+          simpleGeometry.setFeature(fakeFeature);
 
           equal(simpleGeometry.getBackgroundColor(), '#fff',
-              'Should return the background color from type');
+              'Should return the background color from feature');
           equal(simpleGeometry.getBackgroundOpacity(), 0.5,
-              'Should return the background opacity from type');
+              'Should return the background opacity from feature');
           equal(simpleGeometry.getBorderColor(), '#ccc',
-              'Should return the border color from type');
+              'Should return the border color from feature');
           equal(simpleGeometry.getBorderOpacity(), 0.8,
-              'Should return the border opacity from type');
+              'Should return the border opacity from feature');
           equal(simpleGeometry.getBorderSize(), 10,
-              'Should return the border size from type');
+              'Should return the border size from feature');
           equal(simpleGeometry.getDefaultZIndex(), 100,
-              'Should return the z-index from type');
+              'Should return the z-index from feature');
         });
 
         test('Create point geometry with googles marker object', function () {
@@ -280,7 +280,7 @@
             'properties': null
           };
           var point = komoo.geometries.makeGeometry(pointFeature);
-          ok(point instanceof komoo.geometries.Point,
+          ok(point instanceof komoo.geometries.MultiPoint,
               'Geometry object shoud be an instance of komoo.geometries.Point');
 
           var polylineFeature = {
