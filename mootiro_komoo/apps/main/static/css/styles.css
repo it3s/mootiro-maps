@@ -383,61 +383,99 @@ div.collapser i.icon-chevron-down {
 .icon-map {
     background-image: url("../img/menu/map.png");
     background-position: 0 0;
+    margin: 2px 7px 1px;
     width: 10px;
     height: 15px;
 }
 *:hover > .icon-map, .selected .icon-map {
     background-image: url("../img/menu/map-active.png");
 }
+*:hover > .icon-map.no-hover {
+    background-image: url("../img/menu/map.png");
+}
+
+.icon-help {
+    background-image: url("../img/menu/help.png");
+    background-position: 0 0;
+    margin: 0 6px;
+    width: 12px;
+    height: 18px;
+}
+*:hover > .icon-help, .selected .icon-help {
+    background-image: url("../img/menu/help-active.png");
+}
+*:hover > .icon-help.no-hover {
+    background-image: url("../img/menu/help.png");
+}
 
 .icon-community {
     background-image: url("../img/menu/community.png");
     background-position: 0 0;
+    margin: 0 5px 1px 4px;
     width: 15px;
     height: 17px;
 }
 *:hover > .icon-community, .selected .icon-community {
     background-image: url("../img/menu/community-active.png");
 }
+*:hover > .icon-community.no-hover {
+    background-image: url("../img/menu/community.png");
+}
 
 .icon-need {
     background-image: url("../img/menu/need.png");
     background-position: 0 0;
+    margin: 1px 4px 1px 2px;
     width: 18px;
     height: 16px;
 }
 *:hover > .icon-need, .selected .icon-need {
     background-image: url("../img/menu/need-active.png");
 }
+*:hover > .icon-need.no-hover {
+    background-image: url("../img/menu/need.png");
+}
 
 .icon-organization {
     background-image: url("../img/menu/organization.png");
     background-position: 0 0;
+    margin: 2px 4px 1px;
     width: 16px;
     height: 15px;
 }
 *:hover > .icon-organization, .selected .icon-organization {
     background-image: url("../img/menu/organization-active.png");
 }
+*:hover > .icon-organization.no-hover {
+    background-image: url("../img/menu/organization.png");
+}
 
 .icon-resource {
     background-image: url("../img/menu/resource.png");
     background-position: 0 0;
-    width: 23px;
+    margin: 2px 0 1px;
+    width: 24px;
     height: 15px;
 }
 *:hover > .icon-resource, .selected .icon-resource {
     background-image: url("../img/menu/resource-active.png");
 }
+*:hover > .icon-resource.no-hover {
+    background-image: url("../img/menu/resource.png");
+}
 
 .icon-investment {
     background-image: url("../img/menu/investment.png");
     background-position: 0 0;
+    margin: 2px 2px 1px;
     width: 20px;
     height: 15px;
 }
 *:hover > .icon-investment, .selected .icon-investment {
     background-image: url("../img/menu/investment-active.png");
+}
+*:hover > .icon-investment.no-hover {
+    background-image: url("../img/menu/investment.png");
 }
 
 .map-button {
@@ -1564,4 +1602,35 @@ div.investments-list .tab-investment.selected a { color: #000 }
 .alert-message ol{
     list-style: none;
     margin: 0px;
+}
+
+.not-found-error {
+    background: url("../img/404.png") no-repeat;
+    height: 450px;
+    max-width: 900px;
+    padding-top: 60px;
+    margin-top: 30px;
+}
+.not-found-error .content {
+    margin-left: 500px;
+}
+
+.not-found-error .block {
+    padding: 10px;
+}
+
+ul.two-cols li {
+    display: inline-block;
+    width: 45%;
+    margin: 4px 5px 4px 0;
+}
+
+.not-found-error .ajax-search {
+    float: none;
+    margin: 0;
+}
+
+.not-found-error .ajax-search input {
+    width: 97%;
+    margin: 0;
 }
