@@ -1,8 +1,121 @@
 # -*- coding: utf-8 -*-
+import simplejson
+
+from django.core.urlresolvers import reverse
+
 from main.tests import KomooTestCase
+from main.tests import logged_and_unlogged
+from main.tests import A_POLYGON_GEOMETRY
+from .models import Need
+
+
+def A_NEED_DATA():
+    return {
+        'community': 1,
+        'title': 'Quadra Poliesportiva',
+        'description': 'Lorem ipsum.',
+        'categories': [1, 2, 3],
+        'target_audiences': [1, 2, 3],
+        'tags': 'esporte, futebol, quadra',
+        'geometry': A_POLYGON_GEOMETRY,
+    }.copy()
 
 
 class NeedViewsTestCase(KomooTestCase):
 
-    def test_need_view_page__is_up(self):
-        self.assert_get_is_up('/sao-remo/need/parquinho')
+    # new_need
+    def test_new_need_page_is_up(self):
+        self.login_user()
+        self.assert_get_is_up(reverse('new_need'))
+        self.assert_ajax_is_up(reverse('new_need'))
+        self.assert_get_is_up(reverse('new_need', args=('sao-remo',)))
+        self.assert_ajax_is_up(reverse('new_need', args=('sao-remo',)))
+
+    def test_new_need_creation(self):
+        self.login_user()
+        data = A_NEED_DATA()
+        n0 = Need.objects.count()
+        self.client.post(reverse('new_need'), data)
+        self.assertEquals(Need.objects.count(), n0 + 1)
+
+    # edit_need
+    def test_need_edit_page_is_up(self):
+        self.login_user()
+        self.assert_get_is_up(reverse('edit_need', args=('policiamento',)))
+        self.assert_get_is_up(reverse('edit_need', args=('sao-remo', 'parquinho')))
+
+    def test_need_edition(self):
+        self.login_user()
+        n = Need.objects.get(slug='coleta-de-lixo', community__slug='complexo-da-alema')
+        print n.community.all()
+        data = {
+            'id': n.id,  # must set with ajax_form decorator
+            'community': [1, 2],
+            'title': 'Coleta de sujeira',
+            'description': n.description,
+            'categories': [3, 4, 5],
+            'target_audiences': [3, 4, 5],
+            'tags': n.tags,
+            'geometry': str(n.geometry),
+        }
+        url = reverse('edit_need', args=('complexo-da-alema', 'coleta-de-lixo'))
+        http_resp = self.client.post(url, data)
+        self.assertEqual(http_resp.status_code, 200)
+        n2 = Need.objects.get(slug='coleta-de-sujeira')
+        self.assertEquals(n.id, n2.id)
+        with self.assertRaises(Exception):
+            Need.objects.get(slug='coleta-de-lixo')
+
+    # form validation
+    def test_need_empty_form_validation(self):
+        self.login_user()
+        http_resp = self.client.post(reverse('new_need'), data={})
+        json = simplejson.loads(http_resp.content)
+        expected = {
+            'success': 'false',
+            'errors': {
+                'title': ['This field is required.'],
+                'description': ['This field is required.'],
+                'target_audiences': ['This field is required.'],
+                'categories': ['This field is required.'],
+            },
+        }
+        self.assertEquals(json, expected)
+
+    # def test_community_population_is_number(self):
+    #     self.login_user()
+    #     data = A_COMMUNITY_DATA()
+    #     data['population'] = 'this is not a number'
+    #     http_resp = self.client.post(reverse('new_community'), data=data)
+    #     json = simplejson.loads(http_resp.content)
+    #     expected = {
+    #         'success': 'false',
+    #         'errors': {
+    #             'population': ['Enter a whole number.'],
+    #         },
+    #     }
+    #     self.assertEquals(json, expected)
+
+    # view
+    @logged_and_unlogged
+    def test_need_about_page_is_up(self):
+        url = reverse('view_need', args=('policiamento',))
+        self.assert_get_is_up(url)
+        url = reverse('view_need', args=('sao-remo', 'parquinho'))
+        self.assert_get_is_up(url)
+
+    # list
+    @logged_and_unlogged
+    def test_communities_list_page_is_up(self):
+        url = reverse('list_all_needs')
+        self.assert_get_is_up(url)
+        url = reverse('list_community_needs', args=('sao-remo',))
+        self.assert_get_is_up(url)
+
+    # searches
+    # @logged_and_unlogged
+    # def test_community_search_by_tag_is_up(self):
+    #     http_resp = self.client.get('/community/search_by_tag/?term=fave')
+    #     self.assertEqual(http_resp.status_code, 200)
+    #     d = simplejson.loads(http_resp.content)
+    #     self.assertNotEquals(d, [])

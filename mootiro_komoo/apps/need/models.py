@@ -124,4 +124,5 @@ class Need(GeoRefModel, VotableModel):
         return reverse('edit_need', kwargs=self.home_url_params)
 
 
-reversion.register(Need)
+if not reversion.is_registered(Need):
+    reversion.register(Need)

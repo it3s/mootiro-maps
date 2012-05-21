@@ -25,6 +25,8 @@ class KomooTestCase(TestCase):
     @classmethod
     def setUpClass(cls):
         """Called before all tests of a class"""
+        # In conjunction with contenttypes_fixtures.json the command below
+        # fixes content types.
         ContentType.objects.all().delete()
 
     def login_user(self, username="tester"):
