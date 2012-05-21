@@ -65,11 +65,11 @@ def new(request, community_slug="", need_slug="", proposal_number="",
     kw.pop('request')
     investment, community = prepare_investment_objects(**kw)
 
-    # def on_get(request, form):  # necessary?
-    #     data = {}
-    #     if investment.investor:
-    #         data = investment.investor.to_dict()
-    #     return InvestmentForm(instance=investment, initial=data)
+    def on_get(request, form):  # necessary?
+        data = {}
+        if investment.investor:
+            data = investment.investor.to_dict()
+        return InvestmentForm(instance=investment, initial=data)
 
     def on_before_validation(request, form):
         return InvestmentForm(request.POST, instance=investment)
@@ -77,7 +77,7 @@ def new(request, community_slug="", need_slug="", proposal_number="",
     def on_after_save(request, obj):
         return {'redirect': reverse('investment_list')}
 
-    return {'on_before_validation': on_before_validation,
+    return {'on_get': on_get, 'on_before_validation': on_before_validation,
             'on_after_save': on_after_save, 'community': community}
 
 

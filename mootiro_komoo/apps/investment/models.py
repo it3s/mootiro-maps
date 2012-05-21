@@ -126,18 +126,21 @@ class Investment(VotableModel):
 
     title = models.CharField(max_length=256)
     # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.CharField(max_length=256, null=False, blank=False, db_index=True, editable=False)
+    slug = models.CharField(max_length=256, null=False, blank=False,
+                db_index=True, editable=False)
     description = models.TextField()
-    value = models.DecimalField(decimal_places=2, max_digits=14, null=True, blank=True)
-    currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES, null=True, blank=True)
+    value = models.DecimalField(decimal_places=2, max_digits=14, null=True,
+                blank=True)
+    currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES,
+                null=True, blank=True)
 
     date = models.DateField(null=False)
     # TODO: remove over_period. Get this info by existence of an end_date
-    over_period = models.BooleanField(default=False, null=False)
+    over_period = models.BooleanField(default=False)
     end_date = models.DateField(null=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=False, blank=False,
+    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
                 related_name='created_investments')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)

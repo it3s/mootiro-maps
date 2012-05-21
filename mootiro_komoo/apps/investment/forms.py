@@ -87,7 +87,7 @@ class InvestmentForm(AjaxModelForm):
 
     # TODO: value just validates if currency is set
 
-    def __init__(self, user=None, *a, **kw):
+    def __init__(self, *a, **kw):
         # Crispy forms configuration
         self.helper = MooHelper(form_id="investment_form")
         self.helper.layout = Layout(
@@ -142,11 +142,11 @@ class InvestmentForm(AjaxModelForm):
         elif investor_type == 'PER':
             investor = investor_person
 
-        if investor:
-            investor, created = Investor.get_or_create_for(investor,
+        # if investor:
+        investor, created = Investor.get_or_create_for(investor,
                                 current=current_investor)
-        else:
-            investor, created = None, False
+        # else:
+        #     investor, created = None, False
 
         if created:
             investor.save()
@@ -162,11 +162,11 @@ class InvestmentForm(AjaxModelForm):
         investment.investor = investor
         # if not investment.id:  # was never saved
         #     investment.creator = request.user
-        investment.save()
+        # investment.save()
 
         # why need to explicit save tags here?
-        investment = super(InvestmentForm, self).save(commit=False)
-        tags = self.cleaned_data['tags']
-        investment.tags.set(*tags)
+        # investment = super(InvestmentForm, self).save(commit=False)
+        # tags = self.cleaned_data['tags']
+        # investment.tags.set(*tags)
         investment.save()
         return investment
