@@ -227,3 +227,22 @@ function errorMessage(title, message, imageUrl, buttons) {
     });
     return box;
 }
+
+function unexpectedError(info) {
+    title = "Ops";
+    message = "O Spock comeu um pedaço do código... Nos escreva falando que problema você encontrou para que possamos resolvê-lo!";
+    buttons = [];
+
+    var box = $("#unexpected-error-box");
+    $(".message", box).text(message);
+    box.dialog({
+        dialogClass: "error-dialog unexpected-error-dialog",
+        title: title,
+        modal: true,
+        buttons: buttons,
+        resizable: false,
+        draggable: false,
+        width: 650
+    });
+    return box;
+}

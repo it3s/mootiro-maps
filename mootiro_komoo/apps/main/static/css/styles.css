@@ -1634,3 +1634,24 @@ ul.two-cols li {
     width: 97%;
     margin: 0;
 }
+
+#unexpected-error-box {
+    display: none;
+}
+.unexpected-error-dialog {
+    border: solid 10px #FFBD2E;
+}
+#unexpected-error-box .content {
+    background: white;
+}
+#unexpected-error-box .image {
+    background: url("../img/spock.png") no-repeat;
+    width: 195px;
+    height: 295px;
+    float: right;
+}
+#unexpected-error-box textarea {
+    width: 390px;
+    height: 180px;
+    margin-top: 15px;
+}
