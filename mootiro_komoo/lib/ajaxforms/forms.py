@@ -124,7 +124,6 @@ def ajax_form(template=None, form_class=None, form_name="form"):
                 form = form_class(request.POST, instance=instance)
             else:
                 form = form_class(request.POST)
-            form.add_user(request)
 
             # callback on_before_validation
             if 'on_before_validation' in output:
@@ -132,6 +131,8 @@ def ajax_form(template=None, form_class=None, form_name="form"):
                 r_bval = output.pop('on_before_validation')(request, form)
                 if isinstance(r_bval, form_class):
                     form = r_bval
+
+            form.add_user(request)
 
             json_ = {}
             if form.is_valid():

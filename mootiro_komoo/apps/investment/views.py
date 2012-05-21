@@ -7,9 +7,11 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import redirect, get_object_or_404
 from django.http import HttpResponse
 from django.utils import simplejson
+from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to
 from lib.taggit.models import TaggedItem
+from ajaxforms import ajax_form
 
 from proposal.views import prepare_proposal_objects
 from organization.views import prepare_organization_objects
@@ -51,6 +53,32 @@ def prepare_investment_objects(community_slug="", need_slug="",
         investment = Investment(grantee=grantee)
 
     return investment, community
+
+
+@login_required
+@ajax_form('investment/edit.html', form_class=InvestmentForm)
+def new(request, community_slug="", need_slug="", proposal_number="",
+        organization_slug="", resource_id="", investment_slug=""):
+    logger.debug('acessing investment > new')
+
+    kw = locals()
+    kw.pop('request')
+    investment, community = prepare_investment_objects(**kw)
+
+    # def on_get(request, form):  # necessary?
+    #     data = {}
+    #     if investment.investor:
+    #         data = investment.investor.to_dict()
+    #     return InvestmentForm(instance=investment, initial=data)
+
+    def on_before_validation(request, form):
+        return InvestmentForm(request.POST, instance=investment)
+
+    def on_after_save(request, obj):
+        return {'redirect': reverse('investment_list')}
+
+    return {'on_before_validation': on_before_validation,
+            'on_after_save': on_after_save, 'community': community}
 
 
 @render_to('investment/edit.html')
