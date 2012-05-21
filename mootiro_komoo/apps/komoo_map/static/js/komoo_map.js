@@ -772,7 +772,7 @@ komoo.Map.prototype.getOverlayUrl = function (overlay) {
     } else if (overlay.properties.type == "resource") {
         url = dutils.urls.resolve("view_resource", {
                     community_slug: overlay.properties.community_slug || "",
-                    id: overlay.properties.id
+                    resource_id: overlay.properties.id
                 }).replace("//", "/");
     }  else if (overlay.properties.type == "organizationbranch") {
         url = dutils.urls.resolve("view_organization", {
