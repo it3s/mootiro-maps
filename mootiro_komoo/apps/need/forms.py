@@ -78,8 +78,8 @@ class NeedForm(AjaxModelForm):
 class NeedFormGeoRef(NeedForm):
     class Meta:
         model = Need
-        fields = ('community', 'title', 'description', 'categories',
-                    'target_audiences', 'tags', 'geometry', 'files')
+        fields = ('title', 'description', 'categories',
+                    'target_audiences', 'tags', 'community', 'geometry', 'files')
 
     _field_labels = {
         'community': _('Community'),

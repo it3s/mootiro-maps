@@ -74,11 +74,13 @@
         <ul>
           {% for n in similar_needs %}
           <li {% if forloop.counter > 5 %}class="overflow hidden"{% endif %}>
-            <a href="{{ n.view_url }}"> {{ n.title }} </a>
+            <a href="{% url view_need n.slug %}"> {{ n.title }} </a>
             {% if n.community.all.count %}
               {% trans 'at' %}
               {% for comm in n.community.all %}
-                {{ commu.name }}
+                <a href="{% url view_community comm.slug %}">
+                  {{ comm.name }}
+                </a>
                 {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
               {% endfor %}
             {% endif %}
