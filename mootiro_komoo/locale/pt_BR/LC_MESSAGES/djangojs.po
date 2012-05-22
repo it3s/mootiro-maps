@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-15 15:29-0300\n"
+"POT-Creation-Date: 2012-05-22 17:36-0300\n"
 "PO-Revision-Date: 2012-04-05 19:51-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -61,98 +61,98 @@ msgstr "Adicionar Investimento"
 msgid "Clean"
 msgstr "Limpo"
 
-#: apps/komoo_map/static/js/komoo_map.js:810
+#: apps/komoo_map/static/js/komoo_map.js:811
 #, perl-format
 msgid "%s resident"
 msgid_plural "%s residents"
 msgstr[0] "%s habitante"
 msgstr[1] "%s habitantes"
 
-#: apps/komoo_map/static/js/komoo_map.js:813
+#: apps/komoo_map/static/js/komoo_map.js:814
 msgid "No population provided"
 msgstr "População não fornecida"
 
-#: apps/komoo_map/static/js/komoo_map.js:1799
+#: apps/komoo_map/static/js/komoo_map.js:1800
 msgid "Edit"
 msgstr "Editar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1955
-#: apps/komoo_map/static/js/komoo_map.js:2086
+#: apps/komoo_map/static/js/komoo_map.js:1956
+#: apps/komoo_map/static/js/komoo_map.js:2087
 msgid "Add shape"
 msgstr "Adicionar área"
 
-#: apps/komoo_map/static/js/komoo_map.js:1956
-#: apps/komoo_map/static/js/komoo_map.js:2090
+#: apps/komoo_map/static/js/komoo_map.js:1957
+#: apps/komoo_map/static/js/komoo_map.js:2091
 msgid "Add line"
 msgstr "Adicionar linha"
 
-#: apps/komoo_map/static/js/komoo_map.js:1957
-#: apps/komoo_map/static/js/komoo_map.js:2094
+#: apps/komoo_map/static/js/komoo_map.js:1958
+#: apps/komoo_map/static/js/komoo_map.js:2095
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: apps/komoo_map/static/js/komoo_map.js:2086
+#: apps/komoo_map/static/js/komoo_map.js:2087
 msgid "Draw a shape"
 msgstr "Desenhar uma área"
 
-#: apps/komoo_map/static/js/komoo_map.js:2090
+#: apps/komoo_map/static/js/komoo_map.js:2091
 msgid "Draw a line"
 msgstr "Desenhar uma linha"
 
-#: apps/komoo_map/static/js/komoo_map.js:2094
+#: apps/komoo_map/static/js/komoo_map.js:2095
 msgid "Add a marker"
 msgstr "Adicionar um marcador"
 
-#: apps/komoo_map/static/js/komoo_map.js:2098
+#: apps/komoo_map/static/js/komoo_map.js:2099
 msgid "Add new..."
 msgstr "Adicionar..."
 
-#: apps/komoo_map/static/js/komoo_map.js:2102
-#: apps/komoo_map/static/js/komoo_map.js:2210
+#: apps/komoo_map/static/js/komoo_map.js:2103
+#: apps/komoo_map/static/js/komoo_map.js:2211
 msgid "Add"
 msgstr "Adicionar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2102
+#: apps/komoo_map/static/js/komoo_map.js:2103
 msgid "Add another region"
 msgstr "Adicionar outra região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2114
+#: apps/komoo_map/static/js/komoo_map.js:2115
 msgid "Cut out"
 msgstr "Cortar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2114
+#: apps/komoo_map/static/js/komoo_map.js:2115
 msgid "Cut out a hole from a region"
 msgstr "Adicionar um buraco a região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2126
+#: apps/komoo_map/static/js/komoo_map.js:2127
 msgid "Delete"
 msgstr "Apagar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2126
+#: apps/komoo_map/static/js/komoo_map.js:2127
 msgid "Delete a region"
 msgstr "Apagar uma região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2209
+#: apps/komoo_map/static/js/komoo_map.js:2210
 msgid "Filter"
 msgstr "Filtrar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2214
+#: apps/komoo_map/static/js/komoo_map.js:2215
 msgid "Please log in."
 msgstr "Por favor, entre no sistema."
 
-#: apps/komoo_map/static/js/komoo_map.js:2306
+#: apps/komoo_map/static/js/komoo_map.js:2307
 msgid "Close"
 msgstr "Fechar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2333
+#: apps/komoo_map/static/js/komoo_map.js:2334
 msgid "Title"
 msgstr "Título"
 
-#: apps/komoo_map/static/js/komoo_map.js:2335
+#: apps/komoo_map/static/js/komoo_map.js:2336
 msgid "Finish"
 msgstr "Concluir"
 
-#: apps/komoo_map/static/js/komoo_map.js:2336
+#: apps/komoo_map/static/js/komoo_map.js:2337
 msgid "Cancel"
 msgstr "Cancelar"
 
