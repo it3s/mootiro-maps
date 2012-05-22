@@ -50,13 +50,14 @@ def run():
         local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
 
 
-def test(REUSE_DB='1', apps="community need main"):
+def test(apps="community need main", recreate_db=False):
     """Run application tests"""
-    REUSE_DB = int(REUSE_DB)
-    if REUSE_DB:
+    if recreate_db:
+        local('dropdb test_mootiro_komoo')
+    else:
         print "Reusing old last test DB..."
-    local('REUSE_DB={} python manage.py test {} {} --verbosity=1' \
-            .format(REUSE_DB, apps, django_settings[env_]))
+    local('REUSE_DB=1 python manage.py test {} {} --verbosity=1' \
+            .format(apps, django_settings[env_]))
 
 
 def js_urls():

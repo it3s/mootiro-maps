@@ -113,9 +113,22 @@ class NeedViewsTestCase(KomooTestCase):
         self.assert_get_is_up(url)
 
     # searches
-    # @logged_and_unlogged
-    # def test_community_search_by_tag_is_up(self):
-    #     http_resp = self.client.get('/community/search_by_tag/?term=fave')
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     d = simplejson.loads(http_resp.content)
-    #     self.assertNotEquals(d, [])
+    @logged_and_unlogged
+    def test_need_tag_search_is_up(self):
+        url = reverse('need_tag_search')
+        http_resp = self.client.get(url + "?term=saú")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(simplejson.loads(http_resp.content), [])
+        http_resp = self.client.get(url + "?term=xwyk")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])
+
+    @logged_and_unlogged
+    def test_need_target_audience_search_is_up(self):
+        url = reverse('target_audience_search')
+        http_resp = self.client.get(url + "?term=crian")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(simplejson.loads(http_resp.content), [])
+        http_resp = self.client.get(url + "?term=xwyk")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])

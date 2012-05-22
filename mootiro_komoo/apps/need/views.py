@@ -153,6 +153,7 @@ def tag_search(request):
     logger.debug('acessing need > tag_search')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
+    # qset = TaggedItem.tags_for(Need)
     tags = [t.name for t in qset]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")

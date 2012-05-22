@@ -172,5 +172,12 @@
   {"pk": 1, "model": "taggit.tag", "fields": {"name": "favela", "slug": "favela"}},
   {"pk": 2, "model": "taggit.tag", "fields": {"name": "área de risco", "slug": "area-de-risco"}},
   {"pk": 3, "model": "taggit.tag", "fields": {"name": "ribeirinhos", "slug": "ribeirinhos"}},
-  {"pk": 1, "model": "taggit.taggeditem", "fields": {"tag": 1, "content_type": 17, "object_id": 1}}
+  {"pk": 1, "model": "taggit.taggeditem", "fields": {"tag": 1, "content_type": 17, "object_id": 1}},
+  {"pk": 2, "model": "taggit.taggeditem", "fields": {"tag": 2, "content_type": 17, "object_id": 1}},
+  {"pk": 3, "model": "taggit.taggeditem", "fields": {"tag": 1, "content_type": 17, "object_id": 2}},
+
+  {"pk": 4, "model": "taggit.tag", "fields": {"name": "saúde", "slug": "saude"}},
+  {"pk": 5, "model": "taggit.tag", "fields": {"name": "Higiene", "slug": "higiene"}},
+  {"pk": 4, "model": "taggit.taggeditem", "fields": {"tag": 4, "content_type": 20, "object_id": 1}},
+  {"pk": 5, "model": "taggit.taggeditem", "fields": {"tag": 5, "content_type": 20, "object_id": 1}}
 ]
