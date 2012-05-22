@@ -26,7 +26,6 @@ logger = logging.getLogger(__name__)
 @render_to('main/root.html')
 def root(request):
     logger.debug('acessing Root')
-    raise Exception("You broke it!")
     return dict(geojson={})
 
 
