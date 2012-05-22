@@ -1388,6 +1388,17 @@ textarea.markItUpEditor{
     padding-left: 20px;
     margin-left: 20px;
 }
+.branches-see-all{
+    font-size: 16px;
+    font-weight: bold;
+    color: #009CB4;
+    margin-bottom: 10px;
+}
+.branches-see-all img{
+    width:12px;
+    height:18px;
+    margin-right: 10px;
+}
 .branch-pagination{
     margin-right: 10px;
     font-weight: bold;
