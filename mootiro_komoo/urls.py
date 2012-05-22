@@ -14,6 +14,9 @@ ORGANIZATION_SLUG = r'(?P<organization_slug>[a-zA-Z0-9-]+)'
 RESOURCE_ID = r'(?P<resource_id>\d+)'
 INVESTMENT_SLUG = r'(?P<investment_slug>[a-zA-Z0-9-]+)'
 
+handler500 = 'main.views.custom_500'
+handler404 = 'main.views.custom_404'
+
 js_info_dict = {
     'packages': (
         'komoo_map',

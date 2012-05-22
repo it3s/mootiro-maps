@@ -1,9 +1,20 @@
 {% extends 'global.html' %}
+{% load i18n %}
 
 {% block content %}
-    <div class='err-msg'>
-        <h1>500 - holly molly guacamole! </h1>
-        <h1>You've broken our site! lets run for our lives..ruuuuun!</h1>
+    <div class='err-msg internal-error'>
+      <div class="content">
+        <div class="message">
+          <h1>{% trans 'Ops!' %}</h1>
+          <p>O Spock comeu um pedaço do código... Nos escreva falando que problema você encontrou para que possamos resolvê-lo!
+          </p>
+          <form class="error-report">
+            <textarea></textarea>
+            <input type="submit" name="submit" value="Send" class="btn button" />
+          </form>
+        </div>
+        <div class="image"></div>
+      </div>
     </div>
 {% endblock %}
 
@@ -13,8 +24,10 @@
             width: 100%;
         }
         .err-msg h1{
-            text-align: center;
-            margin: 30px auto 70px auto;
+            white-space: nowrap;
+            color: red;
+            font-size: 20px;
+            margin: 0px auto 30px auto;
         }
     </style>
 {% endblock %}

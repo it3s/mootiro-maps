@@ -1632,12 +1632,14 @@ div.investments-list .tab-investment.selected a { color: #000 }
     margin: 0px;
 }
 
-.not-found-error {
-    background: url("../img/404.png") no-repeat;
+.not-found-error, .internal-error {
     height: 450px;
     max-width: 900px;
     padding-top: 60px;
     margin-top: 30px;
+}
+.not-found-error {
+    background: url("../img/404.png") no-repeat;
 }
 .not-found-error .content {
     margin-left: 500px;
@@ -1672,14 +1674,33 @@ ul.two-cols li {
 #unexpected-error-box .content {
     background: white;
 }
-#unexpected-error-box .image {
+#unexpected-error-box .image,
+.internal-error .image {
     background: url("../img/spock.png") no-repeat;
     width: 195px;
     height: 295px;
+}
+#unexpected-error-box .image {
     float: right;
 }
-#unexpected-error-box textarea {
+.internal-error .image {
+    display: inline-block;
+}
+#unexpected-error-box form.error-report textarea,
+.internal-error form.error-report textarea {
     width: 390px;
     height: 180px;
     margin-top: 15px;
+    display: block;
 }
+.internal-error .content {
+    margin-left: 200px;
+}
+.internal-error .content .message {
+    width: 450px;
+    display: inline-block;
+}
+.internal-error .content form.error-report {
+    display: inline-block;
+}
+
