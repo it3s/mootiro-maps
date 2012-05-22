@@ -35,11 +35,7 @@
                 </div>
             </div>
             <div class="view-edit-btn">
-                {% if community %}
-                <a href="/{{ community.slug }}/organization/edit?id={{ organization.id }}" class="btn login-required">
-                {% else %}
-                <a href="/organization/edit?id={{ organization.id }}" class="btn login-required">
-                {% endif %}
+                <a href="{{ organization.edit_url }}" class="btn login-required">
                     <i class="icon-pencil"></i>
                 </a>
             </div>

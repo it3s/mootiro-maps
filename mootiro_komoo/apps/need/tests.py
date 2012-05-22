@@ -82,20 +82,6 @@ class NeedViewsTestCase(KomooTestCase):
         }
         self.assertEquals(json, expected)
 
-    # def test_community_population_is_number(self):
-    #     self.login_user()
-    #     data = A_COMMUNITY_DATA()
-    #     data['population'] = 'this is not a number'
-    #     http_resp = self.client.post(reverse('new_community'), data=data)
-    #     json = simplejson.loads(http_resp.content)
-    #     expected = {
-    #         'success': 'false',
-    #         'errors': {
-    #             'population': ['Enter a whole number.'],
-    #         },
-    #     }
-    #     self.assertEquals(json, expected)
-
     # view
     @logged_and_unlogged
     def test_need_about_page_is_up(self):

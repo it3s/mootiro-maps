@@ -5,6 +5,7 @@ from django.conf.urls.defaults import *
 
 from mootiro_komoo.urls import prepare_regex as pr
 
+home_urls = [r'^COMMUNITY_SLUG/']
 
 urlpatterns = patterns('community.views',
     url(r'^community/new$', 'new_community', name='new_community'),
