@@ -47,7 +47,7 @@ def prepare_resource_objects(community_slug="", resource_id=""):
 def resource_list(request, community_slug=''):
     logger.debug('acessing komoo_resource > list')
 
-    sort_order = ['creation_date', 'name']
+    sort_order = ['creation_date', 'votes', 'name']
 
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))

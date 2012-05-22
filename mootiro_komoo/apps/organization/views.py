@@ -52,7 +52,7 @@ def prepare_organization_objects(community_slug="", organization_slug=""):
 def organization_list(request, community_slug=''):
     logging.debug('acessing organization > list')
 
-    org_sort_order = ['creation_date', 'name']
+    org_sort_order = ['creation_date', 'votes', 'name']
 
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))

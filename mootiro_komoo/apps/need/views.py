@@ -133,7 +133,7 @@ def view(request, community_slug=None, need_slug=None):
 def list(request, community_slug=''):
     logger.debug('acessing need > list')
 
-    sort_fields = ['creation_date', 'title']
+    sort_fields = ['creation_date', 'votes', 'title']
 
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
