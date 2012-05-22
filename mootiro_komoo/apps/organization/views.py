@@ -139,8 +139,8 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
 def edit_organization(request, community_slug='', organization_slug='',
                       *arg, **kwargs):
     logger.debug('acessing organization > edit_organization')
-    community = get_object_or_None(Community, slug=community_slug)
-    organization = get_object_or_None(Organization, pk=request.GET.get('id', 0))
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug, organization_slug=organization_slug)
 
     geojson = create_geojson([organization], convert=False)
     if geojson and geojson.get('features'):
@@ -153,11 +153,10 @@ def edit_organization(request, community_slug='', organization_slug='',
             logger.debug('community_slug: {}'.format(community_slug))
             form.fields['community'].widget = forms.HiddenInput()
             form.initial['community'] = community.id
+        kwargs = dict(organization_slug=organization_slug)
         if community_slug:
-            form.helper.form_action = reverse('edit_organization',
-                    kwargs={'community_slug': community_slug})
-        else:
-            form.helper.form_action = reverse('edit_organization')
+            kwargs['community_slug'] = community_slug
+        form.helper.form_action = reverse('edit_organization', kwargs=kwargs)
         return form
 
     def on_after_save(request, obj):
