@@ -18,8 +18,8 @@ from need.models import Need, NeedCategory, TargetAudience
 class NeedForm(AjaxModelForm):
     class Meta:
         model = Need
-        fields = ('community', 'title', 'description', 'categories',
-                    'target_audiences', 'tags', 'files')
+        fields = ('title', 'description', 'categories',
+                    'target_audiences', 'tags', 'community', 'files')
 
     _field_labels = {
         'community': _('Community'),

@@ -799,7 +799,7 @@ form .datepicker { width: 7em }
     float: left;
     margin: 0 2px;
 }
-#need_form #div_id_community input { width: 150px }
+/*#need_form #div_id_community input { width: 150px }*/
 
 #investment_form #id_currency { width: 7em }
 #investment_form #div_id_investor_type .radio {
