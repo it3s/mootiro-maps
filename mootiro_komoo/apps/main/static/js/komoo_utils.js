@@ -229,12 +229,14 @@ function errorMessage(title, message, imageUrl, buttons) {
 }
 
 function unexpectedError(info) {
-    title = "Ops";
+    title = "Ops!";
     message = "O Spock comeu um pedaço do código... Nos escreva falando que problema você encontrou para que possamos resolvê-lo!";
     buttons = [];
 
     var box = $("#unexpected-error-box");
     $(".message", box).text(message);
+    $("input[name=url]").val(location.href);
+    $("input[name=info]").val(info || "");
     box.dialog({
         dialogClass: "error-dialog unexpected-error-dialog",
         title: title,
