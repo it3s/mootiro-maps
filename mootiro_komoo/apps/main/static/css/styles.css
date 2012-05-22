@@ -1353,15 +1353,43 @@ textarea.markItUpEditor{
     vertical-align: middle;
 }
 .org-info-div{
-    background-color: rgb(166, 229, 238);
+    /*background-color: rgb(166, 229, 238);*/
+    background-color: #ebebeb;
     padding: 10px;
     display: inline-block;
     width:97%;
     margin: 10px 0 10px 0;
     border-radius: 7px;
 }
-.org-info-div.odd{
+.org-info-div:hover{
     background-color: rgb(220, 239, 244);
+    color: #000000;
+}
+.org-info-div:hover .branch-name, .branch-active .branch-name{
+    color: #000000;
+}
+/*.org-info-div:hover a{
+    color: #000000;
+    text-decoration: none;
+}*/
+.branch-active{
+    background-color: rgb(166, 229, 238);
+    color: #000000;
+    text-decoration: none;
+}
+.branch-active:hover{
+    background-color: rgb(166, 229, 238);
+}
+.branch-map-icon{
+    background-image: url('/static/img/ver-no-mapa.png');
+    background-repeat: no-repeat;
+    min-width:10px;
+    min-height: 10px;
+    padding-left: 20px;
+    margin-left: 20px;
+}
+.org-info-div:hover .branch-map-icon, .branch-active .branch-map-icon{
+    background-image: url('/static/img/ver-no-mapa-hover.png');
 }
 .org-list-header{
     vertical-align: top;

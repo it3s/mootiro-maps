@@ -89,16 +89,17 @@
 
             <div class="org-info-panel branches-list">
                 {% for branch in organization.organizationbranch_set.all %}
-                <div class="branch-link org-info-div {% cycle 'odd' '' %}" data-branch-id="{{ branch.id }}">
+                <div class="branch-link org-info-div" data-branch-id="{{ branch.id }}">
                         <a href="#">
                             <div class="branch-name">
                                 <span class="entry">{{ branch.name }}</span>
+                                <span class="branch-map-icon"></span>
                                 <span class="branch-link-btn">
                                     <i class="icon-chevron-right"></i>
                                 </span>
                             </div>
                         </a>
-                        <div class="branch-info org-info-div {% cycle 'odd' '' %}" style="display: none;">
+                        <div class="branch-info" style="display: none;">
                             <div>
                                 <a href="#" class="branch-edit-btn btn login-required">
                                     <i class="icon-pencil"></i>
@@ -258,10 +259,12 @@
                 branch_btn_icon.addClass('icon-chevron-right');
                 $(this).parent().find('.branch-info').slideUp();
                 $(this).parent().find('.branch-form').slideUp();
+                $(this).parent().removeClass('branch-active');
             } else {
                 branch_btn_icon.removeClass('icon-chevron-right');
                 branch_btn_icon.addClass('icon-chevron-down');
                 $(this).parent().find('.branch-info').slideDown();
+                $(this).parent().addClass('branch-active');
             }
         });
 
