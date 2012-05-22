@@ -93,7 +93,6 @@ def ajax_form(template=None, form_class=None, form_name="form"):
             output = function(request, *args, **kwargs)
             if not isinstance(output, dict):
                 return output
-            #tmpl = output.pop('TEMPLATE', template)
 
             logger.debug('request via {}\n{}'.format(request.method,
                 getattr(request, request.method)

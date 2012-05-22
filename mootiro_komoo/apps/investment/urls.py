@@ -13,7 +13,7 @@ pref_urls = prop_prefs + org_prefs + res_prefs
 home_urls = [p + "investment/INVESTMENT_SLUG/" for p in pref_urls]
 
 view_defs = [
-    (r'investment/new/?$', 'new', 'new_investment'),
+    (r'investment/new/?$', 'edit', 'new_investment'),
     (r'investment/INVESTMENT_SLUG/edit/?$', 'edit', 'edit_investment'),
     (r'investment/INVESTMENT_SLUG/?$', 'view', 'view_investment'),
 ]

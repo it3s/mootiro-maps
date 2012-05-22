@@ -124,12 +124,6 @@ class InvestmentForm(AjaxModelForm):
         investor_organization = self.cleaned_data.pop("investor_organization")
         investor_person = self.cleaned_data.pop("investor_person")
         if not anonymous_investor:
-            # msg = _("Invalid investor.")
-            # if investor_type == "ORG" and not investor_organization:
-            #     self._errors["investor_organization"] = self.error_class([msg])
-            # elif investor_type == "PER" and not investor_person:
-            #     self._errors["investor_person"] = self.error_class([msg])
-
             self.validation('investor_organization', _("Invalid investor."),
                 investor_type == "ORG" and not investor_organization)
             self.validation('investor_person', _("Invalid investor."),
@@ -142,11 +136,8 @@ class InvestmentForm(AjaxModelForm):
         elif investor_type == 'PER':
             investor = investor_person
 
-        # if investor:
         investor, created = Investor.get_or_create_for(investor,
                                 current=current_investor)
-        # else:
-        #     investor, created = None, False
 
         if created:
             investor.save()
@@ -160,13 +151,10 @@ class InvestmentForm(AjaxModelForm):
         investor = self.cleaned_data['investor']
         investor.save()
         investment.investor = investor
-        # if not investment.id:  # was never saved
-        #     investment.creator = request.user
-        # investment.save()
 
         # why need to explicit save tags here?
-        # investment = super(InvestmentForm, self).save(commit=False)
-        # tags = self.cleaned_data['tags']
-        # investment.tags.set(*tags)
+        tags = self.cleaned_data['tags']
+        investment.tags.set(*tags)
+
         investment.save()
         return investment

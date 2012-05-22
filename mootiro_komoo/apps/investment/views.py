@@ -4,7 +4,7 @@ import logging
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
@@ -57,7 +57,7 @@ def prepare_investment_objects(community_slug="", need_slug="",
 
 @login_required
 @ajax_form('investment/edit.html', form_class=InvestmentForm)
-def new(request, community_slug="", need_slug="", proposal_number="",
+def edit(request, community_slug="", need_slug="", proposal_number="",
         organization_slug="", resource_id="", investment_slug=""):
     logger.debug('acessing investment > new')
 
@@ -79,44 +79,6 @@ def new(request, community_slug="", need_slug="", proposal_number="",
 
     return {'on_get': on_get, 'on_before_validation': on_before_validation,
             'on_after_save': on_after_save, 'community': community}
-
-
-@render_to('investment/edit.html')
-@login_required
-def edit(request, community_slug="", need_slug="", proposal_number="",
-        organization_slug="", resource_id="", investment_slug=""):
-    logger.debug('acessing investment > edit_<grantee>_investment')
-
-    kw = locals()
-    kw.pop('request')
-    investment, community = prepare_investment_objects(**kw)
-
-    if request.POST:
-        form = InvestmentForm(request.POST, instance=investment)
-        if form.is_valid():
-            investment = form.save(commit=False)
-            investor = form.cleaned_data['investor']
-            investor.save()
-            investment.investor = investor
-            if not investment.id:  # was never saved
-                investment.creator = request.user
-            investment.save()
-
-            # why need to explicit save tags here?
-            investment = form.save(commit=False)
-            tags = form.cleaned_data['tags']
-            investment.tags.set(*tags)
-            investment.save()
-
-            # FIXME: this only works for Proposals
-            return redirect(investment.view_url)
-    else:
-        data = {}
-        if investment.investor:
-            data = investment.investor.to_dict()
-        form = InvestmentForm(instance=investment, initial=data)
-
-    return dict(form=form, community=community)
 
 
 @render_to('investment/view.html')
