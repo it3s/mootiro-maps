@@ -1388,6 +1388,13 @@ textarea.markItUpEditor{
     padding-left: 20px;
     margin-left: 20px;
 }
+.branch-pagination{
+    margin-right: 10px;
+    font-weight: bold;
+}
+.branch-pagination.current-page{
+    color: #000000;
+}
 .org-info-div:hover .branch-map-icon, .branch-active .branch-map-icon{
     background-image: url('/static/img/ver-no-mapa-hover.png');
 }

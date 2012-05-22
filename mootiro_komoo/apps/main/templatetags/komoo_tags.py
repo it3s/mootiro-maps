@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from __future__ import unicode_literals  # unicode by default
+from __future__ import unicode_literals, division
 import ast
 
 from django import template
@@ -139,6 +139,21 @@ def with_http(link):
 @register.filter
 def split(entry, splitter):
     return entry.split(splitter)
+
+
+@register.filter
+def page_num(num, div):
+    return str((num // div) + 1)
+
+
+@register.filter
+def div(num, div):
+    return str(num // div)
+
+
+@register.filter
+def get_range(value):
+    return xrange(int(value))
 
 
 def _get_widgets_dict(obj):

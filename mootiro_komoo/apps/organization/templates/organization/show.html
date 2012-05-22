@@ -87,35 +87,49 @@
                 </div>
             </div>
 
-            <div class="org-info-panel branches-list">
+            <div class="org-info-panel branches-list" >
+                {% with page_size=2 %}
                 {% for branch in organization.organizationbranch_set.all %}
-                <div class="branch-link org-info-div" data-branch-id="{{ branch.id }}">
-                        <a href="#">
-                            <div class="branch-name">
-                                <span class="entry">{{ branch.name }}</span>
-                                <span class="branch-map-icon"></span>
-                                <span class="branch-link-btn">
-                                    <i class="icon-chevron-right"></i>
-                                </span>
-                            </div>
-                        </a>
-                        <div class="branch-info" style="display: none;">
-                            <div>
-                                <a href="#" class="branch-edit-btn btn login-required">
-                                    <i class="icon-pencil"></i>
-                                </a>
-                            </div>
-                            <div class="entry">
-                                {{ branch.info|render_markup }}
-                            </div>
-                            {% include 'organization/branch_communities_list.html' %}
+                <div class="branch-link org-info-div" page="{{ forloop.counter0|page_num:page_size }}" data-branch-id="{{ branch.id }}" style="display:none;">
+                    <a href="#">
+                        <div class="branch-name">
+                            <span class="entry">{{ branch.name }}</span>
+                            <span class="branch-map-icon"></span>
+                            <span class="branch-link-btn">
+                                <i class="icon-chevron-right"></i>
+                            </span>
+                        </div>
+                    </a>
+                    <div class="branch-info" style="display: none;">
+                        <div>
+                            <a href="#" class="branch-edit-btn btn login-required">
+                                <i class="icon-pencil"></i>
+                            </a>
+                        </div>
+                        <div class="entry">
+                            {{ branch.info|render_markup }}
+                        </div>
+                        {% include 'organization/branch_communities_list.html' %}
 
-                        </div>
-                        <div class="branch-form hidden">
-                            {% branch_edit_form branch.id %}
-                        </div>
                     </div>
+                    <div class="branch-form hidden">
+                        {% branch_edit_form branch.id %}
+                    </div>
+                </div>
                 {% endfor %}
+
+                <a href="#" class="branch-pagination" page="1">
+                    &lt;&lt;{%trans 'first' %}
+                </a>
+                {% for i in organization.organizationbranch_set.count|div:page_size|get_range %}
+                    <a href="#" class="branch-pagination {% if i == 0 %}current-page{% endif %}" page="{{ i|add:1 }}">{{ i|add:1 }}</a>
+
+                {% endfor %}
+                <a href="#" class="branch-pagination" page="{{ organization.organizationbranch_set.count|div:page_size }}">
+                    {% trans 'last' %}&gt;&gt;
+                </a>
+
+                {% endwith %}
             </div>
 
             <div class="org-info-panel supported-organizations-list hidden">
@@ -322,6 +336,17 @@
             var $this = $(this);
             $this.addClass('selected');
             $('.' + $this.attr('panel')).fadeIn();
+        });
+
+        $('.branch-link[page=1]').show();
+
+        $('.branch-pagination').click(function(){
+            var page_num = $(this).attr('page');
+            $('.branch-link').hide();
+            $('.branch-pagination').removeClass('current-page');
+
+            $('.branch-link[page=' + page_num + ']').fadeIn();
+            $(this).addClass('current-page');
         });
     </script>
 
