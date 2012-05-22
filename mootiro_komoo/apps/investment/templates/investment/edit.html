@@ -1,3 +1,4 @@
+
 {% extends "global.html" %}
 {% load crispy_forms_tags %}
 {% load komoo_tags %}
@@ -19,6 +20,8 @@
 {% block page_scripts %}
 <script type="text/javascript">
     var $form = $("#investment_form");
+
+    $form.ajaxform();
 
     // Investor field configuration
     $("input[name=investor_type]", $form).on("change", function (event) {

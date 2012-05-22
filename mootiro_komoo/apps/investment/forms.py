@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from annoying.decorators import autostrip
 from markitup.widgets import MarkItUpWidget
 from crispy_forms.layout import *
+from ajaxforms import AjaxModelForm
 
 from main.utils import MooHelper
 from investment.models import Investment, Investor
@@ -17,7 +18,7 @@ from main.widgets import TaggitWidget, Datepicker, ConditionalField, \
 
 
 @autostrip
-class InvestmentForm(forms.ModelForm):
+class InvestmentForm(AjaxModelForm):
 
     class Meta:
         model = Investment
@@ -88,8 +89,7 @@ class InvestmentForm(forms.ModelForm):
 
     def __init__(self, *a, **kw):
         # Crispy forms configuration
-        self.helper = MooHelper()
-        self.helper.form_id = "investment_form"
+        self.helper = MooHelper(form_id="investment_form")
         self.helper.layout = Layout(
             "title",
             "description",
@@ -112,26 +112,22 @@ class InvestmentForm(forms.ModelForm):
             "tags",
         )
 
-        inv = super(InvestmentForm, self).__init__(*a, **kw)
-        for field, label in self._field_labels.iteritems():
-            self.fields[field].label = label
-        return inv
+        return super(InvestmentForm, self).__init__(*a, **kw)
 
     def clean(self):
         cleaned_data = super(InvestmentForm, self).clean()
 
         # investor validation
-        current_investor = cleaned_data.pop("investor")
-        anonymous_investor = cleaned_data.pop("anonymous_investor")
-        investor_type = cleaned_data.pop("investor_type")
-        investor_organization = cleaned_data.pop("investor_organization")
-        investor_person = cleaned_data.pop("investor_person")
+        current_investor = self.cleaned_data.pop("investor")
+        anonymous_investor = self.cleaned_data.pop("anonymous_investor")
+        investor_type = self.cleaned_data.pop("investor_type")
+        investor_organization = self.cleaned_data.pop("investor_organization")
+        investor_person = self.cleaned_data.pop("investor_person")
         if not anonymous_investor:
-            msg = _("Invalid investor.")
-            if investor_type == "ORG" and not investor_organization:
-                self._errors["investor_organization"] = self.error_class([msg])
-            elif investor_type == "PER" and not investor_person:
-                self._errors["investor_person"] = self.error_class([msg])
+            self.validation('investor_organization', _("Invalid investor."),
+                investor_type == "ORG" and not investor_organization)
+            self.validation('investor_person', _("Invalid investor."),
+                investor_type == "PER" and not investor_person)
         # investor coercing
         if anonymous_investor:
             investor = ""
@@ -142,9 +138,23 @@ class InvestmentForm(forms.ModelForm):
 
         investor, created = Investor.get_or_create_for(investor,
                                 current=current_investor)
+
         if created:
             investor.save()
 
-        cleaned_data['investor'] = investor
+        self.cleaned_data['investor'] = investor
 
         return cleaned_data
+
+    def save(self, *args, **kwargs):
+        investment = super(InvestmentForm, self).save(commit=False)
+        investor = self.cleaned_data['investor']
+        investor.save()
+        investment.investor = investor
+
+        # why need to explicit save tags here?
+        tags = self.cleaned_data['tags']
+        investment.tags.set(*tags)
+
+        investment.save()
+        return investment
