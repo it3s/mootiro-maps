@@ -16,9 +16,9 @@
 
     <div class="button-new">
       {% if community %}
-      <a class="button login-required" href="{% url resource_new community.slug %}?frommap=false">{% trans "New Resource" %}</a>
+      <a class="button login-required" href="{% url new_resource community.slug %}">{% trans "New Resource" %}</a>
       {% else %}
-      <a class="button login-required" href="{% url resource_new %}?frommap=false">{% trans "New Resource" %}</a>
+      <a class="button login-required" href="{% url new_resource %}">{% trans "New Resource" %}</a>
       {% endif %}
     </div>
 
@@ -30,7 +30,7 @@
       {% pagination resources %}
     </div>
 
-    {% visualization_opts 'resource' "filters=['tags']" "sorters=['name', 'creation_date']" %}
+    {% visualization_opts 'resource' "filters=['tags','community']" "sorters=['name', 'creation_date', 'votes']" %}
   </div>
 
 
@@ -45,9 +45,14 @@
           {% else %}
           <a href="/resource/{{ resource.id }}">{{ resource.name }}</a>
           {% endif %}
-          {% if resource.community %}
-          &nbsp;{% trans 'at' %}&nbsp;
-          <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
+          {% if resource.community.count %}
+            &nbsp;{% trans 'at' %}&nbsp;
+            {% for comm in resource.community.all %}
+              <a href="/{{ comm.slug }}/about/">{{ comm.name }}</a>
+              {% if not forloop.last %}
+                &nbsp;|&nbsp;
+              {% endif %}
+            {% endfor %}
           {% endif %}
         </span>
         <a class="small preview-on-map" href="#" data-geojson="{% geojson resource %}">{% trans 'see on the map' %}</a>
@@ -57,7 +62,7 @@
 
       </h4>
 
-      <p class="clearBoth">
+      <p class="clear-both">
         <strong>{% trans 'Kind:' %}</strong> {% firstof resource.kind '---' %}
       </p>
       <p>
@@ -77,14 +82,6 @@
           {% taglist resource %}
         </div>
         {% endif %}
-        <div class="created-by">
-          {% trans 'created by' %}
-          <strong>
-            {% firstof resource.creator.get_full_name resource.creator.username '--' %}
-          </strong>
-          {% trans 'at' %}
-          <strong>{% firstof resource.creation_date '--' %}</strong>
-        </div>
       </div>
     </div>
   {% endfor %}

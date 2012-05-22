@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from __future__ import unicode_literals  # unicode by default
+from __future__ import unicode_literals, division
 import ast
 
 from django import template
@@ -8,7 +8,8 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from main.utils import templatetag_args_parser, create_geojson
-from main.widgets import ImageSwitch, ImageSwitchMultiple, TaggitWidget
+from main.widgets import (ImageSwitch, ImageSwitchMultiple, TaggitWidget,
+                          Autocomplete)
 from community.models import Community
 from need.models import Need, NeedCategory
 from organization.models import Organization
@@ -38,19 +39,21 @@ def geojson(obj=None):
     return create_geojson([obj]).replace("'", "\\'").replace('"', "'")
 
 
-@register.inclusion_tag('main/menu_templatetag.html')
-def menu(obj=None, selected_area=''):
-    community = _get_related_community(obj)
+@register.inclusion_tag('main/templatetags/menu.html', takes_context=True)
+def menu(context, obj=None, selected_area=''):
+    community = context.get('community', None)
+    # if not community:
+    #     community = _get_related_community(obj)
     return dict(community=community, selected_area=selected_area)
 
 
-@register.inclusion_tag('main/community_tabs_templatetag.html')
+@register.inclusion_tag('main/templatetags/community_tabs.html')
 def community_tabs(obj=None):
     community = _get_related_community(obj)
     return dict(community=community)
 
 
-@register.inclusion_tag('main/geo_objects_listing_templatetag.html')
+@register.inclusion_tag('main/templatetags/geo_objects_listing.html')
 def geo_objects_listing(arg1='', arg2='', arg3=''):
     """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] %}"""
     parsed_args = templatetag_args_parser(arg1, arg2, arg3)
@@ -96,7 +99,7 @@ def geo_objects_listing(arg1='', arg2='', arg3=''):
     return dict(form=form, show_categories=show_categories)
 
 
-@register.inclusion_tag('main/geo_objects_add_templatetag.html')
+@register.inclusion_tag('main/templatetags/geo_objects_add.html')
 def geo_objects_add(arg1='', arg2='', arg3=''):
     """Usage: {% geo_objects_add [prefix] %}"""
     parsed_args = templatetag_args_parser(arg1, arg2, arg3)
@@ -112,17 +115,17 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
     return dict(img=img, STATIC_URL=settings.STATIC_URL)
 
 
-@register.inclusion_tag('main/track_buttons_templatetag.html')
+@register.inclusion_tag('main/templatetags/track_buttons.html')
 def track_buttons():
     return dict()
 
 
-@register.inclusion_tag('main/taglist_templatetag.html')
+@register.inclusion_tag('main/templatetags/taglist.html')
 def taglist(obj):
     return dict(object=obj)
 
 
-@register.inclusion_tag('main/pagination_templatetag.html')
+@register.inclusion_tag('main/templatetags/pagination.html')
 def pagination(collection):
     return dict(collection=collection)
 
@@ -138,98 +141,38 @@ def split(entry, splitter):
     return entry.split(splitter)
 
 
-# @register.inclusion_tag('main/sorters_tag.html', takes_context=True)
-# def sorters(context, sort_fields):
-#     """
-#     Templatetage for sorters
-#     usage:
-#         {% sorters ['fields', 'list'] %}
-#     """
-#     sort_fields = ast.literal_eval(sort_fields)
-#     field_labels = {
-#         'name': _('Name'),
-#         'title': _('Name'),
-#         'creation_date': _('Date'),
-#         'vote': _('Vote')
-#     }
-#     sort_fields = [(field_labels[field], field) for field in sort_fields]
-#     return dict(sort_fields=sort_fields)
+@register.filter
+def page_num(num, div):
+    return str((num // div) + 1)
 
 
-# @register.simple_tag(takes_context=True)
-# def sorters_js(context):
-#     return """
-#     <script type="text/javascript">
-
-#       $(function(){
-
-#         // get sorters state
-#         var _sorters = getUrlVars()['sorters'];
-#         if (_sorters){
-#           _sorters = _sorters.split(',');
-#         }
-#         if (_sorters && _sorters.length > 0 && _sorters[0]){
-#           $.each(_sorters, function(idx, val){
-#             $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
-#           });
-#         } else {
-#           var main_field = $('.view-list-sorter-btn[sorter-name=name]');
-#           if (!main_field.length) {
-#             main_field = $('.view-list-sorter-btn[sorter-name=title]');
-#           }
-#           main_field.addClass('selected');
-#         }
+@register.filter
+def div(num, div):
+    return str(num // div)
 
 
-#         // click on btn change classes.
-#         $('.view-list-sorter-btn').click(function(){
-#           var that = $(this);
-#           that.toggleClass('selected');
-#         });
-
-#         window.getSorters = function(){
-#           var sorters = [];
-#           $('.view-list-sorter-btn.selected').each(function(idx, val){
-#             sorters.push($(val).attr('sorter-name'));
-#           });
-
-#           return sorters.join();
-#         };
-
-#         // sort button
-#         $('#doSort').click(function(){
-#           window.location = location.pathname + '?sorters=' + getSorters();
-#         });
-
-#       });
-#     </script>
-#     """
+@register.filter
+def get_range(value):
+    return xrange(int(value))
 
 
-# @register.inclusion_tag('main/filters_tag.html', takes_context=True)
-# def filters(context, object, filters):
-#     """
-#     Templatetage for filters
-#     usage:
-#         {% filters object ['list', 'of', 'filters'] %}
-#     """
-#     filters = ast.literal_eval(filters)
-#     field_labels = {
-#         'tags': _('Tags')
-#     }
+def _get_widgets_dict(obj):
+    tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % obj)
+    tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
 
-#     tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
-#     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
-#     field_widgets = {
-#         'tags': tag_widget
-#     }
-#     filters_tuples = [(field, field_labels[field], field_widgets[field]) \
-#                         for field in filters]
-#     return dict(filters=filters_tuples)
+    community_widget = Autocomplete(Community, '/community/search_by_name')
+    community_widget = "%s \n %s" % (str(community_widget.media),
+                                     community_widget.render('community'))
+
+    # filters
+    return {
+        'tags': tag_widget,
+        'community': community_widget
+    }
 
 
-@register.inclusion_tag('main/visualization_opts_tag.html', takes_context=True)
-def visualization_opts(context, object, arg1='', arg2=''):
+@register.inclusion_tag('main/templatetags/visualization_opts.html', takes_context=True)
+def visualization_opts(context, obj, arg1='', arg2=''):
     """
     Templatetag for visualization options (sorters and filters)
     usage:
@@ -249,18 +192,16 @@ def visualization_opts(context, object, arg1='', arg2=''):
         'name': _('Name'),
         'title': _('Name'),
         'creation_date': _('Date'),
-        'vote': _('Vote')
+        'votes': _('Votes'),
+        'community': _('Community')
+
     }
 
     # sorters
     sort_fields = [(field_labels[field], field) for field in opts.get('sorters', [])]
 
     # filters
-    tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % object)
-    tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
-    field_widgets = {
-        'tags': tag_widget
-    }
+    field_widgets = _get_widgets_dict(obj)
     filter_fields = [(field, field_labels[field], field_widgets[field]) \
                         for field in opts.get('filters', [])]
 
@@ -288,7 +229,7 @@ def visualization_opts_js(context):
             $('.view-list-visualization-header i').removeClass('icon-chevron-right');
             $('.view-list-visualization-header i').addClass('icon-chevron-down');
             $.each( getUrlVars()['filters'].split(',') ,function(idx, field){
-              $('.view-list-filter-widget[widget-for='+ field + ']').show();
+              $('.view-list-filter-widget-wrapper[widget-for='+ field + ']').show();
             });
           }
 
@@ -300,6 +241,10 @@ def visualization_opts_js(context):
           if (_sorters && _sorters.length > 0 && _sorters[0]){
             $.each(_sorters, function(idx, val){
               $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
+              if (val.indexOf('date') !== -1){
+                date_order = getUrlVars()[val];
+                $('.date-sorter-order div[order=' + date_order + '] i').addClass('icon-active');
+              }
             });
           } else {
             var main_field = $('.view-list-sorter-btn[sorter-name=name]');
@@ -308,6 +253,7 @@ def visualization_opts_js(context):
             }
             main_field.addClass('selected');
           }
+
           // get filters state
           var _filters = getUrlVars()['filters'];
           if (_filters){
@@ -320,10 +266,35 @@ def visualization_opts_js(context):
                 var tags = unescape(getUrlVars()['tags']);
                 tags = tags.split(',');
                 $.each(tags, function(idx, tag){
-                  $('#id_tags').addTag(tag);
+                  if($.inArray(tag, $('#id_tags').val().split(',') ) == -1){
+                    $('#id_tags').addTag(tag);
+                  }
                 });
+              } else if(val == 'community'){
+                var id = unescape(getUrlVars()[val]);
+                $.get('/community/get_name_for/'+ id +'/', {}, function(data){
+                  $('#id_community_autocomplete').val(data.name);
+                  $('#id_community').val(id);
+                });
+              }else {
+                var filter_val = unescape(getUrlVars()[val]);
+                $('.view-list-filter-widget[widget-for=' + val + '] input').val(filter_val);
               }
             });
+          }
+
+          // auto-fill community
+          var comm = {id: "%(comm_id)s", name: "%(comm_name)s"};
+          if (comm.id){
+            $('#id_community').val(comm.id);
+            $('#id_community_autocomplete').val(comm.name);
+
+            $('.view-list-visualization-options').show();
+            $('.view-list-visualization-header i').removeClass('icon-chevron-right');
+            $('.view-list-visualization-header i').addClass('icon-chevron-down');
+
+            $('.view-list-filter-btn[filter-name=community]').addClass('selected');
+            $('.view-list-filter-widget-wrapper[widget-for=community]').show();
           }
 
           // reset tagsinput styles
@@ -333,12 +304,21 @@ def visualization_opts_js(context):
           $('.view-list-sorter-btn').click(function(){
             var that = $(this);
             that.toggleClass('selected');
+            if ( that.attr('sorter-name').indexOf('date') !== -1) {
+              if (that.hasClass('selected')) {
+                date_order = 'desc';
+                $('.date-sorter-order div[order=desc] i').addClass('icon-active');
+              } else {
+                date_order = '';
+                $('.date-sorter-order i').removeClass('icon-active');
+              }
+            }
           });
           $('.view-list-filter-btn').click(function(){
             var that = $(this);
             that.toggleClass('selected');
             var filter_name = that.attr('filter-name');
-            $('.view-list-filter-widget[widget-for=' + filter_name + ']').slideToggle();
+            $('.view-list-filter-widget-wrapper[widget-for=' + filter_name + ']').slideToggle();
           });
 
           // get filters
@@ -349,13 +329,18 @@ def visualization_opts_js(context):
                 filter_fields = '';
 
             $('.view-list-sorter-btn.selected').each(function(idx, val){
-              sorters.push($(val).attr('sorter-name'));
+              var sorter_name = $(val).attr('sorter-name');
+              sorters.push(sorter_name);
+              if ( sorter_name.indexOf('date') != -1) {
+                filter_fields += '&' + sorter_name + '=' + date_order;
+              }
             });
 
             $('.view-list-filter-btn.selected').each(function(idx, val){
               var filter_name = $(val).attr('filter-name');
               filters.push(filter_name);
-              filter_fields += '&' + filter_name + '=' + escape($('.view-list-filter-widget input').val());
+              filter_fields += '&' + filter_name + '=' +
+                escape($('.view-list-filter-widget[widget-for=' + filter_name + '] input').val());
             });
 
             return 'sorters=' + sorters.join() + '&filters=' + filters.join() + filter_fields;
@@ -365,6 +350,23 @@ def visualization_opts_js(context):
             window.location = location.pathname + '?' + getFilters();
           });
 
+          $('.komoo-pagination a').click(function(evt){
+            var that = $(evt.target);
+            // if selectors are open
+            if ($('.view-list-visualization-header i').hasClass('icon-chevron-down')){
+              evt.preventDefault();
+              window.location = that.attr('href') + '&' + getFilters();
+            }
+          });
+
+          $('.date-sorter-order div').bind('click', function(){
+            $('.date-sorter-order div .icon-active').removeClass('icon-active');
+            $(this).find('i').toggleClass('icon-active');
+            date_order = $(this).attr('order');
+          });
+
       });
       </script>
-    """
+    """ % {
+      'comm_id': context['community'].id if context.get('community', None) else '',
+      'comm_name': context['community'].name if context.get('community', None) else ''}

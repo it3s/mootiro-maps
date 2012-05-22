@@ -1,0 +1,17 @@
+{% load i18n %}
+
+{% if branch.community.count %}
+<div class="branch-communities">
+    <span>
+        {% trans 'Communities' %}:
+    </span>
+    {% for comm in branch.community.all %}
+        <div>
+            <a href="{% url view_community comm.slug %}">{{ comm.name }}</a>
+        </div>
+        {% if not forloop.last %}
+             &nbsp;|&nbsp;
+        {% endif %}
+    {% endfor %}
+</div>
+{% endif %}

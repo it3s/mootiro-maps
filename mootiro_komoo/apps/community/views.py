@@ -5,7 +5,7 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import logging
 
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
 from django.db.models import Count
+from ajaxforms import ajax_form
 
 from annoying.decorators import render_to, ajax_request
 from fileupload.models import UploadedFile
@@ -21,44 +22,51 @@ from lib.taggit.models import TaggedItem
 from community.models import Community
 from community.forms import CommunityForm
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filter_by_tags_query)
+                        filtered_query)
 
 logger = logging.getLogger(__name__)
 
 
 @login_required
-def edit(request, community_slug=""):
-    logger.debug('acessing Community > edit')
+@ajax_form('community/edit_ajax.html', CommunityForm)
+def new_community(request, *args, **kwargs):
+    logger.debug('acessing community > new_community')
 
-    if request.is_ajax():
-        template = "community/edit_ajax.html"
-    else:
-        template = "community/edit.html"
+    def on_get(request,  form_community):
+        form_community.helper.form_action = reverse('new_community')
+        return form_community
+
+    def on_after_save(request, obj):
+        return {'redirect': reverse('view_community', args=(obj.slug,))}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save}
+
+
+@login_required
+@ajax_form('community/edit.html', CommunityForm)
+def edit_community(request, community_slug='', *args, **kwargs):
+    logger.debug('acessing community > edit_community : community_slug={}'
+        ''.format(community_slug))
 
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
     else:
-        community = Community(creator=request.user)
+        community = Community()
 
-    if request.POST:
-        form = CommunityForm(request.POST, instance=community)
-        if form.is_valid():
-            community = form.save()
-
-            redirect_url = reverse('view_community', args=(community.slug,))
-            if not request.is_ajax():
-                return redirect(redirect_url)
-            rdict = dict(redirect=redirect_url)
-        else:
-            rdict = dict(form=form, community=community)
-    else:
-        form = CommunityForm(instance=community)
-        rdict = dict(form=form, community=community)
     geojson = create_geojson([community], convert=False)
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
-    rdict['geojson'] = json.dumps(geojson)
-    return render(request, template, rdict)
+    geojson = json.dumps(geojson)
+
+    def on_get(request, form_community):
+        return CommunityForm(instance=community)
+
+    def on_after_save(request, obj):
+        url = reverse('view_community', args=(obj.slug,))
+        return {'redirect': url}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save, 'community': community,
+            'geojson': geojson}
 
 
 @render_to('community/on_map.html')
@@ -96,7 +104,7 @@ def list(request):
 
     sort_order = ['creation_date', 'name']
 
-    query_set = filter_by_tags_query(Community.objects, request)
+    query_set = filtered_query(Community.objects, request)
     communities = sorted_query(query_set, sort_order, request)
     communities_count = communities.count()
     communities = paginated_query(communities, request)
@@ -118,7 +126,7 @@ def communities_geojson(request):
 
 
 def search_by_name(request):
-    logger.debug('acessing Community > search_by_name')
+    logger.debug('acessing community > search_by_name')
     term = request.GET['term']
     # rx = "^{0}|\s{0}".format(term)  # matches only beginning of words
     # communities = Community.objects.filter(Q(name__iregex=rx) | Q(slug__iregex=rx))
@@ -129,7 +137,7 @@ def search_by_name(request):
 
 
 def search_by_tag(request):
-    logger.debug('acessing resource > search_by_tag')
+    logger.debug('acessing community > search_by_tag')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Community).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')
@@ -152,3 +160,10 @@ def autocomplete_get_or_add(request):
     else:
         added = False
     return dict(added=added)
+
+
+@ajax_request
+def get_name_for(request, id):
+    logger.debug('acessing Community > get_name_for id: {}'.format(id))
+    community_name = Community.objects.get(pk=id).name
+    return {'name': community_name}

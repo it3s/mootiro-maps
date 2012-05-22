@@ -5,7 +5,7 @@
 {% block content %}
     <div id="main-content">
         <div class="main-column">
-            {% crispy form_org form_org.helper %}
+            {% crispy form_organization form_organization.helper %}
         </div>
         <div class="right-bar">
         </div>
@@ -19,8 +19,13 @@
 
 
 {% block page_scripts %}
-    {{ form_org.media }}
+    {{ form_organization.media }}
     {% load_files organization %}
     {% image_picker 'logo' %}
+    <script type="text/javascript">
+        $(function(){
+            $('#form_organization').ajaxform();
+        })
+    </script>
 
 {% endblock %}

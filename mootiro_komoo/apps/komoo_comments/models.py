@@ -5,8 +5,10 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 
+from vote.models import VotableModel
 
-class Comment(models.Model):
+
+class Comment(VotableModel):
     """
     Comments models. Should dinamically reference any table/object.
     For querying purposes we need to add the above entry on those models that

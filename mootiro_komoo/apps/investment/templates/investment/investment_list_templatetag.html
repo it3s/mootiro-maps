@@ -1,0 +1,59 @@
+{% load comment_tags %}
+{% load markitup_tags %}
+{% load i18n %}
+
+<h3>Investments</h3>
+
+{% if both %}
+<ul class="horizontal">
+    <li class="tab-investment"><a href="#realized-investments-panel">{% trans "Realized" %}</a></li>
+    <li class="tab-investment"><a href="#received-investments-panel">{% trans "Received" %}</a></li>
+</ul>
+{% endif %}
+
+<div class="clear-both"></div>
+<div id="received-investments-panel" class="view-list panel-investment">
+    {% for i in received %}
+    <div class="view-list-item {% cycle '' 'odd' %}">
+        <h4>
+            <a href="{{ i.view_url }}"><span class="apart big">{{ i.title }}</span></a>
+            <a class="small preview-on-map" href="#" data-geojson="">{% trans 'see on the map' %}</a>
+            <div class="clear-both"></div>
+            {% comments_summary i %}
+        </h4>
+        <p>{{ i.description|render_markup }}</p>
+    </div>
+    {% empty %}
+    <div class="view-list-item">
+        <li>{% trans "No investments received." %}</li>
+    </div>
+    {% endfor%}
+</div>
+
+{% if both %}
+<div id="realized-investments-panel" class="view-list panel-investment hidden">
+    {% for i in realized %}
+    <div class="view-list-item {% cycle '' 'odd' %}">
+        <h4>
+            <a href="{{ i.view_url }}"><span class="apart big">{{ i.title }}</span></a>
+            <a class="small preview-on-map" href="#" data-geojson="">{% trans 'see on the map' %}</a>
+            <div class="clear-both"></div>
+            {% comments_summary i %}
+        </h4>
+        <p>{{ i.description|render_markup }}</p>
+    </div>
+    {% empty %}
+    <div class="view-list-item">
+        {% trans "No investments realized." %}
+    </div>
+    {% endfor%}
+</div>
+{% endif %}
+
+{% if both %}
+{% block page_scripts %}
+    <script type="text/javascript">
+        var investment_tabs = new Tabs('.tab-investment', '.panel-investment');
+    </script>
+{% endblock %}
+{% endif %}

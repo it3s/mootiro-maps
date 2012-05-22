@@ -17,9 +17,9 @@
 
       <div class="button-new">
         {% if community %}
-        <a class="button login-required" href="{% url organization_new community.slug %}?frommap=false">{% trans "New Organization" %}</a>
+        <a class="button login-required" href="{% url new_organization community.slug %}">{% trans "New Organization" %}</a>
         {% else %}
-        <a class="button login-required" href="{% url organization_new %}?frommap=false">{% trans "New Organization" %}</a>
+        <a class="button login-required" href="{% url new_organization %}">{% trans "New Organization" %}</a>
         {% endif %}
       </div>
 
@@ -31,7 +31,7 @@
         {% pagination organizations %}
       </div>
 
-      {% visualization_opts 'organization' "sorters=['name','creation_date']" "filters=['tags']" %}
+      {% visualization_opts 'organization' "sorters=['name','creation_date', 'votes']" "filters=['tags','community']" %}
 
     </div>
     {% for org in organizations.object_list %}
@@ -68,7 +68,7 @@
                     {% trans 'Operation Field' %}:
                   </span>
                   {% for cat in org.categories.all %}
-                    {{ cat.name }}
+                    {{ cat.get_translated_name }}
                     {% if not forloop.last %} | {% endif %}
                   {% endfor %}
                 </div>
@@ -109,14 +109,6 @@
             {% taglist org %}
           </div>
           {% endif %}
-          <div class="created-by">
-            {% trans 'created by' %}
-            <strong>
-              {% firstof org.creator.get_full_name org.creator.username '--' %}
-            </strong>
-            {% trans 'at' %}
-            <strong>{% firstof org.creation_date '--' %}</strong>
-          </div>
         </div>
 
       </div>

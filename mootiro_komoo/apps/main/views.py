@@ -125,7 +125,7 @@ queries = {
         ],
         'repr': 'name',
         'link': lambda o: reverse('view_resource',
-                                  kwargs={'id': o.id})
+                                  kwargs={'resource_id': o.id})
     },
     'need': {
         'model': Need,
@@ -183,3 +183,13 @@ def komoo_search(request):
         })
     result['google'] = google_results.content
     return {'result': result}
+
+
+@render_to('404.html')
+def custom_404(request):
+    return {'request_path': request.path}
+
+
+@render_to('500.html')
+def custom_500(request):
+    return {}

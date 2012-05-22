@@ -2,7 +2,7 @@
 {% load markitup_tags %}
 {% markitup_media %}
 
-<form class="form-branch-edit" action="{% url branch_edit %}" method="post">
+<form class="form-branch-edit" action="{% url edit_inline_branch %}" method="post">
     {% csrf_token %}
     <input type="hidden" name="id" value="{{ branch.id }}" >
     <input type="hidden" name="geometry" id="branch-geometry-{{ branch.id }}" value="{{ branch.geometry }}" data-feature-collection="{{ branch.geojson }}">
@@ -13,6 +13,7 @@
     <textarea name="info" rows="4" cols="20" id="{{ info_id }}">{{branch.info}}</textarea>
     {% markitup_editor info_id %}
 
+    {{ comm_widget }}
     <input type="submit" value="update" class="btn form-branch-edit-btn" >
     <script type="text/javascript">
       $("#map-edit-button-{{ branch.id }}").click(function (e) {
@@ -45,7 +46,7 @@
               newGeojson = editor.getGeoJSON({currentOnly: true});
               $(geometryInputId).attr("data-feature-collection", JSON.stringify(newGeojson));
             });
-            }
+          }
           editor.clear();
           editor.loadGeoJSON(geojson, true);
           editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
@@ -53,6 +54,7 @@
           $(window).resize();
           editor.editOverlay(editor.overlays[0]);
           setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
+          return false;
       });
     </script>
 </form>

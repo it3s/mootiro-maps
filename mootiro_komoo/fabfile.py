@@ -20,7 +20,7 @@ def dev():
 
 
 def stage():
-    """Set env_ironment to test"""
+    """Set env_ironment to staging"""
     global env_
     env_ = 'stage'
 
@@ -50,6 +50,16 @@ def run():
         local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
 
 
+def test(apps="community need main", recreate_db=False):
+    """Run application tests"""
+    if recreate_db:
+        local('dropdb test_mootiro_komoo')
+    else:
+        print "Reusing old last test DB..."
+    local('REUSE_DB=1 python manage.py test {} {} --verbosity=1' \
+            .format(apps, django_settings[env_]))
+
+
 def js_urls():
     """Creates a javascript file containing urls"""
     local('python manage.py js_urls {}'.format(django_settings[env_]))
@@ -77,8 +87,7 @@ def syncdb(create_superuser=""):
 
 
 def recreate_db():
-    """Drops komoo database, recreates it with postgis template and runs syncdb
-    """
+    """Drops komoo database and recreates it with postgis template."""
     print "Recreating database 'komoo'"
     local('dropdb mootiro_komoo && createdb -T template_postgis mootiro_komoo')
 
@@ -166,7 +175,7 @@ def sync_all(data_fixtures='fixtures/backupdb.json'):
     """
     restart app and database from scratch.
     It: drops the DB, recreates it, syncdb, load_fixtures and call initial_revisions,
-    also makes coffee and give you a hug
+    also makes coffee and hugs you. :)
     """
     recreate_db()
     syncdb()

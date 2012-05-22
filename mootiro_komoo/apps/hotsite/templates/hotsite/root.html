@@ -1,0 +1,149 @@
+{% extends "hotsite/base.html" %}
+{% block title %}Mootiro Maps{% endblock %}
+
+{% block content %}
+  <div class="hotsite-box">
+    <span id="hotsite-highlight-description">
+      MootiroMaps é uma aplicação livre que permite o mapeamento colaborativo de comunidades, organizações, necessidades, recursos e investimentos de um determinado território.
+    </span>
+    <a href="" id="hotsite-start-btn" class="button">Comece a mapear</a>
+  </div>
+  <ul id="hotsite-steps">
+    <li id="hotsite-step-map" class="step-wrapper"><a href="#slide-1-5" class="step"><i class="icon-map big"></i><span class="step-label">Mapeie</span></a></li>
+    <li id="hotsite-step-discuss" class="step-wrapper"><a href="#slide-6" class="step active"><i class="icon-discuss big"></i><span class="step-label">Discuta e proponha</span></a></li>
+    <li id="hotsite-step-resolve" class="step-wrapper"><a href="#slide-7" class="step"><i class="icon-resolve big"></i><span class="step-label">Resolva</span></a></li>
+  </ul>
+  <div id="hotsite-slides">
+    <div id="slide-1-5" class="slide map-slide">
+      <h2 class="slide-title">Mapeie</h2>
+      <ul class="slide-tabs">
+        <li id="slide-1-5-tab-1" class="slide-tab">
+          <a href="#slide-1"><i class="icon-community big"></i><span class="tab-label">Comunidades</span></a>
+        </li>
+        <li id="slide-1-5-tab-2" class="slide-tab">
+          <a href="#slide-2"><i class="icon-need big"></i><span class="tab-label">Necessidades</span></a>
+        </li>
+        <li id="slide-1-5-tab-3" class="slide-tab">
+          <a href="#slide-3"><i class="icon-organization big"></i><span class="tab-label">Organizações</span></a>
+          </li>
+        <li id="slide-1-5-tab-4" class="slide-tab">
+          <a href="#slide-4"><i class="icon-resource big"></i><span class="tab-label">Recursos</span></a>
+        </li>
+        <li id="slide-1-5-tab-5" class="slide-tab">
+          <a href="#slide-5"><i class="icon-investment big"></i><span class="tab-label">Investimentos</span></a>
+        </li>
+      </ul>
+      <div id="slide-1" class="slide-content">
+        <h3 class="slide-title">Comunidades</h3>
+        <span class="text">Municípios, bairros, favelas, aldeias ou qualquer outra região de interesse.</span>
+        <img src="{{ STATIC_URL }}img/hotsite/maps/community.png">
+      </div>
+      <div id="slide-2" class="slide-content">
+        <h3 class="slide-title">Necessidades</h3>
+        <span class="text">Pontos de melhorias identificados, como por exemplo melhorias de infra-estrutura urbana, organizações ou equipamentos públicos, demandas de sensibilização sobre algum tema,formação, etc. Além disso é possível cadastrar e discutir propostas para resolver as necessidades.</span>
+        <img src="{{ STATIC_URL }}img/hotsite/maps/need.png">
+      </div>
+      <div id="slide-3" class="slide-content">
+        <h3 class="slide-title">Organizações</h3>
+        <span class="text">ONGs, Empresas, Escolas, Associações etc, que estão presentes ou atuam no local.</span>
+        <img src="{{ STATIC_URL }}img/hotsite/maps/organization.png">
+      </div>
+      <div id="slide-4" class="slide-content">
+        <h3 class="slide-title">Recursos</h3>
+        <span class="text">Materiais e espaços disponíveis para uso na comunidade como por exemplo espaços para atividades recreativas, esportivas, reuniões, equipamentos tecnológicos, veículos, bibliotecas, cursos que ocorrem regularmente, etc.</span>
+        <img src="{{ STATIC_URL }}img/hotsite/maps/resource.png">
+      </div>
+      <div id="slide-5" class="slide-content">
+        <h3 class="slide-title">Investimentos</h3>
+        <span class="text">Empresas, institutos e fundações podem mapear os investimentos realizados em organizações, recursos e proposta nas regiões onde atuam.</span>
+        <img src="{{ STATIC_URL }}img/hotsite/maps/investment.png">
+      </div>
+    </div>
+    <div id="slide-6" class="slide discuss-slide">
+      <h2 class="slide-title">Discuta e proponha</h2>
+      <div class="slide-content">
+        <ul class="disc">
+          <li>Todo o conteúdo cadastrado poderá ser discutido pelos moradores, membros de organizações</li>
+          <li>Indique propostas como soluções para o território</li>
+          <li>Vote, comente e mostre a relevância de propostas, comunidades, necessidades</li>
+          <li>Priorize necessidades e propostas</li>
+        </ul>
+      </div>
+    </div>
+    <div id="slide-7" class="slide resolve-slide">
+      <h2 class="slide-title">Resolva</h2>
+      <div class="slide-content">
+        <ul class="disc">
+          <li>Promova ações na sua comunidade a partir de informações cadastradas no MootiroMaps</li>
+          <li>Acompanhe resoluções de problemas apontados</li>
+          <li>Invista em propostas apontadas pela comunidade</li>
+          <li>Organize ações voluntárias, mutirões na comunidade</li>
+        </ul>
+      </div>
+    </div>
+    <div id="hotsite-slides-controls">
+      <a href="#" id="hotsite-slides-controls-previous" class="icon-previous control"></a>
+      <span id="hotsite-slides-controls-counter">
+        <span id="hotsite-slides-controls-page">%d</span> de <span id="hotsite-slides-controls-total">%d</span>
+      </span>
+      <a href="#" id="hotsite-slides-controls-next" class="icon-next control"></a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_scripts %}
+<script type="text/javascript">
+  //(function () {
+    var stepsTabsSelector = ".step-wrapper";
+    var stepOneTabsSelector = "#slide-1-5 .slide-tab";
+    var stepsTabs;
+    var stepOneTabs;
+    var total;
+    var getCurrentSlideIndex = function () {
+      var step = stepsTabs.getCurrentTabIndex();
+      if (step == 0) {
+        return stepOneTabs.getCurrentTabIndex();
+      }
+      return step + 4;
+    }
+    var updateCounter = function () {
+      var page = getCurrentSlideIndex() + 1;
+      $("#hotsite-slides-controls-page").text(page);
+      $("#hotsite-slides-controls-total").text(total);
+    }
+    var onSlideChange = function (obj) {
+      updateCounter();
+    }
+    var goToSlide = function (index) {
+      if (index > total - 1) {
+        index = 0;
+      } else if (index < 0) {
+        index = total - 1;
+      }
+      if (index > 4) {
+        stepsTabs.to($(stepsTabsSelector).get(index - 4));
+      } else {
+        stepsTabs.to($(stepsTabsSelector).get(0));
+        stepOneTabs.to($(stepOneTabsSelector).get(index));
+      }
+    };
+    var goToPreviousSlide = function () {
+      var current = getCurrentSlideIndex();
+      goToSlide(current - 1);
+      return false;
+    }
+    $("#hotsite-slides-controls-previous").click(goToPreviousSlide);
+    var goToNextSlide = function () {
+      var current = getCurrentSlideIndex();
+      goToSlide(current + 1);
+      return false;
+    }
+    $("#hotsite-slides-controls-next").click(goToNextSlide);
+    stepsTabs = new Tabs(stepsTabsSelector, ".slide", onSlideChange);
+    stepOneTabs = new Tabs(stepOneTabsSelector, "#slide-1-5 .slide-content", onSlideChange);
+
+    total = stepsTabs.length + stepOneTabs.length - 1;
+    updateCounter();
+  //})();
+</script>
+{% endblock %}

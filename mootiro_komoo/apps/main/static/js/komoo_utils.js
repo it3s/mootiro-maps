@@ -29,7 +29,7 @@ function getCookie(name) {
 }
 
 /* Easy to use, jQuery based, and elegant solution for tabs :) */
-function Tabs(tabs, contents) {
+function Tabs(tabs, contents, onChange) {
     $(contents).hide();
     var instance = this;
     this.to = function (tab) { // Most important method, switches to a tab.
@@ -39,21 +39,33 @@ function Tabs(tabs, contents) {
         var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
         $("*[href=" + tab_content + "]").parent().addClass("selected");
         $(tab_content).addClass("selected").show();
+
+        instance.current = tab;
+        if (onChange && instance.initialized) {
+            onChange(instance);
+        }
+    };
+    this.getCurrentTabIndex = function () {
+        return $(tabs).index(instance.current);
     };
     $(tabs).click(function () {
         instance.to(this);
         return false; // in order not to follow the link
     });
     // first shown tab is the first matched element in DOM tree
+    this.length = $(tabs).length;
     this.to($(tabs)[0]);
+    this.initialized = true;
 }
+
 
 /*
  * retrieve params from url
  */
 function getUrlVars(){
     var vars = [], hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    var hashes = window.location.href.slice(
+        window.location.href.indexOf('?') + 1).split('&');
     for(var i = 0; i < hashes.length; i++)
     {
         hash = hashes[i].split('=');
@@ -77,107 +89,21 @@ function getUrlVars(){
                 return $(':input',this).clearForm();
             }
             if (type == 'text' || type == 'password' || tag == 'textarea'){
-                jQuery(this).val('');/*this.value = '';*/
+                jQuery(this).val('');
             }
             else if(type == 'hidden' && this.name !== "csrfmiddlewaretoken"){
-                jQuery(this).val('');/*this.value = '';*/
+                jQuery(this).val('');
             }
             else if (type == 'checkbox' || type == 'radio'){
-                jQuery(this).attr('checked', false);/*this.checked = false;*/
+                jQuery(this).attr('checked', false);
             }
             else if (tag == 'select'){
-                jQuery(this).val('');/*this.selectedIndex = -1;*/
+                jQuery(this).val('');
             }
         });
     };
 })(jQuery);
 
-/*
- * Extensao do jquery para tratar um form via ajax.
- * em caso de sucesso limpa o form e chama um callback
- * em caso de falha "pendura" os erros, usando o validate-box do easy-UI
- * uso:
- *   jQuery('#meu_form').ajaxform(function(retorno){
- *       // sua funcao de callback aqui
- *       // ...
- *   });
- *
- */
-(function($){
-    $.fn.ajaxform = function(config) {
-        var $form =  this;
-
-        /*  callback configs  */
-        if (config && config.onSubmit){
-            $form.onSubmit = config.onSubmit;
-        }
-        if (config && config.onSuccess){
-            $form.onSuccess = config.onSuccess;
-        }
-        if (config && config.onError){
-            $form.onError = config.onError;
-        }
-        if (config && config.onFocus){
-            $form.onFocus = config.onFocus;
-        }
-
-        $form.submit( function(evt){
-            evt.preventDefault();
-            if ($form.onSubmit) {
-                $form.onSubmit();
-            }
-            $.post(
-                $form.attr('action'),  /* url */
-                $form.serialize(),        /* dados */
-                function(data){           /* callback */
-                    if (data){
-                        var validation_div;
-                        /* em caso de sucesso limpa forma e chama callback */
-                        if (data.success === "true"){
-                            $form.clearForm();
-                            validation_div = $('#validation-error');
-                            if(validation_div.length){
-                                validation_div.remove();
-                            }
-                            if ($form.onSuccess){
-                                $form.onSuccess(data);
-                            }
-                        /* em caso de erro, trata os erros */
-                        } else if (data.success === "false") {
-                            var message = '<br/>';
-                            $.each(data.errors, function(key,val){
-                                if( key === "__all__"){
-                                    message += '<span class="error-field" style="color: #cc2222;">Erro</span> &nbsp; - &nbsp; '+ val + '<br/>';
-                                }else{
-                                    message += '<span class="error-field" style="color: #cc2222;">' + key + '</span> &nbsp; - &nbsp; '+ val + '<br/>';
-                                }
-                            });
-                            message += '<br/>';
-                            validation_div = $('#validation-error');
-                            if (validation_div.length){
-                                validation_div.remove();
-                            }
-                            $form.append('' +
-                                '<div id="validation-error" class="alert-message block-message error fade in" data-alert="alert" >' +
-                                '<a class="btnClose" style="float:right;color:#000000;font-size:20px;font-weight:bold;' +
-                                'line-height:13.5px;text-shadow:0 1px 0 #ffffff;filter:alpha(opacity=25);'+
-                                '-khtml-opacity:0.25;-moz-opacity:0.25;opacity:0.25;"' +
-                                'href="#">&times;</a>'+ message + '</div>');
-                            $('.btnClose').live('click', function(e){
-                                e.preventDefault();
-                                $('#validation-error').alert('close');
-
-                            });
-                            if ($form.onError){
-                                $form.onError(data);
-                            }
-                        }
-                    }
-                }
-            );
-        });
-    };
-})(jQuery);
 
 /*
  * Configure behaviour of geo objects listing
@@ -270,7 +196,7 @@ $(function () {
             }
             $("#login-box #login-button").attr("href", "/user/login?next=" + url);
             $("#login-box").dialog({
-                width: 745,
+                width: 850,
                 modal: true,
                 resizable: false,
                 draggable: false
@@ -300,6 +226,27 @@ function errorMessage(title, message, imageUrl, buttons) {
         resizable: false,
         draggable: false,
         width: 400
+    });
+    return box;
+}
+
+function unexpectedError(info) {
+    title = "Ops!";
+    message = "O Spock comeu um pedaço do código... Nos escreva falando que problema você encontrou para que possamos resolvê-lo!";
+    buttons = [];
+
+    var box = $("#unexpected-error-box");
+    $(".message", box).text(message);
+    $("input[name=url]").val(location.href);
+    $("input[name=info]").val(info || "");
+    box.dialog({
+        dialogClass: "error-dialog unexpected-error-dialog",
+        title: title,
+        modal: true,
+        buttons: buttons,
+        resizable: false,
+        draggable: false,
+        width: 650
     });
     return box;
 }

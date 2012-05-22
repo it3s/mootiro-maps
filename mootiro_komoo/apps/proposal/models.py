@@ -3,12 +3,18 @@
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+from django.contrib.contenttypes import generic
+
+
 import reversion
 
 from need.models import Need
+from investment.models import Investment
+from vote.models import VotableModel
 
 
-class Proposal(models.Model):
+class Proposal(VotableModel):
     """A proposed solution for solving a need"""
 
     class Meta:
@@ -17,7 +23,7 @@ class Proposal(models.Model):
 
     title = models.CharField(max_length=256)
     description = models.TextField()
-    number = models.IntegerField(null=False, editable=False)
+    number = models.IntegerField(null=False, blank=True, editable=False)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
 
@@ -30,7 +36,11 @@ class Proposal(models.Model):
     realizers = models.ManyToManyField(User)
     # TODO: Also: organizations = model.ManyToManyField(Organization)
     cost = models.DecimalField(decimal_places=2, max_digits=14, null=True)
-    report = models.TextField()
+    report = models.TextField(null=True, blank=True)
+
+    investments = generic.GenericRelation(Investment,
+                        content_type_field='grantee_content_type',
+                        object_id_field='grantee_object_id')
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -41,12 +51,23 @@ class Proposal(models.Model):
     def __unicode__(self):
         return unicode(self.title)
 
-    # url aliases
+    # Url aliases
+    @property
+    def base_url_params(self):
+        return self.need.home_url_params
+
     @property
     def home_url_params(self):
-        d = dict(proposal_number=self.number, need_slug=self.need.slug)
-        if self.need.community:
-            d['community_slug'] = self.need.community.slug
+        d = self.base_url_params
+        d.update(dict(proposal_number=self.number))
         return d
+
+    @property
+    def view_url(self):
+        return reverse('view_proposal', kwargs=self.home_url_params)
+
+    @property
+    def new_investment_url(self):
+        return reverse('new_investment', kwargs=self.home_url_params)
 
 reversion.register(Proposal)

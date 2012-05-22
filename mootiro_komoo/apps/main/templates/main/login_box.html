@@ -1,22 +1,41 @@
 {% load i18n %}
-<div id="login-box">
+<div id="login-box" style="display: none; ">
   <h2>
     {% trans "You must be logged in" %}
   </h2>
-  <ul>
-    <li id="login-option" class="option">
-      <a href="/user/login" id="login-button">
-        <div>{% trans "Log in to MootiroMaps!" %}</div>
+  <!-- <ul> -->
+    <div id="login-option" class="option">
+        <div>{% trans "Log in with one the accounts bellow!" %}</div>
         <div><img src="{{STATIC_URL}}img/login_guy.png"></div>
-        <div class="button">{% trans "Login" %}</div>
-      </a>
-    </li>
-    <li id="signup_option" class="option">
+        <div class="login-btns">
+          <a href="/user/login" id="login-button">
+            <div class="button"><img id="login-mootiro" src="{{STATIC_URL}}img/login-mootiro-02.png"><b>Mootiro</b></div>
+          </a>
+          <a rel="nofollow" class="social-link" social-app="google-oauth2" href="#google-oauth2">
+            <div class="button"><img id="login-mootiro" src="{{STATIC_URL}}img/login-google-02.png"><b>Google</b></div>
+          </a>
+          <a rel="nofollow" class="social-link" social-app="facebook" href="#facebook">
+            <div class="button"><img id="login-mootiro" src="{{STATIC_URL}}img/login-facebook-02.png"><b>Facebook</b></div>
+          </a>
+        </div>
+    </div>
+    <div id="signup_option" class="option">
       <a href="http://www.mootiro.org/user/new">
         <div>{% trans "Don't have an account? Sign up!" %}</div>
         <div><img src="{{STATIC_URL}}img/signup_guy.png"></div>
-        <div class="button">{% trans "Create an account" %}</div>
+        <div class="button" id="signup-btn">{% trans "Create an account" %}</div>
       </a>
-    </li>
-  </ul>
+    </div>
+
+
+  <!-- </ul> -->
 </div>
+<script type="text/javascript">
+  $(function(){
+    $('.social-link').click(function(){
+      var social_app = $(this).attr('social-app');
+      window.location = '/login/'+ social_app +'?next=' + location.pathname;
+      return false;
+    })
+  });
+</script>

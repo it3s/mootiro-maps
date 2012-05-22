@@ -12,12 +12,23 @@ class Autocomplete(forms.TextInput):
         label_id: html id of the visible autocomplete field
         value_id: html id of the hidden field that contains data to be persisted
     """
-    def __init__(self, model, source_url, label_field="name", *a, **kw):
+    def __init__(self, model, source_url, label_field="name", clean_on_change=True, *a, **kw):
         self.model = model
         self.source_url = source_url
+        self.clean = clean_on_change
         super(Autocomplete, self).__init__(*a, **kw)
 
     def render_js(self, label_id, value_id):
+        if self.clean:
+            clean_on_change = """
+                if(!ui.item || !$("#%(label_id)s").val()){
+                    $("#%(value_id)s").val('');
+                    $("#%(label_id)s").val('');
+                }
+            """ % {'label_id': label_id, 'value_id': value_id}
+        else:
+            clean_on_change = ''
+
         js = u"""
         $("#%(label_id)s").autocomplete({
             source: "%(source_url)s",
@@ -31,16 +42,14 @@ class Autocomplete(forms.TextInput):
                 return false;
             },
             change: function(event, ui) {
-                if(!ui.item || !$("#%(label_id)s").val()){
-                    $("#%(value_id)s").val('');
-                    $("#%(label_id)s").val('');
-                }
+                %(clean_on_change)s
             }
          });
         """ % {
             'source_url': self.source_url,
             'label_id': label_id,
-            'value_id': value_id
+            'value_id': value_id,
+            'clean_on_change': clean_on_change
         }
         return js
 

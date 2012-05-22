@@ -1,0 +1,277 @@
+ul.disc {
+    list-style: disc;
+    margin: 0 0 0 20px;
+}
+ul.disc li {
+    margin-bottom: 10px;
+}
+#hotsite {
+    width: 900px;
+    margin: 20px;
+}
+#hotsite-top #logo {
+    top: 0;
+    left: 0;
+    margin: 20px 0;
+}
+#hotsite-navigation {
+    display: inline-block;
+    width: 400px;
+    margin: 0 0 7px 60px;
+}
+#hotsite-navigation > li {
+    float: left;
+    width: 200px;
+    line-height: 150%;
+}
+.hotsite-box {
+    background: #eff8fb;
+    border: solid 3px #e2eaed;
+    border-radius: 10px;
+    padding: 10px;
+}
+#hotsite-highlight-description {
+    display: inline-block;
+    width: 735px;
+    margin: 12px 0;
+    vertical-align: top;
+}
+#hotsite-start-btn {
+    font-size: 150%;
+    text-align: center;
+    line-height: 110%;
+    width: 100px;
+    padding: 5px 15px 12px;
+}
+#hotsite-steps {
+    margin: 20px 0 7px;
+    height: 75px;
+    white-space: nowrap;
+}
+#hotsite-steps .step {
+    font-size: 170%;
+    font-weight: bold;
+    height: 46px;
+    padding: 15px 50px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: normal;
+}
+#hotsite-steps .step-wrapper {
+    display: inline-block;
+    zoom: 1; /* IE7 fix */
+    *display: inline; /* IE7 fix */
+}
+#hotsite-steps .step-label {
+    display: inline-block;
+    width: 110px;
+    vertical-align: middle;
+    text-align: left;
+    *padding: 5px 0 10px; /* IE7 fix */
+}
+#hotsite-step-map a {
+    display: inline-block;
+    color: #ff3d2e;
+    background: url("../img/hotsite/steps/map.png") no-repeat;
+    width: 209px;
+    margin-right: -12px;
+    *margin-right: -9px; /* IE7 fix */
+}
+#hotsite-step-map a:hover {
+    background: url("../img/hotsite/steps/map-hover.png") no-repeat;
+}
+#hotsite-step-map.selected a {
+    background: url("../img/hotsite/steps/map-active.png") no-repeat;
+}
+#hotsite-step-discuss a {
+    display: inline-block;
+    color: #fcac2b;
+    background: url("../img/hotsite/steps/discuss.png") no-repeat;
+    width: 217px;
+    margin-left: -9px;
+    margin-right: -12px;
+    *margin-right: -9px; /* IE7 fix */
+}
+#hotsite-step-discuss a:hover {
+    background: url("../img/hotsite/steps/discuss-hover.png") no-repeat;
+}
+#hotsite-step-discuss.selected a {
+    background: url("../img/hotsite/steps/discuss-active.png") no-repeat;
+}
+#hotsite-step-resolve a {
+    display: inline-block;
+    color: #26a56b;
+    background: url("../img/hotsite/steps/resolve.png") no-repeat;
+    width: 209px;
+    margin-left: -9px;
+}
+#hotsite-step-resolve a:hover {
+    background: url("../img/hotsite/steps/resolve-hover.png") no-repeat;
+}
+#hotsite-step-resolve.selected a {
+    background: url("../img/hotsite/steps/resolve-active.png") no-repeat;
+}
+.icon-map.big, .icon-discuss.big, .icon-resolve.big {
+    position: relative;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.icon-map.big {
+    width: 25px;
+    height: 41px;
+    background: url("../img/hotsite/icons/map.png") !important;
+}
+.icon-discuss.big {
+    width: 41px;
+    height: 41px;
+    background: url("../img/hotsite/icons/discuss.png") !important;
+}
+.icon-resolve.big {
+    width: 52px;
+    height: 37px;
+    background: url("../img/hotsite/icons/resolve.png") !important;
+}
+#hotsite-slides .slide {
+    height: 300px;
+    border-radius: 10px;
+}
+.slide-tabs {
+    display: inline-block;
+    padding: 20px 0;
+    white-space: nowrap;
+    width: 280px;
+    *float: left;
+}
+.slide-tab {
+    margin: 0 0 0 30px;
+}
+.slide-tab a {
+    padding: 10px 0 11px 50px;
+    border-radius: 10px 0 0 10px;
+    width: 210px;
+    display: inline-block;
+}
+.slide-tab.selected a {
+    color: black;
+    font-weight: bold;
+    background: #fcd9ca;
+}
+.tab-label {
+    font-size: 122%;
+    vertical-align: middle;
+    margin: 10px;
+}
+.icon-community.big,
+.icon-need.big,
+.icon-organization.big,
+.icon-resource.big,
+.icon-investment.big {
+    vertical-align: middle;
+}
+.icon-community.big {
+    background: url("../img/community.png") !important;
+    margin: 0 2px 0 3px;
+    width: 21px;
+    height: 24px;
+}
+.icon-need.big {
+    background: url("../img/need.png") !important;
+    margin: 3px 2px 3px 3px;
+    width: 21px;
+    height: 18px;
+}
+.icon-organization.big {
+    background: url("../img/organization.png") !important;
+    margin: 2px 3px 2px 3px;
+    width: 20px;
+    height: 20px;
+}
+.icon-resource.big {
+    background: url("../img/resource.png") !important;
+    margin: 3px 0 4px 0;
+    width: 26px;
+    height: 17px;
+}
+.icon-investment.big {
+    background: url("../img/investment.png") !important;
+    margin: 4px 3px 4px 3px;
+    width: 20px;
+    height: 16px;
+}
+.slide-content {
+    margin: 20px;
+    padding: 15px 0 15px 25px;
+    height: 195px;
+    border-radius: 10px;
+    display: inline-block;
+    *float; rigth;
+}
+.slide-content img {
+    display: inline-block;
+}
+.slide-content .text {
+    font-size: 115%;
+    display: inline-block;
+    vertical-align: top;
+    width: 260px;
+}
+.slide-title {
+    display: none;
+}
+#hotsite-slides .slide .slide-content {
+    vertical-align: top;
+    display: inline-block;
+}
+#hotsite-slides .map-slide {
+    background-color: #facab2;
+}
+#hotsite-slides .map-slide .slide-content {
+    background: #fcd9ca;
+    width: 569px;
+    margin: 20px 0 0 0;
+}
+#hotsite-slides .discuss-slide {
+    background: url("../img/hotsite/art/discuss.png") no-repeat 460px bottom;
+    background-color: #ffe2a9;
+}
+#hotsite-slides .discuss-slide .slide-content {
+    background: #fff0d6;
+    width: 380px;
+    height: 188px;
+    padding: 20px;
+    font-size: 135%;
+}
+#hotsite-slides .resolve-slide {
+    background: url("../img/hotsite/art/resolve.png") no-repeat 520px bottom;
+    background-color: #c1dfc4;
+}
+#hotsite-slides .resolve-slide .slide-content {
+    background: #e1efe3;
+    width: 380px;
+    height: 185px;
+    padding: 20px;
+    font-size: 135%;
+}
+#hotsite-slides-controls-counter {
+    font-size: 120%;
+    font-weight: bold;
+    display: inline-block;
+    vertical-align: middle;
+    padding: 5px;
+}
+#hotsite-slides-controls {
+    position: relative;
+    top: -42px;
+    text-align: center;
+}
+.control {
+    width: 33px;
+    height: 33px;
+    vertical-align: middle;
+}
+.control.icon-previous {
+    background: url("../img/hotsite/controls/previous.png");
+}
+.control.icon-next {
+    background: url("../img/hotsite/controls/next.png");
+}

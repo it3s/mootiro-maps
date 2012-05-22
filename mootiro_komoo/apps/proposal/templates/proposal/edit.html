@@ -15,3 +15,11 @@
 </div>
 
 {% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('#proposal_form').ajaxform();
+        });
+    </script>
+{% endblock %}

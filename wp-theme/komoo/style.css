@@ -1,0 +1,379 @@
+/*
+Theme Name: komoo
+Description: Child theme for the twentyeleven theme
+Author: it3s team
+Template: twentyeleven
+*/
+
+@import url("../twentyeleven/style.css");
+
+body {
+    background-color: #fff;
+    font-family: Ubuntu, Helvetica, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body, p {
+    font-size: 14px;
+}
+
+a {
+    color: #0088cc;
+    text-decoration: none;
+}
+a:visited {
+    color: #4092A9;
+}
+a:link {
+    color: #4092A9;
+}
+a:hover {
+    color: #333;
+    text-decoration: none !important;
+}
+
+#page {
+    width: 900px;
+    margin: 17px 20px 20px;
+}
+
+#main {
+    padding: 0;
+}
+
+#access { display: none; }
+
+#logo {
+    display: inline-block;
+    margin: 20px 0;
+    padding: 0 10px;
+}
+
+#logo img {
+    width: auto;
+}
+
+#branding {
+    border: none;
+    padding-bottom: 2px;
+}
+#branding #searchform { display: none; }
+
+#komoo-menu {
+    font-size: 16px;
+    display: inline-block;
+    width: 420px;
+    margin: 0 0 25px 220px;
+    vertical-align: bottom;
+}
+
+#komoo-menu ul {
+    width: 420px;
+    list-style: none;
+    margin: 0;
+}
+
+#komoo-menu li {
+    float: left;
+    width: 210px;
+    line-height: 150%;
+}
+
+#komoo-menu a {
+    display: inline-block;
+    width: 100%;
+}
+
+#komoo-menu .selected {
+    color: #000;
+    border-bottom: 2px solid #000;
+}
+
+
+.widget-title {
+    color: black;
+    font: inherit;
+    font-weight: bold;
+}
+
+.widget ul {
+    list-style: none;
+}
+
+.widget_search #s {
+    width: 100%;
+}
+
+.widget_categories .widget-title {
+    background: url(images/categories-hover.png) no-repeat 0 7px;
+    padding-left: 20px;
+}
+
+.widget-title {
+    text-transform: none;
+    font-size: 14px;
+}
+
+#content,
+.singular #content,
+.left-sidebar.singular #content {
+    width: 70%;
+    margin: 0;
+}
+
+#content nav {
+    padding: 0;
+}
+
+article.post {
+    background-color: #eff8fb;
+    border: solid 3px #e2eaed !important;
+    padding: 15px !important;
+    border-radius: 10px;
+    clear: both;
+}
+
+.entry-title {
+    padding: 0;
+}
+
+.entry-header .comments-link {
+    display: none;
+}
+
+#nav-single {
+    white-space: nowrap;
+}
+
+#primary, .singluar #primary {
+    float: left;
+    margin: 0 -26.4% 0 0 !important;
+    width: 100%;
+}
+
+.singular .entry-header,
+.singular .entry-content,
+.singular footer.entry-meta,
+.singular #comments-title {
+    width: auto;
+}
+
+.singular .entry-header .entry-meta {
+    position: relative;
+}
+
+.singular .entry-title {
+    font-size: 26px;
+}
+
+.singular .entry-meta .edit-link a {
+    position: static;
+}
+
+.commentlist {
+    margin: 0;
+    width: auto;
+}
+
+.commentlist > li::before {
+    content: none;
+}
+
+.commentlist .avatar {
+    position: absolute;
+    left: 2.2em;
+    padding: 0;
+    top: 2.2em;
+}
+
+.commentlist li.comment .fn {
+    display: block;
+}
+
+.commentlist li.comment.depth-1 > .comment > .comment-meta {
+    line-height: 1.625em;
+    margin-left: 80px;
+    min-height: 68px;
+}
+
+.commentlist li.comment .comment-content {
+    margin: 1.625em 0 0;
+}
+
+.post-date {
+    color: #000;
+}
+
+#respond {
+    background: #fff;
+    border: none;
+    margin: 0;
+    width: auto;
+}
+
+#respond input[type="text"], #respond textarea {
+    padding: 5px;
+    text-indent: 0;
+    color: #555;
+    border: 1px solid #ccc;
+    background: #f7f7f7 !important;
+    -webkit-box-shadow: 1px 1px 1px rgb(190, 189, 204) !important;
+    -moz-box-shadow: 1px 1px 1px rgb(190, 189, 204) !important;
+    box-shadow: 1px 1px 1px rgb(190, 189, 204) !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border linear 0.2s,box-shadow linear 0.2s;
+    -moz-transition: border linear 0.2s,box-shadow linear 0.2s;
+    -ms-transition: border linear 0.2s,box-shadow linear 0.2s;
+    -o-transition: border linear 0.2s,box-shadow linear 0.2s;
+    transition: border linear 0.2s,box-shadow linea
+}
+
+#respond input[type="text"]:focus, #respond textarea:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(82, 168, 236, 0.6);
+    outline: 0;
+}
+
+#respond .comment-form-author .required, #respond .comment-form-email .required {
+    top: 31px;
+    left: 74%;
+}
+
+#respond .comment-form-author label,
+#respond .comment-form-email label,
+#respond .comment-form-url label,
+#respond .comment-form-comment label {
+    position: static;
+    background: none;
+    padding: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.icon-categories {
+    background: url(images/categories.png) no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 11px;
+}
+
+.icon-comments {
+    background: url(images/comments.png) no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: bottom;
+}
+
+.icon-time {
+    background: url(images/time.png) no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: bottom;
+}
+
+a:hover .icon-comments {
+    background: url(images/comments-hover.png) no-repeat;
+}
+
+.entry-meta .icon-comments,
+.single .entry-meta .icon-time,
+.single .entry-meta .icon-categories {
+    margin-right: 3px;
+}
+
+.entry-meta .icon-comments,
+.entry-meta .icon-categories,
+.entry-meta .permalink {
+    margin-left: 20px;
+}
+
+#respond .form-submit {
+    float: none;
+    margin: 15px;
+}
+
+#respond input#submit {
+    position: static;
+}
+
+.btn,
+#respond input#submit {
+    display: inline-block;
+    padding: 4px 10px 4px;
+    font-size: 13px;
+    line-height: 18px;
+    color: #333333;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    background-color: #fafafa;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-repeat: no-repeat;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+    border: 1px solid #ccc;
+    border-bottom-color: #bbb;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),0 1px 2px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+}
+
+.btn:hover,
+#respond input#submit:hover {
+    color: #333333;
+    text-decoration: none;
+    background-color: #e6e6e6;
+    background-position: 0 -15px;
+    -webkit-transition: background-position 0.1s linear;
+    -moz-transition: background-position 0.1s linear;
+    -ms-transition: background-position 0.1s linear;
+    -o-transition: background-position 0.1s linear;
+    transition: background-position 0.1s linear;
+}
+
+.btn.active,
+.btn:active,
+#respond input#submit:active {
+    background-image: none;
+    -webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15),0 1px 2px rgba(0, 0, 0, 0.05);
+    background-color: #e6e6e6;
+    background-color: #d9d9d9 9;
+    color: rgba(0, 0, 0, 0.5);
+    outline: 0;
+}
+
+#mootiro-bar {
+    list-style: none;
+    line-height: 16px;
+    font-family: Ubuntu, Helvetica, 'Trebuchet MS', sans-serif;
+    font-size: 14px;
+}
+
+#mootiro-bar ul {
+    padding: 0;
+    margin: 0 6px;
+}
+
+#mootiro-bar li {
+    display: inline-block;
+    padding: 1px 12px 0;
+    margin: 0 6px 0 4px;
+    height: 22px;
+}

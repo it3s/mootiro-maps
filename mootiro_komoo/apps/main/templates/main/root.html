@@ -8,10 +8,12 @@
 
 {% block page_scripts %}
 <script type="text/javascript">
-google.maps.event.addDomListener(window, 'load', function () {
-    if (!editor.goToSavedLocation()) {
-      editor.goToUserLocation();
-    }
-  });
+  if (window.google) {
+    google.maps.event.addDomListener(window, 'load', function () {
+      if (!editor.goToSavedLocation()) {
+        editor.goToUserLocation();
+      }
+    });
+  }
 </script>
 {% endblock %}

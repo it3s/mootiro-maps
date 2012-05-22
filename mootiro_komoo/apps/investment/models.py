@@ -12,11 +12,9 @@ from annoying.functions import get_object_or_None
 
 import reversion
 from lib.taggit.managers import TaggableManager
+from vote.models import VotableModel
 
 from main.utils import slugify
-from proposal.models import Proposal
-from organization.models import Organization
-from komoo_resource.models import Resource
 
 
 class Investor(models.Model):
@@ -110,8 +108,12 @@ class Investor(models.Model):
                 created = False
         return investor, created
 
+    @property
+    def view_url(self):
+        return self.content_object.view_url
 
-class Investment(models.Model):
+
+class Investment(VotableModel):
     """A donation of money (or any other stuff) for either an Organization, a
     Proposal or a Resource in the system.
     """
@@ -124,18 +126,21 @@ class Investment(models.Model):
 
     title = models.CharField(max_length=256)
     # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.CharField(max_length=256, null=False, blank=False, db_index=True, editable=False)
+    slug = models.CharField(max_length=256, null=False, blank=False,
+                db_index=True, editable=False)
     description = models.TextField()
-    value = models.DecimalField(decimal_places=2, max_digits=14, null=True, blank=True)
-    currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES, null=True, blank=True)
+    value = models.DecimalField(decimal_places=2, max_digits=14, null=True,
+                blank=True)
+    currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES,
+                null=True, blank=True)
 
     date = models.DateField(null=False)
     # TODO: remove over_period. Get this info by existence of an end_date
-    over_period = models.BooleanField(default=False, null=False)
+    over_period = models.BooleanField(default=False)
     end_date = models.DateField(null=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=False, blank=False,
+    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
                 related_name='created_investments')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
@@ -145,8 +150,7 @@ class Investment(models.Model):
                     null=True, blank=True)
 
     # Grantee generic relationship
-    grantee_content_type = models.ForeignKey(ContentType, editable=False,
-                related_name="investment_grantee")
+    grantee_content_type = models.ForeignKey(ContentType, editable=False)
     grantee_object_id = models.PositiveIntegerField(editable=False)
     grantee = generic.GenericForeignKey('grantee_content_type', 'grantee_object_id')
 
@@ -171,7 +175,7 @@ class Investment(models.Model):
         super(Investment, self).save(*args, **kwargs)
     ### END ###
 
-    # Url aliases configuration
+    # Url aliases
     @property
     def base_url_params(self):
         return self.grantee.home_url_params
@@ -181,10 +185,6 @@ class Investment(models.Model):
         d = self.base_url_params
         d.update(dict(investment_slug=self.slug))
         return d
-
-    @property
-    def new_url(self):
-        return reverse('new_investment', kwargs=self.grantee.home_url_params)
 
     @property
     def view_url(self):

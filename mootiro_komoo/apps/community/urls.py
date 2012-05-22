@@ -5,9 +5,11 @@ from django.conf.urls.defaults import *
 
 from mootiro_komoo.urls import prepare_regex as pr
 
+home_urls = [r'^COMMUNITY_SLUG/']
 
 urlpatterns = patterns('community.views',
-    url(r'^community/new$', 'edit', name='new_community'),
+    url(r'^community/new$', 'new_community', name='new_community'),
+    url(r'^community/edit$', 'edit_community', name='edit_community'),
 
     url(r'^communities$', 'list', name='list_communities'),
 
@@ -17,11 +19,13 @@ urlpatterns = patterns('community.views',
             name='community_search_by_tag'),
     url(r'^community/get_geojson$', 'communities_geojson',
         name='communities_geojson'),
+    url(r'^community/get_name_for/(?P<id>\d+)/$', 'get_name_for',
+        name='get_name_for'),
 
     url(r'^community/autocomplete_get_or_add/$', 'autocomplete_get_or_add',
         name='autocomplete_get_or_add'),
 
-    url(pr(r'^COMMUNITY_SLUG/edit/?$'), 'edit', name='edit_community'),
+    url(pr(r'^COMMUNITY_SLUG/edit/?$'), 'edit_community', name='edit_community'),
 
     url(pr(r'^COMMUNITY_SLUG/about/?$'), 'view', name='view_community'),
 

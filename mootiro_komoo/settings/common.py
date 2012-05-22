@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 #
 #  Global Settings
-from __future__ import unicode_literals  # unicode by default
 import os
 import sys
 
@@ -99,12 +98,16 @@ CONTEXT_PROCESSORS = (
 )
 
 AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.facebook.FacebookBackend',
+    'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
 # Connect Mootiro Bar to django-cas:
 LOGIN_URL = '/user/login'
-MOOTIRO_BAR_LOGIN_URL = LOGIN_URL
+# LOGIN_REDIRECT_URL = '/'
+# LOGIN_ERROR_URL    = '/login-error/'
+MOOTIRO_BAR_LOGIN_URL = '#'  # LOGIN_URL
 MOOTIRO_BAR_LOGOUT_URL = '/user/logout'
 
 DELETE_HOURS = 24
@@ -142,10 +145,13 @@ INSTALLED_APPS = [
     'lib.ajax_select',
     'fileupload',
     'gunicorn',
+    'social_auth',
+    'django_nose',
+    'ajaxforms',
     # our apps
+    'main',
     'komoo_map',
     'community',
-    'main',
     'need',
     'proposal',
     'komoo_comments',
@@ -155,9 +161,12 @@ INSTALLED_APPS = [
     'organization',
     'investment',
     'moderation',
+    'hotsite',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
+
+FILE_UPLOAD_MAX_MEMORY_SIZE  = 10 * 1024 * 1024
 
 # https://github.com/aljosa/django-tinymce/blob/master/docs/installation.rst
 # TINYMCE_COMPRESSOR = True
@@ -179,7 +188,7 @@ TINYMCE_DEFAULT_CONFIG = dict(
 )
 
 # markiItUp
-MARKITUP_SET = 'markitup/sets/markdown'
+MARKITUP_SET = 'markitup/sets/markdown_pt_BR'
 MARKITUP_FILTER = ('django.contrib.markup.templatetags.markup.markdown', {})
 MARKITUP_AUTO_PREVIEW = True
 JQUERY_URL = 'dummy.js'
@@ -189,9 +198,25 @@ JQUERY_URL = 'dummy.js'
 PROFILE_DATABASE = 'localhost|profile|username|password'
 CAS_SERVER_URL = 'https://localhost:8443/cas/'
 
+FACEBOOK_APP_ID = '428903733789454'
+FACEBOOK_API_SECRET = 'f286aad6b17af279e622d4350b077081'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+# FACEBOOK_PROFILE_EXTRA_PARAMS = {'locale': 'pt_BR'}
+
+GOOGLE_OAUTH2_CLIENT_ID = '37410049822.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'VYPUXk4GraHit4n72nh5CwhX'
+
+SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
+SOCIAL_AUTH_UUID_LENGTH = 16
+SOCIAL_AUTH_EXPIRATION = 3600
+SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+
 # KOMOO Comments settings
 KOMOO_COMMENTS_WIDTH = 3
 KOMOO_COMMENTS_HEIGHT = 20
+
+# KOMOO Map settings
+KOMOO_DISABLE_MAP = False
 
 # AJAX-SELECT
 # define the lookup channels in use on the site
@@ -203,3 +228,11 @@ AJAX_LOOKUP_CHANNELS = {
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = False
+
+# TESTS CONFIGURATION
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+NOSE_ARGS = ['--rednose']
+if 'test' in sys.argv:
+    import logging
+    logging.disable(logging.CRITICAL)
+    FIXTURE_DIRS = ('fixtures/test/',)

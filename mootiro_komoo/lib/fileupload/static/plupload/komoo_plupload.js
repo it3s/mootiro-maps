@@ -37,11 +37,11 @@ $("#uploader").pluploadQueue({
     runtimes : 'html5,flash,gears,silverlight,browserplus',
     url : '/upload/new/',
     max_file_size : '10mb',
-    chunk_size : '1mb',
+    chunk_size : '10mb',
     unique_names : true,
 
     // Resize images on clientside if we can
-    resize : {width : 320, height : 240, quality : 90},
+    // resize : {width : 320, height : 240, quality : 90},
 
     // Specify what files to browse for
     filters : [
@@ -69,10 +69,10 @@ $("#uploader").pluploadQueue({
 
     preinit: {
         'Init' : function(){
-            $('.plupload_header_title').text('Upload de Arquivos');
+            // $('.plupload_header_title').text('Upload de Arquivos');
             $('.plupload_header_text').text('');
-            $('.plupload_buttons .plupload_add').text('Adicionar Arquivos');
-            $('.plupload_buttons .plupload_start').text('Iniciar Upload');
+            // $('.plupload_buttons .plupload_add').text('Adicionar Arquivos');
+            // $('.plupload_buttons .plupload_start').text('Iniciar Upload');
         },
         FilesAdded: function(up, files) {
             var max = up.settings.max_file_count;
@@ -97,23 +97,23 @@ $("#uploader").pluploadQueue({
 
 // Client side form validation
 $('form').submit(function(e) {
-    var uploader = $('#uploader').pluploadQueue();
+//     var uploader = $('#uploader').pluploadQueue();
     $('#id_files_ids_list').val(get_files_list());
 
-    // Files in queue upload them first
-    if (uploader.files.length > 0) {
-        // When all files are uploaded submit form
-        uploader.bind('StateChanged', function() {
-            if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-                $('form')[0].submit();
-            }
-        });
+//     // Files in queue upload them first
+//     if (uploader.files.length > 0) {
+//         // When all files are uploaded submit form
+//         uploader.bind('StateChanged', function() {
+//             if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
+//                 $('form')[0].submit();
+//             }
+//         });
 
-        uploader.start();
+//         uploader.start();
 
-    } /*else {
-        errorMessage('You must queue at least one file.');
-    }*/
-    // return false;
+//     } /*else {
+//         errorMessage('You must queue at least one file.');
+//     }*/
+//     // return false;
 });
 });

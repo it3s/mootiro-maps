@@ -7,6 +7,7 @@
 {% load vote_tags %}
 {% load markitup_tags %}
 {% load organization_tags %}
+{% load investment_tags %}
 
 {% block title %}
   {% if community %}
@@ -34,11 +35,7 @@
                 </div>
             </div>
             <div class="view-edit-btn">
-                {% if community %}
-                <a href="/{{ community.slug }}/organization/edit?id={{ organization.id }}" class="btn login-required">
-                {% else %}
-                <a href="/organization/edit?id={{ organization.id }}" class="btn login-required">
-                {% endif %}
+                <a href="{{ organization.edit_url }}" class="btn login-required">
                     <i class="icon-pencil"></i>
                 </a>
             </div>
@@ -49,78 +46,108 @@
             <div class="mark-down">{{ organization.description|render_markup }}</div>
             <div class="organization-buttons row">
                 <div class="org-btn span3 selected" panel="branches-list">
-                    <img src="{{ STATIC_URL }}img/marker.png" />
+                    <i class="icon-map"></i>
                     <div class="inline-block">
                       {% blocktrans count num=organization.organizationbranch_set.count %}{{ num }} point on map{% plural %}{{ num }} points on map{% endblocktrans %}
                     </div>
                 </div>
-                <!-- <div class="org-btn span3">
-                    <img src="{{ STATIC_URL }}img/organization.png" />
+                <div class="org-btn span3" panel="supported-organizations-list">
+                    <i class="icon-organization"></i>
                     <div class="inline-block">
-                      {% blocktrans count num=0 %}supports {{ num }} organization{% plural %}supports {{ num }} organizations{% endblocktrans %}
+                      {% blocktrans count num=organization.supported_organizations|length %}Supported {{ num }} organization{% plural %}Supported {{ num }} organizations{% endblocktrans %}
                     </div>
-                </div> -->
+                </div>
                 <div class="org-btn span3" panel="communities-list">
-                    <img src="{{ STATIC_URL }}img/community.png" />
+                    <i class="icon-community"></i>
                     <div class="inline-block">
-                      {% blocktrans count num=organization.community.count %}on {{ num }} community{% plural %}on {{ num }} communities{% endblocktrans %}
+                      {% blocktrans count num=organization.community.count %}On {{ num }} community{% plural %}On {{ num }} communities{% endblocktrans %}
                     </div>
                 </div>
-                <!-- <div class="org-btn span3">
-                    <img src="{{ STATIC_URL }}img/need.png" />
+                <div class="org-btn span3" panel="supported-proposals-list">
+                    <i class="icon-need"></i>
                     <div class="inline-block">
-                      {% blocktrans count num=0 %}supported {{ num }} proposal{% plural %}supported {{ num }} proposals{% endblocktrans %}
+                      {% blocktrans count num=organization.supported_proposals|length %}Supported {{ num }} proposal{% plural %}Supported {{ num }} proposals{% endblocktrans %}
                     </div>
                 </div>
-                <div class="org-btn span3">
-                    <img src="{{ STATIC_URL }}img/resource.png" />
+                <div class="org-btn span3" panel="supported-resources-list">
+                    <i class="icon-resource"></i>
                     <div class="inline-block">
-                      {% blocktrans count num=0 %}supported {{ num }} resource{% plural %}supported {{ num }} resources{% endblocktrans %}
+                      {% blocktrans count num=organization.supported_resources|length %}Supported {{ num }} resource{% plural %}Supported {{ num }} resources{% endblocktrans %}
+                    </div>
+                </div>
+                <div class="org-btn span3 multiline" panel="investments-list">
+                    <i class="icon-investment"></i>
+                    <div class="inline-block">
+                      {% blocktrans count num=organization.realized_investments.count %}Realized {{ num }} investment
+                      {% plural %}Realized {{ num }} investments{% endblocktrans %}
                     <br>
-                    {% blocktrans count num=0 %}offered {{ num }} resource{% plural %}offered {{ num }} resources{% endblocktrans %}
+                    {% blocktrans count num=organization.investments.count %}Received {{ num }} investment
+                    {% plural %}Received {{ num }} investments{% endblocktrans %}
                     </div>
                 </div>
-                <div class="org-btn span3">
-                    <img src="{{ STATIC_URL }}img/funding.png" />
-                    <div class="inline-block">
-                      {% blocktrans count num=0 %}realized {{ num }} investment{% plural %}realized {{ num }} investments{% endblocktrans %}
-                    <br>
-                    {% blocktrans count num=0 %}received {{ num }} investment{% plural %}received {{ num }} investments{% endblocktrans %}
-                    </div>
-                </div> -->
             </div>
 
-            <div class="org-info-panel branches-list">
+            <div class="org-info-panel branches-list" >
+                <div class="branches-see-all">
+                    <a href="#">
+                        <img src="{{ STATIC_URL }}img/ver-no-mapa.png">{% trans 'see all' %}
+                    </a>
+                </div>
+                {% with page_size=2 %}
                 {% for branch in organization.organizationbranch_set.all %}
-                <div class="branch-link org-info-div {% cycle 'odd' '' %}" data-branch-id="{{ branch.id }}">
-
-                        <a href="#">
-                            <div class="branch-name">
-                                <span class="entry">{{ branch.name }}</span>
-                                <span class="branch-link-btn">
-                                    <i class="icon-chevron-right"></i>
-                                </span>
-                            </div>
-                        </a>
-                        <div class="branch-info org-info-div {% cycle 'odd' '' %}" style="display: none;">
-                            <div>
-                                <a href="#" class="branch-edit-btn btn login-required">
-                                    <i class="icon-pencil"></i>
-                                </a>
-                            </div>
-                            <div class="entry">
-                                {{ branch.info|render_markup }}
-                            </div>
-
+                <div class="branch-link org-info-div" page="{{ forloop.counter0|page_num:page_size }}" data-branch-id="{{ branch.id }}" style="display:none;">
+                    <a href="#">
+                        <div class="branch-name">
+                            <span class="entry">{{ branch.name }}</span>
+                            <span class="branch-map-icon"></span>
+                            <span class="branch-link-btn">
+                                <i class="icon-chevron-right"></i>
+                            </span>
                         </div>
-                        <div class="branch-form" style="display: none;">
-                            {% branch_edit_form branch.id %}
+                    </a>
+                    <div class="branch-info" style="display: none;">
+                        <div>
+                            <a href="#" class="branch-edit-btn btn login-required">
+                                <i class="icon-pencil"></i>
+                            </a>
                         </div>
+                        <div class="entry">
+                            {{ branch.info|render_markup }}
+                        </div>
+                        {% include 'organization/branch_communities_list.html' %}
+
                     </div>
+                    <div class="branch-form hidden">
+                        {% branch_edit_form branch.id %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <a href="#" class="branch-pagination" page="1">
+                    &lt;&lt;{%trans 'first' %}
+                </a>
+                {% for i in organization.organizationbranch_set.count|div:page_size|get_range %}
+                    <a href="#" class="branch-pagination {% if i == 0 %}current-page{% endif %}" page="{{ i|add:1 }}">{{ i|add:1 }}</a>
+
+                {% endfor %}
+                <a href="#" class="branch-pagination" page="{{ organization.organizationbranch_set.count|div:page_size }}">
+                    {% trans 'last' %}&gt;&gt;
+                </a>
+
+                {% endwith %}
+            </div>
+
+            <div class="org-info-panel supported-organizations-list hidden">
+                {% for org in organization.supported_organizations %}
+                    <div class="org-info-div {% cycle 'odd' '' %}">
+                        <a href="{{ org.view_url }}">{{ org.name }}</a>
+                    </div>
+                {% empty %}
+                    {% trans 'No organizations supported.' %}
                 {% endfor %}
             </div>
 
-            <div class="org-info-panel communities-list" style="display: none;">
+            <div class="org-info-panel communities-list hidden">
                 {% for com in organization.community.all %}
                     <div class="org-info-div {% cycle 'odd' '' %}">
                         <a href="/{{ com.slug }}/about/">{{ com.name }}</a>
@@ -128,6 +155,30 @@
                 {% empty %}
                     {% trans 'No communities bound to this organization' %}
                 {% endfor %}
+            </div>
+
+            <div class="org-info-panel supported-proposals-list hidden">
+                {% for prop in organization.supported_proposals %}
+                    <div class="org-info-div {% cycle 'odd' '' %}">
+                        <a href="{{ prop.view_url }}">{{ prop.title }}</a>
+                    </div>
+                {% empty %}
+                    {% trans 'No proposals supported.' %}
+                {% endfor %}
+            </div>
+
+            <div class="org-info-panel supported-resources-list hidden">
+                {% for res in organization.supported_resources %}
+                    <div class="org-info-div {% cycle 'odd' '' %}">
+                        <a href="{{ res.view_url }}">{{ res.name }}</a>
+                    </div>
+                {% empty %}
+                    {% trans 'No resources supported.' %}
+                {% endfor %}
+            </div>
+
+            <div class="org-info-panel investments-list hidden">
+                {% investments_list organization.investments.all organization.realized_investments.all  %}
             </div>
         </div>
 
@@ -150,7 +201,7 @@
 
     <div class="right-bar organization-right-bar">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
-        <a href="#">{% trans 'see on map' %}</a>
+        <a href="#" class="see-on-map">{% trans 'see on map' %}</a>
 
         <div class="block">
           <h4>{% trans 'Operation Field' %}</h4>
@@ -194,6 +245,10 @@
           {% endif %}
 
         </div>
+
+        <div class="centralizer apart">
+          <a class="button" href="{{ organization.new_investment_url }}">{% trans "Add investment" %}</a>
+        </div>
     </div>
 
     <div class="view-extras">
@@ -210,6 +265,7 @@
 {% block page_scripts %}
     {% vote_staticfiles %}
     {% comments_staticfiles %}
+    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
     <script type="text/javascript">
         $('.branch-link a').click(function(evt){
             evt.preventDefault();
@@ -222,10 +278,12 @@
                 branch_btn_icon.addClass('icon-chevron-right');
                 $(this).parent().find('.branch-info').slideUp();
                 $(this).parent().find('.branch-form').slideUp();
+                $(this).parent().removeClass('branch-active');
             } else {
                 branch_btn_icon.removeClass('icon-chevron-right');
                 branch_btn_icon.addClass('icon-chevron-down');
                 $(this).parent().find('.branch-info').slideDown();
+                $(this).parent().addClass('branch-active');
             }
         });
 
@@ -260,13 +318,17 @@
                         var branch_name = branch.find('.branch-name');
                         info.find('.entry').html(data.info);
                         branch_name.find('.entry').html(data.name);
+                        if ($('.branch-info .branch-communities').length){
+                            $('.branch-info .branch-communities').remove();
+                        }
+                        $('.branch-info').append(data.communities);
                         form.fadeOut(400, function(){
                             info.fadeIn(400);
                             branch_name.fadeIn(400);
                         });
 
                     } else {
-                        console.log('Error!');
+                        errorMessage('Error ao tentar salvar dados!');
                     }
 
                 }, 'json'
@@ -279,6 +341,17 @@
             var $this = $(this);
             $this.addClass('selected');
             $('.' + $this.attr('panel')).fadeIn();
+        });
+
+        $('.branch-link[page=1]').show();
+
+        $('.branch-pagination').click(function(){
+            var page_num = $(this).attr('page');
+            $('.branch-link').hide();
+            $('.branch-pagination').removeClass('current-page');
+
+            $('.branch-link[page=' + page_num + ']').fadeIn();
+            $(this).addClass('current-page');
         });
     </script>
 
@@ -295,4 +368,9 @@
             }
         });
     </script>
+{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
 {% endblock %}

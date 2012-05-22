@@ -2,17 +2,23 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.contenttypes import generic
 from django.template.defaultfilters import slugify
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from komoo_map.models import GeoRefModel
 from community.models import Community
 from need.models import TargetAudience
+from proposal.models import Proposal
+from komoo_resource.models import Resource
+from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
+from vote.models import VotableModel
 
 
-class Organization(models.Model):
+class Organization(VotableModel):
     name = models.CharField(max_length=320, unique=True, db_index=True)
     slug = models.SlugField(max_length=320, db_index=True)
     description = models.TextField(null=True, blank=True, db_index=True)
@@ -30,6 +36,34 @@ class Organization(models.Model):
     target_audiences = models.ManyToManyField(TargetAudience, null=True, blank=True)
 
     tags = TaggableManager()
+
+    investments = generic.GenericRelation(Investment,
+                        content_type_field='grantee_content_type',
+                        object_id_field='grantee_object_id')
+
+    @property
+    def as_investor(self):
+        investor, created = Investor.get_or_create_for(self)
+        return investor
+
+    @property
+    def realized_investments(self):
+        return self.as_investor.investments.all()
+
+    @property
+    def supported_organizations(self):
+        return [i.grantee for i in self.realized_investments \
+                    if isinstance(i.grantee, Organization)]
+
+    @property
+    def supported_proposals(self):
+        return [i.grantee for i in self.realized_investments \
+                    if isinstance(i.grantee, Proposal)]
+
+    @property
+    def supported_resources(self):
+        return [i.grantee for i in self.realized_investments \
+                    if isinstance(i.grantee, Resource)]
 
     def __unicode__(self):
         return unicode(self.name)
@@ -56,8 +90,20 @@ class Organization(models.Model):
         d = dict(organization_slug=self.slug)
         return d
 
+    @property
+    def view_url(self):
+        return reverse('view_organization', kwargs=self.home_url_params)
 
-class OrganizationBranch(GeoRefModel):
+    @property
+    def edit_url(self):
+        return reverse('edit_organization', kwargs=self.home_url_params)
+
+    @property
+    def new_investment_url(self):
+        return reverse('new_investment', kwargs=self.home_url_params)
+
+
+class OrganizationBranch(GeoRefModel, VotableModel):
     name = models.CharField(max_length=320)
     slug = models.SlugField(max_length=320)
 
@@ -66,6 +112,8 @@ class OrganizationBranch(GeoRefModel):
 
     creation_date = models.DateTimeField(auto_now_add=True)
     creator = models.ForeignKey(User, null=True, blank=True)
+
+    community = models.ManyToManyField(Community, null=True, blank=True)
 
     def __unicode__(self):
         return unicode(self.name)
@@ -95,6 +143,22 @@ class OrganizationCategory(models.Model):
         else:
             return OrganizationCategoryTranslation.objects.get(
                 lang=settings.LANGUAGE_CODE, category=self).name
+
+    @classmethod
+    def get_image(cls, name):
+        return "img/org_categories/%s.png" % slugify(name)
+
+    @classmethod
+    def get_image_off(cls, name):
+        return "img/org_categories/%s-off.png" % slugify(name)
+
+    @property
+    def image(self):
+        return self.get_image(self.name)
+
+    @property
+    def image_off(self):
+        return self.get_image_off(self.name)
 
 
 class OrganizationCategoryTranslation(models.Model):

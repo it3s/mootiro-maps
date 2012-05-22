@@ -1,5 +1,5 @@
 <div class="block">
-  <h4><a href="{% if proposal.need.community %}{% url view_proposal proposal.need.community.slug proposal.need.slug proposal.number %}{% else %}{% url view_proposal proposal.need.slug proposal.number %}{% endif %}">
+  <h4><a href="{% if proposal.need.community.count %}{% url view_proposal proposal.need.community.all.0.slug proposal.need.slug proposal.number %}{% else %}{% url view_proposal proposal.need.slug proposal.number %}{% endif %}">
     {{ proposal.title|truncatewords:3 }}</a></h4>
   <span class="meta-info">created by</span> {{ proposal.creator }}
 </div>

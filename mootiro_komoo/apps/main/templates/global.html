@@ -22,6 +22,7 @@
     <script type="text/javascript" src="{{STATIC_URL}}lib/shortcut.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/komoo_utils.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/moderation.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/ajaxforms.js"></script>
 
     {{ form.media.js }}
     {% block css %}{% endblock %}
@@ -60,6 +61,21 @@
     </div>
     {% block page_scripts %}{% endblock %}
 
+    <script type="text/javascript">
+      $(function(){
+        // fixes annoying behaviour on leaving a community context
+        var areas = ['organization', 'needs', 'resource', 'investments'],
+            path_split = location.pathname.split('/');
+
+        if ( ($.inArray(path_split[1], areas) == -1) &&
+             ($.inArray(path_split[2], areas) > -1) ){
+          $('#tabs .tab a').attr('href',
+              '/' + path_split.slice(2).join('/') );
+        }
+
+      });
+    </script>
+
     <!-- Google Analytics -->
     <script type="text/javascript">
 
@@ -74,7 +90,6 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-
     </script>
   </body>
 </html>

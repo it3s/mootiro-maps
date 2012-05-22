@@ -3,32 +3,39 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django import forms
+from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
+from ajaxforms import AjaxModelForm
 
 from main.utils import MooHelper
-from main.widgets import Autocomplete, Tagsinput, TaggitWidget, ImageSwitchMultiple
+from main.widgets import Tagsinput, TaggitWidget, ImageSwitchMultiple
+from ajax_select.fields import AutoCompleteSelectMultipleField
 from need.models import Need, NeedCategory, TargetAudience
-from community.models import Community
 
 
-class NeedForm(forms.ModelForm):
+class NeedForm(AjaxModelForm):
     class Meta:
         model = Need
-        fields = ('community', 'title', 'description', 'categories',
-                    'target_audiences', 'tags', 'geometry', 'files')
+        fields = ('title', 'description', 'categories',
+                    'target_audiences', 'tags', 'community', 'files')
+
+    _field_labels = {
+        'community': _('Community'),
+        'title': _('Title'),
+        'description': _('Description'),
+        'categories': _('Categories'),
+        'target_audiences': _('Target audiences'),
+        'tags': _('Tags'),
+        'files': _(' '),
+    }
 
     class Media:
         js = ('lib/jquery.imagetick-original.js',)
 
-    # FIXME: the urls below should not be hardcoded. They should be calculated
-    # with reverse_lazy function, which is not implemented in Django 1.3 yet.
-    community = forms.ModelChoiceField(
-        queryset=Community.objects.all(),
-        widget=Autocomplete(Community, "/community/search_by_name"),
-        required=False
-    )
+    community = AutoCompleteSelectMultipleField('community', help_text='',
+        required=False)
 
     description = forms.CharField(widget=MarkItUpWidget())
 
@@ -51,16 +58,11 @@ class NeedForm(forms.ModelForm):
         required=False
     )
 
-    geometry = forms.CharField(widget=forms.HiddenInput())
-
     files = FileuploadField(required=False)
 
     def __init__(self, *a, **kw):
-        # Crispy forms configuration
-        self.helper = MooHelper()
-        self.helper.form_id = "need_form"
-
-        super(NeedForm, self).__init__(*a, **kw)
+        self.helper = MooHelper(form_id="need_form")
+        return super(NeedForm, self).__init__(*a, **kw)
 
     # def clean_community(self):
     #     value = self.cleaned_data['community']
@@ -68,6 +70,25 @@ class NeedForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         need = super(NeedForm, self).save(*args, **kwargs)
-        files_id_list = self.cleaned_data.get('files', '').split('|')
-        UploadedFile.bind_files(files_id_list, need)
+        UploadedFile.bind_files(
+            self.cleaned_data.get('files', '').split('|'), need)
         return need
+
+
+class NeedFormGeoRef(NeedForm):
+    class Meta:
+        model = Need
+        fields = ('title', 'description', 'categories',
+                    'target_audiences', 'tags', 'community', 'geometry', 'files')
+
+    _field_labels = {
+        'community': _('Community'),
+        'title': _('Title'),
+        'description': _('Description'),
+        'categories': _('Categories'),
+        'target_audiences': _('Target audiences'),
+        'tags': _('Tags'),
+        'files': _(' '),
+    }
+
+    geometry = forms.CharField(widget=forms.HiddenInput())

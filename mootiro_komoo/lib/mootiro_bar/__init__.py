@@ -28,7 +28,7 @@ except ImportError:
 DEFAULT_SERVICES = [
     ('Form', 'http://form.mootiro.org'),
     ('Vote', 'http://vote.mootiro.org'),
-    ('Maps', 'http://beta.maps.mootiro.org'),
+    ('Maps', 'http://maps.mootiro.org'),
     ('Wiki', 'http://wiki.mootiro.org'),
                     ]
 DEFAULT_MAIN_LINK = ('Mootiro', 'http://mootiro.org')

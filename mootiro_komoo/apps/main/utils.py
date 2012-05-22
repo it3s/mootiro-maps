@@ -5,11 +5,28 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import re
 
+from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.urlresolvers import reverse
+from django.shortcuts import HttpResponseRedirect
+from django.utils.translation import ugettext_lazy as _
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Reset
+
+try:
+    from functools import wraps
+except ImportError:
+    def wraps(wrapped, assigned=('__module__', '__name__', '__doc__'),
+              updated=('__dict__',)):
+        def inner(wrapper):
+            for attr in assigned:
+                setattr(wrapper, attr, getattr(wrapped, attr))
+            for attr in updated:
+                getattr(wrapper, attr).update(getattr(wrapped, attr, {}))
+            return wrapper
+        return inner
 
 
 def slugify(term, slug_exists=lambda s: False):
@@ -90,10 +107,12 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
 
 
 class MooHelper(FormHelper):
-    def __init__(self, *a, **kw):
+    def __init__(self, form_id=None, *a, **kw):
         retorno = super(MooHelper, self).__init__(*a, **kw)
-        self.add_input(Submit('submit', 'Submit'))
-        self.add_input(Reset('reset', 'Reset'))
+        if form_id:
+            self.form_id = form_id
+        self.add_input(Submit('submit', _('Submit'), css_class='button'))
+        # self.add_input(Reset('reset', 'Reset'))
         return retorno
 
 
@@ -122,6 +141,12 @@ def paginated_query(query, request=None, page=None, size=None):
     return _paginated_query
 
 
+date_order_map = {
+    'desc': '-',
+    'asc': ''
+}
+
+
 def sorted_query(query_set, sort_fields, request, default_order='name'):
     """
     Used for handle listing sorters
@@ -129,22 +154,40 @@ def sorted_query(query_set, sort_fields, request, default_order='name'):
         query_set: any query set object or manager
         request: the HttpRequest obejct
     """
+    query_set = query_set.all()
     sort_order = {k: i for i, k in enumerate(sort_fields)}
     sorters = request.GET.get('sorters', '')
     if sorters:
         sorters = sorted(sorters.split(','), key=lambda val: sort_order[val])
 
+    for i, sorter in enumerate(sorters[:]):
+        if 'date' in sorter:
+            date_order = request.GET.get(sorter, '-')
+            sorters[i] = date_order_map[date_order] + sorter
+        if 'votes' in sorter:
+            query_set = query_set.extra(
+                select={'votes_diff': 'votes_up - votes_down'})
+            sorters[i] = '-votes_diff'
+
     if sorters:
-        return query_set.all().order_by(*sorters)
+        return query_set.order_by(*sorters)
     else:
-        return query_set.all().order_by(default_order)
+        return query_set.order_by(default_order)
 
 
-def filter_by_tags_query(query_set, request):
-    tags = request.GET.get('tags', '')
-    if tags:
-        tags = tags.split(',')
-        query_set = query_set.filter(tags__name__in=tags)
+def filtered_query(query_set, request):
+    filters = request.GET.get('filters', '')
+    for f in filters.split(','):
+        if f == 'tags':
+            request.encoding = 'latin-1'
+            tags = request.GET.get('tags', '')
+            if tags:
+                tags = tags.split(',')
+                query_set = query_set.filter(tags__name__in=tags)
+        if f == 'community':
+            community = request.GET.get('community', '')
+            if community:
+                query_set = query_set.filter(community=community)
     return query_set
 
 
@@ -170,3 +213,32 @@ def templatetag_args_parser(*args):
             a = arg.split('=')
             parsed_args[a[0]] = a[1]
     return parsed_args
+
+
+def fix_community_url(view_name):
+    def renderer(function):
+        @wraps(function)
+        def wrapper(request, community_slug='', *args, **kwargs):
+            from community.models import Community
+
+            comm_id = request.GET.get('community', '')
+            comm = Community.objects.get(pk=comm_id) if comm_id else None
+            if (community_slug and comm and comm.slug != community_slug) or (not community_slug and comm):
+                current_url = request.get_full_path()
+                url = reverse(view_name, kwargs={'community_slug': comm.slug})
+                url += current_url[current_url.index('?'):]
+                return HttpResponseRedirect(url)
+
+            return function(request, community_slug=community_slug, *args, **kwargs)
+        return wrapper
+    return renderer
+
+
+def clean_autocomplete_field(field_data, model):
+    try:
+        if not field_data or field_data == 'None':
+            return model()
+        else:
+            return model.objects.get(pk=field_data)
+    except:
+        raise forms.ValidationError(_('invalid field data'))

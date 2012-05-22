@@ -8,7 +8,7 @@
 {% load komoo_tags %}
 {% load markitup_tags %}
 
-{% block title %}{{ need.title }} at {{ need.community.name }}{% endblock %}
+{% block title %}{{ need.title }} {% endblock %}
 
 {% block menu %} {% menu need "need" %} {% endblock %}
 
@@ -16,9 +16,9 @@
   {% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'ajax=True' 'lazy=True' %}
   <div id="main-content">
     <div class="need main-column">
-      <h2>{{ need.title }} <div class="view-edit-btn right"><a href="{% if need.community %}{% url edit_need need.community.slug need.slug %}{% else %}{% url edit_need need.slug %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a></div></h2>
+      <h2 class="title">{{ need.title }} <div class="view-edit-btn right"><a href="{% if community %}{% url edit_need community.slug need.slug %}{% else %}{% url edit_need need.slug %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a></div></h2>
 
-      <ul class="horizontal">
+      <ul class="horizontal" id="categories">
         {% for c in need.categories.all %}
         <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
         {% endfor %}
@@ -47,6 +47,12 @@
           {% pagination photos %}
           {% endif %}
       </div>
+
+      <div class="view-extras">
+        {% taglist need %}
+        {% track_buttons %}
+        {% comments need %}
+      </div>
     </div>
 
   <div class="right-bar">
@@ -57,35 +63,38 @@
       {% for proposal in need.proposals.all %}
         {% proposal_summary proposal %}
       {% endfor %}
-      <a class="button" href="{% if need.community %}{% url new_proposal need.community.slug need.slug %}{% else %}{% url new_proposal need.slug %}{% endif %}">
+      <a class="button" href="{% if community %}{% url new_proposal community.slug need.slug %}{% else %}{% url new_proposal need.slug %}{% endif %}">
         {% trans "New proposal" %}
       </a>
     </div>
     {% with similar_needs=need.tags.similar_objects %}
       {% if similar_needs %}
-      <div class="block">
+      <div id="related-needs" class="block">
         <h3>{% trans "Related needs" %}</h3>
         <ul>
           {% for n in similar_needs %}
-          <li>
-            {% if n.community %}
-              <a href="{% url view_need n.community.slug n.slug %}"> {{ n.title }} </a>
-              {% trans 'at' %} {{ n.community.name }}
-            {% else %}
-              <a href="{% url view_need n.slug %}"> {{ n.title }} </a>
+          <li {% if forloop.counter > 5 %}class="overflow hidden"{% endif %}>
+            <a href="{% url view_need n.slug %}"> {{ n.title }} </a>
+            {% if n.community.all.count %}
+              {% trans 'at' %}
+              {% for comm in n.community.all %}
+                <a href="{% url view_community comm.slug %}">
+                  {{ comm.name }}
+                </a>
+                {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
+              {% endfor %}
             {% endif %}
           </li>
+          {% empty %}
+          <li>{% trans "No related needs." %}</li>
           {% endfor %}
         </ul>
+        <div class="centralizer"><span class="show-more clickable">See more</span></div>
+        <div class="centralizer hidden"><span class="show-less clickable">See less</span></div>
+        <div class="clear-both"></div>
       </div>
       {% endif %}
     {% endwith %}
-  </div>
-
-  <div class="view-extras">
-    {% taglist need %}
-    {% track_buttons %}
-    {% comments need %}
   </div>
 
 </div>
@@ -107,5 +116,10 @@
         }
       });
 
+      $('#related-needs .show-more, #related-needs .show-less').on("click", function (e) {
+        $('#related-needs li.overflow').toggle();
+        $('#related-needs .show-more').parent().toggle();
+        $('#related-needs .show-less').parent().toggle();
+      });
     </script>
 {% endblock %}

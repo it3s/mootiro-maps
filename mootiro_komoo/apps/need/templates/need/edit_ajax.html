@@ -1,7 +1,13 @@
-{% if redirect %}
-  <script>window.location = '{{redirect}}';</script>
-{% else %}
-  {% load crispy_forms_tags %}
-  {{ form.media }}
-  {% crispy form form.helper %}
-{% endif %}
+
+{% load crispy_forms_tags %}
+<link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+<script type="text/javascript" src="/static/js/ajax_select.js"></script>
+{{ form.media }}
+
+{% crispy form form.helper %}
+
+<script type="text/javascript">
+  $(function(){
+    $('#need_form').ajaxform();
+  })
+</script>

@@ -3,26 +3,26 @@
     xmlns:i18n="http://genshi.edgewall.org/i18n"
     xmlns:xi="http://www.w3.org/2001/XInclude"
     py:strip=''>
-  <div class="mootiro_bar" style="height: 25px; background-color: white; clear: both; position: relative; z-index: 10000; line-height: 16px;">
-    <ol class="services" style="float:left; display: block; list-style: none outside none; margin: 0; padding: 3px 0 0;">
-      <li style="display: inline-block; padding: 0 6px; margin: 0 10px; height: 22px; ${selected==main_link[0] and 'background: #dceff4;' or ''}">
+  <div class="mootiro_bar" style="height: 22px; background-color: white; clear: both; position: relative; z-index: 10000; line-height: 16px;">
+    <ol class="services" style="float:left; display: block; list-style: none outside none; margin: 0; padding: 0;">
+      <li style="display: inline-block; padding: 0 12px; margin: 0 10px; height: 22px; ${selected==main_link[0] and 'background: #dceff4;' or ''}">
         <a href="${main_link[1]}">${main_link[0]}</a>
       </li>
       <py:if test="user and enable_notifications">
-        <li id="alerts" style="display: inline; padding: 0 6px; margin: 0 4px;">
+        <li id="alerts" style="display: inline; padding: 0 12px; margin: 0 4px;">
           <a href="#">${_("Notifications")} <span class="count" style="visibility:hidden; padding:0 5px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; font-size:100%; font-weight:normal;">-</span></a>
         </li>
       </py:if>
       <py:for each="service in services">
-        <li style="display: inline-block; padding: 0 6px; margin: 0 4px; height: 22px; ${selected==service[0] and 'background: #dceff4;' or ''}">
-          <a href="${service[1]}">${service[0]}</a>
+        <li style="display: inline-block; padding: 0 12px; margin: 0 4px; height: 23px; ${selected==service[0] and 'background: #dceff4;' or ''}">
+          <a style="${selected==service[0] and 'color: #000;' or ''} padding-top: 2px;" href="${service[1]}">${service[0]}</a>
         </li>
       </py:for>
     </ol>
 
     <ol class="userinfo" style="float:right; display: block; list-style: none outside none; margin: 0; padding: 3px 0 0;">
       <py:if test="user">
-        <li style="display: inline; padding: 0 6px; margin: 0 4px; float: right;">
+        <li style="display: inline; padding: 0 12px; margin: 0 4px; float: right;">
           <py:if test="logout_method == 'POST'">
             <form style="display: inline;" id="logout_bar" action="${logout_url}" method="post" />
             <a onclick="$('form#logout_bar').submit()" href="#">${_("Log out")}</a>
@@ -31,19 +31,19 @@
             <a href="${logout_url}">${_("Log out")}</a>
           </py:if>
         </li>
-        <li style="display: inline; padding: 0 6px; margin: 0 4px; float: right;">
+        <li style="display: inline; padding: 0 12px; margin: 0 4px; float: right;">
           <a href="${settings_url}">${_("Settings")}</a>
         </li>
-        <li style="display: inline; padding: 0 6px; margin: 0 4px; height: 22px; float: right;">
+        <li style="display: inline; padding: 0 12px; margin: 0 4px; height: 20px; float: right;">
           <a href="${user_url}">${user}</a>
         </li>
       </py:if>
       <py:if test="not user">
-        <li style="display: inline-block; padding: 0 6px; margin: 0 4px; float: right;">
-          <a href="${login_url}">${_("Login")}</a>
+        <li style="display: inline-block; padding: 0 12px; margin: 0 4px; float: right;">
+          <a href="${login_url}" class="login-required">${_("Login")}</a>
         </li>
       </py:if>
-      <li style="display: inline-block; padding: 0 6px; margin: 0 4px; float: right;">
+      <li style="display: inline-block; padding: 0 12px; margin: 0 4px; float: right;">
         <a href="${help_url}">${_("Help")}</a>
       </li>
     </ol>

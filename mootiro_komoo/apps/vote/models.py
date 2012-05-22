@@ -28,3 +28,17 @@ class Vote(models.Model):
         obj_content_type = ContentType.objects.get_for_model(obj)
         return Vote.objects.filter(content_type=obj_content_type,
             object_id=obj.id)
+
+
+class VotableModel(models.Model):
+    """
+    Votable interface for denormalizing votes
+    """
+    votes_up = models.PositiveIntegerField(blank=True, default=0)
+    votes_down = models.PositiveIntegerField(blank=True, default=0)
+
+    # def save(self, *a, **kw):
+    #     return super(Votable, self).save(*a, **kw)
+
+    class Meta:
+        abstract = True
