@@ -1394,10 +1394,20 @@ textarea.markItUpEditor{
     color: #009CB4;
     margin-bottom: 10px;
 }
-.branches-see-all img{
+.branches-see-all .see-on-map-icon{
+    background-image: url('/static/img/ver-no-mapa.png');
+    background-repeat: no-repeat;
     width:12px;
     height:18px;
     margin-right: 10px;
+    display: inline-block;
+}
+.branches-see-all:hover{
+    color: #000000;
+    cursor: pointer;
+}
+.branches-see-all:hover .see-on-map-icon{
+    background-image: url('/static/img/ver-no-mapa-hover.png');
 }
 .branch-pagination{
     margin-right: 10px;

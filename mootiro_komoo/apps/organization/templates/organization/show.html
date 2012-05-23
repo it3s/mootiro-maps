@@ -89,9 +89,7 @@
 
             <div class="org-info-panel branches-list" >
                 <div class="branches-see-all">
-                    <a href="#">
-                        <img src="{{ STATIC_URL }}img/ver-no-mapa.png">{% trans 'see all' %}
-                    </a>
+                    <div class="see-on-map-icon"></div>{% trans 'see all' %}
                 </div>
                 {% with page_size=2 %}
                 {% for branch in organization.organizationbranch_set.all %}
