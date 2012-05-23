@@ -1048,6 +1048,8 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 }
 .view-follow-btns {
   margin-bottom: 30px;
+  width: 300px;
+  display: inline-block;
 }
 .view-follow-btns .btn{
     margin-right: 10px;
@@ -1739,4 +1741,8 @@ ul.two-cols li {
 .internal-error .content form.error-report {
     display: inline-block;
 }
-
+.social-buttons{
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}

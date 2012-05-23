@@ -123,6 +123,11 @@ def track_buttons():
     return dict()
 
 
+@register.inclusion_tag('main/templatetags/social_buttons.html')
+def social_buttons():
+    return dict()
+
+
 @register.inclusion_tag('main/templatetags/taglist.html')
 def taglist(obj, community=None):
     sorter = 'name'
