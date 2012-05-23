@@ -183,7 +183,7 @@ def get_range(value):
 
 
 def _get_widgets_dict(obj):
-    tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % obj)
+    tag_widget = TaggitWidget(autocomplete_url="/%s/search_tags/" % obj)
     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
 
     community_widget = Autocomplete(Community, '/community/search_by_name')

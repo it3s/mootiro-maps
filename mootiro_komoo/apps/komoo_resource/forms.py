@@ -25,7 +25,7 @@ class FormResource(AjaxModelForm):
             ResourceKind.favorites(number=10), can_add=True))
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
     tags = forms.Field(required=False, widget=TaggitWidget(
-            autocomplete_url="/resource/search_by_tag/"))
+            autocomplete_url="/resource/search_tags/"))
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     files = FileuploadField(required=False)

@@ -220,5 +220,11 @@
   {"pk": 4, "model": "taggit.tag", "fields": {"name": "saúde", "slug": "saude"}},
   {"pk": 5, "model": "taggit.tag", "fields": {"name": "Higiene", "slug": "higiene"}},
   {"pk": 4, "model": "taggit.taggeditem", "fields": {"tag": 4, "content_type": 20, "object_id": 1}},
-  {"pk": 5, "model": "taggit.taggeditem", "fields": {"tag": 5, "content_type": 20, "object_id": 1}}
+  {"pk": 5, "model": "taggit.taggeditem", "fields": {"tag": 5, "content_type": 20, "object_id": 1}},
+
+  {"pk": 6, "model": "taggit.tag", "fields": {"name": "mudar o mundo", "slug": "mudar-o-mundo"}},
+  {"pk": 7, "model": "taggit.tag", "fields": {"name": "Engajado", "slug": "engajado"}},
+  {"pk": 6, "model": "taggit.taggeditem", "fields": {"tag": 6, "content_type": 26, "object_id": 1}},
+  {"pk": 7, "model": "taggit.taggeditem", "fields": {"tag": 6, "content_type": 26, "object_id": 2}},
+  {"pk": 8, "model": "taggit.taggeditem", "fields": {"tag": 7, "content_type": 26, "object_id": 1}}
 ]

@@ -22,8 +22,8 @@ urlpatterns = patterns('komoo_resource.views',
 
     url(r'^resource/search_by_kind/$', 'search_by_kind',
             name='resource_search_by_kind'),
-    url(r'^resource/search_by_tag/$', 'search_by_tag',
-            name='resource_search_by_tag'),
+    url(r'^resource/search_tags/$', 'search_tags',
+            name='resource_search_tags'),
     url(r'^resource/get_or_add_kind/$', 'resource_get_or_add_kind',
             name='resource_get_or_add_kind'),
 
