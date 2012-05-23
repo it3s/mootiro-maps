@@ -88,16 +88,6 @@ def radial_search(request):
     return d
 
 
-@render_to('404.html')
-def test_404(request):
-    return {}
-
-
-@render_to('500.html')
-def test_500(request):
-    return {}
-
-
 def _query_model(model, term, fields):
     query = Q()
     for field in fields:
@@ -184,6 +174,16 @@ def komoo_search(request):
         })
     result['google'] = google_results.content
     return {'result': result}
+
+
+@render_to('404.html')
+def test_404(request):
+    return {}
+
+
+@render_to('500.html')
+def test_500(request):
+    return {}
 
 
 def custom_404(request):
