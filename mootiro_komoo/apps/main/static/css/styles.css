@@ -1267,10 +1267,10 @@ div.view-list-item.odd {
     height: 60px;
     margin-right: 20px;
 }
-.organization-right-bar{
+.right-bar-modif{
     color: #555555;
 }
-.organization-right-bar h4{
+.right-bar-modif h4{
     color: #000000;
 }
 .branch-link-btn{
@@ -1311,7 +1311,7 @@ div.view-list-item.odd {
 textarea.markItUpEditor{
     height: 250px;
 }
-#form_organization #div_id_contact .markItUpEditor{
+#div_id_contact .markItUpEditor{
     height: 80px;
 }
 .form-branch-edit .results_on_deck{

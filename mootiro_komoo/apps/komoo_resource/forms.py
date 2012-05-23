@@ -23,23 +23,23 @@ class FormResource(AjaxModelForm):
     kind = forms.CharField(required=False, widget=AutocompleteWithFavorites(
             ResourceKind, '/resource/search_by_kind/',
             ResourceKind.favorites(number=10), can_add=True))
+    contact = forms.CharField(required=False, widget=MarkItUpWidget())
     tags = forms.Field(required=False, widget=TaggitWidget(
             autocomplete_url="/resource/search_by_tag/"))
-    # community = forms.CharField(required=False, widget=Autocomplete(
-    #         Community, '/community/search_by_name'))
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     files = FileuploadField(required=False)
 
     class Meta:
         model = Resource
-        fields = ('name', 'description', 'kind', 'tags', 'community', 'id',
-            'files')
+        fields = ('name', 'description', 'kind', 'contact', 'tags', 'community',
+            'id', 'files')
 
     _field_labels = {
         'name': _('Name'),
         'description': _('Description'),
         'kind': _('Kind'),
+        'contact': _('Contact'),
         'tags': _('Tags'),
         'community': _('Community'),
         'files': '', }
@@ -60,15 +60,11 @@ class FormResource(AjaxModelForm):
         return clean_autocomplete_field(
             self.cleaned_data['kind'], ResourceKind)
 
-    # def clean_community(self):
-    #     return clean_autocomplete_field(
-    #         self.cleaned_data['community'], Community)
-
 
 class FormResourceGeoRef(FormResource):
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
 
     class Meta:
         model = Resource
-        fields = ('name', 'description', 'kind', 'tags', 'community', 'id',
-            'geometry', 'files')
+        fields = ('name', 'description', 'kind', 'contact', 'tags', 'community',
+            'id', 'geometry', 'files')
