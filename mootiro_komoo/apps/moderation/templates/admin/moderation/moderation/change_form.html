@@ -2,6 +2,16 @@
 
 {% block after_related_objects %}
   {% with original.content_object as object %}
-  <a href="{{ original.object_admin_url }}">{{ object }}</a>
+  <p>Object: <a href="{{ original.object_admin_url }}">{{ object }}</a></p>
+  {% endwith %}
+  {% with original.reports.all as reports %}
+  <p>
+  Reports:
+  <ul>
+    {% for object in reports %}
+    <li><a href="{{ object.object_admin_url }}">{{ object }}</a></li>
+    {% endfor %}
+  </ul>
+  </p>
   {% endwith %}
 {% endblock %}

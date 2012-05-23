@@ -6,6 +6,7 @@
 {% load vote_tags %}
 {% load proposal_tags %}
 {% load komoo_tags %}
+{% load moderation_tags %}
 {% load markitup_tags %}
 
 {% block title %}{{ need.title }} {% endblock %}
@@ -51,6 +52,8 @@
       <div class="view-extras">
         {% taglist need %}
         {% track_buttons %}
+        {% report_content need %}
+        {% delete_button need %}
         {% comments need %}
       </div>
     </div>

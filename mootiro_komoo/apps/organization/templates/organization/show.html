@@ -1,6 +1,7 @@
 {% extends 'global.html' %}
 
 {% load komoo_tags %}
+{% load moderation_tags %}
 {% load komoo_map_tags %}
 {% load i18n %}
 {% load comment_tags %}
@@ -254,6 +255,8 @@
     <div class="view-extras">
         {% taglist organization %}
         {#% track_buttons %#}
+        {% report_content organization %}
+        {% delete_button organization %}
         {% comments organization %}
     </div>
 

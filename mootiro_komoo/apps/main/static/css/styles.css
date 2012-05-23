@@ -1054,7 +1054,9 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .delete-content span,
 .report-content span,
 .view-follow-btns {
+  color: #444444;
   margin-bottom: 30px;
+  margin-left: 7px;
 }
 .view-follow-btns .btn{
     margin-right: 10px;

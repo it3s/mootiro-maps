@@ -5,6 +5,7 @@ from community.models import Community
 
 
 class CommunityAdmin(VersionAdmin):
-    list_display = ('__unicode__', abuse_reports)
+    #list_display = ('__unicode__', abuse_reports)
+    pass
 
 admin.site.register(Community, CommunityAdmin)

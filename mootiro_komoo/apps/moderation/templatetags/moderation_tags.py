@@ -1,7 +1,7 @@
 #coding: utf-8
 from django import template
 from django.contrib.contenttypes.models import ContentType
-from moderation.models import Moderation
+from moderation.models import Moderation, Report
 register = template.Library()
 
 
@@ -39,4 +39,4 @@ def report_content_box(context):
         {% report_content_box %}
     """
 
-    return dict(types=Moderation.TYPE[1:])
+    return dict(types=Report.TYPE[1:])
