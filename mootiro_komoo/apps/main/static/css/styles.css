@@ -1318,12 +1318,16 @@ textarea.markItUpEditor{
     margin-left: 15px;
 }
 .org-widget-categories .controls{
-    height: 300px;
+    height: 250px;
 }
-.org-widget-categories .checkbox{
+.org-widget-categories label{
     display: inline-block;
     width: 200px;
     padding-right: 10px;
+}
+#div_id_categories.org-widget-categories input{
+    display: inline-block;
+    width: 20px;
 }
 .organization-buttons{
     margin-top: 20px;

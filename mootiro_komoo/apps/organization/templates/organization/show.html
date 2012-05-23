@@ -88,6 +88,8 @@
             </div>
 
             <div class="org-info-panel branches-list" >
+                {% if organization.organizationbranch_set.count %}
+
                 <div class="branches-see-all">
                     <div class="see-on-map-icon"></div>{% trans 'see all' %}
                 </div>
@@ -121,18 +123,21 @@
                 </div>
                 {% endfor %}
 
+                {% if organization.organizationbranch_set.count > page_size %}
                 <a href="#" class="branch-pagination" page="1">
                     &lt;&lt;{%trans 'first' %}
                 </a>
-                {% for i in organization.organizationbranch_set.count|div:page_size|get_range %}
+                {% for i in organization.organizationbranch_set.count|total_pages:page_size|get_range %}
                     <a href="#" class="branch-pagination {% if i == 0 %}current-page{% endif %}" page="{{ i|add:1 }}">{{ i|add:1 }}</a>
 
                 {% endfor %}
-                <a href="#" class="branch-pagination" page="{{ organization.organizationbranch_set.count|div:page_size }}">
+                <a href="#" class="branch-pagination" page="{{ organization.organizationbranch_set.count|total_pages:page_size }}">
                     {% trans 'last' %}&gt;&gt;
                 </a>
-
+                {% endif %}
                 {% endwith %}
+                {% endif %}
+
             </div>
 
             <div class="org-info-panel supported-organizations-list hidden">

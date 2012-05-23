@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals, division
 import ast
+import math
 
 from django import template
 from django import forms
@@ -147,8 +148,8 @@ def page_num(num, div):
 
 
 @register.filter
-def div(num, div):
-    return str(num // div)
+def total_pages(num, div):
+    return math.ceil(num / div)
 
 
 @register.filter
