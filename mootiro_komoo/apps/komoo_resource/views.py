@@ -172,8 +172,8 @@ def search_by_kind(request):
         mimetype="application/x-javascript")
 
 
-def search_by_tag(request):
-    logger.debug('acessing resource > search_by_tag')
+def search_tags(request):
+    logger.debug('acessing resource > search_tags')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Resource).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')

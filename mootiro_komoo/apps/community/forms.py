@@ -32,7 +32,7 @@ class CommunityForm(AjaxModelForm):
     geometry = forms.CharField(widget=forms.HiddenInput())
     files = FileuploadField(required=False)
     tags = forms.Field(
-        widget=TaggitWidget(autocomplete_url="/community/search_by_tag/"),
+        widget=TaggitWidget(autocomplete_url="/community/search_tags/"),
         required=False)
 
     def __init__(self, *a, **kw):

@@ -8,7 +8,7 @@ from django import forms
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import (render_to_response, RequestContext,
-    get_object_or_404, HttpResponse)
+    get_object_or_404, HttpResponse, redirect)
 from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
@@ -39,12 +39,16 @@ def prepare_organization_objects(community_slug="", organization_slug=""):
     community = get_object_or_None(Community, slug=community_slug)
     if organization_slug:
         filters = dict(slug=organization_slug)
-        if community:
+        if community_slug:
             filters["community"] = community
         organization = get_object_or_404(Organization, **filters)
     else:
         organization = Organization(community=community)
     return organization, community
+
+
+def organizations_to_organization(self):
+    return redirect(reverse('organization_list'), permanent=True)
 
 
 @render_to('organization/list.html')
@@ -75,10 +79,10 @@ def organization_list(request, community_slug=''):
 def show(request, organization_slug='', community_slug=''):
     logger.debug('acessing organization > show')
 
-    organization = get_object_or_404(Organization, slug=organization_slug)
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug, organization_slug=organization_slug)
     branches = organization.organizationbranch_set.all().order_by('name')
     geojson = create_geojson(branches)
-    community = get_object_or_None(Community, slug=community_slug)
     files = UploadedFile.get_files_for(organization)
     if organization.logo_id:
         files = files.exclude(pk=organization.logo_id)
@@ -246,8 +250,8 @@ def search_by_name(request):
         mimetype="application/x-javascript")
 
 
-def search_by_tag(request):
-    logger.debug('acessing organization > search_by_tag')
+def search_tags(request):
+    logger.debug('acessing organization > search_tags')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Organization).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')

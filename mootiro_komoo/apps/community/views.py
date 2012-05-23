@@ -13,8 +13,9 @@ from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
 from django.db.models import Count
-from ajaxforms import ajax_form
+from django.shortcuts import redirect
 
+from ajaxforms import ajax_form
 from annoying.decorators import render_to, ajax_request
 from fileupload.models import UploadedFile
 from lib.taggit.models import TaggedItem
@@ -98,6 +99,10 @@ def map(request):
     return dict(geojson={})
 
 
+def communities_to_community(self):
+    return redirect(reverse('list_communities'), permanent=True)
+
+
 @render_to('community/list.html')
 def list(request):
     logger.debug('acessing community > list')
@@ -136,8 +141,8 @@ def search_by_name(request):
     return HttpResponse(simplejson.dumps(d), mimetype="application/x-javascript")
 
 
-def search_by_tag(request):
-    logger.debug('acessing community > search_by_tag')
+def search_tags(request):
+    logger.debug('acessing community > search_tags')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Community).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')

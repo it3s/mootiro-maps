@@ -114,7 +114,7 @@ class CommunityViewsTestCase(KomooTestCase):
 
     # searches
     @logged_and_unlogged
-    def test_community_search_by_name_is_up(self):
+    def test_community_search_by_name(self):
         url = reverse('search_community_by_name') + "?term=Higi"
         http_resp = self.client.get(url)
         self.assertEqual(http_resp.status_code, 200)
@@ -125,12 +125,12 @@ class CommunityViewsTestCase(KomooTestCase):
         self.assertEquals(simplejson.loads(http_resp.content), [])
 
     @logged_and_unlogged
-    def test_community_search_by_tag_is_up(self):
-        url = reverse('community_search_by_tag') + "?term=fave"
+    def test_community_search_tags(self):
+        url = reverse('community_search_tags') + "?term=fave"
         http_resp = self.client.get(url)
         self.assertEqual(http_resp.status_code, 200)
         self.assertNotEquals(simplejson.loads(http_resp.content), [])
-        url = reverse('community_search_by_tag') + "?term=xdfg"
+        url = reverse('community_search_tags') + "?term=xdfg"
         http_resp = self.client.get(url)
         self.assertEqual(http_resp.status_code, 200)
         self.assertEquals(simplejson.loads(http_resp.content), [])

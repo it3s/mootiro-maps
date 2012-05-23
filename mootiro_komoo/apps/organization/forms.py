@@ -48,7 +48,7 @@ class FormOrganization(AjaxModelForm):
     files = FileuploadField(required=False)
     logo = forms.CharField(required=False, widget=forms.HiddenInput())
     tags = forms.Field(
-        widget=TaggitWidget(autocomplete_url="/organization/search_by_tag/"),
+        widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
         required=False)
 
     class Meta:
