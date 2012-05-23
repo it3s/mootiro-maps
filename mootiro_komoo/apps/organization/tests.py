@@ -94,7 +94,17 @@ class OrganizationViewsTestCase(KomooTestCase):
 
     # searches
     @logged_and_unlogged
-    def test_organization_tag_search(self):
+    def test_organization_search_by_name(self):
+        url = reverse('organization_search_by_name')
+        http_resp = self.client.get(url + "?term=Fomento")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(simplejson.loads(http_resp.content), [])
+        http_resp = self.client.get(url + "?term=xdfg")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])
+
+    @logged_and_unlogged
+    def test_organization_search_tags(self):
         url = reverse('organization_search_tags')
         http_resp = self.client.get(url + "?term=mudar")
         self.assertEqual(http_resp.status_code, 200)
@@ -105,13 +115,3 @@ class OrganizationViewsTestCase(KomooTestCase):
         http_resp = self.client.get(url + "?term=saú")
         self.assertEqual(http_resp.status_code, 200)
         self.assertEquals(simplejson.loads(http_resp.content), [])
-
-    # @logged_and_unlogged
-    # def test_need_target_audience_search_is_up(self):
-    #     url = reverse('target_audience_search')
-    #     http_resp = self.client.get(url + "?term=crian")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertNotEquals(simplejson.loads(http_resp.content), [])
-    #     http_resp = self.client.get(url + "?term=xwyk")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertEquals(simplejson.loads(http_resp.content), [])

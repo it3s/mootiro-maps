@@ -83,11 +83,15 @@ class NeedViewsTestCase(KomooTestCase):
 
     # view
     @logged_and_unlogged
-    def test_need_view_page_is_up(self):
+    def test_need_view_page(self):
         url = reverse('view_need', args=('policiamento',))
         self.assert_get_is_up(url)
         url = reverse('view_need', args=('sao-remo', 'parquinho'))
         self.assert_get_is_up(url)
+        url = reverse('view_need', args=('lalala',))
+        self.assert_404(url)
+        url = reverse('view_need', args=('lalala', 'parquinho'))
+        self.assert_404(url)
 
     # list
     @logged_and_unlogged

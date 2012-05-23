@@ -7,8 +7,9 @@ import logging
 
 from django.contrib.gis.geos import Polygon, Point
 from django.contrib.gis.measure import Distance
+from django.template import loader, Context
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
@@ -185,9 +186,10 @@ def komoo_search(request):
     return {'result': result}
 
 
-@render_to('404.html')
 def custom_404(request):
-    return {'request_path': request.path}
+    t = loader.get_template('404.html')
+    c = Context({'request_path': request.path})
+    return HttpResponseNotFound(t.render(c))
 
 
 @render_to('500.html')

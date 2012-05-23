@@ -105,6 +105,8 @@ class CommunityViewsTestCase(KomooTestCase):
     def test_community_about_page_is_up(self):
         url = reverse('view_community', args=('sao-remo',))
         self.assert_get_is_up(url)
+        url = reverse('view_community', args=('lalala',))
+        self.assert_404(url)
 
     # list
     @logged_and_unlogged

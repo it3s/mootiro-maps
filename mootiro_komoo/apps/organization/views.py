@@ -180,8 +180,7 @@ def edit_organization(request, community_slug='', organization_slug='',
 @ajax_form(form_class=FormBranch)
 def add_branch_from_map(request):
     logger.debug('acessing organization > add_branch_from_map')
-    print '\n\nPOST DATA: %s\n\n' % request.POST
-    return {'here?': True}
+    return {}
 
 
 @login_required
