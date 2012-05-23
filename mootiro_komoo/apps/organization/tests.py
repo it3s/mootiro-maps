@@ -106,12 +106,31 @@ class OrganizationViewsTestCase(KomooTestCase):
     @logged_and_unlogged
     def test_organization_search_tags(self):
         url = reverse('organization_search_tags')
+
         http_resp = self.client.get(url + "?term=mudar")
         self.assertEqual(http_resp.status_code, 200)
         self.assertNotEquals(simplejson.loads(http_resp.content), [])
+
         http_resp = self.client.get(url + "?term=xwyk")
         self.assertEqual(http_resp.status_code, 200)
+
         # 'saúde' is a tag for need, not organization
         http_resp = self.client.get(url + "?term=saú")
         self.assertEqual(http_resp.status_code, 200)
         self.assertEquals(simplejson.loads(http_resp.content), [])
+
+    @logged_and_unlogged
+    def test_verify_org_name(self):
+        url = reverse('verify_org_name')
+
+        http_resp = self.client.post(url, dict(org_name="Minha ONG"))
+        self.assertEqual(http_resp.status_code, 200)
+        json = simplejson.loads(http_resp.content)
+        expected = {'exists': False}
+        self.assertEquals(json, expected)
+
+        http_resp = self.client.post(url, dict(org_name="Alavanca Brasil"))
+        self.assertEqual(http_resp.status_code, 200)
+        json = simplejson.loads(http_resp.content)
+        expected_subset = {'exists': True}
+        self.assertDictContainsSubset(expected_subset, json)
