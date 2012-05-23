@@ -1,11 +1,14 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals, division
 import ast
+import math
+import urllib2
 
 from django import template
 from django import forms
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
+from django.core.urlresolvers import reverse
 
 from main.utils import templatetag_args_parser, create_geojson
 from main.widgets import (ImageSwitch, ImageSwitchMultiple, TaggitWidget,
@@ -120,9 +123,37 @@ def track_buttons():
     return dict()
 
 
+@register.inclusion_tag('main/templatetags/social_buttons.html')
+def social_buttons():
+    return dict()
+
+
 @register.inclusion_tag('main/templatetags/taglist.html')
-def taglist(obj):
-    return dict(object=obj)
+def taglist(obj, community=None):
+    sorter = 'name'
+    if isinstance(obj, Resource):
+        link = reverse('resource_list',
+                    kwargs={'community_slug': community.slug}) if community \
+                else reverse('resource_list')
+    elif isinstance(obj, Organization):
+        link = reverse('organization_list',
+                    kwargs={'community_slug': community.slug}) if community \
+                else reverse('organization_list')
+    elif isinstance(obj, Need):
+        link = reverse('list_community_needs',
+                    kwargs={'community_slug': community.slug}) if community \
+                else reverse('list_all_needs')
+        sorter = 'title'
+    elif isinstance(obj, Community):
+        link = reverse('list_communities')
+    else:
+        link = '#'
+    return dict(object=obj, link=link, sorter=sorter)
+
+
+@register.filter
+def linkencode(val):
+    return urllib2.quote(val.encode('latin-1'))
 
 
 @register.inclusion_tag('main/templatetags/pagination.html')
@@ -147,8 +178,8 @@ def page_num(num, div):
 
 
 @register.filter
-def div(num, div):
-    return str(num // div)
+def total_pages(num, div):
+    return math.ceil(num / div)
 
 
 @register.filter
@@ -157,7 +188,7 @@ def get_range(value):
 
 
 def _get_widgets_dict(obj):
-    tag_widget = TaggitWidget(autocomplete_url="/%s/search_by_tag/" % obj)
+    tag_widget = TaggitWidget(autocomplete_url="/%s/search_tags/" % obj)
     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
 
     community_widget = Autocomplete(Community, '/community/search_by_name')

@@ -9,7 +9,7 @@ from main.tests import A_POLYGON_GEOMETRY
 from .models import Organization
 
 
-def A_ORGANIZATION_DATA():
+def AN_ORGANIZATION_DATA():
     return {
         'name': 'IT15S',
         'description': 'Lorem ipsum.',
@@ -35,7 +35,7 @@ class OrganizationViewsTestCase(KomooTestCase):
 
     def test_new_organization_creation(self):
         self.login_user()
-        data = A_ORGANIZATION_DATA()
+        data = AN_ORGANIZATION_DATA()
         n0 = Organization.objects.count()
         self.client.post(reverse('new_organization'), data)
         self.assertEquals(Organization.objects.count(), n0 + 1)
@@ -46,77 +46,91 @@ class OrganizationViewsTestCase(KomooTestCase):
         self.assert_get_is_up(reverse('edit_organization', args=('alavanca-brasil',)))
         self.assert_get_is_up(reverse('edit_organization', args=('sao-remo', 'alavanca-brasil')))
 
-    # def test_need_edition(self):
-    #     self.login_user()
-    #     n = Need.objects.get(slug='coleta-de-lixo', community__slug='complexo-da-alema')
-    #     print n.community.all()
-    #     data = {
-    #         'id': n.id,  # must set with ajax_form decorator
-    #         'community': [1, 2],
-    #         'title': 'Coleta de sujeira',
-    #         'description': n.description,
-    #         'categories': [3, 4, 5],
-    #         'target_audiences': [3, 4, 5],
-    #         'tags': n.tags,
-    #         'geometry': str(n.geometry),
-    #     }
-    #     url = reverse('edit_need', args=('complexo-da-alema', 'coleta-de-lixo'))
-    #     http_resp = self.client.post(url, data)
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     n2 = Need.objects.get(slug='coleta-de-sujeira')
-    #     self.assertEquals(n.id, n2.id)
-    #     with self.assertRaises(Exception):
-    #         Need.objects.get(slug='coleta-de-lixo')
+    def test_organization_edition(self):
+        self.login_user()
+        o = Organization.objects.get(slug='it3s')
+        data = AN_ORGANIZATION_DATA()
+        data['id'] = o.id
+        url = reverse('edit_organization', kwargs=dict(organization_slug='it3s'))
+        http_resp = self.client.post(url, data)
+        self.assertEqual(http_resp.status_code, 200)
+        o2 = Organization.objects.get(slug='it15s')
+        self.assertEquals(o.id, o2.id)
+        with self.assertRaises(Exception):
+            Organization.objects.get(slug='it3s')
 
-    # # form validation
-    # def test_need_empty_form_validation(self):
-    #     self.login_user()
-    #     http_resp = self.client.post(reverse('new_need'), data={})
-    #     json = simplejson.loads(http_resp.content)
-    #     expected = {
-    #         'success': 'false',
-    #         'errors': {
-    #             'title': ['This field is required.'],
-    #             'description': ['This field is required.'],
-    #             'target_audiences': ['This field is required.'],
-    #             'categories': ['This field is required.'],
-    #         },
-    #     }
-    #     self.assertEquals(json, expected)
+    # form validation
+    def test_organization_empty_form_validation(self):
+        self.login_user()
+        http_resp = self.client.post(reverse('new_organization'), data={})
+        json = simplejson.loads(http_resp.content)
+        expected = {
+            'success': 'false',
+            'errors': {
+                'name': ['This field is required.'],
+            },
+        }
+        self.assertEquals(json, expected)
 
-    # # view
-    # @logged_and_unlogged
-    # def test_need_about_page_is_up(self):
-    #     url = reverse('view_need', args=('policiamento',))
-    #     self.assert_get_is_up(url)
-    #     url = reverse('view_need', args=('sao-remo', 'parquinho'))
-    #     self.assert_get_is_up(url)
+    # view
+    @logged_and_unlogged
+    def test_organization_view_page_is_up(self):
+        url = reverse('view_organization', args=('alavanca-brasil',))
+        self.assert_get_is_up(url)
+        url = reverse('view_organization', args=('sao-remo', 'alavanca-brasil',))
+        self.assert_get_is_up(url)
+        url = reverse('view_organization', args=('lalala', 'alavanca-brasil',))
+        self.assert_404(url)
+        url = reverse('view_organization', args=('sao-remo', 'lalala',))
+        self.assert_404(url)
 
-    # # list
-    # @logged_and_unlogged
-    # def test_communities_list_page_is_up(self):
-    #     url = reverse('list_all_needs')
-    #     self.assert_get_is_up(url)
-    #     url = reverse('list_community_needs', args=('sao-remo',))
-    #     self.assert_get_is_up(url)
+    # list
+    @logged_and_unlogged
+    def test_organization_list_page_is_up(self):
+        url = reverse('organization_list')
+        self.assert_get_is_up(url)
+        url = reverse('organization_list', args=('sao-remo',))
+        self.assert_get_is_up(url)
 
-    # # searches
-    # @logged_and_unlogged
-    # def test_need_tag_search_is_up(self):
-    #     url = reverse('need_tag_search')
-    #     http_resp = self.client.get(url + "?term=saú")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertNotEquals(simplejson.loads(http_resp.content), [])
-    #     http_resp = self.client.get(url + "?term=xwyk")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertEquals(simplejson.loads(http_resp.content), [])
+    # searches
+    @logged_and_unlogged
+    def test_organization_search_by_name(self):
+        url = reverse('organization_search_by_name')
+        http_resp = self.client.get(url + "?term=Fomento")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(simplejson.loads(http_resp.content), [])
+        http_resp = self.client.get(url + "?term=xdfg")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])
 
-    # @logged_and_unlogged
-    # def test_need_target_audience_search_is_up(self):
-    #     url = reverse('target_audience_search')
-    #     http_resp = self.client.get(url + "?term=crian")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertNotEquals(simplejson.loads(http_resp.content), [])
-    #     http_resp = self.client.get(url + "?term=xwyk")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertEquals(simplejson.loads(http_resp.content), [])
+    @logged_and_unlogged
+    def test_organization_search_tags(self):
+        url = reverse('organization_search_tags')
+
+        http_resp = self.client.get(url + "?term=mudar")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(simplejson.loads(http_resp.content), [])
+
+        http_resp = self.client.get(url + "?term=xwyk")
+        self.assertEqual(http_resp.status_code, 200)
+
+        # 'saúde' is a tag for need, not organization
+        http_resp = self.client.get(url + "?term=saú")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])
+
+    @logged_and_unlogged
+    def test_verify_org_name(self):
+        url = reverse('verify_org_name')
+
+        http_resp = self.client.post(url, dict(org_name="Minha ONG"))
+        self.assertEqual(http_resp.status_code, 200)
+        json = simplejson.loads(http_resp.content)
+        expected = {'exists': False}
+        self.assertEquals(json, expected)
+
+        http_resp = self.client.post(url, dict(org_name="Alavanca Brasil"))
+        self.assertEqual(http_resp.status_code, 200)
+        json = simplejson.loads(http_resp.content)
+        expected_subset = {'exists': True}
+        self.assertDictContainsSubset(expected_subset, json)

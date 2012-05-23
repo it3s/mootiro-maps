@@ -1051,16 +1051,17 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .view-follow-btns {
     display: inline-block;
 }
-.delete-content span,
-.report-content span,
 .view-follow-btns {
   color: #444444;
-  margin-bottom: 30px;
-  margin-left: 7px;
+  display: inline-block;
 }
-.view-follow-btns .btn{
+.view-follow-btns .btn,
+.delete-content .btn,
+.report-content .btn {
     margin-right: 10px;
 }
+.delete-content span,
+.report-content span,
 .view-follow-btns span{
   color: #444444;
   margin-left: 7px;
@@ -1096,6 +1097,10 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
   background-color: rgb(225, 239, 245);
   border-radius: 3px;
   border: solid 1px #cccccc;
+}
+.tag a{
+    color: #666666;
+    text-decoration: none;
 }
 .view-list-item-tags .view-tag-list-tags{
     width: 370px;
@@ -1276,10 +1281,10 @@ div.view-list-item.odd {
     height: 60px;
     margin-right: 20px;
 }
-.organization-right-bar{
+.right-bar-modif{
     color: #555555;
 }
-.organization-right-bar h4{
+.right-bar-modif h4{
     color: #000000;
 }
 .branch-link-btn{
@@ -1320,19 +1325,23 @@ div.view-list-item.odd {
 textarea.markItUpEditor{
     height: 250px;
 }
-#form_organization #div_id_contact .markItUpEditor{
+#div_id_contact .markItUpEditor{
     height: 80px;
 }
 .form-branch-edit .results_on_deck{
     margin-left: 15px;
 }
 .org-widget-categories .controls{
-    height: 300px;
+    height: 250px;
 }
-.org-widget-categories .checkbox{
+.org-widget-categories label{
     display: inline-block;
     width: 200px;
     padding-right: 10px;
+}
+#div_id_categories.org-widget-categories input{
+    display: inline-block;
+    width: 20px;
 }
 .organization-buttons{
     margin-top: 20px;
@@ -1403,10 +1412,20 @@ textarea.markItUpEditor{
     color: #009CB4;
     margin-bottom: 10px;
 }
-.branches-see-all img{
+.branches-see-all .see-on-map-icon{
+    background-image: url('/static/img/ver-no-mapa.png');
+    background-repeat: no-repeat;
     width:12px;
     height:18px;
     margin-right: 10px;
+    display: inline-block;
+}
+.branches-see-all:hover{
+    color: #000000;
+    cursor: pointer;
+}
+.branches-see-all:hover .see-on-map-icon{
+    background-image: url('/static/img/ver-no-mapa-hover.png');
 }
 .branch-pagination{
     margin-right: 10px;
@@ -1740,4 +1759,8 @@ ul.two-cols li {
 .internal-error .content form.error-report {
     display: inline-block;
 }
-
+.social-buttons{
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}

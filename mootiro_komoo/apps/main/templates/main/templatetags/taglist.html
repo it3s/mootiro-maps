@@ -1,10 +1,13 @@
 {% load i18n %}
+{% load komoo_tags %}
 <div class="view-tag-list">
   {% if object.tags.all %}
   <span class="inline-block meta-info">{% trans 'Tags:' %}</span>
   <div class="view-tag-list-tags">
   {% for tag in object.tags.all %}
-    <span class="inline-block tag">{{ tag }}</span>
+    <span class="inline-block tag">
+      <a href="{{ link }}?sorters={{ sorter }}&filters=tags&tags={{ tag.name|linkencode }}">{{ tag.name }}</a>
+    </span>
   {% endfor %}
   </div>
   {% else %}

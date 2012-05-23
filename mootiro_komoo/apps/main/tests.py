@@ -44,6 +44,11 @@ class KomooTestCase(TestCase):
         self.assertEqual(http_resp.status_code, 200)
         return http_resp
 
+    def assert_404(self, url):
+        http_resp = self.client.get(url)
+        self.assertEqual(http_resp.status_code, 404)
+        return http_resp
+
 
 class MainViewsTestCase(KomooTestCase):
 

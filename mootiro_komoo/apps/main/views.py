@@ -7,8 +7,9 @@ import logging
 
 from django.contrib.gis.geos import Polygon, Point
 from django.contrib.gis.measure import Distance
+from django.template import loader, Context
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
@@ -85,16 +86,6 @@ def radial_search(request):
         d['resources'] = objs['resources']
 
     return d
-
-
-@render_to('404.html')
-def test_404(request):
-    return {}
-
-
-@render_to('500.html')
-def test_500(request):
-    return {}
 
 
 def _query_model(model, term, fields):
@@ -186,8 +177,19 @@ def komoo_search(request):
 
 
 @render_to('404.html')
+def test_404(request):
+    return {}
+
+
+@render_to('500.html')
+def test_500(request):
+    return {}
+
+
 def custom_404(request):
-    return {'request_path': request.path}
+    t = loader.get_template('404.html')
+    c = Context({'request_path': request.path})
+    return HttpResponseNotFound(t.render(c))
 
 
 @render_to('500.html')
