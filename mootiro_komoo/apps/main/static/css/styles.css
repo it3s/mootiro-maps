@@ -1088,6 +1088,10 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
   border-radius: 3px;
   border: solid 1px #cccccc;
 }
+.tag a{
+    color: #666666;
+    text-decoration: none;
+}
 .view-list-item-tags .view-tag-list-tags{
     width: 370px;
 }
