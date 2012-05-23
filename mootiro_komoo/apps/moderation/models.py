@@ -42,7 +42,7 @@ class Moderation(models.Model):
     objects = ModerationManager()
 
     def __unicode__(self):
-        return '{} ({})'.format(self.content_object.name, self.content_type)
+        return '{} ({})'.format(self.content_object, self.content_type)
 
 
 class Report(models.Model):

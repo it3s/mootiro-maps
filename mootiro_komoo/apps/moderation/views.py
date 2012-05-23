@@ -26,6 +26,7 @@ logger = logging.getLogger(__name__)
 @login_required
 @ajax_request
 def moderation_delete(request, app_label, model_name, obj_id):
+    #FIXME
     logger.debug('accessing Moderation > moderation_delete : POST={}'.format(request.POST))
     content_type = ContentType.objects.get(app_label=app_label, model=model_name)
     model = get_model(app_label, model_name)
@@ -69,8 +70,9 @@ def moderation_report(request, app_label, model_name, obj_id):
         if model:
             obj = get_object_or_404(model, id=obj_id)
             moderation = Moderation.objects.get_for_object_or_create(obj)
-            report = Report.objects.filter(user=request.user, moderation=moderation).all()
-            if report:
+            reports = Report.objects.filter(user=request.user, moderation=moderation).all()
+            if reports:
+                report = reports.get()
                 message = _('already reported')
             else:
                 reason = request.POST.get('reason', 0)
