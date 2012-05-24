@@ -83,7 +83,7 @@
                                 $form.onSuccess(data);
                             }
                             if (data.redirect){
-                                window.location.replace(data.redirect);
+                                window.location = data.redirect;
                             } else {
                                 // clean form
                                 $form.clearForm();
