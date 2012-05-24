@@ -1747,3 +1747,47 @@ ul.two-cols li {
     float: right;
     vertical-align: middle;
 }
+
+#map-supporters {
+    background: #dceff4;
+    padding: 5px;
+    margin-bottom: 10px;
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    border-radius        : 4px 0 0 4px;
+    -moz-border-radius   : 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+}
+#map-supporters-content h3 {
+    font-size: 14px;
+    margin-left: 5px;
+}
+#map-supporters-content img {
+    margin: 12px; /* 4*x, x=3 */
+}
+
+#footer {
+    clear: both;
+    width: 900px;
+    margin-left: 60px;
+   font-size: 90%;
+}
+
+#footer > div {
+    display: inline-block;
+    width: 260px;
+    vertical-align: top;
+}
+
+#footer h3 {
+   font-size: 95%;
+}
+
+#footer .supporters h3 {
+    margin-left: 24px;
+}
+
+#footer .cea-logo {
+    margin: 24px; /* 4*x, x=6 */
+}
