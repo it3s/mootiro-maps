@@ -1367,7 +1367,7 @@ textarea.markItUpEditor{
     /*background-color: rgb(166, 229, 238);*/
     background-color: #ebebeb;
     padding: 10px;
-    display: inline-block;
+    display: block;
     width:97%;
     margin: 10px 0 10px 0;
     border-radius: 7px;
