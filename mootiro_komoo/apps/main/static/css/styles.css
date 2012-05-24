@@ -1073,6 +1073,7 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .view-extras{
   clear: both;
   padding-top: 40px;
+  max-width: 700px;
 }
 .view-tag-list {
   margin: 5px 0 15px 0;

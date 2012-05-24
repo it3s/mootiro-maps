@@ -45,3 +45,9 @@ def logout(request):
 def test_login(request):
     logger.debug('\nUSER:\n{}\n{}'.format(dir(request.user), request.user.username))
     return {}
+
+
+@render_to('user_cas/profile.html')
+def profile(request):
+    logger.debug('accessing user_cas > profile')
+    return {}
