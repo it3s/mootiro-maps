@@ -34,12 +34,6 @@ class KomooTestCase(TestCase):
         test_fixtures defines two users: 'tester' and 'noobzin'."""
         self.client.login(username=username, password="testpass")
 
-    def assert_get_is_up(self, url):
-        return self.assert_200(url)
-
-    def assert_ajax_is_up(self, url):
-        return self.assert_200(url, ajax=True)
-
     def _assert_status(self, url, status, ajax=False):
         params = {}
         if ajax:
@@ -58,4 +52,4 @@ class KomooTestCase(TestCase):
 class MainViewsTestCase(KomooTestCase):
 
     def test_homepage_is_up(self):
-        self.assert_get_is_up('/')
+        self.assert_200('/')

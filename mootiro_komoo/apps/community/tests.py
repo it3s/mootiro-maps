@@ -24,8 +24,8 @@ class CommunityViewsTestCase(KomooTestCase):
     # new_community
     def test_new_community_page_is_up(self):
         self.login_user()
-        self.assert_get_is_up(reverse('new_community'))
-        self.assert_ajax_is_up(reverse('new_community'))
+        self.assert_200(reverse('new_community'))
+        self.assert_200(reverse('new_community'), ajax=True)
 
     def test_new_community_creation(self):
         self.login_user()
@@ -43,7 +43,7 @@ class CommunityViewsTestCase(KomooTestCase):
     # edit_community
     def test_community_edit_page_is_up(self):
         self.login_user()
-        self.assert_get_is_up(reverse('edit_community', args=('sao-remo',)))
+        self.assert_200(reverse('edit_community', args=('sao-remo',)))
 
     def test_community_edition(self):
         self.login_user()
@@ -97,14 +97,14 @@ class CommunityViewsTestCase(KomooTestCase):
     @logged_and_unlogged
     def test_community_on_map_page_is_up(self):
         url = reverse('community_on_map', args=('sao-remo',))
-        http_resp = self.assert_get_is_up(url)
+        http_resp = self.assert_200(url)
         self.assertContains(http_resp, "map-canvas-editor")
 
     # view
     @logged_and_unlogged
     def test_community_about_page_is_up(self):
         url = reverse('view_community', args=('sao-remo',))
-        self.assert_get_is_up(url)
+        self.assert_200(url)
         url = reverse('view_community', args=('lalala',))
         self.assert_404(url)
 
@@ -112,7 +112,7 @@ class CommunityViewsTestCase(KomooTestCase):
     @logged_and_unlogged
     def test_communities_list_page_is_up(self):
         url = reverse('list_communities')
-        self.assert_get_is_up(url)
+        self.assert_200(url)
 
     # searches
     @logged_and_unlogged
