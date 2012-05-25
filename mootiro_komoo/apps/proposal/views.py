@@ -22,17 +22,19 @@ def prepare_proposal_objects(community_slug="", need_slug="", proposal_number=""
     """Retrieves a tuple (proposal, need, community). According to given
     parameters may raise an 404. Creates a new proposal if proposal_number is
     evaluated as false."""
+    community = get_object_or_404(Community, slug=community_slug) \
+                    if community_slug else None
+
     filters = dict(slug=need_slug)
     if community_slug:
-        community = get_object_or_404(Community, slug=community_slug)
         filters["community"] = community
-    else:
-        community = None
     need = get_object_or_404(Need, **filters)
+
     if proposal_number:
         proposal = get_object_or_404(Proposal, number=proposal_number, need=need)
     else:
         proposal = Proposal(need=need)
+
     return proposal, need, community
 
 

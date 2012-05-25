@@ -8,7 +8,7 @@ from main.tests import logged_and_unlogged
 from .models import Proposal
 
 
-def AN_PROPOSAL_DATA():
+def A_PROPOSAL_DATA():
     return {
         'title': 'Falar com a prefeitura',
         'description': 'Lorem ipsum.',
@@ -48,7 +48,7 @@ class ProposalViewsTestCase(KomooTestCase):
     def test_new_proposal_creation(self):
         self.login_user()
 
-        data = AN_PROPOSAL_DATA()
+        data = A_PROPOSAL_DATA()
         n0 = Proposal.objects.count()
         kwargs = dict(community_slug='sao-remo', need_slug='parquinho')
         url = reverse('new_proposal', kwargs=kwargs)
@@ -72,14 +72,14 @@ class ProposalViewsTestCase(KomooTestCase):
         self.login_user()
 
         p = Proposal.objects.get(need__slug='alfabetizacao-de-adultos', number=1)
-        data = AN_PROPOSAL_DATA()
+        data = A_PROPOSAL_DATA()
         data['id'] = p.id
         kwargs = dict(community_slug='higienopolis',
             need_slug='alfabetizacao-de-adultos', proposal_number='1')
         url = reverse('edit_proposal', kwargs=kwargs)
         http_resp = self.client.post(url, data)
         self.assertEqual(http_resp.status_code, 200)
-        p2 = Proposal.objects.get(title=AN_PROPOSAL_DATA()['title'])
+        p2 = Proposal.objects.get(title=A_PROPOSAL_DATA()['title'])
         self.assertEquals(p.id, p2.id)
         with self.assertRaises(Exception):
             Proposal.objects.get(title='Mobral')

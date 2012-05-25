@@ -39,7 +39,8 @@ class ResourceKind(models.Model):
 
 class Resource(GeoRefModel, VotableModel):
     """Resources model"""
-    name = models.CharField(max_length=256, default=_('Resource without name'), db_index=True)
+    name = models.CharField(max_length=256, default=_('Resource without name'))
+    # slug = models.CharField(max_length=256, blank=False, db_index=True)
     creator = models.ForeignKey(User, null=True, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
@@ -54,15 +55,29 @@ class Resource(GeoRefModel, VotableModel):
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
 
-    def files_set(self):
-        """ pseudo-reverse query for retrieving Resource Files"""
-        return UploadedFile.get_files_for(self)
-
     def __unicode__(self):
         return unicode(self.name)
 
+    ### Needed to slugify items ###
+    # def slug_exists(self, slug):
+    #     """Answers if a given slug is valid in the needs namespace of the
+    #     community.
+    #     """
+    #     return Resource.objects.filter(slug=slug).exists()
+
+    # def save(self, *args, **kwargs):
+    #     old_name = Resource.objects.get(id=self.id).name if self.id else None
+    #     if not self.id or old_name != self.name:
+    #         self.slug = slugify(self.name, self.slug_exists)
+    #     return super(Resource, self).save(*args, **kwargs)
+    ### END ###
+
     image = "img/resource.png"
     image_off = "img/resource-off.png"
+
+    def files_set(self):
+        """ pseudo-reverse query for retrieving Resource Files"""
+        return UploadedFile.get_files_for(self)
 
     @property
     def home_url_params(self):
@@ -77,4 +92,5 @@ class Resource(GeoRefModel, VotableModel):
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
 
-reversion.register(Resource)
+if not reversion.is_registered(Resource):
+    reversion.register(Resource)

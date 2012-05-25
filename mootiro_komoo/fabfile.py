@@ -50,7 +50,8 @@ def run():
         local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
 
 
-def test(apps="community need organization proposal main", recreate_db=False):
+def test(apps="community need organization proposal komoo_resource main",
+            recreate_db=False):
     """Run application tests"""
     if recreate_db:
         local('dropdb test_mootiro_komoo')
