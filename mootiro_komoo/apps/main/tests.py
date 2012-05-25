@@ -35,19 +35,24 @@ class KomooTestCase(TestCase):
         self.client.login(username=username, password="testpass")
 
     def assert_get_is_up(self, url):
-        http_resp = self.client.get(url)
-        self.assertEqual(http_resp.status_code, 200)
-        return http_resp
+        return self.assert_200(url)
 
     def assert_ajax_is_up(self, url):
-        http_resp = self.client.get(url, HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        self.assertEqual(http_resp.status_code, 200)
+        return self.assert_200(url, ajax=True)
+
+    def _assert_status(self, url, status, ajax=False):
+        params = {}
+        if ajax:
+            params['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest'
+        http_resp = self.client.get(url, **params)
+        self.assertEqual(http_resp.status_code, status)
         return http_resp
 
-    def assert_404(self, url):
-        http_resp = self.client.get(url)
-        self.assertEqual(http_resp.status_code, 404)
-        return http_resp
+    def assert_200(self, url, **kw):
+        return self._assert_status(url, 200, **kw)
+
+    def assert_404(self, url, **kw):
+        return self._assert_status(url, 404, **kw)
 
 
 class MainViewsTestCase(KomooTestCase):
