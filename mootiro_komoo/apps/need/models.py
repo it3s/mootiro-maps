@@ -88,7 +88,6 @@ class Need(GeoRefModel, VotableModel):
         """Answers if a given slug is valid in the needs namespace of the
         community.
         """
-        bool
         return Need.objects.filter(slug=slug).exists()
 
     def save(self, *args, **kwargs):

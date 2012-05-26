@@ -152,6 +152,7 @@ komoo.MapOptions = {
     autoSaveMapType: false,
     enableInfoWindow: true,
     displayClosePanel: false,
+    displaySupporter: false,
     enableCluster: true,
     fetchOverlays: true,
     debug: false,
@@ -775,7 +776,6 @@ komoo.Map.prototype.getOverlayUrl = function (overlay) {
                 }).replace("//", "/");
     }  else if (overlay.properties.type == "organizationbranch") {
         url = dutils.urls.resolve("view_organization", {
-                    community_slug: overlay.properties.community_slug || "",
                     organization_slug: overlay.properties.organization_slug || ""
                 }).replace("//", "/");
     }  else {
@@ -886,6 +886,20 @@ komoo.Map.prototype.initCustomControl = function () {
         // Adds editor toolbar.
         //this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
         //        this.editToolbar.get(0));
+
+        if (this.options.displaySupporter) {
+            this.supportersBox = $("<div>");
+            this.supportersBox.attr("id", "map-supporters");
+            this.googleMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+                    this.supportersBox.get(0));
+        }
+    }
+};
+
+
+komoo.Map.prototype.setSupportersContent = function (selector) {
+    if (this.supportersBox) {
+        this.supportersBox.append(selector.show());
     }
 };
 

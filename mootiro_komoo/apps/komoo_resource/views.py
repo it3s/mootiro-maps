@@ -4,10 +4,9 @@ import logging
 import json
 
 from django.db.models.query_utils import Q
-from django.shortcuts import HttpResponse, get_object_or_404
+from django.shortcuts import HttpResponse, get_object_or_404, redirect
 from django.utils import simplejson
 from django.contrib.auth.decorators import login_required
-from django import forms
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 
@@ -31,15 +30,22 @@ def prepare_resource_objects(community_slug="", resource_id=""):
     """Retrieves a tuple (resource, community). According to given
     parameters may raise an 404. Creates a new resource if resource_id is
     evaluated as false."""
-    community = get_object_or_None(Community, slug=community_slug)
+    community = get_object_or_404(Community, slug=community_slug) \
+                    if community_slug else None
+
     if resource_id:
-        filters = dict(id=resource_id)
+        filters = dict(pk=resource_id)
         if community:
             filters["community"] = community
         resource = get_object_or_404(Resource, **filters)
     else:
-        resource = Resource(community=community)
+        resource = Resource()
+
     return resource, community
+
+
+def resources_to_resource(self):
+    return redirect(reverse('resource_list'), permanent=True)
 
 
 @render_to('resource/list.html')
@@ -86,7 +92,9 @@ def show(request, community_slug=None, resource_id=None):
 @ajax_form('resource/new.html', FormResource, 'form_resource')
 def new_resource(request, community_slug='', *arg, **kwargs):
     logger.debug('acessing komoo_resource > new_resource')
-    community = get_object_or_None(Community, slug=community_slug)
+
+    resource, community = prepare_resource_objects(
+        community_slug=community_slug)
 
     def on_get(request, form_resource):
         # if community:
