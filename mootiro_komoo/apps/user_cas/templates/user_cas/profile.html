@@ -1,5 +1,26 @@
 {% extends 'global.html' %}
 
+{% load i18n %}
+{% load crispy_forms_tags %}
+
 {% block content %}
-    User: {{ user }} - {{ user.username }} - {{ user.get_full_name }}
+
+<div id="user-profile-content">
+    <div class="main-column">
+        <div class="mootiro-maps-logo">
+            <img src="{{ STATIC_URL }}img/logo-login.png" alt="mootiro maps logo">
+        </div>
+        <div class="div-profile-form">
+            {% crispy form form.helper %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('#profile-form').ajaxform();
+        });
+    </script>
 {% endblock %}

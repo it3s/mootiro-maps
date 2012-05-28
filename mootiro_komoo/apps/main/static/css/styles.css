@@ -1614,6 +1614,26 @@ div.investments-list .tab-investment.selected a { color: #000 }
     margin-left: 5px;
     vertical-align: top;
 }
+/* ====== user profile ===== */
+#user-profile-content{
+    padding: 50px 60px 0 60px;
+    background-color: #DCEFF4;
+    min-height: 550px;
+}
+#user-profile-content .main-column{
+    margin: 0 auto;
+    float: none;
+}
+.mootiro-maps-logo{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.div-profile-form label{
+    font-weight: bold;
+}
+.div-profile-form input{
+    background-color: #ffffff;
+}
 /* ====== Error box ======== */
 .error-dialog,
 .error-dialog .ui-widget-content,

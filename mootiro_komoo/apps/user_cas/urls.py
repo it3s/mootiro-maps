@@ -8,10 +8,8 @@ urlpatterns = patterns('',
     url(r'^logout/$', 'django_cas.views.logout'),
 )
 urlpatterns += patterns('user_cas.views',
-    # url(r'user/login$', 'login', name='login'),  #DEPRECATED
-    # url(r'user/after_login$', 'after_login', name='after_login'),  #DEPRECATED
-    # url(r'user/logout$', 'logout', name='logout'),  #DEPRECATED
     url(r'^profile/$', 'profile', name='user_profile'),
+    url(r'^profile_update/$', 'profile_update', name='profile_update'),
 
     url(r'^test_login/$', 'test_login')
 )
