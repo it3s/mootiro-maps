@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-22 17:43-0300\n"
-"PO-Revision-Date: 2012-04-05 19:51-0300\n"
+"POT-Creation-Date: 2012-05-28 19:20-0300\n"
+"PO-Revision-Date: 2012-05-28 19:20-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
 "Language: \n"
@@ -41,118 +41,118 @@ msgstr "Organização"
 msgid "Add Organization"
 msgstr "Adicionar organização"
 
-#: apps/komoo_map/static/js/komoo_map.js:97
+#: apps/komoo_map/static/js/komoo_map.js:96
 msgid "Resource"
 msgstr "Recurso"
 
-#: apps/komoo_map/static/js/komoo_map.js:98
+#: apps/komoo_map/static/js/komoo_map.js:97
 msgid "Add Resource"
 msgstr "Adicionar recurso"
 
-#: apps/komoo_map/static/js/komoo_map.js:113
+#: apps/komoo_map/static/js/komoo_map.js:111
 msgid "Investment"
 msgstr "Investimento"
 
-#: apps/komoo_map/static/js/komoo_map.js:114
+#: apps/komoo_map/static/js/komoo_map.js:112
 msgid "Add Investment"
 msgstr "Adicionar Investimento"
 
-#: apps/komoo_map/static/js/komoo_map.js:600
+#: apps/komoo_map/static/js/komoo_map.js:599
 msgid "Clean"
 msgstr "Limpo"
 
-#: apps/komoo_map/static/js/komoo_map.js:811
+#: apps/komoo_map/static/js/komoo_map.js:809
 #, perl-format
 msgid "%s resident"
 msgid_plural "%s residents"
 msgstr[0] "%s habitante"
 msgstr[1] "%s habitantes"
 
-#: apps/komoo_map/static/js/komoo_map.js:814
+#: apps/komoo_map/static/js/komoo_map.js:812
 msgid "No population provided"
 msgstr "População não fornecida"
 
-#: apps/komoo_map/static/js/komoo_map.js:1800
+#: apps/komoo_map/static/js/komoo_map.js:1812
 msgid "Edit"
 msgstr "Editar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1956
-#: apps/komoo_map/static/js/komoo_map.js:2087
+#: apps/komoo_map/static/js/komoo_map.js:1968
+#: apps/komoo_map/static/js/komoo_map.js:2099
 msgid "Add shape"
 msgstr "Adicionar área"
 
-#: apps/komoo_map/static/js/komoo_map.js:1957
-#: apps/komoo_map/static/js/komoo_map.js:2091
+#: apps/komoo_map/static/js/komoo_map.js:1969
+#: apps/komoo_map/static/js/komoo_map.js:2103
 msgid "Add line"
 msgstr "Adicionar linha"
 
-#: apps/komoo_map/static/js/komoo_map.js:1958
-#: apps/komoo_map/static/js/komoo_map.js:2095
+#: apps/komoo_map/static/js/komoo_map.js:1970
+#: apps/komoo_map/static/js/komoo_map.js:2107
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: apps/komoo_map/static/js/komoo_map.js:2087
+#: apps/komoo_map/static/js/komoo_map.js:2099
 msgid "Draw a shape"
 msgstr "Desenhar uma área"
 
-#: apps/komoo_map/static/js/komoo_map.js:2091
+#: apps/komoo_map/static/js/komoo_map.js:2103
 msgid "Draw a line"
 msgstr "Desenhar uma linha"
 
-#: apps/komoo_map/static/js/komoo_map.js:2095
+#: apps/komoo_map/static/js/komoo_map.js:2107
 msgid "Add a marker"
 msgstr "Adicionar um marcador"
 
-#: apps/komoo_map/static/js/komoo_map.js:2099
+#: apps/komoo_map/static/js/komoo_map.js:2111
 msgid "Add new..."
 msgstr "Adicionar..."
 
-#: apps/komoo_map/static/js/komoo_map.js:2103
-#: apps/komoo_map/static/js/komoo_map.js:2211
+#: apps/komoo_map/static/js/komoo_map.js:2115
+#: apps/komoo_map/static/js/komoo_map.js:2223
 msgid "Add"
 msgstr "Adicionar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2103
+#: apps/komoo_map/static/js/komoo_map.js:2115
 msgid "Add another region"
 msgstr "Adicionar outra região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2115
+#: apps/komoo_map/static/js/komoo_map.js:2127
 msgid "Cut out"
 msgstr "Cortar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2115
+#: apps/komoo_map/static/js/komoo_map.js:2127
 msgid "Cut out a hole from a region"
 msgstr "Adicionar um buraco a região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2127
+#: apps/komoo_map/static/js/komoo_map.js:2139
 msgid "Delete"
 msgstr "Apagar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2127
+#: apps/komoo_map/static/js/komoo_map.js:2139
 msgid "Delete a region"
 msgstr "Apagar uma região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2210
+#: apps/komoo_map/static/js/komoo_map.js:2222
 msgid "Filter"
 msgstr "Filtrar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2215
+#: apps/komoo_map/static/js/komoo_map.js:2227
 msgid "Please log in."
 msgstr "Por favor, entre no sistema."
 
-#: apps/komoo_map/static/js/komoo_map.js:2307
+#: apps/komoo_map/static/js/komoo_map.js:2319
 msgid "Close"
 msgstr "Fechar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2334
+#: apps/komoo_map/static/js/komoo_map.js:2346
 msgid "Title"
 msgstr "Título"
 
-#: apps/komoo_map/static/js/komoo_map.js:2336
+#: apps/komoo_map/static/js/komoo_map.js:2348
 msgid "Finish"
 msgstr "Concluir"
 
-#: apps/komoo_map/static/js/komoo_map.js:2337
+#: apps/komoo_map/static/js/komoo_map.js:2349
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -196,56 +196,59 @@ msgstr "Nenhum resultado encontrado!"
 msgid "Search Results:"
 msgstr "Resultados da Busca:"
 
+#: apps/moderation/static/js/moderation.js:34
+#: apps/moderation/static/js/moderation.js:43
+msgid "Error"
+msgstr "Erro"
+
+#: apps/moderation/static/js/moderation.js:44
+msgid "An error occurred, please try again later."
+msgstr "Ocorreu um erro, tente novamente mais tarde."
+
+#: apps/moderation/static/js/moderation.js:59
+msgid "Network error"
+msgstr "Problema de conexão"
+
+#: apps/moderation/static/js/moderation.js:60
+msgid "An error occurred while connecting to network!"
+msgstr "Ocorreu um erro ao conectar com o servidor!"
+
+#: apps/moderation/static/js/moderation.js:85
+msgid "Report Abuse"
+msgstr "Denunciar abuso"
+
 #: apps/organization/static/js/organization_new.js:14
 msgid "complete"
 msgstr "completo"
 
 #: apps/organization/static/js/organization_new.js:33
-msgid ""
-"Congratulations, you have concluded the organization/branch addition process"
-msgstr ""
-"Parabéns, você concluiu o processo de adição de uma organização/unidade."
+msgid "Congratulations, you have concluded the organization/branch addition process"
+msgstr "Parabéns, você concluiu o processo de adição de uma organização/unidade."
 
-#: apps/organization/static/js/organization_new.js:42
-#: apps/organization/static/js/organization_new.js:92
-msgid ""
-"Provide the organization name so we can verify if it's already registered on "
-"our system"
-msgstr ""
-"Forneça o nome da organização para verificarmos se ela ainda não foi "
-"cadastrada no sistema."
+#: apps/organization/static/js/organization_new.js:41
+#: apps/organization/static/js/organization_new.js:91
+msgid "Provide the organization name so we can verify if it's already registered on our system"
+msgstr "Forneça o nome da organização para verificarmos se ela ainda não foi cadastrada no sistema."
 
-#: apps/organization/static/js/organization_new.js:55
+#: apps/organization/static/js/organization_new.js:54
 msgid "This organization already exists. Do you want to add a branch?"
 msgstr "Essa organização já existe. Deseja adicionar uma unidade (filial) ?"
 
-#: apps/organization/static/js/organization_new.js:62
-msgid ""
-"This organization is not registered yet. Do you want to add this "
-"organization?"
-msgstr ""
-"Esta organização não foi cadastrada ainda. Você deseja adicionar esta "
-"organização?"
+#: apps/organization/static/js/organization_new.js:61
+msgid "This organization is not registered yet. Do you want to add this organization?"
+msgstr "Esta organização não foi cadastrada ainda. Você deseja adicionar esta organização?"
 
-#: apps/organization/static/js/organization_new.js:74
+#: apps/organization/static/js/organization_new.js:73
 msgid "Enter with the data from the branch you have marked on map"
 msgstr "Entre com os dados para a unidade que você marcou no mapa"
 
-#: apps/organization/static/js/organization_new.js:82
-msgid ""
-"Enter with the data from the Organization which owns the branch you have "
-"marked on map."
-msgstr ""
-"Entre com os dados para a Organização a qual pertence a unidade que você "
-"marcou no mapa"
+#: apps/organization/static/js/organization_new.js:81
+msgid "Enter with the data from the Organization which owns the branch you have marked on map."
+msgstr "Entre com os dados para a Organização a qual pertence a unidade que você marcou no mapa"
 
-#: apps/organization/static/js/organization_new.js:105
-msgid ""
-"Congratulations, your organization was successfully saved. Please, now add "
-"the data from the branch you have marked on the map"
-msgstr ""
-"Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
-"adicione os dados da unidade que você marcou no mapa"
+#: apps/organization/static/js/organization_new.js:104
+msgid "Congratulations, your organization was successfully saved. Please, now add the data from the branch you have marked on the map"
+msgstr "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora adicione os dados da unidade que você marcou no mapa"
 
 #: apps/vote/static/js/vote.js:38
 msgid "error : "

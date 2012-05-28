@@ -16,6 +16,7 @@
   </script>
   {% endif %}
 {% endblock %}
+{% include "main/supporters.html" %}
 {% block html %}
   <!-- HTML map container -->
   <div id="map-container-{{ type }}" class="{% if panel %}with-panel{% endif %}" style="overflow:hidden;">
@@ -75,6 +76,7 @@
           {% if type == 'view' %}
           displayClosePanel: true,
           {% endif %}
+          displaySupporter: true,
           googleMapOptions: {
             zoom: {{ zoom }},
             maxZoom: null,
@@ -251,6 +253,8 @@
           setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
       });
       {% endif %}
+      {{ type }}.setSupportersContent($("#map-supporters-content"));
+      $("#map-panel").show();
   {% endif %}
     }
   {% if type != 'disabled' %}

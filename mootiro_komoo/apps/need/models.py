@@ -88,7 +88,6 @@ class Need(GeoRefModel, VotableModel):
         """Answers if a given slug is valid in the needs namespace of the
         community.
         """
-        bool
         return Need.objects.filter(slug=slug).exists()
 
     def save(self, *args, **kwargs):
@@ -106,7 +105,7 @@ class Need(GeoRefModel, VotableModel):
     def base_url_params(self):
         d = dict()
         if self.community:
-            d['community_slug'] = self.community.slug
+            d['community_slug'] = self.community.all()[0].slug
         return d
 
     @property

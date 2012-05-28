@@ -34,7 +34,6 @@ $(function () {
                             if (data.error) {
                                 errorMessage(gettext("Error"), data.error);
                             } else {
-                                console.log(data.message);
                                 // TODO Show feedback message
                                 dialog.dialog("close");
                             }
@@ -83,7 +82,7 @@ $(function () {
             var form = $("#report-content-form");
             form.clearForm();
             dialog = box.dialog({
-                title: "Report Abuse",
+                title: gettext("Report Abuse"),
                 width: 450,
                 modal: true,
                 resizable: false,
@@ -105,8 +104,21 @@ $(function () {
         });
     });
 
-    openDeleteContentDialog = function (button, avoidInfiniteLoop) {
-        errorMessage("Not Implemented");
+    openDeleteContentDialog = function (button) {
+        var appLabel = button.attr("data-app-label");
+        var modelName = button.attr("data-model-name");
+        var objectId = button.attr("data-id");
+        $.ajax({
+            type: 'POST',
+            url: dutils.urls.resolve("moderation_delete", {
+                app_label: appLabel,
+                model_name: modelName,
+                obj_id: objectId
+            }),
+            success: function (data, textStatus, jqXHR) {
+                errorMessage("Enviado");
+            }
+        });
     };
 
     // Connect all delete buttons

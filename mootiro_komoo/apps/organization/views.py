@@ -36,14 +36,15 @@ def prepare_organization_objects(community_slug="", organization_slug=""):
     """Retrieves a tuple (organization, community). According to given
     parameters may raise an 404. Creates a new organization if organization_slug
     is evaluated as false."""
-    community = get_object_or_None(Community, slug=community_slug)
+    community = get_object_or_404(Community, slug=community_slug) \
+                    if community_slug else None
     if organization_slug:
         filters = dict(slug=organization_slug)
-        if community_slug:
-            filters["community"] = community
+        if community:
+            filters["community"] = community.id
         organization = get_object_or_404(Organization, **filters)
     else:
-        organization = Organization(community=community)
+        organization = Organization()
     return organization, community
 
 
@@ -81,6 +82,7 @@ def show(request, organization_slug='', community_slug=''):
 
     organization, community = prepare_organization_objects(
         community_slug=community_slug, organization_slug=organization_slug)
+
     branches = organization.organizationbranch_set.all().order_by('name')
     geojson = create_geojson(branches)
     files = UploadedFile.get_files_for(organization)
@@ -96,7 +98,9 @@ def show(request, organization_slug='', community_slug=''):
 @ajax_form('organization/new.html', FormOrganization, 'form_organization')
 def new_organization(request, community_slug='', *arg, **kwargs):
     logger.debug('acessing organization > new_organization')
-    community = get_object_or_None(Community, slug=community_slug)
+
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug)
 
     def on_get(request, form):
         if community:
@@ -126,7 +130,10 @@ def new_organization(request, community_slug='', *arg, **kwargs):
 @render_to('organization/new_frommap.html')
 def new_organization_from_map(request, community_slug='', *args, **kwargs):
     logger.debug('acessing organization > new_organization_from_map')
-    community = get_object_or_None(Community, slug=community_slug)
+
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug)
+
     form_org = FormOrganization()
     form_org.helper.form_action = reverse('add_org_from_map')
     form_branch = FormBranch(auto_id='id_branch_%s')
@@ -143,6 +150,7 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
 def edit_organization(request, community_slug='', organization_slug='',
                       *arg, **kwargs):
     logger.debug('acessing organization > edit_organization')
+
     organization, community = prepare_organization_objects(
         community_slug=community_slug, organization_slug=organization_slug)
 

@@ -35,7 +35,7 @@ class Proposal(VotableModel):
     # Consummation, realization, attainment:
     realizers = models.ManyToManyField(User)
     # TODO: Also: organizations = model.ManyToManyField(Organization)
-    cost = models.DecimalField(decimal_places=2, max_digits=14, null=True)
+    cost = models.DecimalField(decimal_places=2, max_digits=14, null=True, blank=True)
     report = models.TextField(null=True, blank=True)
 
     investments = generic.GenericRelation(Investment,
@@ -70,4 +70,6 @@ class Proposal(VotableModel):
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
 
-reversion.register(Proposal)
+
+if not reversion.is_registered(Need):
+    reversion.register(Proposal)

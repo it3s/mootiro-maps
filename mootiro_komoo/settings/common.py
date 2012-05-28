@@ -97,12 +97,24 @@ CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+    "main.context_processors.social_keys",
+
+)
+
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
+
 # Connect Mootiro Bar to django-cas:
 LOGIN_URL = '/user/login'
 # LOGIN_REDIRECT_URL = '/'
@@ -166,7 +178,7 @@ INSTALLED_APPS = [
 
 COMMENT_MAX_LENGTH = 80 * 500
 
-FILE_UPLOAD_MAX_MEMORY_SIZE  = 10 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 
 # https://github.com/aljosa/django-tinymce/blob/master/docs/installation.rst
 # TINYMCE_COMPRESSOR = True
@@ -210,6 +222,7 @@ SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
 SOCIAL_AUTH_UUID_LENGTH = 16
 SOCIAL_AUTH_EXPIRATION = 3600
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/user/profile/'
 
 # KOMOO Comments settings
 KOMOO_COMMENTS_WIDTH = 3
@@ -236,3 +249,6 @@ if 'test' in sys.argv:
     import logging
     logging.disable(logging.CRITICAL)
     FIXTURE_DIRS = ('fixtures/test/',)
+
+# EMAIL CONFIGURATION
+EMAIL_SUBJECT_PREFIX = '[MootiroMaps] '

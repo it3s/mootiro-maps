@@ -4,6 +4,7 @@ from __future__ import unicode_literals  # unicode by default
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 import reversion
 from main.utils import slugify
 from lib.taggit.managers import TaggableManager
@@ -53,6 +54,20 @@ class Community(GeoRefModel, VotableModel):
         unordered = Community.objects.filter(polys__distance_lte=(center, radius))
         closest = sorted(unordered, key=lambda c: c.geometry.distance(center))
         return closest[1:(max + 1)]
+
+    # url aliases
+    @property
+    def home_url_params(self):
+        d = dict(community_slug=self.slug)
+        return d
+
+    @property
+    def view_url(self):
+        return reverse('view_community', kwargs=self.home_url_params)
+
+    @property
+    def edit_url(self):
+        return reverse('edit_community', kwargs=self.home_url_params)
 
 if not reversion.is_registered(Community):
     reversion.register(Community)

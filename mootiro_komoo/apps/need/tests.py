@@ -26,10 +26,10 @@ class NeedViewsTestCase(KomooTestCase):
     # new_need
     def test_new_need_page_is_up(self):
         self.login_user()
-        self.assert_get_is_up(reverse('new_need'))
-        self.assert_ajax_is_up(reverse('new_need'))
-        self.assert_get_is_up(reverse('new_need', args=('sao-remo',)))
-        self.assert_ajax_is_up(reverse('new_need', args=('sao-remo',)))
+        self.assert_200(reverse('new_need'))
+        self.assert_200(reverse('new_need'), ajax=True)
+        self.assert_200(reverse('new_need', args=('sao-remo',)))
+        self.assert_200(reverse('new_need', args=('sao-remo',)), ajax=True)
 
     def test_new_need_creation(self):
         self.login_user()
@@ -41,8 +41,8 @@ class NeedViewsTestCase(KomooTestCase):
     # edit_need
     def test_need_edit_page_is_up(self):
         self.login_user()
-        self.assert_get_is_up(reverse('edit_need', args=('policiamento',)))
-        self.assert_get_is_up(reverse('edit_need', args=('sao-remo', 'parquinho')))
+        self.assert_200(reverse('edit_need', args=('policiamento',)))
+        self.assert_200(reverse('edit_need', args=('sao-remo', 'parquinho')))
 
     def test_need_edition(self):
         self.login_user()
@@ -85,9 +85,9 @@ class NeedViewsTestCase(KomooTestCase):
     @logged_and_unlogged
     def test_need_view_page(self):
         url = reverse('view_need', args=('policiamento',))
-        self.assert_get_is_up(url)
+        self.assert_200(url)
         url = reverse('view_need', args=('sao-remo', 'parquinho'))
-        self.assert_get_is_up(url)
+        self.assert_200(url)
         url = reverse('view_need', args=('lalala',))
         self.assert_404(url)
         url = reverse('view_need', args=('lalala', 'parquinho'))
@@ -97,9 +97,9 @@ class NeedViewsTestCase(KomooTestCase):
     @logged_and_unlogged
     def test_communities_list_page_is_up(self):
         url = reverse('list_all_needs')
-        self.assert_get_is_up(url)
+        self.assert_200(url)
         url = reverse('list_community_needs', args=('sao-remo',))
-        self.assert_get_is_up(url)
+        self.assert_200(url)
 
     # searches
     @logged_and_unlogged

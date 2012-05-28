@@ -521,6 +521,11 @@ body.community #collapse-panel {
     padding: 0 30px 0 0;
     position: relative;
     left: 0px;
+    -moz-box-shadow: 2px -2px 2px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 2px -2px 2px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px -2px 2px rgba(0, 0, 0, 0.25);
+    z-index: 10;
+    display: none;
 }
 .collapsed #map-panel {
     left: -300px !important;
@@ -1081,6 +1086,7 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .view-extras{
   clear: both;
   padding-top: 40px;
+  max-width: 700px;
 }
 .view-tag-list {
   margin: 5px 0 15px 0;
@@ -1374,7 +1380,7 @@ textarea.markItUpEditor{
     /*background-color: rgb(166, 229, 238);*/
     background-color: #ebebeb;
     padding: 10px;
-    display: inline-block;
+    display: block;
     width:97%;
     margin: 10px 0 10px 0;
     border-radius: 7px;
@@ -1616,6 +1622,26 @@ div.investments-list .tab-investment.selected a { color: #000 }
     margin-left: 5px;
     vertical-align: top;
 }
+/* ====== user profile ===== */
+#user-profile-content{
+    padding: 50px 60px 0 60px;
+    background-color: #DCEFF4;
+    min-height: 550px;
+}
+#user-profile-content .main-column{
+    margin: 0 auto;
+    float: none;
+}
+.mootiro-maps-logo{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.div-profile-form label{
+    font-weight: bold;
+}
+.div-profile-form input{
+    background-color: #ffffff;
+}
 /* ====== Error box ======== */
 .error-dialog {
     border: solid 1px red;
@@ -1763,4 +1789,53 @@ ul.two-cols li {
     display: inline-block;
     float: right;
     vertical-align: middle;
+}
+.social-buttons span{
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}
+
+#map-supporters {
+    background: #dceff4;
+    padding: 5px;
+    margin-bottom: 10px;
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    border-radius        : 4px 0 0 4px;
+    -moz-border-radius   : 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+}
+#map-supporters-content h3 {
+    font-size: 14px;
+    margin-left: 5px;
+}
+#map-supporters-content img {
+    margin: 12px; /* 4*x, x=3 */
+}
+
+#footer {
+    clear: both;
+    width: 900px;
+    margin-left: 60px;
+   font-size: 90%;
+}
+
+#footer > div {
+    display: inline-block;
+    width: 260px;
+    vertical-align: top;
+}
+
+#footer h3 {
+   font-size: 95%;
+}
+
+#footer .supporters h3 {
+    margin-left: 24px;
+}
+
+#footer .cea-logo {
+    margin: 24px; /* 4*x, x=6 */
 }

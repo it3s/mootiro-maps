@@ -35,7 +35,6 @@ var change_step = function(step){
     change_percent(percent);
     window.scrollTo(0, 0);
 };
-
 $(function(){
     change_step(1);
     // change_msg('Forneça o nome da organização para verificarmos se ela ainda não foi cadastrada no sistema.');
@@ -95,7 +94,7 @@ $(function(){
 
     $('#btn_concluir').click(function(){
         var slug = $(this).attr('slug');
-        window.location.pathname = dutils.urls.resolve('view_organization', {'organization_slug': slug, 'community_slug': ''}).slice(1);
+        window.location.pathname = dutils.urls.resolve('view_organization', {'organization_slug': slug});
     });
 
     $('#form_organization').ajaxform({

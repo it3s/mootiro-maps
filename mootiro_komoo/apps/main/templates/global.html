@@ -5,6 +5,14 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- Chrome Frame for IE loosers -->
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
+
     <title>{% block title %}Mootiro Maps{% endblock %}</title>
     <link rel="image_src" href="{{STATIC_URL}}img/logo.png" />
     {{ form.media.css }}
@@ -28,6 +36,24 @@
     {% block css %}{% endblock %}
   </head>
   <body class="{% if community %}community{% endif %}">
+
+    <div id="prompt">
+        <!-- if IE without GCF, prompt goes here -->
+    </div>
+
+    <!-- Facebook stuff -->
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId={{ FACEBOOK_APP_ID }}";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
     <!-- Mootiro_bar goes here -->
     <div id="root">
       <div id="top">
@@ -54,6 +80,11 @@
       <div id="content">
         {% block content %}{% endblock %}
       </div>
+      <div id="footer">
+        {% block footer %}
+          {% include "main/footer.html" %}
+        {% endblock %}
+      </div>
       {% if not user.is_authenticated %}
         {% include "main/login_box.html" %}
       {% endif %}
@@ -61,8 +92,19 @@
     </div>
     {% block page_scripts %}{% endblock %}
 
-    <script type="text/javascript">
-      $(function(){
+    <!-- Chrome Frame -->
+    <script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>
+      jQuery(window).ready(function () {
+        //Chrome Frame
+        try{
+            CFInstall.check({
+                mode:"overlay"
+            });
+        } catch(err){}
+
         // fixes annoying behaviour on leaving a community context
         var areas = ['organization', 'needs', 'resource', 'investments'],
             path_split = location.pathname.split('/');
