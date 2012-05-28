@@ -4,6 +4,7 @@ from __future__ import unicode_literals  # unicode by default
 
 import json
 import logging
+from smtplib import SMTPException
 
 from django.contrib.gis.geos import Polygon, Point
 from django.contrib.gis.measure import Distance
@@ -11,6 +12,7 @@ from django.template import loader, Context
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseNotFound
 from django.core.urlresolvers import reverse
+from django.core.mail import mail_admins, get_connection
 
 from annoying.decorators import render_to, ajax_request
 import requests
@@ -174,6 +176,32 @@ def komoo_search(request):
         })
     result['google'] = google_results.content
     return {'result': result}
+
+
+@ajax_request
+def send_error_report(request):
+    user = request.user
+    user_message = request.POST.get('message', '')
+    info = request.POST.get('info', '')
+    url = request.POST.get('url', '')
+
+    message = """
+Url: {2}
+Reporter: {3} (id: {4}, email: {5})
+Info: {1}
+
+Message: {0}
+    """.format(user_message, info, url, user, user.id, user.email)
+
+    try:
+        mail_admins('Error report', message, fail_silently=False)
+        status = 'Sent'
+        success = 'true'
+    except SMTPException:
+        status = 'Failed'
+        success = 'false'
+    finally:
+        return {'status': status, 'success': success}
 
 
 @render_to('404.html')

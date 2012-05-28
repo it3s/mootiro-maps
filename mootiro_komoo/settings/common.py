@@ -246,3 +246,6 @@ if 'test' in sys.argv:
     import logging
     logging.disable(logging.CRITICAL)
     FIXTURE_DIRS = ('fixtures/test/',)
+
+# EMAIL CONFIGURATION
+EMAIL_SUBJECT_PREFIX = '[MootiroMaps] '
