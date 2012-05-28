@@ -114,6 +114,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
+
 # Connect Mootiro Bar to django-cas:
 LOGIN_URL = '/user/login'
 # LOGIN_REDIRECT_URL = '/'
@@ -218,6 +219,7 @@ SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
 SOCIAL_AUTH_UUID_LENGTH = 16
 SOCIAL_AUTH_EXPIRATION = 3600
 SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/user/profile/'
 
 # KOMOO Comments settings
 KOMOO_COMMENTS_WIDTH = 3
