@@ -1752,6 +1752,11 @@ ul.two-cols li {
     float: right;
     vertical-align: middle;
 }
+.social-buttons span{
+    display: inline-block;
+    float: right;
+    vertical-align: middle;
+}
 
 #map-supporters {
     background: #dceff4;

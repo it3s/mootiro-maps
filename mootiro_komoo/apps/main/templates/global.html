@@ -5,6 +5,14 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- Chrome Frame for IE loosers -->
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+
+
     <title>{% block title %}Mootiro Maps{% endblock %}</title>
     <link rel="image_src" href="{{STATIC_URL}}img/logo.png" />
     {{ form.media.css }}
@@ -27,6 +35,10 @@
     {% block css %}{% endblock %}
   </head>
   <body class="{% if community %}community{% endif %}">
+
+    <div id="prompt">
+        <!-- if IE without GCF, prompt goes here -->
+    </div>
 
     <!-- Facebook stuff -->
     <div id="fb-root"></div>
@@ -79,8 +91,19 @@
     </div>
     {% block page_scripts %}{% endblock %}
 
-    <script type="text/javascript">
-      $(function(){
+    <!-- Chrome Frame -->
+    <script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>
+      jQuery(window).ready(function () {
+        //Chrome Frame
+        try{
+            CFInstall.check({
+                mode:"overlay"
+            });
+        } catch(err){}
+
         // fixes annoying behaviour on leaving a community context
         var areas = ['organization', 'needs', 'resource', 'investments'],
             path_split = location.pathname.split('/');
