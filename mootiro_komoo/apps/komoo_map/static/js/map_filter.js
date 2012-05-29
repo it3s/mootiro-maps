@@ -1,14 +1,7 @@
-/******* Configure geo objects listing behaviours *******/
-$(function () {
-    geoObjectsListing("#map-panel-filter ul.geo-objects-listing");
-    geoObjectsListing("#map-panel-layers ul.geo-objects-listing");
-    geoObjectsListing("#map-panel-add ul.geo-objects-listing");
-});
-
 /******* Center *******/
 $("#set-center").click(function () {
     editor.selectCenter(parseInt($("#filter-radius").val()), function (latLng, circle) {
-        $("#filter-center").val(latLng.toUrlValue());
+        $("#filter-center").val(latLng.toUrlValue()).change();
         $("#filter-radius").on("change", function () {
             var radius = parseInt($(this).val());
             circle.setRadius(radius);
@@ -17,6 +10,7 @@ $("#set-center").click(function () {
         $("#filter-radius").focus();
     });
     $("#filter-slider-container").hide();
+    $("#filter-radius").parent().removeClass("highlight");
     $("#filter-helper").show();
 });
 
@@ -50,9 +44,11 @@ $("#filter-radius").on("change", function () {
 });
 $("#filter-radius").focus(function () {
     $("#filter-slider-container").show();
+    $("#filter-radius").parent().addClass("highlight");
 });
 $("#filter-slider-container .icon-ok").on("click", function () {
     $("#filter-slider-container").hide();
+    $("#filter-radius").parent().removeClass("highlight");
 });
 
 /******* Navigation *******/
@@ -62,10 +58,29 @@ $("#filter-back, #filter-results .icon-remove").live("click", function (event) {
 });
 
 /******* Form submission *******/
+function checkFilterFormIsReady (event) {
+    var $form = $("#filter-form");
+    var center_ok = Boolean($("#filter-center", $form).val());
+    var objs_ok = Boolean($(".geo-objects-listing input", $form).serialize());
+    var filter_ready = center_ok && objs_ok;
+    if (filter_ready) {
+        $("#filter-submit").addClass("button").removeClass("button-off");
+    } else {
+        $("#filter-submit").addClass("button-off").removeClass("button");
+    };
+    return false;
+};
+$("#filter-center").on("change", checkFilterFormIsReady);
+$("#filter-form ul.geo-objects-listing").on("click", checkFilterFormIsReady);
+
 $("#filter-form").on("submit", function (event) {
     event.preventDefault();
-
     var $form = $("#filter-form");
+
+    // do not submit if parameters are not ready
+    if ($("#filter-submit", $form).hasClass("button-off"))
+        return false;
+
     var need_categories = $("input[name=need_categories]").serializeArray()
         .map(function (item) {
             return item.value;
@@ -99,11 +114,13 @@ $("#filter-results .sublist ul li").live("mouseover", function (event) {
     editor.highlightOverlay(obj_type, obj_id);
 });
 
-// $(function () {
-//     $("#filter-form input[type=checkbox]").attr('checked', true);
-//     $("#filter-center").val("-23.561233,-46.74922");
-//     $("#filter-form").submit();
-// });
+/******* Configure geo objects listing behaviours *******/
+$(function () {
+    // Lines below must be after checkFilterFormIsReady() callback registering
+    geoObjectsListing("#map-panel-filter ul.geo-objects-listing");
+    geoObjectsListing("#map-panel-layers ul.geo-objects-listing");
+    geoObjectsListing("#map-panel-add ul.geo-objects-listing");
+});
 
 /******* Layers *******/
 // Starts with all layers checked
