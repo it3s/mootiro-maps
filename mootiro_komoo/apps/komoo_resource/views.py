@@ -138,28 +138,30 @@ def new_resource_from_map(request, community_slug='', *args, **kwargs):
 
 @login_required
 @ajax_form('resource/edit.html', FormResourceGeoRef, 'form_resource')
-def edit_resource(request, community_slug='', *arg, **kwargs):
+def edit_resource(request, community_slug='', resource_id='', *arg, **kwargs):
     logger.debug('acessing komoo_resource > edit_resource')
-    community = get_object_or_None(Community, slug=community_slug)
+
+    resource, community = prepare_resource_objects(
+        community_slug=community_slug, resource_id=resource_id)
     geojson = {}
-
-    _id = request.GET.get('id', 0)
-    resource = get_object_or_None(Resource, pk=_id)
-
     geojson = create_geojson([resource], convert=False)
+
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
     geojson = json.dumps(geojson)
 
-    def on_get(request, form_resource):
-        form_resource = FormResourceGeoRef(instance=resource)
+    def on_get(request, form):
+        form = FormResourceGeoRef(instance=resource)
         # if community:
             # logger.debug('community_slug: {}'.format(community_slug))
             # form_resource.fields['community'].widget = forms.HiddenInput()
             # form_resource.initial['community'] = community.id
-        form_resource.helper.form_action = reverse('edit_resource')
+        kwargs = dict(resource_id=resource_id)
+        if community_slug:
+            kwargs['community_slug'] = community_slug
+        form.helper.form_action = reverse('edit_resource', kwargs=kwargs)
 
-        return form_resource
+        return form
 
     def on_after_save(request, obj):
         prefix = '/{}'.format(community_slug) if community_slug else ''

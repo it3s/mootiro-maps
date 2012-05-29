@@ -46,13 +46,13 @@ class ResourceViewsTestCase(KomooTestCase):
         self.assertEquals(Resource.objects.count(), r0 + 1)
 
     ####### EDITION #######
-    # def test_resource_edit_page_is_up(self):
-    #     self.login_user()
+    def test_resource_edit_page_is_up(self):
+        self.login_user()
 
-    #     kwargs = dict(resource_id='1')
-    #     url = reverse('edit_resource', kwargs=kwargs)
-    #     self.assert_200(url)
-    #     self.assert_200(url, ajax=True)
+        kwargs = dict(resource_id='1')
+        url = reverse('edit_resource', kwargs=kwargs)
+        self.assert_200(url)
+        self.assert_200(url, ajax=True)
 
     # def test_organization_edition(self):
     #     self.login_user()
