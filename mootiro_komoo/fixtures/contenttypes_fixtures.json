@@ -28,10 +28,19 @@
   {"pk": 27, "model": "contenttypes.contenttype", "fields": {"model": "organizationbranch", "name": "organization branch", "app_label": "organization"}},
   {"pk": 28, "model": "contenttypes.contenttype", "fields": {"model": "organizationcategory", "name": "organization category", "app_label": "organization"}},
   {"pk": 29, "model": "contenttypes.contenttype", "fields": {"model": "organizationcategorytranslation", "name": "organization category translation", "app_label": "organization"}},
-  
+
   {"pk": 31, "model": "contenttypes.contenttype", "fields": {"model": "investment", "name": "investment", "app_label": "investment"}},
   {"pk": 32, "model": "contenttypes.contenttype", "fields": {"model": "investor", "name": "investor", "app_label": "investment"}},
   {"pk": 33, "model": "contenttypes.contenttype", "fields": {"model": "usersocialauth", "name": "user social auth", "app_label": "social_auth"}},
   {"pk": 34, "model": "contenttypes.contenttype", "fields": {"model": "nonce", "name": "nonce", "app_label": "social_auth"}},
-  {"pk": 35, "model": "contenttypes.contenttype", "fields": {"model": "association", "name": "association", "app_label": "social_auth"}}
+  {"pk": 35, "model": "contenttypes.contenttype", "fields": {"model": "association", "name": "association", "app_label": "social_auth"}},
+
+  {"pk": 36, "model": "contenttypes.contenttype", "fields": {"model": "taskmeta", "name": "task meta", "app_label": "djcelery"}},
+  {"pk": 37, "model": "contenttypes.contenttype", "fields": {"model": "tasksetmeta", "name": "taskset meta", "app_label": "djcelery"}},
+  {"pk": 38, "model": "contenttypes.contenttype", "fields": {"model": "intervalschedule", "name": "interval", "app_label": "djcelery"}},
+  {"pk": 39, "model": "contenttypes.contenttype", "fields": {"model": "crontabschedule", "name": "crontab", "app_label": "djcelery"}},
+  {"pk": 40, "model": "contenttypes.contenttype", "fields": {"model": "periodictasks", "name": "periodic tasks", "app_label": "djcelery"}},
+  {"pk": 41, "model": "contenttypes.contenttype", "fields": {"model": "periodictask", "name": "periodic task", "app_label": "djcelery"}},
+  {"pk": 42, "model": "contenttypes.contenttype", "fields": {"model": "workerstate", "name": "worker", "app_label": "djcelery"}},
+  {"pk": 43, "model": "contenttypes.contenttype", "fields": {"model": "taskstate", "name": "task", "app_label": "djcelery"}}
 ]
