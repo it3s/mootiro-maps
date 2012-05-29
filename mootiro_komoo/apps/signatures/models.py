@@ -8,7 +8,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 
-class Signature(models.Models):
+class Signature(models.Model):
     user = models.ForeignKey(User)
     content_type = models.ForeignKey(ContentType,  null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)

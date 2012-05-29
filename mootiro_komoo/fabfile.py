@@ -42,12 +42,23 @@ def build_environment():
         "../docs/postgis-adapter-2.patch")
 
 
+def run_celery():
+    """runs celery task queue"""
+    local('python manage.py celeryd --loglevel=info {} &'.format(django_settings[env_]))
+
+
 def run():
     """Runs django's development server"""
+    run_celery()
     if env_ == 'stage':
         local('python manage.py run_gunicorn --workers=2 --bind=127.0.0.1:8001 {}'.format(django_settings[env_]))
     else:
         local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
+
+
+def kill_manage_tasks():
+    """kill all manage.py background tasks"""
+    local('ps -eo pid,args | grep manage.py | grep -v grep | cut -c1-6 | xargs kill')
 
 
 def test(apps="community need organization proposal komoo_resource main",

@@ -175,6 +175,7 @@ INSTALLED_APPS = [
     'organization',
     'investment',
     'hotsite',
+    'signatures',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
@@ -244,7 +245,7 @@ AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = False
 
 # Celerey task queue config
-BROKER_URL = "amqp://komoo:komoo@localhost:5672/"
+BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
 
 # TESTS CONFIGURATION
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
