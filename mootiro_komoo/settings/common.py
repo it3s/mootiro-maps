@@ -3,6 +3,9 @@
 #  Global Settings
 import os
 import sys
+import djcelery
+
+djcelery.setup_loader()
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_ROOT = os.path.dirname(PROJECT_ROOT)
@@ -158,6 +161,7 @@ INSTALLED_APPS = [
     'social_auth',
     'django_nose',
     'ajaxforms',
+    'djcelery',
     # our apps
     'main',
     'komoo_map',
@@ -171,6 +175,7 @@ INSTALLED_APPS = [
     'organization',
     'investment',
     'hotsite',
+    'signatures',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
@@ -238,6 +243,9 @@ AJAX_LOOKUP_CHANNELS = {
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = False
+
+# Celerey task queue config
+BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
 
 # TESTS CONFIGURATION
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
