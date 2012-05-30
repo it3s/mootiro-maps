@@ -4,8 +4,10 @@ from django.db import models
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 from vote.models import VotableModel
+from signatures.models import notify_on_update
 
 
 class Comment(VotableModel):
@@ -37,3 +39,7 @@ class Comment(VotableModel):
     def get_comments_for(klass, obj):
         obj_content_type = ContentType.objects.get_for_model(obj)
         return Comment.objects.filter(content_type=obj_content_type, object_id=obj.id)
+
+
+# connect follow notify signal
+post_save.connect(notify_on_update, sender=Comment)

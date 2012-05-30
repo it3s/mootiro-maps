@@ -42,6 +42,9 @@ class MailMessage(models.Model):
                 pass
 
 
-def send_mail_on_update(sender, instance, signal, *a, **kw):
-    if not kw['raw']:
+def notify_on_update(sender, instance, signal, *a, **kw):
+    allow_on_creation = kw.get('allow_on_creation', False)
+
+    if (not kw['raw'] and allow_on_creation) or \
+       (not kw['raw'] and not kw['created']):
         send_mail.delay(obj=instance)

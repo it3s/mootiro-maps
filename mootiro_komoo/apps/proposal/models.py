@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes import generic
+from django.db.models.signals import post_save
 
 
 import reversion
@@ -12,6 +13,7 @@ import reversion
 from need.models import Need
 from investment.models import Investment
 from vote.models import VotableModel
+from signatures.models import notify_on_update
 
 
 class Proposal(VotableModel):
@@ -73,3 +75,6 @@ class Proposal(VotableModel):
 
 if not reversion.is_registered(Need):
     reversion.register(Proposal)
+
+# connect follow notify signal
+post_save.connect(notify_on_update, sender=Proposal)

@@ -4,8 +4,9 @@ from celery.task import task
 
 @task
 def send_mail(obj=None):
+    # TODO: implement me
     if obj:
-        print '\n\n\nSending mail to: %s \n\n' % obj
+        print u'\n\n\nSending mail to: {} \n\n'.format(unicode(obj))
 
 
 # from celery.task.schedules import crontab

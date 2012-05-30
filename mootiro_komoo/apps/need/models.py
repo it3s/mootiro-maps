@@ -6,6 +6,7 @@ from django.contrib.gis.db import models
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.db.models.signals import post_save
 
 import reversion
 from lib.taggit.managers import TaggableManager
@@ -14,6 +15,7 @@ from community.models import Community
 from main.utils import slugify
 from komoo_map.models import GeoRefModel
 from vote.models import VotableModel
+from signatures.models import notify_on_update
 
 
 class NeedCategory(models.Model):
@@ -125,3 +127,6 @@ class Need(GeoRefModel, VotableModel):
 
 if not reversion.is_registered(Need):
     reversion.register(Need)
+
+# connect follow notify signal
+post_save.connect(notify_on_update, sender=Need)

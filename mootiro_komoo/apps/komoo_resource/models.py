@@ -17,7 +17,7 @@ from komoo_map.models import GeoRefModel
 from investment.models import Investment
 from fileupload.models import UploadedFile
 from vote.models import VotableModel
-from signatures.models import send_mail_on_update
+from signatures.models import notify_on_update
 
 
 class ResourceKind(models.Model):
@@ -101,5 +101,5 @@ class Resource(GeoRefModel, VotableModel):
 if not reversion.is_registered(Resource):
     reversion.register(Resource)
 
-# connect follow send email signal
-post_save.connect(send_mail_on_update, sender=Resource)
+# connect follow notify signal
+post_save.connect(notify_on_update, sender=Resource)
