@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-24 18:11-0300\n"
-"PO-Revision-Date: 2012-05-24 18:12-0300\n"
-"Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
+"POT-Creation-Date: 2012-05-30 15:50-0300\n"
+"PO-Revision-Date: 2012-05-30 15:54-0300\n"
+"Last-Translator: Anderson Pierre Cardoso <apierre.cardoso@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,8 +19,8 @@ msgstr ""
 
 #: apps/community/forms.py:24
 #: apps/komoo_resource/forms.py:39
-#: apps/main/templatetags/komoo_tags.py:223
-#: apps/main/templatetags/komoo_tags.py:224
+#: apps/main/templatetags/komoo_tags.py:234
+#: apps/main/templatetags/komoo_tags.py:235
 #: apps/organization/forms.py:60
 #: apps/organization/templates/organization/new_frommap.html:34
 #: lib/taggit/models.py:10
@@ -45,7 +45,7 @@ msgstr "População"
 #: apps/community/forms.py:27
 #: apps/investment/forms.py:41
 #: apps/komoo_resource/forms.py:43
-#: apps/main/templatetags/komoo_tags.py:222
+#: apps/main/templatetags/komoo_tags.py:233
 #: apps/need/forms.py:30
 #: apps/need/forms.py:90
 #: apps/organization/forms.py:64
@@ -128,7 +128,7 @@ msgstr "Por um período"
 
 #: apps/investment/forms.py:37
 #: apps/investment/templates/investment/view.html:39
-#: apps/main/templatetags/komoo_tags.py:225
+#: apps/main/templatetags/komoo_tags.py:236
 msgid "Date"
 msgstr "Data"
 
@@ -217,7 +217,7 @@ msgstr "Período"
 
 #: apps/investment/templates/investment/view.html:52
 #: apps/komoo_resource/templates/resource/show.html:74
-#: apps/need/templates/need/view.html:60
+#: apps/need/templates/need/view.html:61
 #: apps/organization/templates/organization/show.html:207
 msgid "see on map"
 msgstr "ver no mapa"
@@ -307,7 +307,7 @@ msgid "Contact"
 msgstr "Contato"
 
 #: apps/komoo_resource/forms.py:44
-#: apps/main/templatetags/komoo_tags.py:227
+#: apps/main/templatetags/komoo_tags.py:238
 #: apps/need/forms.py:25
 #: apps/need/forms.py:85
 #: apps/organization/forms.py:62
@@ -339,7 +339,7 @@ msgstr[1] "%(counter)s Recursos"
 #: apps/komoo_resource/templates/resource/list.html:49
 #: apps/komoo_resource/templates/resource/show.html:87
 #: apps/need/templates/need/list.html:39
-#: apps/need/templates/need/view.html:79
+#: apps/need/templates/need/view.html:80
 msgid "at"
 msgstr "em"
 
@@ -425,11 +425,11 @@ msgstr "Organizações"
 msgid "Help"
 msgstr "Ajuda"
 
-#: apps/main/templates/500.html:8
+#: apps/main/templates/500.html:7
 msgid "Ops!"
 msgstr "Ops!"
 
-#: apps/main/templates/global.html:54
+#: apps/main/templates/global.html:66
 msgid "Search"
 msgstr "Buscar"
 
@@ -557,11 +557,15 @@ msgstr "Classificadores:"
 msgid "No tags"
 msgstr "Sem tags"
 
-#: apps/main/templates/main/templatetags/track_buttons.html:3
+#: apps/main/templates/main/templatetags/track_buttons.html:13
+msgid "Subscribed"
+msgstr "Seguindo"
+
+#: apps/main/templates/main/templatetags/track_buttons.html:15
 msgid "Subscribe"
 msgstr "Seguir"
 
-#: apps/main/templates/main/templatetags/track_buttons.html:4
+#: apps/main/templates/main/templatetags/track_buttons.html:18
 msgid "Observe"
 msgstr "Observar"
 
@@ -581,7 +585,7 @@ msgstr "Filtrar por"
 msgid "Apply"
 msgstr "Aplicar"
 
-#: apps/main/templatetags/komoo_tags.py:226
+#: apps/main/templatetags/komoo_tags.py:237
 msgid "Votes"
 msgstr "Votos"
 
@@ -652,19 +656,19 @@ msgstr "Nova necessidade"
 msgid "target audience:"
 msgstr "público alvo:"
 
-#: apps/need/templates/need/view.html:62
+#: apps/need/templates/need/view.html:63
 msgid "Proposals"
 msgstr "Propostas"
 
-#: apps/need/templates/need/view.html:67
+#: apps/need/templates/need/view.html:68
 msgid "New proposal"
 msgstr "Nova proposta"
 
-#: apps/need/templates/need/view.html:73
+#: apps/need/templates/need/view.html:74
 msgid "Related needs"
 msgstr "Necessidades relacionadas"
 
-#: apps/need/templates/need/view.html:89
+#: apps/need/templates/need/view.html:90
 msgid "No related needs."
 msgstr "Nenhuma necessidade relacionada."
 

@@ -15,16 +15,30 @@ def follow(request):
     logger.debug('acessing signatures > follow')
     content_type = request.POST.get('content_type', None)
     obj_id = request.POST.get('obj', None)
+    sign = request.POST.get('sign', 'true')
     if content_type and obj_id:
-        # TODO enable/disable
-        try:
-            signature, created = Signature.objects.get_or_create(
-                content_type_id=content_type,
-                object_id=obj_id,
-                user=request.user)
-            success = created
-        except Exception as err:
-            logger.error('Erro ao criar nova assinatura: %s' % err)
+        if sign == 'true':
+            try:
+                signature, created = Signature.objects.get_or_create(
+                    content_type_id=content_type,
+                    object_id=obj_id,
+                    user=request.user)
+                success = created
+            except Exception as err:
+                logger.error('Erro ao criar nova assinatura: %s' % err)
+                success = False
+        elif sign == 'false':
+            try:
+                signature = Signature.objects.get(
+                    content_type=content_type,
+                    object_id=obj_id,
+                    user=request.user)
+                signature.delete()
+                success = True
+            except Exception as err:
+                logger.error('Erro ao deletar assinatura: %s' % err)
+                success = False
+        else:
             success = False
     else:
         success = False

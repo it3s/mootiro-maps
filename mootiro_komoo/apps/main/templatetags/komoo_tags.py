@@ -19,6 +19,7 @@ from need.models import Need, NeedCategory
 from organization.models import Organization
 from komoo_resource.models import Resource
 from proposal.models import Proposal
+from signatures.models import Signature
 
 register = template.Library()
 
@@ -121,11 +122,16 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 
 @register.inclusion_tag('main/templatetags/track_buttons.html', takes_context=True)
 def track_buttons(context, obj=None):
+    is_signed = ''
     if obj:
         content_type = ContentType.objects.get_for_model(obj)
+        if Signature.objects.filter(content_type=content_type, object_id=obj.id,
+            user=context.get('user', None)).count():
+            is_signed = 'signed-content'
     else:
         content_type = ''
-    return dict(context=context, obj=obj, content_type=content_type)
+    return dict(context=context, obj=obj, content_type=content_type,
+        is_signed=is_signed)
 
 
 @register.inclusion_tag('main/templatetags/social_buttons.html')
