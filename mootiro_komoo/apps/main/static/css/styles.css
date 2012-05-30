@@ -1077,6 +1077,11 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
   height: 12px;
   margin: 0 0 -1px -1px;
 }
+.view-follow-btns .signed-content{
+    border: solid 2px #ff8a00;
+    background-image: none;
+    background-color: #dedede;
+}
 .view-footer div:first-child{
   margin-top: 100px;
 }
