@@ -200,16 +200,17 @@ def show_on_map(request, geojson=''):
     return dict(geojson=geojson)
 
 
-@login_required
-@ajax_request
-def resource_get_or_add_kind(request):
-    term = request.POST.get('value', '')
-    kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
-        Q(slug__iexact=term))
-    if not kinds.count() and term:
-        r = ResourceKind(name=term)
-        r.save()
-        obj = dict(added=True, id=r.id, value=r.name)
-    else:
-        obj = dict(added=False, id=None, value=term)
-    return obj
+# @login_required
+# @ajax_request
+# def resource_get_or_add_kind(request):
+#     logger.debug('acessing resource > resource_get_or_add_kind')
+#     term = request.POST.get('value', '')
+#     kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
+#         Q(slug__iexact=term))
+#     if not kinds.count() and term:
+#         r = ResourceKind(name=term)
+#         r.save()
+#         obj = dict(added=True, id=r.id, value=r.name)
+#     else:
+#         obj = dict(added=False, id=None, value=term)
+#     return obj

@@ -133,7 +133,3 @@ class ResourceViewsTestCase(KomooTestCase):
         http_resp = self.client.get(url + "?term=xwyk")
         self.assertEqual(http_resp.status_code, 200)
         self.assertEquals(simplejson.loads(http_resp.content), [])
-
-    # @logged_and_unlogged
-    # def test_resource_get_or_add_kind(self):
-    #     pass
