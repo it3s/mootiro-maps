@@ -118,7 +118,9 @@ def load_fixtures(type_='system'):
         fab load_fixtures:test  -> load only the fixtures/test_fixtures.json file
     """
     if type_ == 'test':
-        local('python manage.py loaddata fixtures/test_fixtures.json {}'.format(
+        local('python manage.py loaddata fixtures/test/test_fixtures.json {}'.format(
+                django_settings[env_]))
+        local('python manage.py loaddata fixtures/test/test_investment.json {}'.format(
                 django_settings[env_]))
     else:
         import os
