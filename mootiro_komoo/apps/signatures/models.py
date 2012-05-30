@@ -15,6 +15,9 @@ class Signature(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     digest = models.BooleanField(default=False)
 
+    class Meta:
+        unique_together = (("user", "content_type", "object_id"),)
+
 
 class MailMessage(models.Model):
     subject = models.CharField(max_length=250, blank=True, null=True)
