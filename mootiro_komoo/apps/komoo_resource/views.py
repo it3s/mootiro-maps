@@ -35,7 +35,7 @@ def prepare_resource_objects(community_slug="", resource_id=""):
 
     if resource_id:
         filters = dict(pk=resource_id)
-        if community:
+        if community_slug:
             filters["community"] = community
         resource = get_object_or_404(Resource, **filters)
     else:
@@ -77,11 +77,11 @@ def resource_list(request, community_slug=''):
 def show(request, community_slug=None, resource_id=None):
     logger.debug('acessing komoo_resource > show')
 
-    resource = get_object_or_404(Resource, pk=resource_id)
+    resource, community = prepare_resource_objects(
+        community_slug=community_slug, resource_id=resource_id)
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
-    community = get_object_or_None(Community, slug=community_slug)
     photos = paginated_query(UploadedFile.get_files_for(resource), request, size=3)
 
     return dict(resource=resource, similar=similar, geojson=geojson,
@@ -200,6 +200,7 @@ def show_on_map(request, geojson=''):
     return dict(geojson=geojson)
 
 
+@login_required
 @ajax_request
 def resource_get_or_add_kind(request):
     term = request.POST.get('value', '')

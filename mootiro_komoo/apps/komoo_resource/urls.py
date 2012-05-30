@@ -13,7 +13,6 @@ home_urls = [p + "resource/RESOURCE_ID/" for p in pref_urls]
 view_defs = [
     (r'resource/new/?$', 'new_resource', 'new_resource'),
     (r'resource/new/from_map/?$', 'new_resource_from_map', 'new_resource_from_map'),
-    # FIXME: url below is broken, it receives RESOURCE_ID as a GET variable
     (r'resource/RESOURCE_ID/edit/?$', 'edit_resource', 'edit_resource'),
     (r'resource/RESOURCE_ID/?$', 'show', 'view_resource'),
     (r'resource/?$', 'resource_list', 'resource_list'),
