@@ -126,7 +126,7 @@ def track_buttons(context, obj=None):
     if obj:
         content_type = ContentType.objects.get_for_model(obj)
         if Signature.objects.filter(content_type=content_type, object_id=obj.id,
-            user=context.get('user', None)).count():
+            user=context.get('user', None).id).count():
             is_signed = 'signed-content'
     else:
         content_type = ''

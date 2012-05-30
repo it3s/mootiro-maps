@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
+from signatures.tasks import send_mail
 
 class Signature(models.Model):
     user = models.ForeignKey(User)
@@ -41,7 +42,6 @@ class MailMessage(models.Model):
                 pass
 
 
-@receiver(post_save, sender=MailMessage)
-def send_post_save(sender, instance, signal, *args, **kwargs):
-    # TODO implement-me: send to celery task queue
-    pass
+def send_mail_on_update(sender, instance, signal, *a, **kw):
+    if not kw['raw']:
+        send_mail.delay(obj=instance)

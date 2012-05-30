@@ -3,8 +3,9 @@ from celery.task import task
 
 
 @task
-def add(x, y):
-    return x + y
+def send_mail(obj=None):
+    if obj:
+        print '\n\n\nSending mail to: %s \n\n' % obj
 
 
 # from celery.task.schedules import crontab
