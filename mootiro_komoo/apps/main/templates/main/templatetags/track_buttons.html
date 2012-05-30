@@ -1,5 +1,35 @@
 {% load i18n %}
 <div class="view-follow-btns">
-  <a class="btn" href="#"><img src="/static/img/glyphicons_327_rss.png"/><span>{% trans 'Subscribe' %}</span></a>
-  <a class="btn" href="#"><i class="icon-eye-open"></i><span>{% trans 'Observe' %}</span></a>
+    {% if obj and content_type %}
+    <a class="btn login-required" href="{% url follow_content %}">
+        <img src="/static/img/glyphicons_327_rss.png"/>
+        <span>{% trans 'Subscribe' %}</span>
+    </a>
+    {% else %}
+    <a class="btn" href="#">
+        <img src="/static/img/glyphicons_327_rss.png"/>
+        <span>{% trans 'Subscribe' %}</span>
+    </a>
+    {% endif %}
+  <!-- <a class="btn" href="#"><i class="icon-eye-open"></i><span>{% trans 'Observe' %}</span></a> -->
 </div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.view-follow-btns a').click(function(evt){
+            evt.preventDefault();
+            var that = $(this);
+            $.post(
+                that.attr('href'),
+                {
+                    'content_type': '{{ content_type.id }}',
+                    'obj': '{{ obj.id }}'
+                },
+                function(data){
+                    console.dir(data);
+                },
+                'json'
+            );
+        });
+    });
+</script>

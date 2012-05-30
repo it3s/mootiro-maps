@@ -5,5 +5,5 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('signatures.views',
-    # message queue routes
+    url(r'follow$', 'follow', name='follow_content'),
 )
