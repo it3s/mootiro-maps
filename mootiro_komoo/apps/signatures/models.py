@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.core.mail import EmailMultiAlternatives
-from django.dispatch import receiver
-from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
-from signatures.tasks import send_mail
+from signatures.tasks import send_notification_mail
+
 
 class Signature(models.Model):
     user = models.ForeignKey(User)
@@ -45,6 +44,8 @@ class MailMessage(models.Model):
 def notify_on_update(sender, instance, signal, *a, **kw):
     allow_on_creation = kw.get('allow_on_creation', False)
 
-    if (not kw['raw'] and allow_on_creation) or \
-       (not kw['raw'] and not kw['created']):
-        send_mail.delay(obj=instance)
+    if (not kw['raw'] and allow_on_creation) or (not kw['raw'] and not kw['created']):
+        content_type = ContentType.objects.get_for_model(instance)
+        for signature in Signature.objects.filter(content_type=content_type,
+            object_id=instance.id):
+            send_notification_mail.delay(obj=instance, user=signature.user)

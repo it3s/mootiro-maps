@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
+from django.core.mail import send_mail
 from celery.task import task
 
 
 @task
-def send_mail(obj=None):
-    # TODO: implement me
-    if obj:
-        print u'\n\n\nSending mail to: {} \n\n'.format(unicode(obj))
+def send_notification_mail(obj=None, user=None):
+    if obj and user:
+        send_mail(
+            'Update do Mootiro Maps',
+            'O objeto {} foi atualizado'.format(obj),
+            'it3sdev@gmail.com',
+            [user.email],
+            fail_silently=False
+        )
 
 
 # from celery.task.schedules import crontab
