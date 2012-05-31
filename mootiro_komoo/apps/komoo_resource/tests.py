@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals  # unicode by default
 import simplejson
 
 from django.core.urlresolvers import reverse
@@ -11,13 +12,11 @@ from .models import Resource
 
 def A_RESOURCE_DATA():
     return {
-        'name': 'IT15S',
+        'name': 'Ginásio de esportes',
         'description': 'Lorem ipsum.',
-        'community': [1, 4],
-        'link': 'http://it3s.org',
-        'contact': 'Daniela e Edgar: 3456-7890',
-        'target_audiences': [1, 2, 3],
-        'categories': [1, 2, 3],
+        'community': [1, 3],
+        'contact': 'Tiozinho da segurança. Cel: 99887766.',
+        'kind': 1,
         'tags': 'tecnologia, sistema, desenvolvimento sustentável',
         'geometry': A_POLYGON_GEOMETRY,
     }.copy()
@@ -46,99 +45,91 @@ class ResourceViewsTestCase(KomooTestCase):
         self.assertEquals(Resource.objects.count(), r0 + 1)
 
     ####### EDITION #######
-    # def test_resource_edit_page_is_up(self):
-    #     self.login_user()
+    def test_resource_edit_page_is_up(self):
+        self.login_user()
 
-    #     kwargs = dict(resource_id='1')
-    #     url = reverse('edit_resource', kwargs=kwargs)
-    #     self.assert_200(url)
-    #     self.assert_200(url, ajax=True)
+        kwargs = dict(resource_id='1')
+        url = reverse('edit_resource', kwargs=kwargs)
+        self.assert_200(url)
+        self.assert_200(url, ajax=True)
 
-    # def test_organization_edition(self):
-    #     self.login_user()
-    #     o = Organization.objects.get(slug='it3s')
-    #     data = AN_ORGANIZATION_DATA()
-    #     data['id'] = o.id
-    #     url = reverse('edit_organization', kwargs=dict(organization_slug='it3s'))
-    #     http_resp = self.client.post(url, data)
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     o2 = Organization.objects.get(slug='it15s')
-    #     self.assertEquals(o.id, o2.id)
-    #     with self.assertRaises(Exception):
-    #         Organization.objects.get(slug='it3s')
+    def test_resource_edition(self):
+        self.login_user()
+        r = Resource.objects.get(id=1)
+        data = A_RESOURCE_DATA()
+        data['id'] = r.id
+        url = reverse('edit_resource', kwargs=dict(resource_id='1'))
+        http_resp = self.client.post(url, data)
+        self.assertEqual(http_resp.status_code, 200)
+        r2 = Resource.objects.get(name=data["name"])
+        self.assertEquals(r.id, r2.id)
+        with self.assertRaises(Exception):
+            Resource.objects.get(name="Quadra poliesportiva")
 
-    # # form validation
-    # def test_organization_empty_form_validation(self):
-    #     self.login_user()
-    #     http_resp = self.client.post(reverse('new_organization'), data={})
-    #     json = simplejson.loads(http_resp.content)
-    #     expected = {
-    #         'success': 'false',
-    #         'errors': {
-    #             'name': ['This field is required.'],
-    #         },
-    #     }
-    #     self.assertEquals(json, expected)
+    ####### FORM VALIDATION #######
+    def test_resource_empty_form_validation(self):
+        self.login_user()
+        http_resp = self.client.post(reverse('new_resource'), data={})
+        json = simplejson.loads(http_resp.content)
+        expected = {
+            'success': 'false',
+            'errors': {
+                'name': ['This field is required.'],
+                'description': ['This field is required.'],
+            },
+        }
+        self.assertEquals(json, expected)
 
-    # # view
-    # @logged_and_unlogged
-    # def test_organization_view_page_is_up(self):
-    #     url = reverse('view_organization', args=('alavanca-brasil',))
-    #     self.assert_200(url)
-    #     url = reverse('view_organization', args=('sao-remo', 'alavanca-brasil',))
-    #     self.assert_200(url)
-    #     url = reverse('view_organization', args=('lalala', 'alavanca-brasil',))
-    #     self.assert_404(url)
-    #     url = reverse('view_organization', args=('sao-remo', 'lalala',))
-    #     self.assert_404(url)
+    ####### VIEW #######
+    @logged_and_unlogged
+    def test_organization_view_page_is_up(self):
+        url = reverse('view_resource', args=('1',))
+        self.assert_200(url)
+        url = reverse('view_resource', args=('sao-remo', '1',))
+        self.assert_200(url)
+        url = reverse('view_resource', args=('parque-jurassico', '1',))
+        self.assert_200(url)
 
-    # # list
-    # @logged_and_unlogged
-    # def test_organization_list_page_is_up(self):
-    #     url = reverse('organization_list')
-    #     self.assert_200(url)
-    #     url = reverse('organization_list', args=('sao-remo',))
-    #     self.assert_200(url)
+        url = reverse('view_resource', args=('higienopolis', '1',))
+        self.assert_404(url)
+        url = reverse('view_resource', args=('999',))
+        self.assert_404(url)
+        url = reverse('view_resource', args=('sao-remo', '999',))
+        self.assert_404(url)
 
-    # # searches
-    # @logged_and_unlogged
-    # def test_organization_search_by_name(self):
-    #     url = reverse('organization_search_by_name')
-    #     http_resp = self.client.get(url + "?term=Fomento")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertNotEquals(simplejson.loads(http_resp.content), [])
-    #     http_resp = self.client.get(url + "?term=xdfg")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertEquals(simplejson.loads(http_resp.content), [])
+    ####### LISTING #######
+    @logged_and_unlogged
+    def test_resource_list_page_is_up(self):
+        url = reverse('resource_list')
+        self.assert_200(url)
+        url = reverse('resource_list', args=('sao-remo',))
+        self.assert_200(url)
 
-    # @logged_and_unlogged
-    # def test_organization_search_tags(self):
-    #     url = reverse('organization_search_tags')
+    ####### SEARCHES #######
+    @logged_and_unlogged
+    def test_resource_search_tags(self):
+        url = reverse('resource_search_tags')
 
-    #     http_resp = self.client.get(url + "?term=mudar")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertNotEquals(simplejson.loads(http_resp.content), [])
+        http_resp = self.client.get(url + "?term=EdUcAção")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), ['Educação'])
 
-    #     http_resp = self.client.get(url + "?term=xwyk")
-    #     self.assertEqual(http_resp.status_code, 200)
+        http_resp = self.client.get(url + "?term=xwyk")
+        self.assertEquals(simplejson.loads(http_resp.content), [])
 
-    #     # 'saúde' is a tag for need, not organization
-    #     http_resp = self.client.get(url + "?term=saú")
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     self.assertEquals(simplejson.loads(http_resp.content), [])
+        # 'saúde' is a tag for need, not resource
+        http_resp = self.client.get(url + "?term=saú")
+        self.assertEquals(simplejson.loads(http_resp.content), [])
 
-    # @logged_and_unlogged
-    # def test_verify_org_name(self):
-    #     url = reverse('verify_org_name')
+    @logged_and_unlogged
+    def test_resource_search_by_kind(self):
+        url = reverse('resource_search_by_kind')
 
-    #     http_resp = self.client.post(url, dict(org_name="Minha ONG"))
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     json = simplejson.loads(http_resp.content)
-    #     expected = {'exists': False}
-    #     self.assertEquals(json, expected)
+        http_resp = self.client.get(url + "?term=Espaç")
+        self.assertEqual(http_resp.status_code, 200)
+        expected = [{'value': 1, 'label': 'Espaço'}]
+        self.assertEquals(simplejson.loads(http_resp.content), expected)
 
-    #     http_resp = self.client.post(url, dict(org_name="Alavanca Brasil"))
-    #     self.assertEqual(http_resp.status_code, 200)
-    #     json = simplejson.loads(http_resp.content)
-    #     expected_subset = {'exists': True}
-    #     self.assertDictContainsSubset(expected_subset, json)
+        http_resp = self.client.get(url + "?term=xwyk")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])

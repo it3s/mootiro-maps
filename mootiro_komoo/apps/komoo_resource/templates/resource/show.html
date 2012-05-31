@@ -24,11 +24,7 @@
             <div class="view-votes">
                 {% vote resource %}
                 <div class="view-edit-btn">
-                    {% if community %}
-                    <a href="/{{ community.slug }}/resource/edit?id={{ resource.id }}" class="btn login-required">
-                    {% else %}
-                    <a href="/resource/edit?id={{ resource.id }}" class="btn login-required">
-                    {% endif %}
+                    <a href="{{ resource.edit_url }}" class="btn login-required">
                         <i class="icon-pencil"></i>
                     </a>
                 </div>
@@ -64,7 +60,7 @@
 
         <div class="view-extras">
                 {% taglist resource community %}
-                {% track_buttons %}
+                {% track_buttons resource %}
                 {% report_content resource %}
                 {% delete_button resource %}
                 {% social_buttons %}

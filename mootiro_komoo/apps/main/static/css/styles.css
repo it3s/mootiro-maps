@@ -215,7 +215,7 @@ div.collapser i.icon-chevron-down {
     display: block;
     color: #000;
 }
-#top #menu li a,
+#top #menu li a, .button-off,
 .map-tab a, .map-button ,
 .organization-buttons .org-btn{
     border: 1px solid #c7c7c7;
@@ -594,23 +594,35 @@ body.community #collapse-panel {
 #filter-circle { padding: 8px; }
 #filter-circle .button { margin-left: 0em }
 #filter-circle .button .icon-plus { vertical-align: middle }
-#filter-circle span { margin-left: 2em }
+#filter-circle .highlight { background: #ffc1ae }
+#filter-circle span {
+    margin-left: 31px;
+    padding: 10px 15px 15px;
+    border-radius        : 7px 7px 0 0;
+    -moz-border-radius   : 7px 7px 0 0;
+    -webkit-border-radius: 7px 7px 0 0;
+}
 #filter-circle input {
     width: 3em;
     vertical-align: baseline;
     box-shadow: 1px 1px 1px #999999 inset;
+    background: #fafafa;
 }
-#filter-circle .floating {
+#filter-circle .help-step {
     display: none;
+    width: 208px;
+    height: 18px;
+    text-align: center;
     padding: 15px;
-    background: #ffc1ae;
+    margin: 0 0 0 38px;
     border-radius        : 7px;
     -moz-border-radius   : 7px;
     -webkit-border-radius: 7px;
 }
 #filter-circle .ui-slider {
-    width: 130px;
+    width: 180px;
     height: 10px;
+    margin-top: 4px;
     border-radius        : 7px;
     -moz-border-radius   : 7px;
     -webkit-border-radius: 7px;
@@ -622,23 +634,20 @@ body.community #collapse-panel {
     margin-left: -3px;
 }
 #filter-slider { float: left }
+#filter-circle #filter-slider-container {
+    border-top-right-radius       : 0px;
+    -moz-border-radius-topright   : 0px;
+    -webkit-border-radius-topright: 0px;
+}
 #filter-slider-container .icon-ok {
     float: right;
     margin-left: 0.4em;
 }
-#filter-slider-container {
-    position: absolute;
-    right: 5px;
-    z-index: 1;
-}
-#filter-helper {
-    position: fixed;
-    left: 220px;
-    top: 250px;
-    z-index: 10;
-}
 #filter-results-container { display: none }
-#filter-results { background: #f2f2f2 }
+#filter-results {
+    background: #f2f2f2;
+    margin-top: 10px;
+}
 
 .categories-icons img {
     margin: 10px 2px 0;
@@ -1089,6 +1098,11 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
   width: 12px;
   height: 12px;
   margin: 0 0 -1px -1px;
+}
+.view-follow-btns .signed-content{
+    border: solid 2px #ff8a00;
+    background-image: none;
+    background-color: #dedede;
 }
 .view-footer div:first-child{
   margin-top: 100px;

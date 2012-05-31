@@ -13,6 +13,7 @@ from main.utils import MooHelper
 from main.widgets import Tagsinput, TaggitWidget, ImageSwitchMultiple
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from need.models import Need, NeedCategory, TargetAudience
+from signatures.signals import notify_on_update
 
 
 class NeedForm(AjaxModelForm):
@@ -68,6 +69,7 @@ class NeedForm(AjaxModelForm):
     #     value = self.cleaned_data['community']
     #     return Community.objects.get(id=value) if value else value
 
+    @notify_on_update
     def save(self, *args, **kwargs):
         need = super(NeedForm, self).save(*args, **kwargs)
         UploadedFile.bind_files(

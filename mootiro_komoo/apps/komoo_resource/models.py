@@ -89,6 +89,10 @@ class Resource(GeoRefModel, VotableModel):
         return reverse('view_resource', kwargs=self.home_url_params)
 
     @property
+    def edit_url(self):
+        return reverse('edit_resource', kwargs=self.home_url_params)
+
+    @property
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
 

@@ -1,0 +1,109 @@
+[
+  {
+    "model": "investment.investor",
+    "pk": 1,
+    "fields": {
+      "object_id": null,
+      "typ": "PER",
+      "content_type": null,
+      "is_anonymous": false,
+      "_name": "Fulano de Tal"
+    }
+  },
+  {
+    "model": "investment.investor",
+    "pk": 2,
+    "fields": {
+      "object_id": 2,
+      "typ": "ORG",
+      "content_type": 36,
+      "is_anonymous": false,
+      "_name": null
+    }
+  },
+  {
+    "model": "investment.investor",
+    "pk": 3,
+    "fields": {
+      "object_id": 1,
+      "typ": "ORG",
+      "content_type": 36,
+      "is_anonymous": false,
+      "_name": null
+    }
+  },
+
+
+  {
+    "model": "investment.investment",
+    "pk": 1,
+    "fields": {
+      "slug": "dinheiro-vivo",
+      "title": "Dinheiro Vivo",
+      "description": "Lorem ipsum",
+      "date": "2012-09-05",
+      "over_period": false,
+      "end_date": null,
+      "currency": "BRL",
+      "value": 10000.00,
+      "investor": 1,
+      "grantee_object_id": 2,
+      "grantee_content_type": 36,
+      "creator": 1
+    }
+  },
+  {
+    "model": "investment.investment",
+    "pk": 2,
+    "fields": {
+      "slug": "compra-de-rede-de-volei",
+      "title": "Compra de rede de v\u00f4lei",
+      "description": "Lorem ipsum.",
+      "date": "2012-01-05",
+      "over_period": true,
+      "end_date": "2012-03-05",
+      "currency": "USD",
+      "value": 100000.00,
+      "investor": 2,
+      "grantee_object_id": 1,
+      "grantee_content_type": 35,
+      "creator": 1
+    }
+  },
+  {
+    "model": "investment.investment",
+    "pk": 3,
+    "fields": {
+      "slug": "aluguel-de-sala-de-aula",
+      "title": "Aluguel de sala de aula",
+      "description": "Lorem ipsum.",
+      "date": "2012-02-05",
+      "over_period": false,
+      "end_date": null,
+      "currency": "EUR",
+      "investor": 3,
+      "value": 50000.00,
+      "grantee_object_id": 1,
+      "grantee_content_type": 31,
+      "creator": 2
+    }
+  },
+  {
+    "model": "investment.investment",
+    "pk": 4,
+    "fields": {
+      "slug": "sala-de-computadores",
+      "title": "Sala de Computadores",
+      "description": "Lorem ipsum.",
+      "date": "2012-01-05",
+      "over_period": true,
+      "end_date": "2012-03-05",
+      "currency": "EUR",
+      "investor": 3,
+      "value": 1000000.00,
+      "grantee_object_id": 2,
+      "grantee_content_type": 36,
+      "creator": 2
+    }
+  }
+]

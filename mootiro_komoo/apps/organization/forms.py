@@ -19,10 +19,11 @@ from need.models import TargetAudience
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
+from signatures.signals import notify_on_update
 
 if settings.LANGUAGE_CODE == 'en-us':
     CATEGORIES = [(cat.id, cat.name) \
-                    for cat in OrganizationCategory.objects.all().order_by('name')]
+                for cat in OrganizationCategory.objects.all().order_by('name')]
 else:
     CATEGORIES = [(cat.category_id, cat.name)\
                     for cat in OrganizationCategoryTranslation.objects.filter(
@@ -88,6 +89,7 @@ class FormOrganization(AjaxModelForm):
         finally:
             return self.cleaned_data
 
+    @notify_on_update
     def save(self, *args, **kwargs):
         org = super(FormOrganization, self).save(*args, **kwargs)
         UploadedFile.bind_files(

@@ -6,6 +6,7 @@ from django.forms import fields
 from markitup.widgets import MarkItUpWidget
 
 from komoo_comments.models import Comment
+from signatures.signals import send_notifications
 
 
 class FormComment(forms.ModelForm):
@@ -24,7 +25,7 @@ class FormComment(forms.ModelForm):
     def __init__(self, *a, **kw):
         retorno = super(FormComment, self).__init__(*a, **kw)
 
-        id_ = self.instance.id if self.instance else ''
+        # id_ = self.instance.id if self.instance else ''
 
         self.fields['comment'].widget = MarkItUpWidget()
         return retorno
@@ -43,4 +44,6 @@ class FormComment(forms.ModelForm):
             update = True
         if update:
             comment.save()
+
+        send_notifications.send(sender=self, instance=comment)
         return comment

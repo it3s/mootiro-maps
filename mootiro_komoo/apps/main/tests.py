@@ -10,12 +10,18 @@ A_POLYGON_GEOMETRY = '{"type":"GeometryCollection","geometries":[{"type":"Polygo
 def logged_and_unlogged(test_method):
     @wraps(test_method)
     def test_wrapper(self):
-        print "LOGGED run..."
-        self.login_user()
-        test_method(self)
-        print "UNLOGGED run..."
-        self.client.logout()
-        test_method(self)
+        try:
+            self.login_user()
+            test_method(self)
+        except Exception as e:
+            print "Logged run FAILED!"
+            raise e
+        try:
+            self.client.logout()
+            test_method(self)
+        except Exception as e:
+            print "Unlogged run FAILED!"
+            raise e
     return test_wrapper
 
 

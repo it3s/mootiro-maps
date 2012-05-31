@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals  # unicode by default
+from __future__ import unicode_literals
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+
 import reversion
 from main.utils import slugify
 from lib.taggit.managers import TaggableManager
