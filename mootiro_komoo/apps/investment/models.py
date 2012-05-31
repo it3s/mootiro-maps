@@ -7,14 +7,12 @@ from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
 
 from annoying.functions import get_object_or_None
 
 import reversion
 from lib.taggit.managers import TaggableManager
 from vote.models import VotableModel
-from signatures.models import notify_on_update
 from main.utils import slugify
 
 
@@ -196,6 +194,3 @@ class Investment(VotableModel):
         return reverse('edit_investment', kwargs=self.home_url_params)
 
 reversion.register(Investment)
-
-# connect follow notify signal
-post_save.connect(notify_on_update, sender=Investment)

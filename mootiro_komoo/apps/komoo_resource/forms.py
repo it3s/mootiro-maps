@@ -14,6 +14,7 @@ from main.utils import MooHelper, clean_autocomplete_field
 from main.widgets import TaggitWidget, AutocompleteWithFavorites
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from komoo_resource.models import Resource, ResourceKind
+from signatures.signals import notify_on_update
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +51,7 @@ class FormResource(AjaxModelForm):
         self.fields['name'].initial = ''
         return r
 
+    @notify_on_update
     def save(self, *args, **kwargs):
         resource = super(FormResource, self).save(*args, **kwargs)
         UploadedFile.bind_files(

@@ -6,7 +6,6 @@ from django.contrib.contenttypes import generic
 from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
 
 from komoo_map.models import GeoRefModel
 from community.models import Community
@@ -17,7 +16,6 @@ from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 from vote.models import VotableModel
-from signatures.models import notify_on_update
 
 
 class Organization(VotableModel):
@@ -175,8 +173,3 @@ class OrganizationCategoryTranslation(models.Model):
     def save(self, *a, **kw):
         self.slug = slugify(self.name)
         return super(OrganizationCategoryTranslation, self).save(*a, **kw)
-
-
-# connect follow notify signal
-post_save.connect(notify_on_update, sender=Organization)
-post_save.connect(notify_on_update, sender=OrganizationBranch)

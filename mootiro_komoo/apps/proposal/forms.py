@@ -10,6 +10,7 @@ from ajaxforms import AjaxModelForm
 
 from main.utils import MooHelper
 from proposal.models import Proposal
+from signatures.signals import notify_on_update
 
 
 @autostrip
@@ -30,3 +31,7 @@ class ProposalForm(AjaxModelForm):
         # Crispy forms configuration
         self.helper = MooHelper(form_id="proposal_form")
         return super(ProposalForm, self).__init__(*a, **kw)
+
+    @notify_on_update
+    def save(self, *a, **kw):
+        return super(ProposalForm, self).save(*a, **kw)

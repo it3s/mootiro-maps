@@ -39,13 +39,3 @@ class MailMessage(models.Model):
                 self.save()
             except:
                 pass
-
-
-def notify_on_update(sender, instance, signal, *a, **kw):
-    allow_on_creation = kw.get('allow_on_creation', False)
-
-    if (not kw['raw'] and allow_on_creation) or (not kw['raw'] and not kw['created']):
-        content_type = ContentType.objects.get_for_model(instance)
-        for signature in Signature.objects.filter(content_type=content_type,
-            object_id=instance.id):
-            send_notification_mail.delay(obj=instance, user=signature.user)

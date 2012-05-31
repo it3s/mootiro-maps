@@ -1,17 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals  # unicode by default
+from __future__ import unicode_literals
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
 
 import reversion
 from main.utils import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel
 from vote.models import VotableModel
-from signatures.models import notify_on_update
 
 
 class Community(GeoRefModel, VotableModel):
@@ -59,6 +57,3 @@ class Community(GeoRefModel, VotableModel):
 
 if not reversion.is_registered(Community):
     reversion.register(Community)
-
-# connect follow notify signal
-post_save.connect(notify_on_update, sender=Community)

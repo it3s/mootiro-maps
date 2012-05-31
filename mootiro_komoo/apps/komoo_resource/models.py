@@ -7,7 +7,6 @@ from django.template.defaultfilters import slugify
 from django.db.models import Count
 from django.utils.translation import gettext_lazy as _
 from django.core.urlresolvers import reverse
-from django.db.models.signals import post_save
 
 import reversion
 from lib.taggit.managers import TaggableManager
@@ -17,7 +16,6 @@ from komoo_map.models import GeoRefModel
 from investment.models import Investment
 from fileupload.models import UploadedFile
 from vote.models import VotableModel
-from signatures.models import notify_on_update
 
 
 class ResourceKind(models.Model):
@@ -100,6 +98,3 @@ class Resource(GeoRefModel, VotableModel):
 
 if not reversion.is_registered(Resource):
     reversion.register(Resource)
-
-# connect follow notify signal
-post_save.connect(notify_on_update, sender=Resource)
