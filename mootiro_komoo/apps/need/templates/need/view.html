@@ -30,8 +30,8 @@
 
       <div class="clear-both"></div>
       <p>
-        <span class="apart">created by <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> on {{ need.creation_date|date:'j/n/Y' }}</span>
-        <span class="apart">target audience: {{ need.target_audiences.all|join:", " }}</span>
+        <span class="apart">{% trans 'created by' %} <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</span>
+        <span class="apart">{% trans 'target audience' %}: {{ need.target_audiences.all|join:", " }}</span>
       </p>
       <div class="mark-down">{{ need.description|render_markup }}</div>
 
@@ -93,8 +93,8 @@
           <li>{% trans "No related needs." %}</li>
           {% endfor %}
         </ul>
-        <div class="centralizer"><span class="show-more clickable">See more</span></div>
-        <div class="centralizer hidden"><span class="show-less clickable">See less</span></div>
+        <div class="centralizer"><span class="show-more clickable">{% trans 'See more' %}</span></div>
+        <div class="centralizer hidden"><span class="show-less clickable">{% trans 'See less' %}</span></div>
         <div class="clear-both"></div>
       </div>
       {% endif %}
