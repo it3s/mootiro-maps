@@ -30,5 +30,9 @@ def notify_on_update(fn):
         r = fn(self, *a, **kw)
         if self.cleaned_data.get('id', None):
             send_notifications.send(sender=self, instance=r)
+        elif hasattr(r, 'creator') and r.creator:
+            # sign content on creation
+            s = Signature(content_object=r, user=r.creator)
+            s.save()
         return r
     return _notify_on_update
