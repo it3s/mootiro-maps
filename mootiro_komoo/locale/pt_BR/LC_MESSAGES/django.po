@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-31 15:35-0300\n"
+"POT-Creation-Date: 2012-05-31 17:19-0300\n"
 "PO-Revision-Date: 2012-05-30 15:54-0300\n"
 "Last-Translator: Anderson Pierre Cardoso <apierre.cardoso@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -326,6 +326,7 @@ msgid "Kind:"
 msgstr "Tipo:"
 
 #: apps/komoo_resource/templates/resource/show.html:32
+#: apps/need/templates/need/view.html:32
 msgid "created by"
 msgstr "criado por"
 
@@ -633,6 +634,14 @@ msgstr "Nova necessidade"
 msgid "target audience:"
 msgstr "público alvo:"
 
+#: apps/need/templates/need/view.html:32
+msgid "on"
+msgstr ""
+
+#: apps/need/templates/need/view.html:33
+msgid "target audience"
+msgstr "público alvo"
+
 #: apps/need/templates/need/view.html:63
 msgid "Proposals"
 msgstr "Propostas"
@@ -648,6 +657,14 @@ msgstr "Necessidades relacionadas"
 #: apps/need/templates/need/view.html:90
 msgid "No related needs."
 msgstr "Nenhuma necessidade relacionada."
+
+#: apps/need/templates/need/view.html:93
+msgid "See more"
+msgstr "Ver mais"
+
+#: apps/need/templates/need/view.html:94
+msgid "See less"
+msgstr "Ver menos"
 
 #: apps/organization/forms.py:66
 msgid "Target Audiences"
@@ -848,4 +865,3 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
-
