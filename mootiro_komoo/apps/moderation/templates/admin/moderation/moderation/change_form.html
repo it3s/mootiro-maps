@@ -2,14 +2,14 @@
 
 {% block after_related_objects %}
   {% with original.content_object as object %}
-  <p>Object: <a href="{{ original.object_admin_url }}">{{ object }}</a></p>
+  <p>Object: <a href="{{ object.admin_url }}">{{ object }}</a></p>
   {% endwith %}
   {% with original.reports.all as reports %}
   <p>
   Reports:
   <ul>
     {% for object in reports %}
-    <li><a href="{{ object.object_admin_url }}">{{ object }}</a></li>
+    <li><a href="{% url admin:moderation_report_change object.id %}">{{ object }}</a></li>
     {% endfor %}
   </ul>
   </p>

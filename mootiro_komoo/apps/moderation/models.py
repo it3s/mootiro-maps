@@ -50,18 +50,11 @@ class Report(models.Model):
     Abuse report model. Should dinamically reference any table/object.
     """
 
-    DELETION_REQUEST = 1
-    SPAM = 2
-    INAPPROPRIATE = 3
-    TERMS_OF_USE = 4
-    COPYRIGHT = 5
-    MISLEADING = 6
-    UNSAFE = 7
-    UNRELATED = 8
-    ANOTHER = 9
+    (DELETION_REQUEST, SPAM, INAPPROPRIATE, TERMS_OF_USE, COPYRIGHT, MISLEADING,
+    UNSAFE, UNRELATED, ANOTHER) = range(9)
 
     REASON_NAMES = {
-        DELETION_REQUEST: _('Deletion requested by creator'),
+        DELETION_REQUEST: _('Deletion request'),
         SPAM: _('Spam'),
         INAPPROPRIATE: _('Inappropriate'),
         TERMS_OF_USE: _('Terms Of Use Violation'),
@@ -72,23 +65,11 @@ class Report(models.Model):
         ANOTHER: _('Another Reason')
     }
 
-    TYPE = (
-        (DELETION_REQUEST, _('Deletion requested by creator')),
-        (SPAM, _('Spam')),
-        (INAPPROPRIATE, _('Inappropriate')),
-        (TERMS_OF_USE, _('Terms Of Use Violation')),
-        (COPYRIGHT, _('Copyright Violation')),
-        (MISLEADING, _('Misleading Content')),
-        (UNSAFE, _('Unsafe Content')),
-        (UNRELATED, _('Unrelated Content')),
-        (ANOTHER, _('Another Reason')),
-    )
-
     moderation = models.ForeignKey(Moderation, blank=False, null=False,
             related_name='reports')
     user = models.ForeignKey(User, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    reason = models.IntegerField(choices=TYPE, verbose_name=_('reason'))
+    reason = models.IntegerField(choices=REASON_NAMES.items(), verbose_name=_('reason'))
     comment = models.CharField(max_length=1024, null=True, blank=True,
             verbose_name=_('comment'))
 

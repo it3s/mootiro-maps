@@ -5,6 +5,8 @@ from django.conf.urls.defaults import patterns, url
 
 
 urlpatterns = patterns('moderation.views',
+    url(r'^moderation/deletion_request_box/$',
+            'deletion_request_box', name='deletion_request_box'),
     url(r'^moderation/report_content_box/$',
             'report_content_box', name='report_content_box'),
     url(r'^moderation/list/$',
