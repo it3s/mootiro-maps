@@ -28,6 +28,7 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// Add csrf token to ajax requests
 jQuery(document).ajaxSend(function(event, xhr, settings) {
     function sameOrigin(url) {
         // url could be relative or scheme relative or absolute
@@ -203,13 +204,13 @@ function geoObjectsListing (ul) {
 }
 
 $(function () {
-    // Intercepts all links that have the class /authenticate/
+    // Intercepts all links that have the class /login-required/
     $("a.login-required").bind("click.loginrequierd", function (ev) {
         if (!isAuthenticated) {
+            // TODO: request status from server
             ev.stopPropagation();
             ev.stopImmediatePropagation();
             ev.preventDefault();
-            // TODO: request status from server
             var url = $(this).attr("href");
             if (url == "/vote/add/") {
                 url = document.location.pathname;
@@ -228,20 +229,20 @@ $(function () {
     });
 });
 
-function errorMessage(title, message, imageUrl, buttons) {
+function _displayMessage(selector, dialogClass, title, message, imageUrl, buttons) {
     if (!buttons) {
         buttons = [
             {
                 text: "Ok",
                 'class': "button",
-                click: function() { $(this).dialog("close"); }
+                click: function () { $(this).dialog("close"); }
             }
         ];
     }
-    var box = $("#error-box");
-    $(".message", box).text(message);
-    box.dialog({
-        dialogClass: "error-dialog",
+    var $box = selector;
+    $(".message", $box).text(message);
+    $box.dialog({
+        dialogClass: dialogClass,
         title: title,
         modal: true,
         buttons: buttons,
@@ -249,19 +250,46 @@ function errorMessage(title, message, imageUrl, buttons) {
         draggable: false,
         width: 400
     });
-    return box;
+    return $box;
+}
+
+function errorMessage(title, message, imageUrl, buttons) {
+    return _displayMessage($("#error-box"), "error-dialog",
+            title, message, imageUrl, buttons);
+}
+
+function infoMessage(title, message, imageUrl, buttons) {
+    return _displayMessage($("#info-box"), "info-dialog",
+            title, message, imageUrl, buttons);
+}
+
+function confirmationMessage(title, message, imageUrl, callback) {
+    buttons = [
+        {
+            text: gettext("Yes"),
+            'class': "btn",
+            click: function () { callback("yes"); $(this).dialog("close"); }
+        },
+        {
+            text: gettext("No"),
+            'class': "button",
+            click: function () { callback("no"); $(this).dialog("close"); }
+        }
+    ];
+    return infoMessage(title, message, imageUrl, buttons);
 }
 
 function unexpectedError(info) {
+    //TODO: translate me!
     title = "Ops!";
     message = "O Spock comeu um pedaço do código... Nos escreva falando que problema você encontrou para que possamos resolvê-lo!";
     buttons = [];
 
-    var box = $("#unexpected-error-box");
-    $(".message", box).text(message);
+    var $box = $("#unexpected-error-box");
+    $(".message", $box).text(message);
     $("input[name=url]").val(location.href);
     $("input[name=info]").val(info || "");
-    box.dialog({
+    $box.dialog({
         dialogClass: "error-dialog unexpected-error-dialog",
         title: title,
         modal: true,
@@ -270,5 +298,14 @@ function unexpectedError(info) {
         draggable: false,
         width: 650
     });
-    return box;
+    return $box;
+}
+
+function flash(message, optDuration) {
+    var duration = optDuration || 10000;
+    var $box = $("#flash-message");
+    $(".message", $box).text(message);
+    $box.show();
+    if (duration > 0)
+        setTimeout(function () { $box.fadeOut(); }, duration);
 }

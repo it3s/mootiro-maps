@@ -2,53 +2,55 @@
 from __future__ import unicode_literals  # unicode by default
 import logging
 
-import json
-import datetime
 from smtplib import SMTPException
 
-from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
-from django.conf import settings
 from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse
+from django.db.models.loading import get_model
 
 from annoying.decorators import render_to, ajax_request
 
-from django.db.models.loading import get_model
 from moderation.models import Moderation, Report
-from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query)
+from main.utils import paginated_query
+from moderation.utils import can_delete, delete_object
 
 logger = logging.getLogger(__name__)
 
 
-@login_required
 @ajax_request
 def moderation_delete(request, app_label, model_name, obj_id):
-    #FIXME
-    logger.debug('accessing Moderation > moderation_delete : POST={}'.format(request.POST))
-    content_type = ContentType.objects.get(app_label=app_label, model=model_name)
+    logger.debug('accessing Moderation > moderation_delete : POST={}'.format(
+        request.POST))
     model = get_model(app_label, model_name)
-    data_dict = {'error': _('No data')}
+    data_dict = {'error': _('No data'), 'success': 'false'}
     if model:
         obj = get_object_or_404(model, id=obj_id)
-        now = datetime.datetime.now()
-        delta = now - obj.creation_date
-        hours = delta.days * 24. + delta.seconds / 3600.
 
-        if obj:
-            if request.user.is_superuser or hours <= settings.DELETE_HOURS:
-                # TODO
-                print 'Pode deletar'
+        if can_delete(obj, request.user):
+            logger.debug('user can delete the content {}'.format(obj))
+            confirmed = (request.POST.get('confirmed', 'false') == 'true')
+            if confirmed:
+                logger.debug('deletion confirmed. deleting {}'.format(obj))
+                try:
+                    delete_object(obj)
+                    data_dict = {'next': 'showDeleteFeedback',
+                                 'success': 'true'}
+                except Exception, e:
+                    logger.debug('An unexpected error occurred while ' \
+                            'deleting {} : {}'.format(obj, e.message))
+                    data_dict = {'next': 'unexpectedError',
+                                 'info': e.message, 'success': 'false'}
             else:
-                # TODO
-                print 'Precisa solicitar'
+                logger.debug('asking to display the confirmation dialog...')
+                data_dict = {'next': 'confirmation', 'success': 'true'}
         else:
-            print 'Nada para deletar???'
-    return HttpResponse(json.dumps(data_dict), mimetype='application/javascript')
+            logger.debug('user cannot delete the content. ' \
+                    'asking to display the request dialog...')
+            data_dict = {'next': 'request', 'success': 'true'}
+    return data_dict
 
 
 @render_to('moderation/report_content_box.html')
@@ -68,18 +70,22 @@ def list_reports(request):
 
 @ajax_request
 def moderation_report(request, app_label, model_name, obj_id):
-    logger.debug('accessing Moderation > moderation_report : POST={}'.format(request.POST))
+    logger.debug('accessing Moderation > moderation_report : POST={}'.format(
+        request.POST))
     data_dict = {'error': _('No data'), 'success': 'false'}
     if request.method == 'POST':
         model = get_model(app_label, model_name)
-        content_type = ContentType.objects.get(app_label=app_label, model=model_name)
+        content_type = ContentType.objects.get(app_label=app_label,
+                                               model=model_name)
         if model:
             obj = get_object_or_404(model, id=obj_id)
             moderation = Moderation.objects.get_for_object_or_create(obj)
-            reports = Report.objects.filter(user=request.user, moderation=moderation).all()
+            reports = Report.objects.filter(user=request.user,
+                                            moderation=moderation).all()
             if reports:
                 report = reports.get()
-                message = _('already reported')
+                message = _('You already reported this content! ' \
+                        'Please wait while an admin verifies your report.')
                 success = 'true'
             else:
                 reason = request.POST.get('reason', 0)
@@ -96,7 +102,8 @@ def moderation_report(request, app_label, model_name, obj_id):
                             hasattr(obj.content_object, 'view_url'):
                         view_url = obj.content_object.view_url
 
-                admin_url = reverse('admin:{}_{}_change'.format(app_label, model_name),
+                admin_url = reverse('admin:{}_{}_change'.format(app_label,
+                                                                model_name),
                         args=(obj.id, ))
                 user = request.user
                 body = _("""
@@ -113,9 +120,12 @@ Comment: {9}
 
                 try:
                     mail_admins(_('Content report'), body, fail_silently=False)
-                except SMTPException:
-                    pass #TODO: What?
-                message = _('reported')
+                except SMTPException, e:
+                    logger.debug('An error occurred while sending email ' \
+                            'to admin : {}'.format(e))
+                message = _('The content was successfully reported. An admin will verify this soon.')
                 success = 'true'
-            data_dict = {'id': report.id, 'message': message, 'success': success}
-    return HttpResponse(json.dumps(data_dict), mimetype='application/javascript')
+            data_dict = {'id': report.id,
+                         'message': message,
+                         'success': success}
+    return data_dict

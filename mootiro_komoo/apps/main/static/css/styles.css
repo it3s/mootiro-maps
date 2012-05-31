@@ -160,6 +160,7 @@ div.collapser i.icon-chevron-down {
 }
 #content {
     display: block;
+    min-height: 100px;
 }
 #dinamic-form,
 #main-content {
@@ -476,6 +477,19 @@ div.collapser i.icon-chevron-down {
 }
 *:hover > .icon-investment.no-hover {
     background-image: url("../img/menu/investment.png");
+}
+
+#flash-message {
+    display: none;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    z-index: 99999999999999999999; /* nothing can be over this */
+}
+#flash-message .message {
+    border-radius: 6px;
+    background: #ffffbb;
+    padding: 5px;
 }
 
 .map-button {

@@ -4,6 +4,12 @@
   <div class="message"></div>
 </div>
 
+<div id="info-box">
+  <h3 class="title"></h3>
+  <div class="image"></div>
+  <div class="message"></div>
+</div>
+
 <div id="unexpected-error-box">
   <div class="content">
     <h3 class="title"></h3>
@@ -20,9 +26,8 @@
 <script>
   $("#error-form").ajaxform({
     onSuccess: function (data) {
-      var box = $("#unexpected-error-box");
-      box.dialog("close");
-      // TODO: Show feedback message
+      $("#unexpected-error-box").dialog("close");
+      flash(gettext("Your error report was successfully sent. Thank you!"));
     }
   });
 </script>

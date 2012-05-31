@@ -1,10 +1,13 @@
 $(function () {
+    var scriptFile = "moderation.js";
+
     var dialog;
 
     function getReportContentBox(button) {
         // Get the report box code using ajax
+        var url = dutils.urls.resolve("report_content_box");
         $.ajax({
-            url: dutils.urls.resolve("report_content_box"),
+            url: url,
             context: $("#root"),
 
             success: function (data, textStatus, jqXHR) {
@@ -22,26 +25,42 @@ $(function () {
                     }
 
                     // Send the form using ajax
-                    var serialized = $(this).serialize();
+                    var url = $(this).attr("action");
+                    var postData = $(this).serialize();
                     $.ajax({
-                        url: $(this).attr("action"),
+                        url: url,
                         cache: false,
-                        data: serialized,
+                        data: postData,
                         dataType: "json",
                         type: "POST",
 
                         success: function (data, textStatus, jqXHR) {
                             if (data.error) {
-                                errorMessage(gettext("Error"), data.error);
+                                var info = JSON.stringify({
+                                    script: scriptFile,
+                                    reference: "getReportContentBox#responseError",
+                                    info: "An error occurred while trying to report a content.",
+                                    ajaxUrl: url,
+                                    ajaxPostData: postData,
+                                    jqXHR: jqXHR
+                                });
+                                unexpectedError(info);
                             } else {
-                                // TODO Show feedback message
+                                flash(data.message);
                                 dialog.dialog("close");
                             }
                         },
 
                         error: function (jqXHR, textStatus, errorThrown) {
-                            errorMessage(gettext("Error"),
-                                gettext("An error occurred, please try again later."));
+                            var info = JSON.stringify({
+                                script: scriptFile,
+                                reference: "getReportContentBox#ajaxError",
+                                info: "An error occurred while trying to report a content.",
+                                ajaxUrl: url,
+                                ajaxPostData: postData,
+                                jqXHR: jqXHR
+                            });
+                            unexpectedError(info);
                         }
                     });
                     return false;
@@ -56,8 +75,15 @@ $(function () {
             },
 
             error: function (jqXHR, textStatus, errorThrown) {
-                errorMessage(gettext("Network error"),
-                    gettext("An error occurred while connecting to network!"));
+                var info = JSON.stringify({
+                    script: scriptFile,
+                    reference: "getReportContentBox#ajaxError",
+                    info: "An error occurred while trying to get the abuse report form.",
+                    ajaxUrl: url,
+                    ajaxPostData: "none",
+                    jqXHR: jqXHR
+                });
+                unexpectedError(info);
             }
         });
 
@@ -104,19 +130,63 @@ $(function () {
         });
     });
 
-    openDeleteContentDialog = function (button) {
+    deleteContent = function (button, confirmed) {
         var appLabel = button.attr("data-app-label");
         var modelName = button.attr("data-model-name");
         var objectId = button.attr("data-id");
-        $.ajax({
-            type: 'POST',
-            url: dutils.urls.resolve("moderation_delete", {
-                app_label: appLabel,
-                model_name: modelName,
-                obj_id: objectId
-            }),
+
+        var url = dutils.urls.resolve("moderation_delete", {
+            app_label: appLabel,
+            model_name: modelName,
+            obj_id: objectId
+        });
+        var postData = { confirmed: (confirmed || false) };
+
+        $.ajax({type: 'POST', url: url, data: postData,
             success: function (data, textStatus, jqXHR) {
-                errorMessage("Enviado");
+                if (data.success == "true") {
+                    if (data.next == "confirmation") {
+                        confirmationMessage(gettext("Delete"),
+                            gettext("Do you want to delete this content permanently?"),
+                            "",
+                            function (response) {
+                                if (response == "yes") {
+                                    deleteContent(button, true);
+                                }
+                            });
+                    } else if (data.next == "request") {
+                        //TODO
+                        console.log("display request dialog");
+                    } else if (data.next == "showDeleteFeedback") {
+                        flash(gettext("The content was successfully deleted"), -1);
+                        var $mainContent = $("#main-content");
+                        $("#content").height($mainContent.height());
+                        $mainContent.fadeOut();
+                    } else if (data.next == "showRequestFeedback") {
+                        flash(gettext("Deletion request sent"));
+                    }
+                } else {
+                    var info = JSON.stringify({
+                        script: scriptFile,
+                        reference: "deleteContent#responseError",
+                        info: "An error occurred while trying to delete a content.",
+                        ajaxUrl: url,
+                        ajaxPostData: postData,
+                        jqXHR: jqXHR
+                    });
+                    unexpectedError(info);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                var info = JSON.stringify({
+                    script: scriptFile,
+                    reference: "deleteContent#ajaxError",
+                    info: "An error occurred while trying to delete a content.",
+                    ajaxUrl: url,
+                    ajaxPostData: postData,
+                    jqXHR: jqXHR
+                });
+                unexpectedError(info);
             }
         });
     };
@@ -126,7 +196,7 @@ $(function () {
     $.each(deleteButtons, function (key, btn) {
         var button = $(btn);
         button.bind("click", function (ev) {
-            openDeleteContentDialog (button);
+            deleteContent(button);
             return false;
         });
     });
