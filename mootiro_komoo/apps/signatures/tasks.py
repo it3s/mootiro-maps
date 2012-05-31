@@ -1,15 +1,26 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
 from django.core.mail import send_mail
 from celery.task import task
-from django.utils.translation import ugettext_lazy as _
 
 
 @task
 def send_notification_mail(obj=None, user=None):
     if obj and user:
+        mail_title = "Update do Mootiro Maps"
+        mail_message = """
+Olá {},
+
+O objeto "{}" que você está seguindo foi atualizado.
+Visite: http://maps.mootiro.org/ para ver mais detalhes.
+atenciosamente,
+
+a equipe IT3S.
+""".format(user.get_full_name() or user.username, unicode(obj))
+
         send_mail(
-            _('Mootiro Maps update'),
-            _('The object "{}" which you are subscribed was updated'.format(obj)),
+            mail_title,
+            mail_message,
             'it3sdev@gmail.com',
             [user.email],
             fail_silently=False

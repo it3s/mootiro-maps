@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-31 15:17-0300\n"
+"POT-Creation-Date: 2012-05-31 15:35-0300\n"
 "PO-Revision-Date: 2012-05-30 15:54-0300\n"
 "Last-Translator: Anderson Pierre Cardoso <apierre.cardoso@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -803,14 +803,6 @@ msgstr "Adicionar investimento"
 msgid "Cost"
 msgstr "Custo"
 
-#: apps/signatures/tasks.py:11
-msgid "Mootiro Maps update"
-msgstr "Update do Mootiro Maps"
-
-#: apps/signatures/tasks.py:12
-msgid "The object \"{}\" which you are subscribed was updated"
-msgstr "O objeto \"{}\" que você está seguindo foi atualizado"
-
 #: apps/vote/views.py:59
 msgid "User not logged or anonymous"
 msgstr "Usuário não logado ou anônimo"
@@ -857,37 +849,3 @@ msgstr "Item Classificado"
 msgid "Tagged Items"
 msgstr "Itens Classificados"
 
-#~ msgid "invalid community data"
-#~ msgstr "dados de 'comunidade' inválidos"
-
-#~ msgid "Target Audience"
-#~ msgstr "Público Alvo"
-
-#~ msgid "Name is required"
-#~ msgstr "Nome é requerido"
-
-#~ msgid "Name must be unique"
-#~ msgstr "Já existe uma organização com este nome"
-
-#~ msgid "invalid logo data"
-#~ msgstr "dados de 'logo' inválidos"
-
-#~ msgid "Organization Name:"
-#~ msgstr "Nome da Organização:"
-
-#~ msgid "Organization Data"
-#~ msgstr "Dados da Organização:"
-
-#~ msgid "Branch Data"
-#~ msgstr "Dados da Unidade"
-
-#~ msgid "Login"
-#~ msgstr "Fazer login"
-
-#~ msgid "offered %(num)s resource"
-#~ msgid_plural "offered %(num)s resources"
-#~ msgstr[0] "oferece %(num)s recurso"
-#~ msgstr[1] "oferece %(num)s recursos"
-
-#~ msgid "Sort"
-#~ msgstr "Ordenar"
