@@ -11,6 +11,7 @@ from annoying.decorators import render_to
 
 from ajaxforms import ajax_form
 from forms import FormProfile
+from signatures.models import Signature
 
 
 logger = logging.getLogger(__name__)
@@ -55,7 +56,8 @@ def test_login(request):
 def profile(request):
     logger.debug('accessing user_cas > profile')
     form = FormProfile(instance=request.user)
-    return {'form': form}
+    signatures = Signature.objects.filter(user=request.user)
+    return {'form': form, 'signatures': signatures}
 
 
 @login_required
