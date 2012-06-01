@@ -1,0 +1,68 @@
+[
+  {
+    "model": "need.need",
+    "pk": 1,
+    "fields": {
+      "title": "Parquinho",
+      "slug": "parquinho",
+      "description": "Muita areia e brinquedos legais para a garotada!",
+      "community": [1],
+      "creation_date": "2012-03-21 15:04:58",
+      "creator": 1,
+      "categories": [2, 3],
+      "target_audiences": [2, 3, 4],
+      "geometry": "GEOMETRYCOLLECTION (POINT (-23.5613167724382487 -46.7433837890624773))"
+    }
+  },
+  {
+    "model": "need.need",
+    "pk": 2,
+    "fields": {
+      "title": "Coleta de lixo",
+      "slug": "coleta-de-lixo",
+      "description": "Ta fidido o bagulho aqui!!!",
+      "community": [1, 3],
+      "creation_date": "2012-03-21 15:04:58",
+      "creator": 2,
+      "categories": [3, 4, 5],
+      "target_audiences": [1],
+      "geometry": "GEOMETRYCOLLECTION (POINT (-23.5613167724382487 -46.7443837890624773))"
+    }
+  },
+  {
+    "model": "need.need",
+    "pk": 3,
+    "fields": {
+      "title": "Alfabetização de adultos",
+      "slug": "alfabetizacao-de-adultos",
+      "description": "Temos muitas pessoas que não sabem ler e escrever.",
+      "community": [2],
+      "creator": 1,
+      "creation_date": "2012-03-21 15:04:58",
+      "categories": [1],
+      "target_audiences": [6, 7],
+      "geometry": "GEOMETRYCOLLECTION (POINT (-23.5623167724382487 -46.7433837890624773))"
+    }
+  },
+  {
+    "model": "need.need",
+    "pk": 4,
+    "fields": {
+      "title": "Policiamento",
+      "slug": "policiamento",
+      "description": "Há muita violência. Queremos o ROTA na RUA!",
+      "community": [],
+      "creator": 2,
+      "creation_date": "2012-03-21 15:43:58",
+      "categories": [1],
+      "target_audiences": [6, 7],
+      "geometry": "GEOMETRYCOLLECTION (POINT (-23.5623167724382487 -46.7433837890624773))"
+    }
+  },
+
+  {"pk": 4, "model": "taggit.tag", "fields": {"name": "saúde", "slug": "saude"}},
+  {"pk": 5, "model": "taggit.tag", "fields": {"name": "Higiene", "slug": "higiene"}},
+  {"pk": 4, "model": "taggit.taggeditem", "fields": {"tag": 4, "content_type": 20, "object_id": 1}},
+  {"pk": 5, "model": "taggit.taggeditem", "fields": {"tag": 5, "content_type": 20, "object_id": 1}}
+
+]

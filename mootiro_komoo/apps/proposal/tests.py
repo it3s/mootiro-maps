@@ -21,6 +21,9 @@ def A_PROPOSAL_DATA():
 
 class ProposalViewsTestCase(KomooTestCase):
 
+    fixtures = KomooTestCase.fixtures + \
+        ['communities.json', 'needs.json', 'proposals.json']
+
     ####### CREATION #######
     def test_new_proposal_page(self):
         self.login_user()

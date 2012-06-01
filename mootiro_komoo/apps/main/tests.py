@@ -13,20 +13,19 @@ def logged_and_unlogged(test_method):
         try:
             self.login_user()
             test_method(self)
-        except Exception as e:
+        finally:
             print "Logged run FAILED!"
-            raise e
         try:
             self.client.logout()
             test_method(self)
-        except Exception as e:
+        finally:
             print "Unlogged run FAILED!"
-            raise e
     return test_wrapper
 
 
 class KomooTestCase(TestCase):
-    fixtures = ['test_fixtures.json', 'contenttypes_fixtures.json']
+
+    fixtures = ['contenttypes_fixtures.json', 'users.json']
 
     @classmethod
     def setUpClass(cls):
