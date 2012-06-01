@@ -24,6 +24,9 @@ def A_RESOURCE_DATA():
 
 class ResourceViewsTestCase(KomooTestCase):
 
+    fixtures = KomooTestCase.fixtures + \
+        ['communities.json', 'resources.json']
+
     ####### CREATION #######
     def test_new_resource_page(self):
         self.login_user()

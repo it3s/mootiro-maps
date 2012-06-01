@@ -25,6 +25,9 @@ def AN_ORGANIZATION_DATA():
 
 class OrganizationViewsTestCase(KomooTestCase):
 
+    fixtures = KomooTestCase.fixtures + \
+        ['communities.json', 'organizations.json']
+
     # new_organization
     def test_new_organization_page_is_up(self):
         self.login_user()
