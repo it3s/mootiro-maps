@@ -43,6 +43,11 @@ def _fetch_geo_objects(Q, zoom):
                 organizations=organization_branches)
 
 
+@render_to("main/stats.html")
+def stats(request):
+    return {}
+
+
 #@cache_page(54000)
 def get_geojson(request):
     bounds = request.GET.get('bounds', None)
