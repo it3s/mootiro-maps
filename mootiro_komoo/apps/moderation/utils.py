@@ -16,7 +16,6 @@ logger = logging.getLogger(__name__)
 
 
 def can_delete(obj, user):
-    return False
     """Verify if the object can be deketed by user"""
     if not obj or not user or not user.is_authenticated:
         return False
