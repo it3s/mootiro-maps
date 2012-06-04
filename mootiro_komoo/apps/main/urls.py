@@ -7,6 +7,7 @@ from django.conf import settings
 
 urlpatterns = patterns('main.views',
     url(r'^$', 'root', name='root'),
+    url(r'^stats$', 'stats', name='stats'),
     url(r'^get_geojson$', 'get_geojson', name='get_geojson'),
     url(r'^radial_search$', 'radial_search', name='radial_search'),
     url(r'^komoo_search/$', 'komoo_search', name='komoo_search'),

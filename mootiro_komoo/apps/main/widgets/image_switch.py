@@ -95,7 +95,7 @@ class ImageSwitchMultiple(forms.CheckboxSelectMultiple):
                 list_item = u'<li><div title="{0}" class="img-holder" data-original-label="{2}">{1}</div><span>{0}</span></li>' \
                     .format(label, rendered_cb, option_label)
             else:
-                list_item = u'<li title="%s">%s</li>' % (option_label, rendered_cb)
+                list_item = u'<li title="%s">%s</li>' % (_(option_label), rendered_cb)
             output.append(list_item)
         output.append(u'</ul>')
         return mark_safe(u'\n'.join(output))

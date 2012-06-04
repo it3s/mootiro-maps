@@ -9,6 +9,7 @@ from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
+from django.db.models.query_utils import Q
 from django.shortcuts import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
@@ -175,15 +176,23 @@ def sorted_query(query_set, sort_fields, request, default_order='name'):
         return query_set.order_by(default_order)
 
 
+def _bool_and(a, b):
+    return a and b
+
+
 def filtered_query(query_set, request):
     filters = request.GET.get('filters', '')
     for f in filters.split(','):
         if f == 'tags':
             request.encoding = 'latin-1'
             tags = request.GET.get('tags', '')
+
             if tags:
                 tags = tags.split(',')
-                query_set = query_set.filter(tags__name__in=tags)
+                tag_filters = reduce(_bool_and,
+                    [Q(tags__name=tag) for tag in tags])
+                query_set = query_set.filter(tag_filters)
+                # query_set = query_set.filter(tags__name__in=tags)
         if f == 'community':
             community = request.GET.get('community', '')
             if community:
