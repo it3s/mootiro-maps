@@ -2,16 +2,19 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+import requests
 
 from django.shortcuts import redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout as auth_logout
 from django.core.urlresolvers import reverse
 from annoying.decorators import render_to
 
 from ajaxforms import ajax_form
 from forms import FormProfile
 from signatures.models import Signature
+from django_cas.views import _logout_url as cas_logout_url
 
 
 logger = logging.getLogger(__name__)
@@ -43,6 +46,11 @@ def after_login(request):
 
 def logout(request):
     logger.debug('accessing user_cas > logout')
+    next_page = request.GET.get('next', '/')
+    auth_logout(request)
+    requests.get(cas_logout_url(request, next_page))
+    # request.get("https://www.facebook.com/logout.php?next=YOUR_REDIRECT_URL&access_token=USER_ACCESS_TOKEN")
+    return redirect(next_page)
 
 
 @render_to('user_cas/login_test.html')
