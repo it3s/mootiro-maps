@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-04 11:46-0300\n"
+"POT-Creation-Date: 2012-06-04 12:50-0300\n"
 "PO-Revision-Date: 2012-05-30 15:54-0300\n"
 "Last-Translator: Anderson Pierre Cardoso <apierre.cardoso@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -627,7 +627,7 @@ msgstr "Esporte"
 
 #: apps/need/models.py:34
 msgid "Security"
-msgstr ""
+msgstr "Segurança"
 
 #: apps/need/templates/need/list.html:8
 msgid "Needs for"
@@ -830,6 +830,18 @@ msgstr "Adicionar investimento"
 #: apps/proposal/forms.py:27
 msgid "Cost"
 msgstr "Custo"
+
+#: apps/user_cas/views.py:85
+msgid "You must provide a username"
+msgstr "Você deve fornecer um nome de usuário"
+
+#: apps/user_cas/views.py:88
+msgid "This username already exists"
+msgstr "Esse nome de usuário já existe"
+
+#: apps/user_cas/templates/user_cas/profile.html:38
+msgid "Signatures"
+msgstr "Assinaturas"
 
 #: apps/vote/views.py:59
 msgid "User not logged or anonymous"
