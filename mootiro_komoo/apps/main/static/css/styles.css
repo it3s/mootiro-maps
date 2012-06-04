@@ -1631,7 +1631,7 @@ div.investments-list .tab-investment.selected a { color: #000 }
 /* ====== user profile ===== */
 #user-profile-content{
     padding: 50px 60px 0 60px;
-    background-color: #DCEFF4;
+    /*background-color: #DCEFF4;*/
     min-height: 550px;
 }
 #user-profile-content .main-column{
@@ -1646,7 +1646,7 @@ div.investments-list .tab-investment.selected a { color: #000 }
     font-weight: bold;
 }
 .div-profile-form input{
-    background-color: #ffffff;
+    background-color: #f5f5f5;
 }
 /* ====== Error box ======== */
 .error-dialog,
