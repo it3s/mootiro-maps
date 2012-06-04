@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-31 17:19-0300\n"
+"POT-Creation-Date: 2012-06-04 11:46-0300\n"
 "PO-Revision-Date: 2012-05-30 15:54-0300\n"
 "Last-Translator: Anderson Pierre Cardoso <apierre.cardoso@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: apps/community/forms.py:25 apps/komoo_resource/forms.py:40
-#: apps/main/templatetags/komoo_tags.py:234
-#: apps/main/templatetags/komoo_tags.py:235 apps/organization/forms.py:61
+#: apps/main/templatetags/komoo_tags.py:239
+#: apps/main/templatetags/komoo_tags.py:240 apps/organization/forms.py:61
 #: apps/organization/templates/organization/new_frommap.html:34
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
 #: apps/community/forms.py:26 apps/investment/forms.py:32
-#: apps/komoo_resource/forms.py:41 apps/need/forms.py:28 apps/need/forms.py:89
+#: apps/komoo_resource/forms.py:41 apps/need/forms.py:25
 #: apps/organization/forms.py:62 apps/proposal/forms.py:26
 msgid "Description"
 msgstr "Descrição"
@@ -36,13 +36,13 @@ msgid "Population"
 msgstr "População"
 
 #: apps/community/forms.py:28 apps/investment/forms.py:42
-#: apps/komoo_resource/forms.py:44 apps/main/templatetags/komoo_tags.py:233
-#: apps/need/forms.py:31 apps/need/forms.py:92 apps/organization/forms.py:65
+#: apps/komoo_resource/forms.py:44 apps/main/templatetags/komoo_tags.py:238
+#: apps/need/forms.py:28 apps/organization/forms.py:65
 #: lib/taggit/managers.py:39 lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/community/forms.py:29 apps/need/forms.py:32 apps/need/forms.py:93
+#: apps/community/forms.py:29 apps/need/forms.py:29
 #: apps/organization/forms.py:68 apps/organization/forms.py:69
 #: apps/organization/forms.py:119
 msgid " "
@@ -84,8 +84,7 @@ msgstr "Fotos:"
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
-#: apps/investment/forms.py:31 apps/need/forms.py:27 apps/need/forms.py:88
-#: apps/proposal/forms.py:25
+#: apps/investment/forms.py:31 apps/need/forms.py:24 apps/proposal/forms.py:25
 msgid "Title"
 msgstr "Título"
 
@@ -111,7 +110,7 @@ msgstr "Por um período"
 
 #: apps/investment/forms.py:38
 #: apps/investment/templates/investment/view.html:39
-#: apps/main/templatetags/komoo_tags.py:236
+#: apps/main/templatetags/komoo_tags.py:241
 msgid "Date"
 msgstr "Data"
 
@@ -288,8 +287,8 @@ msgstr "Tipo"
 msgid "Contact"
 msgstr "Contato"
 
-#: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:238
-#: apps/need/forms.py:26 apps/need/forms.py:87 apps/organization/forms.py:63
+#: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:243
+#: apps/need/forms.py:23 apps/organization/forms.py:63
 #: apps/organization/forms.py:118
 msgid "Community"
 msgstr "Comunidade"
@@ -566,7 +565,7 @@ msgstr "Filtrar por"
 msgid "Apply"
 msgstr "Aplicar"
 
-#: apps/main/templatetags/komoo_tags.py:237
+#: apps/main/templatetags/komoo_tags.py:242
 msgid "Votes"
 msgstr "Votos"
 
@@ -578,49 +577,57 @@ msgstr "dados inválidos"
 msgid "You can type above or select here"
 msgstr "Você pode digitar acima ou selecionar algum aqui"
 
-#: apps/need/forms.py:29 apps/need/forms.py:90 apps/organization/forms.py:67
-msgid "Categories"
-msgstr "Categorias"
+#: apps/main/widgets/multiple_autocomplete.py:56
+msgid "add a tag"
+msgstr "adicione"
 
-#: apps/need/forms.py:30 apps/need/forms.py:91
+#: apps/need/forms.py:26
+msgid "Need Categories"
+msgstr "Áreas"
+
+#: apps/need/forms.py:27
 msgid "Target audiences"
 msgstr "Públicos-alvo"
 
-#: apps/need/models.py:24
+#: apps/need/models.py:25
 msgid "Culture"
 msgstr "Cultura"
 
-#: apps/need/models.py:25
+#: apps/need/models.py:26
 msgid "Education"
 msgstr "Educação"
 
-#: apps/need/models.py:26
+#: apps/need/models.py:27
 msgid "Environment"
 msgstr "Meio Ambiente"
 
-#: apps/need/models.py:27
+#: apps/need/models.py:28
 msgid "Health"
 msgstr "Saúde"
 
-#: apps/need/models.py:28
+#: apps/need/models.py:29
 msgid "Housing"
 msgstr "Habitação"
 
-#: apps/need/models.py:29
+#: apps/need/models.py:30
 msgid "Local Economy"
 msgstr "Economia Local"
 
-#: apps/need/models.py:30
+#: apps/need/models.py:31
 msgid "Mobility"
 msgstr "Mobilidade"
 
-#: apps/need/models.py:31
+#: apps/need/models.py:32
 msgid "Social Service"
 msgstr "Serviço Social"
 
-#: apps/need/models.py:32
+#: apps/need/models.py:33
 msgid "Sport"
 msgstr "Esporte"
+
+#: apps/need/models.py:34
+msgid "Security"
+msgstr ""
 
 #: apps/need/templates/need/list.html:8
 msgid "Needs for"
@@ -636,7 +643,7 @@ msgstr "público alvo:"
 
 #: apps/need/templates/need/view.html:32
 msgid "on"
-msgstr ""
+msgstr "em"
 
 #: apps/need/templates/need/view.html:33
 msgid "target audience"
@@ -669,6 +676,10 @@ msgstr "Ver menos"
 #: apps/organization/forms.py:66
 msgid "Target Audiences"
 msgstr "Público Alvo"
+
+#: apps/organization/forms.py:67
+msgid "Categories"
+msgstr "Categorias"
 
 #: apps/organization/forms.py:116
 msgid "Branch Name"
