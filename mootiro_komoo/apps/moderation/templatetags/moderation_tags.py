@@ -2,6 +2,8 @@
 from django import template
 from django.contrib.contenttypes.models import ContentType
 from moderation.models import Moderation, Report
+from moderation.utils import get_reports_by_user
+
 register = template.Library()
 
 
@@ -13,9 +15,12 @@ def report_content(context, obj):
         {% report_content object %}
     """
     content_type = ContentType.objects.get_for_model(obj)
+    user = context.get('user', None)
+    reports = get_reports_by_user(user, obj)
     return dict(app_label=content_type.app_label,
                 model_name=content_type.name,
-                id=obj.id)
+                id=obj.id,
+                reports=reports)
 
 
 @register.inclusion_tag('moderation/delete_button_templatetag.html',
@@ -39,4 +44,4 @@ def report_content_box(context):
         {% report_content_box %}
     """
 
-    return dict(types=Report.TYPE[1:])
+    return dict(types=Report.REASON_NAMES.items()[1:])

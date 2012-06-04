@@ -46,6 +46,7 @@ $(function () {
                                 });
                                 unexpectedError(info);
                             } else {
+                                button.addClass("disabled");
                                 flash(data.message);
                                 dialog.dialog("close");
                             }
@@ -90,6 +91,7 @@ $(function () {
     }
 
     openReportContentDialog = function (button, avoidInfiniteLoop) {
+        if (button.hasClass("disabled")) return;
         var box = $("#report-content-box");
         // Get the object info
         var appLabel = button.attr("data-app-label");
@@ -163,6 +165,7 @@ $(function () {
                                 });
                                 unexpectedError(info);
                             } else {
+                                button.addClass("disabled");
                                 flash(data.message);
                                 dialog.dialog("close");
                             }
@@ -239,6 +242,7 @@ $(function () {
     };
 
     deleteContent = function (button, confirmed) {
+        if (button.hasClass("disabled")) return; 
         var appLabel = button.attr("data-app-label");
         var modelName = button.attr("data-model-name");
         var objectId = button.attr("data-id");
@@ -266,11 +270,13 @@ $(function () {
                         openDeletionRequestDialog(button);
                         console.log("display request dialog");
                     } else if (data.next == "showDeleteFeedback") {
+                        button.addClass("disabled");
                         flash(gettext("The content was successfully deleted"), -1);
                         var $mainContent = $("#main-content");
                         $("#content").height($mainContent.height());
                         $mainContent.fadeOut();
                     } else if (data.next == "showRequestFeedback") {
+                        button.addClass("disabled");
                         flash(gettext("Deletion request sent"));
                     }
                 } else {

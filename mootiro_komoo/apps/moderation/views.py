@@ -11,7 +11,8 @@ from annoying.decorators import render_to, ajax_request
 
 from moderation.models import Moderation, Report
 from main.utils import paginated_query
-from moderation.utils import can_delete, delete_object, create_report
+from moderation.utils import (can_delete, delete_object, create_report,
+                              get_reports_by_user)
 
 logger = logging.getLogger(__name__)
 
@@ -89,10 +90,9 @@ def moderation_report(request, app_label, model_name, obj_id):
         if model:
             obj = get_object_or_404(model, id=obj_id)
             moderation = Moderation.objects.get_for_object_or_create(obj)
-            reports = Report.objects.filter(user=request.user,
-                                            moderation=moderation).all()
+            reports = get_reports_by_user(request.user, obj)
             if reports:
-                report = reports.get()
+                report = reports[0]
                 message = _('You already reported this content! ' \
                         'Please wait while an admin verifies your report.')
                 success = 'true'

@@ -38,6 +38,20 @@ def delete_object(obj):
         moderation.delete()
     obj.delete()
 
+
+def get_reports_by_user(user, obj=None):
+    """Get reports sent by user"""
+    if user.is_anonymous():
+        return []
+    if obj:
+        moderation = Moderation.objects.get_for_object_or_create(obj)
+        reports = Report.objects.filter(user=user, reason__gt=0,
+                                        moderation=moderation).all()
+    else:
+        reports = Report.objects.filter(user=user).all()
+    return reports
+
+
 def create_report(*args, **kwargs):
     obj = kwargs['obj']
     user = kwargs['user']

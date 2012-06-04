@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="report-content">
-  <a class="report-content-btn btn login-required" href="#" data-app-label="{{ app_label }}" data-model-name="{{ model_name }}" data-id="{{ id }}">
+  <a class="report-content-btn btn login-required {% if reports %}disabled{% endif %}" href="#" data-app-label="{{ app_label }}" data-model-name="{{ model_name }}" data-id="{{ id }}" {% if reports %}title="You already reported this content"{% endif %}>
     <i class="icon-flag"></i><span>{% trans 'Report' %}</span>
   </a>
 </div>

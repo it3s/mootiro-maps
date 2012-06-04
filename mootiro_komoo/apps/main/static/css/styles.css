@@ -1079,6 +1079,11 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .view-follow-btns {
     display: inline-block;
 }
+#deletion-request-comment { 
+  margin-top: 10px; 
+  width: 400px; 
+  height: 150px; 
+}
 .view-follow-btns {
   color: #444444;
   display: inline-block;
