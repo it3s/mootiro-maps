@@ -166,7 +166,7 @@ $(function () {
                                 unexpectedError(info);
                             } else {
                                 button.addClass("disabled");
-                                flash(data.message);
+                                flash(gettext("Deletion request sent"));
                                 dialog.dialog("close");
                             }
                         },
