@@ -40,7 +40,7 @@
             <!-- signatures -->
             {% for signature in signatures %}
                 <div class="div_signature">
-                    <input type="checkbox" id="id_singature_{{ signature.id }}" value="{{ signature.id }}" name="signatures" checked="checked">
+                    <input type="checkbox" id="id_signature_{{ signature.id }}" value="{{ signature.id }}" name="signatures" checked="checked">
                     <span>{{ signature.content_object|class_name|title }} &gt; {{ signature.content_object }}</span>
                 </div>
             {% endfor %}

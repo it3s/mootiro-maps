@@ -75,7 +75,7 @@ def profile_update(request):
 
     user = request.user
     username = request.POST.get('username', '')
-    signatures = request.POST.get('signatures', [])
+    signatures = request.POST.getlist('signatures')
 
     success = True
     errors = {}
@@ -96,7 +96,7 @@ def profile_update(request):
         # update signatures
         if signatures:
             signatures = map(int, signatures)
-            for signature in Signature.objects.filter(user=user):
+            for signature in Signature.objects.filter(user=request.user):
                 if not signature.id in signatures:
                     signature.delete()
         return {'success': 'true', 'redirect': reverse('user_profile')}
