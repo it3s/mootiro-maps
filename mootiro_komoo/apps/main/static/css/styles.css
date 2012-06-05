@@ -818,10 +818,17 @@ body.community #main-content {
 }
 
 /* Forms */
+form .requiredField .asteriskField { color: #ff3d2e }
 form .control-group { clear: both }
+form legend {
+    padding: 0;
+    margin: 0;
+    border: none;
+}
 form .form-actions {
     background: none;
     border: none;
+    padding: 15px 0;
 }
 form .formRow { clear: both }
 form .formRow > div {
@@ -830,6 +837,8 @@ form .formRow > div {
     margin-right: 5px;
 }
 form .datepicker { width: 7em }
+form #uploader_container { padding: 0 }
+
 #need_form { width: 100% }
 #need_form input[type=text], #need_form textarea { width: 100% }
 #need_form #div_id_categories ul { display: inline-block }
@@ -837,7 +846,6 @@ form .datepicker { width: 7em }
     float: left;
     margin: 0 2px;
 }
-/*#need_form #div_id_community input { width: 150px }*/
 
 #investment_form #id_currency { width: 7em }
 #investment_form #div_id_investor_type .radio {
@@ -890,6 +898,7 @@ form .datepicker { width: 7em }
     right: 10px;
 }
 /* =========== COMMENT section ======= */
+.comments-block { margin-top: 30px }
 #divFormComment{
     margin-top: 10px;
 }

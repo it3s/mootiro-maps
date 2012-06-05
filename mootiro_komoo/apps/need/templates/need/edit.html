@@ -1,7 +1,10 @@
 {% extends 'global.html' %}
 {% load crispy_forms_tags %}
+{% load komoo_tags %}
 {% load komoo_map_tags %}
 {% load upload_tags %}
+
+{% block menu %} {% menu need "need" %} {% endblock %}
 
 {% block content %}
   {% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'lazy=True' %}
