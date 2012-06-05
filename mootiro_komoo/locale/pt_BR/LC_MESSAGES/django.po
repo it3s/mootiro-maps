@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-05 10:53-0300\n"
+"POT-Creation-Date: 2012-06-05 12:19-0300\n"
 "PO-Revision-Date: 2012-06-04 20:37-0300\n"
-"Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
+"Last-Translator: André Casimiro <ah.casimiro@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -36,9 +36,11 @@ msgid "Population"
 msgstr "População"
 
 #: apps/community/forms.py:28 apps/investment/forms.py:42
-#: apps/komoo_resource/forms.py:44 apps/main/templatetags/komoo_tags.py:238
-#: apps/need/forms.py:28 apps/organization/forms.py:65
-#: lib/taggit/managers.py:39 lib/taggit/models.py:57
+#: apps/komoo_resource/forms.py:44
+#: apps/main/templates/main/templatetags/taglist.html:5
+#: apps/main/templatetags/komoo_tags.py:238 apps/need/forms.py:28
+#: apps/organization/forms.py:65 lib/taggit/managers.py:39
+#: lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
@@ -76,7 +78,7 @@ msgstr "população:"
 
 #: apps/community/templates/community/view.html:32
 #: apps/komoo_resource/templates/resource/show.html:47
-#: apps/need/templates/need/view.html:42
+#: apps/need/templates/need/view.html:46
 #: apps/organization/templates/organization/show.html:193
 msgid "Photos:"
 msgstr "Fotos:"
@@ -199,7 +201,7 @@ msgstr "Período"
 
 #: apps/investment/templates/investment/view.html:53
 #: apps/komoo_resource/templates/resource/show.html:73
-#: apps/need/templates/need/view.html:65
+#: apps/need/templates/need/view.html:68
 #: apps/organization/templates/organization/show.html:208
 msgid "see on map"
 msgstr "ver no mapa"
@@ -313,7 +315,7 @@ msgstr[1] "%(counter)s Recursos"
 
 #: apps/komoo_resource/templates/resource/list.html:49
 #: apps/komoo_resource/templates/resource/show.html:86
-#: apps/need/templates/need/list.html:39 apps/need/templates/need/view.html:84
+#: apps/need/templates/need/list.html:39
 msgid "at"
 msgstr "em"
 
@@ -322,7 +324,7 @@ msgid "Kind:"
 msgstr "Tipo:"
 
 #: apps/komoo_resource/templates/resource/show.html:33
-#: apps/need/templates/need/view.html:35
+#: apps/need/templates/need/view.html:39
 msgid "created by"
 msgstr "criado por"
 
@@ -544,10 +546,6 @@ msgstr "primeira"
 msgid "last"
 msgstr "última"
 
-#: apps/main/templates/main/templatetags/taglist.html:5
-msgid "Tags:"
-msgstr "Classificadores:"
-
 #: apps/main/templates/main/templatetags/taglist.html:14
 msgid "No tags"
 msgstr "Sem tags"
@@ -740,7 +738,7 @@ msgid "Need Categories"
 msgstr "Áreas"
 
 #: apps/need/forms.py:27 apps/need/templates/need/list.html:56
-#: apps/need/templates/need/view.html:34
+#: apps/need/templates/need/view.html:38
 msgid "Target audiences"
 msgstr "Públicos alvo"
 
@@ -792,32 +790,38 @@ msgstr "Necessidades para"
 msgid "New need"
 msgstr "Nova necessidade"
 
-#: apps/need/templates/need/view.html:35
+#: apps/need/templates/need/view.html:30
+msgid "History"
+msgstr ""
+
+#: apps/need/templates/need/view.html:39
 msgid "on"
 msgstr "em"
 
-#: apps/need/templates/need/view.html:67
+#: apps/need/templates/need/view.html:71
 msgid "Proposals"
 msgstr "Propostas"
 
-#: apps/need/templates/need/view.html:72
+#: apps/need/templates/need/view.html:77
 msgid "New proposal"
 msgstr "Nova proposta"
 
-#: apps/need/templates/need/view.html:78
+#: apps/need/templates/need/view.html:84
 msgid "Related needs"
 msgstr "Necessidades relacionadas"
 
-#: apps/need/templates/need/view.html:94
+#: apps/need/templates/need/view.html:101
 msgid "No related needs."
 msgstr "Nenhuma necessidade relacionada."
 
-#: apps/need/templates/need/view.html:97
-msgid "See more"
-msgstr "Ver mais"
+#: apps/need/templates/need/view.html:104
+#: apps/organization/templates/organization/show.html:95
+msgid "see all"
+msgstr "ver todos"
 
-#: apps/need/templates/need/view.html:98
-msgid "See less"
+#: apps/need/templates/need/view.html:105
+#, fuzzy
+msgid "see less"
 msgstr "Ver menos"
 
 #: apps/organization/forms.py:66
@@ -932,10 +936,6 @@ msgid ""
 msgid_plural "Received %(num)s investments"
 msgstr[0] "Recebeu %(num)s investimento"
 msgstr[1] "Recebeu %(num)s investimentos"
-
-#: apps/organization/templates/organization/show.html:95
-msgid "see all"
-msgstr "ver todos"
 
 #: apps/organization/templates/organization/show.html:150
 msgid "No organizations supported."

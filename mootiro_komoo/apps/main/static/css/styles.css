@@ -179,6 +179,8 @@ div.collapser i.icon-chevron-down {
     background: #eff8f9;
     max-width:900px;
 }
+.attenuate { color: #706f6f }
+.attenuate a { color: #706f6f }
 #tabs .tab {
     z-index: 9999999;
     position: absolute;
@@ -791,7 +793,7 @@ body.community #main-content {
 .block {
     padding: 5px;
     background: #dceff4;
-    margin-top: 10px;
+    margin-top: 25px;
     border-radius        : 6px;
     -moz-border-radius   : 6px;
     -webkit-border-radius: 6px;
@@ -800,6 +802,8 @@ body.community #main-content {
 }
 .block h3 {
     color: #000;
+    line-height: 120%;
+    padding: 0.3em 0;
 }
 .right-bar > .block ul li {
     margin-bottom: 5px;
@@ -808,6 +812,9 @@ body.community #main-content {
     display: block;
     background-color: #dceff4;
     margin: 5px 0;
+}
+.right-bar .block .button {
+    margin-top: 10px;
 }
 
 /* Forms */
@@ -1133,7 +1140,7 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 }
 .tag {
   color: #666666;
-  margin: 2px 5px;
+  margin: 2px 1px;
   padding: 2px 5px;
   font-weight: normal;
   background-color: rgb(225, 239, 245);
@@ -1853,9 +1860,11 @@ ul.two-cols li {
 
 #footer {
     clear: both;
+    display: inline-block;
     width: 900px;
     margin-left: 60px;
-   font-size: 90%;
+    margin-top: 10px;
+    font-size: 90%;
 }
 
 #footer > div {
