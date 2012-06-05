@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-04 20:23-0300\n"
+"POT-Creation-Date: 2012-06-05 10:53-0300\n"
 "PO-Revision-Date: 2012-06-04 20:37-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -17,45 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: apps/community/forms.py:25
-#: apps/komoo_resource/forms.py:40
+#: apps/community/forms.py:25 apps/komoo_resource/forms.py:40
 #: apps/main/templatetags/komoo_tags.py:239
-#: apps/main/templatetags/komoo_tags.py:240
-#: apps/organization/forms.py:61
+#: apps/main/templatetags/komoo_tags.py:240 apps/organization/forms.py:61
 #: apps/organization/templates/organization/new_frommap.html:34
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
 
-#: apps/community/forms.py:26
-#: apps/investment/forms.py:32
-#: apps/komoo_resource/forms.py:41
-#: apps/need/forms.py:25
-#: apps/organization/forms.py:62
-#: apps/proposal/forms.py:26
+#: apps/community/forms.py:26 apps/investment/forms.py:32
+#: apps/komoo_resource/forms.py:41 apps/need/forms.py:25
+#: apps/organization/forms.py:62 apps/proposal/forms.py:26
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/community/forms.py:27
-#: apps/community/templates/community/view.html:26
+#: apps/community/forms.py:27 apps/community/templates/community/view.html:26
 msgid "Population"
 msgstr "População"
 
-#: apps/community/forms.py:28
-#: apps/investment/forms.py:42
-#: apps/komoo_resource/forms.py:44
-#: apps/main/templatetags/komoo_tags.py:238
-#: apps/need/forms.py:28
-#: apps/organization/forms.py:65
-#: lib/taggit/managers.py:39
-#: lib/taggit/models.py:57
+#: apps/community/forms.py:28 apps/investment/forms.py:42
+#: apps/komoo_resource/forms.py:44 apps/main/templatetags/komoo_tags.py:238
+#: apps/need/forms.py:28 apps/organization/forms.py:65
+#: lib/taggit/managers.py:39 lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/community/forms.py:29
-#: apps/need/forms.py:29
-#: apps/organization/forms.py:68
-#: apps/organization/forms.py:69
+#: apps/community/forms.py:29 apps/need/forms.py:29
+#: apps/organization/forms.py:68 apps/organization/forms.py:69
 #: apps/organization/forms.py:119
 msgid " "
 msgstr " "
@@ -88,7 +76,7 @@ msgstr "população:"
 
 #: apps/community/templates/community/view.html:32
 #: apps/komoo_resource/templates/resource/show.html:47
-#: apps/need/templates/need/view.html:41
+#: apps/need/templates/need/view.html:42
 #: apps/organization/templates/organization/show.html:193
 msgid "Photos:"
 msgstr "Fotos:"
@@ -97,9 +85,7 @@ msgstr "Fotos:"
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
-#: apps/investment/forms.py:31
-#: apps/need/forms.py:24
-#: apps/proposal/forms.py:25
+#: apps/investment/forms.py:31 apps/need/forms.py:24 apps/proposal/forms.py:25
 msgid "Title"
 msgstr "Título"
 
@@ -142,8 +128,7 @@ msgstr "Moeda"
 msgid "Value"
 msgstr "Valor"
 
-#: apps/investment/forms.py:128
-#: apps/investment/forms.py:130
+#: apps/investment/forms.py:128 apps/investment/forms.py:130
 msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
@@ -214,7 +199,7 @@ msgstr "Período"
 
 #: apps/investment/templates/investment/view.html:53
 #: apps/komoo_resource/templates/resource/show.html:73
-#: apps/need/templates/need/view.html:64
+#: apps/need/templates/need/view.html:65
 #: apps/organization/templates/organization/show.html:208
 msgid "see on map"
 msgstr "ver no mapa"
@@ -299,10 +284,8 @@ msgstr "Tipo"
 msgid "Contact"
 msgstr "Contato"
 
-#: apps/komoo_resource/forms.py:45
-#: apps/main/templatetags/komoo_tags.py:243
-#: apps/need/forms.py:23
-#: apps/organization/forms.py:63
+#: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:243
+#: apps/need/forms.py:23 apps/organization/forms.py:63
 #: apps/organization/forms.py:118
 msgid "Community"
 msgstr "Comunidade"
@@ -330,8 +313,7 @@ msgstr[1] "%(counter)s Recursos"
 
 #: apps/komoo_resource/templates/resource/list.html:49
 #: apps/komoo_resource/templates/resource/show.html:86
-#: apps/need/templates/need/list.html:39
-#: apps/need/templates/need/view.html:83
+#: apps/need/templates/need/list.html:39 apps/need/templates/need/view.html:84
 msgid "at"
 msgstr "em"
 
@@ -340,7 +322,7 @@ msgid "Kind:"
 msgstr "Tipo:"
 
 #: apps/komoo_resource/templates/resource/show.html:33
-#: apps/need/templates/need/view.html:33
+#: apps/need/templates/need/view.html:35
 msgid "created by"
 msgstr "criado por"
 
@@ -668,7 +650,7 @@ msgstr "denúncia"
 msgid "reports"
 msgstr "denúncias"
 
-#: apps/moderation/utils.py:78
+#: apps/moderation/utils.py:77
 msgid ""
 "\n"
 "Content: {0}\n"
@@ -692,30 +674,38 @@ msgstr ""
 "Comentário: {9}\n"
 "    "
 
-#: apps/moderation/utils.py:91
+#: apps/moderation/utils.py:90
 msgid "Content report"
 msgstr "Denúncia do conteúdo"
 
-#: apps/moderation/views.py:25
-#: apps/moderation/views.py:87
+#: apps/moderation/views.py:25 apps/moderation/views.py:87
 msgid "No data"
 msgstr "Nenhum dado"
 
 #: apps/moderation/views.py:96
-msgid "You already reported this content! Please wait while an admin verifies your report."
-msgstr "Você já havia denunciado este conteúdo! Por favor, aguarde enquanto um administrador verifica sua denúncia."
+msgid ""
+"You already reported this content! Please wait while an admin verifies your "
+"report."
+msgstr ""
+"Você já havia denunciado este conteúdo! Por favor, aguarde enquanto um "
+"administrador verifica sua denúncia."
 
 #: apps/moderation/views.py:105
 msgid "The content was successfully reported. An admin will verify this soon."
-msgstr "O conteúdo foi denunciado com sucesso. Um administrador verificará em breve."
+msgstr ""
+"O conteúdo foi denunciado com sucesso. Um administrador verificará em breve."
 
 #: apps/moderation/templates/moderation/delete_button_templatetag.html:5
 msgid "Delete"
 msgstr "Apagar"
 
 #: apps/moderation/templates/moderation/deletion_request_box.html:3
-msgid "Please, tell us about the reason why you are requesting to delete this content"
-msgstr "Por favor, conte-nos o motivo pelo qual você está requisitando a remoção deste conteúdo"
+msgid ""
+"Please, tell us about the reason why you are requesting to delete this "
+"content"
+msgstr ""
+"Por favor, conte-nos o motivo pelo qual você está requisitando a remoção "
+"deste conteúdo"
 
 #: apps/moderation/templates/moderation/deletion_request_box.html:14
 msgid "Request"
@@ -749,9 +739,10 @@ msgstr "Denunciar"
 msgid "Need Categories"
 msgstr "Áreas"
 
-#: apps/need/forms.py:27
+#: apps/need/forms.py:27 apps/need/templates/need/list.html:56
+#: apps/need/templates/need/view.html:34
 msgid "Target audiences"
-msgstr "Públicos-alvo"
+msgstr "Públicos alvo"
 
 #: apps/need/models.py:25
 msgid "Culture"
@@ -801,45 +792,37 @@ msgstr "Necessidades para"
 msgid "New need"
 msgstr "Nova necessidade"
 
-#: apps/need/templates/need/list.html:56
-msgid "target audience:"
-msgstr "público alvo:"
-
-#: apps/need/templates/need/view.html:33
+#: apps/need/templates/need/view.html:35
 msgid "on"
 msgstr "em"
 
-#: apps/need/templates/need/view.html:34
-msgid "target audience"
-msgstr "público alvo"
-
-#: apps/need/templates/need/view.html:66
+#: apps/need/templates/need/view.html:67
 msgid "Proposals"
 msgstr "Propostas"
 
-#: apps/need/templates/need/view.html:71
+#: apps/need/templates/need/view.html:72
 msgid "New proposal"
 msgstr "Nova proposta"
 
-#: apps/need/templates/need/view.html:77
+#: apps/need/templates/need/view.html:78
 msgid "Related needs"
 msgstr "Necessidades relacionadas"
 
-#: apps/need/templates/need/view.html:93
+#: apps/need/templates/need/view.html:94
 msgid "No related needs."
 msgstr "Nenhuma necessidade relacionada."
 
-#: apps/need/templates/need/view.html:96
+#: apps/need/templates/need/view.html:97
 msgid "See more"
 msgstr "Ver mais"
 
-#: apps/need/templates/need/view.html:97
+#: apps/need/templates/need/view.html:98
 msgid "See less"
 msgstr "Ver menos"
 
 #: apps/organization/forms.py:66
 msgid "Target Audiences"
-msgstr "Público Alvo"
+msgstr "Públicos alvo"
 
 #: apps/organization/forms.py:67
 msgid "Categories"
@@ -1006,8 +989,7 @@ msgstr "Assinaturas"
 msgid "User not logged or anonymous"
 msgstr "Usuário não logado ou anônimo"
 
-#: lib/ajax_select/fields.py:97
-#: lib/ajax_select/fields.py:138
+#: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
 #: lib/ajax_select/fields.py:303
 msgid "Enter text to search."
 msgstr "Entre um texto para buscar."
@@ -1037,8 +1019,7 @@ msgstr "%(object)s classificado com %(tag)s"
 msgid "Object id"
 msgstr "Id do Objeto"
 
-#: lib/taggit/models.py:117
-#: lib/taggit/models.py:123
+#: lib/taggit/models.py:117 lib/taggit/models.py:123
 msgid "Content type"
 msgstr "Tipo do Conteúdo"
 
@@ -1049,4 +1030,3 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
-

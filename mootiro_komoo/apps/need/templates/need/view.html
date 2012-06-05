@@ -29,10 +29,11 @@
       {% vote need %}
 
       <div class="clear-both"></div>
-      <p>
-        <span class="apart">{% trans 'created by' %} <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</span>
-        <span class="apart">{% trans 'target audience' %}: {{ need.target_audiences.all|join:", " }}</span>
-      </p>
+
+      <div class="apart">
+        <div><span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}</div>
+        <div>{% trans 'created by' %} <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</div>
+      </div>
       <div class="mark-down">{{ need.description|render_markup }}</div>
 
       <div class="view-footer">

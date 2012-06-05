@@ -76,7 +76,10 @@ ul.horizontal li {
 .right { float:right }
 span.big { font-size: 120% }
 span.apart { margin-right: 3em }
-div.apart { margin-top: 1em }
+div.apart {
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
 .meta-info {
     font-weight: bold;
     color: #000;
@@ -947,7 +950,7 @@ a.btnShowForm{
 
 .vote{
     display: inline-block;
-    margin: 5px 0 20px 0;
+    margin: 5px 0 10px 0;
 }
 .vote a{
     margin: 0 5px;
@@ -1144,7 +1147,7 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .view-list-item-tags .view-tag-list-tags{
     width: 370px;
 }
-.view-tag-list .meta-info{
+.view-tag-list .meta-info {
     vertical-align: top;
 }
 div.view-list-item {

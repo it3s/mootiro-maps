@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-04 20:23-0300\n"
+"POT-Creation-Date: 2012-06-05 10:54-0300\n"
 "PO-Revision-Date: 2012-06-04 20:35-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -209,6 +209,11 @@ msgstr "Não"
 msgid "Report Abuse"
 msgstr "Denunciar abuso"
 
+#: apps/moderation/static/js/moderation.js:167
+#: apps/moderation/static/js/moderation.js:278
+msgid "Deletion request sent"
+msgstr "Requisição de remoção enviada"
+
 #: apps/moderation/static/js/moderation.js:230
 msgid "Deletion Request"
 msgstr "Requisição de remoção"
@@ -221,42 +226,56 @@ msgstr "Você deseja apagar este conteúdo permanentemente?"
 msgid "The content was successfully deleted"
 msgstr "O conteúdo foi apagado com sucesso"
 
-#: apps/moderation/static/js/moderation.js:278
-msgid "Deletion request sent"
-msgstr "Requisição de remoção enviada"
-
 #: apps/organization/static/js/organization_new.js:14
 msgid "complete"
 msgstr "completo"
 
 #: apps/organization/static/js/organization_new.js:33
-msgid "Congratulations, you have concluded the organization/branch addition process"
-msgstr "Parabéns, você concluiu o processo de adição de uma organização/unidade."
+msgid ""
+"Congratulations, you have concluded the organization/branch addition process"
+msgstr ""
+"Parabéns, você concluiu o processo de adição de uma organização/unidade."
 
 #: apps/organization/static/js/organization_new.js:41
 #: apps/organization/static/js/organization_new.js:91
-msgid "Provide the organization name so we can verify if it's already registered on our system"
-msgstr "Forneça o nome da organização para verificarmos se ela ainda não foi cadastrada no sistema."
+msgid ""
+"Provide the organization name so we can verify if it's already registered on "
+"our system"
+msgstr ""
+"Forneça o nome da organização para verificarmos se ela ainda não foi "
+"cadastrada no sistema."
 
 #: apps/organization/static/js/organization_new.js:54
 msgid "This organization already exists. Do you want to add a branch?"
 msgstr "Essa organização já existe. Deseja adicionar uma unidade (filial) ?"
 
 #: apps/organization/static/js/organization_new.js:61
-msgid "This organization is not registered yet. Do you want to add this organization?"
-msgstr "Esta organização não foi cadastrada ainda. Você deseja adicionar esta organização?"
+msgid ""
+"This organization is not registered yet. Do you want to add this "
+"organization?"
+msgstr ""
+"Esta organização não foi cadastrada ainda. Você deseja adicionar esta "
+"organização?"
 
 #: apps/organization/static/js/organization_new.js:73
 msgid "Enter with the data from the branch you have marked on map"
 msgstr "Entre com os dados para a unidade que você marcou no mapa"
 
 #: apps/organization/static/js/organization_new.js:81
-msgid "Enter with the data from the Organization which owns the branch you have marked on map."
-msgstr "Entre com os dados para a Organização a qual pertence a unidade que você marcou no mapa"
+msgid ""
+"Enter with the data from the Organization which owns the branch you have "
+"marked on map."
+msgstr ""
+"Entre com os dados para a Organização a qual pertence a unidade que você "
+"marcou no mapa"
 
 #: apps/organization/static/js/organization_new.js:104
-msgid "Congratulations, your organization was successfully saved. Please, now add the data from the branch you have marked on the map"
-msgstr "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora adicione os dados da unidade que você marcou no mapa"
+msgid ""
+"Congratulations, your organization was successfully saved. Please, now add "
+"the data from the branch you have marked on the map"
+msgstr ""
+"Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
+"adicione os dados da unidade que você marcou no mapa"
 
 #: apps/vote/static/js/vote.js:38
 msgid "error : "

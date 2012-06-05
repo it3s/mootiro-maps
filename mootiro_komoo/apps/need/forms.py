@@ -23,7 +23,7 @@ need_form_field_labels = {
     'community': _('Community'),
     'title': _('Title'),
     'description': _('Description'),
-    'categories': _('Need Categories'),  # doesn't work =S
+    'categories': _('Need Categories'),
     'target_audiences': _('Target audiences'),
     'tags': _('Tags'),
     'files': _(' '),
