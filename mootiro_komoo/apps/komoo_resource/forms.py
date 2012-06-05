@@ -59,8 +59,21 @@ class FormResource(AjaxModelForm):
         return resource
 
     def clean_kind(self):
-        return clean_autocomplete_field(
-            self.cleaned_data['kind'], ResourceKind)
+        field_data = self.cleaned_data['kind']
+        model = ResourceKind
+        can_add = self.fields['kind'].widget.can_add
+        try:
+            if not field_data or field_data == 'None':
+                if can_add and self.data.get('kind_autocomplete', ''):
+                    new_kind = model(name=self.data['kind_autocomplete'])
+                    new_kind.save()
+                    return new_kind
+                else:
+                    return model()
+            else:
+                return model.objects.get(pk=field_data)
+        except:
+            raise forms.ValidationError(_('invalid field data'))
 
 
 class FormResourceGeoRef(FormResource):

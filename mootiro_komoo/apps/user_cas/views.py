@@ -71,6 +71,7 @@ def profile(request):
 @ajax_request
 def profile_update(request):
     logger.debug('accessing user_cas > profile_update')
+    logger.debug('POST: {}'.format(request.POST))
 
     user = request.user
     username = request.POST.get('username', '')
