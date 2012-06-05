@@ -8,6 +8,7 @@ from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
+from crispy_forms.layout import Layout, Fieldset
 
 from main.utils import MooHelper
 from main.widgets import Tagsinput, TaggitWidget, ImageSwitchMultiple
@@ -68,6 +69,18 @@ class NeedForm(AjaxModelForm):
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="need_form")
+        self.helper.layout = Layout(
+            Fieldset(
+                _('Edit need') if 'instance' in kw else _('New need'),
+                'title',
+                'description',
+                'community',
+                'categories',
+                'target_audiences',
+                'tags',
+                'files'
+            )
+        )
         return super(NeedForm, self).__init__(*a, **kw)
 
     @notify_on_update

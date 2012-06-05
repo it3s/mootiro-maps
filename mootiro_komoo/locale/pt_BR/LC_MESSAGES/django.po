@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-05 12:19-0300\n"
+"POT-Creation-Date: 2012-06-05 13:09-0300\n"
 "PO-Revision-Date: 2012-06-04 20:37-0300\n"
 "Last-Translator: André Casimiro <ah.casimiro@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -26,7 +26,7 @@ msgid "Name"
 msgstr "Nome"
 
 #: apps/community/forms.py:26 apps/investment/forms.py:32
-#: apps/komoo_resource/forms.py:41 apps/need/forms.py:25
+#: apps/komoo_resource/forms.py:41 apps/need/forms.py:26
 #: apps/organization/forms.py:62 apps/proposal/forms.py:26
 msgid "Description"
 msgstr "Descrição"
@@ -38,13 +38,13 @@ msgstr "População"
 #: apps/community/forms.py:28 apps/investment/forms.py:42
 #: apps/komoo_resource/forms.py:44
 #: apps/main/templates/main/templatetags/taglist.html:5
-#: apps/main/templatetags/komoo_tags.py:238 apps/need/forms.py:28
+#: apps/main/templatetags/komoo_tags.py:238 apps/need/forms.py:29
 #: apps/organization/forms.py:65 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Classificadores"
 
-#: apps/community/forms.py:29 apps/need/forms.py:29
+#: apps/community/forms.py:29 apps/need/forms.py:30
 #: apps/organization/forms.py:68 apps/organization/forms.py:69
 #: apps/organization/forms.py:119
 msgid " "
@@ -87,7 +87,7 @@ msgstr "Fotos:"
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
-#: apps/investment/forms.py:31 apps/need/forms.py:24 apps/proposal/forms.py:25
+#: apps/investment/forms.py:31 apps/need/forms.py:25 apps/proposal/forms.py:25
 msgid "Title"
 msgstr "Título"
 
@@ -287,7 +287,7 @@ msgid "Contact"
 msgstr "Contato"
 
 #: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:243
-#: apps/need/forms.py:23 apps/organization/forms.py:63
+#: apps/need/forms.py:24 apps/organization/forms.py:63
 #: apps/organization/forms.py:118
 msgid "Community"
 msgstr "Comunidade"
@@ -733,14 +733,22 @@ msgstr "Campos obrigatórios"
 msgid "Report"
 msgstr "Denunciar"
 
-#: apps/need/forms.py:26
+#: apps/need/forms.py:27
 msgid "Need Categories"
 msgstr "Áreas"
 
-#: apps/need/forms.py:27 apps/need/templates/need/list.html:56
+#: apps/need/forms.py:28 apps/need/templates/need/list.html:56
 #: apps/need/templates/need/view.html:38
 msgid "Target audiences"
 msgstr "Públicos alvo"
+
+#: apps/need/forms.py:74
+msgid "Edit need"
+msgstr "Editar necessidade"
+
+#: apps/need/forms.py:74 apps/need/templates/need/list.html:16
+msgid "New need"
+msgstr "Nova necessidade"
 
 #: apps/need/models.py:25
 msgid "Culture"
@@ -785,10 +793,6 @@ msgstr "Segurança"
 #: apps/need/templates/need/list.html:8
 msgid "Needs for"
 msgstr "Necessidades para"
-
-#: apps/need/templates/need/list.html:16
-msgid "New need"
-msgstr "Nova necessidade"
 
 #: apps/need/templates/need/view.html:30
 msgid "History"
