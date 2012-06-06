@@ -8,7 +8,7 @@ register = template.Library()
 
 @register.inclusion_tag('moderation/report_content_button_templatetag.html',
         takes_context=True)
-def report_content(context, obj):
+def report_content(context, obj, button_type='button'):
     """The syntax: {% report_content object %}"""
     user = context.get('user', None)
     reports = get_reports_by_user(user, obj)
@@ -16,7 +16,8 @@ def report_content(context, obj):
     return dict(app_label=obj._meta.app_label,
                 model_name=obj._meta.module_name,
                 id=obj.id,
-                disabled=disabled)
+                disabled=disabled,
+                button_type=button_type)
 
 
 @register.inclusion_tag('moderation/delete_button_templatetag.html',

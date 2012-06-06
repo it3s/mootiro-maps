@@ -770,7 +770,6 @@ komoo.Map.prototype.getOverlayUrl = function (overlay) {
         url = dutils.urls.resolve("view_community", {community_slug: overlay.properties.community_slug});
     } else if (overlay.properties.type == "resource") {
         url = dutils.urls.resolve("view_resource", {
-                    community_slug: overlay.properties.community_slug || "",
                     resource_id: overlay.properties.id
                 }).replace("//", "/");
     }  else if (overlay.properties.type == "organizationbranch") {
