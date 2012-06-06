@@ -855,6 +855,33 @@ form #uploader_container { padding: 0 }
 }
 #investment_form #div_id_investor_type .radio input { margin-top: 0 }
 
+/* form hint boxes */
+.field-hint-box-wrapper{
+  min-height: 20px;
+  width: 230px;
+  display: inline-block;
+  position: absolute;
+}
+.field-hint-box {
+    display: inline-block;
+    min-height: 20px;
+    width: 200px;
+    border-radius: 5px;
+    border: solid 1px #eecc00;
+    vertical-align: middle;
+    word-wrap: break-word;
+    padding: 5px;
+}
+.hint-box-line{
+    width: 20px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    height: 0;
+    left: -20px;
+    border-bottom: solid 1px #eecc00;
+}
+
 /* Ajax Search */
 .ajax-search { float: right }
 .ajax-search input {
@@ -1072,6 +1099,9 @@ input[type=text], textarea{
 .inline-block{
   display: inline-block;
 }
+.controls{
+    position: relative;
+}
 .control-group .controls input{
     width: 99%;
 }
@@ -1098,10 +1128,10 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .view-follow-btns {
     display: inline-block;
 }
-#deletion-request-comment { 
-  margin-top: 10px; 
-  width: 400px; 
-  height: 150px; 
+#deletion-request-comment {
+  margin-top: 10px;
+  width: 400px;
+  height: 150px;
 }
 .view-follow-btns {
   color: #444444;
