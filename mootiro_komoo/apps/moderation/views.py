@@ -91,7 +91,7 @@ def moderation_report(request, app_label, model_name, obj_id):
             reports = get_reports_by_user(request.user, obj)
             if reports:
                 report = reports[0]
-                message = _('You already reported this content!')
+                message = _('You\'ve already reported this content')
                 success = 'true'
             else:
                 reason = request.POST.get('reason', 0)
@@ -99,7 +99,7 @@ def moderation_report(request, app_label, model_name, obj_id):
                 report = create_report(obj=obj, user=request.user,
                         reason=reason, comment=comment)
 
-                message = _('The content was successfully reported.')
+                message = _('The content was successfully reported')
                 success = 'true'
             data_dict = {'id': report.id,
                          'message': message,

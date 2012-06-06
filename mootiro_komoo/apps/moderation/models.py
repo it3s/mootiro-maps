@@ -45,7 +45,7 @@ class Moderation(models.Model):
 class Report(models.Model):
     """Abuse report model. Should dinamically reference any table/object."""
     (DELETION_REQUEST, SPAM, INAPPROPRIATE, TERMS_OF_USE, COPYRIGHT,
-    MISLEADING, UNSAFE, UNRELATED, ANOTHER) = range(9)
+    WRONG, ANOTHER) = range(7)
 
     REASON_NAMES = {
         DELETION_REQUEST: _('Deletion request'),
@@ -53,9 +53,7 @@ class Report(models.Model):
         INAPPROPRIATE: _('Inappropriate'),
         TERMS_OF_USE: _('Terms Of Use Violation'),
         COPYRIGHT: _('Copyright Violation'),
-        MISLEADING: _('Misleading Content'),
-        UNSAFE: _('Unsafe Content'),
-        UNRELATED: _('Unrelated Content'),
+        WRONG: _('Wrong Content'),
         ANOTHER: _('Another Reason')
     }
 
