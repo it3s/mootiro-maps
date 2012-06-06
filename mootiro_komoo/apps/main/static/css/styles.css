@@ -587,6 +587,12 @@ body.community #collapse-panel {
     margin-left: 30px !important;
     width: auto !important;
 }
+#map-canvas-preview .placeholder {
+    font-size: 16px;
+    padding: 80px 35px;
+    text-align: center;
+    background: #DCEFF4;
+}
 #map-panel-content {
     margin-right: -30px;
 }
