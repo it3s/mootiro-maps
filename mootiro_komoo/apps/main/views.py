@@ -44,9 +44,10 @@ def _fetch_geo_objects(Q, zoom):
                 organizations=organization_branches)
 
 
-@render_to("main/stats.html")
-def stats(request):
-    return {}
+@render_to("main/frontpage.html")
+def frontpage(request):
+    communities = Community.objects.filter()
+    return {'communities': communities}
 
 
 #@cache_page(54000)
@@ -178,7 +179,7 @@ def komoo_search(request):
             'input': term,
             'sensor': 'false',
             'types': 'geocode',
-            'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM', #TODO: move to settings
+            'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',  # TODO: move to settings
         })
     result['google'] = google_results.content
     return {'result': result}

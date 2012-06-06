@@ -58,3 +58,6 @@ class MainViewsTestCase(KomooTestCase):
 
     def test_homepage_is_up(self):
         self.assert_200('/')
+
+    def test_frontpage_is_up(self):
+        self.assert_200('/frontpage')  # TODO: exchange url with the map

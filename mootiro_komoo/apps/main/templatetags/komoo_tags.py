@@ -59,11 +59,12 @@ def community_tabs(obj=None):
 
 
 @register.inclusion_tag('main/templatetags/geo_objects_listing.html')
-def geo_objects_listing(arg1='', arg2='', arg3=''):
-    """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] %}"""
-    parsed_args = templatetag_args_parser(arg1, arg2, arg3)
+def geo_objects_listing(arg1='', arg2='', arg3='', arg4=''):
+    """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] [hide_names] %}"""
+    parsed_args = templatetag_args_parser(arg1, arg2, arg3, arg4)
     show_categories = parsed_args.get('show_categories', 'False').lower() == 'true'
     switchable = parsed_args.get('switchable', 'False').lower() == 'true'
+    hide_names = parsed_args.get('hide_names', 'False').lower() == 'true'
     prefix = parsed_args.get('prefix', '')
 
     img = {
@@ -101,7 +102,8 @@ def geo_objects_listing(arg1='', arg2='', arg3=''):
 
     form = GeoObjectsForm()
 
-    return dict(form=form, show_categories=show_categories)
+    return dict(form=form, show_categories=show_categories,
+            hide_names=hide_names)
 
 
 @register.inclusion_tag('main/templatetags/geo_objects_add.html')

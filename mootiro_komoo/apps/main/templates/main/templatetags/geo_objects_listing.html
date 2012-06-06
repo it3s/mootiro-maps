@@ -2,17 +2,17 @@
 {% block js %}{{ form.media.js }}{% endblock %}
 
 {% autoescape off %}
-<ul class="geo-objects-listing" style="display: block; clear: both;">
+<ul class="geo-objects-listing">
   <li class="communities">
     <div class="item">
       <div class="img-holder" data-object-type="community">{{ form.communities }}</div>
-      <span>{% trans "Communities" %}</span>
+      {% if not hide_names %}<span>{% trans "Communities" %}</span>{% endif %}
     </div>
   </li>
   <li class="needs">
     <div class="item">
       <div class="img-holder" data-object-type="need">{{ form.needs }}</div>
-      <span>{% trans "Needs" %}</span>
+      {% if not hide_names %}<span>{% trans "Needs" %}</span>{% endif %}
     </div>
     {% if show_categories %}
     <div class="collapser"><i class="icon-chevron-right"></i></div>
@@ -26,13 +26,13 @@
   <li class="organizations">
     <div class="item">
       <div class="img-holder" data-object-type="organizationbranch">{{ form.organizations }}</div>
-      <span>{% trans "Organizations" %}</span>
+      {% if not hide_names %}<span>{% trans "Organizations" %}</span>{% endif %}
     </div>
   </li>
   <li class="resources">
     <div class="item">
       <div class="img-holder" data-object-type="resource">{{ form.resources }}</div>
-      <span>{% trans "Resources" %}</span>
+      {% if not hide_names %}<span>{% trans "Resources" %}</span>{% endif %}
     </div>
   </li>
 </ul>

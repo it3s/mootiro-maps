@@ -52,16 +52,17 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 });
 
 /* Easy to use, jQuery based, and elegant solution for tabs :) */
-function Tabs(tabs, contents, onChange) {
+function Tabs(tabs, contents, onChange, selectedClass) {
+    var selectedClass = selectedClass || "selected";
     $(contents).hide();
     var instance = this;
     this.to = function (tab) { // Most important method, switches to a tab.
-        $(tabs).removeClass("selected");
-        $(contents).removeClass("selected").hide();
+        $(tabs).removeClass(selectedClass);
+        $(contents).removeClass(selectedClass).hide();
 
         var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
-        $("*[href=" + tab_content + "]").parent().addClass("selected");
-        $(tab_content).addClass("selected").show();
+        $("*[href=" + tab_content + "]").parent().addClass(selectedClass);
+        $(tab_content).addClass(selectedClass).show();
 
         instance.current = tab;
         if (onChange && instance.initialized) {
