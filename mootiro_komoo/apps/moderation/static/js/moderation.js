@@ -275,6 +275,7 @@ $(function () {
                         var $mainContent = $("#main-content");
                         $("#content").height($mainContent.height());
                         $mainContent.fadeOut();
+                        setTimeout(function () {window.location.href = dutils.urls.resolve('root') }, 3000);
                     } else if (data.next == "showRequestFeedback") {
                         button.addClass("disabled");
                         flash(gettext("Your request was successfully sent"));
