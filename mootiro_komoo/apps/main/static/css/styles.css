@@ -921,7 +921,7 @@ div.content-updates .tab.active a {
     background: #fff;
     border: none;
     border-radius        : 5px;
-    -webkit-border-radius: 5px;   
+    -webkit-border-radius: 5px;
     text-decoration: none;
 }
 .a-update .update-message {
@@ -970,14 +970,14 @@ form #uploader_container { padding: 0 }
 /* form hint boxes */
 .field-hint-box-wrapper{
   min-height: 20px;
-  width: 230px;
+  width: 280px;
   display: inline-block;
   position: absolute;
 }
 .field-hint-box {
     display: inline-block;
     min-height: 20px;
-    width: 200px;
+    width: 250px;
     border-radius: 5px;
     border: solid 1px #eecc00;
     vertical-align: middle;

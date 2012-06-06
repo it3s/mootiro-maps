@@ -157,7 +157,7 @@ function getUrlVars(){
             el.find('.controls').append("" +
                 "<div class='field-hint-box-wrapper'>" +
                     "<span class='hint-box-line'>&nbsp;&nbsp;</span>" +
-                    "<div class='field-hint-box'>" + val.desc  +"</div>" +
+                    "<div class='field-hint-box'>" + val.hint  +"</div>" +
                 "</div>"
             );
 
@@ -166,6 +166,10 @@ function getUrlVars(){
 
             el.find('.field-hint-box-wrapper'
               ).css('left', conf.left).css('top', conf.top);
+            if (conf.width){
+                el.find('.field-hint-box-wrapper').css('width', conf.width + 30);
+                el.find('.field-hint-box').css('width', conf.width);
+            }
         });
     };
 
