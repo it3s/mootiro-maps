@@ -221,9 +221,8 @@ div.collapser i.icon-chevron-down {
     display: block;
     color: #000;
 }
-#top #menu li a, .button-off,
-.map-tab a, .map-button ,
-.organization-buttons .org-btn{
+#top #menu li a, .button-off, .map-tab a, .map-button ,
+.organization-buttons .org-btn, .update-community {
     border: 1px solid #c7c7c7;
 
     background-color: #ededed;
@@ -309,7 +308,8 @@ div.collapser i.icon-chevron-down {
 
 .organization-buttons .org-btn[panel='communities-list']:hover,
 .organization-buttons .org-btn[panel='communities-list'].selected,
-#top #menu #menu-community a:hover, #top #menu #menu-community.selected a {
+#top #menu #menu-community a:hover, #top #menu #menu-community.selected a,
+.update-community:hover {
     color: #fff !important;
     background-image: linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
     background-image: -o-linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
@@ -893,16 +893,33 @@ div.content-updates .tab.active a {
 
 /* Updates list */
 .a-update {
-    padding: 15px;
-    clear: both;
+    width: 600px;
+    display: inline-block;
+    padding: 15px 0;
 }
 .a-update:nth-child(even) { background: #dbf1f6 }
 .a-update .update-image {
     float: left;
+    margin: 0 0 0 15px;
 }
 .a-update .update-info {
-    margin-left: 15px;
-    float: left;
+    width: 485px;
+    margin: 0 15px;
+    display: inline-block;
+}
+.a-update .update-info h3 { margin-bottom: 10px }
+.a-update .update-message, .a-update .update-votes { margin-top: 10px }
+.a-update .update-community {
+    padding: 5px;
+    color: #000;
+    background: #fff;
+    border: none;
+    border-radius        : 5px;
+    -webkit-border-radius: 5px;   
+    text-decoration: none;
+}
+.a-update .update-message {
+    max-width: 320px;
 }
 
 
