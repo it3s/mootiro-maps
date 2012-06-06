@@ -8,7 +8,7 @@
         {% if comment.sub_comments > 0 %}
             {% blocktrans count num=comment.sub_comments %}{{ num }} answer{% plural %}{{ num }} answers{% endblocktrans %}
         {% endif %}
-        {% report_content comment %}
+        {% report_content comment 'link' %}
         <div class="comment-vote">
             {% vote comment %}
         </div>

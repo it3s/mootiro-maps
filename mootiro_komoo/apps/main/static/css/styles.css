@@ -863,7 +863,7 @@ div.content-updates .tab.last {
 .shadow-container {
     background: #eff8f9;
     border-radius        : 0 10px 10px 10px;
-    -webkit-border-radius: 0 10px 10px 10px;   
+    -webkit-border-radius: 0 10px 10px 10px;
     position: relative;
     z-index: 3;
 }
@@ -1187,10 +1187,10 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .view-follow-btns {
     display: inline-block;
 }
-#deletion-request-comment { 
-  margin-top: 10px; 
-  width: 400px; 
-  height: 150px; 
+#deletion-request-comment {
+  margin-top: 10px;
+  width: 400px;
+  height: 150px;
 }
 .view-follow-btns {
   color: #444444;
@@ -1201,8 +1201,8 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .report-content .btn {
     margin-right: 10px;
 }
-.delete-content span,
-.report-content span,
+.delete-content .btn span,
+.report-content .btn span,
 .view-follow-btns span{
   color: #444444;
   margin-left: 7px;

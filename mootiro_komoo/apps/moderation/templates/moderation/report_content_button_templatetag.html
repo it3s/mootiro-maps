@@ -1,7 +1,7 @@
 {% load i18n %}
 
 <div class="report-content">
-  <a class="report-content-btn btn login-required {% if disabled %}disabled{% endif %}" href="#" data-app-label="{{ app_label }}" data-model-name="{{ model_name }}" data-id="{{ id }}" {% if disabled %}title="{% trans "You've already reported this content" %}"{% endif %}>
-    <i class="icon-flag"></i><span>{% trans 'Report' %}</span>
+  <a class="report-content-btn {% if button_type == 'button' %}btn {% endif %}login-required {% if disabled %}disabled{% endif %}" href="#" data-app-label="{{ app_label }}" data-model-name="{{ model_name }}" data-id="{{ id }}" {% if disabled %}title="{% trans "You've already reported this content" %}"{% endif %}>
+    {% if button_type == 'button' %}<i class="icon-flag"></i>{% endif %}<span>{% trans 'Report' %}</span>
   </a>
 </div>
