@@ -166,7 +166,7 @@ $(function () {
                                 unexpectedError(info);
                             } else {
                                 button.addClass("disabled");
-                                flash(gettext("Deletion request sent"));
+                                flash(gettext("Your request was successfully sent"));
                                 dialog.dialog("close");
                             }
                         },
@@ -242,7 +242,7 @@ $(function () {
     };
 
     deleteContent = function (button, confirmed) {
-        if (button.hasClass("disabled")) return; 
+        if (button.hasClass("disabled")) return;
         var appLabel = button.attr("data-app-label");
         var modelName = button.attr("data-model-name");
         var objectId = button.attr("data-id");
@@ -259,7 +259,7 @@ $(function () {
                 if (data.success == "true") {
                     if (data.next == "confirmation") {
                         confirmationMessage(gettext("Delete"),
-                            gettext("Do you want to delete this content permanently?"),
+                            gettext("Do you really want to delete this content?"),
                             "",
                             function (response) {
                                 if (response == "yes") {
@@ -277,7 +277,7 @@ $(function () {
                         $mainContent.fadeOut();
                     } else if (data.next == "showRequestFeedback") {
                         button.addClass("disabled");
-                        flash(gettext("Deletion request sent"));
+                        flash(gettext("Your request was successfully sent"));
                     }
                 } else {
                     var info = JSON.stringify({

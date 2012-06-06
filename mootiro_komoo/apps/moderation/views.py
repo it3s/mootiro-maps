@@ -3,7 +3,6 @@ from __future__ import unicode_literals  # unicode by default
 import logging
 
 from django.shortcuts import get_object_or_404
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.db.models.loading import get_model
 
@@ -89,12 +88,10 @@ def moderation_report(request, app_label, model_name, obj_id):
         model = get_model(app_label, model_name)
         if model:
             obj = get_object_or_404(model, id=obj_id)
-            moderation = Moderation.objects.get_for_object_or_create(obj)
             reports = get_reports_by_user(request.user, obj)
             if reports:
                 report = reports[0]
-                message = _('You already reported this content! ' \
-                        'Please wait while an admin verifies your report.')
+                message = _('You already reported this content!')
                 success = 'true'
             else:
                 reason = request.POST.get('reason', 0)
@@ -102,7 +99,7 @@ def moderation_report(request, app_label, model_name, obj_id):
                 report = create_report(obj=obj, user=request.user,
                         reason=reason, comment=comment)
 
-                message = _('The content was successfully reported. An admin will verify this soon.')
+                message = _('The content was successfully reported.')
                 success = 'true'
             data_dict = {'id': report.id,
                          'message': message,

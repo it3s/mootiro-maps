@@ -30,10 +30,7 @@ class ModerationManager(models.Manager):
 
 
 class Moderation(models.Model):
-    """
-    Moderation model.
-    """
-
+    """Moderation model"""
     # dynamic ref
     content_type = models.ForeignKey(ContentType,  null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
@@ -46,12 +43,9 @@ class Moderation(models.Model):
 
 
 class Report(models.Model):
-    """
-    Abuse report model. Should dinamically reference any table/object.
-    """
-
-    (DELETION_REQUEST, SPAM, INAPPROPRIATE, TERMS_OF_USE, COPYRIGHT, MISLEADING,
-    UNSAFE, UNRELATED, ANOTHER) = range(9)
+    """Abuse report model. Should dinamically reference any table/object."""
+    (DELETION_REQUEST, SPAM, INAPPROPRIATE, TERMS_OF_USE, COPYRIGHT,
+    MISLEADING, UNSAFE, UNRELATED, ANOTHER) = range(9)
 
     REASON_NAMES = {
         DELETION_REQUEST: _('Deletion request'),
@@ -66,12 +60,13 @@ class Report(models.Model):
     }
 
     moderation = models.ForeignKey(Moderation, blank=False, null=False,
-            related_name='reports')
+                                   related_name='reports')
     user = models.ForeignKey(User, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
-    reason = models.IntegerField(choices=REASON_NAMES.items(), verbose_name=_('reason'))
+    reason = models.IntegerField(choices=REASON_NAMES.items(),
+                                 verbose_name=_('reason'))
     comment = models.CharField(max_length=1024, null=True, blank=True,
-            verbose_name=_('comment'))
+                               verbose_name=_('comment'))
 
     class Meta:
         verbose_name = _('report')
@@ -97,6 +92,6 @@ class Report(models.Model):
     @classmethod
     def get_reports_for(klass, obj):
         obj_content_type = ContentType.objects.get_for_model(obj)
-        moderation = Moderation.objects.filter(content_type=obj_content_type, object_id=obj.id)
+        moderation = Moderation.objects.filter(content_type=obj_content_type,
+                                               object_id=obj.id)
         return klass.objects.filter(moderation=moderation)
-

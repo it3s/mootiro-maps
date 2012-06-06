@@ -38,17 +38,18 @@ def delete_object(obj):
     obj.delete()
 
 
-def get_reports_by_user(user, obj=None):
+def get_reports_by_user(user, obj=None, reason=None):
     """Get reports sent by user"""
     if user.is_anonymous():
         return []
+    query = {'user': user}
     if obj:
-        moderation = Moderation.objects.get_for_object_or_create(obj)
-        reports = Report.objects.filter(user=user, reason__gt=0,
-                                        moderation=moderation).all()
-    else:
-        reports = Report.objects.filter(user=user).all()
-    return reports
+        if reason:
+            query['reason'] = reason
+        else:
+            query['reason__gt'] = 0
+        query['moderation'] = Moderation.objects.get_for_object_or_create(obj)
+    return Report.objects.filter(**query).all()
 
 
 def create_report(*args, **kwargs):
@@ -92,4 +93,3 @@ Comment: {9}
         logger.debug('An error occurred while sending email ' \
                 'to admin : {}'.format(e))
     return report
-
