@@ -130,6 +130,49 @@ function getUrlVars(){
 
 
 /*
+ *  jQuery plugin for Field description boxes
+ *  Usage:
+ *  $('#form_resource').komooFormHintBoxes({
+ *      'name': {
+ *          desc: 'bla name bla name bla'
+ *      },
+ *      'kind': {
+ *          left: '640px',
+ *          top: '40%',
+ *          desc: 'blbalablba kind lnakslka'
+ *      }
+ *  });
+ *
+ */
+ (function($){
+    $.fn.komooFormHintBoxes = function(box_config){
+        var defaults = {
+            left: '740px',
+            top: '-2px'
+        }
+        var form = $(this);
+
+        $.each(box_config, function(key, val){
+            var el = form.find('#div_id_' + key);
+            el.find('.controls').append("" +
+                "<div class='field-hint-box-wrapper'>" +
+                    "<span class='hint-box-line'>&nbsp;&nbsp;</span>" +
+                    "<div class='field-hint-box'>" + val.desc  +"</div>" +
+                "</div>"
+            );
+
+            var conf = {}
+            $.extend(conf, defaults, val);
+
+            el.find('.field-hint-box-wrapper'
+              ).css('left', conf.left).css('top', conf.top);
+        });
+    };
+
+ })(jQuery);
+
+
+/*
  * Configure behaviour of geo objects listing
  */
 function geoObjectsSelection (parent, children) {
