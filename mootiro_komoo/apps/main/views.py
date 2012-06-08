@@ -222,7 +222,7 @@ def test_500(request):
 
 def custom_404(request):
     t = loader.get_template('404.html')
-    c = Context({'request_path': request.path})
+    c = Context({'request_path': request.path, 'STATIC_URL': '/static/'})
     return HttpResponseNotFound(t.render(c))
 
 
