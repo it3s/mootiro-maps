@@ -121,6 +121,10 @@ $(function(){
           top: '45%',
           hint: 'Coloque detalhes da organização e como ela atua na comunidade.'
         },
+        'community':{
+          hint: 'Coloque as comunidades que a organização atua ou atende.',
+          top: '-8px'
+        },
         'link': {
             hint: 'Coloque o endereço do site da organização. Se ela não tiver, ou você não achar, tudo bem, não é obrigatório.',
             top: '-15px'
