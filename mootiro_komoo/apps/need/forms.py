@@ -94,7 +94,7 @@ class NeedForm(AjaxModelForm):
 class NeedFormGeoRef(NeedForm):
     class Meta:
         model = Need
-        fields = need_form_fields
+        fields = need_form_fields + ('geometry',)
 
     _field_labels = need_form_field_labels
 
