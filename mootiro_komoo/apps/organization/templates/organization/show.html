@@ -92,16 +92,17 @@
             <div class="org-info-panel branches-list" >
                 {% if organization.organizationbranch_set.count %}
 
-                <div class="branches-see-all">
+                <!-- <div class="branches-see-all">
                     <div class="see-on-map-icon"></div>{% trans 'see all' %}
-                </div>
-                {% with page_size=2 %}
+                </div> -->
+                {% with page_size=5 %}
                 {% for branch in organization.organizationbranch_set.all %}
                 <div class="branch-link org-info-div" page="{{ forloop.counter0|page_num:page_size }}" data-branch-id="{{ branch.id }}" style="display:none;">
                     <a href="#">
                         <div class="branch-name">
                             <span class="entry">{{ branch.name }}</span>
                             <span class="branch-map-icon"></span>
+
                             <span class="branch-link-btn">
                                 <i class="icon-chevron-right"></i>
                             </span>

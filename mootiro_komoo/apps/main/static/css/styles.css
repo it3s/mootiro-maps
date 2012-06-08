@@ -1472,6 +1472,9 @@ div.view-list-item.odd {
     font-weight: bold;
     margin-left: 5px;
 }
+.branch-info .entry{
+    min-height: 2em;
+}
 .organization-header{
     max-width: 500px;
 }

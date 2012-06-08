@@ -187,12 +187,12 @@ def split(entry, splitter):
 
 @register.filter
 def page_num(num, div):
-    return str((num // div) + 1)
+    return str(int((num // div) + 1))
 
 
 @register.filter
 def total_pages(num, div):
-    return math.ceil(num / div)
+    return int(math.ceil(num / div))
 
 
 @register.filter
