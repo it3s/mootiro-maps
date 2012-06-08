@@ -1217,6 +1217,10 @@ input[type=text], textarea{
 .control-group .controls input{
     width: 99%;
 }
+.control-group .controls input[type="radio"],
+.control-group .controls input[type="checkbox"]{
+    width: 20px;
+}
 ul.ui-autocomplete.ui-menu{
    border: solid 1px #BCE8F1;
 }
