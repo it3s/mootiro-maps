@@ -21,7 +21,7 @@ a equipe IT3S.
         send_mail(
             mail_title,
             mail_message,
-            'it3sdev@gmail.com',
+            'no-reply@mootiro.org',
             [user.email],
             fail_silently=False
         )
