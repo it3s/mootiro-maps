@@ -13,7 +13,6 @@ home_urls = [p + "resource/RESOURCE_ID/" for p in pref_urls]
 view_defs = [
     (r'resource/new/?$', 'new_resource', 'new_resource'),
     (r'resource/new/from_map/?$', 'new_resource_from_map', 'new_resource_from_map'),
-    # FIXME: url below is broken, it receives RESOURCE_ID as a GET variable
     (r'resource/RESOURCE_ID/edit/?$', 'edit_resource', 'edit_resource'),
     (r'resource/RESOURCE_ID/?$', 'show', 'view_resource'),
     (r'resource/?$', 'resource_list', 'resource_list'),
@@ -23,6 +22,6 @@ view_defs = [
 urlpatterns = patterns('komoo_resource.views',
     url(r'^resource/search_by_kind/$', 'search_by_kind', name='resource_search_by_kind'),
     url(r'^resource/search_tags/$', 'search_tags', name='resource_search_tags'),
-    url(r'^resource/get_or_add_kind/$', 'resource_get_or_add_kind', name='resource_get_or_add_kind'),
+    # url(r'^resource/get_or_add_kind/$', 'resource_get_or_add_kind', name='resource_get_or_add_kind'),
     * (multiurls(pref_urls, view_defs))
 )

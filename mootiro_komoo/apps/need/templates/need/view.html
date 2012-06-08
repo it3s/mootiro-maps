@@ -6,6 +6,7 @@
 {% load vote_tags %}
 {% load proposal_tags %}
 {% load komoo_tags %}
+{% load moderation_tags %}
 {% load markitup_tags %}
 
 {% block title %}{{ need.title }} {% endblock %}
@@ -16,22 +17,27 @@
   {% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'ajax=True' 'lazy=True' %}
   <div id="main-content">
     <div class="need main-column">
-      <h2 class="title">{{ need.title }} <div class="view-edit-btn right"><a href="{% if community %}{% url edit_need community.slug need.slug %}{% else %}{% url edit_need need.slug %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a></div></h2>
+      <h2 class="title">{{ need.title }}</h2>
 
+      <div class="clear-both"></div>
       <ul class="horizontal" id="categories">
         {% for c in need.categories.all %}
         <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
         {% endfor %}
       </ul>
 
+      <div class="view-edit-btn">
+        <a class="history" href="#">{% trans "History" %}</a>
+        <a href="{% if community %}{% url edit_need community.slug need.slug %}{% else %}{% url edit_need need.slug %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a>
+      </div>
+
       <div class="clear-both"></div>
       {% vote need %}
 
-      <div class="clear-both"></div>
-      <p>
-        <span class="apart">created by <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> on {{ need.creation_date|date:'j/n/Y' }}</span>
-        <span class="apart">target audience: {{ need.target_audiences.all|join:", " }}</span>
-      </p>
+      <div class="apart">
+        <div><span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}</div>
+        <div>{% trans 'created by' %} <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</div>
+      </div>
       <div class="mark-down">{{ need.description|render_markup }}</div>
 
       <div class="view-footer">
@@ -49,8 +55,9 @@
       </div>
 
       <div class="view-extras">
-        {% taglist need community %}
-        {% track_buttons %}
+        {% track_buttons need %}
+        {% report_content need %}
+        {% delete_button need %}
         {% social_buttons %}
         {% comments need %}
       </div>
@@ -59,14 +66,17 @@
   <div class="right-bar">
     <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
     <a class="see-on-map" href="#">{% trans "see on map" %}</a>
+    {% taglist need community %}
     <div class="block">
       <h3>{% trans "Proposals" %}</h3>
       {% for proposal in need.proposals.all %}
         {% proposal_summary proposal %}
       {% endfor %}
-      <a class="button" href="{% if community %}{% url new_proposal community.slug need.slug %}{% else %}{% url new_proposal need.slug %}{% endif %}">
+      <div class="centralizer">
+        <a class="button" href="{% if community %}{% url new_proposal community.slug need.slug %}{% else %}{% url new_proposal need.slug %}{% endif %}">
         {% trans "New proposal" %}
-      </a>
+        </a>
+      </div>
     </div>
     {% with similar_needs=need.tags.similar_objects %}
       {% if similar_needs %}
@@ -74,24 +84,25 @@
         <h3>{% trans "Related needs" %}</h3>
         <ul>
           {% for n in similar_needs %}
-          <li {% if forloop.counter > 5 %}class="overflow hidden"{% endif %}>
+          <li {% if forloop.counter > 3 %}class="overflow hidden"{% endif %}>
             <a href="{% url view_need n.slug %}"> {{ n.title }} </a>
             {% if n.community.all.count %}
-              {% trans 'at' %}
+              <span class="attenuate">
               {% for comm in n.community.all %}
                 <a href="{% url view_community comm.slug %}">
                   {{ comm.name }}
                 </a>
                 {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
               {% endfor %}
+              </span>
             {% endif %}
           </li>
           {% empty %}
           <li>{% trans "No related needs." %}</li>
           {% endfor %}
         </ul>
-        <div class="centralizer"><span class="show-more clickable">See more</span></div>
-        <div class="centralizer hidden"><span class="show-less clickable">See less</span></div>
+        <div class=""><span class="show-more clickable">{% trans 'see all' %}</span></div>
+        <div class="hidden"><span class="show-less clickable">{% trans 'see less' %}</span></div>
         <div class="clear-both"></div>
       </div>
       {% endif %}
@@ -118,9 +129,9 @@
       });
 
       $('#related-needs .show-more, #related-needs .show-less').on("click", function (e) {
-        $('#related-needs li.overflow').toggle();
-        $('#related-needs .show-more').parent().toggle();
+        $('#related-needs li.overflow').slideToggle("fast");
         $('#related-needs .show-less').parent().toggle();
+        $('#related-needs .show-more').parent().toggle();
       });
     </script>
 {% endblock %}

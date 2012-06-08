@@ -142,18 +142,21 @@ class AutocompleteWithFavorites(forms.TextInput):
         """ % {'source_url': self.source_url, 'label_id': label_id,
                'value_id': value_id}
 
-        if not self.can_add:
-            #  if we can not add new values, the autocomplete should be
-            #  cleaned when not selected
-            js += u"""
-            $("#%(label_id)s").bind(
-            'autocompletechange', function(event, ui) {
-                if(!ui.item || !$("#%(label_id)s").val()){
-                    $("#%(value_id)s").val('');
+        #  if we can not add new values, the autocomplete should be
+        #  cleaned when not selected
+        js += u"""
+        $("#%(label_id)s").bind(
+        'autocompletechange', function(event, ui) {
+            if(!ui.item || !$("#%(label_id)s").val()){
+                $("#%(value_id)s").val('');
+                if (!%(can_add)s) {
                     $("#%(label_id)s").val('');
                 }
-            });
-        """ % {'label_id': label_id, 'value_id': value_id}
+                // $("#%(value_id)s_select :selected").attr('selected', '');
+            }
+        });
+    """ % {'label_id': label_id, 'value_id': value_id,
+           'can_add': 'true' if self.can_add else 'false'}
 
         # select field behavior
         js += u"""

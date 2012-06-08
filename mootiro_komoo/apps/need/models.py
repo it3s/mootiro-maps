@@ -21,18 +21,21 @@ class NeedCategory(models.Model):
 
     # Adding categories to be translated.
     # Probably there is a better way to do this.
-    _('Culture')
-    _('Education')
-    _('Environment')
-    _('Health')
-    _('Housing')
-    _('Local Economy')
-    _('Mobility')
-    _('Social Service')
-    _('Sport')
+    categories = [
+        _('Culture'),
+        _('Education'),
+        _('Environment'),
+        _('Health'),
+        _('Housing'),
+        _('Local Economy'),
+        _('Mobility'),
+        _('Social Service'),
+        _('Sport'),
+        _('Security'),
+    ]
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     @classmethod
     def get_image(cls, name):
@@ -105,7 +108,7 @@ class Need(GeoRefModel, VotableModel):
     def base_url_params(self):
         d = dict()
         if self.community:
-            d['community_slug'] = self.community.slug
+            d['community_slug'] = self.community.all()[0].slug
         return d
 
     @property
@@ -121,6 +124,15 @@ class Need(GeoRefModel, VotableModel):
     @property
     def edit_url(self):
         return reverse('edit_need', kwargs=self.home_url_params)
+
+    @property
+    def admin_url(self):
+        return reverse('admin:{}_{}_change'.format(self._meta.app_label,
+            self._meta.module_name), args=[self.id])
+
+    @property
+    def name(self):
+        return self.title
 
 
 if not reversion.is_registered(Need):

@@ -3,6 +3,9 @@
 #  Global Settings
 import os
 import sys
+import djcelery
+
+djcelery.setup_loader()
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_ROOT = os.path.dirname(PROJECT_ROOT)
@@ -122,6 +125,8 @@ LOGIN_URL = '/user/login'
 MOOTIRO_BAR_LOGIN_URL = '#'  # LOGIN_URL
 MOOTIRO_BAR_LOGOUT_URL = '/user/logout'
 
+DELETE_HOURS = 24
+
 ROOT_URLCONF = 'mootiro_komoo.urls'
 
 TEMPLATE_DIRS = [
@@ -158,6 +163,7 @@ INSTALLED_APPS = [
     'social_auth',
     'django_nose',
     'ajaxforms',
+    'djcelery',
     # our apps
     'main',
     'komoo_map',
@@ -170,7 +176,9 @@ INSTALLED_APPS = [
     'user_cas',
     'organization',
     'investment',
+    'moderation',
     'hotsite',
+    'signatures',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
@@ -218,8 +226,15 @@ GOOGLE_OAUTH2_CLIENT_SECRET = 'VYPUXk4GraHit4n72nh5CwhX'
 SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
 SOCIAL_AUTH_UUID_LENGTH = 16
 SOCIAL_AUTH_EXPIRATION = 3600
-SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/user/profile/'
+
+# Mailer settings
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'it3sdev@gmail.com'
+EMAIL_HOST_PASSWORD = '...'
+
 
 # KOMOO Comments settings
 KOMOO_COMMENTS_WIDTH = 3
@@ -238,6 +253,9 @@ AJAX_LOOKUP_CHANNELS = {
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = False
+
+# Celerey task queue config
+BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
 
 # TESTS CONFIGURATION
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

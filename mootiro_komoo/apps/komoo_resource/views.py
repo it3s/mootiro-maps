@@ -35,7 +35,7 @@ def prepare_resource_objects(community_slug="", resource_id=""):
 
     if resource_id:
         filters = dict(pk=resource_id)
-        if community:
+        if community_slug:
             filters["community"] = community
         resource = get_object_or_404(Resource, **filters)
     else:
@@ -77,11 +77,11 @@ def resource_list(request, community_slug=''):
 def show(request, community_slug=None, resource_id=None):
     logger.debug('acessing komoo_resource > show')
 
-    resource = get_object_or_404(Resource, pk=resource_id)
+    resource, community = prepare_resource_objects(
+        community_slug=community_slug, resource_id=resource_id)
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
-    community = get_object_or_None(Community, slug=community_slug)
     photos = paginated_query(UploadedFile.get_files_for(resource), request, size=3)
 
     return dict(resource=resource, similar=similar, geojson=geojson,
@@ -200,15 +200,17 @@ def show_on_map(request, geojson=''):
     return dict(geojson=geojson)
 
 
-@ajax_request
-def resource_get_or_add_kind(request):
-    term = request.POST.get('value', '')
-    kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
-        Q(slug__iexact=term))
-    if not kinds.count() and term:
-        r = ResourceKind(name=term)
-        r.save()
-        obj = dict(added=True, id=r.id, value=r.name)
-    else:
-        obj = dict(added=False, id=None, value=term)
-    return obj
+# @login_required
+# @ajax_request
+# def resource_get_or_add_kind(request):
+#     logger.debug('acessing resource > resource_get_or_add_kind')
+#     term = request.POST.get('value', '')
+#     kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
+#         Q(slug__iexact=term))
+#     if not kinds.count() and term:
+#         r = ResourceKind(name=term)
+#         r.save()
+#         obj = dict(added=True, id=r.id, value=r.name)
+#     else:
+#         obj = dict(added=False, id=None, value=term)
+#     return obj

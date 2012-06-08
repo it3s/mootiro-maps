@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load komoo_map_tags %}
 {% load komoo_tags %}
+{% load moderation_tags %}
 {% load comment_tags %}
 {% load markitup_tags %}
 
@@ -56,7 +57,9 @@
 
   <div class="view-extras">
     {% taglist community %}
-    {% track_buttons %}
+    {% track_buttons community %}
+    {% report_content community %}
+    {% delete_button community %}
     {% social_buttons %}
     {% comments community %}
   </div>

@@ -28,6 +28,7 @@ from community.models import Community
 from main.utils import (paginated_query, create_geojson, sorted_query,
                         filtered_query, fix_community_url)
 from main.widgets import Autocomplete
+from signatures.signals import send_notifications
 
 logger = logging.getLogger(__name__)
 
@@ -229,6 +230,7 @@ def edit_inline_branch(request):
             context_instance=RequestContext(request)).content
 
         success = True
+        send_notifications.send(sender=OrganizationBranch, instance=branch)
     else:
         success, info, name = False, '', ''
     return dict(success=success, info=info, name=name, communities=communities)

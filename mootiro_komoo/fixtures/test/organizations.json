@@ -1,0 +1,46 @@
+[
+  {
+    "model": "organization.organization",
+    "pk": 1,
+    "fields": {
+      "name": "IT3S - Instituto de Fomento a Tecnologia do Terceiro Setor",
+      "slug": "it3s",
+      "description": "Instituto que conntruiu o Mootiro.",
+      "community": [1],
+      "link": "http://it3s.org",
+      "contact": "Falar com a Dani e o Edgar.",
+      "votes_down": 0,
+      "votes_up": 1000,
+      "logo": null,
+      "categories": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "target_audiences": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      "creator": 1,
+      "creation_date": "2012-04-29 15:29:21"
+    }
+  },
+  {
+    "model": "organization.organization",
+    "pk": 2,
+    "fields": {
+      "name": "Alavanca Brasil",
+      "slug": "alavanca-brasil",
+      "description": "Projeto Alavanca na São Remo, perto da USP.",
+      "community": [1, 4],
+      "link": "http://alavanca.org",
+      "contact": "Falar com a Rô.",
+      "votes_down": 0,
+      "votes_up": 0,
+      "logo": null,
+      "categories": [1, 2, 3, 5, 8],
+      "target_audiences": [2, 3, 5, 7],
+      "creator": 2,
+      "creation_date": "2012-03-29 15:29:21"
+    }
+  },
+
+  {"pk": 6, "model": "taggit.tag", "fields": {"name": "mudar o mundo", "slug": "mudar-o-mundo"}},
+  {"pk": 7, "model": "taggit.tag", "fields": {"name": "Engajado", "slug": "engajado"}},
+  {"pk": 6, "model": "taggit.taggeditem", "fields": {"tag": 6, "content_type": 26, "object_id": 1}},
+  {"pk": 7, "model": "taggit.taggeditem", "fields": {"tag": 6, "content_type": 26, "object_id": 2}},
+  {"pk": 8, "model": "taggit.taggeditem", "fields": {"tag": 7, "content_type": 26, "object_id": 1}}
+]

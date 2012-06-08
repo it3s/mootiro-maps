@@ -12,6 +12,7 @@ from ajaxforms import AjaxModelForm
 from main.utils import MooHelper
 from main.widgets import TaggitWidget
 from community.models import Community
+from signatures.signals import notify_on_update
 
 
 class CommunityForm(AjaxModelForm):
@@ -39,6 +40,7 @@ class CommunityForm(AjaxModelForm):
         self.helper = MooHelper(form_id="community_form")
         return super(CommunityForm, self).__init__(*a, **kw)
 
+    @notify_on_update
     def save(self, *args, **kwargs):
         comm = super(CommunityForm, self).save(*args, **kwargs)
         UploadedFile.bind_files(

@@ -102,8 +102,7 @@ komoo.RegionTypes = [
         overlayTypes: [komoo.OverlayType.POLYGON,
                        komoo.OverlayType.POLYLINE,
                        komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("new_resource_from_map",
-            {community_slug: "community_slug"}),
+        formUrl: dutils.urls.resolve("new_resource_from_map"),
         zIndex: 100,
         disabled: false
     },
@@ -771,7 +770,6 @@ komoo.Map.prototype.getOverlayUrl = function (overlay) {
         url = dutils.urls.resolve("view_community", {community_slug: overlay.properties.community_slug});
     } else if (overlay.properties.type == "resource") {
         url = dutils.urls.resolve("view_resource", {
-                    community_slug: overlay.properties.community_slug || "",
                     resource_id: overlay.properties.id
                 }).replace("//", "/");
     }  else if (overlay.properties.type == "organizationbranch") {

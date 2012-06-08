@@ -1,0 +1,26 @@
+[
+  {
+    "model": "proposal.proposal",
+    "pk": 1,
+    "fields": {
+      "title": "Mobral",
+      "number": 1,
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "Movimento Brasileiro de Alfabetização",
+      "need": 3,
+      "creator": 1
+    }
+  },
+  {
+    "model": "proposal.proposal",
+    "pk": 2,
+    "fields": {
+      "title": "Sobral",
+      "number": 2,
+      "creation_date": "2012-03-21 15:04:58",
+      "description": "O que sobrou do Mobral vai para o sobral. :)",
+      "need": 3,
+      "creator": 2
+    }
+  }
+]

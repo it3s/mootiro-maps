@@ -9,6 +9,7 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.contrib.contenttypes.models import ContentType
 
 from main.utils import templatetag_args_parser, create_geojson
 from main.widgets import (ImageSwitch, ImageSwitchMultiple, TaggitWidget,
@@ -18,6 +19,7 @@ from need.models import Need, NeedCategory
 from organization.models import Organization
 from komoo_resource.models import Resource
 from proposal.models import Proposal
+from signatures.models import Signature
 
 register = template.Library()
 
@@ -57,11 +59,12 @@ def community_tabs(obj=None):
 
 
 @register.inclusion_tag('main/templatetags/geo_objects_listing.html')
-def geo_objects_listing(arg1='', arg2='', arg3=''):
-    """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] %}"""
-    parsed_args = templatetag_args_parser(arg1, arg2, arg3)
+def geo_objects_listing(arg1='', arg2='', arg3='', arg4=''):
+    """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] [hide_names] %}"""
+    parsed_args = templatetag_args_parser(arg1, arg2, arg3, arg4)
     show_categories = parsed_args.get('show_categories', 'False').lower() == 'true'
     switchable = parsed_args.get('switchable', 'False').lower() == 'true'
+    hide_names = parsed_args.get('hide_names', 'False').lower() == 'true'
     prefix = parsed_args.get('prefix', '')
 
     img = {
@@ -99,7 +102,8 @@ def geo_objects_listing(arg1='', arg2='', arg3=''):
 
     form = GeoObjectsForm()
 
-    return dict(form=form, show_categories=show_categories)
+    return dict(form=form, show_categories=show_categories,
+            hide_names=hide_names)
 
 
 @register.inclusion_tag('main/templatetags/geo_objects_add.html')
@@ -118,9 +122,18 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
     return dict(img=img, STATIC_URL=settings.STATIC_URL)
 
 
-@register.inclusion_tag('main/templatetags/track_buttons.html')
-def track_buttons():
-    return dict()
+@register.inclusion_tag('main/templatetags/track_buttons.html', takes_context=True)
+def track_buttons(context, obj=None):
+    is_signed = ''
+    if obj:
+        content_type = ContentType.objects.get_for_model(obj)
+        if Signature.objects.filter(content_type=content_type, object_id=obj.id,
+            user=context.get('user', None).id).count():
+            is_signed = 'signed-content'
+    else:
+        content_type = ''
+    return dict(context=context, obj=obj, content_type=content_type,
+        is_signed=is_signed)
 
 
 @register.inclusion_tag('main/templatetags/social_buttons.html')
@@ -174,12 +187,17 @@ def split(entry, splitter):
 
 @register.filter
 def page_num(num, div):
-    return str((num // div) + 1)
+    return str(int((num // div) + 1))
 
 
 @register.filter
 def total_pages(num, div):
-    return math.ceil(num / div)
+    return int(math.ceil(num / div))
+
+
+@register.filter
+def class_name(value):
+    return value.__class__.__name__
 
 
 @register.filter

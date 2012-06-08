@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes import generic
 
-
 import reversion
 
 from need.models import Need
@@ -65,6 +64,11 @@ class Proposal(VotableModel):
     @property
     def view_url(self):
         return reverse('view_proposal', kwargs=self.home_url_params)
+
+    @property
+    def admin_url(self):
+        return reverse('admin:{}_{}_change'.format(self._meta.app_label,
+            self._meta.module_name), args=[self.id])
 
     @property
     def new_investment_url(self):

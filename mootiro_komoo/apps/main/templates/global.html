@@ -14,7 +14,12 @@
 
 
     <title>{% block title %}Mootiro Maps{% endblock %}</title>
-    <link rel="image_src" href="{{STATIC_URL}}img/logo.png" />
+    
+    <!-- Facebook sharing tags -->
+    {#<meta property="og:title" content="title" />#}
+    <meta property="og:description" content="MootiroMaps é uma ferramenta open source que promove a colaboração entre atores engajados no desenvolvimento de um território ou uma comunidade."/>
+    <meta property="og:image" content="{{STATIC_URL}}img/logo.png"/>
+
     {{ form.media.css }}
     <link rel="shortcut icon" HREF="{{STATIC_URL}}/img/favicon.png" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css" />
@@ -29,6 +34,7 @@
     <script type="text/javascript">var isAuthenticated = {{ user.is_authenticated|lower }};</script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/shortcut.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/komoo_utils.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/moderation.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/ajaxforms.js"></script>
 
     {{ form.media.js }}
@@ -54,6 +60,9 @@
 
 
     <!-- Mootiro_bar goes here -->
+
+    <div id="flash-message"><span class="message"></span></div>
+
     <div id="root">
       <div id="top">
         <div id="logo">

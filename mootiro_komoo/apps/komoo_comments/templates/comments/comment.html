@@ -1,5 +1,6 @@
 {% load vote_tags %}
 {% load markitup_tags %}
+{% load moderation_tags %}
 {% load i18n %}
 <div class="comment-container {{ comment_class }}" commentID="{{ comment.id }}">
     <div class="comment-header">
@@ -7,7 +8,7 @@
         {% if comment.sub_comments > 0 %}
             {% blocktrans count num=comment.sub_comments %}{{ num }} answer{% plural %}{{ num }} answers{% endblocktrans %}
         {% endif %}
-        <a href="#">{% trans 'Report' %}</a>
+        {% report_content comment 'link' %}
         <div class="comment-vote">
             {% vote comment %}
         </div>

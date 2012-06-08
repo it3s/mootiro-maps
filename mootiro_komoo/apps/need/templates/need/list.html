@@ -53,7 +53,7 @@
           {% comments_summary need %}
         </h4>
         <p>
-          {% trans 'target audience:' %} {{ need.target_audiences.all|join:", " }}
+          <span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}
         </p>
         <p>{{ need.description|render_markup }}</p>
 

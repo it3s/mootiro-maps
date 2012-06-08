@@ -23,6 +23,8 @@ def A_NEED_DATA():
 
 class NeedViewsTestCase(KomooTestCase):
 
+    fixtures = KomooTestCase.fixtures + ['communities.json', 'needs.json']
+
     # new_need
     def test_new_need_page_is_up(self):
         self.login_user()

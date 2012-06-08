@@ -15,6 +15,7 @@ from organization.models import Organization
 
 from main.widgets import TaggitWidget, Datepicker, ConditionalField, \
     Autocomplete
+from signatures.signals import notify_on_update
 
 
 @autostrip
@@ -146,6 +147,7 @@ class InvestmentForm(AjaxModelForm):
 
         return cleaned_data
 
+    @notify_on_update
     def save(self, *args, **kwargs):
         investment = super(InvestmentForm, self).save(commit=False)
         investor = self.cleaned_data['investor']

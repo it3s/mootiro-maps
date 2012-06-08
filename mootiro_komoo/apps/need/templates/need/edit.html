@@ -1,7 +1,10 @@
 {% extends 'global.html' %}
 {% load crispy_forms_tags %}
+{% load komoo_tags %}
 {% load komoo_map_tags %}
 {% load upload_tags %}
+
+{% block menu %} {% menu need "need" %} {% endblock %}
 
 {% block content %}
   {% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'lazy=True' %}
@@ -10,9 +13,11 @@
       {% crispy form form.helper %}
     </div>
 
+    {% if need %}
     <div class="right-bar">
       {% komoo_map geojson 'type=preview' 'edit_button=True' %}
     </div>
+    {% endif %}
   </div>
 {% endblock %}
 
@@ -26,6 +31,36 @@
     <script type="text/javascript">
       $(function(){
         $('#need_form').ajaxform();
+
+        {% if not need %}
+          $('#need_form').komooFormHintBoxes({
+            'title': {
+              top: '-8px',
+              hint: 'Coloque um título que resuma a necessidade. Ex: "Asfaltar a rua X"'
+            },
+            'description': {
+              top: '45%',
+              hint: 'Coloque detalhes da necessidade. Explique o problema, suas causas, quem é prejudicado pelo problema, etc.'
+            },
+            'categories': {
+              hint: 'Informe onde sua necessidade se encaixa, qual é o tipo dela. Você pode escolher mais de um tipo. Ex.: "Asfaltar a rua X" -> Mobilidade',
+              left: '400px',
+              top: '-20px',
+              width: 400
+            },
+            'target_audiences': {
+              hint: 'As pessoas que essa necessidade afeta.'
+            },
+            'tags': {
+              hint: 'Coloque palavras que ajudem a ilustrar a necessidade, tal como "asfalto", "rua", "transporte".'
+            },
+            'files': {
+              hint: 'Coloque fotos, quando possível, da necessidade, como por exemplo, fotos de um buraco, ou lixo, ou falta de asfalto...',
+              top: '40%'
+            }
+          });
+        {% endif %}
+
       })
     </script>
 {% endblock %}

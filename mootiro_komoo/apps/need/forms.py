@@ -8,28 +8,35 @@ from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
+from crispy_forms.layout import Layout, Fieldset
 
 from main.utils import MooHelper
 from main.widgets import Tagsinput, TaggitWidget, ImageSwitchMultiple
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from need.models import Need, NeedCategory, TargetAudience
+from signatures.signals import notify_on_update
+
+
+need_form_fields = ('title', 'description', 'community', 'categories',
+                    'target_audiences', 'tags', 'files')
+
+need_form_field_labels = {
+    'community': _('Community'),
+    'title': _('Title'),
+    'description': _('Description'),
+    'categories': _('Need Categories'),
+    'target_audiences': _('Target audiences'),
+    'tags': _('Tags'),
+    'files': _(' '),
+}
 
 
 class NeedForm(AjaxModelForm):
     class Meta:
         model = Need
-        fields = ('title', 'description', 'categories',
-                    'target_audiences', 'tags', 'community', 'files')
+        fields = need_form_fields
 
-    _field_labels = {
-        'community': _('Community'),
-        'title': _('Title'),
-        'description': _('Description'),
-        'categories': _('Categories'),
-        'target_audiences': _('Target audiences'),
-        'tags': _('Tags'),
-        'files': _(' '),
-    }
+    _field_labels = need_form_field_labels
 
     class Media:
         js = ('lib/jquery.imagetick-original.js',)
@@ -62,12 +69,21 @@ class NeedForm(AjaxModelForm):
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="need_form")
+        self.helper.layout = Layout(
+            Fieldset(
+                _('Edit need') if 'instance' in kw else _('New need'),
+                'title',
+                'description',
+                'community',
+                'categories',
+                'target_audiences',
+                'tags',
+                'files'
+            )
+        )
         return super(NeedForm, self).__init__(*a, **kw)
 
-    # def clean_community(self):
-    #     value = self.cleaned_data['community']
-    #     return Community.objects.get(id=value) if value else value
-
+    @notify_on_update
     def save(self, *args, **kwargs):
         need = super(NeedForm, self).save(*args, **kwargs)
         UploadedFile.bind_files(
@@ -78,17 +94,8 @@ class NeedForm(AjaxModelForm):
 class NeedFormGeoRef(NeedForm):
     class Meta:
         model = Need
-        fields = ('title', 'description', 'categories',
-                    'target_audiences', 'tags', 'community', 'geometry', 'files')
+        fields = need_form_fields + ('geometry',)
 
-    _field_labels = {
-        'community': _('Community'),
-        'title': _('Title'),
-        'description': _('Description'),
-        'categories': _('Categories'),
-        'target_audiences': _('Target audiences'),
-        'tags': _('Tags'),
-        'files': _(' '),
-    }
+    _field_labels = need_form_field_labels
 
     geometry = forms.CharField(widget=forms.HiddenInput())

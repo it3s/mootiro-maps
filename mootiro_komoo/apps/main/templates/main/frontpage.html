@@ -1,0 +1,85 @@
+{% extends "global.html" %}
+{% load i18n %}
+{% load komoo_tags %}
+
+
+{% block title %}TUNT STATS{% endblock %}
+
+{#% block menu %} {% menu need "need" %} {% endblock %#}
+
+{% block content %}
+<div id="main-content">
+  <div class="main-column content-updates">
+    
+    <ul class="tabs horizontal">
+      <li class="tab first"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
+      <li class="tab"><a href="#discussions-panel">{% trans "discussions" %}</a></li>
+      <li class="tab last"><a href="#my-content-panel">{% trans "my content" %}</a></li>
+    </ul>
+    <div class="clear-both"></div>
+
+    <div class="shadow-container">
+      <div id="content-updates-filters">
+        <span class="attenuate small">{% trans "Type" %}</span>
+        {% geo_objects_listing 'switchable=True' 'hide_names=True' %}
+      </div>
+      <div class="clear-both"></div>
+
+      <div id="last-updates-panel" class="panel">
+          <ul class="updates">
+            {% for i in '123'|make_list %}
+            <li class="a-update">
+              <div class="update-image">
+                <img src="{{STATIC_URL}}/img/updates-page/need-added.png">
+              </div>
+              <div class="update-info">
+                <h3>
+                  <a href="#">Reforma do centro de reuniões</a>
+                  <i class="icon-see-on-map"></i>
+                </h3>
+                <a href="#" class="update-community">
+                  <i class="icon-community"></i> Jaguaré
+                </a>
+                <div class="clear-both"></div>
+                <div class="update-message left">
+                  Suspendisse venenatis ullamcorper massa, lerisque augue auctor at. Cras pretium posuere turpis vitae pretium. Integer eu mattis turpis.
+                  <a href="#">Fulano de Tal</a>
+                </div>
+                <div class="update-votes right">
+                  VOTES
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+      </div>
+    </div>
+
+    <div id="discussions-panel" class="panel hidden">
+        DISCUSSIONS
+    </div>
+
+    <div id="my-content-panel" class="panel hiden">
+        MY CONTENT
+    </div>
+
+  </div>
+  <div class="right-bar news-updates">
+    NEWS
+  </div>
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        var tabs = new Tabs('.content-updates .tab', '.content-updates .panel',
+                      undefined, 'active');
+
+        // $(function () {
+        //     geoObjectsListing("#content-updates-filters ul.geo-objects-listing");
+        //     $("#content-updates-filters div.img-holder > img").trigger("click");
+        //     $("#content-updates-filters div.img-holder input[type=checkbox]").attr("checked", "checked");
+        // });
+
+    </script>
+{% endblock %}

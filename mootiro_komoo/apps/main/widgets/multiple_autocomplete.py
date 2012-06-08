@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
+from django.utils.translation import ugettext_lazy as _
 from django import forms
 from django.forms.widgets import flatatt
 from django.utils.html import escape
@@ -43,17 +44,17 @@ class MultipleAutocompleteBase(forms.TextInput):
         return l
 
     def render_js(self, elem_id):
-        if self.autocomplete_url:
-            options_str = """
-            { 'autocomplete_url': '%(url)s',
-              'height':'auto',
-              'width':'100%%', }
-            """ % {
-                'url': self.autocomplete_url,
-            }
-
-        else:
-            options_str = ""
+        options_str = """
+        {
+          'autocomplete_url':'%(url)s',
+          'defaultText':'%(text)s',
+          'height':'auto',
+          'width':'100%%'
+        }
+        """ % {
+            'url': self.autocomplete_url,
+            'text': _("add a tag")
+        }
 
         js = u"""
         $(function(){

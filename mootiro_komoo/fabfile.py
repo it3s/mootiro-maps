@@ -42,15 +42,26 @@ def build_environment():
         "../docs/postgis-adapter-2.patch")
 
 
+def run_celery():
+    """runs celery task queue"""
+    local('python manage.py celeryd --loglevel=info {} &'.format(django_settings[env_]))
+
+
 def run():
     """Runs django's development server"""
+    run_celery()
     if env_ == 'stage':
         local('python manage.py run_gunicorn --workers=2 --bind=127.0.0.1:8001 {}'.format(django_settings[env_]))
     else:
         local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
 
 
-def test(apps="community need organization proposal komoo_resource main",
+def kill_manage_tasks():
+    """kill all manage.py background tasks"""
+    local('ps -eo pid,args | grep manage.py | grep -v grep | cut -c1-6 | xargs kill')
+
+
+def test(apps="community need organization proposal komoo_resource investment main",
             recreate_db=False):
     """Run application tests"""
     if recreate_db:
@@ -106,13 +117,18 @@ def load_fixtures(type_='system'):
             inside the fixtures folder (except for 'test_fixtures.json')
         fab load_fixtures:test  -> load only the fixtures/test_fixtures.json file
     """
+    import os
     if type_ == 'test':
-        local('python manage.py loaddata fixtures/test_fixtures.json {}'.format(
+        fixtures = ""
+        folder = 'fixtures/test'
+        for fixture in os.listdir(folder):
+            if fixture.endswith('.json') and fixture != 'contenttypes_fixtures.json':
+                fixtures += "{}/{} ".format(folder, fixture)
+        local('python manage.py loaddata {} {}'.format(fixtures,
                 django_settings[env_]))
     else:
-        import os
         for fixture in os.listdir('fixtures'):
-            if fixture.endswith('_fixtures.json') and fixture != 'test_fixtures.json':
+            if fixture.endswith('_fixtures.json'):
                 local('python manage.py loaddata fixtures/{} {}'.format(
                     fixture, django_settings[env_]))
 

@@ -2,7 +2,7 @@
 {% load komoo_tags %}
 <div class="view-tag-list">
   {% if object.tags.all %}
-  <span class="inline-block meta-info">{% trans 'Tags:' %}</span>
+  <span class="inline-block meta-info">{% trans 'Tags' %}</span>
   <div class="view-tag-list-tags">
   {% for tag in object.tags.all %}
     <span class="inline-block tag">

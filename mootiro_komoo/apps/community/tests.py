@@ -21,6 +21,8 @@ def A_COMMUNITY_DATA():
 
 class CommunityViewsTestCase(KomooTestCase):
 
+    fixtures = KomooTestCase.fixtures + ['communities.json']
+
     # new_community
     def test_new_community_page_is_up(self):
         self.login_user()

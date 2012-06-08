@@ -10,17 +10,22 @@ A_POLYGON_GEOMETRY = '{"type":"GeometryCollection","geometries":[{"type":"Polygo
 def logged_and_unlogged(test_method):
     @wraps(test_method)
     def test_wrapper(self):
-        print "LOGGED run..."
-        self.login_user()
-        test_method(self)
-        print "UNLOGGED run..."
-        self.client.logout()
-        test_method(self)
+        try:
+            self.login_user()
+            test_method(self)
+        finally:
+            print "Logged run FAILED!"
+        try:
+            self.client.logout()
+            test_method(self)
+        finally:
+            print "Unlogged run FAILED!"
     return test_wrapper
 
 
 class KomooTestCase(TestCase):
-    fixtures = ['test_fixtures.json', 'contenttypes_fixtures.json']
+
+    fixtures = ['contenttypes_fixtures.json', 'users.json']
 
     @classmethod
     def setUpClass(cls):
@@ -53,3 +58,6 @@ class MainViewsTestCase(KomooTestCase):
 
     def test_homepage_is_up(self):
         self.assert_200('/')
+
+    def test_frontpage_is_up(self):
+        self.assert_200('/frontpage')  # TODO: exchange url with the map

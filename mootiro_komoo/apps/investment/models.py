@@ -13,7 +13,6 @@ from annoying.functions import get_object_or_None
 import reversion
 from lib.taggit.managers import TaggableManager
 from vote.models import VotableModel
-
 from main.utils import slugify
 
 
