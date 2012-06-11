@@ -219,6 +219,8 @@
           <a class="button" href="{{ organization.new_investment_url }}">{% trans "New Investment" %}</a>
         </div>
 
+        {% taglist organization community %}
+
         <div class="block">
           <h4>{% trans 'Operation Field' %}</h4>
             <ul>
@@ -257,7 +259,7 @@
     </div>
 
     <div class="view-extras">
-        {% taglist organization community %}
+
         {% track_buttons organization %}
         {% report_content organization %}
         {% delete_button organization %}

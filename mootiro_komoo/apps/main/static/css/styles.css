@@ -1110,7 +1110,7 @@ a.btnShowForm{
 .comment-vote{
     margin-left: 10px;
 }
-.comment-summary {
+.comments-summary {
     display: block;
 }
 /* =========== end of COMMENT section ======= */
@@ -1202,10 +1202,6 @@ a.btnShowForm{
   background: none repeat scroll 0% 0% #fbfbfb; /*rgba(215, 215, 215, 0.2);*/
   box-shadow: 1px 1px 1px rgb(190, 189, 204) ;
 }
-/* resource show */
-.resource-type{
-  margin-left: 40px;
-}
 /* ====== file uploader ======== */
 #fileupload{
   font-size: 0.8em;
@@ -1295,6 +1291,7 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 .view-edit-btn{
   display: inline-block;
   float: right;
+  padding: 5px;
 }
 .view-extras{
   clear: both;
@@ -1343,6 +1340,17 @@ div.view-list-item.odd {
     background-color: #ffffff;
     min-height: 2em;
     max-width: 900px;
+}
+.view-list-reactions{
+    /*display: inline-block;*/
+    float: right;
+    margin-right: 30px;
+}
+.view-list-reactions .comments-summary{
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    padding-top: 5px;
 }
 .view-list-count{
     /* display: inline-block;

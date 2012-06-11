@@ -4,6 +4,8 @@
 
 <!-- <h3>Investments</h3> -->
 
+{% if both or received %}
+
 {% if both %}
 <ul class="horizontal">
     <li class="tab-investment realized">
@@ -20,6 +22,7 @@
     </li>
 </ul>
 {% endif %}
+
 
 <div class="clear-both"></div>
 <div id="received-investments-panel" class="view-list panel-investment">
@@ -75,4 +78,7 @@
         }
     </script>
 {% endblock %}
+{% endif %}
+
+
 {% endif %}
