@@ -20,19 +20,21 @@
     <div class="main-column">
 
         <div class="view-header">
-            <h2>{{ resource.name }}</h2>
-            <div class="view-votes">
-                {% vote resource %}
+            <div>
+                <h2 class="inline-block">{{ resource.name }}</h2>
+
                 <div class="view-edit-btn">
                     <a href="{{ resource.edit_url }}" class="btn login-required">
                         <i class="icon-pencil"></i>
                     </a>
                 </div>
+
             </div>
-            <span>
-                {% trans 'created by' %} <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
-                {% trans 'in' %} {{ resource.creation_date|date:"d/m/Y" }}
-            </span>
+
+            <div class="view-votes">
+                {% vote resource %}
+            </div>
+
             <span class="resource-type">{% trans 'type:' %} &nbsp;<strong>{{ resource.kind }}</strong></span>
         </div>
 
