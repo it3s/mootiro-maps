@@ -1538,6 +1538,10 @@ div.view-list-item.odd {
     margin-left: 15px;
     background-color: #ffffff;
 }
+.form-branch-edit label{
+    font-weight: bold;
+    margin-left: 15px;
+}
 textarea.markItUpEditor{
     height: 250px;
 }
@@ -1588,7 +1592,7 @@ textarea.markItUpEditor{
 }
 .org-info-div{
     /*background-color: rgb(166, 229, 238);*/
-    background-color: #ebebeb;
+    background-color: #F6F6F6;
     padding: 10px;
     display: block;
     width:97%;
@@ -1596,7 +1600,8 @@ textarea.markItUpEditor{
     border-radius: 7px;
 }
 .org-info-div:hover{
-    background-color: rgb(220, 239, 244);
+    /*background-color: rgb(220, 239, 244);*/
+    background-color: #DCEFF4;
     color: #000000;
 }
 .org-info-div:hover .branch-name, .branch-active .branch-name{
@@ -1607,12 +1612,14 @@ textarea.markItUpEditor{
     text-decoration: none;
 }*/
 .branch-active{
-    background-color: rgb(166, 229, 238);
+    /*background-color: rgb(166, 229, 238);*/
+    background-color: #B1DDE8;
     color: #000000;
     text-decoration: none;
 }
 .branch-active:hover{
-    background-color: rgb(166, 229, 238);
+    /*background-color: rgb(166, 229, 238);*/
+    background-color: #B1DDE8;
 }
 .branch-map-icon{
     background-image: url('/static/img/see-on-map.png');
