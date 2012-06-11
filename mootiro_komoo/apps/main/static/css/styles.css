@@ -1095,7 +1095,7 @@ a.btnShowForm{
 .comment-vote{
     margin-left: 10px;
 }
-.comment-summary {
+.comments-summary {
     display: block;
 }
 /* =========== end of COMMENT section ======= */
@@ -1328,6 +1328,16 @@ div.view-list-item.odd {
     background-color: #ffffff;
     min-height: 2em;
     max-width: 900px;
+}
+.view-list-reactions{
+    /*display: inline-block;*/
+    float: right;
+}
+.view-list-reactions .comments-summary{
+    display: inline-block;
+    margin-left: 20px;
+    vertical-align: top;
+    padding-top: 5px;
 }
 .view-list-count{
     /* display: inline-block;
