@@ -1490,6 +1490,7 @@ div.view-list-item.odd {
 }
 .right-bar-modif h4{
     color: #000000;
+    margin-top: 15px;
 }
 .branch-link-btn{
     float: right;

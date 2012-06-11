@@ -184,6 +184,12 @@
             </div>
 
             <div class="org-info-panel investments-list hidden">
+                <div class="apart">
+                    <a class="button" href="{{ organization.new_investment_url }}">
+                        {% trans "New Investment" %}
+                    </a>
+                </div>
+
                 {% investments_list organization.investments.all organization.realized_investments.all  %}
             </div>
         </div>
@@ -209,9 +215,12 @@
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
         <a href="#" class="see-on-map">{% trans 'see on map' %}</a>
 
+        <div class="centralizer apart">
+          <a class="button" href="{{ organization.new_investment_url }}">{% trans "New Investment" %}</a>
+        </div>
+
         <div class="block">
           <h4>{% trans 'Operation Field' %}</h4>
-          <p>
             <ul>
             {% for c in organization.categories.all %}
                 <li>
@@ -221,10 +230,8 @@
                 {% trans 'No categories provided' %}
             {% endfor %}
             </ul>
-          </p>
 
           <h4>{% trans 'Audience' %}</h4>
-          <p>
             <ul>
             {% for t in organization.target_audiences.all %}
                 <li>{{ t.name }}</li>
@@ -232,29 +239,21 @@
                 {% trans 'No target audience provided' %}
             {% endfor %}
             </ul>
-          </p>
 
           <h4>{% trans 'Contact' %}</h4>
-          <p>
             {% if organization.contact %}
                 {{ organization.contact|render_markup }}
             {% else %}
                 {% trans 'No contact info provided' %}
             {% endif %}
-          </p>
 
           {% if organization.link %}
           <h4>Link</h4>
-          <p>
             <a href="{{ organization.link|with_http }}">{{ organization.link }}</a>
-          </p>
           {% endif %}
 
         </div>
 
-        <div class="centralizer apart">
-          <a class="button" href="{{ organization.new_investment_url }}">{% trans "Add investment" %}</a>
-        </div>
     </div>
 
     <div class="view-extras">

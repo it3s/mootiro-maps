@@ -2,12 +2,22 @@
 {% load markitup_tags %}
 {% load i18n %}
 
-<h3>Investments</h3>
+<!-- <h3>Investments</h3> -->
 
 {% if both %}
 <ul class="horizontal">
-    <li class="tab-investment realized"><a href="#realized-investments-panel">{% trans "Realized" %} ({{ realized|length }})</a></li>
-    <li class="tab-investment received"><a href="#received-investments-panel">{% trans "Received" %} ({{ received|length }})</a></li>
+    <li class="tab-investment realized">
+        <a href="#realized-investments-panel">
+            <img src="/static/investment/img/inv_realizados.png">
+            {% trans "Realized" %} ({{ realized|length }})
+        </a>
+    </li>
+    <li class="tab-investment received">
+        <a href="#received-investments-panel">
+            <img src="/static/investment/img/inv_recebidos.png">
+            {% trans "Received" %} ({{ received|length }})
+        </a>
+    </li>
 </ul>
 {% endif %}
 
