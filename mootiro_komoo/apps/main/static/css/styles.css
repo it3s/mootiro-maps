@@ -405,8 +405,8 @@ div.collapser i.icon-chevron-down {
     background-image: url("../img/see-on-map.png");
     background-position: 0 0;
     margin: 2px 7px 1px;
-    width: 10px;
-    height: 15px;
+    width: 32px;
+    height: 24px;
 }
 *:hover > .icon-see-on-map, .selected .icon-see-on-map {
     background-image: url("../img/see-on-map-active.png");
@@ -441,6 +441,13 @@ div.collapser i.icon-chevron-down {
 }
 *:hover > .icon-community.no-hover {
     background-image: url("../img/menu/community.png");
+}
+.icon-community-white {
+    background-image: url("../img/menu/community-active.png");
+    background-position: 0 0;
+    margin: 0 5px 1px 4px;
+    width: 15px;
+    height: 17px;
 }
 
 .icon-need {
@@ -913,12 +920,16 @@ div.content-updates .tab.active a {
     margin: 0 15px;
     display: inline-block;
 }
-.a-update .update-info h3 { margin-bottom: 10px }
+.a-update .update-info h3 {
+    margin-bottom: 10px;
+    width: 420px;
+    display: inline-block;
+}
 .a-update .update-message, .a-update .update-votes { margin-top: 10px }
 .a-update .update-community {
     padding: 5px;
-    color: #000;
-    background: #fff;
+    color: #fff;
+    background: #009cb4;
     border: none;
     border-radius        : 5px;
     -webkit-border-radius: 5px;
