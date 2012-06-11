@@ -4,6 +4,7 @@ from __future__ import unicode_literals  # unicode by default
 
 import json
 import logging
+import itertools
 from smtplib import SMTPException
 
 from django.contrib.gis.geos import Polygon, Point
@@ -17,6 +18,7 @@ from django.utils.translation import ugettext as _
 
 from annoying.decorators import render_to, ajax_request
 import requests
+from reversion.models import Revision, VERSION_DELETE
 
 from community.models import Community
 from need.models import Need
@@ -46,8 +48,38 @@ def _fetch_geo_objects(Q, zoom):
 
 @render_to("main/frontpage.html")
 def frontpage(request):
-    communities = Community.objects.filter()
-    return {'communities': communities}
+    # FIXME: this is too slow!!!
+    updates = Revision.objects.order_by("-date_created").all()
+
+    def make_feed_dict(revision):
+        v = revision.version_set.all()[0]
+        old = v.object_version.object
+        current = v.object
+        return {
+            'title': unicode(old),  # use old or current?
+            'user': revision.user,
+            'date_created': revision.date_created,
+            'object': current,
+            'object_type': old._meta.verbose_name,
+            'update_type': v.get_type_display().lower(),
+            'update_type_id': v.type,
+        }
+    updates = itertools.imap(make_feed_dict, updates)
+
+    def feed_filter(feed_dict):
+        # select only addition and editions, not deletions
+        if feed_dict['update_type_id'] == VERSION_DELETE:
+            return False
+        if feed_dict['object_type'] not in ['community', 'need',
+            'organization', 'resource']:
+            feed_dict['object_type']
+            return False
+        return True
+    updates = itertools.ifilter(feed_filter, updates)
+
+    updates = itertools.islice(updates, 20)
+
+    return {'updates': updates}
 
 
 #@cache_page(54000)

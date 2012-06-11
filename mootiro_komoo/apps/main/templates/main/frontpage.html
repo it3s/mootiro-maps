@@ -1,6 +1,9 @@
 {% extends "global.html" %}
 {% load i18n %}
 {% load komoo_tags %}
+{% load vote_tags %}
+{% load comment_tags %}
+{% load humanize %}
 
 
 {% block title %}TUNT STATS{% endblock %}
@@ -12,9 +15,11 @@
   <div class="main-column content-updates">
     
     <ul class="tabs horizontal">
-      <li class="tab first"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
+      <li class="tab first last"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
+      <!--
       <li class="tab"><a href="#discussions-panel">{% trans "discussions" %}</a></li>
       <li class="tab last"><a href="#my-content-panel">{% trans "my content" %}</a></li>
+      -->
     </ul>
     <div class="clear-both"></div>
 
@@ -27,27 +32,33 @@
 
       <div id="last-updates-panel" class="panel">
           <ul class="updates">
-            {% for i in '123'|make_list %}
+            {% for u in updates %}
             <li class="a-update">
               <div class="update-image">
-                <img src="{{STATIC_URL}}/img/updates-page/need-added.png">
+                <img src="{{STATIC_URL}}/img/updates-page/{{ u.object_type }}-{{ u.update_type }}.png">
               </div>
               <div class="update-info">
                 <h3>
-                  <a href="#">Reforma do centro de reuniões</a>
+                  <a href="{{ u.object.view_url }}">{{ u.title }}</a>
                 </h3>
                 <div class="right"><i class="icon-see-on-map"></i></div>
                 <div class="clear-both"></div>
+                {% for c in u.object.community.all %}
                 <a href="#" class="update-community">
-                  <i class="icon-community-white"></i> Jaguaré
+                  <i class="icon-community-white"></i> {{ c.name }}
                 </a>
+                {% endfor %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  Suspendisse venenatis ullamcorper massa, lerisque augue auctor at. Cras pretium posuere turpis vitae pretium. Integer eu mattis turpis.
-                  <a href="#">Fulano de Tal</a>
+                  {{ u.object_type }}<br/>
+                  {{ u.update_type }}<br/>
+                  {{ u.date_created|timesince }}<br/>
+                  <a href="#">{{ u.user }}</a>
                 </div>
                 <div class="update-votes right">
-                  VOTES
+                  {% if u.object %}
+                    {% vote u.object %} {% comments_summary u.object %}
+                  {% endif %}
                 </div>
               </div>
             </li>
@@ -56,6 +67,7 @@
       </div>
     </div>
 
+    <!--
     <div id="discussions-panel" class="panel hidden">
         DISCUSSIONS
     </div>
@@ -63,6 +75,7 @@
     <div id="my-content-panel" class="panel hiden">
         MY CONTENT
     </div>
+    -->
 
   </div>
   <div class="right-bar news-updates">

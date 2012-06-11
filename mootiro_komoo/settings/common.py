@@ -150,6 +150,7 @@ INSTALLED_APPS = [
     'django.contrib.comments',
     'django.contrib.gis',
     'django.contrib.markup',
+    'django.contrib.humanize',
     # 3rd party apps
     'tinymce',
     'taggit',

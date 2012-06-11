@@ -873,6 +873,10 @@ div.content-updates .tab.last {
     border-radius        : 0 10px 0 0;
     -webkit-border-radius: 0 10px 0 0;
 }
+div.content-updates .tab.first.last {
+    border-radius        : 10px 10px 0 0;
+    -webkit-border-radius: 10px 10px 0 0;
+}
 .shadow-container {
     background: #eff8f9;
     border-radius        : 0 10px 10px 10px;
