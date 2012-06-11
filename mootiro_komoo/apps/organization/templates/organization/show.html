@@ -320,16 +320,16 @@
             $.post($(this).attr('action'), $(this).serialize(),
                 function(data){
                     if (data.success){
-                        var branch = $(that).parent().parent();
+                        var branch = $('.branch-link[data-branch-id='+data.id+']');
                         var form = branch.find('.branch-form');
                         var info = branch.find('.branch-info');
                         var branch_name = branch.find('.branch-name');
                         info.find('.entry').html(data.info);
                         branch_name.find('.entry').html(data.name);
-                        if ($('.branch-info .branch-communities').length){
-                            $('.branch-info .branch-communities').remove();
+                        if (info.find('.branch-communities').length){
+                            info.find('.branch-communities').remove();
                         }
-                        $('.branch-info').append(data.communities);
+                        info.append(data.communities);
                         form.fadeOut(400, function(){
                             info.fadeIn(400);
                             branch_name.fadeIn(400);

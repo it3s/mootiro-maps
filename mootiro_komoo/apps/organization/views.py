@@ -228,12 +228,14 @@ def edit_inline_branch(request):
         communities = render_to_response(
             'organization/branch_communities_list.html', {'branch': branch},
             context_instance=RequestContext(request)).content
+        id_ = branch.id
 
         success = True
         send_notifications.send(sender=OrganizationBranch, instance=branch)
     else:
-        success, info, name = False, '', ''
-    return dict(success=success, info=info, name=name, communities=communities)
+        success, info, name, id_ = False, '', '', ''
+    return dict(success=success, info=info, name=name, communities=communities,
+                id=id_)
 
 
 @ajax_request

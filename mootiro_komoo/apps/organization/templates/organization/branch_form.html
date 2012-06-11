@@ -9,12 +9,17 @@
     <div style="float:right;">
       <a href="#" class="button" id="map-edit-button-{{ branch.id }}">{% trans "Open the map editor" %}</a>
     </div>
+
+    <label>{% trans 'Name' %}</label>
     <input type="text" name="name" value="{{ branch.name }}">
+
+    <label>{% trans 'Description' %}</label>
     <textarea name="info" rows="4" cols="20" id="{{ info_id }}">{{branch.info}}</textarea>
     {% markitup_editor info_id %}
 
+    <label>{% trans 'Communities' %}:</label>
     {{ comm_widget }}
-    <input type="submit" value="update" class="btn form-branch-edit-btn" >
+    <input type="submit" value="update" class="btn button form-branch-edit-btn" >
     <script type="text/javascript">
       $("#map-edit-button-{{ branch.id }}").click(function (e) {
           // FIXME: DRY
