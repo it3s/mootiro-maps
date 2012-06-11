@@ -11,6 +11,8 @@ from django.utils.translation import gettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 
+from markitup.templatetags.markitup_tags import render_markup
+
 from main.utils import templatetag_args_parser, create_geojson
 from main.widgets import (ImageSwitch, ImageSwitchMultiple, TaggitWidget,
                           Autocomplete)
@@ -203,6 +205,13 @@ def class_name(value):
 @register.filter
 def get_range(value):
     return xrange(int(value))
+
+
+@register.filter
+def description_markdown_preview(desc):
+    text = desc[:250]
+    text += ' ...' if len(desc) > 250 else ''
+    return render_markup(text)
 
 
 def _get_widgets_dict(obj):

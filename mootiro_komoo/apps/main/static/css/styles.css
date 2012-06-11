@@ -1306,9 +1306,6 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
     color: #666666;
     text-decoration: none;
 }
-.view-list-item-tags .view-tag-list-tags{
-    width: 370px;
-}
 .view-tag-list .meta-info {
     vertical-align: top;
 }
@@ -1418,7 +1415,7 @@ div.view-list-item.odd {
 }
 .view-list-item-tags{
     display: inline-block;
-    width: 500px;
+    width: 100%;
 }
 .view-list-visualization{
     background-color: #cae9f0;
