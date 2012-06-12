@@ -18,7 +18,7 @@ from django.utils.translation import ugettext as _
 
 from annoying.decorators import render_to, ajax_request
 import requests
-from reversion.models import Revision, VERSION_DELETE
+from reversion.models import Revision, Version, VERSION_DELETE
 
 from community.models import Community
 from need.models import Need
@@ -49,20 +49,22 @@ def _fetch_geo_objects(Q, zoom):
 @render_to("main/frontpage.html")
 def frontpage(request):
     # FIXME: this is too slow!!!
-    updates = Revision.objects.order_by("-date_created").all()
+    # TODO: build an updates class with its own table
+    updates_number = 100
+    updates = Version.objects.order_by("-revision__date_created") \
+                .select_related("revision", "revision__user")
 
-    def make_feed_dict(revision):
-        v = revision.version_set.all()[0]
-        old = v.object_version.object
-        current = v.object
+    def make_feed_dict(version):
+        old = version.object_version.object
+        current = version.object
         return {
             'title': unicode(old),  # use old or current?
-            'user': revision.user,
-            'date_created': revision.date_created,
+            'user': version.revision.user,
+            'date_created': version.revision.date_created,
             'object': current,
             'object_type': old._meta.verbose_name,
-            'update_type': v.get_type_display().lower(),
-            'update_type_id': v.type,
+            'update_type': version.get_type_display().lower(),
+            'update_type_id': version.type,
         }
     updates = itertools.imap(make_feed_dict, updates)
 
@@ -77,7 +79,7 @@ def frontpage(request):
         return True
     updates = itertools.ifilter(feed_filter, updates)
 
-    updates = itertools.islice(updates, 20)
+    updates = itertools.islice(updates, updates_number)
 
     return {'updates': updates}
 

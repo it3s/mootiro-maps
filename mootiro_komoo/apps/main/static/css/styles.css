@@ -929,7 +929,7 @@ div.content-updates .tab.active a {
     width: 420px;
     display: inline-block;
 }
-.a-update .update-message, .a-update .update-votes { margin-top: 10px }
+.a-update .update-message, .a-update .update-social { margin-top: 10px }
 .a-update .update-community {
     padding: 5px;
     color: #fff;
@@ -938,9 +938,18 @@ div.content-updates .tab.active a {
     border-radius        : 5px;
     -webkit-border-radius: 5px;
     text-decoration: none;
+    margin-right: 3px;
 }
-.a-update .update-message {
-    max-width: 320px;
+.a-update .update-message { max-width: 295px }
+.a-update .update-social {
+    max-width: 185px;
+    text-align: right;
+}
+.a-update .update-social .vote { margin: 0 }
+.a-update .update-social .comments-summary {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0;
 }
 
 

@@ -41,21 +41,25 @@
                 <h3>
                   <a href="{{ u.object.view_url }}">{{ u.title }}</a>
                 </h3>
-                <div class="right"><i class="icon-see-on-map"></i></div>
+                <div class="right">
+                  <a href="{{ u.object.on_map_url }}"><i class="icon-see-on-map"></i></a>
+                </div>
                 <div class="clear-both"></div>
                 {% for c in u.object.community.all %}
-                <a href="#" class="update-community">
+                <a href="{{ c.view_url }}" class="update-community">
                   <i class="icon-community-white"></i> {{ c.name }}
                 </a>
                 {% endfor %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  {{ u.object_type }}<br/>
-                  {{ u.update_type }}<br/>
-                  {{ u.date_created|timesince }}<br/>
-                  <a href="#">{{ u.user }}</a>
+                  {% blocktrans with object_type=u.object_type|capfirst update_type=u.update_type date=u.date_created user=u.user %}
+                    {{ object_type }}
+                    {{ update_type }}
+                    on {{ date }}
+                    by {{ user }}.
+                  {% endblocktrans %}
                 </div>
-                <div class="update-votes right">
+                <div class="update-social right">
                   {% if u.object %}
                     {% vote u.object %} {% comments_summary u.object %}
                   {% endif %}
