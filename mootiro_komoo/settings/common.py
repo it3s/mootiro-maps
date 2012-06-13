@@ -180,6 +180,7 @@ INSTALLED_APPS = [
     'moderation',
     'hotsite',
     'signatures',
+    'update',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500

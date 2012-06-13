@@ -4,7 +4,6 @@ from __future__ import unicode_literals  # unicode by default
 
 import json
 import logging
-import itertools
 from smtplib import SMTPException
 
 from django.contrib.gis.geos import Polygon, Point
@@ -18,7 +17,6 @@ from django.utils.translation import ugettext as _
 
 from annoying.decorators import render_to, ajax_request
 import requests
-from reversion.models import Revision, Version, VERSION_DELETE
 
 from community.models import Community
 from need.models import Need
@@ -44,44 +42,6 @@ def _fetch_geo_objects(Q, zoom):
     organization_branches = OrganizationBranch.objects.filter(Q) if zoom >= min_zoom else []
     return dict(communities=communities, needs=needs, resources=resources,
                 organizations=organization_branches)
-
-
-@render_to("main/frontpage.html")
-def frontpage(request):
-    # FIXME: this is too slow!!!
-    # TODO: build an updates class with its own table
-    updates_number = 100
-    updates = Version.objects.order_by("-revision__date_created") \
-                .select_related("revision", "revision__user")
-
-    def make_feed_dict(version):
-        old = version.object_version.object
-        current = version.object
-        return {
-            'title': unicode(old),  # use old or current?
-            'user': version.revision.user,
-            'date_created': version.revision.date_created,
-            'object': current,
-            'object_type': old._meta.verbose_name,
-            'update_type': version.get_type_display().lower(),
-            'update_type_id': version.type,
-        }
-    updates = itertools.imap(make_feed_dict, updates)
-
-    def feed_filter(feed_dict):
-        # select only addition and editions, not deletions
-        if feed_dict['update_type_id'] == VERSION_DELETE:
-            return False
-        if feed_dict['object_type'] not in ['community', 'need',
-            'organization', 'resource']:
-            feed_dict['object_type']
-            return False
-        return True
-    updates = itertools.ifilter(feed_filter, updates)
-
-    updates = itertools.islice(updates, updates_number)
-
-    return {'updates': updates}
 
 
 #@cache_page(54000)
