@@ -61,7 +61,7 @@ def kill_manage_tasks():
     local('ps -eo pid,args | grep manage.py | grep -v grep | cut -c1-6 | xargs kill')
 
 
-def test(apps="community need organization proposal komoo_resource investment main",
+def test(apps="community need organization proposal komoo_resource investment main user_cas",
             recreate_db=False):
     """Run application tests"""
     if recreate_db:

@@ -258,6 +258,9 @@ AJAX_SELECT_INLINES = False
 # Celerey task queue config
 BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
 
+# this should be overridden on local_settings.py
+SECRET_KEY = 'pandapernetacorrendonumpehsohbalancandoosbracosnoar'
+
 # TESTS CONFIGURATION
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ['--rednose']

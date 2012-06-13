@@ -94,11 +94,10 @@ def profile_update(request):
         user.save()
 
         # update signatures
-        if signatures:
-            signatures = map(int, signatures)
-            for signature in Signature.objects.filter(user=request.user):
-                if not signature.id in signatures:
-                    signature.delete()
+        signatures = map(int, signatures) if signatures else []
+        for signature in Signature.objects.filter(user=request.user):
+            if not signature.id in signatures:
+                signature.delete()
         return {'success': 'true', 'redirect': reverse('user_profile')}
 
     return {'success': 'false', 'errors': errors}
