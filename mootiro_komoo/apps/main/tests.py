@@ -3,6 +3,8 @@ from django.test import TestCase
 from django.contrib.contenttypes.models import ContentType
 from functools import wraps
 
+from django.contrib.auth.models import User
+
 
 A_POLYGON_GEOMETRY = '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0],[1,1],[2,2],[0,0]]]}]}'
 
@@ -38,6 +40,7 @@ class KomooTestCase(TestCase):
         """Logs a user in assuming its password is 'testpass'. The
         test_fixtures defines two users: 'tester' and 'noobzin'."""
         self.client.login(username=username, password="testpass")
+        return User.objects.get(username=username)
 
     def _assert_status(self, url, status, ajax=False):
         params = {}
