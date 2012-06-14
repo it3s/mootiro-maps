@@ -36,7 +36,7 @@ class UserCasTestCase(KomooTestCase):
         id = User.objects.get(username='tester').id
         self.login_user()
         new_username = 'awesome_tester'
-        response = self.client.post(reverse('profile_update'),
+        self.client.post(reverse('profile_update'),
             {'username': new_username})
 
         user = User.objects.get(pk=id)
@@ -48,7 +48,7 @@ class UserCasTestCase(KomooTestCase):
             Signature(user=user, content_object=need).save()
         self.login_user()
         self.client.post(reverse('profile_update'),
-            {'username': 'tester', 'signatures': [2,3]})
+            {'username': 'tester', 'signatures': [2, 3]})
         self.assertEquals(Signature.objects.filter(user=user).count(), 2)
         self.assertEquals(
             [sign.id for sign in Signature.objects.filter(user=user)],

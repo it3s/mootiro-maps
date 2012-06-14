@@ -46,7 +46,7 @@ def log_update(sender, **kwargs):
     created = kwargs["created"]
     instance = kwargs["instance"]
 
-    if created and instance.creator:
+    if created and hasattr(instance, 'creator') and instance.creator:
         data = {
             'title': instance.name,
             'user': instance.creator.username,
