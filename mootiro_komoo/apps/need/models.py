@@ -107,7 +107,7 @@ class Need(GeoRefModel, VotableModel):
     @property
     def base_url_params(self):
         d = dict()
-        if self.community:
+        if self.community and self.community.all():
             d['community_slug'] = self.community.all()[0].slug
         return d
 

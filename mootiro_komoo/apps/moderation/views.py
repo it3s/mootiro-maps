@@ -83,6 +83,8 @@ def list_reports(request):
 def moderation_report(request, app_label, model_name, obj_id):
     logger.debug('accessing Moderation > moderation_report : POST={}'.format(
         request.POST))
+    if request.user.is_anonymous():
+        return {'message': _('Please log in first to report a content'), 'success': 'false'}
     data_dict = {'error': _('No data'), 'success': 'false'}
     if request.method == 'POST':
         model = get_model(app_label, model_name)
