@@ -59,12 +59,38 @@ class KomooTestCase(TestCase):
 
 class MainViewsTestCase(KomooTestCase):
 
+    fixtures = KomooTestCase.fixtures + ['resources.json']
+
     def test_homepage_is_up(self):
         self.assert_200('/')
 
     def test_frontpage_is_up(self):
         self.assert_200('/frontpage')  # TODO: exchange url with the map
 
-    # def test_tags_filter(self):
-    #     # TODO: implement- me
-    #     assert True
+    def test_tags_filter(self):
+        from komoo_resource.models import Resource
+        from utils import filtered_query
+
+        query_set = Resource.objects
+
+        original_count = query_set.count()
+        assert original_count > 0
+
+        # Mock a request
+        req = type('MockHttpRequest', (object,), {})
+
+        # Test simple tag filtering with single result
+        req.GET = {'filters': 'tags', 'tags': 'esporte'}
+        new_query_set = filtered_query(query_set, req)
+        self.assertEquals(new_query_set.count(), 1)
+
+        # Test simple tag filtering with more than 1 result
+        req.GET = {'filters': 'tags', 'tags': u'Educação'}
+        new_query_set = filtered_query(query_set, req)
+        self.assertEquals(new_query_set.count(), 2)
+
+        # Test multiple (& clause) tag filtering
+        req.GET = {'filters': 'tags', 'tags': u'Educação,leitura'}
+        new_query_set = filtered_query(query_set, req)
+        self.assertEquals(new_query_set.count(), 1)
+        self.assertEquals(new_query_set[0].name, u'Biblioteca comunitária')
