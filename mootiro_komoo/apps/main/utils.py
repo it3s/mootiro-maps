@@ -176,10 +176,6 @@ def sorted_query(query_set, sort_fields, request, default_order='name'):
         return query_set.order_by(default_order)
 
 
-def _bool_and(a, b):
-    return a and b
-
-
 def filtered_query(query_set, request):
     filters = request.GET.get('filters', '')
     for f in filters.split(','):

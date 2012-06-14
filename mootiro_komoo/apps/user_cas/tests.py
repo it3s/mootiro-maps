@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import simplejson
-
 from django.core.urlresolvers import reverse
 
 from main.tests import KomooTestCase
@@ -44,13 +42,25 @@ class UserCasTestCase(KomooTestCase):
 
     def test_change_signatures(self):
         user = User.objects.get(username='tester')
-        for need in Need.objects.filter(pk__in=[1, 2, 3]):
+        Signature.objects.filter(user=user).delete()
+        for need in Need.objects.all():
             Signature(user=user, content_object=need).save()
+
         self.login_user()
+
+        signatures_count = Signature.objects.filter(user=user).count()
+
+        assert signatures_count > 0
+
+        signatures_list = [signature.id for signature in\
+                             Signature.objects.filter(user=user)]
+
         self.client.post(reverse('profile_update'),
-            {'username': 'tester', 'signatures': [2, 3]})
-        self.assertEquals(Signature.objects.filter(user=user).count(), 2)
+            {'username': 'tester', 'signatures': signatures_list[1:]})
+
+        self.assertEquals(
+            Signature.objects.filter(user=user).count(),
+            signatures_count - 1)
         self.assertEquals(
             [sign.id for sign in Signature.objects.filter(user=user)],
-            [2, 3])
-
+            signatures_list[1:])
