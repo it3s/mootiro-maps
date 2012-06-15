@@ -1,10 +1,15 @@
-"""
-Django does not recognize
-This module must be explicit imported
-"""
-
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+Callback signals that creates new updates (instances of Update class) as users
+interacts with the system.
+
+ATTENTION!
+Django does not recognize signals.py so this module
+must be explicit imported in __init__.py
+"""
+
 from __future__ import unicode_literals  # unicode by default
 
 from django.db.models.signals import post_save
@@ -19,11 +24,10 @@ from komoo_resource.models import Resource
 from investment.models import Investment
 
 
-def _new_update_data(instance):
+def _get_update_data(instance):
     data = {
         'title': instance.name,
         'date': instance.creation_date,
-        'typ': Update.TYPES[0][0],
         'object_type': instance._meta.verbose_name,
         'users': instance.creator.username,
     }
@@ -34,21 +38,33 @@ def _new_update_data(instance):
     return data
 
 
-@receiver(post_save, sender=Investment, dispatch_uid="log_update")
-@receiver(post_save, sender=Resource, dispatch_uid="log_update")
-@receiver(post_save, sender=Organization, dispatch_uid="log_update")
-@receiver(post_save, sender=Proposal, dispatch_uid="log_update")
-@receiver(post_save, sender=Need, dispatch_uid="log_update")
-@receiver(post_save, sender=Community, dispatch_uid="community_post_save")
+@receiver(post_save, dispatch_uid="community_post_save")
 def create_update(sender, **kwargs):
+    """Create updates to be logged on frontpage"""
+
+    klasses = [Community, Need, Proposal, Organization, Resource, Investment]
+    if sender not in klasses:
+        return  # class not to log updates
+
     created = kwargs["created"]
     instance = kwargs["instance"]
     creator = getattr(instance, 'creator', None)
 
-    if created and creator:
-        data = _new_update_data(instance)
-        update = Update(**data)
-        update.save()
+    if not creator:
+        return  # not ready to be logged
+
+    data = _get_update_data(instance)
+
+    if created:
+        data['typ'] = Update.TYPES[0][0]
     else:
+        data['typ'] = Update.TYPES[1][0]
         # TODO: handle slug changes
-        pass
+
+    update = Update(**data)
+    update.save()
+
+
+# @receiver(post_save, dispatch_uid="community_slug_changed", sender=Community)
+# def community_slug_changed()
+    
