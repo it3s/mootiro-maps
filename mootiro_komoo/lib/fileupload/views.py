@@ -6,6 +6,7 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response, RequestContext
 
 
 logger = logging.getLogger(__name__)
@@ -69,3 +70,10 @@ class JSONResponse(HttpResponse):
                  *args, **kwargs):
         content = simplejson.dumps(obj, **json_opts)
         super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
+
+
+def uploader_poc(request):
+    return render_to_response(
+        'fileupload/poc.html',
+        {},
+        context_instance=RequestContext(request))
