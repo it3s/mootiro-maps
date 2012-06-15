@@ -35,24 +35,25 @@
             {% for u in updates %}
             <li class="a-update">
               <div class="update-image">
-                <img src="{{STATIC_URL}}/img/updates-page/{{ u.object_type }}-{{ u.update_type }}.png">
+                {# How to change images to be inside update app??? #}
+                <img src="{{STATIC_URL}}img/updates-page/{{ u.object_type }}-{{ u.type }}.png">
               </div>
               <div class="update-info">
                 <h3>
-                  <a href="{{ u.object.view_url }}">{{ u.title }}</a>
+                  <a href="#">{{ u.title }}</a>
                 </h3>
                 <div class="right">
-                  <a href="{{ u.object.on_map_url }}"><i class="icon-see-on-map"></i></a>
+                  <a href="#"><i class="icon-see-on-map"></i></a>
                 </div>
                 <div class="clear-both"></div>
-                {% for c in u.object.community.all %}
-                <a href="{{ c.view_url }}" class="update-community">
-                  <i class="icon-community-white"></i> {{ c.name }}
+                {% for cname in u.communities %}
+                <a href="#" class="update-community">
+                  <i class="icon-community-white"></i> {{ cname }}
                 </a>
                 {% endfor %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  {% blocktrans with object_type=u.object_type|capfirst update_type=u.update_type date=u.date_created user=u.user %}
+                  {% blocktrans with object_type=u.object_type|capfirst update_type=u.typ date=u.date user=u.users %}
                     {{ object_type }}
                     {{ update_type }}
                     on {{ date }}

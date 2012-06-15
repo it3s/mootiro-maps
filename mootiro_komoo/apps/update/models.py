@@ -10,16 +10,21 @@ class Update(models.Model):
 
     title = models.CharField(max_length=256, null=False)
     date = models.DateTimeField(auto_now=True)
-
-    TYPES = (
-        ("A", "add"),
-        ("E", "edit"),
-        ("D", "discussion"),
-    )
-    typ = models.CharField(max_length=1, null=False, choices=TYPES, db_index=True)
     object_type = models.CharField(max_length=32, null=False, db_index=True)
     object_slug = models.CharField(max_length=512, null=False)
     comments_count = models.IntegerField(null=True)
+
+    # update type
+    TYPES = {
+        "A": "add",
+        "E": "edit",
+        "D": "discussion",
+    }
+    typ = models.CharField(max_length=1, null=False, db_index=True,
+            choices=tuple(TYPES.items()))
+    @property
+    def type(self):
+        return self.TYPES[self.typ]
 
     # comma-separated list of usernames
     _users = models.CharField(max_length=1024)
