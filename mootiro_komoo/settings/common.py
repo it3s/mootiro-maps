@@ -264,7 +264,7 @@ SECRET_KEY = 'pandapernetacorrendonumpehsohbalancandoosbracosnoar'
 
 # TESTS CONFIGURATION
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = ['--rednose']
+NOSE_ARGS = ['--rednose', '-s']
 if 'test' in sys.argv:
     import logging
     logging.disable(logging.CRITICAL)
