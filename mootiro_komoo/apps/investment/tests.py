@@ -1,35 +1,48 @@
 # -*- coding: utf-8 -*-
 import simplejson
+import datetime
 
 from django.core.urlresolvers import reverse
 
 from main.tests import KomooTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
-from .models import Investment
+from organization.tests import AN_UNSAVED_ORGANIZATION
+from .models import Investment, Investor
+from organization.tests import Organization
+
+
+def AN_UNSAVED_INVESTMENT():
+    grantee = AN_UNSAVED_ORGANIZATION()
+    grantee.save()
+    investor, created = Investor.get_or_create_for(grantee)
+    return Investment(title="Grana preta", description="lorem ipsum",
+        date=datetime.date(2012, 12, 31), investor=investor, grantee=grantee)
 
 
 def AN_INVESTMENT_DATA():
-    return {
-        'name': 'IT15S',
-        'description': 'Lorem ipsum.',
-        'community': [1, 4],
-        'link': 'http://it3s.org',
-        'contact': 'Daniela e Edgar: 3456-7890',
-        'target_audiences': [1, 2, 3],
-        'categories': [1, 2, 3],
-        'tags': 'tecnologia, sistema, desenvolvimento sustentável',
-        'geometry': A_POLYGON_GEOMETRY,
-    }.copy()
+    return None
+    # {
+    #     'name': 'IT15S',
+    #     'description': 'Lorem ipsum.',
+    #     'community': [1, 4],
+    #     'link': 'http://it3s.org',
+    #     'contact': 'Daniela e Edgar: 3456-7890',
+    #     'target_audiences': [1, 2, 3],
+    #     'categories': [1, 2, 3],
+    #     'tags': 'tecnologia, sistema, desenvolvimento sustentável',
+    #     'geometry': A_POLYGON_GEOMETRY,
+    # }.copy()
 
 
+# TODO: implement tests for investment
 class InvestmentViewsTestCase(KomooTestCase):
 
     fixtures = KomooTestCase.fixtures + \
         ['communities.json', 'needs.json', 'proposals.json',
          'organizations.json', 'resources.json', 'investments.json']
 
-    ####### CREATION #######
+    # ####### CREATION #######
     # def test_new_resource_page(self):
     #     self.login_user()
     #     self.assert_200(reverse('new_investment'))

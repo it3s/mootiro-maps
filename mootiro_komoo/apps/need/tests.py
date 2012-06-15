@@ -9,6 +9,10 @@ from main.tests import A_POLYGON_GEOMETRY
 from .models import Need
 
 
+def AN_UNSAVED_NEED():
+    return Need(name="Anywhere", description="Lorem ipsum")
+
+
 def A_NEED_DATA():
     return {
         'community': 1,

@@ -158,6 +158,10 @@ class Investment(VotableModel):
     def __unicode__(self):
         return unicode(self.title)
 
+    @property
+    def name(self):
+        return self.title
+
     ### Needed to slugify items ###
     def slug_exists(self, slug):
         """Answers if a given slug is valid in grantee investment namespace."""

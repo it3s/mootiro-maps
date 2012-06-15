@@ -9,6 +9,10 @@ from main.tests import A_POLYGON_GEOMETRY
 from .models import Organization
 
 
+def AN_UNSAVED_ORGANIZATION():
+    return Organization(name="Disney")
+
+
 def AN_ORGANIZATION_DATA():
     return {
         'name': 'IT15S',

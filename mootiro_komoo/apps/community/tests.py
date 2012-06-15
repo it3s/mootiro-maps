@@ -9,13 +9,8 @@ from main.tests import A_POLYGON_GEOMETRY
 from .models import Community
 
 
-def A_UNSAVED_COMMUNITY():
-    data = {
-        "name": "Anywhere",
-        "description": "lorem ipsum",
-    }
-    c = Community(**data)
-    return c
+def AN_UNSAVED_COMMUNITY():
+    return Community(name="Anywhere", description="Lorem ipsum")
 
 
 def A_COMMUNITY_DATA():

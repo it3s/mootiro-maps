@@ -7,11 +7,11 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from community.models import Community
-# from need.models import Need
+from need.models import Need
 # from proposal.models import Proposal
-# from organization.models import Organization
-# from komoo_resource.models import Resource
-# from investment.models import Investment
+from organization.models import Organization
+from komoo_resource.models import Resource
+from investment.models import Investment
 
 
 class Update(models.Model):
@@ -29,18 +29,18 @@ class Update(models.Model):
     typ = models.CharField(max_length=1, null=False, choices=TYPES, db_index=True)
     object_type = models.CharField(max_length=32, null=False, db_index=True)
 
-    # def __unicode__(self):
-    #     return unicode(self.title)
+    def __unicode__(self):
+        return unicode(self.title)
 
     @property
     def name(self):
         return self.title
 
 
-# @receiver(post_save, sender=Need)
-# @receiver(post_save, sender=Organization)
-# @receiver(post_save, sender=Resource)
-# @receiver(post_save, sender=Investment)
+@receiver(post_save, sender=Investment, dispatch_uid="log_update")
+@receiver(post_save, sender=Resource, dispatch_uid="log_update")
+@receiver(post_save, sender=Organization, dispatch_uid="log_update")
+@receiver(post_save, sender=Need, dispatch_uid="log_update")
 @receiver(post_save, sender=Community, dispatch_uid="log_update")
 def log_update(sender, **kwargs):
     created = kwargs["created"]
@@ -58,3 +58,5 @@ def log_update(sender, **kwargs):
         update.save()
     else:
         pass
+
+# TODO: handle slug changes

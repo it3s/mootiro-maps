@@ -10,6 +10,10 @@ from main.tests import A_POLYGON_GEOMETRY
 from .models import Resource
 
 
+def AN_UNSAVED_RESOURCE():
+    return Resource(name="Brasília", description="amarela")
+
+
 def A_RESOURCE_DATA():
     return {
         'name': 'Ginásio de esportes',
