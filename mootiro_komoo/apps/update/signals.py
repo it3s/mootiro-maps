@@ -27,7 +27,6 @@ from investment.models import Investment
 def _get_update_data(instance):
     data = {
         'title': instance.name,
-        'date': instance.creation_date,
         'object_type': instance._meta.verbose_name,
         'users': instance.creator.username,
     }
@@ -38,7 +37,7 @@ def _get_update_data(instance):
     return data
 
 
-@receiver(post_save, dispatch_uid="community_post_save")
+@receiver(post_save, dispatch_uid="create_update")
 def create_update(sender, **kwargs):
     """Create updates to be logged on frontpage"""
 
@@ -48,11 +47,11 @@ def create_update(sender, **kwargs):
 
     created = kwargs["created"]
     instance = kwargs["instance"]
-    creator = getattr(instance, 'creator', None)
 
-    if not creator:
+    if not hasattr(instance, 'creator') or not instance.creator:
         return  # not ready to be logged
 
+    creator = instance.creator
     data = _get_update_data(instance)
 
     if created:
@@ -63,8 +62,3 @@ def create_update(sender, **kwargs):
 
     update = Update(**data)
     update.save()
-
-
-# @receiver(post_save, dispatch_uid="community_slug_changed", sender=Community)
-# def community_slug_changed()
-    

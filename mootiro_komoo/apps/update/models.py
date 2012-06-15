@@ -49,3 +49,7 @@ class Update(models.Model):
     @property
     def name(self):
         return self.title
+
+
+# How this works? Isn't it a circular dependency???
+import signals

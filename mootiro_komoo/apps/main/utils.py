@@ -109,12 +109,12 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
 
 class MooHelper(FormHelper):
     def __init__(self, form_id=None, *a, **kw):
-        retorno = super(MooHelper, self).__init__(*a, **kw)
+        r = super(MooHelper, self).__init__(*a, **kw)
         if form_id:
             self.form_id = form_id
         self.add_input(Submit('submit', _('Submit'), css_class='button'))
         # self.add_input(Reset('reset', 'Reset'))
-        return retorno
+        return r
 
 
 def paginated_query(query, request=None, page=None, size=None):
