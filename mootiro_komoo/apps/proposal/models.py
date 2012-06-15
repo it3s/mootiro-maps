@@ -41,6 +41,10 @@ class Proposal(VotableModel):
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
 
+    @property
+    def name(self):
+        return self.title
+
     def save(self, *args, **kwargs):
         if not self.id:
             # auto numbering a need's proposals

@@ -5,7 +5,14 @@ from django.core.urlresolvers import reverse
 
 from main.tests import KomooTestCase
 from main.tests import logged_and_unlogged
+from need.tests import AN_UNSAVED_NEED
 from .models import Proposal
+
+
+def AN_UNSAVED_PROPOSAL():
+    need = AN_UNSAVED_NEED()
+    need.save()
+    return Proposal(title="Resolver", description="lorem ipsum", need=need)
 
 
 def A_PROPOSAL_DATA():
