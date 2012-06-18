@@ -1,5 +1,6 @@
 import os
 import logging
+import urllib2
 from fileupload.models import UploadedFile
 from django.views.generic import CreateView, DeleteView
 from django.conf import settings
@@ -7,6 +8,8 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, RequestContext
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
 
 
 logger = logging.getLogger(__name__)
@@ -70,6 +73,27 @@ class JSONResponse(HttpResponse):
                  *args, **kwargs):
         content = simplejson.dumps(obj, **json_opts)
         super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
+
+
+# def save_file_from_link(request):
+
+#     uploaded_file = UploadedFile()
+#     link = request.GET.get('file_link', None)
+#     if link:
+#         img_temp = NamedTemporaryFile(delete=True)
+#         img_temp.write(urllib2.urlopen(link).read())
+#         img_temp.flush()
+#         import random
+#         file_name = 'test' + random.randint(0, 100) + '.??'
+#         uploaded_file.file.save(file_name, File(img_temp))
+#         uploaded_file.save()
+#         success, _id = True, uploaded_file.id
+#     else:
+#         success, _id = False, ''
+
+#     response = JSONResponse({'success': success, 'id': _id}, {},
+#                                 response_mimetype(request))
+#     return response
 
 
 def uploader_poc(request):
