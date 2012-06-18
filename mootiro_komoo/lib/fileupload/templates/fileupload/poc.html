@@ -11,7 +11,7 @@
                 {# <a id="uploadfiles" href="#" class="button">Upload files</a> #}
 
                 <a class="btn" data-toggle="modal" href="#myModal" >Add links</a>
-                <div class="modal hide" id="myModal">
+                <div class="modal hide file-modal" id="myModal">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">×</button>
                         <h3>Please add image links</h3>
@@ -20,13 +20,13 @@
                         <p>
                             <div class="inline-block file-link-list">
                                 <div class="add-new-file-link btn">+</div>
-                                <input type="text" class="file-link" >
+                                <input type="text" class="file-link" name='file_link' id="id_file_link" >
                             </div>
                         </p>
                     </div>
                     <div class="modal-footer">
                         <a href="#" class="btn" data-dismiss="modal">Close</a>
-                        <a href="#" class="btn btn-primary">Save changes</a>
+                        <a href="#" class="button" id="add_files_from_links">Save changes</a>
                     </div>
                 </div>
             </div>
@@ -125,6 +125,21 @@
             $('.file-link-list').append(''+
                 '<input type="text" class="file-link" >');
         });
+
+        $('#add_files_from_links').click(function(evt){
+            $.post(
+                '/upload/add_from_link/',
+                {
+                    file_link: $('.file-modal input[name=file_link]').val(),
+                    csrfmiddlewaretoken : getCookie('csrftoken')
+                },
+                function(data){
+                    console.dir(data);
+                    $('.file-modal').modal('hide');
+                },
+                'json'
+            );
+        })
     });
     </script>
 {% endblock page_scripts %}
@@ -145,7 +160,7 @@
             background-color: #f2dede;
             color: #ff0000;
         }
-        .modal {
+        .file-modal {
             margin-top: -20px;
         }
         .file-link {

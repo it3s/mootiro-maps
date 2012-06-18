@@ -75,25 +75,24 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
 
 
-# def save_file_from_link(request):
+def save_file_from_link(request):
 
-#     uploaded_file = UploadedFile()
-#     link = request.GET.get('file_link', None)
-#     if link:
-#         img_temp = NamedTemporaryFile(delete=True)
-#         img_temp.write(urllib2.urlopen(link).read())
-#         img_temp.flush()
-#         import random
-#         file_name = 'test' + random.randint(0, 100) + '.??'
-#         uploaded_file.file.save(file_name, File(img_temp))
-#         uploaded_file.save()
-#         success, _id = True, uploaded_file.id
-#     else:
-#         success, _id = False, ''
+    uploaded_file = UploadedFile()
+    link = request.POST.get('file_link', None)
+    if link:
+        img_temp = NamedTemporaryFile(delete=True)
+        img_temp.write(urllib2.urlopen(link).read())
+        img_temp.flush()
+        file_name = link.split('/')[-1]
+        uploaded_file.file.save(file_name, File(img_temp))
+        uploaded_file.save()
+        success, _id = True, uploaded_file.id
+    else:
+        success, _id = False, ''
 
-#     response = JSONResponse({'success': success, 'id': _id}, {},
-#                                 response_mimetype(request))
-#     return response
+    response = JSONResponse({'success': success, 'id': _id}, {},
+                                response_mimetype(request))
+    return response
 
 
 def uploader_poc(request):
