@@ -67,12 +67,13 @@ class FileuploadWidget(forms.Widget):
                         </p>
                     </div>
                     <div class="modal-footer">
-                        <a href="#" class="btn" data-dismiss="modal">
-                            %(close)s
-                        </a>
                         <a href="#" class="button" id="add_files_from_links">
                             %(save_changes)s
                         </a>
+                        <a href="#" class="btn" data-dismiss="modal">
+                            %(cancel)s
+                        </a>
+
                     </div>
                 </div>
             </div>
@@ -88,7 +89,7 @@ class FileuploadWidget(forms.Widget):
             'select_files': _('Select Files'),
             'add_links': _('Add Links'),
             'add_img_links': _('Add Image Links'),
-            'close': _('Close'),
+            'cancel': _('Cancel'),
             'save_changes': _('Save Changes'),
             'name': name
         }

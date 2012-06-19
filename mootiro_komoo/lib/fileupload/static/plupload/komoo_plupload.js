@@ -1,16 +1,19 @@
 $(function() {
 
-// window.get_files_list = function(){
-//     var ids_list = '';
-//     $('#files-list .file-entry:visible').each(function(idx, obj){
-//         ids_list += $(this).attr('file-id') + '|';
-//     });
-//     return ids_list;
-// };
+window.get_files_list = function(){
+    var ids_list = '';
+    $('#filelist .file-entry:visible').each(function(idx, obj){
+        if (!$(this).is('.file-error')){
+            ids_list += $(this).attr('file-id') + '|';
+        }
+
+    });
+    return ids_list;
+};
 
 window.add_file = function(file){
     $('#filelist').append(
-        '<div id="' + file.id + '" class="file-entry">' +
+        '<div id="' + file.id + '" class="file-entry" file-id="'+ file.id +'">' +
             file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
         '</div>'
     );
@@ -87,24 +90,28 @@ uploader.bind('Error', function(up, err) {
 
 $('.add-new-file-link').click(function(){
     $('.file-link-list').append(''+
-        '<input type="text" class="file-link" >');
+        "<input type='text' class='file-link' name='file_link'>");
 });
 
 $('#add_files_from_links').click(function(evt){
-    $.post(
-        '/upload/add_from_link/',
-        {
-            file_link: $('.file-modal input[name=file_link]').val(),
-            csrfmiddlewaretoken : getCookie('csrftoken')
-        },
-        function(data){
-            console.dir(data);
-            add_file(data.file)
-            $('.file-modal').modal('hide');
-        },
-        'json'
-    );
-})
+    // get links list
+    $('.file-modal input[name=file_link]').each(function(idx, el){
+        var link = $(el).val();
+        $.post(
+            '/upload/add_from_link/',
+            {
+                file_link: link,
+                csrfmiddlewaretoken : getCookie('csrftoken')
+            },
+            function(data){
+                console.dir(data);
+                add_file(data.file)
+                $('.file-modal').modal('hide');
+            },
+            'json'
+        );
+    });
+});
 
 // Client side form validation
 $('form').submit(function(e) {

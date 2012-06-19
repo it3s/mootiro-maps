@@ -1,28 +1,3 @@
-@import url(/static/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);
-.plupload_header_content{
-    background: none;
-    min-height: 36px;
-}
-.plupload_container{
-    width: 700px;
-    height: 200px;
-}
-#uploader_filelist.plupload_filelist{
-    height: 85px;
-}
-li.plupload_droptext{
-    line-height: 65px;
-}
-.file-entry{
-    background-color: #cccccc;
-    border-radius: 5px;
-    padding: 20px;
-    font-weight: bold;
-    vertical-align: middle;
-    color: #555555;
-    margin: 10px;
-    width: 660px;
-}
 .file-img{
     width: 54px;
     height: 40px;
@@ -43,7 +18,7 @@ li.plupload_droptext{
     padding: 7px;
     width: 300px;
     display: inline-block;
-    margin: 10px;
+    margin: 10px 20px 10px 0;
     text-shadow: 1px 1px #ffffff;
     vertical-align: top;
 }
@@ -61,4 +36,12 @@ li.plupload_droptext{
 }
 .add-new-file-link{
     margin-left: 90px;
+}
+.modal-footer a{
+    float: right;
+    margin: 0 10px;
+}
+#file-modal .modal-body {
+    max-height: 200px;
+    overflow: auto;
 }
