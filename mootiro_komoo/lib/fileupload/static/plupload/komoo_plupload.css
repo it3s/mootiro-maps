@@ -35,3 +35,30 @@ li.plupload_droptext{
     vertical-align: top;
     color: #777777;
 }
+
+/** NEW UPLOADER **/
+.file-entry{
+    background-color: #cccccc;
+    border-radius: 3px;
+    padding: 7px;
+    width: 300px;
+    display: inline-block;
+    margin: 10px;
+    text-shadow: 1px 1px #ffffff;
+    vertical-align: top;
+}
+.file-error{
+    background-color: #f2dede;
+    color: #ff0000;
+}
+.file-modal {
+    margin-top: -20px;
+}
+.file-link {
+    width: 300px;
+    display: block;
+    margin: 10px 90px;
+}
+.add-new-file-link{
+    margin-left: 90px;
+}

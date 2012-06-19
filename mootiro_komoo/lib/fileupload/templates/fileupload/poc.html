@@ -5,168 +5,19 @@
     <div id="main-content">
     <div class="main-column">
         <h3>Upload POC</h3>
-        <div id="container">
-            <div>
-                <a id="pickfiles" href="#" class="button">Select files</a>
-                {# <a id="uploadfiles" href="#" class="button">Upload files</a> #}
 
-                <a class="btn" data-toggle="modal" href="#myModal" >Add links</a>
-                <div class="modal hide file-modal" id="myModal">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">×</button>
-                        <h3>Please add image links</h3>
-                    </div>
-                    <div class="modal-body">
-                        <p>
-                            <div class="inline-block file-link-list">
-                                <div class="add-new-file-link btn">+</div>
-                                <input type="text" class="file-link" name='file_link' id="id_file_link" >
-                            </div>
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="#" class="btn" data-dismiss="modal">Close</a>
-                        <a href="#" class="button" id="add_files_from_links">Save changes</a>
-                    </div>
-                </div>
-            </div>
-
-            <div id="filelist"></div>
-
-        </div>
-
+        {{ form_poc }}
     </div>
     </div>
 
 {% endblock content %}
 
-{% block page_scripts %}
-    <!-- Third party script for BrowserPlus runtime (Google Gears included in Gears runtime now) -->
-    <script type="text/javascript" src="/static/plupload/browserplus-min.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery-1.7.1.min.js"></script>
-
-    <!-- Load plupload and all it's runtimes and finally the jQuery queue widget -->
-    <script type="text/javascript" src="/static/plupload/js/plupload.full.js"></script>
-
-    <script type="text/javascript" src="/static/lib/bootstrap-modal.js"></script>
-
-    <script type="text/javascript">
-    // Custom example logic
-    $(function() {
-        var uploader = new plupload.Uploader({
-            runtimes : 'gears,html5,flash,silverlight,browserplus',
-            browse_button : 'pickfiles',
-            container : 'container',
-            max_file_size : '10mb',
-            chunk_size: '10mb',
-            url : '/upload/new/',
-            flash_swf_url : '/static/plupload/js/plupload.flash.swf',
-            silverlight_xap_url : '/static/plupload/js/plupload.silverlight.xap',
-            filters : [
-                {title : "Image files", extensions : "jpg,gif,png"},
-                {title : "Zip files", extensions : "zip"}
-            ],
-            // resize : {width : 320, height : 240, quality : 90},
-            multipart_params : {
-                "csrfmiddlewaretoken" : getCookie('csrftoken')
-            }
-        });
-
-        // uploader.bind('Init', function(up, params) {
-        //     $('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
-        // });
-
-        // $('#uploadfiles').click(function(e) {
-        //     uploader.start();
-        //     e.preventDefault();
-        // });
-
-        uploader.init();
-
-        uploader.bind('FilesAdded', function(up, files) {
-            $.each(files, function(i, file) {
-                $('#filelist').append(
-                    '<div id="' + file.id + '" class="file-entry">' +
-                    file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
-                '</div>');
-            });
-
-            up.refresh(); // Reposition Flash/Silverlight
-
-            uploader.start();
-        });
-
-        uploader.bind('UploadProgress', function(up, file) {
-            $('#' + file.id + " b").html(file.percent + "%");
-        });
-
-        uploader.bind('Error', function(up, err) {
-            $('#filelist').append("" +
-                "<div class=\"file-entry file-error\">" +
-                    (err.file ? "" +
-                        (
-                            err.file.name + ' (' + plupload.formatSize(err.file.size) + ')'
-                        ) : "")  +
-                    "<br>" +
-                    "<strong>Erro</strong>: " + err.message +
-                "</div>"
-            );
-
-            up.refresh(); // Reposition Flash/Silverlight
-        });
-
-        uploader.bind('FileUploaded', function(up, file) {
-            $('#' + file.id + " b").html("100%");
-            $('#')
-        });
-
-        $('.add-new-file-link').click(function(){
-            console.log('? ');
-            $('.file-link-list').append(''+
-                '<input type="text" class="file-link" >');
-        });
-
-        $('#add_files_from_links').click(function(evt){
-            $.post(
-                '/upload/add_from_link/',
-                {
-                    file_link: $('.file-modal input[name=file_link]').val(),
-                    csrfmiddlewaretoken : getCookie('csrftoken')
-                },
-                function(data){
-                    console.dir(data);
-                    $('.file-modal').modal('hide');
-                },
-                'json'
-            );
-        })
-    });
-    </script>
-{% endblock page_scripts %}
-
 {% block css %}
-    <style type="text/css">
-        .file-entry{
-            background-color: #cccccc;
-            border-radius: 3px;
-            padding: 7px;
-            width: 300px;
-            display: inline-block;
-            margin: 10px;
-            text-shadow: 1px 1px #ffffff;
-            vertical-align: top;
-        }
-        .file-error{
-            background-color: #f2dede;
-            color: #ff0000;
-        }
-        .file-modal {
-            margin-top: -20px;
-        }
-        .file-link {
-            width: 300px;
-            display: block;
-        }
-    </style>
-
+    {{ form_poc.media.css }}
 {% endblock %}
+
+{% block page_scripts %}
+    {{ form_poc.media.js }}
+{% endblock %}
+
+

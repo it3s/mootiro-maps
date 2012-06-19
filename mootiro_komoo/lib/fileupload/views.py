@@ -11,6 +11,8 @@ from django.shortcuts import render_to_response, RequestContext
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 
+from .forms import POCForm
+
 
 logger = logging.getLogger(__name__)
 
@@ -28,13 +30,13 @@ class FileCreateView(CreateView):
     # PLUPLOAD
     def form_valid(self, form):
         self.object = form.save()
-        # f = self.request.FILES.get('file')
-        data = {'name': self.object.file.name.split('/')[-1],
-                 'url': self.object.file.url,
-                 'thumbnail_url': self.object.file.url,
-                 'delete_url': reverse('upload-delete', args=[self.object.id]),
-                 'delete_type': "DELETE",
-                 'id': self.object.id}
+        data = {
+            'name': self.object.file.name.split('/')[-1],
+            'url': self.object.file.url,
+            'delete_url': reverse('upload-delete', args=[self.object.id]),
+            'id': self.object.id,
+            'size': self.object.file.size
+        }
         response = JSONResponse(data, {}, response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
@@ -86,17 +88,27 @@ def save_file_from_link(request):
         file_name = link.split('/')[-1]
         uploaded_file.file.save(file_name, File(img_temp))
         uploaded_file.save()
-        success, _id = True, uploaded_file.id
+        success = True
+        file_ = {
+            'name': uploaded_file.file.name.split('/')[-1],
+            'url': uploaded_file.file.url,
+            'delete_url': reverse('upload-delete', args=[uploaded_file.id]),
+            'id': uploaded_file.id,
+            'size': uploaded_file.file.size
+        }
     else:
-        success, _id = False, ''
+        success, file_ = False, {}
 
-    response = JSONResponse({'success': success, 'id': _id}, {},
+    response = JSONResponse({'success': success, 'file': file_}, {},
                                 response_mimetype(request))
     return response
 
 
 def uploader_poc(request):
+    form = POCForm(request.POST or None)
+    if form.is_valid():
+        print 'AHOOY'
     return render_to_response(
         'fileupload/poc.html',
-        {},
+        {'form_poc': form},
         context_instance=RequestContext(request))
