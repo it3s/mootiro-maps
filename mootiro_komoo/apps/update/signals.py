@@ -27,13 +27,13 @@ from investment.models import Investment
 def _get_update_data(instance):
     data = {
         'title': instance.name,
+        'link': instance.view_url,
         'object_type': instance._meta.verbose_name,
-        'users': instance.creator.username,
+        'users': [instance.creator.username],
     }
 
     if getattr(instance, 'community', None):
         data['communities'] = instance.community.all()
-
     return data
 
 
@@ -41,23 +41,22 @@ def _get_update_data(instance):
 def create_update(sender, **kwargs):
     """Create updates to be logged on frontpage"""
 
-    klasses = [Community, Need, Proposal, Organization, Resource, Investment]
+    klasses = [Community, Need, Organization, Resource]
     if sender not in klasses:
         return  # class not to log updates
 
-    created = kwargs["created"]
     instance = kwargs["instance"]
-
     if not hasattr(instance, 'creator') or not instance.creator:
         return  # not ready to be logged
 
     creator = instance.creator
     data = _get_update_data(instance)
 
+    created = kwargs["created"]
     if created:
-        data['typ'] = Update.TYPES[0][0]
+        data['typ'] = Update.ADD
     else:
-        data['typ'] = Update.TYPES[1][0]
+        data['typ'] = Update.EDIT
         # TODO: handle slug changes
 
     update = Update(**data)
