@@ -127,12 +127,10 @@ komoo.geometries.Geometry.prototype.getUrl = function () {
                 {community_slug: this.properties_.community_slug});
     } else if (this.properties_.type == "resource") {
         url = dutils.urls.resolve("view_resource", {
-                    community_slug: this.properties_.community_slug || "",
-                    id: this.properties.id
+                    resource_id: this.properties_.id
                 }).replace("//", "/");
     }  else if (this.properties_.type == "organizationbranch") {
         url = dutils.urls.resolve("view_organization", {
-                    community_slug: this.properties_.community_slug || "",
                     organization_slug: this.properties_.organization_slug || ""
                 }).replace("//", "/");
     }  else {
@@ -176,6 +174,7 @@ komoo.geometries.Geometry.prototype.getIconUrl = function (optZoom) {
         url += this.getProperties().type;
     }
     url += ".png";
+    url = url.replace(" ", "-");
     return url;
 };
 
