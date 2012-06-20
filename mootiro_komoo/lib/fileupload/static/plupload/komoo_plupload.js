@@ -65,23 +65,21 @@ uploader.init();
 
 uploader.bind('FilesAdded', function(up, files) {
     up.start();
-    console.log('here?');
 });
 
 uploader.bind('FileUploaded', function(up, file, response) {
     var resp = JSON.parse(response.response);
-    console.dir(resp);
     add_file(resp);
 });
 uploader.bind('Error', function(up, err) {
-    $('#filelist').append("" +
-        "<div class=\"file-entry file-error\">" +
+    $('#filelist').prepend("" +
+        "<div class=\"file-error\">" +
+            "<span class='close'>x</span>" +
             (err.file ? "" +
                 (
                     err.file.name + ' (' + plupload.formatSize(err.file.size) + ')'
                 ) : "")  +
-            "<br>" +
-            "<strong>Erro</strong>: " + err.message +
+            "&nbsp;&nbsp;<strong>Erro</strong>: " + err.message +
         "</div>"
     );
 
@@ -95,7 +93,6 @@ $('.add-new-file-link').click(function(){
 });
 
 $('#add_files_from_links').click(function(evt){
-    // get links list
     $('.file-modal input[name=file_link]').each(function(idx, el){
         var link = $(el).val();
         $.post(
@@ -105,13 +102,27 @@ $('#add_files_from_links').click(function(evt){
                 csrfmiddlewaretoken : getCookie('csrftoken')
             },
             function(data){
-                console.dir(data);
                 add_file(data.file)
-                $('.file-modal').modal('hide');
             },
             'json'
         );
     });
+
+    $('.file-modal').modal('hide');
+    $('.file-modal input').remove();
+    $('.file-link-list').append(''+
+        "<input type='text' class='file-link' name='file_link'>"
+    );
+
+});
+
+$('.close').live('click', function(){
+    $(this).parent().slideUp();
+});
+
+$('.file-thumb').live('click', function(){
+    $('#subtitle-modal #img-subtitle-modal').attr('src', $(this).attr('src'));
+    $('#subtitle-modal').modal('show');
 });
 
 // Client side form validation

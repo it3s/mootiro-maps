@@ -13,22 +13,27 @@
 
 /** NEW UPLOADER **/
 .file-entry{
-    background-color: #eeeeee;
+    /*background-color: #eeeeee;*/
+    border: solid 1px #ececec;
     border-radius: 4px;
     padding: 5px;
     /*width: 300px;*/
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     display: inline-block;
     margin: 10px 20px 10px 0;
     text-shadow: 1px 1px #ffffff;
-    vertical-align: top;
+    vertical-align: middle;
 }
 .file-error{
     background-color: #f2dede;
     color: #ff0000;
     display: block;
-    width:400px;
+    width:630px;
+    padding: 10px;
+    margin: 10px 20px 10px 0;
+    text-shadow: 1px 1px #ffffff;
+    border-radius: 4px;
 }
 .file-modal {
     margin-top: -20px;
@@ -50,8 +55,46 @@
     overflow: auto;
 }
 .file-thumb {
+    display: table-cell;
+    max-width: 80px;
+    max-height: 80px;
+    margin: 0 auto;
+    vertical-align: middle;
+    transition: transform 0.5s, box-shadow 0.5s;
+    -moz-transition: -moz-transform 0.5s, -moz-box-shadow 0.5s;
+    -o-transition: -o-transform 0.5s, -o-box-shadow 0.5s;
+    -webkit-transition: -webkit-transform 0.5s, -webkit-box-shadow 0.5s;
+}
+/*.file-entry:hover {
+    transform: scale(1.5, 1.5) translate(15px, 15px);
+    -moz-transform: scale(1.5, 1.5) translate(15px,15px);
+    -o-transform: scale(1.5, 1.5) translate(15px,15px);
+    -webkit-transform: scale(1.5, 1.5) translate(15px,15px);
+
+}*/
+.file-thumb:hover {
+    transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -webkit-transform: scale(1.5, 1.5);
+
+    /*border: solid 1px rgb(212, 68, 19);*/
+    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(212, 68, 19, 0.6);
+    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(212, 68, 19, 0.6);
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(212, 68, 19, 0.6);
+    /*outline:0;*/
+    outline:thin dotted \9;
+
+}
+#img-subtitle-modal{
     display: block;
-    max-width: 60px;
-    max-height: 60px;
+    max-width: 250px;
+    max-height: 250px;
+    margin: 0 auto;
+}
+#id_subtitle{
+    display: block;
+    margin-top: 20px;
+    width: 450px;
     margin: 0 auto;
 }

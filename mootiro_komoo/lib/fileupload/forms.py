@@ -76,6 +76,34 @@ class FileuploadWidget(forms.Widget):
 
                     </div>
                 </div>
+
+                <div class="modal hide subtitle-modal" id="subtitle-modal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h3>%(enter_subtitle)s</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <div>
+                                <img src="" alt="img" id="img-subtitle-modal">
+                            </div>
+                            <div>
+                                <input type="text" name="subtitle" id="id_subtitle">
+                            </div>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="button" id="save-subtitle">
+                            %(save_changes)s
+                        </a>
+                        <a href="#" class="btn" data-dismiss="modal">
+                            %(cancel)s
+                        </a>
+
+                    </div>
+                </div>
+
+
             </div>
 
             <div id="filelist"></div>
@@ -91,6 +119,7 @@ class FileuploadWidget(forms.Widget):
             'add_img_links': _('Add Image Links'),
             'cancel': _('Cancel'),
             'save_changes': _('Save Changes'),
+            'enter_subtitle': _('Enter the subtitle for this image'),
             'name': name
         }
         return html
