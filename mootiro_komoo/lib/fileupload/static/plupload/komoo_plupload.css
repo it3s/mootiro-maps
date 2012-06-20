@@ -13,10 +13,12 @@
 
 /** NEW UPLOADER **/
 .file-entry{
-    background-color: #cccccc;
-    border-radius: 3px;
-    padding: 7px;
-    width: 300px;
+    background-color: #eeeeee;
+    border-radius: 4px;
+    padding: 5px;
+    /*width: 300px;*/
+    width: 60px;
+    height: 60px;
     display: inline-block;
     margin: 10px 20px 10px 0;
     text-shadow: 1px 1px #ffffff;
@@ -25,6 +27,8 @@
 .file-error{
     background-color: #f2dede;
     color: #ff0000;
+    display: block;
+    width:400px;
 }
 .file-modal {
     margin-top: -20px;
@@ -44,4 +48,10 @@
 #file-modal .modal-body {
     max-height: 200px;
     overflow: auto;
+}
+.file-thumb {
+    display: block;
+    max-width: 60px;
+    max-height: 60px;
+    margin: 0 auto;
 }

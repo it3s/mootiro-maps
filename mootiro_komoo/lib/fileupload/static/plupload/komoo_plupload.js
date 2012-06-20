@@ -14,7 +14,8 @@ window.get_files_list = function(){
 window.add_file = function(file){
     $('#filelist').append(
         '<div id="' + file.id + '" class="file-entry" file-id="'+ file.id +'">' +
-            file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+            // file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+            '<img src="' + file.url + '" alt="img" class="file-thumb">' +
         '</div>'
     );
 };
