@@ -9,7 +9,7 @@ under version control, and specializes it for staging environment
 from __future__ import unicode_literals  # unicode by default
 from common import *
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 DATABASES = {
@@ -118,3 +118,10 @@ GOOGLE_OAUTH2_CLIENT_SECRET = 'j00dS0i-XQB--ookP98r2q1L'
 
 FACEBOOK_APP_ID = '401285966577597'
 FACEBOOK_API_SECRET = 'dc974ed41ddd0acc9b71f94d4907160e'
+
+# Mailer settings
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'it3sdev@gmail.com'
+# EMAIL_HOST_PASSWORD = '...'

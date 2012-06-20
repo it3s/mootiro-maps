@@ -15,9 +15,10 @@ from komoo_resource.models import Resource
 from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
+from vote.models import VotableModel
 
 
-class Organization(models.Model):
+class Organization(VotableModel):
     name = models.CharField(max_length=320, unique=True, db_index=True)
     slug = models.SlugField(max_length=320, db_index=True)
     description = models.TextField(null=True, blank=True, db_index=True)
@@ -94,11 +95,20 @@ class Organization(models.Model):
         return reverse('view_organization', kwargs=self.home_url_params)
 
     @property
+    def edit_url(self):
+        return reverse('edit_organization', kwargs=self.home_url_params)
+
+    @property
+    def admin_url(self):
+        return reverse('admin:{}_{}_change'.format(self._meta.app_label,
+            self._meta.module_name), args=[self.id])
+
+    @property
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
 
 
-class OrganizationBranch(GeoRefModel):
+class OrganizationBranch(GeoRefModel, VotableModel):
     name = models.CharField(max_length=320)
     slug = models.SlugField(max_length=320)
 
@@ -138,6 +148,22 @@ class OrganizationCategory(models.Model):
         else:
             return OrganizationCategoryTranslation.objects.get(
                 lang=settings.LANGUAGE_CODE, category=self).name
+
+    @classmethod
+    def get_image(cls, name):
+        return "img/org_categories/%s.png" % slugify(name)
+
+    @classmethod
+    def get_image_off(cls, name):
+        return "img/org_categories/%s-off.png" % slugify(name)
+
+    @property
+    def image(self):
+        return self.get_image(self.name)
+
+    @property
+    def image_off(self):
+        return self.get_image_off(self.name)
 
 
 class OrganizationCategoryTranslation(models.Model):

@@ -1,0 +1,20 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "tester",
+      "email": "tester@test.com",
+      "password": "sha1$1a882$8f5a80cb32426102b8a2bab4398d045a082dff0b"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "username": "noobzin",
+      "email": "noobzin@test.com",
+      "password": "sha1$1a882$8f5a80cb32426102b8a2bab4398d045a082dff0b"
+    }
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "model": "komoo_resource.resource",
+    "pk": 1,
+    "fields": {
+      "name": "Quadra poliesportiva",
+      "description": "Lorem ipsum.",
+      "community": [1, 4],
+      "contact": "Falar com a Rô.",
+      "kind": 1,
+      "creator": 2,
+      "creation_date": "2012-03-29 15:29:21"
+    }
+  },
+  {
+    "model": "komoo_resource.resource",
+    "pk": 2,
+    "fields": {
+      "name": "Biblioteca comunitária",
+      "description": "A leitura é para o intelecto o que o exercício é para o corpo.",
+      "community": [1, 4],
+      "contact": "Rosivânia +55 (11) 4321-4321",
+      "kind": 1,
+      "creator": 2,
+      "creation_date": "2012-03-29 15:29:21"
+    }
+  },
+  {
+    "model": "komoo_resource.resource",
+    "pk": 3,
+    "fields": {
+      "name": "Escolinha",
+      "description": "Escola pra molecada.",
+      "community": [1, 4],
+      "contact": "Zé da Silva +55 (11) 4311-3321",
+      "kind": 1,
+      "creator": 2,
+      "creation_date": "2012-03-29 15:29:21"
+    }
+  },
+
+
+  {"pk": 8, "model": "taggit.tag", "fields": {"name": "esporte", "slug": "esporte"}},
+  {"pk": 9, "model": "taggit.tag", "fields": {"name": "leitura", "slug": "leitura"}},
+  {"pk": 10, "model": "taggit.tag", "fields": {"name": "Educação", "slug": "educacao"}},
+  {"pk": 9, "model": "taggit.taggeditem", "fields": {"tag": 8, "content_type": 25, "object_id": 1}},
+  {"pk": 10, "model": "taggit.taggeditem", "fields": {"tag": 9, "content_type": 25, "object_id": 2}},
+  {"pk": 11, "model": "taggit.taggeditem", "fields": {"tag": 10, "content_type": 25, "object_id": 2}},
+  {"pk": 12, "model": "taggit.taggeditem", "fields": {"tag": 10, "content_type": 25, "object_id": 3}}
+]

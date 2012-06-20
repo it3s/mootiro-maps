@@ -8,7 +8,7 @@ from django import forms
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import (render_to_response, RequestContext,
-    get_object_or_404, HttpResponse)
+    get_object_or_404, HttpResponse, redirect)
 from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
@@ -28,6 +28,7 @@ from community.models import Community
 from main.utils import (paginated_query, create_geojson, sorted_query,
                         filtered_query, fix_community_url)
 from main.widgets import Autocomplete
+from signatures.signals import send_notifications
 
 logger = logging.getLogger(__name__)
 
@@ -36,15 +37,20 @@ def prepare_organization_objects(community_slug="", organization_slug=""):
     """Retrieves a tuple (organization, community). According to given
     parameters may raise an 404. Creates a new organization if organization_slug
     is evaluated as false."""
-    community = get_object_or_None(Community, slug=community_slug)
+    community = get_object_or_404(Community, slug=community_slug) \
+                    if community_slug else None
     if organization_slug:
         filters = dict(slug=organization_slug)
         if community:
-            filters["community"] = community
+            filters["community"] = community.id
         organization = get_object_or_404(Organization, **filters)
     else:
-        organization = Organization(community=community)
+        organization = Organization()
     return organization, community
+
+
+def organizations_to_organization(self):
+    return redirect(reverse('organization_list'), permanent=True)
 
 
 @render_to('organization/list.html')
@@ -52,7 +58,7 @@ def prepare_organization_objects(community_slug="", organization_slug=""):
 def organization_list(request, community_slug=''):
     logging.debug('acessing organization > list')
 
-    org_sort_order = ['creation_date', 'name']
+    org_sort_order = ['creation_date', 'votes', 'name']
 
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
@@ -75,10 +81,11 @@ def organization_list(request, community_slug=''):
 def show(request, organization_slug='', community_slug=''):
     logger.debug('acessing organization > show')
 
-    organization = get_object_or_404(Organization, slug=organization_slug)
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug, organization_slug=organization_slug)
+
     branches = organization.organizationbranch_set.all().order_by('name')
     geojson = create_geojson(branches)
-    community = get_object_or_None(Community, slug=community_slug)
     files = UploadedFile.get_files_for(organization)
     if organization.logo_id:
         files = files.exclude(pk=organization.logo_id)
@@ -92,7 +99,9 @@ def show(request, organization_slug='', community_slug=''):
 @ajax_form('organization/new.html', FormOrganization, 'form_organization')
 def new_organization(request, community_slug='', *arg, **kwargs):
     logger.debug('acessing organization > new_organization')
-    community = get_object_or_None(Community, slug=community_slug)
+
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug)
 
     def on_get(request, form):
         if community:
@@ -122,7 +131,10 @@ def new_organization(request, community_slug='', *arg, **kwargs):
 @render_to('organization/new_frommap.html')
 def new_organization_from_map(request, community_slug='', *args, **kwargs):
     logger.debug('acessing organization > new_organization_from_map')
-    community = get_object_or_None(Community, slug=community_slug)
+
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug)
+
     form_org = FormOrganization()
     form_org.helper.form_action = reverse('add_org_from_map')
     form_branch = FormBranch(auto_id='id_branch_%s')
@@ -139,8 +151,9 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
 def edit_organization(request, community_slug='', organization_slug='',
                       *arg, **kwargs):
     logger.debug('acessing organization > edit_organization')
-    community = get_object_or_None(Community, slug=community_slug)
-    organization = get_object_or_None(Organization, pk=request.GET.get('id', 0))
+
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug, organization_slug=organization_slug)
 
     geojson = create_geojson([organization], convert=False)
     if geojson and geojson.get('features'):
@@ -153,11 +166,10 @@ def edit_organization(request, community_slug='', organization_slug='',
             logger.debug('community_slug: {}'.format(community_slug))
             form.fields['community'].widget = forms.HiddenInput()
             form.initial['community'] = community.id
+        kwargs = dict(organization_slug=organization_slug)
         if community_slug:
-            form.helper.form_action = reverse('edit_organization',
-                    kwargs={'community_slug': community_slug})
-        else:
-            form.helper.form_action = reverse('edit_organization')
+            kwargs['community_slug'] = community_slug
+        form.helper.form_action = reverse('edit_organization', kwargs=kwargs)
         return form
 
     def on_after_save(request, obj):
@@ -177,8 +189,7 @@ def edit_organization(request, community_slug='', organization_slug='',
 @ajax_form(form_class=FormBranch)
 def add_branch_from_map(request):
     logger.debug('acessing organization > add_branch_from_map')
-    print '\n\nPOST DATA: %s\n\n' % request.POST
-    return {'here?': True}
+    return {}
 
 
 @login_required
@@ -217,11 +228,14 @@ def edit_inline_branch(request):
         communities = render_to_response(
             'organization/branch_communities_list.html', {'branch': branch},
             context_instance=RequestContext(request)).content
+        id_ = branch.id
 
         success = True
+        send_notifications.send(sender=OrganizationBranch, instance=branch)
     else:
-        success, info, name = False, '', ''
-    return dict(success=success, info=info, name=name, communities=communities)
+        success, info, name, id_ = False, '', '', ''
+    return dict(success=success, info=info, name=name, communities=communities,
+                id=id_)
 
 
 @ajax_request
@@ -247,8 +261,8 @@ def search_by_name(request):
         mimetype="application/x-javascript")
 
 
-def search_by_tag(request):
-    logger.debug('acessing organization > search_by_tag')
+def search_tags(request):
+    logger.debug('acessing organization > search_tags')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Organization).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')

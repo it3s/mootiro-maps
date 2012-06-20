@@ -32,7 +32,8 @@ DEFAULT_SERVICES = [
     ('Wiki', 'http://wiki.mootiro.org'),
                     ]
 DEFAULT_MAIN_LINK = ('Mootiro', 'http://mootiro.org')
-DEFAULT_USER_URL = '{}/user/profile'.format(DEFAULT_MAIN_LINK[1])
+# DEFAULT_USER_URL = '{}/user/profile'.format(DEFAULT_MAIN_LINK[1])
+DEFAULT_USER_URL = '/user/profile'
 DEFAULT_LOGIN_URL = '/user/login'
 DEFAULT_SETTINGS_URL = '/user/edit'
 DEFAULT_LOGOUT_URL = '/user/logout'

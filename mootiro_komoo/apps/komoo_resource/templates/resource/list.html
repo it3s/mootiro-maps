@@ -2,6 +2,7 @@
 {% load komoo_tags %}
 {% load komoo_map_tags %}
 {% load comment_tags %}
+{% load vote_tags %}
 {% load markitup_tags %}
 {% load i18n %}
 
@@ -30,7 +31,7 @@
       {% pagination resources %}
     </div>
 
-    {% visualization_opts 'resource' "filters=['tags','community']" "sorters=['name', 'creation_date']" %}
+    {% visualization_opts 'resource' "filters=['tags','community']" "sorters=['name', 'creation_date', 'votes']" %}
   </div>
 
 
@@ -45,15 +46,24 @@
           {% else %}
           <a href="/resource/{{ resource.id }}">{{ resource.name }}</a>
           {% endif %}
-          {% if resource.community %}
-          &nbsp;{% trans 'at' %}&nbsp;
-          <a href="/{{ resource.community.slug }}/about/">{{ resource.community.name }}</a>
+          {% if resource.community.count %}
+            &nbsp;{% trans 'at' %}&nbsp;
+            {% for comm in resource.community.all %}
+              <a href="/{{ comm.slug }}/about/">{{ comm.name }}</a>
+              {% if not forloop.last %}
+                &nbsp;|&nbsp;
+              {% endif %}
+            {% endfor %}
           {% endif %}
         </span>
-        <a class="small preview-on-map" href="#" data-geojson="{% geojson resource %}">{% trans 'see on the map' %}</a>
-        <div class="clear-both">
+        <a class="small preview-on-map" href="#" data-geojson="{% geojson resource %}">
+          <img src="{{ STATIC_URL}}img/see-on-map.png">
+        </a>
+        <div class="view-list-reactions">
+          {% vote resource %}
           {% comments_summary resource %}
         </div>
+
 
       </h4>
 
@@ -61,8 +71,7 @@
         <strong>{% trans 'Kind:' %}</strong> {% firstof resource.kind '---' %}
       </p>
       <p>
-        {{ resource.description|slice:"250"|render_markup }}
-        {% if resource.description|length|get_digit:"-1" > 250 %} ... {% endif %}
+        {{ resource.description|description_markdown_preview }}
       </p>
 
       {% if resource.files_set.count %}
@@ -74,7 +83,7 @@
       <div class="view-list-footer">
         {% if resource.tags.count %}
         <div class="view-list-item-tags">
-          {% taglist resource %}
+          {% taglist resource community %}
         </div>
         {% endif %}
       </div>
@@ -89,5 +98,6 @@
 {% endblock %}
 
 {% block page_scripts %}
+  {% vote_staticfiles %}
   {% visualization_opts_js %}
 {% endblock %}

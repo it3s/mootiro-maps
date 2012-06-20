@@ -4,12 +4,16 @@ from __future__ import unicode_literals  # unicode by default
 
 import json
 import logging
+from smtplib import SMTPException
 
 from django.contrib.gis.geos import Polygon, Point
 from django.contrib.gis.measure import Distance
+from django.template import loader, Context
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.core.urlresolvers import reverse
+from django.core.mail import mail_admins
+from django.utils.translation import ugettext as _
 
 from annoying.decorators import render_to, ajax_request
 import requests
@@ -85,16 +89,6 @@ def radial_search(request):
         d['resources'] = objs['resources']
 
     return d
-
-
-@render_to('404.html')
-def test_404(request):
-    return {}
-
-
-@render_to('500.html')
-def test_500(request):
-    return {}
 
 
 def _query_model(model, term, fields):
@@ -179,7 +173,53 @@ def komoo_search(request):
             'input': term,
             'sensor': 'false',
             'types': 'geocode',
-            'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',
+            'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',  # TODO: move to settings
         })
     result['google'] = google_results.content
     return {'result': result}
+
+
+@ajax_request
+def send_error_report(request):
+    user = request.user
+    user_message = request.POST.get('message', '')
+    info = request.POST.get('info', '')
+    url = request.POST.get('url', '')
+
+    message = _("""
+Url: {0}
+Reporter: {1} (id: {2}, email: {3})
+Info: {4}
+Message: {5}
+    """).format(url, user, user.id, user.email, info, user_message)
+
+    try:
+        mail_admins(_('Error report'), message, fail_silently=False)
+        status = 'sent'
+        success = 'true'
+    except SMTPException:
+        status = 'failed'
+        success = 'false'
+    finally:
+        return {'status': status, 'success': success}
+
+
+@render_to('404.html')
+def test_404(request):
+    return {}
+
+
+@render_to('500.html')
+def test_500(request):
+    return {}
+
+
+def custom_404(request):
+    t = loader.get_template('404.html')
+    c = Context({'request_path': request.path, 'STATIC_URL': '/static/'})
+    return HttpResponseNotFound(t.render(c))
+
+
+@render_to('500.html')
+def custom_500(request):
+    return {}

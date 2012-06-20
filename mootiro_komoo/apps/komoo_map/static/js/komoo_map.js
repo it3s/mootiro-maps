@@ -12,7 +12,7 @@
 // TODO: Create a generic function to attach events to open/close info window.
 
 /** @namespace */
-var komoo = {};
+if (!window.komoo) komoo = {};
 
 
 komoo.CLEAN_MAPTYPE_ID = "clean";
@@ -87,8 +87,7 @@ komoo.RegionTypes = [
         icon: "/static/img/organization.png",
         overlayTypes: [komoo.OverlayType.POLYGON,
                        komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("new_organization_from_map",
-            {community_slug: "community_slug"}),
+        formUrl: dutils.urls.resolve("new_organization_from_map"),
         zIndex: 100,
         disabled: false
     },
@@ -103,8 +102,7 @@ komoo.RegionTypes = [
         overlayTypes: [komoo.OverlayType.POLYGON,
                        komoo.OverlayType.POLYLINE,
                        komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("new_resource_from_map",
-            {community_slug: "community_slug"}),
+        formUrl: dutils.urls.resolve("new_resource_from_map"),
         zIndex: 100,
         disabled: false
     },
@@ -153,6 +151,7 @@ komoo.MapOptions = {
     autoSaveMapType: false,
     enableInfoWindow: true,
     displayClosePanel: false,
+    displaySupporter: false,
     enableCluster: true,
     fetchOverlays: true,
     debug: false,
@@ -828,6 +827,20 @@ komoo.Map.prototype.initCustomControl = function () {
         // Adds editor toolbar.
         //this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
         //        this.editToolbar.get(0));
+
+        if (this.options.displaySupporter) {
+            this.supportersBox = $("<div>");
+            this.supportersBox.attr("id", "map-supporters");
+            this.googleMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+                    this.supportersBox.get(0));
+        }
+    }
+};
+
+
+komoo.Map.prototype.setSupportersContent = function (selector) {
+    if (this.supportersBox) {
+        this.supportersBox.append(selector.show());
     }
 };
 

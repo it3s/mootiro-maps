@@ -33,8 +33,6 @@ urlpatterns = patterns('need.views',
 
     url(r'^need/tag_search$', 'tag_search',
             name='need_tag_search'),
-    url(r'^need/search_by_tag/$', 'tag_search',
-            name='need_search_by_tag'),
     url(r'^need/target_audience_search$', 'target_audience_search',
             name='target_audience_search'),
     url(r'^need/get_geojson$', 'needs_geojson',

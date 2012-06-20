@@ -3,6 +3,9 @@
 #  Global Settings
 import os
 import sys
+import djcelery
+
+djcelery.setup_loader()
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_ROOT = os.path.dirname(PROJECT_ROOT)
@@ -97,18 +100,32 @@ CONTEXT_PROCESSORS = (
     'django.contrib.auth.context_processors.auth',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.core.context_processors.static",
+    "django.contrib.messages.context_processors.messages",
+    "main.context_processors.social_keys",
+
+)
+
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
     'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
+
 # Connect Mootiro Bar to django-cas:
 LOGIN_URL = '/user/login'
 # LOGIN_REDIRECT_URL = '/'
 # LOGIN_ERROR_URL    = '/login-error/'
 MOOTIRO_BAR_LOGIN_URL = '#'  # LOGIN_URL
 MOOTIRO_BAR_LOGOUT_URL = '/user/logout'
+
+DELETE_HOURS = 24
 
 ROOT_URLCONF = 'mootiro_komoo.urls'
 
@@ -133,6 +150,7 @@ INSTALLED_APPS = [
     'django.contrib.comments',
     'django.contrib.gis',
     'django.contrib.markup',
+    'django.contrib.humanize',
     # 3rd party apps
     'tinymce',
     'taggit',
@@ -146,6 +164,7 @@ INSTALLED_APPS = [
     'social_auth',
     'django_nose',
     'ajaxforms',
+    'djcelery',
     # our apps
     'main',
     'komoo_map',
@@ -158,12 +177,15 @@ INSTALLED_APPS = [
     'user_cas',
     'organization',
     'investment',
+    'moderation',
     'hotsite',
+    'signatures',
+    'update',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
 
-FILE_UPLOAD_MAX_MEMORY_SIZE  = 10 * 1024 * 1024
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 
 # https://github.com/aljosa/django-tinymce/blob/master/docs/installation.rst
 # TINYMCE_COMPRESSOR = True
@@ -206,7 +228,15 @@ GOOGLE_OAUTH2_CLIENT_SECRET = 'VYPUXk4GraHit4n72nh5CwhX'
 SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
 SOCIAL_AUTH_UUID_LENGTH = 16
 SOCIAL_AUTH_EXPIRATION = 3600
-SOCIAL_AUTH_ASSOCIATE_BY_MAIL = True
+SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/user/profile/'
+
+# Mailer settings
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'it3sdev@gmail.com'
+EMAIL_HOST_PASSWORD = '...'
+
 
 # KOMOO Comments settings
 KOMOO_COMMENTS_WIDTH = 3
@@ -226,9 +256,19 @@ AJAX_LOOKUP_CHANNELS = {
 AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = False
 
+# Celerey task queue config
+BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
+
+# this should be overridden on local_settings.py
+SECRET_KEY = 'pandapernetacorrendonumpehsohbalancandoosbracosnoar'
+
 # TESTS CONFIGURATION
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = ['--rednose']
+NOSE_ARGS = ['--rednose', '--nocapture']
 if 'test' in sys.argv:
     import logging
     logging.disable(logging.CRITICAL)
+    FIXTURE_DIRS = ('fixtures/test/',)
+
+# EMAIL CONFIGURATION
+EMAIL_SUBJECT_PREFIX = '[MootiroMaps] '

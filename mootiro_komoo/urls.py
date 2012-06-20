@@ -14,6 +14,9 @@ ORGANIZATION_SLUG = r'(?P<organization_slug>[a-zA-Z0-9-]+)'
 RESOURCE_ID = r'(?P<resource_id>\d+)'
 INVESTMENT_SLUG = r'(?P<investment_slug>[a-zA-Z0-9-]+)'
 
+handler500 = 'main.views.custom_500'
+handler404 = 'main.views.custom_404'
+
 js_info_dict = {
     'packages': (
         'komoo_map',
@@ -78,7 +81,10 @@ urlpatterns = patterns('',
     url(r'', include('komoo_resource.urls')),
     url(r'', include('organization.urls')),
     url(r'', include('investment.urls')),
+    url(r'', include('moderation.urls')),
+    url(r'', include('update.urls')),
     url(r'^about/', include('hotsite.urls')),
+    url(r'^signatures/', include('signatures.urls')),
 
     # Community URLs go last because one of them can match anything
     url(r'', include('community.urls')),

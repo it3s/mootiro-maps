@@ -9,6 +9,7 @@ from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
+from django.db.models.query_utils import Q
 from django.shortcuts import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
@@ -108,12 +109,12 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
 
 class MooHelper(FormHelper):
     def __init__(self, form_id=None, *a, **kw):
-        retorno = super(MooHelper, self).__init__(*a, **kw)
+        r = super(MooHelper, self).__init__(*a, **kw)
         if form_id:
             self.form_id = form_id
-        self.add_input(Submit('submit', 'Submit'))
-        self.add_input(Reset('reset', 'Reset'))
-        return retorno
+        self.add_input(Submit('submit', _('Submit'), css_class='button'))
+        # self.add_input(Reset('reset', 'Reset'))
+        return r
 
 
 def paginated_query(query, request=None, page=None, size=None):
@@ -154,20 +155,25 @@ def sorted_query(query_set, sort_fields, request, default_order='name'):
         query_set: any query set object or manager
         request: the HttpRequest obejct
     """
+    query_set = query_set.all()
     sort_order = {k: i for i, k in enumerate(sort_fields)}
     sorters = request.GET.get('sorters', '')
     if sorters:
         sorters = sorted(sorters.split(','), key=lambda val: sort_order[val])
 
-    for i, sorter in enumerate(sorters):
+    for i, sorter in enumerate(sorters[:]):
         if 'date' in sorter:
             date_order = request.GET.get(sorter, '-')
             sorters[i] = date_order_map[date_order] + sorter
+        if 'votes' in sorter:
+            query_set = query_set.extra(
+                select={'votes_diff': 'votes_up - votes_down'})
+            sorters[i] = '-votes_diff'
 
     if sorters:
-        return query_set.all().order_by(*sorters)
+        return query_set.order_by(*sorters)
     else:
-        return query_set.all().order_by(default_order)
+        return query_set.order_by(default_order)
 
 
 def filtered_query(query_set, request):
@@ -176,9 +182,11 @@ def filtered_query(query_set, request):
         if f == 'tags':
             request.encoding = 'latin-1'
             tags = request.GET.get('tags', '')
+
             if tags:
                 tags = tags.split(',')
-                query_set = query_set.filter(tags__name__in=tags)
+                for tag in tags:
+                    query_set = query_set.filter(tags__name=tag)
         if f == 'community':
             community = request.GET.get('community', '')
             if community:

@@ -1,1 +1,52 @@
-[{"pk": 16, "model": "contenttypes.contenttype", "fields": {"model": "address", "name": "address", "app_label": "komoo_map"}}, {"pk": 22, "model": "contenttypes.contenttype", "fields": {"model": "comment", "name": "comment", "app_label": "komoo_comments"}}, {"pk": 9, "model": "contenttypes.contenttype", "fields": {"model": "comment", "name": "comment", "app_label": "comments"}}, {"pk": 10, "model": "contenttypes.contenttype", "fields": {"model": "commentflag", "name": "comment flag", "app_label": "comments"}}, {"pk": 17, "model": "contenttypes.contenttype", "fields": {"model": "community", "name": "community", "app_label": "community"}}, {"pk": 5, "model": "contenttypes.contenttype", "fields": {"model": "contenttype", "name": "content type", "app_label": "contenttypes"}}, {"pk": 30, "model": "contenttypes.contenttype", "fields": {"model": "grantee", "name": "grantee", "app_label": "investment"}}, {"pk": 2, "model": "contenttypes.contenttype", "fields": {"model": "group", "name": "group", "app_label": "auth"}}, {"pk": 31, "model": "contenttypes.contenttype", "fields": {"model": "investment", "name": "investment", "app_label": "investment"}}, {"pk": 32, "model": "contenttypes.contenttype", "fields": {"model": "investor", "name": "investor", "app_label": "investment"}}, {"pk": 8, "model": "contenttypes.contenttype", "fields": {"model": "logentry", "name": "log entry", "app_label": "admin"}}, {"pk": 4, "model": "contenttypes.contenttype", "fields": {"model": "message", "name": "message", "app_label": "auth"}}, {"pk": 20, "model": "contenttypes.contenttype", "fields": {"model": "need", "name": "need", "app_label": "need"}}, {"pk": 18, "model": "contenttypes.contenttype", "fields": {"model": "needcategory", "name": "need category", "app_label": "need"}}, {"pk": 26, "model": "contenttypes.contenttype", "fields": {"model": "organization", "name": "organization", "app_label": "organization"}}, {"pk": 27, "model": "contenttypes.contenttype", "fields": {"model": "organizationbranch", "name": "organization branch", "app_label": "organization"}}, {"pk": 28, "model": "contenttypes.contenttype", "fields": {"model": "organizationcategory", "name": "organization category", "app_label": "organization"}}, {"pk": 29, "model": "contenttypes.contenttype", "fields": {"model": "organizationcategorytranslation", "name": "organization category translation", "app_label": "organization"}}, {"pk": 1, "model": "contenttypes.contenttype", "fields": {"model": "permission", "name": "permission", "app_label": "auth"}}, {"pk": 25, "model": "contenttypes.contenttype", "fields": {"model": "resource", "name": "resource", "app_label": "komoo_resource"}}, {"pk": 24, "model": "contenttypes.contenttype", "fields": {"model": "resourcekind", "name": "resource kind", "app_label": "komoo_resource"}}, {"pk": 13, "model": "contenttypes.contenttype", "fields": {"model": "revision", "name": "revision", "app_label": "reversion"}}, {"pk": 6, "model": "contenttypes.contenttype", "fields": {"model": "session", "name": "session", "app_label": "sessions"}}, {"pk": 7, "model": "contenttypes.contenttype", "fields": {"model": "site", "name": "site", "app_label": "sites"}}, {"pk": 21, "model": "contenttypes.contenttype", "fields": {"model": "proposal", "name": "solution proposal", "app_label": "proposal"}}, {"pk": 11, "model": "contenttypes.contenttype", "fields": {"model": "tag", "name": "Tag", "app_label": "taggit"}}, {"pk": 12, "model": "contenttypes.contenttype", "fields": {"model": "taggeditem", "name": "Tagged Item", "app_label": "taggit"}}, {"pk": 19, "model": "contenttypes.contenttype", "fields": {"model": "targetaudience", "name": "target audience", "app_label": "need"}}, {"pk": 15, "model": "contenttypes.contenttype", "fields": {"model": "uploadedfile", "name": "uploaded file", "app_label": "fileupload"}}, {"pk": 3, "model": "contenttypes.contenttype", "fields": {"model": "user", "name": "user", "app_label": "auth"}}, {"pk": 14, "model": "contenttypes.contenttype", "fields": {"model": "version", "name": "version", "app_label": "reversion"}}, {"pk": 23, "model": "contenttypes.contenttype", "fields": {"model": "vote", "name": "vote", "app_label": "vote"}}]
+[
+  {"pk": 1, "model": "contenttypes.contenttype","fields": {"model": "permission", "name": "permission", "app_label": "auth"}},
+  {"pk": 2, "model": "contenttypes.contenttype", "fields": {"model": "group", "name": "group", "app_label": "auth"}},
+  {"pk": 3, "model": "contenttypes.contenttype", "fields": {"model": "user", "name": "user", "app_label": "auth"}},
+  {"pk": 4, "model": "contenttypes.contenttype", "fields": {"model": "message", "name": "message", "app_label": "auth"}},
+  {"pk": 5, "model": "contenttypes.contenttype", "fields": {"model": "contenttype", "name": "content type", "app_label": "contenttypes"}},
+  {"pk": 6, "model": "contenttypes.contenttype", "fields": {"model": "session", "name": "session", "app_label": "sessions"}},
+  {"pk": 7, "model": "contenttypes.contenttype", "fields": {"model": "site", "name": "site", "app_label": "sites"}},
+  {"pk": 8, "model": "contenttypes.contenttype", "fields": {"model": "logentry", "name": "log entry", "app_label": "admin"}},
+  {"pk": 9, "model": "contenttypes.contenttype", "fields": {"model": "comment", "name": "comment", "app_label": "comments"}},
+  {"pk": 10, "model": "contenttypes.contenttype", "fields": {"model": "commentflag", "name": "comment flag", "app_label": "comments"}},
+  {"pk": 11, "model": "contenttypes.contenttype", "fields": {"model": "tag", "name": "Tag", "app_label": "taggit"}},
+  {"pk": 12, "model": "contenttypes.contenttype", "fields": {"model": "taggeditem", "name": "Tagged Item", "app_label": "taggit"}},
+  {"pk": 13, "model": "contenttypes.contenttype", "fields": {"model": "revision", "name": "revision", "app_label": "reversion"}},
+  {"pk": 14, "model": "contenttypes.contenttype", "fields": {"model": "version", "name": "version", "app_label": "reversion"}},
+  {"pk": 15, "model": "contenttypes.contenttype", "fields": {"model": "uploadedfile", "name": "uploaded file", "app_label": "fileupload"}},
+
+  {"pk": 17, "model": "contenttypes.contenttype", "fields": {"model": "community", "name": "community", "app_label": "community"}},
+  {"pk": 18, "model": "contenttypes.contenttype", "fields": {"model": "needcategory", "name": "need category", "app_label": "need"}},
+  {"pk": 19, "model": "contenttypes.contenttype", "fields": {"model": "targetaudience", "name": "target audience", "app_label": "need"}},
+  {"pk": 20, "model": "contenttypes.contenttype", "fields": {"model": "need", "name": "need", "app_label": "need"}},
+  {"pk": 21, "model": "contenttypes.contenttype", "fields": {"model": "proposal", "name": "solution proposal", "app_label": "proposal"}},
+  {"pk": 22, "model": "contenttypes.contenttype", "fields": {"model": "comment", "name": "comment", "app_label": "komoo_comments"}},
+  {"pk": 23, "model": "contenttypes.contenttype", "fields": {"model": "vote", "name": "vote", "app_label": "vote"}},
+  {"pk": 24, "model": "contenttypes.contenttype", "fields": {"model": "resourcekind", "name": "resource kind", "app_label": "komoo_resource"}},
+  {"pk": 25, "model": "contenttypes.contenttype", "fields": {"model": "resource", "name": "resource", "app_label": "komoo_resource"}},
+  {"pk": 26, "model": "contenttypes.contenttype", "fields": {"model": "organization", "name": "organization", "app_label": "organization"}},
+  {"pk": 27, "model": "contenttypes.contenttype", "fields": {"model": "organizationbranch", "name": "organization branch", "app_label": "organization"}},
+  {"pk": 28, "model": "contenttypes.contenttype", "fields": {"model": "organizationcategory", "name": "organization category", "app_label": "organization"}},
+  {"pk": 29, "model": "contenttypes.contenttype", "fields": {"model": "organizationcategorytranslation", "name": "organization category translation", "app_label": "organization"}},
+
+  {"pk": 31, "model": "contenttypes.contenttype", "fields": {"model": "investment", "name": "investment", "app_label": "investment"}},
+  {"pk": 32, "model": "contenttypes.contenttype", "fields": {"model": "investor", "name": "investor", "app_label": "investment"}},
+  {"pk": 33, "model": "contenttypes.contenttype", "fields": {"model": "usersocialauth", "name": "user social auth", "app_label": "social_auth"}},
+  {"pk": 34, "model": "contenttypes.contenttype", "fields": {"model": "nonce", "name": "nonce", "app_label": "social_auth"}},
+  {"pk": 35, "model": "contenttypes.contenttype", "fields": {"model": "association", "name": "association", "app_label": "social_auth"}},
+
+  {"pk": 36, "model": "contenttypes.contenttype", "fields": {"model": "taskmeta", "name": "task meta", "app_label": "djcelery"}},
+  {"pk": 37, "model": "contenttypes.contenttype", "fields": {"model": "tasksetmeta", "name": "taskset meta", "app_label": "djcelery"}},
+  {"pk": 38, "model": "contenttypes.contenttype", "fields": {"model": "intervalschedule", "name": "interval", "app_label": "djcelery"}},
+  {"pk": 39, "model": "contenttypes.contenttype", "fields": {"model": "crontabschedule", "name": "crontab", "app_label": "djcelery"}},
+  {"pk": 40, "model": "contenttypes.contenttype", "fields": {"model": "periodictasks", "name": "periodic tasks", "app_label": "djcelery"}},
+  {"pk": 41, "model": "contenttypes.contenttype", "fields": {"model": "periodictask", "name": "periodic task", "app_label": "djcelery"}},
+  {"pk": 42, "model": "contenttypes.contenttype", "fields": {"model": "workerstate", "name": "worker", "app_label": "djcelery"}},
+  {"pk": 43, "model": "contenttypes.contenttype", "fields": {"model": "taskstate", "name": "task", "app_label": "djcelery"}},
+
+  {"pk": 44, "model": "contenttypes.contenttype", "fields": {"model": "signature", "name": "signature", "app_label": "signatures"}},
+  {"pk": 45, "model": "contenttypes.contenttype", "fields": {"model": "mailmessage", "name": "mail message", "app_label": "signatures"}},
+
+  {"pk": 46, "model": "contenttypes.contenttype", "fields": {"model": "update", "name": "update", "app_label": "komoo_update"}}
+
+]

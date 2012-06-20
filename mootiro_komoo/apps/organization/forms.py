@@ -11,7 +11,6 @@ from django.db.models.query_utils import Q
 from markitup.widgets import MarkItUpWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
 
-from crispy_forms.helper import FormHelper
 from main.utils import MooHelper, clean_autocomplete_field
 from main.widgets import Tagsinput, TaggitWidget
 from organization.models import (Organization, OrganizationBranch,
@@ -20,14 +19,15 @@ from need.models import TargetAudience
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
+from signatures.signals import notify_on_update
 
 if settings.LANGUAGE_CODE == 'en-us':
     CATEGORIES = [(cat.id, cat.name) \
-                    for cat in OrganizationCategory.objects.all()]
+                for cat in OrganizationCategory.objects.all().order_by('name')]
 else:
     CATEGORIES = [(cat.category_id, cat.name)\
                     for cat in OrganizationCategoryTranslation.objects.filter(
-                        lang=settings.LANGUAGE_CODE)]
+                        lang=settings.LANGUAGE_CODE).order_by('name')]
 
 
 logger = logging.getLogger(__name__)
@@ -49,7 +49,7 @@ class FormOrganization(AjaxModelForm):
     files = FileuploadField(required=False)
     logo = forms.CharField(required=False, widget=forms.HiddenInput())
     tags = forms.Field(
-        widget=TaggitWidget(autocomplete_url="/organization/search_by_tag/"),
+        widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
         required=False)
 
     class Meta:
@@ -89,6 +89,7 @@ class FormOrganization(AjaxModelForm):
         finally:
             return self.cleaned_data
 
+    @notify_on_update
     def save(self, *args, **kwargs):
         org = super(FormOrganization, self).save(*args, **kwargs)
         UploadedFile.bind_files(

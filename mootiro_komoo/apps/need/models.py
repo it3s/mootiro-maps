@@ -13,6 +13,7 @@ from lib.taggit.managers import TaggableManager
 from community.models import Community
 from main.utils import slugify
 from komoo_map.models import GeoRefModel
+from vote.models import VotableModel
 
 
 class NeedCategory(models.Model):
@@ -20,18 +21,21 @@ class NeedCategory(models.Model):
 
     # Adding categories to be translated.
     # Probably there is a better way to do this.
-    _('Culture')
-    _('Education')
-    _('Environment')
-    _('Health')
-    _('Housing')
-    _('Local Economy')
-    _('Mobility')
-    _('Social Service')
-    _('Sport')
+    categories = [
+        _('Culture'),
+        _('Education'),
+        _('Environment'),
+        _('Health'),
+        _('Housing'),
+        _('Local Economy'),
+        _('Mobility'),
+        _('Social Service'),
+        _('Sport'),
+        _('Security'),
+    ]
 
     def __unicode__(self):
-        return self.name
+        return unicode(self.name)
 
     @classmethod
     def get_image(cls, name):
@@ -57,7 +61,7 @@ class TargetAudience(models.Model):
         return self.name
 
 
-class Need(GeoRefModel):
+class Need(GeoRefModel, VotableModel):
     """A need of a Community"""
 
     title = models.CharField(max_length=256, blank=False, db_index=True)
@@ -72,7 +76,8 @@ class Need(GeoRefModel):
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationships
-    community = models.ForeignKey(Community, related_name="needs", null=True, blank=True)
+    # community = models.ForeignKey(Community, related_name="needs", null=True, blank=True)
+    community = models.ManyToManyField(Community, related_name="needs", null=True, blank=True)
     categories = models.ManyToManyField(NeedCategory)
     target_audiences = models.ManyToManyField(TargetAudience, blank=False)
 
@@ -86,13 +91,13 @@ class Need(GeoRefModel):
         """Answers if a given slug is valid in the needs namespace of the
         community.
         """
-        return Need.objects.filter(community=self.community, slug=slug).exists()
+        return Need.objects.filter(slug=slug).exists()
 
     def save(self, *args, **kwargs):
         old_title = Need.objects.get(id=self.id).title if self.id else None
         if not self.id or old_title != self.title:
             self.slug = slugify(self.title, self.slug_exists)
-        super(Need, self).save(*args, **kwargs)
+        return super(Need, self).save(*args, **kwargs)
     ### END ###
 
     image = "img/need.png"
@@ -102,8 +107,8 @@ class Need(GeoRefModel):
     @property
     def base_url_params(self):
         d = dict()
-        if self.community:
-            d['community_slug'] = self.community.slug
+        if self.community and self.community.all():
+            d['community_slug'] = self.community.all()[0].slug
         return d
 
     @property
@@ -120,5 +125,15 @@ class Need(GeoRefModel):
     def edit_url(self):
         return reverse('edit_need', kwargs=self.home_url_params)
 
+    @property
+    def admin_url(self):
+        return reverse('admin:{}_{}_change'.format(self._meta.app_label,
+            self._meta.module_name), args=[self.id])
 
-reversion.register(Need)
+    @property
+    def name(self):
+        return self.title
+
+
+if not reversion.is_registered(Need):
+    reversion.register(Need)

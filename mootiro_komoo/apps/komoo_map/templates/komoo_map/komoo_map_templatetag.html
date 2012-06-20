@@ -11,12 +11,13 @@
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/infobox_packed.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/markerclusterer_packed.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/multimarker.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/geometries.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
     }
   </script>
   {% endif %}
 {% endblock %}
+{% include "main/supporters.html" %}
 {% block html %}
   <!-- HTML map container -->
   <div id="map-container-{{ type }}" class="{% if panel %}with-panel{% endif %}" style="overflow:hidden;">
@@ -76,6 +77,7 @@
           {% if type == 'view' %}
           displayClosePanel: true,
           {% endif %}
+          displaySupporter: true,
           googleMapOptions: {
             zoom: {{ zoom }},
             maxZoom: null,
@@ -109,7 +111,7 @@
                              komoo.CLEAN_MAPTYPE_ID,
                              google.maps.MapTypeId.HYBRID]
             },
-            mapTypeId: komoo.CLEAN_MAPTYPE_ID,
+            mapTypeId: google.maps.MapTypeId.HYBRID
           }
         };
         {% endif %}
@@ -219,6 +221,9 @@
         $('#map-panel-add').append({{ type }}.addMenu.show());
         {% endif %}
 
+      } else {
+        var placeholder = $('<div>').addClass('placeholder').text('{% trans "Geometric data not available" %}');
+        $('#' + mapCanvasId).append(placeholder);
       }
       {% if edit_button %}
       // Add the link to edit the geometry. Must have the editor.
@@ -252,6 +257,10 @@
           setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
       });
       {% endif %}
+      if (window.{{ type }}) {
+        {{ type }}.setSupportersContent($("#map-supporters-content"));
+      }
+      $("#map-panel").show();
   {% endif %}
     }
   {% if type != 'disabled' %}

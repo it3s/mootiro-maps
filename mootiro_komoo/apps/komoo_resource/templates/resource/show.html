@@ -1,6 +1,7 @@
 {% extends 'global.html' %}
 
 {% load komoo_map_tags %}
+{% load moderation_tags %}
 {% load investment_tags %}
 {% load crispy_forms_tags %}
 {% load vote_tags %}
@@ -9,33 +10,31 @@
 {% load komoo_tags %}
 {% load i18n %}
 
-{% block title %}{{ resource.name }} at {{ resource.community.name }}{% endblock %}
+{% block title %}{{ resource.name }} at {{ community.name }}{% endblock %}
 
 {% block menu %} {% menu community "resource" %} {% endblock %}
 
 {% block content %}
-  {#% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'ajax=True' 'lazy=True' %#}
+  {% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'ajax=True' 'lazy=True' %}
 <div id="main-content" class="inline-block">
     <div class="main-column">
 
         <div class="view-header">
-            <h2>{{ resource.name }}</h2>
-            <div class="view-votes">
-                {% vote resource %}
+            <div>
+                <h2 class="inline-block">{{ resource.name }}</h2>
+
                 <div class="view-edit-btn">
-                    {% if community %}
-                    <a href="/{{ community.slug }}/resource/edit?id={{ resource.id }}" class="btn login-required">
-                    {% else %}
-                    <a href="/resource/edit?id={{ resource.id }}" class="btn login-required">
-                    {% endif %}
+                    <a href="{{ resource.edit_url }}" class="btn login-required">
                         <i class="icon-pencil"></i>
                     </a>
                 </div>
+
             </div>
-            <span>
-                {% trans 'created by' %} <a href="#">{% firstof resource.creator.get_full_name resource.creator.username 'someone' %}</a>
-                {% trans 'in' %} {{ resource.creation_date|date:"d/m/Y" }}
-            </span>
+
+            <div class="view-votes">
+                {% vote resource %}
+            </div>
+
             <span class="resource-type">{% trans 'type:' %} &nbsp;<strong>{{ resource.kind }}</strong></span>
         </div>
 
@@ -59,40 +58,62 @@
             {% endif %}
         </div>
 
-        {% investments_list resource.investments.all %}  
+        {% investments_list resource.investments.all %}
 
         <div class="view-extras">
-                {% taglist resource %}
-                {% track_buttons %}
+                {% taglist resource community %}
+                {% track_buttons resource %}
+                {% report_content resource %}
+                {% delete_button resource %}
+                {% social_buttons %}
                 {% comments resource %}
         </div>
 
     </div>
-    <div class="right-bar">
+    <div class="right-bar right-bar-modif">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
         <a class="see-on-map" href="#">{% trans 'see on map' %}</a>
 
-        {% with similar_resources=resource.tags.similar_objects %}
-            {% if similar_resources %}
-            <div class="block">
-                <h3>Related resources</h3>
-                <ul>
-                    {% for r in similar_resources|slice:'5' %}
-                    <li>
-                        <a href="{{ r.view_url }}"> {{ r.name }} </a>
-                        {% if r.community %}
-                          {% trans 'at' %} {{ r.community.name }}
-                        {% endif %}
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            {% endif %}
-        {% endwith %}
-
         <div class="centralizer apart">
-          <a class="button" href="{{ resource.new_investment_url }}">Add investment</a>
+          <a class="button" href="{{ resource.new_investment_url }}">{% trans "New Investment" %}</a>
         </div>
+
+        {% with similar_resources=resource.tags.similar_objects|slice:"5" %}
+
+            <div class="block">
+                {% if similar_resources %}
+                <h4>Related resources</h4>
+                <p>
+                    <ul>
+                        {% for r in similar_resources|slice:'5' %}
+                        <li>
+                            <a href="{{ r.view_url }}"> {{ r.name }} </a>
+                            {% if r.community.all.count %}
+                              {% trans 'at' %}
+                              {% for comm in r.community.all %}
+                                <a href="{% url view_community comm.slug %}">
+                                    {{ comm.name }}
+                                </a>
+                                {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
+                              {% endfor %}
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </p>
+                {% endif %}
+
+                <h4>{% trans 'Contact' %}</h4>
+                <p>
+                    {% if resource.contact %}
+                        {{ resource.contact|render_markup }}
+                    {% else %}
+                        {% trans 'No contact info provided' %}
+                    {% endif %}
+                </p>
+            </div>
+
+        {% endwith %}
 
     </div>
 

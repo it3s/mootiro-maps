@@ -3,3 +3,31 @@
   <div class="image"></div>
   <div class="message"></div>
 </div>
+
+<div id="info-box">
+  <h3 class="title"></h3>
+  <div class="image"></div>
+  <div class="message"></div>
+</div>
+
+<div id="unexpected-error-box">
+  <div class="content">
+    <h3 class="title"></h3>
+    <div class="image"></div>
+    <div class="message"></div>
+    <form id="error-form" action="{% url send_error_report %}" class="error-report" method="POST">
+      <input type="hidden" name="url" />
+      <input type="hidden" name="info" />
+      <textarea name="message"></textarea>
+      <input type="submit" name="submit" value="Send" class="btn button" />
+    </form>
+  </div>
+</div>
+<script>
+  $("#error-form").ajaxform({
+    onSuccess: function (data) {
+      $("#unexpected-error-box").dialog("close");
+      flash(gettext("Your error report was successfully sent. Thank you!"));
+    }
+  });
+</script>

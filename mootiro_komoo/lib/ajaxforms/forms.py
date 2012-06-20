@@ -62,10 +62,10 @@ class AjaxModelForm(forms.ModelForm):
         self.user = request.user
 
     def save(self, *args, **kwargs):
-        obj = super(AjaxModelForm, self).save(*args, **kwargs)
+        obj = super(AjaxModelForm, self).save(commit=False, *args, **kwargs)
         if (not self.cleaned_data['id']) and self.user and hasattr(obj, 'creator'):
             obj.creator_id = self.user.id
-            obj.save()
+        obj.save()
         return obj
 
 
@@ -93,7 +93,6 @@ def ajax_form(template=None, form_class=None, form_name="form"):
             output = function(request, *args, **kwargs)
             if not isinstance(output, dict):
                 return output
-            #tmpl = output.pop('TEMPLATE', template)
 
             logger.debug('request via {}\n{}'.format(request.method,
                 getattr(request, request.method)
@@ -124,7 +123,6 @@ def ajax_form(template=None, form_class=None, form_name="form"):
                 form = form_class(request.POST, instance=instance)
             else:
                 form = form_class(request.POST)
-            form.add_user(request)
 
             # callback on_before_validation
             if 'on_before_validation' in output:
@@ -132,6 +130,8 @@ def ajax_form(template=None, form_class=None, form_name="form"):
                 r_bval = output.pop('on_before_validation')(request, form)
                 if isinstance(r_bval, form_class):
                     form = r_bval
+
+            form.add_user(request)
 
             json_ = {}
             if form.is_valid():

@@ -1,10 +1,40 @@
 
 {% load crispy_forms_tags %}
+<link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+<script type="text/javascript" src="/static/js/ajax_select.js"></script>
 {{ form.media }}
+
 {% crispy form form.helper %}
 
 <script type="text/javascript">
   $(function(){
     $('#need_form').ajaxform();
+
+    $('#need_form').komooFormHintBoxes({
+        'title': {
+          top: '-8px',
+          hint: 'Coloque um título que resuma a necessidade. Ex: "Asfaltar a rua X"'
+        },
+        'description': {
+          top: '45%',
+          hint: 'Coloque detalhes da necessidade. Explique o problema, suas causas, quem é prejudicado pelo problema, etc.'
+        },
+        'categories': {
+          hint: 'Informe onde sua necessidade se encaixa, qual é o tipo dela. Você pode escolher mais de um tipo. Ex.: "Asfaltar a rua X" -> Mobilidade',
+          left: '400px',
+          top: '-20px',
+          width: 400
+        },
+        'target_audiences': {
+          hint: 'As pessoas que essa necessidade afeta.'
+        },
+        'tags': {
+          hint: 'Coloque palavras que ajudem a ilustrar a necessidade, tal como "asfalto", "rua", "transporte".'
+        },
+        'files': {
+          hint: 'Coloque fotos, quando possível, da necessidade, como por exemplo, fotos de um buraco, ou lixo, ou falta de asfalto...',
+          top: '40%'
+        }
+    });
   })
 </script>

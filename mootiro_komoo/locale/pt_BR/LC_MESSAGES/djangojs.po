@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-05-14 13:41-0300\n"
-"PO-Revision-Date: 2012-04-05 19:51-0300\n"
+"POT-Creation-Date: 2012-06-11 14:19-0300\n"
+"PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
 "Language: \n"
@@ -25,134 +25,135 @@ msgstr "Comunidade"
 msgid "Add Community"
 msgstr "Adicionar comunidade"
 
-#: apps/komoo_map/static/js/komoo_map.js:65
+#: apps/komoo_map/static/js/komoo_map.js:66
 msgid "Need"
 msgstr "Necessidade"
 
-#: apps/komoo_map/static/js/komoo_map.js:66
+#: apps/komoo_map/static/js/komoo_map.js:67
 msgid "Add Need"
 msgstr "Adicionar necessidade"
 
-#: apps/komoo_map/static/js/komoo_map.js:80
+#: apps/komoo_map/static/js/komoo_map.js:82
 msgid "Organization"
 msgstr "Organização"
 
-#: apps/komoo_map/static/js/komoo_map.js:81
+#: apps/komoo_map/static/js/komoo_map.js:83
 msgid "Add Organization"
 msgstr "Adicionar organização"
 
-#: apps/komoo_map/static/js/komoo_map.js:94
+#: apps/komoo_map/static/js/komoo_map.js:96
 msgid "Resource"
 msgstr "Recurso"
 
-#: apps/komoo_map/static/js/komoo_map.js:95
+#: apps/komoo_map/static/js/komoo_map.js:97
 msgid "Add Resource"
 msgstr "Adicionar recurso"
 
-#: apps/komoo_map/static/js/komoo_map.js:109
+#: apps/komoo_map/static/js/komoo_map.js:111
 msgid "Investment"
 msgstr "Investimento"
 
-#: apps/komoo_map/static/js/komoo_map.js:110
+#: apps/komoo_map/static/js/komoo_map.js:112
 msgid "Add Investment"
 msgstr "Adicionar Investimento"
 
-#: apps/komoo_map/static/js/komoo_map.js:592
+#: apps/komoo_map/static/js/komoo_map.js:599
 msgid "Clean"
 msgstr "Limpo"
 
-#: apps/komoo_map/static/js/komoo_map.js:748
+#: apps/komoo_map/static/js/komoo_map.js:808
 #, perl-format
 msgid "%s resident"
 msgid_plural "%s residents"
 msgstr[0] "%s habitante"
 msgstr[1] "%s habitantes"
 
-#: apps/komoo_map/static/js/komoo_map.js:751
+#: apps/komoo_map/static/js/komoo_map.js:811
 msgid "No population provided"
 msgstr "População não fornecida"
 
-#: apps/komoo_map/static/js/komoo_map.js:1728
+#: apps/komoo_map/static/js/komoo_map.js:1811
 msgid "Edit"
 msgstr "Editar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1864
-#: apps/komoo_map/static/js/komoo_map.js:1993
+#: apps/komoo_map/static/js/komoo_map.js:1967
+#: apps/komoo_map/static/js/komoo_map.js:2098
 msgid "Add shape"
 msgstr "Adicionar área"
 
-#: apps/komoo_map/static/js/komoo_map.js:1865
-#: apps/komoo_map/static/js/komoo_map.js:1997
+#: apps/komoo_map/static/js/komoo_map.js:1968
+#: apps/komoo_map/static/js/komoo_map.js:2102
 msgid "Add line"
 msgstr "Adicionar linha"
 
-#: apps/komoo_map/static/js/komoo_map.js:1866
-#: apps/komoo_map/static/js/komoo_map.js:2001
+#: apps/komoo_map/static/js/komoo_map.js:1969
+#: apps/komoo_map/static/js/komoo_map.js:2106
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: apps/komoo_map/static/js/komoo_map.js:1993
+#: apps/komoo_map/static/js/komoo_map.js:2098
 msgid "Draw a shape"
 msgstr "Desenhar uma área"
 
-#: apps/komoo_map/static/js/komoo_map.js:1997
+#: apps/komoo_map/static/js/komoo_map.js:2102
 msgid "Draw a line"
 msgstr "Desenhar uma linha"
 
-#: apps/komoo_map/static/js/komoo_map.js:2001
+#: apps/komoo_map/static/js/komoo_map.js:2106
 msgid "Add a marker"
 msgstr "Adicionar um marcador"
 
-#: apps/komoo_map/static/js/komoo_map.js:2005
+#: apps/komoo_map/static/js/komoo_map.js:2110
 msgid "Add new..."
 msgstr "Adicionar..."
 
-#: apps/komoo_map/static/js/komoo_map.js:2009
-#: apps/komoo_map/static/js/komoo_map.js:2116
+#: apps/komoo_map/static/js/komoo_map.js:2114
+#: apps/komoo_map/static/js/komoo_map.js:2222
 msgid "Add"
 msgstr "Adicionar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2009
+#: apps/komoo_map/static/js/komoo_map.js:2114
 msgid "Add another region"
 msgstr "Adicionar outra região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2021
+#: apps/komoo_map/static/js/komoo_map.js:2126
 msgid "Cut out"
 msgstr "Cortar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2021
+#: apps/komoo_map/static/js/komoo_map.js:2126
 msgid "Cut out a hole from a region"
 msgstr "Adicionar um buraco a região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2033
+#: apps/komoo_map/static/js/komoo_map.js:2138
+#: apps/moderation/static/js/moderation.js:259
 msgid "Delete"
 msgstr "Apagar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2033
+#: apps/komoo_map/static/js/komoo_map.js:2138
 msgid "Delete a region"
 msgstr "Apagar uma região"
 
-#: apps/komoo_map/static/js/komoo_map.js:2115
+#: apps/komoo_map/static/js/komoo_map.js:2221
 msgid "Filter"
 msgstr "Filtrar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2120
+#: apps/komoo_map/static/js/komoo_map.js:2226
 msgid "Please log in."
 msgstr "Por favor, entre no sistema."
 
-#: apps/komoo_map/static/js/komoo_map.js:2212
+#: apps/komoo_map/static/js/komoo_map.js:2318
 msgid "Close"
 msgstr "Fechar"
 
-#: apps/komoo_map/static/js/komoo_map.js:2239
+#: apps/komoo_map/static/js/komoo_map.js:2345
 msgid "Title"
 msgstr "Título"
 
-#: apps/komoo_map/static/js/komoo_map.js:2241
+#: apps/komoo_map/static/js/komoo_map.js:2347
 msgid "Finish"
 msgstr "Concluir"
 
-#: apps/komoo_map/static/js/komoo_map.js:2242
+#: apps/komoo_map/static/js/komoo_map.js:2348
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -196,6 +197,35 @@ msgstr "Nenhum resultado encontrado!"
 msgid "Search Results:"
 msgstr "Resultados da Busca:"
 
+#: apps/main/static/js/komoo_utils.js:329
+msgid "Yes"
+msgstr "Sim"
+
+#: apps/main/static/js/komoo_utils.js:334
+msgid "No"
+msgstr "Não"
+
+#: apps/moderation/static/js/moderation.js:112
+msgid "Report Abuse"
+msgstr "Denunciar abuso"
+
+#: apps/moderation/static/js/moderation.js:167
+#: apps/moderation/static/js/moderation.js:279
+msgid "Your request was successfully sent"
+msgstr "A requisição foi enviada com sucesso"
+
+#: apps/moderation/static/js/moderation.js:230
+msgid "Deletion Request"
+msgstr "Requisição de remoção"
+
+#: apps/moderation/static/js/moderation.js:260
+msgid "Do you really want to delete this content?"
+msgstr "Você deseja realmente apagar este conteúdo?"
+
+#: apps/moderation/static/js/moderation.js:272
+msgid "The content was successfully deleted"
+msgstr "O conteúdo foi apagado com sucesso"
+
 #: apps/organization/static/js/organization_new.js:14
 msgid "complete"
 msgstr "completo"
@@ -207,13 +237,13 @@ msgstr ""
 "Parabéns, você concluiu o processo de adição de uma organização/unidade."
 
 #: apps/organization/static/js/organization_new.js:41
-#: apps/organization/static/js/organization_new.js:90
+#: apps/organization/static/js/organization_new.js:91
 msgid ""
 "Provide the organization name so we can verify if it's already registered on "
 "our system"
 msgstr ""
-"Forneça o nome da organização para verificarmos se ela ainda não foi cadastrada "
-"no sistema."
+"Forneça o nome da organização para verificarmos se ela ainda não foi "
+"cadastrada no sistema."
 
 #: apps/organization/static/js/organization_new.js:54
 msgid "This organization already exists. Do you want to add a branch?"
@@ -239,16 +269,32 @@ msgstr ""
 "Entre com os dados para a Organização a qual pertence a unidade que você "
 "marcou no mapa"
 
-#: apps/organization/static/js/organization_new.js:103
+#: apps/organization/static/js/organization_new.js:104
 msgid ""
 "Congratulations, your organization was successfully saved. Please, now add "
 "the data from the branch you have marked on the map"
-msgstr "Parabéns, sua organização foi adicionada com sucesso. Por favor, "
-"agora adicione os dados da unidade que você marcou no mapa"
+msgstr ""
+"Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
+"adicione os dados da unidade que você marcou no mapa"
 
 #: apps/vote/static/js/vote.js:38
 msgid "error : "
 msgstr "erro: "
+
+#~ msgid "Deletion request sent"
+#~ msgstr "Requisição de remoção enviada"
+
+#~ msgid "Error"
+#~ msgstr "Erro"
+
+#~ msgid "An error occurred, please try again later."
+#~ msgstr "Ocorreu um erro, tente novamente mais tarde."
+
+#~ msgid "Network error"
+#~ msgstr "Problema de conexão"
+
+#~ msgid "An error occurred while connecting to network!"
+#~ msgstr "Ocorreu um erro ao conectar com o servidor!"
 
 #~ msgid "Funder"
 #~ msgstr "Financiador"

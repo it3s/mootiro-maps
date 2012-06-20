@@ -12,7 +12,7 @@ from annoying.functions import get_object_or_None
 
 import reversion
 from lib.taggit.managers import TaggableManager
-
+from vote.models import VotableModel
 from main.utils import slugify
 
 
@@ -112,7 +112,7 @@ class Investor(models.Model):
         return self.content_object.view_url
 
 
-class Investment(models.Model):
+class Investment(VotableModel):
     """A donation of money (or any other stuff) for either an Organization, a
     Proposal or a Resource in the system.
     """
@@ -125,18 +125,21 @@ class Investment(models.Model):
 
     title = models.CharField(max_length=256)
     # Auto-generated url slug. It's not editable via ModelForm.
-    slug = models.CharField(max_length=256, null=False, blank=False, db_index=True, editable=False)
+    slug = models.CharField(max_length=256, null=False, blank=False,
+                db_index=True, editable=False)
     description = models.TextField()
-    value = models.DecimalField(decimal_places=2, max_digits=14, null=True, blank=True)
-    currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES, null=True, blank=True)
+    value = models.DecimalField(decimal_places=2, max_digits=14, null=True,
+                blank=True)
+    currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES,
+                null=True, blank=True)
 
     date = models.DateField(null=False)
     # TODO: remove over_period. Get this info by existence of an end_date
-    over_period = models.BooleanField(default=False, null=False)
+    over_period = models.BooleanField(default=False)
     end_date = models.DateField(null=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=False, blank=False,
+    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
                 related_name='created_investments')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
@@ -154,6 +157,10 @@ class Investment(models.Model):
 
     def __unicode__(self):
         return unicode(self.title)
+
+    @property
+    def name(self):
+        return self.title
 
     ### Needed to slugify items ###
     def slug_exists(self, slug):
@@ -190,4 +197,6 @@ class Investment(models.Model):
     def edit_url(self):
         return reverse('edit_investment', kwargs=self.home_url_params)
 
-reversion.register(Investment)
+
+if not reversion.is_registered(Investment):
+    reversion.register(Investment)

@@ -19,17 +19,17 @@
     <div class="panel" id="map-panel-filter">
       <form id="filter-form" method="GET" action="{% url radial_search %}">
         <div class="centralizer">
-          <input type="submit" id="filter-submit" class="button" value="{% trans "Perform search" %}"/>
+          <input type="submit" id="filter-submit" class="button-off" value="{% trans "Perform search" %}"/>
         </div>
         <div id="filter-circle">
           <div class="img-holder"><img src="{{STATIC_URL}}img/radius.png"/></div>
           <a id="set-center" class="button"><i class="icon-plus icon-white"></i> {% trans "Center" %}</a>
           <span>{% trans "Radius" %} <input id="filter-radius" type="text" name="radius"/> m</span>
           <input id="filter-center" type="hidden" name="center"/>
-          <div id="filter-slider-container" class="floating">
+          <div id="filter-slider-container" class="help-step highlight">
             <div id="filter-slider"></div><i class="icon-ok"></i>
           </div>
-          <div id="filter-helper" class="floating">
+          <div id="filter-helper" class="help-step highlight">
             {% trans "Pick a point on the map" %}
           </div>
         </div>

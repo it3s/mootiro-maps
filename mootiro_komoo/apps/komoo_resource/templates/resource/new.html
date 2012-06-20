@@ -10,10 +10,41 @@
 {% endblock %}
 
 {% block css %}
+  <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+  <script type="text/javascript" src="/static/js/ajax_select.js"></script>
   {{ form_resource.media }}
   <script type="text/javascript">
     $(function(){
         $('#form_resource').ajaxform();
+
+        $('#form_resource').komooFormHintBoxes({
+          'name': {
+            hint: 'Coloque o nome do recurso.'
+          },
+          'description': {
+            hint: 'Coloque detalhes do recurso, e como ele é usado pela comunidade. Informações como acesso ao recurso, responsáveis por ele, horário de funcionamento/acesso ...',
+            top: '35%'
+          },
+          'kind': {
+            hint: 'Escolha em qual tipo o recurso se encaixa (Você pode escolher um já existente ou entrar um novo tipo).',
+            top: '45%',
+            left: '640px',
+            width: '350px'
+          },
+          'tags': {
+            hint: 'Coloque palavras que ajudem a classificar o recurso, tal como "música", "esporte", "biblioteca", etc...',
+            top: '-8px'
+          },
+          'contact': {
+            hint: 'Informações de contato com os responsáveis deste recurso.',
+            top: '30%'
+          },
+          'files': {
+            hint: 'Você pode carregar fotos do recurso.',
+            top: '40%'
+          }
+
+        });
     });
 
   </script>

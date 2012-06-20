@@ -1,0 +1,104 @@
+{% extends "global.html" %}
+{% load i18n %}
+{% load komoo_tags %}
+{% load vote_tags %}
+{% load comment_tags %}
+{% load humanize %}
+
+
+{% block title %}TUNT STATS{% endblock %}
+
+{#% block menu %} {% menu need "need" %} {% endblock %#}
+
+{% block content %}
+<div id="main-content">
+  <div class="main-column content-updates">
+    
+    <ul class="tabs horizontal">
+      <li class="tab first last"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
+      <!--
+      <li class="tab"><a href="#discussions-panel">{% trans "discussions" %}</a></li>
+      <li class="tab last"><a href="#my-content-panel">{% trans "my content" %}</a></li>
+      -->
+    </ul>
+    <div class="clear-both"></div>
+
+    <div class="shadow-container">
+      <div id="content-updates-filters">
+        <span class="attenuate small">{% trans "Type" %}</span>
+        {% geo_objects_listing 'switchable=True' 'hide_names=True' %}
+      </div>
+      <div class="clear-both"></div>
+
+      <div id="last-updates-panel" class="panel">
+          <ul class="updates">
+            {% for u in updates %}
+            <li class="a-update">
+              <div class="update-image">
+                {# How to change images to be inside update app??? #}
+                <img src="{{STATIC_URL}}/{{ u.image }}">
+              </div>
+              <div class="update-info">
+                <h3>
+                  <a href="{{ u.link }}">{{ u.title }}</a>
+                </h3>
+                <div class="right">
+                  <a href="#"><i class="icon-see-on-map"></i></a>
+                </div>
+                <div class="clear-both"></div>
+                {% for ctuple in u.communities %}
+                <a href="{{ ctuple.0 }}" class="update-community">
+                  <i class="icon-community-white"></i> {{ ctuple.1 }}
+                </a>
+                {% endfor %}
+                <div class="clear-both"></div>
+                <div class="update-message left">
+                  {% blocktrans with object_type=u.object_type|capfirst update_type=u.readable_type date=u.date user=u.users|first %}
+                    {{ object_type }}
+                    {{ update_type }}
+                    on {{ date }}
+                    by {{ user }}.
+                  {% endblocktrans %}
+                </div>
+                <div class="update-social right">
+                  {% if u.object %}
+                    {% vote u.object %} {% comments_summary u.object %}
+                  {% endif %}
+                </div>
+              </div>
+            </li>
+            {% endfor %}
+          </ul>
+      </div>
+    </div>
+
+    <!--
+    <div id="discussions-panel" class="panel hidden">
+        DISCUSSIONS
+    </div>
+
+    <div id="my-content-panel" class="panel hiden">
+        MY CONTENT
+    </div>
+    -->
+
+  </div>
+  <div class="right-bar news-updates">
+    NEWS
+  </div>
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        var tabs = new Tabs('.content-updates .tab', '.content-updates .panel',
+                      undefined, 'active');
+
+        // $(function () {
+        //     geoObjectsListing("#content-updates-filters ul.geo-objects-listing");
+        //     $("#content-updates-filters div.img-holder > img").trigger("click");
+        //     $("#content-updates-filters div.img-holder input[type=checkbox]").attr("checked", "checked");
+        // });
+
+    </script>
+{% endblock %}

@@ -2,14 +2,27 @@
 {% load markitup_tags %}
 {% load i18n %}
 
-<h3>Investments</h3>
+<!-- <h3>Investments</h3> -->
+
+{% if both or received %}
 
 {% if both %}
 <ul class="horizontal">
-    <li class="tab-investment"><a href="#realized-investments-panel">{% trans "Realized" %}</a></li>
-    <li class="tab-investment"><a href="#received-investments-panel">{% trans "Received" %}</a></li>
+    <li class="tab-investment realized">
+        <a href="#realized-investments-panel">
+            <img src="/static/investment/img/inv_realizados.png">
+            {% trans "Realized" %} ({{ realized|length }})
+        </a>
+    </li>
+    <li class="tab-investment received">
+        <a href="#received-investments-panel">
+            <img src="/static/investment/img/inv_recebidos.png">
+            {% trans "Received" %} ({{ received|length }})
+        </a>
+    </li>
 </ul>
 {% endif %}
+
 
 <div class="clear-both"></div>
 <div id="received-investments-panel" class="view-list panel-investment">
@@ -25,7 +38,7 @@
     </div>
     {% empty %}
     <div class="view-list-item">
-        <li>{% trans "No investments received." %}</li>
+        {% trans "No investments received." %}
     </div>
     {% endfor%}
 </div>
@@ -53,7 +66,19 @@
 {% if both %}
 {% block page_scripts %}
     <script type="text/javascript">
+        var num_realized = {{ realized|length }};
+        var num_received = {{ received|length }};
+
         var investment_tabs = new Tabs('.tab-investment', '.panel-investment');
+
+        if (num_received > num_realized) {
+            $('.tab-investment.received').click();
+        } else {
+            $('.tab-investment.realized').click();
+        }
     </script>
 {% endblock %}
+{% endif %}
+
+
 {% endif %}

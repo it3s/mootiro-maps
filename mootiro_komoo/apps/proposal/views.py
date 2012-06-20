@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
-from annoying.functions import get_object_or_None
 from annoying.decorators import render_to
 from ajaxforms import ajax_form
 
@@ -23,15 +22,19 @@ def prepare_proposal_objects(community_slug="", need_slug="", proposal_number=""
     """Retrieves a tuple (proposal, need, community). According to given
     parameters may raise an 404. Creates a new proposal if proposal_number is
     evaluated as false."""
-    community = get_object_or_None(Community, slug=community_slug)
+    community = get_object_or_404(Community, slug=community_slug) \
+                    if community_slug else None
+
     filters = dict(slug=need_slug)
-    if community:
+    if community_slug:
         filters["community"] = community
     need = get_object_or_404(Need, **filters)
+
     if proposal_number:
         proposal = get_object_or_404(Proposal, number=proposal_number, need=need)
     else:
         proposal = Proposal(need=need)
+
     return proposal, need, community
 
 
@@ -54,8 +57,8 @@ def edit(request, community_slug="", need_slug="", proposal_number=""):
 
     def on_after_save(request, proposal):
         kw = dict(need_slug=proposal.need.slug, proposal_number=proposal.number)
-        if proposal.need.community:
-            kw["community_slug"] = proposal.need.community.slug
+        if proposal.need.community.count():
+            kw["community_slug"] = proposal.need.community.all()[0].slug
         return {'redirect': reverse('view_proposal', kwargs=kw)}
 
     return {'on_get': on_get, 'on_before_validation': on_before_validation,
@@ -67,10 +70,6 @@ def edit(request, community_slug="", need_slug="", proposal_number=""):
 def view(request, community_slug="", need_slug="", proposal_number=""):
     logger.debug('accessing proposal > view')
 
-    community = get_object_or_None(Community, slug=community_slug)
-    filters = dict(slug=need_slug)
-    if community:
-        filters["community"] = community
-    need = get_object_or_404(Need, **filters)
-    proposal = get_object_or_404(Proposal, number=proposal_number, need=need)
+    proposal, need, community = prepare_proposal_objects(community_slug,
+        need_slug, proposal_number)
     return dict(proposal=proposal, community=community)

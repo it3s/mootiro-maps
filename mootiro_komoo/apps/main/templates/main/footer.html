@@ -1,0 +1,15 @@
+{% load i18n %}
+<hr />
+<div></div>
+<div>
+  <h3>{% trans 'More about' %}</h3>
+  <ul>
+    <li><a href="{% url hotsite %}">{% trans 'About MootiroMaps' %}</a></li>
+    <li>{% trans 'About Us' %}</li>
+    <li>{% trans 'Get Involved' %}</li>
+  </ul>
+</div>
+<div class="supporters">
+  <h3>{% trans 'Supporters' %}</h3>
+  <a href="http://www.institutocea.org.br/" target="_blank"><img class="cea-logo" src="{{ STATIC_URL }}img/supporters/cea-footer.png" alt="Instituto C&amp;A" /></a>
+</div>

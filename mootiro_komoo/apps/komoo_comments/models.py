@@ -4,9 +4,12 @@ from django.db import models
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
+from vote.models import VotableModel
 
 
-class Comment(models.Model):
+class Comment(VotableModel):
     """
     Comments models. Should dinamically reference any table/object.
     For querying purposes we need to add the above entry on those models that
@@ -35,3 +38,8 @@ class Comment(models.Model):
     def get_comments_for(klass, obj):
         obj_content_type = ContentType.objects.get_for_model(obj)
         return Comment.objects.filter(content_type=obj_content_type, object_id=obj.id)
+
+    @property
+    def admin_url(self):
+        return reverse('admin:{}_{}_change'.format(self._meta.app_label,
+            self._meta.module_name), args=[self.id])

@@ -3,14 +3,10 @@ from __future__ import unicode_literals
 import logging
 import json
 
-from django.views.generic import View
 from django.db.models.query_utils import Q
-from django.shortcuts import (render_to_response, RequestContext, HttpResponse,
-        HttpResponseRedirect, get_object_or_404)
+from django.shortcuts import HttpResponse, get_object_or_404, redirect
 from django.utils import simplejson
-from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from django import forms
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 
@@ -34,15 +30,22 @@ def prepare_resource_objects(community_slug="", resource_id=""):
     """Retrieves a tuple (resource, community). According to given
     parameters may raise an 404. Creates a new resource if resource_id is
     evaluated as false."""
-    community = get_object_or_None(Community, slug=community_slug)
+    community = get_object_or_404(Community, slug=community_slug) \
+                    if community_slug else None
+
     if resource_id:
-        filters = dict(id=resource_id)
-        if community:
+        filters = dict(pk=resource_id)
+        if community_slug:
             filters["community"] = community
         resource = get_object_or_404(Resource, **filters)
     else:
-        resource = Resource(community=community)
+        resource = Resource()
+
     return resource, community
+
+
+def resources_to_resource(self):
+    return redirect(reverse('resource_list'), permanent=True)
 
 
 @render_to('resource/list.html')
@@ -50,7 +53,7 @@ def prepare_resource_objects(community_slug="", resource_id=""):
 def resource_list(request, community_slug=''):
     logger.debug('acessing komoo_resource > list')
 
-    sort_order = ['creation_date', 'name']
+    sort_order = ['creation_date', 'votes', 'name']
 
     if community_slug:
         logger.debug('community_slug: {}'.format(community_slug))
@@ -74,11 +77,11 @@ def resource_list(request, community_slug=''):
 def show(request, community_slug=None, resource_id=None):
     logger.debug('acessing komoo_resource > show')
 
-    resource = get_object_or_404(Resource, pk=resource_id)
+    resource, community = prepare_resource_objects(
+        community_slug=community_slug, resource_id=resource_id)
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
-    community = get_object_or_None(Community, slug=community_slug)
     photos = paginated_query(UploadedFile.get_files_for(resource), request, size=3)
 
     return dict(resource=resource, similar=similar, geojson=geojson,
@@ -89,13 +92,15 @@ def show(request, community_slug=None, resource_id=None):
 @ajax_form('resource/new.html', FormResource, 'form_resource')
 def new_resource(request, community_slug='', *arg, **kwargs):
     logger.debug('acessing komoo_resource > new_resource')
-    community = get_object_or_None(Community, slug=community_slug)
+
+    resource, community = prepare_resource_objects(
+        community_slug=community_slug)
 
     def on_get(request, form_resource):
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form_resource.fields['community'].widget = forms.HiddenInput()
-            form_resource.initial['community'] = community.id
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form_resource.fields['community'].widget = forms.HiddenInput()
+            # form_resource.initial['community'] = community.id
         form_resource.helper.form_action = reverse('new_resource')
         return form_resource
 
@@ -115,10 +120,10 @@ def new_resource_from_map(request, community_slug='', *args, **kwargs):
     community = get_object_or_None(Community, slug=community_slug)
 
     def on_get(request, form_resource):
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form_resource.fields['community'].widget = forms.HiddenInput()
-            form_resource.initial['community'] = community.id
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form_resource.fields['community'].widget = forms.HiddenInput()
+            # form_resource.initial['community'] = community.id
         form_resource.helper.form_action = reverse('new_resource_from_map')
         return form_resource
 
@@ -133,28 +138,30 @@ def new_resource_from_map(request, community_slug='', *args, **kwargs):
 
 @login_required
 @ajax_form('resource/edit.html', FormResourceGeoRef, 'form_resource')
-def edit_resource(request, community_slug='', *arg, **kwargs):
+def edit_resource(request, community_slug='', resource_id='', *arg, **kwargs):
     logger.debug('acessing komoo_resource > edit_resource')
-    community = get_object_or_None(Community, slug=community_slug)
+
+    resource, community = prepare_resource_objects(
+        community_slug=community_slug, resource_id=resource_id)
     geojson = {}
-
-    _id = request.GET.get('id', 0)
-    resource = get_object_or_None(Resource, pk=_id)
-
     geojson = create_geojson([resource], convert=False)
+
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
     geojson = json.dumps(geojson)
 
-    def on_get(request, form_resource):
-        form_resource = FormResourceGeoRef(instance=resource)
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form_resource.fields['community'].widget = forms.HiddenInput()
-            form_resource.initial['community'] = community.id
-        form_resource.helper.form_action = reverse('edit_resource')
+    def on_get(request, form):
+        form = FormResourceGeoRef(instance=resource)
+        # if community:
+            # logger.debug('community_slug: {}'.format(community_slug))
+            # form_resource.fields['community'].widget = forms.HiddenInput()
+            # form_resource.initial['community'] = community.id
+        kwargs = dict(resource_id=resource_id)
+        if community_slug:
+            kwargs['community_slug'] = community_slug
+        form.helper.form_action = reverse('edit_resource', kwargs=kwargs)
 
-        return form_resource
+        return form
 
     def on_after_save(request, obj):
         prefix = '/{}'.format(community_slug) if community_slug else ''
@@ -175,8 +182,8 @@ def search_by_kind(request):
         mimetype="application/x-javascript")
 
 
-def search_by_tag(request):
-    logger.debug('acessing resource > search_by_tag')
+def search_tags(request):
+    logger.debug('acessing resource > search_tags')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Resource).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')
@@ -193,15 +200,17 @@ def show_on_map(request, geojson=''):
     return dict(geojson=geojson)
 
 
-@ajax_request
-def resource_get_or_add_kind(request):
-    term = request.POST.get('value', '')
-    kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
-        Q(slug__iexact=term))
-    if not kinds.count() and term:
-        r = ResourceKind(name=term)
-        r.save()
-        obj = dict(added=True, id=r.id, value=r.name)
-    else:
-        obj = dict(added=False, id=None, value=term)
-    return obj
+# @login_required
+# @ajax_request
+# def resource_get_or_add_kind(request):
+#     logger.debug('acessing resource > resource_get_or_add_kind')
+#     term = request.POST.get('value', '')
+#     kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
+#         Q(slug__iexact=term))
+#     if not kinds.count() and term:
+#         r = ResourceKind(name=term)
+#         r.save()
+#         obj = dict(added=True, id=r.id, value=r.name)
+#     else:
+#         obj = dict(added=False, id=None, value=term)
+#     return obj

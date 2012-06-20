@@ -28,17 +28,41 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// Add csrf token to ajax requests
+jQuery(document).ajaxSend(function(event, xhr, settings) {
+    function sameOrigin(url) {
+        // url could be relative or scheme relative or absolute
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Allow absolute or scheme relative URLs to same origin
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // or any other URL that isn't scheme relative or absolute i.e relative.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+    function safeMethod(method) {
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    if (!safeMethod(settings.type) && sameOrigin(settings.url)) {
+        xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+    }
+});
+
 /* Easy to use, jQuery based, and elegant solution for tabs :) */
-function Tabs(tabs, contents, onChange) {
+function Tabs(tabs, contents, onChange, selectedClass) {
+    var selectedClass = selectedClass || "selected";
     $(contents).hide();
     var instance = this;
     this.to = function (tab) { // Most important method, switches to a tab.
-        $(tabs).removeClass("selected");
-        $(contents).removeClass("selected").hide();
+        $(tabs).removeClass(selectedClass);
+        $(contents).removeClass(selectedClass).hide();
 
         var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
-        $("*[href=" + tab_content + "]").parent().addClass("selected");
-        $(tab_content).addClass("selected").show();
+        $("*[href=" + tab_content + "]").parent().addClass(selectedClass);
+        $(tab_content).addClass(selectedClass).show();
 
         instance.current = tab;
         if (onChange && instance.initialized) {
@@ -103,6 +127,66 @@ function getUrlVars(){
         });
     };
 })(jQuery);
+
+
+/*
+ *  jQuery plugin for Field description boxes
+ *  Usage:
+ *  $('#form_resource').komooFormHintBoxes({
+ *      'name': {
+ *          desc: 'bla name bla name bla'
+ *      },
+ *      'kind': {
+ *          left: '640px',
+ *          top: '40%',
+ *          desc: 'blbalablba kind lnakslka'
+ *      }
+ *  });
+ *
+ */
+ (function($){
+    $.fn.komooFormHintBoxes = function(box_config){
+        var defaults = {
+            left: '740px',
+            top: '-2px'
+        }
+        var form = $(this);
+
+        $.each(box_config, function(key, val){
+            var el = form.find('#div_id_' + key);
+            el.find('.controls').append("" +
+                "<div class='field-hint-box-wrapper'>" +
+                    "<span class='hint-box-line'>&nbsp;&nbsp;</span>" +
+                    "<div class='field-hint-box'>" + val.hint  +"</div>" +
+                "</div>"
+            );
+
+            var conf = {}
+            $.extend(conf, defaults, val);
+
+            el.find('.field-hint-box-wrapper'
+              ).css('left', conf.left).css('top', conf.top);
+            if (conf.width){
+                el.find('.field-hint-box-wrapper').css('width', conf.width + 30);
+                el.find('.field-hint-box').css('width', conf.width);
+            }
+        });
+
+        form.find('fieldset').after("" +
+            "<div class='alert alert-info' data-alert='info'>" +
+                "<a class='close' data-dismiss='alert'>×</a>" +
+                "<div class='msg'>" +
+                    "Os campos com asterisco (<strong>*</strong>) são obrigatórios!" +
+                "</div>" +
+            "</div>"
+        );
+
+        $('.close').click(function(){
+            $(this).parent().fadeOut();
+        });
+    };
+
+ })(jQuery);
 
 
 /*
@@ -181,10 +265,13 @@ function geoObjectsListing (ul) {
 }
 
 $(function () {
-    // Intercepts all links that have the class /authenticate/
-    $("a.login-required").click(function (ev) {
+    // Intercepts all links that have the class /login-required/
+    $("a.login-required").bind("click.loginrequierd", function (ev) {
         if (!isAuthenticated) {
             // TODO: request status from server
+            ev.stopPropagation();
+            ev.stopImmediatePropagation();
+            ev.preventDefault();
             var url = $(this).attr("href");
             if (url == "/vote/add/") {
                 url = document.location.pathname;
@@ -198,26 +285,25 @@ $(function () {
                 resizable: false,
                 draggable: false
             });
-            ev.stopPropagation();
             return false;
         }
     });
 });
 
-function errorMessage(title, message, imageUrl, buttons) {
+function _displayMessage(selector, dialogClass, title, message, imageUrl, buttons) {
     if (!buttons) {
         buttons = [
             {
                 text: "Ok",
                 'class': "button",
-                click: function() { $(this).dialog("close"); }
+                click: function () { $(this).dialog("close"); }
             }
         ];
     }
-    var box = $("#error-box");
-    $(".message", box).text(message);
-    box.dialog({
-        dialogClass: "error-dialog",
+    var $box = selector;
+    $(".message", $box).text(message);
+    $box.dialog({
+        dialogClass: dialogClass,
         title: title,
         modal: true,
         buttons: buttons,
@@ -225,5 +311,62 @@ function errorMessage(title, message, imageUrl, buttons) {
         draggable: false,
         width: 400
     });
-    return box;
+    return $box;
+}
+
+function errorMessage(title, message, imageUrl, buttons) {
+    return _displayMessage($("#error-box"), "error-dialog",
+            title, message, imageUrl, buttons);
+}
+
+function infoMessage(title, message, imageUrl, buttons) {
+    return _displayMessage($("#info-box"), "info-dialog",
+            title, message, imageUrl, buttons);
+}
+
+function confirmationMessage(title, message, imageUrl, callback) {
+    buttons = [
+        {
+            text: gettext("Yes"),
+            'class': "btn",
+            click: function () { callback("yes"); $(this).dialog("close"); }
+        },
+        {
+            text: gettext("No"),
+            'class': "button",
+            click: function () { callback("no"); $(this).dialog("close"); }
+        }
+    ];
+    return infoMessage(title, message, imageUrl, buttons);
+}
+
+function unexpectedError(info) {
+    //TODO: translate me!
+    title = "Ops!";
+    message = "O Spock comeu um pedaço do código... Nos escreva falando que problema você encontrou para que possamos resolvê-lo!";
+    buttons = [];
+
+    var $box = $("#unexpected-error-box");
+    $(".message", $box).text(message);
+    $("input[name=url]").val(location.href);
+    $("input[name=info]").val(info || "");
+    $box.dialog({
+        dialogClass: "error-dialog unexpected-error-dialog",
+        title: title,
+        modal: true,
+        buttons: buttons,
+        resizable: false,
+        draggable: false,
+        width: 650
+    });
+    return $box;
+}
+
+function flash(message, optDuration) {
+    var duration = optDuration || 10000;
+    var $box = $("#flash-message");
+    $(".message", $box).text(message);
+    $box.show();
+    if (duration > 0)
+        setTimeout(function () { $box.fadeOut(); }, duration);
 }

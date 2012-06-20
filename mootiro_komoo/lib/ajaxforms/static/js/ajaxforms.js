@@ -74,19 +74,21 @@
                         var validation_div;
                         /* em caso de sucesso limpa forma e chama callback */
                         if (data.success === "true"){
-                            // clean form
-                            $form.clearForm();
+
                             // clean error messages
                             $('.error-field').remove();
                             $('.control-group.error').removeClass('error');
-
 
                             if ($form.onSuccess){
                                 $form.onSuccess(data);
                             }
                             if (data.redirect){
                                 window.location = data.redirect;
+                            } else {
+                                // clean form
+                                $form.clearForm();
                             }
+
                         /* em caso de erro, trata os erros */
                         } else if (data.success === "false") {
                             // clean error messages
