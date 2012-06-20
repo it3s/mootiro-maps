@@ -53,7 +53,7 @@
                 {% endfor %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  {% blocktrans with object_type=u.object_type|capfirst update_type=u.type date=u.date user=u.users|first %}
+                  {% blocktrans with object_type=u.object_type|capfirst update_type=u.readable_type date=u.date user=u.users|first %}
                     {{ object_type }}
                     {{ update_type }}
                     on {{ date }}

@@ -10,7 +10,7 @@ from .models import Need
 
 
 def AN_UNSAVED_NEED():
-    return Need(name="Anywhere", description="Lorem ipsum")
+    return Need(title="Anywhere", description="Lorem ipsum")
 
 
 def A_NEED_DATA():

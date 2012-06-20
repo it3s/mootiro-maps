@@ -62,10 +62,10 @@ class AjaxModelForm(forms.ModelForm):
         self.user = request.user
 
     def save(self, *args, **kwargs):
-        obj = super(AjaxModelForm, self).save(*args, **kwargs)
+        obj = super(AjaxModelForm, self).save(commit=False, *args, **kwargs)
         if (not self.cleaned_data['id']) and self.user and hasattr(obj, 'creator'):
             obj.creator_id = self.user.id
-            obj.save()
+        obj.save()
         return obj
 
 

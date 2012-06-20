@@ -23,11 +23,11 @@ class Update(models.Model):
         "E": "edited",
         "D": "discussed",
     }
-    typ = models.CharField(max_length=1, null=False, db_index=True,
+    type = models.CharField(max_length=1, null=False, db_index=True,
             choices=tuple(TYPES.items()))
     @property
-    def type(self):
-        return self.TYPES[self.typ]
+    def readable_type(self):
+        return self.TYPES[self.type]
 
     # comma-separated list of usernames
     _users = models.CharField(max_length=1024)
@@ -62,7 +62,7 @@ class Update(models.Model):
 
     @property
     def image(self):
-        action = {"A": "add", "E": "edit", "D": "discussion"}[self.typ]
+        action = {"A": "add", "E": "edit", "D": "discussion"}[self.type]
         path = "img/updates-page/{}-{}.png".format(self.object_type, action)
         return path
 

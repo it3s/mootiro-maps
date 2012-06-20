@@ -45,6 +45,12 @@ def create_update(sender, **kwargs):
     if sender not in klasses:
         return  # class not to log updates
 
+    # print "= = = = CREATE UPDATE = = = ="
+    # print sender
+    # print kwargs
+    # print ""
+    # return
+
     instance = kwargs["instance"]
     if not hasattr(instance, 'creator') or not instance.creator:
         return  # not ready to be logged
@@ -54,9 +60,9 @@ def create_update(sender, **kwargs):
 
     created = kwargs["created"]
     if created:
-        data['typ'] = Update.ADD
+        data['type'] = Update.ADD
     else:
-        data['typ'] = Update.EDIT
+        data['type'] = Update.EDIT
         # TODO: handle slug changes
 
     update = Update(**data)
