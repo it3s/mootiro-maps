@@ -8,10 +8,14 @@
       document.write("<s" + "cript type=\"text/javascript\" src=\"http://www.google.com/jsapi\"" + "><" + "/script>");
     }
     if (!window.komoo) {
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/compat.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/infobox_packed.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/markerclusterer_packed.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/multimarker.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/geometries.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/features.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/collections.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/controls.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
     }
   </script>

@@ -15,6 +15,9 @@
     <script type="text/javascript" src="/static/js/multimarker.js"></script>
     <script type="text/javascript" src="/static/js/komoo_map.js"></script>
     <script type="text/javascript" src="/static/js/geometries.js"></script>
+    <script type="text/javascript" src="/static/js/features.js"></script>
+    <script type="text/javascript" src="/static/js/collections.js"></script>
+    <script type="text/javascript" src="/static/js/controls.js"></script>
     <script type="text/javascript" src="/static/js/komoo_utils.js"></script>
     <link rel="stylesheet" href="/static/lib/qunit/qunit.css" type="text/css" media="screen" />
     <script type="text/javascript" src="/static/lib/qunit/qunit.js"></script>
@@ -87,7 +90,7 @@
           editable: true,
           fetchGeometries: false,
           autoSaveMapType: true,
-          autoSaveLocation: true,
+          autoSaveLocation: false,
           googleMapOptions: {
             zoom: 13,
             maxZoom: null,
@@ -132,18 +135,18 @@
 
         test('Loading GeoJSON', function () {
           setUp();
-          var geometries = map.loadGeoJSON(simpleGeoJson);
-          equal(geometries.length, 1, 'Wrong collection size');
-          equal(geometries[0].getPaths().getLength(), 1, 'Wrong paths size');
-          equal(geometries[0].getPath().getLength(), 4, 'Wrong path size');
+          var features = map.loadGeoJSON(simpleGeoJson);
+          equal(features.length, 1, 'Wrong collection size');
+          equal(features[0].getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
+          equal(features[0].getGeometry().getPath().getLength(), 4, 'Wrong path size');
           equal(map.overlays.length, 1, 'Added wrong geometries to map');
-          var moreGeometries = map.loadGeoJSON(completeGeoJson);
-          equal(moreGeometries.length, 4, 'Wrong collection size');
-          equal(moreGeometries[0].getPaths().getLength(), 1, 'Wrong paths size');
-          equal(moreGeometries[0].getPath().getLength(), 4, 'Wrong path size');
-          equal(moreGeometries[1].getPath().getLength(), 5, 'Wrong path size');
-          equal(moreGeometries[2].getPositions()[0].lat(), 1, 'Wrong latitude');
-          equal(moreGeometries[2].getPositions()[0].lng(), 2, 'Wrong longitude');
+          var moreFeatures = map.loadGeoJSON(completeGeoJson);
+          equal(moreFeatures.length, 4, 'Wrong collection size');
+          equal(moreFeatures[0].getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
+          equal(moreFeatures[0].getGeometry().getPath().getLength(), 4, 'Wrong path size');
+          equal(moreFeatures[1].getGeometry().getPath().getLength(), 5, 'Wrong path size');
+          equal(moreFeatures[2].getGeometry().getPositions()[0].lat(), 1, 'Wrong latitude');
+          equal(moreFeatures[2].getGeometry().getPositions()[0].lng(), 2, 'Wrong longitude');
           equal(map.overlays.length, 4, 'Added wrong geometries to map');
         });
 
@@ -154,8 +157,8 @@
           deepEqual(geoJson, completeGeoJson);
           var geoJson = map.getGeoJSON({geometryCollection: true});
           var geometryGeoJson = {
-            "type": "GeometryCollection",
-            "geometries": [
+            'type': 'GeometryCollection',
+            'geometries': [
               completeGeoJson.features[0].geometry,
               completeGeoJson.features[1].geometry,
               completeGeoJson.features[2].geometry,

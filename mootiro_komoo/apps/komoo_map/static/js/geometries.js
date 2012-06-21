@@ -1,12 +1,11 @@
-if (typeof Object.create !== 'function') {
-    Object.create = function (o) {
-        function F() {}
-        F.prototype = o;
-        return new F();
-    };
-}
+/**
+ * geometries.js
+ * requires compat.js
+ */
+
 
 if (!window.komoo) komoo = {};
+if (!komoo.event) komoo.event = google.maps.event;
 
 komoo.GeometryType = {};
 komoo.GeometryType.POINT = 'marker';
@@ -26,6 +25,7 @@ komoo.geometries.defaults.BORDER_OPACITY = 0.6;
 komoo.geometries.defaults.BORDER_SIZE = 1.5;
 komoo.geometries.defaults.ZINDEX = 1;
 
+
 /** Geometry Factory **/
 
 komoo.geometries.makeGeometry = function (feature) {
@@ -39,10 +39,8 @@ komoo.geometries.makeGeometry = function (feature) {
         geometry = new komoo.geometries.Polygon();
     }
 
-    if (geometry) {
-        geometry.setProperties(feature.properties);
-        geometry.setCoordinates(feature.geometry.coordinates);
-    }
+    if (geometry) geometry.setCoordinates(feature.geometry.coordinates);
+
     return geometry;
 };
 
@@ -58,10 +56,10 @@ komoo.geometries.Geometry.prototype.initEvents = function () {
     var that = this;
     var eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
         'mouseout', 'mouseover', 'mouseup', 'rightclick'];
-    $.each(eventsNames, function(i, eventName) {
+    eventsNames.forEach(function(eventName, index, orig) {
         google.maps.event.addListener(that.object_,
                 eventName, function (args) {
-            google.maps.event.trigger(that, eventName, args);
+            komoo.event.trigger(that, eventName, args);
         });
     });
 };
@@ -69,26 +67,23 @@ komoo.geometries.Geometry.prototype.initEvents = function () {
 komoo.geometries.Geometry.prototype.calculateBounds = function () {
     var that = this;
     var bounds;
-    var n = null;
-    var w = null;
-    var s = null;
-    var e = null;
+    var n, w, s, e;
     var getBounds = function (pos) {
-        if (n === null) {
+        if (n === undefined) {
             n = s = pos[0];
             w = e = pos[1];
         }
         n = Math.max(pos[0], n);
         s = Math.min(pos[0], s);
-        w = Math.max(pos[1], w);
-        e = Math.min(pos[1], e);
+        w = Math.min(pos[1], w);
+        e = Math.max(pos[1], e);
         return [[s, w], [n, e]];
     };
     var coordinates = this.getCoordinates();
     if (this.getGeometryType() != 'Polygon')
         coordinates = [coordinates];
-    $.each(coordinates, function (i, path) {
-        $.each(path, function (j, pos) {
+    coordinates.forEach(function (path, index, orig) {
+        path.forEach(function (pos, index_, orig_) {
             bounds = getBounds(pos);
         });
     });
@@ -120,68 +115,6 @@ komoo.geometries.Geometry.prototype.getCenter = function () {
 komoo.geometries.Geometry.prototype.initGoogleObject = function () {
 };
 
-komoo.geometries.Geometry.prototype.getUrl = function () {
-    var url;
-    if (this.properties_.type == "community") {
-        url = dutils.urls.resolve("view_community",
-                {community_slug: this.properties_.community_slug});
-    } else if (this.properties_.type == "resource") {
-        url = dutils.urls.resolve("view_resource", {
-                    resource_id: this.properties_.id
-                }).replace("//", "/");
-    }  else if (this.properties_.type == "organizationbranch") {
-        url = dutils.urls.resolve("view_organization", {
-                    organization_slug: this.properties_.organization_slug || ""
-                }).replace("//", "/");
-    }  else {
-        var slugname = this.properties_.type + "_slug";
-        var params = {"community_slug": this.properties_.community_slug};
-        params[slugname] = this.properties_[slugname];
-        url = dutils.urls.resolve("view_" + this.properties_.type, params).replace("//", "/");
-    }
-    return url;
-};
-
-komoo.geometries.Geometry.prototype.isHighlighted = function () {
-    return this.highlighted;
-};
-
-komoo.geometries.Geometry.prototype.setHighlight = function (flag) {
-    this.highlighted = flag;
-    this.updateIcon();
-};
-
-komoo.geometries.Geometry.prototype.getIconUrl = function (optZoom) {
-    if (!this.getProperties()) return;
-    var zoom = optZoom || 10;
-    var url = "/static/img/";
-    if (zoom >= 15) {
-        url += "near";
-    } else {
-        url += "far";
-    }
-    url += "/";
-    if (this.isHighlighted()) {
-        url += "highlighted/";
-    }
-
-    if (this.getProperties().categories && this.getProperties().categories[0]) {
-        url += this.getProperties().categories[0].name.toLowerCase();
-        if (this.getProperties().categories.length > 1) {
-            url += "-plus";
-        }
-    } else {
-        url += this.getProperties().type;
-    }
-    url += ".png";
-    url = url.replace(" ", "-");
-    return url;
-};
-
-komoo.geometries.Geometry.prototype.updateIcon = function (optZoom) {
-    this.setIcon(this.getIconUrl(optZoom));
-};
-
 komoo.geometries.Geometry.prototype.setObject = function (object) {
     this.object_ = object;
 };
@@ -196,29 +129,6 @@ komoo.geometries.Geometry.prototype.getFeature = function () {
 
 komoo.geometries.Geometry.prototype.getGeometryType = function () {
     return this.geometryType_;
-};
-
-komoo.geometries.Geometry.prototype.getGeometry = function () {
-    return {
-        'type': this.getGeometryType(),
-        'coordinates': this.getCoordinates()
-    };
-};
-
-komoo.geometries.Geometry.prototype.setProperties = function (properties) {
-    this.properties_ = properties;
-};
-
-komoo.geometries.Geometry.prototype.getProperties = function () {
-    return this.properties_;
-};
-
-komoo.geometries.Geometry.prototype.getGeoJsonFeature = function () {
-    return {
-        'type': 'Feature',
-        'geometry': this.getGeometry(),
-        'properties': this.getProperties()
-    };
 };
 
 komoo.geometries.Geometry.prototype.getDefaultZIndex = function () {
@@ -266,6 +176,8 @@ komoo.geometries.Geometry.prototype.setOptions = function (options) {
 };
 
 
+
+
 /** Point Geometry **/
 
 komoo.geometries.Point = function (opts) {
@@ -291,10 +203,10 @@ komoo.geometries.Point.prototype.initEvents = function () {
         'cursor_changed', 'drag', 'dragend', 'daggable_changed', 'dragstart',
         'flat_changed', 'icon_changed', 'position_changed', 'shadow_changed',
         'shape_changed', 'title_changed', 'visible_changed', 'zindex_changed'];
-    $.each(eventsNames, function(i, eventName) {
+    eventsNames.forEach(function(eventName, index, orig) {
         google.maps.event.addListener(that.object_,
                 eventName, function (args) {
-            google.maps.event.trigger(that, eventName, args);
+            komoo.event.trigger(that, eventName, args);
         });
     });
 };
@@ -332,6 +244,8 @@ komoo.geometries.Point.prototype.setDraggable = function (draggable) {
 komoo.geometries.Point.prototype.getDraggable = function () {
     return this.object_.getDraggable();
 };
+
+
 
 
 /** Multipoint Geometry **/
@@ -383,16 +297,16 @@ komoo.geometries.MultiPoint.prototype.setCoordinates = function (coordinates) {
     if (!coords[0].pop) coords = [coords];
     this._guaranteePoints(coords.length);
     this.bounds_ = undefined;
-    $.each(this.getPoints(), function (i, point) {
-        point.setPosition(that.getLatLngFromArray(coords[i]));
+    this.getPoints().forEach(function (point, index, orig) {
+        point.setPosition(that.getLatLngFromArray(coords[index]));
     });
-    this.updateIcon();
+    komoo.event.trigger(this, 'coordinates_changed');
 };
 
 komoo.geometries.MultiPoint.prototype.getCoordinates = function () {
     var that = this;
     var coords = [];
-    $.each(this.getPoints(), function (i, point) {
+    this.getPoints().forEach(function (point, index, orig) {
         coords.push(that.getArrayFromLatLng(point.getPosition()));
     });
     return coords;
@@ -420,6 +334,8 @@ komoo.geometries.MultiPoint.prototype.getIcon = function () {
 };
 
 
+
+
 /** Polyline Geometry **/
 
 komoo.geometries.Polyline = function (opts) {
@@ -445,7 +361,7 @@ komoo.geometries.Polyline.prototype.setCoordinates = function (coordinates) {
     var that = this;
     var path = [];
     this.bounds_ = undefined;
-    $.each(coordinates, function (k, pos) {
+    coordinates.forEach(function (pos, index, orig) {
         path.push(that.getLatLngFromArray(pos));
     });
     this.setPath(path);
@@ -477,7 +393,7 @@ komoo.geometries.Polyline.prototype.getBorderSize = function () {
 
 
 komoo.geometries.Polyline.prototype.setIcon = function (icon) {
-    this.marker.setIcon(icon);
+    if (this.marker) this.marker.setIcon(icon);
 };
 
 /* Delegations */
@@ -492,6 +408,8 @@ komoo.geometries.Polyline.prototype.getPath = function () {
 komoo.geometries.Polyline.prototype.setEditable = function (flag) {
     return this.object_.setEditable(flag);
 }
+
+
 
 
 /** Polygon Geometry **/
@@ -520,10 +438,10 @@ komoo.geometries.Polygon.prototype.initGoogleObject = function (opts) {
 
 komoo.geometries.Polygon.prototype.handleEvents = function () {
     var that = this;
-    google.maps.event.addListener(this, "mousemove", function (e) {
+    komoo.event.addListener(this,'mousemove', function (e) {
         that.setOptions({strokeWeight: 2.5});
     });
-    google.maps.event.addListener(this, "mouseout", function (e) {
+    komoo.event.addListener(this, 'mouseout', function (e) {
         that.setOptions({strokeWeight: that.getBorderSize()});
     });
 };
@@ -542,9 +460,9 @@ komoo.geometries.Polygon.prototype.setCoordinates = function (coordinates) {
     var that = this;
     var paths = [];
     this.bounds_ = undefined;
-    $.each(coordinates, function (i, coord) {
+    coordinates.forEach(function (coord, index, orig) {
         var path = [];
-        $.each(coord, function (j, pos) {
+        coord.forEach(function (pos, index_, orig_) {
             path.push(that.getLatLngFromArray(pos));
         });
         // Removes the last point that closes th

@@ -137,15 +137,6 @@
               'Should return null');
         });
 
-        test('Get geometry from point geometry', function () {
-          expect(1);
-          var point = new komoo.geometries.Point();
-          var coordinates = [1, 2];
-          var geometry = {'type': 'Point', 'coordinates': coordinates};
-          point.setCoordinates(coordinates);
-          deepEqual(point.getGeometry(), geometry,
-              'Should return the geometry containing the coordinates it received');
-        });
 
         test('Set coordinates to polyline geometry', function () {
           expect(10);
@@ -173,16 +164,6 @@
           var polyline = new komoo.geometries.Polyline();
           deepEqual(polyline.getCoordinates(), [],
               'Should return an empty array');
-        });
-
-        test('Get geometry from polyline geometry', function () {
-          expect(1);
-          var polyline = new komoo.geometries.Polyline();
-          var coordinates = [[0,0], [0,1], [1,1], [1,0], [1,2]];
-          var geometry = {'type': 'LineString', 'coordinates': coordinates};
-          polyline.setCoordinates(coordinates);
-          deepEqual(polyline.getGeometry(), geometry,
-              'Should return the geometry containing the coordinates it received');
         });
 
         test('Set coordinates to polygon geometry', function () {
@@ -219,18 +200,6 @@
               'Should return an array containing an empty array');
         });
 
-        test('Get geometry from polygon geometry', function () {
-          expect(1);
-          var polygon = new komoo.geometries.Polygon();
-          var coordinates = [
-            [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]],
-            [[2, 2], [2, 3], [3, 3], [3, 2], [2, 2]]];
-          var geometry = {'type': 'Polygon', 'coordinates': coordinates};
-          polygon.setCoordinates(coordinates);
-          deepEqual(polygon.getGeometry(), geometry,
-              'Should return the geometry containing the coordinates it received');
-        });
-
         test('Set coordinates to multpoint geometry', function () {
           expect(4);
           var multiPoint = new komoo.geometries.MultiPoint();
@@ -257,16 +226,6 @@
           var multiPoint = new komoo.geometries.MultiPoint();
           deepEqual(multiPoint.getCoordinates(), [],
               'Should return an empty array');
-        });
-
-        test('Get geometry from multipoint geometry', function () {
-          expect(1);
-          var multiPoint = new komoo.geometries.MultiPoint();
-          var coordinates = [[1, 2], [3, 4]];
-          var geometry = {'type': 'MultiPoint', 'coordinates': coordinates};
-          multiPoint.setCoordinates(coordinates);
-          deepEqual(multiPoint.getGeometry(), geometry,
-              'Should return the geometry containing the coordinates it received');
         });
 
         test('Geometry factory', function () {
