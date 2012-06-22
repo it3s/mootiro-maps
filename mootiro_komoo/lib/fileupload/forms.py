@@ -99,6 +99,9 @@ class FileuploadWidget(forms.Widget):
                         <a href="#" class="btn" data-dismiss="modal">
                             %(cancel)s
                         </a>
+                        <a href="#" class="btn btn-danger" id="delete-file" file-id="">
+                            %(delete)s
+                        </a>
 
                     </div>
                 </div>
@@ -120,7 +123,8 @@ class FileuploadWidget(forms.Widget):
             'cancel': _('Cancel'),
             'save_changes': _('Save Changes'),
             'enter_subtitle': _('Enter the subtitle for this image'),
-            'name': name
+            'name': name,
+            'delete': _('Delete')
         }
         return html
 

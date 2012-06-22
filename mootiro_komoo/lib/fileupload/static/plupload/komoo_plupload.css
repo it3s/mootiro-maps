@@ -55,11 +55,10 @@
     overflow: auto;
 }
 .file-thumb {
-    display: table-cell;
+    display: block;
     max-width: 80px;
     max-height: 80px;
     margin: 0 auto;
-    vertical-align: middle;
     transition: transform 0.5s, box-shadow 0.5s;
     -moz-transition: -moz-transform 0.5s, -moz-box-shadow 0.5s;
     -o-transition: -o-transform 0.5s, -o-box-shadow 0.5s;
@@ -89,4 +88,8 @@
     display: block;
     width: 450px;
     margin: 20px auto 0 auto;
+}
+#delete-file{
+    float: left;
+    color: #ffffff;
 }
