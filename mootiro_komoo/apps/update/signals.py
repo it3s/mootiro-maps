@@ -41,6 +41,7 @@ def create_add_edit_update(sender, **kwargs):
         'object_type': instance._meta.verbose_name,
         'type': kwargs["type"],
         'users': [instance.creator.username],
+        'comments_count': Comment.comments_count_for(instance),
     }
     if getattr(instance, 'community', None):
         data['communities'] = instance.community.all()
@@ -59,6 +60,7 @@ def create_discussion_update(sender, **kwargs):
         'object_type': instance._meta.verbose_name,
         'type': Update.DISCUSSION,
         'users': [comment.author.username],  # TODO: agreggate discussions
+        'comments_count': Comment.comments_count_for(instance),
     }
     if getattr(instance, 'community', None):
         data['communities'] = instance.community.all()
