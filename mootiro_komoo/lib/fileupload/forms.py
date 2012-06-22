@@ -88,7 +88,7 @@ class FileuploadWidget(forms.Widget):
                                 <img src="" alt="img" id="img-subtitle-modal">
                             </div>
                             <div>
-                                <input type="text" name="subtitle" id="id_subtitle">
+                                <input type="text" name="subtitle" id="id_subtitle" file-id="">
                             </div>
                         </p>
                     </div>

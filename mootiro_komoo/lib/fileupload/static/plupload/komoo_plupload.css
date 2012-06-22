@@ -65,13 +65,6 @@
     -o-transition: -o-transform 0.5s, -o-box-shadow 0.5s;
     -webkit-transition: -webkit-transform 0.5s, -webkit-box-shadow 0.5s;
 }
-/*.file-entry:hover {
-    transform: scale(1.5, 1.5) translate(15px, 15px);
-    -moz-transform: scale(1.5, 1.5) translate(15px,15px);
-    -o-transform: scale(1.5, 1.5) translate(15px,15px);
-    -webkit-transform: scale(1.5, 1.5) translate(15px,15px);
-
-}*/
 .file-thumb:hover {
     transform: scale(1.5, 1.5);
     -moz-transform: scale(1.5, 1.5);
@@ -94,7 +87,6 @@
 }
 #id_subtitle{
     display: block;
-    margin-top: 20px;
     width: 450px;
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
 }

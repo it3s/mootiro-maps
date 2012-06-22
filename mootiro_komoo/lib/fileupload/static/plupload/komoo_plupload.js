@@ -121,8 +121,36 @@ $('.close').live('click', function(){
 });
 
 $('.file-thumb').live('click', function(){
-    $('#subtitle-modal #img-subtitle-modal').attr('src', $(this).attr('src'));
-    $('#subtitle-modal').modal('show');
+    var file_id  = $(this).parent().attr('file-id');
+
+    $.get(
+        '/upload/file_info/',
+        {'id': file_id},
+        function(data){
+            $('#subtitle-modal #img-subtitle-modal').attr('src', data.url);
+            $('#subtitle-modal #id_subtitle').val(data.subtitle || '');
+            $('#subtitle-modal #id_subtitle').attr('file-id', file_id);
+            $('#subtitle-modal').modal('show');
+        },
+        'json'
+    );
+});
+
+$('#save-subtitle').live('click', function(){
+    var file_id = $('#subtitle-modal #id_subtitle').attr('file-id');
+    var subtitle = $('#subtitle-modal #id_subtitle').val();
+    $.post(
+        '/upload/save_subtitle/',
+        {
+            id: file_id,
+            subtitle: subtitle,
+            csrfmiddlewaretoken: getCookie('csrftoken')
+        },
+        function(data){
+            $('#subtitle-modal').modal('hide');
+        },
+        'json'
+    );
 });
 
 // Client side form validation

@@ -112,3 +112,25 @@ def uploader_poc(request):
         'fileupload/poc.html',
         {'form_poc': form},
         context_instance=RequestContext(request))
+
+
+def file_info(request):
+    file_obj = UploadedFile.objects.get(pk=request.GET['id'])
+    return JSONResponse(
+        {'subtitle': file_obj.subtitle, 'url': file_obj.file.url},
+        {},
+        response_mimetype(request))
+
+
+def save_subtitle(request):
+    try:
+        file_obj = UploadedFile.objects.get(pk=request.POST['id'])
+        file_obj.subtitle = request.POST.get('subtitle', '')
+        file_obj.save()
+        success = True
+    except Exception:
+        success = False
+    return JSONResponse(
+        {'success': success},
+        {},
+        response_mimetype(request))
