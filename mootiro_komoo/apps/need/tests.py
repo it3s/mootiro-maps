@@ -71,6 +71,25 @@ class NeedViewsTestCase(KomooTestCase):
         with self.assertRaises(Exception):
             Need.objects.get(slug='coleta-de-lixo')
 
+    def test_need_slug_edition(self):
+        self.login_user()
+        n = Need.objects.get(slug='coleta-de-lixo', community__slug='complexo-da-alema')
+        slug0 = n.slug
+        id0 = n.id
+        data = {
+            'id': n.id,  # must set with ajax_form decorator
+            'community': [1, 2],
+            'title': n.title,  # does not change
+            'description': n.description,
+            'categories': [3, 4, 5],
+            'target_audiences': [3, 4, 5],
+            'geometry': str(n.geometry),
+        }
+        url = reverse('edit_need', args=('complexo-da-alema', 'coleta-de-lixo'))
+        http_resp = self.client.post(url, data)
+        n = Need.objects.get(id=id0)
+        self.assertEquals(n.slug, slug0)
+
     # form validation
     def test_need_empty_form_validation(self):
         self.login_user()

@@ -72,6 +72,7 @@ class NeedForm(AjaxModelForm):
         self.helper.layout = Layout(
             Fieldset(
                 _('Edit need') if 'instance' in kw else _('New need'),
+                'id',  # AjaxModelForm rely on this field!
                 'title',
                 'description',
                 'community',
