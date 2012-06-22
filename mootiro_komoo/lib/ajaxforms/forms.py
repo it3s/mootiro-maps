@@ -12,6 +12,9 @@ from django.http import HttpResponse
 
 from annoying.functions import get_object_or_None
 
+from update.models import Update
+from update.signals import create_update
+
 logger = logging.getLogger(__name__)
 
 
@@ -65,7 +68,11 @@ class AjaxModelForm(forms.ModelForm):
         obj = super(AjaxModelForm, self).save(commit=False, *args, **kwargs)
         if (not self.cleaned_data['id']) and self.user and hasattr(obj, 'creator'):
             obj.creator_id = self.user.id
+            update_type = Update.ADD
+        else:
+            update_type = Update.EDIT
         obj.save()
+        create_update.send(sender=obj.__class__, instance=obj, type=update_type)
         return obj
 
 

@@ -40,7 +40,7 @@ class Update(models.Model):
     def users(self, l):
         self._users = ','.join(l)
 
-    # comma-separated list of communities slugs
+    # List of communities slug and name: "slug1,Name1|slug2,Name2|slug3,Name3"
     _communities = models.CharField(max_length=1024)
 
     @property
@@ -62,10 +62,8 @@ class Update(models.Model):
 
     @property
     def image(self):
-        action = {"A": "add", "E": "edit", "D": "discussion"}[self.type]
-        path = "img/updates-page/{}-{}.png".format(self.object_type, action)
-        return path
+        return "img/updates-page/{}-{}.png" \
+                    .format(self.object_type, self.readable_type)
 
-
-# How this works? Isn't it a circular dependency???
+# How does this works? Isn't it a circular dependency???
 import signals

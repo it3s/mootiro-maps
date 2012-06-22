@@ -13,7 +13,7 @@ must be explicit imported in __init__.py
 from __future__ import unicode_literals  # unicode by default
 
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+from django.dispatch import Signal, receiver
 
 from .models import Update
 from community.models import Community
@@ -22,48 +22,46 @@ from proposal.models import Proposal
 from organization.models import Organization
 from komoo_resource.models import Resource
 from investment.models import Investment
+from komoo_comments.models import Comment
 
 
-def _get_update_data(instance):
+create_update = Signal(providing_args=["instance", "type"])
+
+
+# Community, Need, Organization, Resource
+@receiver(create_update, sender=Community)
+@receiver(create_update, sender=Need)
+@receiver(create_update, sender=Organization)
+@receiver(create_update, sender=Resource)
+def create_add_edit_update(sender, **kwargs):
+    instance = kwargs["instance"]
     data = {
         'title': instance.name,
         'link': instance.view_url,
         'object_type': instance._meta.verbose_name,
+        'type': kwargs["type"],
         'users': [instance.creator.username],
     }
-
     if getattr(instance, 'community', None):
         data['communities'] = instance.community.all()
-    return data
+    
+    update = Update(**data)
+    update.save()
 
 
-@receiver(post_save, dispatch_uid="create_update")
-def create_update(sender, **kwargs):
-    """Create updates to be logged on frontpage"""
-
-    klasses = [Community, Need, Organization, Resource]
-    if sender not in klasses:
-        return  # class not to log updates
-
-    # print "= = = = CREATE UPDATE = = = ="
-    # print sender
-    # print kwargs
-    # print ""
-    # return
-
-    instance = kwargs["instance"]
-    if not hasattr(instance, 'creator') or not instance.creator:
-        return  # not ready to be logged
-
-    creator = instance.creator
-    data = _get_update_data(instance)
-
-    created = kwargs["created"]
-    if created:
-        data['type'] = Update.ADD
-    else:
-        data['type'] = Update.EDIT
-        # TODO: handle slug changes
+@receiver(create_update, sender=Comment)
+def create_discussion_update(sender, **kwargs):
+    comment = kwargs["instance"]
+    instance = comment.content_object
+    data = {
+        'title': instance.name,
+        'link': instance.view_url,
+        'object_type': instance._meta.verbose_name,
+        'type': Update.DISCUSSION,
+        'users': [comment.author.username],  # TODO: agreggate discussions
+    }
+    if getattr(instance, 'community', None):
+        data['communities'] = instance.community.all()
 
     update = Update(**data)
     update.save()
