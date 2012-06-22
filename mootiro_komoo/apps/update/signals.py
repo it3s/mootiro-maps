@@ -38,6 +38,7 @@ def create_add_edit_update(sender, **kwargs):
     data = {
         'title': instance.name,
         'link': instance.view_url,
+        'object_id': instance.id,
         'object_type': instance._meta.verbose_name,
         'type': kwargs["type"],
         'users': [instance.creator.username],
@@ -54,16 +55,27 @@ def create_add_edit_update(sender, **kwargs):
 def create_discussion_update(sender, **kwargs):
     comment = kwargs["instance"]
     instance = comment.content_object
-    data = {
-        'title': instance.name,
-        'link': instance.view_url,
-        'object_type': instance._meta.verbose_name,
-        'type': Update.DISCUSSION,
-        'users': [comment.author.username],  # TODO: agreggate discussions
-        'comments_count': Comment.comments_count_for(instance),
-    }
-    if getattr(instance, 'community', None):
-        data['communities'] = instance.community.all()
 
-    update = Update(**data)
+    discussion_update = Update.get_recent_discussion_for(instance)
+    if discussion_update:
+        update = discussion_update
+        people = update.users
+        if comment.author.username not in people:
+            people.append(comment.author.username)
+            update.users = people
+    else:
+        data = {
+            'title': instance.name,
+            'link': instance.view_url,
+            'object_id': instance.id,
+            'object_type': instance._meta.verbose_name,
+            'type': Update.DISCUSSION,
+            'users': [comment.author.username],  # TODO: agreggate discussions
+        }
+        update = Update(**data)
+
+    if getattr(instance, 'community', None):
+        update.communities = instance.community.all()
+
+    update.comments_count = Comment.comments_count_for(instance)
     update.save()

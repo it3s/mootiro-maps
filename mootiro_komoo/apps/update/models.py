@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
+from datetime import datetime, timedelta
+
 from django.contrib.gis.db import models
 
 
@@ -11,6 +13,7 @@ class Update(models.Model):
     title = models.CharField(max_length=256, null=False)
     link = models.CharField(max_length=512, null=False)
     date = models.DateTimeField(auto_now=True)
+    object_id = models.IntegerField(null=True, db_index=True)
     object_type = models.CharField(max_length=32, null=False, db_index=True)
     comments_count = models.IntegerField(null=True)
 
@@ -52,6 +55,14 @@ class Update(models.Model):
     def communities(self, l):
         if l:
             self._communities = '|'.join([','.join((c.view_url, c.name)) for c in l])
+
+    @classmethod
+    def get_recent_discussion_for(cls, obj):
+        one_day_ago = datetime.now() - timedelta(days=1)
+        u = Update.objects.filter(object_id=obj.id, type=cls.DISCUSSION,
+            object_type=obj._meta.verbose_name, date__gt=one_day_ago)
+        return u[0] if u else None
+
 
     def __unicode__(self):
         return unicode(self.title)
