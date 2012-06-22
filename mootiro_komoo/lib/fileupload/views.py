@@ -106,6 +106,7 @@ def save_file_from_link(request):
 
 def uploader_poc(request):
     form = POCForm(request.POST or None)
+    print '\n\n\n REQUEST: %s \n\n' % request.POST
     if form.is_valid():
         print 'AHOOY'
     return render_to_response(

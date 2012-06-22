@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.utils.translation import ugettext_lazy as _
+from main.utils import MooHelper
 
 
 class PluploadWidget(forms.Widget):
@@ -136,3 +137,7 @@ class FileuploadField(forms.CharField):
 class POCForm(forms.Form):
     files = FileuploadField()
     title = forms.CharField()
+
+    def __init__(self, *a, **kw):
+        self.helper = MooHelper(form_id="poc_form")
+        return super(POCForm, self).__init__(*a, **kw)

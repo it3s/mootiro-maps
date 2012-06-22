@@ -6,7 +6,6 @@
             add_file({
                 name: name.substring(name.lastIndexOf('/') + 1, name.length),
                 id: '{{ f.id }}',
-                delete_url: '{% url upload-delete f.id %}',
                 url: '{{ f.file.url }}'
             });
         {% endfor %}

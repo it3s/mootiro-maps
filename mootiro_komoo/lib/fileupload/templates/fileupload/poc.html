@@ -1,12 +1,15 @@
 {% extends 'global.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
     <div id="main-content">
     <div class="main-column">
         <h3>Upload POC</h3>
 
-        {{ form_poc }}
+
+        {% crispy form_poc %}
     </div>
     </div>
 
