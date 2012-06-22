@@ -50,7 +50,7 @@ class FileuploadWidget(forms.Widget):
         <div id="uploader">
             <div>
                 <a id="pickfiles" href="#" class="button">%(select_files)s</a>
-
+                &nbsp;%(or)s&nbsp;
                 <a class="btn" data-toggle="modal" href="#file-modal" >
                     %(add_links)s
                 </a>
@@ -125,7 +125,8 @@ class FileuploadWidget(forms.Widget):
             'save_changes': _('Save Changes'),
             'enter_subtitle': _('Enter the subtitle for this image'),
             'name': name,
-            'delete': _('Delete')
+            'delete': _('Delete'),
+            'or': _('or')
         }
         return html
 
