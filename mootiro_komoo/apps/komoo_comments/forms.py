@@ -31,7 +31,7 @@ class FormComment(forms.ModelForm):
         return retorno
 
     def save(self, user=None, *args, **kwargs):
-        comment = super(FormComment, self).save(*args, **kwargs)
+        comment = super(FormComment, self).save(commit=False, *args, **kwargs)
         update = False
         if user and not user.is_anonymous():
             comment.author_id = user.id

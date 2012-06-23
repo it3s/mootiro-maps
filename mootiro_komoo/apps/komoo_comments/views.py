@@ -14,6 +14,9 @@ from annoying.decorators import render_to, ajax_request
 from komoo_comments.forms import FormComment
 from komoo_comments.models import Comment
 
+from update.models import Update
+from update.signals import create_update
+
 logger = logging.getLogger(__name__)
 
 
@@ -33,6 +36,7 @@ def comments_add(request):
     form_comment = FormComment(request.POST)
     if form_comment.is_valid():
         comment = form_comment.save(user=request.user)
+        create_update.send(sender=Comment, instance=comment, type=Update.DISCUSSION)
         return {
             'success': True,
             'comment': render_to_response('comments/comment.html',

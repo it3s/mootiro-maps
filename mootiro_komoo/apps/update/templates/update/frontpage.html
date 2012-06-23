@@ -36,7 +36,7 @@
             <li class="a-update">
               <div class="update-image">
                 {# How to change images to be inside update app??? #}
-                <img src="{{STATIC_URL}}/{{ u.image }}">
+                <img src="{{STATIC_URL}}{{ u.image }}">
               </div>
               <div class="update-info">
                 <h3>
@@ -61,9 +61,7 @@
                   {% endblocktrans %}
                 </div>
                 <div class="update-social right">
-                  {% if u.object %}
-                    {% vote u.object %} {% comments_summary u.object %}
-                  {% endif %}
+                  {{ u.comments_count }} comments
                 </div>
               </div>
             </li>

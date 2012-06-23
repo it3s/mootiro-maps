@@ -39,6 +39,13 @@ class Comment(VotableModel):
         obj_content_type = ContentType.objects.get_for_model(obj)
         return Comment.objects.filter(content_type=obj_content_type, object_id=obj.id)
 
+    @classmethod
+    def comments_count_for(klass, obj):
+        obj_content_type = ContentType.objects.get_for_model(obj)
+        return Comment.objects \
+                    .filter(content_type=obj_content_type, object_id=obj.id) \
+                    .count()
+
     @property
     def admin_url(self):
         return reverse('admin:{}_{}_change'.format(self._meta.app_label,

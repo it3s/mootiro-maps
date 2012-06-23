@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
+from datetime import datetime, timedelta
+
 from django.contrib.gis.db import models
 
 
@@ -11,6 +13,7 @@ class Update(models.Model):
     title = models.CharField(max_length=256, null=False)
     link = models.CharField(max_length=512, null=False)
     date = models.DateTimeField(auto_now=True)
+    object_id = models.IntegerField(null=True, db_index=True)
     object_type = models.CharField(max_length=32, null=False, db_index=True)
     comments_count = models.IntegerField(null=True)
 
@@ -40,7 +43,7 @@ class Update(models.Model):
     def users(self, l):
         self._users = ','.join(l)
 
-    # comma-separated list of communities slugs
+    # List of communities slug and name: "slug1,Name1|slug2,Name2|slug3,Name3"
     _communities = models.CharField(max_length=1024)
 
     @property
@@ -53,6 +56,14 @@ class Update(models.Model):
         if l:
             self._communities = '|'.join([','.join((c.view_url, c.name)) for c in l])
 
+    @classmethod
+    def get_recent_discussion_for(cls, obj):
+        one_day_ago = datetime.now() - timedelta(days=1)
+        u = Update.objects.filter(object_id=obj.id, type=cls.DISCUSSION,
+            object_type=obj._meta.verbose_name, date__gt=one_day_ago)
+        return u[0] if u else None
+
+
     def __unicode__(self):
         return unicode(self.title)
 
@@ -62,10 +73,8 @@ class Update(models.Model):
 
     @property
     def image(self):
-        action = {"A": "add", "E": "edit", "D": "discussion"}[self.type]
-        path = "img/updates-page/{}-{}.png".format(self.object_type, action)
-        return path
+        return "img/updates-page/{}-{}.png" \
+                    .format(self.object_type, self.readable_type)
 
-
-# How this works? Isn't it a circular dependency???
+# How does this works? Isn't it a circular dependency???
 import signals
