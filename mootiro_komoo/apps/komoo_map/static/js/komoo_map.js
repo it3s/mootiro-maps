@@ -524,16 +524,16 @@ komoo.Map = function (element, options) {
     // Initializing some properties.
     this.mode = null;
     this.fetchedTiles = {};
-    this.keptOverlays = [];
     this.loadedOverlays = {};
     this.options = $.extend(komoo.MapOptions, options);
     this.drawingManagerOptions = {};
     this.overlayOptions = {};
     this.overlays = komoo.collections.makeFeatureCollection();
+    this.keptOverlays = komoo.collections.makeFeatureCollection();
+    this.newOverlays = komoo.collections.makeFeatureCollection();
     this.loadedOverlays = {};
     this.overlaysByType = {};
     this.initOverlaysByTypeObject();
-    this.newOverlays = [];
     // Creates a jquery selector to use the jquery events feature.
     this.event = $("<div>");
     // Creates the Google Maps object.
@@ -771,12 +771,12 @@ komoo.Map.prototype.initMarkerClusterer = function () {
  */
 komoo.Map.prototype.initOverlaysByTypeObject = function () {
     var komooMap = this;
-    $.each(this.options.regionTypes, function (i, type) {
+    this.options.regionTypes.forEach(function (type, index, orig) {
         komooMap.overlaysByType[type.type] = {};
-        komooMap.overlaysByType[type.type]["uncategorized"] = [];
+        komooMap.overlaysByType[type.type]["uncategorized"] = komoo.collections.makeFeatureCollection();
         if (type.categories.length) {
-            $.each(type.categories, function(j, category) {
-                komooMap.overlaysByType[type.type][category] = [];
+            type.categories.forEach(function(category, index_, orig_) {
+                komooMap.overlaysByType[type.type][category] = komoo.collections.makeFeatureCollection();
             });
         }
     });
@@ -853,12 +853,12 @@ komoo.Map.prototype.handleEvents = function () {
         if (komooMap.options.autoSaveLocation) {
             komooMap.saveLocation();
         }
-        $.each(komooMap.keptOverlays, function (key, overlay) {
+        komooMap.keptOverlays.forEach(function (overlay, index, orig) {
             if (!bounds.intersects(overlay.getBounds())) {
                 overlay.setMap(null);
             }
         });
-        komooMap.keptOverlays = [];
+        komooMap.keptOverlays.clear();
     });
 
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
@@ -927,8 +927,8 @@ komoo.Map.prototype.saveLocation = function (center) {
         center = this.googleMap.getCenter();
     }
     var zoom = this.googleMap.getZoom();
-    komoo.createCookie("lastLocation", center.toUrlValue(), 90);
-    komoo.createCookie("lastZoom", zoom, 90);
+    komoo.utils.createCookie("lastLocation", center.toUrlValue(), 90);
+    komoo.utils.createCookie("lastZoom", zoom, 90);
 };
 
 
@@ -938,8 +938,8 @@ komoo.Map.prototype.saveLocation = function (center) {
  * @returns {boolean}
  */
 komoo.Map.prototype.goToSavedLocation = function () {
-    var lastLocation = komoo.readCookie("lastLocation");
-    var zoom = parseInt(komoo.readCookie("lastZoom"), 10);
+    var lastLocation = komoo.utils.readCookie("lastLocation");
+    var zoom = parseInt(komoo.utils.readCookie("lastZoom"), 10);
     if (lastLocation && zoom) {
         lastLocation = lastLocation.split(",");
         var center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
@@ -960,7 +960,7 @@ komoo.Map.prototype.saveMapType = function (mapType) {
     if (!mapType) {
         mapType = this.googleMap.getMapTypeId();
     }
-    komoo.createCookie("mapType", mapType, 90);
+    komoo.utils.createCookie("mapType", mapType, 90);
 };
 
 
@@ -970,7 +970,7 @@ komoo.Map.prototype.saveMapType = function (mapType) {
  * @returns {boolean}
  */
 komoo.Map.prototype.useSavedMapType = function () {
-    var mapType = komoo.readCookie("mapType");
+    var mapType = komoo.utils.readCookie("mapType");
     if (mapType) {
         this.googleMap.setMapTypeId(mapType);
         return true;
@@ -1155,10 +1155,8 @@ komoo.Map.prototype.getGeoJSON = function (options) {
     } else {
         if (list == this.overlays)
             return this.overlays.getGeoJson();
-        geoJSON = {
-            "type": "FeatureCollection",
-            "features": features
-        };
+        else if (list == this.newOverlays)
+            return this.newOverlays.getGeoJson();
     }
     list.forEach(function (overlay, index, orig) {
         geoms.push(overlay.getGeoJsonGeometry());
@@ -1191,7 +1189,7 @@ komoo.Map.prototype.getOverlaysByType = function (type, opt_categories, opt_stri
     }
     $.each(categories, function (key, category) {
         if (komooMap.overlaysByType[type][category]) {
-            $.each(komooMap.overlaysByType[type][category], function (key, overlay) {
+            komooMap.overlaysByType[type][category].forEach(function (overlay, index, orig) {
                 if (!opt_strict || !overlay.getProperties().categories || overlay.getProperties().categories.length == 1) {
                     overlays.push(overlay);
                 }
@@ -1354,15 +1352,13 @@ komoo.Map.prototype.setCurrentOverlay = function (overlay) {
     if (this.currentOverlay == overlay) return;
     $("#komoo-map-add-button, #komoo-map-cut-out-button, #komoo-map-delete-button").hide();
     this.currentOverlay = overlay;
-    if (this.currentOverlay && this.currentOverlay.properties &&
-            this.currentOverlay.properties.userCanEdit) {
-        if (this.currentOverlay.setEditable) {
-            this.currentOverlay.setEditable(true);
-        }
-        if (this.currentOverlay.getPaths) {
+    if (this.currentOverlay && this.currentOverlay.getProperties() &&
+            this.currentOverlay.getProperties().userCanEdit) {
+        this.currentOverlay.setEditable(true);
+        if (this.currentOverlay.getGeometry().getGeometryType() == 'Polygon') {
             this.drawingMode_ = komoo.OverlayType.POLYGON;
             $("#komoo-map-cut-out-button").show();
-        } else if (this.currentOverlay.getPath) {
+        } else if (this.currentOverlay.getGeometry().getGeometryType() == 'LineString') {
             this.drawingMode_ = komoo.OverlayType.POLYLINE;
         } else {
             this.drawingMode_ = komoo.OverlayType.POINT;
@@ -1582,7 +1578,7 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
                 l = paths.getLength();
                 paths.forEach(function (path, i) {
                     // Delete the correct path.
-                    if (komoo.isPointInside(e.latLng, path)) {
+                    if (komoo.utils.isPointInside(e.latLng, path)) {
                         paths.removeAt(i);
                         l--;
                     }
@@ -1722,29 +1718,17 @@ komoo.Map.prototype._initDrawingManager = function () {
     google.maps.event.addListener(this.drawingManager,
             "overlaycomplete", function (e) {
         // FIXME: REWRITE
-        /*overlay.setProperties({
-            userCanEdit: true,
-            type: komooMap.type,
-            name: "Sem nome"
-        });*/
-
-        // Switch back to non-drawing mode after drawing a shape.
-        komooMap.drawingManager.setDrawingMode(null);
-
-        // Sets the custom image.
-        if (e.overlay.setIcon) {
-            e.overlay.setIcon(overlay.getIconUrl(this.googleMap.getZoom()));
-        }
 
         var path;
         if (e.overlay.getPath) {
             path = e.overlay.getPath();
         }
 
+        var overlay;
         if ((komooMap.editMode == komoo.EditMode.CUTOUT || komooMap.editMode == komoo.EditMode.ADD) &&
                     e.overlay.getPaths) {
             // Gets the overlays path orientation.
-            var paths = komooMap.currentOverlay.getPaths();
+            var paths = komooMap.currentOverlay.getGeometry().getPaths();
             // Gets the paths orientations.
             var sArea = google.maps.geometry.spherical.computeSignedArea(path);
             var sAreaAdded = google.maps.geometry.spherical.computeSignedArea(
@@ -1758,31 +1742,42 @@ komoo.Map.prototype._initDrawingManager = function () {
                 path = new google.maps.MVCArray(path.getArray().reverse());
             }
             paths.push(path);
-            komooMap.currentOverlay.setPaths(paths);
+            komooMap.currentOverlay.getGeometry().setPaths(paths);
+            // Remove the temporary overlay from map
             e.overlay.setMap(null);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (komooMap.editMode == komoo.EditMode.ADD && e.overlay.getPosition) {
-            komooMap.currentOverlay.addMarker(e.overlay);
+            komooMap.currentOverlay.getGeometry()..addMarker(e.overlay);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (e.overlay.getPosition) {
-            // FIXME: DRY
-            var overlay = new MultiMarker();
+            overlay = new MultiMarker();
             overlay.addMarker(e.overlay);
             overlay.setMap(komooMap.googleMap);
-            overlay.setProperties({userCanEdit: true});
-            komooMap.overlays.push(overlay);
-            komooMap.newOverlays.push(overlay);
-            // Listen events from drawn overlay.
-            komooMap._attachOverlayEvents(overlay);
-            komooMap.setCurrentOverlay(overlay);
-            komooMap.setEditMode(komoo.EditMode.DRAW);
         } else {
-            //e.overlay.setProperties({userCanEdit: true});
-            komooMap.overlays.push(e.overlay);
-            komooMap.newOverlays.push(e.overlay);
+            overlay = e.overlay;
+        }
+        if (overlay) {
+            var feature = komoo.features.makeFeature({
+                'properties': {
+                    'userCanEdit': true,
+                    'type': komooMap.type,
+                    'name': 'sem nome'
+                },
+                'geometry': {
+                    'type': komooMap.drawingManager.getDrawingMode(),
+                }
+            });
+            var geometry = feature.getGeometry();
+            geometry.setObject(overlay);
+
+            // Sets the custom image.
+            feature.updateIcon(komooMap.googleMap.getZoom());
+
+            komooMap.overlays.push(feature);
+            komooMap.newOverlays.push(feature);
             // Listen events from drawn overlay.
-            komooMap._attachOverlayEvents(e.overlay);
-            komooMap.setCurrentOverlay(e.overlay);
+            komooMap._attachOverlayEvents(feature);
+            komooMap.setCurrentOverlay(feature);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         }
         if (path) {
@@ -1794,6 +1789,9 @@ komoo.Map.prototype._initDrawingManager = function () {
                 komooMap._emit_changed();
             });
         }
+        // Switch back to non-drawing mode after drawing a shape.
+        komooMap.drawingManager.setDrawingMode(null);
+        
         komooMap._emit_changed();
         return true;
     });
@@ -2061,12 +2059,12 @@ komoo.Map.prototype._createAddPanel = function () {
     }
     cancelButton.bind("click", function () {
         button_click();
-        if (komooMap.newOverlays) { // User drew a overlay, so remove it.
-            $.each(komooMap.newOverlays, function (key, item) {
+        if (komooMap.newOverlays.length > 0) { // User drew a overlay, so remove it.
+            komooMap.newOverlays.forEach(function (item, index, orig) {
                 var overlay = komooMap.overlays.pop(); // The newly created overlay should be the last at array.
                 overlay.setMap(null);
             });
-            komooMap.newOverlays = [];
+            komooMap.newOverlays.clear();
         }
         /**
          * @name komoo.Map#cancel_click
@@ -2256,32 +2254,6 @@ komoo.Map.prototype._emit_changed = function (e) {
 };
 
 
-
-
-/**
- * Verify if a point is inside a closed path.
- * @param {google.maps.LatLng} point
- * @param {google.maps.MVCArray(google.maps.LatLng)} path
- * @returns {boolean}
- */
-komoo.isPointInside = function (point, path) {
-    /* http://www.ecse.rpi.edu/Homepages/wrf/Research/Short_Notes/pnpoly.html */
-    if (!path) return false;
-    var ret = false;
-    var l = path.getLength();
-    for(var i=-1, j=l-1; ++i < l; j=i) {
-        ((path.getAt(i).lng() <= point.lng() && point.lng() < path.getAt(j).lng()) ||
-                (path.getAt(j).lng() <= point.lng() && point.lng() < path.getAt(i).lng()))
-        && (point.lat() < (path.getAt(j).lat() - path.getAt(i).lat()) *
-                          (point.lng() - path.getAt(i).lng()) /
-                          (path.getAt(j).lng() - path.getAt(i).lng()) +
-                          path.getAt(i).lat())
-        && (ret = !ret);
-    }
-    return ret;
-};
-
-
 /**
  * @returns {JQuery}
  */
@@ -2346,52 +2318,3 @@ komoo.createMapTab = function (items) {
     return tabs;
 };
 
-
-/**
- * Creates a cookie and save it.
- * @param {String} name
- * @param {String | number} value
- * @param {number} days
- */
-komoo.createCookie = function (name, value, days) {
-    var expires;
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    }
-    else {
-        expires = "";
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
-};
-
-
-/**
- * Reads a cookie.
- * @param {String} name
- * @returns {String}
- */
-komoo.readCookie = function (name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == " ") {
-            c = c.substring(1, c.length);
-        }
-        if (c.indexOf(nameEQ) === 0) {
-            return c.substring(nameEQ.length, c.length);
-        }
-    }
-    return null;
-};
-
-
-/**
- * Removes a cookie.
- * @param {String} name
- */
-komoo.eraseCookie = function (name) {
-    createCookie(name, "", -1);
-};

@@ -65,8 +65,9 @@ komoo.collections.FeatureCollection.prototype.push = function (feature) {
 };
 
 komoo.collections.FeatureCollection.prototype.pop = function () {
-   this.features_.pop(); 
+   var element = this.features_.pop(); 
    this.updateLength_();
+   return element;
 };
 
 komoo.collections.FeatureCollection.prototype.forEach = function (callback, thisArg) {

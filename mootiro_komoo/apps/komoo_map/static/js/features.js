@@ -14,10 +14,11 @@ komoo.features = {};
 
 komoo.features.makeFeature = function (feature) {
     var feature_ = new komoo.features.Feature();
-    var geometry = komoo.geometries.makeGeometry(feature);
-
-    feature_.setProperties(feature.properties);
-    feature_.setGeometry(geometry);
+    if (feature) {
+        feature_.setProperties(feature.properties);
+        var geometry = komoo.geometries.makeGeometry(feature);
+        feature_.setGeometry(geometry);
+    }
 
     return feature_;
 };
@@ -209,7 +210,6 @@ komoo.features.Feature.prototype.setVisible = function (flag) {
 komoo.features.Feature.prototype.getCenter = function () {
     return this.geometry_.getCenter();
 };
-
 
 /* Temporary methods */
 

@@ -29,17 +29,18 @@ komoo.geometries.defaults.ZINDEX = 1;
 /** Geometry Factory **/
 
 komoo.geometries.makeGeometry = function (feature) {
+    if (!feature.geometry) return;
     var geometryType = feature.geometry.type;
     var geometry;
-    if (geometryType == 'Point' || geometryType == 'MultiPoint') {
+    if (geometryType == 'Point' || geometryType == 'MultiPoint' || geometryType == 'marker') {
         geometry = new komoo.geometries.MultiPoint();
-    } else if (geometryType == 'LineString') {
+    } else if (geometryType == 'LineString' || geometryType == 'polyline') {
         geometry = new komoo.geometries.Polyline();
-    } else if (geometryType == 'Polygon') {
+    } else if (geometryType == 'Polygon' || geometryType == 'polygon') {
         geometry = new komoo.geometries.Polygon();
     }
 
-    if (geometry) geometry.setCoordinates(feature.geometry.coordinates);
+    if (geometry && feature.geometry.coordinates) geometry.setCoordinates(feature.geometry.coordinates);
 
     return geometry;
 };
@@ -49,7 +50,6 @@ komoo.geometries.makeGeometry = function (feature) {
 
 komoo.geometries.Geometry = function (opts) {
     this.initGoogleObject(opts);
-    this.initEvents();
 };
 
 komoo.geometries.Geometry.prototype.initEvents = function () {
@@ -117,6 +117,7 @@ komoo.geometries.Geometry.prototype.initGoogleObject = function () {
 
 komoo.geometries.Geometry.prototype.setObject = function (object) {
     this.object_ = object;
+    this.initEvents();
 };
 
 komoo.geometries.Geometry.prototype.setFeature = function (feature) {
@@ -264,7 +265,7 @@ komoo.geometries.MultiPoint.prototype.initGoogleObject = function (opts) {
         visible: true,
         zIndex: this.getDefaultZIndex(),
     };
-    this.object_ = new MultiMarker(options);
+    this.setObject(new MultiMarker(options));
 };
 
 komoo.geometries.MultiPoint.prototype.setPoints = function (points) {
@@ -354,7 +355,7 @@ komoo.geometries.Polyline.prototype.initGoogleObject = function (opts) {
         strockOpacity: this.getBorderOpacity(),
         strokeWeight: this.getBorderSize()
     };
-    this.object_ = new google.maps.Polyline(options);
+    this.setObject(new google.maps.Polyline(options));
 };
 
 komoo.geometries.Polyline.prototype.setCoordinates = function (coordinates) {
@@ -433,7 +434,7 @@ komoo.geometries.Polygon.prototype.initGoogleObject = function (opts) {
         strockOpacity: this.getBorderOpacity(),
         strokeWeight: this.getBorderSize()
     };
-    this.object_ = new google.maps.Polygon(options);
+    this.setObject(new google.maps.Polygon(options));
 };
 
 komoo.geometries.Polygon.prototype.handleEvents = function () {
