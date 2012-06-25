@@ -25,7 +25,7 @@ from investment.models import Investment
 from komoo_comments.models import Comment
 
 
-create_update = Signal(providing_args=["instance", "type"])
+create_update = Signal(providing_args=["user", "instance", "type"])
 
 
 # Community, Need, Organization, Resource
@@ -41,7 +41,7 @@ def create_add_edit_update(sender, **kwargs):
         'object_id': instance.id,
         'object_type': instance._meta.verbose_name,
         'type': kwargs["type"],
-        'users': [instance.creator.username],
+        'users': [kwargs["user"].username],
         'comments_count': Comment.comments_count_for(instance),
     }
     if getattr(instance, 'community', None):
@@ -70,7 +70,7 @@ def create_discussion_update(sender, **kwargs):
             'object_id': instance.id,
             'object_type': instance._meta.verbose_name,
             'type': Update.DISCUSSION,
-            'users': [comment.author.username],  # TODO: agreggate discussions
+            'users': [comment.author.username],
         }
         update = Update(**data)
 
