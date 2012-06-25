@@ -31,6 +31,20 @@ def prod():
     env_ = 'prod'
 
 
+def setup_django():
+    import os
+    import sys
+    PROJ_DIR = os.path.abspath(os.path.dirname(__file__))
+    SITE_ROOT = os.path.abspath(os.path.join(PROJ_DIR, '..'))
+    sys.path.append(PROJ_DIR)
+    sys.path.append(SITE_ROOT)
+    from django.core.management import setup_environ
+    env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    environ = None
+    exec 'from settings import {} as environ'.format(env_name)
+    setup_environ(environ)
+
+
 def build_environment():
     """
     build env_ironment: pip install everything + patch django for postgis
@@ -219,17 +233,7 @@ def add_superuser(email=''):
         return
     print 'Adding privileges to %s' % email
 
-    import os
-    import sys
-    PROJ_DIR = os.path.abspath(os.path.dirname(__file__))
-    SITE_ROOT = os.path.abspath(os.path.join(PROJ_DIR, '..'))
-    sys.path.append(PROJ_DIR)
-    sys.path.append(SITE_ROOT)
-    from django.core.management import setup_environ
-    env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
-    environ = None
-    exec 'from settings import {} as environ'.format(env_name)
-    setup_environ(environ)
+    setup_django()
 
     from django.contrib.auth.models import User
 
@@ -240,6 +244,17 @@ def add_superuser(email=''):
 
     user.save()
 
+    print 'success'
+
+
+def supercow(username=None):
+    """Grants admin supercow rights to a user."""
+    setup_django()
+    from django.contrib.auth.models import User
+    user = User.objects.get(username=username)
+    user.is_staff = True
+    user.is_superuser = True
+    user.save()
     print 'success'
 
 

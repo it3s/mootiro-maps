@@ -13,6 +13,9 @@
 {% block content %}
 <div id="main-content">
   <div class="main-column content-updates">
+    <div id="updates-header">
+      <img alt="" src="{{STATIC_URL}}/updates-page/"/>
+    </div>
     
     <ul class="tabs horizontal">
       <li class="tab first last"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
@@ -82,7 +85,16 @@
 
   </div>
   <div class="right-bar news-updates shadow-container">
-    <h2><img src="{{STATIC_URL}}img/updates-page/news.png" />{% trans "News" %}</h2>
+    <h2><img src="{{STATIC_URL}}img/updates-page/news.png"/>{% trans "News" %}</h2>
+    <div>
+      {% for n in news %}
+        <p>
+          <h4><a href="{{ n.title_link }}">{{ n.title }}</a></h4>
+          {{ n.description }}<br/>
+          <span class="attenuate">{{ n.date }}</span>
+        </p>
+      {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}

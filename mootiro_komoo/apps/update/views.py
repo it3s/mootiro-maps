@@ -8,7 +8,7 @@ import itertools
 from annoying.decorators import render_to
 from reversion.models import Version, VERSION_DELETE
 
-from .models import Update
+from .models import Update, News
 
 
 logger = logging.getLogger(__name__)
@@ -21,5 +21,6 @@ def frontpage(request):
     # FIXME: this is too slow!!!
     updates_number = 100
     updates = Update.objects.order_by("-date")[0:100]
+    news = News.objects.order_by("-date")[0:100]
 
-    return {'updates': updates}
+    return {'updates': updates, 'news': news}
