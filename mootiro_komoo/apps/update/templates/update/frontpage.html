@@ -23,7 +23,7 @@
     </ul>
     <div class="clear-both"></div>
 
-    <div class="shadow-container">
+    <div class="shadow-container user-updates">
       <div id="content-updates-filters">
         <span class="attenuate small">{% trans "Type" %}</span>
         {% geo_objects_listing 'switchable=True' 'hide_names=True' %}
@@ -81,8 +81,8 @@
     -->
 
   </div>
-  <div class="right-bar news-updates">
-    NEWS
+  <div class="right-bar news-updates shadow-container">
+    <h2><img src="{{STATIC_URL}}img/updates-page/news.png" />{% trans "News" %}</h2>
   </div>
 </div>
 {% endblock %}

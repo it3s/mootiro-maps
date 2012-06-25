@@ -847,7 +847,16 @@ body.community #main-content {
 
 /******* Updates page (frontpage) *******/
 .content-updates { width: 600px }
-.news-updates { width: 300px }
+.news-updates {
+    width: 300px;
+    margin-top: 34px;
+    padding: 5px 15px;
+}
+.news-updates h2 { color: #000 }
+.news-updates h2 img {
+    vertical-align: middle;
+    margin-right: 0.7em;
+}
 .shadow-container, div.content-updates .tabs .tab {
     box-shadow        : 0 0 5px #999;
     -webkit-box-shadow: 0 0 5px #999;
@@ -879,10 +888,16 @@ div.content-updates .tab.first.last {
 }
 .shadow-container {
     background: #eff8f9;
-    border-radius        : 0 10px 10px 10px;
-    -webkit-border-radius: 0 10px 10px 10px;
     position: relative;
     z-index: 3;
+}
+.shadow-container.user-updates {
+    border-radius        : 0 10px 10px 10px;
+    -webkit-border-radius: 0 10px 10px 10px;
+}
+.shadow-container.news-updates {
+    border-radius        : 10px;
+    -webkit-border-radius: 10px;
 }
 div.content-updates .tab.active {
     background: #eff8f9;
