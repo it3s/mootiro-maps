@@ -138,16 +138,16 @@
           setUp();
           var features = map.loadGeoJSON(simpleGeoJson);
           equal(features.length, 1, 'Wrong collection size');
-          equal(features[0].getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
-          equal(features[0].getGeometry().getPath().getLength(), 4, 'Wrong path size');
+          equal(features.getAt(0).getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
+          equal(features.getAt(0).getGeometry().getPath().getLength(), 4, 'Wrong path size');
           equal(map.overlays.length, 1, 'Added wrong geometries to map');
           var moreFeatures = map.loadGeoJSON(completeGeoJson);
           equal(moreFeatures.length, 4, 'Wrong collection size');
-          equal(moreFeatures[0].getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
-          equal(moreFeatures[0].getGeometry().getPath().getLength(), 4, 'Wrong path size');
-          equal(moreFeatures[1].getGeometry().getPath().getLength(), 5, 'Wrong path size');
-          equal(moreFeatures[2].getGeometry().getPositions()[0].lat(), 1, 'Wrong latitude');
-          equal(moreFeatures[2].getGeometry().getPositions()[0].lng(), 2, 'Wrong longitude');
+          equal(moreFeatures.getAt(0).getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
+          equal(moreFeatures.getAt(0).getGeometry().getPath().getLength(), 4, 'Wrong path size');
+          equal(moreFeatures.getAt(1).getGeometry().getPath().getLength(), 5, 'Wrong path size');
+          equal(moreFeatures.getAt(2).getGeometry().getPositions()[0].lat(), 1, 'Wrong latitude');
+          equal(moreFeatures.getAt(2).getGeometry().getPositions()[0].lng(), 2, 'Wrong longitude');
           equal(map.overlays.length, 4, 'Added wrong geometries to map');
         });
 

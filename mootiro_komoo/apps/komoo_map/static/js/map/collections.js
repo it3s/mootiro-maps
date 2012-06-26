@@ -59,6 +59,21 @@ komoo.collections.FeatureCollection.prototype.getAt = function (index) {
     return this.features_[index];
 };
 
+komoo.collections.FeatureCollection.prototype.setVisible = function (flag) {
+    this.features_.forEach(function (feature, index, orig) {
+        feature.setVisible(flag);
+    });
+};
+
+komoo.collections.FeatureCollection.prototype.show = function () {
+    this.setVisible(true);
+};
+
+komoo.collections.FeatureCollection.prototype.hide = function () {
+    this.setVisible(false);
+};
+
+
 /* Private methods */
 
 komoo.collections.FeatureCollection.prototype.updateLength_ = function () {

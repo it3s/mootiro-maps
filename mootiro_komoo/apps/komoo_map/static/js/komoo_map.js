@@ -271,7 +271,6 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
             dataType: "json",
             type: "GET",
             success: function (data, textStatus, jqXHR) {
-                var overlays_ = [];
                 var overlays = me.komooMap.loadGeoJSON(JSON.parse(data), false);
                 me.komooMap.fetchedTiles[addr] = {
                     geojson: data,
@@ -393,7 +392,7 @@ komoo.WikimapiaMapType.prototype.getAddrLatLng = function (coord, zoom) {
 komoo.WikimapiaMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
 
     function createOverlays(json) {
-        var overlays = []
+        var overlays = komoo.collections.makeFeatureCollection();
         var folder = json.folder;
         $.each(folder, function (i, item) {
             var coords = [];
@@ -899,7 +898,7 @@ komoo.Map.prototype.getVisibleOverlays = function () {
     var bounds = this.googleMap.getBounds();
     if (!bounds) return [];
 
-    var overlays = [];
+    var overlays = komoo.collections.makeFeaturesCollection();
     this.overlays.forEach(function (overlay, index, orig) {
         if (!overlay.getMap() && (overlay.getMarker() && !overlay.getMarker().getVisible())) {
             // Dont verify the intersection if overlay is invisible.
@@ -1019,7 +1018,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
     // - type (community, need...)
     var komooMap = this;
     var featureCollection;
-    var overlays = [];
+    var overlays = komoo.collections.makeFeatureCollection();
 
     if (opt_attach === undefined) {
         opt_attach = true;
@@ -1174,7 +1173,7 @@ komoo.Map.prototype.getGeoJSON = function (options) {
  */
 komoo.Map.prototype.getOverlaysByType = function (type, opt_categories, opt_strict) {
     var komooMap = this;
-    var overlays = [];
+    var overlays = new komoo.collections.makeFeatureCollection();
     var categories = opt_categories;
     if (!this.overlaysByType[type]) {
         return false;
@@ -1206,12 +1205,7 @@ komoo.Map.prototype.getOverlaysByType = function (type, opt_categories, opt_stri
  * @returns {number} How many overlays were hidden.
  */
 komoo.Map.prototype.hideOverlays = function (overlays) {
-    var ret = 0;
-    overlays.forEach(function (overlay, index, orig) {
-        overlay.setVisible(false);
-        ret++;
-    });
-    return ret;
+    return overlays.hide();
 };
 
 
@@ -1243,12 +1237,7 @@ komoo.Map.prototype.hideAllOverlays = function () {
  * @returns {number} How many overlays were displayed.
  */
 komoo.Map.prototype.showOverlays = function (overlays) {
-    var ret = 0;
-    overlays.forEach(function (overlay, index, orig) {
-        overlay.setVisible(true);
-        ret++;
-    });
-    return ret;
+    return overlays.show();
 };
 
 

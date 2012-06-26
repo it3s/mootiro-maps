@@ -148,7 +148,7 @@ $("#map-panel-layers > ul > li.sublist > ul > li > div.img-holder > img").bind("
     var $parent = $this.parent();
     var objectType = "need";
     var category = $parent.attr("data-original-label");
-    var enabledCategories = [];
+    var enabledCategories = ['uncategorized'];
     $.each($("input:checked", $parent.parent().parent()).parent(), function (key, element) {
         var e = $(element);
         if (e) {
@@ -162,7 +162,10 @@ $("#map-panel-layers > ul > li.sublist > ul > li > div.img-holder > img").bind("
         editor.hideOverlaysByType(objectType, [category]);
     }
 
-    editor.showOverlaysByType(objectType, enabledCategories);
+    if (enabledCategories.length == 1)
+        editor.hideOverlaysByType(objectType, ['uncategorized']);
+    else
+        editor.showOverlaysByType(objectType, enabledCategories);
 });
 
 /******* Add *******/
@@ -174,7 +177,7 @@ $(function () {
         var type = $item.attr("data-object-type");
         var overlayType = $item.attr("data-overlay-type");
         if (overlayType) {
-            console.log(type, overlayType);
+            // console.log(type, overlayType);
         }
         if ($item.hasClass("sublist")) {
             var subitems = $(".add", $item);

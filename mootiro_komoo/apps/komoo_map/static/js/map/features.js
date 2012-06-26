@@ -40,7 +40,6 @@ komoo.features.Feature.prototype.initEvents = function (opt_object) {
         'coordinates_changed'];
     eventsNames.forEach(function(eventName, index, orig) {
         komoo.event.addListener(object, eventName, function (args) {
-            console.log(eventName);
             komoo.event.trigger(that, eventName, args);
         });
     });
