@@ -8,15 +8,15 @@
       document.write("<s" + "cript type=\"text/javascript\" src=\"http://www.google.com/jsapi\"" + "><" + "/script>");
     }
     if (!window.komoo) {
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/compat.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/utils.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/infobox_packed.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/markerclusterer_packed.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/multimarker.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/geometries.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/features.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/collections.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/controls.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/compat.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/utils.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/vendor/infobox_packed.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/vendor/markerclusterer_packed.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/multimarker.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/geometries.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/features.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/collections.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/controls.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
     }
   </script>
@@ -151,7 +151,6 @@
             var panelLeft = 0;
           }
           //$('#' + mapCanvasId).width($('body').innerWidth() - panelWidth - panelLeft).css('margin-left', panelWidth + panelLeft);
-          console.log(panelWidth + panelLeft);
           $('#' + mapCanvasId).css({marginLeft: panelWidth + panelLeft, width: 'auto'});
           {% endif %}
         }

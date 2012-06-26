@@ -675,6 +675,7 @@ komoo.Map.prototype.closeTooltip = function () {
  * @param {String} [opt_content]
  */
 komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
+    console.log(this.mode);
     this.closeTooltip();
     this.infoWindow.open(overlay, latLng, opt_content);
 };
@@ -1060,6 +1061,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
             var zIndex = komooMap.overlayOptions[feature.properties.type].zIndex;
             polygonOptions.fillColor = color;
             polygonOptions.strokeColor = border;
+            polygonOptions.strokeWeight = 1.5;
             polygonOptions.zIndex = zIndex; //feature.properties.type == "community" ? 1 : 2
             polylineOptions.strokeColor = border;
         } else {
