@@ -428,11 +428,11 @@
                  '</a></li>');
       var context = this;
       this.thumbs_wrapper.find("ul").append(li);
-      
+
       var link = li.find("a");
       var thumb = link.find("img");
       thumb.css('opacity', this.settings.thumb_opacity);
-      
+
       this.whenImageLoaded(thumb[0], function() {
         var thumb_width = thumb[0].parentNode.parentNode.offsetWidth;
         if(thumb[0].width == 0) {
@@ -441,7 +441,7 @@
           // It's not very nice, but it's better than 0.
           thumb_width = 100;
         };
-        
+
         context.thumbs_wrapper_width += thumb_width;
         context._setThumbListWidth(context.thumbs_wrapper_width);
       });
@@ -682,11 +682,11 @@
             this.settings.hooks.displayDescription.call(this, image);
           } else {
             var wrapper = this.settings.description_wrapper;
-            wrapper.append(desc);
+            wrapper.html('').append(desc);
           };
         };
         this.highLightThumb(this.images[index].thumb_link);
-        
+
         var direction = 'right';
         if(this.current_index < index) {
           direction = 'left';

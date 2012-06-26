@@ -1,6 +1,8 @@
 <!-- IMAGES -->
+{% if images.count %}
 <div id="gallery" class="ad-gallery">
     <div class="ad-image-wrapper"></div>
+    <div class="ad-komoo-desc"></div>
     <div class="ad-controls"></div>
     <div class="ad-nav">
         <div class="ad-thumbs">
@@ -43,8 +45,22 @@
       position: absolute;
 
     }
-    #descriptions .ad-image-description .ad-description-title {
+    #gallery .ad-image-description {
         display: block;
+        background: rgba(142, 142, 142, 0.4);
+        text-shadow: 1px 1px 1px #ffffff;
+        border-radius: 4px;
+        /*margin-left: -50%;*/
+        left: 0px;
+        text-align: center;
+        width: 600px;
+        padding: 10px 5px;
+    }
+    .ad-thumb-list{
+        height: 105px;
+    }
+    #gallery .ad-image{
+        overflow: visible;
     }
 </style>
 
@@ -54,9 +70,11 @@
     $(function(){
         var galleries = $('.ad-gallery').adGallery({
             width: 600,
-            height: 300
+            height: 300,
+            description_wrapper: $('.ad-komoo-desc')
         });
 
 
     });
 </script>
+{% endif %}
