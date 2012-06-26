@@ -257,8 +257,9 @@
           editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
           editor.googleMap.setZoom(editor.googleMap.getZoom()-1)
           google.maps.event.trigger(editor.googleMap, 'resize');
-          editor.editOverlay(editor.overlays[0]);
-          setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
+          editor.editOverlay(editor.overlays.getAt(0));
+          setTimeout(function () {
+                  editor.setCurrentOverlay(editor.overlays.getAt(0)); }, 100);
       });
       {% endif %}
       if (window.{{ type }}) {
@@ -289,7 +290,7 @@
           }
           {{ type }}.googleMap.setZoom({{ type }}.googleMap.getZoom()+1);
           {{ type }}.googleMap.setZoom({{ type }}.googleMap.getZoom()-1);
-          {{ type }}.centerOverlay({{ type }}.overlays[0]);
+          {{ type }}.centerOverlay({{ type }}.overlays.getAt(0));
           google.maps.event.trigger({{ type }}.googleMap, 'resize');
           return false;
         });

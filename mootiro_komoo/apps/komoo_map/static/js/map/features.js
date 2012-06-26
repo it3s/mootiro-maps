@@ -40,6 +40,7 @@ komoo.features.Feature.prototype.initEvents = function (opt_object) {
         'coordinates_changed'];
     eventsNames.forEach(function(eventName, index, orig) {
         komoo.event.addListener(object, eventName, function (args) {
+            console.log(eventName);
             komoo.event.trigger(that, eventName, args);
         });
     });
@@ -200,6 +201,11 @@ komoo.features.Feature.prototype.setMap = function (map) {
 
 komoo.features.Feature.prototype.getMap = function () {
     return this.geometry_.getMap();
+};
+
+komoo.features.Feature.prototype.removeFromMap = function () {
+    this.setMap(null);
+    if (this.marker_) this.marker_.setMap(null);
 };
 
 komoo.features.Feature.prototype.setVisible = function (flag) {

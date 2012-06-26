@@ -49,6 +49,15 @@ komoo.collections.FeatureCollection.prototype.clear = function () {
     this.updateLength_();
 };
 
+komoo.collections.FeatureCollection.prototype.removeAllFromMap = function () {
+    this.features_.forEach(function (feature, index, orig) {
+        feature.removeFromMap();
+    });
+};
+
+komoo.collections.FeatureCollection.prototype.getAt = function (index) {
+    return this.features_[index];
+};
 
 /* Private methods */
 

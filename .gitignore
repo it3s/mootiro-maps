@@ -1,6 +1,7 @@
 local_settings.py
 *.pyc
 *.*~
+*.swp
 *.egg-info
 .idea/
 .codeintel/

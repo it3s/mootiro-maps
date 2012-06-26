@@ -675,7 +675,7 @@ komoo.Map.prototype.closeTooltip = function () {
  * @param {String} [opt_content]
  */
 komoo.Map.prototype.openInfoWindow = function (overlay, latLng, opt_content) {
-    console.log(this.mode);
+    if (this.mode) return;
     this.closeTooltip();
     this.infoWindow.open(overlay, latLng, opt_content);
 };
@@ -1144,7 +1144,8 @@ komoo.Map.prototype.getGeoJSON = function (options) {
     if (options.newOnly) {
         list = this.newOverlays;
     } else if (options.currentOnly) {
-        list = [this.currentOverlay];
+        list = komoo.collections.makeFeatureCollection();
+        list.push(this.currentOverlay);
     } else {
         list = this.overlays;
     }
@@ -1155,10 +1156,7 @@ komoo.Map.prototype.getGeoJSON = function (options) {
             "geometries": geoms
         };
     } else {
-        if (list == this.overlays)
-            return this.overlays.getGeoJson();
-        else if (list == this.newOverlays)
-            return this.newOverlays.getGeoJson();
+        return list.getGeoJson();
     }
     list.forEach(function (overlay, index, orig) {
         geoms.push(overlay.getGeoJsonGeometry());
@@ -1285,15 +1283,12 @@ komoo.Map.prototype.clear = function () {
     delete this.fetchedTiles;
     this.loadedOverlays = {};
     this.fetchedTiles = {};
-    this.overlays.forEach(function (overlay, index, orig) {
-        overlay.setMap(null);
-        delete overlay;
-    });
+    this.overlays.removeAllFromMap()
+    this.overlays.clear()
+    this.clusterMarkers = [];
     if (this.clusterer) {
         this.clusterer.clearMarkers();
     }
-    delete this.overlays;
-    this.overlays = komoo.collections.makeFeatureCollection();
 };
 
 
@@ -1749,7 +1744,7 @@ komoo.Map.prototype._initDrawingManager = function () {
             e.overlay.setMap(null);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (komooMap.editMode == komoo.EditMode.ADD && e.overlay.getPosition) {
-            komooMap.currentOverlay.getGeometry()..addMarker(e.overlay);
+            komooMap.currentOverlay.getGeometry().addMarker(e.overlay);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (e.overlay.getPosition) {
             overlay = new MultiMarker();

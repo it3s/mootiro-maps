@@ -194,7 +194,7 @@ komoo.geometries.Point.prototype.initGoogleObject = function (opts) {
         clickable: true,
         zIndex: this.getDefaultZIndex(),
     };
-    this.object_ = new google.maps.Marker(options);
+    this.setObject(new google.maps.Marker(options));
 };
 
 komoo.geometries.Point.prototype.initEvents = function () {
@@ -323,6 +323,7 @@ komoo.geometries.MultiPoint.prototype.getPositions = function () {
 
 /* Delegations */
 komoo.geometries.MultiPoint.prototype.addMarkers = function (markers) {
+    console.log("BBBB")
     this.object_.addMarkers(markers);
 };
 
