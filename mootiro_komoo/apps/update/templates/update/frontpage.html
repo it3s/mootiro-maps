@@ -11,11 +11,36 @@
 {#% block menu %} {% menu need "need" %} {% endblock %#}
 
 {% block content %}
+<div id="updates-header">
+  <img alt="" src="{{STATIC_URL}}img/updates-page/novidades.png"/>
+  <div id="about-mootiro" class="shadow-container right open">
+    <img id="about-image" alt="{% trans "about mootiro" %}" src="{{STATIC_URL}}img/updates-page/sobre-off.png" class="right"/>
+
+    <div class="clear-both"></div>
+    <a>what is this?</a>
+    <ul>
+      <li class="button">
+        <i class="icon-community"></i> Add a community
+      </li>
+      <li class="button">
+        <i class="icon-need"></i> Add a need
+      </li>
+      <li class="button">
+        <i class="icon-organization"></i> Add an organization
+      </li>
+    </ul>
+
+  </div>
+  <!--
+  <div id="about-mootiro" class="open shadow-container right">
+    <img alt="" class="right" src="{{STATIC_URL}}img/updates-page/sobre.png"/>
+
+  </div>
+  -->
+</div>
+
 <div id="main-content">
   <div class="main-column content-updates">
-    <div id="updates-header">
-      <img alt="" src="{{STATIC_URL}}/updates-page/"/>
-    </div>
     
     <ul class="tabs horizontal">
       <li class="tab first last"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
@@ -27,7 +52,7 @@
     <div class="clear-both"></div>
 
     <div class="shadow-container user-updates">
-      <div id="content-updates-filters">
+      <div id="content-updates-filters" style="display: none">
         <span class="attenuate small">{% trans "Type" %}</span>
         {% geo_objects_listing 'switchable=True' 'hide_names=True' %}
       </div>

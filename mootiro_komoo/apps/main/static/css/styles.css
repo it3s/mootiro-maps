@@ -846,6 +846,28 @@ body.community #main-content {
 }
 
 /******* Updates page (frontpage) *******/
+#updates-header {
+    width: 980px;
+    margin-left: 40px;
+}
+#updates-header #about-mootiro {
+    position: relative;
+    top: 20px;
+    right: 0;
+    padding: 10px;
+    border-radius: 10px;
+    background: #eef7fA;
+}
+#updates-header #about-mootiro ul { width: 180px }
+#updates-header #about-mootiro ul li {
+    width: 100%;
+    margin-top: 7px;
+    text-align: center;
+}
+#updates-header #about-mootiro.open {
+    width: 200px;
+    height: 150px;
+}
 .content-updates { width: 600px }
 .news-updates {
     width: 300px;
