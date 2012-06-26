@@ -1330,9 +1330,9 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
     background-image: none;
     background-color: #dedede;
 }
-.view-footer div:first-child{
+/*.view-footer div:first-child{
   margin-top: 100px;
-}
+}*/
 .view-edit-btn{
   display: inline-block;
   float: right;

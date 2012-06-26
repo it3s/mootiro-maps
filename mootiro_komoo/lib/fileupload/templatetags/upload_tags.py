@@ -19,6 +19,13 @@ def load_files(context, obj=None):
     return dict(files=files, object_id=object_id, content_type=content_type)
 
 
+@register.inclusion_tag('fileupload/image_gallery.html', takes_context=True)
+def image_gallery(context, obj=None):
+    images = UploadedFile.get_files_for(obj) if obj else []
+    return dict(images=images)
+
+
+#DEPRECATED
 @register.simple_tag
 def image_picker(field="logo"):
     return """

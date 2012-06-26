@@ -1,11 +1,17 @@
 import os
 import logging
+import urllib2
 from fileupload.models import UploadedFile
 from django.views.generic import CreateView, DeleteView
 from django.conf import settings
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
+from django.shortcuts import render_to_response, RequestContext
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+
+from .forms import POCForm
 
 
 logger = logging.getLogger(__name__)
@@ -24,13 +30,13 @@ class FileCreateView(CreateView):
     # PLUPLOAD
     def form_valid(self, form):
         self.object = form.save()
-        # f = self.request.FILES.get('file')
-        data = {'name': self.object.file.name.split('/')[-1],
-                 'url': self.object.file.url,
-                 'thumbnail_url': self.object.file.url,
-                 'delete_url': reverse('upload-delete', args=[self.object.id]),
-                 'delete_type': "DELETE",
-                 'id': self.object.id}
+        data = {
+            'name': self.object.file.name.split('/')[-1],
+            'url': self.object.file.url,
+            'delete_url': reverse('upload-delete', args=[self.object.id]),
+            'id': self.object.id,
+            'size': self.object.file.size
+        }
         response = JSONResponse(data, {}, response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
         return response
@@ -69,3 +75,63 @@ class JSONResponse(HttpResponse):
                  *args, **kwargs):
         content = simplejson.dumps(obj, **json_opts)
         super(JSONResponse, self).__init__(content, mimetype, *args, **kwargs)
+
+
+def save_file_from_link(request):
+
+    uploaded_file = UploadedFile()
+    link = request.POST.get('file_link', None)
+    if link:
+        img_temp = NamedTemporaryFile(delete=True)
+        img_temp.write(urllib2.urlopen(link).read())
+        img_temp.flush()
+        file_name = link.split('/')[-1]
+        uploaded_file.file.save(file_name, File(img_temp))
+        uploaded_file.save()
+        success = True
+        file_ = {
+            'name': uploaded_file.file.name.split('/')[-1],
+            'url': uploaded_file.file.url,
+            'delete_url': reverse('upload-delete', args=[uploaded_file.id]),
+            'id': uploaded_file.id,
+            'size': uploaded_file.file.size
+        }
+    else:
+        success, file_ = False, {}
+
+    response = JSONResponse({'success': success, 'file': file_}, {},
+                                response_mimetype(request))
+    return response
+
+
+def uploader_poc(request):
+    form = POCForm(request.POST or None)
+    print '\n\n\n REQUEST: %s \n\n' % request.POST
+    if form.is_valid():
+        print 'AHOOY'
+    return render_to_response(
+        'fileupload/poc.html',
+        {'form_poc': form},
+        context_instance=RequestContext(request))
+
+
+def file_info(request):
+    file_obj = UploadedFile.objects.get(pk=request.GET['id'])
+    return JSONResponse(
+        {'subtitle': file_obj.subtitle, 'url': file_obj.file.url},
+        {},
+        response_mimetype(request))
+
+
+def save_subtitle(request):
+    try:
+        file_obj = UploadedFile.objects.get(pk=request.POST['id'])
+        file_obj.subtitle = request.POST.get('subtitle', '')
+        file_obj.save()
+        success = True
+    except Exception:
+        success = False
+    return JSONResponse(
+        {'success': success},
+        {},
+        response_mimetype(request))

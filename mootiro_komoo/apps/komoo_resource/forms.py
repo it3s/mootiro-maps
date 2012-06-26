@@ -10,7 +10,7 @@ from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
 
-from main.utils import MooHelper, clean_autocomplete_field
+from main.utils import MooHelper
 from main.widgets import TaggitWidget, AutocompleteWithFavorites
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from komoo_resource.models import Resource, ResourceKind
@@ -43,7 +43,7 @@ class FormResource(AjaxModelForm):
         'contact': _('Contact'),
         'tags': _('Tags'),
         'community': _('Community'),
-        'files': '', }
+        'files': _('Images'), }
 
     def __init__(self, *args, **kwargs):
         self.helper = MooHelper(form_id='form_resource')
