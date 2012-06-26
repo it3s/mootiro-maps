@@ -58,6 +58,7 @@
     }
     .ad-thumb-list{
         height: 105px;
+        padding: 0;
     }
     #gallery .ad-image{
         overflow: visible;
@@ -71,7 +72,19 @@
         var galleries = $('.ad-gallery').adGallery({
             width: 600,
             height: 300,
-            description_wrapper: $('.ad-komoo-desc')
+            description_wrapper: $('.ad-komoo-desc'),
+            update_window_hash: false,
+            slideshow: {
+                start_label: gettext('Start'),
+                stop_label: gettext('Stop')
+            },
+            callbacks: {
+                beforeImageVisible: function(){
+                    $('.ad_image_gallery_thumb').each(function(idx, el){
+                        $(el).css('padding', 0);
+                    });
+                }
+            }
         });
 
 

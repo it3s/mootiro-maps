@@ -89,10 +89,8 @@ def show(request, organization_slug='', community_slug=''):
     files = UploadedFile.get_files_for(organization)
     if organization.logo_id:
         files = files.exclude(pk=organization.logo_id)
-    photos = paginated_query(files, request, size=3)
 
-    return dict(organization=organization, geojson=geojson,
-                community=community, photos=photos)
+    return dict(organization=organization, geojson=geojson, community=community)
 
 
 @login_required
