@@ -27,7 +27,7 @@ need_form_field_labels = {
     'categories': _('Need Categories'),
     'target_audiences': _('Target audiences'),
     'tags': _('Tags'),
-    'files': _(' '),
+    'files': _('Images'),
 }
 
 
