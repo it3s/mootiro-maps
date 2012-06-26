@@ -72,7 +72,8 @@ class AjaxModelForm(forms.ModelForm):
         else:
             update_type = Update.EDIT
         obj.save()
-        create_update.send(sender=obj.__class__, instance=obj, type=update_type)
+        create_update.send(sender=obj.__class__, user=self.user, instance=obj,
+                            type=update_type)
         return obj
 
 

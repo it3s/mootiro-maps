@@ -91,6 +91,7 @@ class UpdateSignalsTestCase(KomooTestCase):
         self.assertEquals(last_update.type, Update.EDIT)
         self.assertEquals(last_update.users[0], 'tester')
 
+    ####### Discussions #######
     def test_new_comment_creates_update(self):
         self.login_user(username='tester')
 
