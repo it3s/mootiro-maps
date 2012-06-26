@@ -43,6 +43,29 @@
               </div>
               <div class="update-info">
                 <h3>
+                  {% if u.type == "D" %}
+
+                    {% with shown=u.users|slice:":2" aggregated=u.users|slice:"2:" %}
+                      {% for username in shown %}
+                        {{ username }}{% if not forloop.last %},{% endif %}
+                      {% endfor %}
+
+                      {% if aggregated %}
+                        {% blocktrans count num=aggregated|length %}
+                          and {{ num }} more user
+                        {% plural %}
+                          and {{ num }} more users
+                        {% endblocktrans %}
+                      {% endif %}
+
+                      {% blocktrans count num=shown|length %}
+                        discussed
+                      {% plural %}
+                        discussed
+                      {% endblocktrans %}
+                    {% endwith %}
+
+                  {% endif %}
                   <a href="{{ u.link }}">{{ u.title }}</a>
                 </h3>
                 <div class="right">
@@ -56,12 +79,11 @@
                 {% endfor %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  {% blocktrans with object_type=u.object_type|capfirst update_type=u.readable_type date=u.date user=u.users|first %}
-                    {{ object_type }}
-                    {{ update_type }}
-                    on {{ date }}
-                    by {{ user }}.
-                  {% endblocktrans %}
+                  {{ u.readable_type|capfirst }}
+                  {% trans "on" %} {{ u.date }}
+                  {% if u.readable_type != "discussed" %}
+                    {% trans "by" %} {{ u.users|first }}
+                  {% endif %}
                 </div>
                 <div class="update-social right">
                   {{ u.comments_count }} comments
@@ -89,9 +111,17 @@
     <div>
       {% for n in news %}
         <p>
-          <h4><a href="{{ n.title_link }}">{{ n.title }}</a></h4>
+          {% if n.title %}
+          <h4>
+            {% if n.title_link %}
+              <a href="{{ n.title_link }}">{{ n.title }}</a>
+            {% else %}
+              {{ n.title }}
+            {% endif %}
+          </h4>
+          {% endif %}
           {{ n.description }}<br/>
-          <span class="attenuate">{{ n.date }}</span>
+          <span class="attenuate">{{ n.date|date:"d/m/Y" }}</span>
         </p>
       {% endfor %}
     </div>

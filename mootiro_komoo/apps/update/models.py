@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
-
 from datetime import datetime, timedelta
 
 from django.contrib.gis.db import models
+from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import pgettext
 
 
 class Update(models.Model):
@@ -28,9 +29,36 @@ class Update(models.Model):
     }
     type = models.CharField(max_length=1, null=False, db_index=True,
             choices=tuple(TYPES.items()))
+
     @property
     def readable_type(self):
-        return self.TYPES[self.type]
+        key_str = "{0} {1}".format(self.object_type, self.TYPES[self.type])
+        tr_dict = {
+            "community added":     _("community added"),
+            "community edited":    _("community edited"),
+            "community discussed": _("community discussed"),
+
+            "need added":     _("need added"),
+            "need edited":    _("need edited"),
+            "need discussed": _("need discussed"),
+
+            "proposal added":     _("proposal added"),
+            "proposal edited":    _("proposal edited"),
+            "proposal discussed": _("proposal discussed"),
+
+            "organization added":     _("organization added"),
+            "organization edited":    _("organization edited"),
+            "organization discussed": _("organization discussed"),
+
+            "resource added":     _("resource added"),
+            "resource edited":    _("resource edited"),
+            "resource discussed": _("resource discussed"),
+
+            "investment added":     _("investment added"),
+            "investment edited":    _("investment edited"),
+            "investment discussed": _("investment discussed"),
+        }
+        return tr_dict[key_str]
 
     # comma-separated list of usernames
     _users = models.CharField(max_length=1024)
@@ -74,7 +102,7 @@ class Update(models.Model):
     @property
     def image(self):
         return "img/updates-page/{}-{}.png" \
-                    .format(self.object_type, self.readable_type)
+                    .format(self.object_type, self.TYPES[self.type])
 
 
 class News(models.Model):

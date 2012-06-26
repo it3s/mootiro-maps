@@ -60,7 +60,7 @@ def create_discussion_update(sender, **kwargs):
     if discussion_update:
         update = discussion_update
         people = update.users
-        if comment.author.username not in people:
+        if comment.author.username not in people or True:
             people.append(comment.author.username)
             update.users = people
     else:
