@@ -65,7 +65,7 @@ class FormOrganization(AjaxModelForm):
         'tags': _('Tags'),
         'target_audiences': _('Target Audiences'),
         'categories': _('Categories'),
-        'files': _(' '),
+        'files': _('Images'),
         'logo': _(' ')
     }
 

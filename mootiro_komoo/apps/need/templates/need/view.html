@@ -8,6 +8,7 @@
 {% load komoo_tags %}
 {% load moderation_tags %}
 {% load markitup_tags %}
+{% load upload_tags %}
 
 {% block title %}{{ need.title }} {% endblock %}
 
@@ -41,17 +42,7 @@
       <div class="mark-down">{{ need.description|render_markup }}</div>
 
       <div class="view-footer">
-          {% if photos.object_list %}
-          <div class="view-photos">
-              <h3>{% trans 'Photos:' %}</h3>
-              {% for photo in photos.object_list %}
-                  <a href="{{ photo.file.url }}">
-                      <img src="{{ photo.file.url }}">
-                  </a>
-              {% endfor %}
-          </div>
-          {% pagination photos %}
-          {% endif %}
+          {% image_gallery need %}
       </div>
 
       <div class="view-extras">

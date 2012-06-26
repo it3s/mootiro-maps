@@ -1,0 +1,26 @@
+{% extends 'global.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div id="main-content">
+    <div class="main-column">
+        <h3>Upload POC</h3>
+
+
+        {% crispy form_poc %}
+    </div>
+    </div>
+
+{% endblock content %}
+
+{% block css %}
+    {{ form_poc.media.css }}
+{% endblock %}
+
+{% block page_scripts %}
+    {{ form_poc.media.js }}
+{% endblock %}
+
+

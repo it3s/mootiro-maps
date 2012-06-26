@@ -11,11 +11,36 @@
 {#% block menu %} {% menu need "need" %} {% endblock %#}
 
 {% block content %}
+<div id="updates-header">
+  <img alt="" src="{{STATIC_URL}}img/updates-page/novidades.png"/>
+  <div id="about-mootiro" class="shadow-container right open">
+    <img id="about-image" alt="{% trans "about mootiro" %}" src="{{STATIC_URL}}img/updates-page/sobre-off.png" class="right"/>
+
+    <div class="clear-both"></div>
+    <a>what is this?</a>
+    <ul>
+      <li class="button">
+        <i class="icon-community"></i> Add a community
+      </li>
+      <li class="button">
+        <i class="icon-need"></i> Add a need
+      </li>
+      <li class="button">
+        <i class="icon-organization"></i> Add an organization
+      </li>
+    </ul>
+
+  </div>
+  <!--
+  <div id="about-mootiro" class="open shadow-container right">
+    <img alt="" class="right" src="{{STATIC_URL}}img/updates-page/sobre.png"/>
+
+  </div>
+  -->
+</div>
+
 <div id="main-content">
   <div class="main-column content-updates">
-    <div id="updates-header">
-      <img alt="" src="{{STATIC_URL}}/updates-page/"/>
-    </div>
     
     <ul class="tabs horizontal">
       <li class="tab first last"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
@@ -27,7 +52,7 @@
     <div class="clear-both"></div>
 
     <div class="shadow-container user-updates">
-      <div id="content-updates-filters">
+      <div id="content-updates-filters" style="display: none">
         <span class="attenuate small">{% trans "Type" %}</span>
         {% geo_objects_listing 'switchable=True' 'hide_names=True' %}
       </div>
@@ -43,6 +68,29 @@
               </div>
               <div class="update-info">
                 <h3>
+                  {% if u.type == "D" %}
+
+                    {% with shown=u.users|slice:":2" aggregated=u.users|slice:"2:" %}
+                      {% for username in shown %}
+                        {{ username }}{% if not forloop.last %},{% endif %}
+                      {% endfor %}
+
+                      {% if aggregated %}
+                        {% blocktrans count num=aggregated|length %}
+                          and {{ num }} more user
+                        {% plural %}
+                          and {{ num }} more users
+                        {% endblocktrans %}
+                      {% endif %}
+
+                      {% blocktrans count num=shown|length %}
+                        discussed
+                      {% plural %}
+                        discussed
+                      {% endblocktrans %}
+                    {% endwith %}
+
+                  {% endif %}
                   <a href="{{ u.link }}">{{ u.title }}</a>
                 </h3>
                 <div class="right">
@@ -56,12 +104,11 @@
                 {% endfor %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  {% blocktrans with object_type=u.object_type|capfirst update_type=u.readable_type date=u.date user=u.users|first %}
-                    {{ object_type }}
-                    {{ update_type }}
-                    on {{ date }}
-                    by {{ user }}.
-                  {% endblocktrans %}
+                  {{ u.readable_type|capfirst }}
+                  {% trans "on" %} {{ u.date }}
+                  {% if u.readable_type != "discussed" %}
+                    {% trans "by" %} {{ u.users|first }}
+                  {% endif %}
                 </div>
                 <div class="update-social right">
                   {{ u.comments_count }} comments
@@ -89,9 +136,17 @@
     <div>
       {% for n in news %}
         <p>
-          <h4><a href="{{ n.title_link }}">{{ n.title }}</a></h4>
+          {% if n.title %}
+          <h4>
+            {% if n.title_link %}
+              <a href="{{ n.title_link }}">{{ n.title }}</a>
+            {% else %}
+              {{ n.title }}
+            {% endif %}
+          </h4>
+          {% endif %}
           {{ n.description }}<br/>
-          <span class="attenuate">{{ n.date }}</span>
+          <span class="attenuate">{{ n.date|date:"d/m/Y" }}</span>
         </p>
       {% endfor %}
     </div>

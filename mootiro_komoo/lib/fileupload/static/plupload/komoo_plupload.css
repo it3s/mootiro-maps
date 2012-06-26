@@ -1,28 +1,3 @@
-@import url(/static/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css);
-.plupload_header_content{
-    background: none;
-    min-height: 36px;
-}
-.plupload_container{
-    width: 700px;
-    height: 200px;
-}
-#uploader_filelist.plupload_filelist{
-    height: 85px;
-}
-li.plupload_droptext{
-    line-height: 65px;
-}
-.file-entry{
-    background-color: #cccccc;
-    border-radius: 5px;
-    padding: 20px;
-    font-weight: bold;
-    vertical-align: middle;
-    color: #555555;
-    margin: 10px;
-    width: 660px;
-}
 .file-img{
     width: 54px;
     height: 40px;
@@ -34,4 +9,87 @@ li.plupload_droptext{
     float: right;
     vertical-align: top;
     color: #777777;
+}
+
+/** NEW UPLOADER **/
+.file-entry{
+    /*background-color: #eeeeee;*/
+    border: solid 1px #ececec;
+    border-radius: 4px;
+    padding: 5px;
+    /*width: 300px;*/
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    margin: 10px 20px 10px 0;
+    text-shadow: 1px 1px #ffffff;
+    vertical-align: middle;
+}
+.file-error{
+    background-color: #f2dede;
+    color: #ff0000;
+    display: block;
+    width:630px;
+    padding: 10px;
+    margin: 10px 20px 10px 0;
+    text-shadow: 1px 1px #ffffff;
+    border-radius: 4px;
+}
+.file-modal {
+    margin-top: -20px;
+}
+.file-link {
+    width: 300px;
+    display: block;
+    margin: 10px 90px;
+}
+.add-new-file-link{
+    margin-left: 90px;
+}
+.modal-footer a{
+    float: right;
+    margin: 0 10px;
+}
+#file-modal .modal-body {
+    max-height: 200px;
+    overflow: auto;
+}
+.file-thumb {
+    display: block;
+    max-width: 80px;
+    max-height: 80px;
+    margin: 0 auto;
+    transition: transform 0.5s, box-shadow 0.5s;
+    -moz-transition: -moz-transform 0.5s, -moz-box-shadow 0.5s;
+    -o-transition: -o-transform 0.5s, -o-box-shadow 0.5s;
+    -webkit-transition: -webkit-transform 0.5s, -webkit-box-shadow 0.5s;
+}
+.file-thumb:hover {
+    transform: scale(1.5, 1.5);
+    -moz-transform: scale(1.5, 1.5);
+    -o-transform: scale(1.5, 1.5);
+    -webkit-transform: scale(1.5, 1.5);
+
+    /*border: solid 1px rgb(212, 68, 19);*/
+    -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(212, 68, 19, 0.6);
+    -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(212, 68, 19, 0.6);
+    box-shadow:inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(212, 68, 19, 0.6);
+    /*outline:0;*/
+    outline:thin dotted \9;
+
+}
+#img-subtitle-modal{
+    display: block;
+    max-width: 250px;
+    max-height: 250px;
+    margin: 0 auto;
+}
+#id_subtitle{
+    display: block;
+    width: 450px;
+    margin: 20px auto 0 auto;
+}
+#delete-file{
+    float: left;
+    color: #ffffff;
 }

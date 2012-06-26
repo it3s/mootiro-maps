@@ -82,10 +82,9 @@ def show(request, community_slug=None, resource_id=None):
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
-    photos = paginated_query(UploadedFile.get_files_for(resource), request, size=3)
 
     return dict(resource=resource, similar=similar, geojson=geojson,
-                community=community, photos=photos)
+                community=community)
 
 
 @login_required
