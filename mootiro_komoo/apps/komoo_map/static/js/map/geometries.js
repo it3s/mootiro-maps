@@ -87,17 +87,18 @@ komoo.geometries.Geometry.prototype.calculateBounds = function () {
             bounds = getBounds(pos);
         });
     });
-    this.bounds = new google.maps.LatLngBounds(
+    this.bounds_ = new google.maps.LatLngBounds(
             this.getLatLngFromArray(bounds[0]),
             this.getLatLngFromArray(bounds[1])
         );
-    return this.bounds;
+    this.bounds = this.bounds_; // TODO: This should be removed
+    return this.bounds_;
 };
 
 komoo.geometries.Geometry.prototype.getBounds = function () {
-    if (this.bounds == undefined)
+    if (this.bounds_ == undefined)
         this.calculateBounds();
-    return this.bounds;
+    return this.bounds_;
 };
 
 komoo.geometries.Geometry.prototype.getCenter = function () {

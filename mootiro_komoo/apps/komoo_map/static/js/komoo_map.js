@@ -210,7 +210,7 @@ komoo.ServerFetchMapType.prototype.releaseTile = function (tile) {
     var serverFetchMapType = this;
     if (this.komooMap.fetchedTiles[tile.tileKey]) {
         var bounds = serverFetchMapType.komooMap.googleMap.getBounds();
-        $.each(this.komooMap.fetchedTiles[tile.tileKey].overlays, function (key, overlay) {
+        this.komooMap.fetchedTiles[tile.tileKey].overlays.forEach(function (overlay, index, orig) {
             if (overlay.getBounds()) {
                 if (!bounds.intersects(overlay.getBounds())) {
                     overlay.setMap(null);
@@ -250,7 +250,7 @@ komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocumen
             // Display debug info.
             div.innerHTML = this.komooMap.fetchedTiles[addr].geojson;
         }
-        $.each(this.komooMap.fetchedTiles[addr].overlays, function (key, overlay) {
+        this.komooMap.fetchedTiles[addr].overlays.forEach(function (overlay, index, orig) {
             overlay.setMap(me.komooMap.googleMap);
             if (overlay.setIcon) {
                 overlay.setIcon(overlay.getIconUrl(me.komooMap.googleMap.getZoom()));
@@ -394,9 +394,9 @@ komoo.WikimapiaMapType.prototype.getTile = function (coord, zoom, ownerDocument)
     function createOverlays(json) {
         var overlays = komoo.collections.makeFeatureCollection();
         var folder = json.folder;
-        $.each(folder, function (i, item) {
+        folder.forEach(function (item, index, orig) {
             var coords = [];
-            $.each(item.polygon, function (j, point) {
+            item.polygon.forEach(function (point, index, orig) {
                 coords.push(new google.maps.LatLng(point.y, point.x));
             });
             var polygon = new google.maps.Polygon({paths: [coords], fillColor: 'gray'});
@@ -770,9 +770,16 @@ komoo.Map.prototype.initMarkerClusterer = function () {
  * Prepares the overlaysByType property. Should not be called externally.
  */
 komoo.Map.prototype.initOverlaysByTypeObject = function () {
+    // TODO: Refactoring
     var komooMap = this;
     this.options.regionTypes.forEach(function (type, index, orig) {
-        komooMap.overlaysByType[type.type] = {};
+        komooMap.overlaysByType[type.type] = {categories: type.categories};
+        komooMap.overlaysByType[type.type].categories.push("uncategorized");
+        komooMap.overlaysByType[type.type].forEach = function (callback) {
+            this.categories.forEach(function (item, index, orig) {
+                callback(komooMap.overlaysByType[type.type][item], item, orig);
+            });   
+        };
         komooMap.overlaysByType[type.type]["uncategorized"] = komoo.collections.makeFeatureCollection();
         if (type.categories.length) {
             type.categories.forEach(function(category, index_, orig_) {
@@ -1011,6 +1018,7 @@ komoo.Map.prototype.updateOverlay = function (overlay, geojson) {
  * @returns {google.maps.MVCObject[]}
  */
 komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
+    // TODO: Refactoring
     // TODO: Use the correct color
     // TODO: Add a hidden marker for each polygon/polyline
     // TODO: Document the geoJSON properties:
@@ -1045,7 +1053,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
     if (!featureCollection) {
         return [];
     }
-    $.each(featureCollection, function (i, feature) {
+    featureCollection.forEach(function (feature, index, orig) {
         var geometry = feature.geometry;
         if (!geometry) {
             return;
@@ -1090,7 +1098,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
             var overlaysByType = komooMap.overlaysByType[overlay.getProperties().type];
             var categories = overlay.getProperties().categories;
             if (categories && categories.length) {
-                $.each(categories, function(i, category) {
+                categories.forEach(function(category, index, orig) {
                     if (overlaysByType[category.name]) {
                         overlaysByType[category.name].push(overlay);
                     }
@@ -1133,22 +1141,25 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
  * @returns {json}
  */
 komoo.Map.prototype.getGeoJSON = function (options) {
-    // TODO: Create a default options object
+    // TODO: Refactoring
     var geoJSON;
     var geoms = [];
     var list;
     if (!options) {
         options = {};
     }
-    if (options.newOnly) {
+    var newOnly = options.newOnly || false;
+    var currentOnly = options.currentOnly || false;
+    var createGeometryCollection = options.geometryCollection || false;
+    if (newOnly) {
         list = this.newOverlays;
-    } else if (options.currentOnly) {
+    } else if (currentOnly) {
         list = komoo.collections.makeFeatureCollection();
         list.push(this.currentOverlay);
     } else {
         list = this.overlays;
     }
-    if (options.geometryCollection) {
+    if (createGeometryCollection) {
         // TODO
         geoJSON = {
             "type": "GeometryCollection",
@@ -1180,13 +1191,13 @@ komoo.Map.prototype.getOverlaysByType = function (type, opt_categories, opt_stri
     }
     if (!categories) {
         categories = [];
-        $.each(this.overlaysByType[type], function (category, overlays) {
+        this.overlaysByType[type].forEach(function (overlays, category, orig) {
             categories.push(category);
         });
     } else if (categories.length === 0) {
         categories = ["uncategorized"];
     }
-    $.each(categories, function (key, category) {
+    categories.forEach(function (category, index, orig) {
         if (komooMap.overlaysByType[type][category]) {
             komooMap.overlaysByType[type][category].forEach(function (overlay, index, orig) {
                 if (!opt_strict || !overlay.getProperties().categories || overlay.getProperties().categories.length == 1) {
@@ -1917,11 +1928,11 @@ komoo.Map.prototype._createMainPanel = function () {
         submenuItem.bind("click", function (){
             window.location = "/user/login"; // FIXME: Hardcode is evil
         });
-        $.each(this.options.regionTypes, function (i, type) {
+        this.options.regionTypes.forEach(function (type, index, orig) {
             komooMap.overlayOptions[type.type] = type;
         });
     } else {
-        $.each(this.options.regionTypes, function (i, type) {
+        this.options.regionTypes.forEach(function (type, index, orig) {
             komooMap.overlayOptions[type.type] = type;
             var item = $("<li>").addClass("map-menuitem");
             if (type.icon) {
@@ -1932,7 +1943,7 @@ komoo.Map.prototype._createMainPanel = function () {
             item.append($("<div>").addClass("item-title").text(type.title).attr("title", type.tooltip));
             var submenu = komooMap.addItems.clone(true).addClass("map-submenu");
             $("div", submenu).hide();
-            $.each(type.overlayTypes, function (key, overlayType) {
+            type.overlayTypes.forEach(function (overlayType, index, orig) {
                 $("#map-add-" + overlayType, submenu).addClass("enabled").show();
             });
             var submenuItems = $("div.enabled", submenu);
@@ -2257,7 +2268,7 @@ komoo.createMapButton = function (name, title, onClick) {
 komoo.createMapMenu = function (name, items) {
     var selector = $("<div>").text(name).addClass("map-menu");
     var container = $("<div>").addClass("map-container").hide();
-    $.each(items, function (i, item) {
+    items.forEach(function (item, index, orig) {
         container.append(item);
         item.css({"clear": "both", "float": "none"});
         item.bind("click", function () { container.hide(); });
@@ -2280,7 +2291,7 @@ komoo.createMapTab = function (items) {
         containersSelector: $("<div>").addClass("map-container")
     };
     tabs.selector.append(tabs.tabsSelector, tabs.containersSelector);
-    $.each(items, function (i, item) {
+    items.forEach(function (item, index, orig) {
         var tab = {
             tabSelector: $("<div>").text(item.title).addClass("map-tab").css({"border": "0px"}),
             containerSelector: $("<div>").addClass("map-tab-container").hide()
@@ -2303,4 +2314,3 @@ komoo.createMapTab = function (items) {
     });
     return tabs;
 };
-
