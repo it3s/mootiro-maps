@@ -4,10 +4,6 @@
 """
 Callback signals that creates new updates (instances of Update class) as users
 interacts with the system.
-
-ATTENTION!
-Django does not recognize signals.py so this module
-must be explicit imported in __init__.py
 """
 
 from __future__ import unicode_literals  # unicode by default
@@ -37,7 +33,8 @@ def create_add_edit_update(sender, **kwargs):
     instance = kwargs["instance"]
     data = {
         'title': instance.name,
-        'link': instance.view_url,
+        'slug': instance.slug if sender != Resource else "",
+        'view_url': instance.view_url,
         'object_id': instance.id,
         'object_type': instance._meta.verbose_name,
         'type': kwargs["type"],
