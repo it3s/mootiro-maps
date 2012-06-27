@@ -1509,6 +1509,7 @@ div.view-list-item.odd {
     padding: 10px;
     color: #555555;
     font-weight: bold;
+    cursor: pointer;
 }
 .view-list-visualization-header i{
     margin-left: 20px;

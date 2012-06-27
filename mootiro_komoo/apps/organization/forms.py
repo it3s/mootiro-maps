@@ -16,7 +16,7 @@ from main.widgets import Tagsinput, TaggitWidget
 from organization.models import (Organization, OrganizationBranch,
                 OrganizationCategory, OrganizationCategoryTranslation)
 from need.models import TargetAudience
-from fileupload.forms import FileuploadField
+from fileupload.forms import FileuploadField, LogoField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
 from signatures.signals import notify_on_update
@@ -47,7 +47,7 @@ class FormOrganization(AjaxModelForm):
         widget=forms.CheckboxSelectMultiple(
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
-    logo = forms.CharField(required=False, widget=forms.HiddenInput())
+    logo = LogoField(required=False)
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
         required=False)
@@ -66,7 +66,7 @@ class FormOrganization(AjaxModelForm):
         'target_audiences': _('Target Audiences'),
         'categories': _('Categories'),
         'files': _('Images'),
-        'logo': _(' ')
+        'logo': _('Logo')
     }
 
     def __init__(self, *args, **kwargs):
