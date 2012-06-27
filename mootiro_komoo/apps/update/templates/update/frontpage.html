@@ -69,8 +69,11 @@
       <div class="clear-both"></div>
 
       <div id="last-updates-panel" class="panel">
+          <div class="view-list-pagination">
+            {% pagination updates %}
+          </div>
           <ul class="updates">
-            {% for u in updates %}
+            {% for u in updates.object_list %}
             <li class="a-update">
               <div class="update-image">
                 {# How to change images to be inside update app??? #}
@@ -127,6 +130,9 @@
             </li>
             {% endfor %}
           </ul>
+          <div class="view-list-pagination">
+            {% pagination updates %}
+          </div>
       </div>
     </div>
 

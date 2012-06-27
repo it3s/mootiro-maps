@@ -917,12 +917,16 @@ div.content-updates .tab.last {
 div.content-updates .tab.first.last {
     border-radius: 10px 10px 0 0;
 }
+div.content-updates .view-list-pagination {
+    margin: 0 20px;
+}
 .shadow-container {
     position: relative;
     z-index: 3;
 }
 .shadow-container.user-updates {
     background: #eff8f9;
+    padding-top: 10px;
     border-radius        : 0 10px 10px 10px;
     -webkit-border-radius: 0 10px 10px 10px;
 }
