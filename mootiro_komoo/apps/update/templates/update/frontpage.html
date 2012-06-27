@@ -1,5 +1,6 @@
 {% extends "global.html" %}
 {% load i18n %}
+{% load komoo_filters %}
 {% load komoo_tags %}
 {% load vote_tags %}
 {% load comment_tags %}
@@ -41,12 +42,6 @@
       </ul>
     </div>
   </div>
-  <!--
-  <div id="about-mootiro" class="open shadow-container right">
-    
-
-  </div>
-  -->
 </div>
 
 <div id="main-content">
@@ -117,8 +112,7 @@
                 {% endfor %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  {{ u.readable_type|capfirst }}
-                  {% trans "on" %} {{ u.date }}
+                  {{ u.readable_type|capfirst }} {{ u.date|naturaltime }}
                   {% if u.readable_type != "discussed" %}
                     {% trans "by" %} {{ u.users|first }}
                   {% endif %}

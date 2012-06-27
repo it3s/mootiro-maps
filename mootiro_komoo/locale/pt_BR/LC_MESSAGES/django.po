@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-26 15:16-0300\n"
+"POT-Creation-Date: 2012-06-27 17:45-0300\n"
 "PO-Revision-Date: 2012-06-06 14:29-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -47,8 +47,7 @@ msgstr "População"
 msgid "Tags"
 msgstr "Palavras-Chave"
 
-#: apps/community/forms.py:29 apps/organization/forms.py:69
-#: apps/organization/forms.py:119
+#: apps/community/forms.py:29 apps/organization/forms.py:119
 msgid " "
 msgstr " "
 
@@ -578,6 +577,57 @@ msgstr "Filtrar por"
 msgid "Apply"
 msgstr "Aplicar"
 
+#: apps/main/templatetags/komoo_filters.py:34
+msgctxt "naturaltime"
+msgid "%(delta)s ago"
+msgstr "%(delta)s atrás"
+
+#: apps/main/templatetags/komoo_filters.py:37
+#: apps/main/templatetags/komoo_filters.py:59
+msgid "now"
+msgstr "agora"
+
+#: apps/main/templatetags/komoo_filters.py:40
+msgid "a second ago"
+msgid_plural "%(count)s seconds ago"
+msgstr[0] "um segundo atrás"
+msgstr[1] "%(count)s segundos atrás"
+
+#: apps/main/templatetags/komoo_filters.py:45
+msgid "a minute ago"
+msgid_plural "%(count)s minutes ago"
+msgstr[0] "um minuto atrás"
+msgstr[1] "%(count)s minutos atrás"
+
+#: apps/main/templatetags/komoo_filters.py:50
+msgid "an hour ago"
+msgid_plural "%(count)s hours ago"
+msgstr[0] "um hora atrás"
+msgstr[1] "%(count)s horas atrás"
+
+#: apps/main/templatetags/komoo_filters.py:56
+msgctxt "naturaltime"
+msgid "%(delta)s from now"
+msgstr "daqui a %(delta)s"
+
+#: apps/main/templatetags/komoo_filters.py:62
+msgid "a second from now"
+msgid_plural "%(count)s seconds from now"
+msgstr[0] "daqui a um segundo"
+msgstr[1] "daqui a %(count)s segundos"
+
+#: apps/main/templatetags/komoo_filters.py:67
+msgid "a minute from now"
+msgid_plural "%(count)s minutes from now"
+msgstr[0] "daqui a um minuto"
+msgstr[1] "daqui a %(count)s minutos"
+
+#: apps/main/templatetags/komoo_filters.py:72
+msgid "an hour from now"
+msgid_plural "%(count)s hours from now"
+msgstr[0] "daqui a uma hora"
+msgstr[1] "daqui a %(count)s horas"
+
 #: apps/main/templatetags/komoo_tags.py:253
 msgid "Votes"
 msgstr "Votos"
@@ -799,7 +849,7 @@ msgid "created by"
 msgstr "criado por"
 
 #: apps/need/templates/need/view.html:40
-#: apps/update/templates/update/frontpage.html:108
+#: apps/update/templates/update/frontpage.html:116
 msgid "on"
 msgstr "em"
 
@@ -835,6 +885,10 @@ msgstr "Públicos alvo"
 #: apps/organization/forms.py:67
 msgid "Categories"
 msgstr "Categorias"
+
+#: apps/organization/forms.py:69
+msgid "Logo"
+msgstr ""
 
 #: apps/organization/forms.py:116
 msgid "Branch Name"
@@ -1050,27 +1104,44 @@ msgstr "investimento editado"
 msgid "investment discussed"
 msgstr "investimento discutido"
 
-#: apps/update/templates/update/frontpage.html:17
-msgid "about mootiro"
-msgstr "sobre o mootiro"
+#: apps/update/templates/update/frontpage.html:19
+#: apps/update/templates/update/frontpage.html:21
+#, fuzzy
+msgid "About Mootiro"
+msgstr "Sobre o MootiroMaps"
 
-#: apps/update/templates/update/frontpage.html:46
+#: apps/update/templates/update/frontpage.html:29
+#, fuzzy
+msgid "Add a community"
+msgstr "Sobre a Comunidade"
+
+#: apps/update/templates/update/frontpage.html:34
+#, fuzzy
+msgid "Add a need"
+msgstr "Adicionar linha"
+
+#: apps/update/templates/update/frontpage.html:39
+#, fuzzy
+msgid "Add an organization"
+msgstr "Organização"
+
+#: apps/update/templates/update/frontpage.html:51
 msgid "last updates"
 msgstr "últimas atualizações"
 
-#: apps/update/templates/update/frontpage.html:48
+#: apps/update/templates/update/frontpage.html:53
 msgid "discussions"
 msgstr "discussões"
 
-#: apps/update/templates/update/frontpage.html:49
+#: apps/update/templates/update/frontpage.html:54
 msgid "my content"
 msgstr "meu conteúdo"
 
-#: apps/update/templates/update/frontpage.html:56
+#: apps/update/templates/update/frontpage.html:61
 msgid "Type"
 msgstr "Tipo"
 
-#: apps/update/templates/update/frontpage.html:79
+#: apps/update/templates/update/frontpage.html:87
 #, python-format
 msgid ""
 "\n"
@@ -1089,7 +1160,7 @@ msgstr[1] ""
 "                          e mais %(num)s usuários\n"
 "                        "
 
-#: apps/update/templates/update/frontpage.html:86
+#: apps/update/templates/update/frontpage.html:94
 msgid ""
 "\n"
 "                        discussed\n"
@@ -1107,11 +1178,11 @@ msgstr[1] ""
 "                        discutiram\n"
 "                      "
 
-#: apps/update/templates/update/frontpage.html:110
+#: apps/update/templates/update/frontpage.html:118
 msgid "by"
 msgstr "por"
 
-#: apps/update/templates/update/frontpage.html:135
+#: apps/update/templates/update/frontpage.html:146
 msgid "News"
 msgstr "Notícias"
 
@@ -1160,6 +1231,11 @@ msgstr "Entre a legenda para essa imagem"
 msgid "or"
 msgstr "ou"
 
+#: lib/fileupload/forms.py:153
+#, fuzzy
+msgid "Select a logo"
+msgstr "Selecione um motivo"
+
 #: lib/taggit/forms.py:21
 msgid "Please provide a comma-separated list of tags."
 msgstr "Por favor forneça uma lista de tags separadas por vírgula."
@@ -1196,6 +1272,9 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
+
+#~ msgid "about mootiro"
+#~ msgstr "sobre o mootiro"
 
 #~ msgid "Photos:"
 #~ msgstr "Fotos:"

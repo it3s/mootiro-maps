@@ -2108,7 +2108,7 @@ ul.two-cols li {
     clear: both;
     width: 900px;
     margin-left: 60px;
-    margin-top: 10px;
+    padding-top: 1px;
     font-size: 90%;
 }
 
