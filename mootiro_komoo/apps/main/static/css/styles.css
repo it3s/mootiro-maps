@@ -290,6 +290,7 @@ div.collapser i.icon-chevron-down {
     margin-right: 5px;
 }
 
+.button.map:hover, .button.map.selected,
 .organization-buttons .org-btn[panel='branches-list']:hover,
 .organization-buttons .org-btn[panel='branches-list'].selected,
 #top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
@@ -306,6 +307,7 @@ div.collapser i.icon-chevron-down {
     background: #E84239 !important;
 }
 
+.button.community:hover, .button.community.selected,
 .organization-buttons .org-btn[panel='communities-list']:hover,
 .organization-buttons .org-btn[panel='communities-list'].selected,
 #top #menu #menu-community a:hover, #top #menu #menu-community.selected a,
@@ -323,6 +325,7 @@ div.collapser i.icon-chevron-down {
     background: #F08138 !important;
 }
 
+.button.need:hover, .button.need.selected,
 .organization-buttons .org-btn[panel='supported-proposals-list']:hover,
 .organization-buttons .org-btn[panel='supported-proposals-list'].selected,
 #top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
@@ -339,6 +342,7 @@ div.collapser i.icon-chevron-down {
     background: #E83361 !important;
 }
 
+.button.organization:hover, .button.organization.selected,
 .organization-buttons .org-btn[panel='supported-organizations-list']:hover,
 .organization-buttons .org-btn[panel='supported-organizations-list'].selected,
 #top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
@@ -355,6 +359,7 @@ div.collapser i.icon-chevron-down {
     background: #3E5FA9 important;
 }
 
+.button.resource:hover, .button.resource.selected,
 .organization-buttons .org-btn[panel='supported-resources-list']:hover,
 .organization-buttons .org-btn[panel='upported-resources-list'].selected,
 #top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
@@ -371,6 +376,7 @@ div.collapser i.icon-chevron-down {
     background: #1D9DD9 !important;
 }
 
+.button.investment:hover, .button.investment.selected,
 .organization-buttons .org-btn[panel='investments-list']:hover,
 .organization-buttons .org-btn[panel='investments-list'].selected,
 #top #menu #menu-investment a:hover, #top #menu #menu-investment.selected a {
@@ -847,26 +853,30 @@ body.community #main-content {
 
 /******* Updates page (frontpage) *******/
 #updates-header {
-    width: 980px;
+    position: relative;
+    width: 1000px;
     margin-left: 40px;
 }
 #updates-header #about-mootiro {
-    position: relative;
+    position: absolute;
     top: 20px;
     right: 0;
     padding: 10px;
     border-radius: 10px;
     background: #eef7fA;
+    z-index: 100;
+    width: 110px;
+    height: 20px;
 }
 #updates-header #about-mootiro ul { width: 180px }
 #updates-header #about-mootiro ul li {
-    width: 100%;
     margin-top: 7px;
     text-align: center;
 }
-#updates-header #about-mootiro.open {
-    width: 200px;
-    height: 150px;
+#updates-header #about-mootiro .button {
+    border: none;
+    border-radius: 10px;
+    width: 100%;
 }
 .content-updates { width: 600px }
 .news-updates {

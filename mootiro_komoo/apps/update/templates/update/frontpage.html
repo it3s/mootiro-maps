@@ -13,27 +13,37 @@
 {% block content %}
 <div id="updates-header">
   <img alt="" src="{{STATIC_URL}}img/updates-page/novidades.png"/>
-  <div id="about-mootiro" class="shadow-container right open">
-    <img id="about-image" alt="{% trans "about mootiro" %}" src="{{STATIC_URL}}img/updates-page/sobre-off.png" class="right"/>
 
+  <div id="about-mootiro" class="shadow-container right closed">
+    <img alt="{% trans "About Mootiro" %}" src="{{STATIC_URL}}img/updates-page/sobre-off.png"
+        class="about-image right"/>
+    <img alt="{% trans "About Mootiro" %}" src="{{STATIC_URL}}img/updates-page/sobre.png"
+        class="about-image right hidden"/>
     <div class="clear-both"></div>
-    <a>what is this?</a>
-    <ul>
-      <li class="button">
-        <i class="icon-community"></i> Add a community
-      </li>
-      <li class="button">
-        <i class="icon-need"></i> Add a need
-      </li>
-      <li class="button">
-        <i class="icon-organization"></i> Add an organization
-      </li>
-    </ul>
-
+    <div class="about-content hidden">
+      <a>what is this?</a>
+      <ul>
+        <li>
+          <a href="{% url map %}#map-panel-add"  class="button community selected">
+            <i class="icon-community left"></i> {% trans "Add a community" %}
+          </a>
+        </li>
+        <li>
+          <a href="{% url map %}#map-panel-add" class="button need selected">
+            <i class="icon-need left"></i> {% trans "Add a need" %}
+          </a>
+        </li>
+        <li>
+          <a href="{% url map %}#map-panel-add" class="button organization selected">
+            <i class="icon-organization left"></i> {% trans "Add an organization" %}
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
   <!--
   <div id="about-mootiro" class="open shadow-container right">
-    <img alt="" class="right" src="{{STATIC_URL}}img/updates-page/sobre.png"/>
+    
 
   </div>
   -->
@@ -164,6 +174,26 @@
         //     $("#content-updates-filters div.img-holder > img").trigger("click");
         //     $("#content-updates-filters div.img-holder input[type=checkbox]").attr("checked", "checked");
         // });
+        
+        $("#about-mootiro.closed").live("mouseenter", function (evt) {
+            console.log("close enter");
+            $(this).toggleClass("closed open");
+            $(this).animate({
+                width: '+=85',
+                height: '+=120'
+            });
+            $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
+        });
+        
+        $("#about-mootiro.open").live("mouseleave", function (evt) {
+            console.log("open leave");
+            $(this).toggleClass("closed open");
+            $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
+            $(this).animate({
+                width: '-=85',
+                height: '-=120'
+            });
+        });
 
     </script>
 {% endblock %}
