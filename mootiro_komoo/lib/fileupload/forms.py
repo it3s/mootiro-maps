@@ -131,13 +131,41 @@ class FileuploadWidget(forms.Widget):
         return html
 
 
+class LogoWidget(forms.Widget):
+    class Media:
+        js = (
+            'plupload/logo_plupload.js',
+        )
+        css = {
+            'all': ('plupload/komoo_plupload.css',)
+        }
+
+    def render(self, name, value=None, attrs=None):
+        html = u"""
+            <div id="logo-thumb"></div>
+            <div id="logo-uploader">
+                <a id="picklogo" href="#" class="button">%(select_logo)s</a>
+            </div>
+            <div>
+                <input type="hidden" id="id_logo" name="%(name)s" >
+            </div>
+
+        """ % {'name': name, 'select_logo': _('Select a logo')}
+        return html
+
+
 class FileuploadField(forms.CharField):
     widget = FileuploadWidget
+
+
+class LogoField(forms.CharField):
+    widget = LogoWidget
 
 
 class POCForm(forms.Form):
     files = FileuploadField()
     title = forms.CharField()
+    logo = LogoField()
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="poc_form")
