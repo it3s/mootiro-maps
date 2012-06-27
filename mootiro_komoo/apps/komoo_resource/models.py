@@ -45,7 +45,7 @@ class Resource(GeoRefModel, VotableModel):
     creation_date = models.DateTimeField(auto_now_add=True)
     last_update = models.DateTimeField(auto_now=True)
     kind = models.ForeignKey(ResourceKind, null=True, blank=True)
-    description = models.TextField(db_index=True)
+    description = models.TextField()
     contact = models.TextField(null=True, blank=True)
     community = models.ManyToManyField(Community, related_name='resources',
             null=True, blank=True)

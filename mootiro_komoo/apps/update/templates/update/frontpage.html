@@ -29,12 +29,12 @@
           </a>
         </li>
         <li>
-          <a href="{% url map %}#map-panel-add" class="button need selected">
+          <a href="{% url new_need %}" class="button need selected">
             <i class="icon-need left"></i> {% trans "Add a need" %}
           </a>
         </li>
         <li>
-          <a href="{% url map %}#map-panel-add" class="button organization selected">
+          <a href="{% url new_organization %}" class="button organization selected">
             <i class="icon-organization left"></i> {% trans "Add an organization" %}
           </a>
         </li>
@@ -124,7 +124,7 @@
                   {% endif %}
                 </div>
                 <div class="update-social right">
-                  {{ u.comments_count }} comments
+                  <a href="{{ u.link }}#Comments">({{ u.comments_count }} comments)</a>
                 </div>
               </div>
             </li>
