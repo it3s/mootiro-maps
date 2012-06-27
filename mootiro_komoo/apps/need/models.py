@@ -64,10 +64,10 @@ class TargetAudience(models.Model):
 class Need(GeoRefModel, VotableModel):
     """A need of a Community"""
 
-    title = models.CharField(max_length=256, blank=False, db_index=True)
+    title = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.CharField(max_length=256, blank=False, db_index=True)
-    description = models.TextField(db_index=True)
+    description = models.TextField()
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True, blank=True,

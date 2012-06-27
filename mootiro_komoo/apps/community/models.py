@@ -14,11 +14,11 @@ from vote.models import VotableModel
 
 
 class Community(GeoRefModel, VotableModel):
-    name = models.CharField(max_length=256, blank=False, db_index=True)
+    name = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.SlugField(max_length=256, blank=False, db_index=True)
     population = models.IntegerField(null=True, blank=True)  # number of inhabitants
-    description = models.TextField(null=True, blank=True, db_index=True)
+    description = models.TextField(null=True, blank=True)
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True, blank=True,
