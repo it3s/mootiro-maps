@@ -134,6 +134,8 @@ class FileuploadWidget(forms.Widget):
 class LogoWidget(forms.Widget):
     class Media:
         js = (
+            'plupload/browserplus-min.js',
+            'plupload/js/plupload.full.js',
             'plupload/logo_plupload.js',
         )
         css = {
