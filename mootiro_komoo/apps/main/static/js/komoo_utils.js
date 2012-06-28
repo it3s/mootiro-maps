@@ -52,26 +52,13 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 });
 
 /* Easy to use, jQuery based, and elegant solution for tabs :) */
-function Tabs(tabs, contents, onChange, selectedClass) {
-    var selectedClass = selectedClass || "selected";
+Tabs = function (tabs, contents, onChange, selectedClass) {
+    this.tabs = tabs;
+    this.contents = contents;
+    this.selectedClass = selectedClass || "selected";
+    this.onChange = onChange || function (instance) {};
     $(contents).hide();
     var instance = this;
-    this.to = function (tab) { // Most important method, switches to a tab.
-        $(tabs).removeClass(selectedClass);
-        $(contents).removeClass(selectedClass).hide();
-
-        var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
-        $("*[href=" + tab_content + "]").parent().addClass(selectedClass);
-        $(tab_content).addClass(selectedClass).show();
-
-        instance.current = tab;
-        if (onChange && instance.initialized) {
-            onChange(instance);
-        }
-    };
-    this.getCurrentTabIndex = function () {
-        return $(tabs).index(instance.current);
-    };
     $(tabs).click(function () {
         instance.to(this);
         return false; // in order not to follow the link
@@ -80,7 +67,23 @@ function Tabs(tabs, contents, onChange, selectedClass) {
     this.length = $(tabs).length;
     this.to($(tabs)[0]);
     this.initialized = true;
-}
+};
+Tabs.prototype.to = function (tab) { // Most important method, switches to a tab.
+    $(this.tabs).removeClass(this.selectedClass);
+    $(this.contents).removeClass(this.selectedClass).hide();
+
+    var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
+    $("*[href=" + tab_content + "]").parent().addClass(this.selectedClass);
+    $(tab_content).addClass(this.selectedClass).show();
+
+    this.current = tab;
+    if (this.onChange && this.initialized) {
+        this.onChange(this);
+    }
+};
+Tabs.prototype.getCurrentTabIndex = function () {
+    return $(this.tabs).index(this.current);
+};
 
 
 /*

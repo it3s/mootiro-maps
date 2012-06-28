@@ -574,6 +574,11 @@ body.community #collapse-panel {
     z-index: 10;
     display: none;
 }
+#map-panel .panel { 
+    border-top: 4px solid #ffbd2e;
+    margin-top: 5px; 
+    padding-top: 10px; 
+}
 .collapsed #map-panel {
     left: -300px !important;
 }
@@ -625,7 +630,6 @@ body.community #collapse-panel {
 #filter-form ul.geo-objects-listing li.sublist { display: none }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
-#map-panel .panel { margin-top: 10px }
 #filter-submit {
     padding-left: 2em;
     padding-right: 2em;
@@ -723,6 +727,51 @@ body.community #collapse-panel {
 .map-panel {
     background: #dceff4;
 }
+.panel-tab {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+    border: 4px solid transparent;
+    border-radius        : 12px;
+    -moz-border-radius   : 12px;
+    -webkit-border-radius: 12px;
+}
+.panel-tab:hover {
+    border: 1px solid #ffbd2e;
+    padding: 3px;
+}
+.panel-tab.selected, .panel-tab.selected:hover {
+    border: 4px solid #ffbd2e;
+    padding: 0px;
+    font-weight: bold;
+}
+.panel-tab.selected .line {
+    border: 2px solid #ffbd2e;
+    height: 15px;
+    width: 0px;
+    margin: 0 auto;
+    margin-bottom: -19px;
+}
+.panel-tab a {
+    color: black;
+    outline: 0;
+    display: block;
+    padding-top: 75px;
+    padding-bottom: 5px;
+}
+.panel-tab a:hover {
+    text-decoration: none;
+}
+#map-panel-filter-tab a {
+    background: url("../img/panel/filter.png") no-repeat 50% 10px;
+}
+#map-panel-add-tab a {
+    background: url("../img/panel/add.png") no-repeat 50% 0px;
+}
+#map-panel-layers-tab a {
+    background: url("../img/panel/layers.png") no-repeat 50% 10px;
+}
+
 body.community .map-panel {
     margin-top: 35px !important;
 }
