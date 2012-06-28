@@ -732,18 +732,20 @@ body.community #collapse-panel {
     width: 30%;
     text-align: center;
     border: 4px solid transparent;
-    border-radius        : 12px;
-    -moz-border-radius   : 12px;
-    -webkit-border-radius: 12px;
+    border-radius        : 10px;
+    -moz-border-radius   : 10px;
+    -webkit-border-radius: 10px;
 }
 .panel-tab:hover {
     border: 1px solid #ffbd2e;
     padding: 3px;
+    background: #fff9ef;
 }
 .panel-tab.selected, .panel-tab.selected:hover {
     border: 4px solid #ffbd2e;
     padding: 0px;
     font-weight: bold;
+    background: #fff0d4;
 }
 .panel-tab.selected .line {
     border: 2px solid #ffbd2e;
