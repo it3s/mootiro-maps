@@ -152,6 +152,32 @@ function getUrlVars(){
         }
         var form = $(this);
 
+        $(function(){
+            $('.field-hint-box-wrapper').hide();
+        });
+
+
+        $('input, textarea').live('focus',function(){
+            var el = $(this);
+            var node, i;
+            for ( node = el, i = 0;
+                  (!$(node).is('.control-group')) && i < 15;
+                  node = node.parent(), i++
+            );
+
+            // remove focus from previous element
+            $('.control-group.focus').each(function(idx, el){
+                var el = $(el);
+                el.removeClass('focus');
+                el.find('.field-hint-box-wrapper').fadeOut('fast');
+            });
+
+            if (node.is('.control-group')){
+                node.addClass('focus');
+                node.find('.field-hint-box-wrapper').fadeIn('fast');
+            }
+        });
+
         $.each(box_config, function(key, val){
             var el = form.find('#div_id_' + key);
             el.find('.controls').append("" +

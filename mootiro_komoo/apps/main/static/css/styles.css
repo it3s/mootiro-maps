@@ -1041,33 +1041,6 @@ form #uploader_container { padding: 0 }
 }
 #investment_form #div_id_investor_type .radio input { margin-top: 0 }
 
-/* form hint boxes */
-.field-hint-box-wrapper{
-  min-height: 20px;
-  width: 280px;
-  display: inline-block;
-  position: absolute;
-}
-.field-hint-box {
-    display: inline-block;
-    min-height: 20px;
-    width: 250px;
-    border-radius: 5px;
-    border: solid 1px #eecc00;
-    vertical-align: middle;
-    word-wrap: break-word;
-    padding: 5px;
-}
-.hint-box-line{
-    width: 20px;
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    height: 0;
-    left: -20px;
-    border-bottom: solid 1px #eecc00;
-}
-
 /* Ajax Search */
 .ajax-search { float: right }
 .ajax-search input {
@@ -1283,6 +1256,10 @@ input[type=text], textarea{
 }
 .controls{
     position: relative;
+}
+.control-group{
+    margin: -10px -30px 20px -20px;
+    padding: 10px 30px 10px 20px;
 }
 .control-group .controls input{
     width: 99%;
@@ -1942,8 +1919,6 @@ div.investments-list .tab-investment.selected a { color: #000 }
 }
 .control-group.error{
     background-color: #f2dede;
-    margin: -10px -30px 20px -20px;
-    padding: 10px 30px 0 20px;
     border-radius: 4px;
 }
 .control-group.error input, .control-group.error textarea{
@@ -2128,4 +2103,47 @@ ul.two-cols li {
 
 #footer .cea-logo {
     margin: 24px; /* 4*x, x=6 */
+}
+
+/* form hint boxes */
+.field-hint-box-wrapper{
+  min-height: 20px;
+  width: 280px;
+  display: inline-block;
+  position: absolute;
+}
+.field-hint-box {
+    display: inline-block;
+    min-height: 20px;
+    width: 250px;
+    border-radius: 5px;
+    /*border: solid 1px #eecc00;*/
+    border: solid 2px #ffe5af;
+    vertical-align: middle;
+    word-wrap: break-word;
+    padding: 5px;
+}
+.hint-box-line{
+    width: 10px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    height: 0;
+    left: -10px;
+    /*border-bottom: solid 1px #eecc00;*/
+    border-bottom: solid 2px #ffe5af;
+}
+/* Focus */
+.control-group.focus{
+    background-color: #ffe5af;
+    border-radius: 4px;
+}
+.control-group.focus input, .control-group.focus textarea{
+    background-color: #fbfbfb;
+}
+.control-group.focus .tagsinput{
+    background-color: #ff35af;
+}
+.control-group.focus .tagsinput input{
+    background-color: #fbfbfb;
 }
