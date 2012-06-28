@@ -814,6 +814,7 @@ body.community #main-content {
     width: 200px;
     float: left;
     color: #3ebac2;
+    margin-left: 10px;
 }
 .right-bar h2 {
     color: #3ebac2;
@@ -2108,41 +2109,53 @@ ul.two-cols li {
 /* form hint boxes */
 .field-hint-box-wrapper{
   min-height: 20px;
-  width: 280px;
+  width: 330px;
   display: inline-block;
   position: absolute;
 }
 .field-hint-box {
     display: inline-block;
     min-height: 20px;
-    width: 250px;
+    width: 310px;
     border-radius: 5px;
-    /*border: solid 1px #eecc00;*/
-    border: solid 2px #ffe5af;
+    border: solid 2px #eecc00;
+    /*border: solid 2px #ffe5af;*/
     vertical-align: middle;
     word-wrap: break-word;
     padding: 5px;
+    background: #ffffff;
+}
+.hint-text{
+    width: 280px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.hint-icon{
+    width: 18px;
+    margin-right: 12px;
+    vertical-align: middle
 }
 .hint-box-line{
-    width: 10px;
+    width: 14px;
     display: inline-block;
     position: absolute;
     top: 50%;
     height: 0;
-    left: -10px;
-    /*border-bottom: solid 1px #eecc00;*/
-    border-bottom: solid 2px #ffe5af;
+    left: -12px;
+    border-bottom: solid 2px #eecc00;
+    /*border-bottom: solid 2px #ffe5af;*/
 }
 /* Focus */
 .control-group.focus{
     background-color: #ffe5af;
     border-radius: 4px;
+    border: solid 2px #eecc00;
 }
 .control-group.focus input, .control-group.focus textarea{
     background-color: #fbfbfb;
 }
 .control-group.focus .tagsinput{
-    background-color: #ff35af;
+    background-color: #ffe5af;
 }
 .control-group.focus .tagsinput input{
     background-color: #fbfbfb;

@@ -152,13 +152,8 @@ function getUrlVars(){
         }
         var form = $(this);
 
-        $(function(){
-            $('.field-hint-box-wrapper').hide();
-        });
-
-
-        $('input, textarea').live('focus',function(){
-            var el = $(this);
+        var hintBoxesFocusCb = function(el){
+            var el = $(el);
             var node, i;
             for ( node = el, i = 0;
                   (!$(node).is('.control-group')) && i < 15;
@@ -166,24 +161,46 @@ function getUrlVars(){
             );
 
             // remove focus from previous element
-            $('.control-group.focus').each(function(idx, el){
-                var el = $(el);
-                el.removeClass('focus');
-                el.find('.field-hint-box-wrapper').fadeOut('fast');
+            $('.control-group.focus').each(function(idx, obj){
+                var obj = $(obj);
+                if(!obj.is(el)){
+                    obj.removeClass('focus');
+                    obj.find('.field-hint-box-wrapper').fadeOut('fast');
+                }
             });
 
-            if (node.is('.control-group')){
+            if (node.is('.control-group') && !node.is('.focus')){
                 node.addClass('focus');
                 node.find('.field-hint-box-wrapper').fadeIn('fast');
             }
+        };
+
+        $(function(){
+            $('.field-hint-box-wrapper').hide();
         });
+
+
+        $('input, textarea').live('focus',function(){
+            hintBoxesFocusCb(this);
+        });
+        $('#div_id_files').live('mouseover', function(){
+            hintBoxesFocusCb(this);
+        });
+        // $('#div_id_files').live('blur', function(){
+        //     var el = $(this);
+        //     el.removeClass('focus');
+        //     el.find('.field-hint-box-wrapper').fadeOut('fast');
+        // });
 
         $.each(box_config, function(key, val){
             var el = form.find('#div_id_' + key);
             el.find('.controls').append("" +
                 "<div class='field-hint-box-wrapper'>" +
                     "<span class='hint-box-line'>&nbsp;&nbsp;</span>" +
-                    "<div class='field-hint-box'>" + val.hint  +"</div>" +
+                    "<div class='field-hint-box'>" +
+                    "<img class='hint-icon' src='/static/img/hint-icon.png' >" +
+                    "<div class='hint-text'>" + val.hint  + "</div>" +
+                    "</div>" +
                 "</div>"
             );
 
