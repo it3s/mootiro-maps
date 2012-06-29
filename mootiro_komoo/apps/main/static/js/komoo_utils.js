@@ -186,7 +186,11 @@ function getUrlVars(){
         $('input, textarea').live('focus',function(){
             hintBoxesFocusCb(this);
         });
-        $('#div_id_files, #div_id_logo, .org-widget-categories').live(
+
+        // this is ugly and very dependant on how django/crispyforms
+        // generates our . But its quick and works.
+        // Perhaps we should refactor this latter
+        $('#div_id_files, #div_id_logo, .org-widget-categories, #div_id_categories').live(
             'click',
             function(){
                 hintBoxesFocusCb(this);

@@ -574,10 +574,10 @@ body.community #collapse-panel {
     z-index: 10;
     display: none;
 }
-#map-panel .panel { 
+#map-panel .panel {
     border-top: 4px solid #ffbd2e;
-    margin-top: 5px; 
-    padding-top: 10px; 
+    margin-top: 5px;
+    padding-top: 10px;
 }
 .collapsed #map-panel {
     left: -300px !important;
@@ -2163,6 +2163,7 @@ ul.two-cols li {
   width: 330px;
   display: inline-block;
   position: absolute;
+  z-index: 999;
 }
 .field-hint-box {
     display: inline-block;
