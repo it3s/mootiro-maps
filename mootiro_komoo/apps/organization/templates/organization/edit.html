@@ -26,6 +26,44 @@
     <script type="text/javascript">
         $(function(){
             $('#form_organization').ajaxform();
+
+            $('#form_organization').komooFormHintBoxes({
+                'name': {
+                  hint: 'Coloque o nome da organização.'
+                },
+                'description': {
+                  top: '45%',
+                  hint: 'Coloque detalhes da organização e como ela atua na comunidade.'
+                },
+                'community':{
+                  hint: 'Coloque as comunidades que a organização atua ou atende.',
+                  top: '-8px'
+                },
+                'link': {
+                    hint: 'Coloque o endereço do site da organização. Se ela não tiver, ou você não achar, tudo bem, não é obrigatório.',
+                    top: '-15px'
+                },
+                'contact': {
+                  hint: 'Coloque aqui os contatos da organização, telefones, endereço, pessoas que podemos conversar...',
+                  top: '25%'
+                },
+                'target_audiences': {
+                  hint: 'Coloque o tipo de pessoas que essa organização busca atingir na comunidade.',
+                  top: '-12px'
+                },
+                'categories':{
+                    hint: 'Escolha em que área a organização atua, pode-se escolher mais de uma.',
+                    top: '45%'
+                },
+                'tags': {
+                  hint: 'Coloque palavras que ajudem a ilustrar a organização, tal como "escola", "educação", "meio-ambiente"',
+                  top: '-12px'
+                },
+                'files': {
+                  hint: 'Você pode carregar fotos da sua organização',
+                  top: '40%'
+                }
+            });
         })
     </script>
 
