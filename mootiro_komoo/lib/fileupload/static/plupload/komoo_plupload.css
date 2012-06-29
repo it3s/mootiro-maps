@@ -59,6 +59,7 @@
     max-width: 80px;
     max-height: 80px;
     margin: 0 auto;
+    cursor: pointer;
     transition: transform 0.5s, box-shadow 0.5s;
     -moz-transition: -moz-transform 0.5s, -moz-box-shadow 0.5s;
     -o-transition: -o-transform 0.5s, -o-box-shadow 0.5s;
@@ -92,4 +93,15 @@
 #delete-file{
     float: left;
     color: #ffffff;
+}
+/* ### logo uploader ### */
+#logo-thumb {
+    margin: 10px 0px;
+}
+#logo-thumb img{
+    max-width: 150px;
+    max-height: 150px;
+    border-radius: 3px;
+    border: solid 2px #ff8a00;
+    padding: 5px;
 }

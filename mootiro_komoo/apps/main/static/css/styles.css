@@ -290,6 +290,7 @@ div.collapser i.icon-chevron-down {
     margin-right: 5px;
 }
 
+.button.map:hover, .button.map.selected,
 .organization-buttons .org-btn[panel='branches-list']:hover,
 .organization-buttons .org-btn[panel='branches-list'].selected,
 #top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
@@ -306,6 +307,7 @@ div.collapser i.icon-chevron-down {
     background: #E84239 !important;
 }
 
+.button.community:hover, .button.community.selected,
 .organization-buttons .org-btn[panel='communities-list']:hover,
 .organization-buttons .org-btn[panel='communities-list'].selected,
 #top #menu #menu-community a:hover, #top #menu #menu-community.selected a,
@@ -323,6 +325,7 @@ div.collapser i.icon-chevron-down {
     background: #F08138 !important;
 }
 
+.button.need:hover, .button.need.selected,
 .organization-buttons .org-btn[panel='supported-proposals-list']:hover,
 .organization-buttons .org-btn[panel='supported-proposals-list'].selected,
 #top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
@@ -339,6 +342,7 @@ div.collapser i.icon-chevron-down {
     background: #E83361 !important;
 }
 
+.button.organization:hover, .button.organization.selected,
 .organization-buttons .org-btn[panel='supported-organizations-list']:hover,
 .organization-buttons .org-btn[panel='supported-organizations-list'].selected,
 #top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
@@ -355,6 +359,7 @@ div.collapser i.icon-chevron-down {
     background: #3E5FA9 important;
 }
 
+.button.resource:hover, .button.resource.selected,
 .organization-buttons .org-btn[panel='supported-resources-list']:hover,
 .organization-buttons .org-btn[panel='upported-resources-list'].selected,
 #top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
@@ -371,6 +376,7 @@ div.collapser i.icon-chevron-down {
     background: #1D9DD9 !important;
 }
 
+.button.investment:hover, .button.investment.selected,
 .organization-buttons .org-btn[panel='investments-list']:hover,
 .organization-buttons .org-btn[panel='investments-list'].selected,
 #top #menu #menu-investment a:hover, #top #menu #menu-investment.selected a {
@@ -568,6 +574,11 @@ body.community #collapse-panel {
     z-index: 10;
     display: none;
 }
+#map-panel .panel {
+    border-top: 4px solid #ffbd2e;
+    margin-top: 5px;
+    padding-top: 10px;
+}
 .collapsed #map-panel {
     left: -300px !important;
 }
@@ -619,7 +630,6 @@ body.community #collapse-panel {
 #filter-form ul.geo-objects-listing li.sublist { display: none }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
-#map-panel .panel { margin-top: 10px }
 #filter-submit {
     padding-left: 2em;
     padding-right: 2em;
@@ -717,6 +727,53 @@ body.community #collapse-panel {
 .map-panel {
     background: #dceff4;
 }
+.panel-tab {
+    display: inline-block;
+    width: 30%;
+    text-align: center;
+    border: 4px solid transparent;
+    border-radius        : 10px;
+    -moz-border-radius   : 10px;
+    -webkit-border-radius: 10px;
+}
+.panel-tab:hover {
+    border: 1px solid #ffbd2e;
+    padding: 3px;
+    background: #fff9ef;
+}
+.panel-tab.selected, .panel-tab.selected:hover {
+    border: 4px solid #ffbd2e;
+    padding: 0px;
+    font-weight: bold;
+    background: #fff0d4;
+}
+.panel-tab.selected .line {
+    border: 2px solid #ffbd2e;
+    height: 15px;
+    width: 0px;
+    margin: 0 auto;
+    margin-bottom: -19px;
+}
+.panel-tab a {
+    color: black;
+    outline: 0;
+    display: block;
+    padding-top: 75px;
+    padding-bottom: 5px;
+}
+.panel-tab a:hover {
+    text-decoration: none;
+}
+#map-panel-filter-tab a {
+    background: url("../img/panel/filter.png") no-repeat 50% 10px;
+}
+#map-panel-add-tab a {
+    background: url("../img/panel/add.png") no-repeat 50% 0px;
+}
+#map-panel-layers-tab a {
+    background: url("../img/panel/layers.png") no-repeat 50% 10px;
+}
+
 body.community .map-panel {
     margin-top: 35px !important;
 }
@@ -808,6 +865,7 @@ body.community #main-content {
     width: 200px;
     float: left;
     color: #3ebac2;
+    margin-left: 10px;
 }
 .right-bar h2 {
     color: #3ebac2;
@@ -847,26 +905,30 @@ body.community #main-content {
 
 /******* Updates page (frontpage) *******/
 #updates-header {
-    width: 980px;
+    position: relative;
+    width: 1000px;
     margin-left: 40px;
 }
 #updates-header #about-mootiro {
-    position: relative;
+    position: absolute;
     top: 20px;
     right: 0;
     padding: 10px;
     border-radius: 10px;
     background: #eef7fA;
+    z-index: 100;
+    width: 110px;
+    height: 20px;
 }
 #updates-header #about-mootiro ul { width: 180px }
 #updates-header #about-mootiro ul li {
-    width: 100%;
     margin-top: 7px;
     text-align: center;
 }
-#updates-header #about-mootiro.open {
-    width: 200px;
-    height: 150px;
+#updates-header #about-mootiro .button {
+    border: none;
+    border-radius: 10px;
+    width: 100%;
 }
 .content-updates { width: 600px }
 .news-updates {
@@ -907,12 +969,16 @@ div.content-updates .tab.last {
 div.content-updates .tab.first.last {
     border-radius: 10px 10px 0 0;
 }
+div.content-updates .view-list-pagination {
+    margin: 0 20px;
+}
 .shadow-container {
     position: relative;
     z-index: 3;
 }
 .shadow-container.user-updates {
     background: #eff8f9;
+    padding-top: 10px;
     border-radius        : 0 10px 10px 10px;
     -webkit-border-radius: 0 10px 10px 10px;
 }
@@ -1026,33 +1092,6 @@ form #uploader_container { padding: 0 }
     padding-top: 0;
 }
 #investment_form #div_id_investor_type .radio input { margin-top: 0 }
-
-/* form hint boxes */
-.field-hint-box-wrapper{
-  min-height: 20px;
-  width: 280px;
-  display: inline-block;
-  position: absolute;
-}
-.field-hint-box {
-    display: inline-block;
-    min-height: 20px;
-    width: 250px;
-    border-radius: 5px;
-    border: solid 1px #eecc00;
-    vertical-align: middle;
-    word-wrap: break-word;
-    padding: 5px;
-}
-.hint-box-line{
-    width: 20px;
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    height: 0;
-    left: -20px;
-    border-bottom: solid 1px #eecc00;
-}
 
 /* Ajax Search */
 .ajax-search { float: right }
@@ -1269,6 +1308,10 @@ input[type=text], textarea{
 }
 .controls{
     position: relative;
+}
+.control-group{
+    margin: -10px -30px 20px -20px;
+    padding: 10px 30px 10px 20px;
 }
 .control-group .controls input{
     width: 99%;
@@ -1495,6 +1538,7 @@ div.view-list-item.odd {
     padding: 10px;
     color: #555555;
     font-weight: bold;
+    cursor: pointer;
 }
 .view-list-visualization-header i{
     margin-left: 20px;
@@ -1927,8 +1971,6 @@ div.investments-list .tab-investment.selected a { color: #000 }
 }
 .control-group.error{
     background-color: #f2dede;
-    margin: -10px -30px 20px -20px;
-    padding: 10px 30px 0 20px;
     border-radius: 4px;
 }
 .control-group.error input, .control-group.error textarea{
@@ -2093,7 +2135,7 @@ ul.two-cols li {
     clear: both;
     width: 900px;
     margin-left: 60px;
-    margin-top: 10px;
+    padding-top: 1px;
     font-size: 90%;
 }
 
@@ -2113,4 +2155,60 @@ ul.two-cols li {
 
 #footer .cea-logo {
     margin: 24px; /* 4*x, x=6 */
+}
+
+/* form hint boxes */
+.field-hint-box-wrapper{
+  min-height: 20px;
+  width: 330px;
+  display: inline-block;
+  position: absolute;
+  z-index: 999;
+}
+.field-hint-box {
+    display: inline-block;
+    min-height: 20px;
+    width: 310px;
+    border-radius: 5px;
+    border: solid 2px #eecc00;
+    /*border: solid 2px #ffe5af;*/
+    vertical-align: middle;
+    word-wrap: break-word;
+    padding: 5px;
+    background: #ffffff;
+}
+.hint-text{
+    width: 280px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.hint-icon{
+    width: 18px;
+    margin-right: 12px;
+    vertical-align: middle
+}
+.hint-box-line{
+    width: 14px;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    height: 0;
+    left: -12px;
+    border-bottom: solid 2px #eecc00;
+    /*border-bottom: solid 2px #ffe5af;*/
+}
+/* Focus */
+.control-group.focus{
+    background-color: #ffe5af;
+    border-radius: 4px;
+    border: solid 2px #eecc00;
+}
+.control-group.focus input, .control-group.focus textarea{
+    background-color: #fbfbfb;
+}
+.control-group.focus .tagsinput{
+    background-color: #ffe5af;
+}
+.control-group.focus .tagsinput input{
+    background-color: #fbfbfb;
 }

@@ -19,6 +19,11 @@ def load_files(context, obj=None):
     return dict(files=files, object_id=object_id, content_type=content_type)
 
 
+@register.inclusion_tag('fileupload/logo_edit_tag.html', takes_context=True)
+def load_logo(context, obj=None):
+    return dict(logo=obj.logo if obj else None)
+
+
 @register.inclusion_tag('fileupload/image_gallery.html', takes_context=True)
 def image_gallery(context, obj=None):
     images = UploadedFile.get_files_for(obj) if obj else []

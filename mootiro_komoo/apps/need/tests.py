@@ -71,6 +71,35 @@ class NeedViewsTestCase(KomooTestCase):
         with self.assertRaises(Exception):
             Need.objects.get(slug='coleta-de-lixo')
 
+    def test_need_edition_persists_m2m(self):
+        # Related to Bug #2391 on redmine.
+        self.login_user()
+        
+        n0 = Need.objects.get(slug='coleta-de-lixo')
+        ct0 = [ct.id for ct in n0.categories.all()]
+        ta0 = [ta.id for ta in n0.target_audiences.all()]
+
+        data = {
+            'id': n0.id,  # must set with ajax_form decorator
+            'community': [1, 2],
+            'title': n0.title,
+            'description': n0.description,
+            'categories': [1, 5],  # changed
+            'target_audiences': [1, 5],  # changed
+            'tags': n0.tags,
+            'geometry': str(n0.geometry),
+        }
+        url = reverse('edit_need', args=('complexo-da-alema', 'coleta-de-lixo'))
+        http_resp = self.client.post(url, data)
+        self.assertEqual(http_resp.status_code, 200)
+        
+        n = Need.objects.get(slug='coleta-de-lixo')
+        ct = [ct.id for ct in n.categories.all()]
+        ta = [ta.id for ta in n.target_audiences.all()]
+
+        self.assertNotEqual(ct0, ct)
+        self.assertNotEqual(ta0, ta)
+
     def test_need_slug_edition(self):
         self.login_user()
         n = Need.objects.get(slug='coleta-de-lixo', community__slug='complexo-da-alema')

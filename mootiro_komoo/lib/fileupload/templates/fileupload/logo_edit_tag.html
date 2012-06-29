@@ -1,0 +1,10 @@
+{% if logo %}
+<script type="text/javascript">
+    $(function(){
+        $('#id_logo').val('{{ logo.id }}');
+        $('#logo-thumb').html('' +
+            '<img src="{{ logo.file.url }}" >'
+        );
+    });
+</script>
+{% endif %}

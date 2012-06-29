@@ -5,9 +5,9 @@
   <div id="collapse-panel"></div>
   <div id="map-panel-content">
     <ul class="map-tabs" id="map-panel-tabs">
-      <li class="map-tab" id="map-panel-filter-tab" style="width: 30%;"><a href="#map-panel-filter">{% trans "Filter" %}</a></li>
-      <li class="map-tab" id="map-panel-add-tab" style="width: 30%;"><a href="#map-panel-add" class="login-required">{% trans "Add" %}</a></li>
-      <li class="map-tab" id="map-panel-layers-tab" style="width: 30%;"><a href="#map-panel-layers">{% trans "Layers" %}</a></li>
+      <li class="panel-tab" id="map-panel-filter-tab" style="width: 28%;"><a href="#map-panel-filter">{% trans "Filter" %}</a><div class="line"></div></li>
+      <li class="panel-tab" id="map-panel-add-tab" style="width: 28%;"><a href="#map-panel-add" class="login-required">{% trans "Add" %}</a><div class="line"></div></li>
+      <li class="panel-tab" id="map-panel-layers-tab" style="width: 28%;"><a href="#map-panel-layers">{% trans "Layers" %}</a><div class="line"></div></li>
     </ul>
 
     <div style="clear: both;"></div>
@@ -64,7 +64,7 @@
 </div>
 <script type="text/javascript">
   $(function() {
-    tabs = new Tabs('.map-tab', '.panel');
+      var tabs = new Tabs('.panel-tab', '.panel');
   });
   window.csrf_token = '{{ csrf_token }}';
 

@@ -52,26 +52,13 @@ jQuery(document).ajaxSend(function(event, xhr, settings) {
 });
 
 /* Easy to use, jQuery based, and elegant solution for tabs :) */
-function Tabs(tabs, contents, onChange, selectedClass) {
-    var selectedClass = selectedClass || "selected";
+Tabs = function (tabs, contents, onChange, selectedClass) {
+    this.tabs = tabs;
+    this.contents = contents;
+    this.selectedClass = selectedClass || "selected";
+    this.onChange = onChange || function (instance) {};
     $(contents).hide();
     var instance = this;
-    this.to = function (tab) { // Most important method, switches to a tab.
-        $(tabs).removeClass(selectedClass);
-        $(contents).removeClass(selectedClass).hide();
-
-        var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
-        $("*[href=" + tab_content + "]").parent().addClass(selectedClass);
-        $(tab_content).addClass(selectedClass).show();
-
-        instance.current = tab;
-        if (onChange && instance.initialized) {
-            onChange(instance);
-        }
-    };
-    this.getCurrentTabIndex = function () {
-        return $(tabs).index(instance.current);
-    };
     $(tabs).click(function () {
         instance.to(this);
         return false; // in order not to follow the link
@@ -80,7 +67,23 @@ function Tabs(tabs, contents, onChange, selectedClass) {
     this.length = $(tabs).length;
     this.to($(tabs)[0]);
     this.initialized = true;
-}
+};
+Tabs.prototype.to = function (tab) { // Most important method, switches to a tab.
+    $(this.tabs).removeClass(this.selectedClass);
+    $(this.contents).removeClass(this.selectedClass).hide();
+
+    var tab_content = $(tab).attr("href") || $(tab).children().attr("href");
+    $("*[href=" + tab_content + "]").parent().addClass(this.selectedClass);
+    $(tab_content).addClass(this.selectedClass).show();
+
+    this.current = tab;
+    if (this.onChange && this.initialized) {
+        this.onChange(this);
+    }
+};
+Tabs.prototype.getCurrentTabIndex = function () {
+    return $(this.tabs).index(this.current);
+};
 
 
 /*
@@ -152,12 +155,62 @@ function getUrlVars(){
         }
         var form = $(this);
 
+        var hintBoxesFocusCb = function(el){
+            var el = $(el);
+            var node, i;
+            for ( node = el, i = 0;
+                  (!$(node).is('.control-group')) && i < 15;
+                  node = node.parent(), i++
+            );
+
+            // remove focus from previous element
+            $('.control-group.focus').each(function(idx, obj){
+                var obj = $(obj);
+                if(!obj.is(el)){
+                    obj.removeClass('focus');
+                    obj.find('.field-hint-box-wrapper').hide();
+                }
+            });
+
+            if (node.is('.control-group') && !node.is('.focus')){
+                node.addClass('focus');
+                node.find('.field-hint-box-wrapper').show();
+            }
+        };
+
+        $(function(){
+            $('.field-hint-box-wrapper').hide();
+        });
+
+
+        $('input, textarea').live('focus',function(){
+            hintBoxesFocusCb(this);
+        });
+
+        // this is ugly and very dependant on how django/crispyforms
+        // generates our . But its quick and works.
+        // Perhaps we should refactor this latter
+        $('#div_id_files, #div_id_logo, .org-widget-categories, #div_id_categories').live(
+            'click',
+            function(){
+                hintBoxesFocusCb(this);
+            }
+        );
+        // $('#div_id_files').live('blur', function(){
+        //     var el = $(this);
+        //     el.removeClass('focus');
+        //     el.find('.field-hint-box-wrapper').fadeOut('fast');
+        // });
+
         $.each(box_config, function(key, val){
             var el = form.find('#div_id_' + key);
             el.find('.controls').append("" +
                 "<div class='field-hint-box-wrapper'>" +
                     "<span class='hint-box-line'>&nbsp;&nbsp;</span>" +
-                    "<div class='field-hint-box'>" + val.hint  +"</div>" +
+                    "<div class='field-hint-box'>" +
+                    "<img class='hint-icon' src='/static/img/hint-icon.png' >" +
+                    "<div class='hint-text'>" + val.hint  + "</div>" +
+                    "</div>" +
                 "</div>"
             );
 

@@ -19,9 +19,9 @@ from vote.models import VotableModel
 
 
 class Organization(VotableModel):
-    name = models.CharField(max_length=320, unique=True, db_index=True)
+    name = models.CharField(max_length=320, unique=True)
     slug = models.SlugField(max_length=320, db_index=True)
-    description = models.TextField(null=True, blank=True, db_index=True)
+    description = models.TextField(null=True, blank=True)
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 
     creation_date = models.DateTimeField(auto_now_add=True)
