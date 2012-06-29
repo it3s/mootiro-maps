@@ -99,15 +99,15 @@
                     {% endwith %}
 
                   {% endif %}
-                  <a href="{{ u.link }}">{{ u.title }}</a>
+                  <a href="{{ u.instance.link }}">{{ u.instance.name }}</a>
                 </h3>
                 <div class="right">
                   <a href="#"><i class="icon-see-on-map"></i></a>
                 </div>
                 <div class="clear-both"></div>
-                {% for ctuple in u.communities %}
-                <a href="{{ ctuple.0 }}" class="update-community">
-                  <i class="icon-community-white"></i> {{ ctuple.1 }}
+                {% for c in u.communities %}
+                <a href="{% url view_community c.slug %}" class="update-community">
+                  <i class="icon-community-white"></i> {{ c.name }}
                 </a>
                 {% endfor %}
                 <div class="clear-both"></div>
@@ -118,7 +118,7 @@
                   {% endif %}
                 </div>
                 <div class="update-social right">
-                  <a href="{{ u.link }}#Comments">({{ u.comments_count }} comments)</a>
+                  <a href="{{ u.instance.link }}#Comments">({{ u.comments_count }} comments)</a>
                 </div>
               </div>
             </li>

@@ -24,6 +24,11 @@ from komoo_comments.models import Comment
 create_update = Signal(providing_args=["user", "instance", "type"])
 
 
+def _basic_update_info():
+
+    return
+
+
 # Community, Need, Organization, Resource
 @receiver(create_update, sender=Community)
 @receiver(create_update, sender=Need)
@@ -32,9 +37,7 @@ create_update = Signal(providing_args=["user", "instance", "type"])
 def create_add_edit_update(sender, **kwargs):
     instance = kwargs["instance"]
     data = {
-        'title': instance.name,
-        'slug': instance.slug if sender != Resource else "",
-        'view_url': instance.view_url,
+        'instances': [instance],
         'object_id': instance.id,
         'object_type': instance._meta.verbose_name,
         'type': kwargs["type"],
@@ -46,6 +49,29 @@ def create_add_edit_update(sender, **kwargs):
     
     update = Update(**data)
     update.save()
+
+
+# Proposal
+# @receiver(create_update, sender=Proposal)
+# def create_add_edit_update(sender, **kwargs):
+#     proposal = kwargs["instance"]
+#     need = proposal.need
+#     data = {
+#         'names': [proposal.name],
+#         'slugs': instance.slug if sender != Resource else "",
+#         'view_url': instance.view_url,
+#         'object_id': instance.id,
+#         'object_type': instance._meta.verbose_name,
+#         'type': kwargs["type"],
+#         'users': [kwargs["user"].username],
+#         'comments_count': Comment.comments_count_for(instance),
+#     }
+#     if getattr(instance, 'community', None):
+#         data['communities'] = instance.community.all()
+    
+#     update = Update(**data)
+#     update.save()
+
 
 
 @receiver(create_update, sender=Comment)
@@ -62,12 +88,12 @@ def create_discussion_update(sender, **kwargs):
             update.users = people
     else:
         data = {
-            'title': instance.name,
-            'link': instance.view_url,
+            'instances': [instance],
             'object_id': instance.id,
             'object_type': instance._meta.verbose_name,
             'type': Update.DISCUSSION,
             'users': [comment.author.username],
+            'comments_count': Comment.comments_count_for(instance),
         }
         update = Update(**data)
 
