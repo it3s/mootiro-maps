@@ -99,7 +99,12 @@
                     {% endwith %}
 
                   {% endif %}
-                  <a href="{{ u.instance.link }}">{{ u.instance.name }}</a>
+                  {% if u.object_type == 'proposal' %}
+                    {% trans "Proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
+                    {% trans "for the need" %} <a href="{{ u.instances.1.link }}">{{ u.instances.1.name }}</a>
+                  {% else %}
+                    <a href="{{ u.instance.link }}">{{ u.instance.name }}</a>
+                  {% endif %}
                 </h3>
                 <div class="right">
                   <a href="#"><i class="icon-see-on-map"></i></a>
