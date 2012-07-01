@@ -32,9 +32,7 @@ create_update = Signal(providing_args=["user", "instance", "type"])
 def create_add_edit_update(sender, **kwargs):
     instance = kwargs["instance"]
     data = {
-        'title': instance.name,
-        'slug': instance.slug if sender != Resource else "",
-        'view_url': instance.view_url,
+        'instances': [instance],
         'object_id': instance.id,
         'object_type': instance._meta.verbose_name,
         'type': kwargs["type"],
@@ -43,6 +41,26 @@ def create_add_edit_update(sender, **kwargs):
     }
     if getattr(instance, 'community', None):
         data['communities'] = instance.community.all()
+
+    update = Update(**data)
+    update.save()
+
+
+# Proposal
+@receiver(create_update, sender=Proposal)
+def create_add_edit_update_for_proposal(sender, **kwargs):
+    proposal = kwargs["instance"]
+    need = proposal.need
+    data = {
+        'instances': [proposal, need],
+        'object_id': proposal.id,
+        'object_type': proposal._meta.verbose_name,
+        'type': kwargs["type"],
+        'users': [kwargs["user"].username],
+        'comments_count': Comment.comments_count_for(proposal),
+    }
+    if getattr(need, 'community', None):
+        data['communities'] = need.community.all()
     
     update = Update(**data)
     update.save()
@@ -57,18 +75,20 @@ def create_discussion_update(sender, **kwargs):
     if discussion_update:
         update = discussion_update
         people = update.users
-        if comment.author.username not in people or True:
+        if comment.author.username not in people:
             people.append(comment.author.username)
             update.users = people
     else:
         data = {
-            'title': instance.name,
-            'link': instance.view_url,
+            'instances': [instance],
             'object_id': instance.id,
             'object_type': instance._meta.verbose_name,
             'type': Update.DISCUSSION,
             'users': [comment.author.username],
+            'comments_count': Comment.comments_count_for(instance),
         }
+        if type(instance) == Proposal:
+            data['instances'] = [instances, instances.need]
         update = Update(**data)
 
     if getattr(instance, 'community', None):

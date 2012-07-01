@@ -17,8 +17,8 @@ class Proposal(VotableModel):
     """A proposed solution for solving a need"""
 
     class Meta:
-        verbose_name = "solution proposal"
-        verbose_name_plural = "solution proposals"
+        verbose_name = "proposal"
+        verbose_name_plural = "proposals"
 
     title = models.CharField(max_length=256)
     description = models.TextField()
