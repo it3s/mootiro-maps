@@ -39,8 +39,8 @@ komoo.features.Feature.prototype.initEvents = function (opt_object) {
         'drag', 'dragend', 'daggable_changed', 'dragstart',
         'coordinates_changed'];
     eventsNames.forEach(function(eventName, index, orig) {
-        komoo.event.addListener(object, eventName, function (args) {
-            komoo.event.trigger(that, eventName, args);
+        komoo.event.addListener(object, eventName, function (e, args) {
+            komoo.event.trigger(that, eventName, e, args);
         });
     });
 };
@@ -53,6 +53,10 @@ komoo.features.Feature.prototype.setGeometry = function (geometry) {
 
 komoo.features.Feature.prototype.getGeometry = function () {
     return this.geometry_;
+};
+
+komoo.features.Feature.prototype.getGeometryType = function () {
+    return this.geometry_.getGeometryType();
 };
 
 komoo.features.Feature.prototype.setMarker = function (marker) {
@@ -179,7 +183,7 @@ komoo.features.Feature.prototype.getGeoJsonFeature = function () {
 komoo.features.Feature.prototype.setEditable = function (flag) {
     if (this.geometry_.setEditable) {
         return this.geometry_.setEditable(flag);
-    } else if (this.feometry_.setDraggable) {
+    } else if (this.geometry_.setDraggable) {
         return this.geometry.setDraggable(flag);
     }
 };

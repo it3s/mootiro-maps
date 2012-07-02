@@ -1077,7 +1077,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
         if (geometry.type == "Polygon") {
             if (geometry.coordinates[0].length == 0) return;
             overlay.setOptions(polygonOptions);
-        } else if (geometry.type == "LineString") {
+        } else if (geometry.type == "LineString" || geometry.type == 'MultiLineString') {
             if (geometry.coordinates.length == 0) return;
             overlay.setOptions(polylineOptions);
         } else if (geometry.type == "MultiPoint" || geometry.type == "Point") {
@@ -1562,16 +1562,16 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
         }
         if (komooMap.addPanel.is(":visible") && overlay_ != komooMap.currentOverlay) {
             if (window.console) console.log("Clicked on unselected overlay");
-            if (!overlay_.properties.userCanEdit) {
+            if (!overlay_.getProperties().userCanEdit) {
                 return;
             }
         }
-        if (komooMap.editMode == komoo.EditMode.DELETE && overlay_.properties &&
-                overlay_.properties.userCanEdit) {
-                komooMap.setCurrentOverlay(null);
+        if (komooMap.editMode == komoo.EditMode.DELETE && overlay_.getProperties() &&
+                overlay_.getProperties().userCanEdit) {
+            komooMap.setCurrentOverlay(null);
             var l = 0;
-            if (overlay_.getPaths) {  // Clicked on polygon.
-                var paths = overlay_.getPaths();
+            if (overlay_.getGeometryType() == komoo.GeometryType.POLYGON) {  // Clicked on polygon.
+                var paths = overlay_.getGeometry().getPaths();
                 l = paths.getLength();
                 paths.forEach(function (path, i) {
                     // Delete the correct path.
@@ -1580,9 +1580,10 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
                         l--;
                     }
                 });
-            } else if (overlay_.getMarkers) {
-                var markers = overlay_.getMarkers();
+            } else if (overlay_.getGeometryType() == komoo.GeometryType.MULTIPOINT) {
+                var markers = overlay_.getGeometry().getMarkers();
                 l = markers.getLength();
+                console.log(e, o);
                 if (o) {
                     markers.forEach(function (marker, i) {
                         if (marker == o) {
@@ -1749,6 +1750,10 @@ komoo.Map.prototype._initDrawingManager = function () {
         } else if (e.overlay.getPosition) {
             overlay = new MultiMarker();
             overlay.addMarker(e.overlay);
+            overlay.setMap(komooMap.googleMap);
+        } else if (e.overlay.getPath && !e.overlay.getPaths) {
+            overlay = new MultiPolyline();
+            overlay.addPolyline(e.overlay);
             overlay.setMap(komooMap.googleMap);
         } else {
             overlay = e.overlay;

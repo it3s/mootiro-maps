@@ -7,11 +7,14 @@
 if (!window.komoo) komoo = {};
 if (!komoo.event) komoo.event = google.maps.event;
 
+/** Geometry Types **/
+
 komoo.GeometryType = {};
-komoo.GeometryType.POINT = 'marker';
-komoo.GeometryType.MULTIPOINT = 'multimarker';
-komoo.GeometryType.POLYGON = 'polygon';
-komoo.GeometryType.POLYLINE = 'polyline';
+komoo.GeometryType.POINT = 'Point';
+komoo.GeometryType.MULTIPOINT = 'MultiPoint';
+komoo.GeometryType.POLYGON = 'Polygon';
+komoo.GeometryType.POLYLINE = 'LineString';
+komoo.GeometryType.MULTIPOLYLINE = 'LineString';
 
 komoo.geometries = {};
 
@@ -34,8 +37,8 @@ komoo.geometries.makeGeometry = function (feature) {
     var geometry;
     if (geometryType == 'Point' || geometryType == 'MultiPoint' || geometryType == 'marker') {
         geometry = new komoo.geometries.MultiPoint();
-    } else if (geometryType == 'LineString' || geometryType == 'polyline') {
-        geometry = new komoo.geometries.Polyline();
+    } else if (geometryType == 'LineString' || geometryType == 'MultiLineString' || geometryType == 'polyline') {
+        geometry = new komoo.geometries.MultiPolyline();
     } else if (geometryType == 'Polygon' || geometryType == 'polygon') {
         geometry = new komoo.geometries.Polygon();
     }
@@ -58,8 +61,8 @@ komoo.geometries.Geometry.prototype.initEvents = function () {
         'mouseout', 'mouseover', 'mouseup', 'rightclick'];
     eventsNames.forEach(function(eventName, index, orig) {
         google.maps.event.addListener(that.object_,
-                eventName, function (args) {
-            komoo.event.trigger(that, eventName, args);
+                eventName, function (e, args) {
+            komoo.event.trigger(that, eventName, e, args);
         });
     });
 };
@@ -80,8 +83,10 @@ komoo.geometries.Geometry.prototype.calculateBounds = function () {
         return [[s, w], [n, e]];
     };
     var coordinates = this.getCoordinates();
-    if (this.getGeometryType() != 'Polygon')
+    if (this.getGeometryType() != komoo.GeometryType.POLYGON &&
+        this.getGeometryType() != komoo.GeometryType.MULTIPOLYLINE)
         coordinates = [coordinates];
+    console.log(coordinates);
     coordinates.forEach(function (path, index, orig) {
         path.forEach(function (pos, index_, orig_) {
             bounds = getBounds(pos);
@@ -151,6 +156,26 @@ komoo.geometries.Geometry.prototype.getLatLngFromArray = function (pos) {
     return new google.maps.LatLng(pos[0], pos[1]);
 };
 
+komoo.geometries.Geometry.prototype.getLatLngArrayFromArray = function (pos) {
+    if (!pos) return null;
+    var that = this;
+    var pos_ = [];
+    pos.forEach(function (p, index, orig) {
+        pos_.push(that.getLatLngFromArray(p));
+    });
+    return pos_;
+};
+
+komoo.geometries.Geometry.prototype.getArrayFromLatLngArray = function (latLngs) {
+    if (!latLngs) return null;
+    var that = this;
+    var latLngs_ = [];
+    latLngs.forEach(function (latLng, index, orig) {
+        latLngs_.push(that.getArrayFromLatLng(latLng));
+    });
+    return latLngs_;
+};
+
 komoo.geometries.Geometry.prototype.getArrayFromLatLng = function (latLng) {
     if (!latLng) return null;
     return [latLng.lat(), latLng.lng()];
@@ -184,7 +209,7 @@ komoo.geometries.Geometry.prototype.setOptions = function (options) {
 
 komoo.geometries.Point = function (opts) {
     komoo.geometries.Geometry.call(this, opts);
-    this.geometryType_ = 'Point';
+    this.geometryType_ = komoo.GeometryType.POINT;
 };
 
 komoo.geometries.Point.prototype = Object.create(
@@ -207,8 +232,8 @@ komoo.geometries.Point.prototype.initEvents = function () {
         'shape_changed', 'title_changed', 'visible_changed', 'zindex_changed'];
     eventsNames.forEach(function(eventName, index, orig) {
         google.maps.event.addListener(that.object_,
-                eventName, function (args) {
-            komoo.event.trigger(that, eventName, args);
+                eventName, function (e, args) {
+            komoo.event.trigger(that, eventName, e, args);
         });
     });
 };
@@ -254,7 +279,7 @@ komoo.geometries.Point.prototype.getDraggable = function () {
 
 komoo.geometries.MultiPoint = function (opts) {
     komoo.geometries.Geometry.call(this, opts);
-    this.geometryType_ = 'MultiPoint';
+    this.geometryType_ = komoo.GeometryType.MULTIPOINT;
 };
 
 komoo.geometries.MultiPoint.prototype = Object.create(
@@ -324,8 +349,15 @@ komoo.geometries.MultiPoint.prototype.getPositions = function () {
 
 /* Delegations */
 komoo.geometries.MultiPoint.prototype.addMarkers = function (markers) {
-    console.log("BBBB")
     this.object_.addMarkers(markers);
+};
+
+komoo.geometries.MultiPoint.prototype.getMarkers = function () {
+    return this.object_.getMarkers();
+};
+
+komoo.geometries.MultiPoint.prototype.addMarker = function (marker) {
+    this.object_.addMarker(marker);
 };
 
 komoo.geometries.MultiPoint.prototype.setIcon = function (icon) {
@@ -343,7 +375,7 @@ komoo.geometries.MultiPoint.prototype.getIcon = function () {
 
 komoo.geometries.Polyline = function (opts) {
     komoo.geometries.Geometry.call(this, opts);
-    this.geometryType_ = 'LineString';
+    this.geometryType_ = komoo.GeometryType.POLYLINE;
 };
 
 komoo.geometries.Polyline.prototype = Object.create(
@@ -415,11 +447,88 @@ komoo.geometries.Polyline.prototype.setEditable = function (flag) {
 
 
 
+/** MultiLineString Geometry **/
+
+komoo.geometries.MultiPolyline = function (opts) {
+    komoo.geometries.Geometry.call(this, opts);
+    this.geometryType_ = komoo.GeometryType.MULTIPOLYLINE;
+};
+
+komoo.geometries.MultiPolyline.prototype = Object.create(
+        komoo.geometries.Polyline.prototype);
+
+komoo.geometries.MultiPolyline.prototype.initGoogleObject = function (opts) {
+    var options = opts || {
+        clickable: true,
+        zIndex: this.getDefaultZIndex(),
+        strokeColor: this.getBorderColor(),
+        strockOpacity: this.getBorderOpacity(),
+        strokeWeight: this.getBorderSize()
+    };
+    this.options_ = options;
+    this.setObject(new MultiPolyline(options));
+};
+
+komoo.geometries.MultiPolyline.prototype.setLines = function (lines) {
+    this.object_.addPolylines(lines);
+};
+
+komoo.geometries.MultiPolyline.prototype.getLines = function () {
+    return this.object_.getPolylines().getArray();
+};
+
+komoo.geometries.MultiPolyline.prototype._guaranteeLines = function (len) {
+    var lines = this.object_.getPolylines();
+    var missing;
+    if (lines.length > len) {
+        missing = lines.length - len;
+        for (var i=0; i<missing; i++) {
+             lines.pop();
+        }
+    } else if (lines.length < len) {
+        missing = len - lines.length;
+        for (var i=0; i<missing; i++) {
+            this.object_.addPolyline(new komoo.geometries.Polyline(this.options_));
+        }
+    }
+};
+
+komoo.geometries.MultiPolyline.prototype.setCoordinates = function (coordinates) {
+    var that = this;
+    var coords = coordinates;
+    if (!coords[0].pop) coords = [coords];
+    this._guaranteeLines(coords.length);
+    this.bounds_ = undefined;
+    this.getLines().forEach(function (line, index, orig) {
+        line.setPath(that.getLatLngArrayFromArray(coords[index]));
+    });
+    komoo.event.trigger(this, 'coordinates_changed');
+};
+
+komoo.geometries.MultiPolyline.prototype.getCoordinates = function () {
+    var that = this;
+    var coords = [];
+    this.getLines().forEach(function (line, index, orig) {
+        coords.push(that.getArrayFromLatLngArray(line.getPath()));
+    });
+    return coords;
+};
+
+komoo.geometries.MultiPolyline.prototype.setPaths = function (paths) {
+    return this.object_.setPaths(paths);
+};
+
+komoo.geometries.MultiPolyline.prototype.getPaths = function () {
+    return this.object_.getPaths().getArray();
+};
+
+
+
 /** Polygon Geometry **/
 
 komoo.geometries.Polygon = function (opts) {
     komoo.geometries.Polyline.call(this, opts);
-    this.geometryType_ = 'Polygon';
+    this.geometryType_ = komoo.GeometryType.POLYGON;
     this.handleEvents();
 };
 
