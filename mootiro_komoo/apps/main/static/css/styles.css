@@ -920,7 +920,7 @@ body.community #main-content {
     width: 110px;
     height: 20px;
 }
-#updates-header #about-mootiro ul { width: 180px }
+#updates-header #about-mootiro ul { width: 200px }
 #updates-header #about-mootiro ul li {
     margin-top: 7px;
     text-align: center;
@@ -1042,7 +1042,7 @@ div.content-updates .tab.active a {
     text-decoration: none;
     margin-right: 3px;
 }
-.a-update .update-message { max-width: 295px }
+.a-update .update-message { max-width: 360px }
 .a-update .update-social {
     max-width: 185px;
     text-align: right;

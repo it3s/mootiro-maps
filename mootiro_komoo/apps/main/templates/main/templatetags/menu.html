@@ -5,7 +5,7 @@
     {% if community %}
     <a href="{% url community_on_map community.slug %}"><i class="icon-map"></i>{% trans 'Map' %}</a>
     {% else %}
-    <a href="{% url root %}"><i class="icon-map"></i>{% trans 'Map' %}</a>
+    <a href="{% url map %}"><i class="icon-map"></i>{% trans 'Map' %}</a>
     {% endif %}
   </li>
 

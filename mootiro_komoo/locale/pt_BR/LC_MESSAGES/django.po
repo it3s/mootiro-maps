@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-27 17:45-0300\n"
+"POT-Creation-Date: 2012-07-02 16:34-0300\n"
 "PO-Revision-Date: 2012-06-06 14:29-0300\n"
-"Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
+"Last-Translator: André Casimiro <ah.casimiro@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: apps/community/forms.py:25 apps/komoo_resource/forms.py:40
 #: apps/main/templatetags/komoo_tags.py:250
-#: apps/main/templatetags/komoo_tags.py:251 apps/organization/forms.py:61
+#: apps/main/templatetags/komoo_tags.py:251 apps/organization/forms.py:62
 #: apps/organization/templates/organization/branch_form.html:13
 #: apps/organization/templates/organization/new_frommap.html:34
 #: lib/taggit/models.py:10
@@ -28,7 +28,7 @@ msgstr "Nome"
 
 #: apps/community/forms.py:26 apps/investment/forms.py:32
 #: apps/komoo_resource/forms.py:41 apps/need/forms.py:26
-#: apps/organization/forms.py:62
+#: apps/organization/forms.py:63
 #: apps/organization/templates/organization/branch_form.html:16
 #: apps/proposal/forms.py:26
 msgid "Description"
@@ -42,12 +42,12 @@ msgstr "População"
 #: apps/komoo_resource/forms.py:44
 #: apps/main/templates/main/templatetags/taglist.html:5
 #: apps/main/templatetags/komoo_tags.py:249 apps/need/forms.py:29
-#: apps/organization/forms.py:65 lib/taggit/managers.py:39
+#: apps/organization/forms.py:66 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 msgid "Tags"
 msgstr "Palavras-Chave"
 
-#: apps/community/forms.py:29 apps/organization/forms.py:119
+#: apps/community/forms.py:29 apps/organization/forms.py:120
 msgid " "
 msgstr " "
 
@@ -236,7 +236,7 @@ msgstr "ver mais ..."
 msgid "Open the map editor"
 msgstr "Abrir o editor de mapas"
 
-#: apps/komoo_map/templates/komoo_map/komoo_map_templatetag.html:224
+#: apps/komoo_map/templates/komoo_map/komoo_map_templatetag.html:223
 msgid "Geometric data not available"
 msgstr "Informação geométrica não disponível"
 
@@ -278,20 +278,20 @@ msgstr "Tipo"
 
 #: apps/komoo_resource/forms.py:43
 #: apps/komoo_resource/templates/resource/show.html:95
-#: apps/organization/forms.py:64
+#: apps/organization/forms.py:65
 #: apps/organization/templates/organization/show.html:236
 msgid "Contact"
 msgstr "Contato"
 
 #: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:254
-#: apps/need/forms.py:24 apps/organization/forms.py:63
-#: apps/organization/forms.py:118
+#: apps/need/forms.py:24 apps/organization/forms.py:64
+#: apps/organization/forms.py:119
 #: apps/organization/templatetags/organization_tags.py:19
 msgid "Community"
 msgstr "Comunidade"
 
 #: apps/komoo_resource/forms.py:46 apps/need/forms.py:30
-#: apps/organization/forms.py:68
+#: apps/organization/forms.py:69
 msgid "Images"
 msgstr "Imagens"
 
@@ -578,6 +578,7 @@ msgid "Apply"
 msgstr "Aplicar"
 
 #: apps/main/templatetags/komoo_filters.py:34
+#, python-format
 msgctxt "naturaltime"
 msgid "%(delta)s ago"
 msgstr "%(delta)s atrás"
@@ -588,41 +589,48 @@ msgid "now"
 msgstr "agora"
 
 #: apps/main/templatetags/komoo_filters.py:40
+#, python-format
 msgid "a second ago"
 msgid_plural "%(count)s seconds ago"
 msgstr[0] "um segundo atrás"
 msgstr[1] "%(count)s segundos atrás"
 
 #: apps/main/templatetags/komoo_filters.py:45
+#, python-format
 msgid "a minute ago"
 msgid_plural "%(count)s minutes ago"
 msgstr[0] "um minuto atrás"
 msgstr[1] "%(count)s minutos atrás"
 
 #: apps/main/templatetags/komoo_filters.py:50
+#, python-format
 msgid "an hour ago"
 msgid_plural "%(count)s hours ago"
 msgstr[0] "um hora atrás"
 msgstr[1] "%(count)s horas atrás"
 
 #: apps/main/templatetags/komoo_filters.py:56
+#, python-format
 msgctxt "naturaltime"
 msgid "%(delta)s from now"
 msgstr "daqui a %(delta)s"
 
 #: apps/main/templatetags/komoo_filters.py:62
+#, python-format
 msgid "a second from now"
 msgid_plural "%(count)s seconds from now"
 msgstr[0] "daqui a um segundo"
 msgstr[1] "daqui a %(count)s segundos"
 
 #: apps/main/templatetags/komoo_filters.py:67
+#, python-format
 msgid "a minute from now"
 msgid_plural "%(count)s minutes from now"
 msgstr[0] "daqui a um minuto"
 msgstr[1] "daqui a %(count)s minutos"
 
 #: apps/main/templatetags/komoo_filters.py:72
+#, python-format
 msgid "an hour from now"
 msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
@@ -849,7 +857,6 @@ msgid "created by"
 msgstr "criado por"
 
 #: apps/need/templates/need/view.html:40
-#: apps/update/templates/update/frontpage.html:116
 msgid "on"
 msgstr "em"
 
@@ -878,23 +885,23 @@ msgstr "ver todos"
 msgid "see less"
 msgstr "ver menos"
 
-#: apps/organization/forms.py:66
+#: apps/organization/forms.py:67
 msgid "Target Audiences"
 msgstr "Públicos alvo"
 
-#: apps/organization/forms.py:67
+#: apps/organization/forms.py:68
 msgid "Categories"
 msgstr "Categorias"
 
-#: apps/organization/forms.py:69
+#: apps/organization/forms.py:70
 msgid "Logo"
 msgstr ""
 
-#: apps/organization/forms.py:116
+#: apps/organization/forms.py:117
 msgid "Branch Name"
 msgstr "Nome da Unidade"
 
-#: apps/organization/forms.py:117
+#: apps/organization/forms.py:118
 msgid "Info"
 msgstr "Informações"
 
@@ -1032,116 +1039,116 @@ msgstr "Público alvo não fornecido"
 msgid "Cost"
 msgstr "Custo"
 
-#: apps/update/models.py:37
+#: apps/update/models.py:118
 msgid "community added"
 msgstr "comunidade adicionada"
 
-#: apps/update/models.py:38
+#: apps/update/models.py:119
 msgid "community edited"
 msgstr "comunidade editada"
 
-#: apps/update/models.py:39
+#: apps/update/models.py:120
 msgid "community discussed"
 msgstr "comunidade discutida"
 
-#: apps/update/models.py:41
+#: apps/update/models.py:122
 msgid "need added"
 msgstr "necessidade adicionada"
 
-#: apps/update/models.py:42
+#: apps/update/models.py:123
 msgid "need edited"
 msgstr "necessidade editada"
 
-#: apps/update/models.py:43
+#: apps/update/models.py:124
 msgid "need discussed"
 msgstr "necessidade discutida"
 
-#: apps/update/models.py:45
+#: apps/update/models.py:126
 msgid "proposal added"
 msgstr "proposta adicionada"
 
-#: apps/update/models.py:46
+#: apps/update/models.py:127
 msgid "proposal edited"
 msgstr "proposta editada"
 
-#: apps/update/models.py:47
+#: apps/update/models.py:128
 msgid "proposal discussed"
 msgstr "proposta discutida"
 
-#: apps/update/models.py:49
+#: apps/update/models.py:130
 msgid "organization added"
 msgstr "organização adicionada"
 
-#: apps/update/models.py:50
+#: apps/update/models.py:131
 msgid "organization edited"
 msgstr "organização editada"
 
-#: apps/update/models.py:51
+#: apps/update/models.py:132
 msgid "organization discussed"
 msgstr "organização discutida"
 
-#: apps/update/models.py:53
+#: apps/update/models.py:134
 msgid "resource added"
 msgstr "recurso adicionado"
 
-#: apps/update/models.py:54
+#: apps/update/models.py:135
 msgid "resource edited"
 msgstr "recurso editado"
 
-#: apps/update/models.py:55
+#: apps/update/models.py:136
 msgid "resource discussed"
 msgstr "recurso discutido"
 
-#: apps/update/models.py:57
+#: apps/update/models.py:138
 msgid "investment added"
 msgstr "investimento adicionado"
 
-#: apps/update/models.py:58
+#: apps/update/models.py:139
 msgid "investment edited"
 msgstr "investimento editado"
 
-#: apps/update/models.py:59
+#: apps/update/models.py:140
 msgid "investment discussed"
 msgstr "investimento discutido"
 
-#: apps/update/templates/update/frontpage.html:19
 #: apps/update/templates/update/frontpage.html:21
-#, fuzzy
+#: apps/update/templates/update/frontpage.html:23
 msgid "About Mootiro"
 msgstr "Sobre o MootiroMaps"
 
-#: apps/update/templates/update/frontpage.html:29
-#, fuzzy
+#: apps/update/templates/update/frontpage.html:27
+msgid "what is this?"
+msgstr "O que é o MootiroMaps?"
+
+#: apps/update/templates/update/frontpage.html:31
 msgid "Add a community"
-msgstr "Sobre a Comunidade"
+msgstr "Mapeie uma comunidade"
 
-#: apps/update/templates/update/frontpage.html:34
-#, fuzzy
+#: apps/update/templates/update/frontpage.html:36
 msgid "Add a need"
-msgstr "Adicionar linha"
+msgstr "Adicione uma necessidade"
 
-#: apps/update/templates/update/frontpage.html:39
-#, fuzzy
+#: apps/update/templates/update/frontpage.html:41
 msgid "Add an organization"
-msgstr "Organização"
+msgstr "Cadastre uma organização"
 
-#: apps/update/templates/update/frontpage.html:51
+#: apps/update/templates/update/frontpage.html:53
 msgid "last updates"
 msgstr "últimas atualizações"
 
-#: apps/update/templates/update/frontpage.html:53
+#: apps/update/templates/update/frontpage.html:55
 msgid "discussions"
 msgstr "discussões"
 
-#: apps/update/templates/update/frontpage.html:54
+#: apps/update/templates/update/frontpage.html:56
 msgid "my content"
 msgstr "meu conteúdo"
 
-#: apps/update/templates/update/frontpage.html:61
+#: apps/update/templates/update/frontpage.html:63
 msgid "Type"
 msgstr "Tipo"
 
-#: apps/update/templates/update/frontpage.html:87
+#: apps/update/templates/update/frontpage.html:89
 #, python-format
 msgid ""
 "\n"
@@ -1160,7 +1167,7 @@ msgstr[1] ""
 "                          e mais %(num)s usuários\n"
 "                        "
 
-#: apps/update/templates/update/frontpage.html:94
+#: apps/update/templates/update/frontpage.html:96
 msgid ""
 "\n"
 "                        discussed\n"
@@ -1178,11 +1185,19 @@ msgstr[1] ""
 "                        discutiram\n"
 "                      "
 
-#: apps/update/templates/update/frontpage.html:118
+#: apps/update/templates/update/frontpage.html:105
+msgid "the proposal"
+msgstr "a proposta"
+
+#: apps/update/templates/update/frontpage.html:106
+msgid "for the need"
+msgstr "para a necessidade"
+
+#: apps/update/templates/update/frontpage.html:124
 msgid "by"
 msgstr "por"
 
-#: apps/update/templates/update/frontpage.html:146
+#: apps/update/templates/update/frontpage.html:152
 msgid "News"
 msgstr "Notícias"
 
@@ -1231,10 +1246,9 @@ msgstr "Entre a legenda para essa imagem"
 msgid "or"
 msgstr "ou"
 
-#: lib/fileupload/forms.py:153
-#, fuzzy
+#: lib/fileupload/forms.py:155
 msgid "Select a logo"
-msgstr "Selecione um motivo"
+msgstr "Selecione um logotipo"
 
 #: lib/taggit/forms.py:21
 msgid "Please provide a comma-separated list of tags."
@@ -1272,9 +1286,6 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
-
-#~ msgid "about mootiro"
-#~ msgstr "sobre o mootiro"
 
 #~ msgid "Photos:"
 #~ msgstr "Fotos:"

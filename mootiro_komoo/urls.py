@@ -85,8 +85,7 @@ urlpatterns = patterns('',
     url(r'', include('investment.urls')),
     url(r'', include('moderation.urls')),
     url(r'', include('update.urls')),
-    url(r'^about/', include('hotsite.urls')),
-    url(r'^about', 'hotsite.views.root'),
+    url(r'', include('hotsite.urls')),
     url(r'^signatures/', include('signatures.urls')),
 
     # Community URLs go last because one of them can match anything
