@@ -48,7 +48,7 @@ komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_
         this.title.text(feature.getProperties().name);
         this.body.html('');
 
-        if (feature.getProperties().type == 'community') {
+        if (feature.getProperties().type == 'Community') {
             if (feature.getProperties().population) {
                 msg = ngettext('%s resident', '%s residents', feature.getProperties().population);
                 population = interpolate(msg, [feature.getProperties().population])
@@ -56,7 +56,8 @@ komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_
                 population = gettext('No population provided');
             }
             this.body.html('<ul><li>' + population + '</li></ul>');
-        }  else if (feature.getProperties().type == 'organizationbranch') {
+        }  else if (feature.getProperties().type == 'OrganizationBranch') {
+            console.log(feature);
             this.title.text(feature.getProperties().organization_name + ' - ' + feature.getProperties().name);
         }
         this.title.attr('href', url);

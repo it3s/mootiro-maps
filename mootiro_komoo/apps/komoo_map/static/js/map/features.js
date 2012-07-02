@@ -84,7 +84,6 @@ komoo.features.Feature.prototype.onGeometryCoordinatesChanged = function (args) 
 
 komoo.features.Feature.prototype.getUrl = function () {
     var url;
-    console.log(this);
     if (this.properties_.type == 'Community') {
         url = dutils.urls.resolve('view_community',
                 {community_slug: this.properties_.community_slug});

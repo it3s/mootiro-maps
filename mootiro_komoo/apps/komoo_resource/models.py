@@ -57,8 +57,8 @@ class Resource(GeoRefModel, VotableModel):
 
     class Map:
         editable = True
-        background_color =  '#009fe3'
-        border_color = '#0282af'
+        background_color =  '#28CB05'
+        border_color = '#1D9104'
         geometries = (POLYGON, LINESTRING, POINT)
         form_view_name = 'new_resource_from_map'
 

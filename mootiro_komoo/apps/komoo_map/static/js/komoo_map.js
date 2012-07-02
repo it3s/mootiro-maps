@@ -1031,10 +1031,10 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                 overlaysByType["uncategorized"].push(overlay);
             }
             if (!overlay.getMarker()) {
-                overlay.setMarker(new google.maps.Marker({
-                        visible: true,
-                        clickable: true
-                }));
+                //overlay.setMarker(new google.maps.Marker({
+                //        visible: true,
+                //        clickable: true
+                //}));
                 if (overlay.getMarker()) {
                     overlay.getMarker().setMap(komooMap.googleMap)
                     overlay.getMarker().setPosition(overlay.getCenter());
@@ -1046,8 +1046,8 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                         komooMap.clusterMarkers.push(overlay.getMarker());
                     }
                 }
-                // TODO: Add mouseover handler to open info window
             }
+            overlay.updateIcon();
         }
     });
     if (panTo && overlay.getBounds()) {
@@ -1065,7 +1065,6 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
  * @returns {json}
  */
 komoo.Map.prototype.getGeoJSON = function (options) {
-    // TODO: Refactoring
     var geoJSON;
     var geoms = [];
     var list;
