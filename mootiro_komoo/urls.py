@@ -73,6 +73,8 @@ urlpatterns = patterns('',
     url(r'^upload/', include('fileupload.urls')),
     url(r'^lookups/', include('ajax_select.urls')),
 
+    url(r'^$', 'update.views.frontpage', name='frontpage'),
+
     url(r'', include('need.urls')),
     url(r'', include('proposal.urls')),
     url(r'', include('main.urls')),
