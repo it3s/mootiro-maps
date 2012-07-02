@@ -14,7 +14,7 @@ komoo.GeometryType.POINT = 'Point';
 komoo.GeometryType.MULTIPOINT = 'MultiPoint';
 komoo.GeometryType.POLYGON = 'Polygon';
 komoo.GeometryType.POLYLINE = 'LineString';
-komoo.GeometryType.MULTIPOLYLINE = 'LineString';
+komoo.GeometryType.MULTIPOLYLINE = 'MultiLineString';
 
 komoo.geometries = {};
 
@@ -86,7 +86,6 @@ komoo.geometries.Geometry.prototype.calculateBounds = function () {
     if (this.getGeometryType() != komoo.GeometryType.POLYGON &&
         this.getGeometryType() != komoo.GeometryType.MULTIPOLYLINE)
         coordinates = [coordinates];
-    console.log(coordinates);
     coordinates.forEach(function (path, index, orig) {
         path.forEach(function (pos, index_, orig_) {
             bounds = getBounds(pos);

@@ -62,6 +62,7 @@
 
   {% if type != 'disabled' %}
       var geojson = {{ geojson|safe }};
+      var featureTypesJson = {{ feature_types_json|safe }};
       //var geojson = JSON.parse(geojson_);
 
       // Dont display the preview map if the geometry is empty.
@@ -71,6 +72,7 @@
         {% if type != 'preview' %}
         var mapOptions = {
           editable: true,
+          featureTypes: featureTypesJson,
           {% if type == 'editor' and not panel %}
           fetchOverlays: false,
           {% else %}
@@ -105,6 +107,7 @@
         {% else %}
         var mapOptions = {
           editable: false,
+          featureTypes: featureTypesJson,
           enableInfoWindow: false,
           fetchOverlays: false,
           googleMapOptions: {
@@ -168,9 +171,9 @@
           var geojson = {{ type }}.getGeoJSON({newOnly: true, geometryCollection: true});
           if (geojson.geometries.length > 0) {
             if (window.community_slug) {
-              var url = overlayType.formUrl.replace('community_slug', community_slug);
+              var url = overlayType.formUrl.replace('communitySlug', community_slug);
             } else {
-              var url = overlayType.formUrl.replace('/community_slug', '');
+              var url = overlayType.formUrl.replace('/communitySlug', '');
             }
             var context = $('#dinamic-form');
 

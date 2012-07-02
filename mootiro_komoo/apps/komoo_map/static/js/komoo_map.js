@@ -19,7 +19,7 @@ komoo.CLEAN_MAPTYPE_ID = "clean";
 
 
 /**
- * @name komoo.RegionType
+ * @name komoo.FeatureType
  * @class Object that represents a item on Add tab of main panel.
  * @property {String} type An internal identifier.
  * @property {String[]} categories
@@ -35,93 +35,11 @@ komoo.CLEAN_MAPTYPE_ID = "clean";
  */
 
 komoo.OverlayType = {
-    POINT: google.maps.drawing.OverlayType.MARKER,
-    MULTIPOINT: "multimarker",
-    POLYGON: google.maps.drawing.OverlayType.POLYGON,
-    POLYLINE: google.maps.drawing.OverlayType.POLYLINE,
+    POINT: 'Point',
+    MULTIPOINT: 'MultiPoint',
+    POLYGON: 'Polygon',
+    POLYLINE: 'LineString',
 };
-
-
-
-/**
- * Array of {@link komoo.RegionType} objects to populate the Add tab of main panel.
- */
-komoo.RegionTypes = [
-    {
-        type: "community",
-        categories: [],
-        title: gettext("Community"),
-        tooltip: gettext("Add Community"),
-        color: "#ffc166",
-        border: "#ff2e2e",
-        icon: "/static/img/community.png",
-        overlayTypes: [komoo.OverlayType.POLYGON],
-        formUrl: dutils.urls.resolve("new_community"),
-        zIndex: 1,
-        disabled: false
-    },
-    {
-        type: "need",
-        categories: ["Education", "Sport", "Environment", "Health", "Housing",
-                     "Culture", "Local Economy", "Social Service"], // FIXME: Hardcode is evil
-        title: gettext("Need"),
-        tooltip: gettext("Add Need"),
-        color: "#f42c5e",
-        border: "#d31e52",
-        icon: "/static/img/need.png",
-        overlayTypes: [komoo.OverlayType.POLYGON,
-                       komoo.OverlayType.POLYLINE,
-                       komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("new_need_from_map",
-            {community_slug: "community_slug"}),
-        zIndex: 100,
-        disabled: false
-    },
-    {
-        type: "organizationbranch",
-        categories: [],
-        title: gettext("Organization"),
-        tooltip: gettext("Add Organization"),
-        color: "#3a61d6",
-        border: "#1f49b2",
-        icon: "/static/img/organization.png",
-        overlayTypes: [komoo.OverlayType.POLYGON,
-                       komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("new_organization_from_map"),
-        zIndex: 100,
-        disabled: false
-    },
-    {
-        type: "resource",
-        categories: [],
-        title: gettext("Resource"),
-        tooltip: gettext("Add Resource"),
-        color: "#009fe3",
-        border: "#0282af",
-        icon: "/static/img/resource.png",
-        overlayTypes: [komoo.OverlayType.POLYGON,
-                       komoo.OverlayType.POLYLINE,
-                       komoo.OverlayType.POINT],
-        formUrl: dutils.urls.resolve("new_resource_from_map"),
-        zIndex: 100,
-        disabled: false
-    },
-    {
-        type: "investment",
-        categories: [],
-        title: gettext("Investment"),
-        tooltip: gettext("Add Investment"),
-        color: "#aa9f18",
-        border: "#897d12",
-        icon: "/static/img/investment.png",
-        overlayTypes: [komoo.OverlayType.POLYGON],
-        formUrl: "",
-        zIndex: 100,
-        disabled: true
-    }
-];
-
-
 
 
 /**
@@ -131,7 +49,7 @@ komoo.RegionTypes = [
  * @property {boolen} [editable=true]  Define if the drawing feature will be enabled.
  * @property {boolean} [useGeoLocation=false] Define if the HTML5 GeoLocation will be used to set the initial location.
  * @property {boolean} [defaultDrawingControl=false] If true the controls from Google Drawing library are used.
- * @property {komoo.RegionType[]} [regionTypes=komoo.RegionTypes]
+ * @property {komoo.FeatureType[]} [featureTypes=komoo.FeatureTypes]
  * @property {boolean} [autoSaveLocation=false] Determines if the current location is saved to be displayed the next time the map is loaded.
  * @property {boolean} [enableInfoWindow=true] Shows informations on mouse over.
  * @property {boolean} [enableCluster=false] Cluster some points together.
@@ -146,7 +64,7 @@ komoo.MapOptions = {
     editable: true,
     useGeoLocation: false,
     defaultDrawingControl: false,
-    regionTypes: komoo.RegionTypes,
+    featureTypes: [],
     autoSaveLocation: false,
     autoSaveMapType: false,
     enableInfoWindow: true,
@@ -516,6 +434,12 @@ komoo.Map = function (element, options) {
     if (typeof options !== "object") {
         options = {};
     }
+    console.log(komoo.OverlayType.POLYGON);
+    this.drawingMode = {};
+    this.drawingMode[komoo.OverlayType.POINT] = google.maps.drawing.OverlayType.MARKER;
+    this.drawingMode[komoo.OverlayType.POLYGON] = google.maps.drawing.OverlayType.POLYGON;
+    this.drawingMode[komoo.OverlayType.POLYLINE] = google.maps.drawing.OverlayType.POLYLINE;
+
     // Join default option with custom options.
     var googleMapOptions = $.extend(komoo.MapOptions.googleMapOptions,
                                     options.googleMapOptions);
@@ -694,7 +618,7 @@ komoo.Map.prototype.openTooltip = function (overlay, latLng, optContent) {
         this.tooltip.title.text(optContent || overlay.getProperties().name);
         this.tooltip.overlay = overlay;
     }
-    if (overlay.getProperties().type == "organizationbranch") {
+    if (overlay.getProperties().type == "OrganizationBranch") {
         this.tooltip.title.text(overlay.getProperties().organization_name + " - " + overlay.getProperties().name);
     } else {
         this.tooltip.title.text(overlay.getProperties().name);
@@ -772,7 +696,7 @@ komoo.Map.prototype.initMarkerClusterer = function () {
 komoo.Map.prototype.initOverlaysByTypeObject = function () {
     // TODO: Refactoring
     var komooMap = this;
-    this.options.regionTypes.forEach(function (type, index, orig) {
+    this.options.featureTypes.forEach(function (type, index, orig) {
         komooMap.overlaysByType[type.type] = {categories: type.categories};
         komooMap.overlaysByType[type.type].categories.push("uncategorized");
         komooMap.overlaysByType[type.type].forEach = function (callback) {
@@ -825,7 +749,7 @@ komoo.Map.prototype.hideOverlaysByZoom = function () {
         if (overlay.getMarker()) { // FIXME
             if (zoom <  me.options.polygonIconsMinZoom) {
                 overlay.getMarker().setMap(null);
-            } else if (overlay.getProperties().type != "community") {
+            } else if (overlay.getProperties().type != "Community") {
                 overlay.getMarker().setMap(me.googleMap);
             }
         } else {
@@ -1118,7 +1042,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
                     google.maps.event.addListener(overlay.getMarker(), "click", function () {
                         komooMap.googleMap.fitBounds(overlay.getBounds());
                     });
-                    if (overlay.getProperties().type == "community") {
+                    if (overlay.getProperties().type == "Community") {
                         komooMap.clusterMarkers.push(overlay.getMarker());
                     }
                 }
@@ -1625,7 +1549,7 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
         }
         clearTimeout(komooMap.tooltip.timer);
         var delay = 0;
-        if (overlay.getProperties().type == "community") {
+        if (overlay.getProperties().type == "Community") {
             delay = 400;
         }
         komooMap.tooltip.timer = setTimeout(function () {
@@ -1657,7 +1581,7 @@ komoo.Map.prototype.setDrawingMode = function (type, overlayType) {
     this.type = type;
     this.setEditMode(komoo.EditMode.DRAW);
     this.setCurrentOverlay(null);  // Remove the overlay selection
-    this.drawingMode_ = overlayType;
+    this.drawingMode_ = this.drawingMode[overlayType];
     this.drawingManager.setDrawingMode(this.drawingMode_);
     var OverlayTypeTitle = {};
     OverlayTypeTitle[komoo.OverlayType.POLYGON] = gettext("Add shape");
@@ -1822,7 +1746,7 @@ komoo.Map.prototype._initDrawingManager = function () {
             } else {
                 komooMap.setEditMode(komoo.EditMode.ADD);
             }
-            komooMap.drawingManager.setDrawingMode(komooMap.drawingMode_);
+            komooMap.drawingManager.setDrawingMode(komooMap.drawingMode[komooMap.drawingMode_]);
         });
         addButton.hide();
         addButton.attr("id", "komoo-map-add-button");
@@ -1834,7 +1758,7 @@ komoo.Map.prototype._initDrawingManager = function () {
             } else {
                 komooMap.setEditMode(komoo.EditMode.CUTOUT);
             }
-            komooMap.drawingManager.setDrawingMode(komooMap.drawingMode_);
+            komooMap.drawingManager.setDrawingMode(komooMap.drawingMode[komooMap.drawingMode_]);
         });
         cutOutButton.hide();
         cutOutButton.attr("id", "komoo-map-cut-out-button");
@@ -1933,18 +1857,23 @@ komoo.Map.prototype._createMainPanel = function () {
         submenuItem.bind("click", function (){
             window.location = "/user/login"; // FIXME: Hardcode is evil
         });
-        this.options.regionTypes.forEach(function (type, index, orig) {
+        this.options.featureTypes.forEach(function (type, index, orig) {
             komooMap.overlayOptions[type.type] = type;
         });
     } else {
-        this.options.regionTypes.forEach(function (type, index, orig) {
+        this.options.featureTypes.forEach(function (type, index, orig) {
             komooMap.overlayOptions[type.type] = type;
             var item = $("<li>").addClass("map-menuitem");
-            if (type.icon) {
-                var icon = $("<img>").attr({src: type.icon}).css("float", "left");
-                if (type.disabled) icon.css("opacity", "0.3");
-                item.append(icon);
+            if (!type.icon) {
+                if (type.type == 'OrganizationBranch')
+                    type.icon = '/static/img/organization.png';
+                else
+                    type.icon = '/static/img/' + type.type.toLowerCase() + '.png';
             }
+            var icon = $("<img>").attr({src: type.icon}).css("float", "left");
+            if (type.disabled) icon.css("opacity", "0.3");
+            item.append(icon);
+
             item.append($("<div>").addClass("item-title").text(type.title).attr("title", type.tooltip));
             var submenu = komooMap.addItems.clone(true).addClass("map-submenu");
             $("div", submenu).hide();
@@ -1978,6 +1907,7 @@ komoo.Map.prototype._createMainPanel = function () {
                     // Menu should not work if add panel is visible.
                     if (komooMap.addPanel.is(":hidden") && !$(this).hasClass("disabled")) {
                         komooMap.type = type.type;
+                        console.log("aaaaa", submenu);
                         submenu.css({"left": item.outerWidth() + "px"});
                         submenu.toggle();
                     }

@@ -5,13 +5,13 @@
 <ul class="geo-objects-listing">
   <li class="communities">
     <div class="item">
-      <div class="img-holder" data-object-type="community">{{ form.communities }}</div>
+      <div class="img-holder" data-object-type="Community">{{ form.communities }}</div>
       {% if not hide_names %}<span>{% trans "Communities" %}</span>{% endif %}
     </div>
   </li>
   <li class="needs">
     <div class="item">
-      <div class="img-holder" data-object-type="need">{{ form.needs }}</div>
+      <div class="img-holder" data-object-type="Need">{{ form.needs }}</div>
       {% if not hide_names %}<span>{% trans "Needs" %}</span>{% endif %}
     </div>
     {% if show_categories %}
@@ -25,13 +25,13 @@
   {% endif %}
   <li class="organizations">
     <div class="item">
-      <div class="img-holder" data-object-type="organizationbranch">{{ form.organizations }}</div>
+      <div class="img-holder" data-object-type="OrganizationBranch">{{ form.organizations }}</div>
       {% if not hide_names %}<span>{% trans "Organizations" %}</span>{% endif %}
     </div>
   </li>
   <li class="resources">
     <div class="item">
-      <div class="img-holder" data-object-type="resource">{{ form.resources }}</div>
+      <div class="img-holder" data-object-type="Resource">{{ form.resources }}</div>
       {% if not hide_names %}<span>{% trans "Resources" %}</span>{% endif %}
     </div>
   </li>

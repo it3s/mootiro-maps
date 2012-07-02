@@ -32,9 +32,10 @@ class Community(GeoRefModel, VotableModel):
 
     class Map:
         editable = True
-        background_color =  '#ffc166'
+        background_color = '#ffc166'
         border_color = '#ff2e2e'
         geometries = (POLYGON, )
+        form_view_name = 'new_community'
 
     class Meta:
         verbose_name = "community"

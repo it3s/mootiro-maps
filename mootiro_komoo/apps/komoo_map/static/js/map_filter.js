@@ -146,7 +146,7 @@ $("#map-panel-layers > ul > li:not(.needs) div.img-holder > img").bind("click", 
 $("#map-panel-layers > ul > li.sublist > ul > li > div.img-holder > img").bind("click", function () {
     var $this = $(this);
     var $parent = $this.parent();
-    var objectType = "need";
+    var objectType = "Need";
     var category = $parent.attr("data-original-label");
     var enabledCategories = ['uncategorized'];
     $.each($("input:checked", $parent.parent().parent()).parent(), function (key, element) {

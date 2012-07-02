@@ -1,5 +1,6 @@
 import json
 from django.contrib.gis.db import models as geomodels
+from django.core.urlresolvers import reverse
 from collection_from import CollectionFrom
 
 from main.utils import create_geojson
@@ -36,11 +37,14 @@ class GeoRefModel(geomodels.Model):
         editable = False
 
 
+def get_models():
+    return [model for model in GeoRefModel.__subclasses__()]
+
 def get_editable_models():
     return [model for model in GeoRefModel.__subclasses__() \
                 if getattr(model.Map, 'editable', False)]
 
-def get_editable_models_json():
+def get_models_json(all=True):
     return json.dumps([{'type': model.__name__,
                     'categories': getattr(model.Map, 'categories', []),
                     'title': getattr(model.Map, 'title', '{}'.format(model.__name__)),
@@ -49,8 +53,12 @@ def get_editable_models_json():
                     'border': getattr(model.Map, 'border_color', '#000'),
                     'icon': getattr(model.Map, 'icon_url', ''),
                     'overlayTypes': getattr(model.Map, 'geometries', []),
-                    'formUrl': getattr(model.Map, 'form_url', ''),
+                    'formUrl': reverse(getattr(model.Map, 'form_view_name', 'root'), 
+                        args=getattr(model.Map, 'form_view_args', []),
+                        kwargs=getattr(model.Map, 'form_view_kwargs', {})),
                     'zIndex': 1,
                     'disabled': False,
-                    } for model in get_editable_models()])
+                    } for model in (get_models() if all else get_editable_models())])
 
+def get_editable_models_json():
+    return get_models_json(False)

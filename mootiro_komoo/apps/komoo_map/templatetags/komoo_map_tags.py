@@ -1,6 +1,8 @@
 #coding: utf-8
 from django import template
 from django.conf import settings
+
+from komoo_map.models import get_models_json
 register = template.Library()
 
 
@@ -50,5 +52,5 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
 
     return dict(type=type, width=width, height=height, zoom=zoom,
             panel=panel, lazy=lazy, geojson=geojson, edit_button=edit_button,
-            ajax=ajax, editable=editable,
+            ajax=ajax, editable=editable, feature_types_json=get_models_json(),
             STATIC_URL=settings.STATIC_URL, LANGUAGE_CODE=settings.LANGUAGE_CODE)

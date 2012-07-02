@@ -88,6 +88,20 @@ class Need(GeoRefModel, VotableModel):
         background_color =  '#f42c5e'
         border_color = '#d31e52'
         geometries = (POLYGON, LINESTRING, POINT)
+        categories = [
+            ('Culture'),
+            ('Education'),
+            ('Environment'),
+            ('Health'),
+            ('Housing'),
+            ('Local Economy'),
+            ('Mobility'),
+            ('Social Service'),
+            ('Sport'),
+            ('Security'),
+        ]
+        form_view_name = 'new_need_from_map'
+        form_view_kwargs = {'community_slug': 'communitySlug'}
 
     def __unicode__(self):
         return unicode(self.title)

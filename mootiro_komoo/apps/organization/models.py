@@ -127,6 +127,7 @@ class OrganizationBranch(GeoRefModel, VotableModel):
         background_color =  '#3a61d6'
         border_color = '#1f49b2'
         geometries = (POLYGON, POINT)
+        form_view_name = 'new_organization_from_map'
 
     def __unicode__(self):
         return unicode(self.name)
