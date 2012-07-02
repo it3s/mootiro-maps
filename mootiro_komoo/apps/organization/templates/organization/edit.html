@@ -1,10 +1,23 @@
 {% extends 'global.html' %}
 {% load crispy_forms_tags %}
 {% load upload_tags %}
+{% load i18n %}
+{% load komoo_tags %}
+
+{% block menu %} {% menu community "organization" %} {% endblock %}
 
 {% block content %}
     <div id="main-content">
         <div class="main-column">
+            <div class='form-legend'>{% trans 'Edit Organization' %}</div>
+
+            <div class='alert alert-info required-notice' data-alert='info'>
+                <a class='required-notice-close close' data-dismiss='alert'>×</a>
+                <div class='msg'>
+                    Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+                </div>
+            </div>
+
             {% crispy form_organization form_organization.helper %}
         </div>
         <div class="right-bar">

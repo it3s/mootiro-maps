@@ -1,11 +1,19 @@
 {% load crispy_forms_tags %}
 
+
 <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
 <script type="text/javascript" src="/static/js/ajax_select.js"></script>
 {{ form_resource.media }}
 
 <div id="main-content">
   <div class="main-column">
+
+    <div class='alert alert-info required-notice' data-alert='info'>
+        <a class='required-notice-close close' data-dismiss='alert'>×</a>
+        <div class='msg'>
+            Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+        </div>
+    </div>
     {% crispy form_resource form_resource.helper %}
   </div>
 </div>

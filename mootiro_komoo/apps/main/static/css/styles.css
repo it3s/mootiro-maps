@@ -920,7 +920,7 @@ body.community #main-content {
     width: 110px;
     height: 20px;
 }
-#updates-header #about-mootiro ul { width: 180px }
+#updates-header #about-mootiro ul { width: 200px }
 #updates-header #about-mootiro ul li {
     margin-top: 7px;
     text-align: center;
@@ -1062,6 +1062,12 @@ form legend {
     padding: 0;
     margin: 0;
     border: none;
+}
+.form-legend{
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2em;
+    margin: 10px 0 20px;
 }
 form .form-actions {
     background: none;
