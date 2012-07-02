@@ -1,6 +1,7 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 
+
 <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ajax_select.css" />
 <script type="text/javascript" src="{{ STATIC_URL }}js/ajax_select.js"></script>
 {{ form_org.media }}
@@ -40,10 +41,26 @@
             </div>
 
             <div id="org-div-form-organization" class="step_2" style="display: none;">
+
+                <div class='alert alert-info required-notice' data-alert='info'>
+                    <a class='required-notice-close close' data-dismiss='alert'>×</a>
+                    <div class='msg'>
+                        Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+                    </div>
+                </div>
+
                 {% crispy form_org %}
             </div>
 
             <div id="org-div-form-branch" class="step_3" style="display: none;">
+
+                <div class='alert alert-info required-notice' data-alert='info'>
+                    <a class='required-notice-close close' data-dismiss='alert'>×</a>
+                    <div class='msg'>
+                        Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+                    </div>
+                </div>
+
                 <div class="step_3 clearfix control-group ">
                     <label>{% trans 'Branch of'%}:</label>
                     <div class="controls">

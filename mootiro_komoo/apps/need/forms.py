@@ -17,7 +17,7 @@ from need.models import Need, NeedCategory, TargetAudience
 from signatures.signals import notify_on_update
 
 
-need_form_fields = ('title', 'description', 'community', 'categories',
+need_form_fields = ('id', 'title', 'description', 'community', 'categories',
                     'target_audiences', 'tags', 'files')
 
 need_form_field_labels = {
@@ -69,19 +69,6 @@ class NeedForm(AjaxModelForm):
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="need_form")
-        self.helper.layout = Layout(
-            Fieldset(
-                _('Edit need') if 'instance' in kw else _('New need'),
-                'id',  # AjaxModelForm rely on this field!
-                'title',
-                'description',
-                'community',
-                'categories',
-                'target_audiences',
-                'tags',
-                'files'
-            )
-        )
         return super(NeedForm, self).__init__(*a, **kw)
 
     @notify_on_update

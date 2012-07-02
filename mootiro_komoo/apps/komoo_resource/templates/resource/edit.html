@@ -2,11 +2,23 @@
 {% load crispy_forms_tags %}
 {% load komoo_map_tags %}
 {% load upload_tags %}
+{% load i18n %}
+{% load komoo_tags %}
+
+{% block menu %} {% menu community "resource" %} {% endblock %}
 
 {% block content %}
   {% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'lazy=True' %}
   <div id="main-content">
     <div class="main-column">
+      <div class='form-legend'>{% trans 'Edit Resource' %}</div>
+
+      <div class='alert alert-info required-notice' data-alert='info'>
+          <a class='required-notice-close close' data-dismiss='alert'>×</a>
+          <div class='msg'>
+              Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+          </div>
+      </div>
       {% crispy form_resource form_resource.helper %}
     </div>
     <div class="right-bar">
