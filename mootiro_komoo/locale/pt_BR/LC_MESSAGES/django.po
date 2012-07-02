@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-02 16:34-0300\n"
+"POT-Creation-Date: 2012-07-02 16:57-0300\n"
 "PO-Revision-Date: 2012-06-06 14:29-0300\n"
 "Last-Translator: André Casimiro <ah.casimiro@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: apps/main/templatetags/komoo_tags.py:250
 #: apps/main/templatetags/komoo_tags.py:251 apps/organization/forms.py:62
 #: apps/organization/templates/organization/branch_form.html:13
-#: apps/organization/templates/organization/new_frommap.html:34
+#: apps/organization/templates/organization/new_frommap.html:35
 #: lib/taggit/models.py:10
 msgid "Name"
 msgstr "Nome"
@@ -50,6 +50,10 @@ msgstr "Palavras-Chave"
 #: apps/community/forms.py:29 apps/organization/forms.py:120
 msgid " "
 msgstr " "
+
+#: apps/community/templates/community/edit.html:15
+msgid "Edit Community"
+msgstr "Editar Comunidade"
 
 #: apps/community/templates/community/list.html:7
 #: apps/moderation/templates/moderation/list.html:7
@@ -150,6 +154,10 @@ msgstr "Dólar"
 #: apps/investment/models.py:123
 msgid "Euro"
 msgstr "Euro"
+
+#: apps/investment/templates/investment/edit.html:15
+msgid "Form Investment"
+msgstr "Formulário de Investimentos"
 
 #: apps/investment/templates/investment/investment_list_templatetag.html:14
 msgid "Realized"
@@ -303,12 +311,17 @@ msgstr "campo com dados inválidos"
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
+#: apps/komoo_resource/templates/resource/edit.html:14
+msgid "Edit Resource"
+msgstr "Editar Recurso"
+
 #: apps/komoo_resource/templates/resource/list.html:9
 msgid "Resources for"
 msgstr "Recursos para"
 
 #: apps/komoo_resource/templates/resource/list.html:20
 #: apps/komoo_resource/templates/resource/list.html:22
+#: apps/komoo_resource/templates/resource/new.html:11
 msgid "New Resource"
 msgstr "Novo Recurso"
 
@@ -764,8 +777,8 @@ msgstr "Requisitar"
 
 #: apps/moderation/templates/moderation/deletion_request_box.html:15
 #: apps/moderation/templates/moderation/report_content_box_templatetag.html:21
-#: apps/organization/templates/organization/new_frommap.html:65
-#: apps/organization/templates/organization/new_frommap.html:69
+#: apps/organization/templates/organization/new_frommap.html:82
+#: apps/organization/templates/organization/new_frommap.html:86
 #: lib/fileupload/forms.py:124
 msgid "Cancel"
 msgstr "Cancelar"
@@ -795,14 +808,6 @@ msgstr "Áreas"
 #: apps/need/templates/need/view.html:39
 msgid "Target audiences"
 msgstr "Públicos alvo"
-
-#: apps/need/forms.py:74
-msgid "Edit need"
-msgstr "Editar necessidade"
-
-#: apps/need/forms.py:74 apps/need/templates/need/list.html:16
-msgid "New need"
-msgstr "Nova necessidade"
 
 #: apps/need/models.py:25
 msgid "Culture"
@@ -844,9 +849,21 @@ msgstr "Esporte"
 msgid "Security"
 msgstr "Segurança"
 
+#: apps/need/templates/need/edit.html:16
+msgid "Edit Need"
+msgstr "Editar Necessidade"
+
+#: apps/need/templates/need/edit.html:18
+msgid "New Need"
+msgstr "Nova Necessidade"
+
 #: apps/need/templates/need/list.html:8
 msgid "Needs for"
 msgstr "Necessidades para"
+
+#: apps/need/templates/need/list.html:16
+msgid "New need"
+msgstr "Nova necessidade"
 
 #: apps/need/templates/need/view.html:31
 msgid "History"
@@ -895,7 +912,7 @@ msgstr "Categorias"
 
 #: apps/organization/forms.py:70
 msgid "Logo"
-msgstr ""
+msgstr "Logotipo"
 
 #: apps/organization/forms.py:117
 msgid "Branch Name"
@@ -905,9 +922,14 @@ msgstr "Nome da Unidade"
 msgid "Info"
 msgstr "Informações"
 
+#: apps/organization/templates/organization/edit.html:12
+msgid "Edit Organization"
+msgstr "Editar Organização"
+
 #: apps/organization/templates/organization/list.html:20
 #: apps/organization/templates/organization/list.html:22
-#: apps/organization/templates/organization/new_frommap.html:15
+#: apps/organization/templates/organization/new.html:12
+#: apps/organization/templates/organization/new_frommap.html:16
 msgid "New Organization"
 msgstr "Nova Organização"
 
@@ -929,23 +951,23 @@ msgstr "Comunidades Atendidas"
 msgid " and %(diff)s more "
 msgstr " e %(diff)s outras"
 
-#: apps/organization/templates/organization/new_frommap.html:48
+#: apps/organization/templates/organization/new_frommap.html:65
 msgid "Branch of"
 msgstr "Unidade de"
 
-#: apps/organization/templates/organization/new_frommap.html:60
+#: apps/organization/templates/organization/new_frommap.html:77
 msgid "Verify"
 msgstr "Verificar"
 
-#: apps/organization/templates/organization/new_frommap.html:64
+#: apps/organization/templates/organization/new_frommap.html:81
 msgid "Add Branch"
 msgstr "Adicionar Unidade"
 
-#: apps/organization/templates/organization/new_frommap.html:68
+#: apps/organization/templates/organization/new_frommap.html:85
 msgid "Subscribe Organization"
 msgstr "Cadastrar Organização"
 
-#: apps/organization/templates/organization/new_frommap.html:75
+#: apps/organization/templates/organization/new_frommap.html:92
 msgid "Finish"
 msgstr "Concluir"
 
@@ -1038,6 +1060,10 @@ msgstr "Público alvo não fornecido"
 #: apps/proposal/forms.py:27
 msgid "Cost"
 msgstr "Custo"
+
+#: apps/proposal/templates/proposal/edit.html:15
+msgid "Form Proposal"
+msgstr "Formulário de Propostas"
 
 #: apps/update/models.py:118
 msgid "community added"
