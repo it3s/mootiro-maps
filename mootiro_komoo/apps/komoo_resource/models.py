@@ -12,7 +12,7 @@ import reversion
 from lib.taggit.managers import TaggableManager
 
 from community.models import Community
-from komoo_map.models import GeoRefModel
+from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
 from investment.models import Investment
 from fileupload.models import UploadedFile
 from vote.models import VotableModel
@@ -54,6 +54,12 @@ class Resource(GeoRefModel, VotableModel):
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
+
+    class Map:
+        editable = True
+        background_color =  '#009fe3'
+        border_color = '#0282af'
+        geometries = (POLYGON, LINESTRING, POINT)
 
     def __unicode__(self):
         return unicode(self.name)

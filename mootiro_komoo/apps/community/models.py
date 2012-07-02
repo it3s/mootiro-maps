@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 import reversion
 from main.utils import slugify
 from lib.taggit.managers import TaggableManager
-from komoo_map.models import GeoRefModel
+from komoo_map.models import GeoRefModel, POLYGON
 from vote.models import VotableModel
 
 
@@ -29,6 +29,12 @@ class Community(GeoRefModel, VotableModel):
 
     def __unicode__(self):
         return self.name
+
+    class Map:
+        editable = True
+        background_color =  '#ffc166'
+        border_color = '#ff2e2e'
+        geometries = (POLYGON, )
 
     class Meta:
         verbose_name = "community"

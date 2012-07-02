@@ -5,6 +5,13 @@ from collection_from import CollectionFrom
 from main.utils import create_geojson
 
 
+POLYGON = 'Polygon'
+LINESTRING = 'LineString'
+MULTILINESTRING = 'MultiLineString'
+POINT = 'Point'
+MULTIPOINT = 'MultiPoint'
+
+
 class GeoRefModel(geomodels.Model):
     """Abstract class to use on any model we want geo spatial information"""
     # Geolocalization attributes
@@ -24,3 +31,26 @@ class GeoRefModel(geomodels.Model):
 
     class Meta:
         abstract = True
+
+    class Map:
+        editable = False
+
+
+def get_editable_models():
+    return [model for model in GeoRefModel.__subclasses__() \
+                if getattr(model.Map, 'editable', False)]
+
+def get_editable_models_json():
+    return json.dumps([{'type': model.__name__,
+                    'categories': getattr(model.Map, 'categories', []),
+                    'title': getattr(model.Map, 'title', '{}'.format(model.__name__)),
+                    'tooltip': getattr(model.Map, 'tooltip', 'Add {}'.format(model.__name__)),
+                    'color': getattr(model.Map, 'background_color', '#000'),
+                    'border': getattr(model.Map, 'border_color', '#000'),
+                    'icon': getattr(model.Map, 'icon_url', ''),
+                    'overlayTypes': getattr(model.Map, 'geometries', []),
+                    'formUrl': getattr(model.Map, 'form_url', ''),
+                    'zIndex': 1,
+                    'disabled': False,
+                    } for model in get_editable_models()])
+

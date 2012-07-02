@@ -7,7 +7,7 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from komoo_map.models import GeoRefModel
+from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
 from need.models import TargetAudience
 from proposal.models import Proposal
@@ -119,6 +119,14 @@ class OrganizationBranch(GeoRefModel, VotableModel):
     creator = models.ForeignKey(User, null=True, blank=True)
 
     community = models.ManyToManyField(Community, null=True, blank=True)
+
+    class Map:
+        editable = True
+        title = 'Organization'
+        tooltip = 'Add Organization'
+        background_color =  '#3a61d6'
+        border_color = '#1f49b2'
+        geometries = (POLYGON, POINT)
 
     def __unicode__(self):
         return unicode(self.name)
