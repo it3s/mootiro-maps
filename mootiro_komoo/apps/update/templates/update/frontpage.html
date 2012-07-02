@@ -24,7 +24,7 @@
         class="about-image right hidden"/>
     <div class="clear-both"></div>
     <div class="about-content hidden">
-      <a href="{% url hotsite %}">what is this?</a>
+      <a href="{% url hotsite %}">{% trans "what is this?" %}</a>
       <ul>
         <li>
           <a href="{% url map %}#map-panel-add"  class="button community selected">
@@ -32,7 +32,7 @@
           </a>
         </li>
         <li>
-          <a href="{% url new_need %}" class="button need selected">
+          <a href="{% url map %}#map-panel-add" class="button need selected">
             <i class="icon-need left"></i> {% trans "Add a need" %}
           </a>
         </li>
@@ -102,7 +102,7 @@
 
                   {% endif %}
                   {% if u.object_type == 'proposal' %}
-                    {% trans "Proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
+                    {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
                     {% trans "for the need" %} <a href="{{ u.instances.1.link }}">{{ u.instances.1.name }}</a>
                   {% else %}
                     <a href="{{ u.instance.link }}">{{ u.instance.name }}</a>
@@ -186,7 +186,7 @@
             console.log("close enter");
             $(this).toggleClass("closed open");
             $(this).animate({
-                width: '+=85',
+                width: '+=105',
                 height: '+=120'
             });
             $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
@@ -197,7 +197,7 @@
             $(this).toggleClass("closed open");
             $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
             $(this).animate({
-                width: '-=85',
+                width: '-=105',
                 height: '-=120'
             });
         });
