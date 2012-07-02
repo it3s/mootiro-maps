@@ -64,7 +64,13 @@
 </div>
 <script type="text/javascript">
   $(function() {
+      var onhashchange = function() {
+        hash = window.location.hash;
+        $(hash + '-tab').click();
+      };
       var tabs = new Tabs('.panel-tab', '.panel');
+      onhashchange();
+      window.onhashchange = onhashchange;
   });
   window.csrf_token = '{{ csrf_token }}';
 

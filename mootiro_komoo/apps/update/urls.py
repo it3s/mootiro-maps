@@ -5,5 +5,5 @@ from django.conf.urls.defaults import *
 
 
 urlpatterns = patterns('update.views',
-    url(r'^frontpage$', 'frontpage', name='frontpage'),
+    url(r'^$', 'frontpage', name='root'),
 )

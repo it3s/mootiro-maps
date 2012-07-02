@@ -45,6 +45,10 @@ class Proposal(VotableModel):
     def name(self):
         return self.title
 
+    @property
+    def community(self):
+        return self.need.community
+
     def save(self, *args, **kwargs):
         if not self.id:
             # auto numbering a need's proposals

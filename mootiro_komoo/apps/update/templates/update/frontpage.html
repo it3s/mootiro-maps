@@ -7,9 +7,11 @@
 {% load humanize %}
 
 
-{% block title %}TUNT STATS{% endblock %}
-
-{#% block menu %} {% menu need "need" %} {% endblock %#}
+{% block menu %}
+  {% with obj=community selected_area="" %}
+    {% menu obj selected_area %}
+  {% endwith %}
+{% endblock %}
 
 {% block content %}
 <div id="updates-header">
@@ -22,7 +24,7 @@
         class="about-image right hidden"/>
     <div class="clear-both"></div>
     <div class="about-content hidden">
-      <a>what is this?</a>
+      <a href="{% url hotsite %}">what is this?</a>
       <ul>
         <li>
           <a href="{% url map %}#map-panel-add"  class="button community selected">
@@ -46,7 +48,7 @@
 
 <div id="main-content">
   <div class="main-column content-updates">
-    
+
     <ul class="tabs horizontal">
       <li class="tab first last"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
       <!--
@@ -179,7 +181,7 @@
         //     $("#content-updates-filters div.img-holder > img").trigger("click");
         //     $("#content-updates-filters div.img-holder input[type=checkbox]").attr("checked", "checked");
         // });
-        
+
         $("#about-mootiro.closed").live("mouseenter", function (evt) {
             console.log("close enter");
             $(this).toggleClass("closed open");
@@ -189,7 +191,7 @@
             });
             $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
         });
-        
+
         $("#about-mootiro.open").live("mouseleave", function (evt) {
             console.log("open leave");
             $(this).toggleClass("closed open");
