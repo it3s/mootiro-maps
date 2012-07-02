@@ -88,7 +88,7 @@ def create_discussion_update(sender, **kwargs):
             'comments_count': Comment.comments_count_for(instance),
         }
         if type(instance) == Proposal:
-            data['instances'] = [instances, instances.need]
+            data['instances'] = [instance, instance.need]
         update = Update(**data)
 
     if getattr(instance, 'community', None):

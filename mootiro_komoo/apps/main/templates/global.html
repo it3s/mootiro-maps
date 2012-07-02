@@ -75,7 +75,7 @@
             <input type="submit" id="search-button" class="button" value="{% trans 'Search' %}"/>
           </form>
           {% block menu %}
-            {% with obj=community selected_area="map" %}
+            {% with obj=community selected_area="" %}
               {% menu obj selected_area %}
             {% endwith %}
           {% endblock %}
