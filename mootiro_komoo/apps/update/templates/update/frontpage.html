@@ -7,7 +7,11 @@
 {% load humanize %}
 
 
-{#% block menu %} {% menu need "need" %} {% endblock %#}
+{% block menu %}
+  {% with obj=community selected_area="" %}
+    {% menu obj selected_area %}
+  {% endwith %}
+{% endblock %}
 
 {% block content %}
 <div id="updates-header">
