@@ -123,6 +123,8 @@ $('.file-thumb').live('click', function(ev){
             },
             'json'
         );
+
+        return false;
     } else {
 
         ev.stopPropagation();
@@ -156,6 +158,8 @@ $('#save-subtitle').live('click', function(){
         },
         'json'
     );
+
+    return false;
 });
 
 $('#delete-file').live('click', function(){
@@ -178,6 +182,8 @@ $('#delete-file').live('click', function(){
         );
 
     }
+
+    return false;
 });
 
 // Client side form validation
@@ -185,4 +191,5 @@ $('form').submit(function(e) {
     $('#id_files_ids_list').val(get_files_list());
 
 });
-});
+
+});  //end document ready
