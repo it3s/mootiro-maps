@@ -364,16 +364,16 @@ div.collapser i.icon-chevron-down {
 .organization-buttons .org-btn[panel='upported-resources-list'].selected,
 #top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
     color: #fff !important;
-    background-image: linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
-    background-image: -o-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
-    background-image: -moz-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
-    background-image: -webkit-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
-    background-image: -ms-linear-gradient(bottom, #1D9DD9 0%, #51AEE2 100%) !important;
-    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #1D9DD9), color-stop(1, #51AEE2)) !important;
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#1D9DD9, endColorstr=#51AEE2))";
+    background-image: linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
+    background-image: -o-linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #28CB05), color-stop(1, #22AD405AD405)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#28CB05, endColorstr=#2AD405))";
 }
 #top #menu #menu-resource a:active {
-    background: #1D9DD9 !important;
+    background: #28CB05 !important;
 }
 
 .button.investment:hover, .button.investment.selected,

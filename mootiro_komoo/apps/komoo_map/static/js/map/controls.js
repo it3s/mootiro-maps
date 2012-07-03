@@ -57,7 +57,6 @@ komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_
             }
             this.body.html('<ul><li>' + population + '</li></ul>');
         }  else if (feature.getProperties().type == 'OrganizationBranch') {
-            console.log(feature);
             this.title.text(feature.getProperties().organization_name + ' - ' + feature.getProperties().name);
         }
         this.title.attr('href', url);

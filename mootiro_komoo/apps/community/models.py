@@ -36,6 +36,10 @@ class Community(GeoRefModel, VotableModel):
         border_color = '#ff2e2e'
         geometries = (POLYGON, )
         form_view_name = 'new_community'
+        min_zoom_geometry = 10
+        max_zoom_geometry = 100
+        min_zoom_marker = 0
+        max_zoom_marker = 9
 
     class Meta:
         verbose_name = "community"

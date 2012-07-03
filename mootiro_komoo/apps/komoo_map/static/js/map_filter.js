@@ -184,7 +184,6 @@ $(function () {
             $.each(subitems, function (i, subitem) {
                 var $subitem = $(subitem);
                 var overlayType = $subitem.attr("data-overlay-type");
-                console.log(type, overlayType);
                 $subitem.click(function (e) {
                     if (editor.addPanel.is(":visible")){
                         return;

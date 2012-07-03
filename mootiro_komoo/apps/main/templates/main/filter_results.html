@@ -7,22 +7,22 @@
       <i class="icon-remove right"></i>
     </h4>
   </li>
-  {% if not communities and not needs and not organizations and not resources %}
+  {% if not Community and not Need and not OrganizationBranch and not Resource %}
   <li>
     {% trans "No results found." %}
   </li>
   {% endif %}
-  {% if communities %}
+  {% if Community %}
   <li class="communities">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/community.png"/></div>
     <span>
-      {% blocktrans count counter=communities|length %}{{ counter }} Community{% plural %}{{ counter }} Communities{% endblocktrans %}
+      {% blocktrans count counter=Community|length %}{{ counter }} Community{% plural %}{{ counter }} Communities{% endblocktrans %}
     </span>
   </li>
   <li class="community sublist">
     <ul>
-      {% for c in communities %}
-        <li id="community-{{c.id}}">
+      {% for c in Community %}
+        <li id="Community-{{c.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ c.image }}"/></div>
           <span>{{ c.name }}</span>
         </li>
@@ -30,17 +30,17 @@
     </ul>
   </li>
   {% endif %}
-  {% if needs %}
+  {% if Need %}
   <li class="needs">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/need.png"/></div>
     <span>
-      {% blocktrans count counter=needs|length %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}
+      {% blocktrans count counter=Need|length %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}
     </span>
   </li>
   <li class="need sublist">
     <ul>
-      {% for n in needs %}
-        <li id="need-{{n.id}}">
+      {% for n in Need %}
+        <li id="Need-{{n.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ n.image }}"/></div>
           <span>{{ n.title }}</span>
         </li>
@@ -48,17 +48,17 @@
     </ul>
   </li>
   {% endif %}
-  {% if organizations %}
+  {% if OrganizationBranch %}
   <li class="organizations">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/organization.png"/></div>
     <span>
-      {% blocktrans count counter=organizations|length %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
+      {% blocktrans count counter=OrganizationBranch|length %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
     </span>
   </li>
   <li class="organization sublist">
     <ul>
-      {% for o in organizations %}
-          <li id="organizationbranch-{{o.id}}">
+      {% for o in OrganizationBranch %}
+          <li id="OrganizationBranch-{{o.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ o.image }}"/></div>
           <span>{{ o.name }}</span>
         </li>
@@ -66,17 +66,17 @@
     </ul>
   </li>
   {% endif %}
-  {% if resources %}
+  {% if Resource %}
   <li class="resources">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/resource.png"/></div>
     <span>
-      {% blocktrans count counter=resources|length %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}
+      {% blocktrans count counter=Resource|length %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}
     </span>
   </li>
   <li class="resource sublist">
     <ul>
-      {% for r in resources %}
-        <li id="resource-{{r.id}}">
+      {% for r in Resource %}
+        <li id="Resource-{{r.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ r.image }}"/></div>
           <span>{{ r.name }}</span>
         </li>

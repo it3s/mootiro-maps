@@ -188,6 +188,25 @@ komoo.features.Feature.prototype.setEditable = function (flag) {
     }
 };
 
+komoo.features.Feature.prototype.showGeometry = function () {
+    this.geometry_.setMap(this.map_);
+};
+
+komoo.features.Feature.prototype.hideGeometry = function () {
+    this.geometry_.setMap(null);
+};
+
+komoo.features.Feature.prototype.showMarker = function () {
+    if (this.getMarker() && 
+            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) 
+        this.getMarker().setMap(this.map_);
+};
+
+komoo.features.Feature.prototype.hideMarker = function () {
+    if (this.getMarker() && 
+            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) 
+        this.getMarker().setMap(null);
+};
 
 /* Delegations */
 
@@ -196,14 +215,26 @@ komoo.features.Feature.prototype.getBounds = function () {
 };
 
 komoo.features.Feature.prototype.setMap = function (map) {
+    this.map_ = map;
+    var zoom = 0;
+    if (map) zoom = map.getZoom();
+    if (map && zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) {
+        this.geometry_.setMap(map);
+    } else {
+        this.geometry_.setMap(null);
+    }
     if (this.getMarker() && 
-            !this.getGeometry() instanceof komoo.geometries.MultiPoint) 
-        this.getMarker.setMap(map);
-    return this.geometry_.setMap(map);
+            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) { 
+        if (map && zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) {
+            this.getMarker().setMap(map);
+        } else {
+            this.getMarker().setMap(null);
+        }
+    }
 };
 
 komoo.features.Feature.prototype.getMap = function () {
-    return this.geometry_.getMap();
+    return this.map_;
 };
 
 komoo.features.Feature.prototype.removeFromMap = function () {

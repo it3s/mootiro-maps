@@ -125,6 +125,10 @@ komoo.geometries.Geometry.prototype.setObject = function (object) {
     this.initEvents();
 };
 
+komoo.geometries.Geometry.prototype.getObject = function () {
+    return this.object_;
+};
+
 komoo.geometries.Geometry.prototype.setFeature = function (feature) {
     this.feature_ = feature;
 };
@@ -182,7 +186,10 @@ komoo.geometries.Geometry.prototype.getArrayFromLatLng = function (latLng) {
 
 /* Delegations */
 komoo.geometries.Geometry.prototype.setMap = function (map) {
-    return this.object_.setMap(map);
+    if (map instanceof komoo.Map)
+        return this.object_.setMap(map.googleMap);
+    else
+        return this.object_.setMap(map);
 };
 
 komoo.geometries.Geometry.prototype.getMap = function () {
