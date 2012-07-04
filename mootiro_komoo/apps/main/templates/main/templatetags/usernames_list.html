@@ -6,10 +6,23 @@
   {% endfor %}
 
   {% if aggregated %}
+    {% trans "and" %}
+    <a class="more user" title="
+      {% for username in aggregated %}
+        {{ username }}{% if not forloop.last %},{% endif %}
+      {% endfor %}
+    ">
     {% blocktrans count num=aggregated|length %}
-      and {{ num }} more user
+      {{ num }} more user
     {% plural %}
-      and {{ num }} more users
+      {{ num }} more users
     {% endblocktrans %}
+    </a>
   {% endif %}
 {% endwith %}
+
+{% block page_scripts %}
+  <script type="text/javascript">
+    $(".more.user").komooTooltip();
+  </script>
+{% endblock %}
