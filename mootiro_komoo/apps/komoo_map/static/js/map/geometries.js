@@ -37,7 +37,10 @@ komoo.geometries.makeGeometry = function (feature) {
     var geometry;
     if (geometryType == 'Point' || geometryType == 'MultiPoint' || geometryType == 'marker') {
         geometry = new komoo.geometries.MultiPoint();
-    } else if (geometryType == 'LineString' || geometryType == 'MultiLineString' || geometryType == 'polyline') {
+    } else if (geometryType == 'LineString') {
+        if(feature.geometry.coordinates) feature.geometry.coordinates = [feature.geometry.coordinates];
+        geometry = new komoo.geometries.MultiPolyline();
+    } else if (geometryType == 'MultiLineString' || geometryType == 'polyline') {
         geometry = new komoo.geometries.MultiPolyline();
     } else if (geometryType == 'Polygon' || geometryType == 'polygon') {
         geometry = new komoo.geometries.Polygon();
@@ -527,6 +530,10 @@ komoo.geometries.MultiPolyline.prototype.setPaths = function (paths) {
 komoo.geometries.MultiPolyline.prototype.getPaths = function () {
     return this.object_.getPaths().getArray();
 };
+
+komoo.geometries.MultiPolyline.prototype.getPath = function () {
+    return this.object_.getPaths().getAt(0);
+}
 
 
 

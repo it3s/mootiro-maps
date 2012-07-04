@@ -14,6 +14,7 @@
     <script type="text/javascript" src="/static/js/map/utils.js"></script>
     <script type="text/javascript" src="/static/js/vendor/infobox_packed.js"></script>
     <script type="text/javascript" src="/static/js/map/multimarker.js"></script>
+    <script type="text/javascript" src="/static/js/map/multipolyline.js"></script>
     <script type="text/javascript" src="/static/js/komoo_map.js"></script>
     <script type="text/javascript" src="/static/js/map/geometries.js"></script>
     <script type="text/javascript" src="/static/js/map/features.js"></script>
@@ -35,7 +36,7 @@
               'coordinates': [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]]
             },
             'properties': {
-              'type': 'community'
+              'type': 'Community'
             }
           }
         ]
@@ -50,17 +51,17 @@
               'coordinates': [[[0, 0], [0, 1], [1, 1], [1, 2], [0, 0]]]
             },
             'properties': {
-              'type': 'community'
+              'type': 'Community'
             }
           },
           {
             'type': 'Feature',
             'geometry': {
-              'type': 'LineString',
-              'coordinates': [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]]
+              'type': 'MultiLineString',
+              'coordinates': [[[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]]]
             },
             'properties': {
-              'type': 'need'
+              'type': 'Need'
             }
           },
           {
@@ -70,17 +71,7 @@
               'coordinates': [[1, 2]]
             },
             'properties': {
-              'type': 'resource'
-            }
-          },
-          {
-            'type': 'Feature',
-            'geometry': {
-              'type': 'MultiPoint',
-              'coordinates': [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]]
-            },
-            'properties': {
-              'type': 'investment'
+              'type': 'Resource'
             }
           }
         ]
@@ -89,6 +80,16 @@
       $(document).ready(function () {
         var mapOptions = {
           editable: true,
+          featureTypes: [
+            {type: 'Community', categories: [], title: '', tooltip: '',
+            overlayTypes: []},
+            {type: 'Need', categories: [], title: '', tooltip: '',
+            overlayTypes: []},
+            {type: 'Resource', categories: [], title: '', tooltip: '',
+            overlayTypes: []},
+            {type: 'OrganizationBranch', categories: [], title: '', tooltip:
+            '', overlayTypes: []},
+          ],
           fetchGeometries: false,
           autoSaveMapType: true,
           autoSaveLocation: false,
@@ -142,13 +143,13 @@
           equal(features.getAt(0).getGeometry().getPath().getLength(), 4, 'Wrong path size');
           equal(map.overlays.length, 1, 'Added wrong geometries to map');
           var moreFeatures = map.loadGeoJSON(completeGeoJson);
-          equal(moreFeatures.length, 4, 'Wrong collection size');
+          equal(moreFeatures.length, 3, 'Wrong collection size');
           equal(moreFeatures.getAt(0).getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
           equal(moreFeatures.getAt(0).getGeometry().getPath().getLength(), 4, 'Wrong path size');
           equal(moreFeatures.getAt(1).getGeometry().getPath().getLength(), 5, 'Wrong path size');
           equal(moreFeatures.getAt(2).getGeometry().getPositions()[0].lat(), 1, 'Wrong latitude');
           equal(moreFeatures.getAt(2).getGeometry().getPositions()[0].lng(), 2, 'Wrong longitude');
-          equal(map.overlays.length, 4, 'Added wrong geometries to map');
+          equal(map.overlays.length, 3, 'Added wrong geometries to map');
         });
 
         test('Get GeoJSON', function () {
@@ -163,7 +164,6 @@
               completeGeoJson.features[0].geometry,
               completeGeoJson.features[1].geometry,
               completeGeoJson.features[2].geometry,
-              completeGeoJson.features[3].geometry
             ]
           };
           deepEqual(geoJson, geometryGeoJson);
