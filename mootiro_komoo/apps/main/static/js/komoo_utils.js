@@ -225,14 +225,14 @@ function getUrlVars(){
             }
         });
 
-        form.find('fieldset').after("" +
-            "<div class='alert alert-info' data-alert='info'>" +
-                "<a class='close' data-dismiss='alert'>×</a>" +
-                "<div class='msg'>" +
-                    "Os campos com asterisco (<strong>*</strong>) são obrigatórios!" +
-                "</div>" +
-            "</div>"
-        );
+        // form.find('fieldset').after("" +
+        //     "<div class='alert alert-info' data-alert='info'>" +
+        //         "<a class='close' data-dismiss='alert'>×</a>" +
+        //         "<div class='msg'>" +
+        //             "Os campos com asterisco (<strong>*</strong>) são obrigatórios!" +
+        //         "</div>" +
+        //     "</div>"
+        // );
 
         $('.close').click(function(){
             $(this).parent().fadeOut();

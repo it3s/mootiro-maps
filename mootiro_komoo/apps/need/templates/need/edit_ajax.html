@@ -4,6 +4,12 @@
 <script type="text/javascript" src="/static/js/ajax_select.js"></script>
 {{ form.media }}
 
+<div class='alert alert-info required-notice' data-alert='info'>
+    <a class='required-notice-close close' data-dismiss='alert'>×</a>
+    <div class='msg'>
+        Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+    </div>
+</div>
 {% crispy form form.helper %}
 
 <script type="text/javascript">

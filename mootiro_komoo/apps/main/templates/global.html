@@ -14,7 +14,7 @@
 
 
     <title>{% block title %}Mootiro Maps{% endblock %}</title>
-    
+
     <!-- Facebook sharing tags -->
     {#<meta property="og:title" content="title" />#}
     <meta property="og:description" content="MootiroMaps é uma ferramenta open source que promove a colaboração entre atores engajados no desenvolvimento de um território ou uma comunidade."/>
@@ -34,6 +34,7 @@
     <script type="text/javascript">var isAuthenticated = {{ user.is_authenticated|lower }};</script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/shortcut.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/komoo_utils.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/komoo_search.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/moderation.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/ajaxforms.js"></script>
 

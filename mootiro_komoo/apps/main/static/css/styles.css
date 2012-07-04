@@ -1063,6 +1063,12 @@ form legend {
     margin: 0;
     border: none;
 }
+.form-legend{
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.2em;
+    margin: 10px 0 20px;
+}
 form .form-actions {
     background: none;
     border: none;
