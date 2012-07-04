@@ -37,6 +37,8 @@ komoo.controls.InfoWindow = function (opts) {
 };
 
 komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_content) {
+    var map = feature.getMap();
+    if (map.mode == komoo.Mode.DRAW) return;
     var position = opt_position || feature.getCenter();
     var url, population, msg;
     if (opt_content) {
@@ -73,7 +75,6 @@ komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_
 
         this.feature = feature;
     }
-    var map = feature.getMap();
     var point = komoo.utils.latLngToPoint(map, position);
     point.x += 5;
     var newPosition = komoo.utils.pointToLatLng(map, point);

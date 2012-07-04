@@ -1275,7 +1275,7 @@ komoo.Map.prototype.deleteNode = function (e) {
  *        The overlay to be set as current or null to remove the selection.
  */
 komoo.Map.prototype.setCurrentOverlay = function (overlay, opt_force) {
-    if (this.currentOverlay == overlay && !opt_force) return;
+    //if (this.currentOverlay == overlay && !opt_force) return;
     $("#komoo-map-add-button, #komoo-map-cut-out-button, #komoo-map-delete-button").hide();
     this.currentOverlay = overlay;
     if (this.currentOverlay && this.currentOverlay.getProperties() &&
@@ -1284,7 +1284,8 @@ komoo.Map.prototype.setCurrentOverlay = function (overlay, opt_force) {
         if (this.currentOverlay.getGeometry().getGeometryType() == 'Polygon') {
             this.drawingMode_ = komoo.OverlayType.POLYGON;
             $("#komoo-map-cut-out-button").show();
-        } else if (this.currentOverlay.getGeometry().getGeometryType() == 'LineString') {
+        } else if (this.currentOverlay.getGeometry().getGeometryType() == 'LineString' ||
+                   this.currentOverlay.getGeometry().getGeometryType() == 'MultiLineString') {
             this.drawingMode_ = komoo.OverlayType.POLYLINE;
         } else {
             this.drawingMode_ = komoo.OverlayType.POINT;
@@ -1453,10 +1454,18 @@ komoo.Map.prototype.editOverlay = function (overlay) {
         overlay.setDraggable(true);
     }
     this.type = overlay.getProperties().type;
-    this.setCurrentOverlay(overlay);
+    this.setCurrentOverlay(overlay, true);
+    this.mode = komoo.Mode.DRAW;
     $(".map-panel-title", this.addPanel).text(gettext("Edit"));
     this.addPanel.css({"margin-top": "33px"});
     this.addPanel.show();
+    var color = this.overlayOptions[overlay.getProperties().type].color;
+    var border = this.overlayOptions[overlay.getProperties().type].border;
+    var zIndex = this.overlayOptions[overlay.getProperties().type].zIndex;
+    this.drawingManagerOptions.polylineOptions.strokeColor = border;
+    this.drawingManagerOptions.polygonOptions.fillColor = color;
+    this.drawingManagerOptions.polygonOptions.strokeColor = border;
+    this.drawingManagerOptions.polygonOptions.zIndex = zIndex;
     return true;
 };
 
