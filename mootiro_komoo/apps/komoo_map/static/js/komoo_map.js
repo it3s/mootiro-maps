@@ -1274,8 +1274,8 @@ komoo.Map.prototype.deleteNode = function (e) {
  * @param {google.maps.Polygon|google.maps.Polyline|null} overlay
  *        The overlay to be set as current or null to remove the selection.
  */
-komoo.Map.prototype.setCurrentOverlay = function (overlay) {
-    if (this.currentOverlay == overlay) return;
+komoo.Map.prototype.setCurrentOverlay = function (overlay, opt_force) {
+    if (this.currentOverlay == overlay && !opt_force) return;
     $("#komoo-map-add-button, #komoo-map-cut-out-button, #komoo-map-delete-button").hide();
     this.currentOverlay = overlay;
     if (this.currentOverlay && this.currentOverlay.getProperties() &&
@@ -1453,6 +1453,7 @@ komoo.Map.prototype.editOverlay = function (overlay) {
         overlay.setDraggable(true);
     }
     this.type = overlay.getProperties().type;
+    this.setCurrentOverlay(overlay);
     $(".map-panel-title", this.addPanel).text(gettext("Edit"));
     this.addPanel.css({"margin-top": "33px"});
     this.addPanel.show();
