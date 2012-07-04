@@ -74,6 +74,7 @@ komoo.collections.FeatureCollection.prototype.setVisible = function (flag) {
 
 komoo.collections.FeatureCollection.prototype.show = function () {
     this.setVisible(true);
+    this.setMap(this.map_);
 };
 
 komoo.collections.FeatureCollection.prototype.hide = function () {
@@ -88,27 +89,9 @@ komoo.collections.FeatureCollection.prototype.setMap = function (map) {
     this.handleMapEvents()
 }
 
-komoo.collections.FeatureCollection.prototype.showGeometries = function () {
+komoo.collections.FeatureCollection.prototype.updateFeaturesVisibility = function () {
     this.features_.forEach(function (feature, index, orig) {
-        feature.showGeometry();
-    });
-};
-
-komoo.collections.FeatureCollection.prototype.hideGeometries = function () {
-    this.features_.forEach(function (feature, index, orig) {
-        feature.hideGeometry();
-    });
-};
-
-komoo.collections.FeatureCollection.prototype.showMarkers = function () {
-    this.features_.forEach(function (feature, index, orig) {
-        feature.showMarker();
-    });
-};
-
-komoo.collections.FeatureCollection.prototype.hideMarkers = function () {
-    this.features_.forEach(function (feature, index, orig) {
-        feature.hideMarker();
+        feature.setMap(feature.getMap());
     });
 };
 
@@ -120,16 +103,7 @@ komoo.collections.FeatureCollection.prototype.handleMapEvents = function () {
 };
 
 komoo.collections.FeatureCollection.prototype.onZoomChanged = function (zoom) {
-    if (zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) {
-        this.showGeometries();
-    } else {
-        this.hideGeometries();
-    }
-    if (zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) {
-        this.showMarkers();
-    } else {
-        this.hideMarkers();
-    }
+    this.updateFeaturesVisibility();
 };
 
 

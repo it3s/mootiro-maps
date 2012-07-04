@@ -73,8 +73,12 @@ komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_
 
         this.feature = feature;
     }
-    this.object_.setPosition(position);
-    this.object_.open(feature.getMap());
+    var map = feature.getMap();
+    var point = komoo.utils.latLngToPoint(map, position);
+    point.x += 5;
+    var newPosition = komoo.utils.pointToLatLng(map, point);
+    this.object_.setPosition(newPosition);
+    this.object_.open(map);
 };
 
 komoo.controls.InfoWindow.prototype.close = function () {

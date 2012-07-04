@@ -39,7 +39,8 @@ class Community(GeoRefModel, VotableModel):
         min_zoom_geometry = 10
         max_zoom_geometry = 100
         min_zoom_marker = 0
-        max_zoom_marker = 9
+        max_zoom_marker = 0
+        zindex = 5
 
     class Meta:
         verbose_name = "community"

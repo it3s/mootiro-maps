@@ -26,7 +26,6 @@ komoo.utils.createCookie = function (name, value, days) {
     document.cookie = name + "=" + value + expires + "; path=/";
 };
 
-
 /**
  * Reads a cookie.
  * @param {String} name
@@ -47,7 +46,6 @@ komoo.utils.readCookie = function (name) {
     return null;
 };
 
-
 /**
  * Removes a cookie.
  * @param {String} name
@@ -55,7 +53,6 @@ komoo.utils.readCookie = function (name) {
 komoo.utils.eraseCookie = function (name) {
     createCookie(name, "", -1);
 };
-
 
 /**
  * Verify if a point is inside a closed path.
@@ -80,4 +77,32 @@ komoo.utils.isPointInside = function (point, path) {
     return ret;
 };
 
+/**
+ * @param {google.maps.Map} map
+ * @param {google.maps.LatLng} latlng
+ * @param {int} z
+ * @return {google.maps.Point}
+ */
+komoo.utils.latLngToPoint = function (map, latLng, opt_zoom) {
+    if (map.googleMap) map = map.googleMap;
+    var zoom = opt_zoom || map.getZoom();
+    var normalizedPoint = map.getProjection().fromLatLngToPoint(latLng); // returns x,y normalized to 0~255
+    var scale = Math.pow(2, zoom);
+    var pixelCoordinate = new google.maps.Point(normalizedPoint.x * scale, normalizedPoint.y * scale);
+    return pixelCoordinate;
+};
 
+/**
+ * @param {google.maps.Map} map
+ * @param {google.maps.Point} point
+ * @param {int} z
+ * @return {google.maps.LatLng}
+ */
+komoo.utils.pointToLatLng = function (map, point, opt_zoom) {
+    if (map.googleMap) map = map.googleMap;
+    var zoom = opt_zoom || map.getZoom();
+    var scale = Math.pow(2, zoom);
+    var normalizedPoint = new google.maps.Point(point.x / scale, point.y / scale);
+    var latlng = map.getProjection().fromPointToLatLng(normalizedPoint);
+    return latlng;
+};

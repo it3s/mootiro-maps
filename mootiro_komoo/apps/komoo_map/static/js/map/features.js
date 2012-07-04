@@ -208,33 +208,35 @@ komoo.features.Feature.prototype.hideMarker = function () {
         this.getMarker().setMap(null);
 };
 
-/* Delegations */
-
-komoo.features.Feature.prototype.getBounds = function () {
-    return this.geometry_.getBounds();
-};
-
-komoo.features.Feature.prototype.setMap = function (map) {
-    this.map_ = map;
+komoo.features.Feature.prototype.setMap = function (map, opt_force) {
+    var force = opt_force ? opt_force != undefined : false;
+    if (this.getProperties().alwaysVisible) force = true;
     var zoom = 0;
     if (map) zoom = map.getZoom();
-    if (map && zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) {
+    if (map && ((zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) || force)) {
         this.geometry_.setMap(map);
     } else {
         this.geometry_.setMap(null);
     }
     if (this.getMarker() && 
             !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) { 
-        if (map && zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) {
+        if (map && ((zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) || force)) {
             this.getMarker().setMap(map);
         } else {
             this.getMarker().setMap(null);
         }
     }
+    this.map_ = map;
 };
 
 komoo.features.Feature.prototype.getMap = function () {
     return this.map_;
+};
+
+/* Delegations */
+
+komoo.features.Feature.prototype.getBounds = function () {
+    return this.geometry_.getBounds();
 };
 
 komoo.features.Feature.prototype.removeFromMap = function () {
@@ -243,7 +245,10 @@ komoo.features.Feature.prototype.removeFromMap = function () {
 };
 
 komoo.features.Feature.prototype.setVisible = function (flag) {
-    if (this.marker_) this.marker_.setVisible(flag);
+    if (this.getMarker() && 
+            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) { 
+        this.marker_.setVisible(flag);
+    }
     return this.geometry_.setVisible(flag);
 };
 

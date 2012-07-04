@@ -54,7 +54,7 @@ class GeoRefModel(geomodels.Model):
         min_zoom_marker = 18
         max_zoom_marker = 100
 
-        zindex = 1
+        zindex = 10
 
     @classmethod
     def get_map_attr(cls, attr_name):
@@ -71,7 +71,7 @@ def get_editable_models():
 
 def get_models_json(all=True):
     return json.dumps([{'type': model.__name__,
-                    'disabled': model.get_map_attr('editable'),
+                    'disabled': not model.get_map_attr('editable'),
                     'title': model.get_map_attr( 'title') or '{}'.format(model.__name__),
                     'tooltip': model.get_map_attr('tooltip') or 'Add {}'.format(model.__name__),
                     'color': model.get_map_attr('background_color'),
