@@ -423,3 +423,21 @@ function flash(message, optDuration) {
     if (duration > 0)
         setTimeout(function () { $box.fadeOut(); }, duration);
 }
+
+/* Komoo style tooltips. Based on bootstrap tooltip plugin. */
+(function($){
+    $.fn.komooTooltip = function() {
+        var $target = $(this);
+        $target.tooltip({
+            placement: "bottom",
+            trigger: "manual"
+        }).on("click", function (evt) {
+            console.log("click");
+            $target = $(evt.target);
+            $target.tooltip('show');
+            $(".tooltip").on("mouseleave", function (evt) {
+                $target.tooltip('hide');
+            });
+        });
+    };
+})(jQuery);
