@@ -97,10 +97,12 @@ class Update(models.Model):
         self._communities_slugs = simplejson.dumps([c.slug for c in l])
 
     @classmethod
-    def get_recent_discussion_for(cls, obj):
-        one_day_ago = datetime.now() - timedelta(days=1)
-        u = Update.objects.filter(object_id=obj.id, type=cls.DISCUSSION,
-            object_type=obj._meta.verbose_name, date__gt=one_day_ago)
+    def get_recent_for(cls, obj, type_, **timeparams):
+        if not timeparams:
+            timeparams = dict(days=1)
+        time_ago = datetime.now() - timedelta(**timeparams)
+        u = Update.objects.filter(object_id=obj.id, type=type_,
+            object_type=obj._meta.verbose_name, date__gt=time_ago)
         return u[0] if u else None
 
     def __unicode__(self):
