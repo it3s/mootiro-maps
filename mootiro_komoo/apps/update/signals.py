@@ -33,7 +33,7 @@ def _create_the_update(instances, communities, **kwargs):
     if recent_update:
         update = recent_update
         people = update.users
-        if user.username not in people or True:
+        if user.username not in people or True:  # TODO: remove "or True"
             people.insert(0, user.username)
             update.users = people
     else:
@@ -76,7 +76,7 @@ def _proposal_instances(proposal):
     return [proposal, proposal.need]
 
 @receiver(create_update, sender=Proposal)
-def create_add_edit_update_for_proposal(sender, **kwargs):
+def create_proposal_update(sender, **kwargs):
     proposal = kwargs["instance"]
     instances = _proposal_instances(proposal)
     communities = proposal.need.community.all()
@@ -84,41 +84,21 @@ def create_add_edit_update_for_proposal(sender, **kwargs):
 
 
 # Comment
-# @receiver(create_update, sender=Comment)
-# def create_discussion_update(sender, **kwargs):
-#     comment = kwargs["instance"]
-#     instances = [proposal, proposal.need]
-#     communities = proposal.need.community.all()
-#     _create_the_update(instances, communities, **kwargs)
+@receiver(create_update, sender=Comment)
+def create_discussion_update(sender, **kwargs):
+    instance = kwargs["instance"].content_object
+    kwargs["instance"] = instance
 
+    if type(instance) == Proposal:
+        instances = [instance, instance.need]
+    else:
+        instances = [instance]
 
-# @receiver(create_update, sender=Comment)
-# def create_discussion_update(sender, **kwargs):
-#     comment = kwargs["instance"]
-#     instance = comment.content_object
+    if type(instance) == Community:
+        communities = []
+    elif type(instance) == Proposal:
+        communities = instance.need.community.all()
+    else:
+        communities = instance.community.all()
 
-#     discussion_update = Update.get_recent_for(instance,
-#         Update.DISCUSSION, days=1)
-#     if discussion_update:
-#         update = discussion_update
-#         people = update.users
-#         if comment.author.username not in people or True:
-#             people.insert(0, comment.author.username)
-#             update.users = people
-#     else:
-#         data = {
-#             'instances': [instance],
-#             'object_id': instance.id,
-#             'object_type': instance._meta.verbose_name,
-#             'type': Update.DISCUSSION,
-#             'users': [comment.author.username],
-#         }
-#         if type(instance) == Proposal:
-#             data['instances'] = [instance, instance.need]
-#         update = Update(**data)
-
-#     if getattr(instance, 'community', None):
-#         update.communities = instance.community.all()
-
-#     update.comments_count = Comment.comments_count_for(instance)
-#     update.save()
+    _create_the_update(instances, communities, **kwargs)
