@@ -37,11 +37,12 @@ def root(request):
 def _fetch_geo_objects(Q, zoom):
     ret = {}
     for model in [Community, Need, Resource, OrganizationBranch]:
-        min_ =  min(model.get_map_attr('min_zoom_geometry'),
-                    model.get_map_attr('min_zoom_marker'))
-        max_ = max(model.get_map_attr('max_zoom_geometry'),
-                   model.get_map_attr('max_zoom_marker'))
-        ret[model.__name__] = model.objects.filter(Q) if (zoom >= min_ and zoom <= max_) else []
+        #min_ =  min(model.get_map_attr('min_zoom_geometry'),
+        #            model.get_map_attr('min_zoom_marker'))
+        #max_ = max(model.get_map_attr('max_zoom_geometry'),
+        #           model.get_map_attr('max_zoom_marker'))
+        #ret[model.__name__] = model.objects.filter(Q) if (zoom >= min_ and zoom <= max_) else []
+        ret[model.__name__] = model.objects.filter(Q)
     return ret
 
 

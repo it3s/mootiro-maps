@@ -714,11 +714,7 @@ komoo.Map.prototype.initOverlaysByTypeObject = function () {
     var komooMap = this;
     this.options.featureTypes.forEach(function (type, index, orig) {
         var opts = {
-            map: komooMap,
-            minZoomGeometry: type.minZoomGeometry,
-            maxZoomGeometry: type.maxZoomGeometry,
-            minZoomMarker: type.minZoomMarker,
-            maxZoomMarker: type.maxZoomMarker,
+            map: komooMap
         };
         komooMap.overlaysByType[type.type] = {categories: type.categories};
         komooMap.overlaysByType[type.type].categories.push("uncategorized");

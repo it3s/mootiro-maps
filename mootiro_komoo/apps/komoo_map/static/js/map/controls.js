@@ -78,7 +78,7 @@ komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_
     point.x += 5;
     var newPosition = komoo.utils.pointToLatLng(map, point);
     this.object_.setPosition(newPosition);
-    this.object_.open(map);
+    this.object_.open(map.googleMap ? map.googleMap : map);
 };
 
 komoo.controls.InfoWindow.prototype.close = function () {

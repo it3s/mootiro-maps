@@ -31,10 +31,6 @@ komoo.collections.makeFeatureCollection = function (opts) {
 
 komoo.collections.FeatureCollection = function (opts) {
     var options = opts || {};
-    this.minZoomGeometry = options.minZoomGeometry || 0;
-    this.maxZoomGeometry = options.maxZoomGeometry || 100;
-    this.minZoomMarker = options.minZoomMarker || 0;
-    this.maxZoomMarker = options.maxZoomMarker || 100;
     this.features_ = [];
     this.length = 0;
 };
@@ -73,18 +69,18 @@ komoo.collections.FeatureCollection.prototype.setVisible = function (flag) {
 };
 
 komoo.collections.FeatureCollection.prototype.show = function () {
+    this.setMap(this.map_, {geometries: true});
     this.setVisible(true);
-    this.setMap(this.map_);
 };
 
 komoo.collections.FeatureCollection.prototype.hide = function () {
     this.setVisible(false);
 };
 
-komoo.collections.FeatureCollection.prototype.setMap = function (map) {
+komoo.collections.FeatureCollection.prototype.setMap = function (map, opt_force) {
     this.map_ = map;
     this.features_.forEach(function (feature, index, orig) {
-        feature.setMap(map);
+        feature.setMap(map, opt_force);
     });
     this.handleMapEvents()
 }

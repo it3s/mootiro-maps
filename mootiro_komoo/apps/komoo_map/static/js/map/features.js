@@ -209,18 +209,18 @@ komoo.features.Feature.prototype.hideMarker = function () {
 };
 
 komoo.features.Feature.prototype.setMap = function (map, opt_force) {
-    var force = opt_force ? opt_force != undefined : false;
-    if (this.getProperties().alwaysVisible) force = true;
+    var force = opt_force != undefined ? opt_force : {geometries: false, markers: false};
+    if (this.getProperties().alwaysVisible) force = {geometries: true, markers: false};
     var zoom = 0;
     if (map) zoom = map.getZoom();
-    if (map && ((zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) || force)) {
+    if (map && ((zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) || force.geometries)) {
         this.geometry_.setMap(map);
     } else {
         this.geometry_.setMap(null);
     }
     if (this.getMarker() && 
             !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) { 
-        if (map && ((zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) || force)) {
+        if (map && ((zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) || force.markers)) {
             this.getMarker().setMap(map);
         } else {
             this.getMarker().setMap(null);
