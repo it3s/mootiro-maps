@@ -25,7 +25,7 @@
       <span class="apart">created by {{ proposal.creator }} on {{ proposal.creation_date }}</span>
     </p>
 
-    <div class="mark-down">{{ proposal.description|render_markup }}</div>
+    <div class="mark-down">{{ proposal.description|render_markup|safe }}</div>
 
     <p>Cost: {{ proposal.cost }}</p>
 

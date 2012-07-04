@@ -102,7 +102,7 @@
         </div>
 
         <p class="mark-down">
-          {{ org.description|description_markdown_preview }}
+          {{ org.description|description_markdown_preview|safe }}
         </p>
 
         <div class="view-list-footer">
