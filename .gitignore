@@ -14,3 +14,4 @@ backups/
 *.kml
 *.xls
 .ropeproject/
+celerybeat-schedule
