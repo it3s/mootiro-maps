@@ -34,7 +34,7 @@
             <div class="clear-both"></div>
             {% comments_summary i %}
         </h4>
-        <p>{{ i.description|render_markup }}</p>
+        <p>{{ i.description|render_markup|safe }}</p>
     </div>
     {% empty %}
     <div class="view-list-item">
@@ -53,7 +53,7 @@
             <div class="clear-both"></div>
             {% comments_summary i %}
         </h4>
-        <p>{{ i.description|render_markup }}</p>
+        <p>{{ i.description|render_markup|safe }}</p>
     </div>
     {% empty %}
     <div class="view-list-item">

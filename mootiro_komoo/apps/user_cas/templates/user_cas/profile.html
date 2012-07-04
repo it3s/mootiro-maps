@@ -45,6 +45,16 @@
                 </div>
             {% endfor %}
 
+            <div class="horizontal-splitter"></div>
+
+            <div class="div_signature">
+                <input type="checkbox" id="id_weekly_digest" value="true" name="weekly_digest" {% if digest %}checked="checked"{% endif %} >
+                <span>{% trans 'I want to receive only weekly emails digest' %}</span>
+            </div>
+
+
+
+
             <!-- submit button -->
             <input type="submit" class="button profile-submit" value="update">
 

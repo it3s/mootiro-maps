@@ -39,7 +39,7 @@
         <div><span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}</div>
         <div>{% trans 'created by' %} <a href="#">{% firstof need.creator.get_full_name need.creator.username 'someone' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</div>
       </div>
-      <div class="mark-down">{{ need.description|render_markup }}</div>
+      <div class="mark-down">{{ need.description|render_markup|safe }}</div>
 
       <div class="view-footer">
           {% image_gallery need %}

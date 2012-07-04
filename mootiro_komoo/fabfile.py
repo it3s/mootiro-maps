@@ -58,7 +58,7 @@ def build_environment():
 
 def run_celery():
     """runs celery task queue"""
-    local('python manage.py celeryd --loglevel=info {} &'.format(django_settings[env_]))
+    local('python manage.py celeryd -B --loglevel=info {} &'.format(django_settings[env_]))
 
 
 def run():

@@ -40,7 +40,7 @@
         </div>
 
         <div class="view-body">
-            <div class="mark-down">{{ resource.description|render_markup }}</div>
+            <div class="mark-down">{{ resource.description|render_markup|safe }}</div>
         </div>
 
         <div class="view-footer">

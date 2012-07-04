@@ -15,7 +15,7 @@
     </div>
 
     <div class="comment mark-down" >
-        {{ comment.comment|render_markup }}
+        {{ comment.comment|render_markup|safe }}
     </div>
     <div class="comment-footer">
         <a class="btnShowForm" href="#">{% trans 'Reply' %}</a>

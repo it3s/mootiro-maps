@@ -46,7 +46,7 @@
         </div>
 
         <div class="view-body">
-            <div class="mark-down">{{ organization.description|render_markup }}</div>
+            <div class="mark-down">{{ organization.description|render_markup|safe }}</div>
             <div class="organization-buttons row">
                 <div class="org-btn span3 selected" panel="branches-list">
                     <i class="icon-map"></i>
@@ -116,7 +116,7 @@
                             </a>
                         </div>
                         <div class="entry">
-                            {{ branch.info|render_markup }}
+                            {{ branch.info|render_markup|safe }}
                         </div>
                         {% include 'organization/branch_communities_list.html' %}
 
@@ -235,7 +235,7 @@
 
           <h4>{% trans 'Contact' %}</h4>
             {% if organization.contact %}
-                {{ organization.contact|render_markup }}
+                {{ organization.contact|render_markup|safe }}
             {% else %}
                 {% trans 'No contact info provided' %}
             {% endif %}

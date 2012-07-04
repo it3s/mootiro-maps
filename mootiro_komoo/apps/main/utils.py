@@ -4,6 +4,7 @@ from __future__ import unicode_literals  # unicode by default
 
 import json
 import re
+from markdown import markdown
 
 from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
@@ -245,3 +246,7 @@ def clean_autocomplete_field(field_data, model):
             return model.objects.get(pk=field_data)
     except:
         raise forms.ValidationError(_('invalid field data'))
+
+
+def render_markup(text):
+    return markdown(text, safe_mode=True)

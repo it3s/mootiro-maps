@@ -20,7 +20,7 @@
     <div class="view-edit-btn right"><a href="{% url edit_community community.slug %}" class="btn login-required"><i class="icon-pencil"></i></a></div>
 
     <div class="clear-both"></div>
-    <div class="mark-down">{{ community.description|render_markup }}</div>
+    <div class="mark-down">{{ community.description|render_markup|safe }}</div>
 
     <p>
       <!-- <span class="meta-info">Type</span>NOT IMPLEMENTED<br/> -->
