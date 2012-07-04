@@ -36,7 +36,8 @@ def comments_add(request):
     form_comment = FormComment(request.POST)
     if form_comment.is_valid():
         comment = form_comment.save(user=request.user)
-        create_update.send(sender=Comment, instance=comment, type=Update.DISCUSSION)
+        create_update.send(sender=Comment, instance=comment, user=request.user,
+                type=Update.DISCUSSION)
         return {
             'success': True,
             'comment': render_to_response('comments/comment.html',
