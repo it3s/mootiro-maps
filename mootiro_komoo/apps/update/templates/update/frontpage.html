@@ -78,27 +78,13 @@
               </div>
               <div class="update-info">
                 <h3>
-                  {### Users aggregated list ###}
                   {% if u.type == "D" %}
-                    {% with shown=u.users|slice:":2" aggregated=u.users|slice:"2:" %}
-                      {% for username in shown %}
-                        {{ username }}{% if not forloop.last %},{% endif %}
-                      {% endfor %}
-
-                      {% if aggregated %}
-                        {% blocktrans count num=aggregated|length %}
-                          and {{ num }} more user
-                        {% plural %}
-                          and {{ num }} more users
-                        {% endblocktrans %}
-                      {% endif %}
-
-                      {% blocktrans count num=shown|length %}
-                        discussed
-                      {% plural %}
-                        discussed
-                      {% endblocktrans %}
-                    {% endwith %}
+                    {% usernames_list u.users %}
+                    {% blocktrans count num=shown|length %}
+                      discussed
+                    {% plural %}
+                      discussed
+                    {% endblocktrans %}
                   {% endif %}
 
                   {% if u.object_type == 'proposal' %}
@@ -130,19 +116,7 @@
                   {### Users aggregated list ###}
                   {% if u.type == "A" or u.type == "E" %}
                     {% trans "by" %}
-                    {% with shown=u.users|slice:":2" aggregated=u.users|slice:"2:" %}
-                      {% for username in shown %}
-                        {{ username }}{% if not forloop.last %},{% endif %}
-                      {% endfor %}
-
-                      {% if aggregated %}
-                        {% blocktrans count num=aggregated|length %}
-                          and {{ num }} more user
-                        {% plural %}
-                          and {{ num }} more users
-                        {% endblocktrans %}
-                      {% endif %}
-                    {% endwith %}
+                    {% usernames_list u.users %}
                   {% endif %}
                 </div>
                 <div class="update-social right">

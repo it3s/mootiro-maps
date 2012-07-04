@@ -1,0 +1,15 @@
+{% load i18n %}
+
+{% with shown=usernames|slice:":2" aggregated=usernames|slice:"2:" %}
+  {% for username in shown %}
+    {{ username }}{% if not forloop.last %},{% endif %}
+  {% endfor %}
+
+  {% if aggregated %}
+    {% blocktrans count num=aggregated|length %}
+      and {{ num }} more user
+    {% plural %}
+      and {{ num }} more users
+    {% endblocktrans %}
+  {% endif %}
+{% endwith %}
