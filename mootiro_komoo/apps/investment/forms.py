@@ -92,6 +92,7 @@ class InvestmentForm(AjaxModelForm):
         # Crispy forms configuration
         self.helper = MooHelper(form_id="investment_form")
         self.helper.layout = Layout(
+            "id",
             "title",
             "description",
             "investor_type",

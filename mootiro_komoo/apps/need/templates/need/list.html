@@ -55,7 +55,7 @@
         <p>
           <span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}
         </p>
-        <p>{{ need.description|render_markup }}</p>
+        <p>{{ need.description|render_markup|safe }}</p>
 
         <div class="view-list-footer">
           {% if need.tags.count %}

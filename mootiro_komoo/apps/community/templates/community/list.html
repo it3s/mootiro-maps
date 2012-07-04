@@ -36,7 +36,7 @@
         <p class="clearBoth">
           {% trans 'population:' %} {% firstof community.population '-' %}
         </p>
-        <p class="mark-down">{{ community.description|render_markup }}</p>
+        <p class="mark-down">{{ community.description|render_markup|safe }}</p>
 
         <div class="view-list-footer">
           {% if community.tags.count %}
