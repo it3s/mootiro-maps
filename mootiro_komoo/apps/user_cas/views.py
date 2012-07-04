@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from annoying.decorators import render_to, ajax_request
 
-from signatures.models import Signature
+from signatures.models import Signature, WeeklySignature
 from django_cas.views import _logout_url as cas_logout_url
 
 
@@ -64,7 +64,9 @@ def test_login(request):
 def profile(request):
     logger.debug('accessing user_cas > profile')
     signatures = Signature.objects.filter(user=request.user)
-    return {'signatures': signatures}
+    digest = True if WeeklySignature.objects.filter(user=request.user).count() \
+                  else False
+    return dict(signatures=signatures, digest=digest)
 
 
 @login_required
@@ -76,6 +78,7 @@ def profile_update(request):
     user = request.user
     username = request.POST.get('username', '')
     signatures = request.POST.getlist('signatures')
+    digest = request.POST.get('weekly_digest', '')
 
     success = True
     errors = {}
@@ -98,6 +101,15 @@ def profile_update(request):
         for signature in Signature.objects.filter(user=request.user):
             if not signature.id in signatures:
                 signature.delete()
+
+        # update digest
+        user_has_digest = WeeklySignature.objects.filter(user=request.user).count()
+
+        if digest and not user_has_digest:
+            WeeklySignature.objects.create(user=request.user)
+        elif not digest and user_has_digest:
+            WeeklySignature.objects.get(user=request.user).delete()
+
         return {'success': 'true', 'redirect': reverse('user_profile')}
 
     return {'success': 'false', 'errors': errors}
