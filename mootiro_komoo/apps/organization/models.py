@@ -24,8 +24,11 @@ class Organization(VotableModel):
     description = models.TextField(null=True, blank=True)
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 
+    # Meta info
+    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_organizations')
     creation_date = models.DateTimeField(auto_now_add=True)
-    creator = models.ForeignKey(User, null=True, blank=True)
+    last_updater = models.ForeignKey(User, editable=False, null=True, blank=True)
+    last_update = models.DateTimeField(auto_now=True)
 
     community = models.ManyToManyField(Community, null=True, blank=True)
 

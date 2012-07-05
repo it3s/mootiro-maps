@@ -21,10 +21,11 @@ class Community(GeoRefModel, VotableModel):
     description = models.TextField(null=True, blank=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
-                        related_name='created_communities')
+    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_communities')
     creation_date = models.DateTimeField(auto_now_add=True)
+    last_updater = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
+
     tags = TaggableManager()
 
     def __unicode__(self):
