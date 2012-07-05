@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 from django.core.mail import send_mail
 from celery.task import task
+from celery.task.schedules import crontab
+from celery.decorators import periodic_task
+from signatures.models import Digest
 
 
 @task
@@ -27,9 +30,18 @@ a equipe IT3S.
         )
 
 
-# from celery.task.schedules import crontab
-# from celery.decorators import periodic_task
+@periodic_task(run_every=crontab(minute="*/15"))
+def weekly_mail_digest():
+    for signature in Digest.objects.filter(digest_type='W'):
+        send_notification_mail(signature.content_object, signature.user)
+        # montar digest
+        signature.delete()
 
-# @periodic_task(run_every=crontab(hour=7, minute=30, day_of_week=1))
-# def every_monday_morning():
-#     print("Execute every Monday at 7:30AM.")
+
+@periodic_task(run_every=crontab(minute="*/5"))
+def daily_mail_digest():
+    for signature in Digest.objects.filter(digest_type='D'):
+        # montar digest
+        send_notification_mail(signature.content_object, signature.user)
+        signature.delete()
+

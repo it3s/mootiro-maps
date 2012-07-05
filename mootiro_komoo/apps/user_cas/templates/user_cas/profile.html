@@ -45,6 +45,28 @@
                 </div>
             {% endfor %}
 
+            <div class="horizontal-splitter"></div>
+
+            <div class="div_signature">
+                <div>
+                    <input type="radio" value="" name="digest_type" {% if not digest %}checked="checked"{% endif %} >
+                    <span>{% trans 'I dont want to receive digest mails' %}</span>
+                </div>
+                <div>
+                    <input type="radio" value="W" name="digest_type" {% if digest == 'W' %}checked="checked"{% endif %} >
+                    <span>{% trans 'I want to receive only weekly emails digest' %}</span>
+                </div>
+                <div>
+                    <input type="radio" value="D" name="digest_type" {% if digest == 'D' %}checked="checked"{% endif %} >
+                    <span>{% trans 'I want to receive only daily emails digest' %}</span>
+                </div>
+
+
+            </div>
+
+
+
+
             <!-- submit button -->
             <input type="submit" class="button profile-submit" value="update">
 

@@ -96,6 +96,23 @@ div.apart {
 .mark-down ul ul ul { list-style-type: square }
 .mark-down ol { list-style: decimal inside none }
 
+/* Tooltip styles */
+.tooltip.top .tooltip-arrow { border-top-color: #fff }
+.tooltip.bottom .tooltip-arrow { border-bottom-color: #fff }
+.tooltip.left .tooltip-arrow { border-left-color: #fff }
+.tooltip.right .tooltip-arrow { border-right-color: #fff }
+.tooltip.bottom .tooltip-arrow { border-bottom-color: #fff }
+.tooltip-inner {
+    max-width: 300px;
+    font-size: 14px;
+    box-shadow: 1px 1px 3px 1px rgba(0, 0, 0, 0.75);
+    background-color: #fff;
+    color: #333;
+    margin-left: -100px;
+}
+.more { cursor: pointer }
+
+
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
 ul.geo-objects-listing li {

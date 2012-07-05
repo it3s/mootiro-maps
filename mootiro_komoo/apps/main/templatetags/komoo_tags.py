@@ -124,6 +124,11 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
     return dict(img=img, STATIC_URL=settings.STATIC_URL)
 
 
+@register.inclusion_tag('main/templatetags/history.html')
+def history(obj):
+    return dict(obj=obj)
+
+
 @register.inclusion_tag('main/templatetags/track_buttons.html', takes_context=True)
 def track_buttons(context, obj=None):
     is_signed = ''
@@ -217,6 +222,12 @@ def description_markdown_preview(desc):
 @register.inclusion_tag('main/templatetags/usernames_list.html')
 def usernames_list(usernames):
     return dict(usernames=usernames)
+
+
+@register.inclusion_tag('main/templatetags/communities_list.html')
+def communities_list(communities):
+    return dict(communities=communities)
+
 
 
 def _get_widgets_dict(obj):

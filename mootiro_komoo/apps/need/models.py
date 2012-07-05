@@ -70,9 +70,9 @@ class Need(GeoRefModel, VotableModel):
     description = models.TextField()
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
-                related_name='created_needs')
+    creator = models.ForeignKey(User, editable=False, related_name='created_needs')
     creation_date = models.DateTimeField(auto_now_add=True)
+    last_updater = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationships

@@ -98,17 +98,7 @@
                   <a href="#"><i class="icon-see-on-map"></i></a>
                 </div>
                 <div class="clear-both"></div>
-                {% for c in u.communities|slice:'2' %}
-                <a href="{% url view_community c.slug %}" class="update-community">
-                  <i class="icon-community-white"></i> {{ c.name }}
-                </a>
-                {% endfor %}
-                {% if u.communities|length == 3 %}
-                   e uma outra
-                {% endif %}
-                {% if u.communities|length > 3 %}
-                   e {{ u.communities|length|add:'-2' }} outras
-                {% endif %}
+                {% communities_list u.communities %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
                   {{ u.readable_type|capfirst }} {{ u.date|naturaltime }}

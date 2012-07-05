@@ -45,8 +45,9 @@
   {"pk": 43, "model": "contenttypes.contenttype", "fields": {"model": "taskstate", "name": "task", "app_label": "djcelery"}},
 
   {"pk": 44, "model": "contenttypes.contenttype", "fields": {"model": "signature", "name": "signature", "app_label": "signatures"}},
-  {"pk": 45, "model": "contenttypes.contenttype", "fields": {"model": "mailmessage", "name": "mail message", "app_label": "signatures"}},
 
-  {"pk": 46, "model": "contenttypes.contenttype", "fields": {"model": "update", "name": "update", "app_label": "komoo_update"}}
+  {"pk": 46, "model": "contenttypes.contenttype", "fields": {"model": "update", "name": "update", "app_label": "komoo_update"}},
 
+  {"pk": 47, "model": "contenttypes.contenttype", "fields": {"model": "digestsignature", "name": "digest signature", "app_label": "signatures"}},
+  {"pk": 48, "model": "contenttypes.contenttype", "fields": {"model": "digest", "name": "digest", "app_label": "signatures"}}
 ]
