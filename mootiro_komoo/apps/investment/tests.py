@@ -43,15 +43,15 @@ class InvestmentViewsTestCase(KomooTestCase):
          'organizations.json', 'resources.json', 'investments.json']
 
     # ####### CREATION #######
-    # def test_new_resource_page(self):
-    #     self.login_user()
-    #     self.assert_200(reverse('new_investment'))
-    #     self.assert_200(reverse('new_investment'), ajax=True)
-    #     self.assert_200(reverse('new_investment', args=('sao-remo',)))
-    #     self.assert_200(reverse('new_investment', args=('sao-remo',)), ajax=True)
+    def test_new_resource_page(self):
+        self.login_user()
+        self.assert_200(reverse('new_investment'))
+        self.assert_200(reverse('new_investment'), ajax=True)
+        self.assert_200(reverse('new_investment', args=('sao-remo',)))
+        self.assert_200(reverse('new_investment', args=('sao-remo',)), ajax=True)
 
-    #     self.assert_404(reverse('new_investment', args=('invalid',)))
-    #     self.assert_404(reverse('new_investment', args=('invalid',)), ajax=True)
+        self.assert_404(reverse('new_investment', args=('invalid',)))
+        self.assert_404(reverse('new_investment', args=('invalid',)), ajax=True)
 
     # def test_new_resource_creation(self):
     #     self.login_user()
@@ -116,11 +116,11 @@ class InvestmentViewsTestCase(KomooTestCase):
 
     # ####### LISTING #######
     # @logged_and_unlogged
-    # def test_resource_list_page_is_up(self):
-    #     url = reverse('resource_list')
-    #     self.assert_200(url)
-    #     url = reverse('resource_list', args=('sao-remo',))
-    #     self.assert_200(url)
+    def test_investment_list_page_is_up(self):
+        url = reverse('investment_list')
+        self.assert_200(url)
+        url = reverse('investment_list', args=('sao-remo',))
+        self.assert_200(url)
 
     # ####### SEARCHES #######
     # @logged_and_unlogged

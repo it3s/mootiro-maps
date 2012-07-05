@@ -16,14 +16,12 @@ def logged_and_unlogged(test_method):
             self.login_user()
             test_method(self)
         except Exception as err:
-            print err
-            print "Logged run FAILED!"
+            raise RuntimeError("Logged run failed\n" + err.message)
         try:
             self.client.logout()
             test_method(self)
         except Exception as err:
-            print err
-            print "Unlogged run FAILED!"
+            raise RuntimeError("Unlogged run failed\n" + err.message)
     return test_wrapper
 
 

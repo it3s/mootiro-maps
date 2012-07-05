@@ -50,7 +50,7 @@ class Investor(models.Model):
         elif self.content_object:
             return unicode(self.content_object)
         else:
-            return self._name
+            return unicode(self._name)
 
     @name.setter
     def name(self, value):

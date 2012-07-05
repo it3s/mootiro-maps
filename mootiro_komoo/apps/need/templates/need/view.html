@@ -27,7 +27,6 @@
         {% endfor %}
       </ul>
 
-
       <div class="view-edit-btn">
         {% history need %}
         <a href="{% if community %}{% url edit_need community.slug need.slug %}{% else %}{% url edit_need need.slug %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a>
