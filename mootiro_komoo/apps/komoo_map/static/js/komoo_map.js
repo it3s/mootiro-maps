@@ -627,14 +627,27 @@ komoo.Map.prototype.openTooltip = function (overlay, latLng, optContent) {
     if (overlay == this.infoWindow.feature || this.infoWindow.isMouseover) {
         return;
     }
-    if (overlay) {
-        this.tooltip.title.text(optContent || overlay.getProperties().name);
-        this.tooltip.overlay = overlay;
+    var that = this;
+    var getContent = function (feature) {
+        if (feature.getProperties().type == "OrganizationBranch") {
+            return feature.getProperties().organization_name + " - " + feature.getProperties().name;
+        } else {
+            return feature.getProperties().name;
+        }
     }
-    if (overlay.getProperties().type == "OrganizationBranch") {
-        this.tooltip.title.text(overlay.getProperties().organization_name + " - " + overlay.getProperties().name);
+    this.tooltip.overlay = overlay;
+    if (optContent) {
+        this.tooltip.title.text(optContent);
+    } else if (overlay instanceof Cluster) {
+        var limit = 10;
+        var content = '<h4>' + overlay.getSize() + ' ' + gettext('Communities') + '</h4><br>'; // TODO: use plural
+        overlay.getMarkers().slice(0, limit).forEach(function (marker, index, orig) {
+            content += getContent(marker.feature) + '<br>';
+        });
+        if (overlay.getSize() > limit) content += '<br>...';
+        this.tooltip.title.html(content);
     } else {
-        this.tooltip.title.text(overlay.getProperties().name);
+        this.tooltip.title.text(getContent(overlay));
     }
     var point = komoo.utils.latLngToPoint(this, latLng);
     point.x += 5;
@@ -702,6 +715,34 @@ komoo.Map.prototype.initMarkerClusterer = function () {
             imagePath: "/static/img/cluster/communities",
             imageSizes: [24, 29, 35, 41, 47]
         });
+        // TODO: DRY
+        google.maps.event.addListener(this.clusterer, "mouseover", function (c) {
+            if (komooMap.tooltip.overlay == c || komooMap.addPanel.is(":visible") ||
+                    !komooMap.options.enableInfoWindow) {
+                return;
+            }
+            clearTimeout(komooMap.tooltip.timer);
+            delay = 400;
+            komooMap.tooltip.timer = setTimeout(function () {
+                if (komooMap.tooltip.isMouseover || komooMap.addPanel.is(":visible") || komooMap.mode == komoo.Mode.SELECT_CENTER) {
+                    return;
+                }
+                komooMap.openTooltip(c, c.getCenter());
+            }, delay);
+        });
+
+        google.maps.event.addListener(this.clusterer, "mouseout", function (c) {
+            var delay = 0;
+            clearTimeout(komooMap.tooltip.timer);
+            //if (!komooMap.tooltip.isMouseover) {
+                //komooMap.tooltip.timer = setTimeout(function () {
+                    //if (!komooMap.tooltip.isMouseover) {
+                        komooMap.closeTooltip();
+                    //}
+                //}, delay);
+            //}
+        });
+        // TODO: /DRY
     }
 };
 

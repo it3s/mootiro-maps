@@ -67,6 +67,7 @@ komoo.features.Feature.prototype.getGeometryType = function () {
 
 komoo.features.Feature.prototype.setMarker = function (marker) {
     this.marker_ = marker;
+    this.marker_.getObject().feature = this;
     this.initEvents(marker);
 };
 
