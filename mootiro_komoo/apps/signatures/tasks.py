@@ -4,14 +4,16 @@ from django.core.mail import send_mail
 from celery.task import task
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
-from signatures.models import Digest
+from signatures.models import Digest, DigestSignature
 
 
 @task
-def send_notification_mail(obj=None, user=None):
+def send_notification_mail(obj=None, user=None, mail_message=''):
+    print 'sending mail: ', obj, user, mail_message
     if obj and user:
         mail_title = "Update do Mootiro Maps"
-        mail_message = """
+        if not mail_message:
+            mail_message = """
 Olá {},
 
 O objeto "{}" que você está seguindo foi atualizado.
@@ -31,18 +33,24 @@ a equipe IT3S.
         )
 
 
-@periodic_task(run_every=crontab(minute="*/15"))
-def weekly_mail_digest():
-    for signature in Digest.objects.filter(digest_type='W'):
-        send_notification_mail(signature.content_object, signature.user)
-        # montar digest
-        signature.delete()
+# @periodic_task(run_every=crontab(minute="*/2"))
+# def weekly_mail_digest():
+#     for signature in DigestSignature.objects.filter(digest_type='W'):
+#         msg = ''
+#         for content in Digest.objects.filter(digest_type='W', user=signature.user):
+#             msg += "\nAtualização em {} : {}".format(
+#                 content.content_object.__class__.__name__,
+#                 'http://maps.mootiro.org' + getattr(content.content_object, 'view_url', '/')
+#             )
+#             content.delete()
+
+#         send_notification_mail('dummy_obj', signature.user, msg)
 
 
-@periodic_task(run_every=crontab(minute="*/5"))
-def daily_mail_digest():
-    for signature in Digest.objects.filter(digest_type='D'):
-        # montar digest
-        send_notification_mail(signature.content_object, signature.user)
-        signature.delete()
+# @periodic_task(run_every=crontab(minute="*/2"))
+# def daily_mail_digest():
+#     for signature in Digest.objects.filter(digest_type='D'):
+#         # montar digest
+#         send_notification_mail(signature.content_object, signature.user)
+#         signature.delete()
 
