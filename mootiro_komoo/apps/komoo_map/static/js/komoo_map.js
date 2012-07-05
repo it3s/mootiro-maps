@@ -1230,10 +1230,10 @@ komoo.Map.prototype.deleteNode = function (e) {
     var selectedIndex = -1;
     var pathIndex = -1;
     var paths;
-    if (poly.getPaths) {
-        paths = poly.getPaths();
-    } else if (poly.getPath) {
-        paths = new google.maps.MVCArray([poly.getPath()]);
+    if (poly.getGeometry().getPaths) {
+        paths = poly.getGeometry().getPaths();
+    } else if (poly.getGeometry().getPath) {
+        paths = new google.maps.MVCArray([poly.getGeometry().getPath()]);
     } else {
         return false;
     }
@@ -1483,7 +1483,7 @@ komoo.Map.prototype._attachOverlayEvents = function (overlay) {
 
     google.maps.event.addListener(overlay, "rightclick", function (e) {
         var overlay_ = this;
-        if (overlay_.properties && overlay_.properties.userCanEdit &&
+        if (overlay_.getProperties() && overlay_.getProperties().userCanEdit &&
                 overlay_ == komooMap.currentOverlay) {
             if (!komooMap.overlayView) {
                 google.maps.event.trigger(komooMap.googleMap, "projection_changed");

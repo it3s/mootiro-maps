@@ -61,6 +61,7 @@ class Resource(GeoRefModel, VotableModel):
         border_color = '#1D9104'
         geometries = (POLYGON, LINESTRING, POINT)
         form_view_name = 'new_resource_from_map'
+        zindex = 15
 
     def __unicode__(self):
         return unicode(self.name)
