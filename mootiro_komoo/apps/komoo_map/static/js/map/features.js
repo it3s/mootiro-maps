@@ -118,7 +118,7 @@ komoo.features.Feature.prototype.getIconUrl = function (optZoom) {
     if (!this.getProperties()) return;
     var zoom = optZoom || 10;
     var url = '/static/img/';
-    if (zoom >= 15) {
+    if (zoom >= this.minZoomMarker) {
         url += 'near';
     } else {
         url += 'far';
@@ -128,7 +128,8 @@ komoo.features.Feature.prototype.getIconUrl = function (optZoom) {
         url += 'highlighted/';
     }
 
-    if (this.getProperties().categories && this.getProperties().categories[0]) {
+    if (this.getProperties().categories && this.getProperties().categories[0] &&
+            zoom >= this.minZoomMarker)  {
         url += this.getProperties().categories[0].name.toLowerCase();
         if (this.getProperties().categories.length > 1) {
             url += '-plus';
@@ -263,6 +264,10 @@ komoo.features.Feature.prototype.setOptions = function (options) {
 };
 
 komoo.features.Feature.prototype.setIcon = function (icon) {
+    if (this.getMarker() && 
+            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) {
+        this.getMarker().setIcon(icon);
+    }
     return this.geometry_.setIcon(icon);
 };
 
