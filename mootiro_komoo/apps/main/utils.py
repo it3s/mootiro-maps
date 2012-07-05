@@ -249,4 +249,4 @@ def clean_autocomplete_field(field_data, model):
 
 
 def render_markup(text):
-    return markdown(text, safe_mode=True)
+    return markdown(text, safe_mode=True) if text else ''
