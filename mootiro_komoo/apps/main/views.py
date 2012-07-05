@@ -22,6 +22,7 @@ from community.models import Community
 from need.models import Need
 from komoo_resource.models import Resource
 from organization.models import OrganizationBranch, Organization
+from komoo_map.models import GeoRefModel
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
@@ -34,14 +35,15 @@ def root(request):
 
 
 def _fetch_geo_objects(Q, zoom):
-    communities = Community.objects.filter(Q)
-    # Fetch anything else communities only if zoom is greater than min zoom
-    min_zoom = 13
-    needs = Need.objects.filter(Q) if zoom >= min_zoom else []
-    resources = Resource.objects.filter(Q) if zoom >= min_zoom else []
-    organization_branches = OrganizationBranch.objects.filter(Q) if zoom >= min_zoom else []
-    return dict(communities=communities, needs=needs, resources=resources,
-                organizations=organization_branches)
+    ret = {}
+    for model in [Community, Need, Resource, OrganizationBranch]:
+        #min_ =  min(model.get_map_attr('min_zoom_geometry'),
+        #            model.get_map_attr('min_zoom_marker'))
+        #max_ = max(model.get_map_attr('max_zoom_geometry'),
+        #           model.get_map_attr('max_zoom_marker'))
+        #ret[model.__name__] = model.objects.filter(Q) if (zoom >= min_ and zoom <= max_) else []
+        ret[model.__name__] = model.objects.filter(Q)
+    return ret
 
 
 #@cache_page(54000)
@@ -66,6 +68,7 @@ def get_geojson(request):
 
 @render_to("main/filter_results.html")
 def radial_search(request):
+    print request.GET
     center = Point(*[float(i) for i in request.GET['center'].split(',')])
     radius = Distance(m=float(request.GET['radius']))
 
@@ -73,20 +76,21 @@ def radial_search(request):
                       Q(lines__distance_lte=(center, radius)) |
                       Q(polys__distance_lte=(center, radius)))
 
-    objs = _fetch_geo_objects(distance_query, 13)
+    objs = _fetch_geo_objects(distance_query, 100)
+    print objs
     d = {}
     if 'communities' in request.GET:
-        d['communities'] = objs['communities']
+        d['Community'] = objs['Community']
     if 'needs' in request.GET:
         need_categories = request.GET['need_categories'].split(',')
-        d['needs'] = []
-        for n in objs['needs']:
+        d['Need'] = []
+        for n in objs['Need']:
             if [c for c in n.categories.all() if str(c.id) in need_categories]:
-                d['needs'].append(n)
+                d['Need'].append(n)
     if 'organizations' in request.GET:
-        d['organizations'] = objs['organizations']
+        d['OrganizationBranch'] = objs['OrganizationBranch']
     if 'resources' in request.GET:
-        d['resources'] = objs['resources']
+        d['Resource'] = objs['Resource']
 
     return d
 

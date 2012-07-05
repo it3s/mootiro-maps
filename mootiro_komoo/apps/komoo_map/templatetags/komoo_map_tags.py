@@ -1,6 +1,9 @@
 #coding: utf-8
+import json
 from django import template
 from django.conf import settings
+
+from komoo_map.models import get_models_json
 register = template.Library()
 
 
@@ -39,6 +42,13 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
     edit_button = parsed_args.get('edit_button', 'False').lower() != 'false'
 
     editable = type in ('main', 'editor')
+    if geojson:
+        geojson_dict = json.loads(geojson);
+        for feature in geojson_dict.get('features', []):
+            if 'properties' in feature:
+                feature['properties']['alwaysVisible'] = True
+        geojson = json.dumps(geojson_dict)
+
 
     if not width.endswith('%') and not width.endswith('px'):
         width = width + 'px'
@@ -50,5 +60,5 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
 
     return dict(type=type, width=width, height=height, zoom=zoom,
             panel=panel, lazy=lazy, geojson=geojson, edit_button=edit_button,
-            ajax=ajax, editable=editable,
+            ajax=ajax, editable=editable, feature_types_json=get_models_json(),
             STATIC_URL=settings.STATIC_URL, LANGUAGE_CODE=settings.LANGUAGE_CODE)

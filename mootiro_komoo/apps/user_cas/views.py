@@ -113,7 +113,7 @@ def profile_update(request):
             d.digest_type = digest_type
             d.save()
         elif user_digest.count() and not digest_type:
-            DigestSignature.objects.get(user=request.user)
+            DigestSignature.objects.get(user=request.user).delete()
 
         return {'success': 'true', 'redirect': reverse('user_profile')}
 

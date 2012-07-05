@@ -1,0 +1,186 @@
+<html>
+  <head>
+    <style>
+      #map-canvas {
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+    <script src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing&language=pt-br"></script>
+    <script src="/static/lib/jquery-1.7.1.min.js"></script>
+    <script type="text/javascript" src="/jsi18n/"></script>
+    <script type="text/javascript" src="/static/lib/django-js-utils/dutils.js"></script>
+    <script type="text/javascript" src="/static/lib/django-js-utils/dutils.conf.urls.js"></script>
+    <script type="text/javascript" src="/static/js/map/utils.js"></script>
+    <script type="text/javascript" src="/static/js/vendor/infobox_packed.js"></script>
+    <script type="text/javascript" src="/static/js/map/multimarker.js"></script>
+    <script type="text/javascript" src="/static/js/map/multipolyline.js"></script>
+    <script type="text/javascript" src="/static/js/komoo_map.js"></script>
+    <script type="text/javascript" src="/static/js/map/geometries.js"></script>
+    <script type="text/javascript" src="/static/js/map/features.js"></script>
+    <script type="text/javascript" src="/static/js/map/collections.js"></script>
+    <script type="text/javascript" src="/static/js/map/controls.js"></script>
+    <script type="text/javascript" src="/static/js/komoo_utils.js"></script>
+    <link rel="stylesheet" href="/static/lib/qunit/qunit.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/static/lib/qunit/qunit.js"></script>
+
+    <script type="text/javascript">
+      var isAuthenticated = true;
+      var simpleGeoJson = {
+        'type': 'FeatureCollection',
+        'features': [
+          {
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Polygon',
+              'coordinates': [[[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]]
+            },
+            'properties': {
+              'type': 'Community'
+            }
+          }
+        ]
+      };
+      var completeGeoJson = {
+        'type': 'FeatureCollection',
+        'features': [
+          {
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Polygon',
+              'coordinates': [[[0, 0], [0, 1], [1, 1], [1, 2], [0, 0]]]
+            },
+            'properties': {
+              'type': 'Community'
+            }
+          },
+          {
+            'type': 'Feature',
+            'geometry': {
+              'type': 'MultiLineString',
+              'coordinates': [[[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]]]
+            },
+            'properties': {
+              'type': 'Need'
+            }
+          },
+          {
+            'type': 'Feature',
+            'geometry': {
+              'type': 'MultiPoint',
+              'coordinates': [[1, 2]]
+            },
+            'properties': {
+              'type': 'Resource'
+            }
+          }
+        ]
+      };
+      var map;
+      $(document).ready(function () {
+        var mapOptions = {
+          editable: true,
+          featureTypes: [
+            {type: 'Community', categories: [], title: '', tooltip: '',
+            overlayTypes: []},
+            {type: 'Need', categories: [], title: '', tooltip: '',
+            overlayTypes: []},
+            {type: 'Resource', categories: [], title: '', tooltip: '',
+            overlayTypes: []},
+            {type: 'OrganizationBranch', categories: [], title: '', tooltip:
+            '', overlayTypes: []},
+          ],
+          fetchGeometries: false,
+          autoSaveMapType: true,
+          autoSaveLocation: false,
+          googleMapOptions: {
+            zoom: 13,
+            maxZoom: null,
+            disableDefaultUI: false,
+            streetViewControl: false,
+            scaleControl: true,
+            panControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            zoomControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            scaleControlOptions: {
+              position: google.maps.ControlPosition.RIGHT_BOTTOM,
+              style: google.maps.ScaleControlStyle.DEFAULT
+            },
+            mapTypeControlOptions: {
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP,
+                             komoo.CLEAN_MAPTYPE_ID,
+                             google.maps.MapTypeId.HYBRID]
+            },
+            mapTypeId: komoo.CLEAN_MAPTYPE_ID,
+          }
+        };
+
+
+        setUp = function () {
+          map = new komoo.Map($('#map-canvas').get(0), mapOptions);
+        };
+
+        test('Basic requirements', function () {
+          expect(8);
+          ok(Function.call, 'Function.call()');
+          ok(Object.create, 'Object.create()');
+          ok($, 'JQuery');
+          ok(gettext, 'gettext');
+          ok(google.maps, 'Google maps API');
+          ok(komoo.Map, 'Komoo Maps');
+          ok(komoo.geometries, 'Komoo Geometries');
+          ok(InfoBox, 'InfoBox');
+        });
+
+        test('Loading GeoJSON', function () {
+          setUp();
+          var features = map.loadGeoJSON(simpleGeoJson);
+          equal(features.length, 1, 'Wrong collection size');
+          equal(features.getAt(0).getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
+          equal(features.getAt(0).getGeometry().getPath().getLength(), 4, 'Wrong path size');
+          equal(map.overlays.length, 1, 'Added wrong geometries to map');
+          var moreFeatures = map.loadGeoJSON(completeGeoJson);
+          equal(moreFeatures.length, 3, 'Wrong collection size');
+          equal(moreFeatures.getAt(0).getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
+          equal(moreFeatures.getAt(0).getGeometry().getPath().getLength(), 4, 'Wrong path size');
+          equal(moreFeatures.getAt(1).getGeometry().getPath().getLength(), 5, 'Wrong path size');
+          equal(moreFeatures.getAt(2).getGeometry().getPositions()[0].lat(), 1, 'Wrong latitude');
+          equal(moreFeatures.getAt(2).getGeometry().getPositions()[0].lng(), 2, 'Wrong longitude');
+          equal(map.overlays.length, 3, 'Added wrong geometries to map');
+        });
+
+        test('Get GeoJSON', function () {
+          setUp();
+          var geometries = map.loadGeoJSON(completeGeoJson);
+          var geoJson = map.getGeoJSON();
+          deepEqual(geoJson, completeGeoJson);
+          var geoJson = map.getGeoJSON({geometryCollection: true});
+          var geometryGeoJson = {
+            'type': 'GeometryCollection',
+            'geometries': [
+              completeGeoJson.features[0].geometry,
+              completeGeoJson.features[1].geometry,
+              completeGeoJson.features[2].geometry,
+            ]
+          };
+          deepEqual(geoJson, geometryGeoJson);
+        });
+
+      });
+    </script>
+
+  </head>
+  <body>
+    <h1 id="qunit-header">komoo.Geometries</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <div id="qunit-fixture">
+      <div id="map-canvas"></div>
+    </div>
+  </body>
+</html>

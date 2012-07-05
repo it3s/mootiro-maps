@@ -8,9 +8,16 @@
       document.write("<s" + "cript type=\"text/javascript\" src=\"http://www.google.com/jsapi\"" + "><" + "/script>");
     }
     if (!window.komoo) {
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/infobox_packed.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/markerclusterer_packed.js\" defer=\"defer\"" + "><" + "/script>");
-      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/multimarker.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/compat.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/utils.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/vendor/infobox_packed.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/vendor/markerclusterer_packed.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/multimarker.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/multipolyline.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/geometries.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/features.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/collections.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/controls.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
     }
   </script>
@@ -55,6 +62,7 @@
 
   {% if type != 'disabled' %}
       var geojson = {{ geojson|safe }};
+      var featureTypesJson = {{ feature_types_json|safe }};
       //var geojson = JSON.parse(geojson_);
 
       // Dont display the preview map if the geometry is empty.
@@ -64,6 +72,7 @@
         {% if type != 'preview' %}
         var mapOptions = {
           editable: true,
+          featureTypes: featureTypesJson,
           {% if type == 'editor' and not panel %}
           fetchOverlays: false,
           {% else %}
@@ -81,7 +90,7 @@
             zoom: {{ zoom }},
             maxZoom: null,
             disableDefaultUI: false,
-            streetViewControl: false,
+            streetViewControl: true,
             scaleControl: true,
             panControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},
             zoomControlOptions: {position: google.maps.ControlPosition.RIGHT_TOP},
@@ -98,6 +107,7 @@
         {% else %}
         var mapOptions = {
           editable: false,
+          featureTypes: featureTypesJson,
           enableInfoWindow: false,
           fetchOverlays: false,
           googleMapOptions: {
@@ -161,9 +171,9 @@
           var geojson = {{ type }}.getGeoJSON({newOnly: true, geometryCollection: true});
           if (geojson.geometries.length > 0) {
             if (window.community_slug) {
-              var url = overlayType.formUrl.replace('community_slug', community_slug);
+              var url = overlayType.formUrl.replace('communitySlug', community_slug);
             } else {
-              var url = overlayType.formUrl.replace('/community_slug', '');
+              var url = overlayType.formUrl.replace('/communitySlug', '');
             }
             var context = $('#dinamic-form');
 
@@ -251,8 +261,9 @@
           editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
           editor.googleMap.setZoom(editor.googleMap.getZoom()-1)
           google.maps.event.trigger(editor.googleMap, 'resize');
-          editor.editOverlay(editor.overlays[0]);
-          setTimeout(function () { editor.setCurrentOverlay(editor.overlays[0]); }, 100);
+          editor.editOverlay(editor.overlays.getAt(0));
+          setTimeout(function () {
+                  editor.setCurrentOverlay(editor.overlays.getAt(0)); }, 100);
       });
       {% endif %}
       if (window.{{ type }}) {
@@ -283,7 +294,7 @@
           }
           {{ type }}.googleMap.setZoom({{ type }}.googleMap.getZoom()+1);
           {{ type }}.googleMap.setZoom({{ type }}.googleMap.getZoom()-1);
-          {{ type }}.centerOverlay({{ type }}.overlays[0]);
+          {{ type }}.centerOverlay({{ type }}.overlays.getAt(0));
           google.maps.event.trigger({{ type }}.googleMap, 'resize');
           return false;
         });
