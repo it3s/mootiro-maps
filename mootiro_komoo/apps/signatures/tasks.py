@@ -15,11 +15,12 @@ def send_notification_mail(obj=None, user=None):
 Olá {},
 
 O objeto "{}" que você está seguindo foi atualizado.
-Visite: http://maps.mootiro.org/ para ver mais detalhes.
+Visite: {} para ver mais detalhes.
 atenciosamente,
 
 a equipe IT3S.
-""".format(user.get_full_name() or user.username, unicode(obj))
+""".format(user.get_full_name() or user.username, unicode(obj),
+           'http://maps.mootiro.org' + getattr(obj, 'view_url', '/'))
 
         send_mail(
             mail_title,
