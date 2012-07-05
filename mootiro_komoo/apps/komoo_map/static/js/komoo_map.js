@@ -1036,21 +1036,12 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
             } else {
                 overlaysByType["uncategorized"].push(overlay);
             }
-            if (!overlay.getMarker()) {
-                overlay.setMarker(new komoo.geometries.Point({
-                        visible: true,
-                        clickable: true
-                }));
-                if (overlay.getMarker()) {
-                    overlay.getMarker().setMap(komooMap.googleMap)
-                    overlay.getMarker().setPosition(overlay.getCenter());
-                    overlay.getMarker().setIcon(overlay.getIconUrl(komooMap.googleMap.getZoom()));
-                    google.maps.event.addListener(overlay.getMarker(), "click", function () {
-                        komooMap.googleMap.fitBounds(overlay.getBounds());
-                    });
-                    if (overlay.getProperties().type == "Community") {
-                        komooMap.clusterMarkers.push(overlay.getMarker().getObject());
-                    }
+            if (overlay.getMarker()) {
+                google.maps.event.addListener(overlay.getMarker(), "click", function () {
+                    komooMap.googleMap.fitBounds(overlay.getBounds());
+                });
+                if (overlay.getProperties().type == "Community") {
+                    komooMap.clusterMarkers.push(overlay.getMarker().getObject());
                 }
             }
             overlay.updateIcon();

@@ -18,6 +18,12 @@ komoo.features.makeFeature = function (feature) {
         feature_.setProperties(feature.properties);
         var geometry = komoo.geometries.makeGeometry(feature);
         feature_.setGeometry(geometry);
+        var marker = new komoo.geometries.Point({
+            visible: true,
+             clickable: true
+        });
+        feature_.setMarker(marker);
+        marker.setPosition(feature_.getCenter());
     }
 
     return feature_;
@@ -60,9 +66,6 @@ komoo.features.Feature.prototype.getGeometryType = function () {
 };
 
 komoo.features.Feature.prototype.setMarker = function (marker) {
-    if (!this.getGeometry() || 
-            this.getGeometry() instanceof komoo.geometries.MultiPoint) 
-        return;
     this.marker_ = marker;
     this.initEvents(marker);
 };
@@ -198,18 +201,16 @@ komoo.features.Feature.prototype.hideGeometry = function () {
 };
 
 komoo.features.Feature.prototype.showMarker = function () {
-    if (this.getMarker() && 
-            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) 
-        this.getMarker().setMap(this.map_);
+    if (this.marker_) this.getMarker().setMap(this.map_);
 };
 
 komoo.features.Feature.prototype.hideMarker = function () {
-    if (this.getMarker() && 
-            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) 
-        this.getMarker().setMap(null);
+    if (this.marker_) this.getMarker().setMap(null);
 };
 
 komoo.features.Feature.prototype.setMap = function (map, opt_force) {
+    //if (map == this.map_ && force == undefined) return;
+
     var force = opt_force != undefined ? opt_force : {geometries: false, markers: false};
     if (this.getProperties().alwaysVisible) force = {geometries: true, markers: false};
     var zoom = 0;
@@ -219,8 +220,7 @@ komoo.features.Feature.prototype.setMap = function (map, opt_force) {
     } else {
         this.geometry_.setMap(null);
     }
-    if (this.getMarker() && 
-            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) { 
+    if (this.marker_) { 
         if (map && ((zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) || force.markers)) {
             this.getMarker().setMap(map);
         } else {
@@ -246,10 +246,7 @@ komoo.features.Feature.prototype.removeFromMap = function () {
 };
 
 komoo.features.Feature.prototype.setVisible = function (flag) {
-    if (this.getMarker() && 
-            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) { 
-        this.marker_.setVisible(flag);
-    }
+    if (this.marker_) this.marker_.setVisible(flag);
     return this.geometry_.setVisible(flag);
 };
 
@@ -264,10 +261,7 @@ komoo.features.Feature.prototype.setOptions = function (options) {
 };
 
 komoo.features.Feature.prototype.setIcon = function (icon) {
-    if (this.getMarker() && 
-            !(this.getGeometry() instanceof komoo.geometries.MultiPoint)) {
-        this.getMarker().setIcon(icon);
-    }
+    if (this.marker_) this.getMarker().setIcon(icon);
     return this.geometry_.setIcon(icon);
 };
 

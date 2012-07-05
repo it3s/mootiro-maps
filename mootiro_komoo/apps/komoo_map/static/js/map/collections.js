@@ -94,12 +94,7 @@ komoo.collections.FeatureCollection.prototype.updateFeaturesVisibility = functio
 komoo.collections.FeatureCollection.prototype.handleMapEvents = function () {
     var that = this;
     komoo.event.addListener(this.map_, 'zoom_changed', function (zoom) {
-        that.onZoomChanged(zoom);
     });
-};
-
-komoo.collections.FeatureCollection.prototype.onZoomChanged = function (zoom) {
-    this.updateFeaturesVisibility();
 };
 
 
