@@ -4,8 +4,8 @@
   {% blocktrans with user=obj.creator.username date=obj.creation_date|naturaltime %}
     created by {{ user }} {{ date }}<br/>
   {% endblocktrans %}
-  {% if obj.last_updater %}
-    {% blocktrans with user=obj.last_updater.username date=obj.last_update|naturaltime %}
+  {% if obj.last_editor %}
+    {% blocktrans with user=obj.last_editor.username date=obj.last_edition_date|naturaltime %}
       last update by {{ user }} {{ date }}
     {% endblocktrans %}
   {% endif %}

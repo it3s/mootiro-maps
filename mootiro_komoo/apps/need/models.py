@@ -76,8 +76,8 @@ class Need(GeoRefModel, VotableModel):
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True, related_name='created_needs')
     creation_date = models.DateTimeField(auto_now_add=True)
-    last_updater = models.ForeignKey(User, editable=False, null=True, blank=True)
-    last_update = models.DateTimeField(auto_now=True)
+    last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
+    last_edition_date = models.DateTimeField(auto_now=True)
 
     # Relationships
     # community = models.ForeignKey(Community, related_name="needs", null=True, blank=True)

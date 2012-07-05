@@ -27,8 +27,8 @@ class Proposal(VotableModel):
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True, related_name='created_proposals')
     creation_date = models.DateTimeField(auto_now_add=True)
-    last_updater = models.ForeignKey(User, editable=False, null=True, blank=True)
-    last_update = models.DateTimeField(auto_now=True)
+    last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
+    last_edition_date = models.DateTimeField(auto_now=True)
 
     # Relationships
     need = models.ForeignKey(Need, related_name='proposals')
