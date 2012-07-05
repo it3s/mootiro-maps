@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from annoying.decorators import render_to, ajax_request
 
-from signatures.models import Signature, WeeklySignature
+from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 
 
@@ -64,8 +64,9 @@ def test_login(request):
 def profile(request):
     logger.debug('accessing user_cas > profile')
     signatures = Signature.objects.filter(user=request.user)
-    digest = True if WeeklySignature.objects.filter(user=request.user).count() \
-                  else False
+    digest_obj = DigestSignature.objects.filter(user=request.user)
+    digest = digest_obj[0].digest_type if digest_obj.count() \
+                  else ''
     return dict(signatures=signatures, digest=digest)
 
 
@@ -78,7 +79,7 @@ def profile_update(request):
     user = request.user
     username = request.POST.get('username', '')
     signatures = request.POST.getlist('signatures')
-    digest = request.POST.get('weekly_digest', '')
+    digest_type = request.POST.get('digest_type', '')
 
     success = True
     errors = {}
@@ -103,12 +104,16 @@ def profile_update(request):
                 signature.delete()
 
         # update digest
-        user_has_digest = WeeklySignature.objects.filter(user=request.user).count()
+        user_digest = DigestSignature.objects.filter(user=request.user)
 
-        if digest and not user_has_digest:
-            WeeklySignature.objects.create(user=request.user)
-        elif not digest and user_has_digest:
-            WeeklySignature.objects.get(user=request.user).delete()
+        if digest_type and not user_digest.count():
+            DigestSignature.objects.create(user=request.user, digest_type=digest_type)
+        elif user_digest.count() and digest_type != user_digest[0].digest_type:
+            d = DigestSignature.objects.get(user=request.user)
+            d.digest_type = digest_type
+            d.save()
+        elif user_digest.count() and not digest_type:
+            DigestSignature.objects.get(user=request.user)
 
         return {'success': 'true', 'redirect': reverse('user_profile')}
 

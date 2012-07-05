@@ -48,6 +48,6 @@
 
   {"pk": 46, "model": "contenttypes.contenttype", "fields": {"model": "update", "name": "update", "app_label": "komoo_update"}},
 
-  {"pk": 47, "model": "contenttypes.contenttype", "fields": {"model": "weeklysignature", "name": "weekly signature", "app_label": "signatures"}},
-  {"pk": 48, "model": "contenttypes.contenttype", "fields": {"model": "weeklydigest", "name": "weekly digest", "app_label": "signatures"}}
+  {"pk": 47, "model": "contenttypes.contenttype", "fields": {"model": "digestsignature", "name": "digest signature", "app_label": "signatures"}},
+  {"pk": 48, "model": "contenttypes.contenttype", "fields": {"model": "digest", "name": "digest", "app_label": "signatures"}}
 ]

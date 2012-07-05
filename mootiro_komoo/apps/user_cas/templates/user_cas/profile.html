@@ -48,8 +48,20 @@
             <div class="horizontal-splitter"></div>
 
             <div class="div_signature">
-                <input type="checkbox" id="id_weekly_digest" value="true" name="weekly_digest" {% if digest %}checked="checked"{% endif %} >
-                <span>{% trans 'I want to receive only weekly emails digest' %}</span>
+                <div>
+                    <input type="radio" value="" name="digest_type" {% if not digest %}checked="checked"{% endif %} >
+                    <span>{% trans 'I dont want to receive digest mails' %}</span>
+                </div>
+                <div>
+                    <input type="radio" value="W" name="digest_type" {% if digest == 'W' %}checked="checked"{% endif %} >
+                    <span>{% trans 'I want to receive only weekly emails digest' %}</span>
+                </div>
+                <div>
+                    <input type="radio" value="D" name="digest_type" {% if digest == 'D' %}checked="checked"{% endif %} >
+                    <span>{% trans 'I want to receive only daily emails digest' %}</span>
+                </div>
+
+
             </div>
 
 

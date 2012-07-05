@@ -2,7 +2,7 @@
 import django.dispatch
 from django.dispatch import receiver
 from django.contrib.contenttypes.models import ContentType
-from signatures.models import Signature, WeeklySignature, WeeklyDigest
+from signatures.models import Signature, DigestSignature, Digest
 from signatures.tasks import send_notification_mail
 from organization.models import OrganizationBranch
 from komoo_comments.models import Comment
@@ -21,12 +21,14 @@ def notification_callback(sender, instance, *a, **kw):
 
     for signature in Signature.objects.filter(content_type=content_type,
         object_id=instance.id):
-        if WeeklySignature.objects.filter(user=signature.user).count():
-            # create entry on weekly digest
-            WeeklyDigest.objects.get_or_create(
+        digest = DigestSignature.objects.filter(user=signature.user)
+        if digest.count():
+            # create entry on digest
+            Digest.objects.get_or_create(
                 user=signature.user,
                 content_type=signature.content_type,
-                object_id=signature.object_id
+                object_id=signature.object_id,
+                digest_type=digest[0].digest_type
             )
         else:
             send_notification_mail.delay(obj=instance, user=signature.user)
