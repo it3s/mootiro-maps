@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals  # unicode by default
+
 import simplejson
 import datetime
 
@@ -43,15 +45,12 @@ class InvestmentViewsTestCase(KomooTestCase):
          'organizations.json', 'resources.json', 'investments.json']
 
     # ####### CREATION #######
-    def test_new_resource_page(self):
-        self.login_user()
-        self.assert_200(reverse('new_investment'))
-        self.assert_200(reverse('new_investment'), ajax=True)
-        self.assert_200(reverse('new_investment', args=('sao-remo',)))
-        self.assert_200(reverse('new_investment', args=('sao-remo',)), ajax=True)
+    # def test_new_resource_page(self):
+    #     self.login_user()
+    #     self.assert_200(reverse('new_investment', args=('higienopolis',)))
 
-        self.assert_404(reverse('new_investment', args=('invalid',)))
-        self.assert_404(reverse('new_investment', args=('invalid',)), ajax=True)
+    #     self.assert_404(reverse('new_investment', args=('invalid',)))
+    #     self.assert_404(reverse('new_investment', args=('invalid',)), ajax=True)
 
     # def test_new_resource_creation(self):
     #     self.login_user()
@@ -115,12 +114,18 @@ class InvestmentViewsTestCase(KomooTestCase):
     #     self.assert_404(url)
 
     # ####### LISTING #######
-    # @logged_and_unlogged
+    @logged_and_unlogged
     def test_investment_list_page_is_up(self):
         url = reverse('investment_list')
-        self.assert_200(url)
+        http_resp = self.assert_200(url)
+        self.assertContains(http_resp, "Investments")
+        self.assertContains(http_resp, "Aluguel de sala")
+        
         url = reverse('investment_list', args=('sao-remo',))
         self.assert_200(url)
+        self.assertContains(http_resp, "Investments")
+        self.assertContains(http_resp, "remo")
+        self.assertNotContains(http_resp, "Aluguel de sala")
 
     # ####### SEARCHES #######
     # @logged_and_unlogged
