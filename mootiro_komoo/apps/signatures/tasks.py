@@ -4,7 +4,7 @@ from django.core.mail import send_mail
 from celery.task import task
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
-from signatures.models import WeeklyDigest
+from signatures.models import Digest
 
 
 @task
@@ -30,9 +30,18 @@ a equipe IT3S.
         )
 
 
-@periodic_task(run_every=crontab(minute="*/5"))
+@periodic_task(run_every=crontab(minute="*/15"))
 def weekly_mail_digest():
-    # TODO: separar digest diario e digest semanal
-    for signature in WeeklyDigest.objects.all():
+    for signature in Digest.objects.filter(digest_type='W'):
+        send_notification_mail(signature.content_object, signature.user)
+        # montar digest
+        signature.delete()
+
+
+@periodic_task(run_every=crontab(minute="*/5"))
+def daily_mail_digest():
+    for signature in Digest.objects.filter(digest_type='D'):
+        # montar digest
         send_notification_mail(signature.content_object, signature.user)
         signature.delete()
+
