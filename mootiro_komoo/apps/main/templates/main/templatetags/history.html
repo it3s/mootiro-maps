@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load komoo_filters %}
+<a class="more history" title="
+  {% blocktrans with user=obj.creator.username date=obj.creation_date|naturaltime %}
+    created by {{ user }} {{ date }}<br/>
+  {% endblocktrans %}
+  {% if obj.last_updater %}
+    {% blocktrans with user=obj.last_updater.username date=obj.last_update|naturaltime %}
+      last update by {{ user }} {{ date }}
+    {% endblocktrans %}
+  {% endif %}
+">{% trans "History" %}</a>
+
+{% block page_scripts %}
+  <script type="text/javascript">
+    $(".more.history").komooTooltip();
+  </script>
+{% endblock %}

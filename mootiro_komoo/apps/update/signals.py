@@ -33,7 +33,7 @@ def _create_the_update(instances, communities, **kwargs):
     if recent_update:
         update = recent_update
         people = update.users
-        if user.username not in people:
+        if user.username not in people or True:  # TODO: remove "or True"
             people.insert(0, user.username)
             update.users = people
     else:
