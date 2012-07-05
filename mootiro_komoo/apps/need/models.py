@@ -12,7 +12,7 @@ from lib.taggit.managers import TaggableManager
 
 from community.models import Community
 from main.utils import slugify
-from komoo_map.models import GeoRefModel
+from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
 from vote.models import VotableModel
 
 
@@ -70,9 +70,9 @@ class Need(GeoRefModel, VotableModel):
     description = models.TextField()
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
-                related_name='created_needs')
+    creator = models.ForeignKey(User, editable=False, related_name='created_needs')
     creation_date = models.DateTimeField(auto_now_add=True)
+    last_updater = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationships
@@ -82,6 +82,26 @@ class Need(GeoRefModel, VotableModel):
     target_audiences = models.ManyToManyField(TargetAudience, blank=False)
 
     tags = TaggableManager()
+
+    class Map:
+        editable = True
+        background_color =  '#f42c5e'
+        border_color = '#d31e52'
+        geometries = (POLYGON, LINESTRING, POINT)
+        categories = [
+            ('Culture'),
+            ('Education'),
+            ('Environment'),
+            ('Health'),
+            ('Housing'),
+            ('Local Economy'),
+            ('Mobility'),
+            ('Social Service'),
+            ('Sport'),
+            ('Security'),
+        ]
+        form_view_name = 'new_need_from_map'
+        form_view_kwargs = {'community_slug': 'communitySlug'}
 
     def __unicode__(self):
         return unicode(self.title)

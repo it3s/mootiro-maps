@@ -432,7 +432,6 @@ function flash(message, optDuration) {
             placement: "bottom",
             trigger: "manual"
         }).on("click", function (evt) {
-            console.log("click");
             $target = $(evt.target);
             $target.tooltip('show');
             $(".tooltip").on("mouseleave", function (evt) {

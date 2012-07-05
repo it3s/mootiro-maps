@@ -25,6 +25,7 @@
                 <h2 class="inline-block">{{ resource.name }}</h2>
 
                 <div class="view-edit-btn">
+                    {% history resource %}
                     <a href="{{ resource.edit_url }}" class="btn login-required">
                         <i class="icon-pencil"></i>
                     </a>

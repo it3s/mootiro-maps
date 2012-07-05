@@ -29,7 +29,14 @@ def naturaltime(value):
     now = datetime.now()
     if value < now:
         delta = now - value
-        if delta.days != 0:
+        if delta.days > 30:
+            return pgettext(
+                'more than 1 month ago', 'on %(date)s at %(time)s'
+            ) % {
+                'date': value.strftime("%d/%m/%Y"),
+                'time': value.strftime("%H:%M")
+            }
+        elif delta.days != 0:
             return pgettext(
                 'naturaltime', '%(delta)s ago'
             ) % {'delta': defaultfilters.timesince(value)}
