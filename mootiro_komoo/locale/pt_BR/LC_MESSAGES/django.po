@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-02 16:57-0300\n"
+"POT-Creation-Date: 2012-07-06 10:25-0300\n"
 "PO-Revision-Date: 2012-06-06 14:29-0300\n"
 "Last-Translator: André Casimiro <ah.casimiro@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -18,8 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: apps/community/forms.py:25 apps/komoo_resource/forms.py:40
-#: apps/main/templatetags/komoo_tags.py:250
-#: apps/main/templatetags/komoo_tags.py:251 apps/organization/forms.py:62
+#: apps/main/templatetags/komoo_tags.py:266
+#: apps/main/templatetags/komoo_tags.py:267 apps/organization/forms.py:62
 #: apps/organization/templates/organization/branch_form.html:13
 #: apps/organization/templates/organization/new_frommap.html:35
 #: lib/taggit/models.py:10
@@ -34,14 +34,14 @@ msgstr "Nome"
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/community/forms.py:27 apps/community/templates/community/view.html:27
+#: apps/community/forms.py:27 apps/community/templates/community/view.html:30
 msgid "Population"
 msgstr "População"
 
 #: apps/community/forms.py:28 apps/investment/forms.py:42
 #: apps/komoo_resource/forms.py:44
 #: apps/main/templates/main/templatetags/taglist.html:5
-#: apps/main/templatetags/komoo_tags.py:249 apps/need/forms.py:29
+#: apps/main/templatetags/komoo_tags.py:265 apps/need/forms.py:29
 #: apps/organization/forms.py:66 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 msgid "Tags"
@@ -80,7 +80,7 @@ msgstr "ver no mapa"
 msgid "population:"
 msgstr "população:"
 
-#: apps/community/templates/community/view.html:40
+#: apps/community/templates/community/view.html:43
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
@@ -110,7 +110,7 @@ msgstr "Por um período"
 
 #: apps/investment/forms.py:38
 #: apps/investment/templates/investment/view.html:40
-#: apps/main/templatetags/komoo_tags.py:252
+#: apps/main/templatetags/komoo_tags.py:268
 msgid "Date"
 msgstr "Data"
 
@@ -127,7 +127,7 @@ msgstr "Moeda"
 msgid "Value"
 msgstr "Valor"
 
-#: apps/investment/forms.py:128 apps/investment/forms.py:130
+#: apps/investment/forms.py:129 apps/investment/forms.py:131
 msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
@@ -201,9 +201,9 @@ msgid "Period"
 msgstr "Período"
 
 #: apps/investment/templates/investment/view.html:53
-#: apps/komoo_resource/templates/resource/show.html:64
+#: apps/komoo_resource/templates/resource/show.html:65
 #: apps/need/templates/need/view.html:59
-#: apps/organization/templates/organization/show.html:207
+#: apps/organization/templates/organization/show.html:208
 msgid "see on map"
 msgstr "ver no mapa"
 
@@ -211,7 +211,7 @@ msgstr "ver no mapa"
 msgid "Similar investments"
 msgstr "Investimentos similares"
 
-#: apps/komoo_comments/views.py:47
+#: apps/komoo_comments/views.py:48
 msgid "invalid form: {}"
 msgstr "Formulário Inválido: {}"
 
@@ -239,12 +239,12 @@ msgstr "Novo Comentário"
 msgid "see more ..."
 msgstr "ver mais ..."
 
-#: apps/komoo_map/templates/komoo_map/komoo_map_templatetag.html:38
+#: apps/komoo_map/templates/komoo_map/komoo_map_templatetag.html:45
 #: apps/organization/templates/organization/branch_form.html:10
 msgid "Open the map editor"
 msgstr "Abrir o editor de mapas"
 
-#: apps/komoo_map/templates/komoo_map/komoo_map_templatetag.html:223
+#: apps/komoo_map/templates/komoo_map/komoo_map_templatetag.html:233
 msgid "Geometric data not available"
 msgstr "Informação geométrica não disponível"
 
@@ -285,13 +285,13 @@ msgid "Kind"
 msgstr "Tipo"
 
 #: apps/komoo_resource/forms.py:43
-#: apps/komoo_resource/templates/resource/show.html:95
+#: apps/komoo_resource/templates/resource/show.html:96
 #: apps/organization/forms.py:65
-#: apps/organization/templates/organization/show.html:236
+#: apps/organization/templates/organization/show.html:237
 msgid "Contact"
 msgstr "Contato"
 
-#: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:254
+#: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:270
 #: apps/need/forms.py:24 apps/organization/forms.py:64
 #: apps/organization/forms.py:119
 #: apps/organization/templatetags/organization_tags.py:19
@@ -303,7 +303,7 @@ msgstr "Comunidade"
 msgid "Images"
 msgstr "Imagens"
 
-#: apps/komoo_resource/forms.py:76 apps/main/utils.py:247
+#: apps/komoo_resource/forms.py:76 apps/main/utils.py:248
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
@@ -315,17 +315,17 @@ msgstr "Recurso sem nome"
 msgid "Edit Resource"
 msgstr "Editar Recurso"
 
-#: apps/komoo_resource/templates/resource/list.html:9
+#: apps/komoo_resource/templates/resource/list.html:8
 msgid "Resources for"
 msgstr "Recursos para"
 
-#: apps/komoo_resource/templates/resource/list.html:20
-#: apps/komoo_resource/templates/resource/list.html:22
+#: apps/komoo_resource/templates/resource/list.html:19
+#: apps/komoo_resource/templates/resource/list.html:21
 #: apps/komoo_resource/templates/resource/new.html:11
 msgid "New Resource"
 msgstr "Novo Recurso"
 
-#: apps/komoo_resource/templates/resource/list.html:28
+#: apps/komoo_resource/templates/resource/list.html:27
 #: apps/main/templates/main/filter_results.html:73
 #, python-format
 msgid "%(counter)s Resource"
@@ -333,36 +333,36 @@ msgid_plural "%(counter)s Resources"
 msgstr[0] "%(counter)s Recurso"
 msgstr[1] "%(counter)s Recursos"
 
-#: apps/komoo_resource/templates/resource/list.html:50
-#: apps/komoo_resource/templates/resource/show.html:81
+#: apps/komoo_resource/templates/resource/list.html:49
+#: apps/komoo_resource/templates/resource/show.html:82
 #: apps/need/templates/need/list.html:39
 msgid "at"
 msgstr "em"
 
-#: apps/komoo_resource/templates/resource/list.html:71
+#: apps/komoo_resource/templates/resource/list.html:70
 msgid "Kind:"
 msgstr "Tipo:"
 
-#: apps/komoo_resource/templates/resource/show.html:39
+#: apps/komoo_resource/templates/resource/show.html:40
 msgid "type:"
 msgstr "tipo:"
 
-#: apps/komoo_resource/templates/resource/show.html:67
-#: apps/organization/templates/organization/show.html:190
-#: apps/organization/templates/organization/show.html:210
+#: apps/komoo_resource/templates/resource/show.html:68
+#: apps/organization/templates/organization/show.html:191
+#: apps/organization/templates/organization/show.html:211
 msgid "New Investment"
 msgstr "Novo Investimento"
 
-#: apps/komoo_resource/templates/resource/show.html:100
-#: apps/organization/templates/organization/show.html:240
+#: apps/komoo_resource/templates/resource/show.html:101
+#: apps/organization/templates/organization/show.html:241
 msgid "No contact info provided"
 msgstr "Informações de contato não fornecidas"
 
-#: apps/main/utils.py:115
+#: apps/main/utils.py:116
 msgid "Submit"
 msgstr "Enviar"
 
-#: apps/main/views.py:189
+#: apps/main/views.py:193
 msgid ""
 "\n"
 "Url: {0}\n"
@@ -378,7 +378,7 @@ msgstr ""
 "Mensagem: {5}\n"
 "    "
 
-#: apps/main/views.py:197
+#: apps/main/views.py:201
 msgid "Error report"
 msgstr "Relatório de erro"
 
@@ -440,7 +440,7 @@ msgstr "Ajuda"
 msgid "Ops!"
 msgstr "Ops!"
 
-#: apps/main/templates/global.html:75
+#: apps/main/templates/global.html:77
 msgid "Search"
 msgstr "Buscar"
 
@@ -508,6 +508,24 @@ msgstr "Criar uma conta"
 msgid "Support"
 msgstr "Apoio"
 
+#: apps/main/templates/main/templatetags/communities_list.html:11
+#: apps/main/templates/main/templatetags/usernames_list.html:9
+msgid "and"
+msgstr ""
+
+#: apps/main/templates/main/templatetags/communities_list.html:19
+#, python-format
+msgid ""
+"\n"
+"      %(num)s more\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(num)s more\n"
+"    "
+msgstr[0] ""
+msgstr[1] ""
+
 #: apps/main/templates/main/templatetags/geo_objects_add.html:16
 #: apps/main/templates/main/templatetags/geo_objects_add.html:28
 #: apps/main/templates/main/templatetags/geo_objects_add.html:40
@@ -525,6 +543,31 @@ msgstr "Adicionar linha"
 #: apps/main/templates/main/templatetags/geo_objects_add.html:42
 msgid "Add point"
 msgstr "Adicionar ponto"
+
+#: apps/main/templates/main/templatetags/history.html:4
+msgid ""
+"\n"
+"    created by %(user)s %(date)s<br/>\n"
+"  "
+msgstr ""
+"\n"
+"    criado por %(user)s %(date)s<br/>\n"
+"  "
+
+#: apps/main/templates/main/templatetags/history.html:8
+#, python-format
+msgid ""
+"\n"
+"      last update by %(user)s %(date)s\n"
+"    "
+msgstr ""
+"\n"
+"      última edição por %(user)s %(date)s\n"
+"    "
+
+#: apps/main/templates/main/templatetags/history.html:12
+msgid "History"
+msgstr "Histórico"
 
 #: apps/main/templates/main/templatetags/menu.html:6
 #: apps/main/templates/main/templatetags/menu.html:8
@@ -551,12 +594,12 @@ msgid "next"
 msgstr "próxima"
 
 #: apps/main/templates/main/templatetags/pagination.html:30
-#: apps/organization/templates/organization/show.html:132
+#: apps/organization/templates/organization/show.html:133
 msgid "first"
 msgstr "primeira"
 
 #: apps/main/templates/main/templatetags/pagination.html:100
-#: apps/organization/templates/organization/show.html:139
+#: apps/organization/templates/organization/show.html:140
 msgid "last"
 msgstr "última"
 
@@ -573,6 +616,19 @@ msgstr "Seguir"
 #: apps/main/templates/main/templatetags/track_buttons.html:18
 msgid "Observe"
 msgstr "Observar"
+
+#: apps/main/templates/main/templatetags/usernames_list.html:15
+#, python-format
+msgid ""
+"\n"
+"      %(num)s more user\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(num)s more users\n"
+"    "
+msgstr[0] ""
+msgstr[1] ""
 
 #: apps/main/templates/main/templatetags/visualization_opts.html:4
 msgid "Visualization options"
@@ -591,65 +647,70 @@ msgid "Apply"
 msgstr "Aplicar"
 
 #: apps/main/templatetags/komoo_filters.py:34
+msgctxt "more than 1 month ago"
+msgid "on %(date)s at %(time)s"
+msgstr "em %(date)s às %(time)s"
+
+#: apps/main/templatetags/komoo_filters.py:41
 #, python-format
 msgctxt "naturaltime"
 msgid "%(delta)s ago"
 msgstr "%(delta)s atrás"
 
-#: apps/main/templatetags/komoo_filters.py:37
-#: apps/main/templatetags/komoo_filters.py:59
+#: apps/main/templatetags/komoo_filters.py:44
+#: apps/main/templatetags/komoo_filters.py:66
 msgid "now"
 msgstr "agora"
 
-#: apps/main/templatetags/komoo_filters.py:40
+#: apps/main/templatetags/komoo_filters.py:47
 #, python-format
 msgid "a second ago"
 msgid_plural "%(count)s seconds ago"
 msgstr[0] "um segundo atrás"
 msgstr[1] "%(count)s segundos atrás"
 
-#: apps/main/templatetags/komoo_filters.py:45
+#: apps/main/templatetags/komoo_filters.py:52
 #, python-format
 msgid "a minute ago"
 msgid_plural "%(count)s minutes ago"
 msgstr[0] "um minuto atrás"
 msgstr[1] "%(count)s minutos atrás"
 
-#: apps/main/templatetags/komoo_filters.py:50
+#: apps/main/templatetags/komoo_filters.py:57
 #, python-format
 msgid "an hour ago"
 msgid_plural "%(count)s hours ago"
 msgstr[0] "um hora atrás"
 msgstr[1] "%(count)s horas atrás"
 
-#: apps/main/templatetags/komoo_filters.py:56
+#: apps/main/templatetags/komoo_filters.py:63
 #, python-format
 msgctxt "naturaltime"
 msgid "%(delta)s from now"
 msgstr "daqui a %(delta)s"
 
-#: apps/main/templatetags/komoo_filters.py:62
+#: apps/main/templatetags/komoo_filters.py:69
 #, python-format
 msgid "a second from now"
 msgid_plural "%(count)s seconds from now"
 msgstr[0] "daqui a um segundo"
 msgstr[1] "daqui a %(count)s segundos"
 
-#: apps/main/templatetags/komoo_filters.py:67
+#: apps/main/templatetags/komoo_filters.py:74
 #, python-format
 msgid "a minute from now"
 msgid_plural "%(count)s minutes from now"
 msgstr[0] "daqui a um minuto"
 msgstr[1] "daqui a %(count)s minutos"
 
-#: apps/main/templatetags/komoo_filters.py:72
+#: apps/main/templatetags/komoo_filters.py:79
 #, python-format
 msgid "an hour from now"
 msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
 msgstr[1] "daqui a %(count)s horas"
 
-#: apps/main/templatetags/komoo_tags.py:253
+#: apps/main/templatetags/komoo_tags.py:269
 msgid "Votes"
 msgstr "Votos"
 
@@ -865,10 +926,6 @@ msgstr "Necessidades para"
 msgid "New need"
 msgstr "Nova necessidade"
 
-#: apps/need/templates/need/view.html:31
-msgid "History"
-msgstr "Histórico"
-
 #: apps/need/templates/need/view.html:40
 msgid "created by"
 msgstr "criado por"
@@ -894,7 +951,7 @@ msgid "No related needs."
 msgstr "Nenhuma necessidade relacionada."
 
 #: apps/need/templates/need/view.html:95
-#: apps/organization/templates/organization/show.html:97
+#: apps/organization/templates/organization/show.html:98
 msgid "see all"
 msgstr "ver todos"
 
@@ -934,7 +991,7 @@ msgid "New Organization"
 msgstr "Nova Organização"
 
 #: apps/organization/templates/organization/list.html:68
-#: apps/organization/templates/organization/show.html:216
+#: apps/organization/templates/organization/show.html:217
 msgid "Operation Field"
 msgstr "Área de atuação"
 
@@ -976,42 +1033,42 @@ msgstr "Concluir"
 msgid "%(organization)s at %(community)s"
 msgstr "%(organization)s em %(community)s"
 
-#: apps/organization/templates/organization/show.html:54
+#: apps/organization/templates/organization/show.html:55
 #, python-format
 msgid "%(num)s point on map"
 msgid_plural "%(num)s points on map"
 msgstr[0] "%(num)s ponto no mapa"
 msgstr[1] "%(num)s pontos no mapa"
 
-#: apps/organization/templates/organization/show.html:60
+#: apps/organization/templates/organization/show.html:61
 #, python-format
 msgid "Supported %(num)s organization"
 msgid_plural "Supported %(num)s organizations"
 msgstr[0] "Apoiou %(num)s organização"
 msgstr[1] "Apoiou %(num)s organizações"
 
-#: apps/organization/templates/organization/show.html:66
+#: apps/organization/templates/organization/show.html:67
 #, python-format
 msgid "On %(num)s community"
 msgid_plural "On %(num)s communities"
 msgstr[0] "Presente em %(num)s comunidade"
 msgstr[1] "Presente em %(num)s comunidades"
 
-#: apps/organization/templates/organization/show.html:72
+#: apps/organization/templates/organization/show.html:73
 #, python-format
 msgid "Supported %(num)s proposal"
 msgid_plural "Supported %(num)s proposals"
 msgstr[0] "Apoiou %(num)s proposta"
 msgstr[1] "Apoiou %(num)s propostas"
 
-#: apps/organization/templates/organization/show.html:78
+#: apps/organization/templates/organization/show.html:79
 #, python-format
 msgid "Supported %(num)s resource"
 msgid_plural "Supported %(num)s resources"
 msgstr[0] "Apoiou %(num)s recurso"
 msgstr[1] "Apoiou %(num)s recursos"
 
-#: apps/organization/templates/organization/show.html:84
+#: apps/organization/templates/organization/show.html:85
 #, python-format
 msgid ""
 "Realized %(num)s investment\n"
@@ -1020,7 +1077,7 @@ msgid_plural "Realized %(num)s investments"
 msgstr[0] "Realizou %(num)s investimento"
 msgstr[1] "Realizou %(num)s investimentos"
 
-#: apps/organization/templates/organization/show.html:87
+#: apps/organization/templates/organization/show.html:88
 #, python-format
 msgid ""
 "Received %(num)s investment\n"
@@ -1029,31 +1086,31 @@ msgid_plural "Received %(num)s investments"
 msgstr[0] "Recebeu %(num)s investimento"
 msgstr[1] "Recebeu %(num)s investimentos"
 
-#: apps/organization/templates/organization/show.html:153
+#: apps/organization/templates/organization/show.html:154
 msgid "No organizations supported."
 msgstr "Nenhuma organização apoiada."
 
-#: apps/organization/templates/organization/show.html:163
+#: apps/organization/templates/organization/show.html:164
 msgid "No communities bound to this organization"
 msgstr "Nenhuma comunidade vínculada a esta organização"
 
-#: apps/organization/templates/organization/show.html:173
+#: apps/organization/templates/organization/show.html:174
 msgid "No proposals supported."
 msgstr "Nenhuma proposta apoiada."
 
-#: apps/organization/templates/organization/show.html:183
+#: apps/organization/templates/organization/show.html:184
 msgid "No resources supported."
 msgstr "Nenhum recurso apoiado."
 
-#: apps/organization/templates/organization/show.html:223
+#: apps/organization/templates/organization/show.html:224
 msgid "No categories provided"
 msgstr "Categorias não fornecidas"
 
-#: apps/organization/templates/organization/show.html:227
+#: apps/organization/templates/organization/show.html:228
 msgid "Audience"
 msgstr "Público"
 
-#: apps/organization/templates/organization/show.html:232
+#: apps/organization/templates/organization/show.html:233
 msgid "No target audience provided"
 msgstr "Público alvo não fornecido"
 
@@ -1065,75 +1122,75 @@ msgstr "Custo"
 msgid "Form Proposal"
 msgstr "Formulário de Propostas"
 
-#: apps/update/models.py:118
+#: apps/update/models.py:120
 msgid "community added"
 msgstr "comunidade adicionada"
 
-#: apps/update/models.py:119
+#: apps/update/models.py:121
 msgid "community edited"
 msgstr "comunidade editada"
 
-#: apps/update/models.py:120
+#: apps/update/models.py:122
 msgid "community discussed"
 msgstr "comunidade discutida"
 
-#: apps/update/models.py:122
+#: apps/update/models.py:124
 msgid "need added"
 msgstr "necessidade adicionada"
 
-#: apps/update/models.py:123
+#: apps/update/models.py:125
 msgid "need edited"
 msgstr "necessidade editada"
 
-#: apps/update/models.py:124
+#: apps/update/models.py:126
 msgid "need discussed"
 msgstr "necessidade discutida"
 
-#: apps/update/models.py:126
+#: apps/update/models.py:128
 msgid "proposal added"
 msgstr "proposta adicionada"
 
-#: apps/update/models.py:127
+#: apps/update/models.py:129
 msgid "proposal edited"
 msgstr "proposta editada"
 
-#: apps/update/models.py:128
+#: apps/update/models.py:130
 msgid "proposal discussed"
 msgstr "proposta discutida"
 
-#: apps/update/models.py:130
+#: apps/update/models.py:132
 msgid "organization added"
 msgstr "organização adicionada"
 
-#: apps/update/models.py:131
+#: apps/update/models.py:133
 msgid "organization edited"
 msgstr "organização editada"
 
-#: apps/update/models.py:132
+#: apps/update/models.py:134
 msgid "organization discussed"
 msgstr "organização discutida"
 
-#: apps/update/models.py:134
+#: apps/update/models.py:136
 msgid "resource added"
 msgstr "recurso adicionado"
 
-#: apps/update/models.py:135
+#: apps/update/models.py:137
 msgid "resource edited"
 msgstr "recurso editado"
 
-#: apps/update/models.py:136
+#: apps/update/models.py:138
 msgid "resource discussed"
 msgstr "recurso discutido"
 
-#: apps/update/models.py:138
+#: apps/update/models.py:140
 msgid "investment added"
 msgstr "investimento adicionado"
 
-#: apps/update/models.py:139
+#: apps/update/models.py:141
 msgid "investment edited"
 msgstr "investimento editado"
 
-#: apps/update/models.py:140
+#: apps/update/models.py:142
 msgid "investment discussed"
 msgstr "investimento discutido"
 
@@ -1174,34 +1231,16 @@ msgstr "meu conteúdo"
 msgid "Type"
 msgstr "Tipo"
 
-#: apps/update/templates/update/frontpage.html:89
-#, python-format
+#: apps/update/templates/update/frontpage.html:83
+#, fuzzy
 msgid ""
 "\n"
-"                          and %(num)s more user\n"
-"                        "
+"                      discussed\n"
+"                    "
 msgid_plural ""
 "\n"
-"                          and %(num)s more users\n"
-"                        "
-msgstr[0] ""
-"\n"
-"                          e mais %(num)s usuário\n"
-"                        "
-msgstr[1] ""
-"\n"
-"                          e mais %(num)s usuários\n"
-"                        "
-
-#: apps/update/templates/update/frontpage.html:96
-msgid ""
-"\n"
-"                        discussed\n"
-"                      "
-msgid_plural ""
-"\n"
-"                        discussed\n"
-"                      "
+"                      discussed\n"
+"                    "
 msgstr[0] ""
 "\n"
 "                        discutiu\n"
@@ -1211,33 +1250,45 @@ msgstr[1] ""
 "                        discutiram\n"
 "                      "
 
-#: apps/update/templates/update/frontpage.html:105
+#: apps/update/templates/update/frontpage.html:91
 msgid "the proposal"
 msgstr "a proposta"
 
-#: apps/update/templates/update/frontpage.html:106
+#: apps/update/templates/update/frontpage.html:92
 msgid "for the need"
 msgstr "para a necessidade"
 
-#: apps/update/templates/update/frontpage.html:124
+#: apps/update/templates/update/frontpage.html:108
 msgid "by"
 msgstr "por"
 
-#: apps/update/templates/update/frontpage.html:152
+#: apps/update/templates/update/frontpage.html:137
 msgid "News"
 msgstr "Notícias"
 
-#: apps/user_cas/views.py:86
+#: apps/user_cas/views.py:90
 msgid "You must provide a username"
 msgstr "Você deve fornecer um nome de usuário"
 
-#: apps/user_cas/views.py:89
+#: apps/user_cas/views.py:93
 msgid "This username already exists"
 msgstr "Esse nome de usuário já existe"
 
 #: apps/user_cas/templates/user_cas/profile.html:38
 msgid "Signatures"
 msgstr "Assinaturas"
+
+#: apps/user_cas/templates/user_cas/profile.html:53
+msgid "I dont want to receive digest mails"
+msgstr ""
+
+#: apps/user_cas/templates/user_cas/profile.html:57
+msgid "I want to receive only weekly emails digest"
+msgstr ""
+
+#: apps/user_cas/templates/user_cas/profile.html:61
+msgid "I want to receive only daily emails digest"
+msgstr ""
 
 #: apps/vote/views.py:59
 msgid "User not logged or anonymous"
@@ -1312,6 +1363,23 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
+
+#~ msgid ""
+#~ "\n"
+#~ "                          and %(num)s more user\n"
+#~ "                        "
+#~ msgid_plural ""
+#~ "\n"
+#~ "                          and %(num)s more users\n"
+#~ "                        "
+#~ msgstr[0] ""
+#~ "\n"
+#~ "                          e mais %(num)s usuário\n"
+#~ "                        "
+#~ msgstr[1] ""
+#~ "\n"
+#~ "                          e mais %(num)s usuários\n"
+#~ "                        "
 
 #~ msgid "Photos:"
 #~ msgstr "Fotos:"
