@@ -66,8 +66,8 @@ ul.horizontal li {
     margin: 0 2px;
 }
 .clear-both { clear: both }
-.hidden { 
-    display: none; 
+.hidden {
+    display: none;
     visibility: visible; /* overwrite bootstrap */
 }
 .clickable { cursor: pointer }
@@ -114,6 +114,26 @@ div.apart {
 }
 .more { cursor: pointer }
 
+.popover{
+    z-index: 999999;
+    margin-top: -5px;
+}
+.popover-inner{
+    background-color: rgb(245,245,245);
+    padding: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(0, 0, 0, 0.95);
+}
+.popover-content{
+    background-color: rgb(245,245,245);
+}
+.popover.bottom .arrow{
+    border-bottom: 5px solid rgb(245, 245, 245);
+}
+#search-box-close{
+    float: right;
+    color: #777777;
+    cursor: pointer;
+}
 
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
