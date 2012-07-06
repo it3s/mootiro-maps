@@ -66,12 +66,16 @@ class AjaxModelForm(forms.ModelForm):
 
     def save(self, *args, **kwargs):
         obj = super(AjaxModelForm, self).save(*args, **kwargs)
-        if (not self.cleaned_data['id']) and self.user and hasattr(obj, 'creator'):
-            obj.creator_id = self.user.id
-            obj.save()
+
+        if (not self.cleaned_data['id']):
             update_type = Update.ADD
+            if self.user and hasattr(obj, 'creator'):
+                obj.creator_id = self.user.id
         else:
             update_type = Update.EDIT
+            if self.user and hasattr(obj, 'last_editor'):
+                obj.last_editor_id = self.user.id
+        obj.save()
         create_update.send(sender=obj.__class__, user=self.user, instance=obj,
                             type=update_type)
         return obj
