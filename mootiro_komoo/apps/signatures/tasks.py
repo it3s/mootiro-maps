@@ -9,7 +9,6 @@ from signatures.models import Digest, DigestSignature
 
 @task
 def send_notification_mail(obj=None, user=None, mail_message=''):
-    print 'sending mail: ', obj, user, mail_message
     if obj and user:
         mail_title = "Update do Mootiro Maps"
         if not mail_message:
@@ -33,24 +32,38 @@ a equipe IT3S.
         )
 
 
-# @periodic_task(run_every=crontab(minute="*/2"))
-# def weekly_mail_digest():
-#     for signature in DigestSignature.objects.filter(digest_type='W'):
-#         msg = ''
-#         for content in Digest.objects.filter(digest_type='W', user=signature.user):
-#             msg += "\nAtualização em {} : {}".format(
-#                 content.content_object.__class__.__name__,
-#                 'http://maps.mootiro.org' + getattr(content.content_object, 'view_url', '/')
-#             )
-#             content.delete()
+def periodic_mail_digest(digest_type=''):
+    if digest_type:
+        for signature in DigestSignature.objects.filter(digest_type=digest_type):
+            user_digest = Digest.objects.filter(digest_type=digest_type, user=signature.user)
+            if user_digest.count():
+                msg = '''
+Olá {},
 
-#         send_notification_mail('dummy_obj', signature.user, msg)
+Alguns objetos que você está seguindo no MootiroMaps foram atualizados:
+                '''.format(signature.user.get_full_name() or signature.user.username)
+                for content in user_digest:
+                    msg += "\n -  Atualização em {} : {}".format(
+                        content.content_object.__class__.__name__,
+                        'http://maps.mootiro.org' + getattr(content.content_object, 'view_url', '/')
+                    )
+                    content.delete()
+
+                msg += '''\n\n
+
+Visite-nos e veja as novidades.
+atenciosamente,
+
+a equipe IT3S.
+                '''
+                send_notification_mail('dummy_obj', signature.user, msg)
 
 
-# @periodic_task(run_every=crontab(minute="*/2"))
-# def daily_mail_digest():
-#     for signature in Digest.objects.filter(digest_type='D'):
-#         # montar digest
-#         send_notification_mail(signature.content_object, signature.user)
-#         signature.delete()
+@periodic_task(run_every=crontab(minute=0, hour=0, day_of_week='sat'))
+def weekly_mail_digest():
+    periodic_mail_digest(digest_type='W')
 
+
+@periodic_task(run_every=crontab(minute=0, hour=0))
+def daily_mail_digest():
+    periodic_mail_digest(digest_type='D')
