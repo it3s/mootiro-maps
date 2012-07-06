@@ -12,11 +12,7 @@ from django.http import HttpResponse
 
 from annoying.functions import get_object_or_None
 
-from update.models import Update
-from update.signals import create_update
-
 logger = logging.getLogger(__name__)
-
 
 #
 # ================ Serializador json ======================================
@@ -65,6 +61,9 @@ class AjaxModelForm(forms.ModelForm):
         self.user = request.user
 
     def save(self, *args, **kwargs):
+        from update.models import Update
+        from update.signals import create_update
+
         obj = super(AjaxModelForm, self).save(*args, **kwargs)
 
         if (not self.cleaned_data['id']):
