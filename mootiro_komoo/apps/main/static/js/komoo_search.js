@@ -32,7 +32,7 @@ $(function() {
         $.each(result_order, function(idx, key){
             var val = result[key];
             if (val.length && key !== 'google'){
-                results_list += '<li><div class="search-header">' +
+                results_list += '<li><div class="search-header '+ key +'">' +
                     '<img src="/static/img/' + key + '.png" >' +
                     '<div class="search-type-header" >' +
                         titles[key] +
@@ -60,7 +60,7 @@ $(function() {
         var google_results = JSON.parse(result.google).predictions;
         if (google_results && google_results.length){
             var key = 'google';
-            results_list += '<li><div class="search-header">' +
+            results_list += '<li><div class="search-header google">' +
                 '<img src="/static/img/' + key + '.png" >' +
                 '<div class="search-type-header" >' +
                     titles[key] +

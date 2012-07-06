@@ -135,6 +135,27 @@ div.apart {
     color: #777777;
     cursor: pointer;
 }
+.popover li{
+    list-style: none;
+}
+.search-header.google{
+    background-color: #FBDEDA;
+}
+.search-header.community{
+    background-color: #FFF1DF;
+}
+.search-header.need{
+    background-color: #FAD7D7;
+}
+.search-header.organization{
+    background-color: #D3D5ED;
+}
+.search-header.resource{
+    background-color: #DEECCF;
+}
+.search-header.investment{
+    background-color: #EEE9CC;
+}
 
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
