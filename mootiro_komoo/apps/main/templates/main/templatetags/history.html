@@ -5,7 +5,7 @@
     created by {{ user }} {{ date }}<br/>
   {% endblocktrans %}
   {% if obj.last_editor %}
-    {% blocktrans with user=obj.last_editor.username date=obj.last_edition_date|naturaltime %}
+    {% blocktrans with user=obj.last_editor.username date=obj.last_update|naturaltime %}
       last update by {{ user }} {{ date }}
     {% endblocktrans %}
   {% endif %}

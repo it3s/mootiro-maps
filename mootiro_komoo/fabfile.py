@@ -281,6 +281,34 @@ def fix_contenttypes():
     loaddata('fixtures/contenttypes_fixtures.json')
 
 
+def populate_history():
+    setup_django()
+    import reversion
+    from community.models import Community
+    from need.models import Need
+    from proposal.models import Proposal
+    from organization.models import Organization
+    from komoo_resource.models import Resource
+    from investment.models import Investment
+
+    for model in [Community, Need, Proposal, Organization, Resource, Investment]:
+        for obj in model.objects.all():
+            versions = reversion.get_for_object(obj)
+            if versions:
+                last = versions[0]
+                # first = versions.reverse()[0]
+                if last.type == 1:  # 1 == Edition
+                    obj.last_editor = last.revision.user
+
+                    # Disable auto now
+                    for field in obj._meta.local_fields:
+                        if field.name == "last_update":
+                            field.auto_now = False
+                    obj.last_update = last.revision.date_created
+                    obj.save()
+                    print obj, "updated."
+
+
 def help():
     """Fabfile documentation"""
     local('python -c "import fabfile; help(fabfile)"')
