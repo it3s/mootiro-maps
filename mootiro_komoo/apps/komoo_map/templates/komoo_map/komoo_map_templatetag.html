@@ -74,9 +74,9 @@
           editable: true,
           featureTypes: featureTypesJson,
           {% if type == 'editor' and not panel %}
-          fetchOverlays: false,
+          fetchFeatures: false,
           {% else %}
-          fetchOverlays: true,
+          fetchFeatures: true,
           {% endif %}
           autoSaveMapType: true,
           {% if panel %}
@@ -109,7 +109,7 @@
           editable: false,
           featureTypes: featureTypesJson,
           enableInfoWindow: false,
-          fetchOverlays: false,
+          fetchFeatures: false,
           googleMapOptions: {
             zoom: {{ zoom }},
             maxZoom: 17,
@@ -166,14 +166,14 @@
 
         {% if editable and panel %}
         // Load the form when user click 'finish' button
-        {{ type }}.event.bind('finish_click', function (e, overlayType) {
+        {{ type }}.event.bind('finish_click', function (e, featureType) {
           $.ajaxSetup({ cache: true }); // makes scripts be cached
           var geojson = {{ type }}.getGeoJSON({newOnly: true, geometryCollection: true});
           if (geojson.geometries.length > 0) {
             if (window.community_slug) {
-              var url = overlayType.formUrl.replace('communitySlug', community_slug);
+              var url = featureType.formUrl.replace('communitySlug', community_slug);
             } else {
-              var url = overlayType.formUrl.replace('/communitySlug', '');
+              var url = featureType.formUrl.replace('/communitySlug', '');
             }
             var context = $('#dinamic-form');
 
@@ -238,7 +238,7 @@
       $('#map-edit-button').click(function () {
           $('#map-container-editor').show();
           $('#main-content').hide();
-          // TODO: Save a overlay copy to revert edition on cancel click.
+          // TODO: Save a feature copy to revert edition on cancel click.
           if (!editor) {
             initialize_map_editor();
             editor.loadGeoJSON(geojson);
@@ -261,9 +261,9 @@
           editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
           editor.googleMap.setZoom(editor.googleMap.getZoom()-1)
           google.maps.event.trigger(editor.googleMap, 'resize');
-          editor.editOverlay(editor.overlays.getAt(0));
+          editor.editFeature(editor.features.getAt(0));
           setTimeout(function () {
-                  editor.setCurrentOverlay(editor.overlays.getAt(0)); }, 100);
+                  editor.setCurrentFeature(editor.features.getAt(0)); }, 100);
       });
       {% endif %}
       if (window.{{ type }}) {
@@ -283,7 +283,7 @@
         $('.see-on-map').click(function () {
           $('#map-container-{{ type }}').show();
           $('#main-content').hide();
-          // TODO: Save a overlay copy to revert edition on cancel click.
+          // TODO: Save a feature copy to revert edition on cancel click.
           if (!window.{{ type }}) {
             initialize_map_{{ type }}();
             map = {{ type }};
@@ -294,7 +294,7 @@
           }
           {{ type }}.googleMap.setZoom({{ type }}.googleMap.getZoom()+1);
           {{ type }}.googleMap.setZoom({{ type }}.googleMap.getZoom()-1);
-          {{ type }}.centerOverlay({{ type }}.overlays.getAt(0));
+          {{ type }}.centerFeature({{ type }}.features.getAt(0));
           google.maps.event.trigger({{ type }}.googleMap, 'resize');
           return false;
         });

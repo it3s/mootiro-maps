@@ -55,7 +55,7 @@ komoo.geometries.makeGeometry = function (feature) {
 /** Abstract Geometry **/
 
 komoo.geometries.Geometry = function (opts) {
-    this.initGoogleObject(opts);
+    this.initOverlay(opts);
 };
 
 komoo.geometries.Geometry.prototype.initEvents = function () {
@@ -63,7 +63,7 @@ komoo.geometries.Geometry.prototype.initEvents = function () {
     var eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
         'mouseout', 'mouseover', 'mouseup', 'rightclick'];
     eventsNames.forEach(function(eventName, index, orig) {
-        google.maps.event.addListener(that.object_,
+        google.maps.event.addListener(that.overlay_,
                 eventName, function (e, args) {
             komoo.event.trigger(that, eventName, e, args);
         });
@@ -111,26 +111,26 @@ komoo.geometries.Geometry.prototype.getBounds = function () {
 
 komoo.geometries.Geometry.prototype.getCenter = function () {
     var overlayCenter;
-    if (this.object_.getCenter) {
-        overlayCenter = this.object_.getCenter();
-    } else if (this.object_.getPosition) {
-        overlayCenter = this.object_.getPosition();
+    if (this.overlay_.getCenter) {
+        overlayCenter = this.overlay_.getCenter();
+    } else if (this.overlay_.getPosition) {
+        overlayCenter = this.overlay_.getPosition();
     } else if (this.getBounds()) {
         overlayCenter = this.getBounds().getCenter();
     }
     return overlayCenter;
 };
 
-komoo.geometries.Geometry.prototype.initGoogleObject = function () {
+komoo.geometries.Geometry.prototype.initOverlay = function () {
 };
 
-komoo.geometries.Geometry.prototype.setObject = function (object) {
-    this.object_ = object;
+komoo.geometries.Geometry.prototype.setOverlay = function (overlay) {
+    this.overlay_ = overlay;
     this.initEvents();
 };
 
-komoo.geometries.Geometry.prototype.getObject = function () {
-    return this.object_;
+komoo.geometries.Geometry.prototype.getOverlay = function () {
+    return this.overlay_;
 };
 
 komoo.geometries.Geometry.prototype.setFeature = function (feature) {
@@ -191,25 +191,25 @@ komoo.geometries.Geometry.prototype.getArrayFromLatLng = function (latLng) {
 /* Delegations */
 komoo.geometries.Geometry.prototype.setMap = function (map) {
     if (map instanceof komoo.Map)
-        return this.object_.setMap(map.googleMap);
+        return this.overlay_.setMap(map.googleMap);
     else
-        return this.object_.setMap(map);
+        return this.overlay_.setMap(map);
 };
 
 komoo.geometries.Geometry.prototype.getMap = function () {
-    return this.object_.getMap();
+    return this.overlay_.getMap();
 };
 
 komoo.geometries.Geometry.prototype.setVisible = function (visible) {
-    return this.object_.setVisible(visible);
+    return this.overlay_.setVisible(visible);
 };
 
 komoo.geometries.Geometry.prototype.getVisible = function () {
-    return this.object_.getVisible();
+    return this.overlay_.getVisible();
 }
 
 komoo.geometries.Geometry.prototype.setOptions = function (options) {
-    return this.object_.setOptions(options);
+    return this.overlay_.setOptions(options);
 };
 
 
@@ -225,12 +225,12 @@ komoo.geometries.Point = function (opts) {
 komoo.geometries.Point.prototype = Object.create(
         komoo.geometries.Geometry.prototype);
 
-komoo.geometries.Point.prototype.initGoogleObject = function (opts) {
+komoo.geometries.Point.prototype.initOverlay = function (opts) {
     var options = opts || {
         clickable: true,
         zIndex: this.getDefaultZIndex(),
     };
-    this.setObject(new google.maps.Marker(options));
+    this.setOverlay(new google.maps.Marker(options));
 };
 
 komoo.geometries.Point.prototype.initEvents = function () {
@@ -241,7 +241,7 @@ komoo.geometries.Point.prototype.initEvents = function () {
         'flat_changed', 'icon_changed', 'position_changed', 'shadow_changed',
         'shape_changed', 'title_changed', 'visible_changed', 'zindex_changed'];
     eventsNames.forEach(function(eventName, index, orig) {
-        google.maps.event.addListener(that.object_,
+        google.maps.event.addListener(that.overlay_,
                 eventName, function (e, args) {
             komoo.event.trigger(that, eventName, e, args);
         });
@@ -259,27 +259,27 @@ komoo.geometries.Point.prototype.getCoordinates = function () {
 
 /* Delegations */
 komoo.geometries.Point.prototype.setPosition = function (latlng) {
-    return this.object_.setPosition(latlng);
+    return this.overlay_.setPosition(latlng);
 };
 
 komoo.geometries.Point.prototype.getPosition = function () {
-    return this.object_.getPosition();
+    return this.overlay_.getPosition();
 };
 
 komoo.geometries.Point.prototype.setIcon = function (icon) {
-    return this.object_.setIcon(icon);
+    return this.overlay_.setIcon(icon);
 };
 
 komoo.geometries.Point.prototype.getIcon = function () {
-    return this.object_.getIcon();
+    return this.overlay_.getIcon();
 };
 
 komoo.geometries.Point.prototype.setDraggable = function (draggable) {
-    return this.object_.setDraggable(draggable);
+    return this.overlay_.setDraggable(draggable);
 };
 
 komoo.geometries.Point.prototype.getDraggable = function () {
-    return this.object_.getDraggable();
+    return this.overlay_.getDraggable();
 };
 
 
@@ -295,25 +295,25 @@ komoo.geometries.MultiPoint = function (opts) {
 komoo.geometries.MultiPoint.prototype = Object.create(
         komoo.geometries.Geometry.prototype);
 
-komoo.geometries.MultiPoint.prototype.initGoogleObject = function (opts) {
+komoo.geometries.MultiPoint.prototype.initOverlay = function (opts) {
     var options = opts || {
         clickable: true,
         visible: true,
         zIndex: this.getDefaultZIndex(),
     };
-    this.setObject(new MultiMarker(options));
+    this.setOverlay(new MultiMarker(options));
 };
 
 komoo.geometries.MultiPoint.prototype.setPoints = function (points) {
-    this.object_.addMarkers(points);
+    this.overlay_.addMarkers(points);
 };
 
 komoo.geometries.MultiPoint.prototype.getPoints = function () {
-    return this.object_.getMarkers().getArray();
+    return this.overlay_.getMarkers().getArray();
 };
 
 komoo.geometries.MultiPoint.prototype._guaranteePoints = function (len) {
-    var points = this.object_.getMarkers();
+    var points = this.overlay_.getMarkers();
     var missing;
     if (points.length > len) {
         missing = points.length - len;
@@ -323,7 +323,7 @@ komoo.geometries.MultiPoint.prototype._guaranteePoints = function (len) {
     } else if (points.length < len) {
         missing = len - points.length;
         for (var i=0; i<missing; i++) {
-            this.object_.addMarker(new komoo.geometries.Point());
+            this.overlay_.addMarker(new komoo.geometries.Point());
         }
     }
 };
@@ -350,32 +350,32 @@ komoo.geometries.MultiPoint.prototype.getCoordinates = function () {
 };
 
 komoo.geometries.MultiPoint.prototype.setPositions = function (positions) {
-    return this.object_.setPositions(positions);
+    return this.overlay_.setPositions(positions);
 };
 
 komoo.geometries.MultiPoint.prototype.getPositions = function () {
-    return this.object_.getPositions().getArray();
+    return this.overlay_.getPositions().getArray();
 };
 
 /* Delegations */
 komoo.geometries.MultiPoint.prototype.addMarkers = function (markers) {
-    this.object_.addMarkers(markers);
+    this.overlay_.addMarkers(markers);
 };
 
 komoo.geometries.MultiPoint.prototype.getMarkers = function () {
-    return this.object_.getMarkers();
+    return this.overlay_.getMarkers();
 };
 
 komoo.geometries.MultiPoint.prototype.addMarker = function (marker) {
-    this.object_.addMarker(marker);
+    this.overlay_.addMarker(marker);
 };
 
 komoo.geometries.MultiPoint.prototype.setIcon = function (icon) {
-    return this.object_.setIcon(icon);
+    return this.overlay_.setIcon(icon);
 };
 
 komoo.geometries.MultiPoint.prototype.getIcon = function () {
-    return this.object_.getIcon();
+    return this.overlay_.getIcon();
 };
 
 
@@ -391,7 +391,7 @@ komoo.geometries.Polyline = function (opts) {
 komoo.geometries.Polyline.prototype = Object.create(
         komoo.geometries.Geometry.prototype);
 
-komoo.geometries.Polyline.prototype.initGoogleObject = function (opts) {
+komoo.geometries.Polyline.prototype.initOverlay = function (opts) {
     var options = opts || {
         clickable: true,
         zIndex: this.getDefaultZIndex(),
@@ -399,7 +399,7 @@ komoo.geometries.Polyline.prototype.initGoogleObject = function (opts) {
         strockOpacity: this.getBorderOpacity(),
         strokeWeight: this.getBorderSize()
     };
-    this.setObject(new google.maps.Polyline(options));
+    this.setOverlay(new google.maps.Polyline(options));
 };
 
 komoo.geometries.Polyline.prototype.setCoordinates = function (coordinates) {
@@ -443,15 +443,15 @@ komoo.geometries.Polyline.prototype.setIcon = function (icon) {
 
 /* Delegations */
 komoo.geometries.Polyline.prototype.setPath = function (path) {
-    return this.object_.setPath(path);
+    return this.overlay_.setPath(path);
 }
 
 komoo.geometries.Polyline.prototype.getPath = function () {
-    return this.object_.getPath();
+    return this.overlay_.getPath();
 }
 
 komoo.geometries.Polyline.prototype.setEditable = function (flag) {
-    return this.object_.setEditable(flag);
+    return this.overlay_.setEditable(flag);
 }
 
 
@@ -467,7 +467,7 @@ komoo.geometries.MultiPolyline = function (opts) {
 komoo.geometries.MultiPolyline.prototype = Object.create(
         komoo.geometries.Polyline.prototype);
 
-komoo.geometries.MultiPolyline.prototype.initGoogleObject = function (opts) {
+komoo.geometries.MultiPolyline.prototype.initOverlay = function (opts) {
     var options = opts || {
         clickable: true,
         zIndex: this.getDefaultZIndex(),
@@ -476,19 +476,19 @@ komoo.geometries.MultiPolyline.prototype.initGoogleObject = function (opts) {
         strokeWeight: this.getBorderSize()
     };
     this.options_ = options;
-    this.setObject(new MultiPolyline(options));
+    this.setOverlay(new MultiPolyline(options));
 };
 
 komoo.geometries.MultiPolyline.prototype.setLines = function (lines) {
-    this.object_.addPolylines(lines);
+    this.overlay_.addPolylines(lines);
 };
 
 komoo.geometries.MultiPolyline.prototype.getLines = function () {
-    return this.object_.getPolylines().getArray();
+    return this.overlay_.getPolylines().getArray();
 };
 
 komoo.geometries.MultiPolyline.prototype._guaranteeLines = function (len) {
-    var lines = this.object_.getPolylines();
+    var lines = this.overlay_.getPolylines();
     var missing;
     if (lines.length > len) {
         missing = lines.length - len;
@@ -498,7 +498,7 @@ komoo.geometries.MultiPolyline.prototype._guaranteeLines = function (len) {
     } else if (lines.length < len) {
         missing = len - lines.length;
         for (var i=0; i<missing; i++) {
-            this.object_.addPolyline(new komoo.geometries.Polyline(this.options_));
+            this.overlay_.addPolyline(new komoo.geometries.Polyline(this.options_));
         }
     }
 };
@@ -525,15 +525,15 @@ komoo.geometries.MultiPolyline.prototype.getCoordinates = function () {
 };
 
 komoo.geometries.MultiPolyline.prototype.setPaths = function (paths) {
-    return this.object_.setPaths(paths);
+    return this.overlay_.setPaths(paths);
 };
 
 komoo.geometries.MultiPolyline.prototype.getPaths = function () {
-    return this.object_.getPaths().getArray();
+    return this.overlay_.getPaths().getArray();
 };
 
 komoo.geometries.MultiPolyline.prototype.getPath = function () {
-    return this.object_.getPaths().getAt(0);
+    return this.overlay_.getPaths().getAt(0);
 }
 
 
@@ -549,7 +549,7 @@ komoo.geometries.Polygon = function (opts) {
 komoo.geometries.Polygon.prototype = Object.create(
         komoo.geometries.Polyline.prototype);
 
-komoo.geometries.Polygon.prototype.initGoogleObject = function (opts) {
+komoo.geometries.Polygon.prototype.initOverlay = function (opts) {
     var options = opts || {
         clickable: true,
         zIndex: this.getDefaultZIndex(),
@@ -559,7 +559,7 @@ komoo.geometries.Polygon.prototype.initGoogleObject = function (opts) {
         strockOpacity: this.getBorderOpacity(),
         strokeWeight: this.getBorderSize()
     };
-    this.setObject(new google.maps.Polygon(options));
+    this.setOverlay(new google.maps.Polygon(options));
 };
 
 komoo.geometries.Polygon.prototype.handleEvents = function () {
@@ -616,10 +616,10 @@ komoo.geometries.Polygon.prototype.getCoordinates = function () {
 
 /* Delegations */
 komoo.geometries.Polygon.prototype.setPaths = function (paths) {
-    return this.object_.setPaths(paths);
+    return this.overlay_.setPaths(paths);
 }
 
 komoo.geometries.Polygon.prototype.getPaths = function () {
-    return this.object_.getPaths();
+    return this.overlay_.getPaths();
 }
 

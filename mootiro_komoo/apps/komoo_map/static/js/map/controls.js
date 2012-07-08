@@ -23,6 +23,7 @@ komoo.controls.makeInfoWindow = function (opts) {
 /** Info Window **/
 
 komoo.controls.InfoWindow = function (opts) {
+    var options = opts || {};
     var infoWindowOptions = {
         pixelOffset: new google.maps.Size(0, -20),
         closeBoxMargin: '10px',
@@ -33,18 +34,25 @@ komoo.controls.InfoWindow = function (opts) {
         }
     };
     this.object_ = new InfoBox(infoWindowOptions);
+    this.setMap(options.map);
     this.customize_();
 };
 
-komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_content) {
-    var map = feature.getMap();
-    if (map.mode == komoo.Mode.DRAW) return;
-    var position = opt_position || feature.getCenter();
+komoo.controls.InfoWindow.prototype.setMap = function (map) {
+    this.map_ = map;
+};
+
+komoo.controls.InfoWindow.prototype.open = function (opts) {
+    var options = opts || {};
+    var feature = options.feature;
+    var content = options.content;
+    if (this.map_.mode != komoo.Mode.NAVIGATE) return;
+    var position = options.position || feature.getCenter();
     var url, population, msg;
-    if (opt_content) {
+    if (content) {
         this.title.attr('href', '#');
         this.title.text('');
-        this.body.html(opt_content);
+        this.body.html(content);
     } else {
         url = feature.getUrl();
         this.title.text(feature.getProperties().name);
@@ -75,11 +83,11 @@ komoo.controls.InfoWindow.prototype.open = function (feature, opt_position, opt_
 
         this.feature = feature;
     }
-    var point = komoo.utils.latLngToPoint(map, position);
+    var point = komoo.utils.latLngToPoint(this.map_, position);
     point.x += 5;
-    var newPosition = komoo.utils.pointToLatLng(map, point);
+    var newPosition = komoo.utils.pointToLatLng(this.map_, point);
     this.object_.setPosition(newPosition);
-    this.object_.open(map.googleMap ? map.googleMap : map);
+    this.object_.open(this.map_.googleMap ? this.map_.googleMap : this.map_);
 };
 
 komoo.controls.InfoWindow.prototype.close = function () {

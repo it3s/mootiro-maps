@@ -72,9 +72,9 @@
         test('Create point geometry with googles marker object', function () {
           expect(3);
           var simplePoint = new komoo.geometries.Point();
-          ok(simplePoint.object_, 'Should create googleObject');
+          ok(simplePoint.overlay_, 'Should create googleObject');
           ok(google.maps.Marker.prototype.isPrototypeOf(
-                simplePoint.object_),
+                simplePoint.overlay_),
               'object should be a google.maps.Marker object')
           equal(simplePoint.getGeometryType(), 'Point',
               'Geometry type should be "Point"');
@@ -83,9 +83,9 @@
         test('Create polyline geometry with googles polyline object', function () {
           expect(3);
           var simplePolyline = new komoo.geometries.Polyline();
-          ok(simplePolyline.object_, 'Should create googleObject');
+          ok(simplePolyline.overlay_, 'Should create googleObject');
           ok(google.maps.Polyline.prototype.isPrototypeOf(
-                simplePolyline.object_),
+                simplePolyline.overlay_),
               'object should be a google.maps.Polyline object');
           equal(simplePolyline.getGeometryType(), 'LineString',
               'Geometry type should be "LineString"');
@@ -94,9 +94,9 @@
         test('Create polygon geometry with googles polygon object', function () {
           expect(3);
           var simplePolygon = new komoo.geometries.Polygon();
-          ok(simplePolygon.object_, 'Should create googleObject');
+          ok(simplePolygon.overlay_, 'Should create googleObject');
           ok(google.maps.Polygon.prototype.isPrototypeOf(
-                simplePolygon.object_),
+                simplePolygon.overlay_),
               'object should be a google.maps.Polygon object');
           equal(simplePolygon.getGeometryType(), 'Polygon',
               'Geometry type should be "Polygon"');
@@ -105,8 +105,8 @@
         test('Create multipoint geometry with MultiMarker object', function () {
           expect(3);
           var simpleMultiPoint = new komoo.geometries.MultiPoint();
-          ok(simpleMultiPoint.object_, 'Should create googleObject');
-          ok(MultiMarker.prototype.isPrototypeOf(simpleMultiPoint.object_),
+          ok(simpleMultiPoint.overlay_, 'Should create googleObject');
+          ok(MultiMarker.prototype.isPrototypeOf(simpleMultiPoint.overlay_),
               'object should be a MultiMarker object');
           equal(simpleMultiPoint.getGeometryType(), 'MultiPoint',
               'Geometry type should be "MultiPoint"');
@@ -117,7 +117,7 @@
           var point = new komoo.geometries.Point();
           var coordinates = [0, 1];
           point.setCoordinates(coordinates);
-          var position = point.object_.getPosition();
+          var position = point.overlay_.getPosition();
           equal(position.lat(), coordinates[0]);
           equal(position.lng(), coordinates[1]);
         });
@@ -144,7 +144,7 @@
           var polyline = new komoo.geometries.Polyline();
           var coordinates = [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]];
           polyline.setCoordinates(coordinates);
-          var googlePath = polyline.object_.getPath();
+          var googlePath = polyline.overlay_.getPath();
           googlePath.forEach(function(pos, i) {
             equal(pos.lat(), coordinates[i][0]);
             equal(pos.lng(), coordinates[i][1]);
@@ -174,7 +174,7 @@
             [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]],
             [[2, 2], [2, 3], [3, 3], [3, 2], [2, 2]]];
           polygon.setCoordinates(coordinates);
-          var googlePaths = polygon.object_.getPaths();
+          var googlePaths = polygon.overlay_.getPaths();
           googlePaths.forEach(function (path, i) {
             path.forEach(function(pos, j) {
               equal(pos.lat(), coordinates[i][j][0]);

@@ -111,7 +111,7 @@ $("#filter-results .sublist ul li").live("mouseover", function (event) {
     var obj_id = parseInt($(this).attr("id").match(/[0-9]+$/)[0]);
     obj_id = parseInt(obj_id);
     var obj_type = $(this).attr("id").match(/^(.+)-/)[1];
-    editor.highlightOverlay(obj_type, obj_id);
+    editor.highlightFeature(obj_type, obj_id);
 });
 
 /******* Configure geo objects listing behaviours *******/
@@ -136,9 +136,9 @@ $("#map-panel-layers > ul > li:not(.needs) div.img-holder > img").bind("click", 
 
     if (objectType) {
         if ($("input[type=checkbox]", $parent).attr("checked")) {
-            editor.showOverlaysByType(objectType);
+            editor.showFeaturesByType(objectType);
         } else {
-            editor.hideOverlaysByType(objectType);
+            editor.hideFeaturesByType(objectType);
         }
     }
 });
@@ -157,15 +157,15 @@ $("#map-panel-layers > ul > li.sublist > ul > li > div.img-holder > img").bind("
     });
 
     if ($("input[type=checkbox]", $parent).attr("checked")) {
-        editor.showOverlaysByType(objectType, [category]);
+        editor.showFeaturesByType(objectType, [category]);
     } else {
-        editor.hideOverlaysByType(objectType, [category]);
+        editor.hideFeaturesByType(objectType, [category]);
     }
 
     if (enabledCategories.length == 1)
-        editor.hideOverlaysByType(objectType, ['uncategorized']);
+        editor.hideFeaturesByType(objectType, ['uncategorized']);
     else
-        editor.showOverlaysByType(objectType, enabledCategories);
+        editor.showFeaturesByType(objectType, enabledCategories);
 });
 
 /******* Add *******/
@@ -175,20 +175,20 @@ $(function () {
     $.each(items, function (i, item) {
         var $item = $(item);
         var type = $item.attr("data-object-type");
-        var overlayType = $item.attr("data-overlay-type");
-        if (overlayType) {
-            // console.log(type, overlayType);
+        var geometryType = $item.attr("data-geometry-type");
+        if (geometryType) {
+            // console.log(type, geometryType);
         }
         if ($item.hasClass("sublist")) {
             var subitems = $(".add", $item);
             $.each(subitems, function (i, subitem) {
                 var $subitem = $(subitem);
-                var overlayType = $subitem.attr("data-overlay-type");
+                var geometryType = $subitem.attr("data-geometry-type");
                 $subitem.click(function (e) {
                     if (editor.addPanel.is(":visible")){
                         return;
                     }
-                    editor.setDrawingMode(type, overlayType);
+                    editor.setDrawingMode(type, geometryType);
                     $("#map-panel-add .selected").removeClass("selected");
                     $subitem.addClass("selected");
 

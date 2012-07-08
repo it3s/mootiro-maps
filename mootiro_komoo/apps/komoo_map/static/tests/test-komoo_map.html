@@ -82,13 +82,13 @@
           editable: true,
           featureTypes: [
             {type: 'Community', categories: [], title: '', tooltip: '',
-            overlayTypes: []},
+            geometryTypes: []},
             {type: 'Need', categories: [], title: '', tooltip: '',
-            overlayTypes: []},
+            geometryTypes: []},
             {type: 'Resource', categories: [], title: '', tooltip: '',
-            overlayTypes: []},
+            geometryTypes: []},
             {type: 'OrganizationBranch', categories: [], title: '', tooltip:
-            '', overlayTypes: []},
+            '', geometryTypes: []},
           ],
           fetchGeometries: false,
           autoSaveMapType: true,
@@ -141,7 +141,7 @@
           equal(features.length, 1, 'Wrong collection size');
           equal(features.getAt(0).getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
           equal(features.getAt(0).getGeometry().getPath().getLength(), 4, 'Wrong path size');
-          equal(map.overlays.length, 1, 'Added wrong geometries to map');
+          equal(map.features.length, 1, 'Added wrong geometries to map');
           var moreFeatures = map.loadGeoJSON(completeGeoJson);
           equal(moreFeatures.length, 3, 'Wrong collection size');
           equal(moreFeatures.getAt(0).getGeometry().getPaths().getLength(), 1, 'Wrong paths size');
@@ -149,7 +149,7 @@
           equal(moreFeatures.getAt(1).getGeometry().getPath().getLength(), 5, 'Wrong path size');
           equal(moreFeatures.getAt(2).getGeometry().getPositions()[0].lat(), 1, 'Wrong latitude');
           equal(moreFeatures.getAt(2).getGeometry().getPositions()[0].lng(), 2, 'Wrong longitude');
-          equal(map.overlays.length, 3, 'Added wrong geometries to map');
+          equal(map.features.length, 3, 'Added wrong geometries to map');
         });
 
         test('Get GeoJSON', function () {
