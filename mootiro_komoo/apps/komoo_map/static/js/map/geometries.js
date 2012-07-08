@@ -94,10 +94,11 @@ komoo.geometries.Geometry.prototype.calculateBounds = function () {
             bounds = getBounds(pos);
         });
     });
-    this.bounds_ = new google.maps.LatLngBounds(
-            this.getLatLngFromArray(bounds[0]),
-            this.getLatLngFromArray(bounds[1])
-        );
+    if (bounds)
+        this.bounds_ = new google.maps.LatLngBounds(
+                this.getLatLngFromArray(bounds[0]),
+                this.getLatLngFromArray(bounds[1])
+            );
     this.bounds = this.bounds_; // TODO: This should be removed
     return this.bounds_;
 };
@@ -114,7 +115,7 @@ komoo.geometries.Geometry.prototype.getCenter = function () {
         overlayCenter = this.object_.getCenter();
     } else if (this.object_.getPosition) {
         overlayCenter = this.object_.getPosition();
-    } else if (this.getBounds) {
+    } else if (this.getBounds()) {
         overlayCenter = this.getBounds().getCenter();
     }
     return overlayCenter;
