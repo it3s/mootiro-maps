@@ -66,8 +66,8 @@ ul.horizontal li {
     margin: 0 2px;
 }
 .clear-both { clear: both }
-.hidden { 
-    display: none; 
+.hidden {
+    display: none;
     visibility: visible; /* overwrite bootstrap */
 }
 .clickable { cursor: pointer }
@@ -114,6 +114,50 @@ div.apart {
 }
 .more { cursor: pointer }
 
+.popover{
+    z-index: 999999;
+    margin-top: -5px;
+}
+.popover-inner{
+    background-color: rgb(245,245,245);
+    padding: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(0, 0, 0, 0.95);
+    width: 580px;
+    max-height: 600px;
+    overflow-y: scroll;
+}
+.popover-content{
+    background-color: rgb(245,245,245);
+}
+.popover.bottom .arrow{
+    border-bottom: 5px solid rgb(245, 245, 245);
+}
+#search-box-close{
+    float: right;
+    color: #777777;
+    cursor: pointer;
+}
+.popover li{
+    list-style: none;
+}
+.search-header.google{
+    background-color: #FBDEDA;
+}
+.search-header.community{
+    background-color: #FFF1DF;
+}
+.search-header.need{
+    background-color: #FAD7D7;
+}
+.search-header.organization{
+    background-color: #D3D5ED;
+}
+.search-header.resource{
+    background-color: #DEECCF;
+}
+.search-header.investment{
+    background-color: #EEE9CC;
+}
 
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
@@ -857,7 +901,7 @@ body.community #main-content {
     background-color: #ffffff;
     box-shadow: 1px 1px 1px #999999 inset;
 }
-#search-button { margin-left: 4px }
+#search-button { margin-left: 4px; margin-top: -10px; }
 .komoo-map-googlemap img { /* Revert bootstrap changes */
     max-width: none !important;
 }
