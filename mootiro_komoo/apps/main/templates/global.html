@@ -31,6 +31,7 @@
     <script type="text/javascript" src="{{STATIC_URL}}lib/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.conf.urls.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/heartcode-canvasloader-min.js"></script>
     <!-- Our utilities lib -->
     <script type="text/javascript">var isAuthenticated = {{ user.is_authenticated|lower }};</script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/shortcut.js"></script>
@@ -74,8 +75,11 @@
 
           <form id="search" action=".">
             <input type="text" id="search-bar"/>
-            <input type="submit" id="search-button" class="button" value="{% trans 'Search' %}"/>
+            <input type="submit" id="search-button" class="button" value="{% trans 'See Results' %}"/>
+            <div id="search-canvasloader-container" class="inline-block"></div>
           </form>
+          <div id="search-results-box"></div>
+
           {% block menu %}
             {% with obj=community selected_area="" %}
               {% menu obj selected_area %}

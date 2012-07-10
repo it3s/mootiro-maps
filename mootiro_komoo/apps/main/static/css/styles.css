@@ -901,7 +901,7 @@ body.community #main-content {
     background-color: #ffffff;
     box-shadow: 1px 1px 1px #999999 inset;
 }
-#search-button { margin-left: 4px }
+#search-button { margin-left: 4px; margin-top: -10px; }
 .komoo-map-googlemap img { /* Revert bootstrap changes */
     max-width: none !important;
 }

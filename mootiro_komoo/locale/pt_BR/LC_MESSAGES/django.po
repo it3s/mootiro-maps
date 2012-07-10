@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-06 10:25-0300\n"
+"POT-Creation-Date: 2012-07-10 17:31-0300\n"
 "PO-Revision-Date: 2012-06-06 14:29-0300\n"
 "Last-Translator: André Casimiro <ah.casimiro@gmail.com>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -362,7 +362,7 @@ msgstr "Informações de contato não fornecidas"
 msgid "Submit"
 msgstr "Enviar"
 
-#: apps/main/views.py:193
+#: apps/main/views.py:195
 msgid ""
 "\n"
 "Url: {0}\n"
@@ -378,7 +378,7 @@ msgstr ""
 "Mensagem: {5}\n"
 "    "
 
-#: apps/main/views.py:201
+#: apps/main/views.py:203
 msgid "Error report"
 msgstr "Relatório de erro"
 
@@ -441,8 +441,8 @@ msgid "Ops!"
 msgstr "Ops!"
 
 #: apps/main/templates/global.html:77
-msgid "Search"
-msgstr "Buscar"
+msgid "See Results"
+msgstr "Ver Resultados"
 
 #: apps/main/templates/main/filter_results.html:6
 msgid "Search results for this radius"
@@ -511,7 +511,7 @@ msgstr "Apoio"
 #: apps/main/templates/main/templatetags/communities_list.html:11
 #: apps/main/templates/main/templatetags/usernames_list.html:9
 msgid "and"
-msgstr ""
+msgstr "e"
 
 #: apps/main/templates/main/templatetags/communities_list.html:19
 #, python-format
@@ -545,6 +545,7 @@ msgid "Add point"
 msgstr "Adicionar ponto"
 
 #: apps/main/templates/main/templatetags/history.html:4
+#, python-format
 msgid ""
 "\n"
 "    created by %(user)s %(date)s<br/>\n"
@@ -647,6 +648,7 @@ msgid "Apply"
 msgstr "Aplicar"
 
 #: apps/main/templatetags/komoo_filters.py:34
+#, python-format
 msgctxt "more than 1 month ago"
 msgid "on %(date)s at %(time)s"
 msgstr "em %(date)s às %(time)s"
@@ -1232,7 +1234,6 @@ msgid "Type"
 msgstr "Tipo"
 
 #: apps/update/templates/update/frontpage.html:83
-#, fuzzy
 msgid ""
 "\n"
 "                      discussed\n"
@@ -1280,15 +1281,15 @@ msgstr "Assinaturas"
 
 #: apps/user_cas/templates/user_cas/profile.html:53
 msgid "I dont want to receive digest mails"
-msgstr ""
+msgstr "Eu não quero receber emails de resumo das atividades"
 
 #: apps/user_cas/templates/user_cas/profile.html:57
 msgid "I want to receive only weekly emails digest"
-msgstr ""
+msgstr "Eu quero receber somente emails de resumo semanais"
 
 #: apps/user_cas/templates/user_cas/profile.html:61
 msgid "I want to receive only daily emails digest"
-msgstr ""
+msgstr "Eu quero receber somente emails de resumo diário"
 
 #: apps/vote/views.py:59
 msgid "User not logged or anonymous"
@@ -1363,6 +1364,9 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
+
+#~ msgid "Search"
+#~ msgstr "Buscar"
 
 #~ msgid ""
 #~ "\n"

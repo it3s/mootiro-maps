@@ -2,10 +2,17 @@
 (function() {
 
   $(function() {
-    var csrftoken, form_search, geo_object, intvl, search_field, showPopover, showResults, titles;
+    var cl, csrftoken, form_search, geo_object, intvl, search_field, showPopover, showResults, titles, _ref;
     form_search = $('#search');
     search_field = $('#search-bar');
     csrftoken = getCookie('csrftoken') || window.csrf_token;
+    cl = new CanvasLoader('search-canvasloader-container');
+    cl.setColor('#3ebac2');
+    cl.setShape('rect');
+    cl.setDiameter(22);
+    cl.setDensity(43);
+    cl.setRange(1.2);
+    cl.setFPS(22);
     titles = {
       'community': gettext('Communities'),
       'need': gettext('Needs'),
@@ -14,7 +21,6 @@
       'investiment': gettext('Investments'),
       'google': gettext('Google Results')
     };
-    form_search.after('<div id="search-results-box"></div>');
     showPopover = function() {
       $('#search-results-box').popover('show');
       $('.popover').css('top', parseInt($('.popover').css('top'), 10) - 10);
@@ -78,11 +84,13 @@
       }
       $('#search-results-box').data('popover').options.title = "" + results_count + " Results <span id=\"search-box-close\" >x</span>";
       $('#search-results-box').data('popover').options.content = results_list;
-      return showPopover();
+      showPopover();
+      return cl.hide();
     };
     form_search.submit(function(evt) {
       var previous_search, search_term;
       evt.preventDefault();
+      cl.show();
       search_term = search_field.val();
       previous_search = localStorageGet('komoo_search');
       if ((previous_search != null ? previous_search.term : void 0) === search_term) {
@@ -114,6 +122,7 @@
     $('#search-box-close').live('click', function() {
       return $('#search-results-box').popover('hide');
     });
+    search_field.val(((_ref = localStorageGet('komoo_search')) != null ? _ref.term : void 0) || '');
     if (window.location.pathname === dutils.urls.resolve('map') && localStorageGet('komoo_seeOnMap')) {
       geo_object = localStorageGet('komoo_seeOnMap');
       intvl = setInterval(function() {

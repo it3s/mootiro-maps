@@ -4,6 +4,15 @@ $ ->
     search_field = $ '#search-bar'
     csrftoken = getCookie('csrftoken') or  window.csrf_token
 
+    # canvas loader for user feedback
+    cl = new CanvasLoader 'search-canvasloader-container'
+    cl.setColor '#3ebac2'
+    cl.setShape 'rect'
+    cl.setDiameter 22
+    cl.setDensity 43
+    cl.setRange 1.2
+    cl.setFPS 22
+
     titles =
         'community': gettext 'Communities'
         'need': gettext 'Needs'
@@ -11,9 +20,6 @@ $ ->
         'resource': gettext 'Resources'
         'investiment': gettext 'Investments'
         'google': gettext 'Google Results'
-
-    # TODO: this should go to global.html
-    form_search.after '<div id="search-results-box"></div>'
 
     showPopover = ->
         $('#search-results-box').popover 'show'
@@ -121,10 +127,13 @@ $ ->
         """
         $('#search-results-box').data('popover').options.content = results_list
         showPopover()
+        cl.hide()
 
 
     form_search.submit (evt) ->
         evt.preventDefault();
+
+        cl.show()
 
         search_term = search_field.val()
         previous_search = localStorageGet('komoo_search')
@@ -151,6 +160,9 @@ $ ->
 
     $('#search-box-close').live 'click', ->
         $('#search-results-box').popover 'hide'
+
+    # load last search term
+    search_field.val(localStorageGet('komoo_search')?.term or '')
 
     # See on Map
     if window.location.pathname == dutils.urls.resolve('map') and localStorageGet 'komoo_seeOnMap'
