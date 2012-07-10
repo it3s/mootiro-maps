@@ -428,10 +428,9 @@ komoo.Map = function (element, options) {
     this.googleMap.overlayMapTypes.insertAt(0, this.serverFetchMapType);
     this.wikimapiaMapType = new komoo.WikimapiaMapType(this);
     //this.googleMap.overlayMapTypes.insertAt(0, this.wikimapiaMapType);
-    this.initMarkerClusterer();
     // Create the simple version of toolbar.
     this.editToolbar = $("<div>").addClass("map-toolbar").css("margin", "5px");
-    this.initInfoWindow();
+    this.initControls();
     this.setEditable(this.options.editable);
     this.initCustomControl();
     this.initStreetView();
@@ -504,103 +503,45 @@ komoo.Map.prototype.initEvents = function (opt_object) {
     });
 };
 
-/**
- * Prepares the infoWindow property. Should not be called externally
- */
-komoo.Map.prototype.initInfoWindow = function () {
-    var komooMap = this;
-    var infoWindowOptions = {
-        pixelOffset: new google.maps.Size(0, -20),
-        closeBoxMargin: '10px',
-        boxStyle: {
-            cursor: 'pointer',
-            background: 'url(/static/img/infowindow-arrow.png) no-repeat 0 10px', // TODO: Hardcode is evil
-            width: '200px'
-        }
-    };
-    this.tooltip = new InfoBox(infoWindowOptions);
-    google.maps.event.addDomListener(this.tooltip, "domready", function (e) {
-        var closeBox = komooMap.tooltip.div_.firstChild;
-        $(closeBox).hide();  // Removes the close button.
-        google.maps.event.addDomListener(closeBox, "click", function (e) {
-            // Detach the feature from infowindow when close it.
-            komooMap.tooltip.feature = undefined;
-        });
-        google.maps.event.addDomListener(komooMap.tooltip.div_, "click", function (e) {
-            google.maps.event.trigger(komooMap.tooltip.feature, "click", {latLng: komooMap.tooltip.getPosition()});
-        });
-    });
-
-
-    this.tooltip.title = $("<span>");
-    this.tooltip.content = $("<div>").addClass("map-infowindow-content");
-    this.tooltip.content.append(this.tooltip.title);
-
-    var css = {
-        background: "white",
-        padding: "10px",
-        margin: "0 0 0 15px"
-    };
-    this.tooltip.content.css(css);
-    this.tooltip.setContent(this.tooltip.content.get(0));
-
+komoo.Map.prototype.initControls = function () {
+    this.initMarkerClusterer();
+    this.tooltip = komoo.controls.makeTooltip({map: this});
     this.infoWindow = komoo.controls.makeInfoWindow({map: this});
 };
 
-
 /**
- * Closes the information window.
+ * Display the information window.
+ * @param {Object} opts
  */
+komoo.Map.prototype.openInfoWindow = function (opts) {
+    if (!this.options.enableInfoWindow) return;
+    this.closeTooltip();
+    this.infoWindow.open(opts);
+};
+
 komoo.Map.prototype.closeInfoWindow = function () {
     this.infoWindow.close();
 };
 
 
 /**
- * Closes the tooltip.
- */
-komoo.Map.prototype.closeTooltip = function () {
-    this.tooltip.close();
-    this.tooltip.feature = undefined;
-};
-
-
-/**
- * Display the information window.
- * @param {google.maps.MVCObject} feature
- * @param {google.maps.LatLng} latLng
- * @param {String} [opt_content]
- */
-komoo.Map.prototype.openInfoWindow = function (opts) {
-    this.closeTooltip();
-    this.infoWindow.open(opts);
-};
-
-
-/**
  * Display the tooltip.
- * @param {google.maps.MVCObject} feature
- * @param {google.maps.LatLng} latLng
- * @param {String} [optContent]
+ * @param {Object} opts
  */
-komoo.Map.prototype.openTooltip = function (feature, latLng, optContent) {
-    if (feature == this.infoWindow.feature || this.infoWindow.isMouseover) {
+komoo.Map.prototype.openTooltip = function (opts) {
+    var options = opts || {};
+    if (!this.options.enableInfoWindow ||
+            this.addPanel.is(":visible") ||
+            this.tooltip.feature == options.feature ||
+            options.feature == this.infoWindow.feature)
         return;
-    }
-    if (feature) {
-        this.tooltip.title.text(optContent || feature.getProperties().name);
-        this.tooltip.feature = feature;
-    }
-    if (feature.getProperties().type == "OrganizationBranch") {
-        this.tooltip.title.text(feature.getProperties().organization_name + " - " + feature.getProperties().name);
-    } else {
-        this.tooltip.title.text(feature.getProperties().name);
-    }
-    var point = komoo.utils.latLngToPoint(this, latLng);
-    point.x += 5;
-    var newLatLng = komoo.utils.pointToLatLng(this, point);
-    this.tooltip.setPosition(newLatLng);
-    this.tooltip.open(this.googleMap);
+
+    this.tooltip.open(options);
+};
+
+komoo.Map.prototype.closeTooltip = function () {
+    clearTimeout(this.tooltip.timer);
+    this.tooltip.close();
 };
 
 
@@ -662,6 +603,17 @@ komoo.Map.prototype.initMarkerClusterer = function () {
             imagePath: "/static/img/cluster/communities",
             imageSizes: [24, 29, 35, 41, 47]
         });
+        google.maps.event.addListener(this.clusterer, 'mouseover', function (c) {
+            var markers = c.getMarkers();
+            var features = [];
+            markers.forEach(function (marker, index, orig) {
+                features.push(marker.feature);
+            });
+            komooMap.openTooltip({features: features, position: c.getCenter()});
+        })
+        google.maps.event.addListener(this.clusterer, 'mouseout', function (c) {
+            komooMap.closeTooltip();
+        })
     }
 };
 
@@ -1490,46 +1442,28 @@ komoo.Map.prototype._attachFeatureEvents = function (feature) {
             komooMap.setEditMode(null);
             komooMap.setCurrentFeature(feature_);  // Select the clicked feature
             komooMap.closeTooltip();
-            setTimeout(function () { komooMap.openInfoWindow({feature: feature_, position: e.latLng}) }, 200);
+            setTimeout(function () {
+                komooMap.openInfoWindow({feature: feature_, position: e.latLng});
+            }, 200);
         }
     });
 
-    google.maps.event.addListener(feature, "dblclick", function (e, o) {
+    google.maps.event.addListener(feature, 'dblclick', function (e, o) {
         e.stop();
         var url = this.getUrl();
-        if (url) {
-            window.location = url;
-        }
+        if (url) window.location = url;
     });
 
-    google.maps.event.addListener(feature, "mousemove", function (e) {
-        if (komooMap.tooltip.feature == feature || komooMap.addPanel.is(":visible") ||
-                !komooMap.options.enableInfoWindow) {
-            return;
-        }
+    google.maps.event.addListener(feature, 'mousemove', function (e) {
         clearTimeout(komooMap.tooltip.timer);
-        var delay = 0;
-        if (feature.getProperties().type == "Community") {
-            delay = 400;
-        }
+        var delay = (feature.getProperty('type') == 'Community') ? 400 : 0;
         komooMap.tooltip.timer = setTimeout(function () {
-            if (komooMap.tooltip.isMouseover || komooMap.addPanel.is(":visible") || komooMap.mode == komoo.Mode.SELECT_CENTER) {
-                return;
-            }
-            komooMap.openTooltip(feature, e.latLng);
+            komooMap.openTooltip({feature: feature, position: e.latLng});
         }, delay);
     });
 
-    google.maps.event.addListener(feature, "mouseout", function (e) {
-        var delay = 0;
-        clearTimeout(komooMap.tooltip.timer);
-        //if (!komooMap.tooltip.isMouseover) {
-            //komooMap.tooltip.timer = setTimeout(function () {
-                //if (!komooMap.tooltip.isMouseover) {
-                    komooMap.closeTooltip();
-                //}
-            //}, delay);
-        //}
+    google.maps.event.addListener(feature, 'mouseout', function (e) {
+        komooMap.closeTooltip();
     });
 };
 
@@ -1840,7 +1774,6 @@ komoo.Map.prototype._createMainPanel = function () {
             item.append($("<div>").addClass("item-title").text(type.title).attr("title", type.tooltip));
             var submenu = komooMap.addItems.clone(true).addClass("map-submenu");
             $("div", submenu).hide();
-            console.log(type);
             type.geometryTypes.forEach(function (featureType, index, orig) {
                 $("#map-add-" + featureType, submenu).addClass("enabled").show();
             });

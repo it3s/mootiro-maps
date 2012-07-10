@@ -67,6 +67,7 @@ komoo.features.Feature.prototype.getGeometryType = function () {
 
 komoo.features.Feature.prototype.setMarker = function (marker) {
     this.marker_ = marker;
+    this.marker_.getOverlay().feature = this;
     this.initEvents(marker);
 };
 
@@ -119,7 +120,7 @@ komoo.features.Feature.prototype.setHighlight = function (flag) {
 
 komoo.features.Feature.prototype.getIconUrl = function (optZoom) {
     if (!this.getProperties()) return;
-    var zoom = optZoom || this.map_ ? this.map_.getZoom() : 10;
+    var zoom = optZoom || (this.map_ ? this.map_.getZoom() : 10);
     var url = '/static/img/';
     if (zoom >= this.minZoomMarker) {
         url += 'near';
@@ -167,6 +168,10 @@ komoo.features.Feature.prototype.setProperties = function (properties) {
 
 komoo.features.Feature.prototype.getProperties = function () {
     return this.properties_;
+};
+
+komoo.features.Feature.prototype.getProperty = function (name) {
+    return this.properties_[name];
 };
 
 komoo.features.Feature.prototype.getGeoJsonGeometry = function () {
