@@ -139,6 +139,18 @@ class OrganizationBranch(GeoRefModel, VotableModel):
         self.slug = slugify(self.name)
         return super(OrganizationBranch, self).save(*args, **kwargs)
 
+    @property
+    def description(self):
+        return self.info
+
+    @property
+    def view_url(self):
+        return self.organization.view_url
+
+    @property
+    def edit_url(self):
+        return self.organization.edit_url
+
     image = "img/organization.png"
     image_off = "img/organization-off.png"
 

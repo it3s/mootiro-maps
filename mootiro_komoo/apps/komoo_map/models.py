@@ -72,6 +72,8 @@ def get_editable_models():
 
 def get_models_json(all=True):
     return json.dumps([{'type': model.__name__,
+                    'appLabel': model._meta.app_label,
+                    'modelName': model.__name__,
                     'disabled': not model.get_map_attr('editable'),
                     'title': model.get_map_attr( 'title') or '{}'.format(model.__name__),
                     'tooltip': model.get_map_attr('tooltip') or 'Add {}'.format(model.__name__),

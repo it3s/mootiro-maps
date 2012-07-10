@@ -1,0 +1,15 @@
+{% load i18n %}
+
+{% block title %}<strong>{{ object.name }}</strong>{% endblock %}
+{% block content %}
+  <div>
+    {% if object.categories %}
+      <ul class="horizontal" id="categories">
+        {% for c in object.categories.all %}
+        <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
+        {% endfor %}
+      </ul>
+      <div style="clear: both;">
+    {% endif %}
+  </div>
+{% endblock %}
