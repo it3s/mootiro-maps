@@ -1746,6 +1746,8 @@ textarea.markItUpEditor{
     margin-left: 10px;
     min-height: 26px;
     cursor: pointer;
+    display: inline-block;
+    float: none;
 }
 .org-btn.multiline{
     padding: 4px 10px;
