@@ -10,7 +10,15 @@ function storageGet(key){
 function storageRemove(key){
     window.sessionStorage.removeItem(key);
 }
-
+function localStorageSet(key, obj){
+    window.localStorage.setItem(key, JSON.stringify(obj));
+}
+function localStorageGet(key){
+    return JSON.parse(window.localStorage.getItem(key));
+}
+function localStorageRemove(key){
+    window.localStorage.removeItem(key);
+}
 /* function for getting xsrf cookies */
 function getCookie(name) {
     var cookieValue = null;

@@ -39,9 +39,10 @@ def setup_django():
     sys.path.append(PROJ_DIR)
     sys.path.append(SITE_ROOT)
     from django.core.management import setup_environ
-    env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    # env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    env_name = {'dev': 'development', 'stage': 'staging', 'prod': 'production'}
     environ = None
-    exec 'from settings import {} as environ'.format(env_name)
+    exec 'from settings import {} as environ'.format(env_name[env_])
     setup_environ(environ)
 
 
@@ -54,6 +55,19 @@ def build_environment():
     local("patch -p0 `which python | "
         "sed -e 's/bin\/python$/lib\/python2.7\/site-packages\/django\/contrib\/gis\/db\/backends\/postgis\/adapter.py/'` "
         "../docs/postgis-adapter-2.patch")
+
+
+def coffee_maker():
+    """ runs coffeescript compiler"""
+    # apps we want to compile our coffee files
+    COFFEE_SHOP = ['main', ]
+    for app in COFFEE_SHOP:
+        local('coffee -o apps/{app}/static/js/ -cw apps/{app}/static/coffee/ &'.format(app=app))
+
+
+def kill_coffee_tasks():
+    """kill all coffe node.js background tasks"""
+    local('ps -eo pid,args | grep coffee | grep -v grep | cut -c1-6 | xargs kill')
 
 
 def run_celery():
@@ -267,9 +281,10 @@ def fix_contenttypes():
     sys.path.append(PROJ_DIR)
     sys.path.append(SITE_ROOT)
     from django.core.management import setup_environ
-    env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    # env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    env_name = {'dev': 'development', 'stage': 'staging', 'prod': 'production'}
     environ = None
-    exec 'from settings import {} as environ'.format(env_name)
+    exec 'from settings import {} as environ'.format(env_name[env_])
     setup_environ(environ)
 
     from django.contrib.contenttypes.models import ContentType

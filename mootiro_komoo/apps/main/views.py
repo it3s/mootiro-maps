@@ -22,7 +22,6 @@ from community.models import Community
 from need.models import Need
 from komoo_resource.models import Resource
 from organization.models import OrganizationBranch, Organization
-from komoo_map.models import GeoRefModel
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
@@ -164,10 +163,13 @@ def komoo_search(request):
     for key, model in queries.iteritems():
         result[key] = []
         for o in _query_model(model.get('model'), term, model.get('query_fields')):
-            dados = {'id': o.id,
-                     'name': getattr(o, model.get('repr')),
-                     'link': model.get('link')(o),
-                     'model': key}
+            dados = {
+                'id': o.id,
+                 'name': getattr(o, model.get('repr')),
+                 'link': model.get('link')(o),
+                 'model': key,
+                 'geojson': create_geojson([o])
+            }
             result[key].append(dados)
 
     # Google search
