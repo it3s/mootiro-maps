@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 @render_to('main/root.html')
 def root(request):
     logger.debug('acessing Root')
-    return dict(geojson={})
+    return dict(community=None, geojson={})
 
 
 def _fetch_geo_objects(Q, zoom):
