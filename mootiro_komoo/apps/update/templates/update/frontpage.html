@@ -179,12 +179,16 @@
 
         $("#about-mootiro.open").live("mouseleave", function (evt) {
             console.log("open leave");
-            $(this).toggleClass("closed open");
-            $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
-            $(this).animate({
-                width: '-=105',
-                height: '-=120'
-            });
+            var about_mootiro = $(this);
+            var close_panel = setTimeout(function(){
+              about_mootiro.toggleClass("closed open");
+              $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
+              about_mootiro.animate({
+                  width: '-=105',
+                  height: '-=120'
+              });
+            }, 2000);
+
         });
 
     </script>
