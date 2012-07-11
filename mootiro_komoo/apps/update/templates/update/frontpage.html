@@ -101,7 +101,7 @@
                 {% communities_list u.communities %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  {{ u.readable_type|capfirst }} {{ u.date|naturaltime }}
+                  <strong>{{ u.readable_type|capfirst }}</strong> {{ u.date|naturaltime }}
 
                   {### Users aggregated list ###}
                   {% if u.type == "A" or u.type == "E" %}
