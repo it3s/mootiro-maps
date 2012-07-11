@@ -1240,10 +1240,14 @@ a.btnShowForm{
     display: none;
     margin-left: 15px;
 }
+.comment-form .markItUp{
+    width: 95% !important;
+}
 .comment-form textarea.markItUpEditor{
     background-color: #ffffff;
     height: 100px;
-    max-width: 675px;
+    /*max-width: 675px;*/
+    width: 100%;
 }
 .inner-comment{
    margin-right: -1px;
