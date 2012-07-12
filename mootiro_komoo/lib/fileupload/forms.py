@@ -38,7 +38,7 @@ class FileuploadWidget(forms.Widget):
             'plupload/browserplus-min.js',
             'plupload/js/plupload.full.js',
             'plupload/komoo_plupload.js',
-            'lib/bootstrap.min.js',
+            # 'lib/bootstrap.min.js',
         )
         css = {
             'all': ('plupload/komoo_plupload.css',)
