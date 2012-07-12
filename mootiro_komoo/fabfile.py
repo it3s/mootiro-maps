@@ -67,7 +67,7 @@ def coffee_maker():
 
 def kill_coffee_tasks():
     """kill all coffe node.js background tasks"""
-    local('ps -eo pid,args | grep coffee | grep -v grep | cut -c1-6 | xargs kill')
+    local('ps -eo pid,args | grep coffee | grep -v grep | grep -v [.]coffee | cut -c1-6 | xargs kill')
 
 
 def run_celery():
