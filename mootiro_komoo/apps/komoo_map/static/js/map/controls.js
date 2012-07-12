@@ -93,15 +93,6 @@ komoo.controls.Balloon.prototype.customize_ = function () {
     var that = this;
     google.maps.event.addDomListener(this.infoBox_, 'domready', function (e) {
         var div = that.infoBox_.div_;
-        google.maps.event.addDomListener(div, 'mousemove', function (e) {
-            that.isMouseover = (e.offsetX > 10 || e.toElement != div);
-            if (that.isMouseover) {
-                e.cancelBubble = true;
-                if (e.preventDefault) e.preventDefault();
-                if (e.stopPropagation) e.stopPropagation();
-                that.map_.closeTooltip();
-            }
-        });
         google.maps.event.addDomListener(div, 'click', function (e) {
                 e.cancelBubble = true;
                 if (e.stopPropagation) e.stopPropagation();
@@ -230,6 +221,22 @@ komoo.controls.InfoWindow = function (opts) {
 komoo.controls.InfoWindow.prototype = Object.create(
         komoo.controls.BalloonAjax.prototype);
 
+komoo.controls.InfoWindow.prototype.customize_ = function () {
+    komoo.controls.BalloonAjax.prototype.customize_.call(this);
+    var that = this;
+    google.maps.event.addDomListener(this.infoBox_, 'domready', function (e) {
+        var div = that.infoBox_.div_;
+        google.maps.event.addDomListener(div, 'mousemove', function (e) {
+            that.isMouseover = (e.offsetX > 10 || e.toElement != div);
+            if (that.isMouseover) {
+                e.cancelBubble = true;
+                if (e.preventDefault) e.preventDefault();
+                if (e.stopPropagation) e.stopPropagation();
+                that.map_.closeTooltip();
+            }
+        });
+    });
+};
 
 /** Tooltip Window Factory **/
 
