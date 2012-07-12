@@ -1,276 +1,273 @@
-/**
- * features.js
- * requires compat.js
- */
+(function() {
+  var Feature, _base;
 
+  if (window.komoo == null) window.komoo = {};
 
-if (!window.komoo) komoo = {};
-if (!komoo.event) komoo.event = google.maps.event;
+  if ((_base = window.komoo).event == null) _base.event = google.maps.event;
 
-komoo.features = {};
+  Feature = (function() {
 
-
-/** Feature Factory **/
-
-komoo.features.makeFeature = function (feature) {
-    var feature_ = new komoo.features.Feature();
-    if (feature) {
-        feature_.setProperties(feature.properties);
-        var geometry = komoo.geometries.makeGeometry(feature);
-        feature_.setGeometry(geometry);
-        var marker = new komoo.geometries.Point({
-            visible: true,
-             clickable: true
-        });
-        feature_.setMarker(marker);
-        marker.setPosition(feature_.getCenter());
-    }
-
-    return feature_;
-};
-
-
-/** Abstract feature **/
-
-komoo.features.Feature = function (opts) {
-    var options = opts || {};
-    if (options.geometry) this.setGeometry(options.geometry)
-};
-
-komoo.features.Feature.prototype.initEvents = function (opt_object) {
-    var that = this;
-    var object = opt_object || this.getGeometry();
-    var eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
-        'mouseout', 'mouseover', 'mouseup', 'rightclick',
-        'drag', 'dragend', 'daggable_changed', 'dragstart',
-        'coordinates_changed'];
-    eventsNames.forEach(function(eventName, index, orig) {
-        komoo.event.addListener(object, eventName, function (e, args) {
-            komoo.event.trigger(that, eventName, e, args);
-        });
-    });
-};
-
-
-komoo.features.Feature.prototype.setGeometry = function (geometry) {
-    this.geometry_ = geometry;
-    this.initEvents();
-};
-
-komoo.features.Feature.prototype.getGeometry = function () {
-    return this.geometry_;
-};
-
-komoo.features.Feature.prototype.getGeometryType = function () {
-    return this.geometry_.getGeometryType();
-};
-
-komoo.features.Feature.prototype.setMarker = function (marker) {
-    this.marker_ = marker;
-    this.marker_.getOverlay().feature = this;
-    this.initEvents(marker);
-};
-
-komoo.features.Feature.prototype.getMarker = function () {
-    return this.marker_;
-};
-
-komoo.features.Feature.prototype.handleGeometryEvents = function () {
-    var that = this;
-    komoo.event.addListener(this.geometry_, 'coordinates_changed',
-            this.onGeometryCoordinatesChanged);
-};
-
-komoo.features.Feature.prototype.onGeometryCoordinatesChanged = function (args) {
-    this.updateIcon();
-    komoo.event.trigger(this, 'coordinates_changed', args);
-};
-
-komoo.features.Feature.prototype.getUrl = function () {
-    var url;
-    if (this.properties_.type == 'Community') {
-        url = dutils.urls.resolve('view_community',
-                {community_slug: this.properties_.community_slug});
-    } else if (this.properties_.type == 'Resource') {
-        url = dutils.urls.resolve('view_resource', {
-                    resource_id: this.properties_.id
-                }).replace('//', '/');
-    }  else if (this.properties_.type == 'OrganizationBranch') {
-        url = dutils.urls.resolve('view_organization', {
-                    organization_slug: this.properties_.organization_slug || ''
-                }).replace('//', '/');
-    }  else {
-        var slugname = this.properties_.type.toLowerCase() + '_slug';
-        var params = {'community_slug': this.properties_.community_slug};
-        params[slugname] = this.properties_[slugname];
-        url = dutils.urls.resolve('view_' + this.properties_.type.toLowerCase(), params).replace('//', '/');
-    }
-    return url;
-};
-
-komoo.features.Feature.prototype.isHighlighted = function () {
-    return this.highlighted;
-};
-
-komoo.features.Feature.prototype.setHighlight = function (flag) {
-    this.highlighted = flag;
-    this.updateIcon();
-    komoo.event.trigger(this, 'highlight_changed', flag);
-};
-
-komoo.features.Feature.prototype.getIconUrl = function (optZoom) {
-    if (!this.getProperties()) return;
-    var zoom = optZoom || (this.map_ ? this.map_.getZoom() : 10);
-    var url = '/static/img/';
-    if (zoom >= this.minZoomMarker) {
-        url += 'near';
-    } else {
-        url += 'far';
-    }
-    url += '/';
-    if (this.isHighlighted()) {
-        url += 'highlighted/';
-    }
-
-    if (this.getProperties().categories && this.getProperties().categories[0] &&
-            zoom >= this.minZoomMarker)  {
-        url += this.getProperties().categories[0].name.toLowerCase();
-        if (this.getProperties().categories.length > 1) {
-            url += '-plus';
+    function Feature(options) {
+      var geometry, marker;
+      this.options = options != null ? options : {};
+      geometry = this.options.geometry;
+      if (this.options.geojson) {
+        if (this.options.geojson.properties) {
+          this.setProperties(this.options.geojson.properties);
         }
-    } else {
-        url += this.getProperties().type.toLowerCase();
-    }
-    url += '.png';
-    url = url.replace(' ', '-');
-    return url;
-};
-
-komoo.features.Feature.prototype.updateIcon = function (optZoom) {
-    this.setIcon(this.getIconUrl(optZoom));
-};
-
-komoo.features.Feature.prototype.getCategoriesIcons = function () {
-    var icons = [];
-    var url = '/static/need_categories/';
-
-    if (this.getProperties().categories)
-        this.getProperties().categories.forEach(function (category, index, orig) {
-            icons.push(url + category.name.toLowerCase() + '.png');
-        });
-
-    return icons;
-};
-
-komoo.features.Feature.prototype.setProperties = function (properties) {
-    this.properties_ = properties;
-};
-
-komoo.features.Feature.prototype.getProperties = function () {
-    return this.properties_;
-};
-
-komoo.features.Feature.prototype.getProperty = function (name) {
-    return this.properties_[name];
-};
-
-komoo.features.Feature.prototype.getGeoJsonGeometry = function () {
-    return {
-        'type': this.geometry_.getGeometryType(),
-        'coordinates': this.geometry_.getCoordinates()
-    };
-};
-
-komoo.features.Feature.prototype.getGeoJsonFeature = function () {
-    return {
-        'type': 'Feature',
-        'geometry': this.getGeoJsonGeometry(),
-        'properties': this.getProperties()
-    };
-};
-
-komoo.features.Feature.prototype.setEditable = function (flag) {
-    if (this.geometry_.setEditable) {
-        return this.geometry_.setEditable(flag);
-    } else if (this.geometry_.setDraggable) {
-        return this.geometry.setDraggable(flag);
-    }
-};
-
-komoo.features.Feature.prototype.showGeometry = function () {
-    this.geometry_.setMap(this.map_);
-};
-
-komoo.features.Feature.prototype.hideGeometry = function () {
-    this.geometry_.setMap(null);
-};
-
-komoo.features.Feature.prototype.showMarker = function () {
-    if (this.marker_) this.getMarker().setMap(this.map_);
-};
-
-komoo.features.Feature.prototype.hideMarker = function () {
-    if (this.marker_) this.getMarker().setMap(null);
-};
-
-komoo.features.Feature.prototype.setMap = function (map, opt_force) {
-    //if (map == this.map_ && force == undefined) return;
-
-    var force = opt_force != undefined ? opt_force : {geometries: false, markers: false};
-    if (this.getProperties().alwaysVisible) force = {geometries: true, markers: false};
-    var zoom = 0;
-    if (map) zoom = map.getZoom();
-    if (map && ((zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) || force.geometries)) {
-        this.geometry_.setMap(map);
-    } else {
-        this.geometry_.setMap(null);
-    }
-    if (this.marker_) {
-        if (map && ((zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) || force.markers)) {
-            this.getMarker().setMap(map);
-        } else {
-            this.getMarker().setMap(null);
+        if (geometry == null) {
+          geometry = komoo.geometries.makeGeometry(this.options.geojson);
         }
+      }
+      if (geometry != null) {
+        this.setGeometry(geometry);
+        marker = new komoo.geometries.Point({
+          visible: true,
+          clickable: true
+        });
+        marker.setCoordinates(this.getCenter());
+        this.setMarker(marker);
+      }
     }
-    this.map_ = map;
-};
 
-komoo.features.Feature.prototype.getMap = function () {
-    return this.map_;
-};
+    Feature.prototype.initEvents = function(object) {
+      var eventsNames, that;
+      if (object == null) object = this.geometry;
+      that = this;
+      eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'rightclick', 'drag', 'dragend', 'draggable_changed', 'dragstart', 'coordinates_changed'];
+      return eventsNames.forEach(function(eventName) {
+        return komoo.event.addListener(object, eventName, function(e, args) {
+          return komoo.event.trigger(that, eventName, e, args);
+        });
+      });
+    };
 
-/* Delegations */
+    Feature.prototype.getGeometry = function() {
+      return this.geometry;
+    };
 
-komoo.features.Feature.prototype.getBounds = function () {
-    return this.geometry_.getBounds();
-};
+    Feature.prototype.setGeometry = function(geometry) {
+      this.geometry = geometry;
+      return this.initEvents();
+    };
 
-komoo.features.Feature.prototype.removeFromMap = function () {
-    this.setMap(null);
-    if (this.marker_) this.marker_.setMap(null);
-};
+    Feature.prototype.getGeometryType = function() {
+      var _ref;
+      return (_ref = this.geometry) != null ? _ref.getGeometryType() : void 0;
+    };
 
-komoo.features.Feature.prototype.setVisible = function (flag) {
-    if (this.marker_) this.marker_.setVisible(flag);
-    return this.geometry_.setVisible(flag);
-};
+    Feature.prototype.getMarker = function() {
+      return this.marker;
+    };
 
-komoo.features.Feature.prototype.getCenter = function () {
-    return this.geometry_.getCenter();
-};
+    Feature.prototype.setMarker = function(marker) {
+      this.marker = marker;
+      this.marker.getOverlay().feature = this;
+      this.initEvents(this.marker);
+      return this.marker;
+    };
 
-/* Temporary methods */
+    Feature.prototype.handleGeometryEvents = function() {
+      var that;
+      that = this;
+      return komoo.event.addListener(this.geometry, 'coordinates_changed', function(args) {
+        this.updateIcon();
+        return komoo.event.trigger(that, 'coordinates_changed', args);
+      });
+    };
 
-komoo.features.Feature.prototype.setOptions = function (options) {
-    return this.geometry_.setOptions(options);
-};
+    Feature.prototype.getUrl = function() {
+      var params, slugname;
+      if (this.properties.type === 'Community') {
+        return dutils.urls.resolve('view_community', {
+          community_slug: this.properties.community_slug
+        });
+      } else if (this.properties.type === 'Resource') {
+        return dutils.url.resolve('view_resource', {
+          resource_id: this.properties.id
+        }).replace('//', '/');
+      } else if (this.properties.type === 'OrganizationBranch') {
+        return dutils.url.resolve('view_organization', {
+          organization_slug: this.properties.organization_slug
+        }).replace('//', '/');
+      } else {
+        slugname = "" + (this.properties.type.toLowerCase()) + "_slug";
+        params = {
+          community_slug: this.properties.community_slug
+        };
+        params[slugname] = this.properties[slugname];
+        return dutils.url.resolve("view_" + (this.properties.type.toLowerCase()), params).replace('//', '/');
+      }
+    };
 
-komoo.features.Feature.prototype.setIcon = function (icon) {
-    if (this.marker_) this.getMarker().setIcon(icon);
-    return this.geometry_.setIcon(icon);
-};
+    Feature.prototype.isHighlighted = function() {
+      return this.highlighted != null;
+    };
 
-komoo.features.Feature.prototype.getIcon = function () {
-    return this.geometry_.getIcon();
-};
+    Feature.prototype.highlight = function() {
+      return this.setHighlight(true);
+    };
 
+    Feature.prototype.setHighlight = function(highlighted) {
+      this.highlighted = highlighted;
+      this.updateIcons();
+      return komoo.event.trigger(this, 'highlight_changed', this.highlighted);
+    };
+
+    Feature.prototype.getIconUrl = function(zoom) {
+      var categoryOrType, highlighted, nearOrFar;
+      if (zoom == null) zoom = this.map ? this.map.getZoom() : 10;
+      nearOrFar = zoom >= this.minZoomMarker ? "near" : "far";
+      highlighted = this.isHighlighted() ? "highlighted/" : "";
+      categoryOrType = this.properties.categories && zoom >= this.minZoomMarker ? this.properties.categories[0].name.toLowerCase() + (this.properties.categories.length > 1 ? "-plus" : "") : this.properties.type.toLowerCase();
+      return "/static/img/" + nearOrFar + "/" + highlighted + categoryOrType + ".png";
+    };
+
+    Feature.prototype.updateIcon = function(zoom) {
+      return this.setIcon(this.getIconUrl(zoom));
+    };
+
+    Feature.prototype.getCategoriesIcons = function() {
+      var categorie, _i, _len, _ref, _results;
+      _ref = this.properties.categories;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        categorie = _ref[_i];
+        _results.push("/static/need_categories/" + (category.name.toLowerCase()) + ".png");
+      }
+      return _results;
+    };
+
+    Feature.prototype.getProperties = function() {
+      return this.properties;
+    };
+
+    Feature.prototype.setProperties = function(properties) {
+      this.properties = properties;
+    };
+
+    Feature.prototype.getProperty = function(name) {
+      return this.properties[name];
+    };
+
+    Feature.prototype.getGeoJsonGeometry = function() {
+      var _ref, _ref2;
+      return {
+        type: (_ref = this.geometry) != null ? _ref.getGeometryType() : void 0,
+        coordinates: (_ref2 = this.geometry) != null ? _ref2.getCoordinates() : void 0
+      };
+    };
+
+    Feature.prototype.getGeoJsonFeature = function() {
+      return {
+        type: 'Feature',
+        geometry: this.getGeoJsonGeometry(),
+        properties: this.getProperties()
+      };
+    };
+
+    Feature.prototype.setEditable = function(editable) {
+      var _ref;
+      this.editable = editable;
+      return (_ref = this.geometry) != null ? _ref.setEditable(this.editable) : void 0;
+    };
+
+    Feature.prototype.showGeometry = function() {
+      var _ref;
+      return (_ref = this.geometry) != null ? _ref.setMap(this.map) : void 0;
+    };
+
+    Feature.prototype.hideGeometry = function() {
+      var _ref;
+      return (_ref = this.geometry) != null ? _ref.setMap(null) : void 0;
+    };
+
+    Feature.prototype.showMarker = function() {
+      var _ref;
+      return (_ref = this.marker) != null ? _ref.setMap(this.map) : void 0;
+    };
+
+    Feature.prototype.hideMarker = function() {
+      var _ref;
+      return (_ref = this.marker) != null ? _ref.setMap(this.map) : void 0;
+    };
+
+    Feature.prototype.getMap = function() {
+      return this.map;
+    };
+
+    Feature.prototype.setMap = function(map, force) {
+      var zoom, _ref, _ref2;
+      this.map = map;
+      if (force == null) {
+        force = {
+          geometry: false,
+          marker: false
+        };
+      }
+      if (this.properties.alwaysVisible === true) {
+        force = {
+          geometry: true,
+          marker: false
+        };
+      }
+      zoom = this.map != null ? this.map.getZoom() : 0;
+      if ((_ref = this.marker) != null) {
+        _ref.setMap((zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) || force.marker ? this.map : null);
+      }
+      return (_ref2 = this.geometry) != null ? _ref2.setMap((zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) || force.geometry ? this.map : null) : void 0;
+    };
+
+    Feature.prototype.getBounds = function() {
+      var _ref;
+      return (_ref = this.geometry) != null ? _ref.getBounds() : void 0;
+    };
+
+    Feature.prototype.removeFromMap = function() {
+      var _ref;
+      if ((_ref = this.marker) != null) _ref.setMap(null);
+      return this.setMap(null);
+    };
+
+    Feature.prototype.setVisible = function(visible) {
+      var _ref, _ref2;
+      this.visible = visible;
+      if ((_ref = this.marker) != null) _ref.setVisible(this.visible);
+      return (_ref2 = this.geometry) != null ? _ref2.setVisible(this.visible) : void 0;
+    };
+
+    Feature.prototype.getCenter = function() {
+      var _ref;
+      return (_ref = this.geometry) != null ? _ref.getCenter() : void 0;
+    };
+
+    Feature.prototype.setOptions = function(options) {
+      var _ref;
+      return (_ref = this.geometry) != null ? _ref.setOptions(options) : void 0;
+    };
+
+    Feature.prototype.getIcon = function() {
+      var _ref;
+      return (_ref = this.geometry) != null ? _ref.getIcon() : void 0;
+    };
+
+    Feature.prototype.setIcon = function(icon) {
+      var _ref, _ref2;
+      if ((_ref = this.marker) != null) _ref.setIcon(icon);
+      return (_ref2 = this.geometry) != null ? _ref2.setIcon(icon) : void 0;
+    };
+
+    return Feature;
+
+  })();
+
+  window.komoo.features = {
+    Feature: Feature,
+    makeFeature: function(geojson) {
+      return new komoo.features.Feature({
+        geojson: geojson
+      });
+    }
+  };
+
+}).call(this);

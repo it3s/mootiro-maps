@@ -1591,8 +1591,16 @@ komoo.Map.prototype._initDrawingManager = function () {
                     'type': komooMap.drawingManager.getDrawingMode(),
                 }
             });
+            var type = komooMap.featureOptions[komooMap.type];
+            if (type) {
+                feature.minZoomGeometry = type.minZoomGeometry;
+                feature.maxZoomGeometry = type.maxZoomGeometry;
+                feature.minZoomMarker = type.minZoomMarker;
+                feature.maxZoomMarker = type.maxZoomMarker;
+            }
             var geometry = feature.getGeometry();
             geometry.setOverlay(overlay);
+            feature.setMap(komooMap, {geometry: true});
 
             // Sets the custom image.
             feature.updateIcon(komooMap.googleMap.getZoom());
@@ -1892,7 +1900,7 @@ komoo.Map.prototype._createAddPanel = function () {
         if (komooMap.newFeatures.length > 0) { // User drew a feature, so remove it.
             komooMap.newFeatures.forEach(function (item, index, orig) {
                 var feature = komooMap.features.pop(); // The newly created feature should be the last at array.
-                feature.setMap(null);
+                feature.removeFromMap();
             });
             komooMap.newFeatures.clear();
         }
