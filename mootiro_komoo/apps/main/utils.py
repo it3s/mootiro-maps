@@ -10,12 +10,11 @@ from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
-from django.db.models.query_utils import Q
 from django.shortcuts import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Reset
+from crispy_forms.layout import Submit
 
 try:
     from functools import wraps
@@ -57,11 +56,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             if not hasattr(obj, 'geometry'):
                 continue
             type_ = obj.__class__.__name__
-            # geometry = json.loads(obj.geometry.geojson) if \
-            #         type_ == 'community' else \
-            #         json.loads(obj.geometry.geojson)['geometries'][0]
             geometry_json = json.loads(obj.geometry.geojson)
-            #geometry = geometry_json['geometries'][0] if geometry_json['geometries'] else ''
             geometries = geometry_json['geometries']
             geometry = {}
             if geometries:
@@ -78,13 +73,17 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             else:
                 continue
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
+            last_update = obj.last_update.isoformat(b' ') if hasattr(obj,
+                    'last_update') else ''
+
             feature = {
                 'type': 'Feature',
                 'geometry': geometry,
                 'properties': {
                     'type': type_,
                     'name': name,
-                    'id': obj.id
+                    'id': obj.id,
+                    'lastUpdate': last_update
                 }
             }
             if hasattr(obj, 'community'):
@@ -99,6 +98,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             if type_ == 'OrganizationBranch':
                 feature['properties']['organization_slug'] = obj.organization.slug
                 feature['properties']['organization_name'] = obj.organization.name
+                feature['properties']['last_update'] = obj.organization.last_update.isoformat(b' ')
 
             geojson['features'].append(feature)
 

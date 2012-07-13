@@ -13,7 +13,7 @@ if (!komoo.controls) komoo.controls = {};
 
 komoo.controls.Balloon = function (opts) {
     var options = opts || {};
-    this.width_ = options.width || '250px';
+    this.width_ = options.width || '300px';
     this.createInfoBox_(options);
     this.setMap(options.map);
     this.customize_();
@@ -25,6 +25,7 @@ komoo.controls.Balloon.prototype.createInfoBox_ = function (opts) {
         pixelOffset: new google.maps.Size(0, -20),
         enableEventPropagation: true,
         closeBoxMargin: '10px',
+        disableAutoPan: true,
         boxStyle: {
             cursor: 'pointer',
             background: 'url(/static/img/infowindow-arrow.png) no-repeat 0 10px',  // FIXME: Hardcode is evil
@@ -72,7 +73,7 @@ komoo.controls.Balloon.prototype.setContent = function (content) {
             this.title.html('<a href="' + content.url + '">' +
                     content.title + '</a>');
         else
-            this.title.text(content.title);
+            this.title.html(content.title);
         this.body.html(content.body);
     }
 };
@@ -116,11 +117,13 @@ komoo.controls.Balloon.prototype.createClusterContent_ = function (opts) {
     var options = opts || {};
     var features = options.features || [];
     var msg = ngettext('%s Community', '%s Communities', features.length);
-    var title = interpolate(msg, [features.length]);
+    var title = '<strong>' + interpolate(msg, [features.length]) + '</strong>';
     var body = '<ul>'
-    features.forEach(function (feature, index, orig) {
+    features.slice(0, 10).forEach(function (feature, index, orig) {
         body += '<li>' + feature.getProperty('name') + '</li>';
     });
+    if (features.length > 10)
+        body += '<li>...</li>';
     body += '</ul>';
     return {title: title, url: '',  body: body};
 };
