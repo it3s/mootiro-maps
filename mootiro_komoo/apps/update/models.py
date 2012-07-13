@@ -67,8 +67,6 @@ class Update(models.Model):
             keys.append(key)
         self._keys = simplejson.dumps(keys)
         # self._links = simplejson.dumps([i.view_url for i in instances])
-        for i in instances:
-            print '\n\n\n%s\n\n' % komoo_permalink(i)
         self._links = simplejson.dumps([komoo_permalink(i) for i in instances])
 
     @property
