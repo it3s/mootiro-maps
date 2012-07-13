@@ -18,7 +18,26 @@
       </ul>
       <div style="clear: both;">
     {% endif %}
+    <p>
+    <ul>
+      {% if object.needs %}
+      <li><a href="{% url list_community_needs object.slug %}"><i class="icon-need no-hover"></i>{% blocktrans count count=object.needs.count %}{{ count }} Need{% plural %}{{ count }} Needs{% endblocktrans %}</a></li>
+      {% endif %}
+      {% if object.organization_set %}
+      <li><a href="{% url organization_list object.slug %}"><i class="icon-organization no-hover"></i>{% blocktrans count count=object.organization_set.count %}{{ count }} Organization{% plural %}{{ count }} Organizations{% endblocktrans %}</a></li>
+      {% endif %}
+      {% if object.resources %}
+      <li><a href="{% url resource_list object.slug %}"><i class="icon-resource no-hover"></i>{% blocktrans count count=object.resources.count %}{{ count }} Resource{% plural %}{{ count }} Resources{% endblocktrans %}</a></li>
+      {% endif %}
+    </ul>
+    </p>
+    <p>
     <div class="mark-down">{{ object.description|description_markdown_preview|safe }}</div>
+    </p>
+    <p>
+    {% if object.population %}
+      <span class="meta-info">{% trans "Population" %}</span> {% firstof object.population '-' %}
+    {% endif %}
     {% if object.organization %}
       {% if object.organization.categories.all %}
         <strong>{% trans 'Operation Field' %}</strong>
@@ -34,5 +53,6 @@
     {% else %}
       {% taglist object %}
     {% endif %}
+    </p>
   </div>
 {% endblock %}

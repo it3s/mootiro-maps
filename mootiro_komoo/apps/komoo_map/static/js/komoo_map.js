@@ -610,7 +610,12 @@ komoo.Map.prototype.initMarkerClusterer = function () {
             markers.forEach(function (marker, index, orig) {
                 features.push(marker.feature);
             });
-            komooMap.openTooltip({features: features, position: c.getCenter()});
+            features.sort(function (a, b) {
+                return a.getProperty('lastUpdate') < b.getProperty('lastUpdate');
+            });
+            komooMap.openTooltip({feature: features[0],
+                                  features: features,
+                                  position: c.getCenter()});
         })
         google.maps.event.addListener(this.clusterer, 'mouseout', function (c) {
             komooMap.closeTooltip();
