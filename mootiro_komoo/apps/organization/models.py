@@ -18,6 +18,12 @@ from lib.taggit.managers import TaggableManager
 from vote.models import VotableModel
 
 
+LOGO_CHOICES = (
+        ('UP', 'Uploaded'),
+        ('CAT', 'Category'),
+)
+
+
 class Organization(VotableModel):
     name = models.CharField(max_length=320, unique=True)
     slug = models.SlugField(max_length=320, db_index=True)
@@ -25,6 +31,7 @@ class Organization(VotableModel):
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
     logo_category = models.ForeignKey('OrganizationCategory', null=True,
                             blank=True, related_name='organization_category_logo')
+    logo_choice = models.CharField(max_length=3, choices=LOGO_CHOICES, null=True, blank=True)
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True,
