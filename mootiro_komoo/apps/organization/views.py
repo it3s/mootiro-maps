@@ -22,7 +22,8 @@ from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
 
-from organization.models import Organization, OrganizationBranch
+from organization.models import (Organization, OrganizationBranch,
+                                 OrganizationCategory)
 from organization.forms import FormOrganization, FormBranch
 from community.models import Community
 from main.utils import (paginated_query, create_geojson, sorted_query,
@@ -268,3 +269,11 @@ def search_tags(request):
     tags = [t.name for t in qset]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
+
+
+@ajax_request
+def category_images(request):
+    logger.debug('acessing Organization > category_images')
+    images = [cat.image for cat in OrganizationCategory.objects.all()]
+    return {'images': images}
+

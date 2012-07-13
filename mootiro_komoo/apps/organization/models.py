@@ -23,9 +23,12 @@ class Organization(VotableModel):
     slug = models.SlugField(max_length=320, db_index=True)
     description = models.TextField(null=True, blank=True)
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
+    logo_category = models.ForeignKey('OrganizationCategory', null=True,
+                            blank=True, related_name='organization_category_logo')
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_organizations')
+    creator = models.ForeignKey(User, editable=False, null=True,
+                        related_name='created_organizations')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
@@ -173,21 +176,33 @@ class OrganizationCategory(models.Model):
             return OrganizationCategoryTranslation.objects.get(
                 lang=settings.LANGUAGE_CODE, category=self).name
 
-    @classmethod
-    def get_image(cls, name):
-        return "img/org_categories/%s.png" % slugify(name)
-
-    @classmethod
-    def get_image_off(cls, name):
-        return "img/org_categories/%s-off.png" % slugify(name)
+    category_logos = {
+        1: "culture-and-arts.png",
+        2: "education.png",
+        3: "environment.png",
+        4: "health.png",
+        5: "housing.png",
+        6: "research.png",
+        7: "self-help.png",
+        8: "social-services.png",
+        9: "sports-and-recreation.png",
+        10: "emergency-aid-disaster-relief.png",
+        11: "animal-protection.png",
+        12: "community-development.png",
+        13: "income-generation.png",
+        14: "human-rights-promotion.png",
+        15: "law-and-legal-services.png",
+        16: "voluntarism-promotion.png",
+        17: "promotion-of-civil-society-organizations.png",
+        18: "fundraising-and-grant-making-organization.png",
+        19: "peace-promotion.png",
+        20: "cultural-exchange.png",
+        21: "development-assistance.png",
+    }
 
     @property
     def image(self):
-        return self.get_image(self.name)
-
-    @property
-    def image_off(self):
-        return self.get_image_off(self.name)
+        return "img/org_categories/%s" % self.category_logos[self.id]
 
 
 class OrganizationCategoryTranslation(models.Model):
@@ -202,3 +217,4 @@ class OrganizationCategoryTranslation(models.Model):
     def save(self, *a, **kw):
         self.slug = slugify(self.name)
         return super(OrganizationCategoryTranslation, self).save(*a, **kw)
+

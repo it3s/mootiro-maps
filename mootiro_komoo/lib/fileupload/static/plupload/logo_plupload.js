@@ -41,5 +41,34 @@ $(function() {
         up.refresh(); // Reposition Flash/Silverlight
     });
 
+    var addThumb = function(filename){
+        $('#logo-cat-thumbs-list').append(
+            '<div class="file-entry logo-entry">' +
+                // file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+                '<img src="/static/' + filename + '" alt="img" class="logo-thumb">' +
+            '</div>'
+        );
+    };
+
+    var retrieveLogoCategoryImages = function(id_list){
+        var id_list = id_list || [];
+        $.ajax({
+            type: 'GET',
+            url: '/organization/category_images/',
+            data: {categories: id_list},
+            success: function(data){
+                console.dir(data);
+                if (data.images){
+                    $.each(data.images, function(idx, img){
+                        addThumb(img);
+                    });
+                }
+            },
+            dataType: 'json'
+        });
+    }
+
+    retrieveLogoCategoryImages();
+
 });
 

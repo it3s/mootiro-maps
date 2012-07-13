@@ -144,12 +144,27 @@ class LogoWidget(forms.Widget):
 
     def render(self, name, value=None, attrs=None):
         html = u"""
-            <div id="logo-thumb"></div>
-            <div id="logo-uploader">
-                <a id="picklogo" href="#" class="button">%(select_logo)s</a>
+            <div class="div-logo-pane-wrapper">
+            <div class="div-logo-pane logo-pane-left">
+                <div class="logo-radio">
+                    <input type="radio" name="logo_type" value="uploaded">
+                    <span>Faça o upload de um logotipo</span>
+                </div>
+                <div id="logo-thumb"></div>
+                <div id="logo-uploader">
+                    <a id="picklogo" href="#" class="button">%(select_logo)s</a>
+                </div>
+                <div>
+                    <input type="hidden" id="id_logo" name="%(name)s" >
+                </div>
             </div>
-            <div>
-                <input type="hidden" id="id_logo" name="%(name)s" >
+            <div class="div-logo-pane logo-pane-right">
+                <div class="logo-radio">
+                    <input type="radio" name="logo_type" value="category" checked>
+                    <span>Ou escolha uma das imagens de categoria abaixo</span>
+                </div>
+                <div id="logo-cat-thumbs-list"></div>
+            </div>
             </div>
 
         """ % {'name': name, 'select_logo': _('Select a logo')}
@@ -172,3 +187,4 @@ class POCForm(forms.Form):
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="poc_form")
         return super(POCForm, self).__init__(*a, **kw)
+
