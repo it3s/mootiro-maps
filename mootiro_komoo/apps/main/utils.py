@@ -46,6 +46,10 @@ def slugify(term, slug_exists=lambda s: False):
     return slug
 
 
+def komoo_permalink(obj):
+    return '/permalink/{}{}'.format(obj.__class__.__name__.lower()[0], obj.id)
+
+
 def create_geojson(objects, type_='FeatureCollection', convert=True):
     if type_ == 'FeatureCollection':
         geojson = {

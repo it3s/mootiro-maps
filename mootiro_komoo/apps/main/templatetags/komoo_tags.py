@@ -219,11 +219,6 @@ def description_markdown_preview(desc):
     return render_markup(text)
 
 
-@register.simple_tag
-def komoo_permalink(type_='', id_=''):
-    return '/permalink/{}{}/'.format(type_[0], id_) if type_ and id_ else '/'
-
-
 @register.inclusion_tag('main/templatetags/usernames_list.html')
 def usernames_list(usernames):
     return dict(usernames=usernames)

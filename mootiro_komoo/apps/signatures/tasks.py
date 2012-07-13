@@ -5,7 +5,7 @@ from celery.task import task
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
 from signatures.models import Digest, DigestSignature
-from main.templatetags.komoo_tags import komoo_permalink
+from main.utils import komoo_permalink
 
 
 @task
@@ -22,7 +22,7 @@ atenciosamente,
 
 a equipe IT3S.
 """.format(user.get_full_name() or user.username, unicode(obj),
-           'http://maps.mootiro.org' + komoo_permalink(obj.__class__.__name__.lower(), obj.id)
+           'http://maps.mootiro.org' + komoo_permalink(obj)
 )
 
         send_mail(
@@ -47,10 +47,7 @@ Alguns objetos que você está seguindo no MootiroMaps foram atualizados:
                 for content in user_digest:
                     msg += "\n -  Atualização em {} : {}".format(
                         content.content_object.__class__.__name__,
-                        'http://maps.mootiro.org' + komoo_permalink(
-                            content.content_object.__class__.__name__.lower(),
-                            content.object_id
-                        )
+                        'http://maps.mootiro.org' + komoo_permalink(content.content_object)
                     )
                     content.delete()
 
