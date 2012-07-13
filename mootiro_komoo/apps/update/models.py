@@ -116,6 +116,15 @@ class Update(models.Model):
                     .format(self.object_type, self.TYPES[self.type])
 
     @property
+    def object_app_name(self):
+        if self.object_type == 'resource':
+            return 'komoo_resource'
+        elif self.object_type == 'organizationbranch':
+            return 'organization'
+        else:
+            return self.object_type
+
+    @property
     def readable_type(self):
         key_str = "{0} {1}".format(self.object_type, self.TYPES[self.type])
         tr_dict = {

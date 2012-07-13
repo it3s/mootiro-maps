@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load komoo_filters %}
 {% load komoo_tags %}
+{% load komoo_map_tags %}
 {% load vote_tags %}
 {% load comment_tags %}
 {% load humanize %}
@@ -14,6 +15,7 @@
 {% endblock %}
 
 {% block content %}
+{% komoo_map_tooltip %}
 <div id="updates-header">
   <img alt="" src="{{STATIC_URL}}img/updates-page/novidades.png"/>
 
@@ -95,7 +97,7 @@
                   {% endif %}
                 </h3>
                 <div class="right">
-                  <a href="#"><i class="icon-see-on-map"></i></a>
+                  <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map"></i></a>
                 </div>
                 <div class="clear-both"></div>
                 {% communities_list u.communities %}
