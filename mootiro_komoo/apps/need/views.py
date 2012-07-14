@@ -179,3 +179,4 @@ def needs_geojson(request):
     geojson = create_geojson(needs)
     return HttpResponse(json.dumps(geojson),
         mimetype="application/x-javascript")
+

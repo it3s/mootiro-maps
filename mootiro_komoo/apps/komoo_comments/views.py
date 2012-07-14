@@ -116,3 +116,4 @@ def comments_load(request):
                 ).model_class().objects.get(pk=request.GET['object_id'])
     return dict(comments=comments_list(context=RequestContext(request),
                 content_object=content_object, **request.GET).content)
+

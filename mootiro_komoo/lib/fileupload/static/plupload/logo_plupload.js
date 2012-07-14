@@ -35,6 +35,7 @@ $(function() {
         $('#logo-thumb').html('' +
             '<img src="' + resp.url + '" >'
         );
+        setLogoChoice('uploaded');
     });
     logo_uploader.bind('Error', function(up, err) {
         alert(err);
@@ -87,14 +88,28 @@ $(function() {
         retrieveLogoCategoryImages(categories_list);
     }
 
+    var setLogoChoice = function(choice){
+        var choice_vals = {
+            'category': 'CAT',
+            'uploaded': 'UP'
+        };
+
+        $('input[type="radio"][name=logo_type][value="' + choice +'"]').attr('checked', 'checked');
+        $('#id_logo_choice').val(choice_vals[choice]);
+    }
+
     $('#div_id_categories input').click(function(){
         updateCategoriesList();
     });
+
+    updateCategoriesList();
 
     $('.logo-entry').live('click', function(){
         $('.logo-entry.choosen').removeClass('choosen');
         $(this).addClass('choosen');
         $('#id_logo_category').val($(this).attr('org-category'));
+
+        setLogoChoice('category');
     });
 
 });

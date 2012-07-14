@@ -165,7 +165,7 @@ class LogoWidget(forms.Widget):
                 </div>
                 <div id="logo-cat-thumbs-list"></div>
                 <div>
-                    <input type="hidden" id="id_logo_category" name="logo_category">
+                    <!-- input type="hidden" id="id_logo_category" name="logo_category"-->
                 </div>
             </div>
             </div>

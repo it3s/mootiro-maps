@@ -48,6 +48,8 @@ class FormOrganization(AjaxModelForm):
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
     logo = LogoField(required=False)
+    logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
+    logo_category = forms.CharField(required=False, widget=forms.HiddenInput())
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
         required=False)
@@ -55,7 +57,8 @@ class FormOrganization(AjaxModelForm):
     class Meta:
         model = Organization
         fields = ['name', 'description', 'community', 'link', 'contact',
-                  'target_audiences', 'categories', 'tags', 'id', 'logo']
+                  'target_audiences', 'categories', 'tags', 'id', 'logo',
+                  'logo_category', 'logo_choice']
 
     _field_labels = {
         'name': _('Name'),
@@ -98,6 +101,9 @@ class FormOrganization(AjaxModelForm):
 
     def clean_logo(self):
         return clean_autocomplete_field(self.cleaned_data['logo'], UploadedFile)
+
+    def clean_logo_category(self):
+        return clean_autocomplete_field(self.cleaned_data['logo_category'], OrganizationCategory)
 
 
 class FormBranch(AjaxModelForm):

@@ -98,7 +98,7 @@ def list(request, community_slug=''):
     logger.debug('acessing investment > list')
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
-        # TODO: query below must get investments for the given community only 
+        # TODO: query below must get investments for the given community only
         investments = Investment.objects.all().order_by('title')
     else:
         community = None
@@ -113,4 +113,5 @@ def tag_search(request):
     qset = TaggedItem.tags_for(Investment).filter(name__istartswith=term)
     tags = [t.name for t in qset]
     return HttpResponse(simplejson.dumps(tags),
-                mimetype="application/x-javascript")
+            mimetype="application/x-javascript")
+
