@@ -196,7 +196,7 @@ def add_org_from_map(request):
     logger.debug('acessing organization > add_org_from_map')
     return {}
 
-
+@login_required 
 @ajax_request
 def edit_inline_branch(request):
     logger.debug('acessing organization > edit_inline_branch: POST={}'.format(
