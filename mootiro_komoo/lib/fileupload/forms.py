@@ -164,6 +164,9 @@ class LogoWidget(forms.Widget):
                     <span>Ou escolha uma das imagens de categoria abaixo</span>
                 </div>
                 <div id="logo-cat-thumbs-list"></div>
+                <div>
+                    <input type="hidden" id="id_logo_category" name="logo_category">
+                </div>
             </div>
             </div>
 
@@ -178,10 +181,25 @@ class FileuploadField(forms.CharField):
 class LogoField(forms.CharField):
     widget = LogoWidget
 
+from django.conf import settings
+from organization.models import OrganizationCategoryTranslation, OrganizationCategory
+
+if settings.LANGUAGE_CODE == 'en-us':
+    CATEGORIES = [(cat.id, cat.name) \
+                for cat in OrganizationCategory.objects.all().order_by('name')]
+else:
+    CATEGORIES = [(cat.category_id, cat.name)\
+                    for cat in OrganizationCategoryTranslation.objects.filter(
+                        lang=settings.LANGUAGE_CODE).order_by('name')]
 
 class POCForm(forms.Form):
     files = FileuploadField()
     title = forms.CharField()
+    categories = forms.MultipleChoiceField(required=False, choices=CATEGORIES,
+        widget=forms.CheckboxSelectMultiple(
+                    attrs={'class': 'org-widget-categories'}))
+    logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
+
     logo = LogoField()
 
     def __init__(self, *a, **kw):

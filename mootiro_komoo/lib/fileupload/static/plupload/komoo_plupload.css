@@ -134,5 +134,8 @@
     border: solid 2px #ff8a00;
     padding: 4px;
 }
-
+.logo-entry.choosen{
+    border: solid 3px #ff8a00;
+    padding: 3px;
+}
 

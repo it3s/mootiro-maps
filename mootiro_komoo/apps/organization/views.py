@@ -274,6 +274,15 @@ def search_tags(request):
 @ajax_request
 def category_images(request):
     logger.debug('acessing Organization > category_images')
-    images = [cat.image for cat in OrganizationCategory.objects.all()]
+    categories = request.GET.get('categories_list',[])
+    if categories:
+        categories = map(int, categories.split('|'))
+        categories.sort()
+    images = []
+    for id_ in categories:
+        images.append({
+            'filename': OrganizationCategory.objects.get(pk=id_).image,
+            'id': id_
+        })
     return {'images': images}
 

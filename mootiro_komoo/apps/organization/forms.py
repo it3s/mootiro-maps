@@ -48,7 +48,6 @@ class FormOrganization(AjaxModelForm):
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
     logo = LogoField(required=False)
-    # logo = forms.CharField(required=False, widget=forms.HiddenInput())
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
         required=False)
