@@ -897,9 +897,6 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
     }
     geoJsonFeatureCollection.forEach(function (geoJsonFeature, index, orig) {
         var geometry = geoJsonFeature.geometry;
-        if (!geometry) {
-            return;
-        }
         feature = komooMap.getFeature(geoJsonFeature.properties.type, geoJsonFeature.properties.id);
         if (!feature)
             var type = komooMap.featureOptions[geoJsonFeature.properties.type];
@@ -923,14 +920,17 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
         } else {
             // TODO: set a default color
         }
-        if (geometry.type == "Polygon") {
-            if (geometry.coordinates.length == 0 || geometry.coordinates[0].length == 0) return;
-            feature.setOptions(polygonOptions);
-        } else if (geometry.type == "LineString" || geometry.type == 'MultiLineString') {
-            if (geometry.coordinates.length == 0) return;
-            feature.setOptions(polylineOptions);
-        } else if (geometry.type == "MultiPoint" || geometry.type == "Point") {
-            if (geometry.coordinates.length == 0) return;
+
+        if (geometry) {
+            if (geometry.type == "Polygon") {
+                //if (geometry.coordinates.length == 0 || geometry.coordinates[0].length == 0) return;
+                feature.setOptions(polygonOptions);
+            } else if (geometry.type == "LineString" || geometry.type == 'MultiLineString') {
+                //if (geometry.coordinates.length == 0) return;
+                feature.setOptions(polylineOptions);
+            } else if (geometry.type == "MultiPoint" || geometry.type == "Point") {
+                //if (geometry.coordinates.length == 0) return;
+            }
         }
         // Dont attach or return the features already loaded
         if (feature) {
@@ -1006,7 +1006,8 @@ komoo.Map.prototype.getGeoJSON = function (opt_options) {
         return list.getGeoJson();
     }
     list.forEach(function (feature, index, orig) {
-        geoms.push(feature.getGeoJsonGeometry());
+        if (feature.getGeoJsonGeometry())
+            geoms.push(feature.getGeoJsonGeometry());
     });
     return geoJSON;
 };
@@ -1185,13 +1186,15 @@ komoo.Map.prototype.setCurrentFeature = function (feature, opt_force) {
     if (this.currentFeature && this.currentFeature.getProperties() &&
             this.currentFeature.getProperties().userCanEdit) {
         this.currentFeature.setEditable(true);
-        if (this.currentFeature.getGeometry().getGeometryType() == 'Polygon') {
+        var geometry = this.currentFeature.getGeometry();
+        if (geometry.getGeometryType() == 'Polygon') {
             this.drawingMode_ = komoo.GeometryType.POLYGON;
             $("#komoo-map-cut-out-button").show();
-        } else if (this.currentFeature.getGeometry().getGeometryType() == 'LineString' ||
+        } else if (geometry.getGeometryType() == 'LineString' ||
                    this.currentFeature.getGeometry().getGeometryType() == 'MultiLineString') {
             this.drawingMode_ = komoo.GeometryType.POLYLINE;
-        } else {
+        } else if (geometry.getGeometryType() == 'Point' ||
+                   this.currentFeature.getGeometry().getGeometryType() == 'MultiPoint') {
             this.drawingMode_ = komoo.GeometryType.POINT;
         }
         $("#komoo-map-add-button, #komoo-map-delete-button").show();
@@ -1352,12 +1355,8 @@ komoo.Map.prototype.editFeature = function (feature) {
     if (!feature || !feature.getProperties() || !feature.getProperties().userCanEdit) {
         return false;
     }
-    if (feature.setEditable) {
-        feature.setEditable(true);
-    } else if (feature.setDraggable) {
-        feature.setDraggable(true);
-    }
-    this.type = feature.getProperties().type;
+    feature.setEditable(true);
+    this.type = feature.getProperties('type');
     this.setCurrentFeature(feature, true);
     this.setMode(komoo.Mode.DRAW);
     $(".map-panel-title", this.addPanel).text(gettext("Edit"));

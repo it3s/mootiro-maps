@@ -62,11 +62,13 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
             type_ = obj.__class__.__name__
             geometry_json = json.loads(obj.geometry.geojson)
             geometries = geometry_json['geometries']
-            geometry = {}
+            geometry = None
+
             if geometries:
                 if len(geometries) == 1:
                     geometry = geometries[0]
                 else:
+                    geometry = {}
                     geometry_type = geometries[0]['type']
                     geometry['type'] = 'Multi{}'.format(geometry_type)
                     coord = []
@@ -74,8 +76,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
                         if geom['type'] == geometry_type:
                             coord.append(geom['coordinates'])
                     geometry['coordinates'] = coord
-            else:
-                continue
+
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
             last_update = obj.last_update.isoformat(b' ') if hasattr(obj,
                     'last_update') else ''

@@ -151,11 +151,8 @@
     };
 
     Feature.prototype.getGeoJsonGeometry = function() {
-      var _ref, _ref2;
-      return {
-        type: (_ref = this.geometry) != null ? _ref.getGeometryType() : void 0,
-        coordinates: (_ref2 = this.geometry) != null ? _ref2.getCoordinates() : void 0
-      };
+      var _ref;
+      return (_ref = this.geometry) != null ? _ref.getGeoJson() : void 0;
     };
 
     Feature.prototype.getGeoJsonFeature = function() {

@@ -90,13 +90,11 @@ class Feature
     setProperties: (@properties) ->
     getProperty: (name) -> @properties[name]
 
-    getGeoJsonGeometry: ->
-        type: @geometry?.getGeometryType(),
-        coordinates: @geometry?.getCoordinates()
+    getGeoJsonGeometry: -> @geometry?.getGeoJson()
 
     getGeoJsonFeature: ->
         type: 'Feature',
-        geometry: @getGeoJsonGeometry(),
+        geometry: @getGeoJsonGeometry()
         properties: @getProperties()
 
     setEditable: (@editable) -> @geometry?.setEditable @editable

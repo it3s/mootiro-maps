@@ -1,6 +1,7 @@
 window.komoo ?= {}
 window.komoo.event ?= google.maps.event
 
+EMPTY = 'Empty'
 POINT = 'Point'
 MULTIPOINT = 'MultiPoint'
 POLYGON = 'Polygon'
@@ -28,6 +29,9 @@ class Geometry
     setEditable: (flag) -> throw "Not Implemented"
 
     initEvents: (object = @overlay) ->
+        if not object
+            return
+
         that = @
         eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
             'mouseout', 'mouseover', 'mouseup', 'rightclick']
@@ -61,8 +65,11 @@ class Geometry
     getBounds: -> if @bounds? then @bounds else @calculateBounds()
 
     getCenter: ->
-        @getArrayFromLatLng(@overlay.getCenter?() or @getBounds()?.getCenter() \
-            or @overlay.getPosition?())
+        if not @overlay
+            []
+        else
+            @getArrayFromLatLng(@overlay.getCenter?() or \
+                @getBounds()?.getCenter() or @overlay.getPosition?())
 
     getOverlay: -> @overlay
     setOverlay: (@overlay) -> @initEvents()
@@ -88,16 +95,29 @@ class Geometry
 
     getMap: -> @map
     setMap: (@map) ->
-        @overlay.setMap(if @map and @map.googleMap then @map.googleMap else @map)
+        @overlay?.setMap(if @map and @map.googleMap then @map.googleMap else @map)
 
-    getVisible: -> @overlay.getVisible()
-    setVisible: (flag) -> @overlay.setVisible flag
+    getVisible: -> @overlay?.getVisible()
+    setVisible: (flag) -> @overlay?.setVisible flag
 
-    setOptions: (@options) -> @overlay.setOptions(@options)
+    setOptions: (@overlayOptions) -> @overlay?.setOptions(@overlayOptions)
 
-    getIcon: -> @overlay.getIcon?()
-    setIcon: (icon) -> @overlay.setIcon?(icon)
+    getIcon: -> @overlay?.getIcon?()
+    setIcon: (icon) -> @overlay?.setIcon?(icon)
 
+    getGeoJson: ->
+        type: @getGeometryType(),
+        coordinates: @getCoordinates()
+
+class Empty extends Geometry
+    geometryType: EMPTY
+
+    initOverlay: (@options = {}) -> true
+
+    getCoordinates: -> []
+    setEditable: (flag) -> true
+
+    getGeoJson: -> null
 
 class Point extends Geometry
     geometryType: POINT
@@ -274,6 +294,7 @@ class Polygon extends LineString
     setPaths: (paths) -> @overlay.setPaths(paths)
 
 window.komoo.geometries =
+    Empty: Empty
     Point: Point
     MultiPoint: MultiPoint
     Polyline: LineString
@@ -284,7 +305,7 @@ window.komoo.geometries =
 
     makeGeometry: (geojsonFeature) ->
         if not geojsonFeature.geometry?
-            return
+            return new Empty()
         type = geojsonFeature.geometry.type
         coords = geojsonFeature.geometry.coordinates
         if type is 'Point' or type is 'MultiPoint' or type is 'marker'

@@ -1,11 +1,13 @@
 (function() {
-  var Geometry, LineString, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, defaults, _base,
+  var EMPTY, Empty, Geometry, LineString, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, defaults, _base,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   if (window.komoo == null) window.komoo = {};
 
   if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+
+  EMPTY = 'Empty';
 
   POINT = 'Point';
 
@@ -52,6 +54,7 @@
     Geometry.prototype.initEvents = function(object) {
       var eventsNames, that;
       if (object == null) object = this.overlay;
+      if (!object) return;
       that = this;
       eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'rightclick'];
       return eventsNames.forEach(function(eventName) {
@@ -101,7 +104,11 @@
 
     Geometry.prototype.getCenter = function() {
       var _base2, _base3, _ref;
-      return this.getArrayFromLatLng((typeof (_base2 = this.overlay).getCenter === "function" ? _base2.getCenter() : void 0) || ((_ref = this.getBounds()) != null ? _ref.getCenter() : void 0) || (typeof (_base3 = this.overlay).getPosition === "function" ? _base3.getPosition() : void 0));
+      if (!this.overlay) {
+        return [];
+      } else {
+        return this.getArrayFromLatLng((typeof (_base2 = this.overlay).getCenter === "function" ? _base2.getCenter() : void 0) || ((_ref = this.getBounds()) != null ? _ref.getCenter() : void 0) || (typeof (_base3 = this.overlay).getPosition === "function" ? _base3.getPosition() : void 0));
+      }
     };
 
     Geometry.prototype.getOverlay = function() {
@@ -175,36 +182,78 @@
     };
 
     Geometry.prototype.setMap = function(map) {
+      var _ref;
       this.map = map;
-      return this.overlay.setMap(this.map && this.map.googleMap ? this.map.googleMap : this.map);
+      return (_ref = this.overlay) != null ? _ref.setMap(this.map && this.map.googleMap ? this.map.googleMap : this.map) : void 0;
     };
 
     Geometry.prototype.getVisible = function() {
-      return this.overlay.getVisible();
+      var _ref;
+      return (_ref = this.overlay) != null ? _ref.getVisible() : void 0;
     };
 
     Geometry.prototype.setVisible = function(flag) {
-      return this.overlay.setVisible(flag);
+      var _ref;
+      return (_ref = this.overlay) != null ? _ref.setVisible(flag) : void 0;
     };
 
-    Geometry.prototype.setOptions = function(options) {
-      this.options = options;
-      return this.overlay.setOptions(this.options);
+    Geometry.prototype.setOptions = function(overlayOptions) {
+      var _ref;
+      this.overlayOptions = overlayOptions;
+      return (_ref = this.overlay) != null ? _ref.setOptions(this.overlayOptions) : void 0;
     };
 
     Geometry.prototype.getIcon = function() {
-      var _base2;
-      return typeof (_base2 = this.overlay).getIcon === "function" ? _base2.getIcon() : void 0;
+      var _ref;
+      return (_ref = this.overlay) != null ? typeof _ref.getIcon === "function" ? _ref.getIcon() : void 0 : void 0;
     };
 
     Geometry.prototype.setIcon = function(icon) {
-      var _base2;
-      return typeof (_base2 = this.overlay).setIcon === "function" ? _base2.setIcon(icon) : void 0;
+      var _ref;
+      return (_ref = this.overlay) != null ? typeof _ref.setIcon === "function" ? _ref.setIcon(icon) : void 0 : void 0;
+    };
+
+    Geometry.prototype.getGeoJson = function() {
+      return {
+        type: this.getGeometryType(),
+        coordinates: this.getCoordinates()
+      };
     };
 
     return Geometry;
 
   })();
+
+  Empty = (function(_super) {
+
+    __extends(Empty, _super);
+
+    function Empty() {
+      Empty.__super__.constructor.apply(this, arguments);
+    }
+
+    Empty.prototype.geometryType = EMPTY;
+
+    Empty.prototype.initOverlay = function(options) {
+      this.options = options != null ? options : {};
+      return true;
+    };
+
+    Empty.prototype.getCoordinates = function() {
+      return [];
+    };
+
+    Empty.prototype.setEditable = function(flag) {
+      return true;
+    };
+
+    Empty.prototype.getGeoJson = function() {
+      return null;
+    };
+
+    return Empty;
+
+  })(Geometry);
 
   Point = (function(_super) {
 
@@ -618,6 +667,7 @@
   })(LineString);
 
   window.komoo.geometries = {
+    Empty: Empty,
     Point: Point,
     MultiPoint: MultiPoint,
     Polyline: LineString,
@@ -626,7 +676,7 @@
     defaults: defaults,
     makeGeometry: function(geojsonFeature) {
       var coords, geometry, type;
-      if (!(geojsonFeature.geometry != null)) return;
+      if (!(geojsonFeature.geometry != null)) return new Empty();
       type = geojsonFeature.geometry.type;
       coords = geojsonFeature.geometry.coordinates;
       if (type === 'Point' || type === 'MultiPoint' || type === 'marker') {
