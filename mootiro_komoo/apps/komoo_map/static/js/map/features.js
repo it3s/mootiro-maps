@@ -8,27 +8,33 @@
   Feature = (function() {
 
     function Feature(options) {
-      var geometry, marker;
+      var geometry;
       this.options = options != null ? options : {};
       geometry = this.options.geometry;
+      this.setFeatureType(this.options.featureType);
       if (this.options.geojson) {
         if (this.options.geojson.properties) {
           this.setProperties(this.options.geojson.properties);
         }
         if (geometry == null) {
-          geometry = komoo.geometries.makeGeometry(this.options.geojson);
+          geometry = komoo.geometries.makeGeometry(this.options.geojson, this);
         }
       }
       if (geometry != null) {
         this.setGeometry(geometry);
-        marker = new komoo.geometries.Point({
-          visible: true,
-          clickable: true
-        });
-        marker.setCoordinates(this.getCenter());
-        this.setMarker(marker);
+        this.createMarker();
       }
     }
+
+    Feature.prototype.createMarker = function() {
+      var marker;
+      marker = new komoo.geometries.Point({
+        visible: true,
+        clickable: true
+      });
+      marker.setCoordinates(this.getCenter());
+      return this.setMarker(marker);
+    };
 
     Feature.prototype.initEvents = function(object) {
       var eventsNames, that;
@@ -48,12 +54,26 @@
 
     Feature.prototype.setGeometry = function(geometry) {
       this.geometry = geometry;
+      this.geometry.feature = this;
       return this.initEvents();
     };
 
     Feature.prototype.getGeometryType = function() {
       var _ref;
       return (_ref = this.geometry) != null ? _ref.getGeometryType() : void 0;
+    };
+
+    Feature.prototype.getFeatureType = function() {
+      return this.featureType;
+    };
+
+    Feature.prototype.setFeatureType = function(featureType) {
+      this.featureType = featureType != null ? featureType : {
+        minZoomMarker: 0,
+        maxZoomMarker: 100,
+        minZoomGeometry: 0,
+        maxZoomGeometry: 100
+      };
     };
 
     Feature.prototype.getMarker = function() {
@@ -117,9 +137,13 @@
     Feature.prototype.getIconUrl = function(zoom) {
       var categoryOrType, highlighted, nearOrFar;
       if (zoom == null) zoom = this.map ? this.map.getZoom() : 10;
-      nearOrFar = zoom >= this.minZoomMarker ? "near" : "far";
+      nearOrFar = zoom >= this.featureType.minZoomMarker ? "near" : "far";
       highlighted = this.isHighlighted() ? "highlighted/" : "";
-      categoryOrType = this.properties.categories && zoom >= this.minZoomMarker ? this.properties.categories[0].name.toLowerCase() + (this.properties.categories.length > 1 ? "-plus" : "") : this.properties.type.toLowerCase();
+      if (this.properties.categories && this.properties.categories[0].name && zoom >= this.featureType.minZoomMarker) {
+        categoryOrType = this.properties.categories[0].name.toLowerCase() + (this.properties.categories.length > 1 ? "-plus" : "");
+      } else {
+        categoryOrType = this.properties.type.toLowerCase();
+      }
       return "/static/img/" + nearOrFar + "/" + highlighted + categoryOrType + ".png";
     };
 
@@ -148,6 +172,10 @@
 
     Feature.prototype.getProperty = function(name) {
       return this.properties[name];
+    };
+
+    Feature.prototype.setProperty = function(name, value) {
+      return this.properties[name] = value;
     };
 
     Feature.prototype.getGeoJsonGeometry = function() {
@@ -202,7 +230,7 @@
           marker: false
         };
       }
-      if (this.properties.alwaysVisible === true) {
+      if (this.properties.alwaysVisible === true || this.editable) {
         force = {
           geometry: true,
           marker: false
@@ -210,9 +238,9 @@
       }
       zoom = this.map != null ? this.map.getZoom() : 0;
       if ((_ref = this.marker) != null) {
-        _ref.setMap((zoom <= this.maxZoomMarker && zoom >= this.minZoomMarker) || force.marker ? this.map : null);
+        _ref.setMap((zoom <= this.featureType.maxZoomMarker && zoom >= this.featureType.minZoomMarker) || force.marker ? this.map : null);
       }
-      return (_ref2 = this.geometry) != null ? _ref2.setMap((zoom <= this.maxZoomGeometry && zoom >= this.minZoomGeometry) || force.geometry ? this.map : null) : void 0;
+      return (_ref2 = this.geometry) != null ? _ref2.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null) : void 0;
     };
 
     Feature.prototype.getBounds = function() {
@@ -254,15 +282,41 @@
       return (_ref2 = this.geometry) != null ? _ref2.setIcon(icon) : void 0;
     };
 
+    Feature.prototype.getBorderSize = function() {
+      return;
+    };
+
+    Feature.prototype.getBorderOpacity = function() {
+      return;
+    };
+
+    Feature.prototype.getBorderColor = function() {
+      return this.featureType.border;
+    };
+
+    Feature.prototype.getBackgroundColor = function() {
+      return this.featureType.color;
+    };
+
+    Feature.prototype.getBackgroundOpacity = function() {
+      return;
+    };
+
+    Feature.prototype.getDefaultZIndex = function() {
+      return this.featureType.zIndex;
+    };
+
     return Feature;
 
   })();
 
   window.komoo.features = {
     Feature: Feature,
-    makeFeature: function(geojson) {
+    makeFeature: function(geojson, featureTypes) {
+      var _ref;
       return new komoo.features.Feature({
-        geojson: geojson
+        geojson: geojson,
+        featureType: featureTypes != null ? featureTypes[geojson != null ? (_ref = geojson.properties) != null ? _ref.type : void 0 : void 0] : void 0
       });
     }
   };

@@ -31,7 +31,8 @@
   Geometry = (function() {
 
     function Geometry(options) {
-      this.options = options;
+      this.options = options != null ? options : {};
+      this.setFeature(this.options.feature);
       this.initOverlay(this.options);
     }
 
@@ -197,10 +198,10 @@
       return (_ref = this.overlay) != null ? _ref.setVisible(flag) : void 0;
     };
 
-    Geometry.prototype.setOptions = function(overlayOptions) {
+    Geometry.prototype.setOptions = function(options) {
       var _ref;
-      this.overlayOptions = overlayOptions;
-      return (_ref = this.overlay) != null ? _ref.setOptions(this.overlayOptions) : void 0;
+      this.options = options;
+      return (_ref = this.overlay) != null ? _ref.setOptions(this.options) : void 0;
     };
 
     Geometry.prototype.getIcon = function() {
@@ -266,11 +267,10 @@
     Point.prototype.geometryType = POINT;
 
     Point.prototype.initOverlay = function(options) {
-      this.options = options != null ? options : {
-        clickable: true,
-        zIndex: this.getDefaultZIndex()
-      };
-      return this.setOverlay(new google.maps.Marker(this.options));
+      return this.setOverlay(new google.maps.Marker({
+        clickable: options.clickable || true,
+        zIndex: options.zIndex || this.getDefaultZIndex()
+      }));
     };
 
     Point.prototype.initEvents = function(object) {
@@ -323,11 +323,10 @@
     MultiPoint.prototype.geometryType = MULTIPOINT;
 
     MultiPoint.prototype.initOverlay = function(options) {
-      this.options = options != null ? options : {
-        clickable: true,
-        zIndex: this.getDefaultZIndex()
-      };
-      return this.setOverlay(new MultiMarker(this.options));
+      return this.setOverlay(new MultiMarker({
+        clickable: options.clickable || true,
+        zIndex: options.zIndex || this.getDefaultZIndex()
+      }));
     };
 
     MultiPoint.prototype.getPoints = function() {
@@ -380,6 +379,10 @@
       return MultiPoint.__super__.setCoordinates.call(this, coords);
     };
 
+    MultiPoint.prototype.setEditable = function(flag) {
+      return this.overlay.setDraggable(flag);
+    };
+
     MultiPoint.prototype.getPositions = function() {
       var point, _i, _len, _ref, _results;
       _ref = this.getPoints();
@@ -422,14 +425,13 @@
     LineString.prototype.geometryType = POLYLINE;
 
     LineString.prototype.initOverlay = function(options) {
-      this.options = options != null ? options : {
-        clickable: true,
-        zIndex: this.getDefaultZIndex(),
-        strockeColor: this.getBorderColor(),
-        strockOpacity: this.getBorderOpacity(),
-        strokeWeight: this.getBorderSize()
-      };
-      return this.setOverlay(new google.maps.Polyline(this.options));
+      return this.setOverlay(new google.maps.Polyline({
+        clickable: options.clickable || true,
+        zIndex: options.zIndex || this.getDefaultZIndex(),
+        strockeColor: options.strokeColor || this.getBorderColor(),
+        strockOpacity: options.strokeOpacity || this.getBorderOpacity(),
+        strokeWeight: options.strokeWeight || this.getBorderSize()
+      }));
     };
 
     LineString.prototype.getCoordinates = function() {
@@ -483,6 +485,10 @@
       return this.overlay.setPath(path);
     };
 
+    LineString.prototype.addPolyline = function(polyline) {
+      return this.overlay.addPolyline(polyline);
+    };
+
     return LineString;
 
   })(Geometry);
@@ -498,14 +504,13 @@
     MultiLineString.prototype.geometryType = MULTIPOLYLINE;
 
     MultiLineString.prototype.initOverlay = function(options) {
-      this.options = options != null ? options : {
-        clickable: true,
-        zIndex: this.getDefaultZIndex(),
-        strockeColor: this.getBorderColor(),
-        strockOpacity: this.getBorderOpacity(),
-        strokeWeight: this.getBorderSize()
-      };
-      return this.setOverlay(new MultiPolyline(this.options));
+      return this.setOverlay(new MultiPolyline({
+        clickable: options.clickable || true,
+        zIndex: options.zIndex || this.getDefaultZIndex(),
+        strockeColor: options.strokeColor || this.getBorderColor(),
+        strockOpacity: options.strokeOpacity || this.getBorderOpacity(),
+        strokeWeight: options.strokeWeight || this.getBorderSize()
+      }));
     };
 
     MultiLineString.prototype.guaranteeLines = function(len) {
@@ -587,16 +592,15 @@
     }
 
     Polygon.prototype.initOverlay = function(options) {
-      this.options = options != null ? options : {
-        clickable: true,
-        zIndex: this.getDefaultZIndex(),
-        fillColor: this.getBackgroundColor(),
-        fillOpacity: this.getBackgroundOpacity(),
-        strokeColor: this.getBorderColor(),
-        strockOpacity: this.getBorderOpacity(),
-        strokeWeight: this.getBorderSize()
-      };
-      return this.setOverlay(new google.maps.Polygon(this.options));
+      return this.setOverlay(new google.maps.Polygon({
+        clickable: options.clickable || true,
+        zIndex: options.zIndex || this.getDefaultZIndex(),
+        fillColor: options.fillColor || this.getBackgroundColor(),
+        fillOpacity: options.fillOpacity || this.getBackgroundOpacity(),
+        strokeColor: options.strokeColor || this.getBorderColor(),
+        strockOpacity: options.strokeOpacity || this.getBorderOpacity(),
+        strokeWeight: options.strokeWeight || this.getBorderSize()
+      }));
     };
 
     Polygon.prototype.handleEvents = function() {
@@ -632,7 +636,7 @@
         path = _ref[_i];
         subCoords = this.getArrayFromLatLngArray(path.getArray());
         if (subCoords.length) subCoords.push(subCoords[0]);
-        coords.push(subCoords);
+        if (subCoords.length > 0) coords.push(subCoords);
       }
       return coords;
     };
@@ -670,24 +674,27 @@
     Empty: Empty,
     Point: Point,
     MultiPoint: MultiPoint,
-    Polyline: LineString,
-    MultiPolyline: MultiLineString,
+    LineString: LineString,
+    MultiLineString: MultiLineString,
     Polygon: Polygon,
     defaults: defaults,
-    makeGeometry: function(geojsonFeature) {
-      var coords, geometry, type;
-      if (!(geojsonFeature.geometry != null)) return new Empty();
+    makeGeometry: function(geojsonFeature, feature) {
+      var coords, geometry, options, type;
+      options = {
+        feature: feature
+      };
+      if (!(geojsonFeature.geometry != null)) return new Empty(options);
       type = geojsonFeature.geometry.type;
       coords = geojsonFeature.geometry.coordinates;
       if (type === 'Point' || type === 'MultiPoint' || type === 'marker') {
-        geometry = new MultiPoint();
+        geometry = new MultiPoint(options);
       } else if (type === 'LineString' || type === 'polyline') {
-        coords = [coords];
-        geometry = new MultiLineString();
+        if (coords) coords = [coords];
+        geometry = new MultiLineString(options);
       } else if (type === 'MultiLineString') {
-        geometry = new MultiLineString();
+        geometry = new MultiLineString(options);
       } else if (type === 'Polygon' || type === 'polygon') {
-        geometry = new Polygon();
+        geometry = new Polygon(options);
       }
       if (coords) if (geometry != null) geometry.setCoordinates(coords);
       return geometry;

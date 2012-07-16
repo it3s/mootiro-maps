@@ -4,17 +4,21 @@ window.komoo.event ?= google.maps.event
 class Feature
     constructor: (@options = {}) ->
         geometry = @options.geometry
+        @setFeatureType(@options.featureType)
         if @options.geojson
             if @options.geojson.properties
                 @setProperties @options.geojson.properties
-            geometry ?= komoo.geometries.makeGeometry @options.geojson
+            geometry ?= komoo.geometries.makeGeometry @options.geojson, @
         if geometry?
             @setGeometry geometry
-            marker = new komoo.geometries.Point
-                visible : true
-                clickable : true
-            marker.setCoordinates @getCenter()
-            @setMarker marker
+            @createMarker()
+
+    createMarker: ->
+        marker = new komoo.geometries.Point
+            visible : true
+            clickable : true
+        marker.setCoordinates @getCenter()
+        @setMarker marker
 
     initEvents: (object = @geometry) ->
         that = @
@@ -26,9 +30,19 @@ class Feature
                 komoo.event.trigger that, eventName, e, args
 
     getGeometry: -> @geometry
-    setGeometry: (@geometry) -> @initEvents()
+    setGeometry: (@geometry) ->
+        @geometry.feature = @
+        @initEvents()
 
     getGeometryType: -> @geometry?.getGeometryType()
+
+    getFeatureType: -> @featureType
+    setFeatureType: (@featureType = {
+        minZoomMarker: 0
+        maxZoomMarker: 100
+        minZoomGeometry: 0
+        maxZoomGeometry: 100
+    }) ->
 
     getMarker: -> @marker
     setMarker: (@marker) ->
@@ -70,14 +84,15 @@ class Feature
 
     getIconUrl: (zoom) ->
         zoom ?= if @map then @map.getZoom() else 10
-        nearOrFar = if zoom >= @minZoomMarker then "near" else "far"
+        nearOrFar = if zoom >= @featureType.minZoomMarker then "near" else "far"
         highlighted = if @isHighlighted() then "highlighted/" else ""
-        categoryOrType =
-            if @properties.categories and zoom >= @minZoomMarker
-                (@properties.categories[0].name.toLowerCase() +
+        if (@properties.categories and \
+                @properties.categories[0].name and \
+                zoom >= @featureType.minZoomMarker)
+            categoryOrType = (@properties.categories[0].name.toLowerCase() +
                 if @properties.categories.length > 1 then "-plus" else "")
-            else
-                @properties.type.toLowerCase()
+        else
+            categoryOrType = @properties.type.toLowerCase()
         "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png"
 
     updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
@@ -89,6 +104,7 @@ class Feature
     getProperties: -> @properties
     setProperties: (@properties) ->
     getProperty: (name) -> @properties[name]
+    setProperty: (name, value) -> @properties[name] = value
 
     getGeoJsonGeometry: -> @geometry?.getGeoJson()
 
@@ -107,13 +123,17 @@ class Feature
 
     getMap: -> @map
     setMap: (@map, force = geometry: false, marker: false) ->
-        if @properties.alwaysVisible is on
+        if @properties.alwaysVisible is on or @editable
             force =
                 geometry: true,
                 marker: false
         zoom = if @map? then @map.getZoom() else 0
-        @marker?.setMap(if (zoom <= @maxZoomMarker and zoom >= @minZoomMarker) or force.marker then @map else null)
-        @geometry?.setMap(if (zoom <= @maxZoomGeometry and zoom >= @minZoomGeometry) or force.geometry then @map else null)
+        @marker?.setMap(if (zoom <= @featureType.maxZoomMarker and \
+                zoom >= @featureType.minZoomMarker) or \
+                force.marker then @map else null)
+        @geometry?.setMap(if (zoom <= @featureType.maxZoomGeometry and \
+                zoom >= @featureType.minZoomGeometry) or \
+                force.geometry then @map else null)
 
     getBounds: -> @geometry?.getBounds()
 
@@ -134,9 +154,17 @@ class Feature
         @marker?.setIcon icon
         @geometry?.setIcon icon
 
+    getBorderSize: -> undefined
+    getBorderOpacity: -> undefined
+    getBorderColor: -> @featureType.border
+    getBackgroundColor: -> @featureType.color
+    getBackgroundOpacity: -> undefined
+    getDefaultZIndex: -> @featureType.zIndex
+
 
 window.komoo.features =
     Feature: Feature
-    makeFeature: (geojson) ->
+    makeFeature: (geojson, featureTypes) ->
         new komoo.features.Feature
             geojson: geojson
+            featureType: featureTypes?[geojson?.properties?.type]

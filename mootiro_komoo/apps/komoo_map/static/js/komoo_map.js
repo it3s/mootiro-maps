@@ -899,39 +899,9 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
         var geometry = geoJsonFeature.geometry;
         feature = komooMap.getFeature(geoJsonFeature.properties.type, geoJsonFeature.properties.id);
         if (!feature)
-            var type = komooMap.featureOptions[geoJsonFeature.properties.type];
-            feature = komoo.features.makeFeature(geoJsonFeature);
-            if (type) {
-                feature.minZoomGeometry = type.minZoomGeometry;
-                feature.maxZoomGeometry = type.maxZoomGeometry;
-                feature.minZoomMarker = type.minZoomMarker;
-                feature.maxZoomMarker = type.maxZoomMarker;
-            }
+            feature = komoo.features.makeFeature(geoJsonFeature, komooMap.featureOptions);
         var paths = [];
-        if (geoJsonFeature.properties && geoJsonFeature.properties.type && komooMap.featureOptions[geoJsonFeature.properties.type]) {
-            var color = komooMap.featureOptions[geoJsonFeature.properties.type].color;
-            var border = komooMap.featureOptions[geoJsonFeature.properties.type].border;
-            var zIndex = komooMap.featureOptions[geoJsonFeature.properties.type].zIndex;
-            polygonOptions.fillColor = color;
-            polygonOptions.strokeColor = border;
-            polygonOptions.strokeWeight = 1.5;
-            polygonOptions.zIndex = zIndex; //feature.properties.type == "community" ? 1 : 2
-            polylineOptions.strokeColor = border;
-        } else {
-            // TODO: set a default color
-        }
 
-        if (geometry) {
-            if (geometry.type == "Polygon") {
-                //if (geometry.coordinates.length == 0 || geometry.coordinates[0].length == 0) return;
-                feature.setOptions(polygonOptions);
-            } else if (geometry.type == "LineString" || geometry.type == 'MultiLineString') {
-                //if (geometry.coordinates.length == 0) return;
-                feature.setOptions(polylineOptions);
-            } else if (geometry.type == "MultiPoint" || geometry.type == "Point") {
-                //if (geometry.coordinates.length == 0) return;
-            }
-        }
         // Dont attach or return the features already loaded
         if (feature) {
             feature = komooMap.loadedFeatures[geoJsonFeature.properties.type + "_" + geoJsonFeature.properties.id] || feature;
@@ -1350,12 +1320,37 @@ komoo.Map.prototype.panTo = function (position, optDisplayMarker) {
     return this.goTo(position, optDisplayMarker);
 };
 
+komoo.Map.prototype.selectNewGeometryType = function (feature, opt_edit) {
+    var that = this;
+    var buttons = [];
+    feature.featureType.geometryTypes.forEach(function (geometryType, index, orig) {
+        buttons.push({
+            text: gettext(geometryType),
+            'class': "button",
+            click: function () {
+                var newGeometry = komoo.geometries.makeGeometry({geometry: {type: geometryType}}, feature);
+                feature.setGeometry(newGeometry);
+                if (opt_edit) {
+                    that.editFeature(feature);
+                    that.setEditMode(komoo.EditMode.ADD);
+                    that.drawingManager.setDrawingMode(that.drawingMode[that.drawingMode_]);
+                }
+                $(this).dialog("close");
+            }
+        })
+    });
+    return infoMessage('Geometry', 'Select the geometry type you want to draw', null, buttons);
+};
 
 komoo.Map.prototype.editFeature = function (feature) {
     if (!feature || !feature.getProperties() || !feature.getProperties().userCanEdit) {
         return false;
     }
+    if (feature.getGeometryType() == 'Empty')
+        return this.selectNewGeometryType(feature, true);
+
     feature.setEditable(true);
+    feature.setMap(this);
     this.type = feature.getProperties('type');
     this.setCurrentFeature(feature, true);
     this.setMode(komoo.Mode.DRAW);
@@ -1571,6 +1566,10 @@ komoo.Map.prototype._initDrawingManager = function () {
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (komooMap.editMode == komoo.EditMode.ADD && e.overlay.getPosition) {
             komooMap.currentFeature.getGeometry().addMarker(e.overlay);
+            komooMap.currentFeature.updateIcon(100);
+            komooMap.setEditMode(komoo.EditMode.DRAW);
+        } else if (komooMap.editMode == komoo.EditMode.ADD && e.overlay.getPath) {
+            komooMap.currentFeature.getGeometry().addPolyline(e.overlay);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (e.overlay.getPosition) {
             overlay = new MultiMarker();
@@ -1596,12 +1595,7 @@ komoo.Map.prototype._initDrawingManager = function () {
                 }
             });
             var type = komooMap.featureOptions[komooMap.type];
-            if (type) {
-                feature.minZoomGeometry = type.minZoomGeometry;
-                feature.maxZoomGeometry = type.maxZoomGeometry;
-                feature.minZoomMarker = type.minZoomMarker;
-                feature.maxZoomMarker = type.maxZoomMarker;
-            }
+            if (type) feature.setFeatureType(type);
             var geometry = feature.getGeometry();
             geometry.setOverlay(overlay);
             feature.setMap(komooMap, {geometry: true});

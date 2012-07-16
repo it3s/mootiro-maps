@@ -18,8 +18,9 @@ defaults =
 
 
 class Geometry
-    constructor: (@options) ->
-        @initOverlay(@options)
+    constructor: (@options = {}) ->
+        @setFeature @options.feature
+        @initOverlay @options
 
     initOverlay: (options) -> throw "Not Implemented"
 
@@ -100,7 +101,7 @@ class Geometry
     getVisible: -> @overlay?.getVisible()
     setVisible: (flag) -> @overlay?.setVisible flag
 
-    setOptions: (@overlayOptions) -> @overlay?.setOptions(@overlayOptions)
+    setOptions: (@options) -> @overlay?.setOptions(@options)
 
     getIcon: -> @overlay?.getIcon?()
     setIcon: (icon) -> @overlay?.setIcon?(icon)
@@ -108,6 +109,7 @@ class Geometry
     getGeoJson: ->
         type: @getGeometryType(),
         coordinates: @getCoordinates()
+
 
 class Empty extends Geometry
     geometryType: EMPTY
@@ -119,11 +121,14 @@ class Empty extends Geometry
 
     getGeoJson: -> null
 
+
 class Point extends Geometry
     geometryType: POINT
 
-    initOverlay: (@options = clickable: on, zIndex: @getDefaultZIndex()) ->
-        @setOverlay new google.maps.Marker @options
+    initOverlay: (options) ->
+        @setOverlay new google.maps.Marker
+            clickable: options.clickable or on
+            zIndex: options.zIndex or @getDefaultZIndex()
 
     initEvents: (object = @overlay) ->
         super object
@@ -152,8 +157,10 @@ class Point extends Geometry
 class MultiPoint extends Geometry
     geometryType: MULTIPOINT
 
-    initOverlay: (@options = clickable: on, zIndex: @getDefaultZIndex()) ->
-        @setOverlay new MultiMarker @options
+    initOverlay: (options) ->
+        @setOverlay new MultiMarker
+            clickable: options.clickable or on
+            zIndex: options.zIndex or @getDefaultZIndex()
 
     getPoints: -> @overlay.getMarkers().getArray()
     setPoints: (points) -> @overlay.addMarkers points
@@ -174,6 +181,8 @@ class MultiPoint extends Geometry
         point.setPosition(@getLatLngFromArray coords[i]) for point, i in @getPoints()
         super coords
 
+    setEditable: (flag) -> @overlay.setDraggable flag
+
     getPositions: -> point.getPosition() for point in @getPoints()
     setPositions: (positions) -> @overlay.setPositions(positions)
 
@@ -185,13 +194,13 @@ class MultiPoint extends Geometry
 class LineString extends Geometry
     geometryType: POLYLINE
 
-    initOverlay: (@options = {
-        clickable: on
-        zIndex: @getDefaultZIndex()
-        strockeColor: @getBorderColor()
-        strockOpacity: @getBorderOpacity()
-        strokeWeight: @getBorderSize()
-    }) -> @setOverlay new google.maps.Polyline @options
+    initOverlay: (options) ->
+        @setOverlay new google.maps.Polyline
+            clickable: options.clickable or on
+            zIndex: options.zIndex or @getDefaultZIndex()
+            strockeColor: options.strokeColor or  @getBorderColor()
+            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeWeight: options.strokeWeight or @getBorderSize()
 
     getCoordinates: -> @getArrayFromLatLng(latLng) for latLng in @overlay.getPath().getArray()
     setCoordinates: (coords) ->
@@ -199,24 +208,27 @@ class LineString extends Geometry
 
     setEditable: (flag) -> @overlay.setEditable flag
 
-    getBorderColor: -> @feature?.getBorderColor() or defaults.BORDER_COLOR
+    getBorderColor: ->
+        @feature?.getBorderColor() or defaults.BORDER_COLOR
     getBorderOpacity: -> @feature?.getBorderOpacity() or defaults.BORDER_OPACITY
     getBorderSize: -> @feature?.getBorderSize() or defaults.BORDER_SIZE
 
     getPath: -> @overlay.getPath()
     setPath: (path) -> @overlay.setPath(path)
 
+    addPolyline: (polyline) -> @overlay.addPolyline(polyline)
+
 
 class MultiLineString extends LineString
     geometryType: MULTIPOLYLINE
 
-    initOverlay: (@options = {
-        clickable: on
-        zIndex: @getDefaultZIndex()
-        strockeColor: @getBorderColor()
-        strockOpacity: @getBorderOpacity()
-        strokeWeight: @getBorderSize()
-    }) -> @setOverlay new MultiPolyline @options
+    initOverlay: (options) ->
+        @setOverlay new MultiPolyline
+            clickable: options.clickable or on
+            zIndex: options.zIndex or @getDefaultZIndex()
+            strockeColor: options.strokeColor or @getBorderColor()
+            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeWeight: options.strokeWeight or @getBorderSize()
 
     guaranteeLines: (len) ->
         lines = @overlay.getPolylines()
@@ -249,15 +261,15 @@ class Polygon extends LineString
         super options
         @handleEvents()
 
-    initOverlay: (@options = {
-        clickable: on
-        zIndex: @getDefaultZIndex()
-        fillColor: @getBackgroundColor()
-        fillOpacity: @getBackgroundOpacity()
-        strokeColor: @getBorderColor()
-        strockOpacity: @getBorderOpacity()
-        strokeWeight: @getBorderSize()
-    }) -> @setOverlay new google.maps.Polygon @options
+    initOverlay: (options) ->
+        @setOverlay new google.maps.Polygon
+            clickable: options.clickable or on
+            zIndex: options.zIndex or @getDefaultZIndex()
+            fillColor: options.fillColor or @getBackgroundColor()
+            fillOpacity: options.fillOpacity or  @getBackgroundOpacity()
+            strokeColor: options.strokeColor or  @getBorderColor()
+            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeWeight: options.strokeWeight or @getBorderSize()
 
     handleEvents: ->
         that = @
@@ -276,7 +288,8 @@ class Polygon extends LineString
             # Copy the first point as the last one to close the loop
             if subCoords.length
                 subCoords.push(subCoords[0])
-            coords.push(subCoords)
+            if subCoords.length > 0
+                coords.push(subCoords)
         coords
     setCoordinates: (coords) ->
         paths = []
@@ -297,26 +310,27 @@ window.komoo.geometries =
     Empty: Empty
     Point: Point
     MultiPoint: MultiPoint
-    Polyline: LineString
-    MultiPolyline: MultiLineString
+    LineString: LineString
+    MultiLineString: MultiLineString
     Polygon: Polygon
 
     defaults: defaults
 
-    makeGeometry: (geojsonFeature) ->
+    makeGeometry: (geojsonFeature, feature) ->
+        options = feature: feature
         if not geojsonFeature.geometry?
-            return new Empty()
+            return new Empty(options)
         type = geojsonFeature.geometry.type
         coords = geojsonFeature.geometry.coordinates
         if type is 'Point' or type is 'MultiPoint' or type is 'marker'
-            geometry = new MultiPoint()
+            geometry = new MultiPoint(options)
         else if type is 'LineString' or type is 'polyline'
-            coords = [coords]
-            geometry = new MultiLineString()
+            coords = [coords] if coords
+            geometry = new MultiLineString(options)
         else if type is 'MultiLineString'
-            geometry = new MultiLineString()
+            geometry = new MultiLineString(options)
         else if type is 'Polygon' or type is 'polygon'
-            geometry = new Polygon()
+            geometry = new Polygon(options)
         if coords
             geometry?.setCoordinates coords
         geometry
