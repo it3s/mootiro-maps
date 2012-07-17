@@ -14,15 +14,15 @@
     function Balloon(options) {
       this.options = options != null ? options : {};
       this.width = options.width || this.defaultWidth;
+      console.log(this.width);
       this.createInfoBox(this.options);
       this.setMap(this.options.map);
       this.customize();
     }
 
-    createInfoBox(function(options) {
+    Balloon.prototype.createInfoBox = function(options) {
       return this.setInfoBox(new InfoBox({
-        pixelOffset: new google.maps.Size(0)
-      }, -20, {
+        pixelOffset: new google.maps.Size(0, -20),
         enableEventPropagation: true,
         closeBoxMargin: "10px",
         disableAutoPan: true,
@@ -32,14 +32,14 @@
           width: this.width
         }
       }));
-    });
+    };
 
     Balloon.prototype.setInfoBox = function(infoBox) {
       this.infoBox = infoBox;
     };
 
-    Balloon.prototype.setMap = function(setMap) {
-      this.setMap = setMap;
+    Balloon.prototype.setMap = function(map) {
+      this.map = map;
     };
 
     Balloon.prototype.open = function(options) {
@@ -77,8 +77,11 @@
     };
 
     Balloon.prototype.close = function() {
+      var _ref;
       this.infoBox.close();
-      if (this.feature.isHighlighted) this.feature.setHighlight(false);
+      if ((_ref = this.feature) != null ? _ref.isHighlighted : void 0) {
+        this.feature.setHighlight(false);
+      }
       this.feature = null;
       return this.isMouseover = false;
     };
@@ -117,9 +120,7 @@
       this.content.append(this.title);
       this.content.append(this.body);
       this.content.css({
-        background: "white"
-      });
-      ({
+        background: "white",
         padding: "10px",
         margin: "0 0 0 15px"
       });
@@ -258,9 +259,9 @@
       return google.maps.event.addDomListener(this.infoBox, "domready", function(e) {
         var closeBox, div;
         div = that.infoBox.div_;
-        google.maps.event.addDomListener(div("click", function(e) {
+        google.maps.event.addDomListener(div, "click", function(e) {
           return that.map.openInfoWindow(that.options);
-        }));
+        });
         closeBox = div.firstChild;
         return $(closeBox).hide();
       });

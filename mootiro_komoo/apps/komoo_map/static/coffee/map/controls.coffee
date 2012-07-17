@@ -6,25 +6,25 @@ class Balloon
 
     constructor: (@options = {}) ->
         @width = options.width or @defaultWidth
+        console.log @width
         @createInfoBox @options
         @setMap @options.map
         @customize()
 
-    createInfoBox (options) ->
+    createInfoBox: (options) ->
         @setInfoBox new InfoBox
-            pixelOffset: new google.maps.Size 0, -20
+            pixelOffset: new google.maps.Size(0, -20)
             enableEventPropagation: true
             closeBoxMargin: "10px"
             disableAutoPan: true
             boxStyle:
                 cursor: "pointer"
-                background: \
-                    "url(/static/img/infowindow-arrow.png) no-repeat 0 10px"
+                background: "url(/static/img/infowindow-arrow.png) no-repeat 0 10px"
                 width: @width
 
     setInfoBox: (@infoBox) ->
 
-    setMap: (@setMap) ->
+    setMap: (@map) ->
 
     open: (options = {}) ->
         if @map?.mode isnt komoo.Mode.NAVIGATE
@@ -57,7 +57,7 @@ class Balloon
 
     close: ->
         @infoBox.close()
-        if @feature.isHighlighted
+        if @feature?.isHighlighted
             @feature.setHighlight off
         @feature = null
         @isMouseover = false
@@ -89,10 +89,11 @@ class Balloon
         @content = $("<div>").addClass "map-infowindow-content"
         @content.append @title
         @content.append @body
-        @content.css \
+        @content.css {
             background: "white"
             padding: "10px"
             margin: "0 0 0 15px"
+        }
         @content.hover \
             (e) -> that.isMouseover = true,
             (e) -> that.isMouseover = false
@@ -167,7 +168,7 @@ class Tooltip extends AjaxBalloon
         that = @
         google.maps.event.addDomListener @infoBox, "domready", (e) ->
             div = that.infoBox.div_
-            google.maps.event.addDomListener div "click", (e) ->
+            google.maps.event.addDomListener div, "click", (e) ->
                 that.map.openInfoWindow that.options
             closeBox = div.firstChild
             $(closeBox).hide()
