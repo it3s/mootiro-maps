@@ -50,7 +50,11 @@
     </div>
 
   <div class="right-bar">
+      <div id="map-preview">{% komoo_map '{}' 'type=preview' %}</div>
     <a class="see-on-map" href="#">{% trans "see on map" %}</a>
+
+    {% taglist investment %}
+
     {% with similar_investments=investment.tags.similar_objects %}
       {% if similar_investments %}
       <div class="block">
@@ -68,7 +72,6 @@
   </div>
 
   <div class="view-extras">
-    {% taglist investment %}
     {% track_buttons investment %}
     {% report_content investment %}
     {% delete_button investment %}

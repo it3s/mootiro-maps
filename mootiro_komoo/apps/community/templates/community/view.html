@@ -39,6 +39,9 @@
   <div class="right-bar">
     <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
     <a href="{% url community_on_map community.slug %}">ver no mapa</a>
+
+    {% taglist community %}
+
     <div class="block">
       <h3>{% trans "Nearby communities" %}</h3>
       <ul>
@@ -50,7 +53,6 @@
   </div>
 
   <div class="view-extras">
-    {% taglist community %}
     {% track_buttons community %}
     {% report_content community %}
     {% delete_button community %}

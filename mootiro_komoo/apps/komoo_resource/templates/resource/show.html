@@ -51,7 +51,6 @@
         {% investments_list resource.investments.all %}
 
         <div class="view-extras">
-                {% taglist resource community %}
                 {% track_buttons resource %}
                 {% report_content resource %}
                 {% delete_button resource %}
@@ -67,6 +66,8 @@
         <div class="centralizer apart">
           <a class="button" href="{{ resource.new_investment_url }}">{% trans "New Investment" %}</a>
         </div>
+
+        {% taglist resource community %}
 
         {% with similar_resources=resource.tags.similar_objects|slice:"5" %}
 
@@ -96,7 +97,7 @@
                 <h4>{% trans 'Contact' %}</h4>
                 <p>
                     {% if resource.contact %}
-                        {{ resource.contact|render_markup }}
+                        {{ resource.contact|render_markup|safe }}
                     {% else %}
                         {% trans 'No contact info provided' %}
                     {% endif %}
