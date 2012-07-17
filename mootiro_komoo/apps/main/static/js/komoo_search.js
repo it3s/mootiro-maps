@@ -43,7 +43,7 @@
       return false;
     };
     showResults = function(result) {
-      var google_results, has_results, idx, key, obj, result_order, results_count, results_list, val, _i, _j, _len, _len2;
+      var disabled, geojson, google_results, has_results, idx, key, obj, result_order, results_count, results_list, val, _i, _j, _len, _len2, _ref;
       results_list = '';
       results_count = 0;
       has_results = false;
@@ -55,7 +55,10 @@
           results_list += "<li>\n<div class='search-header " + key + "' >\n    <img src='/static/img/" + key + ".png' >\n    <div class='search-type-header' >\n        " + titles[key] + "\n        <span class='search-results-count'>\n            " + (interpolate(ngettext('%s result', '%s results', val.length), [val.length])) + "\n        </span>\n    </div>\n</div>\n<ul class='search-result-entries'>";
           for (idx in val) {
             obj = val[idx];
-            results_list += "<li>\n    <a href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"#\" onclick=\"seeOnMap('" + key + "', JSON.parse(localStorageGet('komoo_search').results['" + key + "'][" + idx + "].geojson));return false;\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+            geojson = localStorageGet('komoo_search').results[key][idx].geojson;
+            console.dir(JSON.parse(geojson));
+            disabled = ((_ref = JSON.parse(geojson)) != null ? _ref.features[0].geometry : void 0) ? '' : 'disabled';
+            results_list += "<li>\n    <a href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"#\" class=\"" + disabled + "\" onclick=\"seeOnMap('" + key + "', JSON.parse(localStorageGet('komoo_search').results['" + key + "'][" + idx + "].geojson));return false;\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
             results_count++;
           }
           results_list += '</ul></li>';

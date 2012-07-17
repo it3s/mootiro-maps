@@ -43,7 +43,9 @@
             {% endfor %}
             {% endif %}
           </span>
-          <a class="small preview-on-map" href="#" data-geojson="{% geojson need %}">{% trans 'see on the map' %}</a>
+          <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson need %}">
+            <i class="icon-see-on-map"></i>
+          </a>
           <ul class="horizontal">
             {% for c in need.categories.all %}
             <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>

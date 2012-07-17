@@ -1181,7 +1181,10 @@ form #uploader_container { padding: 0 }
     display: block;
     background: #bbb;
 }
-
+.list-map-preview{
+    float: right;
+    margin-right: 20px;
+}
 .map-tooltip {
     display: none;
     position: absolute;

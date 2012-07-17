@@ -68,11 +68,14 @@ $ ->
                 """
 
                 for idx, obj of val
+                    geojson = localStorageGet('komoo_search').results[key][idx].geojson
+                    console.dir  JSON.parse(geojson)
+                    disabled = if JSON.parse(geojson)?.features[0].geometry then '' else 'disabled' 
                     results_list += """
                         <li>
                             <a href='#{obj.link}'> #{obj.name} </a>
                             <div class="right">
-                                <a href="#" onclick="seeOnMap('#{key}', JSON.parse(localStorageGet('komoo_search').results['#{key}'][#{idx}].geojson));return false;"><i class="icon-see-on-map"></i></a>
+                                <a href="#" class="#{disabled}" onclick="seeOnMap('#{key}', JSON.parse(localStorageGet('komoo_search').results['#{key}'][#{idx}].geojson));return false;"><i class="icon-see-on-map"></i></a>
                             </div>
                         </li>"""
                     results_count++
