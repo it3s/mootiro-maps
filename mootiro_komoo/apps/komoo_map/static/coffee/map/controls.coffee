@@ -6,7 +6,6 @@ class Balloon
 
     constructor: (@options = {}) ->
         @width = options.width or @defaultWidth
-        console.log @width
         @createInfoBox @options
         @setMap @options.map
         @customize()
@@ -26,7 +25,7 @@ class Balloon
 
     setMap: (@map) ->
 
-    open: (options = {}) ->
+    open: (@options = {}) ->
         if @map?.mode isnt komoo.Mode.NAVIGATE
             return
         @setContent options.content or \
@@ -56,34 +55,27 @@ class Balloon
         @body.html content.body
 
     close: ->
+        @isMouseover = false
         @infoBox.close()
-        if @feature?.isHighlighted
+        if @feature?.isHighlighted()
             @feature.setHighlight off
         @feature = null
-        @isMouseover = false
 
     customize: ->
-        that = @
-        google.maps.event.addDomListener @infoBox, "domread", (e) ->
-            div = that.infoBox.div_
-            google.maps.event.addDomListener div, "click", (e) ->
+        google.maps.event.addDomListener @infoBox, "domread", (e) =>
+            div = @infoBox.div_
+            google.maps.event.addDomListener div, "click", (e) =>
                 e.cancelBubble = true
                 e.stopPropagation?()
-            google.maps.event.addDomListener div, "mouseout", (e) ->
-                that.isMouseover = false
+            google.maps.event.addDomListener div, "mouseout", (e) =>
+                @isMouseover = false
 
-            closeBox = div.firstChild
-            google.maps.event.addDomListener closeBox, "click", (e) ->
-                that.close()
-            google.maps.event.addDomListener closeBox, "mouseover", (e) ->
-                that.isMouseover = true
 
-            komoo.event.trigger that, "domready"
+            komoo.event.trigger @, "domready"
 
         @initDomElements()
 
     initDomElements: ->
-        that = @
         @title = $("<div>")
         @body = $("<div>")
         @content = $("<div>").addClass "map-infowindow-content"
@@ -95,8 +87,8 @@ class Balloon
             margin: "0 0 0 15px"
         }
         @content.hover \
-            (e) -> that.isMouseover = true,
-            (e) -> that.isMouseover = false
+            (e) => @isMouseover = true,
+            (e) => @isMouseover = false
         @infoBox.setContent @content.get(0)
 
     createClusterContent: (options = {}) ->
@@ -123,8 +115,7 @@ class Balloon
 
 class AjaxBalloon extends Balloon
     createFeatureContent: (options = {}) ->
-        that = @
-        feature = options.feature or {}
+        feature = options.feature
 
         if not feature then return
         if feature[@contentViewName] then return feature[@contentViewName]
@@ -135,9 +126,9 @@ class AjaxBalloon extends Balloon
             model_name: feature.featureType.modelName
             obj_id: feature.getProperty "id"
 
-        $.get url, (data) ->
-            feature[that.contentViewName] = data
-            that.setContent data
+        $.get url, (data) =>
+            feature[@contentViewName] = data
+            @setContent data
 
         gettext "Loading..."
 
@@ -148,16 +139,20 @@ class InfoWindow extends AjaxBalloon
 
     customize: ->
         super()
-        that = @
-        google.maps.event.addDomListener @infoBox, "domready", (e) ->
-            div = that.infoBox.div_
-            google.maps.event.addDomListener div, "mousemove", (e) ->
-                that.isMouseover = e.offsetX > 10 or e.toElement isnt div
-                if that.isMouseover
+        google.maps.event.addDomListener @infoBox, "domready", (e) =>
+            div = @infoBox.div_
+            google.maps.event.addDomListener div, "mouseover", (e) =>
+                @isMouseover = e.offsetX > 10 or e.toElement isnt div
+                if @isMouseover
                     e.cancelBubble = true
                     e.preventDefault?()
                     e.stopPropagation?()
-                    that.map.closeTooltip()
+                    @map.closeTooltip()
+            closeBox = div.firstChild
+            google.maps.event.addDomListener closeBox, "click", (e) =>
+                @close()
+            google.maps.event.addDomListener closeBox, "mouseover", (e) =>
+                @isMouseover = true
 
 
 class Tooltip extends AjaxBalloon
@@ -165,11 +160,10 @@ class Tooltip extends AjaxBalloon
 
     customize: ->
         super()
-        that = @
-        google.maps.event.addDomListener @infoBox, "domready", (e) ->
-            div = that.infoBox.div_
-            google.maps.event.addDomListener div, "click", (e) ->
-                that.map.openInfoWindow that.options
+        google.maps.event.addDomListener @infoBox, "domready", (e) =>
+            div = @infoBox.div_
+            google.maps.event.addDomListener div, "click", (e) =>
+                @map.openInfoWindow @options
             closeBox = div.firstChild
             $(closeBox).hide()
 

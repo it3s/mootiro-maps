@@ -14,7 +14,6 @@
     function Balloon(options) {
       this.options = options != null ? options : {};
       this.width = options.width || this.defaultWidth;
-      console.log(this.width);
       this.createInfoBox(this.options);
       this.setMap(this.options.map);
       this.customize();
@@ -44,7 +43,7 @@
 
     Balloon.prototype.open = function(options) {
       var newPosition, point, position, _ref, _ref2;
-      if (options == null) options = {};
+      this.options = options != null ? options : {};
       if (((_ref = this.map) != null ? _ref.mode : void 0) !== komoo.Mode.NAVIGATE) {
         return;
       }
@@ -78,42 +77,33 @@
 
     Balloon.prototype.close = function() {
       var _ref;
+      this.isMouseover = false;
       this.infoBox.close();
-      if ((_ref = this.feature) != null ? _ref.isHighlighted : void 0) {
+      if ((_ref = this.feature) != null ? _ref.isHighlighted() : void 0) {
         this.feature.setHighlight(false);
       }
-      this.feature = null;
-      return this.isMouseover = false;
+      return this.feature = null;
     };
 
     Balloon.prototype.customize = function() {
-      var that;
-      that = this;
+      var _this = this;
       google.maps.event.addDomListener(this.infoBox, "domread", function(e) {
-        var closeBox, div;
-        div = that.infoBox.div_;
+        var div;
+        div = _this.infoBox.div_;
         google.maps.event.addDomListener(div, "click", function(e) {
           e.cancelBubble = true;
           return typeof e.stopPropagation === "function" ? e.stopPropagation() : void 0;
         });
         google.maps.event.addDomListener(div, "mouseout", function(e) {
-          return that.isMouseover = false;
+          return _this.isMouseover = false;
         });
-        closeBox = div.firstChild;
-        google.maps.event.addDomListener(closeBox, "click", function(e) {
-          return that.close();
-        });
-        google.maps.event.addDomListener(closeBox, "mouseover", function(e) {
-          return that.isMouseover = true;
-        });
-        return komoo.event.trigger(that, "domready");
+        return komoo.event.trigger(_this, "domready");
       });
       return this.initDomElements();
     };
 
     Balloon.prototype.initDomElements = function() {
-      var that;
-      that = this;
+      var _this = this;
       this.title = $("<div>");
       this.body = $("<div>");
       this.content = $("<div>").addClass("map-infowindow-content");
@@ -125,9 +115,9 @@
         margin: "0 0 0 15px"
       });
       this.content.hover(function(e) {
-        return that.isMouseover = true;
+        return _this.isMouseover = true;
       }, function(e) {
-        return that.isMouseover = false;
+        return _this.isMouseover = false;
       });
       return this.infoBox.setContent(this.content.get(0));
     };
@@ -184,10 +174,10 @@
     }
 
     AjaxBalloon.prototype.createFeatureContent = function(options) {
-      var feature, that, url;
+      var feature, url,
+        _this = this;
       if (options == null) options = {};
-      that = this;
-      feature = options.feature || {};
+      feature = options.feature;
       if (!feature) return;
       if (feature[this.contentViewName]) return feature[this.contentViewName];
       url = dutils.urls.resolve(this.contentViewName, {
@@ -197,8 +187,8 @@
         obj_id: feature.getProperty("id")
       });
       $.get(url, function(data) {
-        feature[that.contentViewName] = data;
-        return that.setContent(data);
+        feature[_this.contentViewName] = data;
+        return _this.setContent(data);
       });
       return gettext("Loading...");
     };
@@ -220,20 +210,26 @@
     InfoWindow.prototype.contentViewName = "info_window";
 
     InfoWindow.prototype.customize = function() {
-      var that;
+      var _this = this;
       InfoWindow.__super__.customize.call(this);
-      that = this;
       return google.maps.event.addDomListener(this.infoBox, "domready", function(e) {
-        var div;
-        div = that.infoBox.div_;
-        return google.maps.event.addDomListener(div, "mousemove", function(e) {
-          that.isMouseover = e.offsetX > 10 || e.toElement !== div;
-          if (that.isMouseover) {
+        var closeBox, div;
+        div = _this.infoBox.div_;
+        google.maps.event.addDomListener(div, "mouseover", function(e) {
+          _this.isMouseover = e.offsetX > 10 || e.toElement !== div;
+          if (_this.isMouseover) {
             e.cancelBubble = true;
             if (typeof e.preventDefault === "function") e.preventDefault();
             if (typeof e.stopPropagation === "function") e.stopPropagation();
-            return that.map.closeTooltip();
+            return _this.map.closeTooltip();
           }
+        });
+        closeBox = div.firstChild;
+        google.maps.event.addDomListener(closeBox, "click", function(e) {
+          return _this.close();
+        });
+        return google.maps.event.addDomListener(closeBox, "mouseover", function(e) {
+          return _this.isMouseover = true;
         });
       });
     };
@@ -253,14 +249,13 @@
     Tooltip.prototype.contentViewName = "tooltip";
 
     Tooltip.prototype.customize = function() {
-      var that;
+      var _this = this;
       Tooltip.__super__.customize.call(this);
-      that = this;
       return google.maps.event.addDomListener(this.infoBox, "domready", function(e) {
         var closeBox, div;
-        div = that.infoBox.div_;
+        div = _this.infoBox.div_;
         google.maps.event.addDomListener(div, "click", function(e) {
-          return that.map.openInfoWindow(that.options);
+          return _this.map.openInfoWindow(_this.options);
         });
         closeBox = div.firstChild;
         return $(closeBox).hide();

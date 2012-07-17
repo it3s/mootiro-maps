@@ -14,6 +14,7 @@ defaults =
     BORDER_COLOR: '#000'
     BORDER_OPACITY: 0.6
     BORDER_SIZE: 1.5
+    BORDER_SIZE_HOVER: 2.5
     ZINDEX: 1
 
 
@@ -170,7 +171,7 @@ class MultiPoint extends Geometry
         if points.length >= len
             points.pop() for i in [0.. points.length - len - 1]
         else
-            points.push(new google.maps.Marker @options) for i in [0..len - points.length - 1]
+            @overlay.addMarker(new google.maps.Marker @options) for i in [0..len - points.length - 1]
 
     getCoordinates: -> @getArrayFromLatLng(point.getPosition()) for point in @getPoints()
     setCoordinates: (coords) ->
@@ -274,12 +275,13 @@ class Polygon extends LineString
     handleEvents: ->
         that = @
         komoo.event.addListener @, 'mousemove', (e) ->
-            that.setOptions strokeWeight: 2.5
+            that.setOptions strokeWeight: that.getBorderSizeHover()
         komoo.event.addListener @, 'mouseout', (e) ->
             that.setOptions strokeWeight: that.getBorderSize()
 
     getBackgroundColor: -> @feature?.getBackgroundColor() or defaults.BACKGROUND_COLOR
     getBackgroundOpacity: -> @feature?.getBackgroundOpacity() or defaults.BACKGROUND_OPACITY
+    getBorderSizeHover: -> @feature?.getBorderSizeHover() or defaults.BORDER_SIZE_HOVER
 
     getCoordinates: ->
         coords = []

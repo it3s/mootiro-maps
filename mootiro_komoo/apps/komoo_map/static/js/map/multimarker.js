@@ -86,7 +86,7 @@ MultiMarker.prototype.addMarker = function (marker, opt_keep) {
      */
     google.maps.event.addListener(marker, 'click', function (e) {
         google.maps.event.trigger(me, 'click', e, marker);
-        });
+    });
     /**
      * @name komoo.MultiMarker#mouseover
      * @event

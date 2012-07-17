@@ -534,7 +534,7 @@ komoo.Map.prototype.openTooltip = function (opts) {
             this.addPanel.is(":visible") ||
             this.infoWindow.isMouseover ||
             this.tooltip.feature == options.feature ||
-            options.feature == this.infoWindow.feature)
+            (options.features && options.feature == this.infoWindow.feature))
         return;
 
     this.tooltip.open(options);

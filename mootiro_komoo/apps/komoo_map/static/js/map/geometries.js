@@ -25,6 +25,7 @@
     BORDER_COLOR: '#000',
     BORDER_OPACITY: 0.6,
     BORDER_SIZE: 1.5,
+    BORDER_SIZE_HOVER: 2.5,
     ZINDEX: 1
   };
 
@@ -349,7 +350,7 @@
       } else {
         _results2 = [];
         for (i = 0, _ref2 = len - points.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
-          _results2.push(points.push(new google.maps.Marker(this.options)));
+          _results2.push(this.overlay.addMarker(new google.maps.Marker(this.options)));
         }
         return _results2;
       }
@@ -608,7 +609,7 @@
       that = this;
       komoo.event.addListener(this, 'mousemove', function(e) {
         return that.setOptions({
-          strokeWeight: 2.5
+          strokeWeight: that.getBorderSizeHover()
         });
       });
       return komoo.event.addListener(this, 'mouseout', function(e) {
@@ -626,6 +627,11 @@
     Polygon.prototype.getBackgroundOpacity = function() {
       var _ref;
       return ((_ref = this.feature) != null ? _ref.getBackgroundOpacity() : void 0) || defaults.BACKGROUND_OPACITY;
+    };
+
+    Polygon.prototype.getBorderSizeHover = function() {
+      var _ref;
+      return ((_ref = this.feature) != null ? _ref.getBorderSizeHover() : void 0) || defaults.BORDER_SIZE_HOVER;
     };
 
     Polygon.prototype.getCoordinates = function() {

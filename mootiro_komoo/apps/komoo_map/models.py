@@ -41,7 +41,11 @@ class GeoRefModel(geomodels.Model):
         tooltip = ''
 
         background_color = '#000'
+        background_opacity = 0.6
         border_color = '#000'
+        border_opacity = 0.6
+        border_size = 1.5
+        border_size_hover = 2.5
 
         geometries = []
         categories = []
@@ -77,8 +81,12 @@ def get_models_json(all=True):
                     'disabled': not model.get_map_attr('editable'),
                     'title': model.get_map_attr( 'title') or '{}'.format(model.__name__),
                     'tooltip': model.get_map_attr('tooltip') or 'Add {}'.format(model.__name__),
-                    'color': model.get_map_attr('background_color'),
-                    'border': model.get_map_attr('border_color'),
+                    'backgroundColor': model.get_map_attr('background_color'),
+                    'backgroundOpacity': model.get_map_attr('background_opacity'),
+                    'borderColor': model.get_map_attr('border_color'),
+                    'borderOpacity': model.get_map_attr('border_opacity'),
+                    'borderSize': model.get_map_attr('border_size'),
+                    'borderSizeHover': model.get_map_attr('border_size_hover'),
                     'geometryTypes': model.get_map_attr('geometries'),
                     'categories': model.get_map_attr('categories'),
                     'formUrl': reverse(model.get_map_attr('form_view_name'),

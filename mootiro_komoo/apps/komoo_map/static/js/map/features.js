@@ -291,23 +291,27 @@
     };
 
     Feature.prototype.getBorderSize = function() {
-      return;
+      return this.featureType.border_size;
     };
 
-    Feature.prototype.getBorderOpacity = function() {
-      return;
+    Feature.prototype.getBorderSizeHover = function() {
+      return this.featureType.borderSizeHover;
     };
 
     Feature.prototype.getBorderColor = function() {
-      return this.featureType.border;
+      return this.featureType.borderColor;
+    };
+
+    Feature.prototype.getBorderOpacity = function() {
+      return this.featureType.borderOpacity;
     };
 
     Feature.prototype.getBackgroundColor = function() {
-      return this.featureType.color;
+      return this.featureType.backgroundColor;
     };
 
     Feature.prototype.getBackgroundOpacity = function() {
-      return;
+      return this.featureType.backgroundOpacity;
     };
 
     Feature.prototype.getDefaultZIndex = function() {
