@@ -14,6 +14,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from django.core.urlresolvers import reverse
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
+from django.shortcuts import redirect
 
 from annoying.decorators import render_to, ajax_request
 import requests
@@ -22,7 +23,7 @@ from community.models import Community
 from need.models import Need
 from komoo_resource.models import Resource
 from organization.models import OrganizationBranch, Organization
-from komoo_map.models import GeoRefModel
+from proposal.models import Proposal
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
@@ -31,7 +32,7 @@ logger = logging.getLogger(__name__)
 @render_to('main/root.html')
 def root(request):
     logger.debug('acessing Root')
-    return dict(geojson={})
+    return dict(community=None, geojson={})
 
 
 def _fetch_geo_objects(Q, zoom):
@@ -164,10 +165,13 @@ def komoo_search(request):
     for key, model in queries.iteritems():
         result[key] = []
         for o in _query_model(model.get('model'), term, model.get('query_fields')):
-            dados = {'id': o.id,
-                     'name': getattr(o, model.get('repr')),
-                     'link': model.get('link')(o),
-                     'model': key}
+            dados = {
+                'id': o.id,
+                 'name': getattr(o, model.get('repr')),
+                 'link': model.get('link')(o),
+                 'model': key,
+                 'geojson': create_geojson([o])
+            }
             result[key].append(dados)
 
     # Google search
@@ -227,3 +231,20 @@ def custom_404(request):
 @render_to('500.html')
 def custom_500(request):
     return {}
+
+
+def permalink(request, identifier=''):
+    entity_model = {
+        'r': Resource,
+        'n': Need,
+        'c': Community,
+        'o': Organization,
+        'p': Proposal,
+    }
+    url = 'root'
+    if identifier:
+        entity, id_ = identifier[0], identifier[1:]
+        obj = entity_model[entity].objects.get(pk=id_)
+        url = getattr(obj, 'view_url', '/')
+        print entity, id_, url
+    return redirect(url)

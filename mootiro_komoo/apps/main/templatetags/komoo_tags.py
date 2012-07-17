@@ -229,7 +229,6 @@ def communities_list(communities):
     return dict(communities=communities)
 
 
-
 def _get_widgets_dict(obj):
     tag_widget = TaggitWidget(autocomplete_url="/%s/search_tags/" % obj)
     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))

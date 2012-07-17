@@ -67,8 +67,9 @@ class MainViewsTestCase(KomooTestCase):
         self.assert_200('/')
 
     def test_frontpage_is_up(self):
-        self.assert_200('/frontpage')  # TODO: exchange url with the map
+        self.assert_200('/')
 
+    # TODO: move this to apps/komoo_resource/tests.py
     def test_tags_filter(self):
         from komoo_resource.models import Resource
         from utils import filtered_query

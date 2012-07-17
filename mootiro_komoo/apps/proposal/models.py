@@ -23,16 +23,16 @@ class Proposal(VotableModel):
     title = models.CharField(max_length=256)
     description = models.TextField()
     number = models.IntegerField(null=False, blank=True, editable=False)
+
+    # Meta info
+    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_proposals')
     creation_date = models.DateTimeField(auto_now_add=True)
+    last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationships
     need = models.ForeignKey(Need, related_name='proposals')
-    creator = models.ForeignKey(User, editable=False, null=True, blank=True,
-                related_name='created_proposals')
 
-    # Consummation, realization, attainment:
-    realizers = models.ManyToManyField(User)
     # TODO: Also: organizations = model.ManyToManyField(Organization)
     cost = models.DecimalField(decimal_places=2, max_digits=14, null=True, blank=True)
     report = models.TextField(null=True, blank=True)
@@ -40,6 +40,9 @@ class Proposal(VotableModel):
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
+    #dummy? readding to data charge to work
+    realizers = models.ManyToManyField(User, related_name='user_realizers')
+
 
     @property
     def name(self):

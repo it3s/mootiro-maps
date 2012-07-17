@@ -36,15 +36,17 @@
     border-radius: 4px;
 }
 .file-modal {
-    margin-top: -20px;
+    margin-top: -60px;
 }
 .file-link {
-    width: 300px;
+    width: 300px !important;
     display: block;
     margin: 10px 90px;
 }
 .add-new-file-link{
     margin-left: 90px;
+    display: block;
+    width: 12px;
 }
 .modal-footer a{
     float: right;
@@ -105,3 +107,35 @@
     border: solid 2px #ff8a00;
     padding: 5px;
 }
+.div-logo-pane-wrapper {
+    display: block;
+    position: relative;
+}
+.div-logo-pane {
+    display: inline-block;
+    width: 340px;
+}
+.logo-pane-left {
+    float: left;
+}
+.logo-pane-right{
+    float: right;
+}
+.logo-radio{
+    margin-bottom: 10px;
+}
+.logo-thumb {
+    display: block;
+    max-width: 80px;
+    max-height: 80px;
+    margin: 0 auto;
+}
+.logo-entry:hover{
+    border: solid 2px #ff8a00;
+    padding: 4px;
+}
+.logo-entry.choosen{
+    border: solid 3px #ff8a00;
+    padding: 3px;
+}
+

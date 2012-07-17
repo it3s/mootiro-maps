@@ -39,9 +39,9 @@ def setup_django():
     sys.path.append(PROJ_DIR)
     sys.path.append(SITE_ROOT)
     from django.core.management import setup_environ
-    env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    env_name = {'dev': 'development', 'stage': 'staging', 'prod': 'production'}
     environ = None
-    exec 'from settings import {} as environ'.format(env_name)
+    exec 'from settings import {} as environ'.format(env_name[env_])
     setup_environ(environ)
 
 
@@ -54,6 +54,19 @@ def build_environment():
     local("patch -p0 `which python | "
         "sed -e 's/bin\/python$/lib\/python2.7\/site-packages\/django\/contrib\/gis\/db\/backends\/postgis\/adapter.py/'` "
         "../docs/postgis-adapter-2.patch")
+
+
+def coffee_maker():
+    """ runs coffeescript compiler"""
+    # apps we want to compile our coffee files
+    COFFEE_SHOP = ['main', 'komoo_map']
+    for app in COFFEE_SHOP:
+        local('coffee -o apps/{app}/static/js/ -cw apps/{app}/static/coffee/ &'.format(app=app))
+
+
+def kill_coffee_tasks():
+    """kill all coffe node.js background tasks"""
+    local('ps -eo pid,args | grep coffee | grep -v grep | grep -v [.]coffee | cut -c1-6 | xargs kill')
 
 
 def run_celery():
@@ -267,9 +280,10 @@ def fix_contenttypes():
     sys.path.append(PROJ_DIR)
     sys.path.append(SITE_ROOT)
     from django.core.management import setup_environ
-    env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    # env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
+    env_name = {'dev': 'development', 'stage': 'staging', 'prod': 'production'}
     environ = None
-    exec 'from settings import {} as environ'.format(env_name)
+    exec 'from settings import {} as environ'.format(env_name[env_])
     setup_environ(environ)
 
     from django.contrib.contenttypes.models import ContentType
@@ -279,6 +293,34 @@ def fix_contenttypes():
     print '', unicode(ContentType.objects.all())
 
     loaddata('fixtures/contenttypes_fixtures.json')
+
+
+def populate_history():
+    setup_django()
+    import reversion
+    from community.models import Community
+    from need.models import Need
+    from proposal.models import Proposal
+    from organization.models import Organization
+    from komoo_resource.models import Resource
+    from investment.models import Investment
+
+    for model in [Community, Need, Proposal, Organization, Resource, Investment]:
+        for obj in model.objects.all():
+            versions = reversion.get_for_object(obj)
+            if versions:
+                last = versions[0]
+                # first = versions.reverse()[0]
+                if last.type == 1:  # 1 == Edition
+                    obj.last_editor = last.revision.user
+
+                    # Disable auto now
+                    for field in obj._meta.local_fields:
+                        if field.name == "last_update":
+                            field.auto_now = False
+                    obj.last_update = last.revision.date_created
+                    obj.save()
+                    print obj, "updated."
 
 
 def help():

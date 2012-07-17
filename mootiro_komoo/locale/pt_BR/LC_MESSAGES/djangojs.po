@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-02 16:57-0300\n"
+"POT-Creation-Date: 2012-07-10 17:32-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -17,191 +17,155 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: apps/komoo_map/static/js/komoo_map.js:52
-msgid "Community"
-msgstr "Comunidade"
-
-#: apps/komoo_map/static/js/komoo_map.js:53
-msgid "Add Community"
-msgstr "Adicionar comunidade"
-
-#: apps/komoo_map/static/js/komoo_map.js:66
-msgid "Need"
-msgstr "Necessidade"
-
-#: apps/komoo_map/static/js/komoo_map.js:67
-msgid "Add Need"
-msgstr "Adicionar necessidade"
-
-#: apps/komoo_map/static/js/komoo_map.js:82
-msgid "Organization"
-msgstr "Organização"
-
-#: apps/komoo_map/static/js/komoo_map.js:83
-msgid "Add Organization"
-msgstr "Adicionar organização"
-
-#: apps/komoo_map/static/js/komoo_map.js:96
-msgid "Resource"
-msgstr "Recurso"
-
-#: apps/komoo_map/static/js/komoo_map.js:97
-msgid "Add Resource"
-msgstr "Adicionar recurso"
-
-#: apps/komoo_map/static/js/komoo_map.js:111
-msgid "Investment"
-msgstr "Investimento"
-
-#: apps/komoo_map/static/js/komoo_map.js:112
-msgid "Add Investment"
-msgstr "Adicionar Investimento"
-
-#: apps/komoo_map/static/js/komoo_map.js:599
+#: apps/komoo_map/static/js/komoo_map.js:522
 msgid "Clean"
 msgstr "Limpo"
 
-#: apps/komoo_map/static/js/komoo_map.js:808
+#: apps/komoo_map/static/js/komoo_map.js:1443
+msgid "Edit"
+msgstr "Editar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1585
+#: apps/komoo_map/static/js/komoo_map.js:1727
+msgid "Add shape"
+msgstr "Adicionar área"
+
+#: apps/komoo_map/static/js/komoo_map.js:1586
+#: apps/komoo_map/static/js/komoo_map.js:1731
+msgid "Add line"
+msgstr "Adicionar linha"
+
+#: apps/komoo_map/static/js/komoo_map.js:1587
+#: apps/komoo_map/static/js/komoo_map.js:1735
+msgid "Add point"
+msgstr "Adicionar ponto"
+
+#: apps/komoo_map/static/js/komoo_map.js:1727
+msgid "Draw a shape"
+msgstr "Desenhar uma área"
+
+#: apps/komoo_map/static/js/komoo_map.js:1731
+msgid "Draw a line"
+msgstr "Desenhar uma linha"
+
+#: apps/komoo_map/static/js/komoo_map.js:1735
+msgid "Add a marker"
+msgstr "Adicionar um marcador"
+
+#: apps/komoo_map/static/js/komoo_map.js:1739
+msgid "Add new..."
+msgstr "Adicionar..."
+
+#: apps/komoo_map/static/js/komoo_map.js:1743
+#: apps/komoo_map/static/js/komoo_map.js:1851
+msgid "Add"
+msgstr "Adicionar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1743
+msgid "Add another region"
+msgstr "Adicionar outra região"
+
+#: apps/komoo_map/static/js/komoo_map.js:1755
+msgid "Cut out"
+msgstr "Cortar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1755
+msgid "Cut out a hole from a region"
+msgstr "Adicionar um buraco a região"
+
+#: apps/komoo_map/static/js/komoo_map.js:1767
+#: apps/moderation/static/js/moderation.js:259
+msgid "Delete"
+msgstr "Apagar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1767
+msgid "Delete a region"
+msgstr "Apagar uma região"
+
+#: apps/komoo_map/static/js/komoo_map.js:1850
+msgid "Filter"
+msgstr "Filtrar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1855
+msgid "Please log in."
+msgstr "Por favor, entre no sistema."
+
+#: apps/komoo_map/static/js/komoo_map.js:1952
+msgid "Close"
+msgstr "Fechar"
+
+#: apps/komoo_map/static/js/komoo_map.js:1979
+msgid "Title"
+msgstr "Título"
+
+#: apps/komoo_map/static/js/komoo_map.js:1981
+msgid "Finish"
+msgstr "Concluir"
+
+#: apps/komoo_map/static/js/komoo_map.js:1982
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: apps/komoo_map/static/js/map/controls.js:55
 #, perl-format
 msgid "%s resident"
 msgid_plural "%s residents"
 msgstr[0] "%s habitante"
 msgstr[1] "%s habitantes"
 
-#: apps/komoo_map/static/js/komoo_map.js:811
+#: apps/komoo_map/static/js/map/controls.js:58
 msgid "No population provided"
 msgstr "População não fornecida"
 
-#: apps/komoo_map/static/js/komoo_map.js:1811
-msgid "Edit"
-msgstr "Editar"
-
-#: apps/komoo_map/static/js/komoo_map.js:1967
-#: apps/komoo_map/static/js/komoo_map.js:2098
-msgid "Add shape"
-msgstr "Adicionar área"
-
-#: apps/komoo_map/static/js/komoo_map.js:1968
-#: apps/komoo_map/static/js/komoo_map.js:2102
-msgid "Add line"
-msgstr "Adicionar linha"
-
-#: apps/komoo_map/static/js/komoo_map.js:1969
-#: apps/komoo_map/static/js/komoo_map.js:2106
-msgid "Add point"
-msgstr "Adicionar ponto"
-
-#: apps/komoo_map/static/js/komoo_map.js:2098
-msgid "Draw a shape"
-msgstr "Desenhar uma área"
-
-#: apps/komoo_map/static/js/komoo_map.js:2102
-msgid "Draw a line"
-msgstr "Desenhar uma linha"
-
-#: apps/komoo_map/static/js/komoo_map.js:2106
-msgid "Add a marker"
-msgstr "Adicionar um marcador"
-
-#: apps/komoo_map/static/js/komoo_map.js:2110
-msgid "Add new..."
-msgstr "Adicionar..."
-
-#: apps/komoo_map/static/js/komoo_map.js:2114
-#: apps/komoo_map/static/js/komoo_map.js:2222
-msgid "Add"
-msgstr "Adicionar"
-
-#: apps/komoo_map/static/js/komoo_map.js:2114
-msgid "Add another region"
-msgstr "Adicionar outra região"
-
-#: apps/komoo_map/static/js/komoo_map.js:2126
-msgid "Cut out"
-msgstr "Cortar"
-
-#: apps/komoo_map/static/js/komoo_map.js:2126
-msgid "Cut out a hole from a region"
-msgstr "Adicionar um buraco a região"
-
-#: apps/komoo_map/static/js/komoo_map.js:2138
-#: apps/moderation/static/js/moderation.js:259
-msgid "Delete"
-msgstr "Apagar"
-
-#: apps/komoo_map/static/js/komoo_map.js:2138
-msgid "Delete a region"
-msgstr "Apagar uma região"
-
-#: apps/komoo_map/static/js/komoo_map.js:2221
-msgid "Filter"
-msgstr "Filtrar"
-
-#: apps/komoo_map/static/js/komoo_map.js:2226
-msgid "Please log in."
-msgstr "Por favor, entre no sistema."
-
-#: apps/komoo_map/static/js/komoo_map.js:2318
-msgid "Close"
-msgstr "Fechar"
-
-#: apps/komoo_map/static/js/komoo_map.js:2345
-msgid "Title"
-msgstr "Título"
-
-#: apps/komoo_map/static/js/komoo_map.js:2347
-msgid "Finish"
-msgstr "Concluir"
-
-#: apps/komoo_map/static/js/komoo_map.js:2348
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: apps/main/static/js/komoo_search.js:8
+#: apps/main/static/js/komoo_search.js:11
+#: apps/main/static/js/komoo_search.org.js:9
 msgid "Communities"
 msgstr "Comunidades"
 
-#: apps/main/static/js/komoo_search.js:9
+#: apps/main/static/js/komoo_search.js:12
+#: apps/main/static/js/komoo_search.org.js:10
 msgid "Needs"
 msgstr "Necessidades"
 
-#: apps/main/static/js/komoo_search.js:10
+#: apps/main/static/js/komoo_search.js:13
+#: apps/main/static/js/komoo_search.org.js:11
 msgid "Organizations"
 msgstr "Organizações"
 
-#: apps/main/static/js/komoo_search.js:11
+#: apps/main/static/js/komoo_search.js:14
+#: apps/main/static/js/komoo_search.org.js:12
 msgid "Resources"
 msgstr "Recursos"
 
-#: apps/main/static/js/komoo_search.js:12
+#: apps/main/static/js/komoo_search.js:15
+#: apps/main/static/js/komoo_search.org.js:13
 msgid "Investments"
 msgstr "Investimentos"
 
-#: apps/main/static/js/komoo_search.js:13
+#: apps/main/static/js/komoo_search.js:16
+#: apps/main/static/js/komoo_search.org.js:14
 msgid "Google Results"
 msgstr "Resultados do Google"
 
-#: apps/main/static/js/komoo_search.js:38
-#: apps/main/static/js/komoo_search.js:64
+#: apps/main/static/js/komoo_search.js:65
+#: apps/main/static/js/komoo_search.org.js:40
+#: apps/main/static/js/komoo_search.org.js:67
 #, perl-format
 msgid "%s result"
 msgid_plural "%s results"
 msgstr[0] "%s resultado"
 msgstr[1] "%s resultados"
 
-#: apps/main/static/js/komoo_search.js:81
+#: apps/main/static/js/komoo_search.js:77
+#: apps/main/static/js/komoo_search.org.js:85
 msgid "No results found!"
 msgstr "Nenhum resultado encontrado!"
 
-#: apps/main/static/js/komoo_search.js:86
-msgid "Search Results:"
-msgstr "Resultados da Busca:"
-
-#: apps/main/static/js/komoo_utils.js:379
+#: apps/main/static/js/komoo_utils.js:387
 msgid "Yes"
 msgstr "Sim"
 
-#: apps/main/static/js/komoo_utils.js:384
+#: apps/main/static/js/komoo_utils.js:392
 msgid "No"
 msgstr "Não"
 
@@ -281,9 +245,42 @@ msgstr ""
 msgid "error : "
 msgstr "erro: "
 
-#: lib/fileupload/static/plupload/komoo_plupload.js:159
+#: lib/fileupload/static/plupload/komoo_plupload.js:163
 msgid "Are you sure you want to delete this file?"
 msgstr "Você deseja realmente apagar este arquivo?"
+
+#~ msgid "Search Results:"
+#~ msgstr "Resultados da Busca:"
+
+#~ msgid "Community"
+#~ msgstr "Comunidade"
+
+#~ msgid "Add Community"
+#~ msgstr "Adicionar comunidade"
+
+#~ msgid "Need"
+#~ msgstr "Necessidade"
+
+#~ msgid "Add Need"
+#~ msgstr "Adicionar necessidade"
+
+#~ msgid "Organization"
+#~ msgstr "Organização"
+
+#~ msgid "Add Organization"
+#~ msgstr "Adicionar organização"
+
+#~ msgid "Resource"
+#~ msgstr "Recurso"
+
+#~ msgid "Add Resource"
+#~ msgstr "Adicionar recurso"
+
+#~ msgid "Investment"
+#~ msgstr "Investimento"
+
+#~ msgid "Add Investment"
+#~ msgstr "Adicionar Investimento"
 
 #~ msgid "Deletion request sent"
 #~ msgstr "Requisição de remoção enviada"

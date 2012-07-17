@@ -2,6 +2,7 @@
 {% load i18n %}
 {% load komoo_filters %}
 {% load komoo_tags %}
+{% load komoo_map_tags %}
 {% load vote_tags %}
 {% load comment_tags %}
 {% load humanize %}
@@ -14,6 +15,7 @@
 {% endblock %}
 
 {% block content %}
+{% komoo_map_tooltip %}
 <div id="updates-header">
   <img alt="" src="{{STATIC_URL}}img/updates-page/novidades.png"/>
 
@@ -88,20 +90,20 @@
                   {% endif %}
 
                   {% if u.object_type == 'proposal' %}
-                    {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
+                  {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
                     {% trans "for the need" %} <a href="{{ u.instances.1.link }}">{{ u.instances.1.name }}</a>
                   {% else %}
-                    <a href="{{ u.instance.link }}">{{ u.instance.name }}</a>
+                  <a href="{{ u.instance.link }}">{{ u.instance.name }}</a>
                   {% endif %}
                 </h3>
                 <div class="right">
-                  <a href="#"><i class="icon-see-on-map"></i></a>
+                  <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map"></i></a>
                 </div>
                 <div class="clear-both"></div>
                 {% communities_list u.communities %}
                 <div class="clear-both"></div>
                 <div class="update-message left">
-                  {{ u.readable_type|capfirst }} {{ u.date|naturaltime }}
+                  <strong>{{ u.readable_type|capfirst }}</strong> {{ u.date|naturaltime }}
 
                   {### Users aggregated list ###}
                   {% if u.type == "A" or u.type == "E" %}
@@ -179,12 +181,16 @@
 
         $("#about-mootiro.open").live("mouseleave", function (evt) {
             console.log("open leave");
-            $(this).toggleClass("closed open");
-            $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
-            $(this).animate({
-                width: '-=105',
-                height: '-=120'
-            });
+            var about_mootiro = $(this);
+            var close_panel = setTimeout(function(){
+              about_mootiro.toggleClass("closed open");
+              $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
+              about_mootiro.animate({
+                  width: '-=105',
+                  height: '-=120'
+              });
+            }, 2000);
+
         });
 
     </script>

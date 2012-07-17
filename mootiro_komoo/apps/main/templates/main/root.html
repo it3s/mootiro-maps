@@ -1,6 +1,9 @@
 {% extends "global.html" %}
 {% load komoo_map_tags %}
+{% load komoo_tags %}
 {% block title %}Mootiro Maps{% endblock %}
+
+{% block menu %} {% menu community "map" %} {% endblock %}
 
 {% block content %}
   {% komoo_map geojson 'type=main' 'width=100%' 'height=100%' 'zoom=13' %}

@@ -22,10 +22,10 @@ from ajaxforms import AjaxModelForm
 from signatures.signals import notify_on_update
 
 if settings.LANGUAGE_CODE == 'en-us':
-    CATEGORIES = [(cat.id, cat.name) \
+    CATEGORIES = [(cat.id, cat.name) 
                 for cat in OrganizationCategory.objects.all().order_by('name')]
 else:
-    CATEGORIES = [(cat.category_id, cat.name)\
+    CATEGORIES = [(cat.category_id, cat.name)
                     for cat in OrganizationCategoryTranslation.objects.filter(
                         lang=settings.LANGUAGE_CODE).order_by('name')]
 
@@ -48,7 +48,8 @@ class FormOrganization(AjaxModelForm):
                     attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
     logo = LogoField(required=False)
-    # logo = forms.CharField(required=False, widget=forms.HiddenInput())
+    logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
+    logo_category = forms.CharField(required=False, widget=forms.HiddenInput())
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
         required=False)
@@ -56,7 +57,8 @@ class FormOrganization(AjaxModelForm):
     class Meta:
         model = Organization
         fields = ['name', 'description', 'community', 'link', 'contact',
-                  'target_audiences', 'categories', 'tags', 'id', 'logo']
+                  'target_audiences', 'categories', 'tags', 'id', 'logo',
+                  'logo_category', 'logo_choice']
 
     _field_labels = {
         'name': _('Name'),
@@ -99,6 +101,9 @@ class FormOrganization(AjaxModelForm):
 
     def clean_logo(self):
         return clean_autocomplete_field(self.cleaned_data['logo'], UploadedFile)
+
+    def clean_logo_category(self):
+        return clean_autocomplete_field(self.cleaned_data['logo_category'], OrganizationCategory)
 
 
 class FormBranch(AjaxModelForm):

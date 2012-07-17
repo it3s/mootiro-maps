@@ -41,9 +41,6 @@ class Resource(GeoRefModel, VotableModel):
     """Resources model"""
     name = models.CharField(max_length=256, default=_('Resource without name'))
     # slug = models.CharField(max_length=256, blank=False, db_index=True)
-    creator = models.ForeignKey(User, null=True, blank=True)
-    creation_date = models.DateTimeField(auto_now_add=True)
-    last_update = models.DateTimeField(auto_now=True)
     kind = models.ForeignKey(ResourceKind, null=True, blank=True)
     description = models.TextField()
     contact = models.TextField(null=True, blank=True)
@@ -54,6 +51,12 @@ class Resource(GeoRefModel, VotableModel):
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
+
+    # Meta info
+    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_resources')
+    creation_date = models.DateTimeField(auto_now_add=True)
+    last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
+    last_update = models.DateTimeField(auto_now=True)
 
     class Map:
         editable = True

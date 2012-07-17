@@ -172,3 +172,4 @@ def get_name_for(request, id):
     logger.debug('acessing Community > get_name_for id: {}'.format(id))
     community_name = Community.objects.get(pk=id).name
     return {'name': community_name}
+
