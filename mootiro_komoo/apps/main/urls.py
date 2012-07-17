@@ -11,6 +11,7 @@ urlpatterns = patterns('main.views',
     url(r'^radial_search$', 'radial_search', name='radial_search'),
     url(r'^komoo_search/$', 'komoo_search', name='komoo_search'),
     url(r'^send_error_report/$', 'send_error_report', name='send_error_report'),
+    url(r'^permalink/(?P<identifier>\w+)/?$', 'permalink', name='permalink'),
 )
 
 if settings.DEBUG:

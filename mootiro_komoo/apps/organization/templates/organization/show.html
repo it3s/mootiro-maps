@@ -28,8 +28,8 @@
     <div class="main-column">
 
         <div class="view-header" >
-            {% if organization.logo %}
-            <img src="{{ organization.logo.file.url }}" class="inline-block organization-logo">
+            {% if organization.logo or organization.logo_category %}
+            <img src="{{ organization.logo_url }}" class="inline-block organization-logo">
             {% endif %}
             <div class="inline-block organization-header">
                 <h2>{{ organization.name }}</h2>
@@ -214,6 +214,13 @@
         {% taglist organization community %}
 
         <div class="block">
+          <h4>{% trans 'Contact' %}</h4>
+            {% if organization.contact %}
+                {{ organization.contact|render_markup|safe }}
+            {% else %}
+                {% trans 'No contact info provided' %}
+            {% endif %}
+
           <h4>{% trans 'Operation Field' %}</h4>
             <ul>
             {% for c in organization.categories.all %}
@@ -233,13 +240,6 @@
                 {% trans 'No target audience provided' %}
             {% endfor %}
             </ul>
-
-          <h4>{% trans 'Contact' %}</h4>
-            {% if organization.contact %}
-                {{ organization.contact|render_markup|safe }}
-            {% else %}
-                {% trans 'No contact info provided' %}
-            {% endif %}
 
           {% if organization.link %}
           <h4>Link</h4>
@@ -291,7 +291,7 @@
 
         $('.branch-link').bind('mouseover', function(evt){
             var branch_id = $(this).attr('data-branch-id');
-            preview.centerOverlay('organizationbranch', branch_id);
+            preview.centerFeature('organizationbranch', branch_id);
         });
 
         $('.branch-edit-btn').click(function(evt){

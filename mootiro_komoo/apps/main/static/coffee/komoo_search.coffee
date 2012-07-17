@@ -131,7 +131,7 @@ $ ->
 
 
     form_search.submit (evt) ->
-        evt.preventDefault();
+        evt.preventDefault()
 
         cl.show()
 

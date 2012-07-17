@@ -1,0 +1,28 @@
+{% load i18n %}
+
+{% block title %}<strong>{{ object.name }}</strong>{% endblock %}
+{% block content %}
+  <div>
+    {% if object.categories %}
+      <ul class="horizontal" id="categories">
+        {% for c in object.categories.all %}
+        <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
+        {% endfor %}
+      </ul>
+      <div style="clear: both;">
+    {% endif %}
+    <p>
+    <ul>
+      {% if object.needs %}
+      <li><i class="icon-need no-hover"></i>{% blocktrans count count=object.needs.count %}{{ count }} Need{% plural %}{{ count }} Needs{% endblocktrans %}</li>
+      {% endif %}
+      {% if object.organization_set %}
+        <li><i class="icon-organization no-hover"></i>{% blocktrans count count=object.organization_set.count %}{{ count }} Organization{% plural %}{{ count }} Organizations{% endblocktrans %}</li>
+      {% endif %}
+      {% if object.resources %}
+        <li><i class="icon-resource no-hover"></i>{% blocktrans count count=object.resources.count %}{{ count }} Resource{% plural %}{{ count }} Resources{% endblocktrans %}</li>
+      {% endif %}
+    </ul>
+    </p>
+  </div>
+{% endblock %}

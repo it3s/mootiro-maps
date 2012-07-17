@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext
 
 from komoo_resource.models import Resource
+from main.utils import komoo_permalink
 from proposal.models import Proposal
 
 
@@ -28,7 +29,7 @@ class Update(models.Model):
 
     object_id = models.IntegerField(null=False, db_index=True)
     object_type = models.CharField(max_length=32, null=False, db_index=True)
-    
+
     date = models.DateTimeField(auto_now=True)
     comments_count = models.IntegerField(null=True)
 
@@ -65,7 +66,8 @@ class Update(models.Model):
                 key = i.slug
             keys.append(key)
         self._keys = simplejson.dumps(keys)
-        self._links = simplejson.dumps([i.view_url for i in instances])
+        # self._links = simplejson.dumps([i.view_url for i in instances])
+        self._links = simplejson.dumps([komoo_permalink(i) for i in instances])
 
     @property
     def instance(self):
@@ -112,6 +114,15 @@ class Update(models.Model):
     def image(self):
         return "img/updates-page/{}-{}.png" \
                     .format(self.object_type, self.TYPES[self.type])
+
+    @property
+    def object_app_name(self):
+        if self.object_type == 'resource':
+            return 'komoo_resource'
+        elif self.object_type == 'organizationbranch':
+            return 'organization'
+        else:
+            return self.object_type
 
     @property
     def readable_type(self):

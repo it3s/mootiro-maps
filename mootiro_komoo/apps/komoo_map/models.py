@@ -72,14 +72,16 @@ def get_editable_models():
 
 def get_models_json(all=True):
     return json.dumps([{'type': model.__name__,
+                    'appLabel': model._meta.app_label,
+                    'modelName': model.__name__,
                     'disabled': not model.get_map_attr('editable'),
                     'title': model.get_map_attr( 'title') or '{}'.format(model.__name__),
                     'tooltip': model.get_map_attr('tooltip') or 'Add {}'.format(model.__name__),
                     'color': model.get_map_attr('background_color'),
                     'border': model.get_map_attr('border_color'),
-                    'overlayTypes': model.get_map_attr('geometries'),
+                    'geometryTypes': model.get_map_attr('geometries'),
                     'categories': model.get_map_attr('categories'),
-                    'formUrl': reverse(model.get_map_attr('form_view_name'), 
+                    'formUrl': reverse(model.get_map_attr('form_view_name'),
                         args=model.get_map_attr('form_view_args'),
                         kwargs=model.get_map_attr('form_view_kwargs')),
                     'minZoomGeometry': model.get_map_attr('min_zoom_geometry'),

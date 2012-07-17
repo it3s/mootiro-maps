@@ -38,10 +38,11 @@ class UploadedFile(models.Model):
     @classmethod
     def bind_files(cls, ids_list, obj_to_bind):
         """
-        class method to binf a list of files to a given obj
+        class method to bind a list of files to a given obj
         """
         for f in ids_list:
             if f:
                 file_ = UploadedFile.objects.get(pk=f)
                 file_.content_object = obj_to_bind
                 file_.save()
+

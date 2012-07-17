@@ -47,7 +47,7 @@
               var newGeojson = editor.getGeoJSON({currentOnly: true, geometryCollection: true});
               $(geometryInputId).val(JSON.stringify(newGeojson));
               var newGeojson_ = editor.getGeoJSON({currentOnly: true});
-              preview.updateOverlay(newGeojson_);
+              preview.updateFeature(newGeojson_);
               newGeojson = editor.getGeoJSON({currentOnly: true});
               $(geometryInputId).attr("data-feature-collection", JSON.stringify(newGeojson));
             });
@@ -57,9 +57,9 @@
           editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
           editor.googleMap.setZoom(editor.googleMap.getZoom()-1)
           $(window).resize();
-          editor.editOverlay(editor.overlays.getAt(0));
+          editor.editFeature(editor.features.getAt(0));
           setTimeout(function () {
-              editor.setCurrentOverlay(editor.overlays.getAt(0), true);
+              editor.setCurrentFeature(editor.features.getAt(0), true);
           }, 200);
           return false;
       });

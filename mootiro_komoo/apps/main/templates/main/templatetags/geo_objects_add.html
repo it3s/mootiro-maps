@@ -2,7 +2,7 @@
 
 {% autoescape off %}
 <ul class="geo-objects-listing" style="display: block; clear: both;">
-  <li class="communities" data-object-type="Community" data-overlay-type="polygon">
+  <li class="communities" data-object-type="Community" data-geometry-type="polygon">
     <div class="img-holder"><img src="{{ STATIC_URL }}/{{ img.communities }}" /></div>
     <span>{% trans "Communities" %}</span>
   </li>
@@ -13,9 +13,9 @@
   </li>
   <li class="need sublist" data-object-type="Need">
     <ul>
-      <li class="add shape" data-overlay-type="polygon">{% trans "Add shape" %}</li>
-      <li class="add line" data-overlay-type="polyline">{% trans "Add line" %}</li>
-      <li class="add point" data-overlay-type="marker">{% trans "Add point" %}</li>
+      <li class="add shape" data-geometry-type="polygon">{% trans "Add shape" %}</li>
+      <li class="add line" data-geometry-type="polyline">{% trans "Add line" %}</li>
+      <li class="add point" data-geometry-type="marker">{% trans "Add point" %}</li>
     </ul>
   </li>
   <li class="organizations" data-object-type="OrganizationBranch">
@@ -25,9 +25,9 @@
   </li>
   <li class="organizationbranch sublist" data-object-type="OrganizationBranch">
     <ul>
-      <li class="add shape" data-overlay-type="polygon">{% trans "Add shape" %}</li>
-      <li class="add line" data-overlay-type="polyline">{% trans "Add line" %}</li>
-      <li class="add point" data-overlay-type="marker">{% trans "Add point" %}</li>
+      <li class="add shape" data-geometry-type="polygon">{% trans "Add shape" %}</li>
+      <li class="add line" data-geometry-type="polyline">{% trans "Add line" %}</li>
+      <li class="add point" data-geometry-type="marker">{% trans "Add point" %}</li>
     </ul>
   </li>
   <li class="resources" data-object-type="Resource">
@@ -37,9 +37,9 @@
   </li>
   <li class="resource sublist" data-object-type="Resource">
     <ul>
-      <li class="add shape" data-overlay-type="polygon">{% trans "Add shape" %}</li>
-      <li class="add line" data-overlay-type="polyline">{% trans "Add line" %}</li>
-      <li class="add point" data-overlay-type="marker">{% trans "Add point" %}</li>
+      <li class="add shape" data-geometry-type="polygon">{% trans "Add shape" %}</li>
+      <li class="add line" data-geometry-type="polyline">{% trans "Add line" %}</li>
+      <li class="add point" data-geometry-type="marker">{% trans "Add point" %}</li>
     </ul>
   </li>
 </ul>

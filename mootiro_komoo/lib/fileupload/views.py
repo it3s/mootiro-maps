@@ -58,11 +58,13 @@ class FileDeleteView(DeleteView):
                 self.object.content_object.logo == self.object:
             self.object.content_object.logo = None
             self.object.content_object.save()
-        self.object.delete()
-        try:
-            os.remove(path)
-        except Exception as err:
-            logger.warning('Failed to remove file: %s' % err)
+        # self.object.delete()
+        self.object.content_object = None
+        self.object.save()
+#        try:
+#            os.remove(path)
+#        except Exception as err:
+#            logger.warning('Failed to remove file: %s' % err)
         response = JSONResponse({'deleted': True, 'id': _id}, {},
                                 response_mimetype(self.request))
         response['Content-Disposition'] = 'inline; filename=files.json'
