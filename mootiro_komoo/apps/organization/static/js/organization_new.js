@@ -148,6 +148,10 @@ $(function(){
         'files': {
           hint: 'Você pode carregar fotos da sua organização',
           top: '40%'
+        },
+        'logo': {
+          hint: 'neste campo voce pode subir um logo da sua organização ou optar por usar uma imagem correspondente a uma das categorias que você marcou acima. Lembre-se primeiro de escolher as categorias para que as imagens apareçam aqui.',
+          top: '-40px'
         }
     });
 
