@@ -214,6 +214,13 @@
         {% taglist organization community %}
 
         <div class="block">
+          <h4>{% trans 'Contact' %}</h4>
+            {% if organization.contact %}
+                {{ organization.contact|render_markup|safe }}
+            {% else %}
+                {% trans 'No contact info provided' %}
+            {% endif %}
+
           <h4>{% trans 'Operation Field' %}</h4>
             <ul>
             {% for c in organization.categories.all %}
@@ -233,13 +240,6 @@
                 {% trans 'No target audience provided' %}
             {% endfor %}
             </ul>
-
-          <h4>{% trans 'Contact' %}</h4>
-            {% if organization.contact %}
-                {{ organization.contact|render_markup|safe }}
-            {% else %}
-                {% trans 'No contact info provided' %}
-            {% endif %}
 
           {% if organization.link %}
           <h4>Link</h4>

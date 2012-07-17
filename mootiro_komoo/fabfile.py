@@ -39,7 +39,6 @@ def setup_django():
     sys.path.append(PROJ_DIR)
     sys.path.append(SITE_ROOT)
     from django.core.management import setup_environ
-    # env_name = ['', 'development', 'staging', 'production'][3*(int(env_ == 'prod')) + 2*(int(env_ == 'stage')) + (int(env_ == 'dev'))]
     env_name = {'dev': 'development', 'stage': 'staging', 'prod': 'production'}
     environ = None
     exec 'from settings import {} as environ'.format(env_name[env_])
