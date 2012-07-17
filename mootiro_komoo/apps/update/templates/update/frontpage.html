@@ -169,28 +169,35 @@
         //     $("#content-updates-filters div.img-holder input[type=checkbox]").attr("checked", "checked");
         // });
 
+        var closed_panel_width = $("#about-mootiro.closed").width();
+        var closed_panel_height = $("#about-mootiro.closed").height();
+        var close_panel;
+
         $("#about-mootiro.closed").live("mouseenter", function (evt) {
-            console.log("close enter");
+            if (window.console) console.log("close enter");
             $(this).toggleClass("closed open");
             $(this).animate({
-                width: '+=105',
-                height: '+=120'
+                width: closed_panel_width + 105,
+                height: closed_panel_height + 120
             });
             $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
         });
 
         $("#about-mootiro.open").live("mouseleave", function (evt) {
-            console.log("open leave");
+            if (window.console) console.log("open leave");
             var about_mootiro = $(this);
-            var close_panel = setTimeout(function(){
+            close_panel = setTimeout(function(){
               about_mootiro.toggleClass("closed open");
               $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
               about_mootiro.animate({
-                  width: '-=105',
-                  height: '-=120'
+                  width: closed_panel_width,
+                  height: closed_panel_height
               });
             }, 2000);
-
+        });
+        $("#about-mootiro.open").live("mouseenter", function (evt) {
+            // Don't close the panel when the mouse goes out and then come back
+            if (close_panel) clearTimeout(close_panel);
         });
 
     </script>
