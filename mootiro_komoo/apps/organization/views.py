@@ -22,8 +22,7 @@ from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
 
-from organization.models import (Organization, OrganizationBranch,
-                                 OrganizationCategory)
+from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganization, FormBranch
 from community.models import Community
 from main.utils import (paginated_query, create_geojson, sorted_query,
@@ -36,8 +35,8 @@ logger = logging.getLogger(__name__)
 
 def prepare_organization_objects(community_slug="", organization_slug=""):
     """Retrieves a tuple (organization, community). According to given
-    parameters may raise an 404. Creates a new organization if organization_slug
-    is evaluated as false."""
+    parameters may raise an 404. Creates a new organization if
+    organization_slug is evaluated as false."""
     community = get_object_or_404(Community, slug=community_slug) \
                     if community_slug else None
     if organization_slug:
@@ -91,7 +90,8 @@ def show(request, organization_slug='', community_slug=''):
     if organization.logo_id:
         files = files.exclude(pk=organization.logo_id)
 
-    return dict(organization=organization, geojson=geojson, community=community)
+    return dict(organization=organization, geojson=geojson,
+                community=community)
 
 
 @login_required
@@ -140,7 +140,8 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
     form_branch.helper.form_action = reverse('add_branch_from_map')
     form_branch.fields['geometry'].widget.attrs['id'] = 'id_geometry'
     org_name_widget = Autocomplete(Organization,
-        "/organization/search_by_name", clean_on_change=False).render('org_name')
+        "/organization/search_by_name", clean_on_change=False
+        ).render('org_name')
     return {'community': community, 'form_org': form_org,
             'form_branch': form_branch, 'org_name_widget': org_name_widget}
 
@@ -205,7 +206,8 @@ def edit_inline_branch(request):
             request.POST))
 
     if request.POST.get('id', None):
-        branch = get_object_or_404(OrganizationBranch, pk=request.POST.get('id', ''))
+        branch = get_object_or_404(OrganizationBranch,
+            pk=request.POST.get('id', ''))
         branch.info = escape(request.POST['info'])
         name = escape(request.POST.get('name', ''))
         if name:
@@ -242,8 +244,7 @@ def edit_inline_branch(request):
 def verify_org_name(request):
     name = request.POST.get('org_name', '')
     q = Organization.objects.filter(
-            Q(name__iexact=name) | Q(slug=slugify(name))
-        )
+            Q(name__iexact=name) | Q(slug=slugify(name)))
     if q.count():
         r_dict = {'exists': True, 'id': q[0].id, 'slug': q[0].slug}
     else:
@@ -270,20 +271,4 @@ def search_tags(request):
     tags = [t.name for t in qset]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
-
-
-@ajax_request
-def category_images(request):
-    logger.debug('acessing Organization > category_images')
-    categories = request.GET.get('categories_list',[])
-    if categories:
-        categories = map(int, categories.split('|'))
-        categories.sort()
-    images = []
-    for id_ in categories:
-        images.append({
-            'filename': OrganizationCategory.objects.get(pk=id_).image,
-            'id': id_
-        })
-    return {'images': images}
 

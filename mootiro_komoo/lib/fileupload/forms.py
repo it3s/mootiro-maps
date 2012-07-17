@@ -2,6 +2,8 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from main.utils import MooHelper
+from organization.models import OrganizationCategory
+import simplejson as json
 
 
 class PluploadWidget(forms.Widget):
@@ -143,6 +145,7 @@ class LogoWidget(forms.Widget):
         }
 
     def render(self, name, value=None, attrs=None):
+        imgs_dict = json.dumps(OrganizationCategory.category_logos_dict())
         html = u"""
             <div class="div-logo-pane-wrapper">
             <div class="div-logo-pane logo-pane-left">
@@ -169,8 +172,11 @@ class LogoWidget(forms.Widget):
                 </div>
             </div>
             </div>
+            <script type="text/javascript" charset="utf-8">
+               var organization_category_images = %(img_json)s ;
+            </script>
 
-        """ % {'name': name, 'select_logo': _('Select a logo')}
+        """ % {'name': name, 'select_logo': _('Select a logo'), 'img_json': imgs_dict}
         return html
 
 

@@ -45,38 +45,30 @@ $(function() {
     var addThumb = function(img){
         $('#logo-cat-thumbs-list').append(
             '<div class="file-entry logo-entry" org-category="' + img.id + '">' +
-                '<img src="/static/' + img.filename + '" alt="img" class="logo-thumb">' +
+                '<img src="/static/img/org_categories/' + img.filename + '" alt="img" class="logo-thumb">' +
             '</div>'
         );
     };
 
     var retrieveLogoCategoryImages = function(id_list){
         id_list = id_list || [];
-        var request_data = {
-            'categories_list': id_list.join('|'),
-            'bla': 'blee'
-        };
-        $.get(
-            '/organization/category_images/',
-            request_data,
-            function(data){
-                $('#logo-cat-thumbs-list').html('');
-                if (data.images){
-                    $.each(data.images, function(idx, img){
-                        addThumb(img);
-                    });
-                    var id_logo_cat = $('#id_logo_category');
-                    if (id_logo_cat.val() && $('.logo-entry[org-category=' + id_logo_cat.val() + ']').length ){
-                        $('.logo-entry[org-category=' + id_logo_cat.val() + ']').addClass('choosen');
-                    } else {
-                        var logo_cat= $('.logo-entry').first();
-                        logo_cat.addClass('choosen');
-                        $('#id_logo_category').val(logo_cat.attr('org-category'));
-                    }
-                }
-            },
-            'json'
-        );
+        $('#logo-cat-thumbs-list').html('');
+        if (id_list.length){
+            $.each(id_list, function(idx, num){
+                addThumb({
+                    id: num,
+                    filename: organization_category_images[num]
+                });
+            });
+            var id_logo_cat = $('#id_logo_category');
+            if (id_logo_cat.val() && $('.logo-entry[org-category=' + id_logo_cat.val() + ']').length ){
+                $('.logo-entry[org-category=' + id_logo_cat.val() + ']').addClass('choosen');
+            } else {
+                var logo_cat= $('.logo-entry').first();
+                logo_cat.addClass('choosen');
+                $('#id_logo_category').val(logo_cat.attr('org-category'));
+            }
+        }
     };
 
     var updateCategoriesList = function() {

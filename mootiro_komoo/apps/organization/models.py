@@ -201,33 +201,36 @@ class OrganizationCategory(models.Model):
             return OrganizationCategoryTranslation.objects.get(
                 lang=settings.LANGUAGE_CODE, category=self).name
 
-    category_logos = {
-        1: "culture-and-arts.png",
-        2: "education.png",
-        3: "environment.png",
-        4: "health.png",
-        5: "housing.png",
-        6: "research.png",
-        7: "self-help.png",
-        8: "social-services.png",
-        9: "sports-and-recreation.png",
-        10: "emergency-aid-disaster-relief.png",
-        11: "animal-protection.png",
-        12: "community-development.png",
-        13: "income-generation.png",
-        14: "human-rights-promotion.png",
-        15: "law-and-legal-services.png",
-        16: "voluntarism-promotion.png",
-        17: "promotion-of-civil-society-organizations.png",
-        18: "fundraising-and-grant-making-organization.png",
-        19: "peace-promotion.png",
-        20: "cultural-exchange.png",
-        21: "development-assistance.png",
-    }
+    @classmethod
+    def category_logos_dict(cls):
+        return {
+            1: "culture-and-arts.png",
+            2: "education.png",
+            3: "environment.png",
+            4: "health.png",
+            5: "housing.png",
+            6: "research.png",
+            7: "self-help.png",
+            8: "social-services.png",
+            9: "sports-and-recreation.png",
+            10: "emergency-aid-disaster-relief.png",
+            11: "animal-protection.png",
+            12: "community-development.png",
+            13: "income-generation.png",
+            14: "human-rights-promotion.png",
+            15: "law-and-legal-services.png",
+            16: "voluntarism-promotion.png",
+            17: "promotion-of-civil-society-organizations.png",
+            18: "fundraising-and-grant-making-organization.png",
+            19: "peace-promotion.png",
+            20: "cultural-exchange.png",
+            21: "development-assistance.png",
+        }
 
     @property
     def image(self):
-        return "img/org_categories/%s" % self.category_logos[self.id]
+        return "img/org_categories/{}".format(
+            OrganizationCategory.category_logos_dict()[self.id])
 
 
 class OrganizationCategoryTranslation(models.Model):
