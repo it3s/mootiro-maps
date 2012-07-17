@@ -69,9 +69,10 @@
     };
 
     FeatureCollection.prototype.setMap = function(map, opt_force) {
+      var _this = this;
       this.map = map;
       this.forEach(function(feature) {
-        return feature.setMap(this.map, opt_force);
+        return feature.setMap(_this.map, opt_force);
       });
       return this.handleMapEvents();
     };
@@ -119,8 +120,7 @@
     };
 
     FeatureCollection.prototype.handleMapEvents = function() {
-      var that;
-      that = this;
+      var _this = this;
       return komoo.event.addListener(this.map, "zoom_changed", function() {});
     };
 

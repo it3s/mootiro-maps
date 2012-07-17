@@ -159,11 +159,12 @@ class Feature
         @marker?.setIcon icon
         @geometry?.setIcon icon
 
-    getBorderSize: -> undefined
-    getBorderOpacity: -> undefined
-    getBorderColor: -> @featureType.border
-    getBackgroundColor: -> @featureType.color
-    getBackgroundOpacity: -> undefined
+    getBorderSize: -> @featureType.border_size
+    getBorderSizeHover: -> @featureType.borderSizeHover
+    getBorderColor: -> @featureType.borderColor
+    getBorderOpacity: -> @featureType.borderOpacity
+    getBackgroundColor: -> @featureType.backgroundColor
+    getBackgroundOpacity: -> @featureType.backgroundOpacity
     getDefaultZIndex: -> @featureType.zIndex
 
 

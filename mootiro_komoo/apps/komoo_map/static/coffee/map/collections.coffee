@@ -41,7 +41,7 @@ class FeatureCollection extends GenericCollection
         feature.setMap(@map)
 
     setMap: (@map, opt_force) ->
-        @forEach (feature) -> feature.setMap @map, opt_force
+        @forEach (feature) => feature.setMap @map, opt_force
         @handleMapEvents()
 
     show: ->
@@ -69,8 +69,7 @@ class FeatureCollection extends GenericCollection
         @forEach (feature) -> feature.seMap feature.getMap()
 
     handleMapEvents: ->
-        that = @
-        komoo.event.addListener @map, "zoom_changed", ->
+        komoo.event.addListener @map, "zoom_changed", =>
 
 
 class Layer extends FeatureCollection
