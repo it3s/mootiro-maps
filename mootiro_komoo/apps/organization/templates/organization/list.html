@@ -38,18 +38,13 @@
       <div class="view-list-item {% cycle 'odd' '' %}">
         <div>
           <div class="inline-block org-list-logo">
-            {% if org.logo %}
-              <img src="{{ org.logo.file.url }}" class="org-list-img"/>
-
-            {% else %}
-              <img src="{{ STATIC_URL }}img/logo.png" class="org-list-img-placeholder" />
-            {% endif %}
+              <img src="{{ org.logo_url }}" class="org-list-img"/>
           </div>
           <div class="inline-block org-list-header">
             <div>
               {% if community %}
                 <a href="/{{ community.slug }}/organization/{{ org.slug }}" class="org-name">
-                  {{ org.name }}
+                    {{ org.name }}
                 </a>
               {% else %}
                 <a href="/organization/{{ org.slug }}" class="org-list-name">

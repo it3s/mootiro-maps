@@ -32,7 +32,7 @@ $(function() {
         var resp = JSON.parse(response.response);
         //add_file(resp);
         $('#id_logo').val(resp.id);
-        $('#logo-thumb').html('' +
+        $('#logo-thumb').html(
             '<img src="' + resp.url + '" >'
         );
         setLogoChoice('uploaded');
@@ -51,7 +51,7 @@ $(function() {
     };
 
     var retrieveLogoCategoryImages = function(id_list){
-        var id_list = id_list || [];
+        id_list = id_list || [];
         var request_data = {
             'categories_list': id_list.join('|'),
             'bla': 'blee'
@@ -77,7 +77,7 @@ $(function() {
             },
             'json'
         );
-    }
+    };
 
     var updateCategoriesList = function() {
         var categories_list = [];
@@ -86,7 +86,7 @@ $(function() {
         });
 
         retrieveLogoCategoryImages(categories_list);
-    }
+    };
 
     var setLogoChoice = function(choice){
         var choice_vals = {
@@ -96,13 +96,27 @@ $(function() {
 
         $('input[type="radio"][name=logo_type][value="' + choice +'"]').attr('checked', 'checked');
         $('#id_logo_choice').val(choice_vals[choice]);
-    }
+    };
 
     $('#div_id_categories input').click(function(){
         updateCategoriesList();
     });
 
     updateCategoriesList();
+
+    // fix radio button entries
+    var logo_choice = $('#id_logo_choice');
+    if( logo_choice.val()){
+        var choice_vals = {
+            'CAT': 'category',
+            'UP': 'uploaded'
+        };
+        setLogoChoice(choice_vals[logo_choice.val()]);
+    }
+
+    $('input[name=logo_type]').click(function(){
+        setLogoChoice($(this).val());
+    });
 
     $('.logo-entry').live('click', function(){
         $('.logo-entry.choosen').removeClass('choosen');

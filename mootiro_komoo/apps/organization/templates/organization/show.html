@@ -28,8 +28,8 @@
     <div class="main-column">
 
         <div class="view-header" >
-            {% if organization.logo %}
-            <img src="{{ organization.logo.file.url }}" class="inline-block organization-logo">
+            {% if organization.logo or organization.logo_category %}
+            <img src="{{ organization.logo_url }}" class="inline-block organization-logo">
             {% endif %}
             <div class="inline-block organization-header">
                 <h2>{{ organization.name }}</h2>

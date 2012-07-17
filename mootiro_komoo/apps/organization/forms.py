@@ -22,10 +22,10 @@ from ajaxforms import AjaxModelForm
 from signatures.signals import notify_on_update
 
 if settings.LANGUAGE_CODE == 'en-us':
-    CATEGORIES = [(cat.id, cat.name) \
+    CATEGORIES = [(cat.id, cat.name) 
                 for cat in OrganizationCategory.objects.all().order_by('name')]
 else:
-    CATEGORIES = [(cat.category_id, cat.name)\
+    CATEGORIES = [(cat.category_id, cat.name)
                     for cat in OrganizationCategoryTranslation.objects.filter(
                         lang=settings.LANGUAGE_CODE).order_by('name')]
 

@@ -19,8 +19,8 @@ from vote.models import VotableModel
 
 
 LOGO_CHOICES = (
-        ('UP', 'Uploaded'),
-        ('CAT', 'Category'),
+    ('UP', 'Uploaded'),
+    ('CAT', 'Category'),
 )
 
 
@@ -30,14 +30,16 @@ class Organization(VotableModel):
     description = models.TextField(null=True, blank=True)
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
     logo_category = models.ForeignKey('OrganizationCategory', null=True,
-                            blank=True, related_name='organization_category_logo')
-    logo_choice = models.CharField(max_length=3, choices=LOGO_CHOICES, null=True, blank=True)
+                       blank=True, related_name='organization_category_logo')
+    logo_choice = models.CharField(max_length=3, choices=LOGO_CHOICES,
+                        null=True, blank=True)
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True,
                         related_name='created_organizations')
     creation_date = models.DateTimeField(auto_now_add=True)
-    last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
+    last_editor = models.ForeignKey(User, editable=False, null=True,
+                        blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
     community = models.ManyToManyField(Community, null=True, blank=True)
@@ -45,8 +47,10 @@ class Organization(VotableModel):
     link = models.CharField(max_length=250, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
 
-    categories = models.ManyToManyField('OrganizationCategory', null=True, blank=True)
-    target_audiences = models.ManyToManyField(TargetAudience, null=True, blank=True)
+    categories = models.ManyToManyField('OrganizationCategory', null=True,
+                        blank=True)
+    target_audiences = models.ManyToManyField(TargetAudience, null=True,
+                        blank=True)
 
     tags = TaggableManager()
 
@@ -65,18 +69,18 @@ class Organization(VotableModel):
 
     @property
     def supported_organizations(self):
-        return [i.grantee for i in self.realized_investments \
-                    if isinstance(i.grantee, Organization)]
+        return [i.grantee for i in self.realized_investments
+                if isinstance(i.grantee, Organization)]
 
     @property
     def supported_proposals(self):
-        return [i.grantee for i in self.realized_investments \
-                    if isinstance(i.grantee, Proposal)]
+        return [i.grantee for i in self.realized_investments
+                if isinstance(i.grantee, Proposal)]
 
     @property
     def supported_resources(self):
-        return [i.grantee for i in self.realized_investments \
-                    if isinstance(i.grantee, Resource)]
+        return [i.grantee for i in self.realized_investments
+                if isinstance(i.grantee, Resource)]
 
     def __unicode__(self):
         return unicode(self.name)
@@ -93,6 +97,20 @@ class Organization(VotableModel):
     def branch_count(self):
         count = OrganizationBranch.objects.filter(organization=self).count()
         return count
+
+    @property
+    def logo_url(self):
+        if self.logo and not self.logo_category:
+            return self.logo.file.url
+        elif not self.logo and self.logo_category:
+            return '/static/' + self.logo_category.image
+        else:
+            if self.logo_choice == 'CAT':
+                return '/static/' + self.logo_category.image
+            elif self.logo_choice == 'UP':
+                return self.logo.file.url
+            else:
+                return '/static/img/logo.png'
 
     image = "img/organization.png"
     image_off = "img/organization-off.png"
@@ -137,7 +155,7 @@ class OrganizationBranch(GeoRefModel, VotableModel):
         editable = True
         title = 'Organization'
         tooltip = 'Add Organization'
-        background_color =  '#3a61d6'
+        background_color = '#3a61d6'
         border_color = '#1f49b2'
         geometries = (POLYGON, POINT)
         form_view_name = 'new_organization_from_map'
