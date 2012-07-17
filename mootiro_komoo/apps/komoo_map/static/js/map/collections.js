@@ -1,124 +1,152 @@
-/**
- * collections.js
- * requires compat.js
- */
+(function() {
+  var FeatureCollection, GenericCollection, Layer, _base,
+    __hasProp = Object.prototype.hasOwnProperty,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
+  if (window.komoo == null) window.komoo = {};
 
-if (!window.komoo) komoo = {};
-if (!komoo.event) komoo.event = google.maps.event;
+  if ((_base = window.komoo).event == null) _base.event = google.maps.event;
 
-if (!komoo.collections) komoo.collections = {};
+  GenericCollection = (function() {
 
-/** FeatureCollection Factory **/
+    function GenericCollection(options) {
+      this.options = options != null ? options : {};
+      this.elements = [];
+      this.length = 0;
+    }
 
-komoo.collections.makeFeatureCollection = function (opts) {
-    var options = opts || {};
-    var features = options.features || [];
-    var map = options.map || null;
-
-    var featureCollection = new komoo.collections.FeatureCollection(options);
-
-    if (map) featureCollection.setMap(map);
-    if (features) features.forEach(function (feature, index, orig) {
-        featureCollections.push(feature);
-    });
-
-    return featureCollection;
-};
-
-
-/** Feature Collection **/
-
-komoo.collections.FeatureCollection = function (opts) {
-    var options = opts || {};
-    this.features_ = [];
-    this.length = 0;
-};
-
-komoo.collections.FeatureCollection.prototype.getGeoJson = function () {
-    var features = [];
-    var geoJSON = {
-        'type': 'FeatureCollection',
-        'features': features
+    GenericCollection.prototype.updateLength = function() {
+      return this.length = this.elements.length;
     };
-    this.features_.forEach(function (feature, index, orig) {
-        features.push(feature.getGeoJsonFeature());
-    });
-    return geoJSON;
-};
 
-komoo.collections.FeatureCollection.prototype.clear = function () {
-    this.features_ = [];
-    this.updateLength_();
-};
+    GenericCollection.prototype.clear = function() {
+      this.elements = [];
+      return this.updateLength();
+    };
 
-komoo.collections.FeatureCollection.prototype.removeAllFromMap = function () {
-    this.features_.forEach(function (feature, index, orig) {
-        feature.removeFromMap();
-    });
-};
+    GenericCollection.prototype.getAt = function(index) {
+      return this.elements[index];
+    };
 
-komoo.collections.FeatureCollection.prototype.getAt = function (index) {
-    return this.features_[index];
-};
+    GenericCollection.prototype.push = function(element) {
+      this.elements.push(element);
+      return this.updateLength();
+    };
 
-komoo.collections.FeatureCollection.prototype.setVisible = function (flag) {
-    this.features_.forEach(function (feature, index, orig) {
-        feature.setVisible(flag);
-    });
-};
+    GenericCollection.prototype.pop = function() {
+      var element;
+      element = this.elements.pop();
+      this.updateLength();
+      return element;
+    };
 
-komoo.collections.FeatureCollection.prototype.show = function () {
-    this.setMap(this.map_, {geometries: true});
-    this.setVisible(true);
-};
+    GenericCollection.prototype.forEach = function(callback, thisArg) {
+      return this.elements.forEach(callback, thisArg);
+    };
 
-komoo.collections.FeatureCollection.prototype.hide = function () {
-    this.setVisible(false);
-};
+    return GenericCollection;
 
-komoo.collections.FeatureCollection.prototype.setMap = function (map, opt_force) {
-    this.map_ = map;
-    this.features_.forEach(function (feature, index, orig) {
-        feature.setMap(map, opt_force);
-    });
-    this.handleMapEvents()
-}
+  })();
 
-komoo.collections.FeatureCollection.prototype.updateFeaturesVisibility = function () {
-    this.features_.forEach(function (feature, index, orig) {
-        feature.setMap(feature.getMap());
-    });
-};
+  FeatureCollection = (function(_super) {
 
-komoo.collections.FeatureCollection.prototype.handleMapEvents = function () {
-    var that = this;
-    komoo.event.addListener(this.map_, 'zoom_changed', function (zoom) {
-    });
-};
+    __extends(FeatureCollection, _super);
 
+    function FeatureCollection(options) {
+      if (options == null) options = {};
+      FeatureCollection.__super__.constructor.call(this, options);
+      if (options.map) this.setMap(options.map);
+      if (options.features) {
+        options.features.forEach(function(feature) {
+          return this.push(feature);
+        });
+      }
+    }
 
-/* Private methods */
+    FeatureCollection.prototype.push = function(feature) {
+      FeatureCollection.__super__.push.call(this, feature);
+      return feature.setMap(this.map);
+    };
 
-komoo.collections.FeatureCollection.prototype.updateLength_ = function () {
-    this.length = this.features_.length;
-}
+    FeatureCollection.prototype.setMap = function(map, opt_force) {
+      this.map = map;
+      this.forEach(function(feature) {
+        return feature.setMap(this.map, opt_force);
+      });
+      return this.handleMapEvents();
+    };
 
+    FeatureCollection.prototype.show = function() {
+      this.setMap(this.map, {
+        geometries: true
+      });
+      return this.setVisible(true);
+    };
 
-/* Delegations */
+    FeatureCollection.prototype.hide = function() {
+      return this.setVisible(false);
+    };
 
-komoo.collections.FeatureCollection.prototype.push = function (feature) {
-   this.features_.push(feature); 
-   feature.setMap(this.map_);
-   this.updateLength_();
-};
+    FeatureCollection.prototype.getGeoJson = function() {
+      var features, geojson;
+      features = [];
+      geojson = {
+        type: "FeatureCollection",
+        features: features
+      };
+      this.forEach(function(feature) {
+        return features.push(feature.getGeoJson());
+      });
+      return geojson;
+    };
 
-komoo.collections.FeatureCollection.prototype.pop = function () {
-   var element = this.features_.pop(); 
-   this.updateLength_();
-   return element;
-};
+    FeatureCollection.prototype.removeAllFromMap = function() {
+      return this.forEach(function(feature) {
+        return feature.removeFromMap();
+      });
+    };
 
-komoo.collections.FeatureCollection.prototype.forEach = function (callback, thisArg) {
-   this.features_.forEach(callback, thisArg); 
-};
+    FeatureCollection.prototype.setVisible = function(flag) {
+      return this.forEach(function(feature) {
+        return feature.setVisible(flag);
+      });
+    };
+
+    FeatureCollection.prototype.updateFeaturesVisibility = function() {
+      return this.forEach(function(feature) {
+        return feature.seMap(feature.getMap());
+      });
+    };
+
+    FeatureCollection.prototype.handleMapEvents = function() {
+      var that;
+      that = this;
+      return komoo.event.addListener(this.map, "zoom_changed", function() {});
+    };
+
+    return FeatureCollection;
+
+  })(GenericCollection);
+
+  Layer = (function(_super) {
+
+    __extends(Layer, _super);
+
+    function Layer() {
+      Layer.__super__.constructor.apply(this, arguments);
+    }
+
+    return Layer;
+
+  })(FeatureCollection);
+
+  window.komoo.collections = {
+    GenericCollection: GenericCollection,
+    FeatureCollection: FeatureCollection,
+    makeFeatureCollection: function(options) {
+      if (options == null) options = {};
+      return new FeatureCollection(options);
+    }
+  };
+
+}).call(this);

@@ -82,7 +82,7 @@
 
         test('Create polyline geometry with googles polyline object', function () {
           expect(3);
-          var simplePolyline = new komoo.geometries.Polyline();
+          var simplePolyline = new komoo.geometries.LineString();
           ok(simplePolyline.overlay, 'Should create googleObject');
           ok(google.maps.Polyline.prototype.isPrototypeOf(
                 simplePolyline.overlay),
@@ -141,7 +141,7 @@
 
         test('Set coordinates to polyline geometry', function () {
           expect(10);
-          var polyline = new komoo.geometries.Polyline();
+          var polyline = new komoo.geometries.LineString();
           var coordinates = [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]];
           polyline.setCoordinates(coordinates);
           var googlePath = polyline.overlay.getPath();
@@ -153,7 +153,7 @@
 
         test('Get coordinates from polyline geometry', function () {
           expect(1);
-          var polyline = new komoo.geometries.Polyline();
+          var polyline = new komoo.geometries.LineString();
           var coordinates = [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]];
           polyline.setCoordinates(coordinates);
           deepEqual(polyline.getCoordinates(), coordinates,
@@ -162,7 +162,7 @@
 
         test('Get coordinates from empty polyline geometry', function () {
           expect(1);
-          var polyline = new komoo.geometries.Polyline();
+          var polyline = new komoo.geometries.LineString();
           deepEqual(polyline.getCoordinates(), [],
               'Should return an empty array');
         });
@@ -197,8 +197,8 @@
         test('Get coordinates from empty polygon geometry', function () {
           expect(1);
           var polygon = new komoo.geometries.Polygon();
-          deepEqual(polygon.getCoordinates(), [[]],
-              'Should return an array containing an empty array');
+          deepEqual(polygon.getCoordinates(), [],
+              'Should return an empty array');
         });
 
         test('Set coordinates to multpoint geometry', function () {
@@ -252,8 +252,8 @@
             'properties': null
           };
           var polyline = komoo.geometries.makeGeometry(polylineFeature);
-          ok(polyline instanceof komoo.geometries.MultiPolyline,
-              'Geometry object shoud be an instance of komoo.geometries.MultiPolyline');
+          ok(polyline instanceof komoo.geometries.MultiLineString,
+              'Geometry object shoud be an instance of komoo.geometries.MultiLineString');
 
           var polygonFeature = {
             'type': 'Feature',

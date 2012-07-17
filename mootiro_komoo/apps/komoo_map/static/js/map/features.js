@@ -130,7 +130,7 @@
 
     Feature.prototype.setHighlight = function(highlighted) {
       this.highlighted = highlighted;
-      this.updateIcons();
+      this.updateIcon();
       return komoo.event.trigger(this, 'highlight_changed', this.highlighted);
     };
 
@@ -139,7 +139,7 @@
       if (zoom == null) zoom = this.map ? this.map.getZoom() : 10;
       nearOrFar = zoom >= this.featureType.minZoomMarker ? "near" : "far";
       highlighted = this.isHighlighted() ? "highlighted/" : "";
-      if (this.properties.categories && this.properties.categories[0].name && zoom >= this.featureType.minZoomMarker) {
+      if (this.properties.categories && this.properties.categories[0] && this.properties.categories[0].name && zoom >= this.featureType.minZoomMarker) {
         categoryOrType = this.properties.categories[0].name.toLowerCase() + (this.properties.categories.length > 1 ? "-plus" : "");
       } else {
         categoryOrType = this.properties.type.toLowerCase();
@@ -178,17 +178,25 @@
       return this.properties[name] = value;
     };
 
-    Feature.prototype.getGeoJsonGeometry = function() {
+    Feature.prototype.getGeometryGeoJson = function() {
       var _ref;
       return (_ref = this.geometry) != null ? _ref.getGeoJson() : void 0;
     };
 
-    Feature.prototype.getGeoJsonFeature = function() {
+    Feature.prototype.getGeoJsonGeometry = function() {
+      return this.getGeometryGeoJson();
+    };
+
+    Feature.prototype.getGeoJson = function() {
       return {
         type: 'Feature',
-        geometry: this.getGeoJsonGeometry(),
+        geometry: this.getGeometryGeoJson(),
         properties: this.getProperties()
       };
+    };
+
+    Feature.prototype.getGeoJsonFeature = function() {
+      return this.getGeoJson();
     };
 
     Feature.prototype.setEditable = function(editable) {

@@ -889,7 +889,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
     if (!geoJSON.type) return; // geoJSON is invalid.
 
     if (geoJSON.type == "FeatureCollection") {
-        geoJsonFeatureCollection = geoJSON.features;
+        var geoJsonFeatureCollection = geoJSON.features;
     }
     var feature;
     if (!geoJsonFeatureCollection) {

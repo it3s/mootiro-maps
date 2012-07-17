@@ -79,7 +79,7 @@ class Feature
     isHighlighted: -> @highlighted?
     highlight: -> @setHighlight(on)
     setHighlight: (@highlighted) ->
-        @updateIcons()
+        @updateIcon()
         komoo.event.trigger @, 'highlight_changed', @highlighted
 
     getIconUrl: (zoom) ->
@@ -87,6 +87,7 @@ class Feature
         nearOrFar = if zoom >= @featureType.minZoomMarker then "near" else "far"
         highlighted = if @isHighlighted() then "highlighted/" else ""
         if (@properties.categories and \
+                @properties.categories[0] and \
                 @properties.categories[0].name and \
                 zoom >= @featureType.minZoomMarker)
             categoryOrType = (@properties.categories[0].name.toLowerCase() +
@@ -106,12 +107,16 @@ class Feature
     getProperty: (name) -> @properties[name]
     setProperty: (name, value) -> @properties[name] = value
 
-    getGeoJsonGeometry: -> @geometry?.getGeoJson()
+    getGeometryGeoJson: -> @geometry?.getGeoJson()
 
-    getGeoJsonFeature: ->
+    getGeoJsonGeometry: -> @getGeometryGeoJson()
+
+    getGeoJson: ->
         type: 'Feature',
-        geometry: @getGeoJsonGeometry()
+        geometry: @getGeometryGeoJson()
         properties: @getProperties()
+
+    getGeoJsonFeature: -> @getGeoJson()
 
     setEditable: (@editable) -> @geometry?.setEditable @editable
 
