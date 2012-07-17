@@ -133,10 +133,14 @@ $ ->
     form_search.submit (evt) ->
         evt.preventDefault()
 
-        cl.show()
-
         search_term = search_field.val()
         previous_search = localStorageGet('komoo_search')
+
+        if not search_term
+            return
+
+        cl.show()
+
         if previous_search?.term is search_term
             showResults previous_search.results
         else

@@ -1,5 +1,4 @@
 (function() {
-
   $(function() {
     var cl, csrftoken, form_search, geo_object, intvl, search_field, showPopover, showResults, titles, _ref;
     form_search = $('#search');
@@ -89,9 +88,12 @@
     form_search.submit(function(evt) {
       var previous_search, search_term;
       evt.preventDefault();
-      cl.show();
       search_term = search_field.val();
       previous_search = localStorageGet('komoo_search');
+      if (!search_term) {
+        return;
+      }
+      cl.show();
       if ((previous_search != null ? previous_search.term : void 0) === search_term) {
         return showResults(previous_search.results);
       } else {
@@ -132,10 +134,9 @@
             editor.loadGeoJSON(geo_object.geo, true);
           }
           return clearInterval(intvl);
-        } catch (_error) {}
+        } catch (_e) {}
       }, 50);
       return localStorageRemove('komoo_seeOnMap');
     }
   });
-
 }).call(this);
