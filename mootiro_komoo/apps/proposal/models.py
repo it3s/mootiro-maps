@@ -40,6 +40,9 @@ class Proposal(VotableModel):
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
+    #dummy? readding to data charge to work
+    realizers = models.ManyToManyField(User, related_name='user_realizers')
+
 
     @property
     def name(self):
