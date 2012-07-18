@@ -1072,7 +1072,13 @@ div.content-updates .tab.active a {
     float: left;
     margin: 0 2px;
 }
-
+.frontpage-filters-list {
+    display: inline-block;
+}
+.frontpage-filter-item {
+    display: inline-block;
+    margin: 0 10px;
+}
 /* Updates list */
 .a-update {
     width: 600px;

@@ -33,7 +33,7 @@ $ ->
                 idx = parseInt hashlink.substring(1, hashlink.length), 10
                 itvl = setInterval () ->
                         try
-                            desc = JSON.parse(localStorageGet('komoo_search').results['google']).predictions[idx].description 
+                            desc = JSON.parse(localStorageGet('komoo_search').results['google']).predictions[idx].description
                             editor.goTo desc
                             clearInterval itvl
                     ,500
