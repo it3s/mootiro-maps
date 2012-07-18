@@ -1,0 +1,38 @@
+{% load i18n %}
+
+<ul class="geo-objects-listing">
+{% for object in objects %}
+  <li class="{{ object.type|lower }}">
+    <div id="{{ prefix }}-{{ object.type|lower }}" class="item"
+    {% if show_geometries and object.geometries|length > 0 %}
+      {% if object.geometries|length > 1 %}
+      onclick="$('.collapser', $(this).parent()).click();"
+      {% else %}
+      onclick="editor.drawNew('{{ object.geometries.0 }}', '{{ object.type }}');"
+      {% endif %}
+    {% endif %}
+    >
+      <i class="icon-{{ object.type|lower }}-big middle"></i>
+      <span class="middle">{{ object.title }}</span>
+    </div>
+    {% if show_geometries and object.geometries|length > 1 %}
+    <div class="collapser"><i class="icon-chevron-right"></i></div>
+    {% endif %}
+  </li>
+  {% if show_geometries and object.geometries|length > 1 %}
+    <li class="{{ object.type|lower }} sublist">
+      <ul>
+      {% for geometry in object.geometries %}
+        <li class="{{ object.type|lower }}">
+          <div id="{{ prefix }}-{{ object.type|lower }}-{{ geometry|lower }}"
+            onclick="editor.drawNew('{{ geometry }}', '{{ object.type }}');">
+            <i class="icon-{{ geometry|lower }} middle"></i>
+            <span class="middle">{% trans geometry %}</span>
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    </li>
+  {% endif %}
+{% endfor %}
+</ul>

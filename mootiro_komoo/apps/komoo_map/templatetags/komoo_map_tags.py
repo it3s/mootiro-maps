@@ -2,8 +2,9 @@
 import json
 from django import template
 from django.conf import settings
+from django.utils.translation import ugettext as _
 
-from komoo_map.models import get_models_json
+from komoo_map.models import get_models, get_models_json
 register = template.Library()
 
 
@@ -19,6 +20,25 @@ def _parse_args(*args):
 @register.inclusion_tag('komoo_map/komoo_map_tooltip_templatetag.html')
 def komoo_map_tooltip():
     pass
+
+
+@register.inclusion_tag('komoo_map/komoo_map_objects_list_templatetag.html',
+        takes_context=True)
+def komoo_map_objects_list(context, arg1='', arg2=''):
+    parsed_args = _parse_args(arg1, arg2)
+    prefix = parsed_args.get('prefix', 'item')
+    show_geometries = parsed_args.get('show_geometries', False)
+    objects = [{
+        'type': obj.__name__,
+        'title': _(obj.get_map_attr('title') or obj.__name__),
+        'geometries': obj.get_map_attr('geometries'),
+
+    } for obj in get_models()]
+    print show_geometries
+    return {'prefix': prefix,
+            'objects': objects,
+            'show_geometries': show_geometries
+            }
 
 
 @register.inclusion_tag('komoo_map/komoo_map_templatetag.html',

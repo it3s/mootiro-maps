@@ -1,5 +1,6 @@
 {% load i18n %}
 {% load komoo_tags %}
+{% load komoo_map_tags %}
 
 <div id="map-panel" style="width: 300px; position: absolute; overflow: auto;">
   <div id="collapse-panel"></div>
@@ -50,7 +51,7 @@
     </div>
 
     <div class="panel" id="map-panel-add">
-      {#% geo_objects_listing 'show_categories=False' 'switchable=false' 'prefix=add' %#}
+      {% komoo_map_objects_list 'prefix=add' 'show_geometries=True' %}
     </div>
 
     <div id="search-results">

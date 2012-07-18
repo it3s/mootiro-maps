@@ -456,6 +456,8 @@ div.collapser i.icon-chevron-down {
     background: #AB9E15 !important;
 }
 
+.middle { vertical-align: middle }
+
 .icon-map {
     background-image: url("../img/menu/map.png");
     background-position: 0 0;
@@ -498,6 +500,28 @@ div.collapser i.icon-chevron-down {
     background-image: url("../img/menu/help.png");
 }
 
+.icon-point {
+    background-image: url("../img/geometries/point.png");
+    background-position: 0 0;
+    margin: 2px 6px;
+    width: 13px;
+    height: 13px;
+}
+.icon-linestring {
+    background-image: url("../img/geometries/linestring.png");
+    background-position: 0 0;
+    margin: 1px 0 0;
+    width: 25px;
+    height: 16px;
+}
+.icon-polygon {
+    background-image: url("../img/geometries/polygon.png");
+    background-position: 0 0;
+    margin: 2px 3px 1px;
+    width: 19px;
+    height: 17px;
+}
+
 .icon-community {
     background-image: url("../img/menu/community.png");
     background-position: 0 0;
@@ -508,7 +532,7 @@ div.collapser i.icon-chevron-down {
 *:hover > .icon-community, .selected .icon-community {
     background-image: url("../img/menu/community-active.png");
 }
-*:hover > .icon-community.no-hover {
+*:hover > .icon-community.no-hover, .selected .icon-community.no-selected {
     background-image: url("../img/menu/community.png");
 }
 .icon-community-white {
@@ -529,10 +553,11 @@ div.collapser i.icon-chevron-down {
 *:hover > .icon-need, .selected .icon-need {
     background-image: url("../img/menu/need-active.png");
 }
-*:hover > .icon-need.no-hover {
+*:hover > .icon-need.no-hover, .selected .icon-need.no-selected {
     background-image: url("../img/menu/need.png");
 }
 
+.icon-organizationbranch,
 .icon-organization {
     background-image: url("../img/menu/organization.png");
     background-position: 0 0;
@@ -540,10 +565,12 @@ div.collapser i.icon-chevron-down {
     width: 16px;
     height: 15px;
 }
+*:hover > .icon-organizationbranch, .selected .icon-organizationbranch,
 *:hover > .icon-organization, .selected .icon-organization {
     background-image: url("../img/menu/organization-active.png");
 }
-*:hover > .icon-organization.no-hover {
+*:hover > .icon-organizationbranch.no-hover, .selected .icon-organizationbranch.no-selected,
+*:hover > .icon-organization.no-hover, .selected .icon-organization.no-selected  {
     background-image: url("../img/menu/organization.png");
 }
 
@@ -557,8 +584,38 @@ div.collapser i.icon-chevron-down {
 *:hover > .icon-resource, .selected .icon-resource {
     background-image: url("../img/menu/resource-active.png");
 }
-*:hover > .icon-resource.no-hover {
+*:hover > .icon-resource.no-hover, .selected .icon-resource.no-selected  {
     background-image: url("../img/menu/resource.png");
+}
+
+.icon-community-big {
+    background-image: url("../img/community.png");
+    background-position: 0 0;
+    margin: 0 2px 0 3px;
+    width: 21px;
+    height: 24px;
+}
+.icon-need-big {
+    background-image: url("../img/need.png");
+    background-position: 0 0;
+    margin: 3px 2px 3px 3px;
+    width: 21px;
+    height: 18px;
+}
+.icon-organizationbranch-big,
+.icon-organization-big {
+    background-image: url("../img/organization.png");
+    background-position: 0 0;
+    margin: 2px 3px 2px 3px;
+    width: 20px;
+    height: 20px;
+}
+.icon-resource-big {
+    background-image: url("../img/resource.png");
+    background-position: 0 0;
+    margin: 3px 0;
+    width: 26px;
+    height: 18px;
 }
 
 .icon-investment {
@@ -571,7 +628,7 @@ div.collapser i.icon-chevron-down {
 *:hover > .icon-investment, .selected .icon-investment {
     background-image: url("../img/menu/investment-active.png");
 }
-*:hover > .icon-investment.no-hover {
+*:hover > .icon-investment.no-hover, .selected .icon-investment.no-selected {
     background-image: url("../img/menu/investment.png");
 }
 

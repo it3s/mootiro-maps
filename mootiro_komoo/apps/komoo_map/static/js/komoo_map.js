@@ -1466,6 +1466,13 @@ komoo.Map.prototype._attachFeatureEvents = function (feature) {
     });
 };
 
+
+komoo.Map.prototype.drawNew = function (geometryType, featureType) {
+    // TODO: HERE
+    if (window.console) console.log(geometryType, featureType);
+};
+
+
 komoo.Map.prototype.setDrawingMode = function (type, featureType) {
     if (!featureType) {
         featureType = type;
@@ -1831,7 +1838,7 @@ komoo.Map.prototype._createMainPanel = function () {
                 "z-index": "999999"
             });
             item.append(submenu);
-            addMenu.append(item);
+            //addMenu.append(item);
             type.selector = item;
         });
     }
