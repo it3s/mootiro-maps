@@ -248,3 +248,22 @@ def permalink(request, identifier=''):
         url = getattr(obj, 'view_url', '/')
         print entity, id_, url
     return redirect(url)
+
+@ajax_request
+def get_geojson_from_hashlink(request):
+    entity_model = {
+        'r': Resource,
+        'n': Need,
+        'c': Community,
+        'o': Organization,
+        'p': Proposal,
+    }
+    hashlink = request.GET.get('hashlink', '')
+    if hashlink:
+        obj = entity_model[hashlink[0]].objects.get(pk=hashlink[1:])
+        geojson =  create_geojson([obj])
+    else:
+        geojson = {}
+
+    return {'geojson': geojson}
+

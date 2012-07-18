@@ -1,7 +1,7 @@
 (function() {
 
   $(function() {
-    var cl, csrftoken, form_search, geo_object, intvl, search_field, showPopover, showResults, titles, _ref;
+    var cl, csrftoken, form_search, hash, search_field, showPopover, showResults, titles, _ref;
     form_search = $('#search');
     search_field = $('#search-bar');
     csrftoken = getCookie('csrftoken') || window.csrf_token;
@@ -25,25 +25,40 @@
       $('.popover').css('top', parseInt($('.popover').css('top'), 10) - 10);
       return $('.popover').css('left', parseInt($('.popover').css('left'), 10) - 75);
     };
-    window.seeOnMap = function(type, geojson) {
+    window.seeOnMap = function(hashlink) {
+      var idx, itvl;
       if (window.location.pathname === dutils.urls.resolve('map')) {
-        if (type === 'google') {
-          editor.goTo(geojson);
+        if (hashlink[0] === 'g') {
+          idx = parseInt(hashlink.substring(1, hashlink.length), 10);
+          itvl = setInterval(function() {
+            var desc;
+            try {
+              desc = JSON.parse(localStorageGet('komoo_search').results['google']).predictions[idx].description;
+              editor.goTo(desc);
+              return clearInterval(itvl);
+            } catch (_error) {}
+          }, 500);
         } else {
-          editor.loadGeoJSON(geojson, true);
+          $.get('/map/get_geojson_from_hashlink/', {
+            hashlink: hashlink
+          }, function(data) {
+            var geojson;
+            geojson = JSON.parse(data.geojson);
+            return itvl = setInterval(function() {
+              try {
+                editor.loadGeoJSON(geojson, true);
+                return clearInterval(itvl);
+              } catch (_error) {}
+            }, 500);
+          }, 'json');
         }
-        $('#search-results-box').popover('hide');
+        return $('#search-results-box').popover('hide');
       } else {
-        localStorageSet('komoo_seeOnMap', {
-          type: type,
-          geo: geojson
-        });
-        window.location.pathname = dutils.urls.resolve('map');
+        return window.location = dutils.urls.resolve('map') + ("#" + hashlink);
       }
-      return false;
     };
     showResults = function(result) {
-      var disabled, geojson, google_results, has_results, idx, key, obj, result_order, results_count, results_list, val, _i, _j, _len, _len2, _ref;
+      var disabled, geojson, google_results, has_results, hashlink, idx, key, obj, result_order, results_count, results_list, val, _i, _len, _ref, _ref2;
       results_list = '';
       results_count = 0;
       has_results = false;
@@ -55,10 +70,10 @@
           results_list += "<li>\n<div class='search-header " + key + "' >\n    <img src='/static/img/" + key + ".png' >\n    <div class='search-type-header' >\n        " + titles[key] + "\n        <span class='search-results-count'>\n            " + (interpolate(ngettext('%s result', '%s results', val.length), [val.length])) + "\n        </span>\n    </div>\n</div>\n<ul class='search-result-entries'>";
           for (idx in val) {
             obj = val[idx];
-            geojson = localStorageGet('komoo_search').results[key][idx].geojson;
-            console.dir(JSON.parse(geojson));
-            disabled = ((_ref = JSON.parse(geojson)) != null ? _ref.features[0].geometry : void 0) ? '' : 'disabled';
-            results_list += "<li>\n    <a href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"#\" class=\"" + disabled + "\" onclick=\"seeOnMap('" + key + "', JSON.parse(localStorageGet('komoo_search').results['" + key + "'][" + idx + "].geojson));return false;\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+            geojson = JSON.parse((_ref = obj != null ? obj.geojson : void 0) != null ? _ref : {});
+            disabled = !(geojson != null ? (_ref2 = geojson.features[0]) != null ? _ref2.geometry : void 0 : void 0) ? 'disabled' : '';
+            hashlink = key[0] + obj.id;
+            results_list += "<li>\n    <a href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + hashlink + "\" onclick=\"seeOnMap('" + hashlink + "')\" class=\"" + disabled + "\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
             results_count++;
           }
           results_list += '</ul></li>';
@@ -71,9 +86,10 @@
       if (google_results != null ? google_results.length : void 0) {
         key = 'google';
         results_list += "<li>\n<div class=\"search-header google\">\n    <img src=\"/static/img/" + key + ".png\" >\n    <div class=\"search-type-header\" >\n        " + titles[key] + "\n        <span class=\"search-results-count\">\n            " + (interpolate(ngettext("%s result", "%s results", google_results.length), [google_results.length])) + "\n        </span>\n    </div>\n</div>\n<ul class=\"search-result-entries\">";
-        for (_j = 0, _len2 = google_results.length; _j < _len2; _j++) {
-          obj = google_results[_j];
-          results_list += "<li>\n    <a href=\"#\" > " + obj.description + "</a>\n    <div class=\"right\">\n        <a href=\"#\" onclick=\"seeOnMap('google', '" + obj.description + "');return false;\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+        for (idx in google_results) {
+          obj = google_results[idx];
+          hashlink = "g" + idx;
+          results_list += "<li>\n    <a href=\"#\" > " + obj.description + "</a>\n    <div class=\"right\">\n        <a href=\"#" + hashlink + "\" onclick=seeOnMap('" + hashlink + "')><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
           results_count++;
         }
         results_list += '</ul></li>';
@@ -126,19 +142,9 @@
       return $('#search-results-box').popover('hide');
     });
     search_field.val(((_ref = localStorageGet('komoo_search')) != null ? _ref.term : void 0) || '');
-    if (window.location.pathname === dutils.urls.resolve('map') && localStorageGet('komoo_seeOnMap')) {
-      geo_object = localStorageGet('komoo_seeOnMap');
-      intvl = setInterval(function() {
-        try {
-          if (geo_object.type === 'google') {
-            editor.goTo(geo_object.geo);
-          } else {
-            editor.loadGeoJSON(geo_object.geo, true);
-          }
-          return clearInterval(intvl);
-        } catch (_error) {}
-      }, 50);
-      return localStorageRemove('komoo_seeOnMap');
+    if (window.location.pathname === dutils.urls.resolve('map')) {
+      hash = window.location.hash;
+      if (hash) return seeOnMap(hash.substring(1, hash.length));
     }
   });
 
