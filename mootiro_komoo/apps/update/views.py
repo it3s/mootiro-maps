@@ -18,9 +18,14 @@ logger = logging.getLogger(__name__)
 @render_to("update/frontpage.html")
 def frontpage(request):
     logger.debug('acessing update > frontpage')
+    filters = request.GET.get('filters', [])
+    if filters:
+        filters = filters.split(',')
 
-    query_set = Update.objects
-    query_set = filtered_query(query_set, request)
+    if filters:
+        query_set = Update.objects.filter(object_type__in=filters)
+    else:
+        query_set = Update.objects.all()
     sort_order = ['-date', 'comments_count']
     updates_list = sorted_query(query_set, sort_order, request, default_order='-date')
     updates_count = updates_list.count()

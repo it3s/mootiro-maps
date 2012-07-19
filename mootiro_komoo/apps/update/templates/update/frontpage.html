@@ -256,6 +256,7 @@
                 window.location = window.location.pathname + '?filters=' + apps.join();
             });
 
+            // Fix active filters list
             var url_vars = getUrlVars();
             if (url_vars && url_vars['filters']) {
                 var filters = url_vars['filters'].split(',');
@@ -268,6 +269,19 @@
                     }
                 });
             }
+
+            var uri_query = window.location.search;
+            uri_query = uri_query.substring(1, uri_query.length);
+            console.log(uri_query);
+            if (uri_query.length) {
+                $('.komoo-pagination a').each(function(idx, obj){
+                    var el = $(obj);
+                    var href = el.attr('href');
+                    el.attr('href', href + '&' +  uri_query);
+                    console.log('new href', href + uri_query);
+                });
+            }
+
         });
 
     </script>
