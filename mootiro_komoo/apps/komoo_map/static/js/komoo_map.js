@@ -656,10 +656,11 @@ komoo.Map.prototype.initFeaturesByTypeObject = function () {
  */
 komoo.Map.prototype.initStreetView = function () {
     if (window.console) console.log("Initializing StreetView support.");
-    this.streetViewPanel = $("<div>").addClass("map-panel");
-    this.googleMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
+    this.streetViewPanel = $("<div>").addClass("map-panel").height("100%").width("50%");
+    this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
             this.streetViewPanel.get(0));
     this.streetViewPanel.hide();
+    this._createStreetViewObject();
 };
 
 
@@ -1275,8 +1276,6 @@ komoo.Map.prototype.goToUserLocation = function () {
  */
 komoo.Map.prototype.goTo = function (position, optDisplayMarker) {
     if (optDisplayMarker == undefined) optDisplayMarker = true;
-    if (position instanceof Array)
-        position = new google.maps.LatLng(position[0], position[0]);
     var komooMap = this;
     var latLng;
     function _go (latLng) {
@@ -1736,9 +1735,20 @@ komoo.Map.prototype.setEditMode = function (mode) {
  * Initialize the Google Street View.
  */
 komoo.Map.prototype._createStreetViewObject = function () {
-    var options = {};
+    var that = this;
+    var options = {
+        enableCloseButton: true,
+        visible: false
+    };
     this.streetView = new google.maps.StreetViewPanorama(
             this.streetViewPanel.get(0), options);
+    this.googleMap.setStreetView(this.streetView);
+    google.maps.event.addListener(this.streetView, "visible_changed", function () {
+        if (that.streetView.getVisible())
+            that.streetViewPanel.show();
+        else
+            that.streetViewPanel.hide();
+    });
 };
 
 

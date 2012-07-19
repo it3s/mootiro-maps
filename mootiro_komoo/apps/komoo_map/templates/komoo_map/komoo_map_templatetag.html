@@ -285,7 +285,6 @@
         $('.see-on-map').click(function () {
           $('#map-container-{{ type }}').show();
           $('#main-content').hide();
-          // TODO: Save a feature copy to revert edition on cancel click.
           if (!window.{{ type }}) {
             initialize_map_{{ type }}();
             map = {{ type }};
