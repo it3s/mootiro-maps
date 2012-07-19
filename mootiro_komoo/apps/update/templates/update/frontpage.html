@@ -61,9 +61,25 @@
     <div class="clear-both"></div>
 
     <div class="shadow-container user-updates">
-      <div id="content-updates-filters" style="display: none">
+      <div id="content-updates-filters" >
         <span class="attenuate small">{% trans "Type" %}</span>
-        {% geo_objects_listing 'switchable=True' 'hide_names=True' %}
+        <ul class="frontpage-filters-list">
+            <li class="frontpage-filter-item active-filter">
+                <img src="{{ STATIC_URL }}img/community.png" alt="community" />
+            </li>
+            <li class="frontpage-filter-item active-filter">
+                <img src="{{ STATIC_URL }}img/need.png" alt="need" />
+            </li>
+            <li class="frontpage-filter-item active-filter">
+                <img src="{{ STATIC_URL }}img/organization.png" alt="organization" />
+            </li>
+            <li class="frontpage-filter-item active-filter">
+                <img src="{{ STATIC_URL }}img/resource.png" alt="resource" />
+            </li>
+            <li class="frontpage-filter-item active-filter">
+                <img src="{{ STATIC_URL }}img/investment.png" alt="investment" />
+            </li>
+        </ul>
       </div>
       <div class="clear-both"></div>
 
@@ -160,44 +176,112 @@
 
 {% block page_scripts %}
     <script type="text/javascript">
-        var tabs = new Tabs('.content-updates .tab', '.content-updates .panel',
-                      undefined, 'active');
 
-        // $(function () {
-        //     geoObjectsListing("#content-updates-filters ul.geo-objects-listing");
-        //     $("#content-updates-filters div.img-holder > img").trigger("click");
-        //     $("#content-updates-filters div.img-holder input[type=checkbox]").attr("checked", "checked");
-        // });
+        $(function(){
+            var tabs = new Tabs('.content-updates .tab', '.content-updates .panel',
+                          undefined, 'active');
 
-        var closed_panel_width = $("#about-mootiro.closed").width();
-        var closed_panel_height = $("#about-mootiro.closed").height();
-        var close_panel;
 
-        $("#about-mootiro.closed").live("mouseenter", function (evt) {
-            if (window.console) console.log("close enter");
-            $(this).toggleClass("closed open");
-            $(this).animate({
-                width: closed_panel_width + 105,
-                height: closed_panel_height + 120
+            var closed_panel_width = $("#about-mootiro.closed").width();
+            var closed_panel_height = $("#about-mootiro.closed").height();
+            var close_panel;
+
+            $("#about-mootiro.closed").live("mouseenter", function (evt) {
+                if (window.console) console.log("close enter");
+                $(this).toggleClass("closed open");
+                $(this).animate({
+                    width: closed_panel_width + 105,
+                    height: closed_panel_height + 120
+                });
+                $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
             });
-            $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
-        });
 
-        $("#about-mootiro.open").live("mouseleave", function (evt) {
-            if (window.console) console.log("open leave");
-            var about_mootiro = $(this);
-            close_panel = setTimeout(function(){
-              about_mootiro.toggleClass("closed open");
-              $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
-              about_mootiro.animate({
-                  width: closed_panel_width,
-                  height: closed_panel_height
-              });
-            }, 2000);
-        });
-        $("#about-mootiro.open").live("mouseenter", function (evt) {
-            // Don't close the panel when the mouse goes out and then come back
-            if (close_panel) clearTimeout(close_panel);
+            $("#about-mootiro.open").live("mouseleave", function (evt) {
+                if (window.console) console.log("open leave");
+                var about_mootiro = $(this);
+                close_panel = setTimeout(function(){
+                  about_mootiro.toggleClass("closed open");
+                  $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
+                  about_mootiro.animate({
+                      width: closed_panel_width,
+                      height: closed_panel_height
+                  });
+                }, 2000);
+            });
+            $("#about-mootiro.open").live("mouseenter", function (evt) {
+                // Don't close the panel when the mouse goes out and then come back
+                if (close_panel) {
+                    clearTimeout(close_panel);
+                }
+            });
+
+            var entity_image= {
+                'community': {
+                    on: '{{STATIC_URL}}img/community.png',
+                    off: '{{STATIC_URL}}img/community-off.png'
+                },
+                'need': {
+                    on: '{{STATIC_URL}}img/need.png',
+                    off: '{{STATIC_URL}}img/need-off.png'
+                },
+                'organization': {
+                    on: '{{STATIC_URL}}img/organization.png',
+                    off: '{{STATIC_URL}}img/organization-off.png'
+                },
+                'resource': {
+                    on: '{{STATIC_URL}}img/resource.png',
+                    off: '{{STATIC_URL}}img/resource-off.png'
+                },
+                'investment': {
+                    on: '{{STATIC_URL}}img/investment.png',
+                    off: '{{STATIC_URL}}img/investment-off.png'
+                }
+            };
+
+            $('.frontpage-filter-item').click(function(){
+                var that = $(this);
+                var img = that.find('img').first();
+                if (that.is('.active-filter')) {
+                    img.attr('src', entity_image[img.attr('alt')].off);
+                    that.removeClass('active-filter');
+                } else {
+                    img.attr('src', entity_image[img.attr('alt')].on);
+                    that.addClass('active-filter');
+                }
+                var apps = [];
+                $('.frontpage-filter-item.active-filter').each(function(idx, obj){
+                    apps.push($(obj).find('img').first().attr('alt'));
+                });
+                console.log(apps.join());
+                window.location = window.location.pathname + '?filters=' + apps.join();
+            });
+
+            // Fix active filters list
+            var url_vars = getUrlVars();
+            if (url_vars && url_vars['filters']) {
+                var filters = url_vars['filters'].split(',');
+                $('.frontpage-filter-item').each(function(idx, obj){
+                    var that = $(this);
+                    var img = that.find('img').first();
+                    if (filters.indexOf(img.attr('alt')) === -1) {
+                        img.attr('src', entity_image[img.attr('alt')].off);
+                        that.removeClass('active-filter');
+                    }
+                });
+            }
+
+            var uri_query = window.location.search;
+            uri_query = uri_query.substring(1, uri_query.length);
+            console.log(uri_query);
+            if (uri_query.length) {
+                $('.komoo-pagination a').each(function(idx, obj){
+                    var el = $(obj);
+                    var href = el.attr('href');
+                    el.attr('href', href + '&' +  uri_query);
+                    console.log('new href', href + uri_query);
+                });
+            }
+
         });
 
     </script>
