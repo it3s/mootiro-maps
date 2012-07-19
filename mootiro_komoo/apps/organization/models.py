@@ -7,6 +7,8 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
+from django.utils.translation import ugettext as _
+
 from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
 from need.models import TargetAudience
@@ -153,8 +155,8 @@ class OrganizationBranch(GeoRefModel, VotableModel):
 
     class Map:
         editable = True
-        title = 'Organization'
-        tooltip = 'Add Organization'
+        title = _('Organization')
+        tooltip = _('Add Organization')
         background_color = '#3a61d6'
         border_color = '#1f49b2'
         geometries = (POLYGON, POINT)

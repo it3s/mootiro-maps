@@ -312,6 +312,7 @@ function geoObjectsListing (ul) {
 
     /* Setup collapsers */
     $(".collapser", $ul).on("click", function (event) {
+        if ($ul.hasClass('frozen')) return false;
         var $this = $(this);
         $("i", $this).toggleClass("icon-chevron-right icon-chevron-down");
         $this.parent().next().toggle();

@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.template.defaultfilters import slugify
 from django.db.models import Count
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 
 import reversion
@@ -59,6 +59,7 @@ class Resource(GeoRefModel, VotableModel):
     last_update = models.DateTimeField(auto_now=True)
 
     class Map:
+        title = _('Resource')
         editable = True
         background_color =  '#28CB05'
         border_color = '#1D9104'

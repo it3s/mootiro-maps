@@ -4,7 +4,7 @@ from __future__ import unicode_literals  # unicode by default
 
 from django.contrib.gis.db import models
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 
 import reversion
@@ -88,6 +88,7 @@ class Need(GeoRefModel, VotableModel):
     tags = TaggableManager()
 
     class Map:
+        title = _('Need')
         editable = True
         background_color =  '#f42c5e'
         border_color = '#d31e52'

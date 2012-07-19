@@ -193,6 +193,7 @@ div.collapser:hover i.icon-chevron-right {
 div.collapser i.icon-chevron-down {
     background: url("../img/icons/arrow-active.png") no-repeat 2px 5px;
 }
+ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor: default; }
 
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }
@@ -698,6 +699,7 @@ body.community #collapse-panel {
     border-top: 4px solid #ffbd2e;
     margin-top: 5px;
     padding-top: 10px;
+    overflow-y: auto;
 }
 .collapsed #map-panel {
     left: -300px !important;
@@ -745,11 +747,15 @@ body.community #collapse-panel {
     border-bottom: 1px solid #e9e9e9;
 }
 #map-panel ul.geo-objects-listing .sublist li:hover,
+#map-panel ul.geo-objects-listing .sublist li.selected,
+#map-panel ul.geo-objects-listing li .item.selected,
 #map-panel ul.geo-objects-listing li .item:hover { background: #dceff4 }
 #map-panel ul.geo-objects-listing li.sublist { padding: 0 }
 #filter-form ul.geo-objects-listing li.sublist { display: none }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
+#map-panel ul.geo-objects-listing.frozen li .item:hover { background: none; cursor: default; }
+#map-panel ul.geo-objects-listing.frozen li .item.selected:hover { background: #dceff4 }
 #filter-submit {
     padding-left: 2em;
     padding-right: 2em;
