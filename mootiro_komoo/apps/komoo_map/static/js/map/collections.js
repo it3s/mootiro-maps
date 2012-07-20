@@ -1,5 +1,5 @@
 (function() {
-  var FeatureCollection, GenericCollection, Layer, _base,
+  var FeatureCollection, FeatureCollectionPlus, GenericCollection, Layer, _base,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -44,6 +44,10 @@
       return this.elements.forEach(callback, thisArg);
     };
 
+    GenericCollection.prototype.getArray = function() {
+      return this.elements;
+    };
+
     return GenericCollection;
 
   })();
@@ -53,12 +57,14 @@
     __extends(FeatureCollection, _super);
 
     function FeatureCollection(options) {
+      var _ref,
+        _this = this;
       if (options == null) options = {};
       FeatureCollection.__super__.constructor.call(this, options);
       if (options.map) this.setMap(options.map);
-      if (options.features) {
-        options.features.forEach(function(feature) {
-          return this.push(feature);
+      if ((_ref = options.features) != null) {
+        _ref.forEach(function(feature) {
+          return _this.push(feature);
         });
       }
     }
@@ -128,6 +134,90 @@
 
   })(GenericCollection);
 
+  FeatureCollectionPlus = (function(_super) {
+
+    __extends(FeatureCollectionPlus, _super);
+
+    function FeatureCollectionPlus(options) {
+      if (options == null) options = {};
+      FeatureCollectionPlus.__super__.constructor.call(this, options);
+      this.featuresByType = {};
+    }
+
+    FeatureCollectionPlus.prototype.push = function(feature) {
+      var _base2, _base3, _base4, _name, _ref,
+        _this = this;
+      FeatureCollectionPlus.__super__.push.call(this, feature);
+      if ((_base2 = this.featuresByType)[_name = feature.getType()] == null) {
+        _base2[_name] = {};
+      }
+      if ((_base3 = this.featuresByType[feature.getType()])['all'] == null) {
+        _base3['all'] = new FeatureCollection({
+          map: this.map
+        });
+      }
+      if ((_base4 = this.featuresByType[feature.getType()])['uncategorized'] == null) {
+        _base4['uncategorized'] = new FeatureCollection({
+          map: this.map
+        });
+      }
+      if ((_ref = feature.getCategories()) != null) {
+        _ref.forEach(function(category) {
+          var _base5, _name2;
+          if ((_base5 = _this.featuresByType[feature.getType()])[_name2 = category.name] == null) {
+            _base5[_name2] = new FeatureCollection({
+              map: _this.map
+            });
+          }
+          return _this.featuresByType[feature.getType()][category.name].push(feature);
+        });
+      }
+      if (!(feature.getCategories() != null) || feature.getCategories().length === 0) {
+        this.featuresByType[feature.getType()]['uncategorized'].push(feature);
+      }
+      return this.featuresByType[feature.getType()]['all'].push(feature);
+    };
+
+    FeatureCollectionPlus.prototype.pop = function() {
+      return FeatureCollectionPlus.__super__.pop.call(this);
+    };
+
+    FeatureCollectionPlus.prototype.clear = function() {
+      this.featuresByType = {};
+      return FeatureCollectionPlus.__super__.clear.call(this);
+    };
+
+    FeatureCollectionPlus.prototype.getByType = function(type, categories, strict) {
+      var features,
+        _this = this;
+      if (strict == null) strict = false;
+      if (!this.featuresByType[type]) {
+        return false;
+      } else if (!categories) {
+        return this.featuresByType[type]['all'];
+      } else if (categories.length === 0) {
+        return this.featuresByType[type]['uncategorized'];
+      } else {
+        features = new FeatureCollection({
+          map: this.map
+        });
+        categories.forEach(function(category) {
+          if (_this.featuresByType[type][category]) {
+            return _this.featuresByType[type][category].forEach(function(feature) {
+              if (!strict || !feature.getCategories() || feature.getCategories().length === 1) {
+                return features.push(feature);
+              }
+            });
+          }
+        });
+        return features;
+      }
+    };
+
+    return FeatureCollectionPlus;
+
+  })(FeatureCollection);
+
   Layer = (function(_super) {
 
     __extends(Layer, _super);
@@ -145,7 +235,7 @@
     FeatureCollection: FeatureCollection,
     makeFeatureCollection: function(options) {
       if (options == null) options = {};
-      return new FeatureCollection(options);
+      return new FeatureCollectionPlus(options);
     }
   };
 

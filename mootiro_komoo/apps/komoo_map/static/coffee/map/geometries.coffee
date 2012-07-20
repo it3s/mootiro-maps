@@ -31,15 +31,13 @@ class Geometry
     setEditable: (flag) -> throw "Not Implemented"
 
     initEvents: (object = @overlay) ->
-        if not object
-            return
+        if not object then return
 
-        that = @
         eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
             'mouseout', 'mouseover', 'mouseup', 'rightclick']
-        eventsNames.forEach (eventName) ->
-            komoo.event.addListener object, eventName, (e, args) ->
-                komoo.event.trigger that, eventName, e, args
+        eventsNames.forEach (eventName) =>
+            komoo.event.addListener object, eventName, (e, args) =>
+                komoo.event.trigger @, eventName, e, args
 
     calculateBounds: ->
         n = s = w = e = null
@@ -133,15 +131,14 @@ class Point extends Geometry
 
     initEvents: (object = @overlay) ->
         super object
-        that = @
         eventsNames = ['animation_changed', 'clickable_changed',
             'cursor_changed', 'drag', 'dragend', 'daggable_changed',
             'dragstart', 'flat_changed', 'icon_changed', 'position_changed',
             'shadow_changed', 'shape_changed', 'title_changed',
             'visible_changed', 'zindex_changed']
-        eventsNames.forEach (eventName) ->
-            komoo.event.addListener object, eventName, (e, args) ->
-                komoo.event.trigger that, eventName, e, args
+        eventsNames.forEach (eventName) =>
+            komoo.event.addListener object, eventName, (e, args) =>
+                komoo.event.trigger @, eventName, e, args
 
     getCoordinates: -> @getArrayFromLatLng @overlay.getPosition()
     setCoordinates: (coords) ->
@@ -273,11 +270,10 @@ class Polygon extends LineString
             strokeWeight: options.strokeWeight or @getBorderSize()
 
     handleEvents: ->
-        that = @
-        komoo.event.addListener @, 'mousemove', (e) ->
-            that.setOptions strokeWeight: that.getBorderSizeHover()
-        komoo.event.addListener @, 'mouseout', (e) ->
-            that.setOptions strokeWeight: that.getBorderSize()
+        komoo.event.addListener @, 'mousemove', (e) =>
+            @setOptions strokeWeight: @getBorderSizeHover()
+        komoo.event.addListener @, 'mouseout', (e) =>
+            @setOptions strokeWeight: @getBorderSize()
 
     getBackgroundColor: -> @feature?.getBackgroundColor() or defaults.BACKGROUND_COLOR
     getBackgroundOpacity: -> @feature?.getBackgroundOpacity() or defaults.BACKGROUND_OPACITY
