@@ -12,5 +12,4 @@ urlpatterns += patterns('user_cas.views',
     url(r'^profile/$', 'profile', name='user_profile'),
     url(r'^profile_update/$', 'profile_update', name='profile_update'),
 
-    url(r'^test_login/$', 'test_login')
 )

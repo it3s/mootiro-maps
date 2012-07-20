@@ -31,19 +31,6 @@ def login(request):
         '?service=http://{}/user/after_login'.format(host_port))
 
 
-# Never used ??
-def after_login(request):
-    '''
-    When the user authenticates against CAS, he gets redirected here.
-    We check the ticket agains the CAS server, then
-    log him into this application and redirect to / .
-    '''
-    logger.debug('accessing user_cas > after_login')
-    # Check the ticket against CAS
-    # Log the user in
-    # Redirect to /
-
-
 def logout(request):
     logger.debug('accessing user_cas > logout')
     next_page = request.GET.get('next', '/')
@@ -51,12 +38,6 @@ def logout(request):
     requests.get(cas_logout_url(request, next_page))
     # request.get("https://www.facebook.com/logout.php?next=YOUR_REDIRECT_URL&access_token=USER_ACCESS_TOKEN")
     return redirect(next_page)
-
-
-@render_to('user_cas/login_test.html')
-def test_login(request):
-    logger.debug('\nUSER:\n{}\n{}'.format(dir(request.user), request.user.username))
-    return {}
 
 
 @render_to('user_cas/profile.html')
