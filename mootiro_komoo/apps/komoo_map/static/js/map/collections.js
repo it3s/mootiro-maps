@@ -74,18 +74,18 @@
       return feature.setMap(this.map);
     };
 
-    FeatureCollection.prototype.setMap = function(map, opt_force) {
+    FeatureCollection.prototype.setMap = function(map, force) {
       var _this = this;
       this.map = map;
       this.forEach(function(feature) {
-        return feature.setMap(_this.map, opt_force);
+        return feature.setMap(_this.map, force);
       });
       return this.handleMapEvents();
     };
 
     FeatureCollection.prototype.show = function() {
       this.setMap(this.map, {
-        geometries: true
+        geometry: true
       });
       return this.setVisible(true);
     };

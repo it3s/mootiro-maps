@@ -39,12 +39,12 @@ class FeatureCollection extends GenericCollection
         super feature
         feature.setMap(@map)
 
-    setMap: (@map, opt_force) ->
-        @forEach (feature) => feature.setMap @map, opt_force
+    setMap: (@map, force) ->
+        @forEach (feature) => feature.setMap @map, force
         @handleMapEvents()
 
     show: ->
-        @setMap @map, geometries: true
+        @setMap @map, geometry: true
         @setVisible on
 
     hide: -> @setVisible off
