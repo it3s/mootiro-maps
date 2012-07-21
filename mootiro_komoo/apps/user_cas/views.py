@@ -19,8 +19,10 @@ from django_cas.views import _logout_url as cas_logout_url
 
 logger = logging.getLogger(__name__)
 
+
 #TODO: the function login should process the endpoint /login/cas/
-#      And the endpoint /login/ should point to a new page that matches our login design
+#      And the endpoint /login/ should point to a new page that
+#      matches our login design
 def login(request):
     '''
     When the user clicks "login" on Mootiro Bar, this view runs.
@@ -28,7 +30,7 @@ def login(request):
     '''
     logger.debug('accessing user_cas > login')
     host_port = request.environ['HTTP_HOST']
-    return redirect(settings.CAS_SERVER_URL + \
+    return redirect(settings.CAS_SERVER_URL +
         '?service=http://{}/user/after_login'.format(host_port))
 
 
@@ -37,13 +39,13 @@ def logout(request):
     next_page = request.GET.get('next', '/')
     auth_logout(request)
     requests.get(cas_logout_url(request, next_page))
-    # request.get("https://www.facebook.com/logout.php?next=YOUR_REDIRECT_URL&access_token=USER_ACCESS_TOKEN")
     return redirect(next_page)
 
 
 @render_to('user_cas/profile.html')
-def profile(request):
-    return {}
+def profile(request, username=''):
+    logger.debug('acessing user_cas > profile : {}'.format(username))
+    return dict(user=username)
 
 
 @render_to('user_cas/profile_update.html')
@@ -94,14 +96,14 @@ def profile_update_signatures(request):
         user_digest = DigestSignature.objects.filter(user=request.user)
 
         if digest_type and not user_digest.count():
-            DigestSignature.objects.create(user=request.user, digest_type=digest_type)
+            DigestSignature.objects.create(user=request.user,
+                    digest_type=digest_type)
         elif user_digest.count() and not digest_type:
             DigestSignature.objects.get(user=request.user).delete()
         elif user_digest.count() and digest_type != user_digest[0].digest_type:
             d = DigestSignature.objects.get(user=request.user)
             d.digest_type = digest_type
             d.save()
-
 
         return {'success': 'true', 'redirect': reverse('user_profile')}
 
