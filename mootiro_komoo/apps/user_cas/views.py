@@ -19,7 +19,8 @@ from django_cas.views import _logout_url as cas_logout_url
 
 logger = logging.getLogger(__name__)
 
-
+#TODO: the function login should process the endpoint /login/cas/
+#      And the endpoint /login/ should point to a new page that matches our login design
 def login(request):
     '''
     When the user clicks "login" on Mootiro Bar, this view runs.
@@ -41,8 +42,13 @@ def logout(request):
 
 
 @render_to('user_cas/profile.html')
-@login_required
 def profile(request):
+    return {}
+
+
+@render_to('user_cas/profile_update.html')
+@login_required
+def profile_update(request):
     logger.debug('accessing user_cas > profile')
     signatures = Signature.objects.filter(user=request.user)
     digest_obj = DigestSignature.objects.filter(user=request.user)
@@ -53,7 +59,7 @@ def profile(request):
 
 @login_required
 @ajax_request
-def profile_update(request):
+def profile_update_signatures(request):
     logger.debug('accessing user_cas > profile_update')
     logger.debug('POST: {}'.format(request.POST))
 

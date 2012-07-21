@@ -1,0 +1,131 @@
+{% extends 'global.html' %}
+
+{% load i18n %}
+{% load komoo_tags %}
+
+{% block content %}
+
+<div id="user-profile-content">
+    
+
+        <!-- tab navigation -->
+        <ul class="nav nav-tabs">
+            <li><a href="#tab-pane-personal" data-toggle="tab">Personal Settings</a></li>
+            <li class="active"><a href="#tab-pane-public" data-toggle="tab">Public Settings</a></li>
+            <li><a href="#tab-pane-signatures" data-toggle="tab">Signatures</a></li>
+        </ul>
+
+        {# TAB content  section #}
+        <div class="tab-content">
+
+            <div class="tab-pane" id="tab-pane-public"></div>
+
+            <!-- Tab pane personal settings -->
+            <div class="tab-pane active" id="tab-pane-personal">
+             <h3>Personal settings</h3>
+
+            </div><!-- end of tab pane personal settings -->
+
+
+            <!-- Tab pane signatures -->
+            <div class="tab-pane div-profile-form" id="tab-pane-signatures">
+                <form id="profile-form" method="post" action="{% url profile_update_signatures %}">
+
+                <!-- CSRF protection -->
+                <div style='display:none'>
+                    <input type='hidden' name='csrfmiddlewaretoken' value='{{ csrf_token }}' />
+                </div>
+
+                <!-- user id -->
+                <input type="hidden" name="id" value="7" id="id_id" />
+
+                <!-- username -->
+                <div id="div_id_username" class="clearfix control-group ">
+                    <label for="id_username" class="requiredField">
+                        Nome do Usuário<span class="asteriskField">*</span>
+                    </label>
+                    <div class="controls">
+                        <input name="username" value="{{ user.username }}" class="textinput textInput" maxlength="30" type="text" id="id_username" />
+
+                        <p id="hint_id_username" class="help-block">Obrigatório. 30 caracteres ou menos. Letras, números e os caracteres @/./+/-/_</p>
+                 </div>
+                </div>
+
+                <div class="horizontal-splitter"></div>
+
+                <div><label>{% trans 'Signatures' %}:</label></div>
+
+                <!-- signatures -->
+                {% for signature in signatures %}
+                    <div class="div_signature">
+                        <input type="checkbox" id="id_signature_{{ signature.id }}" value="{{ signature.id }}" name="signatures" checked="checked">
+                        <span>{{ signature.content_object|class_name|title }} &gt; {{ signature.content_object }}</span>
+                    </div>
+                {% endfor %}
+
+                <div class="horizontal-splitter"></div>
+
+                <div class="div_signature">
+                    <div>
+                        <input type="radio" value="" name="digest_type" {% if not digest %}checked="checked"{% endif %} >
+                        <span>{% trans 'I dont want to receive digest mails' %}</span>
+                    </div>
+                    <div>
+                        <input type="radio" value="W" name="digest_type" {% if digest == 'W' %}checked="checked"{% endif %} >
+                        <span>{% trans 'I want to receive only weekly emails digest' %}</span>
+                    </div>
+                    <div>
+                        <input type="radio" value="D" name="digest_type" {% if digest == 'D' %}checked="checked"{% endif %} >
+                        <span>{% trans 'I want to receive only daily emails digest' %}</span>
+                    </div>
+
+
+                </div>
+
+
+
+
+                <!-- submit button -->
+                <input type="submit" class="button profile-submit" value="update">
+
+                </form>
+            </div> <!-- end of signatures tab pane -->
+
+        </div><!-- end of tab content-->
+</div>
+{% endblock %}
+
+{% block css %}
+    <style type="text/css">
+        .horizontal-splitter{
+            margin: 25px 0;
+            border-top: solid 1px #cccccc;
+            border-bottom: solid 1px #ffffff;
+        }
+        .profile-submit{
+            margin-top: 30px;
+            padding: 5px 20px;
+            font-weight: bold;
+        }
+        .div_signature{
+            padding-bottom: 10px;
+        }
+        .div_signature input{
+            margin-right: 10px;
+        }
+        .div_signature span{
+            font-weight: bold;
+            color: #777777;
+            text-shadow: 1px 1px 1px #ffffff;
+        }
+    </style>
+
+{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('#profile-form').ajaxform();
+        });
+    </script>
+{% endblock %}
