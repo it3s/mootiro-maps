@@ -97,7 +97,7 @@ class Balloon
         title = "<strong>#{interpolate msg, [features.length]}</strong>"
         body = for feature in features[0..10]
             "<li>#{feature.getProperty 'name'}</li>"
-        body = "<ul>#{body.join()}</ul>"
+        body = "<ul>#{body.join('')}</ul>"
         title: title, url: "", body: body
 
     createFeatureContent: (options = {}) ->
@@ -168,10 +168,85 @@ class Tooltip extends AjaxBalloon
             $(closeBox).hide()
 
 
+class FeatureClusterer
+    maxZoom: 9
+    gridSize: 20
+    minSize: 1
+    imagePath: '/static/img/cluster/communities'
+    imageSizes: [24, 29, 35, 41, 47]
+
+    constructor: (@options = {}) ->
+        @options.gridSize ?= @gridSize
+        @options.maxZoom ?= @maxZoom
+        @options.minimumClusterSize ?= @minSize
+        @options.imagePath ?= @imagePath
+        @options.imageSizes ?= @imageSizes
+        @setMap @options.map
+        @features = []
+        @initMarkerClusterer @options
+        @initEvents()
+
+    initMarkerClusterer: (options = {}) ->
+        map = @map?.googleMap or @map
+        @clusterer = new MarkerClusterer map, [], options
+
+    initEvents: (object = @clusterer) ->
+        if not object then return
+
+        eventsNames = ['clusteringbegin', 'clusteringend']
+        eventsNames.forEach (eventName) =>
+            komoo.event.addListener object, eventName, (mc) =>
+                komoo.event.trigger @, eventName, @
+
+        eventsNames = ['click', 'mouseout', 'mouseover']
+        eventsNames.forEach (eventName) =>
+            komoo.event.addListener object, eventName, (c) =>
+                features = komoo.collections.makeFeatureCollection \
+                    features: (marker.feature for marker in c.getMarkers())
+                komoo.event.trigger @, eventName, features, c.getCenter()
+
+    setMap: (@map) ->
+        #@handleMapEvents()
+
+    updateLength: -> @length = @features.length
+
+    clear: ->
+        @features = []
+        @clusterer.clearMarkers()
+        @updateLength()
+
+    getAt: (index) -> @features[index]
+
+    push: (element) ->
+        if element.getMarker()
+            @features.push element
+            element.getMarker().setVisible off
+            @clusterer.addMarker element.getMarker().getOverlay()
+            @updateLength()
+
+    pop: ->
+        element = @features.pop()
+        @clusterer.removeMarker element.getMarker()
+        @updateLength()
+        element
+
+    forEach: (callback, thisArg) ->
+        @features.forEach callback, thisArg
+
+    repaint: -> @clusterer.repaint()
+
+    getAverageCenter: -> @clusterer.getAverageCenter()
+
+    addFeatures: (features) ->
+        features?.forEach (feature) => @push(feature)
+
+
 window.komoo.controls =
     Balloon: Balloon
     AjaxBalloon: AjaxBalloon
     InfoWindow: InfoWindow
     Tooltip: Tooltip
+    FeatureClusterer: FeatureClusterer
     makeInfoWindow: (options) -> new InfoWindow options
     makeTooltip: (options) -> new Tooltip options
+    makeFeatureClusterer: (options) -> new FeatureClusterer options

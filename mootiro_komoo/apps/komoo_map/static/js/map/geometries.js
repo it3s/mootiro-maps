@@ -54,14 +54,14 @@
     };
 
     Geometry.prototype.initEvents = function(object) {
-      var eventsNames, that;
+      var eventsNames,
+        _this = this;
       if (object == null) object = this.overlay;
       if (!object) return;
-      that = this;
       eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'rightclick'];
       return eventsNames.forEach(function(eventName) {
         return komoo.event.addListener(object, eventName, function(e, args) {
-          return komoo.event.trigger(that, eventName, e, args);
+          return komoo.event.trigger(_this, eventName, e, args);
         });
       });
     };
@@ -275,14 +275,14 @@
     };
 
     Point.prototype.initEvents = function(object) {
-      var eventsNames, that;
+      var eventsNames,
+        _this = this;
       if (object == null) object = this.overlay;
       Point.__super__.initEvents.call(this, object);
-      that = this;
       eventsNames = ['animation_changed', 'clickable_changed', 'cursor_changed', 'drag', 'dragend', 'daggable_changed', 'dragstart', 'flat_changed', 'icon_changed', 'position_changed', 'shadow_changed', 'shape_changed', 'title_changed', 'visible_changed', 'zindex_changed'];
       return eventsNames.forEach(function(eventName) {
         return komoo.event.addListener(object, eventName, function(e, args) {
-          return komoo.event.trigger(that, eventName, e, args);
+          return komoo.event.trigger(_this, eventName, e, args);
         });
       });
     };
@@ -605,16 +605,15 @@
     };
 
     Polygon.prototype.handleEvents = function() {
-      var that;
-      that = this;
+      var _this = this;
       komoo.event.addListener(this, 'mousemove', function(e) {
-        return that.setOptions({
-          strokeWeight: that.getBorderSizeHover()
+        return _this.setOptions({
+          strokeWeight: _this.getBorderSizeHover()
         });
       });
       return komoo.event.addListener(this, 'mouseout', function(e) {
-        return that.setOptions({
-          strokeWeight: that.getBorderSize()
+        return _this.setOptions({
+          strokeWeight: _this.getBorderSize()
         });
       });
     };

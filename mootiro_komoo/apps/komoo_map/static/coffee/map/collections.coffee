@@ -26,26 +26,25 @@ class GenericCollection
     forEach: (callback, thisArg) ->
         @elements.forEach callback, thisArg
 
+    getArray: -> @elements
+
 
 class FeatureCollection extends GenericCollection
     constructor: (options = {}) ->
         super options
-        if options.map
-            @setMap options.map
-        if options.features
-            options.features.forEach (feature) ->
-                @push(feature)
+        if options.map then @setMap options.map
+        options.features?.forEach (feature) => @push(feature)
 
     push: (feature) ->
         super feature
         feature.setMap(@map)
 
-    setMap: (@map, opt_force) ->
-        @forEach (feature) => feature.setMap @map, opt_force
+    setMap: (@map, force) ->
+        @forEach (feature) => feature.setMap @map, force
         @handleMapEvents()
 
     show: ->
-        @setMap @map, geometries: true
+        @setMap @map, geometry: true
         @setVisible on
 
     hide: -> @setVisible off
@@ -72,6 +71,49 @@ class FeatureCollection extends GenericCollection
         komoo.event.addListener @map, "zoom_changed", =>
 
 
+class FeatureCollectionPlus extends FeatureCollection
+    constructor: (options = {}) ->
+        super options
+        @featuresByType = {}
+
+    push: (feature) ->
+        super feature
+        @featuresByType[feature.getType()] ?= {}
+        @featuresByType[feature.getType()]['all'] ?= new FeatureCollection map: @map
+        @featuresByType[feature.getType()]['uncategorized'] ?= new FeatureCollection map: @map
+        feature.getCategories()?.forEach (category) =>
+            @featuresByType[feature.getType()][category.name] ?= new FeatureCollection map: @map
+            @featuresByType[feature.getType()][category.name].push(feature)
+        if not feature.getCategories()? or feature.getCategories().length is 0
+            @featuresByType[feature.getType()]['uncategorized'].push(feature)
+        @featuresByType[feature.getType()]['all'].push(feature)
+
+    pop: ->
+        # TODO: remove the feature from featuresByType
+        super()
+
+    clear: ->
+        @featuresByType = {}
+        super()
+
+    getByType: (type, categories, strict = false) ->
+        if not @featuresByType[type]
+            false
+        else if not categories
+            @featuresByType[type]['all']
+        else if categories.length is 0
+            @featuresByType[type]['uncategorized']
+        else
+            features = new FeatureCollection map: @map;
+            categories.forEach (category) =>
+                if @featuresByType[type][category]
+                    @featuresByType[type][category].forEach (feature) =>
+                        if not strict or not feature.getCategories() or feature.getCategories().length is 1
+                            features.push feature
+            features
+
+
+
 class Layer extends FeatureCollection
 
 
@@ -80,6 +122,5 @@ window.komoo.collections =
     GenericCollection: GenericCollection
     FeatureCollection: FeatureCollection
 
-    makeFeatureCollection: (options = {}) ->
-        new FeatureCollection options
+    makeFeatureCollection: (options = {}) -> new FeatureCollectionPlus options
 

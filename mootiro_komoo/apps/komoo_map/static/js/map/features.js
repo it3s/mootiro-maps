@@ -178,6 +178,15 @@
       return this.properties[name] = value;
     };
 
+    Feature.prototype.getType = function() {
+      return this.getProperty('type');
+    };
+
+    Feature.prototype.getCategories = function() {
+      var _ref;
+      return (_ref = this.getProperty('categories')) != null ? _ref : [];
+    };
+
     Feature.prototype.getGeometryGeoJson = function() {
       var _ref;
       return (_ref = this.geometry) != null ? _ref.getGeoJson() : void 0;

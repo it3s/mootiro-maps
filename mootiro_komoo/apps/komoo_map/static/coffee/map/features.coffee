@@ -107,6 +107,9 @@ class Feature
     getProperty: (name) -> @properties[name]
     setProperty: (name, value) -> @properties[name] = value
 
+    getType: -> @getProperty('type')
+    getCategories: -> @getProperty('categories') ? []
+
     getGeometryGeoJson: -> @geometry?.getGeoJson()
 
     getGeoJsonGeometry: -> @getGeometryGeoJson()

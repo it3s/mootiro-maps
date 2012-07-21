@@ -1,5 +1,5 @@
 (function() {
-  var AjaxBalloon, Balloon, InfoWindow, Tooltip, _base,
+  var AjaxBalloon, Balloon, FeatureClusterer, InfoWindow, Tooltip, _base,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -138,7 +138,7 @@
         }
         return _results;
       })();
-      body = "<ul>" + (body.join()) + "</ul>";
+      body = "<ul>" + (body.join('')) + "</ul>";
       return {
         title: title,
         url: "",
@@ -266,16 +266,151 @@
 
   })(AjaxBalloon);
 
+  FeatureClusterer = (function() {
+
+    FeatureClusterer.prototype.maxZoom = 9;
+
+    FeatureClusterer.prototype.gridSize = 20;
+
+    FeatureClusterer.prototype.minSize = 1;
+
+    FeatureClusterer.prototype.imagePath = '/static/img/cluster/communities';
+
+    FeatureClusterer.prototype.imageSizes = [24, 29, 35, 41, 47];
+
+    function FeatureClusterer(options) {
+      var _base2, _base3, _base4, _base5, _base6;
+      this.options = options != null ? options : {};
+      if ((_base2 = this.options).gridSize == null) {
+        _base2.gridSize = this.gridSize;
+      }
+      if ((_base3 = this.options).maxZoom == null) _base3.maxZoom = this.maxZoom;
+      if ((_base4 = this.options).minimumClusterSize == null) {
+        _base4.minimumClusterSize = this.minSize;
+      }
+      if ((_base5 = this.options).imagePath == null) {
+        _base5.imagePath = this.imagePath;
+      }
+      if ((_base6 = this.options).imageSizes == null) {
+        _base6.imageSizes = this.imageSizes;
+      }
+      this.setMap(this.options.map);
+      this.features = [];
+      this.initMarkerClusterer(this.options);
+      this.initEvents();
+    }
+
+    FeatureClusterer.prototype.initMarkerClusterer = function(options) {
+      var map, _ref;
+      if (options == null) options = {};
+      map = ((_ref = this.map) != null ? _ref.googleMap : void 0) || this.map;
+      return this.clusterer = new MarkerClusterer(map, [], options);
+    };
+
+    FeatureClusterer.prototype.initEvents = function(object) {
+      var eventsNames,
+        _this = this;
+      if (object == null) object = this.clusterer;
+      if (!object) return;
+      eventsNames = ['clusteringbegin', 'clusteringend'];
+      eventsNames.forEach(function(eventName) {
+        return komoo.event.addListener(object, eventName, function(mc) {
+          return komoo.event.trigger(_this, eventName, _this);
+        });
+      });
+      eventsNames = ['click', 'mouseout', 'mouseover'];
+      return eventsNames.forEach(function(eventName) {
+        return komoo.event.addListener(object, eventName, function(c) {
+          var features, marker;
+          features = komoo.collections.makeFeatureCollection({
+            features: (function() {
+              var _i, _len, _ref, _results;
+              _ref = c.getMarkers();
+              _results = [];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                marker = _ref[_i];
+                _results.push(marker.feature);
+              }
+              return _results;
+            })()
+          });
+          return komoo.event.trigger(_this, eventName, features, c.getCenter());
+        });
+      });
+    };
+
+    FeatureClusterer.prototype.setMap = function(map) {
+      this.map = map;
+    };
+
+    FeatureClusterer.prototype.updateLength = function() {
+      return this.length = this.features.length;
+    };
+
+    FeatureClusterer.prototype.clear = function() {
+      this.features = [];
+      this.clusterer.clearMarkers();
+      return this.updateLength();
+    };
+
+    FeatureClusterer.prototype.getAt = function(index) {
+      return this.features[index];
+    };
+
+    FeatureClusterer.prototype.push = function(element) {
+      if (element.getMarker()) {
+        this.features.push(element);
+        element.getMarker().setVisible(false);
+        this.clusterer.addMarker(element.getMarker().getOverlay());
+        return this.updateLength();
+      }
+    };
+
+    FeatureClusterer.prototype.pop = function() {
+      var element;
+      element = this.features.pop();
+      this.clusterer.removeMarker(element.getMarker());
+      this.updateLength();
+      return element;
+    };
+
+    FeatureClusterer.prototype.forEach = function(callback, thisArg) {
+      return this.features.forEach(callback, thisArg);
+    };
+
+    FeatureClusterer.prototype.repaint = function() {
+      return this.clusterer.repaint();
+    };
+
+    FeatureClusterer.prototype.getAverageCenter = function() {
+      return this.clusterer.getAverageCenter();
+    };
+
+    FeatureClusterer.prototype.addFeatures = function(features) {
+      var _this = this;
+      return features != null ? features.forEach(function(feature) {
+        return _this.push(feature);
+      }) : void 0;
+    };
+
+    return FeatureClusterer;
+
+  })();
+
   window.komoo.controls = {
     Balloon: Balloon,
     AjaxBalloon: AjaxBalloon,
     InfoWindow: InfoWindow,
     Tooltip: Tooltip,
+    FeatureClusterer: FeatureClusterer,
     makeInfoWindow: function(options) {
       return new InfoWindow(options);
     },
     makeTooltip: function(options) {
       return new Tooltip(options);
+    },
+    makeFeatureClusterer: function(options) {
+      return new FeatureClusterer(options);
     }
   };
 
