@@ -121,6 +121,7 @@ class Layer extends FeatureCollection
 window.komoo.collections =
     GenericCollection: GenericCollection
     FeatureCollection: FeatureCollection
+    FeatureCollectionPlus: FeatureCollectionPlus
 
     makeFeatureCollection: (options = {}) -> new FeatureCollectionPlus options
 

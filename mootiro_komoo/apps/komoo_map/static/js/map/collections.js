@@ -233,6 +233,7 @@
   window.komoo.collections = {
     GenericCollection: GenericCollection,
     FeatureCollection: FeatureCollection,
+    FeatureCollectionPlus: FeatureCollectionPlus,
     makeFeatureCollection: function(options) {
       if (options == null) options = {};
       return new FeatureCollectionPlus(options);
