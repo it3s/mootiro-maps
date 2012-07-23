@@ -2090,32 +2090,55 @@ div.investments-list .tab-investment.selected a { color: #000 }
     vertical-align: top;
 }
 /* ====== user profile ===== */
-#user-profile-content{
+#user-profile-edit-container{
     padding: 50px 60px 0 60px;
     /*background-color: #DCEFF4;*/
     min-height: 550px;
     width: 1024px;
 }
-#user-profile-content .main-column{
-    margin: 0 auto;
-    float: none;
-}
-.mootiro-maps-logo{
-    text-align: center;
-    margin-bottom: 50px;
-}
-.div-profile-form label{
-    font-weight: bold;
-}
-.div-profile-form input{
-    background-color: #f5f5f5;
-}
-#user-profile-content .nav-tabs{
+#user-profile-edit-container .nav-tabs{
     border-bottom: solid 1px #000;
 }
-#user-profile-content .nav-tabs > .active > a,
-#user-profile-content .nav-tabs > .active > a:hover{
+#user-profile-edit-container .nav-tabs > .active > a,
+#user-profile-edit-container .nav-tabs > .active > a:hover{
     border-color: #000 #000 transparent;
+}
+.profile-container{
+    padding: 30px;
+}
+.profile-left-pane{
+    display: inline-block;
+    width: 332px;
+}
+.profile-central-pane{
+    display: inline-block;
+    width: 602px;
+    margin-left: 10px;
+}
+.profile-lp-header{}
+.profile-lp-header-username{
+    font-weight: bold;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+.profile-lp-header-edit-btn{
+    /* margin-left: 20px; */
+    float: right;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+.profile-lp-photo{
+    margin-top: 20px;
+}
+.profile-lp-contact{
+    border-radius: 4px;
+    background-color: #dedede;
+    padding: 10px;
+    margin-top: 20px;
+    width: 297px;
+}
+.profile-lp-contact header{
+    font-weight: bold;
 }
 /* ====== Error box ======== */
 .error-dialog {

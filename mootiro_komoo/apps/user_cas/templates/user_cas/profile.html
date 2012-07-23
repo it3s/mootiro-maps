@@ -4,7 +4,39 @@
 {% load komoo_tags %}
 
 {% block content %}
-Profile -&gt; <a href="{% url profile_update %}">[{{ user_profile.username }} - {{ user_profile.profile }}]</a>
+
+<div class="profile-container">
+
+    <!-- profile left pane -->
+    <div class="profile-left-pane">
+
+        <!-- profile header (name and edit button) -->
+        <div class="profile-lp-header">
+            <span class="profile-lp-header-username">{% firstof user_profile.get_full_name user_profile.username %}</span>
+            {% if user.id == user_profile.id %}
+            <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn">
+                <i class="icon-pencil"></i>
+            </a>
+            {% endif %}
+        </div>
+
+        <!-- User photo -->
+        <div class="profile-lp-photo">
+            <div style="width:95%; height:200px; background-color: #cccccc; border-radius:4px; text-align:center;"> placeholder </div>
+        </div>
+
+        <!-- user contact info -->
+        <div class="profile-lp-contact">
+            <header>Public Contact</header>
+            {% firstof user_profile.profile.contact '' %}
+        </div>
+    </div> <!-- End of profile left pane -->
+
+    
+    <div class="profile-central-pane">
+        central pane
+    </div>
+</div>
 {% endblock %}
 
 {% block css %}
