@@ -2112,8 +2112,9 @@ div.investments-list .tab-investment.selected a { color: #000 }
 }
 .profile-central-pane{
     display: inline-block;
-    width: 602px;
-    margin-left: 10px;
+    width: 582px;
+    margin-left: 30px;
+    vertical-align: top;
 }
 .profile-lp-header{}
 .profile-lp-header-username{
@@ -2136,9 +2137,15 @@ div.investments-list .tab-investment.selected a { color: #000 }
     padding: 10px;
     margin-top: 20px;
     width: 297px;
+    color: #333333;
 }
-.profile-lp-contact header{
+.profile-lp-contact-header{
     font-weight: bold;
+}
+.profile-cp-header{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 40px;
 }
 /* ====== Error box ======== */
 .error-dialog {

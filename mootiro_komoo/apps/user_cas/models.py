@@ -6,12 +6,16 @@ from django.contrib.auth.models import User
 from komoo_map.models import GeoRefModel
 
 
-class KomooProfile(GeoRefModel):
+# class KomooProfile(GeoRefModel):
+class KomooProfile(models.Model):
     user = models.OneToOneField(User)
     contact = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return "<KomooProfile: {}>".format(unicode(self.user.username))
+
+    class Map:
+        editable = False
 
 # monkey patch auth.User \o/
 # now we can retrieve a profile like: User.objects.get(pk=1).profile

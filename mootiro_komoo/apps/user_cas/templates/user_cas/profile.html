@@ -27,14 +27,27 @@
 
         <!-- user contact info -->
         <div class="profile-lp-contact">
-            <header>Public Contact</header>
-            {% firstof user_profile.profile.contact '' %}
+            <div class="profile-lp-contact-header">{% trans 'Public Contact' %}</div>
+            {% if user.profile.contact %}
+                {{ user_profile.profile.contact }}
+            {% else %}
+                {% trans 'Information Not Provided!' %}
+            {% endif %}
         </div>
+
+        <!-- map info section -->
+        <div class="profile-lp-map-actions">
+        
+        </div>
+
     </div> <!-- End of profile left pane -->
 
     
     <div class="profile-central-pane">
-        central pane
+        <div class="profile-cp-header">{% trans 'Last Contributions' %}</div>
+        <div class="profile-cp-contributions">
+        
+        </div>
     </div>
 </div>
 {% endblock %}
