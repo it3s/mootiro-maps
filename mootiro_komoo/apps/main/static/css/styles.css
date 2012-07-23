@@ -32,6 +32,8 @@ a:hover {
 a:active {
     color: #000;
 }
+a:active, a:active * { outline: none !important; -moz-outline-style: none !important; }
+a:focus, a:focus * { outline: none !important; -moz-outline-style: none !important; }
 ul {
     list-style-type: none;
     margin: 0px;
