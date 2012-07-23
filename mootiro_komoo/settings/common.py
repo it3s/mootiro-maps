@@ -212,6 +212,9 @@ MARKITUP_FILTER = ('main.utils.render_markup', {})
 MARKITUP_AUTO_PREVIEW = True
 JQUERY_URL = 'dummy.js'
 
+# User Profile config
+AUTH_PROFILE_MODULE = 'user_cas.KomooProfile'
+
 
 #CAS config
 PROFILE_DATABASE = 'localhost|profile|username|password'

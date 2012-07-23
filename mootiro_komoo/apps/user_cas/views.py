@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import logging
 import requests
 
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
@@ -45,7 +45,8 @@ def logout(request):
 @render_to('user_cas/profile.html')
 def profile(request, username=''):
     logger.debug('acessing user_cas > profile : {}'.format(username))
-    return dict(user=username)
+    user = get_object_or_404(User, username=username)
+    return dict(user_profile=user)
 
 
 @render_to('user_cas/profile_update.html')

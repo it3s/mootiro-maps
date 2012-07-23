@@ -4,7 +4,7 @@
 {% load komoo_tags %}
 
 {% block content %}
-    Profile -&gt; <a href="{% url profile_update %}">[profile_update]</a>
+Profile -&gt; <a href="{% url profile_update %}">[{{ user_profile.username }} - {{ user_profile.profile }}]</a>
 {% endblock %}
 
 {% block css %}
