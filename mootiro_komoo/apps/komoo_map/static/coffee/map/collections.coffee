@@ -123,5 +123,6 @@ window.komoo.collections =
     FeatureCollection: FeatureCollection
     FeatureCollectionPlus: FeatureCollectionPlus
 
-    makeFeatureCollection: (options = {}) -> new FeatureCollectionPlus options
+    makeFeatureCollection: (options = {}) -> new FeatureCollection options
+    makeFeatureCollectionPlus: (options = {}) -> new FeatureCollectionPlus options
 

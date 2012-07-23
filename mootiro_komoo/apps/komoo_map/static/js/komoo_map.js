@@ -101,252 +101,11 @@ komoo.MapOptions = {
 };
 
 
-
-
-/**
- * @class Object used to get features from server for each tile
- *
- * @param {komoo.Map} komooMap
- * @property {komoo.Map} komooMap
- * @property {google.maps.Size} tileSize The tile size. Default: 256x256
- * @property {number} [maxZoom=32]
- * @property {String} name
- * @property {String} alt
- */
-komoo.ServerFetchMapType = function (komooMap) {
-    this.komooMap = komooMap;
-    this.addrLatLngCache = {};
-    this.tileSize = new google.maps.Size(256, 256);
-    this.maxZoom = 32;
-    this.name = "Server Data";
-    this.alt  = "Server Data Tile Map Type";
-};
-
-
-komoo.ServerFetchMapType.prototype.releaseTile = function (tile) {
-    var serverFetchMapType = this;
-    if (this.komooMap.fetchedTiles[tile.tileKey]) {
-        var bounds = serverFetchMapType.komooMap.googleMap.getBounds();
-        this.komooMap.fetchedTiles[tile.tileKey].features.forEach(function (feature, index, orig) {
-            if (feature.getBounds()) {
-                if (!bounds.intersects(feature.getBounds())) {
-                    feature.setMap(null);
-                } else if (!bounds.contains(feature.getBounds().getNorthEast()) ||
-                        !bounds.contains(feature.getBounds().getSouthWest())){
-                    serverFetchMapType.komooMap.keptFeatures.push(feature);
-                }
-            } else if (feature.getPosition) {
-                if (bounds.contains(feature.getPosition())) {
-                    feature.setMap(null);
-                }
-            }
-        });
-    }
-};
-
-
-komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
-    var me = this;
-    var div = ownerDocument.createElement("DIV");
-    var addr = this.getAddrLatLng(coord, zoom);
-    div.tileKey = addr;
-    if (this.komooMap.options.debug) {
-        // Display debug info.
-        $(div).css({
-            "width": this.tileSize.width + "px",
-            "height": this.tileSize.height + "px",
-            "border": "solid 1px #AAAAAA",
-            "overflow": "hidden",
-            "font-size": "9px"
-        });
-    }
-
-    // Verify if we already loaded this block.
-    if (this.komooMap.fetchedTiles[addr]) {
-        if (this.komooMap.options.debug) {
-            // Display debug info.
-            div.innerHTML = this.komooMap.fetchedTiles[addr].geojson;
-        }
-        this.komooMap.fetchedTiles[addr].features.forEach(function (feature, index, orig) {
-            feature.setMap(me.komooMap);
-            feature.updateIcon();
-        });
-        return div;
-    }
-    if (this.komooMap.options.fetchFeatures != false) {
-        $.ajax({
-            url: this.komooMap.options.fetchUrl + addr,
-            dataType: "json",
-            type: "GET",
-            success: function (data, textStatus, jqXHR) {
-                var features = me.komooMap.loadGeoJSON(JSON.parse(data), false);
-                me.komooMap.fetchedTiles[addr] = {
-                    geojson: data,
-                    features: features
-                };
-                if (me.komooMap.options.debug) {
-                    // Display debug info.
-                    div.innerHTML = data;
-                    $(div).css("border", "solid 1px #F00");
-                }
-                features.forEach(function (feature, index, orig) {
-                    feature.setMap(me.komooMap);
-                    feature.updateIcon();
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (window.console) console.error(textStatus);
-                var serverError = $("#server-error");
-                if (serverError.parent().length == 0) {
-                    serverError = $("<div>").attr("id", "server-error");
-                    $("body").append(serverError);
-                    var error = $("<div>").html(jqXHR.responseText)
-                    serverError.append(error); // FIXME: This is not user friendly
-                }
-            }
-        });
-    }
-    return div;
-};
-
-
-/**
- * Converts tile coords to LatLng and returns a url params.
- *
- * @param {google.maps.Point} coord Tile coordinates (x, y).
- * @param {number} zoom Zoom level.
- * @returns {String} The url params to get the data from server.
- */
-komoo.ServerFetchMapType.prototype.getAddrLatLng = function (coord, zoom) {
-    var key = "x=" + coord.x + ",y=" + coord.y + ",z=" + zoom
-    if (this.addrLatLngCache[key]) {
-        return this.addrLatLngCache[key];
-    }
-    var numTiles = 1 << zoom;
-    var projection = this.komooMap.googleMap.getProjection();
-    var point1 = new google.maps.Point(
-            (coord.x + 1) * this.tileSize.width / numTiles,
-            coord.y * this.tileSize.width / numTiles);
-    var point2 = new google.maps.Point(
-            coord.x * this.tileSize.width / numTiles,
-            (coord.y + 1) * this.tileSize.width / numTiles);
-    var ne = projection.fromPointToLatLng(point1);
-    var sw = projection.fromPointToLatLng(point2);
-    this.addrLatLngCache[key] = "bounds=" + ne.toUrlValue() + "," + sw.toUrlValue() + "&zoom=" + zoom;
-    return this.addrLatLngCache[key];
-};
-
-
-
-komoo.WikimapiaMapType = function (komooMap) {
-    this.komooMap = komooMap;
-    this.addrLatLngCache = {};
-    this.loadedFeatures = {};
-    this.tileSize = new google.maps.Size(256, 256);
-    this.maxZoom = 32;
-    this.name = "Wikimapia Data";
-    this.alt = "Wikimapia Data Tile Map Type";
-    this.key = "Add here your wikimapia key";
-};
-
-komoo.WikimapiaMapType.prototype.getAddrLatLng = function (coord, zoom) {
-    var key = "x=" + coord.x + ",y=" + coord.y
-    if (this.addrLatLngCache[key]) {
-        return this.addrLatLngCache[key];
-    }
-    var numTiles = 1 << zoom;
-    var projection = this.komooMap.googleMap.getProjection();
-    var point1 = new google.maps.Point(
-            (coord.x + 1) * this.tileSize.width / numTiles,
-            coord.y * this.tileSize.width / numTiles);
-    var point2 = new google.maps.Point(
-            coord.x * this.tileSize.width / numTiles,
-            (coord.y + 1) * this.tileSize.width / numTiles);
-    var ne = projection.fromPointToLatLng(point1);
-    var sw = projection.fromPointToLatLng(point2);
-    this.addrLatLngCache[key] = sw.lng() + "," + sw.lat() + "," + ne.lng() + "," + ne.lat();
-    return this.addrLatLngCache[key];
-};
-
-komoo.WikimapiaMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
-    var me = this;
-
-    function createFeatures(json) {
-        var features = komoo.collections.makeFeatureCollection({map: me.komooMap});
-        var folder = json.folder;
-        folder.forEach(function (item, index, orig) {
-            var coords = [];
-            item.polygon.forEach(function (point, index, orig) {
-                coords.push(new google.maps.LatLng(point.y, point.x));
-            });
-            var polygon = new google.maps.Polygon({paths: [coords], fillColor: 'gray'});
-            polygon.wikimapia_id = item.id;
-            polygon.wikimapia_name = item.name;
-            features.push(polygon)
-        });
-        return features;
-    }
-
-    var div = ownerDocument.createElement("DIV");
-    var addr = this.getAddrLatLng(coord, zoom);
-    var url = "http://api.wikimapia.org/?function=box&bbox=" + addr + "&format=json&key=" + this.key;
-    div.tileKey = addr;
-    //if (this.komooMap.options.debug) {
-        // Display debug info.
-        $(div).css({
-            "width": this.tileSize.width + "px",
-            "height": this.tileSize.height + "px",
-            "border": "solid 1px #AAAAAA",
-            "overflow": "hidden",
-            "font-size": "9px"
-        });
-    //}
-
-    // Verify if we already loaded this block.
-    if (this.komooMap.fetchedTiles[addr]) {
-        //if (this.komooMap.options.debug) {
-            // Display debug info.
-            div.innerHTML = JSON.stringify(this.komooMap.fetchedTiles[addr].geojson);
-        //}
-        return div;
-    }
-    if (this.komooMap.options.fetchFeatures != false) {
-        $.ajax({
-            url: url,
-            dataType: "json",
-            type: "GET",
-            success: function (data, textStatus, jqXHR) {
-                var features = createFeatures(data);
-                me.komooMap.fetchedTiles[addr] = {
-                    json: data,
-                    features: features
-                };
-                features.forEach(function (feature, index, orig) {
-                    if (!me.loadedFeatures[feature.wikimapia_id]) {
-                        feature.setMap(me.komooMap);
-                        me.loadedFeatures[feature.wikimapia_id] = feature;
-                    }
-                });
-                //if (me.komooMap.options.debug) {
-                    // Display debug info.
-                    div.innerHTML = JSON.stringify(data);
-                    $(div).css("border", "solid 1px #F00");
-                //}
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (window.console) console.error(textStatus);
-            }
-        });
-    }
-    return div;
-};
-
 /** @namespace */
 komoo.Mode = {};
 /***/ komoo.Mode.NAVIGATE = "navigate";
 /***/ komoo.Mode.SELECT_CENTER = "select_center";
 /***/ komoo.Mode.DRAW = "draw";
-
 
 
 
@@ -411,8 +170,7 @@ komoo.Map = function (element, options) {
     this.options = $.extend(komoo.MapOptions, options);
     this.drawingManagerOptions = {};
     this.featureOptions = {};
-    this.features = komoo.collections.makeFeatureCollection({map: this});
-    this.keptFeatures = komoo.collections.makeFeatureCollection({map: this});
+    this.features = komoo.collections.makeFeatureCollectionPlus({map: this});
     this.newFeatures = komoo.collections.makeFeatureCollection({map: this});
     this.loadedFeatures = {};
     // Creates a jquery selector to use the jquery events feature.
@@ -420,10 +178,7 @@ komoo.Map = function (element, options) {
     // Creates the Google Maps object.
     this.googleMap = new google.maps.Map(element, googleMapOptions);
     // Uses Tiles to get data from server.
-    this.serverFetchMapType = new komoo.ServerFetchMapType(this);
-    this.googleMap.overlayMapTypes.insertAt(0, this.serverFetchMapType);
-    this.wikimapiaMapType = new komoo.WikimapiaMapType(this);
-    //this.googleMap.overlayMapTypes.insertAt(0, this.wikimapiaMapType);
+    this.initProviders();
     // Create the simple version of toolbar.
     this.editToolbar = $("<div>").addClass("map-toolbar").css("margin", "5px");
     this.initControls();
@@ -485,6 +240,15 @@ komoo.Map = function (element, options) {
 
     this.googleMap.mapTypes.set(komoo.CLEAN_MAPTYPE_ID, this.cleanMapType);
     this.initEvents();
+};
+
+komoo.Map.prototype.initProviders = function () {
+    this.featureProvider = komoo.providers.makeFeatureProvider();
+    this.addProvider(this.featureProvider);
+};
+
+komoo.Map.prototype.addProvider = function (provider) {
+    provider.setMap(this);
 };
 
 komoo.Map.prototype.initEvents = function (opt_object) {
@@ -673,16 +437,8 @@ komoo.Map.prototype.handleEvents = function () {
     });
 
     google.maps.event.addListener(this.googleMap, "idle", function () {
-        var bounds = komooMap.googleMap.getBounds();
-        if (komooMap.options.autoSaveLocation) {
+        if (komooMap.options.autoSaveLocation)
             komooMap.saveLocation();
-        }
-        komooMap.keptFeatures.forEach(function (feature, index, orig) {
-            if (!bounds.intersects(feature.getBounds())) {
-                feature.setMap(null);
-            }
-        });
-        komooMap.keptFeatures.clear();
     });
 
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
@@ -908,6 +664,11 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
 
     this._emit_geojson_loaded(geoJSON);
     return features;
+};
+
+
+komoo.Map.prototype.getBounds = function () {
+    return this.googleMap.getBounds();
 };
 
 

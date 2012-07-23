@@ -257,7 +257,10 @@
       if ((_ref = this.marker) != null) {
         _ref.setMap((zoom <= this.featureType.maxZoomMarker && zoom >= this.featureType.minZoomMarker) || force.marker ? this.map : null);
       }
-      return (_ref2 = this.geometry) != null ? _ref2.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null) : void 0;
+      if ((_ref2 = this.geometry) != null) {
+        _ref2.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null);
+      }
+      return this.updateIcon();
     };
 
     Feature.prototype.getBounds = function() {

@@ -142,6 +142,7 @@ class Feature
         @geometry?.setMap(if (zoom <= @featureType.maxZoomGeometry and \
                 zoom >= @featureType.minZoomGeometry) or \
                 force.geometry then @map else null)
+        @updateIcon()
 
     getBounds: -> @geometry?.getBounds()
 
