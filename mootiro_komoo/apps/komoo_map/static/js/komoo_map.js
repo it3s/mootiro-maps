@@ -19,22 +19,6 @@ if (!komoo.event) komoo.event = google.maps.event;
 komoo.CLEAN_MAPTYPE_ID = "clean";
 
 
-/**
- * @name komoo.GeometryType
- * @class Object that represents a item on Add tab of main panel.
- * @property {String} type An internal identifier.
- * @property {String[]} categories
- * @property {String} title The text displayed to user as a menu item.
- * @property {String} tooltip The text displayed on mouse over.
- * @property {String} color
- * @property {String} icon The icon url.
- * @property {google.maps.drawing.GeometryType[]} geometryTypes The geometry options displayed as submenu.
- * @property {String} formUrl The url used to load the form via ajax.
- *           This occurs when user click on Finish button.
- *           Please use dutils.urls.resolve instead of hardcode the address.
- * @property {boolean} disabled
- */
-
 komoo.GeometryType = {
     POINT: 'Point',
     MULTIPOINT: 'MultiPoint',
@@ -243,8 +227,10 @@ komoo.Map = function (element, options) {
 };
 
 komoo.Map.prototype.initProviders = function () {
-    this.featureProvider = komoo.providers.makeFeatureProvider();
-    this.addProvider(this.featureProvider);
+    if (this.options.fetchFeatures) {
+        this.featureProvider = komoo.providers.makeFeatureProvider();
+        this.addProvider(this.featureProvider);
+    }
 };
 
 komoo.Map.prototype.addProvider = function (provider) {
