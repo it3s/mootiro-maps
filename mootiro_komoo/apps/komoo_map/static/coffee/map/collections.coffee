@@ -49,12 +49,21 @@ class FeatureCollection extends GenericCollection
 
     hide: -> @setVisible off
 
-    getGeoJson: ->
-        features = []
-        geojson =
-            type: "FeatureCollection"
-            features: features
-        @forEach (feature) -> features.push feature.getGeoJson()
+    getGeoJson: (options) ->
+        options.geometryCollection ?= false
+
+        if options.geometryCollection
+            geojson =
+                type: "GeometryCollection"
+                geometries: []
+            @forEach (feature) ->
+                geojson.geometries.push feature.getGeometryGeoJson()
+        else
+            geojson =
+                type: "FeatureCollection"
+                features: []
+            @forEach (feature) ->
+                geojson.features.push feature.getGeoJson()
         geojson
 
     removeAllFromMap: ->
@@ -78,15 +87,19 @@ class FeatureCollectionPlus extends FeatureCollection
 
     push: (feature) ->
         super feature
-        @featuresByType[feature.getType()] ?= {}
-        @featuresByType[feature.getType()]['all'] ?= new FeatureCollection map: @map
-        @featuresByType[feature.getType()]['uncategorized'] ?= new FeatureCollection map: @map
+        type = feature.getType()
+        @featuresByType[type] ?= {}
+        @featuresByType[type]['categories'] ?= {}
+        @featuresByType[type]['categories']['all'] ?= new FeatureCollection map: @map
+        @featuresByType[type]['categories']['uncategorized'] ?= new FeatureCollection map: @map
         feature.getCategories()?.forEach (category) =>
-            @featuresByType[feature.getType()][category.name] ?= new FeatureCollection map: @map
-            @featuresByType[feature.getType()][category.name].push(feature)
+            @featuresByType[type]['categories'][category.name] ?= new FeatureCollection map: @map
+            @featuresByType[type]['categories'][category.name].push(feature)
         if not feature.getCategories()? or feature.getCategories().length is 0
-            @featuresByType[feature.getType()]['uncategorized'].push(feature)
-        @featuresByType[feature.getType()]['all'].push(feature)
+            @featuresByType[type]['categories']['uncategorized'].push(feature)
+        @featuresByType[type]['categories']['all'].push(feature)
+        @featuresByType[type]['ids'] ?= {}
+        @featuresByType[type]['ids'][feature.getProperty('id')] = feature
 
     pop: ->
         # TODO: remove the feature from featuresByType
@@ -100,18 +113,20 @@ class FeatureCollectionPlus extends FeatureCollection
         if not @featuresByType[type]
             false
         else if not categories
-            @featuresByType[type]['all']
+            @featuresByType[type]['categories']['all']
         else if categories.length is 0
-            @featuresByType[type]['uncategorized']
+            @featuresByType[type]['categories']['uncategorized']
         else
             features = new FeatureCollection map: @map;
             categories.forEach (category) =>
-                if @featuresByType[type][category]
-                    @featuresByType[type][category].forEach (feature) =>
+                if @featuresByType[type]['categories'][category]
+                    @featuresByType[type]['categories'][category].forEach (feature) =>
                         if not strict or not feature.getCategories() or feature.getCategories().length is 1
                             features.push feature
             features
 
+    getById: (type, id) ->
+        @featuresByType[type]?['ids'][id]
 
 
 class Layer extends FeatureCollection

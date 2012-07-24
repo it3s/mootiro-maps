@@ -116,7 +116,6 @@ komoo.EditMode = {};
  * @property {komoo.EditMode} editMode The current mode of edit feature. Possible values are cutout, add and delete.
  * @property {JQuery} editToolbar JQuery selector of edit toolbar.
  * @property {JQuery} event JQuery selector used to emit events.
- * @property {Object} fetchedTiles Cache the json and the features for each tile
  * @property {google.maps.Geocoder} geocoder  Google service to get addresses locations.
  * @property {google.maps.Map} googleMap The Google Maps map object.
  * @property {InfoBox | google.maps.InfoWindow} infoWindow
@@ -149,8 +148,6 @@ komoo.Map = function (element, options) {
     // TODO: init feature options
     // Initializing some properties.
     this.mode = komoo.Mode.NAVIGATE;
-    this.fetchedTiles = {};
-    this.loadedFeatures = {};
     this.options = $.extend(komoo.MapOptions, options);
     this.drawingManagerOptions = {};
     this.featureOptions = {};
@@ -163,6 +160,7 @@ komoo.Map = function (element, options) {
     this.googleMap = new google.maps.Map(element, googleMapOptions);
     // Uses Tiles to get data from server.
     this.initProviders();
+    this.initMapTypes();
     // Create the simple version of toolbar.
     this.editToolbar = $("<div>").addClass("map-toolbar").css("margin", "5px");
     this.initControls();
@@ -181,49 +179,16 @@ komoo.Map = function (element, options) {
     if (komoo.onMapReady) {
         komoo.onMapReady(this);
     }
-
-    this.cleanMapType = new google.maps.StyledMapType([
-        {
-            featureType: "poi",
-            elementType: "all",
-            stylers: [
-                {visibility: "off"}
-            ]
-        },
-        {
-            featureType: "road",
-            elementType: "all",
-            stylers: [
-                {lightness: 70}
-            ]
-        },
-        {
-            featureType: "transit",
-            elementType: "all",
-            stylers: [
-                {lightness: 50}
-            ]
-        },
-        {
-            featureType: "water",
-            elementType: "all",
-            stylers: [
-                {lightness: 50}
-            ]
-        },
-        {
-            featureType: "administrative",
-            elementType: "labels",
-            stylers: [
-                {lightness: 30}
-            ]
-        }
-    ], {
-        name: gettext("Clean")
-    });
-
-    this.googleMap.mapTypes.set(komoo.CLEAN_MAPTYPE_ID, this.cleanMapType);
     this.initEvents();
+};
+
+komoo.Map.prototype.initMapTypes = function () {
+    this.cleanMapType = komoo.maptypes.makeCleanMapType();
+    this.addMapType(this.cleanMapType);
+};
+
+komoo.Map.prototype.addMapType = function (mapType) {
+    mapType.setMap(this);
 };
 
 komoo.Map.prototype.initProviders = function () {
@@ -775,7 +740,6 @@ komoo.Map.prototype.showAllFeatures = function () {
  */
 komoo.Map.prototype.clear = function () {
     this.loadedFeatures = {};
-    this.fetchedTiles = {};
     this.features.removeAllFromMap()
     this.features.clear()
     if (this.clusterer) {

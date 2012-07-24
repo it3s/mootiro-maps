@@ -94,16 +94,26 @@
       return this.setVisible(false);
     };
 
-    FeatureCollection.prototype.getGeoJson = function() {
-      var features, geojson;
-      features = [];
-      geojson = {
-        type: "FeatureCollection",
-        features: features
-      };
-      this.forEach(function(feature) {
-        return features.push(feature.getGeoJson());
-      });
+    FeatureCollection.prototype.getGeoJson = function(options) {
+      var geojson;
+      if (options.geometryCollection == null) options.geometryCollection = false;
+      if (options.geometryCollection) {
+        geojson = {
+          type: "GeometryCollection",
+          geometries: []
+        };
+        this.forEach(function(feature) {
+          return geojson.geometries.push(feature.getGeometryGeoJson());
+        });
+      } else {
+        geojson = {
+          type: "FeatureCollection",
+          features: []
+        };
+        this.forEach(function(feature) {
+          return geojson.features.push(feature.getGeoJson());
+        });
+      }
       return geojson;
     };
 
@@ -145,37 +155,41 @@
     }
 
     FeatureCollectionPlus.prototype.push = function(feature) {
-      var _base2, _base3, _base4, _name, _ref,
+      var type, _base2, _base3, _base4, _base5, _base6, _ref,
         _this = this;
       FeatureCollectionPlus.__super__.push.call(this, feature);
-      if ((_base2 = this.featuresByType)[_name = feature.getType()] == null) {
-        _base2[_name] = {};
+      type = feature.getType();
+      if ((_base2 = this.featuresByType)[type] == null) _base2[type] = {};
+      if ((_base3 = this.featuresByType[type])['categories'] == null) {
+        _base3['categories'] = {};
       }
-      if ((_base3 = this.featuresByType[feature.getType()])['all'] == null) {
-        _base3['all'] = new FeatureCollection({
+      if ((_base4 = this.featuresByType[type]['categories'])['all'] == null) {
+        _base4['all'] = new FeatureCollection({
           map: this.map
         });
       }
-      if ((_base4 = this.featuresByType[feature.getType()])['uncategorized'] == null) {
-        _base4['uncategorized'] = new FeatureCollection({
+      if ((_base5 = this.featuresByType[type]['categories'])['uncategorized'] == null) {
+        _base5['uncategorized'] = new FeatureCollection({
           map: this.map
         });
       }
       if ((_ref = feature.getCategories()) != null) {
         _ref.forEach(function(category) {
-          var _base5, _name2;
-          if ((_base5 = _this.featuresByType[feature.getType()])[_name2 = category.name] == null) {
-            _base5[_name2] = new FeatureCollection({
+          var _base6, _name;
+          if ((_base6 = _this.featuresByType[type]['categories'])[_name = category.name] == null) {
+            _base6[_name] = new FeatureCollection({
               map: _this.map
             });
           }
-          return _this.featuresByType[feature.getType()][category.name].push(feature);
+          return _this.featuresByType[type]['categories'][category.name].push(feature);
         });
       }
       if (!(feature.getCategories() != null) || feature.getCategories().length === 0) {
-        this.featuresByType[feature.getType()]['uncategorized'].push(feature);
+        this.featuresByType[type]['categories']['uncategorized'].push(feature);
       }
-      return this.featuresByType[feature.getType()]['all'].push(feature);
+      this.featuresByType[type]['categories']['all'].push(feature);
+      if ((_base6 = this.featuresByType[type])['ids'] == null) _base6['ids'] = {};
+      return this.featuresByType[type]['ids'][feature.getProperty('id')] = feature;
     };
 
     FeatureCollectionPlus.prototype.pop = function() {
@@ -194,16 +208,16 @@
       if (!this.featuresByType[type]) {
         return false;
       } else if (!categories) {
-        return this.featuresByType[type]['all'];
+        return this.featuresByType[type]['categories']['all'];
       } else if (categories.length === 0) {
-        return this.featuresByType[type]['uncategorized'];
+        return this.featuresByType[type]['categories']['uncategorized'];
       } else {
         features = new FeatureCollection({
           map: this.map
         });
         categories.forEach(function(category) {
-          if (_this.featuresByType[type][category]) {
-            return _this.featuresByType[type][category].forEach(function(feature) {
+          if (_this.featuresByType[type]['categories'][category]) {
+            return _this.featuresByType[type]['categories'][category].forEach(function(feature) {
               if (!strict || !feature.getCategories() || feature.getCategories().length === 1) {
                 return features.push(feature);
               }
@@ -212,6 +226,11 @@
         });
         return features;
       }
+    };
+
+    FeatureCollectionPlus.prototype.getById = function(type, id) {
+      var _ref;
+      return (_ref = this.featuresByType[type]) != null ? _ref['ids'][id] : void 0;
     };
 
     return FeatureCollectionPlus;
