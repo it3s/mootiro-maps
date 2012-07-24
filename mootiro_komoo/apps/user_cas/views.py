@@ -9,9 +9,13 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
+from django.utils import simplejson
+
 from annoying.decorators import render_to, ajax_request
+from reversion.models import Revision
 
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
@@ -42,11 +46,33 @@ def logout(request):
     return redirect(next_page)
 
 
+def _prepare_contrib_data(version):
+    data = simplejson.loads(version.serialized_data)[0]
+    print data
+
+    contrib = {}
+
+    if not data['model'] == 'komoo_comments.comment':
+        contrib['type'] = ['A', 'E', 'D'][version.type]
+        contrib['entity'] = data['model'].split('.')[-1]
+        contrib['id'] = data['pk']
+    else:
+        contrib['type'] = 'C'
+        contrib['entity'] = ContentType.objects.get_for_id(
+                data['fields']['content_type']).name
+        contrib['id'] = data['fields']['object_id']
+
+    return contrib
 @render_to('user_cas/profile.html')
 def profile(request, username=''):
     logger.debug('acessing user_cas > profile : {}'.format(username))
     user = get_object_or_404(User, username=username)
-    return dict(user_profile=user)
+    contributions = []
+    for rev in Revision.objects.filter(user=user).order_by('-date_created'):
+        version = rev.version_set.all()[0]
+        contrib = _prepare_contrib_data(version)
+        contributions.append(contrib)
+    return dict(user_profile=user, contributions=contributions)
 
 
 @render_to('user_cas/profile_update.html')

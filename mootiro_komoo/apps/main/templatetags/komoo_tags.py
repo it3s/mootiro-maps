@@ -10,6 +10,10 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
+from django.core.serializers import serialize
+from django.core.serializers.json import DjangoJSONEncoder
+from django.utils import simplejson
+from django.db.models.query import QuerySet
 
 from markitup.templatetags.markitup_tags import render_markup
 
@@ -169,6 +173,15 @@ def taglist(obj, community=None):
     else:
         link = '#'
     return dict(object=obj, link=link, sorter=sorter)
+
+
+@register.filter
+def jsonify(object):
+    if isinstance(object, QuerySet):
+        return serialize('json', object)
+    return simplejson.dumps(object, cls=DjangoJSONEncoder)
+    # return simplejson.dumps(object)
+# jsonify.is_safe = True
 
 
 @register.filter

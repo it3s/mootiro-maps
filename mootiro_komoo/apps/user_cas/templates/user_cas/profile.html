@@ -46,7 +46,7 @@
     <div class="profile-central-pane">
         <div class="profile-cp-header">{% trans 'Last Contributions' %}</div>
         <div class="profile-cp-contributions">
-        
+
         </div>
     </div>
 </div>
@@ -56,4 +56,12 @@
 {% endblock %}
 
 {% block page_scripts %}
+    <script src="{{ STATIC_URL}}lib/underscore-min.js" type="text/javascript"></script>
+    <script src="{{STATIC_URL}}lib/backbone-min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        if (typeof window.KomooNS == 'undefined' ) window.KomooNS = {};
+        KomooNS.contributions = {{ contributions|jsonify|safe }};
+    </script>
+    <script src="{{ STATIC_URL }}js/profile.js" type="text/javascript"></script>
 {% endblock %}
+
