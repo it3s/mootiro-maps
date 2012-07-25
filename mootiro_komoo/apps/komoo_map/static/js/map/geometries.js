@@ -419,20 +419,35 @@
 
     __extends(LineString, _super);
 
-    function LineString() {
-      LineString.__super__.constructor.apply(this, arguments);
-    }
-
     LineString.prototype.geometryType = POLYLINE;
+
+    function LineString(options) {
+      LineString.__super__.constructor.call(this, options);
+      this.handleEvents();
+    }
 
     LineString.prototype.initOverlay = function(options) {
       return this.setOverlay(new google.maps.Polyline({
         clickable: options.clickable || true,
         zIndex: options.zIndex || this.getDefaultZIndex(),
-        strockeColor: options.strokeColor || this.getBorderColor(),
-        strockOpacity: options.strokeOpacity || this.getBorderOpacity(),
+        strokeColor: options.strokeColor || this.getBorderColor(),
+        strokOpacity: options.strokeOpacity || this.getBorderOpacity(),
         strokeWeight: options.strokeWeight || this.getBorderSize()
       }));
+    };
+
+    LineString.prototype.handleEvents = function() {
+      var _this = this;
+      komoo.event.addListener(this, 'mousemove', function(e) {
+        return _this.setOptions({
+          strokeWeight: _this.getBorderSizeHover()
+        });
+      });
+      return komoo.event.addListener(this, 'mouseout', function(e) {
+        return _this.setOptions({
+          strokeWeight: _this.getBorderSize()
+        });
+      });
     };
 
     LineString.prototype.getCoordinates = function() {
@@ -478,16 +493,17 @@
       return ((_ref = this.feature) != null ? _ref.getBorderSize() : void 0) || defaults.BORDER_SIZE;
     };
 
+    LineString.prototype.getBorderSizeHover = function() {
+      var _ref;
+      return ((_ref = this.feature) != null ? _ref.getBorderSizeHover() : void 0) || defaults.BORDER_SIZE_HOVER;
+    };
+
     LineString.prototype.getPath = function() {
       return this.overlay.getPath();
     };
 
     LineString.prototype.setPath = function(path) {
       return this.overlay.setPath(path);
-    };
-
-    LineString.prototype.addPolyline = function(polyline) {
-      return this.overlay.addPolyline(polyline);
     };
 
     return LineString;
@@ -508,8 +524,8 @@
       return this.setOverlay(new MultiPolyline({
         clickable: options.clickable || true,
         zIndex: options.zIndex || this.getDefaultZIndex(),
-        strockeColor: options.strokeColor || this.getBorderColor(),
-        strockOpacity: options.strokeOpacity || this.getBorderOpacity(),
+        strokeColor: options.strokeColor || this.getBorderColor(),
+        strokOpacity: options.strokeOpacity || this.getBorderOpacity(),
         strokeWeight: options.strokeWeight || this.getBorderSize()
       }));
     };
@@ -526,7 +542,7 @@
       } else {
         _results2 = [];
         for (i = 0, _ref2 = len - lines.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
-          _results2.push(lines.push(new google.maps.Polyline(this.options)));
+          _results2.push(this.overlay.addPolyline(new google.maps.Polyline(this.options)));
         }
         return _results2;
       }
@@ -557,6 +573,14 @@
       return _results;
     };
 
+    MultiLineString.prototype.getBorderSize = function() {
+      return MultiLineString.__super__.getBorderSize.call(this) + 1;
+    };
+
+    MultiLineString.prototype.getBorderSizeHover = function() {
+      return MultiLineString.__super__.getBorderSizeHover.call(this) + 1;
+    };
+
     MultiLineString.prototype.getPath = function() {
       return this.getPaths().getAt(0);
     };
@@ -577,6 +601,10 @@
       return this.overlay.addPolylines(lines);
     };
 
+    MultiLineString.prototype.addPolyline = function(polyline, keep) {
+      return this.overlay.addPolyline(polyline, keep);
+    };
+
     return MultiLineString;
 
   })(LineString);
@@ -585,12 +613,11 @@
 
     __extends(Polygon, _super);
 
-    Polygon.prototype.geometryType = POLYGON;
-
-    function Polygon(options) {
-      Polygon.__super__.constructor.call(this, options);
-      this.handleEvents();
+    function Polygon() {
+      Polygon.__super__.constructor.apply(this, arguments);
     }
+
+    Polygon.prototype.geometryType = POLYGON;
 
     Polygon.prototype.initOverlay = function(options) {
       return this.setOverlay(new google.maps.Polygon({
@@ -599,23 +626,9 @@
         fillColor: options.fillColor || this.getBackgroundColor(),
         fillOpacity: options.fillOpacity || this.getBackgroundOpacity(),
         strokeColor: options.strokeColor || this.getBorderColor(),
-        strockOpacity: options.strokeOpacity || this.getBorderOpacity(),
+        strokeOpacity: options.strokeOpacity || this.getBorderOpacity(),
         strokeWeight: options.strokeWeight || this.getBorderSize()
       }));
-    };
-
-    Polygon.prototype.handleEvents = function() {
-      var _this = this;
-      komoo.event.addListener(this, 'mousemove', function(e) {
-        return _this.setOptions({
-          strokeWeight: _this.getBorderSizeHover()
-        });
-      });
-      return komoo.event.addListener(this, 'mouseout', function(e) {
-        return _this.setOptions({
-          strokeWeight: _this.getBorderSize()
-        });
-      });
     };
 
     Polygon.prototype.getBackgroundColor = function() {
@@ -626,11 +639,6 @@
     Polygon.prototype.getBackgroundOpacity = function() {
       var _ref;
       return ((_ref = this.feature) != null ? _ref.getBackgroundOpacity() : void 0) || defaults.BACKGROUND_OPACITY;
-    };
-
-    Polygon.prototype.getBorderSizeHover = function() {
-      var _ref;
-      return ((_ref = this.feature) != null ? _ref.getBorderSizeHover() : void 0) || defaults.BORDER_SIZE_HOVER;
     };
 
     Polygon.prototype.getCoordinates = function() {

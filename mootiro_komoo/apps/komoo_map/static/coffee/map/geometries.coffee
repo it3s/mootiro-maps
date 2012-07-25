@@ -192,13 +192,23 @@ class MultiPoint extends Geometry
 class LineString extends Geometry
     geometryType: POLYLINE
 
+    constructor: (options) ->
+        super options
+        @handleEvents()
+
     initOverlay: (options) ->
         @setOverlay new google.maps.Polyline
             clickable: options.clickable or on
             zIndex: options.zIndex or @getDefaultZIndex()
-            strockeColor: options.strokeColor or  @getBorderColor()
-            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeColor: options.strokeColor or  @getBorderColor()
+            strokOpacity: options.strokeOpacity or @getBorderOpacity()
             strokeWeight: options.strokeWeight or @getBorderSize()
+
+    handleEvents: ->
+        komoo.event.addListener @, 'mousemove', (e) =>
+            @setOptions strokeWeight: @getBorderSizeHover()
+        komoo.event.addListener @, 'mouseout', (e) =>
+            @setOptions strokeWeight: @getBorderSize()
 
     getCoordinates: -> @getArrayFromLatLng(latLng) for latLng in @overlay.getPath().getArray()
     setCoordinates: (coords) ->
@@ -210,11 +220,10 @@ class LineString extends Geometry
         @feature?.getBorderColor() or defaults.BORDER_COLOR
     getBorderOpacity: -> @feature?.getBorderOpacity() or defaults.BORDER_OPACITY
     getBorderSize: -> @feature?.getBorderSize() or defaults.BORDER_SIZE
+    getBorderSizeHover: -> @feature?.getBorderSizeHover() or defaults.BORDER_SIZE_HOVER
 
     getPath: -> @overlay.getPath()
     setPath: (path) -> @overlay.setPath(path)
-
-    addPolyline: (polyline) -> @overlay.addPolyline(polyline)
 
 
 class MultiLineString extends LineString
@@ -224,8 +233,8 @@ class MultiLineString extends LineString
         @setOverlay new MultiPolyline
             clickable: options.clickable or on
             zIndex: options.zIndex or @getDefaultZIndex()
-            strockeColor: options.strokeColor or @getBorderColor()
-            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeColor: options.strokeColor or @getBorderColor()
+            strokOpacity: options.strokeOpacity or @getBorderOpacity()
             strokeWeight: options.strokeWeight or @getBorderSize()
 
     guaranteeLines: (len) ->
@@ -233,7 +242,7 @@ class MultiLineString extends LineString
         if lines.length >= len
             lines.pop() for i in [0.. lines.length - len - 1]
         else
-            lines.push(new google.maps.Polyline @options) for i in [0..len - lines.length - 1]
+            @overlay.addPolyline(new google.maps.Polyline @options) for i in [0..len - lines.length - 1]
 
     getCoordinates: -> @getArrayFromLatLngArray(line.getPath().getArray()) for line in @overlay.getPolylines().getArray()
     setCoordinates: (coords) ->
@@ -244,6 +253,9 @@ class MultiLineString extends LineString
         for line, i in @getLines()
             line.setPath @getLatLngArrayFromArray coords[i]
 
+    getBorderSize: -> super() + 1
+    getBorderSizeHover: ->  super() + 1
+
     getPath: -> @getPaths().getAt(0)
     getPaths: -> @overlay.getPaths()
     setPaths: (paths) -> @overlay.setPaths(paths)
@@ -251,13 +263,11 @@ class MultiLineString extends LineString
     getLines: -> @overlay.getPolylines().getArray()
     setLines: (lines) -> @overlay.addPolylines(lines)
 
+    addPolyline: (polyline, keep) -> @overlay.addPolyline(polyline, keep)
+
 
 class Polygon extends LineString
     geometryType: POLYGON
-
-    constructor: (options) ->
-        super options
-        @handleEvents()
 
     initOverlay: (options) ->
         @setOverlay new google.maps.Polygon
@@ -266,18 +276,11 @@ class Polygon extends LineString
             fillColor: options.fillColor or @getBackgroundColor()
             fillOpacity: options.fillOpacity or  @getBackgroundOpacity()
             strokeColor: options.strokeColor or  @getBorderColor()
-            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeOpacity: options.strokeOpacity or @getBorderOpacity()
             strokeWeight: options.strokeWeight or @getBorderSize()
-
-    handleEvents: ->
-        komoo.event.addListener @, 'mousemove', (e) =>
-            @setOptions strokeWeight: @getBorderSizeHover()
-        komoo.event.addListener @, 'mouseout', (e) =>
-            @setOptions strokeWeight: @getBorderSize()
 
     getBackgroundColor: -> @feature?.getBackgroundColor() or defaults.BACKGROUND_COLOR
     getBackgroundOpacity: -> @feature?.getBackgroundOpacity() or defaults.BACKGROUND_OPACITY
-    getBorderSizeHover: -> @feature?.getBorderSizeHover() or defaults.BORDER_SIZE_HOVER
 
     getCoordinates: ->
         coords = []

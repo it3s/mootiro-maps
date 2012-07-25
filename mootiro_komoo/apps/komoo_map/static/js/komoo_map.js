@@ -245,7 +245,7 @@ komoo.Map.prototype.openTooltip = function (opts) {
             this.addPanel.is(":visible") ||
             this.infoWindow.isMouseover ||
             this.tooltip.feature == options.feature ||
-            (options.features && options.feature == this.infoWindow.feature))
+            (options.feature && options.feature == this.infoWindow.feature))
         return;
 
     this.tooltip.open(options);
@@ -1200,7 +1200,7 @@ komoo.Map.prototype._initDrawingManager = function () {
             komooMap.currentFeature.updateIcon(100);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (komooMap.editMode == komoo.EditMode.ADD && e.overlay.getPath) {
-            komooMap.currentFeature.getGeometry().addPolyline(e.overlay);
+            komooMap.currentFeature.getGeometry().addPolyline(e.overlay, true);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (e.overlay.getPosition) {
             overlay = new MultiMarker();
@@ -1208,7 +1208,7 @@ komoo.Map.prototype._initDrawingManager = function () {
             overlay.setMap(komooMap.googleMap);
         } else if (e.overlay.getPath && !e.overlay.getPaths) {
             overlay = new MultiPolyline();
-            overlay.addPolyline(e.overlay);
+            overlay.addPolyline(e.overlay, true);
             overlay.setMap(komooMap.googleMap);
         } else {
             overlay = e.overlay;
