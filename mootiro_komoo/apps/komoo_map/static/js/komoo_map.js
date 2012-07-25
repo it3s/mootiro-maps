@@ -600,7 +600,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
             }
             if (feature.getMarker()) {
                 google.maps.event.addListener(feature.getMarker(), "click", function () {
-                    komooMap.googleMap.fitBounds(feature.getBounds());
+                    //komooMap.googleMap.fitBounds(feature.getBounds());
                 });
                 if (komooMap.clusterer && feature.getProperties().type == "Community") {
                     komooMap.clusterer.push(feature);

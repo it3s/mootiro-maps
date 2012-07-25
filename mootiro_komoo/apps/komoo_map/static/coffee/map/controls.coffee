@@ -106,7 +106,8 @@ class Balloon
         if feature
             title =
                 if feature.getProperty("type") is "OrganizationBranch"
-                    feature.getProperty("organization_name") + \
+                    feature.getProperty("organization_name") + " - " + + \
+                    feature.getProperty("name") \
                         " - " + feature.getProperty("name")
                 else
                     feature.getProperty "name"

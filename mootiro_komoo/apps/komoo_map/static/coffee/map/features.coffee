@@ -38,8 +38,10 @@ class Feature
 
     getFeatureType: -> @featureType
     setFeatureType: (@featureType = {
-        minZoomMarker: 0
-        maxZoomMarker: 100
+        minZoomPoint: 0
+        maxZoomPoint: 10
+        minZoomIcon: 10
+        maxZoomIcon: 100
         minZoomGeometry: 0
         maxZoomGeometry: 100
     }) ->
@@ -84,12 +86,12 @@ class Feature
 
     getIconUrl: (zoom) ->
         zoom ?= if @map then @map.getZoom() else 10
-        nearOrFar = if zoom >= @featureType.minZoomMarker then "near" else "far"
+        nearOrFar = if zoom >= @featureType.minZoomIcon then "near" else "far"
         highlighted = if @isHighlighted() then "highlighted/" else ""
         if (@properties.categories and \
                 @properties.categories[0] and \
                 @properties.categories[0].name and \
-                zoom >= @featureType.minZoomMarker)
+                zoom >= @featureType.minZoomIcon)
             categoryOrType = (@properties.categories[0].name.toLowerCase() +
                 if @properties.categories.length > 1 then "-plus" else "")
         else
@@ -130,15 +132,17 @@ class Feature
     hideMarker: -> @marker?.setMap @map
 
     getMap: -> @map
-    setMap: (@map, force = geometry: false, marker: false) ->
+    setMap: (@map, force = geometry: false, point: false, icon: false) ->
         if @properties.alwaysVisible is on or @editable
             force =
-                geometry: true,
-                marker: false
+                geometry: true
+                point: false
+                icon: false
         zoom = if @map? then @map.getZoom() else 0
-        @marker?.setMap(if (zoom <= @featureType.maxZoomMarker and \
-                zoom >= @featureType.minZoomMarker) or \
-                force.marker then @map else null)
+        @marker?.setMap(
+            if @featureType.minZoomPoint <= zoom <= @featureType.maxZoomPoint or \
+                @featureType.minZoomIcon <= zoom <= @featureType.maxZoomIcon or \
+                force.point or force.icon then @map else null)
         @geometry?.setMap(if (zoom <= @featureType.maxZoomGeometry and \
                 zoom >= @featureType.minZoomGeometry) or \
                 force.geometry then @map else null)

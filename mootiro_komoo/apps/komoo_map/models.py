@@ -56,8 +56,10 @@ class GeoRefModel(geomodels.Model):
 
         min_zoom_geometry = 16
         max_zoom_geometry = 100
-        min_zoom_marker = 18
-        max_zoom_marker = 100
+        min_zoom_point = 14
+        max_zoom_point = 15
+        min_zoom_icon = 18
+        max_zoom_icon = 100
 
         zindex = 10
 
@@ -94,8 +96,10 @@ def get_models_json(all=True):
                         kwargs=model.get_map_attr('form_view_kwargs')),
                     'minZoomGeometry': model.get_map_attr('min_zoom_geometry'),
                     'maxZoomGeometry': model.get_map_attr('max_zoom_geometry'),
-                    'minZoomMarker': model.get_map_attr('min_zoom_marker'),
-                    'maxZoomMarker': model.get_map_attr('max_zoom_marker'),
+                    'minZoomPoint': model.get_map_attr('min_zoom_point'),
+                    'maxZoomPoint': model.get_map_attr('max_zoom_point'),
+                    'minZoomIcon': model.get_map_attr('min_zoom_icon'),
+                    'maxZoomIcon': model.get_map_attr('max_zoom_icon'),
                     'zIndex': model.get_map_attr('zindex'),
                     } for model in (get_models() if all else get_editable_models())])
 

@@ -163,7 +163,8 @@ class OrganizationBranch(GeoRefModel, VotableModel):
         form_view_name = 'new_organization_from_map'
 
     def __unicode__(self):
-        return unicode(self.name)
+        return unicode('{organization} - {branch}'.format(
+                organization=self.organization.name, branch=self.name))
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

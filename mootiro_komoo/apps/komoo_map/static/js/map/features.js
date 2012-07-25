@@ -69,8 +69,10 @@
 
     Feature.prototype.setFeatureType = function(featureType) {
       this.featureType = featureType != null ? featureType : {
-        minZoomMarker: 0,
-        maxZoomMarker: 100,
+        minZoomPoint: 0,
+        maxZoomPoint: 10,
+        minZoomIcon: 10,
+        maxZoomIcon: 100,
         minZoomGeometry: 0,
         maxZoomGeometry: 100
       };
@@ -137,9 +139,9 @@
     Feature.prototype.getIconUrl = function(zoom) {
       var categoryOrType, highlighted, nearOrFar;
       if (zoom == null) zoom = this.map ? this.map.getZoom() : 10;
-      nearOrFar = zoom >= this.featureType.minZoomMarker ? "near" : "far";
+      nearOrFar = zoom >= this.featureType.minZoomIcon ? "near" : "far";
       highlighted = this.isHighlighted() ? "highlighted/" : "";
-      if (this.properties.categories && this.properties.categories[0] && this.properties.categories[0].name && zoom >= this.featureType.minZoomMarker) {
+      if (this.properties.categories && this.properties.categories[0] && this.properties.categories[0].name && zoom >= this.featureType.minZoomIcon) {
         categoryOrType = this.properties.categories[0].name.toLowerCase() + (this.properties.categories.length > 1 ? "-plus" : "");
       } else {
         categoryOrType = this.properties.type.toLowerCase();
@@ -244,18 +246,20 @@
       if (force == null) {
         force = {
           geometry: false,
-          marker: false
+          point: false,
+          icon: false
         };
       }
       if (this.properties.alwaysVisible === true || this.editable) {
         force = {
           geometry: true,
-          marker: false
+          point: false,
+          icon: false
         };
       }
       zoom = this.map != null ? this.map.getZoom() : 0;
       if ((_ref = this.marker) != null) {
-        _ref.setMap((zoom <= this.featureType.maxZoomMarker && zoom >= this.featureType.minZoomMarker) || force.marker ? this.map : null);
+        _ref.setMap((this.featureType.minZoomPoint <= zoom && zoom <= this.featureType.maxZoomPoint) || (this.featureType.minZoomIcon <= zoom && zoom <= this.featureType.maxZoomIcon) || force.point || force.icon ? this.map : null);
       }
       if ((_ref2 = this.geometry) != null) {
         _ref2.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null);
