@@ -2318,6 +2318,15 @@ ul.two-cols li {
     margin: 12px; /* 4*x, x=3 */
 }
 
+#map-license {
+    color: black;
+    font-size: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 2px 5px;
+    margin: 0 300px 1px 65px;
+    line-height: 14px;
+}
+
 #footer {
     clear: both;
     width: 900px;
@@ -2342,6 +2351,11 @@ ul.two-cols li {
 
 #footer .cea-logo {
     margin: 24px; /* 4*x, x=6 */
+}
+
+#footer .license {
+    width: 410px;
+    margin: 10px 0 0 260px;
 }
 
 /* form hint boxes */

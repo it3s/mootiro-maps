@@ -279,6 +279,12 @@ komoo.Map.prototype.initCustomControl = function () {
             this.supportersBox.attr("id", "map-supporters");
             this.googleMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
                     this.supportersBox.get(0));
+
+            this.licenseBox = $("<div>");
+            this.licenseBox.attr("id", "map-license");
+            this.licenseBox.html('Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.');
+            this.googleMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
+                    this.licenseBox.get(0));
         }
     }
 };
