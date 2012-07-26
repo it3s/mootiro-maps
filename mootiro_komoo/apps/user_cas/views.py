@@ -13,10 +13,12 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.utils import simplejson
+from django.forms.models import model_to_dict
 
 from annoying.decorators import render_to, ajax_request
 from reversion.models import Revision
 
+from main.utils import create_geojson
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 
@@ -47,22 +49,45 @@ def logout(request):
 
 
 def _prepare_contrib_data(version):
+    """
+    given a django-reversion.Version object we want a dict like:
+    contrib = {
+        id: object id (in case of comment, the referenced object id)
+        name: presentation name
+        model_name: name of the model (used for retrieve proper image, in case on organization branch use ogranization)
+        app_name: name of the app (the django apps folder name)
+        has_geojson: is it has or not a geojson
+    }
+    """
     data = simplejson.loads(version.serialized_data)[0]
-    print data
 
     contrib = {}
-
-    if not data['model'] == 'komoo_comments.comment':
-        contrib['type'] = ['A', 'E', 'D'][version.type]
-        contrib['entity'] = data['model'].split('.')[-1]
-        contrib['id'] = data['pk']
-    else:
+    if data['model'] == 'komoo_comments.comment':
+        ctype = ContentType.objects.get_for_id(data['fields']['content_type'])
+        obj = model_to_dict(ctype.get_object_for_this_type(
+            pk=data['fields']['object_id']))
         contrib['type'] = 'C'
-        contrib['entity'] = ContentType.objects.get_for_id(
-                data['fields']['content_type']).name
-        contrib['id'] = data['fields']['object_id']
+        contrib['model_name'] = ctype.name
+        contrib['app_name'] = ctype.app_label
+    else:
+        obj = data['fields']
+        if not (obj.get('id', '') or obj.get('pk', '')):
+            obj['id'] = version.object_id
+        contrib['type'] = ['A', 'E', 'D'][version.type]
+        if data['model'] == 'organization.organizationbranch':
+            contrib['model_name'] = 'organization'
+        else:
+            contrib['model_name'] = data['model'].split('.')[-1]
+        contrib['app_name'] = data['model'].split('.')[0]
+
+    contrib['id'] = obj.get('id', '') or obj.get('pk', '')
+    contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
+    contrib['name'] = obj.get('name', '') or obj.get('title', '')
+
 
     return contrib
+
+
 @render_to('user_cas/profile.html')
 def profile(request, username=''):
     logger.debug('acessing user_cas > profile : {}'.format(username))
