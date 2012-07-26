@@ -23,7 +23,7 @@
       <div class="clear-both"></div>
       <ul class="horizontal" id="categories">
         {% for c in need.categories.all %}
-        <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
+        <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{%trans c.name %}" /></li>
         {% endfor %}
       </ul>
 
