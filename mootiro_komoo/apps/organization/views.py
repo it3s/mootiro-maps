@@ -140,7 +140,7 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
     form_branch.helper.form_action = reverse('add_branch_from_map')
     form_branch.fields['geometry'].widget.attrs['id'] = 'id_geometry'
     org_name_widget = Autocomplete(Organization,
-        "/organization/search_by_name", clean_on_change=False
+        "/organization/search_by_name/", clean_on_change=False
         ).render('org_name')
     return {'community': community, 'form_org': form_org,
             'form_branch': form_branch, 'org_name_widget': org_name_widget}
