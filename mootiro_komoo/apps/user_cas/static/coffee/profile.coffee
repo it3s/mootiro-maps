@@ -12,7 +12,6 @@ window.ContributionView = Backbone.View.extend
     initialize: () ->
         _.bindAll this, 'render'
         @template = _.template $('#contribution-template').html()
-        console.log 'Starting View for model', @model.toJSON()
 
     render: () ->
         renderedContent = @template @model.toJSON()

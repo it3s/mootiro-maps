@@ -14,8 +14,7 @@
     className: 'contribution',
     initialize: function() {
       _.bindAll(this, 'render');
-      this.template = _.template($('#contribution-template').html());
-      return console.log('Starting View for model', this.model.toJSON());
+      return this.template = _.template($('#contribution-template').html());
     },
     render: function() {
       var renderedContent;
