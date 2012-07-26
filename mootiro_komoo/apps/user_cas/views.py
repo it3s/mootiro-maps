@@ -17,6 +17,7 @@ from django.utils import simplejson
 from annoying.decorators import render_to, ajax_request
 from reversion.models import Revision
 
+from main.utils import create_geojson
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 
@@ -54,15 +55,26 @@ def _prepare_contrib_data(version):
 
     if not data['model'] == 'komoo_comments.comment':
         contrib['type'] = ['A', 'E', 'D'][version.type]
-        contrib['entity'] = data['model'].split('.')[-1]
+        if data['model'] == 'organization.organizationbranch':
+            contrib['model_name'] = 'organization'
+        else:
+            contrib['model_name'] = data['model'].split('.')[-1]
+        name = data['fields'].get('name', '')
+        if not name:
+            name = data['fields'].get('title', '')
+        contrib['name'] = name
         contrib['id'] = data['pk']
     else:
         contrib['type'] = 'C'
-        contrib['entity'] = ContentType.objects.get_for_id(
+        contrib['model_name'] = ContentType.objects.get_for_id(
                 data['fields']['content_type']).name
         contrib['id'] = data['fields']['object_id']
+        contrib['name'] = 'Comment'
+    contrib['has_geojson'] = True  # TODO verify this properly
 
     return contrib
+
+
 @render_to('user_cas/profile.html')
 def profile(request, username=''):
     logger.debug('acessing user_cas > profile : {}'.format(username))

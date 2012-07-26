@@ -37,37 +37,96 @@
 
         <!-- map info section -->
         <div class="profile-lp-map-actions">
-        
+
         </div>
 
     </div> <!-- End of profile left pane -->
 
-    
-    <div class="profile-central-pane">
-        <div class="profile-cp-header">{% trans 'Last Contributions' %}</div>
-        <div class="profile-cp-contributions">
 
-        </div>
+    <div class="profile-central-pane">
+
     </div>
 </div>
 {% endblock %}
 
 {% block css %}
+<style type="text/css">
+    .profile-cp-header span{
+        border-radius: 3px;
+        /* border-width: 1px; */
+        /* border-style: solid; */
+        /* border-color: #000 #000 transparent; */
+        padding: 10px 15px 0;
+        background-color: rgb(220, 239, 244);
+    }
+    .contribution {
+        padding: 10px;
+    }
+    .contribution:nth-child(odd) {
+        background-color: rgb(220, 239, 244);
+    }
+    .contribution:nth-child(even) {
+        background-color: rgb(202, 233, 240);
+    }
+    .contribution-image{
+        width: 80px;
+        margin-right: 5px;
+        vertical-align: top;
+    }
+    .contribution-image img {
+        max-width: 145px;
+        max-height: 145px;
+    }
+    .contribution-header{
+        width: 570px;
+    }
+    .contribution-title {
+        color: rgb(0, 156, 180);
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .contribution .see-on-map{
+        float: right;
+    }
+</style>
 {% endblock %}
 
 {% block page_scripts %}
 
     <script type="text/template" id="contribution-template">
-        <h2>contrib!!</h2>
+        <div class="inline-block contribution-image">
+            <img src="/static/img/updates-page/<%= model_name %>-<%= {'A': 'added', 'E': 'edited', 'C': 'discussed'}[type] %>.png" alt="Image" />
+        </div>
+        <div class="inline-block contribution-content">
+            <div class="contribution-header">
+                <a href="" class="contribution-title"><%= name %></a>
+                <div class="right">
+                    <a href="" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="" data-model-name="" data-object-id="">
+                        <i class="icon-see-on-map"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="contribution-body"></div>
+        </div>
+    </script>
+
+    <script type="text/template" id="contributions-template">
+        <div class="profile-cp-header"><span>{% trans 'last contributions' %}</span></div>
+        <div class="profile-cp-contributions">
+
+        </div>
     </script>
 
     <!-- Javascript section -->
     <script src="{{ STATIC_URL}}lib/underscore-min.js" type="text/javascript"></script>
     <script src="{{STATIC_URL}}lib/backbone-min.js" type="text/javascript"></script>
+
     <script type="text/javascript">
         if (typeof window.KomooNS == 'undefined' ) window.KomooNS = {};
         KomooNS.contributions = {{ contributions|jsonify|safe }};
     </script>
+
     <script src="{{ STATIC_URL }}js/profile.js" type="text/javascript"></script>
 {% endblock %}
 
