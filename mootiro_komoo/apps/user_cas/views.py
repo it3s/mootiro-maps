@@ -48,7 +48,7 @@ def logout(request):
     return redirect(next_page)
 
 
-def _prepare_contrib_data(version):
+def _prepare_contrib_data(version, created_date):
     """
     given a django-reversion.Version object we want a dict like:
     contrib = {
@@ -81,6 +81,7 @@ def _prepare_contrib_data(version):
         contrib['app_name'], contrib['model_name'] = data['model'].split('.')
         contrib['type'] = ['A', 'E', 'D'][version.type]
         contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
+        contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
 
     elif data['model'] in weird_types:
         ctype = ContentType.objects.get_for_id(data['fields']['content_type'])
@@ -91,7 +92,11 @@ def _prepare_contrib_data(version):
         contrib['app_name'], contrib['model_name'] = ctype.app_label, ctype.name 
         contrib['type'] = 'C'
         contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
+        contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
 
+    contrib['permalink'] = "/permalink/{}{}".format(contrib['model_name'][0] \
+            if data['model'] != 'organization.organizationbranch' else 'o',
+            contrib['id'])
 
     return contrib
 
@@ -103,7 +108,7 @@ def profile(request, username=''):
     contributions = []
     for rev in Revision.objects.filter(user=user).order_by('-date_created'):
         version = rev.version_set.all()[0]
-        contrib = _prepare_contrib_data(version)
+        contrib = _prepare_contrib_data(version, rev.date_created)
         contributions.append(contrib)
     return dict(user_profile=user, contributions=contributions)
 

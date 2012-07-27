@@ -6,21 +6,36 @@ window.Contribution = Backbone.Model.extend
             modelName =  'organization'
         else
             modelName = @model_name
-        return "/static/img/updates-page/#{modelName}-#{@typeExt()}.png"
+        "/static/img/updates-page/#{modelName}-#{@typeExt()}.png"
 
     typeExt: ()->
-        return {
-            A: 'added'
-            E: 'edited'
-            C: 'discussed'
-            D: 'deleted'
+        {
+            A: gettext('added')
+            E: gettext('edited')
+            C: gettext('discussed')
+            D: gettext('deleted')
         }[@type]
+
+    modelPrettyName: () ->
+        namesMapper =
+            organization: gettext 'Organization'
+            organizationbranch: gettext 'Organization'
+            need: gettext 'Need'
+            community: gettext 'Community'
+            resource: gettext 'Resource'
+        namesMapper[@model_name]
+
+    actionDesc: () ->
+        at_trans = gettext 'at'
+        "#{@modelPrettyName()} #{@typeExt()} #{at_trans} #{@date}."
 
     toJSON: (attr) ->
         defaultJSON = Backbone.Model.prototype.toJSON.call this, attr
         _.extend defaultJSON, {
-            imageName: @imageName,
+            imageName: @imageName
+            actionDesc: @actionDesc
             typeExt: @typeExt
+            modelPrettyName: @modelPrettyName
         }
 
 

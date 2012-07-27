@@ -101,7 +101,7 @@
         </div>
         <div class="inline-block contribution-content">
             <div class="contribution-header">
-                <a href="#" class="contribution-title"><%= name %></a>
+                <a href="<%= permalink %>" class="contribution-title"><%= name %></a>
                 <div class="right">
                     <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= id %>">
                         <i class="icon-see-on-map"></i>
@@ -109,8 +109,7 @@
                 </div>
             </div>
             <div class="contribution-body">
-                <%= model_name %> <%= typeExt() %> 
-                by  You 
+                <%= actionDesc() %>
             </div>
         </div>
     </script>

@@ -15,18 +15,36 @@
     },
     typeExt: function() {
       return {
-        A: 'added',
-        E: 'edited',
-        C: 'discussed',
-        D: 'deleted'
+        A: gettext('added'),
+        E: gettext('edited'),
+        C: gettext('discussed'),
+        D: gettext('deleted')
       }[this.type];
+    },
+    modelPrettyName: function() {
+      var namesMapper;
+      namesMapper = {
+        organization: gettext('Organization'),
+        organizationbranch: gettext('Organization'),
+        need: gettext('Need'),
+        community: gettext('Community'),
+        resource: gettext('Resource')
+      };
+      return namesMapper[this.model_name];
+    },
+    actionDesc: function() {
+      var at_trans;
+      at_trans = gettext('at');
+      return "" + (this.modelPrettyName()) + " " + (this.typeExt()) + " " + at_trans + " " + this.date + ".";
     },
     toJSON: function(attr) {
       var defaultJSON;
       defaultJSON = Backbone.Model.prototype.toJSON.call(this, attr);
       return _.extend(defaultJSON, {
         imageName: this.imageName,
-        typeExt: this.typeExt
+        actionDesc: this.actionDesc,
+        typeExt: this.typeExt,
+        modelPrettyName: this.modelPrettyName
       });
     }
   });
