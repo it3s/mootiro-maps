@@ -13,13 +13,20 @@
       }
       return "/static/img/updates-page/" + modelName + "-" + (this.typeExt()) + ".png";
     },
-    typeExt: function() {
-      return {
-        A: gettext('added'),
-        E: gettext('edited'),
-        C: gettext('discussed'),
-        D: gettext('deleted')
+    typeExt: function(translated) {
+      var _type;
+      if (translated == null) translated = false;
+      _type = {
+        A: 'added',
+        E: 'edited',
+        C: 'discussed',
+        D: 'deleted'
       }[this.type];
+      if (translated) {
+        return gettext(_type);
+      } else {
+        return _type;
+      }
     },
     modelPrettyName: function() {
       var namesMapper;
@@ -35,7 +42,7 @@
     actionDesc: function() {
       var at_trans;
       at_trans = gettext('at');
-      return "" + (this.modelPrettyName()) + " " + (this.typeExt()) + " " + at_trans + " " + this.date + ".";
+      return "" + (this.modelPrettyName()) + " " + (this.typeExt(true)) + " " + at_trans + " " + this.date + ".";
     },
     toJSON: function(attr) {
       var defaultJSON;

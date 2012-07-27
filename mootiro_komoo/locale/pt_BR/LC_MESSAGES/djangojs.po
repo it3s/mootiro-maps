@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-19 17:28-0300\n"
+"POT-Creation-Date: 2012-07-27 16:50-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -17,69 +17,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: apps/komoo_map/static/js/komoo_map.js:484
-msgid "Clean"
-msgstr "Limpo"
-
-#: apps/komoo_map/static/js/komoo_map.js:1343
+#: apps/komoo_map/static/js/komoo_map.js:981
 msgid "Edit"
 msgstr "Editar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1474
+#: apps/komoo_map/static/js/komoo_map.js:1112
 msgid "Add shape"
 msgstr "Adicionar área"
 
-#: apps/komoo_map/static/js/komoo_map.js:1475
+#: apps/komoo_map/static/js/komoo_map.js:1113
 msgid "Add line"
 msgstr "Adicionar linha"
 
-#: apps/komoo_map/static/js/komoo_map.js:1476
+#: apps/komoo_map/static/js/komoo_map.js:1114
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: apps/komoo_map/static/js/komoo_map.js:1626
+#: apps/komoo_map/static/js/komoo_map.js:1264
 msgid "Add"
 msgstr "Adicionar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1626
+#: apps/komoo_map/static/js/komoo_map.js:1264
 msgid "Add another region"
 msgstr "Adicionar outra região"
 
-#: apps/komoo_map/static/js/komoo_map.js:1638
+#: apps/komoo_map/static/js/komoo_map.js:1276
 msgid "Cut out"
 msgstr "Cortar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1638
+#: apps/komoo_map/static/js/komoo_map.js:1276
 msgid "Cut out a hole from a region"
 msgstr "Adicionar um buraco a região"
 
-#: apps/komoo_map/static/js/komoo_map.js:1650
+#: apps/komoo_map/static/js/komoo_map.js:1288
 #: apps/moderation/static/js/moderation.js:259
 msgid "Delete"
 msgstr "Apagar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1650
+#: apps/komoo_map/static/js/komoo_map.js:1288
 msgid "Delete a region"
 msgstr "Apagar uma região"
 
-#: apps/komoo_map/static/js/komoo_map.js:1926
+#: apps/komoo_map/static/js/komoo_map.js:1543
 msgid "Close"
 msgstr "Fechar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1953
+#: apps/komoo_map/static/js/komoo_map.js:1570
 msgid "Title"
 msgstr "Título"
 
-#: apps/komoo_map/static/js/komoo_map.js:1955
+#: apps/komoo_map/static/js/komoo_map.js:1572
 msgid "Finish"
 msgstr "Concluir"
 
-#: apps/komoo_map/static/js/komoo_map.js:1956
+#: apps/komoo_map/static/js/komoo_map.js:1573
 msgid "Cancel"
 msgstr "Cancelar"
 
 #: apps/komoo_map/static/js/map/controls.js:129
-#, fuzzy, perl-format
+#, perl-format
 msgid "%s Community"
 msgid_plural "%s Communities"
 msgstr[0] "Comunidade"
@@ -87,7 +83,11 @@ msgstr[1] "Comunidade"
 
 #: apps/komoo_map/static/js/map/controls.js:193
 msgid "Loading..."
-msgstr ""
+msgstr "Carregando..."
+
+#: apps/komoo_map/static/js/map/maptypes.js:56
+msgid "Clean"
+msgstr "Limpo"
 
 #: apps/main/static/js/komoo_search.js:16
 msgid "Communities"
@@ -193,9 +193,45 @@ msgstr ""
 "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
 "adicione os dados da unidade que você marcou no mapa"
 
+#: apps/user_cas/static/js/profile.js:18
+msgid "added"
+msgstr "adicionado(a)"
+
+#: apps/user_cas/static/js/profile.js:19
+msgid "edited"
+msgstr "editado(a)"
+
+#: apps/user_cas/static/js/profile.js:20
+msgid "discussed"
+msgstr "discutido(a)"
+
+#: apps/user_cas/static/js/profile.js:21
+msgid "deleted"
+msgstr "deletado(a)"
+
+#: apps/user_cas/static/js/profile.js:27 apps/user_cas/static/js/profile.js:28
+msgid "Organization"
+msgstr "Organização"
+
+#: apps/user_cas/static/js/profile.js:29
+msgid "Need"
+msgstr "Necessidade"
+
+#: apps/user_cas/static/js/profile.js:30
+msgid "Community"
+msgstr "Comunidade"
+
+#: apps/user_cas/static/js/profile.js:31
+msgid "Resource"
+msgstr "Recurso"
+
+#: apps/user_cas/static/js/profile.js:37
+msgid "at"
+msgstr "em"
+
 #: apps/vote/static/js/vote.js:38
 msgid "error : "
-msgstr "erro: "
+msgstr "erro : "
 
 #: lib/fileupload/static/plupload/komoo_plupload.js:163
 msgid "Are you sure you want to delete this file?"
@@ -241,20 +277,11 @@ msgstr "Você deseja realmente apagar este arquivo?"
 #~ msgid "Add Community"
 #~ msgstr "Adicionar comunidade"
 
-#~ msgid "Need"
-#~ msgstr "Necessidade"
-
 #~ msgid "Add Need"
 #~ msgstr "Adicionar necessidade"
 
-#~ msgid "Organization"
-#~ msgstr "Organização"
-
 #~ msgid "Add Organization"
 #~ msgstr "Adicionar organização"
-
-#~ msgid "Resource"
-#~ msgstr "Recurso"
 
 #~ msgid "Add Resource"
 #~ msgstr "Adicionar recurso"

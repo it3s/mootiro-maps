@@ -8,13 +8,14 @@ window.Contribution = Backbone.Model.extend
             modelName = @model_name
         "/static/img/updates-page/#{modelName}-#{@typeExt()}.png"
 
-    typeExt: ()->
-        {
-            A: gettext('added')
-            E: gettext('edited')
-            C: gettext('discussed')
-            D: gettext('deleted')
+    typeExt: (translated=false)->
+        _type = {
+            A: 'added'
+            E: 'edited'
+            C: 'discussed'
+            D: 'deleted'
         }[@type]
+        if translated then gettext _type else _type
 
     modelPrettyName: () ->
         namesMapper =
@@ -27,7 +28,7 @@ window.Contribution = Backbone.Model.extend
 
     actionDesc: () ->
         at_trans = gettext 'at'
-        "#{@modelPrettyName()} #{@typeExt()} #{at_trans} #{@date}."
+        "#{@modelPrettyName()} #{@typeExt(true)} #{at_trans} #{@date}."
 
     toJSON: (attr) ->
         defaultJSON = Backbone.Model.prototype.toJSON.call this, attr
