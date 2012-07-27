@@ -22,6 +22,8 @@ from main.utils import create_geojson
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 
+from .forms import FormProfile
+
 
 logger = logging.getLogger(__name__)
 
@@ -121,12 +123,28 @@ def profile_update(request):
     digest_obj = DigestSignature.objects.filter(user=request.user)
     digest = digest_obj[0].digest_type if digest_obj.count() \
                   else ''
-    return dict(signatures=signatures, digest=digest)
+    form_profile = FormProfile(instance=request.user.profile)
+    return dict(signatures=signatures, digest=digest, form_profile=form_profile)
+
+
+@login_required
+@ajax_request
+def profile_update_public_settings(request):
+    # TODO implement-me
+    return {}
+
+
+@login_required
+@ajax_request
+def profile_update_personal_settings(request):
+    # TODO implement-me
+    return {}
 
 
 @login_required
 @ajax_request
 def profile_update_signatures(request):
+    # TODO fix-me
     logger.debug('accessing user_cas > profile_update')
     logger.debug('POST: {}'.format(request.POST))
 

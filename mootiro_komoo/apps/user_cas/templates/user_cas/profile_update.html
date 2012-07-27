@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load komoo_tags %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
@@ -18,14 +19,16 @@
         <!-- tab content section -->
         <div class="tab-content">
 
+            <!-- Tab pane personal settings -->
+            <div class="tab-pane active" id="tab-pane-personal">
+
+                {% crispy form_profile form_profile.helper %}
+            </div><!-- end of tab pane personal settings -->
+
+
             <!-- Tab pane public settings -->
             <div class="tab-pane" id="tab-pane-public">
             </div>
-
-            <!-- Tab pane personal settings -->
-            <div class="tab-pane active" id="tab-pane-personal">
-                <h3>Personal settings</h3>
-            </div><!-- end of tab pane personal settings -->
 
 
             <!-- Tab pane signatures -->
@@ -38,35 +41,25 @@
 
 {% block css %}
     <style type="text/css">
-        .horizontal-splitter{
-            margin: 25px 0;
-            border-top: solid 1px #cccccc;
-            border-bottom: solid 1px #ffffff;
-        }
-        .profile-submit{
-            margin-top: 30px;
-            padding: 5px 20px;
-            font-weight: bold;
-        }
-        .div_signature{
-            padding-bottom: 10px;
-        }
-        .div_signature input{
-            margin-right: 10px;
-        }
-        .div_signature span{
-            font-weight: bold;
-            color: #777777;
-            text-shadow: 1px 1px 1px #ffffff;
+        #user-profile-edit-container .tab-content{
+            overflow: hidden;
         }
     </style>
 
 {% endblock %}
 
 {% block page_scripts %}
+    {{ form_profile.media }}
     <script type="text/javascript">
         $(function(){
             $('#profile-form').ajaxform();
+
+            $('#profile-form').komooFormHintBoxes({
+                'contact': {
+                    hint: 'Este Contanto ficará visível para outros usuários do MootiroMaps!'
+                }
+            });
+
         });
     </script>
 {% endblock %}
