@@ -61,28 +61,44 @@ def _prepare_contrib_data(version):
     """
     data = simplejson.loads(version.serialized_data)[0]
 
+    regular_types = [
+        'need.need',
+        'komoo_resource.resource',
+        'community.community',
+        'organization.organization',
+        'organization.organizationbranch',
+    ]
+    weird_types = [
+        'komoo_comments.comment',
+    ]
+
     contrib = {}
-    if data['model'] == 'komoo_comments.comment':
+
+    if data['model'] in regular_types:
+        obj = data['fields']
+        contrib['id'] = version.object_id
+        contrib['name'] = obj.get('name', '') or obj.get('title', '')
+        contrib['app_name'], contrib['model_name'] = data['model'].split('.')
+        contrib['type'] = ['A', 'E', 'D'][version.type]
+        if  data['model'] != 'organization.organizationbranch':
+            contrib['image_name'] = "/static/img/updates-page/{}-{}.png".format(
+                contrib['model_name'], {'A': 'added', 'E': 'edited'}[contrib['type']])
+        else:
+            contrib['image_name'] = "/static/img/updates-page/organization-{}.png".format(
+                {'A': 'added', 'E': 'edited'}[contrib['type']])
+        contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
+
+    elif data['model'] in weird_types:
         ctype = ContentType.objects.get_for_id(data['fields']['content_type'])
         obj = model_to_dict(ctype.get_object_for_this_type(
-            pk=data['fields']['object_id']))
+                pk=data['fields']['object_id']))
+        contrib['id'] = obj.get( 'id', '' ) or obj.get( 'pk', '' )
+        contrib['name'] = obj.get('name', '') or obj.get('title', '')
+        contrib['app_name'], contrib['model_name'] = ctype.app_label, ctype.name 
         contrib['type'] = 'C'
-        contrib['model_name'] = ctype.name
-        contrib['app_name'] = ctype.app_label
-    else:
-        obj = data['fields']
-        if not (obj.get('id', '') or obj.get('pk', '')):
-            obj['id'] = version.object_id
-        contrib['type'] = ['A', 'E', 'D'][version.type]
-        if data['model'] == 'organization.organizationbranch':
-            contrib['model_name'] = 'organization'
-        else:
-            contrib['model_name'] = data['model'].split('.')[-1]
-        contrib['app_name'] = data['model'].split('.')[0]
-
-    contrib['id'] = obj.get('id', '') or obj.get('pk', '')
-    contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
-    contrib['name'] = obj.get('name', '') or obj.get('title', '')
+        contrib['image_name'] = "/static/img/updates-page/{}-discussed.png".format(
+            contrib['model_name'])
+        contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
 
 
     return contrib
