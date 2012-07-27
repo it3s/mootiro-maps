@@ -3,7 +3,27 @@
 
   $ = jQuery;
 
-  window.Contribution = Backbone.Model.extend({});
+  window.Contribution = Backbone.Model.extend({
+    imageName: function() {
+      return "/static/img/updates-page/" + this.model_name + "-" + (this.typeExt()) + ".png";
+    },
+    typeExt: function() {
+      return {
+        A: 'added',
+        E: 'edited',
+        C: 'discussed',
+        D: 'deleted'
+      }[this.type];
+    },
+    toJSON: function(attr) {
+      var defaultJSON;
+      defaultJSON = Backbone.Model.prototype.toJSON.call(this, attr);
+      return _.extend(defaultJSON, {
+        imageName: this.imageName,
+        typeExt: this.typeExt
+      });
+    }
+  });
 
   window.Contributions = Backbone.Collection.extend({
     model: Contribution

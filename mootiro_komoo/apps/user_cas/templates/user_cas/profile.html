@@ -97,7 +97,7 @@
 
     <script type="text/template" id="contribution-template">
         <div class="inline-block contribution-image">
-            <img src="<%= image_name %>" alt="Image" />
+            <img src="<%= imageName() %>" alt="Image" />
         </div>
         <div class="inline-block contribution-content">
             <div class="contribution-header">
@@ -108,7 +108,10 @@
                     </a>
                 </div>
             </div>
-            <div class="contribution-body"></div>
+            <div class="contribution-body">
+                <%= model_name %> <%= typeExt() %> 
+                by  You 
+            </div>
         </div>
     </script>
 

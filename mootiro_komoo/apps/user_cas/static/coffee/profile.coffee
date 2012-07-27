@@ -1,6 +1,24 @@
 $ = jQuery
 
-window.Contribution = Backbone.Model.extend {} 
+window.Contribution = Backbone.Model.extend 
+    imageName: () ->
+        return "/static/img/updates-page/#{@model_name}-#{@typeExt()}.png"
+
+    typeExt: ()->
+        return {
+            A: 'added'
+            E: 'edited'
+            C: 'discussed'
+            D: 'deleted'
+        }[@type]
+
+    toJSON: (attr) ->
+        defaultJSON = Backbone.Model.prototype.toJSON.call this, attr
+        _.extend defaultJSON, {
+            imageName: @imageName,
+            typeExt: @typeExt
+        }
+
 
 window.Contributions = Backbone.Collection.extend
     model: Contribution

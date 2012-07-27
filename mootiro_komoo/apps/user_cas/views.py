@@ -80,12 +80,8 @@ def _prepare_contrib_data(version):
         contrib['name'] = obj.get('name', '') or obj.get('title', '')
         contrib['app_name'], contrib['model_name'] = data['model'].split('.')
         contrib['type'] = ['A', 'E', 'D'][version.type]
-        if  data['model'] != 'organization.organizationbranch':
-            contrib['image_name'] = "/static/img/updates-page/{}-{}.png".format(
-                contrib['model_name'], {'A': 'added', 'E': 'edited'}[contrib['type']])
-        else:
-            contrib['image_name'] = "/static/img/updates-page/organization-{}.png".format(
-                {'A': 'added', 'E': 'edited'}[contrib['type']])
+        if  data['model'] == 'organization.organizationbranch':
+            contrib['model_name'] = 'organization'
         contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
 
     elif data['model'] in weird_types:
@@ -96,8 +92,6 @@ def _prepare_contrib_data(version):
         contrib['name'] = obj.get('name', '') or obj.get('title', '')
         contrib['app_name'], contrib['model_name'] = ctype.app_label, ctype.name 
         contrib['type'] = 'C'
-        contrib['image_name'] = "/static/img/updates-page/{}-discussed.png".format(
-            contrib['model_name'])
         contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
 
 
