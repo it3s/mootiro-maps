@@ -2,7 +2,11 @@ $ = jQuery
 
 window.Contribution = Backbone.Model.extend 
     imageName: () ->
-        return "/static/img/updates-page/#{@model_name}-#{@typeExt()}.png"
+        if @model_name is 'organizationbranch'
+            modelName =  'organization'
+        else
+            modelName = @model_name
+        return "/static/img/updates-page/#{modelName}-#{@typeExt()}.png"
 
     typeExt: ()->
         return {
@@ -32,6 +36,7 @@ window.ContributionView = Backbone.View.extend
         @template = _.template $('#contribution-template').html()
 
     render: () ->
+        console.log 'rendering model', @model.toJSON()
         renderedContent = @template @model.toJSON()
         $(@el).html renderedContent
         this

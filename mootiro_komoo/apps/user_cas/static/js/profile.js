@@ -5,7 +5,13 @@
 
   window.Contribution = Backbone.Model.extend({
     imageName: function() {
-      return "/static/img/updates-page/" + this.model_name + "-" + (this.typeExt()) + ".png";
+      var modelName;
+      if (this.model_name === 'organizationbranch') {
+        modelName = 'organization';
+      } else {
+        modelName = this.model_name;
+      }
+      return "/static/img/updates-page/" + modelName + "-" + (this.typeExt()) + ".png";
     },
     typeExt: function() {
       return {
@@ -38,6 +44,7 @@
     },
     render: function() {
       var renderedContent;
+      console.log('rendering model', this.model.toJSON());
       renderedContent = this.template(this.model.toJSON());
       $(this.el).html(renderedContent);
       return this;

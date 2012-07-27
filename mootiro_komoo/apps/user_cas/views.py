@@ -80,8 +80,6 @@ def _prepare_contrib_data(version):
         contrib['name'] = obj.get('name', '') or obj.get('title', '')
         contrib['app_name'], contrib['model_name'] = data['model'].split('.')
         contrib['type'] = ['A', 'E', 'D'][version.type]
-        if  data['model'] == 'organization.organizationbranch':
-            contrib['model_name'] = 'organization'
         contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
 
     elif data['model'] in weird_types:
