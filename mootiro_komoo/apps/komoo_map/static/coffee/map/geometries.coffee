@@ -6,7 +6,9 @@ POINT = 'Point'
 MULTIPOINT = 'MultiPoint'
 POLYGON = 'Polygon'
 POLYLINE = 'LineString'
+LINESTRING = 'LineString'
 MULTIPOLYLINE = 'MultiLineString'
+MULTILINESTRINGE = 'MultiLineString'
 
 defaults =
     BACKGROUND_COLOR: '#000'
@@ -190,7 +192,7 @@ class MultiPoint extends Geometry
 
 
 class LineString extends Geometry
-    geometryType: POLYLINE
+    geometryType: LINESTRING
 
     constructor: (options) ->
         super options

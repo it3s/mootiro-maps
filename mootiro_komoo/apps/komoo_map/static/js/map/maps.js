@@ -1,5 +1,5 @@
 (function() {
-  var AjaxEditor, AjaxMap, Editor, SimpleMap, _base,
+  var AjaxEditor, AjaxMap, Editor, Map, _base,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -7,9 +7,9 @@
 
   if ((_base = window.komoo).event == null) _base.event = google.maps.event;
 
-  SimpleMap = (function() {
+  Map = (function() {
 
-    SimpleMap.prototype.googleMapDefaultOptions = {
+    Map.prototype.googleMapDefaultOptions = {
       zoom: 12,
       center: new google.maps.LatLng(-23.55, -46.65),
       disableDefaultUI: false,
@@ -31,7 +31,7 @@
       mapTypeId: google.maps.MapTypeId.HYBRID
     };
 
-    function SimpleMap(options) {
+    function Map(options) {
       this.options = options != null ? options : {};
       this.element = document.getElementById(this.options.elementId);
       this.features = komoo.collections.makeFeatureCollectionPlus({
@@ -46,12 +46,12 @@
       this.handleEvents();
     }
 
-    SimpleMap.prototype.initGoogleMap = function(options) {
+    Map.prototype.initGoogleMap = function(options) {
       if (options == null) options = this.googleMapDefaultOptions;
       return this.googleMap = new google.maps.Map(this.element, options);
     };
 
-    SimpleMap.prototype.initFeatureTypes = function() {
+    Map.prototype.initFeatureTypes = function() {
       var _ref,
         _this = this;
       if (this.featureTypes == null) this.featureTypes = {};
@@ -60,39 +60,39 @@
       }) : void 0;
     };
 
-    SimpleMap.prototype.initProviders = function() {};
+    Map.prototype.initProviders = function() {};
 
-    SimpleMap.prototype.initControls = function() {};
+    Map.prototype.initControls = function() {};
 
-    SimpleMap.prototype.handleEvents = function() {};
+    Map.prototype.handleEvents = function() {};
 
-    SimpleMap.prototype.addProvider = function(provider) {
+    Map.prototype.addProvider = function(provider) {
       provider.setMap(this);
       return this.providers.push(provider);
     };
 
-    SimpleMap.prototype.addMapType = function(mapType) {
+    Map.prototype.addMapType = function(mapType) {
       mapType.setMap(this);
       return this.mapTypes.push(mapType);
     };
 
-    SimpleMap.prototype.clear = function() {
+    Map.prototype.clear = function() {
       this.features.removeAllFromMap();
       return this.features.clear();
     };
 
-    SimpleMap.prototype.refresh = function() {
+    Map.prototype.refresh = function() {
       return google.maps.event.trigger(this.googleMap, 'resize');
     };
 
-    SimpleMap.prototype.saveLocation = function(center, zoom) {
+    Map.prototype.saveLocation = function(center, zoom) {
       if (center == null) center = this.googleMap.getCenter();
       if (zoom == null) zoom = this.getZoom();
       komoo.utils.createCookie('lastLocation', center.toUrlValue(), 90);
       return komoo.utils.createCookie('lastZoom', zoom, 90);
     };
 
-    SimpleMap.prototype.goToSavedLocation = function() {
+    Map.prototype.goToSavedLocation = function() {
       var center, lastLocation, zoom;
       lastLocation = komoo.utils.readCookie('lastLocation');
       zoom = parseInt(komoo.utils.readCookie('lastZoom'), 10);
@@ -110,7 +110,7 @@
 
     false;
 
-    SimpleMap.prototype.goToUserLocation = function() {
+    Map.prototype.goToUserLocation = function() {
       var clientLocation, pos,
         _this = this;
       if (clientLocation = google.loader.ClientLocation) {
@@ -131,9 +131,9 @@
       }
     };
 
-    SimpleMap.prototype.handleFeatureEvents = function(feature) {};
+    Map.prototype.handleFeatureEvents = function(feature) {};
 
-    SimpleMap.prototype.loadGeoJSON = function(geojson, panTo, attach) {
+    Map.prototype.loadGeoJSON = function(geojson, panTo, attach) {
       var features, _ref, _ref2,
         _this = this;
       if (panTo == null) panTo = false;
@@ -164,7 +164,7 @@
       return features;
     };
 
-    SimpleMap.prototype.getGeoJSON = function(options) {
+    Map.prototype.getGeoJSON = function(options) {
       var list;
       if (options == null) options = {};
       if (options.newOnly == null) options.newOnly = false;
@@ -179,15 +179,15 @@
       });
     };
 
-    SimpleMap.prototype.getBounds = function() {
+    Map.prototype.getBounds = function() {
       return this.googleMap.getBounds();
     };
 
-    SimpleMap.prototype.getZoom = function() {
+    Map.prototype.getZoom = function() {
       return this.googleMap.getZoom();
     };
 
-    return SimpleMap;
+    return Map;
 
   })();
 
@@ -201,7 +201,7 @@
 
     return Editor;
 
-  })(SimpleMap);
+  })(Map);
 
   AjaxMap = (function(_super) {
 
@@ -218,7 +218,7 @@
 
     return AjaxMap;
 
-  })(SimpleMap);
+  })(Map);
 
   AjaxEditor = (function(_super) {
 
@@ -238,7 +238,7 @@
   })(Editor);
 
   window.komoo.maps = {
-    SimpleMap: SimpleMap,
+    Map: Map,
     AjaxMap: AjaxMap,
     makeMap: function(options) {
       if (options == null) options = {};

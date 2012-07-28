@@ -1,5 +1,5 @@
 (function() {
-  var EMPTY, Empty, Geometry, LineString, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, defaults, _base,
+  var EMPTY, Empty, Geometry, LINESTRING, LineString, MULTILINESTRINGE, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, defaults, _base,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -17,7 +17,11 @@
 
   POLYLINE = 'LineString';
 
+  LINESTRING = 'LineString';
+
   MULTIPOLYLINE = 'MultiLineString';
+
+  MULTILINESTRINGE = 'MultiLineString';
 
   defaults = {
     BACKGROUND_COLOR: '#000',
@@ -419,7 +423,7 @@
 
     __extends(LineString, _super);
 
-    LineString.prototype.geometryType = POLYLINE;
+    LineString.prototype.geometryType = LINESTRING;
 
     function LineString(options) {
       LineString.__super__.constructor.call(this, options);

@@ -1,7 +1,7 @@
 window.komoo ?= {}
 window.komoo.event ?= google.maps.event
 
-class SimpleMap
+class Map
     googleMapDefaultOptions:
         zoom: 12
         center: new google.maps.LatLng(-23.55, -46.65)
@@ -148,10 +148,10 @@ class SimpleMap
     getZoom: -> @googleMap.getZoom()
 
 
-class Editor extends SimpleMap
+class Editor extends Map
 
 
-class AjaxMap extends SimpleMap
+class AjaxMap extends Map
     initProviders: ->
         super()
         @addProvider komoo.providers.makeFeatureProvider()
@@ -164,7 +164,7 @@ class AjaxEditor extends Editor
 
 
 window.komoo.maps =
-    SimpleMap: SimpleMap
+    Map: Map
     AjaxMap: AjaxMap
 
     makeMap: (options = {}) -> new AjaxMap options
