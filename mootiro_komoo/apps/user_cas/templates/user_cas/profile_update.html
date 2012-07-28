@@ -21,7 +21,39 @@
 
             <!-- Tab pane personal settings -->
             <div class="tab-pane" id="tab-pane-personal">
-                 PERSONAL SETTINGS
+
+                <!-- Personal settins form -->
+                <div class="form-profile-wrapper">
+                    <form methos=POST action="{% url profile_update_personal_settings %}" id="form-personal">
+                        {% csrf_token %}
+                       	<div id="div_id_username" class="clearfix control-group ">
+                            <label for="id_username">Nome de Usuário</label>
+                            <div class="controls">
+                                <input id="id_username" type="text"
+                                       class="textinput textInput"
+                                       value="{{ user.username }}"
+                                       name="username" />
+                            </div>
+                        </div>
+
+                        <div class="clearfix control-group">
+                            <label for="id_email">Email</label>
+                            <div class="controls">
+                                <input class="textinput textInput"
+                                       type="text" id="id_email"
+                                       value="{{ user.email }}"
+                                       name="email" disabled='true' />
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <input type="submit" name="submit" value="Enviar"
+                                   class="btn button" id="submit-id-submit" />
+                        </div>
+
+
+                    </form>
+                </div>
             </div><!-- end of tab pane personal settings -->
 
 
@@ -42,8 +74,8 @@
     </div>
 </div>
 
-<script type="text/template" id="form-profile-message-box">
-    <div class="alert alert-info form-profile-message-box" style="display: none;" data-alert="info">
+<script type="text/template" id="form-message-box">
+    <div class="alert alert-info form-message-box" style="display: none;" data-alert="info">
         <a class="close">×</a>
         <div class="msg"><%= msg %></div>
     </div>
@@ -63,12 +95,11 @@
             $('#form-profile').ajaxform({
                 clean: false,
                 onSuccess: function(data){
-                    //TODO: display box with success message
                     console.log(data);
-                    if ($('#form-profile .form-profile-message-box').length){
-                        $('#form-profile .form-profile-message-box').remove();
+                    if ($('.form-message-box').length){
+                        $('.form-message-box').remove();
                     }
-                    var msgTemplate = _.template($('#form-profile-message-box').html());
+                    var msgTemplate = _.template($('#form-message-box').html());
                     var renderedContent = msgTemplate({
                         // msg: gettext('Your public settings have been saved successfully!')
                         msg: gettext('Seus dados públicos foram salvos com sucesso!')
@@ -78,9 +109,29 @@
                     return false;
                 }
             });
-            $('#form-profile .close').live('click', function(){
+            $('.alert .close').live('click', function(){
                 $(this).parent().slideUp();
             });
+
+
+            $('#form-personal').ajaxform({
+                clean: false,
+                onSuccess: function(data){
+                    console.log(data);
+                    if ($('.form-message-box').length){
+                        $('.form-message-box').remove();
+                    }
+                    var msgTemplate = _.template($('#form-message-box').html());
+                    var renderedContent = msgTemplate({
+                        // msg: gettext('Your personal settings have been saved successfully!')
+                        msg: gettext('Seus dados pessoais foram salvos com sucesso!')
+                    });
+                    $('#form-personal .form-actions').before(renderedContent);
+                    $('#form-personal .alert').fadeIn();
+                    return false;
+                }
+            });
+
 
             $('#form-profile').komooFormHintBoxes({
                 'contact': {

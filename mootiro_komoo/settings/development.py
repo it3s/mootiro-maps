@@ -114,17 +114,20 @@ LOGGING['loggers'].update({'{}.models'.format(app): my_app_logger for app in os.
 LOGGING['loggers'].update({'{}.forms'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
 LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
 
-
-MIDDLEWARE_CLASSES += [
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
-]
-
-INSTALLED_APPS += [
-    'debug_toolbar'
-]
-
-INTERNAL_IPS = ('127.0.0.1', )
-DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS':  False}
+WANT_DEBUG_TOOLBAR = True
 
 # This for local_settings (user specific, like db access)
 from local_settings import *
+
+if WANT_DEBUG_TOOLBAR:
+    MIDDLEWARE_CLASSES += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware'
+    ]
+
+    INSTALLED_APPS += [
+        'debug_toolbar'
+    ]
+
+    INTERNAL_IPS = ('127.0.0.1', )
+    DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
+
