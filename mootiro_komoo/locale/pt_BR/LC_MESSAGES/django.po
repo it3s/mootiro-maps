@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-28 00:59-0300\n"
+"POT-Creation-Date: 2012-07-28 01:49-0300\n"
 "PO-Revision-Date: 2012-07-19 17:32-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -1315,13 +1315,17 @@ msgstr "por"
 msgid "News"
 msgstr "Notícias"
 
-#: apps/user_cas/forms.py:22
+#: apps/user_cas/forms.py:25
 msgid "Full Name"
 msgstr "Nome Completo"
 
-#: apps/user_cas/forms.py:23 apps/user_cas/templates/user_cas/profile.html:32
+#: apps/user_cas/forms.py:26 apps/user_cas/templates/user_cas/profile.html:32
 msgid "Public Contact"
 msgstr "Contato Público"
+
+#: apps/user_cas/forms.py:27
+msgid "Photo"
+msgstr "Foto"
 
 #: apps/user_cas/views.py:162
 msgid "You must provide a username"
@@ -1413,50 +1417,3 @@ msgstr "Item Classificado"
 msgid "Tagged Items"
 msgstr "Itens Classificados"
 
-#~ msgid "Signatures"
-#~ msgstr "Assinaturas"
-
-#~ msgid "I dont want to receive digest mails"
-#~ msgstr "Eu não quero receber emails de resumo das atividades"
-
-#~ msgid "I want to receive only weekly emails digest"
-#~ msgstr "Eu quero receber somente emails de resumo semanais"
-
-#~ msgid "I want to receive only daily emails digest"
-#~ msgstr "Eu quero receber somente emails de resumo diário"
-
-#~ msgid "Search"
-#~ msgstr "Buscar"
-
-#~ msgid ""
-#~ "\n"
-#~ "                          and %(num)s more user\n"
-#~ "                        "
-#~ msgid_plural ""
-#~ "\n"
-#~ "                          and %(num)s more users\n"
-#~ "                        "
-#~ msgstr[0] ""
-#~ "\n"
-#~ "                          e mais %(num)s usuário\n"
-#~ "                        "
-#~ msgstr[1] ""
-#~ "\n"
-#~ "                          e mais %(num)s usuários\n"
-#~ "                        "
-
-#~ msgid "Photos:"
-#~ msgstr "Fotos:"
-
-#~ msgid "Misleading Content"
-#~ msgstr "Conteúdo enganoso"
-
-#~ msgid "Unrelated Content"
-#~ msgstr "Conteúdo não relacionado"
-
-#~ msgid ""
-#~ "You already reported this content! Please wait while an admin verifies "
-#~ "your report."
-#~ msgstr ""
-#~ "Você já havia denunciado este conteúdo! Por favor, aguarde enquanto um "
-#~ "administrador verifica sua denúncia."

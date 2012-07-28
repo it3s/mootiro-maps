@@ -109,7 +109,7 @@ def profile(request, username=''):
     logger.debug('acessing user_cas > profile : {}'.format(username))
     user = get_object_or_404(User, username=username)
     contributions = []
-    for rev in Revision.objects.filter(user=user).order_by('-date_created'):
+    for rev in Revision.objects.filter(user=user).order_by('-date_created')[:20]:
         version = rev.version_set.all()[0]
         contrib = _prepare_contrib_data(version, rev.date_created)
         contributions.append(contrib)

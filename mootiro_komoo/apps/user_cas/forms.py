@@ -23,7 +23,8 @@ class FormProfile(AjaxModelForm):
 
     _field_labels = {
         'public_name': _('Full Name'),
-        'contact': _('Public Contact')
+        'contact': _('Public Contact'),
+        'photo': _('Photo'),
     }
 
     def __init__(self, *a, **kw):
