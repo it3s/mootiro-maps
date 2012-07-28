@@ -21,6 +21,7 @@ from reversion.models import Revision
 from main.utils import create_geojson
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
+from ajaxforms import ajax_form
 
 from .forms import FormProfile
 
@@ -128,9 +129,8 @@ def profile_update(request):
 
 
 @login_required
-@ajax_request
+@ajax_form(form_class=FormProfile)
 def profile_update_public_settings(request):
-    # TODO implement-me
     return {}
 
 

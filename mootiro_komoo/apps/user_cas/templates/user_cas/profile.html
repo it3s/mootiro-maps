@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load komoo_tags %}
 {% load komoo_map_tags %}
+{% load markitup_tags %}
 
 {% block content %}
 
@@ -13,7 +14,7 @@
 
         <!-- profile header (name and edit button) -->
         <div class="profile-lp-header">
-            <span class="profile-lp-header-username">{% firstof user_profile.get_full_name user_profile.username %}</span>
+            <span class="profile-lp-header-username">{% firstof user_profile.profile.public_name user_profile.get_full_name user_profile.username %}</span>
             {% if user.id == user_profile.id %}
             <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn">
                 <i class="icon-pencil"></i>
@@ -30,7 +31,7 @@
         <div class="profile-lp-contact">
             <div class="profile-lp-contact-header">{% trans 'Public Contact' %}</div>
             {% if user.profile.contact %}
-                {{ user_profile.profile.contact }}
+                {{ user_profile.profile.contact|render_markup|safe }}
             {% else %}
                 {% trans 'Information Not Provided!' %}
             {% endif %}
@@ -48,52 +49,9 @@
 
     </div>
 </div>
-{% endblock %}
 
-{% block css %}
-<style type="text/css">
-    .profile-cp-header span{
-        border-radius: 3px;
-        /* border-width: 1px; */
-        /* border-style: solid; */
-        /* border-color: #000 #000 transparent; */
-        padding: 10px 15px 0;
-        background-color: rgb(220, 239, 244);
-    }
-    .contribution {
-        padding: 10px;
-    }
-    .contribution:nth-child(odd) {
-        background-color: rgb(220, 239, 244);
-    }
-    .contribution:nth-child(even) {
-        background-color: rgb(202, 233, 240);
-    }
-    .contribution-image{
-        width: 80px;
-        margin-right: 5px;
-        vertical-align: top;
-    }
-    .contribution-image img {
-        max-width: 145px;
-        max-height: 145px;
-    }
-    .contribution-header{
-        width: 570px;
-    }
-    .contribution-title {
-        color: rgb(0, 156, 180);
-        font-size: 1.1em;
-        font-weight: bold;
-        cursor: pointer;
-    }
-    .contribution .see-on-map{
-        float: right;
-    }
-</style>
-{% endblock %}
 
-{% block page_scripts %}
+    <!-- Templates section -->
 
     <script type="text/template" id="contribution-template">
         <div class="inline-block contribution-image">
@@ -120,6 +78,14 @@
 
         </div>
     </script>
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block page_scripts %}
+
 
     <!-- Javascript section -->
     <script src="{{ STATIC_URL}}lib/underscore-min.js" type="text/javascript"></script>

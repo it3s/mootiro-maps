@@ -9,19 +9,19 @@
     $.fn.clearForm = function() {
         return this.each(function() {
             var type = this.type, tag = this.tagName.toLowerCase();
-            if (tag == 'form'){
+            if (tag === 'form'){
                 return $(':input',this).clearForm();
             }
-            if (type == 'text' || type == 'password' || tag == 'textarea'){
+            if (type === 'text' || type === 'password' || tag === 'textarea'){
                 jQuery(this).val('');
             }
-            else if(type == 'hidden' && this.name !== "csrfmiddlewaretoken"){
+            else if(type === 'hidden' && this.name !== "csrfmiddlewaretoken"){
                 jQuery(this).val('');
             }
-            else if (type == 'checkbox' || type == 'radio'){
+            else if (type === 'checkbox' || type === 'radio'){
                 jQuery(this).attr('checked', false);
             }
-            else if (tag == 'select'){
+            else if (tag === 'select'){
                 jQuery(this).val('');
             }
         });
@@ -59,6 +59,11 @@
         if (config && config.onFocus){
             $form.onFocus = config.onFocus;
         }
+        if (config && config.hasOwnProperty('clean')){
+            $form.clean = config.clean;
+        } else {
+            $form.clean = true;
+        }
 
         $form.submit(function(evt){
             evt.preventDefault();
@@ -86,7 +91,9 @@
                                 window.location = data.redirect;
                             } else {
                                 // clean form
-                                $form.clearForm();
+                                if ($form.clean) {
+                                    $form.clearForm();
+                                }
                             }
 
                         /* em caso de erro, trata os erros */

@@ -10,6 +10,7 @@ from komoo_map.models import GeoRefModel
 class KomooProfile(models.Model):
     user = models.OneToOneField(User)
     contact = models.TextField(null=True, blank=True)
+    public_name = models.CharField(max_length=512, null=True, blank=True)
 
     def __unicode__(self):
         return "<KomooProfile: {}>".format(unicode(self.user.username))

@@ -2097,18 +2097,21 @@ div.investments-list .tab-investment.selected a { color: #000 }
     vertical-align: top;
 }
 /* ====== user profile ===== */
-#user-profile-edit-container{
+.user-profile-edit-container{
     padding: 50px 60px 0 60px;
     /*background-color: #DCEFF4;*/
     min-height: 550px;
-    width: 1024px;
+    /* width: 1024px; */
 }
-#user-profile-edit-container .nav-tabs{
+.user-profile-edit-container .nav-tabs{
     border-bottom: solid 1px #000;
 }
-#user-profile-edit-container .nav-tabs > .active > a,
-#user-profile-edit-container .nav-tabs > .active > a:hover{
+.user-profile-edit-container .nav-tabs > .active > a,
+.user-profile-edit-container .nav-tabs > .active > a:hover{
     border-color: #000 #000 transparent;
+}
+.user-profile-edit-container .tab-content{
+    overflow: visible;
 }
 .profile-container{
     padding: 30px;
@@ -2152,6 +2155,48 @@ div.investments-list .tab-investment.selected a { color: #000 }
 .profile-cp-header{
     font-size: 1.2em;
     font-weight: bold;
+    margin-top: 40px;
+}
+
+.profile-cp-header span{
+    border-radius: 3px;
+    /* border-width: 1px; */
+    /* border-style: solid; */
+    /* border-color: #000 #000 transparent; */
+    padding: 10px 15px 0;
+    background-color: rgb(220, 239, 244);
+}
+.contribution {
+    padding: 10px;
+}
+.contribution:nth-child(odd) {
+    background-color: rgb(220, 239, 244);
+}
+.contribution:nth-child(even) {
+    background-color: rgb(202, 233, 240);
+}
+.contribution-image{
+    width: 80px;
+    margin-right: 5px;
+    vertical-align: top;
+}
+.contribution-image img {
+    max-width: 145px;
+    max-height: 145px;
+}
+.contribution-header{
+    width: 570px;
+}
+.contribution-title {
+    color: rgb(0, 156, 180);
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+.contribution .see-on-map{
+    float: right;
+}
+.form-profile-wrapper {
     margin-top: 40px;
 }
 /* ====== Error box ======== */
