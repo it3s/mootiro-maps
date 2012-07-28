@@ -80,23 +80,20 @@ def _prepare_contrib_data(version, created_date):
     if data['model'] in regular_types:
         obj = data['fields']
         contrib['id'] = version.object_id
-        contrib['name'] = obj.get('name', '') or obj.get('title', '')
         contrib['app_name'], contrib['model_name'] = data['model'].split('.')
         contrib['type'] = ['A', 'E', 'D'][version.type]
-        contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
-        contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
 
     elif data['model'] in weird_types:
         ctype = ContentType.objects.get_for_id(data['fields']['content_type'])
         obj = model_to_dict(ctype.get_object_for_this_type(
                 pk=data['fields']['object_id']))
         contrib['id'] = obj.get( 'id', '' ) or obj.get( 'pk', '' )
-        contrib['name'] = obj.get('name', '') or obj.get('title', '')
         contrib['app_name'], contrib['model_name'] = ctype.app_label, ctype.name 
         contrib['type'] = 'C'
-        contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
-        contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
 
+    contrib['name'] = obj.get('name', '') or obj.get('title', '')
+    contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
+    contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
     contrib['permalink'] = "/permalink/{}{}".format(contrib['model_name'][0] \
             if data['model'] != 'organization.organizationbranch' else 'o',
             contrib['id'])
