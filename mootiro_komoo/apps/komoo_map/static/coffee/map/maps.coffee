@@ -24,14 +24,15 @@ class Map
         @element = document.getElementById(@options.elementId);
 
         @features = komoo.collections.makeFeatureCollectionPlus map: @
-        @providers = []
-        @mapTypes = []
+
+        @components = {}
 
         @initGoogleMap @options.googleMapOptions
         @initFeatureTypes()
-        @initProviders()
-        @initControls()
         @handleEvents()
+
+        if @options.geojson
+            @loadGeoJSON @options.geojson, true
 
     initGoogleMap: (options = @googleMapDefaultOptions) ->
         @googleMap = new google.maps.Map @element, options
@@ -41,19 +42,21 @@ class Map
         @options.featureTypes?.forEach (type) =>
             @featureTypes[type.type] = type
 
-    initProviders: ->
-
-    initControls: ->
-
     handleEvents: ->
 
-    addProvider: (provider) ->
-        provider.setMap @
-        @providers.push provider
+    addComponent: (component, type = 'generic') ->
+        component.setMap @
+        @components[type] ?= []
+        @components[type].push component
+        component.enable?()
 
-    addMapType: (mapType) ->
-        mapType.setMap @
-        @mapTypes.push mapType
+    enableComponents: (type) ->
+        @components[type]?.forEach (component) =>
+            component.enable?()
+
+    disableComponents: (type) ->
+        @components[type]?.forEach (component) =>
+            component.disable?()
 
     clear: ->
         @features.removeAllFromMap()
@@ -94,6 +97,33 @@ class Map
 
 
     handleFeatureEvents: (feature) ->
+        eventsNames = ['mouseover', 'mouseout', 'mousemove', 'click',
+            'dblclick']
+        eventsNames.forEach (eventName) =>
+            komoo.event.addListener feature, eventName, (e) =>
+                komoo.event.trigger @, "feature_#{eventName}", e, feature
+
+    makeFeature: (geojson) ->
+        feature = komoo.features.makeFeature geojson, @featureTypes
+        @handleFeatureEvents feature
+        @features.push feature
+        komoo.event.trigger @, 'feature_created', feature
+        feature
+
+    getFeatures: -> @features
+
+    getFeaturesByType: (type, categories, strict) ->
+        @features.getByType type, categories, strict
+
+    showFeaturesByType: (type, categories, strict) ->
+        @getFeaturesByType(type, categories, strict)?.show()
+
+    hideFeaturesByType: (type, categories, strict) ->
+        @getFeaturesByType(type, categories, strict)?.hide()
+
+    showFeatures: (features = @features) -> features.show()
+
+    hideFeatures: (features = @features) -> features.hide()
 
     loadGeoJSON: (geojson, panTo = false, attach = true) ->
         if not geojson?.type?
@@ -108,14 +138,10 @@ class Map
             feature = @features.getById geojsonFeature.properties.type,
                 geojsonFeature.properties.id
             # Otherwise create it
-            feature ?= komoo.features.makeFeature geojsonFeature,
-                @featureTypes
+            feature ?= @makeFeature geojsonFeature
             features.push feature
 
-            @handleFeatureEvents feature
-
             if attach
-                @features.push feature
                 feature.setMap @
 
         if panTo and features.getAt(0)?.getBounds()
@@ -151,20 +177,46 @@ class Map
 class Editor extends Map
 
 
+class Preview extends Map
+    googleMapDefaultOptions:
+        zoom: 12
+        center: new google.maps.LatLng(-23.55, -46.65)
+        disableDefaultUI: true
+        streetViewControl: false
+        scaleControl: true
+        scaleControlOptions:
+            position: google.maps.ControlPosition.RIGHT_BOTTOM
+            style: google.maps.ScaleControlStyle.DEFAULT
+        mapTypeId: google.maps.MapTypeId.HYBRID
+
+
 class AjaxMap extends Map
-    initProviders: ->
-        super()
-        @addProvider komoo.providers.makeFeatureProvider()
+    constructor: (options) ->
+        super options
+
+        @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
+        @addComponent komoo.providers.makeFeatureProvider(), 'provider'
+        @addComponent komoo.controls.makeTooltip(), 'tooltip'
+        @addComponent komoo.controls.makeInfoWindow(), 'infoWindow'
+        @addComponent komoo.controls.makeFeatureClusterer featureType: "Community", 'clusterer'
+        @addComponent komoo.controls.makeSupporterBox()
+        @addComponent komoo.controls.makeLicenseBox()
 
 
-class AjaxEditor extends Editor
-    initProviders: ->
-        super()
-        @addProvider komoo.providers.makeFeatureProvider()
+class AjaxEditor extends AjaxMap
+    constructor: (options) ->
+        super options
+
+        @addComponent komoo.controls.makeDrawingManager()
+
 
 
 window.komoo.maps =
     Map: Map
+    Preview: Preview
     AjaxMap: AjaxMap
 
-    makeMap: (options = {}) -> new AjaxMap options
+    makeMain: (options = {}) -> new AjaxEditor options
+    makeView: (options = {}) -> new AjaxMap options
+    makeEditor: (options = {}) -> new AjaxEditor options
+    makePreview: (options = {}) -> new Preview options

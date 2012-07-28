@@ -101,6 +101,4 @@ class FeatureProvider extends GenericProvider
 window.komoo.providers =
     GenericProvider: GenericProvider
     FeatureProvider: FeatureProvider
-
-    makeFeatureProvider: (options) ->
-        new FeatureProvider options
+    makeFeatureProvider: (options) -> new FeatureProvider options

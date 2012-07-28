@@ -28,13 +28,13 @@
 {% include "main/supporters.html" %}
 {% block html %}
   <!-- HTML map container -->
-  <div id="map-container-{{ type }}" class="{% if panel %}with-panel{% endif %}" style="overflow:hidden; height: 100%;">
+  <div id="map-container-{{ type }}" class="{% if panel %}with-panel{% endif %}" style="height: 100%;">
     {% if panel %}
       {% include "komoo_map/panel.html" %}
       <script type="text/javascript" src="{{STATIC_URL}}/js/map_filter.js"></script>
     {% endif %}
     <div id="map-canvas-{{ type }}"
-      style="{% if width %}width: {{ width }}; height: {{ height }};{% endif %} height: 100%;"
+      style="{% if width %}width: {{ width }}; height: {{ height }};{% endif %}"
       class="komoo-map-googlemap">
         {% if type == 'disabled' %} MAP DISABLED {% endif %}
     </div>
@@ -81,8 +81,9 @@
 
       /** Creating the map object **/
 
-      {{ type }} = komoo.maps.makeMap({
+      {{ type }} = komoo.maps.make{{ type|title }}({
         featureTypes: featureTypes,
+        geojson: geojson,
         elementId: "map-canvas-{{ type }}",
       });
       editor = {{ type }}
@@ -91,7 +92,7 @@
 
       $("#map-panel").show();
     };
-    google.maps.event.addDomListener(window, 'load', initialize);
+    {% if not lazy %} google.maps.event.addDomListener(window, 'load', initialize); {% endif %}
 
 
 

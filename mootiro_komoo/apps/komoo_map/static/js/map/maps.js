@@ -1,5 +1,5 @@
 (function() {
-  var AjaxEditor, AjaxMap, Editor, Map, _base,
+  var AjaxEditor, AjaxMap, Editor, Map, Preview, _base,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -37,13 +37,11 @@
       this.features = komoo.collections.makeFeatureCollectionPlus({
         map: this
       });
-      this.providers = [];
-      this.mapTypes = [];
+      this.components = {};
       this.initGoogleMap(this.options.googleMapOptions);
       this.initFeatureTypes();
-      this.initProviders();
-      this.initControls();
       this.handleEvents();
+      if (this.options.geojson) this.loadGeoJSON(this.options.geojson, true);
     }
 
     Map.prototype.initGoogleMap = function(options) {
@@ -60,20 +58,31 @@
       }) : void 0;
     };
 
-    Map.prototype.initProviders = function() {};
-
-    Map.prototype.initControls = function() {};
-
     Map.prototype.handleEvents = function() {};
 
-    Map.prototype.addProvider = function(provider) {
-      provider.setMap(this);
-      return this.providers.push(provider);
+    Map.prototype.addComponent = function(component, type) {
+      var _base2;
+      if (type == null) type = 'generic';
+      component.setMap(this);
+      if ((_base2 = this.components)[type] == null) _base2[type] = [];
+      this.components[type].push(component);
+      return typeof component.enable === "function" ? component.enable() : void 0;
     };
 
-    Map.prototype.addMapType = function(mapType) {
-      mapType.setMap(this);
-      return this.mapTypes.push(mapType);
+    Map.prototype.enableComponents = function(type) {
+      var _ref,
+        _this = this;
+      return (_ref = this.components[type]) != null ? _ref.forEach(function(component) {
+        return typeof component.enable === "function" ? component.enable() : void 0;
+      }) : void 0;
+    };
+
+    Map.prototype.disableComponents = function(type) {
+      var _ref,
+        _this = this;
+      return (_ref = this.components[type]) != null ? _ref.forEach(function(component) {
+        return typeof component.disable === "function" ? component.disable() : void 0;
+      }) : void 0;
     };
 
     Map.prototype.clear = function() {
@@ -131,7 +140,53 @@
       }
     };
 
-    Map.prototype.handleFeatureEvents = function(feature) {};
+    Map.prototype.handleFeatureEvents = function(feature) {
+      var eventsNames,
+        _this = this;
+      eventsNames = ['mouseover', 'mouseout', 'mousemove', 'click', 'dblclick'];
+      return eventsNames.forEach(function(eventName) {
+        return komoo.event.addListener(feature, eventName, function(e) {
+          return komoo.event.trigger(_this, "feature_" + eventName, e, feature);
+        });
+      });
+    };
+
+    Map.prototype.makeFeature = function(geojson) {
+      var feature;
+      feature = komoo.features.makeFeature(geojson, this.featureTypes);
+      this.handleFeatureEvents(feature);
+      this.features.push(feature);
+      komoo.event.trigger(this, 'feature_created', feature);
+      return feature;
+    };
+
+    Map.prototype.getFeatures = function() {
+      return this.features;
+    };
+
+    Map.prototype.getFeaturesByType = function(type, categories, strict) {
+      return this.features.getByType(type, categories, strict);
+    };
+
+    Map.prototype.showFeaturesByType = function(type, categories, strict) {
+      var _ref;
+      return (_ref = this.getFeaturesByType(type, categories, strict)) != null ? _ref.show() : void 0;
+    };
+
+    Map.prototype.hideFeaturesByType = function(type, categories, strict) {
+      var _ref;
+      return (_ref = this.getFeaturesByType(type, categories, strict)) != null ? _ref.hide() : void 0;
+    };
+
+    Map.prototype.showFeatures = function(features) {
+      if (features == null) features = this.features;
+      return features.show();
+    };
+
+    Map.prototype.hideFeatures = function(features) {
+      if (features == null) features = this.features;
+      return features.hide();
+    };
 
     Map.prototype.loadGeoJSON = function(geojson, panTo, attach) {
       var features, _ref, _ref2,
@@ -147,15 +202,9 @@
         _ref.forEach(function(geojsonFeature) {
           var feature;
           feature = _this.features.getById(geojsonFeature.properties.type, geojsonFeature.properties.id);
-          if (feature == null) {
-            feature = komoo.features.makeFeature(geojsonFeature, _this.featureTypes);
-          }
+          if (feature == null) feature = _this.makeFeature(geojsonFeature);
           features.push(feature);
-          _this.handleFeatureEvents(feature);
-          if (attach) {
-            _this.features.push(feature);
-            return feature.setMap(_this);
-          }
+          if (attach) return feature.setMap(_this);
         });
       }
       if (panTo && ((_ref2 = features.getAt(0)) != null ? _ref2.getBounds() : void 0)) {
@@ -203,18 +252,47 @@
 
   })(Map);
 
+  Preview = (function(_super) {
+
+    __extends(Preview, _super);
+
+    function Preview() {
+      Preview.__super__.constructor.apply(this, arguments);
+    }
+
+    Preview.prototype.googleMapDefaultOptions = {
+      zoom: 12,
+      center: new google.maps.LatLng(-23.55, -46.65),
+      disableDefaultUI: true,
+      streetViewControl: false,
+      scaleControl: true,
+      scaleControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_BOTTOM,
+        style: google.maps.ScaleControlStyle.DEFAULT
+      },
+      mapTypeId: google.maps.MapTypeId.HYBRID
+    };
+
+    return Preview;
+
+  })(Map);
+
   AjaxMap = (function(_super) {
 
     __extends(AjaxMap, _super);
 
-    function AjaxMap() {
-      AjaxMap.__super__.constructor.apply(this, arguments);
+    function AjaxMap(options) {
+      AjaxMap.__super__.constructor.call(this, options);
+      this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
+      this.addComponent(komoo.providers.makeFeatureProvider(), 'provider');
+      this.addComponent(komoo.controls.makeTooltip(), 'tooltip');
+      this.addComponent(komoo.controls.makeInfoWindow(), 'infoWindow');
+      this.addComponent(komoo.controls.makeFeatureClusterer({
+        featureType: "Community"
+      }, 'clusterer'));
+      this.addComponent(komoo.controls.makeSupporterBox());
+      this.addComponent(komoo.controls.makeLicenseBox());
     }
-
-    AjaxMap.prototype.initProviders = function() {
-      AjaxMap.__super__.initProviders.call(this);
-      return this.addProvider(komoo.providers.makeFeatureProvider());
-    };
 
     return AjaxMap;
 
@@ -224,25 +302,34 @@
 
     __extends(AjaxEditor, _super);
 
-    function AjaxEditor() {
-      AjaxEditor.__super__.constructor.apply(this, arguments);
+    function AjaxEditor(options) {
+      AjaxEditor.__super__.constructor.call(this, options);
+      this.addComponent(komoo.controls.makeDrawingManager());
     }
-
-    AjaxEditor.prototype.initProviders = function() {
-      AjaxEditor.__super__.initProviders.call(this);
-      return this.addProvider(komoo.providers.makeFeatureProvider());
-    };
 
     return AjaxEditor;
 
-  })(Editor);
+  })(AjaxMap);
 
   window.komoo.maps = {
     Map: Map,
+    Preview: Preview,
     AjaxMap: AjaxMap,
-    makeMap: function(options) {
+    makeMain: function(options) {
+      if (options == null) options = {};
+      return new AjaxEditor(options);
+    },
+    makeView: function(options) {
       if (options == null) options = {};
       return new AjaxMap(options);
+    },
+    makeEditor: function(options) {
+      if (options == null) options = {};
+      return new AjaxEditor(options);
+    },
+    makePreview: function(options) {
+      if (options == null) options = {};
+      return new Preview(options);
     }
   };
 

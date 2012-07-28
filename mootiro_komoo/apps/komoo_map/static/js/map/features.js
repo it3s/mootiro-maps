@@ -7,6 +7,10 @@
 
   Feature = (function() {
 
+    Feature.prototype.displayTooltip = true;
+
+    Feature.prototype.displayInfoWindow = true;
+
     function Feature(options) {
       var geometry;
       this.options = options != null ? options : {};

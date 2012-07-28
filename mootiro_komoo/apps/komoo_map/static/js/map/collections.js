@@ -48,6 +48,10 @@
       return this.elements;
     };
 
+    GenericCollection.prototype.slice = function(begin, end) {
+      return this.elements.slice(begin, end);
+    };
+
     return GenericCollection;
 
   })();

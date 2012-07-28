@@ -52,10 +52,10 @@ def komoo_map_objects_list(context, arg1='', arg2=''):
             }
 
 
-@register.inclusion_tag('komoo_map/komoo_map_templatetag.html',
-        takes_context=True)
-#@register.inclusion_tag('komoo_map/map_templatetag.html',
+#@register.inclusion_tag('komoo_map/komoo_map_templatetag.html',
 #        takes_context=True)
+@register.inclusion_tag('komoo_map/map_templatetag.html',
+        takes_context=True)
 def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
         arg5='', arg6='', arg7='', arg8=''):
     """

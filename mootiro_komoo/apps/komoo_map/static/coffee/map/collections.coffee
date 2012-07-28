@@ -28,6 +28,9 @@ class GenericCollection
 
     getArray: -> @elements
 
+    slice: (begin, end) ->
+        @elements.slice begin, end
+
 
 class FeatureCollection extends GenericCollection
     constructor: (options = {}) ->
@@ -137,7 +140,5 @@ window.komoo.collections =
     GenericCollection: GenericCollection
     FeatureCollection: FeatureCollection
     FeatureCollectionPlus: FeatureCollectionPlus
-
     makeFeatureCollection: (options = {}) -> new FeatureCollection options
     makeFeatureCollectionPlus: (options = {}) -> new FeatureCollectionPlus options
-

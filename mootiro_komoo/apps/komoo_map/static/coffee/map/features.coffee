@@ -2,6 +2,9 @@ window.komoo ?= {}
 window.komoo.event ?= google.maps.event
 
 class Feature
+    displayTooltip: on
+    displayInfoWindow: on
+
     constructor: (@options = {}) ->
         geometry = @options.geometry
         @setFeatureType(@options.featureType)
