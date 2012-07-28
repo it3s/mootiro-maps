@@ -2141,6 +2141,10 @@ div.investments-list .tab-investment.selected a { color: #000 }
 .profile-lp-photo{
     margin-top: 20px;
 }
+.profile-lp-photo img{
+    max-width: 310px;
+    max-height: 300px;
+}
 .profile-lp-contact{
     border-radius: 4px;
     background-color: #dedede;
