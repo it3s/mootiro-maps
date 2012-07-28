@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-27 16:50-0300\n"
+"POT-Creation-Date: 2012-07-28 00:59-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -193,39 +193,23 @@ msgstr ""
 "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
 "adicione os dados da unidade que você marcou no mapa"
 
-#: apps/user_cas/static/js/profile.js:18
-msgid "added"
-msgstr "adicionado(a)"
-
-#: apps/user_cas/static/js/profile.js:19
-msgid "edited"
-msgstr "editado(a)"
-
-#: apps/user_cas/static/js/profile.js:20
-msgid "discussed"
-msgstr "discutido(a)"
-
-#: apps/user_cas/static/js/profile.js:21
-msgid "deleted"
-msgstr "deletado(a)"
-
-#: apps/user_cas/static/js/profile.js:27 apps/user_cas/static/js/profile.js:28
+#: apps/user_cas/static/js/profile.js:34 apps/user_cas/static/js/profile.js:35
 msgid "Organization"
 msgstr "Organização"
 
-#: apps/user_cas/static/js/profile.js:29
+#: apps/user_cas/static/js/profile.js:36
 msgid "Need"
 msgstr "Necessidade"
 
-#: apps/user_cas/static/js/profile.js:30
+#: apps/user_cas/static/js/profile.js:37
 msgid "Community"
 msgstr "Comunidade"
 
-#: apps/user_cas/static/js/profile.js:31
+#: apps/user_cas/static/js/profile.js:38
 msgid "Resource"
 msgstr "Recurso"
 
-#: apps/user_cas/static/js/profile.js:37
+#: apps/user_cas/static/js/profile.js:44
 msgid "at"
 msgstr "em"
 
@@ -236,6 +220,18 @@ msgstr "erro : "
 #: lib/fileupload/static/plupload/komoo_plupload.js:163
 msgid "Are you sure you want to delete this file?"
 msgstr "Você deseja realmente apagar este arquivo?"
+
+#~ msgid "added"
+#~ msgstr "adicionado(a)"
+
+#~ msgid "edited"
+#~ msgstr "editado(a)"
+
+#~ msgid "discussed"
+#~ msgstr "discutido(a)"
+
+#~ msgid "deleted"
+#~ msgstr "deletado(a)"
 
 #~ msgid "Draw a shape"
 #~ msgstr "Desenhar uma área"
