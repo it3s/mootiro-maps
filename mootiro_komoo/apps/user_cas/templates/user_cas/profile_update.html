@@ -4,6 +4,7 @@
 {% load komoo_tags %}
 {% load crispy_forms_tags %}
 {% load upload_tags %}
+{% load komoo_map_tags %}
 
 {% block content %}
 
@@ -11,9 +12,21 @@
     <div class="main-column">
         <!-- tab navigation -->
         <ul class="nav nav-tabs">
-            <li><a href="#tab-pane-personal" data-toggle="tab">Personal Settings</a></li>
-            <li class="active"><a href="#tab-pane-public" data-toggle="tab">Public Settings</a></li>
-            <li><a href="#tab-pane-signatures" data-toggle="tab">Signatures</a></li>
+            <li>
+                <a href="#tab-pane-personal" data-toggle="tab">
+                    {% trans 'Personal Settings' %}
+                </a>
+            </li>
+            <li class="active">
+                <a href="#tab-pane-public" data-toggle="tab">
+                    {% trans 'Public Settings' %}
+                </a>
+            </li>
+            <li>
+                <a href="#tab-pane-signatures" data-toggle="tab">
+                    {% trans 'Signature Settings' %}
+                </a>
+            </li>
         </ul>
 
         <!-- tab content section -->
@@ -67,39 +80,67 @@
 
             <!-- Tab pane signatures -->
             <div class="tab-pane div-profile-form" id="tab-pane-signatures">
-                SIGNATURES
+                <div class="signatures-list-wrapper"></div>
+
             </div> <!-- end of signatures tab pane -->
 
         </div><!-- end of tab content-->
     </div>
 </div>
 
+<!--
+    #
+    #===================== Template Section ======================
+-->
 <script type="text/template" id="form-message-box">
     <div class="alert alert-info form-message-box" style="display: none;" data-alert="info">
         <a class="close">×</a>
         <div class="msg"><%= msg %></div>
     </div>
 </script>
+
+<script type="text/template" id="signature-template">
+     <div class="inline-block signature-image">
+            <img src="<%= imageName() %>" alt="Image" />
+        </div>
+        <div class="inline-block signature-content">
+            <div class="signature-header">
+                <a href="<%= permalink %>" class="signature-title"><%= obj_name %></a>
+                <div class="right">
+                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= obj_id %>">
+                        <i class="icon-see-on-map"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="signature-body">
+                
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="signatures-list-collection">
+    <div class="signatures-list-header">
+        <span>{% trans 'Signatures' %}</span>
+    </div>
+    <div class="signatures-list"></div>
+</script>
+<!-- End of templates section -->
+
 {% endblock %}
 
-{% block css %}
-
-{% endblock %}
 
 {% block page_scripts %}
     {{ form_profile.media }}
     {% load_files user.profile %}
 
-    <!-- lib section -->
     <script src="{{STATIC_URL}}lib/underscore-min.js" type="text/javascript"></script>
     <script src="{{STATIC_URL}}lib/backbone-min.js" type="text/javascript"></script>
-
-    <!-- load json's on komoo namespace -->
     <script type="text/javascript">
         if (typeof KomooNS == 'undefined') KomooNS = {};
         KomooNS.signatures = {{signatures|jsonify|safe}};
     </script>
-
-    <!-- our code =D-->
     <script src="{{STATIC_URL}}js/profile_update.js" type="text/javascript"></script>
+
+    {% komoo_map_tooltip %}
 {% endblock %}

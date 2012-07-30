@@ -125,8 +125,10 @@ def profile_update(request):
         signatures.append({
             'signature_id': sig.id,
             'obj_name': getattr(obj, 'name', '') or getattr(obj, 'title', ''),
+            'obj_id': obj.id,
             'model_name': ct.name,
             'app_name': ct.app_label,
+            'permalink': '/permalink/{}{}'.format(ct.name[0], obj.id),
             'has_geojson': not 'EMPTY' in getattr(obj, 'geometry', 'EMPTY'),
         })
 
