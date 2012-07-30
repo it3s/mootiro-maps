@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-28 01:49-0300\n"
+"POT-Creation-Date: 2012-07-30 15:27-0300\n"
 "PO-Revision-Date: 2012-07-19 17:32-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -1327,13 +1327,21 @@ msgstr "Contato Público"
 msgid "Photo"
 msgstr "Foto"
 
-#: apps/user_cas/views.py:162
-msgid "You must provide a username"
-msgstr "Você deve fornecer um nome de usuário"
+#: apps/user_cas/views.py:156
+msgid "Username Required"
+msgstr "Nome de usuário é obrigatório"
 
-#: apps/user_cas/views.py:165
+#: apps/user_cas/views.py:163 apps/user_cas/views.py:199
 msgid "This username already exists"
 msgstr "Esse nome de usuário já existe"
+
+#: apps/user_cas/views.py:175
+msgid "Failed to save data"
+msgstr "Houve uma falha ao tentar salvar os dados"
+
+#: apps/user_cas/views.py:196
+msgid "You must provide a username"
+msgstr "Você deve fornecer um nome de usuário"
 
 #: apps/user_cas/templates/user_cas/profile.html:36
 msgid "Information Not Provided!"
@@ -1342,6 +1350,30 @@ msgstr "Informação não fornecida!"
 #: apps/user_cas/templates/user_cas/profile.html:76
 msgid "last contributions"
 msgstr "Últimas contribuições"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:17
+msgid "Personal Settings"
+msgstr "Configurações Pessoais"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:22
+msgid "Public Settings"
+msgstr "Configurações Públicas"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:27
+msgid "Signature Settings"
+msgstr "Configurações de Assinaturas"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:118
+msgid "Cancel Subscription"
+msgstr "Cancelar Assinatura"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:127
+msgid "Signatures"
+msgstr "Assinaturas"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:131
+msgid "Receivings Options"
+msgstr "Opções de Recebimentos"
 
 #: apps/vote/views.py:61
 msgid "User not logged or anonymous"
@@ -1416,4 +1448,3 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
-

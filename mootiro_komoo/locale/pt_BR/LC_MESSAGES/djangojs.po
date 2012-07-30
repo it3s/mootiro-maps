@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-28 01:49-0300\n"
+"POT-Creation-Date: 2012-07-30 15:27-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -212,6 +212,14 @@ msgstr "Recurso"
 #: apps/user_cas/static/js/profile.js:44
 msgid "at"
 msgstr "em"
+
+#: apps/user_cas/static/js/profile_update.js:82
+msgid "Seus dados públicos foram salvos com sucesso!"
+msgstr ""
+
+#: apps/user_cas/static/js/profile_update.js:107
+msgid "Seus dados pessoais foram salvos com sucesso!"
+msgstr ""
 
 #: apps/vote/static/js/vote.js:38
 msgid "error : "

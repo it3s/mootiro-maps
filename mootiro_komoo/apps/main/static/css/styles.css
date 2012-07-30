@@ -2207,6 +2207,20 @@ div.investments-list .tab-investment.selected a { color: #000 }
     padding: 20px 10px 10px;
     background-color: rgb(220, 239, 244);
 }
+.signature-body{
+    padding-top: 10px;
+}
+.cancel-subscription-btn{
+    display: inline-block;
+    font-weight: bold;
+}
+.cancel-subscription-btn span{
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.cancel-subscription-btn i{
+    vertical-align:middle;
+}
 /* ====== Error box ======== */
 .error-dialog {
     border: solid 1px red;
