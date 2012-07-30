@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-30 15:27-0300\n"
+"POT-Creation-Date: 2012-07-30 18:57-0300\n"
 "PO-Revision-Date: 2012-07-19 17:32-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -424,7 +424,7 @@ msgstr "Informações de contato não fornecidas"
 msgid "Submit"
 msgstr "Enviar"
 
-#: apps/main/views.py:192
+#: apps/main/views.py:193
 msgid ""
 "\n"
 "Url: {0}\n"
@@ -440,7 +440,7 @@ msgstr ""
 "Mensagem: {5}\n"
 "    "
 
-#: apps/main/views.py:200
+#: apps/main/views.py:201
 msgid "Error report"
 msgstr "Relatório de erro"
 
@@ -1327,21 +1327,17 @@ msgstr "Contato Público"
 msgid "Photo"
 msgstr "Foto"
 
-#: apps/user_cas/views.py:156
+#: apps/user_cas/views.py:157
 msgid "Username Required"
 msgstr "Nome de usuário é obrigatório"
 
-#: apps/user_cas/views.py:163 apps/user_cas/views.py:199
+#: apps/user_cas/views.py:164
 msgid "This username already exists"
 msgstr "Esse nome de usuário já existe"
 
-#: apps/user_cas/views.py:175
+#: apps/user_cas/views.py:176
 msgid "Failed to save data"
 msgstr "Houve uma falha ao tentar salvar os dados"
-
-#: apps/user_cas/views.py:196
-msgid "You must provide a username"
-msgstr "Você deve fornecer um nome de usuário"
 
 #: apps/user_cas/templates/user_cas/profile.html:36
 msgid "Information Not Provided!"
@@ -1374,6 +1370,40 @@ msgstr "Assinaturas"
 #: apps/user_cas/templates/user_cas/profile_update.html:131
 msgid "Receivings Options"
 msgstr "Opções de Recebimentos"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:140
+msgid "Update your mailing settings"
+msgstr "Atualize suas opções de emails"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:149
+msgid ""
+"I want to receive mails every time someone update an object I'm subscribed to"
+msgstr ""
+"Eu quero receber notificações cada vez que alguém atualizar um objeto o qual estou observando"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:154
+msgid ""
+"I want to receive only a <strong>weekly</strong> digest mail with the "
+"updates for the objects I'm subescribed to"
+msgstr ""
+"Eu Quero receber somente notificações com o resumo <strong>semanal</strong> "
+"contendo as atualizações dos objetos que estou observando"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:159
+msgid ""
+"I want to receive only a <strong>daily</strong> digest mail with the updates "
+"for the objects I'm subescribed to"
+msgstr ""
+"Eu Quero receber somente notificações com o resumo <strong>diário</strong> "
+"contendo as atualizações dos objetos que estou observando"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:166
+msgid "Save changes"
+msgstr "Salvar mudanças"
+
+#: apps/user_cas/templates/user_cas/profile_update.html:169
+msgid "Close"
+msgstr "Fechar"
 
 #: apps/vote/views.py:61
 msgid "User not logged or anonymous"
@@ -1448,3 +1478,6 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
+
+#~ msgid "You must provide a username"
+#~ msgstr "Você deve fornecer um nome de usuário"

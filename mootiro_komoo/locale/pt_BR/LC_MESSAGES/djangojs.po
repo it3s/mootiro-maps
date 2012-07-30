@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-30 15:27-0300\n"
+"POT-Creation-Date: 2012-07-30 18:58-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -213,13 +213,17 @@ msgstr "Recurso"
 msgid "at"
 msgstr "em"
 
-#: apps/user_cas/static/js/profile_update.js:82
-msgid "Seus dados públicos foram salvos com sucesso!"
-msgstr ""
+#: apps/user_cas/static/js/profile_update.js:26
+msgid "Are you sure you want to delete your signature for this object?"
+msgstr "Você tem certeza que deseja deletar sua assinatura para este objeto?"
 
-#: apps/user_cas/static/js/profile_update.js:107
+#: apps/user_cas/static/js/profile_update.js:124
+msgid "Seus dados públicos foram salvos com sucesso!"
+msgstr "Seus dados públicos foram salvos com sucesso!"
+
+#: apps/user_cas/static/js/profile_update.js:149
 msgid "Seus dados pessoais foram salvos com sucesso!"
-msgstr ""
+msgstr "Seus dados pessoais foram salvos com sucesso!"
 
 #: apps/vote/static/js/vote.js:38
 msgid "error : "
