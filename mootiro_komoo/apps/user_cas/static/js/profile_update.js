@@ -19,6 +19,9 @@
       return _.extend(defaultJSON, {
         imageName: this.imageName
       });
+    },
+    deleteSignature: function() {
+      return console.log('Deleting signature ', this.attributes);
     }
   });
 
@@ -29,10 +32,17 @@
       return this.template = _.template($('#signature-template').html());
     },
     render: function() {
-      var renderedContent;
+      var renderedContent,
+        _this = this;
       console.log('rendering model: ', this.model.toJSON());
       renderedContent = this.template(this.model.toJSON());
       $(this.el).html(renderedContent);
+      this.$('.cancel-subscription-btn').click(function() {
+        $(_this.el).slideUp(300, function() {
+          return $(this).remove();
+        });
+        return _this.model.deleteSignature();
+      });
       return this;
     }
   });
@@ -56,8 +66,7 @@
       collection.each(function(sign) {
         var view;
         view = new SignatureView({
-          model: sign,
-          collection: collection
+          model: sign
         });
         return $signatures.append(view.render().el);
       });

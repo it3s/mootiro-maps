@@ -18,6 +18,15 @@ window.Signature = Backbone.Model.extend
             imageName: @imageName
         }
 
+    deleteSignature: () ->
+        console.log 'Deleting signature ', @attributes
+        $.post
+            '/user/profile/signature/delete/'
+            {id: @get 'signature_id'}
+            (data) =>
+                console.dir(data)
+                console.log 'request concluido..sucesso?'
+            'json'
 
 window.SignatureView = Backbone.View.extend
     className: 'signature'
@@ -29,6 +38,11 @@ window.SignatureView = Backbone.View.extend
         console.log 'rendering model: ', @model.toJSON()
         renderedContent = @template @model.toJSON()
         $(@el).html renderedContent
+
+        this.$('.cancel-subscription-btn').click () =>
+            $(@el).slideUp 300, () ->
+                $(this).remove()
+            @model.deleteSignature()
         this
 
 
@@ -50,7 +64,7 @@ window.SignaturesListView = Backbone.View.extend
         collection.each (sign) ->
             view = new SignatureView
                 model: sign
-                collection: collection
+                # collection: collection
             $signatures.append view.render().el
 
         this.$('#signatures-manage-btn').click () =>

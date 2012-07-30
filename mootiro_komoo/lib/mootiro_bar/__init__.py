@@ -108,8 +108,9 @@ def render(user=None, main_link=DEFAULT_MAIN_LINK, services=DEFAULT_SERVICES,
     translations = get_translations(locale)
 
     # if urls is None:
-    uname = user.username if user and hasattr(user, 'username') else ''
-    urls = {'user': DEFAULT_USER_URL + uname,
+    # uname = user.username if user and hasattr(user, 'username') else ''
+    uname = user.id if user and hasattr(user, 'id') else ''
+    urls = {'user': '/permalink/u{}'.format(uname),  # DEFAULT_USER_URL + uname,
             'login': DEFAULT_LOGIN_URL,
             'settings': DEFAULT_SETTINGS_URL,
             'logout': DEFAULT_LOGOUT_URL,

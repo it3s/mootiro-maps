@@ -190,19 +190,7 @@ def profile_update_signatures(request):
     success = True
     errors = {}
 
-    # validations
-    if not username:
-        success = False
-        errors['username'] = _('You must provide a username')
-    if User.objects.filter(username=username).exclude(pk=user.id).count():
-        success = False
-        errors['username'] = _('This username already exists')
-
     if not errors and success:
-        # save username
-        user.username = username
-        user.save()
-
         # update signatures
         signatures = map(int, signatures) if signatures else []
         for signature in Signature.objects.filter(user=request.user):
