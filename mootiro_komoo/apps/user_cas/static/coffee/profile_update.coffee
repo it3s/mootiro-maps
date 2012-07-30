@@ -10,8 +10,7 @@ window.Signature = Backbone.Model.extend
             modelName = 'organization'
         else
             modelName = @model_name
-        # TODO we need proper images (using added only for testing)
-        "/static/img/updates-page/#{modelName}-added.png"
+        "/static/img/updates-page/#{modelName}-feed.png"
 
     toJSON: (attr) ->
         defaultJSON = Backbone.Model.prototype.toJSON.call this, attr
@@ -53,6 +52,11 @@ window.SignaturesListView = Backbone.View.extend
                 model: sign
                 collection: collection
             $signatures.append view.render().el
+
+        this.$('#signatures-manage-btn').click () =>
+            # TODO implement-me
+            alert 'manage mailing options'
+
         this
 
 
@@ -116,3 +120,4 @@ $ () ->
         collection: loadedSignatures
 
     $('.signatures-list-wrapper').append signaturesListView.render().el
+

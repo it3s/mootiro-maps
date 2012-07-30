@@ -2203,7 +2203,10 @@ div.investments-list .tab-investment.selected a { color: #000 }
 .form-profile-wrapper {
     margin-top: 40px;
 }
-
+.div-signatures-manage-btn{
+    padding: 20px 10px 10px;
+    background-color: rgb(220, 239, 244);
+}
 /* ====== Error box ======== */
 .error-dialog {
     border: solid 1px red;

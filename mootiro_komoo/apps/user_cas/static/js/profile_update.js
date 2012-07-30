@@ -11,7 +11,7 @@
       } else {
         modelName = this.model_name;
       }
-      return "/static/img/updates-page/" + modelName + "-added.png";
+      return "/static/img/updates-page/" + modelName + "-feed.png";
     },
     toJSON: function(attr) {
       var defaultJSON;
@@ -48,7 +48,8 @@
       return this.collection.bind('reset', this.render);
     },
     render: function() {
-      var $signatures, collection;
+      var $signatures, collection,
+        _this = this;
       $(this.el).html(this.template({}));
       $signatures = this.$('.signatures-list');
       collection = this.collection;
@@ -59,6 +60,9 @@
           collection: collection
         });
         return $signatures.append(view.render().el);
+      });
+      this.$('#signatures-manage-btn').click(function() {
+        return alert('manage mailing options');
       });
       return this;
     }
