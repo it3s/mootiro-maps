@@ -70,17 +70,20 @@
 
   window.SignaturesListView = Backbone.View.extend({
     events: {
-      'click #signatures-manage-btn': 'mailingOptions'
+      'click #signatures-manage-btn': 'digestOptions',
+      'click #digest-options-save': 'digestOptionsSave'
     },
     initialize: function() {
-      _.bindAll(this, 'render', 'mailingOptions');
+      _.bindAll(this, 'render', 'digestOptions');
       this.template = _.template($('#signatures-list-collection').html());
       return this.collection.bind('reset', this.render);
     },
     render: function() {
-      var $signatures, collection;
+      var $signatures, collection, self;
       $(this.el).html(this.template({}));
       $signatures = this.$('.signatures-list');
+      this.digestModal = this.$('#digest-options-modal');
+      this.digestForm = this.$('#form-digest');
       collection = this.collection;
       collection.each(function(sign) {
         var view;
@@ -89,11 +92,21 @@
         });
         return $signatures.append(view.render().el);
       });
+      self = this;
+      this.digestForm.ajaxform({
+        clean: false,
+        onSuccess: function() {
+          return self.digestModal.modal('hide');
+        }
+      });
       return this;
     },
-    mailingOptions: function() {
-      alert('manage mailing options');
+    digestOptions: function() {
+      this.digestModal.modal('show');
       return this;
+    },
+    digestOptionsSave: function() {
+      return this.digestForm.submit();
     }
   });
 

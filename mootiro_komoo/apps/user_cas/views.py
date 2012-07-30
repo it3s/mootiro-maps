@@ -132,11 +132,12 @@ def profile_update(request):
             'has_geojson': not 'EMPTY' in getattr(obj, 'geometry', 'EMPTY'),
         })
 
-    # digest_obj = DigestSignature.objects.filter(user=request.user)
-    # digest = digest_obj[0].digest_type if digest_obj.count() \
-    #               else ''
+    digest_obj = DigestSignature.objects.filter(user=request.user)
+    digest = digest_obj[0].digest_type if digest_obj.count() \
+                  else ''
     form_profile = FormProfile(instance=request.user.profile)
-    return dict(signatures=signatures, form_profile=form_profile)
+    return dict(signatures=signatures, form_profile=form_profile, 
+                digest=digest)
 
 
 @login_required
@@ -177,30 +178,26 @@ def profile_update_personal_settings(request):
 
 @login_required
 @ajax_request
-def profile_update_signatures(request):
+def digest_update(request):
     # TODO fix-me
-    user = request.user
-    username = request.POST.get('username', '')
+    logger.debug('acessing user_cas > digest_update')
+    logger.debug('POST: {}'.format(request.POST))
     digest_type = request.POST.get('digest_type', '')
-    success = True
-    errors = {}
 
-    if not errors and success:
-        # update digest
-        user_digest = DigestSignature.objects.filter(user=request.user)
+    # update digest
+    user_digest = DigestSignature.objects.filter(user=request.user)
 
-        if digest_type and not user_digest.count():
-            DigestSignature.objects.create(user=request.user,
-                    digest_type=digest_type)
-        elif user_digest.count() and not digest_type:
-            DigestSignature.objects.get(user=request.user).delete()
-        elif user_digest.count() and digest_type != user_digest[0].digest_type:
-            d = DigestSignature.objects.get(user=request.user)
-            d.digest_type = digest_type
-            d.save()
+    if digest_type and not user_digest.count():
+        DigestSignature.objects.create(user=request.user,
+                digest_type=digest_type)
+    elif user_digest.count() and not digest_type:
+        DigestSignature.objects.get(user=request.user).delete()
+    elif user_digest.count() and digest_type != user_digest[0].digest_type:
+        d = DigestSignature.objects.get(user=request.user)
+        d.digest_type = digest_type
+        d.save()
 
-        return {'success': 'true', 'redirect': reverse('user_profile')}
-    return {'success': 'false', 'errors': errors}
+    return {'success': 'true'}
 
 
 @login_required

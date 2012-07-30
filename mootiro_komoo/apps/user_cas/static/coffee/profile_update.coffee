@@ -64,9 +64,11 @@ window.SignaturesList = Backbone.Collection.extend
 
 window.SignaturesListView = Backbone.View.extend
     events:
-        'click #signatures-manage-btn': 'mailingOptions'
+        'click #signatures-manage-btn': 'digestOptions'
+        'click #digest-options-save': 'digestOptionsSave'
+
     initialize: () ->
-        _.bindAll this, 'render', 'mailingOptions'
+        _.bindAll this, 'render', 'digestOptions'
 
         @template = _.template $('#signatures-list-collection').html()
         @collection.bind 'reset', @render
@@ -74,6 +76,8 @@ window.SignaturesListView = Backbone.View.extend
     render: () ->
         $(@el).html @template({})
         $signatures = this.$ '.signatures-list'
+        @digestModal = this.$ '#digest-options-modal'
+        @digestForm = this.$ '#form-digest'
 
         collection = @collection
         collection.each (sign) ->
@@ -81,11 +85,20 @@ window.SignaturesListView = Backbone.View.extend
                 model: sign
                 # collection: collection
             $signatures.append view.render().el
+
+        self = this
+        @digestForm.ajaxform
+            clean: false
+            onSuccess: () ->
+               self.digestModal.modal 'hide'
         this
 
-    mailingOptions: () ->
-        alert 'manage mailing options'
+    digestOptions: () ->
+        @digestModal.modal 'show'
         this
+
+    digestOptionsSave: () ->
+        @digestForm.submit()
 
 
 # jQuery -> on document ready

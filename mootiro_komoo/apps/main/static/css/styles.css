@@ -2221,6 +2221,17 @@ div.investments-list .tab-investment.selected a { color: #000 }
 .cancel-subscription-btn i{
     vertical-align:middle;
 }
+.digest-modal-header{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.digest-radio-btn{
+    margin-bottom: 5px;
+}
+.digest-radio-btn span{
+    color: #555;
+    margin-left: 10px;
+}
 /* ====== Error box ======== */
 .error-dialog {
     border: solid 1px red;

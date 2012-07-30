@@ -114,8 +114,8 @@
             </div>
             <div class="signature-body">
                 <div class="cancel-subscription-btn btn">
-                    <i class="icon-remove-sign"></i> 
-                    <span>{% trans 'Cancel Subscription' %}</span> 
+                    <i class="icon-remove-sign"></i>
+                    <span>{% trans 'Cancel Subscription' %}</span>
                 </div>
             </div>
         </div>
@@ -127,11 +127,49 @@
         <span>{% trans 'Signatures' %}</span>
     </div>
     <div class="div-signatures-manage-btn">
-        <button id="signatures-manage-btn" class="button">
+        <button id="signatures-manage-btn" class="button" >
             {% trans 'Receivings Options' %}
         </button>
     </div>
     <div class="signatures-list"></div>
+
+    <div class="modal hide" id="digest-options-modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <div class="digest-modal-header">
+                {% trans 'Update your mailing settings' %}
+            </div>
+        </div>
+        <div class="modal-body">
+            <p>
+                <form action="/user/profile/update/digest/" id="form-digest" method="POST">
+                    <div class="digest-radio-btn">
+                        <input type="radio" name="digest_type" value="" 
+                            {% if not digest %}checked="checked"{% endif %}>
+                            <span>{% trans "I want to receive mails every time someone update an object I'm subscribed to" %}</span>
+                    </div>
+                    <div class="digest-radio-btn">
+                        <input type="radio" name="digest_type" value="W" 
+                        {% if digest == 'W' %}checked="checked"{% endif %}>
+                            <span>{% trans "I want to receive only a <strong>weekly</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
+                    </div>
+                    <div class="digest-radio-btn">
+                        <input type="radio" name="digest_type" value="D" 
+                            {% if digest == 'D' %}checked="checked"{% endif %}>
+                            <span>{% trans "I want to receive only a <strong>daily</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
+                    </div>
+                </form>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="digest-options-save" class="button">
+                {% trans 'Save changes' %}
+            </a>
+            <a href="#" class="btn" data-dismiss="modal">
+                {% trans 'Close' %}
+            </a>
+        </div>
+    </div>
 </script>
 <!-- End of templates section -->
 
