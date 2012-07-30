@@ -89,57 +89,17 @@
 {% block page_scripts %}
     {{ form_profile.media }}
     {% load_files user.profile %}
+
+    <!-- lib section -->
     <script src="{{STATIC_URL}}lib/underscore-min.js" type="text/javascript"></script>
+    <script src="{{STATIC_URL}}lib/backbone-min.js" type="text/javascript"></script>
+
+    <!-- load json's on komoo namespace -->
     <script type="text/javascript">
-        $(function(){
-            $('#form-profile').ajaxform({
-                clean: false,
-                onSuccess: function(data){
-                    console.log(data);
-                    if ($('.form-message-box').length){
-                        $('.form-message-box').remove();
-                    }
-                    var msgTemplate = _.template($('#form-message-box').html());
-                    var renderedContent = msgTemplate({
-                        // msg: gettext('Your public settings have been saved successfully!')
-                        msg: gettext('Seus dados públicos foram salvos com sucesso!')
-                    });
-                    $('#form-profile .form-actions').before(renderedContent);
-                    $('#form-profile .alert').fadeIn();
-                    return false;
-                }
-            });
-            $('.alert .close').live('click', function(){
-                $(this).parent().slideUp();
-            });
-
-
-            $('#form-personal').ajaxform({
-                clean: false,
-                onSuccess: function(data){
-                    console.log(data);
-                    if ($('.form-message-box').length){
-                        $('.form-message-box').remove();
-                    }
-                    var msgTemplate = _.template($('#form-message-box').html());
-                    var renderedContent = msgTemplate({
-                        // msg: gettext('Your personal settings have been saved successfully!')
-                        msg: gettext('Seus dados pessoais foram salvos com sucesso!')
-                    });
-                    $('#form-personal .form-actions').before(renderedContent);
-                    $('#form-personal .alert').fadeIn();
-                    return false;
-                }
-            });
-
-
-            $('#form-profile').komooFormHintBoxes({
-                'contact': {
-                    hint: 'Este Contanto ficará visível para outros usuários do MootiroMaps!',
-                    top: '30%'
-                }
-            });
-
-        });
+        if (typeof KomooNS == 'undefined') KomooNS = {};
+        KomooNS.signatures = {{signatures|jsonify|safe}};
     </script>
+
+    <!-- our code =D-->
+    <script src="{{STATIC_URL}}js/profile_update.js" type="text/javascript"></script>
 {% endblock %}

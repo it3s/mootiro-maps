@@ -118,13 +118,23 @@ def profile(request, username=''):
 @login_required
 def profile_update(request):
     logger.debug('accessing user_cas > profile')
-    signatures = Signature.objects.filter(user=request.user)
-    digest_obj = DigestSignature.objects.filter(user=request.user)
-    digest = digest_obj[0].digest_type if digest_obj.count() \
-                  else ''
+    signatures = []
+    for sig in Signature.objects.filter(user=request.user):
+        ct = ContentType.objects.get_for_id(sig.content_type_id)
+        obj = ct.get_object_for_this_type(pk=sig.object_id)
+        signatures.append({
+            'signature_id': sig.id,
+            'obj_name': getattr(obj, 'name', '') or getattr(obj, 'title', ''),
+            'model_name': ct.name,
+            'app_name': ct.app_label,
+            'has_geojson': not 'EMPTY' in getattr(obj, 'geometry', 'EMPTY'),
+        })
+
+    # digest_obj = DigestSignature.objects.filter(user=request.user)
+    # digest = digest_obj[0].digest_type if digest_obj.count() \
+    #               else ''
     form_profile = FormProfile(instance=request.user.profile)
-    return dict(signatures=signatures, digest=digest,
-                form_profile=form_profile)
+    return dict(signatures=signatures, form_profile=form_profile)
 
 
 @login_required
