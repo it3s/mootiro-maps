@@ -235,7 +235,7 @@ msgstr "Responder"
 #: apps/komoo_comments/templates/comments/comments_summary_templatetag.html:5
 #: apps/moderation/models.py:67
 msgid "comment"
-msgstr "Comentário:"
+msgstr "comentário"
 
 #: apps/komoo_comments/templates/comments/comments_summary_templatetag.html:7
 msgid "comments"
