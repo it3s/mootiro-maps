@@ -21,27 +21,44 @@
       });
     },
     deleteSignature: function() {
-      return console.log('Deleting signature ', this.attributes);
+      var self;
+      console.log('Deleting signature ', this.attributes);
+      if (confirm(gettext('Are you sure you want to delete your signature for this object?'))) {
+        self = this;
+        return $.post('/user/profile/signature/delete/', {
+          id: this.get('signature_id')
+        }, function(data) {
+          console.dir(data);
+          return self.trigger('deleteSignature', self);
+        }, 'json');
+      }
     }
   });
 
   window.SignatureView = Backbone.View.extend({
     className: 'signature',
+    events: {
+      'click .cancel-subscription-btn': 'cancelSubscription'
+    },
     initialize: function() {
-      _.bindAll(this, 'render');
-      return this.template = _.template($('#signature-template').html());
+      _.bindAll(this, 'render', 'cancelSubscription', 'remove');
+      this.template = _.template($('#signature-template').html());
+      return this.model.bind('deleteSignature', this.remove);
     },
     render: function() {
-      var renderedContent,
-        _this = this;
+      var renderedContent;
       console.log('rendering model: ', this.model.toJSON());
       renderedContent = this.template(this.model.toJSON());
       $(this.el).html(renderedContent);
-      this.$('.cancel-subscription-btn').click(function() {
-        $(_this.el).slideUp(300, function() {
-          return $(this).remove();
-        });
-        return _this.model.deleteSignature();
+      return this;
+    },
+    cancelSubscription: function() {
+      this.model.deleteSignature();
+      return this;
+    },
+    remove: function() {
+      $(this.el).slideUp(300, function() {
+        return $(this).remove();
       });
       return this;
     }
@@ -52,14 +69,16 @@
   });
 
   window.SignaturesListView = Backbone.View.extend({
+    events: {
+      'click #signatures-manage-btn': 'mailingOptions'
+    },
     initialize: function() {
-      _.bindAll(this, 'render');
+      _.bindAll(this, 'render', 'mailingOptions');
       this.template = _.template($('#signatures-list-collection').html());
       return this.collection.bind('reset', this.render);
     },
     render: function() {
-      var $signatures, collection,
-        _this = this;
+      var $signatures, collection;
       $(this.el).html(this.template({}));
       $signatures = this.$('.signatures-list');
       collection = this.collection;
@@ -70,9 +89,10 @@
         });
         return $signatures.append(view.render().el);
       });
-      this.$('#signatures-manage-btn').click(function() {
-        return alert('manage mailing options');
-      });
+      return this;
+    },
+    mailingOptions: function() {
+      alert('manage mailing options');
       return this;
     }
   });

@@ -16,5 +16,7 @@ urlpatterns += patterns('user_cas.views',
         name='profile_update_public_settings'),
     url(r'^profile/update/personal_settings/?$', 'profile_update_personal_settings',
         name='profile_update_personal_settings'),
+    url(r'^profile/signature/delete/?$', 'signature_delete',
+        name='signature_delete'),
     url(r'^profile/(?P<username>\w+)/?$', 'profile', name='user_profile'),
 )

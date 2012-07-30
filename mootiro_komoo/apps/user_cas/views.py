@@ -179,24 +179,13 @@ def profile_update_personal_settings(request):
 @ajax_request
 def profile_update_signatures(request):
     # TODO fix-me
-    logger.debug('accessing user_cas > profile_update')
-    logger.debug('POST: {}'.format(request.POST))
-
     user = request.user
     username = request.POST.get('username', '')
-    signatures = request.POST.getlist('signatures')
     digest_type = request.POST.get('digest_type', '')
-
     success = True
     errors = {}
 
     if not errors and success:
-        # update signatures
-        signatures = map(int, signatures) if signatures else []
-        for signature in Signature.objects.filter(user=request.user):
-            if not signature.id in signatures:
-                signature.delete()
-
         # update digest
         user_digest = DigestSignature.objects.filter(user=request.user)
 
@@ -211,6 +200,17 @@ def profile_update_signatures(request):
             d.save()
 
         return {'success': 'true', 'redirect': reverse('user_profile')}
-
     return {'success': 'false', 'errors': errors}
+
+
+@login_required
+@ajax_request
+def signature_delete(request):
+    logger.debug('acessing user_cas > signature_delete')
+    id_ = request.POST.get('id', '')
+    signature = get_object_or_404(Signature, pk=id_)
+    if signature.user == request.user:
+        signature.delete()
+        return dict(success=True)
+    return sict(success=False)
 

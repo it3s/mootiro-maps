@@ -20,29 +20,41 @@ window.Signature = Backbone.Model.extend
 
     deleteSignature: () ->
         console.log 'Deleting signature ', @attributes
-        $.post
-            '/user/profile/signature/delete/'
-            {id: @get 'signature_id'}
-            (data) =>
-                console.dir(data)
-                console.log 'request concluido..sucesso?'
-            'json'
+        if confirm(gettext 'Are you sure you want to delete your signature for this object?')
+            self = this
+            $.post(
+                '/user/profile/signature/delete/',
+                {id: @get 'signature_id'},
+                (data) ->
+                    console.dir(data)
+                    self.trigger 'deleteSignature', self
+                ,
+                'json'
+            )
 
 window.SignatureView = Backbone.View.extend
     className: 'signature'
+    events: 
+        'click .cancel-subscription-btn': 'cancelSubscription'
+
     initialize: () ->
-        _.bindAll this, 'render'
+        _.bindAll this, 'render', 'cancelSubscription', 'remove'
         @template = _.template $('#signature-template').html()
+        @model.bind 'deleteSignature', @remove
 
     render: () ->
         console.log 'rendering model: ', @model.toJSON()
         renderedContent = @template @model.toJSON()
         $(@el).html renderedContent
+        this
 
-        this.$('.cancel-subscription-btn').click () =>
-            $(@el).slideUp 300, () ->
-                $(this).remove()
-            @model.deleteSignature()
+    cancelSubscription: () ->
+        @model.deleteSignature()
+        this
+
+    remove: () ->
+        $(@el).slideUp 300, () ->
+            $(this).remove()
         this
 
 
@@ -51,8 +63,11 @@ window.SignaturesList = Backbone.Collection.extend
 
 
 window.SignaturesListView = Backbone.View.extend
+    events:
+        'click #signatures-manage-btn': 'mailingOptions'
     initialize: () ->
-        _.bindAll this, 'render'
+        _.bindAll this, 'render', 'mailingOptions'
+
         @template = _.template $('#signatures-list-collection').html()
         @collection.bind 'reset', @render
 
@@ -66,11 +81,10 @@ window.SignaturesListView = Backbone.View.extend
                 model: sign
                 # collection: collection
             $signatures.append view.render().el
+        this
 
-        this.$('#signatures-manage-btn').click () =>
-            # TODO implement-me
-            alert 'manage mailing options'
-
+    mailingOptions: () ->
+        alert 'manage mailing options'
         this
 
 
