@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
 
 from annoying.decorators import render_to, ajax_request
 import requests
@@ -235,13 +236,14 @@ def permalink(request, identifier=''):
         'c': Community,
         'o': Organization,
         'p': Proposal,
+        'u': User,
     }
     url = 'root'
     if identifier:
         entity, id_ = identifier[0], identifier[1:]
         obj = entity_model[entity].objects.get(pk=id_)
-        url = getattr(obj, 'view_url', '/')
-        print entity, id_, url
+        url = getattr(obj, 'view_url', '/') if entity != 'u' \
+                else reverse('user_profile', kwargs={'username': obj.username})
     return redirect(url)
 
 @ajax_request

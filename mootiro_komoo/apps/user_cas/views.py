@@ -118,13 +118,26 @@ def profile(request, username=''):
 @login_required
 def profile_update(request):
     logger.debug('accessing user_cas > profile')
-    signatures = Signature.objects.filter(user=request.user)
+    signatures = []
+    for sig in Signature.objects.filter(user=request.user):
+        ct = ContentType.objects.get_for_id(sig.content_type_id)
+        obj = ct.get_object_for_this_type(pk=sig.object_id)
+        signatures.append({
+            'signature_id': sig.id,
+            'obj_name': getattr(obj, 'name', '') or getattr(obj, 'title', ''),
+            'obj_id': obj.id,
+            'model_name': ct.name,
+            'app_name': ct.app_label,
+            'permalink': '/permalink/{}{}'.format(ct.name[0], obj.id),
+            'has_geojson': not 'EMPTY' in getattr(obj, 'geometry', 'EMPTY'),
+        })
+
     digest_obj = DigestSignature.objects.filter(user=request.user)
     digest = digest_obj[0].digest_type if digest_obj.count() \
                   else ''
     form_profile = FormProfile(instance=request.user.profile)
-    return dict(signatures=signatures, digest=digest,
-                form_profile=form_profile)
+    return dict(signatures=signatures, form_profile=form_profile, 
+                digest=digest)
 
 
 @login_required
@@ -165,52 +178,36 @@ def profile_update_personal_settings(request):
 
 @login_required
 @ajax_request
-def profile_update_signatures(request):
+def digest_update(request):
     # TODO fix-me
-    logger.debug('accessing user_cas > profile_update')
+    logger.debug('acessing user_cas > digest_update')
     logger.debug('POST: {}'.format(request.POST))
-
-    user = request.user
-    username = request.POST.get('username', '')
-    signatures = request.POST.getlist('signatures')
     digest_type = request.POST.get('digest_type', '')
 
-    success = True
-    errors = {}
+    # update digest
+    user_digest = DigestSignature.objects.filter(user=request.user)
 
-    # validations
-    if not username:
-        success = False
-        errors['username'] = _('You must provide a username')
-    if User.objects.filter(username=username).exclude(pk=user.id).count():
-        success = False
-        errors['username'] = _('This username already exists')
+    if digest_type and not user_digest.count():
+        DigestSignature.objects.create(user=request.user,
+                digest_type=digest_type)
+    elif user_digest.count() and not digest_type:
+        DigestSignature.objects.get(user=request.user).delete()
+    elif user_digest.count() and digest_type != user_digest[0].digest_type:
+        d = DigestSignature.objects.get(user=request.user)
+        d.digest_type = digest_type
+        d.save()
 
-    if not errors and success:
-        # save username
-        user.username = username
-        user.save()
+    return {'success': 'true'}
 
-        # update signatures
-        signatures = map(int, signatures) if signatures else []
-        for signature in Signature.objects.filter(user=request.user):
-            if not signature.id in signatures:
-                signature.delete()
 
-        # update digest
-        user_digest = DigestSignature.objects.filter(user=request.user)
-
-        if digest_type and not user_digest.count():
-            DigestSignature.objects.create(user=request.user,
-                    digest_type=digest_type)
-        elif user_digest.count() and not digest_type:
-            DigestSignature.objects.get(user=request.user).delete()
-        elif user_digest.count() and digest_type != user_digest[0].digest_type:
-            d = DigestSignature.objects.get(user=request.user)
-            d.digest_type = digest_type
-            d.save()
-
-        return {'success': 'true', 'redirect': reverse('user_profile')}
-
-    return {'success': 'false', 'errors': errors}
+@login_required
+@ajax_request
+def signature_delete(request):
+    logger.debug('acessing user_cas > signature_delete')
+    id_ = request.POST.get('id', '')
+    signature = get_object_or_404(Signature, pk=id_)
+    if signature.user == request.user:
+        signature.delete()
+        return dict(success=True)
+    return sict(success=False)
 

@@ -30,7 +30,7 @@
         <!-- user contact info -->
         <div class="profile-lp-contact">
             <div class="profile-lp-contact-header">{% trans 'Public Contact' %}</div>
-            {% if user.profile.contact %}
+            {% if user_profile.profile.contact %}
                 {{ user_profile.profile.contact|render_markup|safe }}
             {% else %}
                 {% trans 'Information Not Provided!' %}

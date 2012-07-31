@@ -2156,13 +2156,13 @@ div.investments-list .tab-investment.selected a { color: #000 }
 .profile-lp-contact-header{
     font-weight: bold;
 }
-.profile-cp-header{
+.profile-cp-header, .signatures-list-header{
     font-size: 1.2em;
     font-weight: bold;
     margin-top: 40px;
 }
 
-.profile-cp-header span{
+.profile-cp-header span, .signatures-list-header span{
     border-radius: 3px;
     /* border-width: 1px; */
     /* border-style: solid; */
@@ -2170,38 +2170,67 @@ div.investments-list .tab-investment.selected a { color: #000 }
     padding: 10px 15px 0;
     background-color: rgb(220, 239, 244);
 }
-.contribution {
+.contribution, .signature {
     padding: 10px;
 }
-.contribution:nth-child(odd) {
+.contribution:nth-child(odd), .signature:nth-child(odd) {
     background-color: rgb(220, 239, 244);
 }
-.contribution:nth-child(even) {
+.contribution:nth-child(even), .signature:nth-child(even) {
     background-color: rgb(202, 233, 240);
 }
-.contribution-image{
+.contribution-image, .signature-image{
     width: 80px;
     margin-right: 5px;
     vertical-align: top;
 }
-.contribution-image img {
+.contribution-image img, .signature-image img {
     max-width: 145px;
     max-height: 145px;
 }
-.contribution-header{
+.contribution-header, .signature-header{
     width: 570px;
 }
-.contribution-title {
+.contribution-title, .signature-title {
     color: rgb(0, 156, 180);
     font-size: 1.1em;
     font-weight: bold;
     cursor: pointer;
 }
-.contribution .see-on-map{
+.contribution .see-on-map, .signature .see-on-map{
     float: right;
 }
 .form-profile-wrapper {
     margin-top: 40px;
+}
+.div-signatures-manage-btn{
+    padding: 20px 10px 10px;
+    background-color: rgb(220, 239, 244);
+}
+.signature-body{
+    padding-top: 10px;
+}
+.cancel-subscription-btn{
+    display: inline-block;
+    font-weight: bold;
+}
+.cancel-subscription-btn span{
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.cancel-subscription-btn i{
+    vertical-align:middle;
+}
+.digest-modal-header{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.digest-radio-btn{
+    margin-bottom: 5px;
+}
+.digest-radio-btn span{
+    color: #555;
+    margin-left: 10px;
 }
 /* ====== Error box ======== */
 .error-dialog {
