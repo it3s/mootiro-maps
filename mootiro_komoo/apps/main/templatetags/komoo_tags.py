@@ -130,7 +130,17 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 
 @register.inclusion_tag('main/templatetags/history.html')
 def history(obj):
-    return dict(obj=obj)
+    if obj.creator:
+        creator_link = '<a href="/permalink/u{}">{}</a>'.format(
+                obj.creator.id, obj.creator.username)
+    else:
+        creator_link = ''
+    if hasattr(obj, 'last_editor') and obj.last_editor:
+        lasteditor_link = '<a href="/permalink/u{}">{}</a>'.format(
+                obj.last_editor.id, obj.last_editor.username)
+    else:
+        lasteditor_link = ''
+    return dict(obj=obj, creator_link=creator_link, last_editor=lasteditor_link)
 
 
 @register.inclusion_tag('main/templatetags/track_buttons.html', takes_context=True)
