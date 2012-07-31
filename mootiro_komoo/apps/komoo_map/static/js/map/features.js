@@ -63,8 +63,7 @@
     };
 
     Feature.prototype.getGeometryType = function() {
-      var _ref;
-      return (_ref = this.geometry) != null ? _ref.getGeometryType() : void 0;
+      return this.geometry.getGeometryType();
     };
 
     Feature.prototype.getFeatureType = function() {
@@ -194,8 +193,7 @@
     };
 
     Feature.prototype.getGeometryGeoJson = function() {
-      var _ref;
-      return (_ref = this.geometry) != null ? _ref.getGeoJson() : void 0;
+      return this.geometry.getGeoJson();
     };
 
     Feature.prototype.getGeoJsonGeometry = function() {
@@ -215,19 +213,16 @@
     };
 
     Feature.prototype.setEditable = function(editable) {
-      var _ref;
       this.editable = editable;
-      return (_ref = this.geometry) != null ? _ref.setEditable(this.editable) : void 0;
+      return this.geometry.setEditable(this.editable);
     };
 
     Feature.prototype.showGeometry = function() {
-      var _ref;
-      return (_ref = this.geometry) != null ? _ref.setMap(this.map) : void 0;
+      return this.geometry.setMap(this.map);
     };
 
     Feature.prototype.hideGeometry = function() {
-      var _ref;
-      return (_ref = this.geometry) != null ? _ref.setMap(null) : void 0;
+      return this.geometry.setMap(null);
     };
 
     Feature.prototype.showMarker = function() {
@@ -245,7 +240,7 @@
     };
 
     Feature.prototype.setMap = function(map, force) {
-      var zoom, _ref, _ref2;
+      var zoom, _ref;
       this.map = map;
       if (force == null) {
         force = {
@@ -265,15 +260,12 @@
       if ((_ref = this.marker) != null) {
         _ref.setMap((this.featureType.minZoomPoint <= zoom && zoom <= this.featureType.maxZoomPoint) || (this.featureType.minZoomIcon <= zoom && zoom <= this.featureType.maxZoomIcon) || force.point || force.icon ? this.map : null);
       }
-      if ((_ref2 = this.geometry) != null) {
-        _ref2.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null);
-      }
+      this.geometry.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null);
       return this.updateIcon();
     };
 
     Feature.prototype.getBounds = function() {
-      var _ref;
-      return (_ref = this.geometry) != null ? _ref.getBounds() : void 0;
+      return this.geometry.getBounds();
     };
 
     Feature.prototype.removeFromMap = function() {
@@ -283,31 +275,28 @@
     };
 
     Feature.prototype.setVisible = function(visible) {
-      var _ref, _ref2;
+      var _ref;
       this.visible = visible;
       if ((_ref = this.marker) != null) _ref.setVisible(this.visible);
-      return (_ref2 = this.geometry) != null ? _ref2.setVisible(this.visible) : void 0;
+      return this.geometry.setVisible(this.visible);
     };
 
     Feature.prototype.getCenter = function() {
-      var _ref;
-      return (_ref = this.geometry) != null ? _ref.getCenter() : void 0;
+      return this.geometry.getCenter();
     };
 
     Feature.prototype.setOptions = function(options) {
-      var _ref;
-      return (_ref = this.geometry) != null ? _ref.setOptions(options) : void 0;
+      return this.geometry.setOptions(options);
     };
 
     Feature.prototype.getIcon = function() {
-      var _ref;
-      return (_ref = this.geometry) != null ? _ref.getIcon() : void 0;
+      return this.geometry.getIcon();
     };
 
     Feature.prototype.setIcon = function(icon) {
-      var _ref, _ref2;
+      var _ref;
       if ((_ref = this.marker) != null) _ref.setIcon(icon);
-      return (_ref2 = this.geometry) != null ? _ref2.setIcon(icon) : void 0;
+      return this.geometry.setIcon(icon);
     };
 
     Feature.prototype.getBorderSize = function() {

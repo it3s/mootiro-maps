@@ -36,6 +36,7 @@ class Map
 
     initGoogleMap: (options = @googleMapDefaultOptions) ->
         @googleMap = new google.maps.Map @element, options
+        $(@element).trigger 'initialized', @
 
     initFeatureTypes: ->
         @featureTypes ?= {}
@@ -57,6 +58,16 @@ class Map
     disableComponents: (type) ->
         @components[type]?.forEach (component) =>
             component.disable?()
+
+    getComponentsStatus: (type) ->
+        status = []
+        @components[type]?.forEach (component) =>
+            if component.enabled is on
+                status.push('enabled')
+        if 'enabled' in status
+            'enabled'
+        else
+            'disabled'
 
     clear: ->
         @features.removeAllFromMap()
@@ -167,6 +178,22 @@ class Map
         list.getGeoJson
             geometryCollection: options.geometryCollection
 
+    drawNewFeature: (geometryType, featureType) ->
+        feature = @makeFeature
+            type: 'Feature'
+            geometry:
+                type: geometryType
+            properties:
+                name: "New #{featureType}"
+                type: featureType
+        komoo.event.trigger @, 'draw_feature', geometryType, feature
+
+    editFeature: (feature) ->
+        komoo.event.trigger @, 'edit_feature', feature
+
+    setMode: (@mode) ->
+        komoo.event.trigger @, 'mode_changed', @mode
+
     ## Delegations
 
     getBounds: -> @googleMap.getBounds()
@@ -207,7 +234,7 @@ class AjaxEditor extends AjaxMap
     constructor: (options) ->
         super options
 
-        @addComponent komoo.controls.makeDrawingManager()
+        @addComponent komoo.controls.makeDrawingManager(), 'drawingManager'
 
 
 

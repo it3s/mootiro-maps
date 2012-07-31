@@ -1,5 +1,6 @@
 (function() {
   var AjaxEditor, AjaxMap, Editor, Map, Preview, _base,
+    __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -46,7 +47,8 @@
 
     Map.prototype.initGoogleMap = function(options) {
       if (options == null) options = this.googleMapDefaultOptions;
-      return this.googleMap = new google.maps.Map(this.element, options);
+      this.googleMap = new google.maps.Map(this.element, options);
+      return $(this.element).trigger('initialized', this);
     };
 
     Map.prototype.initFeatureTypes = function() {
@@ -83,6 +85,22 @@
       return (_ref = this.components[type]) != null ? _ref.forEach(function(component) {
         return typeof component.disable === "function" ? component.disable() : void 0;
       }) : void 0;
+    };
+
+    Map.prototype.getComponentsStatus = function(type) {
+      var status, _ref,
+        _this = this;
+      status = [];
+      if ((_ref = this.components[type]) != null) {
+        _ref.forEach(function(component) {
+          if (component.enabled === true) return status.push('enabled');
+        });
+      }
+      if (__indexOf.call(status, 'enabled') >= 0) {
+        return 'enabled';
+      } else {
+        return 'disabled';
+      }
     };
 
     Map.prototype.clear = function() {
@@ -228,6 +246,30 @@
       });
     };
 
+    Map.prototype.drawNewFeature = function(geometryType, featureType) {
+      var feature;
+      feature = this.makeFeature({
+        type: 'Feature',
+        geometry: {
+          type: geometryType
+        },
+        properties: {
+          name: "New " + featureType,
+          type: featureType
+        }
+      });
+      return komoo.event.trigger(this, 'draw_feature', geometryType, feature);
+    };
+
+    Map.prototype.editFeature = function(feature) {
+      return komoo.event.trigger(this, 'edit_feature', feature);
+    };
+
+    Map.prototype.setMode = function(mode) {
+      this.mode = mode;
+      return komoo.event.trigger(this, 'mode_changed', this.mode);
+    };
+
     Map.prototype.getBounds = function() {
       return this.googleMap.getBounds();
     };
@@ -304,7 +346,7 @@
 
     function AjaxEditor(options) {
       AjaxEditor.__super__.constructor.call(this, options);
-      this.addComponent(komoo.controls.makeDrawingManager());
+      this.addComponent(komoo.controls.makeDrawingManager(), 'drawingManager');
     }
 
     return AjaxEditor;

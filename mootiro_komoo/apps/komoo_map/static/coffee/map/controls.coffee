@@ -1,11 +1,25 @@
 window.komoo ?= {}
 window.komoo.event ?= google.maps.event
 
+OVERLAY = {}
+OVERLAY[komoo.geometries.types.POINT] = google.maps.drawing.OverlayType.MARKER
+OVERLAY[komoo.geometries.types.MULTIPOINT] = google.maps.drawing.OverlayType.MARKER
+OVERLAY[komoo.geometries.types.LINESTRING] = google.maps.drawing.OverlayType.POLYLINE
+OVERLAY[komoo.geometries.types.MULTILINESTRING] = google.maps.drawing.OverlayType.POLYLINE
+OVERLAY[komoo.geometries.types.POLYGON] = google.maps.drawing.OverlayType.POLYGON
+
+EDIT = 'edit'
+ADD = 'add'
+CUTOUT = 'cutout'
 
 class DrawingManager
+    enabled: on
+
     defaultDrawingManagerOptions:
         drawingControl: false
         drawingMode: null
+
+    componentOriginalStatus: {}
 
     constructor: (@options = {}) ->
         @options.drawingManagerOptions ?= @defaultDrawingManagerOptions
@@ -14,10 +28,117 @@ class DrawingManager
 
     initManager: (options = @defaultDrawingManagerOptions) ->
         @manager = new google.maps.drawing.DrawingManager options
+        @handleManagerEvents()
 
     setMap: (@map) ->
         @options.drawingManagerOptions.map = @map.googleMap
         @initManager @options.drawingManagerOptions
+        @handleMapEvents()
+
+    enable: -> @enabled = on
+    disable: -> @enabled = off
+
+    setMode: (@mode) ->
+        console.log @mode, @feature.getGeometryType(), OVERLAY[@feature.getGeometryType()]
+        @manager.setDrawingMode \
+            if @mode is ADD or
+                    (@mode is CUTOUT and
+                     @feature.getGeometryType() is komoo.geometries.types.POLYGON)
+                OVERLAY[@feature.getGeometryType()]
+             else
+                null
+        if @mode is CUTOUT and
+                @feature.getGeometryType() isnt komoo.geometries.types.POLYGON
+            @mode = EDIT
+
+    handleMapEvents: ->
+        komoo.event.addListener @map, 'draw_feature', (geometryType, feature) =>
+            @drawFeature(feature)
+
+        komoo.event.addListener @map, 'edit_feature', (feature) =>
+            @editFeature(feature)
+
+        komoo.event.addListener @map, 'drawing_started', (feature) =>
+            @disableComponents()
+
+        komoo.event.addListener @map, 'drawing_finished', (feature) =>
+            @feature.setEditable off
+            @feature.updateIcon()
+            @enableComponents()
+
+        komoo.event.addListener @map, 'mode_changed', (mode) =>
+            @setMode mode
+
+    handleManagerEvents: ->
+        komoo.event.addListener @manager, 'overlaycomplete', (e) =>
+            path = e.overlay?.getPath?()
+            if path and @mode in [ADD, CUTOUT] and e.overlay?.getPaths
+                # Gets the overlays path orientation.
+                paths = @feature.getGeometry().getPaths()
+                console.log '-->', paths
+                if paths?.length > 0
+                    # Gets the paths orientations.
+                    sArea = google.maps.geometry.spherical.computeSignedArea path
+                    sAreaAdded = google.maps.geometry.spherical.computeSignedArea paths.getAt(0)
+                    orientation = sArea / Math.abs sArea
+                    orientationAdded = sAreaAdded / Math.abs sAreaAdded
+                    # Verify the paths orientation.
+                    if (orientation is orientationAdded and @mode is CUTOUT) or
+                            (orientation isnt orientationAdded and @mode is ADD)
+                        # Reverse path orientation to correspond to the action
+                        path = new google.maps.MVCArray path.getArray().reverse()
+
+                paths.push path
+                @feature.getGeometry().setPaths paths
+                # Remove the temporary overlay from map
+                e.overlay.setMap null
+
+            else if @mode is ADD and e.overlay.getPosition
+                @feature.getGeometry().addMarker e.overlay
+                @feature.updateIcon 100
+
+            else if @mode is ADD and e.overlay.getPath
+                @feature.getGeometry().addPolyline e.overlay, true
+
+            @map.setMode EDIT
+            @feature.setEditable on
+
+    disableComponents: ->
+        if @enabled is off then return
+
+        # Ask the map to disable some components to make the edition more pleasant
+        for component in ['infoWindow', 'tooltip']
+            console.log component
+            @componentOriginalStatus[component] = \
+                @map.getComponentsStatus(component) is 'enabled'
+            @map.disableComponents component
+
+    enableComponents: ->
+        if @enabled is off then return
+
+        # Enable the components we asked to disable
+        for component, enabled of @componentOriginalStatus
+            if enabled
+                @map.enableComponents component
+
+    editFeature: (@feature) ->
+        if @enabled is off then return
+
+        @feature.setEditable on
+        options = {}
+        options["#{OVERLAY[@feature.getGeometryType()]}Options"] = @feature.getGeometry().getOverlayOptions
+            strokeWeight: 2.5
+            zoom: 100  # Draw using the main icon
+        @manager.setOptions options
+        @map.setMode EDIT
+        komoo.event.trigger @map, 'drawing_started', @feature
+
+    drawFeature: (@feature) ->
+        #if @enabled is off then return
+
+        @editFeature @feature
+        @map.setMode ADD
+
 
 class Balloon
     defaultWidth: "300px"
@@ -146,6 +267,7 @@ class AjaxBalloon extends Balloon
 
         if not feature then return
         if feature[@contentViewName] then return feature[@contentViewName]
+        if not feature.getProperty("id")? then return super options
 
         url = dutils.urls.resolve @contentViewName,
             zoom: @map.getZoom()
@@ -167,10 +289,10 @@ class InfoWindow extends AjaxBalloon
     open: (options) ->
         @feature?.displayTooltip = on
         super options
-        @feature.displayTooltip = off
+        @feature?.displayTooltip = off
 
     close: ->
-        @feature.displayTooltip = on
+        @feature?.displayTooltip = on
         @map.enableComponents 'tooltip'
         super()
 

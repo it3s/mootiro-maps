@@ -1,5 +1,5 @@
 (function() {
-  var AjaxBalloon, Balloon, Box, DrawingManager, FeatureClusterer, InfoWindow, LicenseBox, SupporterBox, Tooltip, _base,
+  var ADD, AjaxBalloon, Balloon, Box, CUTOUT, DrawingManager, EDIT, FeatureClusterer, InfoWindow, LicenseBox, OVERLAY, SupporterBox, Tooltip, _base,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -7,12 +7,34 @@
 
   if ((_base = window.komoo).event == null) _base.event = google.maps.event;
 
+  OVERLAY = {};
+
+  OVERLAY[komoo.geometries.types.POINT] = google.maps.drawing.OverlayType.MARKER;
+
+  OVERLAY[komoo.geometries.types.MULTIPOINT] = google.maps.drawing.OverlayType.MARKER;
+
+  OVERLAY[komoo.geometries.types.LINESTRING] = google.maps.drawing.OverlayType.POLYLINE;
+
+  OVERLAY[komoo.geometries.types.MULTILINESTRING] = google.maps.drawing.OverlayType.POLYLINE;
+
+  OVERLAY[komoo.geometries.types.POLYGON] = google.maps.drawing.OverlayType.POLYGON;
+
+  EDIT = 'edit';
+
+  ADD = 'add';
+
+  CUTOUT = 'cutout';
+
   DrawingManager = (function() {
+
+    DrawingManager.prototype.enabled = true;
 
     DrawingManager.prototype.defaultDrawingManagerOptions = {
       drawingControl: false,
       drawingMode: null
     };
+
+    DrawingManager.prototype.componentOriginalStatus = {};
 
     function DrawingManager(options) {
       var _base2;
@@ -25,13 +47,135 @@
 
     DrawingManager.prototype.initManager = function(options) {
       if (options == null) options = this.defaultDrawingManagerOptions;
-      return this.manager = new google.maps.drawing.DrawingManager(options);
+      this.manager = new google.maps.drawing.DrawingManager(options);
+      return this.handleManagerEvents();
     };
 
     DrawingManager.prototype.setMap = function(map) {
       this.map = map;
       this.options.drawingManagerOptions.map = this.map.googleMap;
-      return this.initManager(this.options.drawingManagerOptions);
+      this.initManager(this.options.drawingManagerOptions);
+      return this.handleMapEvents();
+    };
+
+    DrawingManager.prototype.enable = function() {
+      return this.enabled = true;
+    };
+
+    DrawingManager.prototype.disable = function() {
+      return this.enabled = false;
+    };
+
+    DrawingManager.prototype.setMode = function(mode) {
+      this.mode = mode;
+      console.log(this.mode, this.feature.getGeometryType(), OVERLAY[this.feature.getGeometryType()]);
+      this.manager.setDrawingMode(this.mode === ADD || (this.mode === CUTOUT && this.feature.getGeometryType() === komoo.geometries.types.POLYGON) ? OVERLAY[this.feature.getGeometryType()] : null);
+      if (this.mode === CUTOUT && this.feature.getGeometryType() !== komoo.geometries.types.POLYGON) {
+        return this.mode = EDIT;
+      }
+    };
+
+    DrawingManager.prototype.handleMapEvents = function() {
+      var _this = this;
+      komoo.event.addListener(this.map, 'draw_feature', function(geometryType, feature) {
+        return _this.drawFeature(feature);
+      });
+      komoo.event.addListener(this.map, 'edit_feature', function(feature) {
+        return _this.editFeature(feature);
+      });
+      komoo.event.addListener(this.map, 'drawing_started', function(feature) {
+        return _this.disableComponents();
+      });
+      komoo.event.addListener(this.map, 'drawing_finished', function(feature) {
+        _this.feature.setEditable(false);
+        _this.feature.updateIcon();
+        return _this.enableComponents();
+      });
+      return komoo.event.addListener(this.map, 'mode_changed', function(mode) {
+        return _this.setMode(mode);
+      });
+    };
+
+    DrawingManager.prototype.handleManagerEvents = function() {
+      var _this = this;
+      return komoo.event.addListener(this.manager, 'overlaycomplete', function(e) {
+        var orientation, orientationAdded, path, paths, sArea, sAreaAdded, _ref, _ref2, _ref3;
+        path = (_ref = e.overlay) != null ? typeof _ref.getPath === "function" ? _ref.getPath() : void 0 : void 0;
+        if (path && ((_ref2 = _this.mode) === ADD || _ref2 === CUTOUT) && ((_ref3 = e.overlay) != null ? _ref3.getPaths : void 0)) {
+          paths = _this.feature.getGeometry().getPaths();
+          console.log('-->', paths);
+          if ((paths != null ? paths.length : void 0) > 0) {
+            sArea = google.maps.geometry.spherical.computeSignedArea(path);
+            sAreaAdded = google.maps.geometry.spherical.computeSignedArea(paths.getAt(0));
+            orientation = sArea / Math.abs(sArea);
+            orientationAdded = sAreaAdded / Math.abs(sAreaAdded);
+            if ((orientation === orientationAdded && _this.mode === CUTOUT) || (orientation !== orientationAdded && _this.mode === ADD)) {
+              path = new google.maps.MVCArray(path.getArray().reverse());
+            }
+          }
+          paths.push(path);
+          _this.feature.getGeometry().setPaths(paths);
+          e.overlay.setMap(null);
+        } else if (_this.mode === ADD && e.overlay.getPosition) {
+          _this.feature.getGeometry().addMarker(e.overlay);
+          _this.feature.updateIcon(100);
+        } else if (_this.mode === ADD && e.overlay.getPath) {
+          _this.feature.getGeometry().addPolyline(e.overlay, true);
+        }
+        _this.map.setMode(EDIT);
+        return _this.feature.setEditable(true);
+      });
+    };
+
+    DrawingManager.prototype.disableComponents = function() {
+      var component, _i, _len, _ref, _results;
+      if (this.enabled === false) return;
+      _ref = ['infoWindow', 'tooltip'];
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        component = _ref[_i];
+        console.log(component);
+        this.componentOriginalStatus[component] = this.map.getComponentsStatus(component) === 'enabled';
+        _results.push(this.map.disableComponents(component));
+      }
+      return _results;
+    };
+
+    DrawingManager.prototype.enableComponents = function() {
+      var component, enabled, _ref, _results;
+      if (this.enabled === false) return;
+      _ref = this.componentOriginalStatus;
+      _results = [];
+      for (component in _ref) {
+        enabled = _ref[component];
+        if (enabled) {
+          _results.push(this.map.enableComponents(component));
+        } else {
+          _results.push(void 0);
+        }
+      }
+      return _results;
+    };
+
+    DrawingManager.prototype.editFeature = function(feature) {
+      var options;
+      this.feature = feature;
+      if (this.enabled === false) return;
+      this.feature.setEditable(true);
+      options = {};
+      options["" + OVERLAY[this.feature.getGeometryType()] + "Options"] = this.feature.getGeometry().getOverlayOptions({
+        strokeWeight: 2.5,
+        zoom: 100
+      });
+      this.manager.setOptions(options);
+      this.map.setMode(EDIT);
+      return komoo.event.trigger(this.map, 'drawing_started', this.feature);
+    };
+
+    DrawingManager.prototype.drawFeature = function(feature) {
+      this.feature = feature;
+      this.editFeature(this.feature);
+      return this.map.setMode(ADD);
     };
 
     return DrawingManager;
@@ -221,6 +365,9 @@
       feature = options.feature;
       if (!feature) return;
       if (feature[this.contentViewName]) return feature[this.contentViewName];
+      if (!(feature.getProperty("id") != null)) {
+        return AjaxBalloon.__super__.createFeatureContent.call(this, options);
+      }
       url = dutils.urls.resolve(this.contentViewName, {
         zoom: this.map.getZoom(),
         app_label: feature.featureType.appLabel,
@@ -251,14 +398,15 @@
     InfoWindow.prototype.contentViewName = "info_window";
 
     InfoWindow.prototype.open = function(options) {
-      var _ref;
+      var _ref, _ref2;
       if ((_ref = this.feature) != null) _ref.displayTooltip = true;
       InfoWindow.__super__.open.call(this, options);
-      return this.feature.displayTooltip = false;
+      return (_ref2 = this.feature) != null ? _ref2.displayTooltip = false : void 0;
     };
 
     InfoWindow.prototype.close = function() {
-      this.feature.displayTooltip = true;
+      var _ref;
+      if ((_ref = this.feature) != null) _ref.displayTooltip = true;
       this.map.enableComponents('tooltip');
       return InfoWindow.__super__.close.call(this);
     };

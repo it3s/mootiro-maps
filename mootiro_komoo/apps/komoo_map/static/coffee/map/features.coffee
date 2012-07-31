@@ -37,7 +37,7 @@ class Feature
         @geometry.feature = @
         @initEvents()
 
-    getGeometryType: -> @geometry?.getGeometryType()
+    getGeometryType: -> @geometry.getGeometryType()
 
     getFeatureType: -> @featureType
     setFeatureType: (@featureType = {
@@ -115,7 +115,7 @@ class Feature
     getType: -> @getProperty('type')
     getCategories: -> @getProperty('categories') ? []
 
-    getGeometryGeoJson: -> @geometry?.getGeoJson()
+    getGeometryGeoJson: -> @geometry.getGeoJson()
 
     getGeoJsonGeometry: -> @getGeometryGeoJson()
 
@@ -126,10 +126,10 @@ class Feature
 
     getGeoJsonFeature: -> @getGeoJson()
 
-    setEditable: (@editable) -> @geometry?.setEditable @editable
+    setEditable: (@editable) -> @geometry.setEditable @editable
 
-    showGeometry: -> @geometry?.setMap @map
-    hideGeometry: -> @geometry?.setMap null
+    showGeometry: -> @geometry.setMap @map
+    hideGeometry: -> @geometry.setMap null
 
     showMarker: -> @marker?.setMap @map
     hideMarker: -> @marker?.setMap @map
@@ -146,12 +146,12 @@ class Feature
             if @featureType.minZoomPoint <= zoom <= @featureType.maxZoomPoint or \
                 @featureType.minZoomIcon <= zoom <= @featureType.maxZoomIcon or \
                 force.point or force.icon then @map else null)
-        @geometry?.setMap(if (zoom <= @featureType.maxZoomGeometry and \
+        @geometry.setMap(if (zoom <= @featureType.maxZoomGeometry and \
                 zoom >= @featureType.minZoomGeometry) or \
                 force.geometry then @map else null)
         @updateIcon()
 
-    getBounds: -> @geometry?.getBounds()
+    getBounds: -> @geometry.getBounds()
 
     removeFromMap: ->
         @marker?.setMap(null)
@@ -159,16 +159,16 @@ class Feature
 
     setVisible: (@visible) ->
         @marker?.setVisible @visible
-        @geometry?.setVisible @visible
+        @geometry.setVisible @visible
 
-    getCenter: -> @geometry?.getCenter()
+    getCenter: -> @geometry.getCenter()
 
-    setOptions: (options) -> @geometry?.setOptions(options)
+    setOptions: (options) -> @geometry.setOptions(options)
 
-    getIcon: -> @geometry?.getIcon()
+    getIcon: -> @geometry.getIcon()
     setIcon: (icon) ->
         @marker?.setIcon icon
-        @geometry?.setIcon icon
+        @geometry.setIcon icon
 
     getBorderSize: -> @featureType.border_size
     getBorderSizeHover: -> @featureType.borderSizeHover
