@@ -132,12 +132,12 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 def history(obj):
     if obj.creator:
         creator_link = '<a href="/permalink/u{}">{}</a>'.format(
-                obj.creator.id, obj.creator.username)
+                obj.creator.id, obj.creator.get_name)
     else:
         creator_link = ''
     if hasattr(obj, 'last_editor') and obj.last_editor:
         lasteditor_link = '<a href="/permalink/u{}">{}</a>'.format(
-                obj.last_editor.id, obj.last_editor.username)
+                obj.last_editor.id, obj.last_editor.get_name)
     else:
         lasteditor_link = ''
     return dict(obj=obj, creator_link=creator_link, last_editor=lasteditor_link)
