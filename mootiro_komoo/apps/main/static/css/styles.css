@@ -331,14 +331,14 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     text-shadow: none;
     background-color: rgba(62, 186, 194, 0.2);
 }
-#komoo-map-add-button,
+#drawing-control-add,
 #top #menu li:first-child a,
 .map-tab:first-child a {
     border-radius        : 6px 0 0 6px;
     -moz-border-radius   : 6px 0 0 6px;
     -webkit-border-radius: 6px 0 0 6px;
 }
-#komoo-map-cut-out-button,
+#drawing-control-cutout,
 #top #menu li:last-child a,
 .map-tab:last-child a {
     border-radius        : 0 6px 6px 0;
@@ -347,7 +347,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 #top #menu li a:active,
 .map-tab a:active { background: #2E6167 !important; }
-#komoo-map-delete-button {
+#drawing-control-delete {
     margin: 0 5px;
 }
 
@@ -503,6 +503,26 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: url("../img/menu/help.png");
 }
 
+.icon-komoo-minus {
+    background-image: url("../img/minus.png");
+}
+.icon-komoo-plus {
+    background-image: url("../img/plus.png");
+}
+.icon-komoo-minus,
+.icon-komoo-plus {
+    background-position: 0 0;
+    margin: 4px 3px;
+    width: 12px;
+    height: 12px;
+}
+.icon-komoo-trash {
+    background-image: url("../img/trash.png");
+    background-position: 0 0;
+    width: 18px;
+    height: 20px;
+}
+
 .icon-point {
     background-image: url("../img/geometries/point.png");
     background-position: 0 0;
@@ -650,12 +670,13 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 .map-button {
     cursor: pointer;
-    float: left;
+    display: inline-block;
     padding: 5px;
     margin: 10px 5px;
 }
 .map-panel .content .map-button,
 .map-button:hover, .map-button.selected {
+    padding: 2px 5px 5px;
     border: 1px solid #4092a9 !important;
 }
 

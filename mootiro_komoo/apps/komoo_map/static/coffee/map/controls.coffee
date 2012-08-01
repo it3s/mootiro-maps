@@ -9,8 +9,38 @@ OVERLAY[komoo.geometries.types.MULTILINESTRING] = google.maps.drawing.OverlayTyp
 OVERLAY[komoo.geometries.types.POLYGON] = google.maps.drawing.OverlayType.POLYGON
 
 EDIT = 'edit'
+DELETE = 'delete'
+NEW = 'new'
 ADD = 'add'
 CUTOUT = 'cutout'
+
+class Box
+    position: google.maps.ControlPosition.RIGHT_BOTTOM
+    constructor: ->
+        @box = $ "<div>"
+        if @id? then @box.attr "id", @id
+
+    setMap: (@map) ->
+        @map.googleMap.controls[@position].push @box.get 0
+        @handleMapEvents?()
+
+
+class SupporterBox extends Box
+    id: "map-supporters"
+
+    constructor: ->
+        super()
+        @box.append $("#map-supporters-content").show()
+
+
+class LicenseBox extends Box
+    id: "map-license"
+    position: google.maps.ControlPosition.BOTTOM_LEFT
+
+    constructor: ->
+        super()
+        @box.html 'Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.'
+
 
 class DrawingManager
     enabled: on
@@ -39,9 +69,8 @@ class DrawingManager
     disable: -> @enabled = off
 
     setMode: (@mode) ->
-        console.log @mode, @feature.getGeometryType(), OVERLAY[@feature.getGeometryType()]
         @manager.setDrawingMode \
-            if @mode is ADD or
+            if @mode in [ADD, NEW] or
                     (@mode is CUTOUT and
                      @feature.getGeometryType() is komoo.geometries.types.POLYGON)
                 OVERLAY[@feature.getGeometryType()]
@@ -58,13 +87,16 @@ class DrawingManager
         komoo.event.addListener @map, 'edit_feature', (feature) =>
             @editFeature(feature)
 
-        komoo.event.addListener @map, 'drawing_started', (feature) =>
-            @disableComponents()
-
         komoo.event.addListener @map, 'drawing_finished', (feature) =>
             @feature.setEditable off
             @feature.updateIcon()
-            @enableComponents()
+            @setMode null
+
+        komoo.event.addListener @map, 'finish_drawing', () =>
+            komoo.event.trigger @map, 'drawing_finished', @feature, true
+
+        komoo.event.addListener @map, 'cancel_drawing', () =>
+            komoo.event.trigger @map, 'drawing_finished', @feature, false
 
         komoo.event.addListener @map, 'mode_changed', (mode) =>
             @setMode mode
@@ -72,10 +104,9 @@ class DrawingManager
     handleManagerEvents: ->
         komoo.event.addListener @manager, 'overlaycomplete', (e) =>
             path = e.overlay?.getPath?()
-            if path and @mode in [ADD, CUTOUT] and e.overlay?.getPaths
+            if path and @mode in [ADD, NEW, CUTOUT] and e.overlay?.getPaths
                 # Gets the overlays path orientation.
                 paths = @feature.getGeometry().getPaths()
-                console.log '-->', paths
                 if paths?.length > 0
                     # Gets the paths orientations.
                     sArea = google.maps.geometry.spherical.computeSignedArea path
@@ -84,7 +115,7 @@ class DrawingManager
                     orientationAdded = sAreaAdded / Math.abs sAreaAdded
                     # Verify the paths orientation.
                     if (orientation is orientationAdded and @mode is CUTOUT) or
-                            (orientation isnt orientationAdded and @mode is ADD)
+                            (orientation isnt orientationAdded and @mode in [ADD, NEW])
                         # Reverse path orientation to correspond to the action
                         path = new google.maps.MVCArray path.getArray().reverse()
 
@@ -93,37 +124,20 @@ class DrawingManager
                 # Remove the temporary overlay from map
                 e.overlay.setMap null
 
-            else if @mode is ADD and e.overlay.getPosition
+            else if @mode in [ADD, NEW] and e.overlay.getPosition
                 @feature.getGeometry().addMarker e.overlay
                 @feature.updateIcon 100
 
-            else if @mode is ADD and e.overlay.getPath
+            else if @mode in [ADD, NEW] and e.overlay.getPath
                 @feature.getGeometry().addPolyline e.overlay, true
 
             @map.setMode EDIT
             @feature.setEditable on
 
-    disableComponents: ->
-        if @enabled is off then return
-
-        # Ask the map to disable some components to make the edition more pleasant
-        for component in ['infoWindow', 'tooltip']
-            console.log component
-            @componentOriginalStatus[component] = \
-                @map.getComponentsStatus(component) is 'enabled'
-            @map.disableComponents component
-
-    enableComponents: ->
-        if @enabled is off then return
-
-        # Enable the components we asked to disable
-        for component, enabled of @componentOriginalStatus
-            if enabled
-                @map.enableComponents component
-
     editFeature: (@feature) ->
         if @enabled is off then return
 
+        @feature.setMap @map, geometry: on
         @feature.setEditable on
         options = {}
         options["#{OVERLAY[@feature.getGeometryType()]}Options"] = @feature.getGeometry().getOverlayOptions
@@ -134,10 +148,100 @@ class DrawingManager
         komoo.event.trigger @map, 'drawing_started', @feature
 
     drawFeature: (@feature) ->
-        #if @enabled is off then return
+        if @enabled is off then return
 
         @editFeature @feature
-        @map.setMode ADD
+        @map.setMode NEW
+
+
+class DrawingControl extends Box
+    id: "map-drawing-box"
+    position: google.maps.ControlPosition.TOP_LEFT
+
+    constructor: ->
+        super()
+        @box.hide()
+        @box.html """
+        <div class="map-panel" id="drawing-control">
+          <div class="map-panel-title" id="drawing-control-title"></div>
+          <div class="content" id="drawing-control-content"></div>
+          <div class="map-panel-buttons">
+            <div class="map-button" id="drawing-control-finish">Concluir</div>
+            <div class="map-button" id="drawing-control-cancel">Cancelar</div>
+          </div>
+        </div>
+        """
+        @handleBoxEvents()
+
+    handleMapEvents: ->
+        komoo.event.addListener @map, 'drawing_started', (feature) =>
+            @open feature
+
+        komoo.event.addListener @map, 'drawing_finished', (feature) =>
+            @close()
+
+        komoo.event.addListener @map, 'mode_changed', (mode) =>
+            @setMode mode
+
+    handleBoxEvents: ->
+        $("#drawing-control-finish", @box).click =>
+            komoo.event.trigger @map, 'finish_drawing'
+
+        $("#drawing-control-cancel", @box).click =>
+            komoo.event.trigger @map, 'cancel_drawing'
+
+    handleButtonEvents: ->
+        $("#drawing-control-add", @box).click =>
+            @map.setMode if @mode isnt ADD then ADD else EDIT
+
+        $("#drawing-control-cutout", @box).click =>
+            @map.setMode if @mode isnt CUTOUT then CUTOUT else EDIT
+
+        $("#drawing-control-delete", @box).click =>
+            @map.setMode if @mode isnt DELETE then DELETE else EDIT
+
+    setMode: (@mode) ->
+        if @mode is NEW
+            $("#drawing-control-content", @box).hide()
+        else
+            $("#drawing-control-content", @box).show()
+        $(".map-button.active", @box).removeClass "active"
+        $("#drawing-control-#{@mode.toLowerCase()}", @box).addClass "active"
+
+    getTitle: ->
+        if @feature.getGeometryType() is komoo.geometries.types.POLYGON
+            geometry = 'polygon'
+            title = gettext 'Add shape'
+        else if @feature.getGeometryType() in [komoo.geometries.types.LINESTRING,
+                                               komoo.geometries.types.MULTILINESTRING]
+            geometry = 'linestring'
+            title = gettext 'Add line'
+        else if @feature.getGeometryType() in [komoo.geometries.types.POINT,
+
+                                               komoo.geometries.types.MULTIPOINT]
+            geometry = 'point'
+            title = gettext 'Add point'
+        """<i class="icon-#{geometry} middle"></i><span class="middle">#{title}</span>"""
+
+    getContent: ->
+        add = """<div class="map-button" id="drawing-control-add"><i class="icon-komoo-plus middle"></i><span class="middle">#{gettext 'Sum'}</span></div>"""
+        cutout = """<div class="map-button" id="drawing-control-cutout"><i class="icon-komoo-minus middle"></i><span class="middle">#{gettext 'Cutout'}</span></div>"""
+        remove = """<div class="map-button" id="drawing-control-delete"><i class="icon-komoo-trash middle"></i></div>"""
+
+        content = add
+        if @feature.getGeometryType() is komoo.geometries.types.POLYGON
+            content += cutout
+        content += remove
+        content
+
+
+    open: (@feature) ->
+        $("#drawing-control-title", @box).html @getTitle()
+        $("#drawing-control-content", @box).html @getContent()
+        @handleButtonEvents()
+        @box.show()
+
+    close: -> @box.hide()
 
 
 class Balloon
@@ -162,6 +266,13 @@ class Balloon
                 background: "url(/static/img/infowindow-arrow.png) no-repeat 0 10px"
                 width: @width
 
+    handleMapEvents: ->
+        komoo.event.addListener @map, 'drawing_started', (feature) =>
+            @disable()
+
+        komoo.event.addListener @map, 'drawing_finished', (feature) =>
+            @enable()
+
     setInfoBox: (@infoBox) ->
 
     setMap: (@map) ->
@@ -170,7 +281,7 @@ class Balloon
     enable: -> @enabled = on
 
     disable: ->
-        @close()
+        @close(false)
         @enabled = off
 
     open: (@options = {}) ->
@@ -196,7 +307,7 @@ class Balloon
                 body: content
         @title.html \
             if content.url
-                "<a href=\"#{content.url}\">#{content.title}</a>"
+                """<a href="#{content.url}'">#{content.title}</a>"""
             else
                 content.title
         @body.html content.body
@@ -252,10 +363,10 @@ class Balloon
         feature = options.feature
         if feature
             title =
-                if feature.getProperty("type") is "OrganizationBranch"
-                    feature.getProperty("organization_name") + " - " + + \
-                    feature.getProperty("name") \
-                        " - " + feature.getProperty("name")
+                if feature.getProperty "type" is "OrganizationBranch" \
+                        and feature.getProperty "organization_name"
+                    feature.getProperty("organization_name") + " - " + \
+                    feature.getProperty "name"
                 else
                     feature.getProperty "name"
         title: title, url: "", body: ""
@@ -291,9 +402,10 @@ class InfoWindow extends AjaxBalloon
         super options
         @feature?.displayTooltip = off
 
-    close: ->
+    close: (enableTooltip = true) ->
         @feature?.displayTooltip = on
-        @map.enableComponents 'tooltip'
+        if enableTooltip
+            @map.enableComponents 'tooltip'
         super()
 
     customize: ->
@@ -314,6 +426,7 @@ class InfoWindow extends AjaxBalloon
                 @close()
 
     handleMapEvents: ->
+        super()
         komoo.event.addListener @map, 'feature_click', (e, feature) =>
             setTimeout =>
                 @open feature: feature, position: e.latLng
@@ -338,6 +451,7 @@ class Tooltip extends AjaxBalloon
             $(closeBox).hide()
 
     handleMapEvents: ->
+        super()
         komoo.event.addListener @map, 'feature_mousemove', (e, feature) =>
             clearTimeout @timer
 
@@ -448,33 +562,6 @@ class FeatureClusterer
         features?.forEach (feature) => @push(feature)
 
 
-class Box
-    position: google.maps.ControlPosition.RIGHT_BOTTOM
-    constructor: ->
-        @box = $ "<div>"
-        if @id? then @box.attr "id", @id
-
-    setMap: (@map) ->
-        @map.googleMap.controls[@position].push @box.get 0
-
-
-class SupporterBox extends Box
-    id: "map-supporters"
-
-    constructor: ->
-        super()
-        @box.append $("#map-supporters-content").show()
-
-
-class LicenseBox extends Box
-    id: "map-license"
-    position: google.maps.ControlPosition.BOTTOM_LEFT
-
-    constructor: ->
-        super()
-        @box.html 'Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.'
-
-
 window.komoo.controls =
     DrawingManager: DrawingManager
     Balloon: Balloon
@@ -485,6 +572,7 @@ window.komoo.controls =
     SupporterBox: SupporterBox
     LicenseBox: LicenseBox
     makeDrawingManager: (options) -> new DrawingManager options
+    makeDrawingControl: (options) -> new DrawingControl options
     makeInfoWindow: (options) -> new InfoWindow options
     makeTooltip: (options) -> new Tooltip options
     makeFeatureClusterer: (options) -> new FeatureClusterer options

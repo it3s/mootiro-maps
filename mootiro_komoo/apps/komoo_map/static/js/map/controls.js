@@ -1,5 +1,5 @@
 (function() {
-  var ADD, AjaxBalloon, Balloon, Box, CUTOUT, DrawingManager, EDIT, FeatureClusterer, InfoWindow, LicenseBox, OVERLAY, SupporterBox, Tooltip, _base,
+  var ADD, AjaxBalloon, Balloon, Box, CUTOUT, DELETE, DrawingControl, DrawingManager, EDIT, FeatureClusterer, InfoWindow, LicenseBox, NEW, OVERLAY, SupporterBox, Tooltip, _base,
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
@@ -21,9 +21,64 @@
 
   EDIT = 'edit';
 
+  DELETE = 'delete';
+
+  NEW = 'new';
+
   ADD = 'add';
 
   CUTOUT = 'cutout';
+
+  Box = (function() {
+
+    Box.prototype.position = google.maps.ControlPosition.RIGHT_BOTTOM;
+
+    function Box() {
+      this.box = $("<div>");
+      if (this.id != null) this.box.attr("id", this.id);
+    }
+
+    Box.prototype.setMap = function(map) {
+      this.map = map;
+      this.map.googleMap.controls[this.position].push(this.box.get(0));
+      return typeof this.handleMapEvents === "function" ? this.handleMapEvents() : void 0;
+    };
+
+    return Box;
+
+  })();
+
+  SupporterBox = (function(_super) {
+
+    __extends(SupporterBox, _super);
+
+    SupporterBox.prototype.id = "map-supporters";
+
+    function SupporterBox() {
+      SupporterBox.__super__.constructor.call(this);
+      this.box.append($("#map-supporters-content").show());
+    }
+
+    return SupporterBox;
+
+  })(Box);
+
+  LicenseBox = (function(_super) {
+
+    __extends(LicenseBox, _super);
+
+    LicenseBox.prototype.id = "map-license";
+
+    LicenseBox.prototype.position = google.maps.ControlPosition.BOTTOM_LEFT;
+
+    function LicenseBox() {
+      LicenseBox.__super__.constructor.call(this);
+      this.box.html('Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.');
+    }
+
+    return LicenseBox;
+
+  })(Box);
 
   DrawingManager = (function() {
 
@@ -67,9 +122,9 @@
     };
 
     DrawingManager.prototype.setMode = function(mode) {
+      var _ref;
       this.mode = mode;
-      console.log(this.mode, this.feature.getGeometryType(), OVERLAY[this.feature.getGeometryType()]);
-      this.manager.setDrawingMode(this.mode === ADD || (this.mode === CUTOUT && this.feature.getGeometryType() === komoo.geometries.types.POLYGON) ? OVERLAY[this.feature.getGeometryType()] : null);
+      this.manager.setDrawingMode(((_ref = this.mode) === ADD || _ref === NEW) || (this.mode === CUTOUT && this.feature.getGeometryType() === komoo.geometries.types.POLYGON) ? OVERLAY[this.feature.getGeometryType()] : null);
       if (this.mode === CUTOUT && this.feature.getGeometryType() !== komoo.geometries.types.POLYGON) {
         return this.mode = EDIT;
       }
@@ -83,13 +138,16 @@
       komoo.event.addListener(this.map, 'edit_feature', function(feature) {
         return _this.editFeature(feature);
       });
-      komoo.event.addListener(this.map, 'drawing_started', function(feature) {
-        return _this.disableComponents();
-      });
       komoo.event.addListener(this.map, 'drawing_finished', function(feature) {
         _this.feature.setEditable(false);
         _this.feature.updateIcon();
-        return _this.enableComponents();
+        return _this.setMode(null);
+      });
+      komoo.event.addListener(this.map, 'finish_drawing', function() {
+        return komoo.event.trigger(_this.map, 'drawing_finished', _this.feature, true);
+      });
+      komoo.event.addListener(this.map, 'cancel_drawing', function() {
+        return komoo.event.trigger(_this.map, 'drawing_finished', _this.feature, false);
       });
       return komoo.event.addListener(this.map, 'mode_changed', function(mode) {
         return _this.setMode(mode);
@@ -99,27 +157,26 @@
     DrawingManager.prototype.handleManagerEvents = function() {
       var _this = this;
       return komoo.event.addListener(this.manager, 'overlaycomplete', function(e) {
-        var orientation, orientationAdded, path, paths, sArea, sAreaAdded, _ref, _ref2, _ref3;
+        var orientation, orientationAdded, path, paths, sArea, sAreaAdded, _ref, _ref2, _ref3, _ref4, _ref5, _ref6;
         path = (_ref = e.overlay) != null ? typeof _ref.getPath === "function" ? _ref.getPath() : void 0 : void 0;
-        if (path && ((_ref2 = _this.mode) === ADD || _ref2 === CUTOUT) && ((_ref3 = e.overlay) != null ? _ref3.getPaths : void 0)) {
+        if (path && ((_ref2 = _this.mode) === ADD || _ref2 === NEW || _ref2 === CUTOUT) && ((_ref3 = e.overlay) != null ? _ref3.getPaths : void 0)) {
           paths = _this.feature.getGeometry().getPaths();
-          console.log('-->', paths);
           if ((paths != null ? paths.length : void 0) > 0) {
             sArea = google.maps.geometry.spherical.computeSignedArea(path);
             sAreaAdded = google.maps.geometry.spherical.computeSignedArea(paths.getAt(0));
             orientation = sArea / Math.abs(sArea);
             orientationAdded = sAreaAdded / Math.abs(sAreaAdded);
-            if ((orientation === orientationAdded && _this.mode === CUTOUT) || (orientation !== orientationAdded && _this.mode === ADD)) {
+            if ((orientation === orientationAdded && _this.mode === CUTOUT) || (orientation !== orientationAdded && ((_ref4 = _this.mode) === ADD || _ref4 === NEW))) {
               path = new google.maps.MVCArray(path.getArray().reverse());
             }
           }
           paths.push(path);
           _this.feature.getGeometry().setPaths(paths);
           e.overlay.setMap(null);
-        } else if (_this.mode === ADD && e.overlay.getPosition) {
+        } else if (((_ref5 = _this.mode) === ADD || _ref5 === NEW) && e.overlay.getPosition) {
           _this.feature.getGeometry().addMarker(e.overlay);
           _this.feature.updateIcon(100);
-        } else if (_this.mode === ADD && e.overlay.getPath) {
+        } else if (((_ref6 = _this.mode) === ADD || _ref6 === NEW) && e.overlay.getPath) {
           _this.feature.getGeometry().addPolyline(e.overlay, true);
         }
         _this.map.setMode(EDIT);
@@ -127,40 +184,13 @@
       });
     };
 
-    DrawingManager.prototype.disableComponents = function() {
-      var component, _i, _len, _ref, _results;
-      if (this.enabled === false) return;
-      _ref = ['infoWindow', 'tooltip'];
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        component = _ref[_i];
-        console.log(component);
-        this.componentOriginalStatus[component] = this.map.getComponentsStatus(component) === 'enabled';
-        _results.push(this.map.disableComponents(component));
-      }
-      return _results;
-    };
-
-    DrawingManager.prototype.enableComponents = function() {
-      var component, enabled, _ref, _results;
-      if (this.enabled === false) return;
-      _ref = this.componentOriginalStatus;
-      _results = [];
-      for (component in _ref) {
-        enabled = _ref[component];
-        if (enabled) {
-          _results.push(this.map.enableComponents(component));
-        } else {
-          _results.push(void 0);
-        }
-      }
-      return _results;
-    };
-
     DrawingManager.prototype.editFeature = function(feature) {
       var options;
       this.feature = feature;
       if (this.enabled === false) return;
+      this.feature.setMap(this.map, {
+        geometry: true
+      });
       this.feature.setEditable(true);
       options = {};
       options["" + OVERLAY[this.feature.getGeometryType()] + "Options"] = this.feature.getGeometry().getOverlayOptions({
@@ -174,13 +204,120 @@
 
     DrawingManager.prototype.drawFeature = function(feature) {
       this.feature = feature;
+      if (this.enabled === false) return;
       this.editFeature(this.feature);
-      return this.map.setMode(ADD);
+      return this.map.setMode(NEW);
     };
 
     return DrawingManager;
 
   })();
+
+  DrawingControl = (function(_super) {
+
+    __extends(DrawingControl, _super);
+
+    DrawingControl.prototype.id = "map-drawing-box";
+
+    DrawingControl.prototype.position = google.maps.ControlPosition.TOP_LEFT;
+
+    function DrawingControl() {
+      DrawingControl.__super__.constructor.call(this);
+      this.box.hide();
+      this.box.html("<div class=\"map-panel\" id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-finish\">Concluir</div>\n    <div class=\"map-button\" id=\"drawing-control-cancel\">Cancelar</div>\n  </div>\n</div>");
+      this.handleBoxEvents();
+    }
+
+    DrawingControl.prototype.handleMapEvents = function() {
+      var _this = this;
+      komoo.event.addListener(this.map, 'drawing_started', function(feature) {
+        return _this.open(feature);
+      });
+      komoo.event.addListener(this.map, 'drawing_finished', function(feature) {
+        return _this.close();
+      });
+      return komoo.event.addListener(this.map, 'mode_changed', function(mode) {
+        return _this.setMode(mode);
+      });
+    };
+
+    DrawingControl.prototype.handleBoxEvents = function() {
+      var _this = this;
+      $("#drawing-control-finish", this.box).click(function() {
+        return komoo.event.trigger(_this.map, 'finish_drawing');
+      });
+      return $("#drawing-control-cancel", this.box).click(function() {
+        return komoo.event.trigger(_this.map, 'cancel_drawing');
+      });
+    };
+
+    DrawingControl.prototype.handleButtonEvents = function() {
+      var _this = this;
+      $("#drawing-control-add", this.box).click(function() {
+        return _this.map.setMode(_this.mode !== ADD ? ADD : EDIT);
+      });
+      $("#drawing-control-cutout", this.box).click(function() {
+        return _this.map.setMode(_this.mode !== CUTOUT ? CUTOUT : EDIT);
+      });
+      return $("#drawing-control-delete", this.box).click(function() {
+        return _this.map.setMode(_this.mode !== DELETE ? DELETE : EDIT);
+      });
+    };
+
+    DrawingControl.prototype.setMode = function(mode) {
+      this.mode = mode;
+      if (this.mode === NEW) {
+        $("#drawing-control-content", this.box).hide();
+      } else {
+        $("#drawing-control-content", this.box).show();
+      }
+      $(".map-button.active", this.box).removeClass("active");
+      return $("#drawing-control-" + (this.mode.toLowerCase()), this.box).addClass("active");
+    };
+
+    DrawingControl.prototype.getTitle = function() {
+      var geometry, title, _ref, _ref2;
+      if (this.feature.getGeometryType() === komoo.geometries.types.POLYGON) {
+        geometry = 'polygon';
+        title = gettext('Add shape');
+      } else if ((_ref = this.feature.getGeometryType()) === komoo.geometries.types.LINESTRING || _ref === komoo.geometries.types.MULTILINESTRING) {
+        geometry = 'linestring';
+        title = gettext('Add line');
+      } else if ((_ref2 = this.feature.getGeometryType()) === komoo.geometries.types.POINT || _ref2 === komoo.geometries.types.MULTIPOINT) {
+        geometry = 'point';
+        title = gettext('Add point');
+      }
+      return "<i class=\"icon-" + geometry + " middle\"></i><span class=\"middle\">" + title + "</span>";
+    };
+
+    DrawingControl.prototype.getContent = function() {
+      var add, content, cutout, remove;
+      add = "<div class=\"map-button\" id=\"drawing-control-add\"><i class=\"icon-komoo-plus middle\"></i><span class=\"middle\">" + (gettext('Sum')) + "</span></div>";
+      cutout = "<div class=\"map-button\" id=\"drawing-control-cutout\"><i class=\"icon-komoo-minus middle\"></i><span class=\"middle\">" + (gettext('Cutout')) + "</span></div>";
+      remove = "<div class=\"map-button\" id=\"drawing-control-delete\"><i class=\"icon-komoo-trash middle\"></i></div>";
+      content = add;
+      if (this.feature.getGeometryType() === komoo.geometries.types.POLYGON) {
+        content += cutout;
+      }
+      content += remove;
+      return content;
+    };
+
+    DrawingControl.prototype.open = function(feature) {
+      this.feature = feature;
+      $("#drawing-control-title", this.box).html(this.getTitle());
+      $("#drawing-control-content", this.box).html(this.getContent());
+      this.handleButtonEvents();
+      return this.box.show();
+    };
+
+    DrawingControl.prototype.close = function() {
+      return this.box.hide();
+    };
+
+    return DrawingControl;
+
+  })(Box);
 
   Balloon = (function() {
 
@@ -210,6 +347,16 @@
       }));
     };
 
+    Balloon.prototype.handleMapEvents = function() {
+      var _this = this;
+      komoo.event.addListener(this.map, 'drawing_started', function(feature) {
+        return _this.disable();
+      });
+      return komoo.event.addListener(this.map, 'drawing_finished', function(feature) {
+        return _this.enable();
+      });
+    };
+
     Balloon.prototype.setInfoBox = function(infoBox) {
       this.infoBox = infoBox;
     };
@@ -224,7 +371,7 @@
     };
 
     Balloon.prototype.disable = function() {
-      this.close();
+      this.close(false);
       return this.enabled = false;
     };
 
@@ -256,7 +403,7 @@
           body: content
         };
       }
-      this.title.html(content.url ? "<a href=\"" + content.url + "\">" + content.title + "</a>" : content.title);
+      this.title.html(content.url ? "<a href=\"" + content.url + "'\">" + content.title + "</a>" : content.title);
       return this.body.html(content.body);
     };
 
@@ -337,7 +484,7 @@
       title = "";
       feature = options.feature;
       if (feature) {
-        title = feature.getProperty("type") === "OrganizationBranch" ? feature.getProperty("organization_name") + " - " + +feature.getProperty("name")(" - " + feature.getProperty("name")) : feature.getProperty("name");
+        title = feature.getProperty("type" === "OrganizationBranch" && feature.getProperty("organization_name")) ? feature.getProperty("organization_name") + " - " + feature.getProperty("name") : feature.getProperty("name");
       }
       return {
         title: title,
@@ -404,10 +551,11 @@
       return (_ref2 = this.feature) != null ? _ref2.displayTooltip = false : void 0;
     };
 
-    InfoWindow.prototype.close = function() {
+    InfoWindow.prototype.close = function(enableTooltip) {
       var _ref;
+      if (enableTooltip == null) enableTooltip = true;
       if ((_ref = this.feature) != null) _ref.displayTooltip = true;
-      this.map.enableComponents('tooltip');
+      if (enableTooltip) this.map.enableComponents('tooltip');
       return InfoWindow.__super__.close.call(this);
     };
 
@@ -435,6 +583,7 @@
 
     InfoWindow.prototype.handleMapEvents = function() {
       var _this = this;
+      InfoWindow.__super__.handleMapEvents.call(this);
       return komoo.event.addListener(this.map, 'feature_click', function(e, feature) {
         return setTimeout(function() {
           return _this.open({
@@ -481,6 +630,7 @@
 
     Tooltip.prototype.handleMapEvents = function() {
       var _this = this;
+      Tooltip.__super__.handleMapEvents.call(this);
       komoo.event.addListener(this.map, 'feature_mousemove', function(e, feature) {
         var delay;
         clearTimeout(_this.timer);
@@ -661,56 +811,6 @@
 
   })();
 
-  Box = (function() {
-
-    Box.prototype.position = google.maps.ControlPosition.RIGHT_BOTTOM;
-
-    function Box() {
-      this.box = $("<div>");
-      if (this.id != null) this.box.attr("id", this.id);
-    }
-
-    Box.prototype.setMap = function(map) {
-      this.map = map;
-      return this.map.googleMap.controls[this.position].push(this.box.get(0));
-    };
-
-    return Box;
-
-  })();
-
-  SupporterBox = (function(_super) {
-
-    __extends(SupporterBox, _super);
-
-    SupporterBox.prototype.id = "map-supporters";
-
-    function SupporterBox() {
-      SupporterBox.__super__.constructor.call(this);
-      this.box.append($("#map-supporters-content").show());
-    }
-
-    return SupporterBox;
-
-  })(Box);
-
-  LicenseBox = (function(_super) {
-
-    __extends(LicenseBox, _super);
-
-    LicenseBox.prototype.id = "map-license";
-
-    LicenseBox.prototype.position = google.maps.ControlPosition.BOTTOM_LEFT;
-
-    function LicenseBox() {
-      LicenseBox.__super__.constructor.call(this);
-      this.box.html('Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.');
-    }
-
-    return LicenseBox;
-
-  })(Box);
-
   window.komoo.controls = {
     DrawingManager: DrawingManager,
     Balloon: Balloon,
@@ -722,6 +822,9 @@
     LicenseBox: LicenseBox,
     makeDrawingManager: function(options) {
       return new DrawingManager(options);
+    },
+    makeDrawingControl: function(options) {
+      return new DrawingControl(options);
     },
     makeInfoWindow: function(options) {
       return new InfoWindow(options);

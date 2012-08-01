@@ -1,5 +1,6 @@
 (function() {
   var AjaxEditor, AjaxMap, Editor, Map, Preview, _base,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -34,6 +35,7 @@
 
     function Map(options) {
       this.options = options != null ? options : {};
+      this.addFeature = __bind(this.addFeature, this);
       this.element = document.getElementById(this.options.elementId);
       this.features = komoo.collections.makeFeatureCollectionPlus({
         map: this
@@ -60,7 +62,16 @@
       }) : void 0;
     };
 
-    Map.prototype.handleEvents = function() {};
+    Map.prototype.handleEvents = function() {
+      var _this = this;
+      return komoo.event.addListener(this, "drawing_finished", function(feature, status) {
+        if (status === false) {
+          return _this.revertFeature(feature);
+        } else if (!(feature.getProperty("id") != null)) {
+          return _this.addFeature(feature);
+        }
+      });
+    };
 
     Map.prototype.addComponent = function(component, type) {
       var _base2;
@@ -169,13 +180,24 @@
       });
     };
 
-    Map.prototype.makeFeature = function(geojson) {
+    Map.prototype.makeFeature = function(geojson, attach) {
       var feature;
+      if (attach == null) attach = true;
       feature = komoo.features.makeFeature(geojson, this.featureTypes);
-      this.handleFeatureEvents(feature);
-      this.features.push(feature);
+      if (attach) this.addFeature(feature);
       komoo.event.trigger(this, 'feature_created', feature);
       return feature;
+    };
+
+    Map.prototype.addFeature = function(feature) {
+      this.handleFeatureEvents(feature);
+      return this.features.push(feature);
+    };
+
+    Map.prototype.revertFeature = function(feature) {
+      if (feature.getProperty("id") != null) {} else {
+        return feature.setMap(null);
+      }
     };
 
     Map.prototype.getFeatures = function() {
@@ -211,8 +233,9 @@
         _this = this;
       if (panTo == null) panTo = false;
       if (attach == null) attach = true;
-      if (!((geojson != null ? geojson.type : void 0) != null)) return [];
-      if (!geojson.type === 'FeatureCollection') return [];
+      if (!((geojson != null ? geojson.type : void 0) != null) || !geojson.type === 'FeatureCollection') {
+        return [];
+      }
       features = komoo.collections.makeFeatureCollection({
         map: this
       });
@@ -220,7 +243,7 @@
         _ref.forEach(function(geojsonFeature) {
           var feature;
           feature = _this.features.getById(geojsonFeature.properties.type, geojsonFeature.properties.id);
-          if (feature == null) feature = _this.makeFeature(geojsonFeature);
+          if (feature == null) feature = _this.makeFeature(geojsonFeature, attach);
           features.push(feature);
           if (attach) return feature.setMap(_this);
         });
@@ -346,7 +369,8 @@
 
     function AjaxEditor(options) {
       AjaxEditor.__super__.constructor.call(this, options);
-      this.addComponent(komoo.controls.makeDrawingManager(), 'drawingManager');
+      this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
+      this.addComponent(komoo.controls.makeDrawingControl(), 'drawing');
     }
 
     return AjaxEditor;

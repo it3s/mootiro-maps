@@ -44,6 +44,11 @@ class Map
             @featureTypes[type.type] = type
 
     handleEvents: ->
+        komoo.event.addListener @, "drawing_finished", (feature, status) =>
+            if status is false
+                @revertFeature feature
+            else if not feature.getProperty("id")?
+                @addFeature feature
 
     addComponent: (component, type = 'generic') ->
         component.setMap @
@@ -114,12 +119,21 @@ class Map
             komoo.event.addListener feature, eventName, (e) =>
                 komoo.event.trigger @, "feature_#{eventName}", e, feature
 
-    makeFeature: (geojson) ->
+    makeFeature: (geojson, attach = true) ->
         feature = komoo.features.makeFeature geojson, @featureTypes
-        @handleFeatureEvents feature
-        @features.push feature
+        if attach then @addFeature feature
         komoo.event.trigger @, 'feature_created', feature
         feature
+
+    addFeature: (feature) =>
+        @handleFeatureEvents feature
+        @features.push feature
+
+    revertFeature: (feature) ->
+        if feature.getProperty("id")?
+            # TODO: set the original geometry
+        else
+            feature.setMap null
 
     getFeatures: -> @features
 
@@ -137,9 +151,7 @@ class Map
     hideFeatures: (features = @features) -> features.hide()
 
     loadGeoJSON: (geojson, panTo = false, attach = true) ->
-        if not geojson?.type?
-            return []
-        if not geojson.type is 'FeatureCollection'
+        if not geojson?.type? or not geojson.type is 'FeatureCollection'
             return []
 
         features = komoo.collections.makeFeatureCollection map: @
@@ -149,11 +161,10 @@ class Map
             feature = @features.getById geojsonFeature.properties.type,
                 geojsonFeature.properties.id
             # Otherwise create it
-            feature ?= @makeFeature geojsonFeature
+            feature ?= @makeFeature geojsonFeature, attach
             features.push feature
 
-            if attach
-                feature.setMap @
+            if attach then feature.setMap @
 
         if panTo and features.getAt(0)?.getBounds()
             @googleMap.fitBounds features.getAt(0).getBounds()
@@ -234,7 +245,8 @@ class AjaxEditor extends AjaxMap
     constructor: (options) ->
         super options
 
-        @addComponent komoo.controls.makeDrawingManager(), 'drawingManager'
+        @addComponent komoo.controls.makeDrawingManager(), 'drawing'
+        @addComponent komoo.controls.makeDrawingControl(), 'drawing'
 
 
 
