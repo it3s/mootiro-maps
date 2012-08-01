@@ -12,6 +12,8 @@ urlpatterns = patterns('main.views',
     url(r'^komoo_search/$', 'komoo_search', name='komoo_search'),
     url(r'^send_error_report/$', 'send_error_report', name='send_error_report'),
     url(r'^permalink/(?P<identifier>\w+)/?$', 'permalink', name='permalink'),
+    url(r'^map/get_geojson_from_hashlink/?$', 'get_geojson_from_hashlink', 
+        name='get_geojson_from_hashlink'),
 )
 
 if settings.DEBUG:

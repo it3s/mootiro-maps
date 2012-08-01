@@ -51,7 +51,10 @@
                   {{ org.name }}
                 </a>
               {% endif %}
-               <a class="small" href="#">{% trans 'see on the map' %}</a>
+                {# <a data-geojson="{% geojson org %}" href="#" class="small preview-on-map list-map-preview"> #}
+                {#     <i class="icon-see-on-map"></i> #}
+                {# </a> #}
+
             </div>
             <div>
               {% vote org %}
@@ -85,6 +88,8 @@
                   {% for com in org.community.all|slice:'6' %}
                     <a href="/{{ com.slug }}/about/">{{ com.name }}</a>
                     {% if not forloop.last %},&nbsp; {% endif %}
+                  {% empty %}
+                    nenhuma comunidade cadastrada
                   {% endfor %}
                   {% if org.community.count > 6 %}
                     {% blocktrans with diff=org.community.count|add:'-6' %} and {{ diff }} more {% endblocktrans %}

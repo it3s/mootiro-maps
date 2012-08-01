@@ -1,7 +1,10 @@
+{% load i18n %}
 <div class="comments-summary">
-  {% if num_comments == 1 %}
-    ({{ num_comments }} comment)
-  {% else %}
-    ({{ num_comments }} comments)
-  {% endif %}
+    {% if num_comments %}
+        {% if num_comments == 1 %}
+            ({{ num_comments }} {% trans 'comment' %})
+        {% else %}
+            ({{ num_comments }} {% trans 'comments' %})
+        {% endif %}
+    {% endif %}
 </div>

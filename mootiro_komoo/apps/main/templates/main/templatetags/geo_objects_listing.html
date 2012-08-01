@@ -23,16 +23,16 @@
     {{ form.need_categories }}
   </li>
   {% endif %}
-  <li class="organizations">
-    <div class="item">
-      <div class="img-holder" data-object-type="OrganizationBranch">{{ form.organizations }}</div>
-      {% if not hide_names %}<span>{% trans "Organizations" %}</span>{% endif %}
-    </div>
-  </li>
   <li class="resources">
     <div class="item">
       <div class="img-holder" data-object-type="Resource">{{ form.resources }}</div>
       {% if not hide_names %}<span>{% trans "Resources" %}</span>{% endif %}
+    </div>
+  </li>
+  <li class="organizations">
+    <div class="item">
+      <div class="img-holder" data-object-type="OrganizationBranch">{{ form.organizations }}</div>
+      {% if not hide_names %}<span>{% trans "Organizations" %}</span>{% endif %}
     </div>
   </li>
 </ul>

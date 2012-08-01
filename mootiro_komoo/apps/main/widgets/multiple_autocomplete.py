@@ -74,7 +74,7 @@ class MultipleAutocompleteBase(forms.TextInput):
         if value:
             strings = [v if type(v) == unicode else self.field_to_widget(v) \
                         for v in value]
-            final_attrs['value'] = ", ".join([escape(s) for s in strings])
+            final_attrs['value'] = ", ".join(strings)
 
         html = u"""
         <input %(attrs)s"/>

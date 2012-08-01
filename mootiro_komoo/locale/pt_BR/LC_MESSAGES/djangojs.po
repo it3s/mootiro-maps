@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-10 17:32-0300\n"
+"POT-Creation-Date: 2012-07-30 18:58-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -17,155 +17,107 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: apps/komoo_map/static/js/komoo_map.js:522
-msgid "Clean"
-msgstr "Limpo"
-
-#: apps/komoo_map/static/js/komoo_map.js:1443
+#: apps/komoo_map/static/js/komoo_map.js:981
 msgid "Edit"
 msgstr "Editar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1585
-#: apps/komoo_map/static/js/komoo_map.js:1727
+#: apps/komoo_map/static/js/komoo_map.js:1112
 msgid "Add shape"
 msgstr "Adicionar área"
 
-#: apps/komoo_map/static/js/komoo_map.js:1586
-#: apps/komoo_map/static/js/komoo_map.js:1731
+#: apps/komoo_map/static/js/komoo_map.js:1113
 msgid "Add line"
 msgstr "Adicionar linha"
 
-#: apps/komoo_map/static/js/komoo_map.js:1587
-#: apps/komoo_map/static/js/komoo_map.js:1735
+#: apps/komoo_map/static/js/komoo_map.js:1114
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: apps/komoo_map/static/js/komoo_map.js:1727
-msgid "Draw a shape"
-msgstr "Desenhar uma área"
-
-#: apps/komoo_map/static/js/komoo_map.js:1731
-msgid "Draw a line"
-msgstr "Desenhar uma linha"
-
-#: apps/komoo_map/static/js/komoo_map.js:1735
-msgid "Add a marker"
-msgstr "Adicionar um marcador"
-
-#: apps/komoo_map/static/js/komoo_map.js:1739
-msgid "Add new..."
-msgstr "Adicionar..."
-
-#: apps/komoo_map/static/js/komoo_map.js:1743
-#: apps/komoo_map/static/js/komoo_map.js:1851
+#: apps/komoo_map/static/js/komoo_map.js:1264
 msgid "Add"
 msgstr "Adicionar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1743
+#: apps/komoo_map/static/js/komoo_map.js:1264
 msgid "Add another region"
 msgstr "Adicionar outra região"
 
-#: apps/komoo_map/static/js/komoo_map.js:1755
+#: apps/komoo_map/static/js/komoo_map.js:1276
 msgid "Cut out"
 msgstr "Cortar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1755
+#: apps/komoo_map/static/js/komoo_map.js:1276
 msgid "Cut out a hole from a region"
 msgstr "Adicionar um buraco a região"
 
-#: apps/komoo_map/static/js/komoo_map.js:1767
+#: apps/komoo_map/static/js/komoo_map.js:1288
 #: apps/moderation/static/js/moderation.js:259
 msgid "Delete"
 msgstr "Apagar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1767
+#: apps/komoo_map/static/js/komoo_map.js:1288
 msgid "Delete a region"
 msgstr "Apagar uma região"
 
-#: apps/komoo_map/static/js/komoo_map.js:1850
-msgid "Filter"
-msgstr "Filtrar"
-
-#: apps/komoo_map/static/js/komoo_map.js:1855
-msgid "Please log in."
-msgstr "Por favor, entre no sistema."
-
-#: apps/komoo_map/static/js/komoo_map.js:1952
+#: apps/komoo_map/static/js/komoo_map.js:1543
 msgid "Close"
 msgstr "Fechar"
 
-#: apps/komoo_map/static/js/komoo_map.js:1979
+#: apps/komoo_map/static/js/komoo_map.js:1570
 msgid "Title"
 msgstr "Título"
 
-#: apps/komoo_map/static/js/komoo_map.js:1981
+#: apps/komoo_map/static/js/komoo_map.js:1572
 msgid "Finish"
 msgstr "Concluir"
 
-#: apps/komoo_map/static/js/komoo_map.js:1982
+#: apps/komoo_map/static/js/komoo_map.js:1573
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: apps/komoo_map/static/js/map/controls.js:55
+#: apps/komoo_map/static/js/map/controls.js:129
 #, perl-format
-msgid "%s resident"
-msgid_plural "%s residents"
-msgstr[0] "%s habitante"
-msgstr[1] "%s habitantes"
+msgid "%s Community"
+msgid_plural "%s Communities"
+msgstr[0] "Comunidade"
+msgstr[1] "Comunidade"
 
-#: apps/komoo_map/static/js/map/controls.js:58
-msgid "No population provided"
-msgstr "População não fornecida"
+#: apps/komoo_map/static/js/map/controls.js:193
+msgid "Loading..."
+msgstr "Carregando..."
 
-#: apps/main/static/js/komoo_search.js:11
-#: apps/main/static/js/komoo_search.org.js:9
+#: apps/komoo_map/static/js/map/maptypes.js:56
+msgid "Clean"
+msgstr "Limpo"
+
+#: apps/main/static/js/komoo_search.js:16
 msgid "Communities"
 msgstr "Comunidades"
 
-#: apps/main/static/js/komoo_search.js:12
-#: apps/main/static/js/komoo_search.org.js:10
+#: apps/main/static/js/komoo_search.js:17
 msgid "Needs"
 msgstr "Necessidades"
 
-#: apps/main/static/js/komoo_search.js:13
-#: apps/main/static/js/komoo_search.org.js:11
+#: apps/main/static/js/komoo_search.js:18
 msgid "Organizations"
 msgstr "Organizações"
 
-#: apps/main/static/js/komoo_search.js:14
-#: apps/main/static/js/komoo_search.org.js:12
+#: apps/main/static/js/komoo_search.js:19
 msgid "Resources"
 msgstr "Recursos"
 
-#: apps/main/static/js/komoo_search.js:15
-#: apps/main/static/js/komoo_search.org.js:13
+#: apps/main/static/js/komoo_search.js:20
 msgid "Investments"
 msgstr "Investimentos"
 
-#: apps/main/static/js/komoo_search.js:16
-#: apps/main/static/js/komoo_search.org.js:14
+#: apps/main/static/js/komoo_search.js:21
 msgid "Google Results"
 msgstr "Resultados do Google"
 
-#: apps/main/static/js/komoo_search.js:65
-#: apps/main/static/js/komoo_search.org.js:40
-#: apps/main/static/js/komoo_search.org.js:67
-#, perl-format
-msgid "%s result"
-msgid_plural "%s results"
-msgstr[0] "%s resultado"
-msgstr[1] "%s resultados"
-
-#: apps/main/static/js/komoo_search.js:77
-#: apps/main/static/js/komoo_search.org.js:85
-msgid "No results found!"
-msgstr "Nenhum resultado encontrado!"
-
-#: apps/main/static/js/komoo_utils.js:387
+#: apps/main/static/js/komoo_utils.js:388
 msgid "Yes"
 msgstr "Sim"
 
-#: apps/main/static/js/komoo_utils.js:392
+#: apps/main/static/js/komoo_utils.js:393
 msgid "No"
 msgstr "Não"
 
@@ -241,37 +193,103 @@ msgstr ""
 "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
 "adicione os dados da unidade que você marcou no mapa"
 
+#: apps/user_cas/static/js/profile.js:34 apps/user_cas/static/js/profile.js:35
+msgid "Organization"
+msgstr "Organização"
+
+#: apps/user_cas/static/js/profile.js:36
+msgid "Need"
+msgstr "Necessidade"
+
+#: apps/user_cas/static/js/profile.js:37
+msgid "Community"
+msgstr "Comunidade"
+
+#: apps/user_cas/static/js/profile.js:38
+msgid "Resource"
+msgstr "Recurso"
+
+#: apps/user_cas/static/js/profile.js:44
+msgid "at"
+msgstr "em"
+
+#: apps/user_cas/static/js/profile_update.js:26
+msgid "Are you sure you want to delete your signature for this object?"
+msgstr "Você tem certeza que deseja deletar sua assinatura para este objeto?"
+
+#: apps/user_cas/static/js/profile_update.js:124
+msgid "Seus dados públicos foram salvos com sucesso!"
+msgstr "Seus dados públicos foram salvos com sucesso!"
+
+#: apps/user_cas/static/js/profile_update.js:149
+msgid "Seus dados pessoais foram salvos com sucesso!"
+msgstr "Seus dados pessoais foram salvos com sucesso!"
+
 #: apps/vote/static/js/vote.js:38
 msgid "error : "
-msgstr "erro: "
+msgstr "erro : "
 
 #: lib/fileupload/static/plupload/komoo_plupload.js:163
 msgid "Are you sure you want to delete this file?"
 msgstr "Você deseja realmente apagar este arquivo?"
 
+#~ msgid "added"
+#~ msgstr "adicionado(a)"
+
+#~ msgid "edited"
+#~ msgstr "editado(a)"
+
+#~ msgid "discussed"
+#~ msgstr "discutido(a)"
+
+#~ msgid "deleted"
+#~ msgstr "deletado(a)"
+
+#~ msgid "Draw a shape"
+#~ msgstr "Desenhar uma área"
+
+#~ msgid "Draw a line"
+#~ msgstr "Desenhar uma linha"
+
+#~ msgid "Add a marker"
+#~ msgstr "Adicionar um marcador"
+
+#~ msgid "Add new..."
+#~ msgstr "Adicionar..."
+
+#~ msgid "Filter"
+#~ msgstr "Filtrar"
+
+#~ msgid "Please log in."
+#~ msgstr "Por favor, entre no sistema."
+
+#~ msgid "%s resident"
+#~ msgid_plural "%s residents"
+#~ msgstr[0] "%s habitante"
+#~ msgstr[1] "%s habitantes"
+
+#~ msgid "No population provided"
+#~ msgstr "População não fornecida"
+
+#~ msgid "%s result"
+#~ msgid_plural "%s results"
+#~ msgstr[0] "%s resultado"
+#~ msgstr[1] "%s resultados"
+
+#~ msgid "No results found!"
+#~ msgstr "Nenhum resultado encontrado!"
+
 #~ msgid "Search Results:"
 #~ msgstr "Resultados da Busca:"
-
-#~ msgid "Community"
-#~ msgstr "Comunidade"
 
 #~ msgid "Add Community"
 #~ msgstr "Adicionar comunidade"
 
-#~ msgid "Need"
-#~ msgstr "Necessidade"
-
 #~ msgid "Add Need"
 #~ msgstr "Adicionar necessidade"
 
-#~ msgid "Organization"
-#~ msgstr "Organização"
-
 #~ msgid "Add Organization"
 #~ msgstr "Adicionar organização"
-
-#~ msgid "Resource"
-#~ msgstr "Recurso"
 
 #~ msgid "Add Resource"
 #~ msgstr "Adicionar recurso"

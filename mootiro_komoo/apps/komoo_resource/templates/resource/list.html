@@ -55,8 +55,8 @@
             {% endfor %}
           {% endif %}
         </span>
-        <a class="small preview-on-map" href="#" data-geojson="{% geojson resource %}">
-          <img src="{{ STATIC_URL}}img/see-on-map.png">
+        <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson resource %}">
+            <i class="icon-see-on-map"></i>
         </a>
         <div class="view-list-reactions">
           {% vote resource %}

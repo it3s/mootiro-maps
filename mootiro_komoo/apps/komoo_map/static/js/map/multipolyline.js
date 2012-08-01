@@ -32,7 +32,7 @@ MultiPolyline = function (opt_options) {
     this.clickable_ = opt_options.clickable;
     this.zIndex = opt_options.zIndex || 0;
     this.strokeColor_ = opt_options.strokeColor || 'black';
-    this.strockOpacity_ = opt_options.strokeOpacity || 1;
+    this.strokOpacity_ = opt_options.strokeOpacity || 1;
     this.strokeWeight_ = opt_options.strokeWeight || 3;
 };
 
@@ -73,6 +73,15 @@ MultiPolyline.prototype.addPolyline = function (polyline, opt_keep) {
     var me = this;
     // TODO: verify if we already have added this polyline.
     this.polylines_.push(polyline);
+    if (opt_keep != true) {
+        polyline.setOptions({
+            clickable: this.clickable_,
+            zIndex: this.zIndex,
+            strokeColor: this.strokeColor_,
+            strokeOpacity: this.strokOpacity_,
+            strokeWeight: this.strokeWeight_
+        });
+    }
     /**
      * @name komoo.MultiLine#click
      * @event

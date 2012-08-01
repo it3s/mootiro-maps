@@ -6,7 +6,9 @@ POINT = 'Point'
 MULTIPOINT = 'MultiPoint'
 POLYGON = 'Polygon'
 POLYLINE = 'LineString'
+LINESTRING = 'LineString'
 MULTIPOLYLINE = 'MultiLineString'
+MULTILINESTRINGE = 'MultiLineString'
 
 defaults =
     BACKGROUND_COLOR: '#000'
@@ -14,6 +16,7 @@ defaults =
     BORDER_COLOR: '#000'
     BORDER_OPACITY: 0.6
     BORDER_SIZE: 1.5
+    BORDER_SIZE_HOVER: 2.5
     ZINDEX: 1
 
 
@@ -30,15 +33,13 @@ class Geometry
     setEditable: (flag) -> throw "Not Implemented"
 
     initEvents: (object = @overlay) ->
-        if not object
-            return
+        if not object then return
 
-        that = @
         eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
             'mouseout', 'mouseover', 'mouseup', 'rightclick']
-        eventsNames.forEach (eventName) ->
-            komoo.event.addListener object, eventName, (e, args) ->
-                komoo.event.trigger that, eventName, e, args
+        eventsNames.forEach (eventName) =>
+            komoo.event.addListener object, eventName, (e, args) =>
+                komoo.event.trigger @, eventName, e, args
 
     calculateBounds: ->
         n = s = w = e = null
@@ -132,15 +133,14 @@ class Point extends Geometry
 
     initEvents: (object = @overlay) ->
         super object
-        that = @
         eventsNames = ['animation_changed', 'clickable_changed',
             'cursor_changed', 'drag', 'dragend', 'daggable_changed',
             'dragstart', 'flat_changed', 'icon_changed', 'position_changed',
             'shadow_changed', 'shape_changed', 'title_changed',
             'visible_changed', 'zindex_changed']
-        eventsNames.forEach (eventName) ->
-            komoo.event.addListener object, eventName, (e, args) ->
-                komoo.event.trigger that, eventName, e, args
+        eventsNames.forEach (eventName) =>
+            komoo.event.addListener object, eventName, (e, args) =>
+                komoo.event.trigger @, eventName, e, args
 
     getCoordinates: -> @getArrayFromLatLng @overlay.getPosition()
     setCoordinates: (coords) ->
@@ -170,7 +170,7 @@ class MultiPoint extends Geometry
         if points.length >= len
             points.pop() for i in [0.. points.length - len - 1]
         else
-            points.push(new google.maps.Marker @options) for i in [0..len - points.length - 1]
+            @overlay.addMarker(new google.maps.Marker @options) for i in [0..len - points.length - 1]
 
     getCoordinates: -> @getArrayFromLatLng(point.getPosition()) for point in @getPoints()
     setCoordinates: (coords) ->
@@ -192,15 +192,25 @@ class MultiPoint extends Geometry
 
 
 class LineString extends Geometry
-    geometryType: POLYLINE
+    geometryType: LINESTRING
+
+    constructor: (options) ->
+        super options
+        @handleEvents()
 
     initOverlay: (options) ->
         @setOverlay new google.maps.Polyline
             clickable: options.clickable or on
             zIndex: options.zIndex or @getDefaultZIndex()
-            strockeColor: options.strokeColor or  @getBorderColor()
-            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeColor: options.strokeColor or  @getBorderColor()
+            strokOpacity: options.strokeOpacity or @getBorderOpacity()
             strokeWeight: options.strokeWeight or @getBorderSize()
+
+    handleEvents: ->
+        komoo.event.addListener @, 'mousemove', (e) =>
+            @setOptions strokeWeight: @getBorderSizeHover()
+        komoo.event.addListener @, 'mouseout', (e) =>
+            @setOptions strokeWeight: @getBorderSize()
 
     getCoordinates: -> @getArrayFromLatLng(latLng) for latLng in @overlay.getPath().getArray()
     setCoordinates: (coords) ->
@@ -212,11 +222,10 @@ class LineString extends Geometry
         @feature?.getBorderColor() or defaults.BORDER_COLOR
     getBorderOpacity: -> @feature?.getBorderOpacity() or defaults.BORDER_OPACITY
     getBorderSize: -> @feature?.getBorderSize() or defaults.BORDER_SIZE
+    getBorderSizeHover: -> @feature?.getBorderSizeHover() or defaults.BORDER_SIZE_HOVER
 
     getPath: -> @overlay.getPath()
     setPath: (path) -> @overlay.setPath(path)
-
-    addPolyline: (polyline) -> @overlay.addPolyline(polyline)
 
 
 class MultiLineString extends LineString
@@ -226,8 +235,8 @@ class MultiLineString extends LineString
         @setOverlay new MultiPolyline
             clickable: options.clickable or on
             zIndex: options.zIndex or @getDefaultZIndex()
-            strockeColor: options.strokeColor or @getBorderColor()
-            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeColor: options.strokeColor or @getBorderColor()
+            strokOpacity: options.strokeOpacity or @getBorderOpacity()
             strokeWeight: options.strokeWeight or @getBorderSize()
 
     guaranteeLines: (len) ->
@@ -235,7 +244,7 @@ class MultiLineString extends LineString
         if lines.length >= len
             lines.pop() for i in [0.. lines.length - len - 1]
         else
-            lines.push(new google.maps.Polyline @options) for i in [0..len - lines.length - 1]
+            @overlay.addPolyline(new google.maps.Polyline @options) for i in [0..len - lines.length - 1]
 
     getCoordinates: -> @getArrayFromLatLngArray(line.getPath().getArray()) for line in @overlay.getPolylines().getArray()
     setCoordinates: (coords) ->
@@ -246,6 +255,9 @@ class MultiLineString extends LineString
         for line, i in @getLines()
             line.setPath @getLatLngArrayFromArray coords[i]
 
+    getBorderSize: -> super() + 1
+    getBorderSizeHover: ->  super() + 1
+
     getPath: -> @getPaths().getAt(0)
     getPaths: -> @overlay.getPaths()
     setPaths: (paths) -> @overlay.setPaths(paths)
@@ -253,13 +265,11 @@ class MultiLineString extends LineString
     getLines: -> @overlay.getPolylines().getArray()
     setLines: (lines) -> @overlay.addPolylines(lines)
 
+    addPolyline: (polyline, keep) -> @overlay.addPolyline(polyline, keep)
+
 
 class Polygon extends LineString
     geometryType: POLYGON
-
-    constructor: (options) ->
-        super options
-        @handleEvents()
 
     initOverlay: (options) ->
         @setOverlay new google.maps.Polygon
@@ -268,15 +278,8 @@ class Polygon extends LineString
             fillColor: options.fillColor or @getBackgroundColor()
             fillOpacity: options.fillOpacity or  @getBackgroundOpacity()
             strokeColor: options.strokeColor or  @getBorderColor()
-            strockOpacity: options.strokeOpacity or @getBorderOpacity()
+            strokeOpacity: options.strokeOpacity or @getBorderOpacity()
             strokeWeight: options.strokeWeight or @getBorderSize()
-
-    handleEvents: ->
-        that = @
-        komoo.event.addListener @, 'mousemove', (e) ->
-            that.setOptions strokeWeight: 2.5
-        komoo.event.addListener @, 'mouseout', (e) ->
-            that.setOptions strokeWeight: that.getBorderSize()
 
     getBackgroundColor: -> @feature?.getBackgroundColor() or defaults.BACKGROUND_COLOR
     getBackgroundOpacity: -> @feature?.getBackgroundOpacity() or defaults.BACKGROUND_OPACITY

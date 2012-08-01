@@ -10,6 +10,10 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
+from django.core.serializers import serialize
+from django.core.serializers.json import DjangoJSONEncoder
+from django.utils import simplejson
+from django.db.models.query import QuerySet
 
 from markitup.templatetags.markitup_tags import render_markup
 
@@ -126,7 +130,17 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 
 @register.inclusion_tag('main/templatetags/history.html')
 def history(obj):
-    return dict(obj=obj)
+    if obj.creator:
+        creator_link = '<a href="/permalink/u{}">{}</a>'.format(
+                obj.creator.id, obj.creator.get_name)
+    else:
+        creator_link = ''
+    if hasattr(obj, 'last_editor') and obj.last_editor:
+        lasteditor_link = '<a href="/permalink/u{}">{}</a>'.format(
+                obj.last_editor.id, obj.last_editor.get_name)
+    else:
+        lasteditor_link = ''
+    return dict(obj=obj, creator_link=creator_link, last_editor=lasteditor_link)
 
 
 @register.inclusion_tag('main/templatetags/track_buttons.html', takes_context=True)
@@ -169,6 +183,15 @@ def taglist(obj, community=None):
     else:
         link = '#'
     return dict(object=obj, link=link, sorter=sorter)
+
+
+@register.filter
+def jsonify(object):
+    if isinstance(object, QuerySet):
+        return serialize('json', object)
+    return simplejson.dumps(object, cls=DjangoJSONEncoder)
+    # return simplejson.dumps(object)
+# jsonify.is_safe = True
 
 
 @register.filter
@@ -233,7 +256,7 @@ def _get_widgets_dict(obj):
     tag_widget = TaggitWidget(autocomplete_url="/%s/search_tags/" % obj)
     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
 
-    community_widget = Autocomplete(Community, '/community/search_by_name')
+    community_widget = Autocomplete(Community, '/community/search_by_name/')
     community_widget = "%s \n %s" % (str(community_widget.media),
                                      community_widget.render('community'))
 

@@ -19,22 +19,6 @@ if (!komoo.event) komoo.event = google.maps.event;
 komoo.CLEAN_MAPTYPE_ID = "clean";
 
 
-/**
- * @name komoo.GeometryType
- * @class Object that represents a item on Add tab of main panel.
- * @property {String} type An internal identifier.
- * @property {String[]} categories
- * @property {String} title The text displayed to user as a menu item.
- * @property {String} tooltip The text displayed on mouse over.
- * @property {String} color
- * @property {String} icon The icon url.
- * @property {google.maps.drawing.GeometryType[]} geometryTypes The geometry options displayed as submenu.
- * @property {String} formUrl The url used to load the form via ajax.
- *           This occurs when user click on Finish button.
- *           Please use dutils.urls.resolve instead of hardcode the address.
- * @property {boolean} disabled
- */
-
 komoo.GeometryType = {
     POINT: 'Point',
     MULTIPOINT: 'MultiPoint',
@@ -59,8 +43,6 @@ komoo.GeometryType = {
  * @property {google.maps.MapOptions} [googleMapOptions] The Google Maps map options.
  */
 komoo.MapOptions = {
-    clustererMaxZoom: 10,
-    polygonIconsMinZoom: 17,
     fetchUrl: "/get_geojson?",
     editable: true,
     useGeoLocation: false,
@@ -103,252 +85,11 @@ komoo.MapOptions = {
 };
 
 
-
-
-/**
- * @class Object used to get features from server for each tile
- *
- * @param {komoo.Map} komooMap
- * @property {komoo.Map} komooMap
- * @property {google.maps.Size} tileSize The tile size. Default: 256x256
- * @property {number} [maxZoom=32]
- * @property {String} name
- * @property {String} alt
- */
-komoo.ServerFetchMapType = function (komooMap) {
-    this.komooMap = komooMap;
-    this.addrLatLngCache = {};
-    this.tileSize = new google.maps.Size(256, 256);
-    this.maxZoom = 32;
-    this.name = "Server Data";
-    this.alt  = "Server Data Tile Map Type";
-};
-
-
-komoo.ServerFetchMapType.prototype.releaseTile = function (tile) {
-    var serverFetchMapType = this;
-    if (this.komooMap.fetchedTiles[tile.tileKey]) {
-        var bounds = serverFetchMapType.komooMap.googleMap.getBounds();
-        this.komooMap.fetchedTiles[tile.tileKey].features.forEach(function (feature, index, orig) {
-            if (feature.getBounds()) {
-                if (!bounds.intersects(feature.getBounds())) {
-                    feature.setMap(null);
-                } else if (!bounds.contains(feature.getBounds().getNorthEast()) ||
-                        !bounds.contains(feature.getBounds().getSouthWest())){
-                    serverFetchMapType.komooMap.keptFeatures.push(feature);
-                }
-            } else if (feature.getPosition) {
-                if (bounds.contains(feature.getPosition())) {
-                    feature.setMap(null);
-                }
-            }
-        });
-    }
-};
-
-
-komoo.ServerFetchMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
-    var me = this;
-    var div = ownerDocument.createElement("DIV");
-    var addr = this.getAddrLatLng(coord, zoom);
-    div.tileKey = addr;
-    if (this.komooMap.options.debug) {
-        // Display debug info.
-        $(div).css({
-            "width": this.tileSize.width + "px",
-            "height": this.tileSize.height + "px",
-            "border": "solid 1px #AAAAAA",
-            "overflow": "hidden",
-            "font-size": "9px"
-        });
-    }
-
-    // Verify if we already loaded this block.
-    if (this.komooMap.fetchedTiles[addr]) {
-        if (this.komooMap.options.debug) {
-            // Display debug info.
-            div.innerHTML = this.komooMap.fetchedTiles[addr].geojson;
-        }
-        this.komooMap.fetchedTiles[addr].features.forEach(function (feature, index, orig) {
-            feature.setMap(me.komooMap);
-            feature.updateIcon();
-        });
-        return div;
-    }
-    if (this.komooMap.options.fetchFeatures != false) {
-        $.ajax({
-            url: this.komooMap.options.fetchUrl + addr,
-            dataType: "json",
-            type: "GET",
-            success: function (data, textStatus, jqXHR) {
-                var features = me.komooMap.loadGeoJSON(JSON.parse(data), false);
-                me.komooMap.fetchedTiles[addr] = {
-                    geojson: data,
-                    features: features
-                };
-                if (me.komooMap.options.debug) {
-                    // Display debug info.
-                    div.innerHTML = data;
-                    $(div).css("border", "solid 1px #F00");
-                }
-                features.forEach(function (feature, index, orig) {
-                    feature.setMap(me.komooMap);
-                    feature.updateIcon();
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (window.console) console.error(textStatus);
-                var serverError = $("#server-error");
-                if (serverError.parent().length == 0) {
-                    serverError = $("<div>").attr("id", "server-error");
-                    $("body").append(serverError);
-                    var error = $("<div>").html(jqXHR.responseText)
-                    serverError.append(error); // FIXME: This is not user friendly
-                }
-            }
-        });
-    }
-    return div;
-};
-
-
-/**
- * Converts tile coords to LatLng and returns a url params.
- *
- * @param {google.maps.Point} coord Tile coordinates (x, y).
- * @param {number} zoom Zoom level.
- * @returns {String} The url params to get the data from server.
- */
-komoo.ServerFetchMapType.prototype.getAddrLatLng = function (coord, zoom) {
-    var key = "x=" + coord.x + ",y=" + coord.y + ",z=" + zoom
-    if (this.addrLatLngCache[key]) {
-        return this.addrLatLngCache[key];
-    }
-    var numTiles = 1 << zoom;
-    var projection = this.komooMap.googleMap.getProjection();
-    var point1 = new google.maps.Point(
-            (coord.x + 1) * this.tileSize.width / numTiles,
-            coord.y * this.tileSize.width / numTiles);
-    var point2 = new google.maps.Point(
-            coord.x * this.tileSize.width / numTiles,
-            (coord.y + 1) * this.tileSize.width / numTiles);
-    var ne = projection.fromPointToLatLng(point1);
-    var sw = projection.fromPointToLatLng(point2);
-    this.addrLatLngCache[key] = "bounds=" + ne.toUrlValue() + "," + sw.toUrlValue() + "&zoom=" + zoom;
-    return this.addrLatLngCache[key];
-};
-
-
-
-komoo.WikimapiaMapType = function (komooMap) {
-    this.komooMap = komooMap;
-    this.addrLatLngCache = {};
-    this.loadedFeatures = {};
-    this.tileSize = new google.maps.Size(256, 256);
-    this.maxZoom = 32;
-    this.name = "Wikimapia Data";
-    this.alt = "Wikimapia Data Tile Map Type";
-    this.key = "Add here your wikimapia key";
-};
-
-komoo.WikimapiaMapType.prototype.getAddrLatLng = function (coord, zoom) {
-    var key = "x=" + coord.x + ",y=" + coord.y
-    if (this.addrLatLngCache[key]) {
-        return this.addrLatLngCache[key];
-    }
-    var numTiles = 1 << zoom;
-    var projection = this.komooMap.googleMap.getProjection();
-    var point1 = new google.maps.Point(
-            (coord.x + 1) * this.tileSize.width / numTiles,
-            coord.y * this.tileSize.width / numTiles);
-    var point2 = new google.maps.Point(
-            coord.x * this.tileSize.width / numTiles,
-            (coord.y + 1) * this.tileSize.width / numTiles);
-    var ne = projection.fromPointToLatLng(point1);
-    var sw = projection.fromPointToLatLng(point2);
-    this.addrLatLngCache[key] = sw.lng() + "," + sw.lat() + "," + ne.lng() + "," + ne.lat();
-    return this.addrLatLngCache[key];
-};
-
-komoo.WikimapiaMapType.prototype.getTile = function (coord, zoom, ownerDocument) {
-    var me = this;
-
-    function createFeatures(json) {
-        var features = komoo.collections.makeFeatureCollection({map: me.komooMap});
-        var folder = json.folder;
-        folder.forEach(function (item, index, orig) {
-            var coords = [];
-            item.polygon.forEach(function (point, index, orig) {
-                coords.push(new google.maps.LatLng(point.y, point.x));
-            });
-            var polygon = new google.maps.Polygon({paths: [coords], fillColor: 'gray'});
-            polygon.wikimapia_id = item.id;
-            polygon.wikimapia_name = item.name;
-            features.push(polygon)
-        });
-        return features;
-    }
-
-    var div = ownerDocument.createElement("DIV");
-    var addr = this.getAddrLatLng(coord, zoom);
-    var url = "http://api.wikimapia.org/?function=box&bbox=" + addr + "&format=json&key=" + this.key;
-    div.tileKey = addr;
-    //if (this.komooMap.options.debug) {
-        // Display debug info.
-        $(div).css({
-            "width": this.tileSize.width + "px",
-            "height": this.tileSize.height + "px",
-            "border": "solid 1px #AAAAAA",
-            "overflow": "hidden",
-            "font-size": "9px"
-        });
-    //}
-
-    // Verify if we already loaded this block.
-    if (this.komooMap.fetchedTiles[addr]) {
-        //if (this.komooMap.options.debug) {
-            // Display debug info.
-            div.innerHTML = JSON.stringify(this.komooMap.fetchedTiles[addr].geojson);
-        //}
-        return div;
-    }
-    if (this.komooMap.options.fetchFeatures != false) {
-        $.ajax({
-            url: url,
-            dataType: "json",
-            type: "GET",
-            success: function (data, textStatus, jqXHR) {
-                var features = createFeatures(data);
-                me.komooMap.fetchedTiles[addr] = {
-                    json: data,
-                    features: features
-                };
-                features.forEach(function (feature, index, orig) {
-                    if (!me.loadedFeatures[feature.wikimapia_id]) {
-                        feature.setMap(me.komooMap);
-                        me.loadedFeatures[feature.wikimapia_id] = feature;
-                    }
-                });
-                //if (me.komooMap.options.debug) {
-                    // Display debug info.
-                    div.innerHTML = JSON.stringify(data);
-                    $(div).css("border", "solid 1px #F00");
-                //}
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                if (window.console) console.error(textStatus);
-            }
-        });
-    }
-    return div;
-};
-
 /** @namespace */
 komoo.Mode = {};
 /***/ komoo.Mode.NAVIGATE = "navigate";
 /***/ komoo.Mode.SELECT_CENTER = "select_center";
 /***/ komoo.Mode.DRAW = "draw";
-
 
 
 
@@ -375,7 +116,6 @@ komoo.EditMode = {};
  * @property {komoo.EditMode} editMode The current mode of edit feature. Possible values are cutout, add and delete.
  * @property {JQuery} editToolbar JQuery selector of edit toolbar.
  * @property {JQuery} event JQuery selector used to emit events.
- * @property {Object} fetchedTiles Cache the json and the features for each tile
  * @property {google.maps.Geocoder} geocoder  Google service to get addresses locations.
  * @property {google.maps.Map} googleMap The Google Maps map object.
  * @property {InfoBox | google.maps.InfoWindow} infoWindow
@@ -408,26 +148,19 @@ komoo.Map = function (element, options) {
     // TODO: init feature options
     // Initializing some properties.
     this.mode = komoo.Mode.NAVIGATE;
-    this.fetchedTiles = {};
-    this.loadedFeatures = {};
     this.options = $.extend(komoo.MapOptions, options);
     this.drawingManagerOptions = {};
     this.featureOptions = {};
-    this.features = komoo.collections.makeFeatureCollection({map: this});
-    this.keptFeatures = komoo.collections.makeFeatureCollection({map: this});
+    this.features = komoo.collections.makeFeatureCollectionPlus({map: this});
     this.newFeatures = komoo.collections.makeFeatureCollection({map: this});
     this.loadedFeatures = {};
-    this.featuresByType = {};
-    this.initFeaturesByTypeObject();
     // Creates a jquery selector to use the jquery events feature.
-    this.event = $("<div>");
+    this.event = $('#' + this.options.mapCanvasId);
     // Creates the Google Maps object.
     this.googleMap = new google.maps.Map(element, googleMapOptions);
     // Uses Tiles to get data from server.
-    this.serverFetchMapType = new komoo.ServerFetchMapType(this);
-    this.googleMap.overlayMapTypes.insertAt(0, this.serverFetchMapType);
-    this.wikimapiaMapType = new komoo.WikimapiaMapType(this);
-    //this.googleMap.overlayMapTypes.insertAt(0, this.wikimapiaMapType);
+    this.initProviders();
+    this.initMapTypes();
     // Create the simple version of toolbar.
     this.editToolbar = $("<div>").addClass("map-toolbar").css("margin", "5px");
     this.initControls();
@@ -446,49 +179,27 @@ komoo.Map = function (element, options) {
     if (komoo.onMapReady) {
         komoo.onMapReady(this);
     }
-
-    this.cleanMapType = new google.maps.StyledMapType([
-        {
-            featureType: "poi",
-            elementType: "all",
-            stylers: [
-                {visibility: "off"}
-            ]
-        },
-        {
-            featureType: "road",
-            elementType: "all",
-            stylers: [
-                {lightness: 70}
-            ]
-        },
-        {
-            featureType: "transit",
-            elementType: "all",
-            stylers: [
-                {lightness: 50}
-            ]
-        },
-        {
-            featureType: "water",
-            elementType: "all",
-            stylers: [
-                {lightness: 50}
-            ]
-        },
-        {
-            featureType: "administrative",
-            elementType: "labels",
-            stylers: [
-                {lightness: 30}
-            ]
-        }
-    ], {
-        name: gettext("Clean")
-    });
-
-    this.googleMap.mapTypes.set(komoo.CLEAN_MAPTYPE_ID, this.cleanMapType);
     this.initEvents();
+};
+
+komoo.Map.prototype.initMapTypes = function () {
+    this.cleanMapType = komoo.maptypes.makeCleanMapType();
+    this.addMapType(this.cleanMapType);
+};
+
+komoo.Map.prototype.addMapType = function (mapType) {
+    mapType.setMap(this);
+};
+
+komoo.Map.prototype.initProviders = function () {
+    if (this.options.fetchFeatures) {
+        this.featureProvider = komoo.providers.makeFeatureProvider();
+        this.addProvider(this.featureProvider);
+    }
+};
+
+komoo.Map.prototype.addProvider = function (provider) {
+    provider.setMap(this);
 };
 
 komoo.Map.prototype.initEvents = function (opt_object) {
@@ -534,7 +245,7 @@ komoo.Map.prototype.openTooltip = function (opts) {
             this.addPanel.is(":visible") ||
             this.infoWindow.isMouseover ||
             this.tooltip.feature == options.feature ||
-            options.feature == this.infoWindow.feature)
+            (options.feature && options.feature == this.infoWindow.feature))
         return;
 
     this.tooltip.open(options);
@@ -556,26 +267,24 @@ komoo.Map.prototype.initCustomControl = function () {
         if (this.options.displayClosePanel) {
             this.closePanel.show();
         }
-        this.mainPanel = this._createMainPanel();
-        if (!this.editable) {
-            this.mainPanel.hide();
-        }
-        //this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
-        //        this.mainPanel.get(0));
+        this._createMainPanel();
         this.addPanel = this._createAddPanel();
         this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
                 this.addPanel.get(0));
         this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
                 this.closePanel.get(0));
-        // Adds editor toolbar.
-        //this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
-        //        this.editToolbar.get(0));
 
         if (this.options.displaySupporter) {
             this.supportersBox = $("<div>");
             this.supportersBox.attr("id", "map-supporters");
             this.googleMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
                     this.supportersBox.get(0));
+
+            this.licenseBox = $("<div>");
+            this.licenseBox.attr("id", "map-license");
+            this.licenseBox.html('Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.');
+            this.googleMap.controls[google.maps.ControlPosition.BOTTOM_LEFT].push(
+                    this.licenseBox.get(0));
         }
     }
 };
@@ -593,61 +302,23 @@ komoo.Map.prototype.setSupportersContent = function (selector) {
  */
 komoo.Map.prototype.initMarkerClusterer = function () {
     var komooMap = this;
-    this.clusterMarkers = [];
     // Adds MarkerClusterer if available.
     if (window.MarkerClusterer && this.options.enableCluster) {
         if (window.console) console.log("Initializing Marker Clusterer support.");
-        this.clusterer = new MarkerClusterer(this.googleMap, [], {
-            gridSize: 20,
-            maxZoom: this.options.clustererMaxZoom,
-            minimumClusterSize: 1,
-            imagePath: "/static/img/cluster/communities",
-            imageSizes: [24, 29, 35, 41, 47]
-        });
-        google.maps.event.addListener(this.clusterer, 'mouseover', function (c) {
-            var markers = c.getMarkers();
-            var features = [];
-            markers.forEach(function (marker, index, orig) {
-                features.push(marker.feature);
-            });
+        this.clusterer = komoo.controls.makeFeatureClusterer({map: komooMap});
+        google.maps.event.addListener(this.clusterer, 'mouseover', function (features, center) {
+            var features = features.getArray();
             features.sort(function (a, b) {
                 return a.getProperty('lastUpdate') < b.getProperty('lastUpdate');
             });
             komooMap.openTooltip({feature: features[0],
                                   features: features,
-                                  position: c.getCenter()});
+                                  position: center});
         })
-        google.maps.event.addListener(this.clusterer, 'mouseout', function (c) {
+        google.maps.event.addListener(this.clusterer, 'mouseout', function (features) {
             komooMap.closeTooltip();
         })
     }
-};
-
-
-/**
- * Prepares the featuresByType property. Should not be called externally.
- */
-komoo.Map.prototype.initFeaturesByTypeObject = function () {
-    // TODO: Refactoring
-    var komooMap = this;
-    this.options.featureTypes.forEach(function (type, index, orig) {
-        var opts = {
-            map: komooMap
-        };
-        komooMap.featuresByType[type.type] = {categories: type.categories};
-        komooMap.featuresByType[type.type].categories.push("uncategorized");
-        komooMap.featuresByType[type.type].forEach = function (callback) {
-            this.categories.forEach(function (item, index, orig) {
-                callback(komooMap.featuresByType[type.type][item], item, orig);
-            });
-        };
-        komooMap.featuresByType[type.type]["uncategorized"] = komoo.collections.makeFeatureCollection(opts);
-        if (type.categories.length) {
-            type.categories.forEach(function(category, index_, orig_) {
-                komooMap.featuresByType[type.type][category] = komoo.collections.makeFeatureCollection(opts);
-            });
-        }
-    });
 };
 
 
@@ -656,25 +327,53 @@ komoo.Map.prototype.initFeaturesByTypeObject = function () {
  */
 komoo.Map.prototype.initStreetView = function () {
     if (window.console) console.log("Initializing StreetView support.");
-    this.streetViewPanel = $("<div>").addClass("map-panel");
-    this.googleMap.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
+    this.streetViewPanel = $("<div>").addClass("map-panel").height("100%").width("50%");
+    this.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
             this.streetViewPanel.get(0));
     this.streetViewPanel.hide();
+    this._createStreetViewObject();
 };
 
 
-komoo.Map.prototype.updateClusterers = function () {
-    // FIXME: This is not the best way to do the cluster feature.
-    var zoom = this.googleMap.getZoom();
-    if (this.clusterer) {
-        if (zoom < this.options.clustererMaxZoom) {
-            this.clusterer.addMarkers(this.clusterMarkers);
-        } else {
-            this.clusterer.clearMarkers();
-        }
+/**
+ * Initialize the Google Street View.
+ */
+komoo.Map.prototype._createStreetViewObject = function () {
+    var that = this;
+    var options = {
+        enableCloseButton: true,
+        visible: false
+    };
+    this.streetView = new google.maps.StreetViewPanorama(
+            this.streetViewPanel.get(0), options);
+    this.googleMap.setStreetView(this.streetView);
+    google.maps.event.addListener(this.streetView, "visible_changed", function () {
+        if (that.streetView.getVisible())
+            that.streetViewPanel.show();
+        else
+            that.streetViewPanel.hide();
+    });
+};
+
+
+/**
+ * Show a box containing the Google Street View layer.
+ * @param {boolean} flag
+ *        Sets to true to make Street View visible or false to hide.
+ * @param {google.maps.LatLng} position
+ */
+komoo.Map.prototype.setStreetView = function (flag, position) {
+    if (!position) {
+        position = this.googleMap.getCenter();
     }
+    this.streetView.setPosition(position);
+    if (flag) {
+        this.streetViewPanel.show();
+    } else {
+        this.streetViewPanel.hide();
+    }
+    this.streetView.setVisible(flag);
 };
-
 
 
 /**
@@ -695,21 +394,12 @@ komoo.Map.prototype.handleEvents = function () {
     });
 
     google.maps.event.addListener(this.googleMap, "idle", function () {
-        var bounds = komooMap.googleMap.getBounds();
-        if (komooMap.options.autoSaveLocation) {
+        if (komooMap.options.autoSaveLocation)
             komooMap.saveLocation();
-        }
-        komooMap.keptFeatures.forEach(function (feature, index, orig) {
-            if (!bounds.intersects(feature.getBounds())) {
-                feature.setMap(null);
-            }
-        });
-        komooMap.keptFeatures.clear();
     });
 
     google.maps.event.addListener(this.googleMap, "zoom_changed", function () {
         komooMap.closeTooltip();
-        komooMap.updateClusterers();
     });
 
     google.maps.event.addListener(this.googleMap, "projection_changed", function () {
@@ -889,7 +579,7 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
     if (!geoJSON.type) return; // geoJSON is invalid.
 
     if (geoJSON.type == "FeatureCollection") {
-        geoJsonFeatureCollection = geoJSON.features;
+        var geoJsonFeatureCollection = geoJSON.features;
     }
     var feature;
     if (!geoJsonFeatureCollection) {
@@ -914,23 +604,12 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
             if (opt_attach) {
                 feature.setMap(komooMap);
             }
-            var featuresByType = komooMap.featuresByType[feature.getProperties().type];
-            var categories = feature.getProperties().categories;
-            if (categories && categories.length) {
-                categories.forEach(function(category, index, orig) {
-                    if (featuresByType[category.name]) {
-                        featuresByType[category.name].push(feature);
-                    }
-                });
-            } else {
-                featuresByType["uncategorized"].push(feature);
-            }
             if (feature.getMarker()) {
                 google.maps.event.addListener(feature.getMarker(), "click", function () {
-                    komooMap.googleMap.fitBounds(feature.getBounds());
+                    //komooMap.googleMap.fitBounds(feature.getBounds());
                 });
-                if (feature.getProperties().type == "Community") {
-                    komooMap.clusterMarkers.push(feature.getMarker().getOverlay());
+                if (komooMap.clusterer && feature.getProperties().type == "Community") {
+                    komooMap.clusterer.push(feature);
                 }
             }
             feature.updateIcon();
@@ -942,6 +621,11 @@ komoo.Map.prototype.loadGeoJSON = function (geoJSON, panTo, opt_attach) {
 
     this._emit_geojson_loaded(geoJSON);
     return features;
+};
+
+
+komoo.Map.prototype.getBounds = function () {
+    return this.googleMap.getBounds();
 };
 
 
@@ -991,40 +675,19 @@ komoo.Map.prototype.getGeoJSON = function (opt_options) {
  * @returns {google.maps.MVCObject[]} features that matches the parameters.
  */
 komoo.Map.prototype.getFeaturesByType = function (type, opt_categories, opt_strict) {
-    var komooMap = this;
-    var features = new komoo.collections.makeFeatureCollection({map: this});
-    var categories = opt_categories;
-    if (!this.featuresByType[type]) {
-        return false;
-    }
-    if (!categories) {
-        categories = [];
-        this.featuresByType[type].forEach(function (features, category, orig) {
-            categories.push(category);
-        });
-    } else if (categories.length === 0) {
-        categories = ["uncategorized"];
-    }
-    categories.forEach(function (category, index, orig) {
-        if (komooMap.featuresByType[type][category]) {
-            komooMap.featuresByType[type][category].forEach(function (feature, index, orig) {
-                if (!opt_strict || !feature.getProperties().categories || feature.getProperties().categories.length == 1) {
-                    features.push(feature);
-                }
-            });
-        }
-    });
-    return features;
+    return this.features.getByType(type, opt_categories, opt_strict);
 };
 
 
 /**
- * Hides some features.
- * @property {google.maps.MVCObject[]} features
- * @returns {number} How many features were hidden.
+ * Makes visible features of specific type.
+ * @param {String} type
+ * @param {String[]} [opt_categories=[]]
+ * @param {boolean} [opt_strict=false]
+ * @returns {number} How many features were displayed.
  */
-komoo.Map.prototype.hideFeatures = function (features) {
-    return features.hide();
+komoo.Map.prototype.showFeaturesByType = function (type, opt_categories, opt_strict) {
+    return this.getFeaturesByType(type, opt_categories, opt_strict).show();
 };
 
 
@@ -1037,6 +700,16 @@ komoo.Map.prototype.hideFeatures = function (features) {
  */
 komoo.Map.prototype.hideFeaturesByType = function (type, opt_categories, opt_strict) {
     return this.getFeaturesByType(type, opt_categories, opt_strict).hide();
+};
+
+
+/**
+ * Hides some features.
+ * @property {google.maps.MVCObject[]} features
+ * @returns {number} How many features were hidden.
+ */
+komoo.Map.prototype.hideFeatures = function (features) {
+    return features.hide();
 };
 
 
@@ -1060,18 +733,6 @@ komoo.Map.prototype.showFeatures = function (features) {
 
 
 /**
- * Makes visible features of specific type.
- * @param {String} type
- * @param {String[]} [opt_categories=[]]
- * @param {boolean} [opt_strict=false]
- * @returns {number} How many features were displayed.
- */
-komoo.Map.prototype.showFeaturesByType = function (type, opt_categories, opt_strict) {
-    return this.getFeaturesByType(type, opt_categories, opt_strict).show();
-};
-
-
-/**
  * Makes visible all features.
  * @returns {number} How many features were displayed.
  */
@@ -1084,14 +745,11 @@ komoo.Map.prototype.showAllFeatures = function () {
  * Remove all features from map.
  */
 komoo.Map.prototype.clear = function () {
-    this.initFeaturesByTypeObject();
     this.loadedFeatures = {};
-    this.fetchedTiles = {};
     this.features.removeAllFromMap()
     this.features.clear()
-    this.clusterMarkers = [];
     if (this.clusterer) {
-        this.clusterer.clearMarkers();
+        this.clusterer.clear();
     }
 };
 
@@ -1218,32 +876,6 @@ komoo.Map.prototype.setEditable = function (editable) {
 
 
 /**
- * Show a box containing the Google Street View layer.
- * @param {boolean} flag
- *        Sets to true to make Street View visible or false to hide.
- * @param {google.maps.LatLng} position
- */
-komoo.Map.prototype.setStreetView = function (flag, position) {
-    // FIXME: Add close button to the Street View panel
-    // TODO: Define the panel position and size
-    if (!this.streetView) {
-        // Creates the StreetView object only when needed.
-        this._createStreetViewObject();
-    }
-    if (!position) {
-        position = this.googleMap.getCenter();
-    }
-    this.streetView.setPosition(position);
-    if (flag) {
-        this.streetViewPanel.show();
-    } else {
-        this.streetViewPanel.hide();
-    }
-    this.streetView.setVisible(flag);
-};
-
-
-/**
  * Use the HTML5 GeoLocation to set the user location as the map center.
  */
 komoo.Map.prototype.goToUserLocation = function () {
@@ -1275,8 +907,6 @@ komoo.Map.prototype.goToUserLocation = function () {
  */
 komoo.Map.prototype.goTo = function (position, optDisplayMarker) {
     if (optDisplayMarker == undefined) optDisplayMarker = true;
-    if (position instanceof Array)
-        position = new google.maps.LatLng(position[0], position[0]);
     var komooMap = this;
     var latLng;
     function _go (latLng) {
@@ -1357,8 +987,8 @@ komoo.Map.prototype.editFeature = function (feature) {
     $(".map-panel-title", this.addPanel).text(gettext("Edit"));
     this.addPanel.css({"margin-top": "33px"});
     this.addPanel.show();
-    var color = this.featureOptions[feature.getProperties().type].color;
-    var border = this.featureOptions[feature.getProperties().type].border;
+    var color = this.featureOptions[feature.getProperties().type].backgroundColor;
+    var border = this.featureOptions[feature.getProperties().type].borderColor;
     var zIndex = this.featureOptions[feature.getProperties().type].zIndex;
     this.drawingManagerOptions.polylineOptions.strokeColor = border;
     this.drawingManagerOptions.polygonOptions.fillColor = color;
@@ -1467,6 +1097,13 @@ komoo.Map.prototype._attachFeatureEvents = function (feature) {
     });
 };
 
+
+komoo.Map.prototype.drawNew = function (geometryType, featureType) {
+    this.setDrawingMode(featureType, geometryType);
+    this.event.trigger('drawing_started', [geometryType, featureType]);
+};
+
+
 komoo.Map.prototype.setDrawingMode = function (type, featureType) {
     if (!featureType) {
         featureType = type;
@@ -1483,8 +1120,8 @@ komoo.Map.prototype.setDrawingMode = function (type, featureType) {
     FeatureTypeTitle[komoo.GeometryType.POINT] = gettext("Add point");
     $(".map-panel-title", this.addPanel).text(FeatureTypeTitle[featureType]);
     if (this.featureOptions[this.type]) {
-        var color = this.featureOptions[this.type].color;
-        var border = this.featureOptions[this.type].border;
+        var color = this.featureOptions[this.type].backgroundColor;
+        var border = this.featureOptions[this.type].borderColor;
         var zIndex = this.featureOptions[this.type].zIndex;
         this.drawingManagerOptions.polylineOptions.strokeColor = border;
         this.drawingManagerOptions.polygonOptions.fillColor = color;
@@ -1569,7 +1206,7 @@ komoo.Map.prototype._initDrawingManager = function () {
             komooMap.currentFeature.updateIcon(100);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (komooMap.editMode == komoo.EditMode.ADD && e.overlay.getPath) {
-            komooMap.currentFeature.getGeometry().addPolyline(e.overlay);
+            komooMap.currentFeature.getGeometry().addPolyline(e.overlay, true);
             komooMap.setEditMode(komoo.EditMode.DRAW);
         } else if (e.overlay.getPosition) {
             overlay = new MultiMarker();
@@ -1577,7 +1214,7 @@ komoo.Map.prototype._initDrawingManager = function () {
             overlay.setMap(komooMap.googleMap);
         } else if (e.overlay.getPath && !e.overlay.getPaths) {
             overlay = new MultiPolyline();
-            overlay.addPolyline(e.overlay);
+            overlay.addPolyline(e.overlay, true);
             overlay.setMap(komooMap.googleMap);
         } else {
             overlay = e.overlay;
@@ -1623,26 +1260,13 @@ komoo.Map.prototype._initDrawingManager = function () {
         komooMap.drawingManager.setDrawingMode(null);
 
         komooMap._emit_changed();
+
+
         return true;
     });
 
     if (!this.options.defaultDrawingControl) {
-        // Adds new HTML elements to the map.
-        var polygonButton = komoo.createMapButton(gettext("Add shape"), gettext("Draw a shape"), function (e) {
-            komooMap.setDrawingMode(komoo.GeometryType.POLYGON);
-        }).attr("id", "map-add-" + komoo.GeometryType.POLYGON);
-
-        var lineButton = komoo.createMapButton(gettext("Add line"), gettext("Draw a line"), function (e) {
-            komooMap.setDrawingMode(komoo.GeometryType.POLYLINE);
-        }).attr("id", "map-add-" + komoo.GeometryType.POLYLINE);
-
-        var markerButton = komoo.createMapButton(gettext("Add point"), gettext("Add a marker"), function (e) {
-            komooMap.setDrawingMode(komoo.GeometryType.POINT);
-        }).attr("id", "map-add-" + komoo.GeometryType.POINT);
-
-        var addMenu = komoo.createMapMenu(gettext("Add new..."), [polygonButton, lineButton, markerButton]);
-        //this.editToolbar.append(addMenu);
-        this.addItems = $(".map-container", addMenu);
+        this.addItems = $("<div>");
 
         var addButton = komoo.createMapButton(gettext("Add"), gettext("Add another region"), function (e) {
             if (komooMap.editMode == komoo.EditMode.ADD) {
@@ -1733,213 +1357,6 @@ komoo.Map.prototype.setEditMode = function (mode) {
 
 
 /**
- * Initialize the Google Street View.
- */
-komoo.Map.prototype._createStreetViewObject = function () {
-    var options = {};
-    this.streetView = new google.maps.StreetViewPanorama(
-            this.streetViewPanel.get(0), options);
-};
-
-
-/**
- * @returns {JQuery}
- */
-komoo.Map.prototype._createMainPanel = function () {
-    var komooMap = this;
-    var panel = $("<div>").addClass("map-panel");
-    var addMenu = $("<ul>").addClass("map-menu");
-
-    var tabs = komoo.createMapTab([
-        {title: gettext("Filter")},
-        {title: gettext("Add")/*, content: addMenu*/}
-    ]);
-
-    // Only logged in users can add new items.
-    if (!isAuthenticated) {
-        var submenuItem = addMenu.append($("<li>").addClass("map-menuitem").text(gettext("Please log in.")));
-        submenuItem.bind("click", function (){
-            window.location = "/user/login"; // FIXME: Hardcode is evil
-        });
-        this.options.featureTypes.forEach(function (type, index, orig) {
-            komooMap.featureOptions[type.type] = type;
-        });
-    } else {
-        this.options.featureTypes.forEach(function (type, index, orig) {
-            komooMap.featureOptions[type.type] = type;
-            var item = $("<li>").addClass("map-menuitem");
-            if (!type.icon) {
-                if (type.type == 'OrganizationBranch')
-                    type.icon = '/static/img/organization.png';
-                else
-                    type.icon = '/static/img/' + type.type.toLowerCase() + '.png';
-            }
-            var icon = $("<img>").attr({src: type.icon}).css("float", "left");
-            if (type.disabled) icon.css("opacity", "0.3");
-            item.append(icon);
-
-            item.append($("<div>").addClass("item-title").text(type.title).attr("title", type.tooltip));
-            var submenu = komooMap.addItems.clone(true).addClass("map-submenu");
-            $("div", submenu).hide();
-            type.geometryTypes.forEach(function (featureType, index, orig) {
-                $("#map-add-" + featureType, submenu).addClass("enabled").show();
-            });
-            var submenuItems = $("div.enabled", submenu);
-            if (type.disabled) {
-                item.addClass("disabled");
-            }
-            item.css({
-                "position": "relative"
-            });
-            submenuItems.removeClass("map-button").addClass("map-menuitem"); // Change the class
-            submenuItems.bind("click", function () {
-                $(".map-submenu", addMenu).hide();
-                $(".map-menuitem.selected", komooMap.mainPanel).removeClass("selected");
-                item.addClass("selected");
-                $(".map-menuitem:not(.selected)", komooMap.mainPanel).addClass("frozen");
-            });
-            if (submenuItems.length == 1) {
-                submenuItems.hide();
-                item.bind("click", function () {
-                    if (komooMap.addPanel.is(":hidden") && !$(this).hasClass("disabled")) {
-                        komooMap.type = type.type;
-                        submenuItems.trigger("click");
-                    }
-                });
-            } else {
-                item.bind("click", function () {
-                    // Menu should not work if add panel is visible.
-                    if (komooMap.addPanel.is(":hidden") && !$(this).hasClass("disabled")) {
-                        komooMap.type = type.type;
-                        submenu.css({"left": item.outerWidth() + "px"});
-                        submenu.toggle();
-                    }
-                });
-            }
-            submenu.css({
-                "top": "0",
-                "z-index": "999999"
-            });
-            item.append(submenu);
-            addMenu.append(item);
-            type.selector = item;
-        });
-    }
-
-    panel.css({
-        "margin": "10px 5px 10px 10px",
-        "width": "180px"
-    });
-
-    panel.append(tabs.selector);
-
-    google.maps.event.addListener(this.drawingManager, "drawingmode_changed",
-        function (e){
-            if (komooMap.drawingManager.drawingMode) {
-                komooMap.addPanel.show();
-            }
-        });
-
-
-    this.addMenu = addMenu;
-    return panel;
-};
-
-
-komoo.Map.prototype._createClosePanel = function () {
-    var komooMap = this;
-    var panel = $("<div>").addClass("map-panel");
-    var content = $("<div>").addClass("content");
-    var buttons = $("<div>").addClass("map-panel-buttons");
-    var closeButton = $("<div>").addClass("map-button");
-
-    closeButton.append($("<i>").addClass("icon-remove"));
-    closeButton.append($("<span>").text(gettext("Close")));
-
-    content.css({"clear": "both"});
-    buttons.css({"clear": "both"});
-    panel.append(content);
-    panel.append(buttons);
-    buttons.append(closeButton);
-
-    panel.css({
-        "margin": "10px",
-        "width": "220px"
-    });
-
-    closeButton.click(function (e) {
-        komooMap.event.trigger("close_click");
-    });
-    return panel.hide();
-};
-
-
-/**
- * @returns {JQuery}
- */
-komoo.Map.prototype._createAddPanel = function () {
-    var komooMap = this;
-    var panel = $("<div>").addClass("map-panel");
-    var content = $("<div>").addClass("content");
-    var title = $("<div>").text(gettext("Title")).addClass("map-panel-title");
-    var buttons = $("<div>").addClass("map-panel-buttons");
-    var finishButton = $("<div>").text(gettext("Finish")).addClass("map-button");
-    var cancelButton = $("<div>").text(gettext("Cancel")).addClass("map-button");
-
-    function button_click () {
-        $(".map-menuitem.selected", komooMap.addMenu).removeClass("selected");
-        $(".frozen", komooMap.mainPanel).removeClass("frozen");
-        komooMap.drawingManager.setDrawingMode(null);
-        komooMap.setMode(komoo.Mode.NAVIGATE);
-        panel.hide();
-    }
-    cancelButton.bind("click", function () {
-        button_click();
-        if (komooMap.newFeatures.length > 0) { // User drew a feature, so remove it.
-            komooMap.newFeatures.forEach(function (item, index, orig) {
-                var feature = komooMap.features.pop(); // The newly created feature should be the last at array.
-                feature.removeFromMap();
-            });
-            komooMap.newFeatures.clear();
-        }
-        /**
-         * @name komoo.Map#cancel_click
-         * @event
-         */
-        komooMap.event.trigger("cancel_click");
-        komooMap.type = null;
-        komooMap.setEditMode(undefined);
-    });
-    finishButton.bind("click", function () {
-        button_click();
-        /**
-         * @name komoo.Map#finish_click
-         * @event
-         */
-        komooMap.event.trigger("finish_click", komooMap.featureOptions[komooMap.type]);
-        komooMap.type = null;
-        komooMap.setEditMode(undefined);
-    });
-
-    content.css({"clear": "both"});
-    buttons.css({"clear": "both"});
-    content.append(this.editToolbar);
-    panel.append(title);
-    panel.append(content);
-    panel.append(buttons);
-    buttons.append(finishButton);
-    buttons.append(cancelButton);
-
-    panel.css({
-        "margin": "10px",
-        "width": "220px"
-    });
-
-    return panel.hide();
-};
-
-
-/**
  * Sets to the select_center mode to user select the center point of radius filter.
  * Emits center_selected event when done.
  * @param {number} [opt_radius]
@@ -2022,7 +1439,7 @@ komoo.Map.prototype._emit_geojson_loaded = function (e) {
      * @name komoo.Map#geojson_loaded
      * @event
      */
-    this.updateClusterers();
+    if (this.clusterer) this.clusterer.repaint();
     this.event.trigger("geojson_loaded", e);
 };
 
@@ -2102,56 +1519,114 @@ komoo.createMapButton = function (name, title, onClick) {
     return selector;
 };
 
-
 /**
  * @returns {JQuery}
  */
-komoo.createMapMenu = function (name, items) {
-    var selector = $("<div>").text(name).addClass("map-menu");
-    var container = $("<div>").addClass("map-container").hide();
-    items.forEach(function (item, index, orig) {
-        container.append(item);
-        item.css({"clear": "both", "float": "none"});
-        item.bind("click", function () { container.hide(); });
+komoo.Map.prototype._createMainPanel = function () {
+    var komooMap = this;
+
+    this.options.featureTypes.forEach(function (type, index, orig) {
+        komooMap.featureOptions[type.type] = type;
     });
-    selector.append(container);
-    selector.hover(function () { container.show(); },
-                   function () { container.hide(); });
-    return selector;
-};
 
-
-/**
- * @returns {JQuery}
- */
-komoo.createMapTab = function (items) {
-    var tabs = {
-        items: {},
-        selector: $("<div>"),
-        tabsSelector: $("<div>").addClass("map-tabs"),
-        containersSelector: $("<div>").addClass("map-container")
-    };
-    tabs.selector.append(tabs.tabsSelector, tabs.containersSelector);
-    items.forEach(function (item, index, orig) {
-        var tab = {
-            tabSelector: $("<div>").text(item.title).addClass("map-tab").css({"border": "0px"}),
-            containerSelector: $("<div>").addClass("map-tab-container").hide()
-        };
-        if (item.content) tab.containerSelector.append(item.content);
-        tab.tabSelector.click(function () {
-            if (tabs.current && tabs.current != tab) {
-                tabs.current.tabSelector.removeClass("selected");
-                tabs.current.containerSelector.hide();
+    google.maps.event.addListener(this.drawingManager, "drawingmode_changed",
+        function (e){
+            if (komooMap.drawingManager.drawingMode) {
+                komooMap.addPanel.show();
             }
-            tabs.current = tab;
-            tab.tabSelector.toggleClass("selected");
-            tab.containerSelector.toggle();
-        });
-
-        tabs.items[item.title] = tab;
-        tab.tabSelector.css({"width": 100 / items.length + "%"});
-        tabs.tabsSelector.append(tab.tabSelector);
-        tabs.containersSelector.append(tab.containerSelector);
-    });
-    return tabs;
+        }
+    );
 };
+
+
+komoo.Map.prototype._createClosePanel = function () {
+    var komooMap = this;
+    var panel = $("<div>").addClass("map-panel");
+    var content = $("<div>").addClass("content");
+    var buttons = $("<div>").addClass("map-panel-buttons");
+    var closeButton = $("<div>").addClass("map-button");
+
+    closeButton.append($("<i>").addClass("icon-remove"));
+    closeButton.append($("<span>").text(gettext("Close")));
+
+    content.css({"clear": "both"});
+    buttons.css({"clear": "both"});
+    panel.append(content);
+    panel.append(buttons);
+    buttons.append(closeButton);
+
+    panel.css({
+        "margin": "10px",
+        "width": "220px"
+    });
+
+    closeButton.click(function (e) {
+        komooMap.event.trigger("close_click");
+    });
+    return panel.hide();
+};
+
+
+/**
+ * @returns {JQuery}
+ */
+komoo.Map.prototype._createAddPanel = function () {
+    var komooMap = this;
+    var panel = $("<div>").addClass("map-panel");
+    var content = $("<div>").addClass("content");
+    var title = $("<div>").text(gettext("Title")).addClass("map-panel-title");
+    var buttons = $("<div>").addClass("map-panel-buttons");
+    var finishButton = $("<div>").text(gettext("Finish")).addClass("map-button");
+    var cancelButton = $("<div>").text(gettext("Cancel")).addClass("map-button");
+
+    function button_click () {
+        komooMap.drawingManager.setDrawingMode(null);
+        komooMap.setMode(komoo.Mode.NAVIGATE);
+        panel.hide();
+        komooMap.event.trigger('drawing_finished');
+    }
+    cancelButton.bind("click", function () {
+        button_click();
+        if (komooMap.newFeatures.length > 0) { // User drew a feature, so remove it.
+            komooMap.newFeatures.forEach(function (item, index, orig) {
+                var feature = komooMap.features.pop(); // The newly created feature should be the last at array.
+                feature.removeFromMap();
+            });
+            komooMap.newFeatures.clear();
+        }
+        /**
+         * @name komoo.Map#cancel_click
+         * @event
+         */
+        komooMap.event.trigger("cancel_click");
+        komooMap.type = null;
+        komooMap.setEditMode(undefined);
+    });
+    finishButton.bind("click", function () {
+        button_click();
+        /**
+         * @name komoo.Map#finish_click
+         * @event
+         */
+        komooMap.event.trigger("finish_click", komooMap.featureOptions[komooMap.type]);
+        komooMap.type = null;
+        komooMap.setEditMode(undefined);
+    });
+
+    content.css({"clear": "both"});
+    buttons.css({"clear": "both"});
+    content.append(this.editToolbar);
+    panel.append(title);
+    panel.append(content);
+    panel.append(buttons);
+    buttons.append(finishButton);
+    buttons.append(cancelButton);
+
+    panel.css({
+        "margin": "10px",
+        "width": "220px"
+    });
+
+    return panel.hide();
+};
+

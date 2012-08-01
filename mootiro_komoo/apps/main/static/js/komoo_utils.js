@@ -312,6 +312,7 @@ function geoObjectsListing (ul) {
 
     /* Setup collapsers */
     $(".collapser", $ul).on("click", function (event) {
+        if ($ul.hasClass('frozen')) return false;
         var $this = $(this);
         $("i", $this).toggleClass("icon-chevron-right icon-chevron-down");
         $this.parent().next().toggle();
@@ -339,7 +340,7 @@ $(function () {
             } else if (url.charAt(0) == "#") {
                 url = document.location.pathname + url;
             }
-            $("#login-box #login-button").attr("href", "/user/login?next=" + url);
+            $("#login-box #login-button").attr("href", "/user/login?next=" + encodeURIComponent(url));
             $("#login-box").dialog({
                 width: 850,
                 modal: true,

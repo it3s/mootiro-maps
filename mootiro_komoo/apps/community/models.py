@@ -6,6 +6,8 @@ from django.contrib.gis.measure import Distance
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
+from django.utils.translation import ugettext as _
+
 import reversion
 from main.utils import slugify
 from lib.taggit.managers import TaggableManager
@@ -32,6 +34,7 @@ class Community(GeoRefModel, VotableModel):
         return self.name
 
     class Map:
+        title = _('Community')
         editable = True
         background_color = '#ffc166'
         border_color = '#ff2e2e'
@@ -39,8 +42,10 @@ class Community(GeoRefModel, VotableModel):
         form_view_name = 'new_community'
         min_zoom_geometry = 10
         max_zoom_geometry = 100
-        min_zoom_marker = 0
-        max_zoom_marker = 0
+        min_zoom_point = 0
+        max_zoom_point = 0
+        min_zoom_icon = 0
+        max_zoom_icon = 0
         zindex = 5
 
     class Meta:

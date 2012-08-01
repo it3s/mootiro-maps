@@ -212,6 +212,9 @@ MARKITUP_FILTER = ('main.utils.render_markup', {})
 MARKITUP_AUTO_PREVIEW = True
 JQUERY_URL = 'dummy.js'
 
+# User Profile config
+AUTH_PROFILE_MODULE = 'user_cas.KomooProfile'
+
 
 #CAS config
 PROFILE_DATABASE = 'localhost|profile|username|password'
@@ -227,7 +230,8 @@ GOOGLE_OAUTH2_CLIENT_SECRET = 'VYPUXk4GraHit4n72nh5CwhX'
 
 SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
 SOCIAL_AUTH_UUID_LENGTH = 16
-SOCIAL_AUTH_EXPIRATION = 3600
+# SOCIAL_AUTH_EXPIRATION = 3600
+SOCIAL_AUTH_SESSION_EXPIRATION = False
 SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/user/profile/'
 
 # Mailer settings

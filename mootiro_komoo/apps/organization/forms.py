@@ -22,7 +22,7 @@ from ajaxforms import AjaxModelForm
 from signatures.signals import notify_on_update
 
 if settings.LANGUAGE_CODE == 'en-us':
-    CATEGORIES = [(cat.id, cat.name) 
+    CATEGORIES = [(cat.id, cat.name)
                 for cat in OrganizationCategory.objects.all().order_by('name')]
 else:
     CATEGORIES = [(cat.category_id, cat.name)
@@ -41,11 +41,10 @@ class FormOrganization(AjaxModelForm):
     target_audiences = forms.Field(required=False,
         widget=Tagsinput(
             TargetAudience,
-            autocomplete_url="/need/target_audience_search")
-    )
+            autocomplete_url="/need/target_audience_search"))
     categories = forms.MultipleChoiceField(required=False, choices=CATEGORIES,
         widget=forms.CheckboxSelectMultiple(
-                    attrs={'class': 'org-widget-categories'}))
+            attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
     logo = LogoField(required=False)
     logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
@@ -83,10 +82,9 @@ class FormOrganization(AjaxModelForm):
                 self.validation('name',
                     u'O sistema já possui uma organização com este nome',
                     Organization.objects.filter(
-                        Q(name__iexact=self.cleaned_data['name']) | \
+                        Q(name__iexact=self.cleaned_data['name']) |
                         Q(slug=slugify(self.cleaned_data['name']))
-                    ).count()
-                )
+                    ).count())
         except Exception as err:
             logger.error('Validation Error: {}'.format(err))
         finally:
@@ -100,10 +98,12 @@ class FormOrganization(AjaxModelForm):
         return org
 
     def clean_logo(self):
-        return clean_autocomplete_field(self.cleaned_data['logo'], UploadedFile)
+        return clean_autocomplete_field(self.cleaned_data['logo'],
+                                        UploadedFile)
 
     def clean_logo_category(self):
-        return clean_autocomplete_field(self.cleaned_data['logo_category'], OrganizationCategory)
+        return clean_autocomplete_field(self.cleaned_data['logo_category'],
+                                        OrganizationCategory)
 
 
 class FormBranch(AjaxModelForm):
@@ -116,7 +116,8 @@ class FormBranch(AjaxModelForm):
 
     class Meta:
         model = OrganizationBranch
-        fields = ['id', 'name', 'geometry', 'info', 'community', 'organization']
+        fields = ['id', 'name', 'geometry', 'info', 'community',
+                  'organization']
 
     _field_labels = {
         'name': _('Branch Name'),
@@ -132,3 +133,4 @@ class FormBranch(AjaxModelForm):
     def clean_organization(self):
         return clean_autocomplete_field(
             self.cleaned_data['organization'], Organization)
+

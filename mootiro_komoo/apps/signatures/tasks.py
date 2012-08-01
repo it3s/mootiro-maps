@@ -21,7 +21,7 @@ Visite: {} para ver mais detalhes.
 atenciosamente,
 
 a equipe IT3S.
-""".format(user.get_full_name() or user.username, unicode(obj),
+""".format(user.get_name, unicode(obj),
            'http://maps.mootiro.org' + komoo_permalink(obj)
 )
 
@@ -43,7 +43,7 @@ def periodic_mail_digest(digest_type=''):
 Olá {},
 
 Alguns objetos que você está seguindo no MootiroMaps foram atualizados:
-                '''.format(signature.user.get_full_name() or signature.user.username)
+                '''.format(signature.user.get_name)
                 for content in user_digest:
                     msg += "\n -  Atualização em {} : {}".format(
                         content.content_object.__class__.__name__,

@@ -26,18 +26,37 @@ $ ->
         $('.popover').css 'top', parseInt($('.popover').css('top'), 10) - 10
         $('.popover').css 'left', parseInt($('.popover').css('left'), 10) - 75
 
-    window.seeOnMap = (type, geojson) ->
+
+    window.seeOnMap = (hashlink) ->
         if window.location.pathname == dutils.urls.resolve 'map'
-            if type == 'google'
-                editor.goTo(geojson)
+            if hashlink[0] is 'g'
+                idx = parseInt hashlink.substring(1, hashlink.length), 10
+                itvl = setInterval () ->
+                        try
+                            desc = JSON.parse(localStorageGet('komoo_search').results['google']).predictions[idx].description
+                            editor.goTo desc
+                            clearInterval itvl
+                    ,500
+
             else
-                editor.loadGeoJSON(geojson, true)
+                # XhR
+                $.get(
+                    '/map/get_geojson_from_hashlink/'
+                    {hashlink: hashlink}
+                    (data) ->
+                        geojson = JSON.parse(data.geojson)
+                        itvl = setInterval () ->
+                            try
+                                editor.loadGeoJSON(geojson, true)
+                                clearInterval itvl
+                        ,500
+
+                    'json'
+                )
+
             $('#search-results-box').popover 'hide'
         else
-            localStorageSet 'komoo_seeOnMap',{type: type, geo: geojson}
-            window.location.pathname = dutils.urls.resolve 'map'
-        false
-
+            window.location = dutils.urls.resolve('map') + "##{hashlink}"
 
 
     showResults = (result) ->
@@ -68,11 +87,14 @@ $ ->
                 """
 
                 for idx, obj of val
+                    geojson = JSON.parse(obj?.geojson ? {})
+                    disabled = if not geojson?.features[0]?.geometry then 'disabled' else ''
+                    hashlink = key[0] + obj.id
                     results_list += """
                         <li>
                             <a href='#{obj.link}'> #{obj.name} </a>
                             <div class="right">
-                                <a href="#" onclick="seeOnMap('#{key}', JSON.parse(localStorageGet('komoo_search').results['#{key}'][#{idx}].geojson));return false;"><i class="icon-see-on-map"></i></a>
+                                <a href="/map/##{hashlink}" onclick="seeOnMap('#{hashlink}')" class="#{disabled}"><i class="icon-see-on-map"></i></a>
                             </div>
                         </li>"""
                     results_count++
@@ -102,12 +124,13 @@ $ ->
                 </div>
                 <ul class="search-result-entries">
             """
-            for obj in google_results
+            for idx, obj of google_results
+                hashlink = "g#{idx}"
                 results_list += """
                     <li>
                         <a href="#" > #{obj.description}</a>
                         <div class="right">
-                            <a href="#" onclick="seeOnMap('google', '#{obj.description}');return false;"><i class="icon-see-on-map"></i></a>
+                            <a href="##{hashlink}" onclick=seeOnMap('#{hashlink}')><i class="icon-see-on-map"></i></a>
                         </div>
                     </li>
                 """
@@ -133,10 +156,14 @@ $ ->
     form_search.submit (evt) ->
         evt.preventDefault()
 
+        search_term = search_field.val()
+        previous_search = localStorageGet 'komoo_search'
+
+        if not search_term
+            return
+
         cl.show()
 
-        search_term = search_field.val()
-        previous_search = localStorageGet('komoo_search')
         if previous_search?.term is search_term
             showResults previous_search.results
         else
@@ -165,16 +192,7 @@ $ ->
     search_field.val(localStorageGet('komoo_search')?.term or '')
 
     # See on Map
-    if window.location.pathname == dutils.urls.resolve('map') and localStorageGet 'komoo_seeOnMap'
-        geo_object = localStorageGet('komoo_seeOnMap')
+    if window.location.pathname == dutils.urls.resolve('map')
+        hash = window.location.hash
+        seeOnMap(hash.substring(1, hash.length)) if hash
 
-        intvl = setInterval ->
-            try
-                if geo_object.type == 'google'
-                    editor.goTo geo_object.geo
-                else
-                    editor.loadGeoJSON geo_object.geo, true
-                clearInterval intvl
-        , 50
-
-        localStorageRemove 'komoo_seeOnMap'

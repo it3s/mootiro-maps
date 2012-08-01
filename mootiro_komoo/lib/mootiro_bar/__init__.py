@@ -33,7 +33,7 @@ DEFAULT_SERVICES = [
                     ]
 DEFAULT_MAIN_LINK = ('Mootiro', 'http://mootiro.org')
 # DEFAULT_USER_URL = '{}/user/profile'.format(DEFAULT_MAIN_LINK[1])
-DEFAULT_USER_URL = '/user/profile'
+DEFAULT_USER_URL = '/user/profile/'
 DEFAULT_LOGIN_URL = '/user/login'
 DEFAULT_SETTINGS_URL = '/user/edit'
 DEFAULT_LOGOUT_URL = '/user/logout'
@@ -79,6 +79,7 @@ def get_alerts(user, key, locale='en'):
             pass
     return content, content_type
 
+
 def get_translations(locale='en'):
     try:
         translations = gettext.translation('mootiro_bar',
@@ -92,11 +93,13 @@ def get_translations(locale='en'):
         translations.install()
         return translations
 
+
 def get_service_name_by_appname(appname):
     if appname == 'Mootiro Profile':
         return 'Mootiro'
     else:
         return appname.replace('Mootiro ', '')
+
 
 def render(user=None, main_link=DEFAULT_MAIN_LINK, services=DEFAULT_SERVICES,
            urls=None, locale='en', selected=None, logout_method='GET'):
@@ -104,12 +107,14 @@ def render(user=None, main_link=DEFAULT_MAIN_LINK, services=DEFAULT_SERVICES,
 
     translations = get_translations(locale)
 
-    if urls is None:
-        urls = {'user': DEFAULT_USER_URL,
-                'login': DEFAULT_LOGIN_URL,
-                'settings': DEFAULT_SETTINGS_URL,
-                'logout': DEFAULT_LOGOUT_URL,
-                'help': DEFAULT_HELP_URL}
+    # if urls is None:
+    # uname = user.username if user and hasattr(user, 'username') else ''
+    uname = user.id if user and hasattr(user, 'id') else ''
+    urls = {'user': '/permalink/u{}'.format(uname),  # DEFAULT_USER_URL + uname,
+            'login': DEFAULT_LOGIN_URL,
+            'settings': DEFAULT_SETTINGS_URL,
+            'logout': DEFAULT_LOGOUT_URL,
+            'help': DEFAULT_HELP_URL}
 
     organizations_awaiting = []
     relationships_awaiting = []
@@ -121,6 +126,8 @@ def render(user=None, main_link=DEFAULT_MAIN_LINK, services=DEFAULT_SERVICES,
     if user is not None:
         if hasattr(user, 'nickname'):
             show_nickname = elipsize(user.nickname)
+        elif hasattr(user, 'get_name'):
+            show_nickname = elipsize(user.get_name)
         elif hasattr(user, 'username'):
             show_nickname = elipsize(user.username)
         elif hasattr(user, 'email'):

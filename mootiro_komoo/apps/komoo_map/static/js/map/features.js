@@ -69,8 +69,10 @@
 
     Feature.prototype.setFeatureType = function(featureType) {
       this.featureType = featureType != null ? featureType : {
-        minZoomMarker: 0,
-        maxZoomMarker: 100,
+        minZoomPoint: 0,
+        maxZoomPoint: 10,
+        minZoomIcon: 10,
+        maxZoomIcon: 100,
         minZoomGeometry: 0,
         maxZoomGeometry: 100
       };
@@ -130,16 +132,16 @@
 
     Feature.prototype.setHighlight = function(highlighted) {
       this.highlighted = highlighted;
-      this.updateIcons();
+      this.updateIcon();
       return komoo.event.trigger(this, 'highlight_changed', this.highlighted);
     };
 
     Feature.prototype.getIconUrl = function(zoom) {
       var categoryOrType, highlighted, nearOrFar;
       if (zoom == null) zoom = this.map ? this.map.getZoom() : 10;
-      nearOrFar = zoom >= this.featureType.minZoomMarker ? "near" : "far";
+      nearOrFar = zoom >= this.featureType.minZoomIcon ? "near" : "far";
       highlighted = this.isHighlighted() ? "highlighted/" : "";
-      if (this.properties.categories && this.properties.categories[0].name && zoom >= this.featureType.minZoomMarker) {
+      if (this.properties.categories && this.properties.categories[0] && this.properties.categories[0].name && zoom >= this.featureType.minZoomIcon) {
         categoryOrType = this.properties.categories[0].name.toLowerCase() + (this.properties.categories.length > 1 ? "-plus" : "");
       } else {
         categoryOrType = this.properties.type.toLowerCase();
@@ -178,17 +180,34 @@
       return this.properties[name] = value;
     };
 
-    Feature.prototype.getGeoJsonGeometry = function() {
+    Feature.prototype.getType = function() {
+      return this.getProperty('type');
+    };
+
+    Feature.prototype.getCategories = function() {
+      var _ref;
+      return (_ref = this.getProperty('categories')) != null ? _ref : [];
+    };
+
+    Feature.prototype.getGeometryGeoJson = function() {
       var _ref;
       return (_ref = this.geometry) != null ? _ref.getGeoJson() : void 0;
     };
 
-    Feature.prototype.getGeoJsonFeature = function() {
+    Feature.prototype.getGeoJsonGeometry = function() {
+      return this.getGeometryGeoJson();
+    };
+
+    Feature.prototype.getGeoJson = function() {
       return {
         type: 'Feature',
-        geometry: this.getGeoJsonGeometry(),
+        geometry: this.getGeometryGeoJson(),
         properties: this.getProperties()
       };
+    };
+
+    Feature.prototype.getGeoJsonFeature = function() {
+      return this.getGeoJson();
     };
 
     Feature.prototype.setEditable = function(editable) {
@@ -227,20 +246,25 @@
       if (force == null) {
         force = {
           geometry: false,
-          marker: false
+          point: false,
+          icon: false
         };
       }
       if (this.properties.alwaysVisible === true || this.editable) {
         force = {
           geometry: true,
-          marker: false
+          point: false,
+          icon: false
         };
       }
       zoom = this.map != null ? this.map.getZoom() : 0;
       if ((_ref = this.marker) != null) {
-        _ref.setMap((zoom <= this.featureType.maxZoomMarker && zoom >= this.featureType.minZoomMarker) || force.marker ? this.map : null);
+        _ref.setMap((this.featureType.minZoomPoint <= zoom && zoom <= this.featureType.maxZoomPoint) || (this.featureType.minZoomIcon <= zoom && zoom <= this.featureType.maxZoomIcon) || force.point || force.icon ? this.map : null);
       }
-      return (_ref2 = this.geometry) != null ? _ref2.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null) : void 0;
+      if ((_ref2 = this.geometry) != null) {
+        _ref2.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null);
+      }
+      return this.updateIcon();
     };
 
     Feature.prototype.getBounds = function() {
@@ -283,23 +307,27 @@
     };
 
     Feature.prototype.getBorderSize = function() {
-      return;
+      return this.featureType.border_size;
     };
 
-    Feature.prototype.getBorderOpacity = function() {
-      return;
+    Feature.prototype.getBorderSizeHover = function() {
+      return this.featureType.borderSizeHover;
     };
 
     Feature.prototype.getBorderColor = function() {
-      return this.featureType.border;
+      return this.featureType.borderColor;
+    };
+
+    Feature.prototype.getBorderOpacity = function() {
+      return this.featureType.borderOpacity;
     };
 
     Feature.prototype.getBackgroundColor = function() {
-      return this.featureType.color;
+      return this.featureType.backgroundColor;
     };
 
     Feature.prototype.getBackgroundOpacity = function() {
-      return;
+      return this.featureType.backgroundOpacity;
     };
 
     Feature.prototype.getDefaultZIndex = function() {

@@ -1,0 +1,192 @@
+{% extends 'global.html' %}
+
+{% load i18n %}
+{% load komoo_tags %}
+{% load crispy_forms_tags %}
+{% load upload_tags %}
+{% load komoo_map_tags %}
+
+{% block content %}
+
+<div id="main-content" class="user-profile-edit-container">
+    <div class="main-column">
+        <!-- tab navigation -->
+        <ul class="nav nav-tabs">
+            <li>
+                <a href="#tab-pane-personal" data-toggle="tab">
+                    {% trans 'Personal Settings' %}
+                </a>
+            </li>
+            <li class="active">
+                <a href="#tab-pane-public" data-toggle="tab">
+                    {% trans 'Public Settings' %}
+                </a>
+            </li>
+            <li>
+                <a href="#tab-pane-signatures" data-toggle="tab">
+                    {% trans 'Signature Settings' %}
+                </a>
+            </li>
+        </ul>
+
+        <!-- tab content section -->
+        <div class="tab-content">
+
+            <!-- Tab pane personal settings -->
+            <div class="tab-pane" id="tab-pane-personal">
+
+                <!-- Personal settins form -->
+                <div class="form-profile-wrapper">
+                    <form methos=POST action="{% url profile_update_personal_settings %}" id="form-personal">
+                        {% csrf_token %}
+                       	<div id="div_id_username" class="clearfix control-group ">
+                            <label for="id_username">Nome de Usuário</label>
+                            <div class="controls">
+                                <input id="id_username" type="text"
+                                       class="textinput textInput"
+                                       value="{{ user.username }}"
+                                       name="username" disabled='true' />
+                            </div>
+                        </div>
+
+                        <div class="clearfix control-group">
+                            <label for="id_email">Email</label>
+                            <div class="controls">
+                                <input class="textinput textInput"
+                                       type="text" id="id_email"
+                                       value="{{ user.email }}"
+                                       name="email" disabled='true' />
+                            </div>
+                        </div>
+
+                        {# <div class="form-actions"> #}
+                        {#     <input type="submit" name="submit" value="Enviar" #}
+                        {#            class="btn button" id="submit-id-submit" /> #}
+                        {# </div> #}
+
+
+                    </form>
+                </div>
+            </div><!-- end of tab pane personal settings -->
+
+
+            <!-- Tab pane public settings -->
+            <div class="tab-pane active" id="tab-pane-public">
+                <div class="form-profile-wrapper">
+                    {% crispy form_profile form_profile.helper %}
+                </div>
+            </div>
+
+
+            <!-- Tab pane signatures -->
+            <div class="tab-pane div-profile-form" id="tab-pane-signatures">
+                <div class="signatures-list-wrapper"></div>
+
+            </div> <!-- end of signatures tab pane -->
+
+        </div><!-- end of tab content-->
+    </div>
+</div>
+
+<!--
+    #
+    #===================== Template Section ======================
+-->
+<script type="text/template" id="form-message-box">
+    <div class="alert alert-info form-message-box" style="display: none;" data-alert="info">
+        <a class="close">×</a>
+        <div class="msg"><%= msg %></div>
+    </div>
+</script>
+
+<script type="text/template" id="signature-template">
+     <div class="inline-block signature-image">
+            <img src="<%= imageName() %>" alt="Image" />
+        </div>
+        <div class="inline-block signature-content">
+            <div class="signature-header">
+                <a href="<%= permalink %>" class="signature-title"><%= obj_name %></a>
+                <div class="right">
+                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= obj_id %>">
+                        <i class="icon-see-on-map"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="signature-body">
+                <div class="cancel-subscription-btn btn">
+                    <i class="icon-remove-sign"></i>
+                    <span>{% trans 'Cancel Subscription' %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/template" id="signatures-list-collection">
+    <div class="signatures-list-header">
+        <span>{% trans 'Signatures' %}</span>
+    </div>
+    <div class="div-signatures-manage-btn">
+        <button id="signatures-manage-btn" class="button" >
+            {% trans 'Receivings Options' %}
+        </button>
+    </div>
+    <div class="signatures-list"></div>
+
+    <div class="modal hide" id="digest-options-modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <div class="digest-modal-header">
+                {% trans 'Update your mailing settings' %}
+            </div>
+        </div>
+        <div class="modal-body">
+            <p>
+                <form action="/user/profile/update/digest/" id="form-digest" method="POST">
+                    <div class="digest-radio-btn">
+                        <input type="radio" name="digest_type" value="" 
+                            {% if not digest %}checked="checked"{% endif %}>
+                            <span>{% trans "I want to receive mails every time someone update an object I'm subscribed to" %}</span>
+                    </div>
+                    <div class="digest-radio-btn">
+                        <input type="radio" name="digest_type" value="W" 
+                        {% if digest == 'W' %}checked="checked"{% endif %}>
+                            <span>{% trans "I want to receive only a <strong>weekly</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
+                    </div>
+                    <div class="digest-radio-btn">
+                        <input type="radio" name="digest_type" value="D" 
+                            {% if digest == 'D' %}checked="checked"{% endif %}>
+                            <span>{% trans "I want to receive only a <strong>daily</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
+                    </div>
+                </form>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" id="digest-options-save" class="button">
+                {% trans 'Save changes' %}
+            </a>
+            <a href="#" class="btn" data-dismiss="modal">
+                {% trans 'Close' %}
+            </a>
+        </div>
+    </div>
+</script>
+<!-- End of templates section -->
+
+{% endblock %}
+
+
+{% block page_scripts %}
+    {{ form_profile.media }}
+    {% load_files user.profile %}
+
+    <script src="{{STATIC_URL}}lib/underscore-min.js" type="text/javascript"></script>
+    <script src="{{STATIC_URL}}lib/backbone-min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        if (typeof KomooNS == 'undefined') KomooNS = {};
+        KomooNS.signatures = {{signatures|jsonify|safe}};
+    </script>
+    <script src="{{STATIC_URL}}js/profile_update.js" type="text/javascript"></script>
+
+    {% komoo_map_tooltip %}
+{% endblock %}

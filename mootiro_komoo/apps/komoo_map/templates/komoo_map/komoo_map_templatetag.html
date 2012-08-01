@@ -18,6 +18,8 @@
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/features.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/collections.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/controls.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/providers.js\" defer=\"defer\"" + "><" + "/script>");
+      document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/map/maptypes.js\" defer=\"defer\"" + "><" + "/script>");
       document.write("<s" + "cript type=\"text/javascript\" src=\"{{ STATIC_URL }}js/komoo_map.js\" defer=\"defer\"" + "><" + "/script>");
     }
   </script>
@@ -71,6 +73,7 @@
         // Options.
         {% if type != 'preview' %}
         var mapOptions = {
+          mapCanvasId: mapCanvasId,
           editable: true,
           featureTypes: featureTypesJson,
           {% if type == 'editor' and not panel %}
@@ -106,6 +109,7 @@
         };
         {% else %}
         var mapOptions = {
+          mapCanvasId: mapCanvasId,
           editable: false,
           featureTypes: featureTypesJson,
           enableInfoWindow: false,
@@ -143,7 +147,9 @@
           {% if height == '100%' %}
           var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
           $('#' + mapCanvasId).height(height);
-          $('#map-panel').height(height);
+          var mapPanel = $('#map-panel');
+          mapPanel.height(height);
+          $('.panel', mapPanel).height(height - (window.community_slug ? 170 : 146));
           {% endif %}
         }
         function fixMapWidth() {
@@ -226,7 +232,7 @@
           }
         });
 
-        $('#map-panel-add').append({{ type }}.addMenu.show());
+        //$('#map-panel-add').append({{ type }}.addMenu.show());
         {% endif %}
 
       } else {
@@ -285,7 +291,6 @@
         $('.see-on-map').click(function () {
           $('#map-container-{{ type }}').show();
           $('#main-content').hide();
-          // TODO: Save a feature copy to revert edition on cancel click.
           if (!window.{{ type }}) {
             initialize_map_{{ type }}();
             map = {{ type }};

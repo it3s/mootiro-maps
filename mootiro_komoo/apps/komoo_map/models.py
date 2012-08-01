@@ -41,7 +41,11 @@ class GeoRefModel(geomodels.Model):
         tooltip = ''
 
         background_color = '#000'
+        background_opacity = 0.6
         border_color = '#000'
+        border_opacity = 0.6
+        border_size = 1.5
+        border_size_hover = 2.5
 
         geometries = []
         categories = []
@@ -52,8 +56,10 @@ class GeoRefModel(geomodels.Model):
 
         min_zoom_geometry = 16
         max_zoom_geometry = 100
-        min_zoom_marker = 18
-        max_zoom_marker = 100
+        min_zoom_point = 14
+        max_zoom_point = 15
+        min_zoom_icon = 18
+        max_zoom_icon = 100
 
         zindex = 10
 
@@ -77,8 +83,12 @@ def get_models_json(all=True):
                     'disabled': not model.get_map_attr('editable'),
                     'title': model.get_map_attr( 'title') or '{}'.format(model.__name__),
                     'tooltip': model.get_map_attr('tooltip') or 'Add {}'.format(model.__name__),
-                    'color': model.get_map_attr('background_color'),
-                    'border': model.get_map_attr('border_color'),
+                    'backgroundColor': model.get_map_attr('background_color'),
+                    'backgroundOpacity': model.get_map_attr('background_opacity'),
+                    'borderColor': model.get_map_attr('border_color'),
+                    'borderOpacity': model.get_map_attr('border_opacity'),
+                    'borderSize': model.get_map_attr('border_size'),
+                    'borderSizeHover': model.get_map_attr('border_size_hover'),
                     'geometryTypes': model.get_map_attr('geometries'),
                     'categories': model.get_map_attr('categories'),
                     'formUrl': reverse(model.get_map_attr('form_view_name'),
@@ -86,8 +96,10 @@ def get_models_json(all=True):
                         kwargs=model.get_map_attr('form_view_kwargs')),
                     'minZoomGeometry': model.get_map_attr('min_zoom_geometry'),
                     'maxZoomGeometry': model.get_map_attr('max_zoom_geometry'),
-                    'minZoomMarker': model.get_map_attr('min_zoom_marker'),
-                    'maxZoomMarker': model.get_map_attr('max_zoom_marker'),
+                    'minZoomPoint': model.get_map_attr('min_zoom_point'),
+                    'maxZoomPoint': model.get_map_attr('max_zoom_point'),
+                    'minZoomIcon': model.get_map_attr('min_zoom_icon'),
+                    'maxZoomIcon': model.get_map_attr('max_zoom_icon'),
                     'zIndex': model.get_map_attr('zindex'),
                     } for model in (get_models() if all else get_editable_models())])
 

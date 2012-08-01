@@ -32,6 +32,8 @@ a:hover {
 a:active {
     color: #000;
 }
+a:active, a:active * { outline: none !important; -moz-outline-style: none !important; }
+a:focus, a:focus * { outline: none !important; -moz-outline-style: none !important; }
 ul {
     list-style-type: none;
     margin: 0px;
@@ -193,6 +195,7 @@ div.collapser:hover i.icon-chevron-right {
 div.collapser i.icon-chevron-down {
     background: url("../img/icons/arrow-active.png") no-repeat 2px 5px;
 }
+ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor: default; }
 
 /* Mootiro Bar */
 .mootiro_bar a { color: #3EBAC2 }
@@ -456,6 +459,8 @@ div.collapser i.icon-chevron-down {
     background: #AB9E15 !important;
 }
 
+.middle { vertical-align: middle }
+
 .icon-map {
     background-image: url("../img/menu/map.png");
     background-position: 0 0;
@@ -498,6 +503,28 @@ div.collapser i.icon-chevron-down {
     background-image: url("../img/menu/help.png");
 }
 
+.icon-point {
+    background-image: url("../img/geometries/point.png");
+    background-position: 0 0;
+    margin: 2px 6px;
+    width: 13px;
+    height: 13px;
+}
+.icon-linestring {
+    background-image: url("../img/geometries/linestring.png");
+    background-position: 0 0;
+    margin: 1px 0 0;
+    width: 25px;
+    height: 16px;
+}
+.icon-polygon {
+    background-image: url("../img/geometries/polygon.png");
+    background-position: 0 0;
+    margin: 2px 3px 1px;
+    width: 19px;
+    height: 17px;
+}
+
 .icon-community {
     background-image: url("../img/menu/community.png");
     background-position: 0 0;
@@ -508,7 +535,7 @@ div.collapser i.icon-chevron-down {
 *:hover > .icon-community, .selected .icon-community {
     background-image: url("../img/menu/community-active.png");
 }
-*:hover > .icon-community.no-hover {
+*:hover > .icon-community.no-hover, .selected .icon-community.no-selected {
     background-image: url("../img/menu/community.png");
 }
 .icon-community-white {
@@ -529,10 +556,11 @@ div.collapser i.icon-chevron-down {
 *:hover > .icon-need, .selected .icon-need {
     background-image: url("../img/menu/need-active.png");
 }
-*:hover > .icon-need.no-hover {
+*:hover > .icon-need.no-hover, .selected .icon-need.no-selected {
     background-image: url("../img/menu/need.png");
 }
 
+.icon-organizationbranch,
 .icon-organization {
     background-image: url("../img/menu/organization.png");
     background-position: 0 0;
@@ -540,10 +568,12 @@ div.collapser i.icon-chevron-down {
     width: 16px;
     height: 15px;
 }
+*:hover > .icon-organizationbranch, .selected .icon-organizationbranch,
 *:hover > .icon-organization, .selected .icon-organization {
     background-image: url("../img/menu/organization-active.png");
 }
-*:hover > .icon-organization.no-hover {
+*:hover > .icon-organizationbranch.no-hover, .selected .icon-organizationbranch.no-selected,
+*:hover > .icon-organization.no-hover, .selected .icon-organization.no-selected  {
     background-image: url("../img/menu/organization.png");
 }
 
@@ -557,8 +587,38 @@ div.collapser i.icon-chevron-down {
 *:hover > .icon-resource, .selected .icon-resource {
     background-image: url("../img/menu/resource-active.png");
 }
-*:hover > .icon-resource.no-hover {
+*:hover > .icon-resource.no-hover, .selected .icon-resource.no-selected  {
     background-image: url("../img/menu/resource.png");
+}
+
+.icon-community-big {
+    background-image: url("../img/community.png");
+    background-position: 0 0;
+    margin: 0 2px 0 3px;
+    width: 21px;
+    height: 24px;
+}
+.icon-need-big {
+    background-image: url("../img/need.png");
+    background-position: 0 0;
+    margin: 3px 2px 3px 3px;
+    width: 21px;
+    height: 18px;
+}
+.icon-organizationbranch-big,
+.icon-organization-big {
+    background-image: url("../img/organization.png");
+    background-position: 0 0;
+    margin: 2px 3px 2px 3px;
+    width: 20px;
+    height: 20px;
+}
+.icon-resource-big {
+    background-image: url("../img/resource.png");
+    background-position: 0 0;
+    margin: 3px 0;
+    width: 26px;
+    height: 18px;
 }
 
 .icon-investment {
@@ -571,7 +631,7 @@ div.collapser i.icon-chevron-down {
 *:hover > .icon-investment, .selected .icon-investment {
     background-image: url("../img/menu/investment-active.png");
 }
-*:hover > .icon-investment.no-hover {
+*:hover > .icon-investment.no-hover, .selected .icon-investment.no-selected {
     background-image: url("../img/menu/investment.png");
 }
 
@@ -602,8 +662,8 @@ div.collapser i.icon-chevron-down {
 /* Map panels */
 #collapse-panel {
     background: url("../img/collapse-horizontal.png") no-repeat center center;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 40px;
     position: absolute;
     right: 5px;
     top: 15px;
@@ -641,9 +701,17 @@ body.community #collapse-panel {
     border-top: 4px solid #ffbd2e;
     margin-top: 5px;
     padding-top: 10px;
+    overflow-y: auto;
 }
 .collapsed #map-panel {
-    left: -300px !important;
+    left: -330px !important;
+}
+.collapsed #collapse-panel {
+    background-color: white;
+    right: -22px;
+    -moz-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.25);
+    box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.25);
 }
 .collapsed #map-panel-content {
     transition: opacity 1s;
@@ -665,7 +733,7 @@ body.community #collapse-panel {
 }
 .collapsed #map-canvas-editor,
 .collapsed #map-canvas-main {
-    margin-left: 30px !important;
+    margin-left: 0px !important;
     width: auto !important;
 }
 #map-canvas-preview .placeholder {
@@ -688,11 +756,15 @@ body.community #collapse-panel {
     border-bottom: 1px solid #e9e9e9;
 }
 #map-panel ul.geo-objects-listing .sublist li:hover,
+#map-panel ul.geo-objects-listing .sublist li.selected,
+#map-panel ul.geo-objects-listing li .item.selected,
 #map-panel ul.geo-objects-listing li .item:hover { background: #dceff4 }
 #map-panel ul.geo-objects-listing li.sublist { padding: 0 }
 #filter-form ul.geo-objects-listing li.sublist { display: none }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
+#map-panel ul.geo-objects-listing.frozen li .item:hover { background: none; cursor: default; }
+#map-panel ul.geo-objects-listing.frozen li .item.selected:hover { background: #dceff4 }
 #filter-submit {
     padding-left: 2em;
     padding-right: 2em;
@@ -1072,7 +1144,13 @@ div.content-updates .tab.active a {
     float: left;
     margin: 0 2px;
 }
-
+.frontpage-filters-list {
+    display: inline-block;
+}
+.frontpage-filter-item {
+    display: inline-block;
+    margin: 0 10px;
+}
 /* Updates list */
 .a-update {
     width: 600px;
@@ -1181,7 +1259,10 @@ form #uploader_container { padding: 0 }
     display: block;
     background: #bbb;
 }
-
+.list-map-preview{
+    float: right;
+    margin-right: 20px;
+}
 .map-tooltip {
     display: none;
     position: absolute;
@@ -1665,10 +1746,10 @@ div.view-list-item.odd {
     max-width: 500px;
 }
 .organization-logo{
-    /* placeholder for logo TODO: remove this and replace by img */
     max-width: 80px;
     max-height: 60px;
     margin-right: 20px;
+    vertical-align: top;
 }
 .right-bar-modif{
     color: #555555;
@@ -2016,24 +2097,140 @@ div.investments-list .tab-investment.selected a { color: #000 }
     vertical-align: top;
 }
 /* ====== user profile ===== */
-#user-profile-content{
+.user-profile-edit-container{
     padding: 50px 60px 0 60px;
     /*background-color: #DCEFF4;*/
     min-height: 550px;
+    /* width: 1024px; */
 }
-#user-profile-content .main-column{
-    margin: 0 auto;
-    float: none;
+.user-profile-edit-container .nav-tabs{
+    border-bottom: solid 1px #000;
 }
-.mootiro-maps-logo{
-    text-align: center;
-    margin-bottom: 50px;
+.user-profile-edit-container .nav-tabs > .active > a,
+.user-profile-edit-container .nav-tabs > .active > a:hover{
+    border-color: #000 #000 transparent;
 }
-.div-profile-form label{
+.user-profile-edit-container .tab-content{
+    overflow: visible;
+}
+.profile-container{
+    padding: 30px;
+}
+.profile-left-pane{
+    display: inline-block;
+    width: 332px;
+}
+.profile-central-pane{
+    display: inline-block;
+    width: 682px;
+    margin-left: 30px;
+    vertical-align: top;
+}
+.profile-lp-header{}
+.profile-lp-header-username{
+    font-weight: bold;
+    font-size: 1.5em;
+    vertical-align: middle;
+}
+.profile-lp-header-edit-btn{
+    /* margin-left: 20px; */
+    float: right;
+    margin-right: 20px;
+    vertical-align: middle;
+}
+.profile-lp-photo{
+    margin-top: 20px;
+}
+.profile-lp-photo img{
+    max-width: 310px;
+    max-height: 300px;
+}
+.profile-lp-contact{
+    border-radius: 4px;
+    background-color: #dedede;
+    padding: 10px;
+    margin-top: 20px;
+    width: 297px;
+    color: #333333;
+}
+.profile-lp-contact-header{
     font-weight: bold;
 }
-.div-profile-form input{
-    background-color: #f5f5f5;
+.profile-cp-header, .signatures-list-header{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+.profile-cp-header span, .signatures-list-header span{
+    border-radius: 3px;
+    /* border-width: 1px; */
+    /* border-style: solid; */
+    /* border-color: #000 #000 transparent; */
+    padding: 10px 15px 0;
+    background-color: rgb(220, 239, 244);
+}
+.contribution, .signature {
+    padding: 10px;
+}
+.contribution:nth-child(odd), .signature:nth-child(odd) {
+    background-color: rgb(220, 239, 244);
+}
+.contribution:nth-child(even), .signature:nth-child(even) {
+    background-color: rgb(202, 233, 240);
+}
+.contribution-image, .signature-image{
+    width: 80px;
+    margin-right: 5px;
+    vertical-align: top;
+}
+.contribution-image img, .signature-image img {
+    max-width: 145px;
+    max-height: 145px;
+}
+.contribution-header, .signature-header{
+    width: 570px;
+}
+.contribution-title, .signature-title {
+    color: rgb(0, 156, 180);
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+}
+.contribution .see-on-map, .signature .see-on-map{
+    float: right;
+}
+.form-profile-wrapper {
+    margin-top: 40px;
+}
+.div-signatures-manage-btn{
+    padding: 20px 10px 10px;
+    background-color: rgb(220, 239, 244);
+}
+.signature-body{
+    padding-top: 10px;
+}
+.cancel-subscription-btn{
+    display: inline-block;
+    font-weight: bold;
+}
+.cancel-subscription-btn span{
+    margin-left: 5px;
+    vertical-align: middle;
+}
+.cancel-subscription-btn i{
+    vertical-align:middle;
+}
+.digest-modal-header{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.digest-radio-btn{
+    margin-bottom: 5px;
+}
+.digest-radio-btn span{
+    color: #555;
+    margin-left: 10px;
 }
 /* ====== Error box ======== */
 .error-dialog {
@@ -2206,6 +2403,15 @@ ul.two-cols li {
     margin: 12px; /* 4*x, x=3 */
 }
 
+#map-license {
+    color: black;
+    font-size: 10px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 2px 5px;
+    margin: 0 300px 1px 0;
+    line-height: 14px;
+}
+
 #footer {
     clear: both;
     width: 900px;
@@ -2230,6 +2436,11 @@ ul.two-cols li {
 
 #footer .cea-logo {
     margin: 24px; /* 4*x, x=6 */
+}
+
+#footer .license {
+    width: 410px;
+    margin: 10px 0 0 260px;
 }
 
 /* form hint boxes */

@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% block title %}<strong>{{ object.name }}</strong>{% endblock %}
+{% block title %}<strong>{{ object }}</strong>{% endblock %}
 {% block content %}
   <div>
     {% if object.categories %}
@@ -14,13 +14,13 @@
     <p>
     <ul>
       {% if object.needs %}
-      <li><i class="icon-need no-hover"></i>{% blocktrans count count=object.needs.count %}{{ count }} Need{% plural %}{{ count }} Needs{% endblocktrans %}</li>
+      <li><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}</li>
       {% endif %}
       {% if object.organization_set %}
-        <li><i class="icon-organization no-hover"></i>{% blocktrans count count=object.organization_set.count %}{{ count }} Organization{% plural %}{{ count }} Organizations{% endblocktrans %}</li>
+        <li><i class="icon-organization no-hover"></i>{% blocktrans count counter=object.organization_set.count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}</li>
       {% endif %}
       {% if object.resources %}
-        <li><i class="icon-resource no-hover"></i>{% blocktrans count count=object.resources.count %}{{ count }} Resource{% plural %}{{ count }} Resources{% endblocktrans %}</li>
+        <li><i class="icon-resource no-hover"></i>{% blocktrans count counter=object.resources.count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}</li>
       {% endif %}
     </ul>
     </p>

@@ -1,0 +1,62 @@
+<ul class="geo-objects-listing" id="map-add-menu">
+{% for object in objects %}
+  <li class="{{ object.type|lower }}">
+    <div id="{{ prefix }}-{{ object.type|lower }}" class="item"
+      data-feature-type="{{ object.type }}"
+      data-geometry-type="{% if object.geometries|length == 1 %}{{ object.geometries.0.type }}{% endif %}">
+      <i class="icon-{{ object.type|lower }}-big middle"></i>
+      <span class="middle">{{ object.title }}</span>
+    </div>
+    {% if show_geometries and object.geometries|length > 1 %}
+    <div class="collapser"><i class="icon-chevron-right"></i></div>
+    {% endif %}
+  </li>
+  {% if show_geometries and object.geometries|length > 1 %}
+    <li class="{{ object.type|lower }} sublist">
+      <ul>
+      {% for geometry in object.geometries %}
+        <li class="{{ object.type|lower }}">
+          <div id="{{ prefix }}-{{ object.type|lower }}-{{ geometry.type|lower }}"
+            data-feature-type="{{ object.type }}"
+            data-geometry-type="{{ geometry.type }}">
+            <i class="icon-{{ geometry.type|lower }} middle"></i>
+            <span class="middle">{{ geometry.title }}</span>
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    </li>
+  {% endif %}
+{% endfor %}
+</ul>
+
+<script type="text/javascript">
+  $(function () {
+    var menu = $("#map-add-menu");
+    // Listen map events
+    $("#map-canvas-main").bind('drawing_started', function (e, geometryType, featureType) {
+      var menuItem = $('.' + featureType.toLowerCase() + ' .item', menu);
+      $('.item', menu).removeClass('selected');
+      $('.sublist', menu).hide();
+      $('.collapser i.icon-chevron-down', menu).toggleClass("icon-chevron-right icon-chevron-down");
+      menuItem.addClass('selected');
+      menu.addClass("frozen");
+    });
+    $("#map-canvas-main").bind('drawing_finished', function (e) {
+      $('.item', menu).removeClass('selected');
+      menu.removeClass("frozen");
+    });
+
+    // Add click event to add menu items
+    $('.item, .sublist li > div', menu).click(function (e) {
+      if (menu.hasClass('frozen')) return false;
+      var item = $(this);
+      var geometryType = item.attr("data-geometry-type");
+      var featureType = item.attr("data-feature-type");
+      if (geometryType)
+        editor.drawNew(geometryType, featureType);
+      else
+        $('.collapser', $(this).parent()).click();
+    });
+  });
+</script>

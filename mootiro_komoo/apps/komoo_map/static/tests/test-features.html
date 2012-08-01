@@ -24,7 +24,10 @@
           var coordinates = [1, 2];
 	  var point = {
 	      getGeometryType: function () { return 'Point'; },
-	      getCoordinates: function () { return coordinates }
+	      getCoordinates: function () { return coordinates },
+          getGeoJson: function () { return {
+            type: this.getGeometryType(),
+            coordinates: this.getCoordinates() }}
 	  };
 	  var feature = new komoo.features.Feature();
           var geometry = {'type': 'Point', 'coordinates': coordinates};

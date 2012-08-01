@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
+from django.contrib.auth.models import User
 
 from annoying.decorators import render_to, ajax_request
 import requests
@@ -38,11 +39,6 @@ def root(request):
 def _fetch_geo_objects(Q, zoom):
     ret = {}
     for model in [Community, Need, Resource, OrganizationBranch]:
-        #min_ =  min(model.get_map_attr('min_zoom_geometry'),
-        #            model.get_map_attr('min_zoom_marker'))
-        #max_ = max(model.get_map_attr('max_zoom_geometry'),
-        #           model.get_map_attr('max_zoom_marker'))
-        #ret[model.__name__] = model.objects.filter(Q) if (zoom >= min_ and zoom <= max_) else []
         ret[model.__name__] = model.objects.filter(Q)
     return ret
 
@@ -240,11 +236,31 @@ def permalink(request, identifier=''):
         'c': Community,
         'o': Organization,
         'p': Proposal,
+        'u': User,
     }
     url = 'root'
     if identifier:
         entity, id_ = identifier[0], identifier[1:]
         obj = entity_model[entity].objects.get(pk=id_)
-        url = getattr(obj, 'view_url', '/')
-        print entity, id_, url
+        url = getattr(obj, 'view_url', '/') if entity != 'u' \
+                else reverse('user_profile', kwargs={'username': obj.username})
     return redirect(url)
+
+@ajax_request
+def get_geojson_from_hashlink(request):
+    entity_model = {
+        'r': Resource,
+        'n': Need,
+        'c': Community,
+        'o': Organization,
+        'p': Proposal,
+    }
+    hashlink = request.GET.get('hashlink', '')
+    if hashlink:
+        obj = entity_model[hashlink[0]].objects.get(pk=hashlink[1:])
+        geojson =  create_geojson([obj])
+    else:
+        geojson = {}
+
+    return {'geojson': geojson}
+
