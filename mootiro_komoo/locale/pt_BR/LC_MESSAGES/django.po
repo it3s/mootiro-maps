@@ -1386,7 +1386,7 @@ msgid ""
 "I want to receive only a <strong>weekly</strong> digest mail with the "
 "updates for the objects I'm subescribed to"
 msgstr ""
-"Eu Quero receber somente notificações com o resumo <strong>semanal</strong> "
+"Eu quero receber somente notificações com o resumo <strong>semanal</strong> "
 "contendo as atualizações dos objetos que estou observando"
 
 #: apps/user_cas/templates/user_cas/profile_update.html:159
@@ -1394,7 +1394,7 @@ msgid ""
 "I want to receive only a <strong>daily</strong> digest mail with the updates "
 "for the objects I'm subescribed to"
 msgstr ""
-"Eu Quero receber somente notificações com o resumo <strong>diário</strong> "
+"Eu quero receber somente notificações com o resumo <strong>diário</strong> "
 "contendo as atualizações dos objetos que estou observando"
 
 #: apps/user_cas/templates/user_cas/profile_update.html:166

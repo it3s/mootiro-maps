@@ -126,6 +126,8 @@ def render(user=None, main_link=DEFAULT_MAIN_LINK, services=DEFAULT_SERVICES,
     if user is not None:
         if hasattr(user, 'nickname'):
             show_nickname = elipsize(user.nickname)
+        elif hasattr(user, 'get_name'):
+            show_nickname = elipsize(user.get_name)
         elif hasattr(user, 'username'):
             show_nickname = elipsize(user.username)
         elif hasattr(user, 'email'):

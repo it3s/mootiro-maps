@@ -1,11 +1,11 @@
 {% load i18n %}
 {% load komoo_filters %}
 <a class="more history" title="
-  {% blocktrans with user=obj.creator.username date=obj.creation_date|naturaltime %}
-    created by {{ user }} {{ date }}<br/>
+  {% blocktrans with id=obj.creator.id user=creator_link date=obj.creation_date|naturaltime %}
+  created by {{ user }} {{ date }}<br/>
   {% endblocktrans %}
   {% if obj.last_editor %}
-    {% blocktrans with user=obj.last_editor.username date=obj.last_update|naturaltime %}
+    {% blocktrans with user=last_editor date=obj.last_update|naturaltime %}
       last update by {{ user }} {{ date }}
     {% endblocktrans %}
   {% endif %}

@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 from django.utils import simplejson
 from django.forms.models import model_to_dict
@@ -76,27 +75,28 @@ def _prepare_contrib_data(version, created_date):
 
     contrib = {}
 
-    if data['model'] in regular_types:
-        obj = data['fields']
-        contrib['id'] = version.object_id
-        contrib['app_name'], contrib['model_name'] = data['model'].split('.')
-        contrib['type'] = ['A', 'E', 'D'][version.type]
+    if data['model'] in regular_types + weird_types:
+        if data['model'] in regular_types:
+            obj = data['fields']
+            contrib['id'] = version.object_id
+            contrib['app_name'], contrib['model_name'] = data['model'].split('.')
+            contrib['type'] = ['A', 'E', 'D'][version.type]
 
-    elif data['model'] in weird_types:
-        ctype = ContentType.objects.get_for_id(data['fields']['content_type'])
-        obj = model_to_dict(ctype.get_object_for_this_type(
-                pk=data['fields']['object_id']))
-        contrib['id'] = obj.get('id', '') or obj.get('pk', '')
-        contrib['app_name'] = ctype.app_label
-        contrib['model_name'] = ctype.name
-        contrib['type'] = 'C'
+        elif data['model'] in weird_types:
+            ctype = ContentType.objects.get_for_id(data['fields']['content_type'])
+            obj = model_to_dict(ctype.get_object_for_this_type(
+                    pk=data['fields']['object_id']))
+            contrib['id'] = obj.get('id', '') or obj.get('pk', '')
+            contrib['app_name'] = ctype.app_label
+            contrib['model_name'] = ctype.name
+            contrib['type'] = 'C'
 
-    contrib['name'] = obj.get('name', '') or obj.get('title', '')
-    contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
-    contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
-    contrib['permalink'] = "/permalink/{}{}".format(contrib['model_name'][0]
-            if data['model'] != 'organization.organizationbranch' else 'o',
-            contrib['id'])
+        contrib['name'] = obj.get('name', '') or obj.get('title', '')
+        contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
+        contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
+        contrib['permalink'] = "/permalink/{}{}".format(contrib['model_name'][0]
+                if data['model'] != 'organization.organizationbranch' else 'o',
+                contrib['id'])
 
     return contrib
 
@@ -136,7 +136,7 @@ def profile_update(request):
     digest = digest_obj[0].digest_type if digest_obj.count() \
                   else ''
     form_profile = FormProfile(instance=request.user.profile)
-    return dict(signatures=signatures, form_profile=form_profile, 
+    return dict(signatures=signatures, form_profile=form_profile,
                 digest=digest)
 
 
@@ -150,25 +150,25 @@ def profile_update_public_settings(request):
 @ajax_request
 def profile_update_personal_settings(request):
     logger.debug('accessing user_cas > profile_update_personal_settings')
-    username = request.POST.get('username', '')
+    # username = request.POST.get('username', '')
     try:
-        if not username:
-            return dict(success='false',
-                        errors={'username': _('Username Required')})
+        # if not username:
+        #     return dict(success='false',
+        #                 errors={'username': _('Username Required')})
 
-        user_with_this_username = User.objects.filter(username=username)
-        if user_with_this_username.count():
-            if user_with_this_username[0] != request.user:
-                # same username , different users -> no no no
-                return dict(success='false',
-                    errors={'username': _('This username already exists')})
-            else:
-                # same user, same username -> do nothing
-                return dict(success='true', data={})
-        else:
-            # new username =]
-            request.user.username = username
-            request.user.save()
+        # user_with_this_username = User.objects.filter(username=username)
+        # if user_with_this_username.count():
+        #     if user_with_this_username[0] != request.user:
+        #         # same username , different users -> no no no
+        #         return dict(success='false',
+        #             errors={'username': _('This username already exists')})
+        #     else:
+        #         # same user, same username -> do nothing
+        #         return dict(success='true', data={})
+        # else:
+        #     # new username =]
+        #     request.user.username = username
+        #     request.user.save()
             return dict(success='true', data={})
     except Exception as err:
         logger.error('OPS: ', err)
@@ -179,7 +179,6 @@ def profile_update_personal_settings(request):
 @login_required
 @ajax_request
 def digest_update(request):
-    # TODO fix-me
     logger.debug('acessing user_cas > digest_update')
     logger.debug('POST: {}'.format(request.POST))
     digest_type = request.POST.get('digest_type', '')
@@ -209,5 +208,5 @@ def signature_delete(request):
     if signature.user == request.user:
         signature.delete()
         return dict(success=True)
-    return sict(success=False)
+    return dict(success=False)
 

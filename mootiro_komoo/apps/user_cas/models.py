@@ -28,3 +28,18 @@ class KomooProfile(models.Model):
 User.profile = property(lambda u:
         KomooProfile.objects.get_or_create(user=u)[0])
 
+
+def get_name(user):
+    if user:
+        name = ''
+        if hasattr(user, 'profile') and user.profile:
+            name = user.profile.public_name
+        if not name:
+            name = user.get_full_name()
+        if not name:
+            name = user.username
+        return name
+    else:
+        return ''
+User.get_name = property(get_name)
+
