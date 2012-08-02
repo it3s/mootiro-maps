@@ -8,6 +8,7 @@ interacts with the system.
 
 from __future__ import unicode_literals  # unicode by default
 
+from django.db.models.signals import post_save
 from django.dispatch import Signal, receiver
 
 from .models import Update
@@ -16,6 +17,7 @@ from need.models import Need
 from proposal.models import Proposal
 from organization.models import Organization
 from komoo_resource.models import Resource
+from investment.models import Investment
 from komoo_comments.models import Comment
 
 create_update = Signal(providing_args=["user", "instance", "type"])
@@ -31,7 +33,7 @@ def _create_the_update(instances, communities, **kwargs):
     if recent_update:
         update = recent_update
         people = update.users
-        if user.username not in people or True:  # TODO: remove "or True"
+        if user.username not in people:
             people.insert(0, user.username)
             update.users = people
     else:
@@ -89,14 +91,12 @@ def create_discussion_update(sender, **kwargs):
     kwargs["instance"] = instance
 
     if type(instance) == Proposal:
-        instances = [instance, instance.need]
+        instances = _proposal_instances(instance)
     else:
         instances = [instance]
 
     if type(instance) == Community:
         communities = []
-    elif type(instance) == Proposal:
-        communities = instance.need.community.all()
     elif hasattr(instance, 'community'):
         communities = instance.community.all()
     else:
