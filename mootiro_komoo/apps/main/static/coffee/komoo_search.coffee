@@ -20,6 +20,7 @@ $ ->
         'resource': gettext 'Resources'
         'investiment': gettext 'Investments'
         'google': gettext 'Google Results'
+        'user': gettext 'User'
 
     showPopover = ->
         $('#search-results-box').popover 'show'
@@ -63,7 +64,7 @@ $ ->
         results_list = ''
         results_count = 0
         has_results = false
-        result_order = ['community', 'organization', 'need', 'resource']
+        result_order = ['community', 'organization', 'need', 'resource', 'user']
 
         for key in result_order
             val = result[key]

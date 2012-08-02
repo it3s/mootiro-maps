@@ -144,6 +144,18 @@ queries = {
         'repr': 'name',
         'link': lambda o: reverse('view_community',
                                   kwargs={'community_slug': o.slug})
+    },
+    'user': {
+        'model': User,
+        'query_fields': [
+            'username',
+            'first_name',
+            'last_name',
+            'komooprofile__public_name'
+        ],
+        'repr': 'get_name',
+        'link': lambda o: reverse('user_profile',
+                                  kwargs={'username': o.username})
     }
 }
 
