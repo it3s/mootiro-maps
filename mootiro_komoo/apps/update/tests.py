@@ -83,13 +83,25 @@ class UpdateSignalsTestCase(KomooTestCase):
 
         n = Update.objects.count()
         data = A_COMMUNITY_DATA()
-        data['id'] = 1
+        data['id'] = 1  # work as a edit flag for ajaxform
         self.client.post(reverse('edit_community', args=('sao-remo',)), data)
         self.assertEquals(Update.objects.count(), n + 1)
 
         last_update = Update.objects.order_by("-date")[0]
         self.assertEquals(last_update.type, Update.EDIT)
         self.assertEquals(last_update.users[0], 'tester')
+
+    def test_updates_aggregation(self):
+        self.login_user(username='tester')
+
+        n = Update.objects.count()
+        data = A_COMMUNITY_DATA()
+        data['id'] = 1  # work as a edit flag for ajaxform
+
+        # assert updates are aggregated
+        self.client.post(reverse('edit_community', args=('sao-remo',)), data)
+        self.client.post(reverse('edit_community', args=('sao-remo',)), data)
+        self.assertEquals(Update.objects.count(), n + 1)
 
     ####### Discussions #######
     def test_new_comment_creates_update(self):
