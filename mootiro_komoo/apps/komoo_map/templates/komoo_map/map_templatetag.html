@@ -39,7 +39,8 @@
         {% if type == 'disabled' %} MAP DISABLED {% endif %}
     </div>
     <div style="clear: both;"></div>
-    </div>
+  </div>
+  <div id="dinamic-form"></div>
 {% endblock %}
 
 {% block map_js %}
@@ -50,8 +51,9 @@
 
     initialize = function () {
 
-      /** The map should fill the main page size **/
+      $('#dinamic-form').hide();
 
+      /** The map should fill the main page size **/
       function fixMapSize() {
         fixMapHeight();
         fixMapWidth();
@@ -59,34 +61,62 @@
       }
       function fixMapHeight() {
         {% if height == '100%' %}
-        var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
-        $("#map-canvas-{{ type }}").height(height);
-        var mapPanel = $('#map-panel');
-        mapPanel.height(height);
-        $('.panel', mapPanel).height(height - (window.community_slug ? 170 : 146));
+          var mapPanel = $('#map-panel');
+          var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
+          $("#map-canvas-{{ type }}").height(height);
+          mapPanel.height(height);
+          $('.panel', mapPanel).height(height - (window.community_slug ? 170 : 146));
         {% endif %}
       }
       function fixMapWidth() {
         {% if width == '100%' %}
-        var panelWidth = $('#map-panel').innerWidth();
-        try {
-          var panelLeft = $('#map-panel').position().left;
-        } catch (err) {
-          var panelLeft = 0;
-        }
-        $("#map-canvas-{{ type }}").css({marginLeft: panelWidth + panelLeft, width: 'auto'});
+          var panelWidth = $('#map-panel').innerWidth();
+          try {
+            var panelLeft = $('#map-panel').position().left;
+          } catch (err) {
+            var panelLeft = 0;
+          }
+          $("#map-canvas-{{ type }}").css({marginLeft: panelWidth + panelLeft, width: 'auto'});
         {% endif %}
       }
       $(window).resize(fixMapSize);
 
       /** Creating the map object **/
-
       {{ type }} = komoo.maps.make{{ type|title }}({
         featureTypes: featureTypes,
         geojson: geojson,
         elementId: "map-canvas-{{ type }}",
       });
       editor = {{ type }}
+
+      komoo.event.addListener(editor, 'drawing_finished', function (feature, gotoNextStep) {
+        var featureType, url, geojson;
+        var context = $('#dinamic-form');
+        $.ajaxSetup({ cache: true });
+
+        if (gotoNextStep && feature) {
+          featureType = feature.getFeatureType();
+          geojson = feature.getGeometryCollectionGeoJson();
+          url = featureType.formUrl.replace('/communitySlug', (window.community_slug) ? ('/' + community_slug) : '');
+          $.ajax({
+            url: url,
+            cache: true,
+            context: context,
+            dataType: 'html',
+            type: 'GET',
+            success: function (data, textStatus, jqXHR) {
+              $(this).html(data);
+              $('#id_geometry').val(JSON.stringify(geojson));
+              $(this).show();
+              fixMapSize();
+              $('#map-container-{{ type }}, #map-panel').slideUp(600);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              alert('ERRO!!!11!');
+            }
+          });
+        }
+      });
 
       fixMapSize();
 

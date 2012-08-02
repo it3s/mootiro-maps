@@ -331,7 +331,20 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     text-shadow: none;
     background-color: rgba(62, 186, 194, 0.2);
 }
-#drawing-control-add,
+.map-button.disabled:hover {
+    color: #000;
+    border: 1px solid #c7c7c7 !important;
+    background-color: #ededed !important;
+    /* Generated from: http://gradients.glrzad.com/ */
+    background-image: linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -o-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #CECECE), color-stop(1, #EDEDED)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CECECE, endColorstr=#EDEDED)" important;
+}
+.polygon #drawing-control-add,
 #top #menu li:first-child a,
 .map-tab:first-child a {
     border-radius        : 6px 0 0 6px;
@@ -778,14 +791,14 @@ body.community #collapse-panel {
 }
 #map-panel ul.geo-objects-listing .sublist li:hover,
 #map-panel ul.geo-objects-listing .sublist li.selected,
-#map-panel ul.geo-objects-listing li .item.selected,
 #map-panel ul.geo-objects-listing li .item:hover { background: #dceff4 }
 #map-panel ul.geo-objects-listing li.sublist { padding: 0 }
 #filter-form ul.geo-objects-listing li.sublist { display: none }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
 #map-panel ul.geo-objects-listing.frozen li .item:hover { background: none; cursor: default; }
-#map-panel ul.geo-objects-listing.frozen li .item.selected:hover { background: #dceff4 }
+#map-panel ul.geo-objects-listing li .item.selected,
+#map-panel ul.geo-objects-listing.frozen li .item.selected:hover { background: #b1dde8 }
 #filter-submit {
     padding-left: 2em;
     padding-right: 2em;
@@ -942,9 +955,11 @@ body.community #map-panel-tabs {
 body.community #main-content {
     margin: 40px 0 0;
 }
-.map-panel .map-panel-buttons,
-.map-panel .content {
+.map-panel .map-panel-buttons {
     margin: 0 5px;
+}
+.map-panel .content {
+    margin: 0 10px;
 }
 .map-panel .content .map-button {
     margin: 0 0px;
@@ -2403,6 +2418,21 @@ ul.two-cols li {
     display: inline-block;
     float: right;
     vertical-align: middle;
+}
+
+#map-drawing-box {
+    background: #dceff4;
+    margin: 10px;
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    border-radius        : 4px;
+    -moz-border-radius   : 4px;
+    -webkit-border-radius: 4px;
+}
+
+.collapsed #map-drawing-box {
+    margin: 10px 10px 10px 30px;
 }
 
 #map-supporters {

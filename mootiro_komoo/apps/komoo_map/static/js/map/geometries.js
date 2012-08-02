@@ -632,6 +632,10 @@
       return this.overlay.addPolyline(polyline, keep);
     };
 
+    MultiLineString.prototype.getPolylines = function() {
+      return this.overlay.getPolylines();
+    };
+
     return MultiLineString;
 
   })(LineString);

@@ -274,6 +274,8 @@ class MultiLineString extends LineString
 
     addPolyline: (polyline, keep) -> @overlay.addPolyline(polyline, keep)
 
+    getPolylines: -> @overlay.getPolylines()
+
 
 class Polygon extends LineString
     geometryType: POLYGON

@@ -117,6 +117,10 @@ class Feature
 
     getGeometryGeoJson: -> @geometry.getGeoJson()
 
+    getGeometryCollectionGeoJson: ->
+        type: "GeometryCollection"
+        geometries: [@getGeometryGeoJson()]
+
     getGeoJsonGeometry: -> @getGeometryGeoJson()
 
     getGeoJson: ->

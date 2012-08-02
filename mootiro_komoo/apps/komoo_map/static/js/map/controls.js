@@ -36,6 +36,7 @@
     function Box() {
       this.box = $("<div>");
       if (this.id != null) this.box.attr("id", this.id);
+      if (this["class"] != null) this.box.addClass(this["class"]);
     }
 
     Box.prototype.setMap = function(map) {
@@ -141,6 +142,7 @@
       komoo.event.addListener(this.map, 'drawing_finished', function(feature) {
         _this.feature.setEditable(false);
         _this.feature.updateIcon();
+        _this.setFeature(null);
         return _this.setMode(null);
       });
       komoo.event.addListener(this.map, 'finish_drawing', function() {
@@ -157,7 +159,7 @@
     DrawingManager.prototype.handleManagerEvents = function() {
       var _this = this;
       return komoo.event.addListener(this.manager, 'overlaycomplete', function(e) {
-        var orientation, orientationAdded, path, paths, sArea, sAreaAdded, _ref, _ref2, _ref3, _ref4, _ref5, _ref6;
+        var orientation, orientationAdded, path, paths, sArea, sAreaAdded, _ref, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
         path = (_ref = e.overlay) != null ? typeof _ref.getPath === "function" ? _ref.getPath() : void 0 : void 0;
         if (path && ((_ref2 = _this.mode) === ADD || _ref2 === NEW || _ref2 === CUTOUT) && ((_ref3 = e.overlay) != null ? _ref3.getPaths : void 0)) {
           paths = _this.feature.getGeometry().getPaths();
@@ -180,17 +182,55 @@
           _this.feature.getGeometry().addPolyline(e.overlay, true);
         }
         _this.map.setMode(EDIT);
-        return _this.feature.setEditable(true);
+        return (_ref7 = _this.feature) != null ? _ref7.setEditable(true) : void 0;
+      });
+    };
+
+    DrawingManager.prototype.setFeature = function(feature) {
+      var _this = this;
+      this.feature = feature;
+      if (this.featureClickListener != null) {
+        komoo.event.removeListener(this.featureClickListener);
+      }
+      if (!(this.feature != null)) return;
+      this.feature.setMap(this.map, {
+        geometry: true
+      });
+      return this.featureClickListener = komoo.event.addListener(this.feature, 'click', function(e, o) {
+        var index, marker, markers, paths, polyline, polylines;
+        if (_this.mode === DELETE) {
+          console.log(o);
+          if (_this.feature.getGeometryType() === komoo.geometries.types.POLYGON) {
+            paths = _this.feature.getGeometry().getPaths();
+            paths.forEach(function(path, index) {
+              if (komoo.utils.isPointInside(e.latLng, path)) {
+                return paths.removeAt(index);
+              }
+            });
+          } else if (o && _this.feature.getGeometryType() === komoo.geometries.types.MULTIPOINT) {
+            markers = _this.feature.getGeometry().getMarkers();
+            index = $.inArray(o, markers.getArray());
+            if (index > -1) {
+              marker = markers.removeAt(index);
+              marker.setMap(null);
+            }
+          } else if (o && _this.feature.getGeometryType() === komoo.geometries.types.MULTILINESTRING) {
+            polylines = _this.feature.getGeometry().getPolylines();
+            index = $.inArray(o, polylines.getArray());
+            if (index > -1) {
+              polyline = polylines.removeAt(index);
+              polyline.setMap(null);
+            }
+          }
+          return _this.map.setMode(EDIT);
+        }
       });
     };
 
     DrawingManager.prototype.editFeature = function(feature) {
       var options;
-      this.feature = feature;
       if (this.enabled === false) return;
-      this.feature.setMap(this.map, {
-        geometry: true
-      });
+      this.setFeature(feature);
       this.feature.setEditable(true);
       options = {};
       options["" + OVERLAY[this.feature.getGeometryType()] + "Options"] = this.feature.getGeometry().getOverlayOptions({
@@ -219,12 +259,14 @@
 
     DrawingControl.prototype.id = "map-drawing-box";
 
+    DrawingControl.prototype["class"] = "map-panel";
+
     DrawingControl.prototype.position = google.maps.ControlPosition.TOP_LEFT;
 
     function DrawingControl() {
       DrawingControl.__super__.constructor.call(this);
       this.box.hide();
-      this.box.html("<div class=\"map-panel\" id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-finish\">Concluir</div>\n    <div class=\"map-button\" id=\"drawing-control-cancel\">Cancelar</div>\n  </div>\n</div>");
+      this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-finish\">" + (gettext('Next Step')) + "</div>\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Cancel')) + "</div>\n  </div>\n</div>");
       this.handleBoxEvents();
     }
 
@@ -244,6 +286,7 @@
     DrawingControl.prototype.handleBoxEvents = function() {
       var _this = this;
       $("#drawing-control-finish", this.box).click(function() {
+        if ($("#drawing-control-finish", _this.box).hasClass('disabled')) return;
         return komoo.event.trigger(_this.map, 'finish_drawing');
       });
       return $("#drawing-control-cancel", this.box).click(function() {
@@ -268,8 +311,10 @@
       this.mode = mode;
       if (this.mode === NEW) {
         $("#drawing-control-content", this.box).hide();
+        $("#drawing-control-finish", this.box).addClass('disabled');
       } else {
         $("#drawing-control-content", this.box).show();
+        $("#drawing-control-finish", this.box).removeClass('disabled');
       }
       $(".map-button.active", this.box).removeClass("active");
       return $("#drawing-control-" + (this.mode.toLowerCase()), this.box).addClass("active");
@@ -292,14 +337,15 @@
 
     DrawingControl.prototype.getContent = function() {
       var add, content, cutout, remove;
-      add = "<div class=\"map-button\" id=\"drawing-control-add\"><i class=\"icon-komoo-plus middle\"></i><span class=\"middle\">" + (gettext('Sum')) + "</span></div>";
-      cutout = "<div class=\"map-button\" id=\"drawing-control-cutout\"><i class=\"icon-komoo-minus middle\"></i><span class=\"middle\">" + (gettext('Cutout')) + "</span></div>";
-      remove = "<div class=\"map-button\" id=\"drawing-control-delete\"><i class=\"icon-komoo-trash middle\"></i></div>";
-      content = add;
+      add = $("<div class=\"map-button\" id=\"drawing-control-add\"><i class=\"icon-komoo-plus middle\"></i><span class=\"middle\">" + (gettext('Sum')) + "</span></div>");
+      cutout = $("<div class=\"map-button\" id=\"drawing-control-cutout\"><i class=\"icon-komoo-minus middle\"></i><span class=\"middle\">" + (gettext('Cut out')) + "</span></div>");
+      remove = $("<div class=\"map-button\" id=\"drawing-control-delete\"><i class=\"icon-komoo-trash middle\"></i></div>");
+      content = $("<div>").addClass(this.feature.getGeometryType().toLowerCase());
+      content.append(add);
       if (this.feature.getGeometryType() === komoo.geometries.types.POLYGON) {
-        content += cutout;
+        content.append(cutout);
       }
-      content += remove;
+      content.append(remove);
       return content;
     };
 

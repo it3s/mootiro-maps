@@ -19,6 +19,7 @@ class Box
     constructor: ->
         @box = $ "<div>"
         if @id? then @box.attr "id", @id
+        if @class? then @box.addClass @class
 
     setMap: (@map) ->
         @map.googleMap.controls[@position].push @box.get 0
@@ -90,16 +91,18 @@ class DrawingManager
         komoo.event.addListener @map, 'drawing_finished', (feature) =>
             @feature.setEditable off
             @feature.updateIcon()
+            @setFeature null
             @setMode null
 
-        komoo.event.addListener @map, 'finish_drawing', () =>
+        komoo.event.addListener @map, 'finish_drawing', =>
             komoo.event.trigger @map, 'drawing_finished', @feature, true
 
-        komoo.event.addListener @map, 'cancel_drawing', () =>
+        komoo.event.addListener @map, 'cancel_drawing', =>
             komoo.event.trigger @map, 'drawing_finished', @feature, false
 
         komoo.event.addListener @map, 'mode_changed', (mode) =>
             @setMode mode
+
 
     handleManagerEvents: ->
         komoo.event.addListener @manager, 'overlaycomplete', (e) =>
@@ -132,13 +135,45 @@ class DrawingManager
                 @feature.getGeometry().addPolyline e.overlay, true
 
             @map.setMode EDIT
-            @feature.setEditable on
+            @feature?.setEditable on
 
-    editFeature: (@feature) ->
-        if @enabled is off then return
+    setFeature: (@feature) ->
+        if @featureClickListener?
+            komoo.event.removeListener @featureClickListener
+
+        if not @feature? then return
 
         @feature.setMap @map, geometry: on
+        @featureClickListener = komoo.event.addListener @feature, 'click', (e, o) =>
+            if @mode is DELETE
+                # Delete clicked stuff
+                console.log o
+                if @feature.getGeometryType() is komoo.geometries.types.POLYGON
+                    paths = @feature.getGeometry().getPaths()
+                    paths.forEach (path, index) =>
+                        # Delete the correct path.
+                        if komoo.utils.isPointInside e.latLng, path
+                            paths.removeAt index
+                else if o and @feature.getGeometryType() is komoo.geometries.types.MULTIPOINT
+                    markers = @feature.getGeometry().getMarkers()
+                    index = $.inArray o, markers.getArray()
+                    if index > -1
+                        marker = markers.removeAt index
+                        marker.setMap null
+                else if o and @feature.getGeometryType() is komoo.geometries.types.MULTILINESTRING
+                    polylines = @feature.getGeometry().getPolylines()
+                    index = $.inArray o, polylines.getArray()
+                    if index > -1
+                        polyline = polylines.removeAt index
+                        polyline.setMap null
+                @map.setMode EDIT
+
+    editFeature: (feature) ->
+        if @enabled is off then return
+
+        @setFeature feature
         @feature.setEditable on
+
         options = {}
         options["#{OVERLAY[@feature.getGeometryType()]}Options"] = @feature.getGeometry().getOverlayOptions
             strokeWeight: 2.5
@@ -156,18 +191,19 @@ class DrawingManager
 
 class DrawingControl extends Box
     id: "map-drawing-box"
+    class: "map-panel"
     position: google.maps.ControlPosition.TOP_LEFT
 
     constructor: ->
         super()
         @box.hide()
         @box.html """
-        <div class="map-panel" id="drawing-control">
+        <div id="drawing-control">
           <div class="map-panel-title" id="drawing-control-title"></div>
           <div class="content" id="drawing-control-content"></div>
           <div class="map-panel-buttons">
-            <div class="map-button" id="drawing-control-finish">Concluir</div>
-            <div class="map-button" id="drawing-control-cancel">Cancelar</div>
+            <div class="map-button" id="drawing-control-finish">#{gettext 'Next Step'}</div>
+            <div class="map-button" id="drawing-control-cancel">#{gettext 'Cancel'}</div>
           </div>
         </div>
         """
@@ -185,6 +221,8 @@ class DrawingControl extends Box
 
     handleBoxEvents: ->
         $("#drawing-control-finish", @box).click =>
+            if $("#drawing-control-finish", @box).hasClass 'disabled' then return
+
             komoo.event.trigger @map, 'finish_drawing'
 
         $("#drawing-control-cancel", @box).click =>
@@ -203,8 +241,10 @@ class DrawingControl extends Box
     setMode: (@mode) ->
         if @mode is NEW
             $("#drawing-control-content", @box).hide()
+            $("#drawing-control-finish", @box).addClass 'disabled'
         else
             $("#drawing-control-content", @box).show()
+            $("#drawing-control-finish", @box).removeClass 'disabled'
         $(".map-button.active", @box).removeClass "active"
         $("#drawing-control-#{@mode.toLowerCase()}", @box).addClass "active"
 
@@ -224,14 +264,15 @@ class DrawingControl extends Box
         """<i class="icon-#{geometry} middle"></i><span class="middle">#{title}</span>"""
 
     getContent: ->
-        add = """<div class="map-button" id="drawing-control-add"><i class="icon-komoo-plus middle"></i><span class="middle">#{gettext 'Sum'}</span></div>"""
-        cutout = """<div class="map-button" id="drawing-control-cutout"><i class="icon-komoo-minus middle"></i><span class="middle">#{gettext 'Cutout'}</span></div>"""
-        remove = """<div class="map-button" id="drawing-control-delete"><i class="icon-komoo-trash middle"></i></div>"""
+        add = $("""<div class="map-button" id="drawing-control-add"><i class="icon-komoo-plus middle"></i><span class="middle">#{gettext 'Sum'}</span></div>""")
+        cutout = $("""<div class="map-button" id="drawing-control-cutout"><i class="icon-komoo-minus middle"></i><span class="middle">#{gettext 'Cut out'}</span></div>""")
+        remove = $("""<div class="map-button" id="drawing-control-delete"><i class="icon-komoo-trash middle"></i></div>""")
 
-        content = add
+        content = $("<div>").addClass @feature.getGeometryType().toLowerCase()
+        content.append add
         if @feature.getGeometryType() is komoo.geometries.types.POLYGON
-            content += cutout
-        content += remove
+            content.append cutout
+        content.append remove
         content
 
 

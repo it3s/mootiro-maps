@@ -196,6 +196,13 @@
       return this.geometry.getGeoJson();
     };
 
+    Feature.prototype.getGeometryCollectionGeoJson = function() {
+      return {
+        type: "GeometryCollection",
+        geometries: [this.getGeometryGeoJson()]
+      };
+    };
+
     Feature.prototype.getGeoJsonGeometry = function() {
       return this.getGeometryGeoJson();
     };
