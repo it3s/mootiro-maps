@@ -1,5 +1,5 @@
 {% load i18n %}
-<div id="login-box" style="display: none; ">
+<div id="login-box">
   <h2>
     {% trans "You must be logged in" %}
   </h2>
@@ -8,7 +8,7 @@
         <div>{% trans "Log in with one the accounts bellow!" %}</div>
         <div><img src="{{STATIC_URL}}img/login_guy.png"></div>
         <div class="login-btns">
-          <a href="/user/login" id="login-button">
+          <a id="login-button" class="social-link" social-app="cas" href="#cas">
             <div class="button"><img id="login-mootiro" src="{{STATIC_URL}}img/login-mootiro-02.png"><b>Mootiro</b></div>
           </a>
           <a rel="nofollow" class="social-link" social-app="google-oauth2" href="#google-oauth2">
@@ -34,7 +34,12 @@
   $(function(){
     $('.social-link').click(function(){
       var social_app = $(this).attr('social-app');
-      window.location = '/login/'+ social_app +'?next=' + location.pathname;
+      var urlVars = getUrlVars();
+      if (urlVars.next)
+        window.location = '/login/'+ social_app +'?next=' + urlVars.next;
+      else {
+        window.location = '/login/'+ social_app +'?next=' + location.pathname;
+      }
       return false;
     })
   });

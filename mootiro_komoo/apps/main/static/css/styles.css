@@ -2048,7 +2048,10 @@ div.investments-list .tab-investment.selected a { color: #000 }
     width: 825px !important;
     display: none;
     margin: -20px 23px 10px;
-    display: inline-block;
+}
+#content #login-box {
+    display: block;
+    margin: 30px 60px;
 }
 #login-box .option {
     width: 400px;
