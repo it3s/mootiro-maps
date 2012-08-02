@@ -67,8 +67,6 @@
           <a class="button" href="{{ resource.new_investment_url }}">{% trans "New Investment" %}</a>
         </div>
 
-        {% taglist resource community %}
-
         {% with similar_resources=resource.tags.similar_objects|slice:"5" %}
 
             <div class="block">
@@ -105,6 +103,8 @@
             </div>
 
         {% endwith %}
+
+        {% taglist resource community %}
 
     </div>
 

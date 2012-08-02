@@ -211,8 +211,6 @@
           <a class="button" href="{{ organization.new_investment_url }}">{% trans "New Investment" %}</a>
         </div>
 
-        {% taglist organization community %}
-
         <div class="block">
           <h4>{% trans 'Contact' %}</h4>
             {% if organization.contact %}
@@ -247,6 +245,8 @@
           {% endif %}
 
         </div>
+
+        {% taglist organization community %}
 
     </div>
 
