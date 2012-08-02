@@ -8,7 +8,6 @@ interacts with the system.
 
 from __future__ import unicode_literals  # unicode by default
 
-from django.db.models.signals import post_save
 from django.dispatch import Signal, receiver
 
 from .models import Update
@@ -17,7 +16,6 @@ from need.models import Need
 from proposal.models import Proposal
 from organization.models import Organization
 from komoo_resource.models import Resource
-from investment.models import Investment
 from komoo_comments.models import Comment
 
 create_update = Signal(providing_args=["user", "instance", "type"])
@@ -75,6 +73,7 @@ def create_need_org_res_update(sender, **kwargs):
 def _proposal_instances(proposal):
     return [proposal, proposal.need]
 
+
 @receiver(create_update, sender=Proposal)
 def create_proposal_update(sender, **kwargs):
     proposal = kwargs["instance"]
@@ -98,7 +97,9 @@ def create_discussion_update(sender, **kwargs):
         communities = []
     elif type(instance) == Proposal:
         communities = instance.need.community.all()
-    else:
+    elif hasattr(instance, 'community'):
         communities = instance.community.all()
+    else:
+        return None
 
     _create_the_update(instances, communities, **kwargs)
