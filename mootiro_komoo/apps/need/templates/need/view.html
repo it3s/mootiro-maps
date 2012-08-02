@@ -57,7 +57,7 @@
   <div class="right-bar">
     <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
     <a class="see-on-map" href="#">{% trans "see on map" %}</a>
-    {% taglist need community %}
+
     <div class="block">
       <h3>{% trans "Proposals" %}</h3>
       {% for proposal in need.proposals.all %}
@@ -69,6 +69,7 @@
         </a>
       </div>
     </div>
+
     {% with similar_needs=need.tags.similar_objects %}
       {% if similar_needs %}
       <div id="related-needs" class="block">
@@ -98,6 +99,9 @@
       </div>
       {% endif %}
     {% endwith %}
+
+    {% taglist need community %}
+
   </div>
 
 </div>

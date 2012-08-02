@@ -33,7 +33,7 @@ def _create_the_update(instances, communities, **kwargs):
     if recent_update:
         update = recent_update
         people = update.users
-        if user.username not in people or True:  # TODO: remove "or True"
+        if user.username not in people:
             people.insert(0, user.username)
             update.users = people
     else:
@@ -75,6 +75,7 @@ def create_need_org_res_update(sender, **kwargs):
 def _proposal_instances(proposal):
     return [proposal, proposal.need]
 
+
 @receiver(create_update, sender=Proposal)
 def create_proposal_update(sender, **kwargs):
     proposal = kwargs["instance"]
@@ -90,15 +91,15 @@ def create_discussion_update(sender, **kwargs):
     kwargs["instance"] = instance
 
     if type(instance) == Proposal:
-        instances = [instance, instance.need]
+        instances = _proposal_instances(instance)
     else:
         instances = [instance]
 
     if type(instance) == Community:
         communities = []
-    elif type(instance) == Proposal:
-        communities = instance.need.community.all()
-    else:
+    elif hasattr(instance, 'community'):
         communities = instance.community.all()
+    else:
+        return None
 
     _create_the_update(instances, communities, **kwargs)

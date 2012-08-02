@@ -15,6 +15,7 @@ from django.core.urlresolvers import reverse
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
 from annoying.decorators import render_to, ajax_request
@@ -143,6 +144,18 @@ queries = {
         'repr': 'name',
         'link': lambda o: reverse('view_community',
                                   kwargs={'community_slug': o.slug})
+    },
+    'user': {
+        'model': User,
+        'query_fields': [
+            'username',
+            'first_name',
+            'last_name',
+            'komooprofile__public_name'
+        ],
+        'repr': 'get_name',
+        'link': lambda o: reverse('user_profile',
+                                  kwargs={'username': o.username})
     }
 }
 
@@ -241,7 +254,7 @@ def permalink(request, identifier=''):
     url = 'root'
     if identifier:
         entity, id_ = identifier[0], identifier[1:]
-        obj = entity_model[entity].objects.get(pk=id_)
+        obj = get_object_or_404(entity_model[entity], pk=id_)
         url = getattr(obj, 'view_url', '/') if entity != 'u' \
                 else reverse('user_profile', kwargs={'username': obj.username})
     return redirect(url)

@@ -18,7 +18,8 @@
       'organization': gettext('Organizations'),
       'resource': gettext('Resources'),
       'investiment': gettext('Investments'),
-      'google': gettext('Google Results')
+      'google': gettext('Google Results'),
+      'user': gettext('User')
     };
     showPopover = function() {
       $('#search-results-box').popover('show');
@@ -62,7 +63,7 @@
       results_list = '';
       results_count = 0;
       has_results = false;
-      result_order = ['community', 'organization', 'need', 'resource'];
+      result_order = ['community', 'organization', 'need', 'resource', 'user'];
       for (_i = 0, _len = result_order.length; _i < _len; _i++) {
         key = result_order[_i];
         val = result[key];
