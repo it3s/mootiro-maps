@@ -130,8 +130,7 @@ DELETE_HOURS = 24
 ROOT_URLCONF = 'mootiro_komoo.urls'
 
 TEMPLATE_DIRS = [
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
+    # Put strings here, like "/home/html/django_templates"
     # Don't forget to use absolute paths, not relative paths.
     # Nah. Walk SITE_ROOT looking for directories named "templates"?
     # SITE_ROOT + '/komoo/templates',
@@ -181,6 +180,7 @@ INSTALLED_APPS = [
     'hotsite',
     'signatures',
     'update',
+    'komoo_project',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500
@@ -189,22 +189,22 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 
 # https://github.com/aljosa/django-tinymce/blob/master/docs/installation.rst
 # TINYMCE_COMPRESSOR = True
-TINYMCE_SPELLCHECKER = False
-TINYMCE_DEFAULT_CONFIG = dict(
-    plugins='table,paste,searchreplace,autolink',
-    relative_urls=False,
-    theme='advanced',
-    cleanup_on_startup=True,
-    # custom_undo_redo_levels=10,
-    # content_css=,
-    theme_advanced_toolbar_location="top",
-    theme_advanced_statusbar_location='bottom',
-    theme_advanced_resizing=True,
-    # newdocument,|,justifyleft,justifycenter,justifyright,fontselect,fontsizeselect,forecolor,backcolor,|,cut,copy,paste,spellchecker,preview,|,advhr,emotions
-    theme_advanced_buttons1="formatselect,bold,italic,underline,|,bullist,numlist,|,outdent,indent,|,removeformat",
-    theme_advanced_buttons2="link,unlink,anchor,image,|,sub,sup,|,charmap,|,undo,redo,|,help,code,cleanup",
-    theme_advanced_buttons3='',
-)
+# TINYMCE_SPELLCHECKER = False
+# TINYMCE_DEFAULT_CONFIG = dict(
+#     plugins='table,paste,searchreplace,autolink',
+#     relative_urls=False,
+#     theme='advanced',
+#     cleanup_on_startup=True,
+#     # custom_undo_redo_levels=10,
+#     # content_css=,
+#     theme_advanced_toolbar_location="top",
+#     theme_advanced_statusbar_location='bottom',
+#     theme_advanced_resizing=True,
+#     # newdocument,|,justifyleft,justifycenter,justifyright,fontselect,fontsizeselect,forecolor,backcolor,|,cut,copy,paste,spellchecker,preview,|,advhr,emotions
+#     theme_advanced_buttons1="formatselect,bold,italic,underline,|,bullist,numlist,|,outdent,indent,|,removeformat",
+#     theme_advanced_buttons2="link,unlink,anchor,|,sub,sup,|,charmap,|,undo,redo,|,help,code,cleanup",
+#     theme_advanced_buttons3='',
+# )
 
 # markiItUp
 MARKITUP_SET = 'markitup/sets/markdown_pt_BR'

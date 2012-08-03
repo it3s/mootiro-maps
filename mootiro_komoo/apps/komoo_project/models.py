@@ -17,7 +17,7 @@ class Project(models.Model):
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
     creator = models.ForeignKey(User, editable=False, null=True,
             related_name='created_projects')
-    creation_date = models.DateTimeField(auto_add_now=True)
+    creation_date = models.DateTimeField(auto_now_add=True)
     last_editor = models.ForeignKey(User, editable=False, null=True,
             blank=True)
     last_update = models.DateTimeField(auto_now=True)
