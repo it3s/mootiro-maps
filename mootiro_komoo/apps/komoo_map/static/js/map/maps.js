@@ -1,5 +1,5 @@
 (function() {
-  var AjaxEditor, AjaxMap, Editor, Map, Preview, _base,
+  var AjaxEditor, AjaxMap, Editor, Map, Preview, UserEditor, _base,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __hasProp = Object.prototype.hasOwnProperty,
@@ -41,6 +41,7 @@
         map: this
       });
       this.components = {};
+      this.geocoder = new google.maps.Geocoder();
       this.initGoogleMap(this.options.googleMapOptions);
       this.initFeatureTypes();
       this.handleEvents();
@@ -180,6 +181,48 @@
       });
     };
 
+    Map.prototype.goTo = function(position, displayMarker) {
+      var latLng, request, _go,
+        _this = this;
+      if (displayMarker == null) displayMarker = true;
+      _go = function(latLng) {
+        if (latLng) {
+          _this.googleMap.panTo(latLng);
+          if (!_this.searchMarker) {
+            _this.searchMarker = new google.maps.Marker();
+            _this.searchMarker.setMap(_this.googleMap);
+          }
+          if (displayMarker) return _this.searchMarker.setPosition(latLng);
+        }
+      };
+      if (typeof position === "string") {
+        request = {
+          address: position,
+          region: this.region
+        };
+        return this.geocoder.geocode(request, function(result, status_) {
+          var first_result, latLng;
+          if (status_ === google.maps.GeocoderStatus.OK) {
+            first_result = result[0];
+            latLng = first_result.geometry.location;
+            return _go(latLng);
+          }
+        });
+      } else {
+        if (position instanceof Array) {
+          latLng = new google.maps.LatLng(position[0], position[1]);
+        } else {
+          latLng = position;
+        }
+        return _go(latLng);
+      }
+    };
+
+    Map.prototype.panTo = function(position, displayMarker) {
+      if (displayMarker == null) displayMarker = false;
+      return this.goTo(position, displayMarker);
+    };
+
     Map.prototype.makeFeature = function(geojson, attach) {
       var feature;
       if (attach == null) attach = true;
@@ -228,7 +271,13 @@
       return features.hide();
     };
 
-    Map.prototype.loadGeoJSON = function(geojson, panTo, attach) {
+    Map.prototype.centerFeature = function(type, id) {
+      var feature;
+      feature = type instanceof komoo.features.Feature ? type : this.features.getById(type, id);
+      return this.panTo(feature.getCenter(), false);
+    };
+
+    Map.prototype.loadGeoJson = function(geojson, panTo, attach) {
       var features, _ref, _ref2,
         _this = this;
       if (panTo == null) panTo = false;
@@ -254,7 +303,11 @@
       return features;
     };
 
-    Map.prototype.getGeoJSON = function(options) {
+    Map.prototype.loadGeoJSON = function(geojson, panTo, attach) {
+      return this.loadGeoJson(geojson, panTo, attach);
+    };
+
+    Map.prototype.getGeoJson = function(options) {
       var list;
       if (options == null) options = {};
       if (options.newOnly == null) options.newOnly = false;
@@ -267,6 +320,10 @@
       return list.getGeoJson({
         geometryCollection: options.geometryCollection
       });
+    };
+
+    Map.prototype.getGeoJSON = function(options) {
+      return this.getGeoJson(options);
     };
 
     Map.prototype.drawNewFeature = function(geometryType, featureType) {
@@ -285,6 +342,7 @@
     };
 
     Map.prototype.editFeature = function(feature) {
+      if (feature == null) feature = this.features.getAt(0);
       return komoo.event.trigger(this, 'edit_feature', feature);
     };
 
@@ -305,12 +363,30 @@
 
   })();
 
+  UserEditor = (function(_super) {
+
+    __extends(UserEditor, _super);
+
+    function UserEditor(options) {
+      UserEditor.__super__.constructor.call(this, options);
+      this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
+      this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
+    }
+
+    return UserEditor;
+
+  })(Map);
+
   Editor = (function(_super) {
 
     __extends(Editor, _super);
 
-    function Editor() {
-      Editor.__super__.constructor.apply(this, arguments);
+    function Editor(options) {
+      Editor.__super__.constructor.call(this, options);
+      this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
+      this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
+      this.addComponent(komoo.controls.makeDrawingControl(), 'drawing');
+      this.addComponent(komoo.controls.makeSupporterBox());
     }
 
     return Editor;
@@ -381,21 +457,21 @@
     Map: Map,
     Preview: Preview,
     AjaxMap: AjaxMap,
-    makeMain: function(options) {
+    makeMap: function(options) {
+      var type, _ref;
       if (options == null) options = {};
-      return new AjaxEditor(options);
-    },
-    makeView: function(options) {
-      if (options == null) options = {};
-      return new AjaxMap(options);
-    },
-    makeEditor: function(options) {
-      if (options == null) options = {};
-      return new AjaxEditor(options);
-    },
-    makePreview: function(options) {
-      if (options == null) options = {};
-      return new Preview(options);
+      type = (_ref = options.type) != null ? _ref : 'map';
+      if (type === 'main') {
+        return new AjaxEditor(options);
+      } else if (type === 'editor') {
+        return new Editor(options);
+      } else if (type === 'view') {
+        return new AjaxMap(options);
+      } else if (type === 'preview') {
+        return new Preview(options);
+      } else if (type === 'userEditor') {
+        return new UserEditor(options);
+      }
     }
   };
 

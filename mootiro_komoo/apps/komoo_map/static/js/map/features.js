@@ -139,6 +139,10 @@
       return komoo.event.trigger(this, 'highlight_changed', this.highlighted);
     };
 
+    Feature.prototype.isNew = function() {
+      return !this.getProperty('id');
+    };
+
     Feature.prototype.getIconUrl = function(zoom) {
       var categoryOrType, highlighted, nearOrFar;
       if (zoom == null) zoom = this.map ? this.map.getZoom() : 10;

@@ -87,6 +87,8 @@ class Feature
         @updateIcon()
         komoo.event.trigger @, 'highlight_changed', @highlighted
 
+    isNew: -> not @getProperty 'id'
+
     getIconUrl: (zoom) ->
         zoom ?= if @map then @map.getZoom() else 10
         nearOrFar = if zoom >= @featureType.minZoomIcon then "near" else "far"

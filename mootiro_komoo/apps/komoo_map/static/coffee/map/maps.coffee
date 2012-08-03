@@ -27,6 +27,8 @@ class Map
 
         @components = {}
 
+        @geocoder = new google.maps.Geocoder()
+
         @initGoogleMap @options.googleMapOptions
         @initFeatureTypes()
         @handleEvents()
@@ -119,6 +121,35 @@ class Map
             komoo.event.addListener feature, eventName, (e) =>
                 komoo.event.trigger @, "feature_#{eventName}", e, feature
 
+    goTo: (position, displayMarker = true) ->
+        _go = (latLng) =>
+            if latLng
+                @googleMap.panTo latLng
+                if not @searchMarker
+                    @searchMarker = new google.maps.Marker()
+                    @searchMarker.setMap this.googleMap
+
+                if displayMarker then @searchMarker.setPosition latLng
+
+        if typeof position is "string"  # Got an address
+            request = {
+                address: position
+                region: this.region
+            }
+            @geocoder.geocode request, (result, status_) =>
+                if status_ is google.maps.GeocoderStatus.OK
+                    first_result = result[0]
+                    latLng = first_result.geometry.location
+                    _go latLng
+        else
+            if position instanceof Array
+                latLng = new google.maps.LatLng position[0], position[1]
+            else
+                latLng = position
+            _go latLng
+
+    panTo: (position, displayMarker = false) -> @goTo position, displayMarker
+
     makeFeature: (geojson, attach = true) ->
         feature = komoo.features.makeFeature geojson, @featureTypes
         if attach then @addFeature feature
@@ -150,7 +181,16 @@ class Map
 
     hideFeatures: (features = @features) -> features.hide()
 
-    loadGeoJSON: (geojson, panTo = false, attach = true) ->
+    centerFeature: (type, id) ->
+        feature =
+            if type instanceof komoo.features.Feature
+                type
+            else
+                @features.getById type, id
+
+        @panTo feature.getCenter(), false
+
+    loadGeoJson: (geojson, panTo = false, attach = true) ->
         if not geojson?.type? or not geojson.type is 'FeatureCollection'
             return []
 
@@ -171,7 +211,10 @@ class Map
 
         features
 
-    getGeoJSON: (options = {}) ->
+    loadGeoJSON: (geojson, panTo, attach) ->
+        @loadGeoJson(geojson, panTo, attach)
+
+    getGeoJson: (options = {}) ->
         options.newOnly ?= false
         options.currentOnly ?= false
         options.geometryCollection ?= false
@@ -189,6 +232,8 @@ class Map
         list.getGeoJson
             geometryCollection: options.geometryCollection
 
+    getGeoJSON: (options) -> @getGeoJson options
+
     drawNewFeature: (geometryType, featureType) ->
         feature = @makeFeature
             type: 'Feature'
@@ -199,7 +244,7 @@ class Map
                 type: featureType
         komoo.event.trigger @, 'draw_feature', geometryType, feature
 
-    editFeature: (feature) ->
+    editFeature: (feature = @features.getAt 0) ->
         komoo.event.trigger @, 'edit_feature', feature
 
     setMode: (@mode) ->
@@ -212,7 +257,22 @@ class Map
     getZoom: -> @googleMap.getZoom()
 
 
+class UserEditor extends Map
+    constructor: (options) ->
+        super options
+
+        @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
+        @addComponent komoo.controls.makeDrawingManager(), 'drawing'
+
+
 class Editor extends Map
+    constructor: (options) ->
+        super options
+
+        @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
+        @addComponent komoo.controls.makeDrawingManager(), 'drawing'
+        @addComponent komoo.controls.makeDrawingControl(), 'drawing'
+        @addComponent komoo.controls.makeSupporterBox()
 
 
 class Preview extends Map
@@ -249,13 +309,21 @@ class AjaxEditor extends AjaxMap
         @addComponent komoo.controls.makeDrawingControl(), 'drawing'
 
 
-
 window.komoo.maps =
     Map: Map
     Preview: Preview
     AjaxMap: AjaxMap
 
-    makeMain: (options = {}) -> new AjaxEditor options
-    makeView: (options = {}) -> new AjaxMap options
-    makeEditor: (options = {}) -> new AjaxEditor options
-    makePreview: (options = {}) -> new Preview options
+    makeMap: (options = {}) ->
+        type = options.type ? 'map'
+
+        if type is 'main'
+            new AjaxEditor options
+        else if type is 'editor'
+            new Editor options
+        else if type is 'view'
+            new AjaxMap options
+        else if type is 'preview'
+            new Preview options
+        else if type is 'userEditor'
+            new UserEditor options

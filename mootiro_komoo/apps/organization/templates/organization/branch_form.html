@@ -31,36 +31,30 @@
           });
           geometryInputId = '#branch-geometry-{{ branch.id }}';
           var geojson = JSON.parse($("#branch-geometry-{{ branch.id }}").attr("data-feature-collection"))
-          if (!editor) {
-            initialize_map_editor();
-            editor.event.bind('cancel_click', function () {
-              $('#map-container-editor, #map-panel').slideUp(600);
-              $("body, html").animate({scrollTop: scrollTop});
-              $('#main-content').show();
-              $(window).resize();
-            });
-            editor.event.bind('finish_click', function () {
-              $('#map-container-editor, #map-panel').slideUp(600);
-              $("body, html").animate({scrollTop: scrollTop});
-              $('#main-content').show();
-              $(window).resize();
-              var newGeojson = editor.getGeoJSON({currentOnly: true, geometryCollection: true});
-              $(geometryInputId).val(JSON.stringify(newGeojson));
-              var newGeojson_ = editor.getGeoJSON({currentOnly: true});
-              preview.updateFeature(newGeojson_);
-              newGeojson = editor.getGeoJSON({currentOnly: true});
-              $(geometryInputId).attr("data-feature-collection", JSON.stringify(newGeojson));
+          if (!window.editor) {
+            editor = initialize_map_editor();
+            editor.clear();
+            editor.loadGeoJSON(geojson, true);
+            editor.editFeature();
+
+            komoo.event.addListener(editor, 'drawing_finished', function (feature, gotoNextStep) {
+              if (gotoNextStep) {
+                $('#map-container-editor, #map-panel').slideUp(600);
+                $('#main-content').show();
+                $(geometryInputId).val(JSON.stringify(feature.getGeometryCollectionGeoJson()));
+                if (window.preview) {
+                  preview.clear();
+                  preview.loadGeoJson(editor.getGeoJson());
+                }
+              } else {
+                $('#map-container-editor, #map-panel').slideUp(600);
+                $('#main-content').show();
+              }
+
             });
           }
-          editor.clear();
-          editor.loadGeoJSON(geojson, true);
-          editor.googleMap.setZoom(editor.googleMap.getZoom()+1);
-          editor.googleMap.setZoom(editor.googleMap.getZoom()-1)
           $(window).resize();
-          editor.editFeature(editor.features.getAt(0));
-          setTimeout(function () {
-              editor.setCurrentFeature(editor.features.getAt(0), true);
-          }, 200);
+          editor.editFeature();
           return false;
       });
     </script>
