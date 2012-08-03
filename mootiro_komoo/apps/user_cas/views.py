@@ -40,7 +40,8 @@ def logout(request):
     logger.debug('accessing user_cas > logout')
     next_page = request.GET.get('next', '/')
     auth_logout(request)
-    requests.get(cas_logout_url(request, next_page))
+    # Is it the right thing to logout from SSO?
+    # requests.get(cas_logout_url(request, next_page))
     return redirect(next_page)
 
 
