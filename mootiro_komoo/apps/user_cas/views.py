@@ -27,9 +27,6 @@ from .forms import FormProfile
 logger = logging.getLogger(__name__)
 
 
-#TODO: the function login should process the endpoint /login/cas/
-#      And the endpoint /login/ should point to a new page that
-#      matches our login design
 @render_to('user_cas/login.html')
 def login(request):
     """Displays a page with login options."""
