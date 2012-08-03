@@ -163,7 +163,9 @@
         path = (_ref = e.overlay) != null ? typeof _ref.getPath === "function" ? _ref.getPath() : void 0 : void 0;
         if (path && ((_ref2 = _this.mode) === ADD || _ref2 === NEW || _ref2 === CUTOUT) && ((_ref3 = e.overlay) != null ? _ref3.getPaths : void 0)) {
           paths = _this.feature.getGeometry().getPaths();
+          if (_this.mode === NEW) paths.clear();
           if ((paths != null ? paths.length : void 0) > 0) {
+            console.log(paths.length, paths.getAt(0));
             sArea = google.maps.geometry.spherical.computeSignedArea(path);
             sAreaAdded = google.maps.geometry.spherical.computeSignedArea(paths.getAt(0));
             orientation = sArea / Math.abs(sArea);

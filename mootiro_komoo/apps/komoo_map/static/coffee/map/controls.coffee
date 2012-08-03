@@ -110,10 +110,12 @@ class DrawingManager
             if path and @mode in [ADD, NEW, CUTOUT] and e.overlay?.getPaths
                 # Gets the overlays path orientation.
                 paths = @feature.getGeometry().getPaths()
+                if @mode is NEW then paths.clear()
                 if paths?.length > 0
+                    console.log paths.length, paths.getAt 0
                     # Gets the paths orientations.
                     sArea = google.maps.geometry.spherical.computeSignedArea path
-                    sAreaAdded = google.maps.geometry.spherical.computeSignedArea paths.getAt(0)
+                    sAreaAdded = google.maps.geometry.spherical.computeSignedArea paths.getAt 0
                     orientation = sArea / Math.abs sArea
                     orientationAdded = sAreaAdded / Math.abs sAreaAdded
                     # Verify the paths orientation.
