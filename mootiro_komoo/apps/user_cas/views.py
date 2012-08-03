@@ -27,25 +27,18 @@ from .forms import FormProfile
 logger = logging.getLogger(__name__)
 
 
-#TODO: the function login should process the endpoint /login/cas/
-#      And the endpoint /login/ should point to a new page that
-#      matches our login design
+@render_to('user_cas/login.html')
 def login(request):
-    '''
-    When the user clicks "login" on Mootiro Bar, this view runs.
-    It redirects the user to CAS.
-    '''
-    logger.debug('accessing user_cas > login')
-    host_port = request.environ['HTTP_HOST']
-    return redirect(settings.CAS_SERVER_URL +
-        '?service=http://{}/user/after_login'.format(host_port))
-
+    """Displays a page with login options."""
+    logger.debug('accessing user > login')
+    return {}
 
 def logout(request):
     logger.debug('accessing user_cas > logout')
     next_page = request.GET.get('next', '/')
     auth_logout(request)
-    requests.get(cas_logout_url(request, next_page))
+    # Is it the right thing to logout from SSO?
+    # requests.get(cas_logout_url(request, next_page))
     return redirect(next_page)
 
 

@@ -66,6 +66,7 @@ urlpatterns = patterns('',
 
     # user and CAS urls
     url(r'^user/', include('user_cas.urls')),
+    url(r'^login/cas?$', 'django_cas.views.login'),
     url(r'', include('social_auth.urls')),
 
     url(r'^tinymce/', include('tinymce.urls')),
