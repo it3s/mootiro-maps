@@ -19,6 +19,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
 from annoying.decorators import render_to, ajax_request
+from annoying.functions import get_object_or_None
 import requests
 
 from community.models import Community
@@ -242,6 +243,7 @@ def custom_500(request):
     return {}
 
 
+@render_to('not_anymore.html')
 def permalink(request, identifier=''):
     entity_model = {
         'r': Resource,
@@ -254,7 +256,9 @@ def permalink(request, identifier=''):
     url = 'root'
     if identifier:
         entity, id_ = identifier[0], identifier[1:]
-        obj = get_object_or_404(entity_model[entity], pk=id_)
+        obj = get_object_or_None(entity_model[entity], pk=id_)
+        if not obj:
+            return {}
         url = getattr(obj, 'view_url', '/') if entity != 'u' \
                 else reverse('user_profile', kwargs={'username': obj.username})
     return redirect(url)

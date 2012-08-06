@@ -144,13 +144,16 @@ class InvestmentForm(AjaxModelForm):
         elif investor_type == 'PER':
             investor = investor_person
 
-        investor, created = Investor.get_or_create_for(investor,
-                                current=current_investor)
+        if investor != None:
+            investor, created = Investor.get_or_create_for(investor,
+                                    current=current_investor)
+            self.cleaned_data['investor'] = investor
+        else:
+            created = False
 
         if created:
             investor.save()
 
-        self.cleaned_data['investor'] = investor
 
         return cleaned_data
 
