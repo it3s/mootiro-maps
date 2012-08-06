@@ -26,11 +26,12 @@
 {% endblock %}
 
 {% block page_scripts %}
-    {{ form_project.media }} 
+    {{ form_project.media }}
     <script type="text/javascript" charset="utf-8">
         $(function(){
-            $('#form_project').ajaxform();
-            $('#form_project').komooFormHintBoxes({});
+            $form = $('#form_project');
+            $form.ajaxform();
+            $form.komooFormHintBoxes({});
         });
     </script>
 {% endblock %}

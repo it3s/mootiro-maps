@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from lib.taggit.models import TaggedItem
 from ajaxforms.forms import ajax_form
 from annoying.decorators import render_to
+from main.utils import paginated_query, sorted_query, filtered_query
 
 from .forms import FormProject
 from .models import Project
@@ -17,10 +18,23 @@ from .models import Project
 logger = logging.getLogger(__name__)
 
 
+@render_to('project/list.html')
 def project_list(request):
-    #  TODO implement-me
-    return {}
+    logger.debug('acessing komoo_project > list')
 
+    sort_order = ['creation_date', 'votes', 'name']
+
+    community = None
+    query_set = Project.objects
+
+    query_set = filtered_query(query_set, request)
+
+    projects_list = sorted_query(query_set, sort_order, request)
+    projects_count = projects_list.count()
+    projects = paginated_query(projects_list, request)
+
+    return dict(projects=projects, community=community,
+                projects_count=projects_count)
 
 @render_to('project/view.html')
 def project_view(request, project_slug=''):
@@ -38,8 +52,7 @@ def project_new(request):
         return form
 
     def on_after_save(request, project):
-        redirect_url = project.view_url
-        return {'redirect': redirect_url}
+        return {'redirect': project.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
 

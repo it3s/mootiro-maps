@@ -1,0 +1,76 @@
+{% extends 'global.html' %}
+{% load komoo_tags %}
+{% load komoo_map_tags %}
+{% load comment_tags %}
+{% load vote_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'Projects' %}{% endblock %}
+
+{% block menu %} {% menu community "project" %} {% endblock %}
+
+{% block content %}
+  <div id="main-content">
+
+  <div class="highlight">
+
+    <div class="button-new">
+      <a class="button login-required" href="{% url project_new %}">{% trans "New Project" %}</a>
+    </div>
+
+  <div class="view-list-top">
+    <div class="view-list-count">
+          {% blocktrans count counter=projects_count %}{{ counter }} Project{% plural %}{{ counter }} Projects{% endblocktrans %}
+    </div>
+    <div class="view-list-pagination">
+      {% pagination projects %}
+    </div>
+
+    {% visualization_opts 'project' "filters=['tags']" "sorters=['name', 'creation_date', 'votes']" %}
+  </div>
+
+
+  {% for proj in projects.object_list %}
+
+    <div class="view-list-item {% cycle 'odd' '' %}">
+
+      <h4>
+        <span class="apart">
+            <a href="{{ proj.view_url }}">{{ proj.name }}</a>
+        </span>
+        <!-- <a class="small preview-on-map list-map-preview" href="#" data-geojson="{#% geojson proj %#}"> -->
+        <!--     <i class="icon-see-on-map"></i> -->
+        <!-- </a> -->
+        <div class="view-list-reactions">
+          {% vote proj %}
+          {% comments_summary proj %}
+        </div>
+
+
+      </h4>
+
+      <p>
+        {{ proj.description|description_markdown_preview|safe }}
+      </p>
+
+      <div class="view-list-footer">
+        {% if proj.tags.count %}
+        <div class="view-list-item-tags">
+          {% taglist proj community %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+
+  {% pagination projects %}
+</div>
+
+{% komoo_map_tooltip %}
+{% endblock %}
+
+{% block page_scripts %}
+  {% vote_staticfiles %}
+  {% visualization_opts_js %}
+{% endblock %}
