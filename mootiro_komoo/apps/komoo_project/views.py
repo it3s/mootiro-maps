@@ -25,11 +25,11 @@ def project_list(request):
 @render_to('project/view.html')
 def project_view(request, project_slug=''):
     project = get_object_or_404(Project, slug=project_slug)
-    return dict(project=project)
+    return dict(project=project, geojson={})
 
 
 @login_required
-@ajax_form('project/new.html', FormProject)
+@ajax_form('project/edit.html', FormProject)
 def project_new(request):
     logger.debug('acessing project > project_new')
 
@@ -42,6 +42,27 @@ def project_new(request):
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
+
+
+@login_required
+@ajax_form('project/edit.html', FormProject)
+def project_edit(request, project_slug='', *arg, **kwargs):
+    logger.debug('acessing komoo_project > edit_project')
+
+    project = get_object_or_404(Project, slug=project_slug)
+
+    def on_get(request, form):
+        form = FormProject(instance=project)
+        kwargs = dict(project_slug=project_slug)
+        form.helper.form_action = reverse('project_edit', kwargs=kwargs)
+
+        return form
+
+    def on_after_save(request, obj):
+        return {'redirect': obj.view_url}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save,
+            'project': project}
 
 
 def tag_search(request):

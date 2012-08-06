@@ -46,9 +46,9 @@ class Project(models.Model):
     def view_url(self):
         return reverse('project_view', kwargs=self.home_url_params)
 
-    # @property
-    # def edit_url(self):
-    #     return reverse('edit_project', kwargs=self.home_url_params)
+    @property
+    def edit_url(self):
+        return reverse('project_edit', kwargs=self.home_url_params)
 
     # @property
     # def admin_url(self):

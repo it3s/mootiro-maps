@@ -12,4 +12,5 @@ urlpatterns = patterns('komoo_project.views',
 
     url(r'^project/serach_tags/?$', 'tag_search', name='project_tag_search'),
     url(pr(r'^project/PROJECT_SLUG/?$'), 'project_view', name='project_view'),
+    url(pr(r'^project/PROJECT_SLUG/edit/?$'), 'project_edit', name='project_edit'),
 )
