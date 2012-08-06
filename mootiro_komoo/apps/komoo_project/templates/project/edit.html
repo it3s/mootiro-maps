@@ -6,7 +6,13 @@
 {% block content %}
     <div id="main-content">
         <div class="main-column">
-            <div class="form-legend">{% trans 'New Project' %}</div>
+            <div class="form-legend">
+                {% if  project %}
+                    {% trans 'Edit Project' %}
+                {% else %}
+                    {% trans 'New Project' %}
+                {% endif %}
+            </div>
             <div class='alert alert-info required-notice' data-alert='info'>
                 <a class='required-notice-close close' data-dismiss='alert'>×</a>
                 <div class='msg'>
