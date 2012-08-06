@@ -116,6 +116,12 @@ class InvestmentForm(AjaxModelForm):
 
         return super(InvestmentForm, self).__init__(*a, **kw)
 
+    def clean_end_date(self):
+        data = self.cleaned_data['end_date']
+        if not self.cleaned_data['over_period']:
+            data = None
+        return data
+
     def clean(self):
         cleaned_data = super(InvestmentForm, self).clean()
 

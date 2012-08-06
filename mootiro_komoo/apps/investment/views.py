@@ -75,7 +75,7 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
         return InvestmentForm(request.POST, instance=investment)
 
     def on_after_save(request, obj):
-        return {'redirect': reverse('investment_list')}
+        return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_before_validation': on_before_validation,
             'on_after_save': on_after_save, 'community': community}
