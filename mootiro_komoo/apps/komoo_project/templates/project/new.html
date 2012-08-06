@@ -14,11 +14,17 @@
                 </div>
             </div>
 
-            {% crispy form_project form_project.helper %}
+            {% crispy form form.helper %}
         </div>
     </div>
 {% endblock %}
 
 {% block page_scripts %}
     {{ form_project.media }} 
+    <script type="text/javascript" charset="utf-8">
+        $(function(){
+            $('#form_project').ajaxform();
+            $('#form_project').komooFormHintBoxes({});
+        });
+    </script>
 {% endblock %}

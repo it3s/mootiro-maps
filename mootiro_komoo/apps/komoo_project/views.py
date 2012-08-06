@@ -1,27 +1,47 @@
 #! coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.shortcuts import render_to_response, RequestContext
+import logging
+
+from django.shortcuts import (render_to_response, RequestContext, 
+        get_object_or_404)
+from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
+
 from lib.taggit.models import TaggedItem
+from ajaxforms.forms import ajax_form
+from annoying.decorators import render_to
 
 from .forms import FormProject
 from .models import Project
+
+logger = logging.getLogger(__name__)
+
 
 def project_list(request):
     #  TODO implement-me
     return {}
 
 
+@render_to('project/view.html')
 def project_view(request, project_slug=''):
-    # TODO implement-me
-    return {}
+    project = get_object_or_404(Project, slug=project_slug)
+    return dict(project=project)
 
 
-def project_new(request, project_slug=''):
-    form = FormProject()
-    return render_to_response(
-            'project/new.html',
-            dict(form_project=form),
-            context_instance=RequestContext(request))
+@login_required
+@ajax_form('project/new.html', FormProject)
+def project_new(request):
+    logger.debug('acessing project > project_new')
+
+    def on_get(request, form):
+        form.helper.form_action = reverse('project_new')
+        return form
+
+    def on_after_save(request, project):
+        redirect_url = project.view_url
+        return {'redirect': redirect_url}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save}
 
 
 def tag_search(request):

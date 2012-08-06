@@ -7,7 +7,7 @@ from mootiro_komoo.urls import prepare_regex as pr
 
 
 urlpatterns = patterns('komoo_project.views',
-    url(r'^project/?$', 'project_list', name="project_view"),
+    url(r'^project/?$', 'project_list', name="project_list"),
     url(r'^project/new/?$', 'project_new', name="project_new"),
 
     url(r'^project/serach_tags/?$', 'tag_search', name='project_tag_search'),

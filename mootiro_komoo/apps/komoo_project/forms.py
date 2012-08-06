@@ -7,9 +7,10 @@ from django.utils.translation import ugettext_lazy as _
 
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
+from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
 
-from main.utils import MooHelper
+from main.utils import MooHelper, clean_autocomplete_field
 from main.widgets import TaggitWidget
 from .models import Project
 
@@ -37,5 +38,8 @@ class FormProject(AjaxModelForm):
         self.helper = MooHelper(form_id='form_project')
         return super(FormProject, self).__init__(*a, **kw)
 
+    def clean_logo(self):
+        return clean_autocomplete_field(self.cleaned_data['logo'],
+                                        UploadedFile)
 
 
