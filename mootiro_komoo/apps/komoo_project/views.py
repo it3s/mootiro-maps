@@ -2,10 +2,11 @@
 from __future__ import unicode_literals
 import logging
 
-from django.shortcuts import (render_to_response, RequestContext, 
-        get_object_or_404)
+from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
+from django.utils import simplejson
 
 from lib.taggit.models import TaggedItem
 from ajaxforms.forms import ajax_form
@@ -35,6 +36,7 @@ def project_list(request):
 
     return dict(projects=projects, community=community,
                 projects_count=projects_count)
+
 
 @render_to('project/view.html')
 def project_view(request, project_slug=''):
