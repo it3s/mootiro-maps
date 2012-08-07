@@ -53,5 +53,6 @@
 
   {"pk": 49, "model": "contenttypes.contenttype", "fields": {"model": "komooprofile", "name": "komoo profile", "app_label": "user_cas"}},
 
-  {"pk": 50, "model": "contenttypes.contenttype", "fields": {"model": "project", "name": "project", "app_label": "komoo_project"}}
+  {"pk": 50, "model": "contenttypes.contenttype", "fields": {"model": "project", "name": "project", "app_label": "komoo_project"}},
+  {"pk": 51, "model": "contenttypes.contenttype", "fields": {"model": "projectrelatedobject", "name": "project related object", "app_label": "komoo_project"}}
 ]
