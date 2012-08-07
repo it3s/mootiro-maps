@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-30 18:58-0300\n"
+"POT-Creation-Date: 2012-08-07 18:05-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -112,6 +112,10 @@ msgstr "Investimentos"
 #: apps/main/static/js/komoo_search.js:21
 msgid "Google Results"
 msgstr "Resultados do Google"
+
+#: apps/main/static/js/komoo_search.js:22
+msgid "User"
+msgstr ""
 
 #: apps/main/static/js/komoo_utils.js:388
 msgid "Yes"

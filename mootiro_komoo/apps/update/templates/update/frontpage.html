@@ -128,7 +128,9 @@
                   {% endif %}
                 </div>
                 <div class="update-social right">
-                  <a href="{{ u.instance.link }}#Comments">({{ u.comments_count }} comments)</a>
+                  <a href="{{ u.instance.link }}#Comments">
+                    ({{ u.comments_count }} {% if u.comments_count == 1 %}{% trans 'comment' %}{% else %}{% trans 'comments' %}{% endif %})
+                  </a>
                 </div>
               </div>
             </li>
