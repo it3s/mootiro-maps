@@ -1,0 +1,37 @@
+{% extends 'global.html'%}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div id="main-content">
+        <div class="main-column">
+            <div class="form-legend">
+                {% if  project %}
+                    {% trans 'Edit Project' %}
+                {% else %}
+                    {% trans 'New Project' %}
+                {% endif %}
+            </div>
+            <div class='alert alert-info required-notice' data-alert='info'>
+                <a class='required-notice-close close' data-dismiss='alert'>×</a>
+                <div class='msg'>
+                    Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+                </div>
+            </div>
+
+            {% crispy form form.helper %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_scripts %}
+    {{ form_project.media }}
+    <script type="text/javascript" charset="utf-8">
+        $(function(){
+            $form = $('#form_project');
+            $form.ajaxform();
+            $form.komooFormHintBoxes({});
+        });
+    </script>
+{% endblock %}

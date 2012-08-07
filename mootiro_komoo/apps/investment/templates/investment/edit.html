@@ -31,8 +31,7 @@
     var $form = $("#investment_form");
 
     $form.ajaxform();
-
-    $form.komooFormHintBoxes();
+    $form.komooFormHintBoxes({}); // This call is breaking the JS
 
     // Investor field configuration
     $("input[name=investor_type]", $form).on("change", function (event) {
@@ -48,5 +47,6 @@
     $(function (event) {
         $("input[name=investor_type]:checked", $form).change();
     });
+
 </script>
 {% endblock %}
