@@ -37,7 +37,7 @@
   </div>
 
   <div class="right-bar">
-    <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
+    <div id="map-preview"><div id="map-preview-canvas" style="width: 200px; height: 200px;"></div></div>
     <a href="{% url community_on_map community.slug %}">ver no mapa</a>
 
     {% taglist community %}
@@ -65,8 +65,17 @@
 {% endblock %}
 
 {% block page_scripts %}
-  <script type="text/javascript">
+<script type="text/javascript">
+    var preview;
     var community_slug = '{{ community.slug }}';
+    scriptLoader.waitFor('map', function () {
+      preview = komoo.maps.makeMap({
+        type: 'preview',
+        geojson: {{ geojson|safe }},
+        elementId: "map-preview-canvas",
+      });
+    });
   </script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
   {% comments_staticfiles %}
 {% endblock %}

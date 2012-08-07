@@ -33,6 +33,7 @@ class Map
         @initFeatureTypes()
         @handleEvents()
 
+    loadGeoJsonFromOptons: ->
         if @options.geojson
             @loadGeoJSON @options.geojson, true
 
@@ -42,8 +43,17 @@ class Map
 
     initFeatureTypes: ->
         @featureTypes ?= {}
-        @options.featureTypes?.forEach (type) =>
-            @featureTypes[type.type] = type
+        if @options.featureTypes?
+            # Get Feature types from options
+            @options.featureTypes?.forEach (type) =>
+                @featureTypes[type.type] = type
+            @loadGeoJsonFromOptons()
+        else
+            # Load Feature types via ajax
+            $.ajax url: '/map_info/feature_types/', dataType: 'json', success: (data) =>
+                data.forEach (type) =>
+                    @featureTypes[type.type] = type
+                @loadGeoJsonFromOptons()
 
     handleEvents: ->
         komoo.event.addListener @, "drawing_finished", (feature, status) =>

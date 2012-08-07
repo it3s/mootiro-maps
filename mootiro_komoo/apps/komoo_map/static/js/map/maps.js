@@ -45,8 +45,13 @@
       this.initGoogleMap(this.options.googleMapOptions);
       this.initFeatureTypes();
       this.handleEvents();
-      if (this.options.geojson) this.loadGeoJSON(this.options.geojson, true);
     }
+
+    Map.prototype.loadGeoJsonFromOptons = function() {
+      if (this.options.geojson) {
+        return this.loadGeoJSON(this.options.geojson, true);
+      }
+    };
 
     Map.prototype.initGoogleMap = function(options) {
       if (options == null) options = this.googleMapDefaultOptions;
@@ -58,9 +63,25 @@
       var _ref,
         _this = this;
       if (this.featureTypes == null) this.featureTypes = {};
-      return (_ref = this.options.featureTypes) != null ? _ref.forEach(function(type) {
-        return _this.featureTypes[type.type] = type;
-      }) : void 0;
+      if (this.options.featureTypes != null) {
+        if ((_ref = this.options.featureTypes) != null) {
+          _ref.forEach(function(type) {
+            return _this.featureTypes[type.type] = type;
+          });
+        }
+        return this.loadGeoJsonFromOptons();
+      } else {
+        return $.ajax({
+          url: '/map_info/feature_types/',
+          dataType: 'json',
+          success: function(data) {
+            data.forEach(function(type) {
+              return _this.featureTypes[type.type] = type;
+            });
+            return _this.loadGeoJsonFromOptons();
+          }
+        });
+      }
     };
 
     Map.prototype.handleEvents = function() {
