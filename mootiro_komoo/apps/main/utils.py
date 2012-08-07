@@ -197,6 +197,11 @@ def filtered_query(query_set, request):
             community = request.GET.get('community', '')
             if community:
                 query_set = query_set.filter(community=community)
+        if f == 'need_categories':
+            need_categories = request.GET.get('need_categories', '').split(',')
+            for nc in need_categories:
+                if nc:
+                    query_set = query_set.filter(categories=nc)
     return query_set
 
 
