@@ -256,14 +256,40 @@ def _get_widgets_dict(obj):
     tag_widget = TaggitWidget(autocomplete_url="/%s/search_tags/" % obj)
     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
 
-    community_widget = Autocomplete(Community, '/community/search_by_name/')
+    community_widget = Autocomplete(Community, '/community/search_by_name')
     community_widget = "%s \n %s" % (str(community_widget.media),
                                      community_widget.render('community'))
+
+    # TODO: POG is evil!
+    need_categories_widget = "<input id='need_categories' type='hidden'/>\n"
+    for nc in NeedCategory.objects.all().order_by('name'):
+        need_categories_widget += """
+            <img src='/static/{0}' class='nc_filter' ncid='{2}'/>
+            <img src='/static/{1}' class='nc_filter hidden' ncid='{2}'/>
+        """.format(nc.image_off, nc.image, nc.id)
+    need_categories_widget += """
+        <script type="text/javascript">
+            var nc_filter_arr = [];
+
+            $("img.nc_filter").on("click", function (evt) {
+                var id = $(evt.target).attr('ncid');
+
+                var pos = nc_filter_arr.indexOf(id);
+                if (pos != -1)
+                    nc_filter_arr.splice(pos, 1); // removes the element
+                else
+                    nc_filter_arr.push(id); // appends element
+                $("#need_categories").val(nc_filter_arr.join()).change;
+                $(".nc_filter[ncid='"+id+"']").toggle();
+            });
+        </script>
+    """
 
     # filters
     return {
         'tags': tag_widget,
-        'community': community_widget
+        'community': community_widget,
+        'need_categories': need_categories_widget,
     }
 
 
@@ -289,8 +315,8 @@ def visualization_opts(context, obj, arg1='', arg2=''):
         'title': _('Name'),
         'creation_date': _('Date'),
         'votes': _('Votes'),
-        'community': _('Community')
-
+        'community': _('Community'),
+        'need_categories': _('Need categories'),
     }
 
     # sorters
@@ -395,6 +421,14 @@ def visualization_opts_js(context):
 
           // reset tagsinput styles
           $('.view-list-filter-widget .tagsinput').attr('style', '');
+
+          // auto-fill need_categories
+          if ($("#need_categories").val()) {
+              nc_filter_arr = $("#need_categories").val().split(',');
+              $.each(nc_filter_arr, function(index, value){
+                  $(".nc_filter[ncid='"+value+"']").toggle();
+              })
+          }
 
           // click on btn change classes.
           $('.view-list-sorter-btn').click(function(){

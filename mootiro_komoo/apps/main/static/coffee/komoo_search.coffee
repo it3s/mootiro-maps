@@ -88,8 +88,7 @@ $ ->
                 """
 
                 for idx, obj of val
-                    geojson = JSON.parse(obj?.geojson ? {})
-                    disabled = if not geojson?.features[0]?.geometry then 'disabled' else ''
+                    disabled = if not obj?.has_geojson then 'disabled' else ''
                     hashlink = key[0] + obj.id
                     results_list += """
                         <li>
@@ -98,6 +97,19 @@ $ ->
                                 <a href="/map/##{hashlink}" onclick="seeOnMap('#{hashlink}')" class="#{disabled}"><i class="icon-see-on-map"></i></a>
                             </div>
                         </li>"""
+
+                    if key is 'organization' and obj.branches?.length
+                        for b in obj.branches
+                            console.log b
+                            results_list += """
+                                <li class="branch-search-result">
+                                    <a href='#{obj.link}'>&#8226; #{b.name} </a>
+                                    <div class="right">
+                                        <a href="/map/#b#{b.id}" onclick="seeOnMap('b#{b.id}')"><i class="icon-see-on-map"></i></a>
+                                    </div>
+                                </li>"""
+
+
                     results_count++
                 results_list += '</ul></li>'
                 has_results |= yes
