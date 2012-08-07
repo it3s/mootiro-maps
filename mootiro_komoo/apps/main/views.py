@@ -15,7 +15,6 @@ from django.core.urlresolvers import reverse
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
 from annoying.decorators import render_to, ajax_request
@@ -161,6 +160,11 @@ queries = {
 }
 
 
+def _has_geojson(obj):
+    geometry = getattr(obj, 'geometry', '')
+    return bool(geometry)
+
+
 @ajax_request
 def komoo_search(request):
     """
@@ -180,8 +184,18 @@ def komoo_search(request):
                  'name': getattr(o, model.get('repr')),
                  'link': model.get('link')(o),
                  'model': key,
+                 'has_geojson': _has_geojson(o),
                  'geojson': create_geojson([o])
             }
+            if o.__class__.__name__ == 'Organization' and o.branch_count > 0:
+                dados['branches'] = []
+                for b in o.organizationbranch_set.all():
+                    dados['branches'].append({
+                        'id': b.id,
+                        'name': getattr(b, model.get('repr')),
+                        'model': key,
+                        'has_geojson': _has_geojson(b),
+                    })
             result[key].append(dados)
 
     # Google search
@@ -263,6 +277,7 @@ def permalink(request, identifier=''):
                 else reverse('user_profile', kwargs={'username': obj.username})
     return redirect(url)
 
+
 @ajax_request
 def get_geojson_from_hashlink(request):
     entity_model = {
@@ -271,11 +286,12 @@ def get_geojson_from_hashlink(request):
         'c': Community,
         'o': Organization,
         'p': Proposal,
+        'b': OrganizationBranch,
     }
     hashlink = request.GET.get('hashlink', '')
     if hashlink:
         obj = entity_model[hashlink[0]].objects.get(pk=hashlink[1:])
-        geojson =  create_geojson([obj])
+        geojson = create_geojson([obj])
     else:
         geojson = {}
 

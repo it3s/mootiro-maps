@@ -160,7 +160,9 @@ div.apart {
 .search-header.investment{
     background-color: #EEE9CC;
 }
-
+.branch-search-result {
+    padding-left: 40px !important; 
+}
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
 ul.geo-objects-listing li {
