@@ -25,8 +25,16 @@
     </div>
 {% endblock %}
 
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
+{% endblock %}
+
+
 {% block page_scripts %}
     {{ form_project.media }}
+
     <script type="text/javascript" charset="utf-8">
         $(function(){
             $form = $('#form_project');

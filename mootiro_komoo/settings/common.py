@@ -255,6 +255,7 @@ AJAX_LOOKUP_CHANNELS = {
     #   pass a dict with the model and the field to search against
     'community': ('community.lookups', 'CommunityLookup'),
     'organizationcategory': ('organization.lookups', 'OrganizationCategoryLookup'),
+    'user': ('user_cas.lookups', 'UserLookup'),
 }
 # magically include jqueryUI/js/css
 AJAX_SELECT_BOOTSTRAP = False
