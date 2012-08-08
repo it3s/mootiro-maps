@@ -28,6 +28,7 @@ class FormProject(AjaxModelForm):
     contributors = AutoCompleteSelectMultipleField('user', help_text='',
         required=False)
     logo = FileuploadField(required=False)
+    # partners_logo = FileuploadField(required=False)
 
     class Meta:
         model = Project
@@ -42,11 +43,18 @@ class FormProject(AjaxModelForm):
         'contact': _('Contact'),
         'contributors': _('Contributors'),
         'community': _('Community'),
+        # 'partners_logo': _('Partners Logo'),
     }
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id='form_project')
         return super(FormProject, self).__init__(*a, **kw)
+
+    def save(self, *a, **kw):
+        proj = super(FormProject, self).save(*a, **kw)
+        # UploadedFile.bind_files(
+        #         self.cleaned_data.get('partners_logo', '').split('|'), proj)
+        return proj
 
     def clean_logo(self):
         return clean_autocomplete_field(self.cleaned_data['logo'],
