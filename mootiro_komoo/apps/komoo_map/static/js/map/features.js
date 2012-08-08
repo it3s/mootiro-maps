@@ -92,11 +92,10 @@
       };
 
       Feature.prototype.handleGeometryEvents = function() {
-        var that;
-        that = this;
+        var _this = this;
         return komoo.event.addListener(this.geometry, 'coordinates_changed', function(args) {
-          this.updateIcon();
-          return komoo.event.trigger(that, 'coordinates_changed', args);
+          _this.updateIcon();
+          return komoo.event.trigger(_this, 'coordinates_changed', args);
         });
       };
 
@@ -125,17 +124,21 @@
       };
 
       Feature.prototype.isHighlighted = function() {
-        return this.highlighted != null;
+        return this.highlighted;
       };
 
       Feature.prototype.highlight = function() {
         return this.setHighlight(true);
       };
 
-      Feature.prototype.setHighlight = function(highlighted) {
+      Feature.prototype.setHighlight = function(highlighted, silent) {
+        if (silent == null) silent = false;
+        if (this.highlighted === highlighted) return;
         this.highlighted = highlighted;
         this.updateIcon();
-        return komoo.event.trigger(this, 'highlight_changed', this.highlighted);
+        if (!silent) {
+          return komoo.event.trigger(this, 'highlight_changed', this.highlighted);
+        }
       };
 
       Feature.prototype.isNew = function() {
@@ -251,7 +254,6 @@
 
       Feature.prototype.setMap = function(map, force) {
         var zoom, _ref;
-        this.map = map;
         if (force == null) {
           force = {
             geometry: false,
@@ -259,6 +261,8 @@
             icon: false
           };
         }
+        this.oldMap = this.map;
+        this.map = map;
         if (this.properties.alwaysVisible === true || this.editable) {
           force = {
             geometry: true,
@@ -271,7 +275,16 @@
           _ref.setMap((this.featureType.minZoomPoint <= zoom && zoom <= this.featureType.maxZoomPoint) || (this.featureType.minZoomIcon <= zoom && zoom <= this.featureType.maxZoomIcon) || force.point || force.icon ? this.map : null);
         }
         this.geometry.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null);
-        return this.updateIcon();
+        this.updateIcon();
+        if (this.oldMap === void 0) return this.handleMapEvents();
+      };
+
+      Feature.prototype.handleMapEvents = function() {
+        var _this = this;
+        return komoo.event.addListener(this.map, 'feature_highlight_changed', function(flag, feature) {
+          if (feature === _this) return;
+          if (_this.isHighlighted()) return _this.setHighlight(false, true);
+        });
       };
 
       Feature.prototype.getBounds = function() {

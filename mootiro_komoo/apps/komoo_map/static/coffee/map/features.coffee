@@ -58,10 +58,9 @@ define ['map/geometries'], ->
             @marker
 
         handleGeometryEvents: ->
-            that = @
-            komoo.event.addListener @geometry, 'coordinates_changed', (args) ->
+            komoo.event.addListener @geometry, 'coordinates_changed', (args) =>
                 @updateIcon()
-                komoo.event.trigger that, 'coordinates_changed', args
+                komoo.event.trigger this, 'coordinates_changed', args
 
         getUrl: ->
             if @properties.type is 'Community'
@@ -83,11 +82,14 @@ define ['map/geometries'], ->
                 dutils.url.resolve("view_#{@properties.type.toLowerCase()}",
                 params).replace('//', '/')
 
-        isHighlighted: -> @highlighted?
+        isHighlighted: -> @highlighted
         highlight: -> @setHighlight(on)
-        setHighlight: (@highlighted) ->
+        setHighlight: (highlighted, silent = false) ->
+            if @highlighted is highlighted then return
+            @highlighted = highlighted
             @updateIcon()
-            komoo.event.trigger @, 'highlight_changed', @highlighted
+            if not silent
+                komoo.event.trigger @, 'highlight_changed', @highlighted
 
         isNew: -> not @getProperty 'id'
 
@@ -143,7 +145,9 @@ define ['map/geometries'], ->
         hideMarker: -> @marker?.setMap @map
 
         getMap: -> @map
-        setMap: (@map, force = geometry: false, point: false, icon: false) ->
+        setMap: (map, force = geometry: false, point: false, icon: false) ->
+            @oldMap = @map
+            @map = map
             if @properties.alwaysVisible is on or @editable
                 force =
                     geometry: true
@@ -158,6 +162,15 @@ define ['map/geometries'], ->
                     zoom >= @featureType.minZoomGeometry) or \
                     force.geometry then @map else null)
             @updateIcon()
+
+            if @oldMap is undefined
+                @handleMapEvents()
+
+        handleMapEvents: ->
+            komoo.event.addListener @map, 'feature_highlight_changed', (flag, feature) =>
+                if feature is this then return
+                if @isHighlighted()
+                    @setHighlight off, true
 
         getBounds: -> @geometry.getBounds()
 
