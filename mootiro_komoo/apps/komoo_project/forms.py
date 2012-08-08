@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
+from ajax_select.fields import AutoCompleteSelectMultipleField
 from ajaxforms import AjaxModelForm
 
 from main.utils import MooHelper, clean_autocomplete_field
@@ -19,19 +20,28 @@ logger = logging.getLogger(__name__)
 
 class FormProject(AjaxModelForm):
     description = forms.CharField(widget=MarkItUpWidget())
+    contact = forms.CharField(required=False, widget=MarkItUpWidget())
     tags = forms.Field(required=False, widget=TaggitWidget(
         autocomplete_url="/project/search_tags/"))
+    community = AutoCompleteSelectMultipleField('community', help_text='',
+        required=False)
+    contributors = AutoCompleteSelectMultipleField('user', help_text='',
+        required=False)
     logo = FileuploadField(required=False)
 
     class Meta:
         model = Project
-        fields = ('name', 'description', 'tags', 'logo', 'id')
+        fields = ('name', 'description', 'contributors', 'tags', 'contact',
+                  'community', 'logo', 'id')
 
     _field_labels = {
         'name': _('Name'),
         'description': _('Description'),
         'tags': _('Tags'),
         'logo': _('Logo'),
+        'contact': _('Contact'),
+        'contributors': _('Contributors'),
+        'community': _('Community'),
     }
 
     def __init__(self, *a, **kw):
