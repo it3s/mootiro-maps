@@ -1,7 +1,6 @@
 {% extends "global.html" %}
 
 {% load i18n %}
-{% load komoo_map_tags %}
 {% load komoo_tags %}
 {% load moderation_tags %}
 {% load comment_tags %}
@@ -37,7 +36,9 @@
   </div>
 
   <div class="right-bar">
-    <div id="map-preview"><div id="map-preview-canvas" style="width: 200px; height: 200px;"></div></div>
+    <div id="map-preview">
+      <div id="map-preview-canvas" style="width: 200px; height: 200px;"></div>
+    </div>
     <a href="{% url community_on_map community.slug %}">ver no mapa</a>
 
     {% taglist community %}
@@ -66,16 +67,14 @@
 
 {% block page_scripts %}
 <script type="text/javascript">
-    var preview;
     var community_slug = '{{ community.slug }}';
-    scriptLoader.waitFor('map', function () {
-      preview = komoo.maps.makeMap({
+    require(['map.jquery'], function () {
+        console.log(window.komoo);
+      $("#map-preview-canvas").komooMap({
         type: 'preview',
         geojson: {{ geojson|safe }},
-        elementId: "map-preview-canvas",
       });
     });
   </script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
   {% comments_staticfiles %}
 {% endblock %}

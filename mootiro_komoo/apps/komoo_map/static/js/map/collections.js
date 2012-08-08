@@ -237,6 +237,13 @@
       return (_ref = this.featuresByType[type]) != null ? _ref['ids'][id] : void 0;
     };
 
+    FeatureCollectionPlus.prototype.highlightFeature = function(type, id) {
+      var feature;
+      feature = typeof type === 'string' ? this.getById(type, id) : type;
+      feature.highlight();
+      return console.log(feature);
+    };
+
     return FeatureCollectionPlus;
 
   })(FeatureCollection);

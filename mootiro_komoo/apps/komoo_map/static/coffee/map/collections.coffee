@@ -131,6 +131,15 @@ class FeatureCollectionPlus extends FeatureCollection
     getById: (type, id) ->
         @featuresByType[type]?['ids'][id]
 
+    highlightFeature: (type, id) ->
+        feature =
+            if typeof type is 'string'
+                @getById type, id
+            else
+                type
+        feature.highlight()
+        console.log feature
+
 
 class Layer extends FeatureCollection
 

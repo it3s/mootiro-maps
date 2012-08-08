@@ -1,8 +1,5 @@
 {% load i18n %}
 {% block api_js %}
-  {% if type != 'disabled' %}
-  <script type="text/javascript" src="{{ STATIC_URL }}js/map.js"></script>
-  {% endif %}
 {% endblock %}
 {% include "main/supporters.html" %}
 {% block html %}
@@ -20,6 +17,7 @@
 
 {% block map_js %}
   <!-- Map creation script -->
+  {% if type != 'disabled' %}
   <script type="text/javascript">
     var geojson = {{ geojson|safe }};
     var featureTypes = {{ feature_types_json|safe }};
@@ -155,8 +153,9 @@
     };
 
 {% if not lazy %}
-  scriptLoader.waitFor('map', initialize_map_{{ type }});
+  require(['map/maps'], initialize_map_{{ type }});
 {% endif %}
 
   </script>
+  {% endif %}
 {% endblock %}

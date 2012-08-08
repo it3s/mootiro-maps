@@ -1,193 +1,195 @@
-window.komoo ?= {}
-window.komoo.event ?= google.maps.event
+define ['map/geometries'], ->
 
-class Feature
-    displayTooltip: on
-    displayInfoWindow: on
+    window.komoo ?= {}
+    window.komoo.event ?= google.maps.event
 
-    constructor: (@options = {}) ->
-        geometry = @options.geometry
-        @setFeatureType(@options.featureType)
-        if @options.geojson
-            if @options.geojson.properties
-                @setProperties @options.geojson.properties
-            geometry ?= komoo.geometries.makeGeometry @options.geojson, @
-        if geometry?
-            @setGeometry geometry
-            @createMarker()
+    class Feature
+        displayTooltip: on
+        displayInfoWindow: on
 
-    createMarker: ->
-        marker = new komoo.geometries.Point
-            visible : true
-            clickable : true
-        marker.setCoordinates @getCenter()
-        @setMarker marker
+        constructor: (@options = {}) ->
+            geometry = @options.geometry
+            @setFeatureType(@options.featureType)
+            if @options.geojson
+                if @options.geojson.properties
+                    @setProperties @options.geojson.properties
+                geometry ?= komoo.geometries.makeGeometry @options.geojson, @
+            if geometry?
+                @setGeometry geometry
+                @createMarker()
 
-    initEvents: (object = @geometry) ->
-        that = @
-        eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
-            'mouseout', 'mouseover', 'mouseup', 'rightclick', 'drag',
-            'dragend', 'draggable_changed', 'dragstart', 'coordinates_changed']
-        eventsNames.forEach (eventName) ->
-            komoo.event.addListener object, eventName, (e, args) ->
-                komoo.event.trigger that, eventName, e, args
+        createMarker: ->
+            marker = new komoo.geometries.Point
+                visible : true
+                clickable : true
+            marker.setCoordinates @getCenter()
+            @setMarker marker
 
-    getGeometry: -> @geometry
-    setGeometry: (@geometry) ->
-        @geometry.feature = @
-        @initEvents()
+        initEvents: (object = @geometry) ->
+            that = @
+            eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
+                'mouseout', 'mouseover', 'mouseup', 'rightclick', 'drag',
+                'dragend', 'draggable_changed', 'dragstart', 'coordinates_changed']
+            eventsNames.forEach (eventName) ->
+                komoo.event.addListener object, eventName, (e, args) ->
+                    komoo.event.trigger that, eventName, e, args
 
-    getGeometryType: -> @geometry.getGeometryType()
+        getGeometry: -> @geometry
+        setGeometry: (@geometry) ->
+            @geometry.feature = @
+            @initEvents()
 
-    getFeatureType: -> @featureType
-    setFeatureType: (@featureType = {
-        minZoomPoint: 0
-        maxZoomPoint: 10
-        minZoomIcon: 10
-        maxZoomIcon: 100
-        minZoomGeometry: 0
-        maxZoomGeometry: 100
-    }) ->
+        getGeometryType: -> @geometry.getGeometryType()
 
-    getMarker: -> @marker
-    setMarker: (@marker) ->
-        @marker.getOverlay().feature = @
-        @initEvents @marker
-        @marker
+        getFeatureType: -> @featureType
+        setFeatureType: (@featureType = {
+            minZoomPoint: 0
+            maxZoomPoint: 10
+            minZoomIcon: 10
+            maxZoomIcon: 100
+            minZoomGeometry: 0
+            maxZoomGeometry: 100
+        }) ->
 
-    handleGeometryEvents: ->
-        that = @
-        komoo.event.addListener @geometry, 'coordinates_changed', (args) ->
+        getMarker: -> @marker
+        setMarker: (@marker) ->
+            @marker.getOverlay().feature = @
+            @initEvents @marker
+            @marker
+
+        handleGeometryEvents: ->
+            that = @
+            komoo.event.addListener @geometry, 'coordinates_changed', (args) ->
+                @updateIcon()
+                komoo.event.trigger that, 'coordinates_changed', args
+
+        getUrl: ->
+            if @properties.type is 'Community'
+                dutils.urls.resolve 'view_community',
+                    community_slug: @properties.community_slug
+            else if @properties.type is 'Resource'
+                dutils.url.resolve('view_resource',
+                    resource_id: @properties.id
+                ).replace '//', '/'
+            else if @properties.type is 'OrganizationBranch'
+                dutils.url.resolve('view_organization',
+                    organization_slug: @properties.organization_slug
+                ).replace '//', '/'
+            else
+                slugname = "#{@properties.type.toLowerCase()}_slug"
+                params =
+                    community_slug: @properties.community_slug
+                params[slugname] = @properties[slugname]
+                dutils.url.resolve("view_#{@properties.type.toLowerCase()}",
+                params).replace('//', '/')
+
+        isHighlighted: -> @highlighted?
+        highlight: -> @setHighlight(on)
+        setHighlight: (@highlighted) ->
             @updateIcon()
-            komoo.event.trigger that, 'coordinates_changed', args
+            komoo.event.trigger @, 'highlight_changed', @highlighted
 
-    getUrl: ->
-        if @properties.type is 'Community'
-            dutils.urls.resolve 'view_community',
-                community_slug: @properties.community_slug
-        else if @properties.type is 'Resource'
-            dutils.url.resolve('view_resource',
-                resource_id: @properties.id
-            ).replace '//', '/'
-        else if @properties.type is 'OrganizationBranch'
-            dutils.url.resolve('view_organization',
-                organization_slug: @properties.organization_slug
-            ).replace '//', '/'
-        else
-            slugname = "#{@properties.type.toLowerCase()}_slug"
-            params =
-                community_slug: @properties.community_slug
-            params[slugname] = @properties[slugname]
-            dutils.url.resolve("view_#{@properties.type.toLowerCase()}",
-            params).replace('//', '/')
+        isNew: -> not @getProperty 'id'
 
-    isHighlighted: -> @highlighted?
-    highlight: -> @setHighlight(on)
-    setHighlight: (@highlighted) ->
-        @updateIcon()
-        komoo.event.trigger @, 'highlight_changed', @highlighted
+        getIconUrl: (zoom) ->
+            zoom ?= if @map then @map.getZoom() else 10
+            nearOrFar = if zoom >= @featureType.minZoomIcon then "near" else "far"
+            highlighted = if @isHighlighted() then "highlighted/" else ""
+            if (@properties.categories and \
+                    @properties.categories[0] and \
+                    @properties.categories[0].name and \
+                    zoom >= @featureType.minZoomIcon)
+                categoryOrType = (@properties.categories[0].name.toLowerCase() +
+                    if @properties.categories.length > 1 then "-plus" else "")
+            else
+                categoryOrType = @properties.type.toLowerCase()
+            "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png"
 
-    isNew: -> not @getProperty 'id'
+        updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
 
-    getIconUrl: (zoom) ->
-        zoom ?= if @map then @map.getZoom() else 10
-        nearOrFar = if zoom >= @featureType.minZoomIcon then "near" else "far"
-        highlighted = if @isHighlighted() then "highlighted/" else ""
-        if (@properties.categories and \
-                @properties.categories[0] and \
-                @properties.categories[0].name and \
-                zoom >= @featureType.minZoomIcon)
-            categoryOrType = (@properties.categories[0].name.toLowerCase() +
-                if @properties.categories.length > 1 then "-plus" else "")
-        else
-            categoryOrType = @properties.type.toLowerCase()
-        "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png"
+        getCategoriesIcons: ->
+            for categorie in @properties.categories
+                "/static/need_categories/#{category.name.toLowerCase()}.png"
 
-    updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
+        getProperties: -> @properties
+        setProperties: (@properties) ->
+        getProperty: (name) -> @properties[name]
+        setProperty: (name, value) -> @properties[name] = value
 
-    getCategoriesIcons: ->
-        for categorie in @properties.categories
-            "/static/need_categories/#{category.name.toLowerCase()}.png"
+        getType: -> @getProperty('type')
+        getCategories: -> @getProperty('categories') ? []
 
-    getProperties: -> @properties
-    setProperties: (@properties) ->
-    getProperty: (name) -> @properties[name]
-    setProperty: (name, value) -> @properties[name] = value
+        getGeometryGeoJson: -> @geometry.getGeoJson()
 
-    getType: -> @getProperty('type')
-    getCategories: -> @getProperty('categories') ? []
+        getGeometryCollectionGeoJson: ->
+            type: "GeometryCollection"
+            geometries: [@getGeometryGeoJson()]
 
-    getGeometryGeoJson: -> @geometry.getGeoJson()
+        getGeoJsonGeometry: -> @getGeometryGeoJson()
 
-    getGeometryCollectionGeoJson: ->
-        type: "GeometryCollection"
-        geometries: [@getGeometryGeoJson()]
+        getGeoJson: ->
+            type: 'Feature',
+            geometry: @getGeometryGeoJson()
+            properties: @getProperties()
 
-    getGeoJsonGeometry: -> @getGeometryGeoJson()
+        getGeoJsonFeature: -> @getGeoJson()
 
-    getGeoJson: ->
-        type: 'Feature',
-        geometry: @getGeometryGeoJson()
-        properties: @getProperties()
+        setEditable: (@editable) -> @geometry.setEditable @editable
 
-    getGeoJsonFeature: -> @getGeoJson()
+        showGeometry: -> @geometry.setMap @map
+        hideGeometry: -> @geometry.setMap null
 
-    setEditable: (@editable) -> @geometry.setEditable @editable
+        showMarker: -> @marker?.setMap @map
+        hideMarker: -> @marker?.setMap @map
 
-    showGeometry: -> @geometry.setMap @map
-    hideGeometry: -> @geometry.setMap null
+        getMap: -> @map
+        setMap: (@map, force = geometry: false, point: false, icon: false) ->
+            if @properties.alwaysVisible is on or @editable
+                force =
+                    geometry: true
+                    point: false
+                    icon: false
+            zoom = if @map? then @map.getZoom() else 0
+            @marker?.setMap(
+                if @featureType.minZoomPoint <= zoom <= @featureType.maxZoomPoint or \
+                    @featureType.minZoomIcon <= zoom <= @featureType.maxZoomIcon or \
+                    force.point or force.icon then @map else null)
+            @geometry.setMap(if (zoom <= @featureType.maxZoomGeometry and \
+                    zoom >= @featureType.minZoomGeometry) or \
+                    force.geometry then @map else null)
+            @updateIcon()
 
-    showMarker: -> @marker?.setMap @map
-    hideMarker: -> @marker?.setMap @map
+        getBounds: -> @geometry.getBounds()
 
-    getMap: -> @map
-    setMap: (@map, force = geometry: false, point: false, icon: false) ->
-        if @properties.alwaysVisible is on or @editable
-            force =
-                geometry: true
-                point: false
-                icon: false
-        zoom = if @map? then @map.getZoom() else 0
-        @marker?.setMap(
-            if @featureType.minZoomPoint <= zoom <= @featureType.maxZoomPoint or \
-                @featureType.minZoomIcon <= zoom <= @featureType.maxZoomIcon or \
-                force.point or force.icon then @map else null)
-        @geometry.setMap(if (zoom <= @featureType.maxZoomGeometry and \
-                zoom >= @featureType.minZoomGeometry) or \
-                force.geometry then @map else null)
-        @updateIcon()
+        removeFromMap: ->
+            @marker?.setMap(null)
+            @setMap(null)
 
-    getBounds: -> @geometry.getBounds()
+        setVisible: (@visible) ->
+            @marker?.setVisible @visible
+            @geometry.setVisible @visible
 
-    removeFromMap: ->
-        @marker?.setMap(null)
-        @setMap(null)
+        getCenter: -> @geometry.getCenter()
 
-    setVisible: (@visible) ->
-        @marker?.setVisible @visible
-        @geometry.setVisible @visible
+        setOptions: (options) -> @geometry.setOptions(options)
 
-    getCenter: -> @geometry.getCenter()
+        getIcon: -> @geometry.getIcon()
+        setIcon: (icon) ->
+            @marker?.setIcon icon
+            @geometry.setIcon icon
 
-    setOptions: (options) -> @geometry.setOptions(options)
-
-    getIcon: -> @geometry.getIcon()
-    setIcon: (icon) ->
-        @marker?.setIcon icon
-        @geometry.setIcon icon
-
-    getBorderSize: -> @featureType.border_size
-    getBorderSizeHover: -> @featureType.borderSizeHover
-    getBorderColor: -> @featureType.borderColor
-    getBorderOpacity: -> @featureType.borderOpacity
-    getBackgroundColor: -> @featureType.backgroundColor
-    getBackgroundOpacity: -> @featureType.backgroundOpacity
-    getDefaultZIndex: -> @featureType.zIndex
+        getBorderSize: -> @featureType.border_size
+        getBorderSizeHover: -> @featureType.borderSizeHover
+        getBorderColor: -> @featureType.borderColor
+        getBorderOpacity: -> @featureType.borderOpacity
+        getBackgroundColor: -> @featureType.backgroundColor
+        getBackgroundOpacity: -> @featureType.backgroundOpacity
+        getDefaultZIndex: -> @featureType.zIndex
 
 
-window.komoo.features =
-    Feature: Feature
-    makeFeature: (geojson, featureTypes) ->
-        new komoo.features.Feature
-            geojson: geojson
-            featureType: featureTypes?[geojson?.properties?.type]
+    window.komoo.features =
+        Feature: Feature
+        makeFeature: (geojson, featureTypes) ->
+            new komoo.features.Feature
+                geojson: geojson
+                featureType: featureTypes?[geojson?.properties?.type]
