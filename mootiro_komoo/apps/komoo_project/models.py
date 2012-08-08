@@ -11,13 +11,14 @@ from fileupload.models import UploadedFile
 import reversion
 
 from main.utils import slugify
+from community.models import Community
 
 
 class ProjectRelatedObject(models.Model):
     project = models.ForeignKey('Project')
 
     # dynamic ref
-    content_type = models.ForeignKey(ContentType,  null=True, blank=True)
+    content_type = models.ForeignKey(ContentType, null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
@@ -28,12 +29,18 @@ class Project(models.Model):
     description = models.TextField()
     tags = TaggableManager()
 
+    contributors = models.ManyToManyField(User, null=True, blank=True,
+            related_name='project_contributors')
+    community = models.ManyToManyField(Community, null=True, blank=True)
+    contact = models.TextField(null=True, blank=True)
+
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
+
     creator = models.ForeignKey(User, editable=False, null=True,
             related_name='created_projects')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_editor = models.ForeignKey(User, editable=False, null=True,
-            blank=True)
+            blank=True, related_name='project_last_editor')
     last_update = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
@@ -48,6 +55,10 @@ class Project(models.Model):
             self.slug = slugify(self.name,
                     lambda slug: Project.objects.filter(slug=slug).exists())
         return super(Project, self).save(*a, **kw)
+
+    def partners_logo(self):
+        """ pseudo-reverse query for retrieving the partners logo"""
+        return UploadedFile.get_files_for(self)
 
     @property
     def home_url_params(self):
@@ -64,7 +75,7 @@ class Project(models.Model):
     @property
     def related_objects(self):
         """Returns a queryset for the objects for a given project"""
-        return ProjectObjects.objects.filter(project=self)
+        return ProjectRelatedObject.objects.filter(project=self)
 
     def save_related_object(self, related_object):
         obj, created = ProjectRelatedObject.objects.get_or_create(
@@ -74,3 +85,4 @@ class Project(models.Model):
 
 if not reversion.is_registered(Project):
     reversion.register(Project)
+
