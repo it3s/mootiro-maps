@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load crispy_forms_tags %}
+{% load upload_tags %}
 
 {% block content %}
     <div id="main-content">
@@ -34,6 +35,7 @@
 
 {% block page_scripts %}
     {{ form_project.media }}
+    {% load_files project %}
 
     <script type="text/javascript" charset="utf-8">
         $(function(){
