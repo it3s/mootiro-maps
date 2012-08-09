@@ -60,6 +60,9 @@ class Project(models.Model):
         """ pseudo-reverse query for retrieving the partners logo"""
         return UploadedFile.get_files_for(self)
 
+    def user_can_edit(self, user):
+        return user == self.creator or user in self.contributors.all()
+
     @property
     def home_url_params(self):
         return dict(project_slug=self.slug)
