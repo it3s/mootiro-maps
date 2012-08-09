@@ -133,6 +133,24 @@ class FileuploadWidget(forms.Widget):
         return html
 
 
+class SingleFileUploadWidget(forms.Widget):
+    class Media:
+        js = (
+            'plupload/browserplus-min.js',
+            'plupload/plupload.full.js',
+            'plupload/singlefile_plupload.js',
+        )
+        css = {
+            'all': ('plupload/komoo_plupload.css',)
+        }
+
+    def render(self, name, value=None, attrs=None):
+        html = """
+
+        """
+        return html
+
+
 class LogoWidget(forms.Widget):
     class Media:
         js = (
