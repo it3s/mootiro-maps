@@ -288,7 +288,7 @@ def _get_widgets_dict(obj):
     """
     ##################################
 
-    target_audience_widget = TaggitWidget(autocomplete_url="/%s/target_audience_search/" % obj)
+    target_audience_widget = TaggitWidget(autocomplete_url="/need/target_audience_search/")
     target_audience_widget = "%s \n %s" % (str(target_audience_widget.media),
                                 target_audience_widget.render('target_audiences'))
     # target_audience_widget = target_audience_widget.render('target_audiences')
