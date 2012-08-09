@@ -162,6 +162,10 @@ class Investment(VotableModel):
     def name(self):
         return self.title
 
+    @property
+    def community(self):
+        return self.grantee.community
+
     ### Needed to slugify items ###
     def slug_exists(self, slug):
         """Answers if a given slug is valid in grantee investment namespace."""

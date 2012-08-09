@@ -100,6 +100,7 @@ def list(request, community_slug=''):
         community = get_object_or_404(Community, slug=community_slug)
         # TODO: query below must get investments for the given community only
         investments = Investment.objects.all().order_by('title')
+        investments = filter(lambda inv: community in inv.community.all(), investments)
     else:
         community = None
         investments = Investment.objects.all().order_by('title')
