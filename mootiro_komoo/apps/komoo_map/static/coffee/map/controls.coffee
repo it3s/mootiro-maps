@@ -439,7 +439,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                     @isMouseover = false
 
 
-                komoo.event.trigger @, "domready"
+                komoo.event.trigger this, "domready"
 
             @initDomElements()
 
@@ -620,14 +620,14 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             eventsNames = ['clusteringbegin', 'clusteringend']
             eventsNames.forEach (eventName) =>
                 komoo.event.addListener object, eventName, (mc) =>
-                    komoo.event.trigger @, eventName, @
+                    komoo.event.trigger this, eventName, this
 
             eventsNames = ['click', 'mouseout', 'mouseover']
             eventsNames.forEach (eventName) =>
                 komoo.event.addListener object, eventName, (c) =>
                     features = komoo.collections.makeFeatureCollection \
                         features: (marker.feature for marker in c.getMarkers())
-                    komoo.event.trigger @, eventName, features, c.getCenter()
+                    komoo.event.trigger this, eventName, features, c.getCenter()
                     komoo.event.trigger @map, "cluster_#{eventName}", features, c.getCenter()
 
         setMap: (@map) ->
@@ -674,6 +674,128 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             features?.forEach (feature) => @push(feature)
 
 
+    class Location
+        enabled = on
+
+        constructor: ->
+            @geocoder = new google.maps.Geocoder()
+
+        handleMapEvents: ->
+            komoo.event.addListener @map, 'goto', (position, marker) =>
+                @goTo position, marker
+            komoo.event.addListener @map, 'goto_user_location', =>
+                @goToUserLocation()
+
+        goTo: (position, marker = true) ->
+            _go = (latLng) =>
+                if latLng
+                    @map.googleMap.panTo latLng
+                    if not @searchMarker
+                        @searchMarker = new google.maps.Marker()
+                        @searchMarker.setMap this.googleMap
+
+                    if displayMarker then @searchMarker.setPosition latLng
+
+            if typeof position is "string"  # Got an address
+                request = {
+                    address: position
+                    region: this.region
+                }
+                @geocoder.geocode request, (result, status_) =>
+                    if status_ is google.maps.GeocoderStatus.OK
+                        first_result = result[0]
+                        latLng = first_result.geometry.location
+                        _go latLng
+            else
+                if position instanceof Array
+                    latLng = new google.maps.LatLng position[0], position[1]
+                else
+                    latLng = position
+                _go latLng
+
+        goToUserLocation: ->
+            clientLocation = google.loader.ClientLocation
+            if clientLocation
+                pos = new google.maps.LatLng clientLocation.latitude,
+                                             clientLocation.longitude
+                @map.googleMap.setCenter pos
+                console?.log 'Getting location from Google...'
+            if navigator.geolocation
+                navigator.geolocation.getCurrentPosition (position) =>
+                    pos = new google.maps.LatLng position.coords.latitude,
+                                                 position.coords.longitude
+                    @map.googleMap.setCenter pos
+                    console?.log 'Getting location from navigator.geolocation...'
+                , =>
+                    console?.log 'User denied access to navigator.geolocation...'
+
+        setMap: (@map) ->
+            @handleMapEvents()
+
+        enable: -> @enabled = on
+
+        disable: ->
+            @close(false)
+            @enabled = off
+
+
+    class SaveLocation extends Location
+        handleMapEvents: ->
+            super()
+            komoo.event.addListener @map, 'save_location', (center, zoom) =>
+                @saveLocation center, zoom
+            komoo.event.addListener @map, 'goto_saved_location', =>
+                @goToSavedLocation()
+
+        saveLocation: (center = @map.googleMap.getCenter(), zoom = @map.getZoom()) ->
+            komoo.utils.createCookie 'lastLocation', center.toUrlValue(), 90
+            komoo.utils.createCookie 'lastZoom', zoom, 90
+
+        goToSavedLocation: ->
+            lastLocation = komoo.utils.readCookie 'lastLocation'
+            zoom = parseInt komoo.utils.readCookie('lastZoom'), 10
+            if lastLocation and zoom
+                console?.log 'Getting location from cookie...'
+                lastLocation = lastLocation.split ','
+                center = new google.maps.LatLng lastLocation[0], lastLocation[1]
+                @map.googleMap.setCenter center
+                @map.googleMap.setZoom zoom
+
+
+    class AutosaveLocation extends SaveLocation
+        handleMapEvents: ->
+            super()
+            komoo.event.addListener @map, 'idle', =>
+                @saveLocation()
+
+
+    class StreetView
+        constructor: ->
+            console?.log "Initializing StreetView support."
+            @streetViewPanel = $("<div>").addClass "map-panel"
+            @streetViewPanel.height("100%").width("50%")
+            @streetViewPanel.hide()
+            @createObject()
+
+        setMap: (@map) ->
+            @map.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
+                    this.streetViewPanel.get 0)
+            if @streetView? then @map.googleMap.setStreetView @streetView
+
+        createObject: ->
+            options =
+                enableCloseButton: true
+                visible: false
+            @streetView = new google.maps.StreetViewPanorama \
+                    this.streetViewPanel.get(0), options
+            @map?.googleMap.setStreetView @streetView
+            google.maps.event.addListener @streetView, "visible_changed", =>
+                if @streetView.getVisible()
+                    @streetViewPanel.show()
+                else
+                    @streetViewPanel.hide()
+
+
     window.komoo.controls =
         DrawingManager: DrawingManager
         Balloon: Balloon
@@ -683,6 +805,11 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         FeatureClusterer: FeatureClusterer
         SupporterBox: SupporterBox
         LicenseBox: LicenseBox
+        PerimeterSelector: PerimeterSelector
+        Location: Location
+        SaveLocation: SaveLocation
+        AutosaveLocation: AutosaveLocation
+        StreetView: StreetView
         makeDrawingManager: (options) -> new DrawingManager options
         makeDrawingControl: (options) -> new DrawingControl options
         makeInfoWindow: (options) -> new InfoWindow options
@@ -691,3 +818,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         makeSupporterBox: (options) -> new SupporterBox options
         makeLicenseBox: (options) -> new LicenseBox options
         makePerimeterSelector: (options) -> new PerimeterSelector options
+        makeLocation: (options) -> new Location options
+        makeSaveLocation: (options) -> new SaveLocation options
+        makeAutosaveLocation: (options) -> new AutosaveLocation options
+        makeStreetView: (options) -> new StreetView options

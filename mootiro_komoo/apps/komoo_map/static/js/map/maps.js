@@ -9,6 +9,9 @@
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
     Map = (function() {
+      var featureTypesUrl;
+
+      featureTypesUrl = '/map_info/feature_types/';
 
       Map.prototype.googleMapDefaultOptions = {
         zoom: 12,
@@ -41,7 +44,7 @@
           map: this
         });
         this.components = {};
-        this.geocoder = new google.maps.Geocoder();
+        this.addComponent(komoo.controls.makeLocation());
         this.initGoogleMap(this.options.googleMapOptions);
         this.initFeatureTypes();
         this.handleEvents();
@@ -63,7 +66,7 @@
       Map.prototype.handleGoogleMapEvents = function() {
         var eventNames,
           _this = this;
-        eventNames = ['click'];
+        eventNames = ['click', 'idle'];
         return eventNames.forEach(function(eventName) {
           return komoo.event.addListener(_this.googleMap, eventName, function(e) {
             return komoo.event.trigger(_this, eventName, e);
@@ -84,7 +87,7 @@
           return this.loadGeoJsonFromOptons();
         } else {
           return $.ajax({
-            url: '/map_info/feature_types/',
+            url: this.featureTypesUrl,
             dataType: 'json',
             success: function(data) {
               data.forEach(function(type) {
@@ -160,47 +163,16 @@
       Map.prototype.saveLocation = function(center, zoom) {
         if (center == null) center = this.googleMap.getCenter();
         if (zoom == null) zoom = this.getZoom();
-        komoo.utils.createCookie('lastLocation', center.toUrlValue(), 90);
-        return komoo.utils.createCookie('lastZoom', zoom, 90);
+        return komoo.event.trigger(this, 'save_location', center, zoom);
       };
 
       Map.prototype.goToSavedLocation = function() {
-        var center, lastLocation, zoom;
-        lastLocation = komoo.utils.readCookie('lastLocation');
-        zoom = parseInt(komoo.utils.readCookie('lastZoom'), 10);
-        if (lastLocation && zoom) {
-          if (typeof console !== "undefined" && console !== null) {
-            console.log('Getting location from cookie...');
-          }
-          lastLocation = lastLocation.split(',');
-          center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
-          this.googleMap.setCenter(center);
-          this.googleMap.setZoom(zoom);
-        }
+        komoo.event.trigger(this, 'goto_saved_location');
         return true;
       };
 
-      false;
-
       Map.prototype.goToUserLocation = function() {
-        var clientLocation, pos,
-          _this = this;
-        if (clientLocation = google.loader.ClientLocation) {
-          pos = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
-          this.googleMap.setCenter(pos);
-          if (typeof console !== "undefined" && console !== null) {
-            console.log('Getting location from Google...');
-          }
-        }
-        if (navigator.geolocation) {
-          return navigator.geolocation.getCurrentPosition(function(position) {
-            pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            _this.googleMap.setCenter(pos);
-            return typeof console !== "undefined" && console !== null ? console.log('Getting location from navigator.geolocation...') : void 0;
-          }, function() {
-            return typeof console !== "undefined" && console !== null ? console.log('User denied access to navigator.geolocation...') : void 0;
-          });
-        }
+        return komoo.event.trigger(this, 'goto_user_location');
       };
 
       Map.prototype.handleFeatureEvents = function(feature) {
@@ -215,40 +187,8 @@
       };
 
       Map.prototype.goTo = function(position, displayMarker) {
-        var latLng, request, _go,
-          _this = this;
         if (displayMarker == null) displayMarker = true;
-        _go = function(latLng) {
-          if (latLng) {
-            _this.googleMap.panTo(latLng);
-            if (!_this.searchMarker) {
-              _this.searchMarker = new google.maps.Marker();
-              _this.searchMarker.setMap(_this.googleMap);
-            }
-            if (displayMarker) return _this.searchMarker.setPosition(latLng);
-          }
-        };
-        if (typeof position === "string") {
-          request = {
-            address: position,
-            region: this.region
-          };
-          return this.geocoder.geocode(request, function(result, status_) {
-            var first_result, latLng;
-            if (status_ === google.maps.GeocoderStatus.OK) {
-              first_result = result[0];
-              latLng = first_result.geometry.location;
-              return _go(latLng);
-            }
-          });
-        } else {
-          if (position instanceof Array) {
-            latLng = new google.maps.LatLng(position[0], position[1]);
-          } else {
-            latLng = position;
-          }
-          return _go(latLng);
-        }
+        return komoo.event.trigger(this, 'goto', position, displayMarker);
       };
 
       Map.prototype.panTo = function(position, displayMarker) {
@@ -429,6 +369,8 @@
       function Editor(options) {
         Editor.__super__.constructor.call(this, options);
         this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
+        this.addComponent(komoo.controls.makeSaveLocation());
+        this.addComponent(komoo.controls.makeStreetView());
         this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
         this.addComponent(komoo.controls.makeDrawingControl(), 'drawing');
         this.addComponent(komoo.controls.makeSupporterBox());
@@ -470,6 +412,8 @@
         AjaxMap.__super__.constructor.call(this, options);
         this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
         this.addComponent(komoo.providers.makeFeatureProvider(), 'provider');
+        this.addComponent(komoo.controls.makeAutosaveLocation());
+        this.addComponent(komoo.controls.makeStreetView());
         this.addComponent(komoo.controls.makeTooltip(), 'tooltip');
         this.addComponent(komoo.controls.makeInfoWindow(), 'infoWindow');
         this.addComponent(komoo.controls.makeFeatureClusterer({
