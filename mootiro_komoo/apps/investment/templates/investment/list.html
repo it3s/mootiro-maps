@@ -16,6 +16,8 @@
   <div class="highlight">
     <div class="view-list">
 
+      {% visualization_opts 'investment' "sorters=['title','creation_date', 'votes']" "filters=['tags']"%}
+
       {% for investment in investments.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
@@ -40,4 +42,8 @@
   </div>
 </div>
 {% komoo_map_tooltip %}
+{% endblock %}
+
+{% block page_scripts %}
+  {% visualization_opts_js %}
 {% endblock %}
