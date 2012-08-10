@@ -300,7 +300,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
 
     class PerimeterSelector
-        enabled = on
+        enabled: on
 
         constructor: ->
             @circle = new google.maps.Circle
@@ -593,6 +593,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
 
     class FeatureClusterer
+        enabled: on
         maxZoom: 9
         gridSize: 20
         minSize: 1
@@ -675,7 +676,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
 
     class Location
-        enabled = on
+        enabled: on
 
         constructor: ->
             @geocoder = new google.maps.Geocoder()
@@ -770,6 +771,8 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
 
     class StreetView
+        enabled: on
+
         constructor: ->
             console?.log "Initializing StreetView support."
             @streetViewPanel = $("<div>").addClass "map-panel"

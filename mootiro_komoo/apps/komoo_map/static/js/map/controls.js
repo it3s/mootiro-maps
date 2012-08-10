@@ -362,9 +362,8 @@
 
     })(Box);
     PerimeterSelector = (function() {
-      var enabled;
 
-      enabled = true;
+      PerimeterSelector.prototype.enabled = true;
 
       function PerimeterSelector() {
         var _this = this;
@@ -797,6 +796,8 @@
     })(AjaxBalloon);
     FeatureClusterer = (function() {
 
+      FeatureClusterer.prototype.enabled = true;
+
       FeatureClusterer.prototype.maxZoom = 9;
 
       FeatureClusterer.prototype.gridSize = 20;
@@ -937,9 +938,8 @@
 
     })();
     Location = (function() {
-      var enabled;
 
-      enabled = true;
+      Location.prototype.enabled = true;
 
       function Location() {
         this.geocoder = new google.maps.Geocoder();
@@ -1095,6 +1095,8 @@
 
     })(SaveLocation);
     StreetView = (function() {
+
+      StreetView.prototype.enabled = true;
 
       function StreetView() {
         if (typeof console !== "undefined" && console !== null) {

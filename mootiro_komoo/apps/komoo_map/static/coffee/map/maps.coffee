@@ -4,7 +4,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
     window.komoo.event ?= google.maps.event
 
     class Map
-        featureTypesUrl = '/map_info/feature_types/'
+        featureTypesUrl: '/map_info/feature_types/'
 
         googleMapDefaultOptions:
             zoom: 12

@@ -9,9 +9,8 @@
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
     Map = (function() {
-      var featureTypesUrl;
 
-      featureTypesUrl = '/map_info/feature_types/';
+      Map.prototype.featureTypesUrl = '/map_info/feature_types/';
 
       Map.prototype.googleMapDefaultOptions = {
         zoom: 12,

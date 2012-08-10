@@ -69,7 +69,6 @@
 <script type="text/javascript">
     var community_slug = '{{ community.slug }}';
     require(['map.jquery'], function () {
-        console.log(window.komoo);
       $("#map-preview-canvas").komooMap({
         type: 'preview',
         geojson: {{ geojson|safe }},
