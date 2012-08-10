@@ -5,7 +5,11 @@ define ['map/maps'], ->
                 @each ->
                     $this = $(this)
                     opts = $.extend({element: $this.get(0)}, $.fn.komooMap.defaults, options)
-                    $this.data 'map', komoo.maps.makeMap(opts)
+                    if opts.width? then $this.width opts.width
+                    if opts.height? then $this.height opts.height
+                    map = komoo.maps.makeMap(opts)
+                    $this.data 'map', map
+                    if opts.mapType? then map.googleMap.setMapTypeId opts.mapType
 
             edit: (feature) ->
                 $(this).data('map').editFeature feature

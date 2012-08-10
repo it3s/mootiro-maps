@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.db.models.loading import get_model
 
-from komoo_map.models import get_editable_models_json
+from komoo_map.models import get_models_json
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 def feature_types(request):
     logger.debug('accessing Komoo Map > feature_types')
-    return HttpResponse(get_editable_models_json(),
+    return HttpResponse(get_models_json(),
         mimetype="application/x-javascript")
 
 def geojson(request, app_label, model_name, obj_id):

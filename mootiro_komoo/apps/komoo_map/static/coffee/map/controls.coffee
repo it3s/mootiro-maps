@@ -695,7 +695,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                         @searchMarker = new google.maps.Marker()
                         @searchMarker.setMap this.googleMap
 
-                    if displayMarker then @searchMarker.setPosition latLng
+                    if marker then @searchMarker.setPosition latLng
 
             if typeof position is "string"  # Got an address
                 request = {

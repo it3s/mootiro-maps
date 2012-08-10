@@ -8,6 +8,7 @@
 
 {% block content %}
 
+{% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=' 'lazy=True' %}
 <div id="main-content" class="user-profile-edit-container">
     <div class="main-column">
         <!-- tab navigation -->
@@ -144,17 +145,17 @@
             <p>
                 <form action="/user/profile/update/digest/" id="form-digest" method="POST">
                     <div class="digest-radio-btn">
-                        <input type="radio" name="digest_type" value="" 
+                        <input type="radio" name="digest_type" value=""
                             {% if not digest %}checked="checked"{% endif %}>
                             <span>{% trans "I want to receive mails every time someone update an object I'm subscribed to" %}</span>
                     </div>
                     <div class="digest-radio-btn">
-                        <input type="radio" name="digest_type" value="W" 
+                        <input type="radio" name="digest_type" value="W"
                         {% if digest == 'W' %}checked="checked"{% endif %}>
                             <span>{% trans "I want to receive only a <strong>weekly</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
                     </div>
                     <div class="digest-radio-btn">
-                        <input type="radio" name="digest_type" value="D" 
+                        <input type="radio" name="digest_type" value="D"
                             {% if digest == 'D' %}checked="checked"{% endif %}>
                             <span>{% trans "I want to receive only a <strong>daily</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
                     </div>

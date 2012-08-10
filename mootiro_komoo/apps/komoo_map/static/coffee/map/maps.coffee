@@ -39,7 +39,9 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
         loadGeoJsonFromOptons: ->
             if @options.geojson
-                @loadGeoJSON @options.geojson, true
+                features = @loadGeoJSON @options.geojson, not @options.zoom?
+                @centerFeature features?.getAt(0)
+            @setZoom @options.zoom
 
         initGoogleMap: (options = @googleMapDefaultOptions) ->
             @googleMap = new google.maps.Map @element, options
@@ -166,13 +168,13 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 else
                     @features.getById type, id
 
-            @panTo feature.getCenter(), false
+            if feature? then @panTo feature.getCenter(), false
 
         loadGeoJson: (geojson, panTo = false, attach = true) ->
-            if not geojson?.type? or not geojson.type is 'FeatureCollection'
-                return []
-
             features = komoo.collections.makeFeatureCollection map: @
+
+            if not geojson?.type? or not geojson.type is 'FeatureCollection'
+                return features
 
             geojson.features?.forEach (geojsonFeature) =>
                 # Try to get the instance already created
@@ -186,6 +188,8 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
             if panTo and features.getAt(0)?.getBounds()
                 @googleMap.fitBounds features.getAt(0).getBounds()
+
+            komoo.event.trigger this, 'features_loaded', features
 
             features
 
@@ -222,8 +226,13 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                     type: featureType
             komoo.event.trigger this, 'draw_feature', geometryType, feature
 
-        editFeature: (feature = @features.getAt 0) ->
-            komoo.event.trigger this, 'edit_feature', feature
+        editFeature: (feature = @features.getAt(0), newGeometry) ->
+            if newGeometry? and feature.getGeometryType() is komoo.geometries.types.EMPTY
+                feature.setGeometry komoo.geometries.makeGeometry geometry:
+                    type: newGeometry
+                komoo.event.trigger this, 'draw_feature', newGeometry, feature
+            else
+                komoo.event.trigger this, 'edit_feature', feature
 
         setMode: (@mode) ->
             komoo.event.trigger this, 'mode_changed', @mode
@@ -241,6 +250,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
         getBounds: -> @googleMap.getBounds()
 
+        setZoom: (zoom) -> if zoom? then @googleMap.setZoom zoom
         getZoom: -> @googleMap.getZoom()
 
 

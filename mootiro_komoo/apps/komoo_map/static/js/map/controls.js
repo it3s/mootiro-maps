@@ -966,7 +966,7 @@
               _this.searchMarker = new google.maps.Marker();
               _this.searchMarker.setMap(_this.googleMap);
             }
-            if (displayMarker) return _this.searchMarker.setPosition(latLng);
+            if (marker) return _this.searchMarker.setPosition(latLng);
           }
         };
         if (typeof position === "string") {

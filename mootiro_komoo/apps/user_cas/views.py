@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import json
 import logging
 import requests
 
@@ -20,6 +21,7 @@ from reversion.models import Revision
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
+from main.utils import create_geojson
 
 from .forms import FormProfile
 
@@ -97,14 +99,21 @@ def _prepare_contrib_data(version, created_date):
 @render_to('user_cas/profile.html')
 def profile(request, username=''):
     logger.debug('acessing user_cas > profile : {}'.format(username))
-    user = get_object_or_404(User, username=username)
+    if username == 'me':
+        user = request.user
+    else:
+        user = get_object_or_404(User, username=username)
     contributions = []
     for rev in Revision.objects.filter(user=user
                ).order_by('-date_created')[:20]:
         version = rev.version_set.all()[0]
         contrib = _prepare_contrib_data(version, rev.date_created)
         contributions.append(contrib)
-    return dict(user_profile=user, contributions=contributions)
+    geojson = create_geojson([user.profile], convert=False, discard_empty=True)
+    if geojson:
+        geojson['features'][0]['properties']['image'] = '/static/img/user.png'
+        geojson = json.dumps(geojson)
+    return dict(user_profile=user, contributions=contributions, geojson=geojson)
 
 
 @render_to('user_cas/profile_update.html')
@@ -129,8 +138,11 @@ def profile_update(request):
     digest = digest_obj[0].digest_type if digest_obj.count() \
                   else ''
     form_profile = FormProfile(instance=request.user.profile)
+    geojson = create_geojson([request.user.profile], convert=False)
+    geojson['features'][0]['properties']['image'] = '/static/img/me.png'
+    geojson = json.dumps(geojson)
     return dict(signatures=signatures, form_profile=form_profile,
-                digest=digest)
+                digest=digest, geojson=geojson)
 
 
 @login_required

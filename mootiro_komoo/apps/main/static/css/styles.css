@@ -161,7 +161,7 @@ div.apart {
     background-color: #EEE9CC;
 }
 .branch-search-result {
-    padding-left: 40px !important; 
+    padding-left: 40px !important;
 }
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
@@ -2193,6 +2193,10 @@ div.investments-list .tab-investment.selected a { color: #000 }
     margin-top: 20px;
     width: 297px;
     color: #333333;
+}
+.profile-lp-map-preview {
+    margin-top: 20px;
+    width: 297px;
 }
 .profile-lp-contact-header{
     font-weight: bold;

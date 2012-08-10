@@ -50,9 +50,12 @@
       }
 
       Map.prototype.loadGeoJsonFromOptons = function() {
+        var features;
         if (this.options.geojson) {
-          return this.loadGeoJSON(this.options.geojson, true);
+          features = this.loadGeoJSON(this.options.geojson, !(this.options.zoom != null));
+          this.centerFeature(features != null ? features.getAt(0) : void 0);
         }
+        return this.setZoom(this.options.zoom);
       };
 
       Map.prototype.initGoogleMap = function(options) {
@@ -246,7 +249,7 @@
       Map.prototype.centerFeature = function(type, id) {
         var feature;
         feature = type instanceof komoo.features.Feature ? type : this.features.getById(type, id);
-        return this.panTo(feature.getCenter(), false);
+        if (feature != null) return this.panTo(feature.getCenter(), false);
       };
 
       Map.prototype.loadGeoJson = function(geojson, panTo, attach) {
@@ -254,12 +257,12 @@
           _this = this;
         if (panTo == null) panTo = false;
         if (attach == null) attach = true;
-        if (!((geojson != null ? geojson.type : void 0) != null) || !geojson.type === 'FeatureCollection') {
-          return [];
-        }
         features = komoo.collections.makeFeatureCollection({
           map: this
         });
+        if (!((geojson != null ? geojson.type : void 0) != null) || !geojson.type === 'FeatureCollection') {
+          return features;
+        }
         if ((_ref = geojson.features) != null) {
           _ref.forEach(function(geojsonFeature) {
             var feature;
@@ -274,6 +277,7 @@
         if (panTo && ((_ref2 = features.getAt(0)) != null ? _ref2.getBounds() : void 0)) {
           this.googleMap.fitBounds(features.getAt(0).getBounds());
         }
+        komoo.event.trigger(this, 'features_loaded', features);
         return features;
       };
 
@@ -315,9 +319,18 @@
         return komoo.event.trigger(this, 'draw_feature', geometryType, feature);
       };
 
-      Map.prototype.editFeature = function(feature) {
+      Map.prototype.editFeature = function(feature, newGeometry) {
         if (feature == null) feature = this.features.getAt(0);
-        return komoo.event.trigger(this, 'edit_feature', feature);
+        if ((newGeometry != null) && feature.getGeometryType() === komoo.geometries.types.EMPTY) {
+          feature.setGeometry(komoo.geometries.makeGeometry({
+            geometry: {
+              type: newGeometry
+            }
+          }));
+          return komoo.event.trigger(this, 'draw_feature', newGeometry, feature);
+        } else {
+          return komoo.event.trigger(this, 'edit_feature', feature);
+        }
       };
 
       Map.prototype.setMode = function(mode) {
@@ -339,6 +352,10 @@
 
       Map.prototype.getBounds = function() {
         return this.googleMap.getBounds();
+      };
+
+      Map.prototype.setZoom = function(zoom) {
+        if (zoom != null) return this.googleMap.setZoom(zoom);
       };
 
       Map.prototype.getZoom = function() {
