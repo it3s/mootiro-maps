@@ -16,6 +16,8 @@
   <div class="highlight">
     <div class="view-list">
 
+      {% visualization_opts 'investment' "sorters=['title','creation_date', 'votes']" "filters=['tags']"%}
+
       {% for investment in investments.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
@@ -23,6 +25,12 @@
         </h4>
         <div class="apart">
           <span class="meta-info">{% trans "Investor" %}: </span> {{ investment.investor }}
+          <br/>
+          <span class="meta-info">{% trans "Community" %}:</span>
+          {% for c in investment.community.all %}
+              <a href="{% url view_community c.slug %}">{{ c.name }}</a>
+              {% if not forloop.last %}&nbsp;,&nbsp;{% endif %}
+            {% endfor %}
         </div>
         <div class="apart">
           {{ investment.description|render_markup|safe }}
@@ -34,4 +42,8 @@
   </div>
 </div>
 {% komoo_map_tooltip %}
+{% endblock %}
+
+{% block page_scripts %}
+  {% visualization_opts_js %}
 {% endblock %}

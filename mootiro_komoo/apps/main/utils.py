@@ -198,10 +198,19 @@ def filtered_query(query_set, request):
             if community:
                 query_set = query_set.filter(community=community)
         if f == 'need_categories':
-            need_categories = request.GET.get('need_categories', '').split(',')
-            for nc in need_categories:
-                if nc:
+            need_categories = request.GET.get('need_categories', '')
+            if need_categories:
+                need_categories = need_categories.split(',')
+                for nc in need_categories:
                     query_set = query_set.filter(categories=nc)
+        if f == 'target_audiences':
+            request.encoding = 'latin-1'
+            target_audiences = request.GET.get('target_audiences', '')
+            if target_audiences:
+                target_audiences = target_audiences.split(',')
+                for ta in target_audiences:
+                    query_set = query_set.filter(target_audiences__name=ta)
+
     return query_set
 
 

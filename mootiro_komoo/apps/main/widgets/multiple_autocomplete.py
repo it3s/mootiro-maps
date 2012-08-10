@@ -77,7 +77,7 @@ class MultipleAutocompleteBase(forms.TextInput):
             final_attrs['value'] = ", ".join(strings)
 
         html = u"""
-        <input %(attrs)s"/>
+        <input %(attrs)s/>
         <script type="text/javascript"><!--//
           %(js)s
         //--></script>

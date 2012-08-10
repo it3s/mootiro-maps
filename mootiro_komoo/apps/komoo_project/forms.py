@@ -6,7 +6,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from markitup.widgets import MarkItUpWidget
-from fileupload.forms import FileuploadField
+from fileupload.forms import FileuploadField, SingleFileUploadWidget
 from fileupload.models import UploadedFile
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from ajaxforms import AjaxModelForm
@@ -27,8 +27,8 @@ class FormProject(AjaxModelForm):
         required=False)
     contributors = AutoCompleteSelectMultipleField('user', help_text='',
         required=False)
-    logo = FileuploadField(required=False)
-    # partners_logo = FileuploadField(required=False)
+    logo = FileuploadField(required=False, widget=SingleFileUploadWidget)
+    partners_logo = FileuploadField(required=False)
 
     class Meta:
         model = Project
@@ -43,7 +43,7 @@ class FormProject(AjaxModelForm):
         'contact': _('Contact'),
         'contributors': _('Contributors'),
         'community': _('Community'),
-        # 'partners_logo': _('Partners Logo'),
+        'partners_logo': _('Partners Logo'),
     }
 
     def __init__(self, *a, **kw):
@@ -52,8 +52,8 @@ class FormProject(AjaxModelForm):
 
     def save(self, *a, **kw):
         proj = super(FormProject, self).save(*a, **kw)
-        # UploadedFile.bind_files(
-        #         self.cleaned_data.get('partners_logo', '').split('|'), proj)
+        UploadedFile.bind_files(
+                self.cleaned_data.get('partners_logo', '').split('|'), proj)
         return proj
 
     def clean_logo(self):
