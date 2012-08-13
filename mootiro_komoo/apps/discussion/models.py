@@ -9,7 +9,7 @@ from django.contrib.contenttypes import generic
 import reversion
 
 
-class ContentDiscussion(models.Model):
+class Discussion(models.Model):
     text = models.TextField(null=True, blank=True)
 
     last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
@@ -21,5 +21,5 @@ class ContentDiscussion(models.Model):
     content_object = generic.GenericForeignKey('content_type', 'object_id')
 
 
-if not reversion.is_registered(ContentDiscussion):
-    reversion.register(ContentDiscussion)
+if not reversion.is_registered(Discussion):
+    reversion.register(Discussion)
