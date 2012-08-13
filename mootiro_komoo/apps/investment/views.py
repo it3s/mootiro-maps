@@ -100,17 +100,18 @@ def list(request, community_slug=''):
 
     sort_fields = ['creation_date', 'votes', 'title']
 
-    if community_slug:
-        community = get_object_or_404(Community, slug=community_slug)
-        # TODO: query below must get investments for the given community only
-        query_set = Investment.objects.all().order_by('title')
-        query_set = filter(lambda inv: community in inv.community.all(), query_set)
-    else:
-        community = None
-        query_set = Investment.objects.all().order_by('title')
 
+    query_set = Investment.objects
     query_set = filtered_query(query_set, request)
     investments = sorted_query(query_set, sort_fields, request, default_order='title')
+
+    if community_slug:
+        community = get_object_or_404(Community, slug=community_slug)
+        # TODO: the filter below is inneficient, should be done in database level
+        query_set = filter(lambda inv: community in inv.community.all(), query_set.all())
+    else:
+        community = None
+
     investments = paginated_query(investments, request=request)
     return dict(investments=investments, community=community)
 
