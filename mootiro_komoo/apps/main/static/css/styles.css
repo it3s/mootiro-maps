@@ -215,7 +215,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     font-size: 30px;
     padding: 0 10px;
     position: relative;
-    top: -25px;
+    /* top: -25px; */
+    vertical-align: top;
+    margin-top: -15px;
     left: 20px;
     min-width: 110px;
 }
@@ -279,6 +281,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 #top #menu {
     display: inline-block;
     margin-bottom: 10px;
+    margin-left: -75px;
 }
 #top #menu li {
     margin: 0;
@@ -461,6 +464,30 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background: #AB9E15 !important;
 }
 
+
+.button.project:hover, .button.project.selected,
+.organization-buttons .org-btn[panel='projects-list']:hover,
+.organization-buttons .org-btn[panel='projects-list'].selected,
+#top #menu #menu-project a:hover, #top #menu #menu-project.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -o-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -moz-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -webkit-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -ms-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.47, rgb(133,94,56)),
+        color-stop(0.74, rgb(117,86,40)),
+        color-stop(0.9, rgb(117,79,17))
+    ) !important;
+}
+#top #menu #menu-project a:active {
+    background: rgb(133,94, 56) !important;
+}
+
 .middle { vertical-align: middle }
 
 .icon-map {
@@ -635,6 +662,20 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 *:hover > .icon-investment.no-hover, .selected .icon-investment.no-selected {
     background-image: url("../img/menu/investment.png");
+}
+
+.icon-project {
+    background-image: url("../img/menu/project.png");
+    background-position: 0 0;
+    margin: 2px 0 1px;
+    width: 24px;
+    height: 15px;
+}
+*:hover > .icon-project, .selected .icon-project {
+    background-image: url("../img/menu/project-active.png");
+}
+*:hover > .icon-project.no-hover, .selected .icon-project.no-selected  {
+    background-image: url("../img/menu/project.png");
 }
 
 #flash-message {
@@ -966,8 +1007,8 @@ body.community #main-content {
 .map-menuitem.disabled, .map-menuitem.disabled:hover {
     color: #aaa;
 }
-#top #menu, #top #search { margin-left: 40px; }
-#top #search { margin-bottom: 0px; }
+/* #top #menu, #top #search { margin-left: 40px; } */
+#top #search { margin-bottom: 0px; margin-left: 40px; }
 
 #search-bar {
     width: 585px; /* FIXME: this is dependent of the language */
@@ -1632,6 +1673,7 @@ div.view-list-item.odd {
 }
 .view-list-footer{
     min-height: 1em;
+    padding-bottom: 15px;
 }
 .view-list-footer .created-by{
     display: inline-block;
@@ -2502,4 +2544,15 @@ ul.two-cols li {
 }
 .control-group.focus .tagsinput input{
     background-color: #fbfbfb;
+}
+/** project header **/
+.project-header{
+    width: 85%;
+    padding-left: 10px;
+}
+.project-header-extras{
+    padding-top: 10px;
+}
+.project-list-logo {
+    vertical-align: top;
 }

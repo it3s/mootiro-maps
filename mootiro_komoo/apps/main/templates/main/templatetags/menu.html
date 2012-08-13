@@ -48,4 +48,8 @@
     <a href="{% url investment_list %}"><i class="icon-investment"></i>{% trans 'Investments' %}</a>
     {% endif %}
   </li>
+
+  <li{% if selected_area == 'project' %} class='selected'{% endif%} id="menu-project">
+    <a href="{% url project_list %}"><i class="icon-project"></i>{% trans 'Projects' %}</a>
+  </li>
 </ul>
