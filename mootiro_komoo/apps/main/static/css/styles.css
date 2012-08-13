@@ -1972,7 +1972,7 @@ textarea.markItUpEditor{
     font-weight: bold;
     text-shadow: 0px -1px 0px rgba(15, 15, 15, 0.65);
 }
-/* == serach ==*/
+/* == search ==*/
 .search-header{
     background-color: #dceff4; ;
     font-weight: bold;
@@ -2022,6 +2022,10 @@ div.investments-list .tab-investment {
 }
 div.investments-list .tab-investment.selected { background: #dceff4 }
 div.investments-list .tab-investment.selected a { color: #000 }
+.view-list-item div.investment-info {
+    width: 50%;
+    float: left;
+}
 
 /* ====== JQuery UI ======== */
 .ui-dialog-titlebar {
