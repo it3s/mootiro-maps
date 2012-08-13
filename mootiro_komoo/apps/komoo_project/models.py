@@ -74,6 +74,13 @@ class Project(models.Model):
     @property
     def edit_url(self):
         return reverse('project_edit', kwargs=self.home_url_params)
+    
+    @property
+    def logo_url(self):
+        if self.logo:
+            return self.logo.file.url
+        else:
+            return '/static/img/logo.png'
 
     @property
     def related_objects(self):
