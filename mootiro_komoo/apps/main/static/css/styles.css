@@ -1632,6 +1632,7 @@ div.view-list-item.odd {
 }
 .view-list-footer{
     min-height: 1em;
+    padding-bottom: 15px;
 }
 .view-list-footer .created-by{
     display: inline-block;
@@ -2498,4 +2499,15 @@ ul.two-cols li {
 }
 .control-group.focus .tagsinput input{
     background-color: #fbfbfb;
+}
+/** project header **/
+.project-header{
+    width: 85%;
+    padding-left: 10px;
+}
+.project-header-extras{
+    padding-top: 10px;
+}
+.project-list-logo {
+    vertical-align: top;
 }

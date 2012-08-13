@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.utils import simplejson
+from django import template
 
 from lib.taggit.models import TaggedItem
 from ajaxforms.forms import ajax_form
@@ -56,7 +57,8 @@ def project_new(request):
     def on_after_save(request, project):
         return {'redirect': project.view_url}
 
-    return {'on_get': on_get, 'on_after_save': on_after_save}
+    return {'on_get': on_get, 'on_after_save': on_after_save,
+            'project': None}
 
 
 @login_required
