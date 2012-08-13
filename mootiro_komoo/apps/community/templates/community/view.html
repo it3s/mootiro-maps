@@ -7,6 +7,7 @@
 {% load comment_tags %}
 {% load markitup_tags %}
 {% load upload_tags %}
+{% load discussion_tags %}
 
 {% block title %}{{ community.name }}{% endblock %}
 
@@ -19,6 +20,7 @@
     <h2 class="title">{{ community.name }}</h2>
     <div class="view-edit-btn">
       {% history community %}
+      {% discussion_tab community %}
       <a href="{% url edit_community community.slug %}" class="btn login-required"><i class="icon-pencil"></i></a>
     </div>
 
