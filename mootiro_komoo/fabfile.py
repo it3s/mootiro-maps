@@ -224,7 +224,10 @@ def sync_all(data_fixtures='fixtures/backupdb.json'):
     recreate_db()
     syncdb()
     fix_contenttypes()
-    loaddata(data_fixtures)
+    if data_fixtures == "test":
+        load_fixtures(data_fixtures)
+    else:
+        loaddata(data_fixtures)
 
 
 def dumpdata():
