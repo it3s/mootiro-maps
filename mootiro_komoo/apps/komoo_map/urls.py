@@ -9,4 +9,5 @@ urlpatterns = patterns('komoo_map.views',
     url(r'^tooltip/(?P<zoom>\d+)/(?P<app_label>.*)/(?P<model_name>.*)/(?P<obj_id>\d+)/?$', 'tooltip', name='tooltip'),
     url(r'^info_window/(?P<zoom>\d+)/(?P<app_label>.*)/(?P<model_name>.*)/(?P<obj_id>\d+)/?$', 'info_window', name='info_window'),
     url(r'^geojson/(?P<app_label>.*)/(?P<model_name>.*)/(?P<obj_id>\d+)/?$', 'geojson', name='geojson'),
+    url(r'^related/(?P<app_label>.*)/(?P<model_name>.*)/(?P<obj_id>\d+)/?$', 'related', name='related'),
 )

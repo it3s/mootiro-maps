@@ -8,6 +8,7 @@
           return this.each(function() {
             var $this, map, opts;
             $this = $(this);
+            $this.addClass('komoo-map-googlemap');
             opts = $.extend({
               element: $this.get(0)
             }, $.fn.komooMap.defaults, options);

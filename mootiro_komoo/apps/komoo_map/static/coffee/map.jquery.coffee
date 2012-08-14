@@ -4,6 +4,7 @@ define ['map/maps'], ->
             init: (options) ->
                 @each ->
                     $this = $(this)
+                    $this.addClass 'komoo-map-googlemap'  # Reverts bootstraps css rules
                     opts = $.extend({element: $this.get(0)}, $.fn.komooMap.defaults, options)
                     if opts.width? then $this.width opts.width
                     if opts.height? then $this.height opts.height

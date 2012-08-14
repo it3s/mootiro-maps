@@ -288,19 +288,30 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             mapTypeId: google.maps.MapTypeId.HYBRID
 
 
-    class AjaxMap extends Map
+    class StaticMap extends Map
         constructor: (options) ->
             super options
 
             @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
-            @addComponent komoo.providers.makeFeatureProvider(), 'provider'
             @addComponent komoo.controls.makeAutosaveLocation()
             @addComponent komoo.controls.makeStreetView()
             @addComponent komoo.controls.makeTooltip(), 'tooltip'
             @addComponent komoo.controls.makeInfoWindow(), 'infoWindow'
-            @addComponent komoo.controls.makeFeatureClusterer featureType: "Community", 'clusterer'
             @addComponent komoo.controls.makeSupporterBox()
             @addComponent komoo.controls.makeLicenseBox()
+
+        loadGeoJson: (geojson, panTo = false, attach = true) ->
+            features = super geojson, panTo, attach
+            features.forEach (feature) =>
+                feature.setMap this, geometry: true
+            features
+
+
+    class AjaxMap extends StaticMap
+        constructor: (options) ->
+            super options
+
+            @addComponent komoo.providers.makeFeatureProvider(), 'provider'
 
 
     class AjaxEditor extends AjaxMap
@@ -326,6 +337,8 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 new Editor options
             else if type is 'view'
                 new AjaxMap options
+            else if type is 'static'
+                new StaticMap options
             else if type is 'preview'
                 new Preview options
             else if type is 'userEditor'

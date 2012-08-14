@@ -32,7 +32,7 @@
     </ul>
     </p>
     <p>
-    <div class="mark-down">{{ object.description|description_markdown_preview|safe }}</div>
+    <div class="mark-down">{{ object.description|default:""|description_markdown_preview|safe }}</div>
     </p>
     <p>
     {% if object.population %}

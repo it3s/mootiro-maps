@@ -23,6 +23,11 @@ class GeoRefModel(geomodels.Model):
     polys = geomodels.MultiPolygonField(null=True, blank=True, editable=False)
     geometry = CollectionFrom(points='points', lines='lines', polys='polys')
 
+
+    @property
+    def related_items(self):
+        return []
+
     @property
     def geojson(self):
         geojson = create_geojson([self], convert=False)

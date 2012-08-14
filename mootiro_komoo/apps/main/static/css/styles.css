@@ -797,19 +797,16 @@ body.community #collapse-panel {
     -o-transition: opacity 1s; /* Opera */
     opacity: 0;
 }
-#map-canvas-editor,
-#map-canvas-main {
+.komoo-map-googlemap {
     transition: margin-left 1s;
     -moz-transition: margin-left 1s; /* Firefox 4 */
     -webkit-transition: margin-left 1s; /* Safari and Chrome */
     -o-transition: margin-left 1s; /* Opera */
 }
-.with-panel #map-canvas-editor,
-#map-canvas-main {
+.with-panel .komoo-map-googlemap {
     margin-left: 330px !important;
 }
-.collapsed #map-canvas-editor,
-.collapsed #map-canvas-main {
+.collapsed .komoo-map-googlemap {
     margin-left: 0px !important;
     width: auto !important;
 }

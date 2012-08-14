@@ -5,7 +5,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   define(['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map/features'], function() {
-    var AjaxEditor, AjaxMap, Editor, Map, Preview, UserEditor, _base;
+    var AjaxEditor, AjaxMap, Editor, Map, Preview, StaticMap, UserEditor, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
     Map = (function() {
@@ -420,28 +420,50 @@
       return Preview;
 
     })(Map);
+    StaticMap = (function(_super) {
+
+      __extends(StaticMap, _super);
+
+      function StaticMap(options) {
+        StaticMap.__super__.constructor.call(this, options);
+        this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
+        this.addComponent(komoo.controls.makeAutosaveLocation());
+        this.addComponent(komoo.controls.makeStreetView());
+        this.addComponent(komoo.controls.makeTooltip(), 'tooltip');
+        this.addComponent(komoo.controls.makeInfoWindow(), 'infoWindow');
+        this.addComponent(komoo.controls.makeSupporterBox());
+        this.addComponent(komoo.controls.makeLicenseBox());
+      }
+
+      StaticMap.prototype.loadGeoJson = function(geojson, panTo, attach) {
+        var features,
+          _this = this;
+        if (panTo == null) panTo = false;
+        if (attach == null) attach = true;
+        features = StaticMap.__super__.loadGeoJson.call(this, geojson, panTo, attach);
+        features.forEach(function(feature) {
+          return feature.setMap(_this, {
+            geometry: true
+          });
+        });
+        return features;
+      };
+
+      return StaticMap;
+
+    })(Map);
     AjaxMap = (function(_super) {
 
       __extends(AjaxMap, _super);
 
       function AjaxMap(options) {
         AjaxMap.__super__.constructor.call(this, options);
-        this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
         this.addComponent(komoo.providers.makeFeatureProvider(), 'provider');
-        this.addComponent(komoo.controls.makeAutosaveLocation());
-        this.addComponent(komoo.controls.makeStreetView());
-        this.addComponent(komoo.controls.makeTooltip(), 'tooltip');
-        this.addComponent(komoo.controls.makeInfoWindow(), 'infoWindow');
-        this.addComponent(komoo.controls.makeFeatureClusterer({
-          featureType: "Community"
-        }, 'clusterer'));
-        this.addComponent(komoo.controls.makeSupporterBox());
-        this.addComponent(komoo.controls.makeLicenseBox());
       }
 
       return AjaxMap;
 
-    })(Map);
+    })(StaticMap);
     AjaxEditor = (function(_super) {
 
       __extends(AjaxEditor, _super);
@@ -470,6 +492,8 @@
           return new Editor(options);
         } else if (type === 'view') {
           return new AjaxMap(options);
+        } else if (type === 'static') {
+          return new StaticMap(options);
         } else if (type === 'preview') {
           return new Preview(options);
         } else if (type === 'userEditor') {

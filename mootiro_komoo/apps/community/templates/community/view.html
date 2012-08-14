@@ -39,7 +39,7 @@
 
   <div class="right-bar">
     <div id="map-preview">
-      <div id="map-preview-canvas" style="width: 200px; height: 200px;"></div>
+      <div id="map-preview-canvas"></div>
     </div>
     <a href="{% url community_on_map community.slug %}">ver no mapa</a>
 
@@ -74,6 +74,8 @@
       $("#map-preview-canvas").komooMap({
         type: 'preview',
         geojson: {{ geojson|safe }},
+        width: '200px',
+        height: '200px'
       });
     });
   </script>
