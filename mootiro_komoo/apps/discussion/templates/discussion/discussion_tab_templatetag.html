@@ -1,7 +1,31 @@
-<a href="#" class="btn"><i class="icon-eye-open"></i></a>
-<a href="#" class="btn"><i class="icon-comment"></i></a>
+<a id="view-content-info" href="#" class="btn"><i class="icon-eye-open"></i></a>
+<a id="view-discussion-info" href="#discussion" class="btn"><i class="icon-comment"></i></a>
 
-<div class="hidden">
+<div id="content-discussion" class="hidden">
   BLA BLA BLA...
-  BLE BLE BLE...
 </div>
+
+<script type="text/javascript">
+  $(function () {
+    // Initial discussion insertion to after DOM content
+    $content = $("#{{ content_id }}");
+    $discussion = $("#content-discussion").detach();
+    $discussion.insertAfter($content);
+
+    $("#view-content-info").on('click', function (evt) {
+      $content.show();
+      $discussion.hide();
+    });
+
+    $("#view-discussion-info").on('click', function (evt) {
+      $discussion.show();
+      $content.hide();
+    });
+
+    hash = window.location.hash;
+    if (hash == "#discussion") {
+      $("#view-discussion-info").click();
+    }
+
+  });
+</script>
