@@ -94,6 +94,7 @@ define ['map/geometries'], ->
         isNew: -> not @getProperty 'id'
 
         getIconUrl: (zoom) ->
+            if @getProperty 'image' then return @getProperty 'image'
             zoom ?= if @map then @map.getZoom() else 10
             nearOrFar = if zoom >= @featureType.minZoomIcon then "near" else "far"
             highlighted = if @isHighlighted() then "highlighted/" else ""

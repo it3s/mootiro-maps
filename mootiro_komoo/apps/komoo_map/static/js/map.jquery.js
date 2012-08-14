@@ -6,12 +6,19 @@
       methods = {
         init: function(options) {
           return this.each(function() {
-            var $this, opts;
+            var $this, map, opts;
             $this = $(this);
+            $this.addClass('komoo-map-googlemap');
             opts = $.extend({
               element: $this.get(0)
             }, $.fn.komooMap.defaults, options);
-            return $this.data('map', komoo.maps.makeMap(opts));
+            if (opts.width != null) $this.width(opts.width);
+            if (opts.height != null) $this.height(opts.height);
+            map = komoo.maps.makeMap(opts);
+            $this.data('map', map);
+            if (opts.mapType != null) {
+              return map.googleMap.setMapTypeId(opts.mapType);
+            }
           });
         },
         edit: function(feature) {

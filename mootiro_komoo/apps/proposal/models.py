@@ -52,6 +52,10 @@ class Proposal(VotableModel):
     def community(self):
         return self.need.community
 
+    @property
+    def geometry(self):
+        return self.need.geometry
+
     def save(self, *args, **kwargs):
         if not self.id:
             # auto numbering a need's proposals

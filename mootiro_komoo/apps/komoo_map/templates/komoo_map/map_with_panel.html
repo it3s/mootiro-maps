@@ -1,0 +1,97 @@
+{% load i18n %}
+{% include "main/supporters.html" %}
+{% block html %}
+  <!-- HTML map container -->
+  <div id="map-container" class="with-panel" style="width: 100%; height: 100%;">
+    {% block panel %}
+      {% include panel|default:'komoo_map/panel.html' %}
+    {% endblock %}
+    <div id="map-canvas"></div>
+    <div style="clear: both;"></div>
+  </div>
+  {% block after_map %}
+  {% endblock %}
+{% endblock %}
+
+{% block map_js %}
+  <!-- Map creation script -->
+  <script type="text/javascript">
+    var geojson = {{ geojson|safe }};
+
+    initialize_map = function () {
+      $('#dinamic-form').hide();
+
+      /** Creating the map object **/
+      var $map = $('#map-canvas').komooMap({
+        type: '{{ type }}',
+        geojson: geojson
+      });
+
+      var map = $map.data('map');
+
+      /** The map should fill the main page size **/
+      function fixMapSize(e) {
+        fixMapHeight(e.data.map);
+        fixMapWidth(e.data.map);
+        if (window.google) google.maps.event.trigger(e.data.map.googleMap, 'resize');
+      }
+      function fixMapHeight(map, opt_mapPanel) {
+        var mapPanel = opt_mapPanel || $('#map-panel');
+        var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
+        $(map.element).height(height);
+        mapPanel.height(height);
+        $('.panel', mapPanel).height(height - (window.community_slug ? 170 : 146));
+      }
+      function fixMapWidth(map, opt_mapPanel) {
+        var mapPanel = opt_mapPanel || $('#map-panel');
+        var panelWidth = mapPanel.innerWidth();
+        try {
+          var panelLeft = mapPanel.position().left;
+        } catch (err) {
+          var panelLeft = 0;
+        }
+
+         $(map.element).css({marginLeft: panelWidth + panelLeft, width: 'auto'});
+      }
+      $(window).resize({map: map}, fixMapSize);
+      $(window).resize()
+
+      $("#map-panel").show();
+
+      komoo.event.addListener(map, 'drawing_finished', function (feature, gotoNextStep) {
+        if (!feature.isNew()) return;
+        var featureType, url, geojson;
+        var context = $('#dinamic-form');
+        $.ajaxSetup({ cache: true });
+
+        if (gotoNextStep && feature) {
+          featureType = feature.getFeatureType();
+          geojson = feature.getGeometryCollectionGeoJson();
+          url = featureType.formUrl.replace('/communitySlug', (window.community_slug) ? ('/' + community_slug) : '');
+          $.ajax({
+            url: url,
+            cache: true,
+            context: context,
+            dataType: 'html',
+            type: 'GET',
+            success: function (data, textStatus, jqXHR) {
+              $(this).html(data);
+              $('#id_geometry').val(JSON.stringify(geojson));
+              $(this).show();
+              $(window).resize()
+              $('#map-container-{{ type }}, #map-panel').slideUp(600);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              alert('ERRO!!!11!');
+            }
+          });
+        }
+      });
+
+      return map;
+    };
+
+  require(['map.jquery'], initialize_map);
+
+  </script>
+{% endblock %}

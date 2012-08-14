@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   define(['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'], function() {
-    var ADD, AjaxBalloon, Balloon, Box, CUTOUT, DELETE, DrawingControl, DrawingManager, EDIT, FeatureClusterer, InfoWindow, LicenseBox, NEW, OVERLAY, PERIMETER_SELECTION, PerimeterSelector, SupporterBox, Tooltip, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, DELETE, DrawingControl, DrawingManager, EDIT, FeatureClusterer, InfoWindow, LicenseBox, Location, NEW, OVERLAY, PERIMETER_SELECTION, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
     OVERLAY = {};
@@ -362,9 +362,8 @@
 
     })(Box);
     PerimeterSelector = (function() {
-      var enabled;
 
-      enabled = true;
+      PerimeterSelector.prototype.enabled = true;
 
       function PerimeterSelector() {
         var _this = this;
@@ -797,6 +796,8 @@
     })(AjaxBalloon);
     FeatureClusterer = (function() {
 
+      FeatureClusterer.prototype.enabled = true;
+
       FeatureClusterer.prototype.maxZoom = 9;
 
       FeatureClusterer.prototype.gridSize = 20;
@@ -936,6 +937,208 @@
       return FeatureClusterer;
 
     })();
+    Location = (function() {
+
+      Location.prototype.enabled = true;
+
+      function Location() {
+        this.geocoder = new google.maps.Geocoder();
+      }
+
+      Location.prototype.handleMapEvents = function() {
+        var _this = this;
+        komoo.event.addListener(this.map, 'goto', function(position, marker) {
+          return _this.goTo(position, marker);
+        });
+        return komoo.event.addListener(this.map, 'goto_user_location', function() {
+          return _this.goToUserLocation();
+        });
+      };
+
+      Location.prototype.goTo = function(position, marker) {
+        var latLng, request, _go,
+          _this = this;
+        if (marker == null) marker = true;
+        _go = function(latLng) {
+          if (latLng) {
+            _this.map.googleMap.panTo(latLng);
+            if (!_this.searchMarker) {
+              _this.searchMarker = new google.maps.Marker();
+              _this.searchMarker.setMap(_this.googleMap);
+            }
+            if (marker) return _this.searchMarker.setPosition(latLng);
+          }
+        };
+        if (typeof position === "string") {
+          request = {
+            address: position,
+            region: this.region
+          };
+          return this.geocoder.geocode(request, function(result, status_) {
+            var first_result, latLng;
+            if (status_ === google.maps.GeocoderStatus.OK) {
+              first_result = result[0];
+              latLng = first_result.geometry.location;
+              return _go(latLng);
+            }
+          });
+        } else {
+          if (position instanceof Array) {
+            latLng = new google.maps.LatLng(position[0], position[1]);
+          } else {
+            latLng = position;
+          }
+          return _go(latLng);
+        }
+      };
+
+      Location.prototype.goToUserLocation = function() {
+        var clientLocation, pos,
+          _this = this;
+        clientLocation = google.loader.ClientLocation;
+        if (clientLocation) {
+          pos = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
+          this.map.googleMap.setCenter(pos);
+          if (typeof console !== "undefined" && console !== null) {
+            console.log('Getting location from Google...');
+          }
+        }
+        if (navigator.geolocation) {
+          return navigator.geolocation.getCurrentPosition(function(position) {
+            pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            _this.map.googleMap.setCenter(pos);
+            return typeof console !== "undefined" && console !== null ? console.log('Getting location from navigator.geolocation...') : void 0;
+          }, function() {
+            return typeof console !== "undefined" && console !== null ? console.log('User denied access to navigator.geolocation...') : void 0;
+          });
+        }
+      };
+
+      Location.prototype.setMap = function(map) {
+        this.map = map;
+        return this.handleMapEvents();
+      };
+
+      Location.prototype.enable = function() {
+        return this.enabled = true;
+      };
+
+      Location.prototype.disable = function() {
+        this.close(false);
+        return this.enabled = false;
+      };
+
+      return Location;
+
+    })();
+    SaveLocation = (function(_super) {
+
+      __extends(SaveLocation, _super);
+
+      function SaveLocation() {
+        SaveLocation.__super__.constructor.apply(this, arguments);
+      }
+
+      SaveLocation.prototype.handleMapEvents = function() {
+        var _this = this;
+        SaveLocation.__super__.handleMapEvents.call(this);
+        komoo.event.addListener(this.map, 'save_location', function(center, zoom) {
+          return _this.saveLocation(center, zoom);
+        });
+        return komoo.event.addListener(this.map, 'goto_saved_location', function() {
+          return _this.goToSavedLocation();
+        });
+      };
+
+      SaveLocation.prototype.saveLocation = function(center, zoom) {
+        if (center == null) center = this.map.googleMap.getCenter();
+        if (zoom == null) zoom = this.map.getZoom();
+        komoo.utils.createCookie('lastLocation', center.toUrlValue(), 90);
+        return komoo.utils.createCookie('lastZoom', zoom, 90);
+      };
+
+      SaveLocation.prototype.goToSavedLocation = function() {
+        var center, lastLocation, zoom;
+        lastLocation = komoo.utils.readCookie('lastLocation');
+        zoom = parseInt(komoo.utils.readCookie('lastZoom'), 10);
+        if (lastLocation && zoom) {
+          if (typeof console !== "undefined" && console !== null) {
+            console.log('Getting location from cookie...');
+          }
+          lastLocation = lastLocation.split(',');
+          center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
+          this.map.googleMap.setCenter(center);
+          return this.map.googleMap.setZoom(zoom);
+        }
+      };
+
+      return SaveLocation;
+
+    })(Location);
+    AutosaveLocation = (function(_super) {
+
+      __extends(AutosaveLocation, _super);
+
+      function AutosaveLocation() {
+        AutosaveLocation.__super__.constructor.apply(this, arguments);
+      }
+
+      AutosaveLocation.prototype.handleMapEvents = function() {
+        var _this = this;
+        AutosaveLocation.__super__.handleMapEvents.call(this);
+        return komoo.event.addListener(this.map, 'idle', function() {
+          return _this.saveLocation();
+        });
+      };
+
+      return AutosaveLocation;
+
+    })(SaveLocation);
+    StreetView = (function() {
+
+      StreetView.prototype.enabled = true;
+
+      function StreetView() {
+        if (typeof console !== "undefined" && console !== null) {
+          console.log("Initializing StreetView support.");
+        }
+        this.streetViewPanel = $("<div>").addClass("map-panel");
+        this.streetViewPanel.height("100%").width("50%");
+        this.streetViewPanel.hide();
+        this.createObject();
+      }
+
+      StreetView.prototype.setMap = function(map) {
+        this.map = map;
+        this.map.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(this.streetViewPanel.get(0));
+        if (this.streetView != null) {
+          return this.map.googleMap.setStreetView(this.streetView);
+        }
+      };
+
+      StreetView.prototype.createObject = function() {
+        var options, _ref,
+          _this = this;
+        options = {
+          enableCloseButton: true,
+          visible: false
+        };
+        this.streetView = new google.maps.StreetViewPanorama(this.streetViewPanel.get(0), options);
+        if ((_ref = this.map) != null) {
+          _ref.googleMap.setStreetView(this.streetView);
+        }
+        return google.maps.event.addListener(this.streetView, "visible_changed", function() {
+          if (_this.streetView.getVisible()) {
+            return _this.streetViewPanel.show();
+          } else {
+            return _this.streetViewPanel.hide();
+          }
+        });
+      };
+
+      return StreetView;
+
+    })();
     return window.komoo.controls = {
       DrawingManager: DrawingManager,
       Balloon: Balloon,
@@ -945,6 +1148,11 @@
       FeatureClusterer: FeatureClusterer,
       SupporterBox: SupporterBox,
       LicenseBox: LicenseBox,
+      PerimeterSelector: PerimeterSelector,
+      Location: Location,
+      SaveLocation: SaveLocation,
+      AutosaveLocation: AutosaveLocation,
+      StreetView: StreetView,
       makeDrawingManager: function(options) {
         return new DrawingManager(options);
       },
@@ -968,6 +1176,18 @@
       },
       makePerimeterSelector: function(options) {
         return new PerimeterSelector(options);
+      },
+      makeLocation: function(options) {
+        return new Location(options);
+      },
+      makeSaveLocation: function(options) {
+        return new SaveLocation(options);
+      },
+      makeAutosaveLocation: function(options) {
+        return new AutosaveLocation(options);
+      },
+      makeStreetView: function(options) {
+        return new StreetView(options);
       }
     };
   });

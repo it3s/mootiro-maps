@@ -133,6 +133,69 @@ class FileuploadWidget(forms.Widget):
         return html
 
 
+class SingleFileUploadWidget(forms.Widget):
+    class Media:
+        js = (
+            'plupload/browserplus-min.js',
+            'plupload/js/plupload.full.js',
+            'plupload/singlefile_plupload.js',
+        )
+        css = {
+            'all': ('plupload/komoo_plupload.css',)
+        }
+
+    def render(self, name, value='', attrs=None):
+        html = u"""
+            <div class="div-file-wrapper">
+                <div id="file-thumb"></div>
+                <div id="file-uploader">
+                    <a id="pick-file" href="#" class="button pick-file">%(select_file)s</a>
+                </div>
+
+                <div class="modal hide subtitle-modal" id="subtitle-modal">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h3>%(enter_subtitle)s</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            <div>
+                                <img src="" alt="img" id="img-subtitle-modal">
+                            </div>
+                            <div>
+                                <input type="text" name="subtitle" id="id_subtitle" file-id="">
+                            </div>
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#" class="button" id="save-subtitle">
+                            %(save_changes)s
+                        </a>
+                        <a href="#" class="btn" data-dismiss="modal">
+                            %(cancel)s
+                        </a>
+                        <a href="#" class="btn btn-danger" id="delete-file" file-id="">
+                            %(delete)s
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            <div>
+                <input type="hidden" class="logo-input-field" id="id_%(name)s" name="%(name)s" value="%(logo_id)s" >
+            </div>
+
+        """ % {'name': name,
+               'select_file': _('Select a file'), 
+               'cancel': _('Cancel'),
+               'save_changes': _('Save Changes'),
+               'delete': _('Delete'),
+               'enter_subtitle': _('Enter the subtitle for this image'),
+               'logo_id': value,
+        }
+        return html
+
+
 class LogoWidget(forms.Widget):
     class Media:
         js = (
@@ -198,15 +261,18 @@ else:
                     for cat in OrganizationCategoryTranslation.objects.filter(
                         lang=settings.LANGUAGE_CODE).order_by('name')]
 
-class POCForm(forms.Form):
-    files = FileuploadField()
-    title = forms.CharField()
-    categories = forms.MultipleChoiceField(required=False, choices=CATEGORIES,
-        widget=forms.CheckboxSelectMultiple(
-                    attrs={'class': 'org-widget-categories'}))
-    logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
 
-    logo = LogoField()
+class POCForm(forms.Form):
+    # files = FileuploadField()
+    # title = forms.CharField()
+    # categories = forms.MultipleChoiceField(required=False, choices=CATEGORIES,
+    #     widget=forms.CheckboxSelectMultiple(
+    #                 attrs={'class': 'org-widget-categories'}))
+    # logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
+
+    # logo = LogoField()
+
+    single_file = FileuploadField(widget=SingleFileUploadWidget)
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="poc_form")

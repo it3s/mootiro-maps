@@ -22,5 +22,6 @@ urlpatterns = patterns('investment.views',
     url(pr(r'^COMMUNITY_SLUG/investments/?$'), 'list', name='investment_list'),
     url(r'^investments/?$', 'list', name='investment_list'),
     url(r'^investment/tag_search$', 'tag_search', name='investment_tag_search'),
+    url(r'^investment/search_tags/?$', 'tag_search'),
     * (multiurls(pref_urls, view_defs))
 )

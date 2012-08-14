@@ -181,6 +181,7 @@ INSTALLED_APPS = [
     'signatures',
     'update',
     'komoo_project',
+    'discussion',
 ]
 
 COMMENT_MAX_LENGTH = 80 * 500

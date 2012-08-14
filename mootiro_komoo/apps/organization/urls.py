@@ -13,6 +13,7 @@ view_defs = [
     (r'organization/new/?$', 'new_organization', 'new_organization'),
     (r'organization/new/from_map/?$', 'new_organization_from_map', 'new_organization_from_map'),
     (r'organization/ORGANIZATION_SLUG/edit/?$', 'edit_organization', 'edit_organization'),
+    (r'organization/ORGANIZATION_SLUG/related/?$', 'related_items', 'view_organization_related_items'),
     (r'organization/ORGANIZATION_SLUG/?$', 'show', 'view_organization'),
     (r'organization/?$', 'organization_list', 'organization_list'),
     (r'organizations/?$', 'organizations_to_organization', 'deprecated_organization_list'),

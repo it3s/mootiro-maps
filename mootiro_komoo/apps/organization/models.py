@@ -61,6 +61,13 @@ class Organization(VotableModel):
                         object_id_field='grantee_object_id')
 
     @property
+    def related_items(self):
+        return [c for c in self.community.all()] + \
+            [b for b in self.organizationbranch_set.all()] + \
+            [i for i in self.investments.all()] + \
+            [r for r in self.realized_investments.all()]
+
+    @property
     def as_investor(self):
         investor, created = Investor.get_or_create_for(self)
         return investor
@@ -181,6 +188,10 @@ class OrganizationBranch(GeoRefModel, VotableModel):
     @property
     def edit_url(self):
         return self.organization.edit_url
+
+    @property
+    def related_items(self):
+        return self.organization.related
 
     image = "img/organization.png"
     image_off = "img/organization-off.png"

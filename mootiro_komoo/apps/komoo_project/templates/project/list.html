@@ -34,20 +34,29 @@
 
     <div class="view-list-item {% cycle 'odd' '' %}">
 
-      <h4>
-        <span class="apart">
+      <div>
+        <div class="inline-block project-list-logo">
+          <img src="{{ proj.logo_url }}" class="org-list-img"/>
+        </div>
+
+        <div class="inline-block project-header">
+          <span class="apart">
             <a href="{{ proj.view_url }}">{{ proj.name }}</a>
-        </span>
-        <!-- <a class="small preview-on-map list-map-preview" href="#" data-geojson="{#% geojson proj %#}"> -->
-        <!--     <i class="icon-see-on-map"></i> -->
-        <!-- </a> -->
-        <div class="view-list-reactions">
-          {% vote proj %}
-          {% comments_summary proj %}
+          </span>
+          <!-- <a class="small preview-on-map list-map-preview" href="#" data-geojson="{#% geojson proj %#}"> -->
+          <!--     <i class="icon-see-on-map"></i> -->
+          <!-- </a> -->
+          <div class="right view-list-reactions">
+            {% vote proj %}
+            {% comments_summary proj %}
+          </div>
+          <div class="project-header-extras">
+            <strong>{% trans 'Administrator' %}</strong>: {{ proj.creator.get_name}}
+          </div>
         </div>
 
 
-      </h4>
+      </div>
 
       <p>
         {{ proj.description|description_markdown_preview|safe }}

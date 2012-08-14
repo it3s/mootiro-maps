@@ -147,6 +147,7 @@
 
       Feature.prototype.getIconUrl = function(zoom) {
         var categoryOrType, highlighted, nearOrFar;
+        if (this.getProperty('image')) return this.getProperty('image');
         if (zoom == null) zoom = this.map ? this.map.getZoom() : 10;
         nearOrFar = zoom >= this.featureType.minZoomIcon ? "near" : "far";
         highlighted = this.isHighlighted() ? "highlighted/" : "";

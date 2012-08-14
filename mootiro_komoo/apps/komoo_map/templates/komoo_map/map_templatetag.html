@@ -19,7 +19,7 @@
   <!-- Map creation script -->
   {% if type != 'disabled' %}
   <script type="text/javascript">
-    var geojson = {{ geojson|safe }};
+    var geojson_{{ type }} = {{ geojson|safe }};
     var featureTypes = {{ feature_types_json|safe }};
 
     initialize_map_{{ type }} = function () {
@@ -29,7 +29,7 @@
       {{ type }} = komoo.maps.makeMap({
         type: '{{ type }}',
         featureTypes: featureTypes,
-        geojson: geojson,
+        geojson: geojson_{{ type }},
         elementId: "map-canvas-{{ type }}",
       });
       if (!{{ type }}.goToSavedLocation()) {
@@ -108,7 +108,7 @@
             $('#main-content').hide();
             if (!window.editor) {
               window.editor = initialize_map_editor();
-              window.editor.loadGeoJSON(geojson, true);
+              window.editor.loadGeoJSON(geojson_{{ type }}, true);
 
               komoo.event.addListener(editor, 'drawing_finished', function (feature, gotoNextStep) {
                 if (gotoNextStep) {

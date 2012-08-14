@@ -94,6 +94,19 @@ def show(request, organization_slug='', community_slug=''):
                 community=community)
 
 
+@render_to('organization/related_items.html')
+def related_items(request, organization_slug='', community_slug=''):
+    logger.debug('acessing organization > related_items')
+
+    organization, community = prepare_organization_objects(
+        community_slug=community_slug, organization_slug=organization_slug)
+
+    geojson = create_geojson(organization.related_items)
+
+    return dict(organization=organization, geojson=geojson,
+                community=community)
+
+
 @login_required
 @ajax_form('organization/new.html', FormOrganization, 'form_organization')
 def new_organization(request, community_slug='', *arg, **kwargs):

@@ -23,6 +23,11 @@ class GeoRefModel(geomodels.Model):
     polys = geomodels.MultiPolygonField(null=True, blank=True, editable=False)
     geometry = CollectionFrom(points='points', lines='lines', polys='polys')
 
+
+    @property
+    def related_items(self):
+        return []
+
     @property
     def geojson(self):
         geojson = create_geojson([self], convert=False)
@@ -73,7 +78,7 @@ def get_models():
 
 
 def get_editable_models():
-    return [model for model in GeoRefModel.__subclasses__()
+    return [model for model in get_models()
                 if getattr(model.Map, 'editable', False)]
 
 

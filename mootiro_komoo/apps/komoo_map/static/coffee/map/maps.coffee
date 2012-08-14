@@ -4,6 +4,8 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
     window.komoo.event ?= google.maps.event
 
     class Map
+        featureTypesUrl: '/map_info/feature_types/'
+
         googleMapDefaultOptions:
             zoom: 12
             center: new google.maps.LatLng(-23.55, -46.65)
@@ -24,13 +26,12 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
         constructor: (@options = {}) ->
             @element = @options.element ? \
-                       document.getElementById(@options.elementId);
+                       document.getElementById @options.elementId
 
             @features = komoo.collections.makeFeatureCollectionPlus map: @
 
             @components = {}
-
-            @geocoder = new google.maps.Geocoder()
+            @addComponent komoo.controls.makeLocation()
 
             @initGoogleMap @options.googleMapOptions
             @initFeatureTypes()
@@ -38,7 +39,9 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
         loadGeoJsonFromOptons: ->
             if @options.geojson
-                @loadGeoJSON @options.geojson, true
+                features = @loadGeoJSON @options.geojson, not @options.zoom?
+                @centerFeature features?.getAt(0)
+            @setZoom @options.zoom
 
         initGoogleMap: (options = @googleMapDefaultOptions) ->
             @googleMap = new google.maps.Map @element, options
@@ -46,10 +49,10 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             $(@element).trigger 'initialized', @
 
         handleGoogleMapEvents: ->
-            eventNames = ['click']
+            eventNames = ['click', 'idle']
             eventNames.forEach (eventName) =>
                 komoo.event.addListener @googleMap, eventName, (e) =>
-                    komoo.event.trigger @, eventName, e
+                    komoo.event.trigger this, eventName, e
 
         initFeatureTypes: ->
             @featureTypes ?= {}
@@ -60,13 +63,16 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 @loadGeoJsonFromOptons()
             else
                 # Load Feature types via ajax
-                $.ajax url: '/map_info/feature_types/', dataType: 'json', success: (data) =>
-                    data.forEach (type) =>
-                        @featureTypes[type.type] = type
-                    @loadGeoJsonFromOptons()
+                $.ajax
+                    url: @featureTypesUrl
+                    dataType: 'json'
+                    success: (data) =>
+                        data.forEach (type) =>
+                            @featureTypes[type.type] = type
+                        @loadGeoJsonFromOptons()
 
         handleEvents: ->
-            komoo.event.addListener @, "drawing_finished", (feature, status) =>
+            komoo.event.addListener this, "drawing_finished", (feature, status) =>
                 if status is false
                     @revertFeature feature
                 else if not feature.getProperty("id")?
@@ -103,77 +109,31 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
         refresh: -> google.maps.event.trigger @googleMap, 'resize'
 
         saveLocation: (center = @googleMap.getCenter(), zoom = @getZoom()) ->
-            komoo.utils.createCookie 'lastLocation', center.toUrlValue(), 90
-            komoo.utils.createCookie 'lastZoom', zoom, 90
+            komoo.event.trigger this, 'save_location', center, zoom
 
         goToSavedLocation: ->
-            lastLocation = komoo.utils.readCookie 'lastLocation'
-            zoom = parseInt komoo.utils.readCookie('lastZoom'), 10
-            if lastLocation and zoom
-                console?.log 'Getting location from cookie...'
-                lastLocation = lastLocation.split ','
-                center = new google.maps.LatLng lastLocation[0], lastLocation[1]
-                @googleMap.setCenter center
-                @googleMap.setZoom zoom
+            komoo.event.trigger this, 'goto_saved_location'
             true
-        false
 
         goToUserLocation: ->
-            if clientLocation = google.loader.ClientLocation
-                pos = new google.maps.LatLng clientLocation.latitude,
-                                             clientLocation.longitude
-                @googleMap.setCenter pos
-                console?.log 'Getting location from Google...'
-            if navigator.geolocation
-                navigator.geolocation.getCurrentPosition (position) =>
-                    pos = new google.maps.LatLng position.coords.latitude,
-                                                 position.coords.longitude
-                    @googleMap.setCenter pos
-                    console?.log 'Getting location from navigator.geolocation...'
-                , =>
-                    console?.log 'User denied access to navigator.geolocation...'
-
+            komoo.event.trigger this, 'goto_user_location'
 
         handleFeatureEvents: (feature) ->
             eventsNames = ['mouseover', 'mouseout', 'mousemove', 'click',
                 'dblclick', 'rightclick', 'highlight_changed']
             eventsNames.forEach (eventName) =>
                 komoo.event.addListener feature, eventName, (e) =>
-                    komoo.event.trigger @, "feature_#{eventName}", e, feature
+                    komoo.event.trigger this, "feature_#{eventName}", e, feature
 
         goTo: (position, displayMarker = true) ->
-            _go = (latLng) =>
-                if latLng
-                    @googleMap.panTo latLng
-                    if not @searchMarker
-                        @searchMarker = new google.maps.Marker()
-                        @searchMarker.setMap this.googleMap
-
-                    if displayMarker then @searchMarker.setPosition latLng
-
-            if typeof position is "string"  # Got an address
-                request = {
-                    address: position
-                    region: this.region
-                }
-                @geocoder.geocode request, (result, status_) =>
-                    if status_ is google.maps.GeocoderStatus.OK
-                        first_result = result[0]
-                        latLng = first_result.geometry.location
-                        _go latLng
-            else
-                if position instanceof Array
-                    latLng = new google.maps.LatLng position[0], position[1]
-                else
-                    latLng = position
-                _go latLng
+            komoo.event.trigger this, 'goto', position, displayMarker
 
         panTo: (position, displayMarker = false) -> @goTo position, displayMarker
 
         makeFeature: (geojson, attach = true) ->
             feature = komoo.features.makeFeature geojson, @featureTypes
             if attach then @addFeature feature
-            komoo.event.trigger @, 'feature_created', feature
+            komoo.event.trigger this, 'feature_created', feature
             feature
 
         addFeature: (feature) =>
@@ -208,13 +168,13 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 else
                     @features.getById type, id
 
-            @panTo feature.getCenter(), false
+            if feature? then @panTo feature.getCenter(), false
 
         loadGeoJson: (geojson, panTo = false, attach = true) ->
-            if not geojson?.type? or not geojson.type is 'FeatureCollection'
-                return []
-
             features = komoo.collections.makeFeatureCollection map: @
+
+            if not geojson?.type? or not geojson.type is 'FeatureCollection'
+                return features
 
             geojson.features?.forEach (geojsonFeature) =>
                 # Try to get the instance already created
@@ -228,6 +188,8 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
             if panTo and features.getAt(0)?.getBounds()
                 @googleMap.fitBounds features.getAt(0).getBounds()
+
+            komoo.event.trigger this, 'features_loaded', features
 
             features
 
@@ -262,17 +224,24 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 properties:
                     name: "New #{featureType}"
                     type: featureType
-            komoo.event.trigger @, 'draw_feature', geometryType, feature
+            komoo.event.trigger this, 'draw_feature', geometryType, feature
 
-        editFeature: (feature = @features.getAt 0) ->
-            komoo.event.trigger @, 'edit_feature', feature
+        editFeature: (feature = @features.getAt(0), newGeometry) ->
+            if newGeometry? and feature.getGeometryType() is komoo.geometries.types.EMPTY
+                feature.setGeometry komoo.geometries.makeGeometry geometry:
+                    type: newGeometry
+                komoo.event.trigger this, 'draw_feature', newGeometry, feature
+            else
+                komoo.event.trigger this, 'edit_feature', feature
 
         setMode: (@mode) ->
-            komoo.event.trigger @, 'mode_changed', @mode
+            komoo.event.trigger this, 'mode_changed', @mode
 
-        selectCenter: (radius, callback) -> @selectPerimeter radius, callback
+        selectCenter: (radius, callback) ->
+            @selectPerimeter radius, callback
+
         selectPerimeter: (radius, callback) ->
-            komoo.event.trigger @, 'select_perimeter', radius, callback
+            komoo.event.trigger this, 'select_perimeter', radius, callback
 
         ## Delegations
 
@@ -281,6 +250,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
         getBounds: -> @googleMap.getBounds()
 
+        setZoom: (zoom) -> if zoom? then @googleMap.setZoom zoom
         getZoom: -> @googleMap.getZoom()
 
 
@@ -297,6 +267,8 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             super options
 
             @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
+            @addComponent komoo.controls.makeSaveLocation()
+            @addComponent komoo.controls.makeStreetView()
             @addComponent komoo.controls.makeDrawingManager(), 'drawing'
             @addComponent komoo.controls.makeDrawingControl(), 'drawing'
             @addComponent komoo.controls.makeSupporterBox()
@@ -316,17 +288,30 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             mapTypeId: google.maps.MapTypeId.HYBRID
 
 
-    class AjaxMap extends Map
+    class StaticMap extends Map
         constructor: (options) ->
             super options
 
             @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
-            @addComponent komoo.providers.makeFeatureProvider(), 'provider'
+            @addComponent komoo.controls.makeAutosaveLocation()
+            @addComponent komoo.controls.makeStreetView()
             @addComponent komoo.controls.makeTooltip(), 'tooltip'
             @addComponent komoo.controls.makeInfoWindow(), 'infoWindow'
-            @addComponent komoo.controls.makeFeatureClusterer featureType: "Community", 'clusterer'
             @addComponent komoo.controls.makeSupporterBox()
             @addComponent komoo.controls.makeLicenseBox()
+
+        loadGeoJson: (geojson, panTo = false, attach = true) ->
+            features = super geojson, panTo, attach
+            features.forEach (feature) =>
+                feature.setMap this, geometry: true
+            features
+
+
+    class AjaxMap extends StaticMap
+        constructor: (options) ->
+            super options
+
+            @addComponent komoo.providers.makeFeatureProvider(), 'provider'
 
 
     class AjaxEditor extends AjaxMap
@@ -352,6 +337,8 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 new Editor options
             else if type is 'view'
                 new AjaxMap options
+            else if type is 'static'
+                new StaticMap options
             else if type is 'preview'
                 new Preview options
             else if type is 'userEditor'
