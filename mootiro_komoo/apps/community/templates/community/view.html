@@ -19,20 +19,21 @@
     <h2 class="title">{{ community.name }}</h2>
     <div class="view-edit-btn">
       {% history community %}
-      {% discussion_tab community %}
+      {% discussion_tab community 'community-info' %}
       <a href="{% url edit_community community.slug %}" class="btn login-required"><i class="icon-pencil"></i></a>
     </div>
 
     <div class="clear-both"></div>
-    <div class="mark-down">{{ community.description|render_markup|safe }}</div>
 
-    <p>
-      <!-- <span class="meta-info">Type</span>NOT IMPLEMENTED<br/> -->
-      <span class="meta-info">{% trans "Population" %}</span> {% firstof community.population '-' %}
-    </p>
-
-    <div class="view-footer">
-        {% image_gallery community %}
+    <div id="community-info" class="hidden">
+      <div class="mark-down">{{ community.description|render_markup|safe }}</div>
+      <p>
+        <!-- <span class="meta-info">Type</span>NOT IMPLEMENTED<br/> -->
+        <span class="meta-info">{% trans "Population" %}</span> {% firstof community.population '-' %}
+      </p>
+      <div class="view-footer">
+          {% image_gallery community %}
+      </div>
     </div>
 
   </div>

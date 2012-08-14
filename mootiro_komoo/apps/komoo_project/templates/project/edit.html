@@ -1,8 +1,10 @@
 {% extends 'global.html'%}
-
+{% load komoo_tags %}
 {% load i18n %}
 {% load crispy_forms_tags %}
 {% load upload_tags %}
+
+{% block menu %} {% menu "" "project" %} {% endblock %}
 
 {% block content %}
     <div id="main-content">
@@ -30,6 +32,12 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
     <script type="text/javascript" src="/static/js/ajax_select.js"></script>
+    <style type="text/css">
+        .contributors_deck_project_creator{
+            margin-left: 15px;
+            color: #555555;
+        }
+    </style>
 {% endblock %}
 
 
@@ -38,10 +46,40 @@
     {% load_files project %}
 
     <script type="text/javascript" charset="utf-8">
+        // "providential workaround" for the contributors widget ;)
         $(function(){
+            var clean_contributors = function(){
+                var contributors = $('#id_contributors').val();
+                contributors = contributors.split('|');
+                var new_contributors = [];
+                $.each(contributors, function(idx, obj){
+                    if(obj && obj !== '{{project.creator.id}}'){
+                        new_contributors.push(obj);
+                    }
+                });
+                $('#id_contributors').val(new_contributors.join("|") + "|");
+            }
+
+
             $form = $('#form_project');
-            $form.ajaxform();
+            $form.ajaxform({
+                onSubmit: function(){
+                    clean_contributors();
+                }
+            });
             $form.komooFormHintBoxes({});
+
+            {% if project %}
+            $('#id_contributors_on_deck.results_on_deck').prepend(
+                '<div id="id_contributors_on_deck_{{ project.creator.id}}" >' +
+                    '<div class="contributors_deck_project_creator">' +
+                    '{{ project.creator.get_name }} ({% trans "creator" %})' +
+                    '</div>'+
+                '</div>'
+            );
+            var contributors = $('#id_contributors')
+            contributors.val(contributors.val() + '{{ project.creator.id}}|');
+            {% endif %}
         });
     </script>
 {% endblock %}

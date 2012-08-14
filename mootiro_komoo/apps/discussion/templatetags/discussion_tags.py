@@ -5,16 +5,7 @@ from django.conf import settings
 register = template.Library()
 
 
-def _parse_args(*args):
-    parsed_args = {}
-    for arg in args:
-        if arg:
-            a = arg.split('=')
-            parsed_args[a[0]] = a[1]
-    return parsed_args
-
-
-@register.inclusion_tag('discussion/discussion_tab_templatetag.html')
-def discussion_tab(content_object):
+@register.inclusion_tag('discussion/discussion_tab_templatetag.html', takes_context=True)
+def discussion_tab(context, content_object, content_id):
     """Templatetag for discussion tab on any content."""
-    return dict()
+    return dict(content_object=content_object, content_id=content_id)
