@@ -62,6 +62,30 @@
         {% with similar_projects=project.tags.similar_objects|slice:"5" %}
 
             <div class="block">
+
+                <h4>{% trans 'Administrator' %}</h4>
+                <p>
+                    {{ project.creator.get_name }}
+                </p>
+
+                {% if project.contributors.count %}
+                <h4>{% trans 'Contributors' %}</h4>
+                <p>
+                    <ul>
+                        {% for contributor in project.contributors.all %}
+                        <li>{{ contributor.get_name }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+                {% endif %}
+
+                {% if project.contact %}
+                <h4>{% trans 'Contact' %}</h4>
+                <p>
+                    {{ project.contact|render_markup|safe }}
+                </p>
+                {% endif %}
+
                 {% if similar_projects %}
                 <h4>Related projects</h4>
                 <p>
