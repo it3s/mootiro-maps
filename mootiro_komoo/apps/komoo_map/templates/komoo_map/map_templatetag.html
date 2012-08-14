@@ -26,52 +26,26 @@
       $('#dinamic-form').hide();
 
       /** Creating the map object **/
-      {{ type }} = komoo.maps.makeMap({
+      var $map = $('#map-canvas-{{type}}').komooMap({
         type: '{{ type }}',
         featureTypes: featureTypes,
         geojson: geojson_{{ type }},
-        elementId: "map-canvas-{{ type }}",
+        height: '{{ height|default:'200px' }}',
+        width: '{{ width|default:'200px' }}'
       });
-      if (!{{ type }}.goToSavedLocation()) {
-        {{ type }}.goToUserLocation();
+      var map = $map.data('map');
+      {{ type }} = map;
+      if (!map.goToSavedLocation()) {
+        map.goToUserLocation();
       }
       {% if editable %}
         editor = {{ type }};
       {% endif %}
 
-      {% if height == '100%' or width == '100%' %}
-        /** The map should fill the main page size **/
-        function fixMapSize(e) {
-          fixMapHeight(e.data.map);
-          fixMapWidth(e.data.map);
-          if (window.google) google.maps.event.trigger(e.data.map.googleMap, 'resize');
-        }
-        function fixMapHeight(map, opt_mapPanel) {
-          var mapPanel = opt_mapPanel || $('#map-panel');
-          var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
-          $(map.element).height(height);
-          mapPanel.height(height);
-          $('.panel', mapPanel).height(height - (window.community_slug ? 170 : 146));
-        }
-        function fixMapWidth(map, opt_mapPanel) {
-          var mapPanel = opt_mapPanel || $('#map-panel');
-          var panelWidth = mapPanel.innerWidth();
-          try {
-            var panelLeft = mapPanel.position().left;
-          } catch (err) {
-            var panelLeft = 0;
-          }
-
-          $(map.element).css({marginLeft: panelWidth + panelLeft, width: 'auto'});
-        }
-        $(window).resize({map: editor}, fixMapSize);
-        $(window).resize()
-      {% endif %}
-
       $("#map-panel").show();
 
       {% if editable %}
-        komoo.event.addListener(editor, 'drawing_finished', function (feature, gotoNextStep) {
+        komoo.event.addListener(map, 'drawing_finished', function (feature, gotoNextStep) {
           if (!feature.isNew()) return;
           var featureType, url, geojson;
           var context = $('#dinamic-form');
@@ -106,6 +80,7 @@
         /* Add the link to edit the geometry. Must have the editor. */
         $('#map-edit-button').click(function () {
             $('#main-content').hide();
+            $('#map-container-editor, #map-panel').show();
             if (!window.editor) {
               window.editor = initialize_map_editor();
               window.editor.loadGeoJSON(geojson_{{ type }}, true);
@@ -113,22 +88,21 @@
               komoo.event.addListener(editor, 'drawing_finished', function (feature, gotoNextStep) {
                 if (gotoNextStep) {
                   $('#id_geometry').val(JSON.stringify(feature.getGeometryCollectionGeoJson()));
-                  if (window.{{ type }}) {
-                    {{ type }}.clear();
-                    {{ type }}.loadGeoJson(editor.getGeoJson());
+                  if (map) {
+                    map.clear();
+                    map.loadGeoJson(editor.getGeoJson());
                   }
                 } else {
                 }
                 $('#map-container-editor, #map-panel').slideUp(600);
                 $('#main-content').show();
-                if (window.{{ type }}) google.maps.event.trigger({{ type }}.googleMap, 'resize');
+                if (window.{{ type }}) {{ type }}.refresh();
 
               });
             }
 
+            window.editor.refresh();
             window.editor.editFeature();
-            $('#map-container-editor, #map-panel').show();
-            google.maps.event.trigger(window.editor.googleMap, 'resize');
         });
       {% endif %}
 
@@ -143,17 +117,17 @@
               $('#main-content').show();
             });
           }
-          {{ type }}.centerFeature();
-          google.maps.event.trigger({{ type }}.googleMap, 'resize');
+          map.centerFeature();
+          map.refresh();
           return false;
         });
       {% endif %}
 
-      return {{ type }};
+      return map;
     };
 
 {% if not lazy %}
-  require(['map/maps'], initialize_map_{{ type }});
+  require(['map.jquery'], initialize_map_{{ type }});
 {% endif %}
 
   </script>

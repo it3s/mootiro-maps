@@ -42,6 +42,16 @@ class FeatureCollection extends GenericCollection
         super feature
         feature.setMap(@map)
 
+    getBounds: ->
+        firstFeature = @getAt 0
+        if firstFeature
+            geometry = firstFeature.getGeometry()
+            point = geometry.getLatLngFromArray geometry.getCenter()
+            @bounds = new google.maps.LatLngBounds point, point
+        @forEach (feature) =>
+            @bounds?.union feature.getBounds()
+        @bounds
+
     setMap: (@map, force) ->
         @forEach (feature) => feature.setMap @map, force
         @handleMapEvents()

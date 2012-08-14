@@ -497,6 +497,12 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
         color-stop(0.9, rgb(117,79,17))
     ) !important;
 }
+
+.organization-related-button {
+    text-align: center;
+    margin-right: 25px;
+}
+
 #top #menu #menu-project a:active {
     background: rgb(133,94, 56) !important;
 }

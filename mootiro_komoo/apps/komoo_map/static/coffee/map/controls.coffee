@@ -283,10 +283,12 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             remove = $("""<div class="map-button" id="drawing-control-delete"><i class="icon-komoo-trash middle"></i></div>""")
 
             content = $("<div>").addClass @feature.getGeometryType().toLowerCase()
-            content.append add
+            if @feature.getGeometryType() isnt komoo.geometries.types.POINT
+                content.append add
             if @feature.getGeometryType() is komoo.geometries.types.POLYGON
                 content.append cutout
-            content.append remove
+            if @feature.getGeometryType() isnt komoo.geometries.types.POINT
+                content.append remove
             content
 
 
@@ -708,10 +710,12 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                         latLng = first_result.geometry.location
                         _go latLng
             else
-                if position instanceof Array
-                    latLng = new google.maps.LatLng position[0], position[1]
-                else
-                    latLng = position
+                latLng =
+                    if position instanceof Array
+                        if position.length is 2
+                            new google.maps.LatLng position[0], position[1]
+                    else
+                        position
                 _go latLng
 
         goToUserLocation: ->
@@ -723,6 +727,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                 console?.log 'Getting location from Google...'
             if navigator.geolocation
                 navigator.geolocation.getCurrentPosition (position) =>
+                    console.log('dddd')
                     pos = new google.maps.LatLng position.coords.latitude,
                                                  position.coords.longitude
                     @map.googleMap.setCenter pos

@@ -24,37 +24,12 @@
       /** Creating the map object **/
       var $map = $('#map-canvas').komooMap({
         type: '{{ type }}',
-        geojson: geojson
+        geojson: geojson,
+        height: '100%',
+        width: '100%'
       });
 
       var map = $map.data('map');
-
-      /** The map should fill the main page size **/
-      function fixMapSize(e) {
-        fixMapHeight(e.data.map);
-        fixMapWidth(e.data.map);
-        if (window.google) google.maps.event.trigger(e.data.map.googleMap, 'resize');
-      }
-      function fixMapHeight(map, opt_mapPanel) {
-        var mapPanel = opt_mapPanel || $('#map-panel');
-        var height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
-        $(map.element).height(height);
-        mapPanel.height(height);
-        $('.panel', mapPanel).height(height - (window.community_slug ? 170 : 146));
-      }
-      function fixMapWidth(map, opt_mapPanel) {
-        var mapPanel = opt_mapPanel || $('#map-panel');
-        var panelWidth = mapPanel.innerWidth();
-        try {
-          var panelLeft = mapPanel.position().left;
-        } catch (err) {
-          var panelLeft = 0;
-        }
-
-         $(map.element).css({marginLeft: panelWidth + panelLeft, width: 'auto'});
-      }
-      $(window).resize({map: map}, fixMapSize);
-      $(window).resize()
 
       $("#map-panel").show();
 
@@ -86,6 +61,10 @@
             }
           });
         }
+      });
+
+      komoo.event.addListener(map, 'features_loaded', function (feature, gotoNextStep) {
+        //map.fitBounds();
       });
 
       return map;

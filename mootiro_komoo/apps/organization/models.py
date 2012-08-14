@@ -64,8 +64,8 @@ class Organization(VotableModel):
     def related_items(self):
         return [c for c in self.community.all()] + \
             [b for b in self.organizationbranch_set.all()] + \
-            [i for i in self.investments.all()] + \
-            [r for r in self.realized_investments.all()]
+            [i.grantee for i in self.investments.all()] + \
+            [r.grantee for r in self.realized_investments.all()]
 
     @property
     def as_investor(self):
@@ -146,6 +146,10 @@ class Organization(VotableModel):
     @property
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
+
+    @property
+    def related_items_url(self):
+        return reverse('view_organization_related_items', kwargs=self.home_url_params)
 
 
 class OrganizationBranch(GeoRefModel, VotableModel):

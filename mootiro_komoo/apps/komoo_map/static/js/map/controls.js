@@ -338,11 +338,15 @@
         cutout = $("<div class=\"map-button\" id=\"drawing-control-cutout\"><i class=\"icon-komoo-minus middle\"></i><span class=\"middle\">" + (gettext('Cut out')) + "</span></div>");
         remove = $("<div class=\"map-button\" id=\"drawing-control-delete\"><i class=\"icon-komoo-trash middle\"></i></div>");
         content = $("<div>").addClass(this.feature.getGeometryType().toLowerCase());
-        content.append(add);
+        if (this.feature.getGeometryType() !== komoo.geometries.types.POINT) {
+          content.append(add);
+        }
         if (this.feature.getGeometryType() === komoo.geometries.types.POLYGON) {
           content.append(cutout);
         }
-        content.append(remove);
+        if (this.feature.getGeometryType() !== komoo.geometries.types.POINT) {
+          content.append(remove);
+        }
         return content;
       };
 
@@ -983,11 +987,7 @@
             }
           });
         } else {
-          if (position instanceof Array) {
-            latLng = new google.maps.LatLng(position[0], position[1]);
-          } else {
-            latLng = position;
-          }
+          latLng = position instanceof Array ? position.length === 2 ? new google.maps.LatLng(position[0], position[1]) : void 0 : position;
           return _go(latLng);
         }
       };
@@ -1005,6 +1005,7 @@
         }
         if (navigator.geolocation) {
           return navigator.geolocation.getCurrentPosition(function(position) {
+            console.log('dddd');
             pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             _this.map.googleMap.setCenter(pos);
             return typeof console !== "undefined" && console !== null ? console.log('Getting location from navigator.geolocation...') : void 0;

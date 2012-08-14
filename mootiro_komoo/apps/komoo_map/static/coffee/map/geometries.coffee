@@ -163,6 +163,8 @@ define ['map/multimarker', 'map/multipolyline'], ->
         setPosition: (pos) ->
             @overlay.setPosition(if pos instanceof Array then @getLatLngFromArray pos else pos)
 
+        addMarker: (marker) -> @setOverlay(marker)
+
     class MultiPoint extends Geometry
         geometryType: MULTIPOINT
 
@@ -201,6 +203,14 @@ define ['map/multimarker', 'map/multipolyline'], ->
         getMarkers: -> @overlay.getMarkers()
         addMarkers: (markers) -> @overlay.addMarkers(markers)
         addMarker: (marker) -> @overlay.addMarker(marker)
+
+
+    class SinglePoint extends MultiPoint
+        geometryType: POINT
+
+        getGeoJson: ->
+            type: MULTIPOINT,
+            coordinates: @getCoordinates()
 
 
     class LineString extends Geometry
@@ -335,7 +345,7 @@ define ['map/multimarker', 'map/multipolyline'], ->
 
         Geometry: Geometry
         Empty: Empty
-        Point: Point
+        Point: SinglePoint
         MultiPoint: MultiPoint
         LineString: LineString
         MultiLineString: MultiLineString
@@ -349,7 +359,9 @@ define ['map/multimarker', 'map/multipolyline'], ->
                 return new Empty(options)
             type = geojsonFeature.geometry.type
             coords = geojsonFeature.geometry.coordinates
-            if type is 'Point' or type is 'MultiPoint' or type is 'marker'
+            if type is 'Point'
+                geometry = new SinglePoint(options)
+            else if type is 'MultiPoint' or type is 'marker'
                 geometry = new MultiPoint(options)
             else if type is 'LineString' or type is 'polyline'
                 coords = [coords] if coords

@@ -48,6 +48,7 @@
 
         <div class="view-body">
             <div class="mark-down">{{ organization.description|render_markup|safe }}</div>
+            <div class="organization-related-button"><a class="button" href="{{ organization.related_items_url }}">Ver todos os objetos no mapa</a></div>
             <div class="organization-buttons row">
                 <div class="org-btn span3 selected" panel="branches-list">
                     <i class="icon-map"></i>

@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   define(['map/multimarker', 'map/multipolyline'], function() {
-    var EMPTY, Empty, Geometry, LINESTRING, LineString, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, defaults, _base;
+    var EMPTY, Empty, Geometry, LINESTRING, LineString, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, SinglePoint, defaults, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
     EMPTY = 'Empty';
@@ -317,6 +317,10 @@
         return this.overlay.setPosition(pos instanceof Array ? this.getLatLngFromArray(pos) : pos);
       };
 
+      Point.prototype.addMarker = function(marker) {
+        return this.setOverlay(marker);
+      };
+
       return Point;
 
     })(Geometry);
@@ -428,6 +432,26 @@
       return MultiPoint;
 
     })(Geometry);
+    SinglePoint = (function(_super) {
+
+      __extends(SinglePoint, _super);
+
+      function SinglePoint() {
+        SinglePoint.__super__.constructor.apply(this, arguments);
+      }
+
+      SinglePoint.prototype.geometryType = POINT;
+
+      SinglePoint.prototype.getGeoJson = function() {
+        return {
+          type: MULTIPOINT,
+          coordinates: this.getCoordinates()
+        };
+      };
+
+      return SinglePoint;
+
+    })(MultiPoint);
     LineString = (function(_super) {
 
       __extends(LineString, _super);
@@ -716,7 +740,7 @@
       },
       Geometry: Geometry,
       Empty: Empty,
-      Point: Point,
+      Point: SinglePoint,
       MultiPoint: MultiPoint,
       LineString: LineString,
       MultiLineString: MultiLineString,
@@ -730,7 +754,9 @@
         if (!(geojsonFeature.geometry != null)) return new Empty(options);
         type = geojsonFeature.geometry.type;
         coords = geojsonFeature.geometry.coordinates;
-        if (type === 'Point' || type === 'MultiPoint' || type === 'marker') {
+        if (type === 'Point') {
+          geometry = new SinglePoint(options);
+        } else if (type === 'MultiPoint' || type === 'marker') {
           geometry = new MultiPoint(options);
         } else if (type === 'LineString' || type === 'polyline') {
           if (coords) coords = [coords];

@@ -78,6 +78,22 @@
       return feature.setMap(this.map);
     };
 
+    FeatureCollection.prototype.getBounds = function() {
+      var firstFeature, geometry, point,
+        _this = this;
+      firstFeature = this.getAt(0);
+      if (firstFeature) {
+        geometry = firstFeature.getGeometry();
+        point = geometry.getLatLngFromArray(geometry.getCenter());
+        this.bounds = new google.maps.LatLngBounds(point, point);
+      }
+      this.forEach(function(feature) {
+        var _ref;
+        return (_ref = _this.bounds) != null ? _ref.union(feature.getBounds()) : void 0;
+      });
+      return this.bounds;
+    };
+
     FeatureCollection.prototype.setMap = function(map, force) {
       var _this = this;
       this.map = map;

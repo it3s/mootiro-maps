@@ -249,7 +249,7 @@
       Map.prototype.centerFeature = function(type, id) {
         var feature;
         feature = type instanceof komoo.features.Feature ? type : this.features.getById(type, id);
-        if (feature != null) return this.panTo(feature.getCenter(), false);
+        return this.panTo(feature != null ? feature.getCenter() : void 0, false);
       };
 
       Map.prototype.loadGeoJson = function(geojson, panTo, attach) {
@@ -270,8 +270,7 @@
             if (feature == null) {
               feature = _this.makeFeature(geojsonFeature, attach);
             }
-            features.push(feature);
-            if (attach) return feature.setMap(_this);
+            return features.push(feature);
           });
         }
         if (panTo && ((_ref2 = features.getAt(0)) != null ? _ref2.getBounds() : void 0)) {
@@ -360,6 +359,11 @@
 
       Map.prototype.getZoom = function() {
         return this.googleMap.getZoom();
+      };
+
+      Map.prototype.fitBounds = function(bounds) {
+        if (bounds == null) bounds = this.features.getBounds();
+        return this.googleMap.fitBounds(bounds);
       };
 
       return Map;

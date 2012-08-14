@@ -168,7 +168,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 else
                     @features.getById type, id
 
-            if feature? then @panTo feature.getCenter(), false
+            @panTo feature?.getCenter(), false
 
         loadGeoJson: (geojson, panTo = false, attach = true) ->
             features = komoo.collections.makeFeatureCollection map: @
@@ -184,13 +184,12 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 feature ?= @makeFeature geojsonFeature, attach
                 features.push feature
 
-                if attach then feature.setMap @
+                #if attach then feature.setMap @
 
             if panTo and features.getAt(0)?.getBounds()
                 @googleMap.fitBounds features.getAt(0).getBounds()
 
             komoo.event.trigger this, 'features_loaded', features
-
             features
 
         loadGeoJSON: (geojson, panTo, attach) ->
@@ -252,6 +251,9 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
         setZoom: (zoom) -> if zoom? then @googleMap.setZoom zoom
         getZoom: -> @googleMap.getZoom()
+
+        fitBounds: (bounds = @features.getBounds()) ->
+            @googleMap.fitBounds bounds
 
 
     class UserEditor extends Map
