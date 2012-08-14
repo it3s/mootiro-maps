@@ -59,7 +59,7 @@ def build_environment():
 def coffee_maker():
     """ runs coffeescript compiler"""
     # apps we want to compile our coffee files
-    COFFEE_SHOP = ['main', 'komoo_map', 'user_cas']
+    COFFEE_SHOP = ['main', 'komoo_map', 'user_cas', 'discussion']
     for app in COFFEE_SHOP:
         local('coffee -o apps/{app}/static/js/ -cw apps/{app}/static/coffee/ &'.format(app=app))
 

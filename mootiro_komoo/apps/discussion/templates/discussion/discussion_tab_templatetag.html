@@ -5,27 +5,11 @@
   BLA BLA BLA...
 </div>
 
+
 <script type="text/javascript">
   $(function () {
-    // Initial discussion insertion to after DOM content
     $content = $("#{{ content_id }}");
-    $discussion = $("#content-discussion").detach();
-    $discussion.insertAfter($content);
-
-    $("#view-content-info").on('click', function (evt) {
-      $content.show();
-      $discussion.hide();
-    });
-
-    $("#view-discussion-info").on('click', function (evt) {
-      $discussion.show();
-      $content.hide();
-    });
-
-    hash = window.location.hash;
-    if (hash == "#discussion") {
-      $("#view-discussion-info").click();
-    }
-
   });
 </script>
+
+<script type="text/javascript" src="/static/js/discussion.js"></script>
