@@ -2566,3 +2566,15 @@ ul.two-cols li {
     color: #111111;
     font-size: 1.1em;
 }
+.project-selector input{
+    width: 300px;
+    margin-left: 100px;
+}
+.add-project-msg p{
+    background-color: #bedebe;
+    color: #333333;
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+    border: solid 1px #999999;
+}

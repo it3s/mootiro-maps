@@ -1,7 +1,8 @@
 #! coding: utf-8 -*-
 from django import template
 from django.contrib.contenttypes.models import ContentType
-from komoo_project.models import ProjectRelatedObject
+from komoo_project.models import Project, ProjectRelatedObject
+from main.widgets import Autocomplete
 
 
 register = template.Library()
@@ -17,5 +18,8 @@ def projects_for_object(context, obj):
     ct = ContentType.objects.get_for_model(obj)
     projects = [p.project for p in
         ProjectRelatedObject.objects.filter(content_type=ct, object_id=obj.id)]
-    return dict(projects=projects)
+    project_widget = Autocomplete(Project, '/project/search_by_name')
+    project_widget = "%s \n %s" % (str(project_widget.media),
+                                     project_widget.render('project'))
+    return dict(projects=projects, project_widget=project_widget)
 

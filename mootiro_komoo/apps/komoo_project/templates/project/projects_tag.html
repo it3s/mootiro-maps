@@ -28,12 +28,19 @@
     </div>
     <div class="modal-body">
         <p>
-            project add
+        <div class="project-selector">
+            {{ project_widget|safe }}
+        </div>
         </p>
+        <div class="add-project-msg">
+        </div>
     </div>
     <div class="modal-footer">
         <a href="#" class="btn" data-dismiss="modal">
-            {% trans 'Close' %}
+            {% trans 'Cancel' %}
+        </a>
+        <a href="#" class="button" id="add-project-save">
+            {% trans "Save changes" %}
         </a>
     </div>
 </div>
@@ -42,5 +49,18 @@
     $('#add-to-project').click(function(evt){
         $('#add-project-modal').modal('show');
         return false;
+    });
+    $( "#id_project_autocomplete" ).bind( "autocompleteselect", function(event, ui) {
+        $('.add-project-msg').html(
+            '<p>' + 
+                'Adicionando este objeto ao projeto ' + ui.item.label +
+            '</p>'
+        );
+    });
+    $('#add-project-save').click(function(){
+        alert('bang');
+        //save projrelatedobject
+        // clean all
+        //close modal
     });
 </script>
