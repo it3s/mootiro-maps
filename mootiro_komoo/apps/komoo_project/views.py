@@ -5,9 +5,11 @@ import logging
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
+from django.db.models.query_utils import Q
 from django.http import HttpResponse
 from django.utils import simplejson
 from django import template
+from django.http import HttpResponse
 
 from lib.taggit.models import TaggedItem
 from ajaxforms.forms import ajax_form
@@ -91,4 +93,13 @@ def tag_search(request):
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
 
+
+def search_by_name(request):
+    logger.debug('acessing project > search_by_name')
+    term = request.GET['term']
+    projects = Project.objects.filter(Q(name__icontains=term) |
+                                           Q(slug__icontains=term))
+    d = [{'value': p.id, 'label': p.name} for p in projects]
+    return HttpResponse(simplejson.dumps(d), 
+            mimetype="application/x-javascript")
 
