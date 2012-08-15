@@ -1,0 +1,46 @@
+{% load i18n %}
+<div class="block">
+    <header class="projects-tag-header">
+        <img src="/static/img/menu/project.png">
+        <span class="projects-tag-title">{% trans 'Projects' %}</span>
+    </header>
+    <section>
+        <ul>
+
+            {% for project in projects %}
+                <li>{{ project }}</li>
+            {% endfor %}
+        </ul>
+        <div class="centralizer apart">
+            <a href="#" id="add-to-project" class="button login-required">{% trans 'Add to a project' %}</a>
+
+        </div>
+   </section>
+</div>
+
+<!-- Modal form for adding this project to a project -->
+<div class="modal hide" id="add-project-modal" style="display:none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <div class="add-project-modal-header">
+            {% trans 'Add this object to a project' %}
+        </div>
+    </div>
+    <div class="modal-body">
+        <p>
+            project add
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">
+            {% trans 'Close' %}
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    $('#add-to-project').click(function(evt){
+        $('#add-project-modal').modal('show');
+        return false;
+    });
+</script>

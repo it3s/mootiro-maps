@@ -2556,3 +2556,13 @@ ul.two-cols li {
 .project-list-logo {
     vertical-align: top;
 }
+.projects-tag-header img{
+    display: inline-block;
+    margin-right: 15px;
+}
+.projects-tag-title{
+    display: inline-block;
+    font-weight: bold;
+    color: #111111;
+    font-size: 1.1em;
+}
