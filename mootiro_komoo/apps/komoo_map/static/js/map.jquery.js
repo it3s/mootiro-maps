@@ -72,6 +72,10 @@
           $(this).data('map').goTo((_ref = opts.position) != null ? _ref : opts.address, opts.displayMarker);
           return $(this);
         },
+        highlight: function(opts) {
+          $(this).data('map').highlightFeature(opts.type, opts.id);
+          return $(this);
+        },
         resize: function() {
           return $(window).resize();
         }

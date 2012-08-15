@@ -147,8 +147,13 @@ class FeatureCollectionPlus extends FeatureCollection
                 @getById type, id
             else
                 type
+
+        if feature.isHighlighted() then return
+
+        console.log '--->', @highlighted
+        @highlighted?.setHighlight off
         feature.highlight()
-        console.log feature
+        @highlighted = feature
 
 
 class Layer extends FeatureCollection

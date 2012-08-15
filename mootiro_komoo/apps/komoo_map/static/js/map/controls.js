@@ -678,9 +678,10 @@
       };
 
       InfoWindow.prototype.close = function(enableTooltip) {
-        var _ref;
+        var _ref, _ref2;
         if (enableTooltip == null) enableTooltip = true;
-        if ((_ref = this.feature) != null) _ref.displayTooltip = true;
+        if ((_ref = this.feature) != null) _ref.setHighlight(false);
+        if ((_ref2 = this.feature) != null) _ref2.displayTooltip = true;
         if (enableTooltip) this.map.enableComponents('tooltip');
         return InfoWindow.__super__.close.call(this);
       };
@@ -719,9 +720,11 @@
           }, 200);
         });
         return komoo.event.addListener(this.map, 'feature_highlight_changed', function(e, feature) {
-          return _this.open({
-            feature: feature
-          });
+          if (feature.isHighlighted()) {
+            return _this.open({
+              feature: feature
+            });
+          }
         });
       };
 

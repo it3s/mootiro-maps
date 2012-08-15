@@ -346,6 +346,7 @@
       };
 
       Map.prototype.highlightFeature = function() {
+        this.centerFeature.apply(this, arguments);
         return this.features.highlightFeature.apply(this.features, arguments);
       };
 

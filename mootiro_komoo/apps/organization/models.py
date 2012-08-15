@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import simplejson
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
@@ -64,8 +66,8 @@ class Organization(VotableModel):
     def related_items(self):
         return [c for c in self.community.all()] + \
             [b for b in self.organizationbranch_set.all()] + \
-            [i.grantee for i in self.investments.all()] + \
-            [r.grantee for r in self.realized_investments.all()]
+            [i.grantee.need for i in self.investments.all() if hasattr(i.grantee, 'need')] + \
+            [r.grantee.need for r in self.realized_investments.all() if hasattr(r.grantee, 'need')]
 
     @property
     def as_investor(self):
@@ -150,6 +152,15 @@ class Organization(VotableModel):
     @property
     def related_items_url(self):
         return reverse('view_organization_related_items', kwargs=self.home_url_params)
+
+    @property
+    def json(self):
+        return simplejson.dumps({
+            'name': self.name,
+            'slug': self.slug,
+            'logo_url': self.logo_url,
+            'view_url': self.view_url,
+        })
 
 
 class OrganizationBranch(GeoRefModel, VotableModel):

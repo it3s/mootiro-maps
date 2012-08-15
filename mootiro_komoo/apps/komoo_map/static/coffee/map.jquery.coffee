@@ -50,6 +50,10 @@ define ['map/maps'], ->
                 $(this).data('map').goTo opts.position ? opts.address, opts.displayMarker
                 $(this)
 
+            highlight: (opts) ->
+                $(this).data('map').highlightFeature opts.type, opts.id
+                $(this)
+
             resize: ->
                 $(window).resize()
 

@@ -254,10 +254,13 @@
     };
 
     FeatureCollectionPlus.prototype.highlightFeature = function(type, id) {
-      var feature;
+      var feature, _ref;
       feature = typeof type === 'string' ? this.getById(type, id) : type;
+      if (feature.isHighlighted()) return;
+      console.log('--->', this.highlighted);
+      if ((_ref = this.highlighted) != null) _ref.setHighlight(false);
       feature.highlight();
-      return console.log(feature);
+      return this.highlighted = feature;
     };
 
     return FeatureCollectionPlus;

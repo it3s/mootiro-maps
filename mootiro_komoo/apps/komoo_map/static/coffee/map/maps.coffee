@@ -245,6 +245,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
         ## Delegations
 
         highlightFeature: ->
+            @centerFeature.apply this, arguments
             @features.highlightFeature.apply @features, arguments
 
         getBounds: -> @googleMap.getBounds()

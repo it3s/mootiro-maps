@@ -189,6 +189,8 @@ def taglist(obj, community=None):
 def jsonify(object):
     if isinstance(object, QuerySet):
         return serialize('json', object)
+    if hasattr(object, 'json'):
+        return object.json
     return simplejson.dumps(object, cls=DjangoJSONEncoder)
     # return simplejson.dumps(object)
 # jsonify.is_safe = True

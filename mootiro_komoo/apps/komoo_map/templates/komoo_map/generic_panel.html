@@ -11,6 +11,7 @@
 
 
 <script type="text/javascript">
+/* Collaps button */
 $("#collapse-panel").click(function (ev) {
     var $parent = $("#map-panel").parent();
     $parent.toggleClass("collapsed");
@@ -22,5 +23,5 @@ $("#collapse-panel").click(function (ev) {
 });
 </script>
 
-{% block panel_js %}
+{% block panel_scripts %}
 {% endblock %}

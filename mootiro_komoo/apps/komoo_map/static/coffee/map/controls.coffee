@@ -515,6 +515,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @feature?.displayTooltip = off
 
         close: (enableTooltip = true) ->
+            @feature?.setHighlight off
             @feature?.displayTooltip = on
             if enableTooltip
                 @map.enableComponents 'tooltip'
@@ -544,7 +545,8 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                     @open feature: feature, position: e.latLng
                 , 200
             komoo.event.addListener @map, 'feature_highlight_changed', (e, feature) =>
-                @open feature: feature
+                if feature.isHighlighted()
+                    @open feature: feature
 
 
     class Tooltip extends AjaxBalloon

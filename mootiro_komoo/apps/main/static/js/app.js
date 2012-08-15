@@ -5,7 +5,7 @@
     paths: {
       map: 'map',
       vendor: 'vendor',
-      lib: 'lib'
+      lib: '../lib'
     }
   });
 

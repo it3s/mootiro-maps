@@ -1,7 +1,23 @@
 {% extends "komoo_map/generic_panel.html" %}
 
 {% block panel_content %}
-  <div class="panel" id="map-panel-list"></div>
+  <div class="panel-info-wrapper"></div>
+  <div class="panel features-wrapper"></div>
+
+  <script type="text/template" id="feature-template">
+    <div class="item">
+      <i class="<%= iconClass() %> middle"></i>
+      <span class="middle"><%= properties.name %></span>
+    </div>
+  </script>
+
+  <script type="text/template" id="features-template">
+    <ul class="feature-list geo-objects-listing"></ul>
+  </script>
 {% endblock %}
 
-
+{% block panel_scripts %}
+  <script type="text/javascript">
+    require(['related_items_panel']);
+  </script>
+{% endblock %}

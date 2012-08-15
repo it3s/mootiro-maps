@@ -503,6 +503,15 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     margin-right: 25px;
 }
 
+#map-panel-content .panel-info {
+    margin: 10px;
+    clear: both;
+}
+
+#map-panel-content .panel-info img {
+    float: left;
+}
+
 #top #menu #menu-project a:active {
     background: rgb(133,94, 56) !important;
 }
