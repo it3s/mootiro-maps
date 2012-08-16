@@ -2645,3 +2645,7 @@ ul.two-cols li {
     padding: 20px;
     border: solid 1px #999999;
 }
+#div_id_is_public .radio{
+    width: 45%;
+    display: inline-block;
+}

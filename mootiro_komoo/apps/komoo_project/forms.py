@@ -18,6 +18,12 @@ from .models import Project
 logger = logging.getLogger(__name__)
 
 
+IS_PUBLIC_CHOICES = (
+        ('publ', _('Public')),
+        ('priv', _('Private'))
+)
+
+
 class FormProject(AjaxModelForm):
     description = forms.CharField(widget=MarkItUpWidget())
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
@@ -29,11 +35,13 @@ class FormProject(AjaxModelForm):
         required=False)
     logo = FileuploadField(required=False, widget=SingleFileUploadWidget)
     partners_logo = FileuploadField(required=False)
+    is_public = forms.ChoiceField(choices=IS_PUBLIC_CHOICES,
+            widget=forms.RadioSelect)
 
     class Meta:
         model = Project
         fields = ('name', 'description', 'contributors', 'tags', 'contact',
-                  'community', 'logo', 'id')
+                  'community', 'is_public', 'logo', 'id')
 
     _field_labels = {
         'name': _('Name'),
@@ -44,10 +52,17 @@ class FormProject(AjaxModelForm):
         'contributors': _('Contributors'),
         'community': _('Community'),
         'partners_logo': _('Partners Logo'),
+        'is_public': _('Access to editing and discussion pages'),
     }
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id='form_project')
+        inst = kw.get('instance', None)
+        if inst:
+            is_public = 'publ' if inst.is_public else 'priv'
+        else:
+            is_public = 'publ'
+        kw['initial'] = {'is_public': is_public}
         return super(FormProject, self).__init__(*a, **kw)
 
     def save(self, *a, **kw):
@@ -60,4 +75,5 @@ class FormProject(AjaxModelForm):
         return clean_autocomplete_field(self.cleaned_data['logo'],
                                         UploadedFile)
 
-
+    def clean_is_public(self):
+        return True if self.cleaned_data['is_public'] == 'publ' else False

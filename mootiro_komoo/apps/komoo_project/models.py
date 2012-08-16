@@ -33,6 +33,7 @@ class Project(models.Model):
             related_name='project_contributors')
     community = models.ManyToManyField(Community, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
+    is_public = models.BooleanField(default=True)
 
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 
