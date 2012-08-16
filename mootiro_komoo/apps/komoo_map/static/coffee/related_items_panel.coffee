@@ -2,13 +2,6 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
     $ = jQuery
 
     window.Feature = Backbone.Model.extend
-        iconClass: () ->
-            if @properties.type is 'OrganizationBranch'
-                modelName = 'Organization'
-            else
-                modelName = @properties.type
-            "icon-#{modelName.toLowerCase()}-big"
-
         toJSON: (attr) ->
             defaultJSON = Backbone.Model.prototype.toJSON.call this, attr
             _.extend defaultJSON,
@@ -43,18 +36,39 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
 
 
     window.Features = Backbone.Collection.extend
+        initialize: () ->
         model: Feature
 
 
     window.FeaturesView = Backbone.View.extend
-        initialize: () ->
+        initialize: (attr) ->
             _.bindAll this, 'render'
 
+            @type = attr.type
             @template = _.template $('#features-template').html()
             @collection.bind 'reset', @render
 
+        title: ->
+            if @type is 'OrganizationBranch'
+                "#{@collection.length} points on map"
+            else if @type is 'Community'
+                "On #{@collection.length} communities"
+            else
+                ""
+
+        iconClass: ->
+            if @type is 'OrganizationBranch'
+                modelName = 'Organization'
+            else
+                modelName = @type
+            "icon-#{modelName.toLowerCase()}-big"
+
+
         render: () ->
-            @$el.html @template({})
+            @$el.html @template(
+                title: @title()
+                iconClass: @iconClass()
+            )
             $features = this.$ '.feature-list'
 
             collection = @collection
@@ -67,14 +81,20 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
 
     $ ->
         KomooNS ?= {}
-        KomooNS.features = geojson.features;
+        KomooNS.features = _(geojson.features).groupBy (f) -> f.properties.type
 
-        loadedFeatures = new Features()
-        loadedFeatures.reset window.KomooNS.features
+        communitiesView = new FeaturesView
+            type: 'Community'
+            collection: new Features().reset KomooNS.features['Community']
+        $('.features-wrapper').append communitiesView.render().$el
 
-        featuresView = new FeaturesView
-            collection: loadedFeatures
+        needsView = new FeaturesView
+            type: 'Need'
+            collection: new Features().reset KomooNS.features['Need']
+        $('.features-wrapper').append needsView.render().$el
 
-
-        $('.features-wrapper').append featuresView.render().$el
+        branchsView = new FeaturesView
+            type: 'OrganizationBranch'
+            collection: new Features().reset KomooNS.features['OrganizationBranch']
+        $('.features-wrapper').append branchsView.render().$el
 

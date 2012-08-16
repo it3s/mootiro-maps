@@ -2,17 +2,24 @@
 
 {% block panel_content %}
   <div class="panel-info-wrapper"></div>
-  <div class="panel features-wrapper"></div>
+  <ul class="panel features-wrapper geo-objects-listing"></ul>
 
   <script type="text/template" id="feature-template">
-    <div class="item">
-      <i class="<%= iconClass() %> middle"></i>
-      <span class="middle"><%= properties.name %></span>
-    </div>
+    <span class="middle"><%= properties.name %></span>
   </script>
 
   <script type="text/template" id="features-template">
-    <ul class="feature-list geo-objects-listing"></ul>
+    <li>
+      <div class="item">
+        <i class="<%= iconClass %> middle"></i>
+        <span class="middle"><%= title %></span>
+      </div>
+      <div class="collapser"><i class="icon-chevron-right"></i></div>
+    </li>
+    <li>
+      <ul class="feature-list sublist">
+      </ul>
+    </li>
   </script>
 {% endblock %}
 
