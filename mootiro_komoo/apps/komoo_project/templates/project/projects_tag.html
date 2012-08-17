@@ -5,10 +5,10 @@
         <span class="projects-tag-title">{% trans 'Projects' %}</span>
     </header>
     <section>
-        <ul>
+        <ul id="project-related-list">
 
             {% for project in projects %}
-                <li>{{ project }}</li>
+            <li project-id="{{ project.id }}"><a href="{{ project.view_url }}">{{ project }}</a></li>
             {% endfor %}
         </ul>
         <div class="centralizer apart">
@@ -30,13 +30,16 @@
         <p>
         <div class="project-selector">
             {{ project_widget|safe }}
+
+            <input type="hidden" id="project_related_object_id" value="{{ object_id }}">
+            <input type="hidden" id="project_related_contenttype" value="{{ contenttype }}">
         </div>
         </p>
         <div class="add-project-msg">
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">
+        <a href="#" class="btn" id="add-project-cancel" >
             {% trans 'Cancel' %}
         </a>
         <a href="#" class="button" id="add-project-save">
@@ -59,11 +62,42 @@
         );
     });
     $('#add-project-save').click(function(){
-        alert('bang');
-        //save projrelatedobject
+        //save proj related object
+        $.post(
+            '/project/add_related/',
+            {
+                object_id: $('#project_related_object_id').val(),
+                content_type: $('#project_related_contenttype').val(),
+                project_id: $('#id_project').val(),
+            },
+            function(data){
+                if (data.success) {
+                    if (! $('#project-related-list li[project-id=' + data.project.id + ']').length){
+                        $('#project-related-list').append('' +
+                            '<li project-id="' + data.project.id + '">' +
+                                '<a href="' + data.project.link + '">' +
+                                        data.project.name +
+                                '</a>' +
+                            '</li>'
+                        );
+                    }
+                } else {
+                    alert('Falha ao relacionar este objeto ao projeto selecionado');
+                }
+            },
+            'json'
+        );
         $('#id_project_autocomplete').val('');
         $('#id_project').val('');
         $('.add-project-msg').html('');
         $('#add-project-modal').modal('hide');
+    });
+    $('#add-project-cancel').click(function(evt){
+        evt.preventDefault();
+        $('#id_project_autocomplete').val('');
+        $('#id_project').val('');
+        $('.add-project-msg').html('');
+        $('#add-project-modal').modal('hide');
+        return false;
     });
 </script>

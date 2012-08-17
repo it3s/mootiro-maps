@@ -8,6 +8,7 @@
 {% load proposal_tags %}
 {% load komoo_tags %}
 {% load markitup_tags %}
+{% load project_tags %}
 
 {% block title %}{{ investment.title }} on {{ investment.grantee }}{% endblock %}
 
@@ -53,6 +54,7 @@
       <div id="map-preview">{% komoo_map '{}' 'type=preview' %}</div>
     <a class="see-on-map" href="#">{% trans "see on map" %}</a>
 
+    {% projects_for_object investment %}
     {% taglist investment %}
 
     {% with similar_investments=investment.tags.similar_objects %}

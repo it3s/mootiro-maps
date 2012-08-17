@@ -21,5 +21,6 @@ def projects_for_object(context, obj):
     project_widget = Autocomplete(Project, '/project/search_by_name')
     project_widget = "%s \n %s" % (str(project_widget.media),
                                      project_widget.render('project'))
-    return dict(projects=projects, project_widget=project_widget)
+    return dict(projects=projects, project_widget=project_widget,
+                contenttype=ct.id, object_id=obj.id)
 

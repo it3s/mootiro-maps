@@ -2556,6 +2556,9 @@ ul.two-cols li {
 .project-list-logo {
     vertical-align: top;
 }
+.projects-tag-header {
+    margin-bottom: 10px;
+}
 .projects-tag-header img{
     display: inline-block;
     margin-right: 15px;

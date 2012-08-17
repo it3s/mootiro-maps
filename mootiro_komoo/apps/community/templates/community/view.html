@@ -8,6 +8,7 @@
 {% load markitup_tags %}
 {% load upload_tags %}
 {% load discussion_tags %}
+{% load project_tags %}
 
 {% block title %}{{ community.name }}{% endblock %}
 
@@ -53,6 +54,7 @@
         {% endfor %}
       </ul>
     </div>
+    {% projects_for_object community %}
   </div>
 
   <div class="view-extras">
