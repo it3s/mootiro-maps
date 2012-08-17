@@ -130,7 +130,7 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 
 @register.inclusion_tag('main/templatetags/history.html')
 def history(obj):
-    if obj.creator:
+    if hasattr(obj, 'creator') and obj.creator:
         creator_link = '<a href="/permalink/u{}">{}</a>'.format(
                 obj.creator.id, obj.creator.get_name)
     else:
