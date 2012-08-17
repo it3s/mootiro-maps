@@ -52,15 +52,18 @@
     });
     $( "#id_project_autocomplete" ).bind( "autocompleteselect", function(event, ui) {
         $('.add-project-msg').html(
-            '<p>' + 
-                'Adicionando este objeto ao projeto ' + ui.item.label +
+            '<p>' +
+                'Este objeto será adicionado ao projeto <strong>' +
+                ui.item.label + '</strong>' +
             '</p>'
         );
     });
     $('#add-project-save').click(function(){
         alert('bang');
         //save projrelatedobject
-        // clean all
-        //close modal
+        $('#id_project_autocomplete').val('');
+        $('#id_project').val('');
+        $('.add-project-msg').html('');
+        $('#add-project-modal').modal('hide');
     });
 </script>
