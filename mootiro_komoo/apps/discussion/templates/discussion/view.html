@@ -6,28 +6,29 @@
 {% load markitup_tags %}
 
 {% block title %}
-  {% trans "Discussion about" %} {{ discussion.content_object.name }}
+  {% trans "Discussion about" %} {{ obj.name }}
 {% endblock %}
 
 {% block menu %}
-  {% menu discussion.content_object menu_section %}
+  {% menu obj menu_section %}
 {% endblock %}
 
 {% block content %}
 
 <div id="main-content">
   <div class="main-column">
-    <h2 class="title">{% trans "Discussion about" %} {{ discussion.content_object.name }}</h2>
+    <h2 class="title">{% trans "Discussion about" %} {{ obj.name }}</h2>
     <div class="view-edit-btn">
       {#% history discussion %#}
-      <a href="" class="btn login-required"><i class="icon-pencil"></i></a>
+      <a href="{% url edit_discussion obj.perm_id %}" class="btn login-required"><i class="icon-pencil"></i></a>
     </div>
 
     <div class="mark-down">
-      {{ discussion.text|render_markup|safe }}
+      {{ obj.discussion.text|render_markup|safe }}
     </div>
     
-    {% comments discussion %}
+    {% comments obj.discussion %}
+    
   </div>
 
 </div>

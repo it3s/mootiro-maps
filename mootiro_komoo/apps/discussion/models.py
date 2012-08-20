@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.core.urlresolvers import reverse
 
 import reversion
 
@@ -17,8 +18,6 @@ class Discussion(models.Model):
         return self.content_objects.all()[0]
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_discussion')
-    creation_date = models.DateTimeField(auto_now_add=True)
     last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
