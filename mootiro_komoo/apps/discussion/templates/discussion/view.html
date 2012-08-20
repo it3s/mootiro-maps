@@ -1,0 +1,35 @@
+{% extends "global.html" %}
+
+{% load i18n %}
+{% load komoo_tags %}
+{% load comment_tags %}
+{% load markitup_tags %}
+
+{% block title %}
+  {% trans "Discussion about" %} {{ obj.name }}
+{% endblock %}
+
+{% block menu %}
+  {% menu obj menu_section %}
+{% endblock %}
+
+{% block content %}
+
+<div id="main-content">
+  <div class="main-column">
+    <h2 class="title">{% trans "Discussion about" %} {{ obj.name }}</h2>
+    <div class="view-edit-btn">
+      {#% history discussion %#}
+      <a href="{% url edit_discussion obj.perm_id %}" class="btn login-required"><i class="icon-pencil"></i></a>
+    </div>
+
+    <div class="mark-down">
+      {{ obj.discussion.text|render_markup|safe }}
+    </div>
+    
+    {% comments obj.discussion %}
+    
+  </div>
+
+</div>
+{% endblock %}

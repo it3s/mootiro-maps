@@ -13,6 +13,7 @@ from main.utils import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON
 from vote.models import VotableModel
+from discussion.models import Discussion
 
 
 class Community(GeoRefModel, VotableModel):
@@ -27,6 +28,9 @@ class Community(GeoRefModel, VotableModel):
     creation_date = models.DateTimeField(auto_now_add=True)
     last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
+
+    # Discussion
+    discussion = models.ForeignKey(Discussion, null=True, related_name="content_objects")
 
     tags = TaggableManager()
 
@@ -92,6 +96,11 @@ class Community(GeoRefModel, VotableModel):
     def admin_url(self):
         return reverse('admin:{}_{}_change'.format(self._meta.app_label,
             self._meta.module_name), args=[self.id])
+
+    @property
+    def perm_id(self):
+        return 'c%d' % self.id
+
 
 if not reversion.is_registered(Community):
     reversion.register(Community)
