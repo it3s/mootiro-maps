@@ -45,6 +45,73 @@
             <div class="mark-down">{{ project.description|render_markup|safe }}</div>
         </div>
 
+
+        <div>
+            <div class="organization-buttons row">
+                <div class="org-btn span3 selected" panel="map-points-list">
+                    <i class="icon-map"></i>
+                    <div class="inline-block">
+                      {% trans 'points on map' %}
+                    </div>
+                </div>
+                <div class="org-btn span3" panel="organizations-list">
+                    <i class="icon-organization"></i>
+                    <div class="inline-block">
+                        {% trans 'Organization' %}
+                    </div>
+                </div>
+                <div class="org-btn span3" panel="communities-list">
+                    <i class="icon-community"></i>
+                    <div class="inline-block">
+                        {% trans 'Communities' %}
+                    </div>
+                </div>
+                <div class="org-btn span3" panel="needs-list">
+                    <i class="icon-need"></i>
+                    <div class="inline-block">
+                        {% trans 'Needs' %}
+                    </div>
+                </div>
+                <div class="org-btn span3" panel="resources-list">
+                    <i class="icon-resource"></i>
+                    <div class="inline-block">
+                        {% trans 'Resource' %}
+                    </div>
+                </div>
+                <div class="org-btn span3 multiline" panel="investments-list">
+                    <i class="icon-investment"></i>
+                    <div class="inline-block">
+                        {% trans 'Investments' %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="org-info-panel map-points-list" >
+                Ponits on Map
+            </div>
+
+            <div class="org-info-panel organizations-list hidden">
+                Organizations
+            </div>
+
+            <div class="org-info-panel communities-list hidden">
+                communities
+            </div>
+
+            <div class="org-info-panel needs-list hidden">
+                needs
+            </div>
+
+            <div class="org-info-panel resources-list hidden">
+                resources
+            </div>
+
+            <div class="org-info-panel investments-list hidden">
+                investments
+            </div>
+        </div>
+
+
         <div class="view-footer">
 
         </div>
@@ -118,5 +185,16 @@
 {% block page_scripts %}
     {% vote_staticfiles %}
     {% comments_staticfiles %}
+    <script type="text/javascript">
+        $(function(){
+            $('.org-btn').click(function(evt){
+                $('.org-btn.selected').removeClass('selected');
+                $('.org-info-panel').hide();
+                var $this = $(this);
+                $this.addClass('selected');
+                $('.' + $this.attr('panel')).fadeIn();
+            });
+        });
+    </script>
 
 {% endblock %}

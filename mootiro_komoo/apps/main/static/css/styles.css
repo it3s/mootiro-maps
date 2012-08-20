@@ -364,6 +364,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.map:hover, .button.map.selected,
 .organization-buttons .org-btn[panel='branches-list']:hover,
 .organization-buttons .org-btn[panel='branches-list'].selected,
+.organization-buttons .org-btn[panel='map-points-list']:hover,
+.organization-buttons .org-btn[panel='map-points-list'].selected,
 #top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
@@ -399,6 +401,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.need:hover, .button.need.selected,
 .organization-buttons .org-btn[panel='supported-proposals-list']:hover,
 .organization-buttons .org-btn[panel='supported-proposals-list'].selected,
+.organization-buttons .org-btn[panel='needs-list']:hover,
+.organization-buttons .org-btn[panel='needs-list'].selected,
 #top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
@@ -416,6 +420,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.organization:hover, .button.organization.selected,
 .organization-buttons .org-btn[panel='supported-organizations-list']:hover,
 .organization-buttons .org-btn[panel='supported-organizations-list'].selected,
+.organization-buttons .org-btn[panel='organizations-list']:hover,
+.organization-buttons .org-btn[panel='organizations-list'].selected,
 #top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
@@ -432,7 +438,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 .button.resource:hover, .button.resource.selected,
 .organization-buttons .org-btn[panel='supported-resources-list']:hover,
-.organization-buttons .org-btn[panel='upported-resources-list'].selected,
+.organization-buttons .org-btn[panel='supported-resources-list'].selected,
+.organization-buttons .org-btn[panel='resources-list']:hover,
+.organization-buttons .org-btn[panel='resources-list'].selected,
 #top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
