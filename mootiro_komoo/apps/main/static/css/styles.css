@@ -161,7 +161,7 @@ div.apart {
     background-color: #EEE9CC;
 }
 .branch-search-result {
-    padding-left: 40px !important; 
+    padding-left: 40px !important;
 }
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
@@ -293,7 +293,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     color: #000;
 }
 #top #menu li a, .button-off, .map-tab a, .map-button ,
-.organization-buttons .org-btn, .update-community {
+.organization-buttons .org-btn, .view-info-buttons .view-info-btn, .update-community {
     border: 1px solid #c7c7c7;
 
     background-color: #ededed;
@@ -311,7 +311,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 #top #menu li a:hover, #top #menu li.selected a,
 .map-tab a:hover, .map-tab.selected a,
 .map-button:hover, .map-button.selected,
-.organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected{
+.organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected,
+.view-info-buttons .view-info-btn:hover, .view-info-buttons .view-info-btn.selected{
     color: #fff;
     text-decoration: none;
     background-color: #3EBAC2;
@@ -364,8 +365,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.map:hover, .button.map.selected,
 .organization-buttons .org-btn[panel='branches-list']:hover,
 .organization-buttons .org-btn[panel='branches-list'].selected,
-.organization-buttons .org-btn[panel='map-points-list']:hover,
-.organization-buttons .org-btn[panel='map-points-list'].selected,
+.view-info-buttons .view-info-btn[panel='map-points-list']:hover,
+.view-info-buttons .view-info-btn[panel='map-points-list'].selected,
 #top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
@@ -383,6 +384,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.community:hover, .button.community.selected,
 .organization-buttons .org-btn[panel='communities-list']:hover,
 .organization-buttons .org-btn[panel='communities-list'].selected,
+.view-info-buttons .view-info-btn[panel='communities-list']:hover,
+.view-info-buttons .view-info-btn[panel='communities-list'].selected,
 #top #menu #menu-community a:hover, #top #menu #menu-community.selected a,
 .update-community:hover {
     color: #fff !important;
@@ -401,8 +404,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.need:hover, .button.need.selected,
 .organization-buttons .org-btn[panel='supported-proposals-list']:hover,
 .organization-buttons .org-btn[panel='supported-proposals-list'].selected,
-.organization-buttons .org-btn[panel='needs-list']:hover,
-.organization-buttons .org-btn[panel='needs-list'].selected,
+.view-info-buttons .view-info-btn[panel='needs-list']:hover,
+.view-info-buttons .view-info-btn[panel='needs-list'].selected,
 #top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
@@ -420,8 +423,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.organization:hover, .button.organization.selected,
 .organization-buttons .org-btn[panel='supported-organizations-list']:hover,
 .organization-buttons .org-btn[panel='supported-organizations-list'].selected,
-.organization-buttons .org-btn[panel='organizations-list']:hover,
-.organization-buttons .org-btn[panel='organizations-list'].selected,
+.view-info-buttons .view-info-btn[panel='organizations-list']:hover,
+.view-info-buttons .view-info-btn[panel='organizations-list'].selected,
 #top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
@@ -439,8 +442,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.resource:hover, .button.resource.selected,
 .organization-buttons .org-btn[panel='supported-resources-list']:hover,
 .organization-buttons .org-btn[panel='supported-resources-list'].selected,
-.organization-buttons .org-btn[panel='resources-list']:hover,
-.organization-buttons .org-btn[panel='resources-list'].selected,
+.view-info-buttons .view-info-btn[panel='resources-list']:hover,
+.view-info-buttons .view-info-btn[panel='resources-list'].selected,
 #top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
@@ -458,6 +461,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.investment:hover, .button.investment.selected,
 .organization-buttons .org-btn[panel='investments-list']:hover,
 .organization-buttons .org-btn[panel='investments-list'].selected,
+.view-info-buttons .view-info-btn[panel='investments-list']:hover,
+.view-info-buttons .view-info-btn[panel='investments-list'].selected,
 #top #menu #menu-investment a:hover, #top #menu #menu-investment.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
@@ -1783,7 +1788,7 @@ div.view-list-item.odd {
     background-image:url(../img/glyphicons-halflings-orange.png);
 }
 /* ====== Organization ======== */
-.org-info-panel {
+.org-info-panel, .view-info-panel {
     margin-top: 30px;
     margin-bottom: 20px;
 }
@@ -1870,12 +1875,12 @@ textarea.markItUpEditor{
     display: inline-block;
     width: 20px;
 }
-.organization-buttons{
+.organization-buttons, .view-info-buttons{
     margin-top: 20px;
     font-weight: bold;
     font-size: 0.9em;
 }
-.org-btn{
+.org-btn, .view-info-btn{
     padding: 10px;
     border-radius: 7px;
     width: 208px;
@@ -1885,19 +1890,32 @@ textarea.markItUpEditor{
     cursor: pointer;
     display: inline-block;
     float: none;
+    vertical-align: top;
 }
-.org-btn.multiline{
+.org-btn.multiline, .view-info-btn.multiline{
     padding: 4px 10px;
     min-height: 38px;
 }
-.org-btn div{
+.org-btn div, .view-info-btn div{
     display: inline-block;
     max-width: 160px;
     vertical-align: middle;
 }
-.org-btn i{
+.org-btn i, .view-info-btn i{
     margin-right: 5px;
     vertical-align: middle;
+}
+.view-info-object{
+    background-color: #F6F6F6;
+    padding: 10px;
+    display: block;
+    width:97%;
+    margin: 10px 0 10px 0;
+    border-radius: 7px;
+}
+.view-info-object:hover{
+    background-color: #DCEFF4;
+    color: #000000;
 }
 .org-info-div{
     /*background-color: rgb(166, 229, 238);*/

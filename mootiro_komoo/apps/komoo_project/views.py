@@ -42,7 +42,23 @@ def project_list(request):
 @render_to('project/view.html')
 def project_view(request, project_slug=''):
     project = get_object_or_404(Project, slug=project_slug)
-    return dict(project=project, geojson={})
+
+    proj_objects = {}
+
+    for p in ProjectRelatedObject.objects.filter(project=project):
+        obj = p.content_object
+        if not proj_objects.get(obj.__class__.__name__, None):
+            proj_objects[obj.__class__.__name__] = {
+                    'app_name': obj.__module__.split('.')[0],
+                    'objects_list': []}
+        proj_objects[obj.__class__.__name__]['objects_list'].append({
+            'name': obj.name,
+            'link': obj.view_url,
+            'id': obj.id,
+            'has_geojson': bool(getattr(obj, 'geometry', ''))
+        })
+
+    return dict(project=project, geojson={}, proj_objects=proj_objects)
 
 
 @login_required
@@ -93,13 +109,12 @@ def add_related_object(request):
     proj_id = request.POST.get('project_id', '')
     proj = get_object_or_404(Project, pk=proj_id)
 
-
     if proj and obj_id and ct:
         ProjectRelatedObject.objects.get_or_create(content_type_id=ct,
                 object_id=obj_id, project_id=proj_id)
-        return {'success': True, 
+        return {'success': True,
                 'project': {
-                    'id':proj.id,
+                    'id': proj.id,
                     'name': proj.name,
                     'link': proj.view_url
                 }}
