@@ -19,6 +19,11 @@
 {% block content %}
 <div id="main-content" class="inline-block">
     <div class="main-column">
+    {% if project.logo %}
+    <div class="view-header-logo"><img src="{{ project.logo_url }}" class="inline-block organization-logo"></div>
+    {% else %}
+    <div class="view-header-logo"></div>
+    {% endif %}
 
         <div class="view-header">
             <div>
@@ -44,7 +49,6 @@
         <div class="view-body">
             <div class="mark-down">{{ project.description|render_markup|safe }}</div>
         </div>
-
 
         <div>
             <div class="view-info-buttons row">
@@ -185,7 +189,7 @@
 
 
         <div class="view-footer">
-
+            {% image_gallery project %}
         </div>
 
         <div class="view-extras">
