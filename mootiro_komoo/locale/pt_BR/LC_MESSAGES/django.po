@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-17 16:59-0300\n"
+"POT-Creation-Date: 2012-08-20 16:17-0300\n"
 "PO-Revision-Date: 2012-07-19 17:32-0300\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -52,7 +52,7 @@ msgstr "Palavras-Chave"
 msgid " "
 msgstr " "
 
-#: apps/community/models.py:37
+#: apps/community/models.py:41
 #: apps/investment/templates/investment/list.html:37
 #: apps/komoo_project/forms.py:55 apps/komoo_resource/forms.py:45
 #: apps/main/templatetags/komoo_tags.py:328 apps/need/forms.py:24
@@ -85,6 +85,15 @@ msgstr "população:"
 #: apps/community/templates/community/view.html:50
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
+
+#: apps/discussion/forms.py:24
+msgid "Text"
+msgstr "Texto"
+
+#: apps/discussion/templates/discussion/view.html:9
+#: apps/discussion/templates/discussion/view.html:20
+msgid "Discussion about"
+msgstr "Discussões sobre"
 
 #: apps/investment/forms.py:31 apps/need/forms.py:25 apps/proposal/forms.py:25
 msgid "Title"
@@ -188,6 +197,7 @@ msgid "Investiments for %(community)s"
 msgstr "Investimentos em %(community)s"
 
 #: apps/investment/templates/investment/list.html:9
+#: apps/komoo_project/templates/project/view.html:84
 #: apps/main/templates/404.html:32
 #: apps/main/templates/main/templatetags/menu.html:46
 #: apps/main/templates/main/templatetags/menu.html:48
@@ -214,7 +224,7 @@ msgid "Period"
 msgstr "Período"
 
 #: apps/investment/templates/investment/view.html:55
-#: apps/komoo_project/templates/project/view.html:63
+#: apps/komoo_project/templates/project/view.html:187
 #: apps/komoo_resource/templates/resource/show.html:65
 #: apps/need/templates/need/view.html:60
 #: apps/organization/templates/organization/show.html:209
@@ -378,7 +388,7 @@ msgid "Logo"
 msgstr "Logotipo"
 
 #: apps/komoo_project/forms.py:53
-#: apps/komoo_project/templates/project/view.html:86
+#: apps/komoo_project/templates/project/view.html:210
 #: apps/komoo_resource/forms.py:43
 #: apps/komoo_resource/templates/resource/show.html:96
 #: apps/organization/forms.py:66
@@ -387,7 +397,7 @@ msgid "Contact"
 msgstr "Contato"
 
 #: apps/komoo_project/forms.py:54
-#: apps/komoo_project/templates/project/view.html:75
+#: apps/komoo_project/templates/project/view.html:199
 msgid "Contributors"
 msgstr "Contribuidores"
 
@@ -418,7 +428,6 @@ msgstr "creator"
 
 #: apps/komoo_project/templates/project/list.html:8
 #: apps/komoo_project/templates/project/projects_tag.html:5
-#: apps/komoo_project/templates/project/view.html:15
 #: apps/main/templates/main/templatetags/menu.html:53
 msgid "Projects"
 msgstr "Projetos"
@@ -431,7 +440,7 @@ msgstr[0] "%(counter)s Projeto"
 msgstr[1] "%(counter)s Projetos"
 
 #: apps/komoo_project/templates/project/list.html:54
-#: apps/komoo_project/templates/project/view.html:69
+#: apps/komoo_project/templates/project/view.html:193
 msgid "Administrator"
 msgstr "Administrador"
 
@@ -456,6 +465,72 @@ msgstr "Cancelar"
 #: apps/user_cas/templates/user_cas/profile_update.html:166
 msgid "Save changes"
 msgstr "Salvar mudanças"
+
+#: apps/komoo_project/templates/project/view.html:54
+msgid "Points on Map"
+msgstr "Ponto no Mapa"
+
+#: apps/komoo_project/templates/project/view.html:60
+#: apps/main/templates/404.html:33
+#: apps/main/templates/main/templatetags/geo_objects_add.html:23
+#: apps/main/templates/main/templatetags/geo_objects_listing.html:35
+#: apps/main/templates/main/templatetags/menu.html:30
+#: apps/main/templates/main/templatetags/menu.html:32
+#: apps/organization/templates/organization/list.html:9
+msgid "Organizations"
+msgstr "Organizações"
+
+#: apps/komoo_project/templates/project/view.html:66
+#: apps/main/templates/404.html:29
+#: apps/main/templates/main/templatetags/geo_objects_add.html:7
+#: apps/main/templates/main/templatetags/geo_objects_listing.html:9
+#: apps/main/templates/main/templatetags/menu.html:16
+#: apps/organization/templates/organization/branch_communities_list.html:6
+#: apps/organization/templates/organization/branch_form.html:20
+msgid "Communities"
+msgstr "Comunidades"
+
+#: apps/komoo_project/templates/project/view.html:72
+#: apps/main/templates/404.html:31
+#: apps/main/templates/main/templatetags/geo_objects_add.html:11
+#: apps/main/templates/main/templatetags/geo_objects_listing.html:15
+#: apps/main/templates/main/templatetags/menu.html:22
+#: apps/main/templates/main/templatetags/menu.html:24
+msgid "Needs"
+msgstr "Necessidades"
+
+#: apps/komoo_project/templates/project/view.html:78
+#: apps/main/templates/404.html:30
+#: apps/main/templates/main/templatetags/geo_objects_add.html:35
+#: apps/main/templates/main/templatetags/geo_objects_listing.html:29
+#: apps/main/templates/main/templatetags/menu.html:38
+#: apps/main/templates/main/templatetags/menu.html:40
+msgid "Resources"
+msgstr "Recursos"
+
+#: apps/komoo_project/templates/project/view.html:101
+msgid "This project has no related Objects yet"
+msgstr "Este projeto não tem nenhum Objeto relacionado"
+
+#: apps/komoo_project/templates/project/view.html:114
+msgid "This project has no related Organizations yet"
+msgstr "Este projeto não tem nenhuma Organização relacionada"
+
+#: apps/komoo_project/templates/project/view.html:127
+msgid "This project has no related Communities yet"
+msgstr "Este projeto não tem nenhuma Communidade relacionada"
+
+#: apps/komoo_project/templates/project/view.html:140
+msgid "This project has no related Needs yet"
+msgstr "Este projeto não tem nenhuma Necessidade relacionada"
+
+#: apps/komoo_project/templates/project/view.html:153
+msgid "This project has no related Resources yet"
+msgstr "Este projeto não tem nenhum Recurso relacionada"
+
+#: apps/komoo_project/templates/project/view.html:166
+msgid "This project has no related Investments yet"
+msgstr "Este Projeto não tem nenhum Investimento relacionado"
 
 #: apps/komoo_resource/forms.py:42
 msgid "Kind"
@@ -560,40 +635,6 @@ msgstr "Reclame com a gente"
 #: apps/main/templates/404.html:25
 msgid "Take a look at some important links"
 msgstr "Veja alguns links importantes"
-
-#: apps/main/templates/404.html:29
-#: apps/main/templates/main/templatetags/geo_objects_add.html:7
-#: apps/main/templates/main/templatetags/geo_objects_listing.html:9
-#: apps/main/templates/main/templatetags/menu.html:16
-#: apps/organization/templates/organization/branch_communities_list.html:6
-#: apps/organization/templates/organization/branch_form.html:20
-msgid "Communities"
-msgstr "Comunidades"
-
-#: apps/main/templates/404.html:30
-#: apps/main/templates/main/templatetags/geo_objects_add.html:35
-#: apps/main/templates/main/templatetags/geo_objects_listing.html:29
-#: apps/main/templates/main/templatetags/menu.html:38
-#: apps/main/templates/main/templatetags/menu.html:40
-msgid "Resources"
-msgstr "Recursos"
-
-#: apps/main/templates/404.html:31
-#: apps/main/templates/main/templatetags/geo_objects_add.html:11
-#: apps/main/templates/main/templatetags/geo_objects_listing.html:15
-#: apps/main/templates/main/templatetags/menu.html:22
-#: apps/main/templates/main/templatetags/menu.html:24
-msgid "Needs"
-msgstr "Necessidades"
-
-#: apps/main/templates/404.html:33
-#: apps/main/templates/main/templatetags/geo_objects_add.html:23
-#: apps/main/templates/main/templatetags/geo_objects_listing.html:35
-#: apps/main/templates/main/templatetags/menu.html:30
-#: apps/main/templates/main/templatetags/menu.html:32
-#: apps/organization/templates/organization/list.html:9
-msgid "Organizations"
-msgstr "Organizações"
 
 #: apps/main/templates/404.html:34
 msgid "Help"
@@ -1571,6 +1612,9 @@ msgstr "Item Classificado"
 #: lib/taggit/models.py:160
 msgid "Tagged Items"
 msgstr "Itens Classificados"
+
+#~ msgid "Objects"
+#~ msgstr "Id do Objeto"
 
 #~ msgid "Username Required"
 #~ msgstr "Nome de usuário é obrigatório"

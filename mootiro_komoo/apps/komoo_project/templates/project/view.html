@@ -57,31 +57,46 @@
                 <div class="view-info-btn span3 selected" panel="organizations-list">
                     <i class="icon-organization"></i>
                     <div class="inline-block">
-                        {% trans 'Organizations' %}
+                        {% trans 'Organizations' %} 
+                        {% if proj_objects.Organization.objects_list %}
+                            &nbsp;({{ proj_objects.Organization.objects_list|length }})
+                        {% endif %}
                     </div>
                 </div>
                 <div class="view-info-btn span3" panel="communities-list">
                     <i class="icon-community"></i>
                     <div class="inline-block">
                         {% trans 'Communities' %}
+                        {% if proj_objects.Community.objects_list %}
+                            &nbsp;({{ proj_objects.Community.objects_list|length }})
+                        {% endif %}
                     </div>
                 </div>
                 <div class="view-info-btn span3" panel="needs-list">
                     <i class="icon-need"></i>
                     <div class="inline-block">
                         {% trans 'Needs' %}
+                        {% if proj_objects.Need.objects_list %}
+                            &nbsp;({{ proj_objects.Need.objects_list|length }})
+                        {% endif %}
                     </div>
                 </div>
                 <div class="view-info-btn span3" panel="resources-list">
                     <i class="icon-resource"></i>
                     <div class="inline-block">
                         {% trans 'Resources' %}
+                        {% if proj_objects.Resource.objects_list %}
+                            &nbsp;({{ proj_objects.Resource.objects_list|length }})
+                        {% endif %}
                     </div>
                 </div>
                 <div class="view-info-btn span3 multiline" panel="investments-list">
                     <i class="icon-investment"></i>
                     <div class="inline-block">
                         {% trans 'Investments' %}
+                        {% if proj_objects.Investment.objects_list %}
+                            &nbsp;({{ proj_objects.Investment.objects_list|length }})
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -98,7 +113,7 @@
             <!--         </div> -->
             <!--         {#% endfor %#} -->
             <!--     {#% empty %#} -->
-            <!--     <div class="view-info-empty">{% trans 'This project has no related' %} {% trans 'Objects' %} {% trans 'yet' %}.</div> -->
+            <!--     <div class="view-info-empty">{% trans 'This project has no related Objects yet' %}.</div> -->
             <!--     {#% endfor %#} -->
             <!-- </div> -->
 
@@ -111,7 +126,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related' %} {% trans 'Organizations' %} {% trans 'yet' %}.</div>
+                <div class="view-info-empty">{% trans 'This project has no related Organizations yet' %}.</div>
                 {% endfor %}
             </div>
 
@@ -124,7 +139,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related' %} {% trans 'Communities' %} {% trans 'yet' %}.</div>
+                <div class="view-info-empty">{% trans 'This project has no related Communities yet' %}.</div>
                 {% endfor %}
             </div>
 
@@ -137,7 +152,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related' %} {% trans 'Needs' %} {% trans 'yet' %}.</div>
+                <div class="view-info-empty">{% trans 'This project has no related Needs yet' %}.</div>
                 {% endfor %}
             </div>
 
@@ -150,7 +165,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related' %} {% trans 'Resources' %} {% trans 'yet' %}.</div>
+                <div class="view-info-empty">{% trans 'This project has no related Resources yet' %}.</div>
                 {% endfor %}
             </div>
 
@@ -163,7 +178,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related' %} {% trans 'Investments' %} {% trans 'yet' %}.</div>
+                <div class="view-info-empty">{% trans 'This project has no related Investments yet' %}.</div>
                 {% endfor %}
             </div>
         </div>
