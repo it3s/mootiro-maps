@@ -2556,6 +2556,9 @@ ul.two-cols li {
 .project-list-logo {
     vertical-align: top;
 }
+.projects-tag-header {
+    margin-bottom: 10px;
+}
 .projects-tag-header img{
     display: inline-block;
     margin-right: 15px;
@@ -2578,7 +2581,7 @@ ul.two-cols li {
     padding: 20px;
     border: solid 1px #999999;
 }
-#div_id_is_public .radio{
+#div_id_public .radio, #div_id_public_discussion .radio{
     width: 45%;
     display: inline-block;
 }

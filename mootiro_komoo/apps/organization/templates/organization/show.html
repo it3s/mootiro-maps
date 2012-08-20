@@ -10,6 +10,7 @@
 {% load organization_tags %}
 {% load investment_tags %}
 {% load upload_tags %}
+{% load project_tags %}
 
 {% block title %}
   {% if community %}
@@ -246,6 +247,7 @@
 
         </div>
 
+        {% projects_for_object organization %}
         {% taglist organization community %}
 
     </div>
