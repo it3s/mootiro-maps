@@ -9,6 +9,7 @@
 {% load moderation_tags %}
 {% load markitup_tags %}
 {% load upload_tags %}
+{% load project_tags %}
 
 {% block title %}{{ need.title }} {% endblock %}
 
@@ -100,6 +101,7 @@
       {% endif %}
     {% endwith %}
 
+    {% projects_for_object need %}
     {% taglist need community %}
 
   </div>

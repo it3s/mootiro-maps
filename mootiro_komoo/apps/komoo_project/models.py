@@ -33,7 +33,8 @@ class Project(models.Model):
             related_name='project_contributors')
     community = models.ManyToManyField(Community, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
-    is_public = models.BooleanField(default=True)
+    public = models.BooleanField(default=True)
+    public_discussion = models.BooleanField(default=False)
 
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 
@@ -62,7 +63,9 @@ class Project(models.Model):
         return UploadedFile.get_files_for(self)
 
     def user_can_edit(self, user):
-        return user == self.creator or user in self.contributors.all()
+        return self.public or \
+               user == self.creator or \
+               user in self.contributors.all()
 
     @property
     def home_url_params(self):
@@ -75,7 +78,7 @@ class Project(models.Model):
     @property
     def edit_url(self):
         return reverse('project_edit', kwargs=self.home_url_params)
-    
+
     @property
     def logo_url(self):
         if self.logo:
