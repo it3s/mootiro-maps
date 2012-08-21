@@ -38,7 +38,15 @@
             {% endif %}
         </div>
         <div class="profile-lp-map-preview">
-          <div id="map-canvas-main-preview"></div>
+          <div id="map-canvas-main-preview" class="map-canvas">
+            <div class="placeholder">
+              {% if geojson %}
+                {% trans 'Loading...' %}
+              {% else %}
+                {% trans 'Map position not available' %}
+              {% endif %}
+            </div>
+          </div>
         </div>
 
         <!-- map info section -->

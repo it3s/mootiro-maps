@@ -35,6 +35,8 @@ class MapButtonWidget(forms.Widget):
                 }
                 $('#%(container_id)s').show();
                 google.maps.event.trigger(window.editor.googleMap, 'resize');
+
+                return false;
             });
         """ % {
                 'field_id': field_id,

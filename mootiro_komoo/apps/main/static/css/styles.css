@@ -838,7 +838,12 @@ body.community #collapse-panel {
     margin-left: 0px !important;
     width: auto !important;
 }
-#map-canvas-preview .placeholder {
+.map-canvas .placeholder {
+    width: 247px;
+    height: 40px;
+}
+#map-canvas-preview .placeholder,
+.map-canvas .placeholder {
     font-size: 16px;
     padding: 80px 35px;
     text-align: center;
