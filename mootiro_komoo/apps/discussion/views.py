@@ -29,12 +29,13 @@ def _discussion_for (identifier):
     entity, id_ = identifier[0], identifier[1:]
     obj = get_object_or_404(entity_model[entity], pk=id_)
     if not obj.discussion:
-        # ESTA CRIANDO DISCUSSION SEMPRE!!!
-        print "OBJ", obj, "nao tem discussion!"
-        obj.discussion = Discussion(content_objects=[obj])
+        print "\n\n\n = = = = = NOOOOOT = = = = = \n\n\n"
+        d = Discussion()
+        d.save()
+        obj.discussion = d
         obj.save()
-        print "OBJ", obj, "tem a discussion", obj.discussion
-        print "Dicussion", obj.discussion, "tem os objs", obj.discussion.content_objects.all()
+    else:
+        print "\n\n\n = = = = = YESSSSS = = = = = \n\n\n"
 
     return obj
 
