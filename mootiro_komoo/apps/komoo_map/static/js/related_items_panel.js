@@ -51,20 +51,10 @@
         this.template = _.template($('#features-template').html());
         return this.collection.bind('reset', this.render);
       },
-      title: function() {
-        if (this.type === 'OrganizationBranch') {
-          return "" + this.collection.length + " points on map";
-        } else if (this.type === 'Community') {
-          return "On " + this.collection.length + " communities";
-        } else if (this.type === 'SupportedOrganizationBranch') {
-          return "Supported " + this.collection.length + " organizations";
-        } else if (this.type === 'Resource') {
-          return "Supported " + this.collection.length + " resources";
-        } else if (this.type === 'Need') {
-          return "Supported " + this.collection.length + " needs";
-        } else {
-          return "";
-        }
+      title: function(count) {
+        var msg;
+        msg = this.type === 'OrganizationBranch' ? ngettext("%s organization branch", "%s organization branchs", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%{s needs", count) : "";
+        return interpolate(msg, [count]);
       },
       iconClass: function() {
         var modelName, _ref;
@@ -77,12 +67,13 @@
       },
       render: function() {
         var $features, collection;
+        collection = this.collection;
+        if (collection.length === 0) return this;
         this.$el.html(this.template({
-          title: this.title(),
+          title: this.title(collection.length),
           iconClass: this.iconClass()
         }));
         $features = this.$('.feature-list');
-        collection = this.collection;
         collection.each(function(feature) {
           var view;
           view = new FeatureView({
@@ -93,36 +84,37 @@
         return this;
       }
     });
-    return $(function() {
+    if (typeof KomooNS === "undefined" || KomooNS === null) KomooNS = {};
+    return KomooNS.drawFeaturesList = function(FeaturesViewClass) {
       var branchsView, communitiesView, needsView, resourcesView, supportedBranchsView,
         _this = this;
-      if (typeof KomooNS === "undefined" || KomooNS === null) KomooNS = {};
+      if (FeaturesViewClass == null) FeaturesViewClass = FeaturesView;
       KomooNS.features = _(geojson.features).groupBy(function(f) {
         return f.properties.type;
       });
-      communitiesView = new FeaturesView({
+      communitiesView = new FeaturesViewClass({
         type: 'Community',
         collection: new Features().reset(KomooNS.features['Community'])
       });
       $('.features-wrapper').append(communitiesView.render().$el);
-      needsView = new FeaturesView({
+      needsView = new FeaturesViewClass({
         type: 'Need',
         collection: new Features().reset(KomooNS.features['Need'])
       });
       $('.features-wrapper').append(needsView.render().$el);
-      resourcesView = new FeaturesView({
+      resourcesView = new FeaturesViewClass({
         type: 'Resource',
         collection: new Features().reset(KomooNS.features['Resource'])
       });
       $('.features-wrapper').append(resourcesView.render().$el);
-      branchsView = new FeaturesView({
+      branchsView = new FeaturesViewClass({
         type: 'OrganizationBranch',
         collection: new Features().reset(_.filter(KomooNS.features['OrganizationBranch'], function(o) {
           return o.properties.organization_name === KomooNS.obj.name;
         }))
       });
       $('.features-wrapper').append(branchsView.render().$el);
-      supportedBranchsView = new FeaturesView({
+      supportedBranchsView = new FeaturesViewClass({
         type: 'SupportedOrganizationBranch',
         collection: new Features().reset(_.filter(KomooNS.features['OrganizationBranch'], function(o) {
           return o.properties.organization_name !== KomooNS.obj.name;
@@ -130,7 +122,7 @@
       });
       $('.features-wrapper').append(supportedBranchsView.render().$el);
       return geoObjectsListing($('.features-wrapper'));
-    });
+    };
   });
 
 }).call(this);

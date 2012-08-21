@@ -20,7 +20,36 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             $(@el).html renderedContent
             this
 
+    window.OrganizationFeaturesView = FeaturesView.extend
+        title: (count) ->
+            msg =
+                if @type is 'OrganizationBranch'
+                    ngettext("%s point on map",
+                        "%s points on map",
+                        count)
+                else if @type is 'SupportedOrganizationBranch'
+                    ngettext("Supported %s organization",
+                        "Supported %s organizations",
+                        count)
+                else if @type is 'Community'
+                    ngettext("On %s community",
+                        "On %s communities",
+                        count)
+                else if @type is 'Resource'
+                    ngettext("Supported %s resource",
+                        "Supported %s resources",
+                        count)
+                else if @type is 'Need'
+                    ngettext("Supported %s need",
+                        "Supported %s needs",
+                        count)
+                else
+                    ""
+            interpolate msg, [count]
+
     $ ->
+        KomooNS.drawFeaturesList OrganizationFeaturesView
+
         panelInfoView = new PanelInfoView
             model: new PanelInfo KomooNS.obj
 

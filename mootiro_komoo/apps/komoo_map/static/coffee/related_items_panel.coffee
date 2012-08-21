@@ -48,19 +48,27 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             @template = _.template $('#features-template').html()
             @collection.bind 'reset', @render
 
-        title: ->
-            if @type is 'OrganizationBranch'
-                "#{@collection.length} points on map"
-            else if @type is 'Community'
-                "On #{@collection.length} communities"
-            else if @type is 'SupportedOrganizationBranch'
-                "Supported #{@collection.length} organizations"
-            else if @type is 'Resource'
-                "Supported #{@collection.length} resources"
-            else if @type is 'Need'
-                "Supported #{@collection.length} needs"
-            else
-                ""
+        title: (count) ->
+            msg =
+                if @type is 'OrganizationBranch'
+                    ngettext("%s organization branch",
+                        "%s organization branchs",
+                        count)
+                else if @type is 'Community'
+                    ngettext("%s community",
+                        "%s communities",
+                        count)
+                else if @type is 'Resource'
+                    ngettext("%s resource",
+                        "%s resources",
+                        count)
+                else if @type is 'Need'
+                    ngettext("%s need",
+                        "%{s needs",
+                        count)
+                else
+                    ""
+            interpolate msg, [count]
 
         iconClass: ->
             if @type in ['OrganizationBranch', 'SupportedOrganizationBranch']
@@ -71,13 +79,17 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
 
 
         render: () ->
+            collection = @collection
+
+            if collection.length is 0
+                return this
+
             @$el.html @template(
-                title: @title()
+                title: @title(collection.length)
                 iconClass: @iconClass()
             )
             $features = this.$ '.feature-list'
 
-            collection = @collection
             collection.each (feature) ->
                 view = new FeatureView
                     model: feature
@@ -85,32 +97,32 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
                 $features.append view.render().$el
             this
 
-    $ ->
-        KomooNS ?= {}
+    KomooNS ?= {}
+    KomooNS.drawFeaturesList = (FeaturesViewClass = FeaturesView) ->
         KomooNS.features = _(geojson.features).groupBy (f) -> f.properties.type
 
-        communitiesView = new FeaturesView
+        communitiesView = new FeaturesViewClass
             type: 'Community'
             collection: new Features().reset KomooNS.features['Community']
         $('.features-wrapper').append communitiesView.render().$el
 
-        needsView = new FeaturesView
+        needsView = new FeaturesViewClass
             type: 'Need'
             collection: new Features().reset KomooNS.features['Need']
         $('.features-wrapper').append needsView.render().$el
 
-        resourcesView = new FeaturesView
+        resourcesView = new FeaturesViewClass
             type: 'Resource'
             collection: new Features().reset KomooNS.features['Resource']
         $('.features-wrapper').append resourcesView.render().$el
 
-        branchsView = new FeaturesView
+        branchsView = new FeaturesViewClass
             type: 'OrganizationBranch'
             collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
                 o.properties.organization_name is KomooNS.obj.name)
         $('.features-wrapper').append branchsView.render().$el
 
-        supportedBranchsView = new FeaturesView
+        supportedBranchsView = new FeaturesViewClass
             type: 'SupportedOrganizationBranch'
             collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
                 o.properties.organization_name isnt KomooNS.obj.name)
