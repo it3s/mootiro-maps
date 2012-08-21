@@ -140,6 +140,10 @@ class Organization(VotableModel):
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
 
+    @property
+    def perm_id(self):
+        return 'o%d' % self.id
+
 
 class OrganizationBranch(GeoRefModel, VotableModel):
     name = models.CharField(max_length=320)
