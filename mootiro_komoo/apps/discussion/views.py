@@ -16,7 +16,7 @@ from .models import Discussion
 from community.models import Community
 from need.models import Need
 from proposal.models import Proposal
-# from komoo_resource.models import Resource
+from komoo_resource.models import Resource
 # from organization.models import OrganizationBranch, Organization
 # from proposal.models import Proposal
 from .forms import DiscussionForm
@@ -29,6 +29,7 @@ def _discussion_for (identifier):
         'c': Community,
         'n': Need,
         'p': Proposal,
+        'r': Resource,
     }
     ent, id_ = identifier[0], identifier[1:]
     ent_content_type = ContentType.objects.get_for_model(ent_model[ent])
