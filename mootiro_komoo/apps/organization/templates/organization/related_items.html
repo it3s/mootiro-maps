@@ -1,6 +1,9 @@
 {% extends "komoo_map/related_items.html" %}
 {% load i18n %}
 {% load komoo_tags %}
+
+{% block menu %} {% menu organization "organization" %} {% endblock %}
+
 {% block page_scripts %}
   {{ block.super }}
 

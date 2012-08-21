@@ -53,11 +53,17 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
                 "#{@collection.length} points on map"
             else if @type is 'Community'
                 "On #{@collection.length} communities"
+            else if @type is 'SupportedOrganizationBranch'
+                "Supported #{@collection.length} organizations"
+            else if @type is 'Resource'
+                "Supported #{@collection.length} resources"
+            else if @type is 'Need'
+                "Supported #{@collection.length} needs"
             else
                 ""
 
         iconClass: ->
-            if @type is 'OrganizationBranch'
+            if @type in ['OrganizationBranch', 'SupportedOrganizationBranch']
                 modelName = 'Organization'
             else
                 modelName = @type
@@ -93,8 +99,22 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             collection: new Features().reset KomooNS.features['Need']
         $('.features-wrapper').append needsView.render().$el
 
+        resourcesView = new FeaturesView
+            type: 'Resource'
+            collection: new Features().reset KomooNS.features['Resource']
+        $('.features-wrapper').append resourcesView.render().$el
+
         branchsView = new FeaturesView
             type: 'OrganizationBranch'
-            collection: new Features().reset KomooNS.features['OrganizationBranch']
+            collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
+                o.properties.organization_name is KomooNS.obj.name)
         $('.features-wrapper').append branchsView.render().$el
+
+        supportedBranchsView = new FeaturesView
+            type: 'SupportedOrganizationBranch'
+            collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
+                o.properties.organization_name isnt KomooNS.obj.name)
+        $('.features-wrapper').append supportedBranchsView.render().$el
+
+        geoObjectsListing $('.features-wrapper')
 

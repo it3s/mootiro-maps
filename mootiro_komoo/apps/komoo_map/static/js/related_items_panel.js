@@ -56,13 +56,19 @@
           return "" + this.collection.length + " points on map";
         } else if (this.type === 'Community') {
           return "On " + this.collection.length + " communities";
+        } else if (this.type === 'SupportedOrganizationBranch') {
+          return "Supported " + this.collection.length + " organizations";
+        } else if (this.type === 'Resource') {
+          return "Supported " + this.collection.length + " resources";
+        } else if (this.type === 'Need') {
+          return "Supported " + this.collection.length + " needs";
         } else {
           return "";
         }
       },
       iconClass: function() {
-        var modelName;
-        if (this.type === 'OrganizationBranch') {
+        var modelName, _ref;
+        if ((_ref = this.type) === 'OrganizationBranch' || _ref === 'SupportedOrganizationBranch') {
           modelName = 'Organization';
         } else {
           modelName = this.type;
@@ -88,7 +94,8 @@
       }
     });
     return $(function() {
-      var branchsView, communitiesView, needsView;
+      var branchsView, communitiesView, needsView, resourcesView, supportedBranchsView,
+        _this = this;
       if (typeof KomooNS === "undefined" || KomooNS === null) KomooNS = {};
       KomooNS.features = _(geojson.features).groupBy(function(f) {
         return f.properties.type;
@@ -103,11 +110,26 @@
         collection: new Features().reset(KomooNS.features['Need'])
       });
       $('.features-wrapper').append(needsView.render().$el);
+      resourcesView = new FeaturesView({
+        type: 'Resource',
+        collection: new Features().reset(KomooNS.features['Resource'])
+      });
+      $('.features-wrapper').append(resourcesView.render().$el);
       branchsView = new FeaturesView({
         type: 'OrganizationBranch',
-        collection: new Features().reset(KomooNS.features['OrganizationBranch'])
+        collection: new Features().reset(_.filter(KomooNS.features['OrganizationBranch'], function(o) {
+          return o.properties.organization_name === KomooNS.obj.name;
+        }))
       });
-      return $('.features-wrapper').append(branchsView.render().$el);
+      $('.features-wrapper').append(branchsView.render().$el);
+      supportedBranchsView = new FeaturesView({
+        type: 'SupportedOrganizationBranch',
+        collection: new Features().reset(_.filter(KomooNS.features['OrganizationBranch'], function(o) {
+          return o.properties.organization_name !== KomooNS.obj.name;
+        }))
+      });
+      $('.features-wrapper').append(supportedBranchsView.render().$el);
+      return geoObjectsListing($('.features-wrapper'));
     });
   });
 

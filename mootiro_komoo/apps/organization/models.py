@@ -66,8 +66,9 @@ class Organization(VotableModel):
     def related_items(self):
         return [c for c in self.community.all()] + \
             [b for b in self.organizationbranch_set.all()] + \
-            [i.grantee.need for i in self.investments.all() if hasattr(i.grantee, 'need')] + \
-            [r.grantee.need for r in self.realized_investments.all() if hasattr(r.grantee, 'need')]
+            [r for r in self.supported_resources] + \
+            [p.need for p in self.supported_proposals] + \
+            [b for o in self.supported_organizations for b in o.organizationbranch_set.all()]
 
     @property
     def as_investor(self):
