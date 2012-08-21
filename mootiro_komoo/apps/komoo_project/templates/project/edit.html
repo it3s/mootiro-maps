@@ -9,6 +9,7 @@
 {% block content %}
     <div id="main-content">
         <div class="main-column">
+
             <div class="form-legend">
                 {% if  project %}
                     {% trans 'Edit Project' %}
@@ -24,6 +25,22 @@
             </div>
 
             {% crispy form form.helper %}
+
+            {% if project and project.related_objects.count %}
+                <hr/>
+                <div class="form-legend">
+                    {% trans 'Edit Project Associations' %}
+                </div>
+                <ul>
+                    {% for obj in project.related_objects %}
+                    <li>
+                        <input class="association" type="checkbox" proj-related-id="{{ obj.id }}" />
+                        <span>{{ obj.content_type.name|ctype_trans_name }}: <a href="{{ o.content_object.view_url }}">{{ obj.content_object.name }}</a></span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="button" id="delete-associations-btn">{% trans "Deleted marked associations" %}</div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
@@ -36,6 +53,9 @@
         .contributors_deck_project_creator{
             margin-left: 15px;
             color: #555555;
+        }
+        #delete-associations-btn{
+            margin-top: 10px;
         }
     </style>
 {% endblock %}
@@ -79,6 +99,29 @@
             );
             var contributors = $('#id_contributors');
             contributors.val(contributors.val() + '{{ project.creator.id}}|');
+
+            $('#delete-associations-btn').click(function(){
+                var associations = [];
+                $('.association:checked').each(function(idx, item){
+                    associations.push($(item).attr('proj-related-id'));
+                });
+                $.post(
+                    '/project/delete_relations/',
+                    {'associations': associations.join('|'), 'project': '{{ project.id }}'},
+                    function(data){
+                        if(data.success){
+                            // remove objects from DOM
+                            $.each(associations, function(idx, item){
+                                $('.association[proj-related-id=' + item + ']').parent().remove();
+                            });
+                        } else {
+                                console.log('error :*(');
+                        }
+
+                    },
+                    'json'
+                );
+            });
             {% endif %}
         });
     </script>

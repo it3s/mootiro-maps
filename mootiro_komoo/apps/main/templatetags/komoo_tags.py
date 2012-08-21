@@ -231,6 +231,19 @@ def class_name(value):
 
 
 @register.filter
+def ctype_trans_name(value):
+    name_mapper = {
+        'organization': _('Organization'),
+        'resource': _('Resource'),
+        'need': _('Need'),
+        'proposal': _('Proposal'),
+        'investment': _('Investment'),
+        'community': _('Community'),
+    }
+    return name_mapper.get(value, value)
+
+
+@register.filter
 def get_range(value):
     return xrange(int(value))
 

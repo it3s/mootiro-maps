@@ -122,6 +122,30 @@ def add_related_object(request):
         return {'success': False}
 
 
+@login_required
+@ajax_request
+def delete_relations(request):
+    logger.debug('acessing project > delete_relations : {}'.format(request.POST))
+    project = request.POST.get('project', '')
+    relations = request.POST.get('associations', '')
+
+    project = get_object_or_404(Project, pk=project)
+
+    if not project.user_can_edit(request.user):
+        return redirect(project.view_url)
+    try:
+        for rel in relations.split('|'):
+            if rel:
+                p = ProjectRelatedObject.objects.get(pk=rel)
+                p.delete()
+        success = True
+    except Exception as err:
+        logger.error('ERRO ao deletar relacao: %s' % err)
+        success = False
+
+    return{'success': success}
+
+
 def tag_search(request):
     logger.debug('acessing project > tag_search')
     term = request.GET['term']
