@@ -75,7 +75,7 @@
       },
       iconClass: function() {
         var modelName, _ref;
-        if ((_ref = this.type) === 'OrganizationBranch' || _ref === 'SupportedOrganizationBranch') {
+        if ((_ref = this.type) === 'OrganizationBranch' || _ref === 'SelfOrganizationBranch') {
           modelName = 'Organization';
         } else {
           modelName = this.type;
@@ -126,7 +126,7 @@
       $('.features-wrapper').append(resourcesView.render().$el);
       selfBranchsView = new FeaturesViewClass({
         type: 'SelfOrganizationBranch',
-        collection: new Features().reset(_.filter(KomooNS.features['SelfOrganizationBranch'], function(o) {
+        collection: new Features().reset(_.filter(KomooNS.features['OrganizationBranch'], function(o) {
           return o.properties.organization_name === KomooNS.obj.name;
         }))
       });

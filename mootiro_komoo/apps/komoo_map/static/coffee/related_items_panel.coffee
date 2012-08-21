@@ -87,7 +87,7 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             interpolate msg, [count]
 
         iconClass: ->
-            if @type in ['OrganizationBranch', 'SupportedOrganizationBranch']
+            if @type in ['OrganizationBranch', 'SelfOrganizationBranch']
                 modelName = 'Organization'
             else
                 modelName = @type
@@ -134,7 +134,7 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
 
         selfBranchsView = new FeaturesViewClass
             type: 'SelfOrganizationBranch'
-            collection: new Features().reset _.filter(KomooNS.features['SelfOrganizationBranch'], (o) =>
+            collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
                 o.properties.organization_name is KomooNS.obj.name)
         $('.features-wrapper').append selfBranchsView.render().$el
 
