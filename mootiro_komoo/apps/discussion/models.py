@@ -13,9 +13,9 @@ import reversion
 class Discussion(models.Model):
     text = models.TextField(null=True, blank=True)
 
-    @property
-    def content_object (self):
-        return self.content_objects.all()[0]
+    content_type = models.ForeignKey(ContentType,  null=True, blank=True)
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     # Meta info
     last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)

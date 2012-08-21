@@ -159,6 +159,10 @@ class Need(GeoRefModel, VotableModel):
     def name(self):
         return self.title
 
+    @property
+    def perm_id(self):
+        return 'n%d' % self.id
+
 
 if not reversion.is_registered(Need):
     reversion.register(Need)

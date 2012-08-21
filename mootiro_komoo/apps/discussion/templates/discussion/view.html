@@ -9,9 +9,7 @@
   {% trans "Discussion about" %} {{ obj.name }}
 {% endblock %}
 
-{% block menu %}
-  {% menu obj menu_section %}
-{% endblock %}
+{% block menu %} {% menu obj section %} {% endblock %}
 
 {% block content %}
 
@@ -19,7 +17,7 @@
   <div class="main-column">
     <h2 class="title">{% trans "Discussion about" %} {{ obj.name }}</h2>
     <div class="view-edit-btn">
-      {% history obj.discussion %}
+      {% history discussion %}
       <a href="{{ obj.view_url }}" class="btn login-required"><i class="icon-list-alt"></i></a>
       <a href="{% url edit_discussion obj.perm_id %}" class="btn login-required"><i class="icon-pencil"></i></a>
     </div>
@@ -27,12 +25,12 @@
     <div class="clear-both"></div>
 
     <div class="mark-down">
-      {{ obj.discussion.text|render_markup|safe }}
+      {{ discussion.text|render_markup|safe }}
     </div>
   </div>
   
   <div class="view-extras">
-    {% comments obj.discussion %}
+    {% comments discussion %}
   </div>
 
 </div>

@@ -29,9 +29,6 @@ class Community(GeoRefModel, VotableModel):
     last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
-    # Discussion
-    discussion = models.ForeignKey(Discussion, null=True, related_name="content_objects")
-
     tags = TaggableManager()
 
     def __unicode__(self):
