@@ -19,6 +19,7 @@ from proposal.models import Proposal
 from komoo_resource.models import Resource
 from organization.models import Organization
 from investment.models import Investment
+from komoo_project.models import Project
 from .forms import DiscussionForm
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,7 @@ def _discussion_for (identifier):
         'r': Resource,
         'o': Organization,
         'i': Investment,
+        'j': Project,
     }
     ent, id_ = identifier[0], identifier[1:]
     ent_content_type = ContentType.objects.get_for_model(ent_model[ent])
