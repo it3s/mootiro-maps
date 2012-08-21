@@ -40,8 +40,11 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
         loadGeoJsonFromOptons: ->
             if @options.geojson
                 features = @loadGeoJSON @options.geojson, not @options.zoom?
-                @centerFeature features?.getAt(0)
-            @setZoom @options.zoom
+                bounds = features.getBounds()
+                if bounds?
+                    @fitBounds bounds
+                features?.setMap this, geometry: on, icon: on
+                @setZoom @options.zoom
 
         initGoogleMap: (options = @googleMapDefaultOptions) ->
             @googleMap = new google.maps.Map @element, options

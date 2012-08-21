@@ -156,12 +156,12 @@ define ['map/geometries'], ->
                     icon: false
             zoom = if @map? then @map.getZoom() else 0
             @marker?.setMap(
-                if @featureType.minZoomPoint <= zoom <= @featureType.maxZoomPoint or \
-                    @featureType.minZoomIcon <= zoom <= @featureType.maxZoomIcon or \
-                    force.point or force.icon then @map else null)
-            @geometry.setMap(if (zoom <= @featureType.maxZoomGeometry and \
-                    zoom >= @featureType.minZoomGeometry) or \
-                    force.geometry then @map else null)
+                if force.point or force.icon or \
+                    @featureType.minZoomPoint <= zoom <= @featureType.maxZoomPoint or \
+                    @featureType.minZoomIcon <= zoom <= @featureType.maxZoomIcon then \
+                    @map else null)
+            @geometry.setMap(if force.geometry or (zoom <= @featureType.maxZoomGeometry and \
+                    zoom >= @featureType.minZoomGeometry) then @map else null)
             @updateIcon()
 
             if @oldMap is undefined

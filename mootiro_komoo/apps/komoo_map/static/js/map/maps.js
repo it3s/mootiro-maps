@@ -50,12 +50,19 @@
       }
 
       Map.prototype.loadGeoJsonFromOptons = function() {
-        var features;
+        var bounds, features;
         if (this.options.geojson) {
           features = this.loadGeoJSON(this.options.geojson, !(this.options.zoom != null));
-          this.centerFeature(features != null ? features.getAt(0) : void 0);
+          bounds = features.getBounds();
+          if (bounds != null) this.fitBounds(bounds);
+          if (features != null) {
+            features.setMap(this, {
+              geometry: true,
+              icon: true
+            });
+          }
+          return this.setZoom(this.options.zoom);
         }
-        return this.setZoom(this.options.zoom);
       };
 
       Map.prototype.initGoogleMap = function(options) {

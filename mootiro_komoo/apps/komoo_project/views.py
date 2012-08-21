@@ -12,10 +12,12 @@ from django.utils import simplejson
 from lib.taggit.models import TaggedItem
 from ajaxforms.forms import ajax_form
 from annoying.decorators import render_to, ajax_request
-from main.utils import paginated_query, sorted_query, filtered_query
+from main.utils import (paginated_query, sorted_query, filtered_query,
+        create_geojson)
 
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
+from organization.models import Organization
 
 logger = logging.getLogger(__name__)
 
@@ -44,8 +46,8 @@ def project_view(request, project_slug=''):
     project = get_object_or_404(Project, slug=project_slug)
 
     proj_objects = {}
-
-    for p in ProjectRelatedObject.objects.filter(project=project):
+    items = []
+    for p in project.related_objects:
         obj = p.content_object
         if not proj_objects.get(obj.__class__.__name__, None):
             proj_objects[obj.__class__.__name__] = {
@@ -57,8 +59,26 @@ def project_view(request, project_slug=''):
             'id': obj.id,
             'has_geojson': bool(getattr(obj, 'geometry', ''))
         })
+        if isinstance(obj, Organization):
+            branchs = [b for b in obj.organizationbranch_set.all()]
+            if branchs:
+                items += branchs
+        else:
+            items.append(obj)
+    geojson = create_geojson(items)
 
-    return dict(project=project, geojson={}, proj_objects=proj_objects)
+    return dict(project=project, geojson=geojson, proj_objects=proj_objects)
+
+
+@render_to('project/related_items.html')
+def project_map(request, project_slug=''):
+    logger.debug('acessing project > related_items')
+
+    project = get_object_or_404(Project, slug=project_slug)
+
+    geojson = create_geojson(project.related_items)
+
+    return dict(project=project, geojson=geojson)
 
 
 @login_required

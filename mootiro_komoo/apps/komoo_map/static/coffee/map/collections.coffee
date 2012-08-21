@@ -53,7 +53,19 @@ class FeatureCollection extends GenericCollection
         @bounds
 
     setMap: (@map, force) ->
-        @forEach (feature) => feature.setMap @map, force
+        tmpForce = null
+        @forEach (feature) =>
+            if force?
+                tmpForce =
+                    geometry: force?.geometry
+                    point: force?.icon
+                    icon: force?.icon
+
+            if feature.getType() is 'Community'
+                tmpForce?['point'] = off
+                tmpForce?['icon'] = off
+
+            feature.setMap @map, tmpForce
         @handleMapEvents()
 
     show: ->

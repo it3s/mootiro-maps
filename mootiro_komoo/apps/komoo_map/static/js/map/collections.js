@@ -95,10 +95,23 @@
     };
 
     FeatureCollection.prototype.setMap = function(map, force) {
-      var _this = this;
+      var tmpForce,
+        _this = this;
       this.map = map;
+      tmpForce = null;
       this.forEach(function(feature) {
-        return feature.setMap(_this.map, force);
+        if (force != null) {
+          tmpForce = {
+            geometry: force != null ? force.geometry : void 0,
+            point: force != null ? force.icon : void 0,
+            icon: force != null ? force.icon : void 0
+          };
+        }
+        if (feature.getType() === 'Community') {
+          if (tmpForce != null) tmpForce['point'] = false;
+          if (tmpForce != null) tmpForce['icon'] = false;
+        }
+        return feature.setMap(_this.map, tmpForce);
       });
       return this.handleMapEvents();
     };

@@ -1,6 +1,24 @@
 define ['lib/underscore-min', 'lib/backbone-min'], () ->
     $ = jQuery
 
+    window.PanelInfo = Backbone.Model.extend
+        toJSON: (attr) ->
+            Backbone.Model.prototype.toJSON.call this, attr
+
+
+    window.PanelInfoView = Backbone.View.extend
+        className: 'panel-info'
+
+        initialize: () ->
+            _.bindAll this, 'render'
+            @template = _.template $('#panel-info-template').html()
+
+        render: () ->
+            console.log 'rendering model: ', @model.toJSON()
+            renderedContent = @template @model.toJSON()
+            $(@el).html renderedContent
+            this
+
     window.Feature = Backbone.Model.extend
         toJSON: (attr) ->
             defaultJSON = Backbone.Model.prototype.toJSON.call this, attr
@@ -49,6 +67,7 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             @collection.bind 'reset', @render
 
         title: (count) ->
+            console.log @type
             msg =
                 if @type is 'OrganizationBranch'
                     ngettext("%s organization branch",
@@ -116,17 +135,17 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             collection: new Features().reset KomooNS.features['Resource']
         $('.features-wrapper').append resourcesView.render().$el
 
+        selfBranchsView = new FeaturesViewClass
+            type: 'SelfOrganizationBranch'
+            collection: new Features().reset _.filter(KomooNS.features['SelfOrganizationBranch'], (o) =>
+                o.properties.organization_name is KomooNS.obj.name)
+        $('.features-wrapper').append selfBranchsView.render().$el
+
         branchsView = new FeaturesViewClass
             type: 'OrganizationBranch'
             collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
-                o.properties.organization_name is KomooNS.obj.name)
-        $('.features-wrapper').append branchsView.render().$el
-
-        supportedBranchsView = new FeaturesViewClass
-            type: 'SupportedOrganizationBranch'
-            collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
                 o.properties.organization_name isnt KomooNS.obj.name)
-        $('.features-wrapper').append supportedBranchsView.render().$el
+        $('.features-wrapper').append branchsView.render().$el
 
         geoObjectsListing $('.features-wrapper')
 

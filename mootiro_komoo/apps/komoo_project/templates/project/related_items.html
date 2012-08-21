@@ -1,0 +1,21 @@
+{% extends "komoo_map/related_items.html" %}
+{% load i18n %}
+{% load komoo_tags %}
+
+{% block menu %} {% menu project "project" %} {% endblock %}
+
+{% block page_scripts %}
+  {{ block.super }}
+
+  <script type="text/template" id="panel-info-template">
+    <img src="<%= logo_url %>" alt="Image" />
+      <div><a href="<%= view_url %>"><%= name %></a></div>
+      <div style="clear: both;"></div>
+  </script>
+
+  <script type="text/javascript">
+    if (typeof window.KomooNS === 'undefined') window.KomooNS = {};
+    KomooNS.obj = {{ project|jsonify|safe }};
+    require(['project_related_items']);
+  </script>
+{% endblock %}

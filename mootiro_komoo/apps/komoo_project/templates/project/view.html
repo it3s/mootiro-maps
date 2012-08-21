@@ -61,7 +61,7 @@
                 <div class="view-info-btn span3 selected" panel="organizations-list">
                     <i class="icon-organization"></i>
                     <div class="inline-block">
-                        {% trans 'Organizations' %} 
+                        {% trans 'Organizations' %}
                         {% if proj_objects.Organization.objects_list %}
                             &nbsp;({{ proj_objects.Organization.objects_list|length }})
                         {% endif %}
@@ -202,8 +202,10 @@
 
     </div>
     <div class="right-bar right-bar-modif">
-        <!-- <div id="map-preview">{#% komoo_map geojson 'type=preview' %#}</div> -->
-        <!-- <a class="see-on-map" href="#">{% trans 'see on map' %}</a> -->
+        <div id="map-main-preview">
+          <div id="map-main-preview-canvas"></div>
+        </div>
+        <a class="see-on-map" href="{% url project_map project.slug %}">{% trans 'see on map' %}</a>
 
         {% with similar_projects=project.tags.similar_objects|slice:"5" %}
 
@@ -270,6 +272,15 @@
                 var $this = $(this);
                 $this.addClass('selected');
                 $('.' + $this.attr('panel')).fadeIn();
+            });
+            var community_slug = '{{ community.slug }}';
+            require(['map.jquery'], function () {
+                $("#map-main-preview-canvas").komooMap({
+                    type: 'preview',
+                    geojson: {{ geojson|safe }},
+                    width: '200px',
+                    height: '200px'
+                });
             });
         });
     </script>

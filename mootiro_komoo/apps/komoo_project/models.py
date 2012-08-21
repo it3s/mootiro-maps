@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+import simplejson
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -12,6 +15,7 @@ import reversion
 
 from main.utils import slugify
 from community.models import Community
+from organization.models import Organization
 
 
 class ProjectRelatedObject(models.Model):
@@ -95,6 +99,28 @@ class Project(models.Model):
         obj, created = ProjectRelatedObject.objects.get_or_create(
                 project=self, content_object=related_object)
         return created
+
+    @property
+    def related_items(self):
+        items = []
+        for obj in [o.content_object for o in self.related_objects]:
+            if isinstance(obj, Organization):
+                branchs = [b for b in obj.organizationbranch_set.all()]
+                if branchs:
+                    items += branchs
+            else:
+                items.append(obj)
+        return items
+
+    @property
+    def json(self):
+        return simplejson.dumps({
+            'name': self.name,
+            'slug': self.slug,
+            'logo_url': self.logo_url,
+            'view_url': self.view_url,
+            'partners_logo': [{'url': logo.file.url} for logo in self.partners_logo()]
+        })
 
 
 if not reversion.is_registered(Project):

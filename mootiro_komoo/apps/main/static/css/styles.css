@@ -838,6 +838,13 @@ body.community #collapse-panel {
     margin-left: 0px !important;
     width: auto !important;
 }
+.partners-logo-list {
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+.partners-logo-list .partner-logo {
+    display: inline;
+}
 .map-canvas .placeholder {
     width: 247px;
     height: 40px;

@@ -1,33 +1,14 @@
 define ['lib/underscore-min', 'lib/backbone-min'], () ->
     $ = jQuery
 
-    window.PanelInfo = Backbone.Model.extend
-
-        toJSON: (attr) ->
-            Backbone.Model.prototype.toJSON.call this, attr
-
-
-    window.PanelInfoView = Backbone.View.extend
-        className: 'panel-info'
-
-        initialize: () ->
-            _.bindAll this, 'render'
-            @template = _.template $('#panel-info-template').html()
-
-        render: () ->
-            console.log 'rendering model: ', @model.toJSON()
-            renderedContent = @template @model.toJSON()
-            $(@el).html renderedContent
-            this
-
     window.OrganizationFeaturesView = FeaturesView.extend
         title: (count) ->
             msg =
-                if @type is 'OrganizationBranch'
+                if @type is 'SelfOrganizationBranch'
                     ngettext("%s point on map",
                         "%s points on map",
                         count)
-                else if @type is 'SupportedOrganizationBranch'
+                else if @type is 'OrganizationBranch'
                     ngettext("Supported %s organization",
                         "Supported %s organizations",
                         count)

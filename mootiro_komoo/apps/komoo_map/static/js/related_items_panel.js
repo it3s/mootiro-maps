@@ -3,6 +3,25 @@
   define(['lib/underscore-min', 'lib/backbone-min'], function() {
     var $;
     $ = jQuery;
+    window.PanelInfo = Backbone.Model.extend({
+      toJSON: function(attr) {
+        return Backbone.Model.prototype.toJSON.call(this, attr);
+      }
+    });
+    window.PanelInfoView = Backbone.View.extend({
+      className: 'panel-info',
+      initialize: function() {
+        _.bindAll(this, 'render');
+        return this.template = _.template($('#panel-info-template').html());
+      },
+      render: function() {
+        var renderedContent;
+        console.log('rendering model: ', this.model.toJSON());
+        renderedContent = this.template(this.model.toJSON());
+        $(this.el).html(renderedContent);
+        return this;
+      }
+    });
     window.Feature = Backbone.Model.extend({
       toJSON: function(attr) {
         var defaultJSON;
@@ -53,6 +72,7 @@
       },
       title: function(count) {
         var msg;
+        console.log(this.type);
         msg = this.type === 'OrganizationBranch' ? ngettext("%s organization branch", "%s organization branchs", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%{s needs", count) : "";
         return interpolate(msg, [count]);
       },
@@ -86,7 +106,7 @@
     });
     if (typeof KomooNS === "undefined" || KomooNS === null) KomooNS = {};
     return KomooNS.drawFeaturesList = function(FeaturesViewClass) {
-      var branchsView, communitiesView, needsView, resourcesView, supportedBranchsView,
+      var branchsView, communitiesView, needsView, resourcesView, selfBranchsView,
         _this = this;
       if (FeaturesViewClass == null) FeaturesViewClass = FeaturesView;
       KomooNS.features = _(geojson.features).groupBy(function(f) {
@@ -107,20 +127,20 @@
         collection: new Features().reset(KomooNS.features['Resource'])
       });
       $('.features-wrapper').append(resourcesView.render().$el);
-      branchsView = new FeaturesViewClass({
-        type: 'OrganizationBranch',
-        collection: new Features().reset(_.filter(KomooNS.features['OrganizationBranch'], function(o) {
+      selfBranchsView = new FeaturesViewClass({
+        type: 'SelfOrganizationBranch',
+        collection: new Features().reset(_.filter(KomooNS.features['SelfOrganizationBranch'], function(o) {
           return o.properties.organization_name === KomooNS.obj.name;
         }))
       });
-      $('.features-wrapper').append(branchsView.render().$el);
-      supportedBranchsView = new FeaturesViewClass({
-        type: 'SupportedOrganizationBranch',
+      $('.features-wrapper').append(selfBranchsView.render().$el);
+      branchsView = new FeaturesViewClass({
+        type: 'OrganizationBranch',
         collection: new Features().reset(_.filter(KomooNS.features['OrganizationBranch'], function(o) {
           return o.properties.organization_name !== KomooNS.obj.name;
         }))
       });
-      $('.features-wrapper').append(supportedBranchsView.render().$el);
+      $('.features-wrapper').append(branchsView.render().$el);
       return geoObjectsListing($('.features-wrapper'));
     };
   });

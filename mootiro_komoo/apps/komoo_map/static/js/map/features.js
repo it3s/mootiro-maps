@@ -273,9 +273,9 @@
         }
         zoom = this.map != null ? this.map.getZoom() : 0;
         if ((_ref = this.marker) != null) {
-          _ref.setMap((this.featureType.minZoomPoint <= zoom && zoom <= this.featureType.maxZoomPoint) || (this.featureType.minZoomIcon <= zoom && zoom <= this.featureType.maxZoomIcon) || force.point || force.icon ? this.map : null);
+          _ref.setMap(force.point || force.icon || (this.featureType.minZoomPoint <= zoom && zoom <= this.featureType.maxZoomPoint) || (this.featureType.minZoomIcon <= zoom && zoom <= this.featureType.maxZoomIcon) ? this.map : null);
         }
-        this.geometry.setMap((zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) || force.geometry ? this.map : null);
+        this.geometry.setMap(force.geometry || (zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) ? this.map : null);
         this.updateIcon();
         if (this.oldMap === void 0) return this.handleMapEvents();
       };
