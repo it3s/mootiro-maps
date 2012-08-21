@@ -318,6 +318,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             super options
 
             @addComponent komoo.providers.makeFeatureProvider(), 'provider'
+            @addComponent komoo.controls.makeFeatureClusterer(featureType: 'Community', map: this), 'clusterer'
 
 
     class AjaxEditor extends AjaxMap

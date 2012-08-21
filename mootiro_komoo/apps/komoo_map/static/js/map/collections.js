@@ -74,6 +74,7 @@
     }
 
     FeatureCollection.prototype.push = function(feature) {
+      if (!(feature != null)) return;
       FeatureCollection.__super__.push.call(this, feature);
       return feature.setMap(this.map);
     };
@@ -109,9 +110,8 @@
         }
         if (feature.getType() === 'Community') {
           if (tmpForce != null) tmpForce['point'] = false;
-          if (tmpForce != null) tmpForce['icon'] = false;
         }
-        return feature.setMap(_this.map, tmpForce);
+        return feature != null ? feature.setMap(_this.map, tmpForce) : void 0;
       });
       return this.handleMapEvents();
     };

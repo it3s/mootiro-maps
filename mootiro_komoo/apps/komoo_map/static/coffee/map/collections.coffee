@@ -39,6 +39,8 @@ class FeatureCollection extends GenericCollection
         options.features?.forEach (feature) => @push(feature)
 
     push: (feature) ->
+        if not feature?
+            return
         super feature
         feature.setMap(@map)
 
@@ -63,9 +65,8 @@ class FeatureCollection extends GenericCollection
 
             if feature.getType() is 'Community'
                 tmpForce?['point'] = off
-                tmpForce?['icon'] = off
 
-            feature.setMap @map, tmpForce
+            feature?.setMap @map, tmpForce
         @handleMapEvents()
 
     show: ->

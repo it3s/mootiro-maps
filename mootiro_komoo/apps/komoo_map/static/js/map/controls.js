@@ -784,7 +784,10 @@
           return _this.close();
         });
         komoo.event.addListener(this.map, 'cluster_mouseover', function(features, position) {
-          if (!features.getAt(0).displayTooltip) return;
+          var _ref;
+          if (!((_ref = features.getAt(0)) != null ? _ref.displayTooltip : void 0)) {
+            return;
+          }
           return _this.open({
             features: features,
             position: position
@@ -909,7 +912,7 @@
         if (element.getMarker()) {
           this.features.push(element);
           element.getMarker().setVisible(false);
-          this.clusterer.addMarker(element.getMarker().getOverlay());
+          this.clusterer.addMarker(element.getMarker().getOverlay().markers_.getAt(0));
           return this.updateLength();
         }
       };

@@ -471,6 +471,10 @@
       function AjaxMap(options) {
         AjaxMap.__super__.constructor.call(this, options);
         this.addComponent(komoo.providers.makeFeatureProvider(), 'provider');
+        this.addComponent(komoo.controls.makeFeatureClusterer({
+          featureType: 'Community',
+          map: this
+        }), 'clusterer');
       }
 
       return AjaxMap;

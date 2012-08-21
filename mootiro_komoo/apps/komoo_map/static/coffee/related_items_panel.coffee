@@ -14,7 +14,6 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             @template = _.template $('#panel-info-template').html()
 
         render: () ->
-            console.log 'rendering model: ', @model.toJSON()
             renderedContent = @template @model.toJSON()
             $(@el).html renderedContent
             this
@@ -43,7 +42,6 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             @template = _.template $('#feature-template').html()
 
         render: () ->
-            console.log 'rendering model: ', @model.toJSON()
             renderedContent = @template @model.toJSON()
             $(@el).html renderedContent
             this
@@ -67,7 +65,6 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             @collection.bind 'reset', @render
 
         title: (count) ->
-            console.log @type
             msg =
                 if @type is 'OrganizationBranch'
                     ngettext("%s organization branch",

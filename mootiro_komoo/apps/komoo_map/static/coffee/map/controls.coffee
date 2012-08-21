@@ -586,7 +586,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                 @close()
 
             komoo.event.addListener @map, 'cluster_mouseover',  (features, position) =>
-                if not features.getAt(0).displayTooltip then return
+                if not features.getAt(0)?.displayTooltip then return
                 @open features: features, position: position
 
             komoo.event.addListener @map, 'cluster_mouseout', (e, feature) =>
@@ -659,7 +659,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             if element.getMarker()
                 @features.push element
                 element.getMarker().setVisible off
-                @clusterer.addMarker element.getMarker().getOverlay()
+                @clusterer.addMarker element.getMarker().getOverlay().markers_.getAt(0)
                 @updateLength()
 
         pop: ->

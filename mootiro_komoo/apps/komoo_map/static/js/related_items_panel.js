@@ -16,7 +16,6 @@
       },
       render: function() {
         var renderedContent;
-        console.log('rendering model: ', this.model.toJSON());
         renderedContent = this.template(this.model.toJSON());
         $(this.el).html(renderedContent);
         return this;
@@ -49,7 +48,6 @@
       },
       render: function() {
         var renderedContent;
-        console.log('rendering model: ', this.model.toJSON());
         renderedContent = this.template(this.model.toJSON());
         $(this.el).html(renderedContent);
         return this;
@@ -72,7 +70,6 @@
       },
       title: function(count) {
         var msg;
-        console.log(this.type);
         msg = this.type === 'OrganizationBranch' ? ngettext("%s organization branch", "%s organization branchs", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%{s needs", count) : "";
         return interpolate(msg, [count]);
       },
