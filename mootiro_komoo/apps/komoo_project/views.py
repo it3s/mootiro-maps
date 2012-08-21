@@ -57,6 +57,20 @@ def project_view(request, project_slug=''):
             'id': obj.id,
             'has_geojson': bool(getattr(obj, 'geometry', ''))
         })
+    proj_objects['User']= {'app_name': 'user_cas', 'objects_list': [{
+        'name': project.creator.get_name,
+        'link': project.creator.profile.view_url,
+        'id': project.creator.id,
+        'has_geojson': bool(getattr(project.creator.profile, 'geometry', ''))
+
+    }]}
+    for c in project.contributors.all():
+        proj_objects['User']['objects_list'].append({
+            'name': c.get_name,
+            'link': c.profile.view_url,
+            'id': c.id,
+            'has_geojson': bool(getattr(c.profile, 'geometry', ''))
+        })
 
     return dict(project=project, geojson={}, proj_objects=proj_objects)
 
