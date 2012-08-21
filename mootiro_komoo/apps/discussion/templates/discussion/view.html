@@ -27,9 +27,14 @@
       {{ obj.discussion.text|render_markup|safe }}
     </div>
     
-    {% comments obj.discussion %}
-    
+    <div class="view-extras">
+      {% comments obj.discussion %}
+    </div>
   </div>
 
 </div>
+{% endblock %}
+
+{% block page_scripts %}
+  {% comments_staticfiles %}
 {% endblock %}

@@ -29,13 +29,10 @@ def _discussion_for (identifier):
     entity, id_ = identifier[0], identifier[1:]
     obj = get_object_or_404(entity_model[entity], pk=id_)
     if not obj.discussion:
-        print "\n\n\n = = = = = NOOOOOT = = = = = \n\n\n"
         d = Discussion()
         d.save()
         obj.discussion = d
         obj.save()
-    else:
-        print "\n\n\n = = = = = YESSSSS = = = = = \n\n\n"
 
     return obj
 
