@@ -26,18 +26,18 @@
     {% endif %}
 
         <div class="view-header">
-            <div>
-                <h2 class="inline-block">{{ project.name }}</h2>
+            <h2 class="inline-block">{{ project.name }}</h2>
 
-                <div class="view-edit-btn">
-                    {% if project|user_can_edit_this_project:user %}
-                    {% history project %}
-                    <a href="{{ project.edit_url }}" class="btn login-required">
-                        <i class="icon-pencil"></i>
-                    </a>
-                    {% endif %}
-                </div>
-
+            <div class="view-edit-btn">
+                {% if project|user_can_edit_this_project:user %}
+                {% history project %}
+                <a href="{% url view_discussion project.perm_id %}" class="btn login-required">
+                    <i class="icon-comment"></i>
+                </a>
+                <a href="{{ project.edit_url }}" class="btn login-required">
+                    <i class="icon-pencil"></i>
+                </a>
+                {% endif %}
             </div>
 
             <div class="view-votes">
@@ -94,7 +94,7 @@
                         {% endif %}
                     </div>
                 </div>
-                <div class="view-info-btn span3 multiline" panel="investments-list">
+                <div class="view-info-btn span3" panel="investments-list">
                     <i class="icon-investment"></i>
                     <div class="inline-block">
                         {% trans 'Investments' %}
@@ -103,6 +103,16 @@
                         {% endif %}
                     </div>
                 </div>
+                <div class="view-info-btn span3" panel="contributors-list">
+                    <i class="icon-user"></i>
+                    <div class="inline-block">
+                        {% trans 'Collaborators' %}
+                        {% if proj_objects.User.objects_list %}
+                            &nbsp;({{ proj_objects.User.objects_list|length }})
+                        {% endif %}
+                    </div>
+                </div>
+
             </div>
 
             <!-- <div class="view-info-panel map-points-list" > -->
@@ -185,6 +195,21 @@
                 <div class="view-info-empty">{% trans 'This project has no related Investments yet' %}.</div>
                 {% endfor %}
             </div>
+
+            <div class="view-info-panel contributors-list hidden">
+               {% for o in proj_objects.User.objects_list %}
+                <div class="view-info-object">
+                    <a href="{{ o.link }}" >{{ o.name }}</a>
+                    <div class="right">
+                        <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{proj_objects.User.app_name}}" data-model-name="KomooProfile" data-object-id="{{ o.id }}"><i class="icon-see-on-map"></i></a>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="view-info-empty">{% trans 'This project has no related Investments yet' %}.</div>
+                {% endfor %}
+            </div>
+
+
         </div>
 
 

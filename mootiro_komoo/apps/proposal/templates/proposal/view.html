@@ -20,8 +20,14 @@
     <h3>
       {{ proposal.title }}
       <span class="small"> (<a href="{% if community %}{% url view_need proposal.need.community.all.0.slug proposal.need.slug %}{% else %}{% url view_need proposal.need.slug %}{% endif %}"> {{ proposal.need.title }}</a>)</span>
-      <div class="view-edit-btn"><a href="{% if community %}{% url edit_proposal community.slug proposal.need.slug proposal.number %}{% else %}{% url edit_proposal proposal.need.slug proposal.number %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a></div>
     </h3>
+
+    <div class="view-edit-btn">
+      {% history proposal %}
+      <a href="{% url view_discussion proposal.perm_id %}" class="btn login-required"><i class="icon-comment"></i></a>
+      <a href="{{ proposal.edit_url }}" class="btn login-required"><i class="icon-pencil"></i></a>
+    </div>
+    
     {% vote proposal %}
     <p>
     <span class="apart">{% trans 'created by' %} {{ proposal.creator }} {%trans 'on' %} {{ proposal.creation_date }}</span>

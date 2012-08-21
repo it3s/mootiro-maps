@@ -151,6 +151,7 @@ class Organization(VotableModel):
         return reverse('new_investment', kwargs=self.home_url_params)
 
     @property
+
     def related_items_url(self):
         return reverse('view_organization_related_items', kwargs=self.home_url_params)
 
@@ -162,6 +163,9 @@ class Organization(VotableModel):
             'logo_url': self.logo_url,
             'view_url': self.view_url,
         })
+
+    def perm_id(self):
+        return 'o%d' % self.id
 
 
 class OrganizationBranch(GeoRefModel, VotableModel):

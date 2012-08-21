@@ -81,6 +81,10 @@ class Proposal(VotableModel):
         return reverse('view_proposal', kwargs=self.home_url_params)
 
     @property
+    def edit_url(self):
+        return reverse('edit_proposal', kwargs=self.home_url_params)
+
+    @property
     def admin_url(self):
         return reverse('admin:{}_{}_change'.format(self._meta.app_label,
             self._meta.module_name), args=[self.id])
@@ -89,6 +93,9 @@ class Proposal(VotableModel):
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
 
+    @property
+    def perm_id(self):
+        return 'p%d' % self.id
 
 if not reversion.is_registered(Need):
     reversion.register(Proposal)

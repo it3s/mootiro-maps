@@ -30,7 +30,8 @@
 
       <div class="view-edit-btn">
         {% history need %}
-        <a href="{% if community %}{% url edit_need community.slug need.slug %}{% else %}{% url edit_need need.slug %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a>
+        <a href="{% url view_discussion need.perm_id %}" class="btn login-required"><i class="icon-comment"></i></a>
+        <a href="{{ need.edit_url }}" class="btn login-required"><i class="icon-pencil"></i></a>
       </div>
 
       <div class="clear-both"></div>

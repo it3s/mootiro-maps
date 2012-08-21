@@ -84,6 +84,10 @@ class Project(models.Model):
         return reverse('project_edit', kwargs=self.home_url_params)
 
     @property
+    def perm_id(self):
+        return 'j%d' % self.id  # proJect, and not Proposal
+
+    @property
     def logo_url(self):
         if self.logo:
             return self.logo.file.url

@@ -30,6 +30,10 @@ class KomooProfile(GeoRefModel):
         """ pseudo-reverse query for retrieving Resource Files"""
         return UploadedFile.get_files_for(self)
 
+    @property
+    def view_url(self):
+        return '/user/profile/%s/' % self.user.username
+
 
 # monkey patch auth.User \o/
 # now we can retrieve a profile like: User.objects.get(pk=1).profile

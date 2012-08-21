@@ -47,6 +47,23 @@ def project_view(request, project_slug=''):
 
     proj_objects = {}
     items = []
+
+    proj_objects['User']= {'app_name': 'user_cas', 'objects_list': [{
+        'name': project.creator.get_name,
+        'link': project.creator.profile.view_url,
+        'id': project.creator.id,
+        'has_geojson': bool(getattr(project.creator.profile, 'geometry', ''))
+
+    }]}
+
+    for c in project.contributors.all():
+        proj_objects['User']['objects_list'].append({
+            'name': c.get_name,
+            'link': c.profile.view_url,
+            'id': c.id,
+            'has_geojson': bool(getattr(c.profile, 'geometry', ''))
+        })
+
     for p in project.related_objects:
         obj = p.content_object
         if not proj_objects.get(obj.__class__.__name__, None):
@@ -59,6 +76,7 @@ def project_view(request, project_slug=''):
             'id': obj.id,
             'has_geojson': bool(getattr(obj, 'geometry', ''))
         })
+
         if isinstance(obj, Organization):
             branchs = [b for b in obj.organizationbranch_set.all()]
             if branchs:
@@ -140,6 +158,30 @@ def add_related_object(request):
                 }}
     else:
         return {'success': False}
+
+
+@login_required
+@ajax_request
+def delete_relations(request):
+    logger.debug('acessing project > delete_relations : {}'.format(request.POST))
+    project = request.POST.get('project', '')
+    relations = request.POST.get('associations', '')
+
+    project = get_object_or_404(Project, pk=project)
+
+    if not project.user_can_edit(request.user):
+        return redirect(project.view_url)
+    try:
+        for rel in relations.split('|'):
+            if rel:
+                p = ProjectRelatedObject.objects.get(pk=rel)
+                p.delete()
+        success = True
+    except Exception as err:
+        logger.error('ERRO ao deletar relacao: %s' % err)
+        success = False
+
+    return{'success': success}
 
 
 def tag_search(request):
