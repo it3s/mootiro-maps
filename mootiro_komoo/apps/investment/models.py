@@ -201,6 +201,10 @@ class Investment(VotableModel):
     def edit_url(self):
         return reverse('edit_investment', kwargs=self.home_url_params)
 
+    @property
+    def perm_id(self):
+        return 'i%d' % self.id
+
 
 if not reversion.is_registered(Investment):
     reversion.register(Investment)
