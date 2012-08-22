@@ -71,6 +71,11 @@ class Project(models.Model):
                user == self.creator or \
                user in self.contributors.all()
 
+    def user_can_discuss(self, user):
+        return self.public_discussion or \
+               user == self.creator or \
+               user in self.contributors.all()
+
     @property
     def home_url_params(self):
         return dict(project_slug=self.slug)
