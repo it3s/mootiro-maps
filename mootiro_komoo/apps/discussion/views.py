@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
+from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect
 
 import logging
 from annoying.decorators import render_to, ajax_request
@@ -53,6 +54,12 @@ def _discussion_for (identifier):
 def view_discussion(request, identifier=''):
     discussion = _discussion_for(identifier)
     obj = discussion.content_object
+
+    # FIXME: duplicate code!!!!11
+    if hasattr(obj, 'user_can_discuss'):
+        if not obj.user_can_discuss(request.user):
+            return redirect(obj.view_url)
+
     return dict(discussion=discussion, obj=obj, section=obj._meta.verbose_name)
 
 
@@ -64,6 +71,11 @@ def edit_discussion(request, identifier='', *args, **kwargs):
 
     discussion = _discussion_for(identifier)
     obj = discussion.content_object
+
+    # FIXME: duplicate code!!!!11
+    if hasattr(obj, 'user_can_discuss'):
+        if not obj.user_can_discuss(request.user):
+            return redirect(obj.view_url)
     
     def on_get(request, form_discussion):
         return DiscussionForm(instance=discussion)

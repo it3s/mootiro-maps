@@ -18,7 +18,7 @@ $("#collapse-panel").click(function (ev) {
     var map = $(".komoo-map-googlemap", $parent).data("map");
     if (map === undefined) return;
     google.maps.event.trigger(map.googleMap, 'resize');
-    var interval = setInterval(function () { google.maps.event.trigger(map.googleMap, 'resize'); }, 500)
+    var interval = setInterval(function () { map.refresh(); }, 500)
     setTimeout(function () { clearInterval(interval); }, 1000)
 });
 </script>

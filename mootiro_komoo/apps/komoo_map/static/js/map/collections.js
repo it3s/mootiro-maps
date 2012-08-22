@@ -85,11 +85,13 @@
       firstFeature = this.getAt(0);
       if (firstFeature) {
         geometry = firstFeature.getGeometry();
+        if (geometry.getGeometryType() === 'Empty') return;
         point = geometry.getLatLngFromArray(geometry.getCenter());
         this.bounds = new google.maps.LatLngBounds(point, point);
       }
       this.forEach(function(feature) {
         var _ref;
+        if (feature.getGeometryType() === 'Empty') return;
         return (_ref = _this.bounds) != null ? _ref.union(feature.getBounds()) : void 0;
       });
       return this.bounds;
@@ -270,7 +272,6 @@
       var feature, _ref;
       feature = typeof type === 'string' ? this.getById(type, id) : type;
       if (feature.isHighlighted()) return;
-      console.log('--->', this.highlighted);
       if ((_ref = this.highlighted) != null) _ref.setHighlight(false);
       feature.highlight();
       return this.highlighted = feature;

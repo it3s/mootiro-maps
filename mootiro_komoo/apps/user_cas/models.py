@@ -12,8 +12,11 @@ class KomooProfile(GeoRefModel):
     contact = models.TextField(null=True, blank=True)
     public_name = models.CharField(max_length=512, null=True, blank=True)
 
-    def __unicode__(self):
+    def __repr__(self):
         return "<KomooProfile: {}>".format(unicode(self.user.username))
+
+    def __unicode__(self):
+        return self.name
 
     class Map:
         editable = False
@@ -33,6 +36,10 @@ class KomooProfile(GeoRefModel):
     @property
     def view_url(self):
         return '/user/profile/%s/' % self.user.username
+
+    @property
+    def name(self):
+        return self.public_name or self.user.username
 
 
 # monkey patch auth.User \o/

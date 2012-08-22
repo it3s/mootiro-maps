@@ -80,7 +80,11 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
                         count)
                 else if @type is 'Need'
                     ngettext("%s need",
-                        "%{s needs",
+                        "%s needs",
+                        count)
+                else if @type is 'KomooProfile'
+                    ngettext("%s contributors",
+                        "%s contributors",
                         count)
                 else
                     ""
@@ -144,5 +148,9 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
                 o.properties.organization_name isnt KomooNS.obj.name)
         $('.features-wrapper').append branchsView.render().$el
 
-        geoObjectsListing $('.features-wrapper')
+        branchsView = new FeaturesViewClass
+            type: 'KomooProfile'
+            collection: new Features().reset KomooNS.features['KomooProfile']
+        $('.features-wrapper').append branchsView.render().$el
 
+        geoObjectsListing $('.features-wrapper')

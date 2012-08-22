@@ -10,6 +10,9 @@ define ['map/maps'], ->
             height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5
             $(map.element).height height
             mapPanel.height height
+            panelInfo = $('.panel-info-wrapper')
+            if panelInfo
+                height -= panelInfo.height() + 30
             $('.panel', mapPanel).height(height - (window.community_slug ? 170 : 146))
 
         fixMapWidth = (map, mapPanel = $('#map-panel')) ->

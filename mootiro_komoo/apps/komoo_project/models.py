@@ -71,6 +71,11 @@ class Project(models.Model):
                user == self.creator or \
                user in self.contributors.all()
 
+    def user_can_discuss(self, user):
+        return self.public_discussion or \
+               user == self.creator or \
+               user in self.contributors.all()
+
     @property
     def home_url_params(self):
         return dict(project_slug=self.slug)
@@ -106,7 +111,9 @@ class Project(models.Model):
 
     @property
     def related_items(self):
-        items = []
+        items = [self.creator.profile]
+        for c in self.contributors.all():
+            items.append(c)
         for obj in [o.content_object for o in self.related_objects]:
             if isinstance(obj, Organization):
                 branchs = [b for b in obj.organizationbranch_set.all()]

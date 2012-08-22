@@ -48,9 +48,14 @@ class FeatureCollection extends GenericCollection
         firstFeature = @getAt 0
         if firstFeature
             geometry = firstFeature.getGeometry()
+            if geometry.getGeometryType() is 'Empty'
+                return
+
             point = geometry.getLatLngFromArray geometry.getCenter()
             @bounds = new google.maps.LatLngBounds point, point
         @forEach (feature) =>
+            if feature.getGeometryType() is 'Empty'
+                return
             @bounds?.union feature.getBounds()
         @bounds
 
@@ -163,7 +168,6 @@ class FeatureCollectionPlus extends FeatureCollection
 
         if feature.isHighlighted() then return
 
-        console.log '--->', @highlighted
         @highlighted?.setHighlight off
         feature.highlight()
         @highlighted = feature

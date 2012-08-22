@@ -30,13 +30,19 @@
 
             <div class="view-edit-btn">
                 {% if project|user_can_edit_this_project:user %}
+
                 {% history project %}
+
+                {% if user_can_discuss %}
                 <a href="{% url view_discussion project.perm_id %}" class="btn login-required">
                     <i class="icon-comment"></i>
                 </a>
+                {% endif %}
+                
                 <a href="{{ project.edit_url }}" class="btn login-required">
                     <i class="icon-pencil"></i>
                 </a>
+
                 {% endif %}
             </div>
 

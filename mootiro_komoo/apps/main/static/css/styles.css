@@ -681,6 +681,13 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: url("../img/menu/resource.png");
 }
 
+.icon-komooprofile-big {
+    background-image: url("../img/komooprofile.png");
+    background-position: 0 0;
+    margin: 0 2px 0 3px;
+    width: 21px;
+    height: 24px;
+}
 .icon-community-big {
     background-image: url("../img/community.png");
     background-position: 0 0;
