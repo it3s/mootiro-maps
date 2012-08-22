@@ -18,7 +18,7 @@
     <h2 class="title">{% trans "Discussion about" %} {{ obj.name }}</h2>
     <div class="view-edit-btn">
       {% history discussion %}
-      <a href="{{ obj.view_url }}" class="btn login-required"><i class="icon-list-alt"></i></a>
+      <a href="{{ obj.view_url }}" class="btn"><i class="icon-list-alt"></i></a>
       <a href="{% url edit_discussion obj.perm_id %}" class="btn login-required"><i class="icon-pencil"></i></a>
     </div>
     
