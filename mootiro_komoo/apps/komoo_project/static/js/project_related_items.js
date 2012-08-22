@@ -13,7 +13,7 @@
       tagName: 'li',
       initialize: function() {
         _.bindAll(this, 'render');
-        return this.template = _.template('<img src="<%= url %>" />');
+        return this.template = _.template("<a href=\"<%= url %>\">\n    <img src=\"<%= url %>\" class=\"ad_image_gallery_thumb\" />\n</a>");
       },
       render: function() {
         var renderedContent;
@@ -29,14 +29,15 @@
     window.PartnersLogosView = Backbone.View.extend({
       initialize: function() {
         _.bindAll(this, 'render');
-        this.template = _.template('<ul class="partners-logo-list"></ul>');
+        this.template = _.template("<div class=\"proj-partners-title\">Parceiros:</div>\n<div id=\"logos-gallery\" class=\"ad-gallery\">\n    <div class=\"ad-image-wrapper\"></div>\n    <div class=\"ad-controls\"></div>\n    <div class=\"ad-nav\">\n        <div class=\"ad-thumbs\">\n            <ul class=\"ad-thumb-list\"></ul>\n        </div>\n    </div>\n</div>");
         return this.collection.bind('reset', this.render);
       },
       render: function() {
-        var $logos, collection;
+        var $gallery, $logos, collection;
         collection = this.collection;
         this.$el.html(this.template());
-        $logos = this.$('.partners-logo-list');
+        $logos = this.$('.ad-thumb-list');
+        $gallery = this.$('#logos-gallery');
         collection.each(function(logo) {
           var view;
           console.log('-----', logo);
@@ -44,6 +45,16 @@
             model: logo
           });
           return $logos.append(view.render().$el);
+        });
+        $gallery.adGallery({
+          width: 250,
+          height: 150,
+          update_window_hash: false,
+          slideshow: {
+            enable: true,
+            autostart: true,
+            speed: 3500
+          }
         });
         return this;
       }

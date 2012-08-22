@@ -11,7 +11,11 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
 
         initialize: () ->
             _.bindAll this, 'render'
-            @template = _.template '<img src="<%= url %>" />'
+            @template = _.template """
+                <a href="<%= url %>">
+                    <img src="<%= url %>" class="ad_image_gallery_thumb" />
+                </a>
+            """
 
         render: () ->
             console.log 'rendering model: ', @model.toJSON()
@@ -25,19 +29,41 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
     window.PartnersLogosView = Backbone.View.extend
         initialize: () ->
             _.bindAll this, 'render'
-            @template = _.template '<ul class="partners-logo-list"></ul>'
+            @template = _.template """
+                <div class="proj-partners-title">Parceiros:</div>
+                <div id="logos-gallery" class="ad-gallery">
+                    <div class="ad-image-wrapper"></div>
+                    <div class="ad-controls"></div>
+                    <div class="ad-nav">
+                        <div class="ad-thumbs">
+                            <ul class="ad-thumb-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            """
             @collection.bind 'reset', @render
 
         render: () ->
             collection = @collection
             @$el.html @template()
-            $logos = this.$ '.partners-logo-list'
+            $logos = this.$ '.ad-thumb-list'
+            $gallery = this.$ '#logos-gallery'
 
             collection.each (logo) ->
                 console.log '-----', logo
                 view = new PartnersLogoView
                     model: logo
                 $logos.append view.render().$el
+
+            $gallery.adGallery
+                width: 250
+                height:150
+                update_window_hash: no
+                slideshow:
+                    enable: true
+                    autostart: true
+                    speed: 3500
+
             this
 
     $ ->
