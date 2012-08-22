@@ -8,14 +8,58 @@
   {{ block.super }}
 
   <script type="text/template" id="panel-info-template">
-    <img src="<%= logo_url %>" alt="Image" />
-      <div><a href="<%= view_url %>"><%= name %></a></div>
+      <div class="proj-name" ><a href="<%= view_url %>"><%= name %></a></div>
+      <img class="proj-logo-img" src="<%= logo_url %>" alt="Image" />
       <div style="clear: both;"></div>
   </script>
+  
+    <link rel="stylesheet" type="text/css" href="/static/ad_gallery/jquery.ad-gallery.css">
+    <script type="text/javascript" src="/static/ad_gallery/jquery.ad-gallery.min.js"></script>
 
   <script type="text/javascript">
     if (typeof window.KomooNS === 'undefined') window.KomooNS = {};
     KomooNS.obj = {{ project|jsonify|safe }};
     require(['project_related_items']);
   </script>
+
+<style type="text/css">
+    .ad_image_gallery_thumb{
+        max-width: 100px;
+        max-height: 100px;
+    }
+    #logos-gallery {
+        padding: 15px;
+        background: #e1eef5;
+        border-radius: 5px;
+        margin: 20px auto 0;
+    }
+    .ad-thumb-list{
+        height: 105px;
+        padding: 0;
+    }
+    #logos-gallery .ad-image{
+        overflow: visible;
+    }
+    #logos-gallery .ad-nav{
+        display: none;
+    }
+    #logos-gallery .ad-controls{
+        display: none;
+    }
+    #map-panel-content .panel-info .proj-logo-img{
+        max-width: 150px;
+        max-height: 150px;
+        margin: 10px 75px 0;
+    }
+    #map-panel-content .panel-info .proj-name{
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+    .proj-partners-title{
+        font-weight: bold;
+        margin-left: 30px;
+    }
+</style>
+
 {% endblock %}
