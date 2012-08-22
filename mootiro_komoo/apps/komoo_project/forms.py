@@ -65,7 +65,7 @@ class FormProject(AjaxModelForm):
             public = 'publ' if inst.public else 'priv'
             public_discussion = 'publ' if inst.public_discussion else 'priv'
         else:
-            public, public_discussion = 'publ', 'priv'
+            public, public_discussion = 'publ', 'publ'
         kw['initial'] = {
                 'public': public, 'public_discussion': public_discussion}
         return super(FormProject, self).__init__(*a, **kw)

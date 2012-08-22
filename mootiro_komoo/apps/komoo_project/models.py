@@ -38,7 +38,7 @@ class Project(models.Model):
     community = models.ManyToManyField(Community, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
     public = models.BooleanField(default=True)
-    public_discussion = models.BooleanField(default=False)
+    public_discussion = models.BooleanField(default=True)
 
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 
