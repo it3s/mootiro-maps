@@ -51,7 +51,7 @@ def project_view(request, project_slug=''):
     proj_objects['User']= {'app_name': 'user_cas', 'objects_list': [{
         'name': project.creator.get_name,
         'link': project.creator.profile.view_url,
-        'id': project.creator.id,
+        'id': project.creator.profile.id,
         'has_geojson': bool(getattr(project.creator.profile, 'geometry', ''))
 
     }]}
@@ -60,7 +60,7 @@ def project_view(request, project_slug=''):
         proj_objects['User']['objects_list'].append({
             'name': c.get_name,
             'link': c.profile.view_url,
-            'id': c.id,
+            'id': c.profile.id,
             'has_geojson': bool(getattr(c.profile, 'geometry', ''))
         })
 

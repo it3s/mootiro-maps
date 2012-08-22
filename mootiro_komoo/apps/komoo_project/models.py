@@ -111,7 +111,9 @@ class Project(models.Model):
 
     @property
     def related_items(self):
-        items = []
+        items = [self.creator.profile]
+        for c in self.contributors.all():
+            items.append(c)
         for obj in [o.content_object for o in self.related_objects]:
             if isinstance(obj, Organization):
                 branchs = [b for b in obj.organizationbranch_set.all()]

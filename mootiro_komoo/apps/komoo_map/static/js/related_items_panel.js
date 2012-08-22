@@ -70,7 +70,7 @@
       },
       title: function(count) {
         var msg;
-        msg = this.type === 'OrganizationBranch' ? ngettext("%s organization branch", "%s organization branchs", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%{s needs", count) : "";
+        msg = this.type === 'OrganizationBranch' ? ngettext("%s organization branch", "%s organization branchs", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%s needs", count) : this.type === 'KomooProfile' ? ngettext("%s contributors", "%s contributors", count) : "";
         return interpolate(msg, [count]);
       },
       iconClass: function() {
@@ -136,6 +136,11 @@
         collection: new Features().reset(_.filter(KomooNS.features['OrganizationBranch'], function(o) {
           return o.properties.organization_name !== KomooNS.obj.name;
         }))
+      });
+      $('.features-wrapper').append(branchsView.render().$el);
+      branchsView = new FeaturesViewClass({
+        type: 'KomooProfile',
+        collection: new Features().reset(KomooNS.features['KomooProfile'])
       });
       $('.features-wrapper').append(branchsView.render().$el);
       return geoObjectsListing($('.features-wrapper'));

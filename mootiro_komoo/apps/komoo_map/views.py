@@ -23,6 +23,7 @@ def feature_types(request):
 def geojson(request, app_label, model_name, obj_id):
     logger.debug('accessing Komoo Map > geojson')
     model = get_model(app_label, model_name)
+    print model
     obj = get_object_or_404(model, id=obj_id) if model else None
     return HttpResponse(create_geojson([obj]),
         mimetype="application/x-javascript")

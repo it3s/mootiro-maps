@@ -1,4 +1,4 @@
-define ['lib/underscore-min', 'lib/backbone-min'], () ->
+define ['lib/underscore-min', 'lib/backbone-min', 'related_items_panel'], () ->
     $ = jQuery
 
     window.PartnersLogo = Backbone.Model.extend
@@ -45,17 +45,19 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
 
         render: () ->
             collection = @collection
+            if collection.length is 0
+                return this
             @$el.html @template()
             $logos = this.$ '.ad-thumb-list'
             $gallery = this.$ '#logos-gallery'
 
             collection.each (logo) ->
-                console.log '-----', logo
                 view = new PartnersLogoView
                     model: logo
                 $logos.append view.render().$el
 
             $gallery.adGallery
+                loader_image: '/static/img/loader.gif'
                 width: 250
                 height:150
                 update_window_hash: no
@@ -67,8 +69,6 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             this
 
     $ ->
-        KomooNS.drawFeaturesList()
-
         panelInfoView = new PanelInfoView
             model: new PanelInfo KomooNS.obj
         $('.panel-info-wrapper').append panelInfoView.render().$el
@@ -76,4 +76,6 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
         partnersLogosView = new PartnersLogosView
             collection: new PartnersLogos().reset KomooNS.obj.partners_logo
         $('.panel-info-wrapper').append partnersLogosView.render().$el
+
+        KomooNS.drawFeaturesList()
 

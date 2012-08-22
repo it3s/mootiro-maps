@@ -168,7 +168,6 @@ class FeatureCollectionPlus extends FeatureCollection
 
         if feature.isHighlighted() then return
 
-        console.log '--->', @highlighted
         @highlighted?.setHighlight off
         feature.highlight()
         @highlighted = feature

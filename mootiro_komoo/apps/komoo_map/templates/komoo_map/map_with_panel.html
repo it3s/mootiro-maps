@@ -32,6 +32,7 @@
       var map = $map.data('map');
 
       $("#map-panel").show();
+      $(window).resize();
 
       komoo.event.addListener(map, 'drawing_finished', function (feature, gotoNextStep) {
         if (!feature.isNew()) return;
