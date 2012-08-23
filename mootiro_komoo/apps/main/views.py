@@ -66,7 +66,6 @@ def get_geojson(request):
 
 @render_to("main/filter_results.html")
 def radial_search(request):
-    print request.GET
     center = Point(*[float(i) for i in request.GET['center'].split(',')])
     radius = Distance(m=float(request.GET['radius']))
 
@@ -75,7 +74,6 @@ def radial_search(request):
                       Q(polys__distance_lte=(center, radius)))
 
     objs = _fetch_geo_objects(distance_query, 100)
-    print objs
     d = {}
     if 'communities' in request.GET:
         d['Community'] = objs['Community']

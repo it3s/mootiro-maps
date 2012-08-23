@@ -45,7 +45,6 @@ def komoo_map_objects_list(context, arg1='', arg2=''):
             'title': _(geometries_titles.get(geometry, geometry))
         } for geometry in obj.get_map_attr('geometries')]
     } for obj in get_models() if obj.get_map_attr('editable')]
-    print show_geometries
     return {'prefix': prefix,
             'objects': objects,
             'show_geometries': show_geometries
