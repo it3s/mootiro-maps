@@ -108,7 +108,8 @@ def profile(request, username=''):
                ).order_by('-date_created')[:20]:
         version = rev.version_set.all()[0]
         contrib = _prepare_contrib_data(version, rev.date_created)
-        contributions.append(contrib)
+        if contrib:
+            contributions.append(contrib)
     geojson = create_geojson([user.profile], convert=False, discard_empty=True)
     if geojson:
         geojson['features'][0]['properties']['image'] = '/static/img/user.png'
