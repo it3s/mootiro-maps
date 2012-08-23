@@ -1,0 +1,41 @@
+[
+  {
+    "model": "komoo_project.project",
+    "pk": 1,
+    "fields": {
+      "name": "Mapeamento da Zona Leste",
+      "slug": "mapeamento-do-zona-leste",
+      "description": "O baguio \u00e9 loko!",
+      "contributors": [1, 2],
+      "community": [1, 2],
+      "contact": "",
+      "public": true,
+      "public_discussion": false,
+      "logo": null,
+      "creator": 1,
+      "creation_date": "2012-08-21 17:12:28",
+      "last_editor": 2,
+      "last_update": "2012-08-21 17:13:15"
+    }
+  },
+    
+  {
+    "pk": 2,
+    "model": "komoo_project.project",
+    "fields": {
+      "name": "Planta\u00e7\u00e3o de Jardim Vertical",
+      "slug": "plantacao-de-jardim-vertical",
+      "description": "WoooW! SpiderGrama na parede!\r\n",
+      "contributors": [1],
+      "community": [4],
+      "contact": "",
+      "public": false,
+      "public_discussion": false,
+      "logo": null,
+      "creator": 1,
+      "creation_date": "2012-08-21 17:20:25",
+      "last_editor": 1,
+      "last_update": "2012-08-21 17:20:55"
+    }
+  }
+]

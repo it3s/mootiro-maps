@@ -19,7 +19,8 @@ from komoo_resource.views import prepare_resource_objects
 from investment.models import Investment
 from investment.forms import InvestmentForm
 from community.models import Community
-from main.utils import paginated_query
+from main.utils import paginated_query, filtered_query, sorted_query
+
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +76,7 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
         return InvestmentForm(request.POST, instance=investment)
 
     def on_after_save(request, obj):
-        return {'redirect': reverse('investment_list')}
+        return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_before_validation': on_before_validation,
             'on_after_save': on_after_save, 'community': community}
@@ -96,13 +97,21 @@ def view(request, community_slug="", need_slug="", proposal_number="",
 @render_to('investment/list.html')
 def list(request, community_slug=''):
     logger.debug('acessing investment > list')
+
+    sort_fields = ['creation_date', 'votes', 'title']
+
+
+    query_set = Investment.objects
+    query_set = filtered_query(query_set, request)
+    investments = sorted_query(query_set, sort_fields, request, default_order='title')
+
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
-        # TODO: query below must get investments for the given community only
-        investments = Investment.objects.all().order_by('title')
+        # TODO: the filter below is inneficient, should be done in database level
+        query_set = filter(lambda inv: community in inv.community.all(), query_set.all())
     else:
         community = None
-        investments = Investment.objects.all().order_by('title')
+
     investments = paginated_query(investments, request=request)
     return dict(investments=investments, community=community)
 

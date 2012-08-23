@@ -113,5 +113,9 @@ class Resource(GeoRefModel, VotableModel):
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
 
+    @property
+    def perm_id(self):
+        return 'r%d' % self.id
+
 if not reversion.is_registered(Resource):
     reversion.register(Resource)

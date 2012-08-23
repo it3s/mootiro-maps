@@ -130,7 +130,7 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 
 @register.inclusion_tag('main/templatetags/history.html')
 def history(obj):
-    if obj.creator:
+    if hasattr(obj, 'creator') and obj.creator:
         creator_link = '<a href="/permalink/u{}">{}</a>'.format(
                 obj.creator.id, obj.creator.get_name)
     else:
@@ -189,6 +189,8 @@ def taglist(obj, community=None):
 def jsonify(object):
     if isinstance(object, QuerySet):
         return serialize('json', object)
+    if hasattr(object, 'json'):
+        return object.json
     return simplejson.dumps(object, cls=DjangoJSONEncoder)
     # return simplejson.dumps(object)
 # jsonify.is_safe = True
@@ -231,6 +233,19 @@ def class_name(value):
 
 
 @register.filter
+def ctype_trans_name(value):
+    name_mapper = {
+        'organization': _('Organization'),
+        'resource': _('Resource'),
+        'need': _('Need'),
+        'proposal': _('Proposal'),
+        'investment': _('Investment'),
+        'community': _('Community'),
+    }
+    return name_mapper.get(value, value)
+
+
+@register.filter
 def get_range(value):
     return xrange(int(value))
 
@@ -255,15 +270,51 @@ def communities_list(communities):
 def _get_widgets_dict(obj):
     tag_widget = TaggitWidget(autocomplete_url="/%s/search_tags/" % obj)
     tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
+    # tag_widget = "<input id='id_tags' type='text'/>"
 
-    community_widget = Autocomplete(Community, '/community/search_by_name/')
+    community_widget = Autocomplete(Community, '/community/search_by_name')
     community_widget = "%s \n %s" % (str(community_widget.media),
                                      community_widget.render('community'))
+
+    ##### NEED CATEGORIES FILTER #####
+    # FIXME: this code should be somewhere else.
+    need_categories_widget = "<input id='need_categories' type='hidden'/>\n"
+    for nc in NeedCategory.objects.all().order_by('name'):
+        need_categories_widget += """
+            <img src='/static/{0}' title='{3}' class='nc_filter' ncid='{2}'/>
+            <img src='/static/{1}' title='{3}' class='nc_filter hidden' ncid='{2}'/>
+        """.format(nc.image_off, nc.image, nc.id, nc.name)
+    need_categories_widget += """
+        <script type="text/javascript">
+            var nc_filter_arr = [];
+
+            $("img.nc_filter").on("click", function (evt) {
+                var id = $(evt.target).attr('ncid');
+
+                var pos = nc_filter_arr.indexOf(id);
+                if (pos != -1)
+                    nc_filter_arr.splice(pos, 1); // removes the element
+                else
+                    nc_filter_arr.push(id); // appends element
+                $("#need_categories").val(nc_filter_arr.join()).change;
+                $(".nc_filter[ncid='"+id+"']").toggle();
+            });
+        </script>
+    """
+    ##################################
+
+    target_audience_widget = TaggitWidget(autocomplete_url="/need/target_audience_search/")
+    target_audience_widget = "%s \n %s" % (str(target_audience_widget.media),
+                                target_audience_widget.render('target_audiences'))
+    # target_audience_widget = target_audience_widget.render('target_audiences')
+    # target_audience_widget = "<input id='id_target_audiences' type='text'/>"
 
     # filters
     return {
         'tags': tag_widget,
-        'community': community_widget
+        'community': community_widget,
+        'need_categories': need_categories_widget,
+        'target_audiences': target_audience_widget,
     }
 
 
@@ -289,8 +340,9 @@ def visualization_opts(context, obj, arg1='', arg2=''):
         'title': _('Name'),
         'creation_date': _('Date'),
         'votes': _('Votes'),
-        'community': _('Community')
-
+        'community': _('Community'),
+        'need_categories': _('Need categories'),
+        'target_audiences': _('Target audiences'),
     }
 
     # sorters
@@ -358,7 +410,7 @@ def visualization_opts_js(context):
           if (_filters && _filters.length > 0 && _filters[0]){
             $.each(_filters, function(idx, val){
               $('.view-list-filter-btn[filter-name=' + val + ']').addClass('selected');
-              if (val == 'tags'){
+              if (val == 'tags') {
                 var tags = unescape(getUrlVars()['tags']);
                 tags = tags.split(',');
                 $.each(tags, function(idx, tag){
@@ -366,7 +418,15 @@ def visualization_opts_js(context):
                     $('#id_tags').addTag(tag);
                   }
                 });
-              } else if(val == 'community'){
+              } else if (val == 'target_audiences') {
+                var target_audiences = unescape(getUrlVars()['target_audiences']);
+                target_audiences = target_audiences.split(',');
+                $.each(target_audiences, function(idx, tag){
+                  if($.inArray(tag, $('#id_target_audiences').val().split(',') ) == -1){
+                    $('#id_target_audiences').addTag(tag);
+                  }
+                });
+              } else if(val == 'community') {
                 var id = unescape(getUrlVars()[val]);
                 $.get('/community/get_name_for/'+ id +'/', {}, function(data){
                   $('#id_community_autocomplete').val(data.name);
@@ -395,6 +455,14 @@ def visualization_opts_js(context):
 
           // reset tagsinput styles
           $('.view-list-filter-widget .tagsinput').attr('style', '');
+
+          // auto-fill need_categories
+          if ($("#need_categories").val()) {
+              nc_filter_arr = $("#need_categories").val().split(',');
+              $.each(nc_filter_arr, function(index, value){
+                  $(".nc_filter[ncid='"+value+"']").toggle();
+              })
+          }
 
           // click on btn change classes.
           $('.view-list-sorter-btn').click(function(){

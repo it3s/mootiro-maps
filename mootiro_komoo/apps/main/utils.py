@@ -49,7 +49,7 @@ def komoo_permalink(obj):
     return '/permalink/{}{}'.format(obj.__class__.__name__.lower()[0], obj.id)
 
 
-def create_geojson(objects, type_='FeatureCollection', convert=True):
+def create_geojson(objects, type_='FeatureCollection', convert=True, discard_empty=False):
     if type_ == 'FeatureCollection':
         geojson = {
             'type': 'FeatureCollection',
@@ -76,6 +76,9 @@ def create_geojson(objects, type_='FeatureCollection', convert=True):
                         if geom['type'] == geometry_type:
                             coord.append(geom['coordinates'])
                     geometry['coordinates'] = coord
+
+            if discard_empty and not geometry:
+                return {}
 
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
             last_update = obj.last_update.isoformat(b' ') if hasattr(obj,
@@ -197,6 +200,20 @@ def filtered_query(query_set, request):
             community = request.GET.get('community', '')
             if community:
                 query_set = query_set.filter(community=community)
+        if f == 'need_categories':
+            need_categories = request.GET.get('need_categories', '')
+            if need_categories:
+                need_categories = need_categories.split(',')
+                for nc in need_categories:
+                    query_set = query_set.filter(categories=nc)
+        if f == 'target_audiences':
+            request.encoding = 'latin-1'
+            target_audiences = request.GET.get('target_audiences', '')
+            if target_audiences:
+                target_audiences = target_audiences.split(',')
+                for ta in target_audiences:
+                    query_set = query_set.filter(target_audiences__name=ta)
+
     return query_set
 
 

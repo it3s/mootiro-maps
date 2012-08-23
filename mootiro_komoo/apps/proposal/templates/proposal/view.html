@@ -7,6 +7,8 @@
 {% load investment_tags %}
 {% load komoo_tags %}
 {% load markitup_tags %}
+{% load project_tags %}
+{% load i18n %}
 
 {% block title %}Proposal: {{proposal.name}} ― Komoo{% endblock %}
 
@@ -18,16 +20,22 @@
     <h3>
       {{ proposal.title }}
       <span class="small"> (<a href="{% if community %}{% url view_need proposal.need.community.all.0.slug proposal.need.slug %}{% else %}{% url view_need proposal.need.slug %}{% endif %}"> {{ proposal.need.title }}</a>)</span>
-      <div class="view-edit-btn"><a href="{% if community %}{% url edit_proposal community.slug proposal.need.slug proposal.number %}{% else %}{% url edit_proposal proposal.need.slug proposal.number %}{% endif %}" class="btn login-required"><i class="icon-pencil"></i></a></div>
     </h3>
+
+    <div class="view-edit-btn">
+      {% history proposal %}
+      <a href="{% url view_discussion proposal.perm_id %}" class="btn login-required"><i class="icon-comment"></i></a>
+      <a href="{{ proposal.edit_url }}" class="btn login-required"><i class="icon-pencil"></i></a>
+    </div>
+    
     {% vote proposal %}
     <p>
-      <span class="apart">created by {{ proposal.creator }} on {{ proposal.creation_date }}</span>
+    <span class="apart">{% trans 'created by' %} {{ proposal.creator }} {%trans 'on' %} {{ proposal.creation_date }}</span>
     </p>
 
     <div class="mark-down">{{ proposal.description|render_markup|safe }}</div>
 
-    <p>Cost: {{ proposal.cost }}</p>
+    <p>{% trans 'Cost' %}: {{ proposal.cost }}</p>
 
     {% investments_list proposal.investments.all %}
 
@@ -41,19 +49,23 @@
 
   <div class="right-bar">
     <div class="block">
-      <h4>Proposals for <a href="{% if community %}{% url view_need proposal.need.community.all.0.slug proposal.need.slug %}{% else %}{% url view_need proposal.need.slug %}{% endif %}"> {{ proposal.need.title }}</a></h4>
+        <h4>{% trans 'Proposals for' %} <a href="{% if community %}{% url view_need proposal.need.community.all.0.slug proposal.need.slug %}{% else %}{% url view_need proposal.need.slug %}{% endif %}"> {{ proposal.need.title }}</a></h4>
       {% for p in proposal.need.proposals.all %}
         {% if p != proposal %}
           {% proposal_summary p %}
         {% endif %}
-      {% endfor %}
+        {% endfor %}
+      <div class="centralizer">  
       <a class="button" href="{% if community %}{% url new_proposal proposal.need.community.all.0.slug proposal.need.slug %}{% else %}{% url new_proposal proposal.need.slug %}{% endif %}">
-        New proposal
+          {%trans 'New proposal' %}
       </a>
+      </div>
     </div>
 
+    {% projects_for_object proposal %}
+
     <div class="centralizer apart">
-      <a class="button" href="{{ proposal.new_investment_url }}">Add investment</a>
+        <a class="button" href="{{ proposal.new_investment_url }}">{% trans 'Add investment' %}</a>
     </div>
 
   </div>

@@ -51,5 +51,10 @@
   {"pk": 47, "model": "contenttypes.contenttype", "fields": {"model": "digestsignature", "name": "digest signature", "app_label": "signatures"}},
   {"pk": 48, "model": "contenttypes.contenttype", "fields": {"model": "digest", "name": "digest", "app_label": "signatures"}},
 
-  {"pk": 49, "model": "contenttypes.contenttype", "fields": {"model": "komooprofile", "name": "komoo profile", "app_label": "user_cas"}}
+  {"pk": 49, "model": "contenttypes.contenttype", "fields": {"model": "komooprofile", "name": "komoo profile", "app_label": "user_cas"}},
+
+  {"pk": 50, "model": "contenttypes.contenttype", "fields": {"model": "project", "name": "project", "app_label": "komoo_project"}},
+  {"pk": 51, "model": "contenttypes.contenttype", "fields": {"model": "projectrelatedobject", "name": "project related object", "app_label": "komoo_project"}},
+  
+  {"pk": 52, "model": "contenttypes.contenttype", "fields": {"model": "discussion", "name": "discussion", "app_label": "discussion"}}
 ]

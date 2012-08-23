@@ -48,6 +48,10 @@
       return this.elements;
     };
 
+    GenericCollection.prototype.slice = function(begin, end) {
+      return this.elements.slice(begin, end);
+    };
+
     return GenericCollection;
 
   })();
@@ -70,15 +74,46 @@
     }
 
     FeatureCollection.prototype.push = function(feature) {
+      if (!(feature != null)) return;
       FeatureCollection.__super__.push.call(this, feature);
       return feature.setMap(this.map);
     };
 
-    FeatureCollection.prototype.setMap = function(map, force) {
-      var _this = this;
-      this.map = map;
+    FeatureCollection.prototype.getBounds = function() {
+      var firstFeature, geometry, point,
+        _this = this;
+      firstFeature = this.getAt(0);
+      if (firstFeature) {
+        geometry = firstFeature.getGeometry();
+        if (geometry.getGeometryType() === 'Empty') return;
+        point = geometry.getLatLngFromArray(geometry.getCenter());
+        this.bounds = new google.maps.LatLngBounds(point, point);
+      }
       this.forEach(function(feature) {
-        return feature.setMap(_this.map, force);
+        var _ref;
+        if (feature.getGeometryType() === 'Empty') return;
+        return (_ref = _this.bounds) != null ? _ref.union(feature.getBounds()) : void 0;
+      });
+      return this.bounds;
+    };
+
+    FeatureCollection.prototype.setMap = function(map, force) {
+      var tmpForce,
+        _this = this;
+      this.map = map;
+      tmpForce = null;
+      this.forEach(function(feature) {
+        if (force != null) {
+          tmpForce = {
+            geometry: force != null ? force.geometry : void 0,
+            point: force != null ? force.icon : void 0,
+            icon: force != null ? force.icon : void 0
+          };
+        }
+        if (feature.getType() === 'Community') {
+          if (tmpForce != null) tmpForce['point'] = false;
+        }
+        return feature != null ? feature.setMap(_this.map, tmpForce) : void 0;
       });
       return this.handleMapEvents();
     };
@@ -231,6 +266,15 @@
     FeatureCollectionPlus.prototype.getById = function(type, id) {
       var _ref;
       return (_ref = this.featuresByType[type]) != null ? _ref['ids'][id] : void 0;
+    };
+
+    FeatureCollectionPlus.prototype.highlightFeature = function(type, id) {
+      var feature, _ref;
+      feature = typeof type === 'string' ? this.getById(type, id) : type;
+      if (feature.isHighlighted()) return;
+      if ((_ref = this.highlighted) != null) _ref.setHighlight(false);
+      feature.highlight();
+      return this.highlighted = feature;
     };
 
     return FeatureCollectionPlus;

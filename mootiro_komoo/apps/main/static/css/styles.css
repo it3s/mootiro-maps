@@ -160,7 +160,9 @@ div.apart {
 .search-header.investment{
     background-color: #EEE9CC;
 }
-
+.branch-search-result {
+    padding-left: 40px !important;
+}
 /* geo_object_listing templatetag */
 ul.geo-objects-listing { margin-bottom: 10px }
 ul.geo-objects-listing li {
@@ -213,7 +215,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     font-size: 30px;
     padding: 0 10px;
     position: relative;
-    top: -25px;
+    /* top: -25px; */
+    vertical-align: top;
+    margin-top: -15px;
     left: 20px;
     min-width: 110px;
 }
@@ -277,6 +281,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 #top #menu {
     display: inline-block;
     margin-bottom: 10px;
+    margin-left: -75px;
 }
 #top #menu li {
     margin: 0;
@@ -288,7 +293,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     color: #000;
 }
 #top #menu li a, .button-off, .map-tab a, .map-button ,
-.organization-buttons .org-btn, .update-community {
+.organization-buttons .org-btn, .view-info-buttons .view-info-btn, .update-community {
     border: 1px solid #c7c7c7;
 
     background-color: #ededed;
@@ -306,7 +311,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 #top #menu li a:hover, #top #menu li.selected a,
 .map-tab a:hover, .map-tab.selected a,
 .map-button:hover, .map-button.selected,
-.organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected{
+.organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected,
+.view-info-buttons .view-info-btn:hover, .view-info-buttons .view-info-btn.selected{
     color: #fff;
     text-decoration: none;
     background-color: #3EBAC2;
@@ -331,14 +337,27 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     text-shadow: none;
     background-color: rgba(62, 186, 194, 0.2);
 }
-#komoo-map-add-button,
+.map-button.disabled:hover {
+    color: #000;
+    border: 1px solid #c7c7c7 !important;
+    background-color: #ededed !important;
+    /* Generated from: http://gradients.glrzad.com/ */
+    background-image: linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -o-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -moz-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -webkit-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -ms-linear-gradient(bottom, #CECECE 0%, #EDEDED 100%) !important;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #CECECE), color-stop(1, #EDEDED)) !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CECECE, endColorstr=#EDEDED)" important;
+}
+.polygon #drawing-control-add,
 #top #menu li:first-child a,
 .map-tab:first-child a {
     border-radius        : 6px 0 0 6px;
     -moz-border-radius   : 6px 0 0 6px;
     -webkit-border-radius: 6px 0 0 6px;
 }
-#komoo-map-cut-out-button,
+#drawing-control-cutout,
 #top #menu li:last-child a,
 .map-tab:last-child a {
     border-radius        : 0 6px 6px 0;
@@ -347,7 +366,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 #top #menu li a:active,
 .map-tab a:active { background: #2E6167 !important; }
-#komoo-map-delete-button {
+#drawing-control-delete {
     margin: 0 5px;
 }
 
@@ -359,6 +378,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.map:hover, .button.map.selected,
 .organization-buttons .org-btn[panel='branches-list']:hover,
 .organization-buttons .org-btn[panel='branches-list'].selected,
+.view-info-buttons .view-info-btn[panel='map-points-list']:hover,
+.view-info-buttons .view-info-btn[panel='map-points-list'].selected,
 #top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
@@ -376,6 +397,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.community:hover, .button.community.selected,
 .organization-buttons .org-btn[panel='communities-list']:hover,
 .organization-buttons .org-btn[panel='communities-list'].selected,
+.view-info-buttons .view-info-btn[panel='communities-list']:hover,
+.view-info-buttons .view-info-btn[panel='communities-list'].selected,
 #top #menu #menu-community a:hover, #top #menu #menu-community.selected a,
 .update-community:hover {
     color: #fff !important;
@@ -394,6 +417,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.need:hover, .button.need.selected,
 .organization-buttons .org-btn[panel='supported-proposals-list']:hover,
 .organization-buttons .org-btn[panel='supported-proposals-list'].selected,
+.view-info-buttons .view-info-btn[panel='needs-list']:hover,
+.view-info-buttons .view-info-btn[panel='needs-list'].selected,
 #top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
@@ -411,6 +436,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.organization:hover, .button.organization.selected,
 .organization-buttons .org-btn[panel='supported-organizations-list']:hover,
 .organization-buttons .org-btn[panel='supported-organizations-list'].selected,
+.view-info-buttons .view-info-btn[panel='organizations-list']:hover,
+.view-info-buttons .view-info-btn[panel='organizations-list'].selected,
 #top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
@@ -427,7 +454,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 .button.resource:hover, .button.resource.selected,
 .organization-buttons .org-btn[panel='supported-resources-list']:hover,
-.organization-buttons .org-btn[panel='upported-resources-list'].selected,
+.organization-buttons .org-btn[panel='supported-resources-list'].selected,
+.view-info-buttons .view-info-btn[panel='resources-list']:hover,
+.view-info-buttons .view-info-btn[panel='resources-list'].selected,
 #top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
@@ -445,6 +474,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .button.investment:hover, .button.investment.selected,
 .organization-buttons .org-btn[panel='investments-list']:hover,
 .organization-buttons .org-btn[panel='investments-list'].selected,
+.view-info-buttons .view-info-btn[panel='investments-list']:hover,
+.view-info-buttons .view-info-btn[panel='investments-list'].selected,
 #top #menu #menu-investment a:hover, #top #menu #menu-investment.selected a {
     color: #fff !important;
     background-image: linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
@@ -457,6 +488,45 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 #top #menu #menu-investment a:active {
     background: #AB9E15 !important;
+}
+
+
+.button.project:hover, .button.project.selected,
+.organization-buttons .org-btn[panel='projects-list']:hover,
+.organization-buttons .org-btn[panel='projects-list'].selected,
+#top #menu #menu-project a:hover, #top #menu #menu-project.selected a {
+    color: #fff !important;
+    background-image: linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -o-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -moz-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -webkit-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -ms-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: -webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.47, rgb(133,94,56)),
+        color-stop(0.74, rgb(117,86,40)),
+        color-stop(0.9, rgb(117,79,17))
+    ) !important;
+}
+
+.organization-related-button {
+    text-align: center;
+    margin-right: 25px;
+}
+
+#map-panel-content .panel-info {
+    margin: 10px;
+    clear: both;
+}
+
+#map-panel-content .panel-info img {
+    float: left;
+}
+
+#top #menu #menu-project a:active {
+    background: rgb(133,94, 56) !important;
 }
 
 .middle { vertical-align: middle }
@@ -501,6 +571,26 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 *:hover > .icon-help.no-hover {
     background-image: url("../img/menu/help.png");
+}
+
+.icon-komoo-minus {
+    background-image: url("../img/minus.png");
+}
+.icon-komoo-plus {
+    background-image: url("../img/plus.png");
+}
+.icon-komoo-minus,
+.icon-komoo-plus {
+    background-position: 0 0;
+    margin: 4px 3px;
+    width: 12px;
+    height: 12px;
+}
+.icon-komoo-trash {
+    background-image: url("../img/trash.png");
+    background-position: 0 0;
+    width: 18px;
+    height: 20px;
 }
 
 .icon-point {
@@ -591,6 +681,13 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: url("../img/menu/resource.png");
 }
 
+.icon-komooprofile-big {
+    background-image: url("../img/komooprofile.png");
+    background-position: 0 0;
+    margin: 0 2px 0 3px;
+    width: 21px;
+    height: 24px;
+}
 .icon-community-big {
     background-image: url("../img/community.png");
     background-position: 0 0;
@@ -635,6 +732,20 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: url("../img/menu/investment.png");
 }
 
+.icon-project {
+    background-image: url("../img/menu/project.png");
+    background-position: 0 0;
+    margin: 2px 0 1px;
+    width: 24px;
+    height: 15px;
+}
+*:hover > .icon-project, .selected .icon-project {
+    background-image: url("../img/menu/project-active.png");
+}
+*:hover > .icon-project.no-hover, .selected .icon-project.no-selected  {
+    background-image: url("../img/menu/project.png");
+}
+
 #flash-message {
     display: none;
     text-align: center;
@@ -650,12 +761,13 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 .map-button {
     cursor: pointer;
-    float: left;
+    display: inline-block;
     padding: 5px;
     margin: 10px 5px;
 }
 .map-panel .content .map-button,
 .map-button:hover, .map-button.selected {
+    padding: 2px 5px 5px;
     border: 1px solid #4092a9 !important;
 }
 
@@ -720,23 +832,32 @@ body.community #collapse-panel {
     -o-transition: opacity 1s; /* Opera */
     opacity: 0;
 }
-#map-canvas-editor,
-#map-canvas-main {
+.komoo-map-googlemap {
     transition: margin-left 1s;
     -moz-transition: margin-left 1s; /* Firefox 4 */
     -webkit-transition: margin-left 1s; /* Safari and Chrome */
     -o-transition: margin-left 1s; /* Opera */
 }
-.with-panel #map-canvas-editor,
-#map-canvas-main {
+.with-panel .komoo-map-googlemap {
     margin-left: 330px !important;
 }
-.collapsed #map-canvas-editor,
-.collapsed #map-canvas-main {
+.collapsed .komoo-map-googlemap {
     margin-left: 0px !important;
     width: auto !important;
 }
-#map-canvas-preview .placeholder {
+.partners-logo-list {
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+.partners-logo-list .partner-logo {
+    display: inline;
+}
+.map-canvas .placeholder {
+    width: 247px;
+    height: 40px;
+}
+#map-canvas-preview .placeholder,
+.map-canvas .placeholder {
     font-size: 16px;
     padding: 80px 35px;
     text-align: center;
@@ -757,14 +878,14 @@ body.community #collapse-panel {
 }
 #map-panel ul.geo-objects-listing .sublist li:hover,
 #map-panel ul.geo-objects-listing .sublist li.selected,
-#map-panel ul.geo-objects-listing li .item.selected,
 #map-panel ul.geo-objects-listing li .item:hover { background: #dceff4 }
 #map-panel ul.geo-objects-listing li.sublist { padding: 0 }
 #filter-form ul.geo-objects-listing li.sublist { display: none }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
 #map-panel ul.geo-objects-listing.frozen li .item:hover { background: none; cursor: default; }
-#map-panel ul.geo-objects-listing.frozen li .item.selected:hover { background: #dceff4 }
+#map-panel ul.geo-objects-listing li .item.selected,
+#map-panel ul.geo-objects-listing.frozen li .item.selected:hover { background: #b1dde8 }
 #filter-submit {
     padding-left: 2em;
     padding-right: 2em;
@@ -921,9 +1042,11 @@ body.community #map-panel-tabs {
 body.community #main-content {
     margin: 40px 0 0;
 }
-.map-panel .map-panel-buttons,
-.map-panel .content {
+.map-panel .map-panel-buttons {
     margin: 0 5px;
+}
+.map-panel .content {
+    margin: 0 10px;
 }
 .map-panel .content .map-button {
     margin: 0 0px;
@@ -964,8 +1087,8 @@ body.community #main-content {
 .map-menuitem.disabled, .map-menuitem.disabled:hover {
     color: #aaa;
 }
-#top #menu, #top #search { margin-left: 40px; }
-#top #search { margin-bottom: 0px; }
+/* #top #menu, #top #search { margin-left: 40px; } */
+#top #search { margin-bottom: 0px; margin-left: 40px; }
 
 #search-bar {
     width: 585px; /* FIXME: this is dependent of the language */
@@ -1491,6 +1614,21 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 /* ========= Entity show ====== */
 .view-header{
   margin-bottom: 20px;
+  display: inline-block;
+  min-width: 590px;
+}
+.view-header-logo{
+    width: 80px;
+    height: 60px;
+    margin-right: 20px;
+    vertical-align: top;
+    /* background-color: #999999; */
+    /* border-radius: 4px; */
+    display: inline-block;
+}
+.view-header h2{
+    width: 480px;
+    word-wrap: break-word;
 }
 .delete-content,
 .report-content,
@@ -1541,7 +1679,7 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
   max-width: 700px;
 }
 .view-tag-list {
-  margin: 5px 0 15px 0;
+  margin: 25px 0 0 0;
   font-weight: bold;
 }
 .view-tag-list-tags{
@@ -1630,6 +1768,7 @@ div.view-list-item.odd {
 }
 .view-list-footer{
     min-height: 1em;
+    padding-bottom: 15px;
 }
 .view-list-footer .created-by{
     display: inline-block;
@@ -1731,7 +1870,7 @@ div.view-list-item.odd {
     background-image:url(../img/glyphicons-halflings-orange.png);
 }
 /* ====== Organization ======== */
-.org-info-panel {
+.org-info-panel, .view-info-panel {
     margin-top: 30px;
     margin-bottom: 20px;
 }
@@ -1818,12 +1957,12 @@ textarea.markItUpEditor{
     display: inline-block;
     width: 20px;
 }
-.organization-buttons{
+.organization-buttons, .view-info-buttons{
     margin-top: 20px;
     font-weight: bold;
     font-size: 0.9em;
 }
-.org-btn{
+.org-btn, .view-info-btn{
     padding: 10px;
     border-radius: 7px;
     width: 208px;
@@ -1833,19 +1972,45 @@ textarea.markItUpEditor{
     cursor: pointer;
     display: inline-block;
     float: none;
+    vertical-align: top;
 }
-.org-btn.multiline{
+.org-btn.multiline, .view-info-btn.multiline{
     padding: 4px 10px;
     min-height: 38px;
 }
-.org-btn div{
+.org-btn div, .view-info-btn div{
     display: inline-block;
     max-width: 160px;
     vertical-align: middle;
 }
-.org-btn i{
+.org-btn i, .view-info-btn i{
     margin-right: 5px;
     vertical-align: middle;
+}
+.view-info-object{
+    background-color: #F6F6F6;
+    padding: 10px;
+    display: block;
+    width:97%;
+    margin: 10px 0 10px 0;
+    border-radius: 7px;
+    border: solid 1px #cdcdef;
+    border-radius: 4px;
+
+}
+.view-info-object:hover{
+    background-color: #DCEFF4;
+    color: #000000;
+}
+.view-info-empty{
+    background-color: #F6F6F6;
+    padding: 10px;
+    display: block;
+    width:97%;
+    margin: 10px 0 10px 0;
+    border-radius: 7px;
+    border: solid 1px #efcdcd;
+    border-radius: 4px;
 }
 .org-info-div{
     /*background-color: rgb(166, 229, 238);*/
@@ -1969,7 +2134,7 @@ textarea.markItUpEditor{
     font-weight: bold;
     text-shadow: 0px -1px 0px rgba(15, 15, 15, 0.65);
 }
-/* == serach ==*/
+/* == search ==*/
 .search-header{
     background-color: #dceff4; ;
     font-weight: bold;
@@ -2019,6 +2184,10 @@ div.investments-list .tab-investment {
 }
 div.investments-list .tab-investment.selected { background: #dceff4 }
 div.investments-list .tab-investment.selected a { color: #000 }
+.view-list-item div.investment-info {
+    width: 50%;
+    float: left;
+}
 
 /* ====== JQuery UI ======== */
 .ui-dialog-titlebar {
@@ -2048,7 +2217,10 @@ div.investments-list .tab-investment.selected a { color: #000 }
     width: 825px !important;
     display: none;
     margin: -20px 23px 10px;
-    display: inline-block;
+}
+#content #login-box {
+    display: block;
+    margin: 30px 60px;
 }
 #login-box .option {
     width: 400px;
@@ -2152,6 +2324,10 @@ div.investments-list .tab-investment.selected a { color: #000 }
     margin-top: 20px;
     width: 297px;
     color: #333333;
+}
+.profile-lp-map-preview {
+    margin-top: 20px;
+    width: 297px;
 }
 .profile-lp-contact-header{
     font-weight: bold;
@@ -2302,22 +2478,18 @@ div.investments-list .tab-investment.selected a { color: #000 }
     height: 80px;
 }
 
-.not-found-error, .internal-error {
+.not-found-error, .internal-error, .not-anymore-error {
     height: 450px;
     max-width: 900px;
     padding-top: 60px;
     margin-top: 30px;
 }
-.not-found-error {
-    background: url("../img/404.png") no-repeat;
-}
-.not-found-error .content {
-    margin-left: 500px;
-}
+.not-found-error { background: url("../img/404.png") no-repeat }
+.not-anymore-error { background: url("../img/not_anymore.png") no-repeat }
+.not-found-error .content, .not-anymore-error .content { margin-left: 500px }
+.not-found-error .block, .not-anymore-error .block { padding: 10px }
+.err-msg.not-anymore-error h1 { color: #fc5400 }
 
-.not-found-error .block {
-    padding: 10px;
-}
 
 ul.two-cols li {
     display: inline-block;
@@ -2382,6 +2554,21 @@ ul.two-cols li {
     display: inline-block;
     float: right;
     vertical-align: middle;
+}
+
+#map-drawing-box {
+    background: #dceff4;
+    margin: 10px;
+    -moz-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    border-radius        : 4px;
+    -moz-border-radius   : 4px;
+    -webkit-border-radius: 4px;
+}
+
+.collapsed #map-drawing-box {
+    margin: 10px 10px 10px 30px;
 }
 
 #map-supporters {
@@ -2497,4 +2684,44 @@ ul.two-cols li {
 }
 .control-group.focus .tagsinput input{
     background-color: #fbfbfb;
+}
+/** project header **/
+.project-header{
+    width: 85%;
+    padding-left: 10px;
+}
+.project-header-extras{
+    padding-top: 10px;
+}
+.project-list-logo {
+    vertical-align: top;
+}
+.projects-tag-header {
+    margin-bottom: 10px;
+}
+.projects-tag-header img{
+    display: inline-block;
+    margin-right: 15px;
+}
+.projects-tag-title{
+    display: inline-block;
+    font-weight: bold;
+    color: #111111;
+    font-size: 1.1em;
+}
+.project-selector input{
+    width: 300px;
+    margin-left: 100px;
+}
+.add-project-msg p{
+    background-color: #bedebe;
+    color: #333333;
+    border-radius: 5px;
+    text-align: center;
+    padding: 20px;
+    border: solid 1px #999999;
+}
+#div_id_public .radio, #div_id_public_discussion .radio{
+    width: 45%;
+    display: inline-block;
 }

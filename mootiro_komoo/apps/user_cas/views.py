@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import json
 import logging
 import requests
 
@@ -20,6 +21,7 @@ from reversion.models import Revision
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
+from main.utils import create_geojson
 
 from .forms import FormProfile
 
@@ -27,25 +29,18 @@ from .forms import FormProfile
 logger = logging.getLogger(__name__)
 
 
-#TODO: the function login should process the endpoint /login/cas/
-#      And the endpoint /login/ should point to a new page that
-#      matches our login design
+@render_to('user_cas/login.html')
 def login(request):
-    '''
-    When the user clicks "login" on Mootiro Bar, this view runs.
-    It redirects the user to CAS.
-    '''
-    logger.debug('accessing user_cas > login')
-    host_port = request.environ['HTTP_HOST']
-    return redirect(settings.CAS_SERVER_URL +
-        '?service=http://{}/user/after_login'.format(host_port))
-
+    """Displays a page with login options."""
+    logger.debug('accessing user > login')
+    return {}
 
 def logout(request):
     logger.debug('accessing user_cas > logout')
     next_page = request.GET.get('next', '/')
     auth_logout(request)
-    requests.get(cas_logout_url(request, next_page))
+    # Is it the right thing to logout from SSO?
+    # requests.get(cas_logout_url(request, next_page))
     return redirect(next_page)
 
 
@@ -104,14 +99,22 @@ def _prepare_contrib_data(version, created_date):
 @render_to('user_cas/profile.html')
 def profile(request, username=''):
     logger.debug('acessing user_cas > profile : {}'.format(username))
-    user = get_object_or_404(User, username=username)
+    if username == 'me':
+        user = request.user
+    else:
+        user = get_object_or_404(User, username=username)
     contributions = []
     for rev in Revision.objects.filter(user=user
                ).order_by('-date_created')[:20]:
         version = rev.version_set.all()[0]
         contrib = _prepare_contrib_data(version, rev.date_created)
-        contributions.append(contrib)
-    return dict(user_profile=user, contributions=contributions)
+        if contrib:
+            contributions.append(contrib)
+    geojson = create_geojson([user.profile], convert=False, discard_empty=True)
+    if geojson:
+        geojson['features'][0]['properties']['image'] = '/static/img/user.png'
+        geojson = json.dumps(geojson)
+    return dict(user_profile=user, contributions=contributions, geojson=geojson)
 
 
 @render_to('user_cas/profile_update.html')
@@ -136,8 +139,11 @@ def profile_update(request):
     digest = digest_obj[0].digest_type if digest_obj.count() \
                   else ''
     form_profile = FormProfile(instance=request.user.profile)
+    geojson = create_geojson([request.user.profile], convert=False)
+    geojson['features'][0]['properties']['image'] = '/static/img/me.png'
+    geojson = json.dumps(geojson)
     return dict(signatures=signatures, form_profile=form_profile,
-                digest=digest)
+                digest=digest, geojson=geojson)
 
 
 @login_required

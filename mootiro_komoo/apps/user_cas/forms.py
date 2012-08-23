@@ -4,6 +4,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from ajaxforms import AjaxModelForm
+from komoo_map.forms import MapButtonWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from markitup.widgets import MarkItUpWidget
@@ -14,17 +15,19 @@ from .models import KomooProfile
 class FormProfile(AjaxModelForm):
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
     public_name = forms.CharField(required=False)
-    # geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+    geometry = forms.CharField(required=False, widget=MapButtonWidget)
+    #geometry = forms.CharField(required=False, widget=forms.HiddenInput())
     photo = FileuploadField(required=False)
 
     class Meta:
         model = KomooProfile
-        fields = ['public_name', 'contact', 'id']
+        fields = ['public_name', 'contact', 'id', 'geometry']
 
     _field_labels = {
         'public_name': _('Full Name'),
         'contact': _('Public Contact'),
         'photo': _('Photo'),
+        'geometry': _('Location'),
     }
 
     def __init__(self, *a, **kw):

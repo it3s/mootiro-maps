@@ -12,13 +12,4 @@
 {% block footer %}{% endblock %}
 
 {% block page_scripts %}
-<script type="text/javascript">
-  if (window.google) {
-    google.maps.event.addDomListener(window, 'load', function () {
-      if (!editor.goToSavedLocation()) {
-        editor.goToUserLocation();
-      }
-    });
-  }
-</script>
 {% endblock %}

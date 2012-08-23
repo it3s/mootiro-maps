@@ -23,6 +23,11 @@ class GeoRefModel(geomodels.Model):
     polys = geomodels.MultiPolygonField(null=True, blank=True, editable=False)
     geometry = CollectionFrom(points='points', lines='lines', polys='polys')
 
+
+    @property
+    def related_items(self):
+        return []
+
     @property
     def geojson(self):
         geojson = create_geojson([self], convert=False)
@@ -68,20 +73,21 @@ class GeoRefModel(geomodels.Model):
         return getattr(cls.Map, attr_name, getattr(GeoRefModel.Map, attr_name))
 
 
-
 def get_models():
     return [model for model in GeoRefModel.__subclasses__()]
 
+
 def get_editable_models():
-    return [model for model in GeoRefModel.__subclasses__() \
+    return [model for model in get_models()
                 if getattr(model.Map, 'editable', False)]
+
 
 def get_models_json(all=True):
     return json.dumps([{'type': model.__name__,
                     'appLabel': model._meta.app_label,
                     'modelName': model.__name__,
                     'disabled': not model.get_map_attr('editable'),
-                    'title': model.get_map_attr( 'title') or '{}'.format(model.__name__),
+                    'title': model.get_map_attr('title') or '{}'.format(model.__name__),
                     'tooltip': model.get_map_attr('tooltip') or 'Add {}'.format(model.__name__),
                     'backgroundColor': model.get_map_attr('background_color'),
                     'backgroundOpacity': model.get_map_attr('background_opacity'),
@@ -93,7 +99,8 @@ def get_models_json(all=True):
                     'categories': model.get_map_attr('categories'),
                     'formUrl': reverse(model.get_map_attr('form_view_name'),
                         args=model.get_map_attr('form_view_args'),
-                        kwargs=model.get_map_attr('form_view_kwargs')),
+                        kwargs=model.get_map_attr('form_view_kwargs'))
+                                if model.get_map_attr('editable') else '',
                     'minZoomGeometry': model.get_map_attr('min_zoom_geometry'),
                     'maxZoomGeometry': model.get_map_attr('max_zoom_geometry'),
                     'minZoomPoint': model.get_map_attr('min_zoom_point'),
@@ -103,5 +110,7 @@ def get_models_json(all=True):
                     'zIndex': model.get_map_attr('zindex'),
                     } for model in (get_models() if all else get_editable_models())])
 
+
 def get_editable_models_json():
     return get_models_json(False)
+

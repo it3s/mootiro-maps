@@ -216,23 +216,23 @@ class DjangoMiddleware(object):
             response.status_code = 200
             return response
 
-        user = request.user if hasattr(request, 'user') \
-                and request.user.is_authenticated() else None
-        locale = getattr(settings, 'LANGUAGE_CODE', '')
-        if not locale:
-            locale = translation.get_language()
-            # Fix the language string format
-            if '-' in locale:
-                locale = locale.replace('-', '_')
-                locale = locale[:-2] + locale[:2].upper()
-
-        request.environ['mootiro_bar.enabled'] = 'true'
-
         # Do nothing if the response content isn't html document or
         # response code isn't 200
         if not response['Content-Type'].startswith('text/html') or \
                 not response.status_code == 200:
             return response
+
+        user = request.user if hasattr(request, 'user') \
+                and request.user.is_authenticated() else None
+        locale = getattr(settings, 'LANGUAGE_CODE', '')
+        if not locale:
+            locale = translation.get_language()
+        # Fix the language string format
+        if '-' in locale:
+            locale = locale.replace('-', '_')
+            locale = locale[:-2] + locale[3:].upper()
+
+        request.environ['mootiro_bar.enabled'] = 'true'
 
         # Get some info from Django app settings
         urls = {

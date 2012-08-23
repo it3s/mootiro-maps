@@ -44,18 +44,17 @@ def komoo_map_objects_list(context, arg1='', arg2=''):
             'type': geometry,
             'title': _(geometries_titles.get(geometry, geometry))
         } for geometry in obj.get_map_attr('geometries')]
-    } for obj in get_models()]
-    print show_geometries
+    } for obj in get_models() if obj.get_map_attr('editable')]
     return {'prefix': prefix,
             'objects': objects,
             'show_geometries': show_geometries
             }
 
 
-@register.inclusion_tag('komoo_map/komoo_map_templatetag.html',
-        takes_context=True)
-#@register.inclusion_tag('komoo_map/map_templatetag.html',
+#@register.inclusion_tag('komoo_map/komoo_map_templatetag.html',
 #        takes_context=True)
+@register.inclusion_tag('komoo_map/map_templatetag.html',
+        takes_context=True)
 def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
         arg5='', arg6='', arg7='', arg8=''):
     """
@@ -68,8 +67,7 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
     height = parsed_args.get('height', '200')
     zoom = parsed_args.get('zoom', 16)
     panel = parsed_args.get('panel',
-            'True' if not type in ('preview') else 'False'
-        ).lower() != 'false'
+            'komoo_map/panel.html' if not type in ('preview') else '')
     ajax = parsed_args.get('ajax', 'True').lower() != 'false'
     lazy = parsed_args.get('lazy', 'False').lower() != 'false'
     edit_button = parsed_args.get('edit_button', 'False').lower() != 'false'

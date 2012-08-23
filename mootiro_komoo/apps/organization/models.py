@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import simplejson
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
@@ -59,6 +61,14 @@ class Organization(VotableModel):
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
+
+    @property
+    def related_items(self):
+        return [c for c in self.community.all()] + \
+            [b for b in self.organizationbranch_set.all()] + \
+            [r for r in self.supported_resources] + \
+            [p.need for p in self.supported_proposals] + \
+            [b for o in self.supported_organizations for b in o.organizationbranch_set.all()]
 
     @property
     def as_investor(self):
@@ -140,6 +150,23 @@ class Organization(VotableModel):
     def new_investment_url(self):
         return reverse('new_investment', kwargs=self.home_url_params)
 
+    @property
+
+    def related_items_url(self):
+        return reverse('view_organization_related_items', kwargs=self.home_url_params)
+
+    @property
+    def json(self):
+        return simplejson.dumps({
+            'name': self.name,
+            'slug': self.slug,
+            'logo_url': self.logo_url,
+            'view_url': self.view_url,
+        })
+
+    def perm_id(self):
+        return 'o%d' % self.id
+
 
 class OrganizationBranch(GeoRefModel, VotableModel):
     name = models.CharField(max_length=320)
@@ -181,6 +208,10 @@ class OrganizationBranch(GeoRefModel, VotableModel):
     @property
     def edit_url(self):
         return self.organization.edit_url
+
+    @property
+    def related_items(self):
+        return self.organization.related
 
     image = "img/organization.png"
     image_off = "img/organization-off.png"

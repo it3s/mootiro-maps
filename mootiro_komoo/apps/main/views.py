@@ -18,6 +18,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 
 from annoying.decorators import render_to, ajax_request
+from annoying.functions import get_object_or_None
 import requests
 
 from community.models import Community
@@ -65,7 +66,6 @@ def get_geojson(request):
 
 @render_to("main/filter_results.html")
 def radial_search(request):
-    print request.GET
     center = Point(*[float(i) for i in request.GET['center'].split(',')])
     radius = Distance(m=float(request.GET['radius']))
 
@@ -74,7 +74,6 @@ def radial_search(request):
                       Q(polys__distance_lte=(center, radius)))
 
     objs = _fetch_geo_objects(distance_query, 100)
-    print objs
     d = {}
     if 'communities' in request.GET:
         d['Community'] = objs['Community']
@@ -143,8 +142,25 @@ queries = {
         'repr': 'name',
         'link': lambda o: reverse('view_community',
                                   kwargs={'community_slug': o.slug})
+    },
+    'user': {
+        'model': User,
+        'query_fields': [
+            'username',
+            'first_name',
+            'last_name',
+            'komooprofile__public_name'
+        ],
+        'repr': 'get_name',
+        'link': lambda o: reverse('user_profile',
+                                  kwargs={'username': o.username})
     }
 }
+
+
+def _has_geojson(obj):
+    geometry = getattr(obj, 'geometry', '')
+    return bool(geometry)
 
 
 @ajax_request
@@ -166,8 +182,18 @@ def komoo_search(request):
                  'name': getattr(o, model.get('repr')),
                  'link': model.get('link')(o),
                  'model': key,
+                 'has_geojson': _has_geojson(o),
                  'geojson': create_geojson([o])
             }
+            if o.__class__.__name__ == 'Organization' and o.branch_count > 0:
+                dados['branches'] = []
+                for b in o.organizationbranch_set.all():
+                    dados['branches'].append({
+                        'id': b.id,
+                        'name': getattr(b, model.get('repr')),
+                        'model': key,
+                        'has_geojson': _has_geojson(b),
+                    })
             result[key].append(dados)
 
     # Google search
@@ -229,6 +255,7 @@ def custom_500(request):
     return {}
 
 
+@render_to('not_anymore.html')
 def permalink(request, identifier=''):
     entity_model = {
         'r': Resource,
@@ -241,10 +268,13 @@ def permalink(request, identifier=''):
     url = 'root'
     if identifier:
         entity, id_ = identifier[0], identifier[1:]
-        obj = entity_model[entity].objects.get(pk=id_)
+        obj = get_object_or_None(entity_model[entity], pk=id_)
+        if not obj:
+            return {}
         url = getattr(obj, 'view_url', '/') if entity != 'u' \
                 else reverse('user_profile', kwargs={'username': obj.username})
     return redirect(url)
+
 
 @ajax_request
 def get_geojson_from_hashlink(request):
@@ -254,11 +284,12 @@ def get_geojson_from_hashlink(request):
         'c': Community,
         'o': Organization,
         'p': Proposal,
+        'b': OrganizationBranch,
     }
     hashlink = request.GET.get('hashlink', '')
     if hashlink:
         obj = entity_model[hashlink[0]].objects.get(pk=hashlink[1:])
-        geojson =  create_geojson([obj])
+        geojson = create_geojson([obj])
     else:
         geojson = {}
 

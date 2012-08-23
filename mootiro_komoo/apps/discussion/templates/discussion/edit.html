@@ -1,0 +1,25 @@
+{% extends 'global.html' %}
+
+{% load crispy_forms_tags %}
+{% load komoo_map_tags %}
+{% load upload_tags %}
+{% load i18n %}
+{% load komoo_tags %}
+
+{% block menu %} {% menu obj section %} {% endblock %}
+
+{% block content %}
+  <div id="main-content">
+    <div class="main-column">
+        {% crispy form form.helper %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('#discussion_form').ajaxform();
+        });
+    </script>
+{% endblock %}

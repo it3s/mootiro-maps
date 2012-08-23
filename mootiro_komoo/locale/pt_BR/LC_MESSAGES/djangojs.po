@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-30 18:58-0300\n"
+"POT-Creation-Date: 2012-08-22 17:33-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -74,14 +74,41 @@ msgstr "Concluir"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: apps/komoo_map/static/js/map/controls.js:129
+#: apps/komoo_map/static/js/related_items_panel.js:73
+#, perl-format
+msgid "%s organization branch"
+msgid_plural "%s organization branchs"
+msgstr[0] "%s unidade de uma organização"
+msgstr[1] "%s unidades de um organização"
+
+#: apps/komoo_map/static/js/related_items_panel.js:73
+#, perl-format
+msgid "%s community"
+msgid_plural "%s communities"
+msgstr[0] "%s comunidade"
+msgstr[1] "%s comunidades"
+
+#: apps/komoo_map/static/js/related_items_panel.js:73
+#, perl-format
+msgid "%s resource"
+msgid_plural "%s resources"
+msgstr[0] "%s recurso"
+msgstr[1] "%s recursos"
+
+#: apps/komoo_map/static/js/related_items_panel.js:73
+msgid "%s need"
+msgid_plural "%s needs"
+msgstr[0] "%s necessidade"
+msgstr[1] "%s necessidades"
+
+#: apps/komoo_map/static/js/map/controls.js:589
 #, perl-format
 msgid "%s Community"
 msgid_plural "%s Communities"
 msgstr[0] "Comunidade"
 msgstr[1] "Comunidade"
 
-#: apps/komoo_map/static/js/map/controls.js:193
+#: apps/komoo_map/static/js/map/controls.js:655
 msgid "Loading..."
 msgstr "Carregando..."
 
@@ -112,6 +139,21 @@ msgstr "Investimentos"
 #: apps/main/static/js/komoo_search.js:21
 msgid "Google Results"
 msgstr "Resultados do Google"
+
+#: apps/main/static/js/komoo_search.js:22
+msgid "User"
+msgstr "Usuário"
+
+#: apps/main/static/js/komoo_search.js:96
+#, perl-format
+msgid "%s result"
+msgid_plural "%s results"
+msgstr[0] "%s resultado"
+msgstr[1] "%s resultados"
+
+#: apps/main/static/js/komoo_search.js:109
+msgid "No results found!"
+msgstr "Nenhum resultado encontrado!"
 
 #: apps/main/static/js/komoo_utils.js:388
 msgid "Yes"
@@ -193,6 +235,41 @@ msgstr ""
 "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
 "adicione os dados da unidade que você marcou no mapa"
 
+#: apps/organization/static/js/organization_related_items.js:9
+#, perl-format
+msgid "%s point on map"
+msgid_plural "%s points on map"
+msgstr[0] "%s ponto no mapa"
+msgstr[1] "%s pontos no mapa"
+
+#: apps/organization/static/js/organization_related_items.js:9
+#, perl-format
+msgid "Supported %s organization"
+msgid_plural "Supported %s organizations"
+msgstr[0] "apoiou %s organização"
+msgstr[1] "apoiou %s organizações"
+
+#: apps/organization/static/js/organization_related_items.js:9
+#, perl-format
+msgid "On %s community"
+msgid_plural "On %s communities"
+msgstr[0] "Em %s comunidade"
+msgstr[1] "Em %s comunidades"
+
+#: apps/organization/static/js/organization_related_items.js:9
+#, perl-format
+msgid "Supported %s resource"
+msgid_plural "Supported %s resources"
+msgstr[0] "%s recurso apoiado"
+msgstr[1] "%s recursos apoiados"
+
+#: apps/organization/static/js/organization_related_items.js:9
+#, perl-format
+msgid "Supported %s need"
+msgid_plural "Supported %s needs"
+msgstr[0] "%s necessidade apoiada"
+msgstr[1] "%s necessidades apoiadas"
+
 #: apps/user_cas/static/js/profile.js:34 apps/user_cas/static/js/profile.js:35
 msgid "Organization"
 msgstr "Organização"
@@ -230,6 +307,7 @@ msgid "error : "
 msgstr "erro : "
 
 #: lib/fileupload/static/plupload/komoo_plupload.js:163
+#: lib/fileupload/static/plupload/singlefile_plupload.js:109
 msgid "Are you sure you want to delete this file?"
 msgstr "Você deseja realmente apagar este arquivo?"
 
@@ -271,14 +349,6 @@ msgstr "Você deseja realmente apagar este arquivo?"
 #~ msgid "No population provided"
 #~ msgstr "População não fornecida"
 
-#~ msgid "%s result"
-#~ msgid_plural "%s results"
-#~ msgstr[0] "%s resultado"
-#~ msgstr[1] "%s resultados"
-
-#~ msgid "No results found!"
-#~ msgstr "Nenhum resultado encontrado!"
-
 #~ msgid "Search Results:"
 #~ msgstr "Resultados da Busca:"
 
@@ -287,9 +357,6 @@ msgstr "Você deseja realmente apagar este arquivo?"
 
 #~ msgid "Add Need"
 #~ msgstr "Adicionar necessidade"
-
-#~ msgid "Add Organization"
-#~ msgstr "Adicionar organização"
 
 #~ msgid "Add Resource"
 #~ msgstr "Adicionar recurso"

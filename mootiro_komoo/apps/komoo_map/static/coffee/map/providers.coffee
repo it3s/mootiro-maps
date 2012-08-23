@@ -7,6 +7,8 @@ class GenericProvider
     tileSize: new google.maps.Size 256, 256
     maxZoom: 32
 
+    enabled: on
+
     constructor: (@options) ->
         @addrLatLngCache = {}
         @fetchedTiles = {}
@@ -14,6 +16,9 @@ class GenericProvider
     setMap: (@map) ->
         @map.googleMap.overlayMapTypes.insertAt(0, @)
         @handleMapEvents?()
+
+    enable: -> @enabled = on
+    disable: -> @enabled = off
 
     getAddrLatLng: (coord, zoom) ->
         key = "x=#{coord.x},y=#{coord.y},z=#{zoom}"
@@ -45,6 +50,8 @@ class FeatureProvider extends GenericProvider
 
     handleMapEvents: ->
         komoo.event.addListener @map.googleMap, 'idle', =>
+            if @enabled is off then return
+
             bounds = @map.googleMap.getBounds()
             @keptFeatures.forEach (feature) =>
                 if not bounds.intersects feature.getBounds()
@@ -53,6 +60,8 @@ class FeatureProvider extends GenericProvider
 
 
     releaseTile: (tile) ->
+        if @enabled is off then return
+
         if @fetchedTiles[tile.addr]
             bounds = @map.getBounds()
             @fetchedTiles[tile.addr].features.forEach (feature) =>
@@ -68,9 +77,12 @@ class FeatureProvider extends GenericProvider
                         feature.setMap null
 
     getTile: (coord, zoom, ownerDocument) ->
+
         div = ownerDocument.createElement('DIV')
         addr = @getAddrLatLng coord, zoom
         div.addr = addr
+
+        if @enabled is off then return div
 
         # Verifies if we already loaded this block
         if @fetchedTiles[addr]
@@ -101,6 +113,4 @@ class FeatureProvider extends GenericProvider
 window.komoo.providers =
     GenericProvider: GenericProvider
     FeatureProvider: FeatureProvider
-
-    makeFeatureProvider: (options) ->
-        new FeatureProvider options
+    makeFeatureProvider: (options) -> new FeatureProvider options

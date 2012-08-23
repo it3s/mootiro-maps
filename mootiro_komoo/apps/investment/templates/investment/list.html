@@ -16,17 +16,48 @@
   <div class="highlight">
     <div class="view-list">
 
+      {% visualization_opts 'investment' "sorters=['title','creation_date', 'votes']" "filters=['tags']"%}
+
       {% for investment in investments.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
           <span class="big"><a href="{{ investment.view_url }}">{{ investment }}</a></span>
+          {% if investment.grantee.geometry %}
+            <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson investment.grantee %}"><i class="icon-see-on-map"></i></a>
+          {% endif %}
         </h4>
         <div class="apart">
-          <span class="meta-info">{% trans "Investor" %}: </span> {{ investment.investor }}
+          <div class="investment-info">
+            <span class="meta-info">{% trans "Cost" %}: {{ investment.cost }}</span>
+          </div>
+          <div class="investment-info">
+            <span class="meta-info">{% trans "Investor" %}: </span> {{ investment.investor }}
+          </div>
+          <div class="investment-info">
+            <span class="meta-info">{% trans "Community" %}:</span>
+            {% for c in investment.community.all %}
+              <a href="{% url view_community c.slug %}">{{ c.name }}</a>{% if not forloop.last %},&nbsp;{% endif %}
+            {% endfor %}
+          </div>
+          <div class="investment-info">
+            <span class="meta-info">{% trans "Grantee" %}: </span>
+            <img alt="" src="{{STATIC_URL}}{{ investment.grantee.image }}" />
+            <a href="{{ investment.grantee.view_url }}">{{ investment.grantee }}</a>
+          </div>
         </div>
-        <div class="apart">
+
+        <div>
           {{ investment.description|render_markup|safe }}
         </div>
+
+        <div class="view-list-footer">
+          {% if investment.tags.count %}
+          <div class="view-list-item-tags">
+            {% taglist investment community %}
+          </div>
+          {% endif %}
+        </div>
+
       </div>
       {% endfor %}
 
@@ -34,4 +65,8 @@
   </div>
 </div>
 {% komoo_map_tooltip %}
+{% endblock %}
+
+{% block page_scripts %}
+  {% visualization_opts_js %}
 {% endblock %}

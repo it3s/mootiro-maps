@@ -32,10 +32,14 @@ class CleanMapType
             }
             ], name: gettext 'Clean'
 
-    setMap: (@map) -> @map.googleMap.mapTypes.set @id, @mapType
+    setMap: (@map) ->
+        @map.googleMap.mapTypes.set @id, @mapType
+        options = @map.googleMap.mapTypeControlOptions
+        options.mapTypeIds.push @id
+        @map.googleMap.setOptions mapTypeControlOptions: options
+        @map.googleMap.setMapTypeId @id
 
 
 window.komoo.maptypes =
     CleanMapType: CleanMapType
-
     makeCleanMapType: -> new CleanMapType()

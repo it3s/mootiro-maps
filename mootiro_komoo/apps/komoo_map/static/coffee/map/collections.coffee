@@ -28,6 +28,9 @@ class GenericCollection
 
     getArray: -> @elements
 
+    slice: (begin, end) ->
+        @elements.slice begin, end
+
 
 class FeatureCollection extends GenericCollection
     constructor: (options = {}) ->
@@ -36,11 +39,39 @@ class FeatureCollection extends GenericCollection
         options.features?.forEach (feature) => @push(feature)
 
     push: (feature) ->
+        if not feature?
+            return
         super feature
         feature.setMap(@map)
 
+    getBounds: ->
+        firstFeature = @getAt 0
+        if firstFeature
+            geometry = firstFeature.getGeometry()
+            if geometry.getGeometryType() is 'Empty'
+                return
+
+            point = geometry.getLatLngFromArray geometry.getCenter()
+            @bounds = new google.maps.LatLngBounds point, point
+        @forEach (feature) =>
+            if feature.getGeometryType() is 'Empty'
+                return
+            @bounds?.union feature.getBounds()
+        @bounds
+
     setMap: (@map, force) ->
-        @forEach (feature) => feature.setMap @map, force
+        tmpForce = null
+        @forEach (feature) =>
+            if force?
+                tmpForce =
+                    geometry: force?.geometry
+                    point: force?.icon
+                    icon: force?.icon
+
+            if feature.getType() is 'Community'
+                tmpForce?['point'] = off
+
+            feature?.setMap @map, tmpForce
         @handleMapEvents()
 
     show: ->
@@ -128,6 +159,19 @@ class FeatureCollectionPlus extends FeatureCollection
     getById: (type, id) ->
         @featuresByType[type]?['ids'][id]
 
+    highlightFeature: (type, id) ->
+        feature =
+            if typeof type is 'string'
+                @getById type, id
+            else
+                type
+
+        if feature.isHighlighted() then return
+
+        @highlighted?.setHighlight off
+        feature.highlight()
+        @highlighted = feature
+
 
 class Layer extends FeatureCollection
 
@@ -137,7 +181,5 @@ window.komoo.collections =
     GenericCollection: GenericCollection
     FeatureCollection: FeatureCollection
     FeatureCollectionPlus: FeatureCollectionPlus
-
     makeFeatureCollection: (options = {}) -> new FeatureCollection options
     makeFeatureCollectionPlus: (options = {}) -> new FeatureCollectionPlus options
-

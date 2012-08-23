@@ -59,7 +59,7 @@ def build_environment():
 def coffee_maker():
     """ runs coffeescript compiler"""
     # apps we want to compile our coffee files
-    COFFEE_SHOP = ['main', 'komoo_map', 'user_cas']
+    COFFEE_SHOP = ['main', 'komoo_map', 'user_cas', 'discussion', 'organization', 'komoo_project']
     for app in COFFEE_SHOP:
         local('coffee -o apps/{app}/static/js/ -cw apps/{app}/static/coffee/ &'.format(app=app))
 
@@ -81,6 +81,11 @@ def run():
         local('python manage.py run_gunicorn --workers=2 --bind=127.0.0.1:8001 {}'.format(django_settings[env_]))
     else:
         local('python manage.py runserver 8001 {}'.format(django_settings[env_]))
+
+
+def collectstatic():
+    """Runs static files collector"""
+    local("python manage.py collectstatic {}".format(django_settings[env_]))
 
 
 def kill_manage_tasks():
@@ -224,7 +229,10 @@ def sync_all(data_fixtures='fixtures/backupdb.json'):
     recreate_db()
     syncdb()
     fix_contenttypes()
-    loaddata(data_fixtures)
+    if data_fixtures == "test":
+        load_fixtures(data_fixtures)
+    else:
+        loaddata(data_fixtures)
 
 
 def dumpdata():

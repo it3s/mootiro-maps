@@ -1,0 +1,128 @@
+{% extends 'global.html'%}
+{% load komoo_tags %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% load upload_tags %}
+
+{% block menu %} {% menu "" "project" %} {% endblock %}
+
+{% block content %}
+    <div id="main-content">
+        <div class="main-column">
+
+            <div class="form-legend">
+                {% if  project %}
+                    {% trans 'Edit Project' %}
+                {% else %}
+                    {% trans 'New Project' %}
+                {% endif %}
+            </div>
+            <div class='alert alert-info required-notice' data-alert='info'>
+                <a class='required-notice-close close' data-dismiss='alert'>×</a>
+                <div class='msg'>
+                    Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+                </div>
+            </div>
+
+            {% crispy form form.helper %}
+
+            {% if project and project.related_objects.count %}
+                <hr/>
+                <div class="form-legend">
+                    {% trans 'Edit Project Associations' %}
+                </div>
+                <ul>
+                    {% for obj in project.related_objects %}
+                    <li>
+                        <input class="association" type="checkbox" proj-related-id="{{ obj.id }}" />
+                        <span>{{ obj.content_type.name|ctype_trans_name }}: <a href="{{ o.content_object.view_url }}">{{ obj.content_object.name }}</a></span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="button" id="delete-associations-btn">{% trans "Deleted marked associations" %}</div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+    <script type="text/javascript" src="/static/js/ajax_select.js"></script>
+    <style type="text/css">
+        .contributors_deck_project_creator{
+            margin-left: 15px;
+            color: #555555;
+        }
+        #delete-associations-btn{
+            margin-top: 10px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block page_scripts %}
+    {{ form_project.media }}
+    {% load_files project %}
+
+    <script type="text/javascript" charset="utf-8">
+        // "providential workaround" for the contributors widget ;)
+        $(function(){
+            var clean_contributors = function(){
+                var contributors = $('#id_contributors').val();
+                contributors = contributors.split('|');
+                var new_contributors = [];
+                $.each(contributors, function(idx, obj){
+                    if(obj && obj !== '{{project.creator.id}}'){
+                        new_contributors.push(obj);
+                    }
+                });
+                $('#id_contributors').val(new_contributors.join("|") + "|");
+            };
+
+
+            $form = $('#form_project');
+            $form.ajaxform({
+                onSubmit: function(){
+                    clean_contributors();
+                }
+            });
+            $form.komooFormHintBoxes({});
+
+            {% if project %}
+            $('#id_contributors_on_deck.results_on_deck').prepend(
+                '<div id="id_contributors_on_deck_{{ project.creator.id}}" >' +
+                    '<div class="contributors_deck_project_creator">' +
+                    '{{ project.creator.get_name }} ({% trans "creator" %})' +
+                    '</div>'+
+                '</div>'
+            );
+            var contributors = $('#id_contributors');
+            contributors.val(contributors.val() + '{{ project.creator.id}}|');
+
+            $('#delete-associations-btn').click(function(){
+                var associations = [];
+                $('.association:checked').each(function(idx, item){
+                    associations.push($(item).attr('proj-related-id'));
+                });
+                $.post(
+                    '/project/delete_relations/',
+                    {'associations': associations.join('|'), 'project': '{{ project.id }}'},
+                    function(data){
+                        if(data.success){
+                            // remove objects from DOM
+                            $.each(associations, function(idx, item){
+                                $('.association[proj-related-id=' + item + ']').parent().remove();
+                            });
+                        } else {
+                                console.log('error :*(');
+                        }
+
+                    },
+                    'json'
+                );
+            });
+            {% endif %}
+        });
+    </script>
+{% endblock %}

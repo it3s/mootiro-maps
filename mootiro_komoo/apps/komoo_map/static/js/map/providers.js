@@ -17,6 +17,8 @@
 
     GenericProvider.prototype.maxZoom = 32;
 
+    GenericProvider.prototype.enabled = true;
+
     function GenericProvider(options) {
       this.options = options;
       this.addrLatLngCache = {};
@@ -27,6 +29,14 @@
       this.map = map;
       this.map.googleMap.overlayMapTypes.insertAt(0, this);
       return typeof this.handleMapEvents === "function" ? this.handleMapEvents() : void 0;
+    };
+
+    GenericProvider.prototype.enable = function() {
+      return this.enabled = true;
+    };
+
+    GenericProvider.prototype.disable = function() {
+      return this.enabled = false;
     };
 
     GenericProvider.prototype.getAddrLatLng = function(coord, zoom) {
@@ -65,6 +75,7 @@
       var _this = this;
       return komoo.event.addListener(this.map.googleMap, 'idle', function() {
         var bounds;
+        if (_this.enabled === false) return;
         bounds = _this.map.googleMap.getBounds();
         _this.keptFeatures.forEach(function(feature) {
           if (!bounds.intersects(feature.getBounds())) return feature.setMap(null);
@@ -76,6 +87,7 @@
     FeatureProvider.prototype.releaseTile = function(tile) {
       var bounds,
         _this = this;
+      if (this.enabled === false) return;
       if (this.fetchedTiles[tile.addr]) {
         bounds = this.map.getBounds();
         return this.fetchedTiles[tile.addr].features.forEach(function(feature) {
@@ -101,6 +113,7 @@
       div = ownerDocument.createElement('DIV');
       addr = this.getAddrLatLng(coord, zoom);
       div.addr = addr;
+      if (this.enabled === false) return div;
       if (this.fetchedTiles[addr]) {
         this.fetchedTiles[addr].features.setMap(this.map);
         return div;

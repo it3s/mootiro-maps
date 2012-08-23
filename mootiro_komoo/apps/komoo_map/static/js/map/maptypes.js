@@ -58,8 +58,15 @@
     }
 
     CleanMapType.prototype.setMap = function(map) {
+      var options;
       this.map = map;
-      return this.map.googleMap.mapTypes.set(this.id, this.mapType);
+      this.map.googleMap.mapTypes.set(this.id, this.mapType);
+      options = this.map.googleMap.mapTypeControlOptions;
+      options.mapTypeIds.push(this.id);
+      this.map.googleMap.setOptions({
+        mapTypeControlOptions: options
+      });
+      return this.map.googleMap.setMapTypeId(this.id);
     };
 
     return CleanMapType;

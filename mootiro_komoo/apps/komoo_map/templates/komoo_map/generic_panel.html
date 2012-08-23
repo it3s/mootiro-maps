@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div id="map-panel" style="width: 300px; position: absolute;">
+  <div id="collapse-panel"></div>
+  <div id="map-panel-content">
+    {% block panel_content %}
+    {% endblock %}
+  </div>
+  <div style="clear: both;"></div>
+</div>
+
+
+<script type="text/javascript">
+/* Collaps button */
+$("#collapse-panel").click(function (ev) {
+    var $parent = $("#map-panel").parent();
+    $parent.toggleClass("collapsed");
+    var map = $(".komoo-map-googlemap", $parent).data("map");
+    if (map === undefined) return;
+    google.maps.event.trigger(map.googleMap, 'resize');
+    var interval = setInterval(function () { map.refresh(); }, 500)
+    setTimeout(function () { clearInterval(interval); }, 1000)
+});
+</script>
+
+{% block panel_scripts %}
+{% endblock %}

@@ -10,6 +10,7 @@
 {% load organization_tags %}
 {% load investment_tags %}
 {% load upload_tags %}
+{% load project_tags %}
 
 {% block title %}
   {% if community %}
@@ -22,8 +23,8 @@
 {% block menu %} {% menu organization "organization" %} {% endblock %}
 
 {% block content %}
-{% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'lazy=True' %}
-{% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'panel=False' 'ajax=True' 'lazy=True' %}
+{% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=' 'lazy=True' %}
+{% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'ajax=True' 'lazy=True' %}
 <div id="main-content" class="inline-block">
     <div class="main-column">
 
@@ -39,6 +40,7 @@
             </div>
             <div class="view-edit-btn">
                 {% history organization %}
+                <a href="{% url view_discussion organization.perm_id %}" class="btn login-required"><i class="icon-comment"></i></a>
                 <a href="{{ organization.edit_url }}" class="btn login-required">
                     <i class="icon-pencil"></i>
                 </a>
@@ -48,6 +50,7 @@
 
         <div class="view-body">
             <div class="mark-down">{{ organization.description|render_markup|safe }}</div>
+            <div class="organization-related-button"><a class="button" href="{{ organization.related_items_url }}">{% trans 'See all objects on map' %}</a></div>
             <div class="organization-buttons row">
                 <div class="org-btn span3 selected" panel="branches-list">
                     <i class="icon-map"></i>
@@ -211,8 +214,6 @@
           <a class="button" href="{{ organization.new_investment_url }}">{% trans "New Investment" %}</a>
         </div>
 
-        {% taglist organization community %}
-
         <div class="block">
           <h4>{% trans 'Contact' %}</h4>
             {% if organization.contact %}
@@ -247,6 +248,9 @@
           {% endif %}
 
         </div>
+
+        {% projects_for_object organization %}
+        {% taglist organization community %}
 
     </div>
 
@@ -291,7 +295,7 @@
 
         $('.branch-link').bind('mouseover', function(evt){
             var branch_id = $(this).attr('data-branch-id');
-            preview.centerFeature('organizationbranch', branch_id);
+            if (window.preview) preview.centerFeature('OrganizationBranch', branch_id);
         });
 
         $('.branch-edit-btn').click(function(evt){

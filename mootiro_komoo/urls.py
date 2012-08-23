@@ -13,6 +13,7 @@ PROPOSAL_NUMBER = r'(?P<proposal_number>\d+)'
 ORGANIZATION_SLUG = r'(?P<organization_slug>[a-zA-Z0-9-]+)'
 RESOURCE_ID = r'(?P<resource_id>\d+)'
 INVESTMENT_SLUG = r'(?P<investment_slug>[a-zA-Z0-9-]+)'
+PROJECT_SLUG = r'(?P<project_slug>[a-zA-Z0-9-]+)'
 
 handler500 = 'main.views.custom_500'
 handler404 = 'main.views.custom_404'
@@ -30,7 +31,8 @@ def prepare_regex(regex):
                 .replace('PROPOSAL_NUMBER', PROPOSAL_NUMBER) \
                 .replace('ORGANIZATION_SLUG', ORGANIZATION_SLUG) \
                 .replace('RESOURCE_ID', RESOURCE_ID) \
-                .replace('INVESTMENT_SLUG', INVESTMENT_SLUG)
+                .replace('INVESTMENT_SLUG', INVESTMENT_SLUG) \
+                .replace('PROJECT_SLUG', PROJECT_SLUG)
 
 
 def multiurls(prefixes, view_defs):
@@ -66,6 +68,7 @@ urlpatterns = patterns('',
 
     # user and CAS urls
     url(r'^user/', include('user_cas.urls')),
+    url(r'^login/cas?$', 'django_cas.views.login'),
     url(r'', include('social_auth.urls')),
 
     url(r'^tinymce/', include('tinymce.urls')),
@@ -86,6 +89,8 @@ urlpatterns = patterns('',
     url(r'', include('moderation.urls')),
     url(r'', include('update.urls')),
     url(r'', include('hotsite.urls')),
+    url(r'', include('komoo_project.urls')),
+    url(r'', include('discussion.urls')),
     url(r'^map_info/', include('komoo_map.urls')),
     url(r'^about/', include('hotsite.urls')),
     url(r'^about', 'hotsite.views.root'),

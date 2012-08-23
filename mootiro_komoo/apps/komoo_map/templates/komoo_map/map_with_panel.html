@@ -1,0 +1,77 @@
+{% load i18n %}
+{% include "main/supporters.html" %}
+{% block html %}
+  <!-- HTML map container -->
+  <div id="map-container" class="with-panel" style="width: 100%; height: 100%;">
+    {% block panel %}
+      {% include panel|default:'komoo_map/panel.html' %}
+    {% endblock %}
+    <div id="map-canvas"></div>
+    <div style="clear: both;"></div>
+  </div>
+  {% block after_map %}
+  {% endblock %}
+{% endblock %}
+
+{% block map_scripts %}
+  <!-- Map creation script -->
+  <script type="text/javascript">
+    var geojson = {{ geojson|safe }};
+
+    initialize_map = function () {
+      $('#dinamic-form').hide();
+
+      /** Creating the map object **/
+      var $map = $('#map-canvas').komooMap({
+        type: '{{ type }}',
+        geojson: geojson,
+        height: '100%',
+        width: '100%'
+      });
+
+      var map = $map.data('map');
+
+      $("#map-panel").show();
+      $(window).resize();
+
+      komoo.event.addListener(map, 'drawing_finished', function (feature, gotoNextStep) {
+        if (!feature.isNew()) return;
+        var featureType, url, geojson;
+        var context = $('#dinamic-form');
+        $.ajaxSetup({ cache: true });
+
+        if (gotoNextStep && feature) {
+          featureType = feature.getFeatureType();
+          geojson = feature.getGeometryCollectionGeoJson();
+          url = featureType.formUrl.replace('/communitySlug', (window.community_slug) ? ('/' + community_slug) : '');
+          $.ajax({
+            url: url,
+            cache: true,
+            context: context,
+            dataType: 'html',
+            type: 'GET',
+            success: function (data, textStatus, jqXHR) {
+              $(this).html(data);
+              $('#id_geometry').val(JSON.stringify(geojson));
+              $(this).show();
+              $(window).resize()
+              $('#map-container-{{ type }}, #map-panel').slideUp(600);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              alert('ERRO!!!11!');
+            }
+          });
+        }
+      });
+
+      komoo.event.addListener(map, 'features_loaded', function (feature, gotoNextStep) {
+        //map.fitBounds();
+      });
+
+      return map;
+    };
+
+  require(['map.jquery'], initialize_map);
+
+  </script>
+{% endblock %}

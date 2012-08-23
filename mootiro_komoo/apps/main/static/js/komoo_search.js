@@ -18,7 +18,8 @@
       'organization': gettext('Organizations'),
       'resource': gettext('Resources'),
       'investiment': gettext('Investments'),
-      'google': gettext('Google Results')
+      'google': gettext('Google Results'),
+      'user': gettext('User')
     };
     showPopover = function() {
       $('#search-results-box').popover('show');
@@ -58,11 +59,11 @@
       }
     };
     showResults = function(result) {
-      var disabled, geojson, google_results, has_results, hashlink, idx, key, obj, result_order, results_count, results_list, val, _i, _len, _ref, _ref2;
+      var b, disabled, google_results, has_results, hashlink, idx, key, obj, result_order, results_count, results_list, val, _i, _j, _len, _len2, _ref, _ref2;
       results_list = '';
       results_count = 0;
       has_results = false;
-      result_order = ['community', 'organization', 'need', 'resource'];
+      result_order = ['community', 'organization', 'need', 'resource', 'user'];
       for (_i = 0, _len = result_order.length; _i < _len; _i++) {
         key = result_order[_i];
         val = result[key];
@@ -70,10 +71,17 @@
           results_list += "<li>\n<div class='search-header " + key + "' >\n    <img src='/static/img/" + key + ".png' >\n    <div class='search-type-header' >\n        " + titles[key] + "\n        <span class='search-results-count'>\n            " + (interpolate(ngettext('%s result', '%s results', val.length), [val.length])) + "\n        </span>\n    </div>\n</div>\n<ul class='search-result-entries'>";
           for (idx in val) {
             obj = val[idx];
-            geojson = JSON.parse((_ref = obj != null ? obj.geojson : void 0) != null ? _ref : {});
-            disabled = !(geojson != null ? (_ref2 = geojson.features[0]) != null ? _ref2.geometry : void 0 : void 0) ? 'disabled' : '';
+            disabled = !(obj != null ? obj.has_geojson : void 0) ? 'disabled' : '';
             hashlink = key[0] + obj.id;
             results_list += "<li>\n    <a href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + hashlink + "\" onclick=\"seeOnMap('" + hashlink + "')\" class=\"" + disabled + "\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+            if (key === 'organization' && ((_ref = obj.branches) != null ? _ref.length : void 0)) {
+              _ref2 = obj.branches;
+              for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+                b = _ref2[_j];
+                console.log(b);
+                results_list += "<li class=\"branch-search-result\">\n    <a href='" + obj.link + "'>&#8226; " + b.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#b" + b.id + "\" onclick=\"seeOnMap('b" + b.id + "')\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+              }
+            }
             results_count++;
           }
           results_list += '</ul></li>';

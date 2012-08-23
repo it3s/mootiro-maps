@@ -1,0 +1,16 @@
+<a id="view-content-info" href="#" class="btn"><i class="icon-eye-open"></i></a>
+<a id="view-discussion-info" href="#discussion" class="btn"><i class="icon-comment"></i></a>
+
+<div id="content-discussion" class="hidden">
+  BLA BLA BLA...
+  {{ content_object.discussion }}
+</div>
+
+
+<script type="text/javascript">
+  $(function () {
+    $content = $("#{{ content_id }}");
+  });
+</script>
+
+<script type="text/javascript" src="/static/js/discussion.js"></script>

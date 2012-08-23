@@ -8,7 +8,7 @@ class Datepicker(forms.DateInput):
 
     def render_js(self, field_id):
         js = u"""
-        $("#%(field_id)s").datepicker();
+        $("#%(field_id)s").datepicker({dateFormat: "dd/mm/yy"});
         """ % {
             'field_id': field_id,
         }

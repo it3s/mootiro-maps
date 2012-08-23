@@ -162,6 +162,10 @@ class Investment(VotableModel):
     def name(self):
         return self.title
 
+    @property
+    def community(self):
+        return self.grantee.community
+
     ### Needed to slugify items ###
     def slug_exists(self, slug):
         """Answers if a given slug is valid in grantee investment namespace."""
@@ -196,6 +200,10 @@ class Investment(VotableModel):
     @property
     def edit_url(self):
         return reverse('edit_investment', kwargs=self.home_url_params)
+
+    @property
+    def perm_id(self):
+        return 'i%d' % self.id
 
 
 if not reversion.is_registered(Investment):

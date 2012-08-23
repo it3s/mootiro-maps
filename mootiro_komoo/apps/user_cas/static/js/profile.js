@@ -69,7 +69,6 @@
     },
     render: function() {
       var renderedContent;
-      console.log('rendering model', this.model.toJSON());
       renderedContent = this.template(this.model.toJSON());
       $(this.el).html(renderedContent);
       return this;

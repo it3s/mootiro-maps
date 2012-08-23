@@ -1,6 +1,6 @@
 $ = jQuery
 
-window.Contribution = Backbone.Model.extend 
+window.Contribution = Backbone.Model.extend
     imageName: () ->
         if @model_name is 'organizationbranch'
             modelName =  'organization'
@@ -52,7 +52,6 @@ window.ContributionView = Backbone.View.extend
         @template = _.template $('#contribution-template').html()
 
     render: () ->
-        console.log 'rendering model', @model.toJSON()
         renderedContent = @template @model.toJSON()
         $(@el).html renderedContent
         this
