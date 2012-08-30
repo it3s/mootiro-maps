@@ -401,6 +401,7 @@
         this.addComponent(komoo.controls.makeStreetView());
         this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
         this.addComponent(komoo.controls.makeDrawingControl(), 'drawing');
+        this.addComponent(komoo.controls.makeGeometrySelector(), 'drawing');
         this.addComponent(komoo.controls.makeSupporterBox());
         this.addComponent(komoo.controls.makePerimeterSelector(), 'perimeter');
       }
@@ -488,6 +489,7 @@
         AjaxEditor.__super__.constructor.call(this, options);
         this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
         this.addComponent(komoo.controls.makeDrawingControl(), 'drawing');
+        this.addComponent(komoo.controls.makeGeometrySelector(), 'drawing');
         this.addComponent(komoo.controls.makePerimeterSelector(), 'perimeter');
       }
 

@@ -39,7 +39,7 @@
       methods = {
         init: function(options) {
           return this.each(function() {
-            var $this, map, opts;
+            var $this, map, opts, _ref, _ref2, _ref3;
             $this = $(this);
             $this.addClass('komoo-map-googlemap');
             opts = $.extend({
@@ -47,6 +47,10 @@
             }, $.fn.komooMap.defaults, options);
             if (opts.width != null) $this.width(opts.width);
             if (opts.height != null) $this.height(opts.height);
+            if ((opts != null ? opts.type : void 0) === 'preview' && !(opts != null ? (_ref = opts.geojson) != null ? (_ref2 = _ref.features) != null ? (_ref3 = _ref2[0]) != null ? _ref3.geometry : void 0 : void 0 : void 0 : void 0)) {
+              $this.html($('<div>').addClass('placeholder').text('Informação geométrica não disponível'));
+              return;
+            }
             map = komoo.maps.makeMap(opts);
             $this.data('map', map);
             if (opts.mapType != null) map.googleMap.setMapTypeId(opts.mapType);
@@ -59,23 +63,30 @@
           });
         },
         edit: function(feature) {
-          $(this).data('map').editFeature(feature);
+          var _ref;
+          if ((_ref = $(this).data('map')) != null) _ref.editFeature(feature);
           return $(this);
         },
         geojson: function(geojson) {
+          var _ref, _ref2;
           if (!(geojson != null)) {
-            return $(this).data('map').getGeoJson();
+            return (_ref = $(this).data('map')) != null ? _ref.getGeoJson() : void 0;
           } else {
-            return $(this).data('map').loadGeoJson(geojson);
+            return (_ref2 = $(this).data('map')) != null ? _ref2.loadGeoJson(geojson) : void 0;
           }
         },
         goTo: function(opts) {
-          var _ref;
-          $(this).data('map').goTo((_ref = opts.position) != null ? _ref : opts.address, opts.displayMarker);
+          var _ref, _ref2;
+          if ((_ref = $(this).data('map')) != null) {
+            _ref.panTo((_ref2 = opts.position) != null ? _ref2 : opts.address, opts.displayMarker);
+          }
           return $(this);
         },
         highlight: function(opts) {
-          $(this).data('map').highlightFeature(opts.type, opts.id);
+          var _ref;
+          if ((_ref = $(this).data('map')) != null) {
+            _ref.highlightFeature(opts.type, opts.id);
+          }
           return $(this);
         },
         resize: function() {

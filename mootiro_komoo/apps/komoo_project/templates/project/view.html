@@ -38,7 +38,7 @@
                     <i class="icon-comment"></i>
                 </a>
                 {% endif %}
-                
+
                 <a href="{{ project.edit_url }}" class="btn login-required">
                     <i class="icon-pencil"></i>
                 </a>
@@ -54,6 +54,7 @@
 
         <div class="view-body">
             <div class="mark-down">{{ project.description|render_markup|safe }}</div>
+            <div class="related-button"><a class="button" href="{% url project_map project.slug %}">{% trans 'See all objects on map' %}</a></div>
         </div>
 
         <div>

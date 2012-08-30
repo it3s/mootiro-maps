@@ -1,4 +1,4 @@
-define ['lib/underscore-min', 'lib/backbone-min'], () ->
+define ['lib/underscore-min', 'lib/backbone-min', 'related_items_panel'], () ->
     $ = jQuery
 
     window.OrganizationFeaturesView = FeaturesView.extend

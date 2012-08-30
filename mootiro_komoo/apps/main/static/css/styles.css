@@ -511,7 +511,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     ) !important;
 }
 
-.organization-related-button {
+.related-button {
     text-align: center;
     margin-right: 25px;
 }
@@ -855,6 +855,10 @@ body.community #collapse-panel {
 .map-canvas .placeholder {
     width: 247px;
     height: 40px;
+}
+#geometry-selector li {
+    display: block;
+    margin: 2px;
 }
 #map-canvas-preview .placeholder,
 .map-canvas .placeholder {

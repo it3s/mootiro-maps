@@ -1,6 +1,6 @@
 (function() {
 
-  define(['lib/underscore-min', 'lib/backbone-min'], function() {
+  define(['lib/underscore-min', 'lib/backbone-min', 'related_items_panel'], function() {
     var $;
     $ = jQuery;
     window.OrganizationFeaturesView = FeaturesView.extend({

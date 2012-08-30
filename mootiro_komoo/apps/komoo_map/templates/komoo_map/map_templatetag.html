@@ -35,14 +35,6 @@
       });
       var map = $map.data('map');
       {{ type }} = map;
-      if (!map.goToSavedLocation()) {
-        map.goToUserLocation();
-      }
-      {% if editable %}
-        editor = {{ type }};
-      {% endif %}
-
-      $("#map-panel").show();
 
       {% if editable %}
         komoo.event.addListener(map, 'drawing_finished', function (feature, gotoNextStep) {
@@ -122,6 +114,18 @@
           return false;
         });
       {% endif %}
+
+
+      if (!map) return;
+
+      if (!map.goToSavedLocation()) {
+        map.goToUserLocation();
+      }
+      {% if editable %}
+        editor = {{ type }};
+      {% endif %}
+
+      $("#map-panel").show();
 
       return map;
     };

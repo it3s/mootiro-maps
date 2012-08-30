@@ -50,7 +50,7 @@
 
         <div class="view-body">
             <div class="mark-down">{{ organization.description|render_markup|safe }}</div>
-            <div class="organization-related-button"><a class="button" href="{{ organization.related_items_url }}">{% trans 'See all objects on map' %}</a></div>
+            <div class="related-button"><a class="button" href="{{ organization.related_items_url }}">{% trans 'See all objects on map' %}</a></div>
             <div class="organization-buttons row">
                 <div class="org-btn span3 selected" panel="branches-list">
                     <i class="icon-map"></i>
@@ -208,7 +208,7 @@
 
     <div class="right-bar right-bar-modif">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
-        <a href="#" class="see-on-map">{% trans 'see on map' %}</a>
+        <a href="{{ organization.related_items_url }}" class="see-on-map">{% trans 'see on map' %}</a>
 
         <div class="centralizer apart">
           <a class="button" href="{{ organization.new_investment_url }}">{% trans "New Investment" %}</a>
