@@ -1,4 +1,4 @@
-define ['lib/underscore-min', 'lib/backbone-min', 'related_items_panel'], () ->
+define ['lib/underscore-min', 'lib/backbone-min', 'related_items_panel', 'ad-gallery'], () ->
     $ = jQuery
 
     window.PartnersLogo = Backbone.Model.extend
