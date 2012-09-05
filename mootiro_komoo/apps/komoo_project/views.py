@@ -71,7 +71,7 @@ def project_view(request, project_slug=''):
                     'app_name': obj.__module__.split('.')[0],
                     'objects_list': []}
         proj_objects[obj.__class__.__name__]['objects_list'].append({
-            'name': obj.name,
+            'name': obj.name.strip(),
             'link': obj.view_url,
             'id': obj.id,
             'has_geojson': bool(getattr(obj, 'geometry', ''))
@@ -85,6 +85,10 @@ def project_view(request, project_slug=''):
             items.append(obj)
     geojson = create_geojson(items)
 
+    # ugly sort
+    for key in proj_objects.iterkeys():
+        proj_objects[key]['objects_list'].sort(key=lambda o: o['name'])
+
     return dict(project=project, geojson=geojson, proj_objects=proj_objects,
                 user_can_discuss=project.user_can_discuss(request.user))
 
@@ -95,7 +99,22 @@ def project_map(request, project_slug=''):
 
     project = get_object_or_404(Project, slug=project_slug)
 
-    geojson = create_geojson(project.related_items)
+    related_items = []
+
+    for obj in project.related_items:
+        name = getattr(obj, 'get_name', '')
+        if not name:
+            name = getattr(obj, 'name', '')
+        related_items.append({'name': name.strip() , 'obj':obj})
+
+
+    related_items.sort(key=lambda o: o['name'])
+
+    print related_items
+
+    related_items = [o['obj'] for o in related_items]
+
+    geojson = create_geojson(related_items)
 
     return dict(project=project, geojson=geojson)
 
