@@ -162,14 +162,20 @@ def project_edit(request, project_slug='', *arg, **kwargs):
 @ajax_request
 def add_related_object(request):
     logger.debug('acessing project > add_related_object')
+
     ct = request.POST.get('content_type', '')
     obj_id = request.POST.get('object_id', '')
     proj_id = request.POST.get('project_id', '')
     proj = get_object_or_404(Project, pk=proj_id)
 
     if proj and obj_id and ct:
-        ProjectRelatedObject.objects.get_or_create(content_type_id=ct,
+        obj, created = ProjectRelatedObject.objects.get_or_create(content_type_id=ct,
                 object_id=obj_id, project_id=proj_id)
+        if created:
+            from update.models import Update
+            from update.signals import create_update
+            create_update.send(sender=obj.__class__, user=request.user,
+                                instance=obj, type=Update.EDIT)
         return {'success': True,
                 'project': {
                     'id': proj.id,

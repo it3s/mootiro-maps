@@ -18,7 +18,7 @@ from proposal.models import Proposal
 from organization.models import Organization
 from komoo_resource.models import Resource
 from investment.models import Investment
-from komoo_project.models import Project
+from komoo_project.models import Project, ProjectRelatedObject
 from komoo_comments.models import Comment
 
 create_update = Signal(providing_args=["user", "instance", "type"])
@@ -85,12 +85,22 @@ def create_proposal_update(sender, **kwargs):
     _create_the_update(instances, communities, **kwargs)
 
 
+# Project
 @receiver(create_update, sender=Project)
-def create_proj_update(sender, **kwargs):
+def create_project_update(sender, **kwargs):
     instance = kwargs["instance"]
     instances = [instance]
     communities = []
     _create_the_update(instances, communities, **kwargs)
+
+
+@receiver(create_update, sender=ProjectRelatedObject)
+def create_object_related_to_project_update(sender, **kwargs):
+    print "ABEBUBABA"
+    instance = kwargs["instance"]
+    instances = [instance.content_object, instance.project]
+    communities = []
+    # _create_the_update(instances, communities, **kwargs)
 
 
 # Comment
