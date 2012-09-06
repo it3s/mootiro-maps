@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   define(['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'], function() {
-    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, DELETE, DrawingControl, DrawingManager, EDIT, FeatureClusterer, GeometrySelector, InfoWindow, LicenseBox, Location, NEW, OVERLAY, PERIMETER_SELECTION, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, FeatureClusterer, GeometrySelector, InfoWindow, LicenseBox, Location, NEW, OVERLAY, PERIMETER_SELECTION, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
     OVERLAY = {};
@@ -253,6 +253,45 @@
       return DrawingManager;
 
     })();
+    CloseBox = (function(_super) {
+
+      __extends(CloseBox, _super);
+
+      CloseBox.prototype.id = "map-drawing-box";
+
+      CloseBox.prototype["class"] = "map-panel";
+
+      CloseBox.prototype.position = google.maps.ControlPosition.TOP_LEFT;
+
+      function CloseBox(opt) {
+        var title, _ref;
+        if (opt == null) {
+          opt = {
+            title: ''
+          };
+        }
+        CloseBox.__super__.constructor.call(this);
+        title = (_ref = opt.title) != null ? _ref : '';
+        this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\">" + title + "</div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Close')) + "</div>\n  </div>\n</div>");
+        this.box.show();
+        this.handleButtonEvents();
+      }
+
+      CloseBox.prototype.setTitle = function(title) {
+        if (title == null) title = '';
+        return this.box.find('#drawing-control-title').text(title);
+      };
+
+      CloseBox.prototype.handleButtonEvents = function() {
+        var _this = this;
+        return $("#drawing-control-cancel", this.box).click(function() {
+          return komoo.event.trigger(_this.map, 'close_click');
+        });
+      };
+
+      return CloseBox;
+
+    })(Box);
     GeometrySelector = (function(_super) {
 
       __extends(GeometrySelector, _super);
@@ -1263,6 +1302,9 @@
       },
       makeLicenseBox: function(options) {
         return new LicenseBox(options);
+      },
+      makeCloseBox: function(options) {
+        return new CloseBox(options);
       },
       makePerimeterSelector: function(options) {
         return new PerimeterSelector(options);
