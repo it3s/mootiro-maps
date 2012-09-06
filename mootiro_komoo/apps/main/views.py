@@ -23,12 +23,27 @@ import requests
 
 from community.models import Community
 from need.models import Need
-from komoo_resource.models import Resource
-from organization.models import OrganizationBranch, Organization
 from proposal.models import Proposal
+from organization.models import OrganizationBranch, Organization
+from komoo_resource.models import Resource
+from investment.models import Investment
+from komoo_project.models import Project
 from main.utils import create_geojson
 
 logger = logging.getLogger(__name__)
+
+
+ENTITY_MODEL = {
+    'c': Community,
+    'n': Need,
+    'p': Proposal,
+    'o': Organization,
+    'b': OrganizationBranch,
+    'r': Resource,
+    'i': Investment,
+    'j': Project,
+}
+ENTITY_MODEL_REV = {v:k for k, v in ENTITY_MODEL.items()}
 
 
 @render_to('main/root.html')
@@ -257,18 +272,10 @@ def custom_500(request):
 
 @render_to('not_anymore.html')
 def permalink(request, identifier=''):
-    entity_model = {
-        'r': Resource,
-        'n': Need,
-        'c': Community,
-        'o': Organization,
-        'p': Proposal,
-        'u': User,
-    }
     url = 'root'
     if identifier:
         entity, id_ = identifier[0], identifier[1:]
-        obj = get_object_or_None(entity_model[entity], pk=id_)
+        obj = get_object_or_None(ENTITY_MODEL[entity], pk=id_)
         if not obj:
             return {}
         url = getattr(obj, 'view_url', '/') if entity != 'u' \
@@ -278,17 +285,9 @@ def permalink(request, identifier=''):
 
 @ajax_request
 def get_geojson_from_hashlink(request):
-    entity_model = {
-        'r': Resource,
-        'n': Need,
-        'c': Community,
-        'o': Organization,
-        'p': Proposal,
-        'b': OrganizationBranch,
-    }
     hashlink = request.GET.get('hashlink', '')
     if hashlink:
-        obj = entity_model[hashlink[0]].objects.get(pk=hashlink[1:])
+        obj = ENTITY_MODEL[hashlink[0]].objects.get(pk=hashlink[1:])
         geojson = create_geojson([obj])
     else:
         geojson = {}

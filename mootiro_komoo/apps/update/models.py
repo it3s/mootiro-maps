@@ -151,6 +151,11 @@ class Update(models.Model):
             "investment added":     _("investment added"),
             "investment edited":    _("investment edited"),
             "investment discussed": _("investment discussed"),
+
+            "project added":     _("project added"),
+            "project edited":    _("project edited"),
+            "project discussed": _("project discussed"),
+
         }
         return tr_dict[key_str]
 

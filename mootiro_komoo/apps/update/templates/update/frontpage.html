@@ -43,6 +43,11 @@
             <i class="icon-organization left"></i> {% trans "Add an organization" %}
           </a>
         </li>
+        <li>
+          <a href="{% url project_new %}" class="button project selected">
+            <i class="icon-project left"></i> {% trans "Add a project" %}
+          </a>
+        </li>
       </ul>
     </div>
   </div>
@@ -193,7 +198,7 @@
                 $(this).toggleClass("closed open");
                 $(this).animate({
                     width: closed_panel_width + 105,
-                    height: closed_panel_height + 120
+                    height: closed_panel_height + 155
                 });
                 $("#about-mootiro .about-image, #about-mootiro .about-content").toggle();
             });

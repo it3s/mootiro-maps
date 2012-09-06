@@ -496,11 +496,11 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .organization-buttons .org-btn[panel='projects-list'].selected,
 #top #menu #menu-project a:hover, #top #menu #menu-project.selected a {
     color: #fff !important;
-    background-image: linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
-    background-image: -o-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
-    background-image: -moz-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
-    background-image: -webkit-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
-    background-image: -ms-linear-gradient(bottom, rgb(133,94,56) 47%, rgb(117,86,40) 74%, rgb(117,79,17) 90%) !important;
+    background-image: linear-gradient(bottom, rgb(117,79,17) 47%, rgb(117,86,40) 74%, rgb(133,94,56) 90%) !important;
+    background-image: -o-linear-gradient(bottom, rgb(117,79,17) 47%, rgb(117,86,40) 74%, rgb(133,94,56) 90%) !important;
+    background-image: -moz-linear-gradient(bottom, rgb(117,79,17) 47%, rgb(117,86,40) 74%, rgb(133,94,56) 90%) !important;
+    background-image: -webkit-linear-gradient(bottom, rgb(117,79,17) 47%, rgb(117,86,40) 74%, rgb(133,94,56) 90%) !important;
+    background-image: -ms-linear-gradient(bottom, rgb(117,79,17) 47%, rgb(117,86,40) 74%, rgb(133,94,56) 90%) !important;
     background-image: -webkit-gradient(
         linear,
         left bottom,
@@ -735,9 +735,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .icon-project {
     background-image: url("../img/menu/project.png");
     background-position: 0 0;
-    margin: 2px 0 1px;
-    width: 24px;
-    height: 15px;
+    margin: 4px 1px 1px 4px;
+    width: 20px;
+    height: 13px;
 }
 *:hover > .icon-project, .selected .icon-project {
     background-image: url("../img/menu/project-active.png");
