@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-22 17:33-0300\n"
+"POT-Creation-Date: 2012-09-06 15:29-0300\n"
 "PO-Revision-Date: 2012-06-06 14:01-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -22,14 +22,17 @@ msgid "Edit"
 msgstr "Editar"
 
 #: apps/komoo_map/static/js/komoo_map.js:1112
+#: apps/komoo_map/static/js/map/controls.js:399
 msgid "Add shape"
 msgstr "Adicionar área"
 
 #: apps/komoo_map/static/js/komoo_map.js:1113
+#: apps/komoo_map/static/js/map/controls.js:402
 msgid "Add line"
 msgstr "Adicionar linha"
 
 #: apps/komoo_map/static/js/komoo_map.js:1114
+#: apps/komoo_map/static/js/map/controls.js:405
 msgid "Add point"
 msgstr "Adicionar ponto"
 
@@ -42,6 +45,7 @@ msgid "Add another region"
 msgstr "Adicionar outra região"
 
 #: apps/komoo_map/static/js/komoo_map.js:1276
+#: apps/komoo_map/static/js/map/controls.js:413
 msgid "Cut out"
 msgstr "Cortar"
 
@@ -71,44 +75,61 @@ msgid "Finish"
 msgstr "Concluir"
 
 #: apps/komoo_map/static/js/komoo_map.js:1573
+#: apps/komoo_map/static/js/map/controls.js:340
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: apps/komoo_map/static/js/related_items_panel.js:73
+#: apps/komoo_map/static/js/related_items_panel.js:78
 #, perl-format
 msgid "%s organization branch"
 msgid_plural "%s organization branchs"
 msgstr[0] "%s unidade de uma organização"
 msgstr[1] "%s unidades de um organização"
 
-#: apps/komoo_map/static/js/related_items_panel.js:73
+#: apps/komoo_map/static/js/related_items_panel.js:78
 #, perl-format
 msgid "%s community"
 msgid_plural "%s communities"
 msgstr[0] "%s comunidade"
 msgstr[1] "%s comunidades"
 
-#: apps/komoo_map/static/js/related_items_panel.js:73
+#: apps/komoo_map/static/js/related_items_panel.js:78
 #, perl-format
 msgid "%s resource"
 msgid_plural "%s resources"
 msgstr[0] "%s recurso"
 msgstr[1] "%s recursos"
 
-#: apps/komoo_map/static/js/related_items_panel.js:73
+#: apps/komoo_map/static/js/related_items_panel.js:78
+#, perl-format
 msgid "%s need"
 msgid_plural "%s needs"
 msgstr[0] "%s necessidade"
 msgstr[1] "%s necessidades"
 
-#: apps/komoo_map/static/js/map/controls.js:589
+#: apps/komoo_map/static/js/related_items_panel.js:78
+#, perl-format
+msgid "%s contributors"
+msgid_plural "%s contributors"
+msgstr[0] ""
+msgstr[1] ""
+
+#: apps/komoo_map/static/js/map/controls.js:340
+msgid "Next Step"
+msgstr ""
+
+#: apps/komoo_map/static/js/map/controls.js:412
+msgid "Sum"
+msgstr ""
+
+#: apps/komoo_map/static/js/map/controls.js:669
 #, perl-format
 msgid "%s Community"
 msgid_plural "%s Communities"
 msgstr[0] "Comunidade"
 msgstr[1] "Comunidade"
 
-#: apps/komoo_map/static/js/map/controls.js:655
+#: apps/komoo_map/static/js/map/controls.js:735
 msgid "Loading..."
 msgstr "Carregando..."
 
