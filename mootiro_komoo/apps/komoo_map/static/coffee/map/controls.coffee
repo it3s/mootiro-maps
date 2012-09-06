@@ -207,6 +207,33 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @editFeature @feature
             @map.setMode NEW
 
+    class CloseBox extends Box
+        id: "map-drawing-box"
+        class: "map-panel"
+        position: google.maps.ControlPosition.TOP_LEFT
+
+        constructor: (opt = { title: '' }) ->
+            super()
+            title = opt.title ? ''
+            @box.html """
+            <div id="drawing-control">
+              <div class="map-panel-title" id="drawing-control-title">#{title}</div>
+              <div class="content" id="drawing-control-content"></div>
+              <div class="map-panel-buttons">
+                <div class="map-button" id="drawing-control-cancel">#{gettext 'Close'}</div>
+              </div>
+            </div>
+            """
+            @box.show()
+            @handleButtonEvents()
+
+        setTitle: (title = '') ->
+            @box.find('#drawing-control-title').text title
+
+        handleButtonEvents: ->
+            $("#drawing-control-cancel", @box).click =>
+                komoo.event.trigger @map, 'close_click'
+
 
     class GeometrySelector extends Box
         id: "map-drawing-box"
@@ -897,6 +924,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         makeFeatureClusterer: (options) -> new FeatureClusterer options
         makeSupporterBox: (options) -> new SupporterBox options
         makeLicenseBox: (options) -> new LicenseBox options
+        makeCloseBox: (options) -> new CloseBox options
         makePerimeterSelector: (options) -> new PerimeterSelector options
         makeLocation: (options) -> new Location options
         makeSaveLocation: (options) -> new SaveLocation options

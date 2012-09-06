@@ -98,24 +98,6 @@
         });
       {% endif %}
 
-      {% if type == 'view' %}
-        $('.see-on-map').click(function () {
-          $('#map-container-{{ type }}').show();
-          $('#main-content').hide();
-          if (!window.{{ type }}) {
-            var map = initialize_map_{{ type }}();
-            komoo.event.addListener(map, 'close_click', function () {
-              $('#map-container-{{ type }}, #map-panel').slideUp(600);
-              $('#main-content').show();
-            });
-          }
-          map.centerFeature();
-          map.refresh();
-          return false;
-        });
-      {% endif %}
-
-
       if (!map) return;
 
       if (!map.goToSavedLocation()) {
@@ -129,6 +111,30 @@
 
       return map;
     };
+      {% if type == 'view' %}
+      $(function () {
+        $('.see-on-map').click(function () {
+          var closeBox;
+          $('#map-container-{{ type }}').show();
+          $('#main-content').hide();
+          if (!window.{{ type }}) {
+            var map = initialize_map_{{ type }}();
+            closeBox = komoo.controls.makeCloseBox();
+            map.addComponent(closeBox);
+            komoo.event.addListener(map, 'close_click', function () {
+              $('#map-container-{{ type }}, #map-panel').slideUp(600);
+              $('#main-content').show();
+            });
+          }
+          var feature = map.features.getAt(0);
+          closeBox.setTitle(feature.getProperty('name'));
+          if (feature && feature.getBounds())
+            map.fitBounds(feature.getBounds());
+          map.refresh();
+          return false;
+        });
+      });
+      {% endif %}
 
 {% if not lazy %}
   require(['map.jquery'], initialize_map_{{ type }});
