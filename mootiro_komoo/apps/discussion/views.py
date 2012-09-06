@@ -22,23 +22,14 @@ from organization.models import Organization
 from investment.models import Investment
 from komoo_project.models import Project
 from .forms import DiscussionForm
+from main.views import ENTITY_MODEL
 
 logger = logging.getLogger(__name__)
 
 
 def _discussion_for (identifier):
-    # TODO: move this perm_* id interpretation to a centralized place
-    ent_model = {
-        'c': Community,
-        'n': Need,
-        'p': Proposal,
-        'r': Resource,
-        'o': Organization,
-        'i': Investment,
-        'j': Project,
-    }
     ent, id_ = identifier[0], identifier[1:]
-    ent_content_type = ContentType.objects.get_for_model(ent_model[ent])
+    ent_content_type = ContentType.objects.get_for_model(ENTITY_MODEL[ent])
 
     discussion = get_object_or_None(Discussion, object_id=id_,
                     content_type=ent_content_type)
