@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-06 15:29-0300\n"
+"POT-Creation-Date: 2012-09-06 15:38-0300\n"
 "PO-Revision-Date: 2012-07-19 17:32-0300\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -256,12 +256,12 @@ msgstr "Responder"
 
 #: apps/komoo_comments/templates/comments/comments_summary_templatetag.html:5
 #: apps/moderation/models.py:67
-#: apps/update/templates/update/frontpage.html:132
+#: apps/update/templates/update/frontpage.html:137
 msgid "comment"
 msgstr "comentário"
 
 #: apps/komoo_comments/templates/comments/comments_summary_templatetag.html:7
-#: apps/update/templates/update/frontpage.html:132
+#: apps/update/templates/update/frontpage.html:137
 msgid "comments"
 msgstr "comentários"
 
@@ -1453,23 +1453,27 @@ msgstr "Adicione uma necessidade"
 msgid "Add an organization"
 msgstr "Cadastre uma organização"
 
-#: apps/update/templates/update/frontpage.html:55
+#: apps/update/templates/update/frontpage.html:48
+msgid "Add a project"
+msgstr "Comece um projeto"
+
+#: apps/update/templates/update/frontpage.html:60
 msgid "last updates"
 msgstr "últimas atualizações"
 
-#: apps/update/templates/update/frontpage.html:57
+#: apps/update/templates/update/frontpage.html:62
 msgid "discussions"
 msgstr "discussões"
 
-#: apps/update/templates/update/frontpage.html:58
+#: apps/update/templates/update/frontpage.html:63
 msgid "my content"
 msgstr "meu conteúdo"
 
-#: apps/update/templates/update/frontpage.html:65
+#: apps/update/templates/update/frontpage.html:70
 msgid "Type"
 msgstr "Tipo"
 
-#: apps/update/templates/update/frontpage.html:101
+#: apps/update/templates/update/frontpage.html:106
 msgid ""
 "\n"
 "                      discussed\n"
@@ -1487,19 +1491,19 @@ msgstr[1] ""
 "                        discutiram\n"
 "                      "
 
-#: apps/update/templates/update/frontpage.html:109
+#: apps/update/templates/update/frontpage.html:114
 msgid "the proposal"
 msgstr "a proposta"
 
-#: apps/update/templates/update/frontpage.html:110
+#: apps/update/templates/update/frontpage.html:115
 msgid "for the need"
 msgstr "para a necessidade"
 
-#: apps/update/templates/update/frontpage.html:126
+#: apps/update/templates/update/frontpage.html:131
 msgid "by"
 msgstr "por"
 
-#: apps/update/templates/update/frontpage.html:157
+#: apps/update/templates/update/frontpage.html:162
 msgid "News"
 msgstr "Notícias"
 
