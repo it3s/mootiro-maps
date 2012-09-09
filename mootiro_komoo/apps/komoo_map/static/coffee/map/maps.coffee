@@ -277,6 +277,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             @addComponent komoo.controls.makeStreetView()
             @addComponent komoo.controls.makeDrawingManager(), 'drawing'
             @addComponent komoo.controls.makeDrawingControl(), 'drawing'
+            @addComponent komoo.controls.makeGeometrySelector(), 'drawing'
             @addComponent komoo.controls.makeSupporterBox()
             @addComponent komoo.controls.makePerimeterSelector(), 'perimeter'
 
@@ -327,6 +328,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
             @addComponent komoo.controls.makeDrawingManager(), 'drawing'
             @addComponent komoo.controls.makeDrawingControl(), 'drawing'
+            @addComponent komoo.controls.makeGeometrySelector(), 'drawing'
             @addComponent komoo.controls.makePerimeterSelector(), 'perimeter'
 
 

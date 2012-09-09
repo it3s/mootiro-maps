@@ -3,7 +3,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   define(['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'], function() {
-    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, DELETE, DrawingControl, DrawingManager, EDIT, FeatureClusterer, InfoWindow, LicenseBox, Location, NEW, OVERLAY, PERIMETER_SELECTION, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, FeatureClusterer, GeometrySelector, InfoWindow, LicenseBox, Location, NEW, OVERLAY, PERIMETER_SELECTION, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
     OVERLAY = {};
@@ -228,6 +228,10 @@
         var options;
         if (this.enabled === false) return;
         this.setFeature(feature);
+        if (this.feature.getGeometryType() === 'Empty') {
+          komoo.event.trigger(this.map, 'select_new_geometry', this.feature);
+          return;
+        }
         this.feature.setEditable(true);
         options = {};
         options["" + OVERLAY[this.feature.getGeometryType()] + "Options"] = this.feature.getGeometry().getOverlayOptions({
@@ -249,6 +253,116 @@
       return DrawingManager;
 
     })();
+    CloseBox = (function(_super) {
+
+      __extends(CloseBox, _super);
+
+      CloseBox.prototype.id = "map-drawing-box";
+
+      CloseBox.prototype["class"] = "map-panel";
+
+      CloseBox.prototype.position = google.maps.ControlPosition.TOP_LEFT;
+
+      function CloseBox(opt) {
+        var title, _ref;
+        if (opt == null) {
+          opt = {
+            title: ''
+          };
+        }
+        CloseBox.__super__.constructor.call(this);
+        title = (_ref = opt.title) != null ? _ref : '';
+        this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\">" + title + "</div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Close')) + "</div>\n  </div>\n</div>");
+        this.box.show();
+        this.handleButtonEvents();
+      }
+
+      CloseBox.prototype.setTitle = function(title) {
+        if (title == null) title = '';
+        return this.box.find('#drawing-control-title').text(title);
+      };
+
+      CloseBox.prototype.handleButtonEvents = function() {
+        var _this = this;
+        return $("#drawing-control-cancel", this.box).click(function() {
+          return komoo.event.trigger(_this.map, 'close_click');
+        });
+      };
+
+      return CloseBox;
+
+    })(Box);
+    GeometrySelector = (function(_super) {
+
+      __extends(GeometrySelector, _super);
+
+      GeometrySelector.prototype.id = "map-drawing-box";
+
+      GeometrySelector.prototype["class"] = "map-panel";
+
+      GeometrySelector.prototype.position = google.maps.ControlPosition.TOP_LEFT;
+
+      function GeometrySelector() {
+        GeometrySelector.__super__.constructor.call(this);
+        this.box.hide();
+        this.box.html("<div id=\"geometry-selector\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <ul class=\"content\" id=\"drawing-control-content\">\n    <li class=\"polygon btn\" data-geometry-type=\"Polygon\">\n      <i class=\"icon-polygon middle\"></i><span class=\"middle\">Adicionar área</span>\n    </li>\n    <li class=\"linestring btn\" data-geometry-type=\"LineString\">\n      <i class=\"icon-linestring middle\"></i><span class=\"middle\">Adicionar linha</span>\n    </li>\n    <li class=\"point btn\" data-geometry-type=\"Point\">\n      <i class=\"icon-point middle\"></i><span class=\"middle\">Adicionar ponto</span>\n    </li>\n  </ul>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Cancel')) + "</div>\n  </div>\n</div>");
+        this.handleBoxEvents();
+      }
+
+      GeometrySelector.prototype.handleMapEvents = function() {
+        var _this = this;
+        return komoo.event.addListener(this.map, 'select_new_geometry', function(feature) {
+          return _this.open(feature);
+        });
+      };
+
+      GeometrySelector.prototype.handleBoxEvents = function() {
+        var _this = this;
+        return this.box.find('li').each(function(i, element) {
+          var $element, geometryType;
+          $element = $(element);
+          geometryType = $element.attr('data-geometry-type');
+          return $element.click(function() {
+            _this.close();
+            return _this.map.editFeature(_this.feature, geometryType);
+          });
+        });
+      };
+
+      GeometrySelector.prototype.handleButtonEvents = function() {
+        var _this = this;
+        return $("#drawing-control-cancel", this.box).click(function() {
+          return komoo.event.trigger(_this.map, 'cancel_drawing');
+        });
+      };
+
+      GeometrySelector.prototype.showContent = function() {
+        var geometryType, _i, _len, _ref, _ref2, _results;
+        this.box.find('li').hide();
+        _ref2 = (_ref = this.feature.getFeatureType()) != null ? _ref.geometryTypes : void 0;
+        _results = [];
+        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+          geometryType = _ref2[_i];
+          _results.push(this.box.find("li." + (geometryType.toLowerCase())).show());
+        }
+        return _results;
+      };
+
+      GeometrySelector.prototype.open = function(feature) {
+        this.feature = feature;
+        this.showContent();
+        $("#drawing-control-title", this.box).html('Selecione o tipo de objeto');
+        this.handleButtonEvents();
+        return this.box.show();
+      };
+
+      GeometrySelector.prototype.close = function() {
+        return this.box.hide();
+      };
+
+      return GeometrySelector;
+
+    })(Box);
     DrawingControl = (function(_super) {
 
       __extends(DrawingControl, _super);
@@ -379,6 +493,9 @@
           strokeColor: "#ffbda8",
           zIndex: -1
         });
+        this.marker = new google.maps.Marker({
+          icon: '/static/img/marker.png'
+        });
         komoo.event.addListener(this.circle, 'click', function(e) {
           if (_this.map.mode === PERIMETER_SELECTION) {
             return _this.selected(e.latLng);
@@ -402,6 +519,8 @@
         }
         this.circle.setCenter(latLng);
         this.circle.setMap(this.map.googleMap);
+        this.marker.setPosition(latLng);
+        this.marker.setMap(this.map.googleMap);
         komoo.event.trigger(this.map, 'perimeter_selected', latLng, this.circle);
         this.map.setMode(this.origMode);
         return this.map.enableComponents('infoWindow');
@@ -953,6 +1072,9 @@
 
       function Location() {
         this.geocoder = new google.maps.Geocoder();
+        this.marker = new google.maps.Marker({
+          icon: '/static/img/marker.png'
+        });
       }
 
       Location.prototype.handleMapEvents = function() {
@@ -968,15 +1090,11 @@
       Location.prototype.goTo = function(position, marker) {
         var latLng, request, _go,
           _this = this;
-        if (marker == null) marker = true;
+        if (marker == null) marker = false;
         _go = function(latLng) {
           if (latLng) {
             _this.map.googleMap.panTo(latLng);
-            if (!_this.searchMarker) {
-              _this.searchMarker = new google.maps.Marker();
-              _this.searchMarker.setMap(_this.googleMap);
-            }
-            if (marker) return _this.searchMarker.setPosition(latLng);
+            if (marker) return _this.marker.setPosition(latLng);
           }
         };
         if (typeof position === "string") {
@@ -1023,6 +1141,7 @@
 
       Location.prototype.setMap = function(map) {
         this.map = map;
+        this.marker.setMap(this.map.googleMap);
         return this.handleMapEvents();
       };
 
@@ -1166,6 +1285,9 @@
       makeDrawingControl: function(options) {
         return new DrawingControl(options);
       },
+      makeGeometrySelector: function(options) {
+        return new GeometrySelector(options);
+      },
       makeInfoWindow: function(options) {
         return new InfoWindow(options);
       },
@@ -1180,6 +1302,9 @@
       },
       makeLicenseBox: function(options) {
         return new LicenseBox(options);
+      },
+      makeCloseBox: function(options) {
+        return new CloseBox(options);
       },
       makePerimeterSelector: function(options) {
         return new PerimeterSelector(options);

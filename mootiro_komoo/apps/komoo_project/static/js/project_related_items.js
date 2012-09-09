@@ -1,6 +1,6 @@
 (function() {
 
-  define(['lib/underscore-min', 'lib/backbone-min', 'related_items_panel'], function() {
+  define(['lib/underscore-min', 'lib/backbone-min', 'related_items_panel', 'ad-gallery'], function() {
     var $;
     $ = jQuery;
     window.PartnersLogo = Backbone.Model.extend({

@@ -123,17 +123,22 @@ def profile_update(request):
     logger.debug('accessing user_cas > profile')
     signatures = []
     for sig in Signature.objects.filter(user=request.user):
-        ct = ContentType.objects.get_for_id(sig.content_type_id)
-        obj = ct.get_object_for_this_type(pk=sig.object_id)
-        signatures.append({
-            'signature_id': sig.id,
-            'obj_name': getattr(obj, 'name', '') or getattr(obj, 'title', ''),
-            'obj_id': obj.id,
-            'model_name': ct.name,
-            'app_name': ct.app_label,
-            'permalink': '/permalink/{}{}'.format(ct.name[0], obj.id),
-            'has_geojson': not 'EMPTY' in getattr(obj, 'geometry', 'EMPTY'),
-        })
+        try:
+            ct = ContentType.objects.get_for_id(sig.content_type_id)
+            obj = ct.get_object_for_this_type(pk=sig.object_id)
+
+            signatures.append({
+                'signature_id': sig.id,
+                'obj_name': getattr(obj, 'name', '') or getattr(obj, 'title', ''),
+                'obj_id': obj.id,
+                'model_name': ct.name,
+                'app_name': ct.app_label,
+                'permalink': '/permalink/{}{}'.format(ct.name[0], obj.id),
+                'has_geojson': not 'EMPTY' in getattr(obj, 'geometry', 'EMPTY'),
+            })
+        except:
+            #assinatura para um objeto que nao podeser encontrado
+            sig.delete()
 
     digest_obj = DigestSignature.objects.filter(user=request.user)
     digest = digest_obj[0].digest_type if digest_obj.count() \

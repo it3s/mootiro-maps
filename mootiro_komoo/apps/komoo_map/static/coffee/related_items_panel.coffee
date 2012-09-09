@@ -21,8 +21,13 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
     window.Feature = Backbone.Model.extend
         toJSON: (attr) ->
             defaultJSON = Backbone.Model.prototype.toJSON.call this, attr
+            name = @get('properties')?['organization_name'] ? ''
+            if name
+                name += ' - '
+            name += @get('properties')?['name']
             _.extend defaultJSON,
                 iconClass: @iconClass
+                name: name
 
         displayOnMap: () ->
             $('#map-canvas').komooMap 'highlight',
@@ -42,6 +47,7 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             @template = _.template $('#feature-template').html()
 
         render: () ->
+            console.log @model.toJSON()
             renderedContent = @template @model.toJSON()
             $(@el).html renderedContent
             this

@@ -10,7 +10,8 @@ from fileupload.forms import FileuploadField, SingleFileUploadWidget
 from fileupload.models import UploadedFile
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from ajaxforms import AjaxModelForm
-
+from django.template.defaultfilters import slugify
+from django.db.models.query_utils import Q
 from main.utils import MooHelper, clean_autocomplete_field
 from main.widgets import TaggitWidget
 from .models import Project
@@ -86,3 +87,18 @@ class FormProject(AjaxModelForm):
     def clean_public_discussion(self):
             return True if self.cleaned_data['public_discussion'] == 'publ' \
                         else False
+
+    def clean(self):
+        super(FormProject, self).clean()
+        try:
+            if not self.cleaned_data['id']:
+                self.validation('name',
+                    u'O sistema já possui um projeto com este nome',
+                    Project.objects.filter(
+                        Q(name__iexact=self.cleaned_data['name']) |
+                        Q(slug=slugify(self.cleaned_data['name']))
+                    ).count())
+        except Exception as err:
+            logger.error('Validation Error: {}'.format(err))
+        finally:
+            return self.cleaned_data

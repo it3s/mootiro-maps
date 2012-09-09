@@ -32,6 +32,9 @@ define ['map/maps'], ->
                     opts = $.extend {element: $this.get(0)}, $.fn.komooMap.defaults, options
                     if opts.width? then $this.width opts.width
                     if opts.height? then $this.height opts.height
+                    if opts?.type is 'preview' and not opts?.geojson?.features?[0]?.geometry
+                        $this.html $('<div>').addClass('placeholder').text('Informação geométrica não disponível')
+                        return
                     map = komoo.maps.makeMap opts
                     $this.data 'map', map
                     if opts.mapType? then map.googleMap.setMapTypeId opts.mapType
@@ -40,21 +43,21 @@ define ['map/maps'], ->
                         $(window).resize()
 
             edit: (feature) ->
-                $(this).data('map').editFeature feature
+                $(this).data('map')?.editFeature feature
                 $(this)
 
             geojson: (geojson) ->
                 if not geojson?
-                    $(this).data('map').getGeoJson()
+                    $(this).data('map')?.getGeoJson()
                 else
-                    $(this).data('map').loadGeoJson geojson
+                    $(this).data('map')?.loadGeoJson geojson
 
             goTo: (opts) ->
-                $(this).data('map').goTo opts.position ? opts.address, opts.displayMarker
+                $(this).data('map')?.panTo opts.position ? opts.address, opts.displayMarker
                 $(this)
 
             highlight: (opts) ->
-                $(this).data('map').highlightFeature opts.type, opts.id
+                $(this).data('map')?.highlightFeature opts.type, opts.id
                 $(this)
 
             resize: ->

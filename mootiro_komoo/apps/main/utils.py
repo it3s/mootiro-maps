@@ -46,7 +46,8 @@ def slugify(term, slug_exists=lambda s: False):
 
 
 def komoo_permalink(obj):
-    return '/permalink/{}{}'.format(obj.__class__.__name__.lower()[0], obj.id)
+    from main.views import ENTITY_MODEL_REV
+    return '/permalink/{}{}'.format(ENTITY_MODEL_REV[obj.__class__], obj.id)
 
 
 def create_geojson(objects, type_='FeatureCollection', convert=True, discard_empty=False):

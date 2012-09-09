@@ -186,6 +186,11 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             if @enabled is off then return
 
             @setFeature feature
+
+            if @feature.getGeometryType() is 'Empty'
+                komoo.event.trigger @map, 'select_new_geometry', @feature
+                return
+
             @feature.setEditable on
 
             options = {}
@@ -201,6 +206,92 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
             @editFeature @feature
             @map.setMode NEW
+
+    class CloseBox extends Box
+        id: "map-drawing-box"
+        class: "map-panel"
+        position: google.maps.ControlPosition.TOP_LEFT
+
+        constructor: (opt = { title: '' }) ->
+            super()
+            title = opt.title ? ''
+            @box.html """
+            <div id="drawing-control">
+              <div class="map-panel-title" id="drawing-control-title">#{title}</div>
+              <div class="content" id="drawing-control-content"></div>
+              <div class="map-panel-buttons">
+                <div class="map-button" id="drawing-control-cancel">#{gettext 'Close'}</div>
+              </div>
+            </div>
+            """
+            @box.show()
+            @handleButtonEvents()
+
+        setTitle: (title = '') ->
+            @box.find('#drawing-control-title').text title
+
+        handleButtonEvents: ->
+            $("#drawing-control-cancel", @box).click =>
+                komoo.event.trigger @map, 'close_click'
+
+
+    class GeometrySelector extends Box
+        id: "map-drawing-box"
+        class: "map-panel"
+        position: google.maps.ControlPosition.TOP_LEFT
+
+        constructor: ->
+            super()
+            @box.hide()
+            @box.html """
+            <div id="geometry-selector">
+              <div class="map-panel-title" id="drawing-control-title"></div>
+              <ul class="content" id="drawing-control-content">
+                <li class="polygon btn" data-geometry-type="Polygon">
+                  <i class="icon-polygon middle"></i><span class="middle">Adicionar área</span>
+                </li>
+                <li class="linestring btn" data-geometry-type="LineString">
+                  <i class="icon-linestring middle"></i><span class="middle">Adicionar linha</span>
+                </li>
+                <li class="point btn" data-geometry-type="Point">
+                  <i class="icon-point middle"></i><span class="middle">Adicionar ponto</span>
+                </li>
+              </ul>
+              <div class="map-panel-buttons">
+                <div class="map-button" id="drawing-control-cancel">#{gettext 'Cancel'}</div>
+              </div>
+            </div>
+            """
+            @handleBoxEvents()
+
+        handleMapEvents: ->
+            komoo.event.addListener @map, 'select_new_geometry', (feature) =>
+                @open feature
+
+        handleBoxEvents: ->
+            @box.find('li').each (i, element) =>
+                $element = $(element)
+                geometryType = $element.attr 'data-geometry-type'
+                $element.click () =>
+                    @close()
+                    @map.editFeature @feature, geometryType
+
+        handleButtonEvents: ->
+            $("#drawing-control-cancel", @box).click =>
+                komoo.event.trigger @map, 'cancel_drawing'
+
+        showContent: () ->
+            @box.find('li').hide()
+            for geometryType in @feature.getFeatureType()?.geometryTypes
+                @box.find("li.#{geometryType.toLowerCase()}").show()
+
+        open: (@feature) ->
+            @showContent()
+            $("#drawing-control-title", @box).html 'Selecione o tipo de objeto'
+            @handleButtonEvents()
+            @box.show()
+
+        close: -> @box.hide()
 
 
     class DrawingControl extends Box
@@ -312,6 +403,9 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                 fillOpacity: 0.0
                 strokeColor: "#ffbda8"
                 zIndex: -1
+            @marker = new google.maps.Marker
+                icon: '/static/img/marker.png'
+
             komoo.event.addListener @circle, 'click', (e) =>
                 if @map.mode is PERIMETER_SELECTION then @selected e.latLng
 
@@ -329,6 +423,9 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
             @circle.setCenter latLng
             @circle.setMap @map.googleMap
+
+            @marker.setPosition latLng
+            @marker.setMap @map.googleMap
 
             komoo.event.trigger @map, 'perimeter_selected', latLng, @circle
 
@@ -684,6 +781,8 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
         constructor: ->
             @geocoder = new google.maps.Geocoder()
+            @marker = new google.maps.Marker
+                icon: '/static/img/marker.png'
 
         handleMapEvents: ->
             komoo.event.addListener @map, 'goto', (position, marker) =>
@@ -691,15 +790,11 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             komoo.event.addListener @map, 'goto_user_location', =>
                 @goToUserLocation()
 
-        goTo: (position, marker = true) ->
+        goTo: (position, marker = false) ->
             _go = (latLng) =>
                 if latLng
                     @map.googleMap.panTo latLng
-                    if not @searchMarker
-                        @searchMarker = new google.maps.Marker()
-                        @searchMarker.setMap this.googleMap
-
-                    if marker then @searchMarker.setPosition latLng
+                    if marker then @marker.setPosition latLng
 
             if typeof position is "string"  # Got an address
                 request = {
@@ -738,6 +833,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                     console?.log 'User denied access to navigator.geolocation...'
 
         setMap: (@map) ->
+            @marker.setMap @map.googleMap
             @handleMapEvents()
 
         enable: -> @enabled = on
@@ -822,11 +918,13 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         StreetView: StreetView
         makeDrawingManager: (options) -> new DrawingManager options
         makeDrawingControl: (options) -> new DrawingControl options
+        makeGeometrySelector: (options) -> new GeometrySelector options
         makeInfoWindow: (options) -> new InfoWindow options
         makeTooltip: (options) -> new Tooltip options
         makeFeatureClusterer: (options) -> new FeatureClusterer options
         makeSupporterBox: (options) -> new SupporterBox options
         makeLicenseBox: (options) -> new LicenseBox options
+        makeCloseBox: (options) -> new CloseBox options
         makePerimeterSelector: (options) -> new PerimeterSelector options
         makeLocation: (options) -> new Location options
         makeSaveLocation: (options) -> new SaveLocation options

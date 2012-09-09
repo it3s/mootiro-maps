@@ -23,10 +23,14 @@
     });
     window.Feature = Backbone.Model.extend({
       toJSON: function(attr) {
-        var defaultJSON;
+        var defaultJSON, name, _ref, _ref2, _ref3;
         defaultJSON = Backbone.Model.prototype.toJSON.call(this, attr);
+        name = (_ref = (_ref2 = this.get('properties')) != null ? _ref2['organization_name'] : void 0) != null ? _ref : '';
+        if (name) name += ' - ';
+        name += (_ref3 = this.get('properties')) != null ? _ref3['name'] : void 0;
         return _.extend(defaultJSON, {
-          iconClass: this.iconClass
+          iconClass: this.iconClass,
+          name: name
         });
       },
       displayOnMap: function() {
@@ -48,6 +52,7 @@
       },
       render: function() {
         var renderedContent;
+        console.log(this.model.toJSON());
         renderedContent = this.template(this.model.toJSON());
         $(this.el).html(renderedContent);
         return this;
