@@ -78,12 +78,12 @@ class FormOrganization(AjaxModelForm):
     def clean(self):
         super(FormOrganization, self).clean()
         try:
-            if not self.cleaned_data['id']:
-                self.validation('name',
+            self.validation('name',
                     u'O sistema já possui uma organização com este nome',
-                    Organization.objects.filter(
+                    Organization.objects.filter((
                         Q(name__iexact=self.cleaned_data['name']) |
-                        Q(slug=slugify(self.cleaned_data['name']))
+                        Q(slug=slugify(self.cleaned_data['name']))) &
+                        ~Q(pk=self.cleaned_data['id'])
                     ).count())
         except Exception as err:
             logger.error('Validation Error: {}'.format(err))
