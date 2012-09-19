@@ -19,7 +19,8 @@
       'resource': gettext('Resources'),
       'investiment': gettext('Investments'),
       'google': gettext('Google Results'),
-      'user': gettext('User')
+      'user': gettext('User'),
+      'project': gettext('Project')
     };
     showPopover = function() {
       $('#search-results-box').popover('show');
@@ -63,7 +64,7 @@
       results_list = '';
       results_count = 0;
       has_results = false;
-      result_order = ['community', 'organization', 'need', 'resource', 'user'];
+      result_order = ['community', 'project', 'organization', 'need', 'resource', 'user'];
       for (_i = 0, _len = result_order.length; _i < _len; _i++) {
         key = result_order[_i];
         val = result[key];
@@ -73,13 +74,12 @@
             obj = val[idx];
             disabled = !(obj != null ? obj.has_geojson : void 0) ? 'disabled' : '';
             hashlink = key[0] + obj.id;
-            results_list += "<li>\n    <a href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + hashlink + "\" onclick=\"seeOnMap('" + hashlink + "')\" class=\"" + disabled + "\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+            results_list += "<li class=\"search-result\">\n    <a class=\"search-result-title\" href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + hashlink + "\" hashlink=\"" + hashlink + "\" class=\"search-map-link " + disabled + "\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
             if (key === 'organization' && ((_ref = obj.branches) != null ? _ref.length : void 0)) {
               _ref2 = obj.branches;
               for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
                 b = _ref2[_j];
-                console.log(b);
-                results_list += "<li class=\"branch-search-result\">\n    <a href='" + obj.link + "'>&#8226; " + b.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#b" + b.id + "\" onclick=\"seeOnMap('b" + b.id + "')\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+                results_list += "<li class=\"branch-search-result\">\n    <span class=\"search-result-title org-branch\">&#8226; " + b.name + "</span>\n    <div class=\"right\">\n        <a href=\"/map/#b" + b.id + "\" hashlink=\"b" + b.id + "\" class=\"search-map-link\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
               }
             }
             results_count++;
@@ -97,7 +97,7 @@
         for (idx in google_results) {
           obj = google_results[idx];
           hashlink = "g" + idx;
-          results_list += "<li>\n    <a href=\"#\" > " + obj.description + "</a>\n    <div class=\"right\">\n        <a href=\"#" + hashlink + "\" onclick=seeOnMap('" + hashlink + "')><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+          results_list += "<li>\n    <a href=\"#\" class=\"search-result-title\"> " + obj.description + "</a>\n    <div class=\"right\">\n        <a href=\"#" + hashlink + "\" hashlink=\"" + hashlink + "\" class=\"search-map-link\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
           results_count++;
         }
         results_list += '</ul></li>';
@@ -148,6 +148,16 @@
     });
     $('#search-box-close').live('click', function() {
       return $('#search-results-box').popover('hide');
+    });
+    $('.search-map-link').live('click', function(evt) {
+      var _this;
+      evt.preventDefault();
+      _this = $(this);
+      if (!_this.is('.disabled')) {
+        return seeOnMap(_this.attr('hashlink'));
+      } else {
+        return false;
+      }
     });
     search_field.val(((_ref = localStorageGet('komoo_search')) != null ? _ref.term : void 0) || '');
     if (window.location.pathname === dutils.urls.resolve('map')) {
