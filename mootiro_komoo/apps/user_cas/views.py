@@ -97,12 +97,9 @@ def _prepare_contrib_data(version, created_date):
 
 
 @render_to('user_cas/profile.html')
-def profile(request, username=''):
-    logger.debug('acessing user_cas > profile : {}'.format(username))
-    if username == 'me':
-        user = request.user
-    else:
-        user = get_object_or_404(User, username=username)
+def profile(request, user_id=''):
+    logger.debug('acessing user_cas > profile : {}'.format(user_id))
+    user = get_object_or_404(User, id=user_id)
     contributions = []
     for rev in Revision.objects.filter(user=user
                ).order_by('-date_created')[:20]:

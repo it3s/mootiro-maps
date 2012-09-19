@@ -279,8 +279,10 @@ def permalink(request, identifier=''):
         obj = get_object_or_None(ENTITY_MODEL[entity], pk=id_)
         if not obj:
             return {}
-        url = getattr(obj, 'view_url', '/') if entity != 'u' \
-                else reverse('user_profile', kwargs={'username': obj.username})
+        if entity == 'u':
+            url = reverse('user_profile', kwargs={'user_id': obj.id})
+        else:
+            url = getattr(obj, 'view_url', '/')
     return redirect(url)
 
 
