@@ -42,6 +42,7 @@ ENTITY_MODEL = {
     'r': Resource,
     'i': Investment,
     'j': Project,
+    'u': User,
 }
 ENTITY_MODEL_REV = {v:k for k, v in ENTITY_MODEL.items()}
 
