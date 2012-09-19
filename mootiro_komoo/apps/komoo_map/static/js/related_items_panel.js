@@ -1,8 +1,6 @@
 (function() {
 
-  define(['lib/underscore-min', 'lib/backbone-min'], function() {
-    var $;
-    $ = jQuery;
+  define(['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
     window.PanelInfo = Backbone.Model.extend({
       toJSON: function(attr) {
         return Backbone.Model.prototype.toJSON.call(this, attr);
@@ -52,7 +50,6 @@
       },
       render: function() {
         var renderedContent;
-        console.log(this.model.toJSON());
         renderedContent = this.template(this.model.toJSON());
         $(this.el).html(renderedContent);
         return this;
@@ -107,7 +104,7 @@
       }
     });
     if (typeof KomooNS === "undefined" || KomooNS === null) KomooNS = {};
-    return KomooNS.drawFeaturesList = function(FeaturesViewClass) {
+    KomooNS.drawFeaturesList = function(FeaturesViewClass) {
       var branchsView, communitiesView, needsView, resourcesView, selfBranchsView,
         _this = this;
       if (FeaturesViewClass == null) FeaturesViewClass = FeaturesView;
@@ -150,6 +147,7 @@
       $('.features-wrapper').append(branchsView.render().$el);
       return geoObjectsListing($('.features-wrapper'));
     };
+    return KomooNS.drawFeaturesList;
   });
 
 }).call(this);

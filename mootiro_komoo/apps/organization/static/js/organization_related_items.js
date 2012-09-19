@@ -1,8 +1,6 @@
 (function() {
 
-  define(['lib/underscore-min', 'lib/backbone-min', 'related_items_panel'], function() {
-    var $;
-    $ = jQuery;
+  define(['jquery', 'underscore', 'backbone', 'related_items_panel'], function($, _, Backbone, drawFeaturesList) {
     window.OrganizationFeaturesView = FeaturesView.extend({
       title: function(count) {
         var msg;
@@ -12,7 +10,7 @@
     });
     return $(function() {
       var panelInfoView;
-      KomooNS.drawFeaturesList(OrganizationFeaturesView);
+      drawFeaturesList(OrganizationFeaturesView);
       panelInfoView = new PanelInfoView({
         model: new PanelInfo(KomooNS.obj)
       });

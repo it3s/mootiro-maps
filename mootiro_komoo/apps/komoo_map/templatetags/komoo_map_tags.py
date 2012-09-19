@@ -67,7 +67,7 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
     height = parsed_args.get('height', '200')
     zoom = parsed_args.get('zoom', 16)
     panel = parsed_args.get('panel',
-            'komoo_map/panel.html' if not type in ('preview') else '')
+            'komoo_map/panel.html' if not type in ('preview', 'tooltip') else '')
     ajax = parsed_args.get('ajax', 'True').lower() != 'false'
     lazy = parsed_args.get('lazy', 'False').lower() != 'false'
     edit_button = parsed_args.get('edit_button', 'False').lower() != 'false'

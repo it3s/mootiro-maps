@@ -496,7 +496,7 @@
       return AjaxEditor;
 
     })(AjaxMap);
-    return window.komoo.maps = {
+    window.komoo.maps = {
       Map: Map,
       Preview: Preview,
       AjaxMap: AjaxMap,
@@ -512,13 +512,14 @@
           return new AjaxMap(options);
         } else if (type === 'static') {
           return new StaticMap(options);
-        } else if (type === 'preview') {
+        } else if (type === 'preview' || type === 'tooltip') {
           return new Preview(options);
         } else if (type === 'userEditor') {
           return new UserEditor(options);
         }
       }
     };
+    return window.komoo.maps;
   });
 
 }).call(this);

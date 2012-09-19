@@ -1,5 +1,4 @@
-define ['lib/underscore-min', 'lib/backbone-min', 'related_items_panel'], () ->
-    $ = jQuery
+define ['jquery', 'underscore', 'backbone', 'related_items_panel'], ($, _, Backbone, drawFeaturesList) ->
 
     window.OrganizationFeaturesView = FeaturesView.extend
         title: (count) ->
@@ -29,7 +28,7 @@ define ['lib/underscore-min', 'lib/backbone-min', 'related_items_panel'], () ->
             interpolate msg, [count]
 
     $ ->
-        KomooNS.drawFeaturesList OrganizationFeaturesView
+        drawFeaturesList OrganizationFeaturesView
 
         panelInfoView = new PanelInfoView
             model: new PanelInfo KomooNS.obj

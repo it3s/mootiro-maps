@@ -1,8 +1,6 @@
 (function() {
 
-  define(['lib/underscore-min', 'lib/backbone-min', 'related_items_panel', 'ad-gallery'], function() {
-    var $;
-    $ = jQuery;
+  define(['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery'], function($, _, Backbone, drawFeaturesList) {
     window.PartnersLogo = Backbone.Model.extend({
       toJSON: function(attr) {
         return Backbone.Model.prototype.toJSON.call(this, attr);
@@ -70,7 +68,7 @@
         collection: new PartnersLogos().reset(KomooNS.obj.partners_logo)
       });
       $('.panel-info-wrapper').append(partnersLogosView.render().$el);
-      return KomooNS.drawFeaturesList();
+      return drawFeaturesList();
     });
   });
 

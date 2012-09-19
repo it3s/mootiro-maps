@@ -156,7 +156,7 @@
         } else {
           categoryOrType = this.properties.type.toLowerCase();
         }
-        return "/static/img/" + nearOrFar + "/" + highlighted + categoryOrType + ".png";
+        return ("/static/img/" + nearOrFar + "/" + highlighted + categoryOrType + ".png").replace(' ', '-');
       };
 
       Feature.prototype.updateIcon = function(zoom) {

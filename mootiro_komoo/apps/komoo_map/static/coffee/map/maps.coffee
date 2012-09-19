@@ -348,7 +348,9 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 new AjaxMap options
             else if type is 'static'
                 new StaticMap options
-            else if type is 'preview'
+            else if type in ['preview', 'tooltip']
                 new Preview options
             else if type is 'userEditor'
                 new UserEditor options
+
+    return window.komoo.maps
