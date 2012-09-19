@@ -44,7 +44,7 @@ ENTITY_MODEL = {
     'j': Project,
     'u': User,
 }
-ENTITY_MODEL_REV = {v:k for k, v in ENTITY_MODEL.items()}
+ENTITY_MODEL_REV = {v: k for k, v in ENTITY_MODEL.items()}
 
 
 @render_to('main/root.html')
@@ -169,7 +169,18 @@ queries = {
         ],
         'repr': 'get_name',
         'link': lambda o: reverse('user_profile',
-                                  kwargs={'username': o.username})
+                                  kwargs={'user_id': o.id})
+    },
+    'project': {
+        'model': Project,
+        'query_fields': [
+            'name',
+            'slug',
+            'description',
+        ],
+        'repr': 'name',
+        'link': lambda o: reverse('project_view',
+                                  kwargs={'project_slug': o.slug})
     }
 }
 
@@ -192,10 +203,12 @@ def komoo_search(request):
     result = {}
     for key, model in queries.iteritems():
         result[key] = []
-        for o in _query_model(model.get('model'), term, model.get('query_fields')):
+        for o in _query_model(model.get('model'),
+                              term,
+                              model.get('query_fields')):
             dados = {
                 'id': o.id,
-                 'name': getattr(o, model.get('repr')),
+                'name': getattr(o, model.get('repr')),
                  'link': model.get('link')(o),
                  'model': key,
                  'has_geojson': _has_geojson(o),
@@ -219,7 +232,8 @@ def komoo_search(request):
             'input': term,
             'sensor': 'false',
             'types': 'geocode',
-            'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',  # TODO: move to settings
+            'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',
+            # TODO: move to settings
         })
     result['google'] = google_results.content
     return {'result': result}

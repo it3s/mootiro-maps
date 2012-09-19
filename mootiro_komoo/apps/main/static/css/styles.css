@@ -160,6 +160,16 @@ div.apart {
 .search-header.investment{
     background-color: #EEE9CC;
 }
+.search-header.project{
+    background-color: #E0C1B5;
+}
+.search-result-title{
+    width: 430px;
+    display: inline-block;
+}
+.search-result-title.org-branch{
+    width: 410px;
+}
 .branch-search-result {
     padding-left: 40px !important;
 }

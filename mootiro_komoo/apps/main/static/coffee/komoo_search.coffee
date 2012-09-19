@@ -21,6 +21,7 @@ $ ->
         'investiment': gettext 'Investments'
         'google': gettext 'Google Results'
         'user': gettext 'User'
+        'project': gettext 'Project'
 
     showPopover = ->
         $('#search-results-box').popover 'show'
@@ -29,6 +30,7 @@ $ ->
 
 
     window.seeOnMap = (hashlink) ->
+
         if window.location.pathname == dutils.urls.resolve 'map'
             if hashlink[0] is 'g'
                 idx = parseInt hashlink.substring(1, hashlink.length), 10
@@ -64,7 +66,14 @@ $ ->
         results_list = ''
         results_count = 0
         has_results = false
-        result_order = ['community', 'organization', 'need', 'resource', 'user']
+        result_order = [
+          'community',
+          'project',
+          'organization',
+          'need',
+          'resource',
+          'user'
+        ]
 
         for key in result_order
             val = result[key]
@@ -91,21 +100,20 @@ $ ->
                     disabled = if not obj?.has_geojson then 'disabled' else ''
                     hashlink = key[0] + obj.id
                     results_list += """
-                        <li>
-                            <a href='#{obj.link}'> #{obj.name} </a>
+                        <li class="search-result">
+                            <a class="search-result-title" href='#{obj.link}'> #{obj.name} </a>
                             <div class="right">
-                                <a href="/map/##{hashlink}" onclick="seeOnMap('#{hashlink}')" class="#{disabled}"><i class="icon-see-on-map"></i></a>
+                                <a href="/map/##{hashlink}" hashlink="#{hashlink}" class="search-map-link #{disabled}"><i class="icon-see-on-map"></i></a>
                             </div>
                         </li>"""
 
                     if key is 'organization' and obj.branches?.length
                         for b in obj.branches
-                            console.log b
                             results_list += """
                                 <li class="branch-search-result">
-                                    <a href='#{obj.link}'>&#8226; #{b.name} </a>
+                                    <span class="search-result-title org-branch">&#8226; #{b.name}</span>
                                     <div class="right">
-                                        <a href="/map/#b#{b.id}" onclick="seeOnMap('b#{b.id}')"><i class="icon-see-on-map"></i></a>
+                                        <a href="/map/#b#{b.id}" hashlink="b#{b.id}" class="search-map-link"><i class="icon-see-on-map"></i></a>
                                     </div>
                                 </li>"""
 
@@ -141,9 +149,9 @@ $ ->
                 hashlink = "g#{idx}"
                 results_list += """
                     <li>
-                        <a href="#" > #{obj.description}</a>
+                        <a href="#" class="search-result-title"> #{obj.description}</a>
                         <div class="right">
-                            <a href="##{hashlink}" onclick=seeOnMap('#{hashlink}')><i class="icon-see-on-map"></i></a>
+                            <a href="##{hashlink}" hashlink="#{hashlink}" class="search-map-link"><i class="icon-see-on-map"></i></a>
                         </div>
                     </li>
                 """
@@ -200,6 +208,14 @@ $ ->
 
     $('#search-box-close').live 'click', ->
         $('#search-results-box').popover 'hide'
+
+    $('.search-map-link').live 'click', (evt) ->
+        evt.preventDefault()
+        _this = $ this
+        if not _this.is '.disabled'
+            seeOnMap _this.attr 'hashlink'
+        else
+            return false
 
     # load last search term
     search_field.val(localStorageGet('komoo_search')?.term or '')
