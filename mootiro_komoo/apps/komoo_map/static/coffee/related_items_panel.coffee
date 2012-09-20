@@ -1,5 +1,4 @@
-define ['lib/underscore-min', 'lib/backbone-min'], () ->
-    $ = jQuery
+define ['jquery', 'underscore', 'backbone'], ($, _, Backbone) ->
 
     window.PanelInfo = Backbone.Model.extend
         toJSON: (attr) ->
@@ -47,7 +46,6 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
             @template = _.template $('#feature-template').html()
 
         render: () ->
-            console.log @model.toJSON()
             renderedContent = @template @model.toJSON()
             $(@el).html renderedContent
             this
@@ -160,3 +158,5 @@ define ['lib/underscore-min', 'lib/backbone-min'], () ->
         $('.features-wrapper').append branchsView.render().$el
 
         geoObjectsListing $('.features-wrapper')
+
+    return KomooNS.drawFeaturesList

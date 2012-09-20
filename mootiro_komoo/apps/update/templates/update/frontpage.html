@@ -102,7 +102,7 @@
               <div class="update-info">
                 <h3>
                   {% if u.type == "D" %}
-                    {% usernames_list u.users %}
+                    {% users_list u.users %}
                     {% blocktrans count num=shown|length %}
                       discussed
                     {% plural %}
@@ -129,7 +129,7 @@
                   {### Users aggregated list ###}
                   {% if u.type == "A" or u.type == "E" %}
                     {% trans "by" %}
-                    {% usernames_list u.users %}
+                    {% users_list u.users %}
                   {% endif %}
                 </div>
                 <div class="update-social right">

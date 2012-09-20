@@ -33,16 +33,15 @@ def _create_the_update(instances, communities, **kwargs):
     recent_update = Update.get_recent_for(instance, type_, **ago)
     if recent_update:
         update = recent_update
-        people = update.users
-        if user.username not in people:
-            people.insert(0, user.username)
-            update.users = people
+        ids = [u_dict['id'] for u_dict in update.users]
+        if user.id not in ids:
+            update.push_user(user)
     else:
         data = {
             'object_id': instance.id,
             'object_type': instance._meta.verbose_name,
             'type': type_,
-            'users': [user.username],
+            'users': [user],
         }
         update = Update(**data)
 

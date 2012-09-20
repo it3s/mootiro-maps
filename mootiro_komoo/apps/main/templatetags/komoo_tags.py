@@ -258,8 +258,8 @@ def description_markdown_preview(desc):
 
 
 @register.inclusion_tag('main/templatetags/usernames_list.html')
-def usernames_list(usernames):
-    return dict(usernames=usernames)
+def users_list(users):
+    return dict(users=users)
 
 
 @register.inclusion_tag('main/templatetags/communities_list.html')

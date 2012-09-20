@@ -58,9 +58,9 @@ def create_geojson(objects, type_='FeatureCollection', convert=True, discard_emp
         }
 
         for obj in objects:
+            type_ = obj.__class__.__name__
             if not hasattr(obj, 'geometry'):
                 continue
-            type_ = obj.__class__.__name__
             geometry_json = json.loads(obj.geometry.geojson)
             geometries = geometry_json['geometries']
             geometry = None

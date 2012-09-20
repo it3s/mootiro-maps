@@ -1407,7 +1407,7 @@ form #uploader_container { padding: 0 }
     padding: 0 0 0 15px;
     background: url("/static/img/infowindow-arrow.png") no-repeat 0 50%;
 }
-.map-tooltip #map-container-preview {
+.map-tooltip #map-container-tooltip {
     background: white;
     padding: 10px;
     border-radius: 5px;

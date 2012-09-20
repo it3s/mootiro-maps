@@ -28,6 +28,8 @@
       /** Creating the map object **/
       var $map = $('#map-canvas-{{type}}').komooMap({
         type: '{{ type }}',
+        // should set 'force: true' because we are not setting a geometry info
+        force: ('{{ type }}' == 'tooltip'),
         featureTypes: featureTypes,
         geojson: geojson_{{ type }},
         height: '{{ height|default:'200px' }}',

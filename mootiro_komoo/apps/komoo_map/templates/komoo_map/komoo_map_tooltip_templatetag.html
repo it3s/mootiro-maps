@@ -1,6 +1,6 @@
 {% load komoo_map_tags %}
 
-<div id="map-preview" class="map-tooltip">{% komoo_map '{"features": [{}, {}]}' 'type=preview' 'width=400px' 'height=400px'%}<div class="close-bttn"><i class="icon-remove"></i></div></div>
+<div id="map-tooltip" class="map-tooltip">{% komoo_map '{"features": [{}, {}]}' 'type=tooltip' 'width=400px' 'height=400px'%}<div class="close-bttn"><i class="icon-remove"></i></div></div>
 <script type="text/javascript" charset="utf-8">
   $(function () {
       var $mapTooltip = $(".map-tooltip").hide();
@@ -9,14 +9,17 @@
       });
 
       var openMapBox = function (geojson, e) {
+        var parsedGeojson = JSON.parse(geojson.replace(/\'/g, '"'));
+        if (!(parsedGeojson && parsedGeojson['features'] && parsedGeojson['features'][0] && parsedGeojson['features'][0]['geometry'])) return false;
         var top = e.pageY - $mapTooltip.outerHeight(true) / 2;
         var left = e.pageX + 20;
-        preview.clear();
-        preview.googleMap.setMapTypeId(google.maps.MapTypeId.HYBRID);
+        tooltip.clear();
+        tooltip.googleMap.setMapTypeId(google.maps.MapTypeId.HYBRID);
         $mapTooltip.css({"left": left, "top": top}).show();
-        google.maps.event.trigger(preview.googleMap, "resize");
-        preview.loadGeoJSON(JSON.parse(geojson.replace(/\'/g, '"')), true);
-        preview.features.show();
+        google.maps.event.trigger(tooltip.googleMap, "resize");
+        tooltip.loadGeoJSON(parsedGeojson, true);
+        tooltip.features.show();
+        return true;
       };
 
       $(".preview-on-map[data-geojson='{}'], .preview-on-map-ajax[data-model-name='organization']").addClass("disabled").removeAttr("href");
@@ -27,13 +30,16 @@
         return false;
       });
       $(".preview-on-map-ajax[data-model-name!='organization']").click(function (e) {
+        var isNotEmpty = true;
         var $this = $(this);
         var appName = $this.attr("data-app-name");
         var modelName = $this.attr("data-model-name");
         var objectId = $this.attr("data-object-id");
         var geojson = $this.attr("data-geojson");
         if (geojson) {
-          openMapBox(geojson, e);
+          isNotEmpt = openMapBox(geojson, e);
+          if (!isNotEmpty)
+            $this.addClass('disabled');
         } else {
           var url = dutils.urls.resolve('geojson',
               {app_label: appName, model_name: modelName, obj_id: objectId});
@@ -41,7 +47,9 @@
             url: url,
             success: function (data, textStatus, jqXHR) {
               $this.attr("data-geojson", data);
-              openMapBox(data, e);
+              isNotEmpty = openMapBox(data, e);
+              if (!isNotEmpty)
+                $this.addClass('disabled');
             },
             dataType: 'text'
           });

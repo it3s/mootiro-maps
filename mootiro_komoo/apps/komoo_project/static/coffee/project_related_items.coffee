@@ -1,5 +1,4 @@
-define ['lib/underscore-min', 'lib/backbone-min', 'related_items_panel', 'ad-gallery'], () ->
-    $ = jQuery
+define ['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery'], ($, _, Backbone, drawFeaturesList) ->
 
     window.PartnersLogo = Backbone.Model.extend
         toJSON: (attr) ->
@@ -77,5 +76,5 @@ define ['lib/underscore-min', 'lib/backbone-min', 'related_items_panel', 'ad-gal
             collection: new PartnersLogos().reset KomooNS.obj.partners_logo
         $('.panel-info-wrapper').append partnersLogosView.render().$el
 
-        KomooNS.drawFeaturesList()
+        drawFeaturesList()
 

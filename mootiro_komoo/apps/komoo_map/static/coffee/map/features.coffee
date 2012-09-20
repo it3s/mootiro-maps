@@ -106,7 +106,7 @@ define ['map/geometries'], ->
                     if @properties.categories.length > 1 then "-plus" else "")
             else
                 categoryOrType = @properties.type.toLowerCase()
-            "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png"
+            "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png".replace ' ', '-'
 
         updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
 

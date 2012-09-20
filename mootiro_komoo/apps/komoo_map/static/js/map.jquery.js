@@ -1,6 +1,6 @@
 (function() {
 
-  define(['map/maps'], function() {
+  define(['jquery', 'map/maps'], function($, maps) {
     return (function($) {
       var fixMapHeight, fixMapSize, fixMapWidth, methods;
       fixMapSize = function(e) {
@@ -47,11 +47,11 @@
             }, $.fn.komooMap.defaults, options);
             if (opts.width != null) $this.width(opts.width);
             if (opts.height != null) $this.height(opts.height);
-            if ((opts != null ? opts.type : void 0) === 'preview' && !(opts != null ? (_ref = opts.geojson) != null ? (_ref2 = _ref.features) != null ? (_ref3 = _ref2[0]) != null ? _ref3.geometry : void 0 : void 0 : void 0 : void 0)) {
+            if ((opts != null ? opts.type : void 0) === 'preview' && !(opts != null ? (_ref = opts.geojson) != null ? (_ref2 = _ref.features) != null ? (_ref3 = _ref2[0]) != null ? _ref3.geometry : void 0 : void 0 : void 0 : void 0) && !(opts != null ? opts.force : void 0)) {
               $this.html($('<div>').addClass('placeholder').text('Informação geométrica não disponível'));
               return;
             }
-            map = komoo.maps.makeMap(opts);
+            map = maps.makeMap(opts);
             $this.data('map', map);
             if (opts.mapType != null) map.googleMap.setMapTypeId(opts.mapType);
             if (opts.height === '100%') {
@@ -105,7 +105,7 @@
       return $.fn.komooMap.defaults = {
         type: 'editor'
       };
-    })(jQuery);
+    })($);
   });
 
 }).call(this);
