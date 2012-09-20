@@ -66,23 +66,24 @@ def project_view(request, project_slug=''):
 
     for p in project.related_objects:
         obj = p.content_object
-        if not proj_objects.get(obj.__class__.__name__, None):
-            proj_objects[obj.__class__.__name__] = {
-                    'app_name': obj.__module__.split('.')[0],
-                    'objects_list': []}
-        proj_objects[obj.__class__.__name__]['objects_list'].append({
-            'name': obj.name.strip(),
-            'link': obj.view_url,
-            'id': obj.id,
-            'has_geojson': bool(getattr(obj, 'geometry', ''))
-        })
+        if obj:
+            if not proj_objects.get(obj.__class__.__name__, None):
+                proj_objects[obj.__class__.__name__] = {
+                        'app_name': obj.__module__.split('.')[0],
+                        'objects_list': []}
+            proj_objects[obj.__class__.__name__]['objects_list'].append({
+                'name': obj.name.strip(),
+                'link': obj.view_url,
+                'id': obj.id,
+                'has_geojson': bool(getattr(obj, 'geometry', ''))
+            })
 
-        if isinstance(obj, Organization):
-            branchs = [b for b in obj.organizationbranch_set.all()]
-            if branchs:
-                items += branchs
-        else:
-            items.append(obj)
+            if isinstance(obj, Organization):
+                branchs = [b for b in obj.organizationbranch_set.all()]
+                if branchs:
+                    items += branchs
+            else:
+                items.append(obj)
     geojson = create_geojson(items)
 
     # ugly sort
