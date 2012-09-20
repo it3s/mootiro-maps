@@ -1,15 +1,23 @@
 {% load i18n %}
 
-{% with shown=usernames|slice:":2" aggregated=usernames|slice:"2:" %}
-  {% for username in shown %}
-    {{ username }}{% if not forloop.last %},{% endif %}
+{% with shown=users|slice:":2" aggregated=users|slice:"2:" %}
+  {% for user in shown %}
+    {% if user.id %}
+      <a href='{% url user_profile user.id %}'>{{ user.username }}</a>{% if not forloop.last %},{% endif %}
+    {% else %}
+      {{ user.username }}{% if not forloop.last %},{% endif %}
+    {% endif %}
   {% endfor %}
 
   {% if aggregated %}
     {% trans "and" %}
     <a class="more user" title="
-      {% for username in aggregated %}
-        {{ username }}{% if not forloop.last %},{% endif %}
+      {% for user in aggregated %}
+        {% if user.id %}
+          <a href='{% url user_profile user.id %}'>{{ user.username }}</a>{% if not forloop.last %},{% endif %}
+        {% else %}
+          {{ user.username }}{% if not forloop.last %},{% endif %}
+        {% endif %}
       {% endfor %}
     ">
     {% blocktrans count num=aggregated|length %}

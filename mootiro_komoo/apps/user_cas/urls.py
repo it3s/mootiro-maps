@@ -16,5 +16,5 @@ urlpatterns = patterns('user_cas.views',
     url(r'^profile/update/digest/?$', 'digest_update', name='digest_update'),
     url(r'^profile/signature/delete/?$', 'signature_delete',
         name='signature_delete'),
-    url(r'^profile/(?P<user_id>\d+)/?$', 'profile', name='user_profile'),
+    url(r'profile/(?P<user_id>\d+)/?$', 'profile', name='user_profile'),
 )

@@ -24,6 +24,7 @@ class Update(models.Model):
     _keys = models.CharField(max_length=2048, null=False)
     _links = models.CharField(max_length=2048, null=False)
     _users = models.CharField(max_length=2048, null=False)
+    _user_ids = models.CharField(max_length=2048, null=True)
     _communities_names = models.CharField(max_length=2048)
     _communities_slugs = models.CharField(max_length=2048)
 
@@ -75,15 +76,27 @@ class Update(models.Model):
 
     @property
     def users(self):
-        return simplejson.loads(self._users)
+        names = simplejson.loads(self._users)
+        ids = simplejson.loads(self._user_ids) if self._user_ids \
+                    else ['' for n in names]
+        return [dict(username=z[0], id=z[1]) for z in zip(names, ids)]
 
     @users.setter
     def users(self, l):
-        self._users = simplejson.dumps(l)
+        self._users = simplejson.dumps([user.username for user in l])
+        self._user_ids = simplejson.dumps([user.id for user in l])
 
     @property
     def user(self):
         return self.users[0]
+
+    def push_user(self, u):
+        names = simplejson.loads(self._users)
+        ids = simplejson.loads(self._user_ids)
+        names.insert(0, u.username)
+        ids.insert(0, u.id)
+        self._users = simplejson.dumps(names)
+        self._user_ids = simplejson.dumps(ids)
 
     @property
     def communities(self):
