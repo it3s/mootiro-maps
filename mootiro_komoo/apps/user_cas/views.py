@@ -6,6 +6,7 @@ import logging
 import requests
 
 from django.shortcuts import redirect, get_object_or_404
+from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout as auth_logout
@@ -99,7 +100,13 @@ def _prepare_contrib_data(version, created_date):
 @render_to('user_cas/profile.html')
 def profile(request, user_id=''):
     logger.debug('acessing user_cas > profile : {}'.format(user_id))
-    user = get_object_or_404(User, id=user_id)
+    if not user_id:
+        if request.user.is_authenticated():
+            user = request.user
+        else:
+            return redirect(reverse('user_login'))
+    else:
+        user = get_object_or_404(User, id=user_id)
     contributions = []
     for rev in Revision.objects.filter(user=user
                ).order_by('-date_created')[:20]:

@@ -19,16 +19,15 @@ class UserCasTestCase(KomooTestCase):
     def test_loads_proper_username(self):
         self.login_user(username='noobzin')
         response = self.client.get(reverse('user_profile'))
-        self.assertContains(response, 'value="noobzin"')
-        self.assertContains(response, 'name="username"')
+        self.assertContains(response, 'noobzin')
 
     def test_loads_signatures(self):
         need = Need.objects.get(title='Parquinho')
         user = User.objects.get(username='tester')
         Signature(user=user, content_object=need).save()
         self.login_user()
-        response = self.client.get(reverse('user_profile'))
-        self.assertContains(response, 'Need &gt; Parquinho')
+        response = self.client.get(reverse('profile_update'))
+        self.assertContains(response, 'Parquinho')
 
     def test_change_username(self):
         id = User.objects.get(username='tester').id
