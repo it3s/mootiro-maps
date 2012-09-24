@@ -35,7 +35,7 @@ class KomooProfile(GeoRefModel):
 
     @property
     def view_url(self):
-        return '/user/profile/%s/' % self.user.username
+        return '/user/profile/%s/' % self.user.id
 
     @property
     def name(self):
