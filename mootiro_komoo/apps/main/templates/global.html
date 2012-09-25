@@ -26,17 +26,12 @@
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />
     <script type="text/javascript" src="{% url javascript_catalog %}"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/config.js"></script>
     <script type="text/javascript">
-      var require = {
-        deps: [
-          "map/compat",
-          "map/utils"
-        ]
-      };
       var isAuthenticated = {{ user.is_authenticated|lower }};
       var lang = '{{ LANGUAGE_CODE }}';
     </script>
-    <script type="text/javascript" data-main="{{STATIC_URL}}js/app.js" src="{{STATIC_URL}}lib/require.js"></script>
+    <script type="text/javascript" data-main="app" src="{{STATIC_URL}}lib/require.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/bootstrap.min.js"></script>

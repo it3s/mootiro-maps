@@ -1,14 +1,24 @@
-define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'], ->
+define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'],
+(Component, common, geometries)->
 
     window.komoo ?= {}
     window.komoo.event ?= google.maps.event
 
+    EMPTY = common.geometries.types.EMPTY
+    POINT = common.geometries.types.POINT
+    MULTIPOINT = common.geometries.types.MULTIPOINT
+    POLYGON = common.geometries.types.POLYGON
+    POLYLINE = common.geometries.types.LINESTRING
+    LINESTRING = common.geometries.types.LINESTRING
+    MULTIPOLYLINE = common.geometries.types.MULTILINESTRING
+    MULTILINESTRING = common.geometries.types.MULTILINESTRING
+
     OVERLAY = {}
-    OVERLAY[komoo.geometries.types.POINT] = google.maps.drawing.OverlayType.MARKER
-    OVERLAY[komoo.geometries.types.MULTIPOINT] = google.maps.drawing.OverlayType.MARKER
-    OVERLAY[komoo.geometries.types.LINESTRING] = google.maps.drawing.OverlayType.POLYLINE
-    OVERLAY[komoo.geometries.types.MULTILINESTRING] = google.maps.drawing.OverlayType.POLYLINE
-    OVERLAY[komoo.geometries.types.POLYGON] = google.maps.drawing.OverlayType.POLYGON
+    OVERLAY[POINT] = google.maps.drawing.OverlayType.MARKER
+    OVERLAY[MULTIPOINT] = google.maps.drawing.OverlayType.MARKER
+    OVERLAY[LINESTRING] = google.maps.drawing.OverlayType.POLYLINE
+    OVERLAY[MULTILINESTRING] = google.maps.drawing.OverlayType.POLYLINE
+    OVERLAY[POLYGON] = google.maps.drawing.OverlayType.POLYGON
 
     EDIT = 'edit'
     DELETE = 'delete'
@@ -18,22 +28,22 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
     PERIMETER_SELECTION = 'perimeter_selection'
 
-    class Box
+    class Box extends Component
         position: google.maps.ControlPosition.RIGHT_BOTTOM
-        constructor: ->
+        init: ->
+            super()
             @box = $ "<div>"
             if @id? then @box.attr "id", @id
             if @class? then @box.addClass @class
 
-        setMap: (@map) ->
-            @map.googleMap.controls[@position].push @box.get 0
+            @map.addControl @position, @box.get 0
             @handleMapEvents?()
 
 
     class SupporterBox extends Box
         id: "map-supporters"
 
-        constructor: ->
+        init: ->
             super()
             @box.append $("#map-supporters-content").show()
 
@@ -42,12 +52,12 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         id: "map-license"
         position: google.maps.ControlPosition.BOTTOM_LEFT
 
-        constructor: ->
+        init: ->
             super()
             @box.html 'Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.'
 
 
-    class DrawingManager
+    class DrawingManager extends Component
         enabled: on
 
         defaultDrawingManagerOptions:
@@ -56,7 +66,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
         componentOriginalStatus: {}
 
-        constructor: (@options = {}) ->
+        init: (@options = {}) ->
             @options.drawingManagerOptions ?= @defaultDrawingManagerOptions
             if @options.map
                 @setMap @options.map
@@ -77,37 +87,36 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @manager.setDrawingMode \
                 if @mode in [ADD, NEW] or
                         (@mode is CUTOUT and
-                         @feature.getGeometryType() is komoo.geometries.types.POLYGON)
+                         @feature.getGeometryType() is POLYGON)
                     OVERLAY[@feature.getGeometryType()]
                  else
                     null
-            if @mode is CUTOUT and
-                    @feature.getGeometryType() isnt komoo.geometries.types.POLYGON
+            if @mode is CUTOUT and @feature.getGeometryType() isnt POLYGON
                 @mode = EDIT
 
         handleMapEvents: ->
-            komoo.event.addListener @map, 'draw_feature', (geometryType, feature) =>
+            @map.subscribe 'draw_feature', (geometryType, feature) =>
                 @drawFeature(feature)
 
-            komoo.event.addListener @map, 'edit_feature', (feature) =>
+            @map.subscribe 'edit_feature', (feature) =>
                 @editFeature(feature)
 
-            komoo.event.addListener @map, 'drawing_finished', (feature) =>
+            @map.subscribe 'drawing_finished', (feature) =>
                 @feature.setEditable off
                 @feature.updateIcon()
                 @setFeature null
                 @setMode null
 
-            komoo.event.addListener @map, 'finish_drawing', =>
-                komoo.event.trigger @map, 'drawing_finished', @feature, true
+            @map.subscribe 'finish_drawing', =>
+                @map.publish 'drawing_finished', @feature, true
 
-            komoo.event.addListener @map, 'cancel_drawing', =>
-                komoo.event.trigger @map, 'drawing_finished', @feature, false
+            @map.subscribe 'cancel_drawing', =>
+                @map.publish 'drawing_finished', @feature, false
 
-            komoo.event.addListener @map, 'mode_changed', (mode) =>
+            @map.subscribe 'mode_changed', (mode) =>
                 @setMode mode
 
-            komoo.event.addListener @map, 'feature_rightclick', (e, feature) =>
+            @map.subscribe 'feature_rightclick', (e, feature) =>
                 if not e.vertex? then return
                 # Rightclick on vertex removes it
                 overlay = feature.getGeometry().getOverlay()
@@ -162,19 +171,19 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @featureClickListener = komoo.event.addListener @feature, 'click', (e, o) =>
                 if @mode is DELETE
                     # Delete clicked stuff
-                    if @feature.getGeometryType() is komoo.geometries.types.POLYGON
+                    if @feature.getGeometryType() is POLYGON
                         paths = @feature.getGeometry().getPaths()
                         paths.forEach (path, index) =>
                             # Delete the correct path.
                             if komoo.utils.isPointInside e.latLng, path
                                 paths.removeAt index
-                    else if o and @feature.getGeometryType() is komoo.geometries.types.MULTIPOINT
+                    else if o and @feature.getGeometryType() is MULTIPOINT
                         markers = @feature.getGeometry().getMarkers()
                         index = $.inArray o, markers.getArray()
                         if index > -1
                             marker = markers.removeAt index
                             marker.setMap null
-                    else if o and @feature.getGeometryType() is komoo.geometries.types.MULTILINESTRING
+                    else if o and @feature.getGeometryType() is MULTILINESTRING
                         polylines = @feature.getGeometry().getPolylines()
                         index = $.inArray o, polylines.getArray()
                         if index > -1
@@ -188,7 +197,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @setFeature feature
 
             if @feature.getGeometryType() is 'Empty'
-                komoo.event.trigger @map, 'select_new_geometry', @feature
+                @map.publish 'select_new_geometry', @feature
                 return
 
             @feature.setEditable on
@@ -199,7 +208,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                 zoom: 100  # Draw using the main icon
             @manager.setOptions options
             @map.setMode EDIT
-            komoo.event.trigger @map, 'drawing_started', @feature
+            @map.publish 'drawing_started', @feature
 
         drawFeature: (@feature) ->
             if @enabled is off then return
@@ -212,7 +221,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         class: "map-panel"
         position: google.maps.ControlPosition.TOP_LEFT
 
-        constructor: (opt = { title: '' }) ->
+        init: (opt = { title: '' }) ->
             super()
             title = opt.title ? ''
             @box.html """
@@ -240,7 +249,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         class: "map-panel"
         position: google.maps.ControlPosition.TOP_LEFT
 
-        constructor: ->
+        init: ->
             super()
             @box.hide()
             @box.html """
@@ -265,7 +274,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @handleBoxEvents()
 
         handleMapEvents: ->
-            komoo.event.addListener @map, 'select_new_geometry', (feature) =>
+            @map.subscribe 'select_new_geometry', (feature) =>
                 @open feature
 
         handleBoxEvents: ->
@@ -278,7 +287,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
         handleButtonEvents: ->
             $("#drawing-control-cancel", @box).click =>
-                komoo.event.trigger @map, 'cancel_drawing'
+                @map.publish 'cancel_drawing'
 
         showContent: () ->
             @box.find('li').hide()
@@ -299,7 +308,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         class: "map-panel"
         position: google.maps.ControlPosition.TOP_LEFT
 
-        constructor: ->
+        init: ->
             super()
             @box.hide()
             @box.html """
@@ -315,23 +324,23 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @handleBoxEvents()
 
         handleMapEvents: ->
-            komoo.event.addListener @map, 'drawing_started', (feature) =>
+            @map.subscribe 'drawing_started', (feature) =>
                 @open feature
 
-            komoo.event.addListener @map, 'drawing_finished', (feature) =>
+            @map.subscribe 'drawing_finished', (feature) =>
                 @close()
 
-            komoo.event.addListener @map, 'mode_changed', (mode) =>
+            @map.subscribe 'mode_changed', (mode) =>
                 @setMode mode
 
         handleBoxEvents: ->
             $("#drawing-control-finish", @box).click =>
                 if $("#drawing-control-finish", @box).hasClass 'disabled' then return
 
-                komoo.event.trigger @map, 'finish_drawing'
+                @map.publish 'finish_drawing'
 
             $("#drawing-control-cancel", @box).click =>
-                komoo.event.trigger @map, 'cancel_drawing'
+                @map.publish 'cancel_drawing'
 
         handleButtonEvents: ->
             $("#drawing-control-add", @box).click =>
@@ -354,16 +363,13 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             $("#drawing-control-#{@mode?.toLowerCase()}", @box).addClass "active"
 
         getTitle: ->
-            if @feature.getGeometryType() is komoo.geometries.types.POLYGON
+            if @feature.getGeometryType() is POLYGON
                 geometry = 'polygon'
                 title = gettext 'Add shape'
-            else if @feature.getGeometryType() in [komoo.geometries.types.LINESTRING,
-                                                   komoo.geometries.types.MULTILINESTRING]
+            else if @feature.getGeometryType() in [LINESTRING, MULTILINESTRING]
                 geometry = 'linestring'
                 title = gettext 'Add line'
-            else if @feature.getGeometryType() in [komoo.geometries.types.POINT,
-
-                                                   komoo.geometries.types.MULTIPOINT]
+            else if @feature.getGeometryType() in [POINT, MULTIPOINT]
                 geometry = 'point'
                 title = gettext 'Add point'
             """<i class="icon-#{geometry} middle"></i><span class="middle">#{title}</span>"""
@@ -374,11 +380,11 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             remove = $("""<div class="map-button" id="drawing-control-delete"><i class="icon-komoo-trash middle"></i></div>""")
 
             content = $("<div>").addClass @feature.getGeometryType().toLowerCase()
-            if @feature.getGeometryType() isnt komoo.geometries.types.POINT
+            if @feature.getGeometryType() isnt POINT
                 content.append add
-            if @feature.getGeometryType() is komoo.geometries.types.POLYGON
+            if @feature.getGeometryType() is POLYGON
                 content.append cutout
-            if @feature.getGeometryType() isnt komoo.geometries.types.POINT
+            if @feature.getGeometryType() isnt POINT
                 content.append remove
             content
 
@@ -392,10 +398,11 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         close: -> @box.hide()
 
 
-    class PerimeterSelector
+    class PerimeterSelector extends Component
         enabled: on
 
-        constructor: ->
+        init: ->
+            super()
             @circle = new google.maps.Circle
                 visible: true
                 radius: 100
@@ -427,17 +434,17 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @marker.setPosition latLng
             @marker.setMap @map.googleMap
 
-            komoo.event.trigger @map, 'perimeter_selected', latLng, @circle
+            @map.publish 'perimeter_selected', latLng, @circle
 
             @map.setMode @origMode
             @map.enableComponents 'infoWindow'
 
         handleMapEvents: ->
-            komoo.event.addListener @map, 'select_perimeter', (radius, callback) =>
+            @map.subscribe 'select_perimeter', (radius, callback) =>
                 @select radius, callback
 
             for eventName in ['click', 'feature_click']
-                komoo.event.addListener @map, eventName, (e) =>
+                @map.subscribe eventName, (e) =>
                     if @map.mode is PERIMETER_SELECTION then @selected e.latLng
 
         setMap: (@map) ->
@@ -450,11 +457,12 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @enabled = off
 
 
-    class Balloon
+    class Balloon extends Component
         defaultWidth: "300px"
         enabled: on
 
-        constructor: (@options = {}) ->
+        init: (@options = {}) ->
+            super()
             @width = @options.width or @defaultWidth
             @createInfoBox @options
             if @options.map
@@ -473,10 +481,10 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                     width: @width
 
         handleMapEvents: ->
-            komoo.event.addListener @map, 'drawing_started', (feature) =>
+            @map.subscribe 'drawing_started', (feature) =>
                 @disable()
 
-            komoo.event.addListener @map, 'drawing_finished', (feature) =>
+            @map.subscribe 'drawing_finished', (feature) =>
                 @enable()
 
         setInfoBox: (@infoBox) ->
@@ -492,13 +500,13 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
         open: (@options = {}) ->
             if not @enabled then return
-            @setContent options.content or \
-                if options.features
-                    @createClusterContent options
+            @setContent @options.content or \
+                if @options.features
+                    @createClusterContent @options
                 else
-                    @createFeatureContent options
-            @feature = options.feature ? options.features?.getAt 0
-            position = options.position ? @feature.getCenter()
+                    @createFeatureContent @options
+            @feature = @options.feature ? @options.features?.getAt 0
+            position = @options.position ? @feature.getCenter()
             if position instanceof Array
                 empty = new komoo.geometries.Empty()  # WTF?!!? TODO: Move getLatLngFromArray to utils
                 position = empty.getLatLngFromArray position
@@ -529,7 +537,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @feature = null
 
         customize: ->
-            google.maps.event.addDomListener @infoBox, "domread", (e) =>
+            google.maps.event.addDomListener @infoBox, "domready", (e) =>
                 div = @infoBox.div_
                 google.maps.event.addDomListener div, "click", (e) =>
                     e.cancelBubble = true
@@ -637,11 +645,11 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
         handleMapEvents: ->
             super()
-            komoo.event.addListener @map, 'feature_click', (e, feature) =>
+            @map.subscribe 'feature_click', (e, feature) =>
                 setTimeout =>
                     @open feature: feature, position: e.latLng
                 , 200
-            komoo.event.addListener @map, 'feature_highlight_changed', (e, feature) =>
+            @map.subscribe 'feature_highlight_changed', (e, feature) =>
                 if feature.isHighlighted()
                     @open feature: feature
 
@@ -659,13 +667,13 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                 div = @infoBox.div_
                 google.maps.event.addDomListener div, "click", (e) =>
                     e.latLng = @infoBox.getPosition()
-                    komoo.event.trigger @map, 'feature_click', e, @feature
+                    @map.publish 'feature_click', e, @feature
                 closeBox = div.firstChild
                 $(closeBox).hide()
 
         handleMapEvents: ->
             super()
-            komoo.event.addListener @map, 'feature_mousemove', (e, feature) =>
+            @map.subscribe 'feature_mousemove', (e, feature) =>
                 clearTimeout @timer
 
                 if feature is @feature or not feature.displayTooltip then return
@@ -676,24 +684,24 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                     @open feature: feature, position: e.latLng
                 , delay
 
-            komoo.event.addListener @map, 'feature_mouseout', (e, feature) =>
+            @map.subscribe 'feature_mouseout', (e, feature) =>
                 @close()
 
-            komoo.event.addListener @map, 'feature_click', (e, feature) =>
+            @map.subscribe 'feature_click', (e, feature) =>
                 @close()
 
-            komoo.event.addListener @map, 'cluster_mouseover',  (features, position) =>
+            @map.subscribe 'cluster_mouseover',  (features, position) =>
                 if not features.getAt(0)?.displayTooltip then return
                 @open features: features, position: position
 
-            komoo.event.addListener @map, 'cluster_mouseout', (e, feature) =>
+            @map.subscribe 'cluster_mouseout', (e, feature) =>
                 @close()
 
-            komoo.event.addListener @map, 'cluster_click', (e, feature) =>
+            @map.subscribe 'cluster_click', (e, feature) =>
                 @close()
 
 
-    class FeatureClusterer
+    class FeatureClusterer extends Component
         enabled: on
         maxZoom: 9
         gridSize: 20
@@ -701,7 +709,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         imagePath: '/static/img/cluster/communities'
         imageSizes: [24, 29, 35, 41, 47]
 
-        constructor: (@options = {}) ->
+        init: (@options = {}) ->
             @options.gridSize ?= @gridSize
             @options.maxZoom ?= @maxZoom
             @options.minimumClusterSize ?= @minSize
@@ -730,7 +738,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                     features = komoo.collections.makeFeatureCollection \
                         features: (marker.feature for marker in c.getMarkers())
                     komoo.event.trigger this, eventName, features, c.getCenter()
-                    komoo.event.trigger @map, "cluster_#{eventName}", features, c.getCenter()
+                    @map.publish "cluster_#{eventName}", features, c.getCenter()
 
         setMap: (@map) ->
             @initMarkerClusterer @options
@@ -739,7 +747,7 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             @handleMapEvents()
 
         handleMapEvents: ->
-            komoo.event.addListener @map, 'feature_created', (feature) =>
+            @map.subscribe 'feature_created', (feature) =>
                 if feature.getType() is @featureType
                     @push feature
 
@@ -776,18 +784,18 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             features?.forEach (feature) => @push(feature)
 
 
-    class Location
+    class Location extends Component
         enabled: on
 
-        constructor: ->
+        init: ->
             @geocoder = new google.maps.Geocoder()
             @marker = new google.maps.Marker
                 icon: '/static/img/marker.png'
 
         handleMapEvents: ->
-            komoo.event.addListener @map, 'goto', (position, marker) =>
+            @map.subscribe 'goto', (position, marker) =>
                 @goTo position, marker
-            komoo.event.addListener @map, 'goto_user_location', =>
+            @map.subscribe 'goto_user_location', =>
                 @goToUserLocation()
 
         goTo: (position, marker = false) ->
@@ -824,7 +832,6 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
                 console?.log 'Getting location from Google...'
             if navigator.geolocation
                 navigator.geolocation.getCurrentPosition (position) =>
-                    console.log('dddd')
                     pos = new google.maps.LatLng position.coords.latitude,
                                                  position.coords.longitude
                     @map.googleMap.setCenter pos
@@ -846,12 +853,13 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
     class SaveLocation extends Location
         handleMapEvents: ->
             super()
-            komoo.event.addListener @map, 'save_location', (center, zoom) =>
+            @map.subscribe 'save_location', (center, zoom) =>
                 @saveLocation center, zoom
-            komoo.event.addListener @map, 'goto_saved_location', =>
+            @map.subscribe 'goto_saved_location', =>
                 @goToSavedLocation()
 
         saveLocation: (center = @map.googleMap.getCenter(), zoom = @map.getZoom()) ->
+            #console?.log 'Location saved:', center.toUrlValue()
             komoo.utils.createCookie 'lastLocation', center.toUrlValue(), 90
             komoo.utils.createCookie 'lastZoom', zoom, 90
 
@@ -860,23 +868,21 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
             zoom = parseInt komoo.utils.readCookie('lastZoom'), 10
             if lastLocation and zoom
                 console?.log 'Getting location from cookie...'
-                lastLocation = lastLocation.split ','
-                center = new google.maps.LatLng lastLocation[0], lastLocation[1]
-                @map.googleMap.setCenter center
-                @map.googleMap.setZoom zoom
+                @map.publish 'set_location', lastLocation
+                @map.publish 'set_zoom', zoom
 
 
     class AutosaveLocation extends SaveLocation
         handleMapEvents: ->
             super()
-            komoo.event.addListener @map, 'idle', =>
+            @map.subscribe 'idle', =>
                 @saveLocation()
 
 
-    class StreetView
+    class StreetView extends Component
         enabled: on
 
-        constructor: ->
+        init: ->
             console?.log "Initializing StreetView support."
             @streetViewPanel = $("<div>").addClass "map-panel"
             @streetViewPanel.height("100%").width("50%")
@@ -904,11 +910,14 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
 
     window.komoo.controls =
         DrawingManager: DrawingManager
+        DrawingControl: DrawingControl
+        GeometrySelector: GeometrySelector
         Balloon: Balloon
         AjaxBalloon: AjaxBalloon
         InfoWindow: InfoWindow
         Tooltip: Tooltip
         FeatureClusterer: FeatureClusterer
+        CloseBox: CloseBox
         SupporterBox: SupporterBox
         LicenseBox: LicenseBox
         PerimeterSelector: PerimeterSelector
@@ -916,17 +925,5 @@ define ['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packe
         SaveLocation: SaveLocation
         AutosaveLocation: AutosaveLocation
         StreetView: StreetView
-        makeDrawingManager: (options) -> new DrawingManager options
-        makeDrawingControl: (options) -> new DrawingControl options
-        makeGeometrySelector: (options) -> new GeometrySelector options
-        makeInfoWindow: (options) -> new InfoWindow options
-        makeTooltip: (options) -> new Tooltip options
-        makeFeatureClusterer: (options) -> new FeatureClusterer options
-        makeSupporterBox: (options) -> new SupporterBox options
-        makeLicenseBox: (options) -> new LicenseBox options
-        makeCloseBox: (options) -> new CloseBox options
-        makePerimeterSelector: (options) -> new PerimeterSelector options
-        makeLocation: (options) -> new Location options
-        makeSaveLocation: (options) -> new SaveLocation options
-        makeAutosaveLocation: (options) -> new AutosaveLocation options
-        makeStreetView: (options) -> new StreetView options
+
+    return window.komoo.controls

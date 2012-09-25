@@ -1,6 +1,7 @@
 (function() {
 
-  define(['map/geometries'], function() {
+  define(['map/geometries'], function(geometries) {
+    'use strict';
     var Feature, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
@@ -20,7 +21,7 @@
             this.setProperties(this.options.geojson.properties);
           }
           if (geometry == null) {
-            geometry = komoo.geometries.makeGeometry(this.options.geojson, this);
+            geometry = geometries.makeGeometry(this.options.geojson, this);
           }
         }
         if (geometry != null) {
@@ -31,7 +32,7 @@
 
       Feature.prototype.createMarker = function() {
         var marker;
-        marker = new komoo.geometries.Point({
+        marker = new geometries.Point({
           visible: true,
           clickable: true
         });
@@ -282,7 +283,7 @@
 
       Feature.prototype.handleMapEvents = function() {
         var _this = this;
-        return komoo.event.addListener(this.map, 'feature_highlight_changed', function(flag, feature) {
+        return this.map.subscribe('feature_highlight_changed', function(flag, feature) {
           if (feature === _this) return;
           if (_this.isHighlighted()) return _this.setHighlight(false, true);
         });
@@ -354,7 +355,7 @@
       return Feature;
 
     })();
-    return window.komoo.features = {
+    window.komoo.features = {
       Feature: Feature,
       makeFeature: function(geojson, featureTypes) {
         var _ref;
@@ -364,6 +365,7 @@
         });
       }
     };
+    return window.komoo.features;
   });
 
 }).call(this);

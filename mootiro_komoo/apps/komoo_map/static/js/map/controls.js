@@ -2,51 +2,66 @@
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  define(['map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'], function() {
-    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, FeatureClusterer, GeometrySelector, InfoWindow, LicenseBox, Location, NEW, OVERLAY, PERIMETER_SELECTION, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
+  define(['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'], function(Component, common, geometries) {
+    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+    EMPTY = common.geometries.types.EMPTY;
+    POINT = common.geometries.types.POINT;
+    MULTIPOINT = common.geometries.types.MULTIPOINT;
+    POLYGON = common.geometries.types.POLYGON;
+    POLYLINE = common.geometries.types.LINESTRING;
+    LINESTRING = common.geometries.types.LINESTRING;
+    MULTIPOLYLINE = common.geometries.types.MULTILINESTRING;
+    MULTILINESTRING = common.geometries.types.MULTILINESTRING;
     OVERLAY = {};
-    OVERLAY[komoo.geometries.types.POINT] = google.maps.drawing.OverlayType.MARKER;
-    OVERLAY[komoo.geometries.types.MULTIPOINT] = google.maps.drawing.OverlayType.MARKER;
-    OVERLAY[komoo.geometries.types.LINESTRING] = google.maps.drawing.OverlayType.POLYLINE;
-    OVERLAY[komoo.geometries.types.MULTILINESTRING] = google.maps.drawing.OverlayType.POLYLINE;
-    OVERLAY[komoo.geometries.types.POLYGON] = google.maps.drawing.OverlayType.POLYGON;
+    OVERLAY[POINT] = google.maps.drawing.OverlayType.MARKER;
+    OVERLAY[MULTIPOINT] = google.maps.drawing.OverlayType.MARKER;
+    OVERLAY[LINESTRING] = google.maps.drawing.OverlayType.POLYLINE;
+    OVERLAY[MULTILINESTRING] = google.maps.drawing.OverlayType.POLYLINE;
+    OVERLAY[POLYGON] = google.maps.drawing.OverlayType.POLYGON;
     EDIT = 'edit';
     DELETE = 'delete';
     NEW = 'new';
     ADD = 'add';
     CUTOUT = 'cutout';
     PERIMETER_SELECTION = 'perimeter_selection';
-    Box = (function() {
+    Box = (function(_super) {
+
+      __extends(Box, _super);
+
+      function Box() {
+        Box.__super__.constructor.apply(this, arguments);
+      }
 
       Box.prototype.position = google.maps.ControlPosition.RIGHT_BOTTOM;
 
-      function Box() {
+      Box.prototype.init = function() {
+        Box.__super__.init.call(this);
         this.box = $("<div>");
         if (this.id != null) this.box.attr("id", this.id);
         if (this["class"] != null) this.box.addClass(this["class"]);
-      }
-
-      Box.prototype.setMap = function(map) {
-        this.map = map;
-        this.map.googleMap.controls[this.position].push(this.box.get(0));
+        this.map.addControl(this.position, this.box.get(0));
         return typeof this.handleMapEvents === "function" ? this.handleMapEvents() : void 0;
       };
 
       return Box;
 
-    })();
+    })(Component);
     SupporterBox = (function(_super) {
 
       __extends(SupporterBox, _super);
 
+      function SupporterBox() {
+        SupporterBox.__super__.constructor.apply(this, arguments);
+      }
+
       SupporterBox.prototype.id = "map-supporters";
 
-      function SupporterBox() {
-        SupporterBox.__super__.constructor.call(this);
-        this.box.append($("#map-supporters-content").show());
-      }
+      SupporterBox.prototype.init = function() {
+        SupporterBox.__super__.init.call(this);
+        return this.box.append($("#map-supporters-content").show());
+      };
 
       return SupporterBox;
 
@@ -55,19 +70,29 @@
 
       __extends(LicenseBox, _super);
 
+      function LicenseBox() {
+        LicenseBox.__super__.constructor.apply(this, arguments);
+      }
+
       LicenseBox.prototype.id = "map-license";
 
       LicenseBox.prototype.position = google.maps.ControlPosition.BOTTOM_LEFT;
 
-      function LicenseBox() {
-        LicenseBox.__super__.constructor.call(this);
-        this.box.html('Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.');
-      }
+      LicenseBox.prototype.init = function() {
+        LicenseBox.__super__.init.call(this);
+        return this.box.html('Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.');
+      };
 
       return LicenseBox;
 
     })(Box);
-    DrawingManager = (function() {
+    DrawingManager = (function(_super) {
+
+      __extends(DrawingManager, _super);
+
+      function DrawingManager() {
+        DrawingManager.__super__.constructor.apply(this, arguments);
+      }
 
       DrawingManager.prototype.enabled = true;
 
@@ -78,14 +103,14 @@
 
       DrawingManager.prototype.componentOriginalStatus = {};
 
-      function DrawingManager(options) {
+      DrawingManager.prototype.init = function(options) {
         var _base2;
         this.options = options != null ? options : {};
         if ((_base2 = this.options).drawingManagerOptions == null) {
           _base2.drawingManagerOptions = this.defaultDrawingManagerOptions;
         }
-        if (this.options.map) this.setMap(this.options.map);
-      }
+        if (this.options.map) return this.setMap(this.options.map);
+      };
 
       DrawingManager.prototype.initManager = function(options) {
         if (options == null) options = this.defaultDrawingManagerOptions;
@@ -111,36 +136,36 @@
       DrawingManager.prototype.setMode = function(mode) {
         var _ref;
         this.mode = mode;
-        this.manager.setDrawingMode(((_ref = this.mode) === ADD || _ref === NEW) || (this.mode === CUTOUT && this.feature.getGeometryType() === komoo.geometries.types.POLYGON) ? OVERLAY[this.feature.getGeometryType()] : null);
-        if (this.mode === CUTOUT && this.feature.getGeometryType() !== komoo.geometries.types.POLYGON) {
+        this.manager.setDrawingMode(((_ref = this.mode) === ADD || _ref === NEW) || (this.mode === CUTOUT && this.feature.getGeometryType() === POLYGON) ? OVERLAY[this.feature.getGeometryType()] : null);
+        if (this.mode === CUTOUT && this.feature.getGeometryType() !== POLYGON) {
           return this.mode = EDIT;
         }
       };
 
       DrawingManager.prototype.handleMapEvents = function() {
         var _this = this;
-        komoo.event.addListener(this.map, 'draw_feature', function(geometryType, feature) {
+        this.map.subscribe('draw_feature', function(geometryType, feature) {
           return _this.drawFeature(feature);
         });
-        komoo.event.addListener(this.map, 'edit_feature', function(feature) {
+        this.map.subscribe('edit_feature', function(feature) {
           return _this.editFeature(feature);
         });
-        komoo.event.addListener(this.map, 'drawing_finished', function(feature) {
+        this.map.subscribe('drawing_finished', function(feature) {
           _this.feature.setEditable(false);
           _this.feature.updateIcon();
           _this.setFeature(null);
           return _this.setMode(null);
         });
-        komoo.event.addListener(this.map, 'finish_drawing', function() {
-          return komoo.event.trigger(_this.map, 'drawing_finished', _this.feature, true);
+        this.map.subscribe('finish_drawing', function() {
+          return _this.map.publish('drawing_finished', _this.feature, true);
         });
-        komoo.event.addListener(this.map, 'cancel_drawing', function() {
-          return komoo.event.trigger(_this.map, 'drawing_finished', _this.feature, false);
+        this.map.subscribe('cancel_drawing', function() {
+          return _this.map.publish('drawing_finished', _this.feature, false);
         });
-        komoo.event.addListener(this.map, 'mode_changed', function(mode) {
+        this.map.subscribe('mode_changed', function(mode) {
           return _this.setMode(mode);
         });
-        return komoo.event.addListener(this.map, 'feature_rightclick', function(e, feature) {
+        return this.map.subscribe('feature_rightclick', function(e, feature) {
           var overlay, path, paths;
           if (!(e.vertex != null)) return;
           overlay = feature.getGeometry().getOverlay();
@@ -197,21 +222,21 @@
         return this.featureClickListener = komoo.event.addListener(this.feature, 'click', function(e, o) {
           var index, marker, markers, paths, polyline, polylines;
           if (_this.mode === DELETE) {
-            if (_this.feature.getGeometryType() === komoo.geometries.types.POLYGON) {
+            if (_this.feature.getGeometryType() === POLYGON) {
               paths = _this.feature.getGeometry().getPaths();
               paths.forEach(function(path, index) {
                 if (komoo.utils.isPointInside(e.latLng, path)) {
                   return paths.removeAt(index);
                 }
               });
-            } else if (o && _this.feature.getGeometryType() === komoo.geometries.types.MULTIPOINT) {
+            } else if (o && _this.feature.getGeometryType() === MULTIPOINT) {
               markers = _this.feature.getGeometry().getMarkers();
               index = $.inArray(o, markers.getArray());
               if (index > -1) {
                 marker = markers.removeAt(index);
                 marker.setMap(null);
               }
-            } else if (o && _this.feature.getGeometryType() === komoo.geometries.types.MULTILINESTRING) {
+            } else if (o && _this.feature.getGeometryType() === MULTILINESTRING) {
               polylines = _this.feature.getGeometry().getPolylines();
               index = $.inArray(o, polylines.getArray());
               if (index > -1) {
@@ -229,7 +254,7 @@
         if (this.enabled === false) return;
         this.setFeature(feature);
         if (this.feature.getGeometryType() === 'Empty') {
-          komoo.event.trigger(this.map, 'select_new_geometry', this.feature);
+          this.map.publish('select_new_geometry', this.feature);
           return;
         }
         this.feature.setEditable(true);
@@ -240,7 +265,7 @@
         });
         this.manager.setOptions(options);
         this.map.setMode(EDIT);
-        return komoo.event.trigger(this.map, 'drawing_started', this.feature);
+        return this.map.publish('drawing_started', this.feature);
       };
 
       DrawingManager.prototype.drawFeature = function(feature) {
@@ -252,10 +277,14 @@
 
       return DrawingManager;
 
-    })();
+    })(Component);
     CloseBox = (function(_super) {
 
       __extends(CloseBox, _super);
+
+      function CloseBox() {
+        CloseBox.__super__.constructor.apply(this, arguments);
+      }
 
       CloseBox.prototype.id = "map-drawing-box";
 
@@ -263,19 +292,19 @@
 
       CloseBox.prototype.position = google.maps.ControlPosition.TOP_LEFT;
 
-      function CloseBox(opt) {
+      CloseBox.prototype.init = function(opt) {
         var title, _ref;
         if (opt == null) {
           opt = {
             title: ''
           };
         }
-        CloseBox.__super__.constructor.call(this);
+        CloseBox.__super__.init.call(this);
         title = (_ref = opt.title) != null ? _ref : '';
         this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\">" + title + "</div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Close')) + "</div>\n  </div>\n</div>");
         this.box.show();
-        this.handleButtonEvents();
-      }
+        return this.handleButtonEvents();
+      };
 
       CloseBox.prototype.setTitle = function(title) {
         if (title == null) title = '';
@@ -296,22 +325,26 @@
 
       __extends(GeometrySelector, _super);
 
+      function GeometrySelector() {
+        GeometrySelector.__super__.constructor.apply(this, arguments);
+      }
+
       GeometrySelector.prototype.id = "map-drawing-box";
 
       GeometrySelector.prototype["class"] = "map-panel";
 
       GeometrySelector.prototype.position = google.maps.ControlPosition.TOP_LEFT;
 
-      function GeometrySelector() {
-        GeometrySelector.__super__.constructor.call(this);
+      GeometrySelector.prototype.init = function() {
+        GeometrySelector.__super__.init.call(this);
         this.box.hide();
         this.box.html("<div id=\"geometry-selector\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <ul class=\"content\" id=\"drawing-control-content\">\n    <li class=\"polygon btn\" data-geometry-type=\"Polygon\">\n      <i class=\"icon-polygon middle\"></i><span class=\"middle\">Adicionar área</span>\n    </li>\n    <li class=\"linestring btn\" data-geometry-type=\"LineString\">\n      <i class=\"icon-linestring middle\"></i><span class=\"middle\">Adicionar linha</span>\n    </li>\n    <li class=\"point btn\" data-geometry-type=\"Point\">\n      <i class=\"icon-point middle\"></i><span class=\"middle\">Adicionar ponto</span>\n    </li>\n  </ul>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Cancel')) + "</div>\n  </div>\n</div>");
-        this.handleBoxEvents();
-      }
+        return this.handleBoxEvents();
+      };
 
       GeometrySelector.prototype.handleMapEvents = function() {
         var _this = this;
-        return komoo.event.addListener(this.map, 'select_new_geometry', function(feature) {
+        return this.map.subscribe('select_new_geometry', function(feature) {
           return _this.open(feature);
         });
       };
@@ -332,7 +365,7 @@
       GeometrySelector.prototype.handleButtonEvents = function() {
         var _this = this;
         return $("#drawing-control-cancel", this.box).click(function() {
-          return komoo.event.trigger(_this.map, 'cancel_drawing');
+          return _this.map.publish('cancel_drawing');
         });
       };
 
@@ -367,28 +400,32 @@
 
       __extends(DrawingControl, _super);
 
+      function DrawingControl() {
+        DrawingControl.__super__.constructor.apply(this, arguments);
+      }
+
       DrawingControl.prototype.id = "map-drawing-box";
 
       DrawingControl.prototype["class"] = "map-panel";
 
       DrawingControl.prototype.position = google.maps.ControlPosition.TOP_LEFT;
 
-      function DrawingControl() {
-        DrawingControl.__super__.constructor.call(this);
+      DrawingControl.prototype.init = function() {
+        DrawingControl.__super__.init.call(this);
         this.box.hide();
         this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-finish\">" + (gettext('Next Step')) + "</div>\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Cancel')) + "</div>\n  </div>\n</div>");
-        this.handleBoxEvents();
-      }
+        return this.handleBoxEvents();
+      };
 
       DrawingControl.prototype.handleMapEvents = function() {
         var _this = this;
-        komoo.event.addListener(this.map, 'drawing_started', function(feature) {
+        this.map.subscribe('drawing_started', function(feature) {
           return _this.open(feature);
         });
-        komoo.event.addListener(this.map, 'drawing_finished', function(feature) {
+        this.map.subscribe('drawing_finished', function(feature) {
           return _this.close();
         });
-        return komoo.event.addListener(this.map, 'mode_changed', function(mode) {
+        return this.map.subscribe('mode_changed', function(mode) {
           return _this.setMode(mode);
         });
       };
@@ -397,10 +434,10 @@
         var _this = this;
         $("#drawing-control-finish", this.box).click(function() {
           if ($("#drawing-control-finish", _this.box).hasClass('disabled')) return;
-          return komoo.event.trigger(_this.map, 'finish_drawing');
+          return _this.map.publish('finish_drawing');
         });
         return $("#drawing-control-cancel", this.box).click(function() {
-          return komoo.event.trigger(_this.map, 'cancel_drawing');
+          return _this.map.publish('cancel_drawing');
         });
       };
 
@@ -433,13 +470,13 @@
 
       DrawingControl.prototype.getTitle = function() {
         var geometry, title, _ref, _ref2;
-        if (this.feature.getGeometryType() === komoo.geometries.types.POLYGON) {
+        if (this.feature.getGeometryType() === POLYGON) {
           geometry = 'polygon';
           title = gettext('Add shape');
-        } else if ((_ref = this.feature.getGeometryType()) === komoo.geometries.types.LINESTRING || _ref === komoo.geometries.types.MULTILINESTRING) {
+        } else if ((_ref = this.feature.getGeometryType()) === LINESTRING || _ref === MULTILINESTRING) {
           geometry = 'linestring';
           title = gettext('Add line');
-        } else if ((_ref2 = this.feature.getGeometryType()) === komoo.geometries.types.POINT || _ref2 === komoo.geometries.types.MULTIPOINT) {
+        } else if ((_ref2 = this.feature.getGeometryType()) === POINT || _ref2 === MULTIPOINT) {
           geometry = 'point';
           title = gettext('Add point');
         }
@@ -452,15 +489,9 @@
         cutout = $("<div class=\"map-button\" id=\"drawing-control-cutout\"><i class=\"icon-komoo-minus middle\"></i><span class=\"middle\">" + (gettext('Cut out')) + "</span></div>");
         remove = $("<div class=\"map-button\" id=\"drawing-control-delete\"><i class=\"icon-komoo-trash middle\"></i></div>");
         content = $("<div>").addClass(this.feature.getGeometryType().toLowerCase());
-        if (this.feature.getGeometryType() !== komoo.geometries.types.POINT) {
-          content.append(add);
-        }
-        if (this.feature.getGeometryType() === komoo.geometries.types.POLYGON) {
-          content.append(cutout);
-        }
-        if (this.feature.getGeometryType() !== komoo.geometries.types.POINT) {
-          content.append(remove);
-        }
+        if (this.feature.getGeometryType() !== POINT) content.append(add);
+        if (this.feature.getGeometryType() === POLYGON) content.append(cutout);
+        if (this.feature.getGeometryType() !== POINT) content.append(remove);
         return content;
       };
 
@@ -479,12 +510,19 @@
       return DrawingControl;
 
     })(Box);
-    PerimeterSelector = (function() {
+    PerimeterSelector = (function(_super) {
+
+      __extends(PerimeterSelector, _super);
+
+      function PerimeterSelector() {
+        PerimeterSelector.__super__.constructor.apply(this, arguments);
+      }
 
       PerimeterSelector.prototype.enabled = true;
 
-      function PerimeterSelector() {
+      PerimeterSelector.prototype.init = function() {
         var _this = this;
+        PerimeterSelector.__super__.init.call(this);
         this.circle = new google.maps.Circle({
           visible: true,
           radius: 100,
@@ -496,12 +534,12 @@
         this.marker = new google.maps.Marker({
           icon: '/static/img/marker.png'
         });
-        komoo.event.addListener(this.circle, 'click', function(e) {
+        return komoo.event.addListener(this.circle, 'click', function(e) {
           if (_this.map.mode === PERIMETER_SELECTION) {
             return _this.selected(e.latLng);
           }
         });
-      }
+      };
 
       PerimeterSelector.prototype.select = function(radius, callback) {
         this.radius = radius;
@@ -521,7 +559,7 @@
         this.circle.setMap(this.map.googleMap);
         this.marker.setPosition(latLng);
         this.marker.setMap(this.map.googleMap);
-        komoo.event.trigger(this.map, 'perimeter_selected', latLng, this.circle);
+        this.map.publish('perimeter_selected', latLng, this.circle);
         this.map.setMode(this.origMode);
         return this.map.enableComponents('infoWindow');
       };
@@ -529,14 +567,14 @@
       PerimeterSelector.prototype.handleMapEvents = function() {
         var eventName, _i, _len, _ref, _results,
           _this = this;
-        komoo.event.addListener(this.map, 'select_perimeter', function(radius, callback) {
+        this.map.subscribe('select_perimeter', function(radius, callback) {
           return _this.select(radius, callback);
         });
         _ref = ['click', 'feature_click'];
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           eventName = _ref[_i];
-          _results.push(komoo.event.addListener(this.map, eventName, function(e) {
+          _results.push(this.map.subscribe(eventName, function(e) {
             if (_this.map.mode === PERIMETER_SELECTION) {
               return _this.selected(e.latLng);
             }
@@ -561,20 +599,27 @@
 
       return PerimeterSelector;
 
-    })();
-    Balloon = (function() {
+    })(Component);
+    Balloon = (function(_super) {
+
+      __extends(Balloon, _super);
+
+      function Balloon() {
+        Balloon.__super__.constructor.apply(this, arguments);
+      }
 
       Balloon.prototype.defaultWidth = "300px";
 
       Balloon.prototype.enabled = true;
 
-      function Balloon(options) {
+      Balloon.prototype.init = function(options) {
         this.options = options != null ? options : {};
+        Balloon.__super__.init.call(this);
         this.width = this.options.width || this.defaultWidth;
         this.createInfoBox(this.options);
         if (this.options.map) this.setMap(this.options.map);
-        this.customize();
-      }
+        return this.customize();
+      };
 
       Balloon.prototype.createInfoBox = function(options) {
         return this.setInfoBox(new InfoBox({
@@ -592,10 +637,10 @@
 
       Balloon.prototype.handleMapEvents = function() {
         var _this = this;
-        komoo.event.addListener(this.map, 'drawing_started', function(feature) {
+        this.map.subscribe('drawing_started', function(feature) {
           return _this.disable();
         });
-        return komoo.event.addListener(this.map, 'drawing_finished', function(feature) {
+        return this.map.subscribe('drawing_finished', function(feature) {
           return _this.enable();
         });
       };
@@ -622,9 +667,9 @@
         var empty, newPosition, point, position, _ref, _ref2, _ref3, _ref4;
         this.options = options != null ? options : {};
         if (!this.enabled) return;
-        this.setContent(options.content || (options.features ? this.createClusterContent(options) : this.createFeatureContent(options)));
-        this.feature = (_ref = options.feature) != null ? _ref : (_ref2 = options.features) != null ? _ref2.getAt(0) : void 0;
-        position = (_ref3 = options.position) != null ? _ref3 : this.feature.getCenter();
+        this.setContent(this.options.content || (this.options.features ? this.createClusterContent(this.options) : this.createFeatureContent(this.options)));
+        this.feature = (_ref = this.options.feature) != null ? _ref : (_ref2 = this.options.features) != null ? _ref2.getAt(0) : void 0;
+        position = (_ref3 = this.options.position) != null ? _ref3 : this.feature.getCenter();
         if (position instanceof Array) {
           empty = new komoo.geometries.Empty();
           position = empty.getLatLngFromArray(position);
@@ -666,7 +711,7 @@
 
       Balloon.prototype.customize = function() {
         var _this = this;
-        google.maps.event.addDomListener(this.infoBox, "domread", function(e) {
+        google.maps.event.addDomListener(this.infoBox, "domready", function(e) {
           var div;
           div = _this.infoBox.div_;
           google.maps.event.addDomListener(div, "click", function(e) {
@@ -742,7 +787,7 @@
 
       return Balloon;
 
-    })();
+    })(Component);
     AjaxBalloon = (function(_super) {
 
       __extends(AjaxBalloon, _super);
@@ -830,7 +875,7 @@
       InfoWindow.prototype.handleMapEvents = function() {
         var _this = this;
         InfoWindow.__super__.handleMapEvents.call(this);
-        komoo.event.addListener(this.map, 'feature_click', function(e, feature) {
+        this.map.subscribe('feature_click', function(e, feature) {
           return setTimeout(function() {
             return _this.open({
               feature: feature,
@@ -838,7 +883,7 @@
             });
           }, 200);
         });
-        return komoo.event.addListener(this.map, 'feature_highlight_changed', function(e, feature) {
+        return this.map.subscribe('feature_highlight_changed', function(e, feature) {
           if (feature.isHighlighted()) {
             return _this.open({
               feature: feature
@@ -873,7 +918,7 @@
           div = _this.infoBox.div_;
           google.maps.event.addDomListener(div, "click", function(e) {
             e.latLng = _this.infoBox.getPosition();
-            return komoo.event.trigger(_this.map, 'feature_click', e, _this.feature);
+            return _this.map.publish('feature_click', e, _this.feature);
           });
           closeBox = div.firstChild;
           return $(closeBox).hide();
@@ -883,7 +928,7 @@
       Tooltip.prototype.handleMapEvents = function() {
         var _this = this;
         Tooltip.__super__.handleMapEvents.call(this);
-        komoo.event.addListener(this.map, 'feature_mousemove', function(e, feature) {
+        this.map.subscribe('feature_mousemove', function(e, feature) {
           var delay;
           clearTimeout(_this.timer);
           if (feature === _this.feature || !feature.displayTooltip) return;
@@ -896,13 +941,13 @@
             });
           }, delay);
         });
-        komoo.event.addListener(this.map, 'feature_mouseout', function(e, feature) {
+        this.map.subscribe('feature_mouseout', function(e, feature) {
           return _this.close();
         });
-        komoo.event.addListener(this.map, 'feature_click', function(e, feature) {
+        this.map.subscribe('feature_click', function(e, feature) {
           return _this.close();
         });
-        komoo.event.addListener(this.map, 'cluster_mouseover', function(features, position) {
+        this.map.subscribe('cluster_mouseover', function(features, position) {
           var _ref;
           if (!((_ref = features.getAt(0)) != null ? _ref.displayTooltip : void 0)) {
             return;
@@ -912,10 +957,10 @@
             position: position
           });
         });
-        komoo.event.addListener(this.map, 'cluster_mouseout', function(e, feature) {
+        this.map.subscribe('cluster_mouseout', function(e, feature) {
           return _this.close();
         });
-        return komoo.event.addListener(this.map, 'cluster_click', function(e, feature) {
+        return this.map.subscribe('cluster_click', function(e, feature) {
           return _this.close();
         });
       };
@@ -923,7 +968,13 @@
       return Tooltip;
 
     })(AjaxBalloon);
-    FeatureClusterer = (function() {
+    FeatureClusterer = (function(_super) {
+
+      __extends(FeatureClusterer, _super);
+
+      function FeatureClusterer() {
+        FeatureClusterer.__super__.constructor.apply(this, arguments);
+      }
 
       FeatureClusterer.prototype.enabled = true;
 
@@ -937,7 +988,7 @@
 
       FeatureClusterer.prototype.imageSizes = [24, 29, 35, 41, 47];
 
-      function FeatureClusterer(options) {
+      FeatureClusterer.prototype.init = function(options) {
         var _base2, _base3, _base4, _base5, _base6;
         this.options = options != null ? options : {};
         if ((_base2 = this.options).gridSize == null) {
@@ -955,8 +1006,8 @@
         }
         this.featureType = this.options.featureType;
         this.features = [];
-        if (this.options.map) this.setMap(this.options.map);
-      }
+        if (this.options.map) return this.setMap(this.options.map);
+      };
 
       FeatureClusterer.prototype.initMarkerClusterer = function(options) {
         var map, _ref;
@@ -993,7 +1044,7 @@
               })()
             });
             komoo.event.trigger(_this, eventName, features, c.getCenter());
-            return komoo.event.trigger(_this.map, "cluster_" + eventName, features, c.getCenter());
+            return _this.map.publish("cluster_" + eventName, features, c.getCenter());
           });
         });
       };
@@ -1008,7 +1059,7 @@
 
       FeatureClusterer.prototype.handleMapEvents = function() {
         var _this = this;
-        return komoo.event.addListener(this.map, 'feature_created', function(feature) {
+        return this.map.subscribe('feature_created', function(feature) {
           if (feature.getType() === _this.featureType) return _this.push(feature);
         });
       };
@@ -1065,24 +1116,30 @@
 
       return FeatureClusterer;
 
-    })();
-    Location = (function() {
+    })(Component);
+    Location = (function(_super) {
+
+      __extends(Location, _super);
+
+      function Location() {
+        Location.__super__.constructor.apply(this, arguments);
+      }
 
       Location.prototype.enabled = true;
 
-      function Location() {
+      Location.prototype.init = function() {
         this.geocoder = new google.maps.Geocoder();
-        this.marker = new google.maps.Marker({
+        return this.marker = new google.maps.Marker({
           icon: '/static/img/marker.png'
         });
-      }
+      };
 
       Location.prototype.handleMapEvents = function() {
         var _this = this;
-        komoo.event.addListener(this.map, 'goto', function(position, marker) {
+        this.map.subscribe('goto', function(position, marker) {
           return _this.goTo(position, marker);
         });
-        return komoo.event.addListener(this.map, 'goto_user_location', function() {
+        return this.map.subscribe('goto_user_location', function() {
           return _this.goToUserLocation();
         });
       };
@@ -1129,7 +1186,6 @@
         }
         if (navigator.geolocation) {
           return navigator.geolocation.getCurrentPosition(function(position) {
-            console.log('dddd');
             pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             _this.map.googleMap.setCenter(pos);
             return typeof console !== "undefined" && console !== null ? console.log('Getting location from navigator.geolocation...') : void 0;
@@ -1156,7 +1212,7 @@
 
       return Location;
 
-    })();
+    })(Component);
     SaveLocation = (function(_super) {
 
       __extends(SaveLocation, _super);
@@ -1168,10 +1224,10 @@
       SaveLocation.prototype.handleMapEvents = function() {
         var _this = this;
         SaveLocation.__super__.handleMapEvents.call(this);
-        komoo.event.addListener(this.map, 'save_location', function(center, zoom) {
+        this.map.subscribe('save_location', function(center, zoom) {
           return _this.saveLocation(center, zoom);
         });
-        return komoo.event.addListener(this.map, 'goto_saved_location', function() {
+        return this.map.subscribe('goto_saved_location', function() {
           return _this.goToSavedLocation();
         });
       };
@@ -1184,17 +1240,15 @@
       };
 
       SaveLocation.prototype.goToSavedLocation = function() {
-        var center, lastLocation, zoom;
+        var lastLocation, zoom;
         lastLocation = komoo.utils.readCookie('lastLocation');
         zoom = parseInt(komoo.utils.readCookie('lastZoom'), 10);
         if (lastLocation && zoom) {
           if (typeof console !== "undefined" && console !== null) {
             console.log('Getting location from cookie...');
           }
-          lastLocation = lastLocation.split(',');
-          center = new google.maps.LatLng(lastLocation[0], lastLocation[1]);
-          this.map.googleMap.setCenter(center);
-          return this.map.googleMap.setZoom(zoom);
+          this.map.publish('set_location', lastLocation);
+          return this.map.publish('set_zoom', zoom);
         }
       };
 
@@ -1212,7 +1266,7 @@
       AutosaveLocation.prototype.handleMapEvents = function() {
         var _this = this;
         AutosaveLocation.__super__.handleMapEvents.call(this);
-        return komoo.event.addListener(this.map, 'idle', function() {
+        return this.map.subscribe('idle', function() {
           return _this.saveLocation();
         });
       };
@@ -1220,19 +1274,25 @@
       return AutosaveLocation;
 
     })(SaveLocation);
-    StreetView = (function() {
+    StreetView = (function(_super) {
+
+      __extends(StreetView, _super);
+
+      function StreetView() {
+        StreetView.__super__.constructor.apply(this, arguments);
+      }
 
       StreetView.prototype.enabled = true;
 
-      function StreetView() {
+      StreetView.prototype.init = function() {
         if (typeof console !== "undefined" && console !== null) {
           console.log("Initializing StreetView support.");
         }
         this.streetViewPanel = $("<div>").addClass("map-panel");
         this.streetViewPanel.height("100%").width("50%");
         this.streetViewPanel.hide();
-        this.createObject();
-      }
+        return this.createObject();
+      };
 
       StreetView.prototype.setMap = function(map) {
         this.map = map;
@@ -1264,64 +1324,26 @@
 
       return StreetView;
 
-    })();
-    return window.komoo.controls = {
+    })(Component);
+    window.komoo.controls = {
       DrawingManager: DrawingManager,
+      DrawingControl: DrawingControl,
+      GeometrySelector: GeometrySelector,
       Balloon: Balloon,
       AjaxBalloon: AjaxBalloon,
       InfoWindow: InfoWindow,
       Tooltip: Tooltip,
       FeatureClusterer: FeatureClusterer,
+      CloseBox: CloseBox,
       SupporterBox: SupporterBox,
       LicenseBox: LicenseBox,
       PerimeterSelector: PerimeterSelector,
       Location: Location,
       SaveLocation: SaveLocation,
       AutosaveLocation: AutosaveLocation,
-      StreetView: StreetView,
-      makeDrawingManager: function(options) {
-        return new DrawingManager(options);
-      },
-      makeDrawingControl: function(options) {
-        return new DrawingControl(options);
-      },
-      makeGeometrySelector: function(options) {
-        return new GeometrySelector(options);
-      },
-      makeInfoWindow: function(options) {
-        return new InfoWindow(options);
-      },
-      makeTooltip: function(options) {
-        return new Tooltip(options);
-      },
-      makeFeatureClusterer: function(options) {
-        return new FeatureClusterer(options);
-      },
-      makeSupporterBox: function(options) {
-        return new SupporterBox(options);
-      },
-      makeLicenseBox: function(options) {
-        return new LicenseBox(options);
-      },
-      makeCloseBox: function(options) {
-        return new CloseBox(options);
-      },
-      makePerimeterSelector: function(options) {
-        return new PerimeterSelector(options);
-      },
-      makeLocation: function(options) {
-        return new Location(options);
-      },
-      makeSaveLocation: function(options) {
-        return new SaveLocation(options);
-      },
-      makeAutosaveLocation: function(options) {
-        return new AutosaveLocation(options);
-      },
-      makeStreetView: function(options) {
-        return new StreetView(options);
-      }
+      StreetView: StreetView
     };
+    return window.komoo.controls;
   });
 
 }).call(this);

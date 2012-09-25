@@ -1,16 +1,18 @@
-define ['map/multimarker', 'map/multipolyline'], ->
+define ['map/common', 'map/multimarker', 'map/multipolyline'],
+(common) ->
+    'use strict'
 
     window.komoo ?= {}
     window.komoo.event ?= google.maps.event
 
-    EMPTY = 'Empty'
-    POINT = 'Point'
-    MULTIPOINT = 'MultiPoint'
-    POLYGON = 'Polygon'
-    POLYLINE = 'LineString'
-    LINESTRING = 'LineString'
-    MULTIPOLYLINE = 'MultiLineString'
-    MULTILINESTRING = 'MultiLineString'
+    EMPTY = common.geometries.types.EMPTY
+    POINT = common.geometries.types.POINT
+    MULTIPOINT = common.geometries.types.MULTIPOINT
+    POLYGON = common.geometries.types.POLYGON
+    POLYLINE = common.geometries.types.LINESTRING
+    LINESTRING = common.geometries.types.LINESTRING
+    MULTIPOLYLINE = common.geometries.types.MULTILINESTRING
+    MULTILINESTRING = common.geometries.types.MULTILINESTRING
 
     defaults =
         BACKGROUND_COLOR: '#000'
@@ -373,3 +375,5 @@ define ['map/multimarker', 'map/multipolyline'], ->
             if coords
                 geometry?.setCoordinates coords
             geometry
+
+    return window.komoo.geometries

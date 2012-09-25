@@ -1,4 +1,5 @@
-define ['map/geometries'], ->
+define ['map/geometries'], (geometries) ->
+    'use strict'
 
     window.komoo ?= {}
     window.komoo.event ?= google.maps.event
@@ -13,13 +14,13 @@ define ['map/geometries'], ->
             if @options.geojson
                 if @options.geojson.properties
                     @setProperties @options.geojson.properties
-                geometry ?= komoo.geometries.makeGeometry @options.geojson, @
+                geometry ?= geometries.makeGeometry @options.geojson, @
             if geometry?
                 @setGeometry geometry
                 @createMarker()
 
         createMarker: ->
-            marker = new komoo.geometries.Point
+            marker = new geometries.Point
                 visible : true
                 clickable : true
             marker.setCoordinates @getCenter()
@@ -168,7 +169,7 @@ define ['map/geometries'], ->
                 @handleMapEvents()
 
         handleMapEvents: ->
-            komoo.event.addListener @map, 'feature_highlight_changed', (flag, feature) =>
+            @map.subscribe 'feature_highlight_changed', (flag, feature) =>
                 if feature is this then return
                 if @isHighlighted()
                     @setHighlight off, true
@@ -207,3 +208,5 @@ define ['map/geometries'], ->
             new komoo.features.Feature
                 geojson: geojson
                 featureType: featureTypes?[geojson?.properties?.type]
+
+    return window.komoo.features

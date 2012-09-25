@@ -1,9 +1,10 @@
-define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map/features'], () ->
+define ['underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries'],
+(_, core, Collections, Features, geometries) ->
 
     window.komoo ?= {}
     window.komoo.event ?= google.maps.event
 
-    class Map
+    class Map extends core.Mediator
         featureTypesUrl: '/map_info/feature_types/'
 
         googleMapDefaultOptions:
@@ -25,17 +26,21 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             mapTypeId: google.maps.MapTypeId.HYBRID
 
         constructor: (@options = {}) ->
+            super()
             @element = @options.element ? \
                        document.getElementById @options.elementId
 
-            @features = komoo.collections.makeFeatureCollectionPlus map: @
+            @features = Collections.makeFeatureCollectionPlus map: @
 
             @components = {}
-            @addComponent komoo.controls.makeLocation()
+            @addComponent 'map/controls::Location'
 
             @initGoogleMap @options.googleMapOptions
             @initFeatureTypes()
             @handleEvents()
+
+        addControl: (pos, el) ->
+            @googleMap.controls[pos].push el
 
         loadGeoJsonFromOptons: ->
             if @options.geojson
@@ -44,7 +49,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 if bounds?
                     @fitBounds bounds
                 features?.setMap this, geometry: on, icon: on
-                @setZoom @options.zoom
+                @publish 'set_zoom', @options.zoom
 
         initGoogleMap: (options = @googleMapDefaultOptions) ->
             @googleMap = new google.maps.Map @element, options
@@ -55,7 +60,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             eventNames = ['click', 'idle']
             eventNames.forEach (eventName) =>
                 komoo.event.addListener @googleMap, eventName, (e) =>
-                    komoo.event.trigger this, eventName, e
+                    @publish eventName, e
 
         initFeatureTypes: ->
             @featureTypes ?= {}
@@ -75,17 +80,38 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                         @loadGeoJsonFromOptons()
 
         handleEvents: ->
-            komoo.event.addListener this, "drawing_finished", (feature, status) =>
+            @subscribe "features_loaded", (features) =>
+                komoo.event.trigger this, "features_loaded", features
+
+            @subscribe "close_clicked", =>
+                komoo.event.trigger this, "close_clicked"
+
+            @subscribe "drawing_finished", (feature, status) =>
+                komoo.event.trigger this, "drawing_finished", feature, status
                 if status is false
                     @revertFeature feature
                 else if not feature.getProperty("id")?
                     @addFeature feature
 
-        addComponent: (component, type = 'generic') ->
-            component.setMap @
-            @components[type] ?= []
-            @components[type].push component
-            component.enable?()
+            @subscribe "set_location", (location) =>
+                location = location.split ','
+                center = new google.maps.LatLng location[0], location[1]
+                @googleMap.setCenter center
+
+            @subscribe "set_zoom", (zoom) =>
+                @setZoom zoom
+
+        addComponent: (component, type = 'generic', opts = {}) ->
+            if _.isString component
+                component = @start component, '', opts
+            else
+                component = @start component
+            return @data.when(component).done () =>
+                for instance in arguments
+                    instance.setMap @
+                    @components[type] ?= []
+                    @components[type].push instance
+                    instance.enable?()
 
         enableComponents: (type) ->
             @components[type]?.forEach (component) =>
@@ -112,31 +138,31 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
         refresh: -> google.maps.event.trigger @googleMap, 'resize'
 
         saveLocation: (center = @googleMap.getCenter(), zoom = @getZoom()) ->
-            komoo.event.trigger this, 'save_location', center, zoom
+            @publish 'save_location', center, zoom
 
         goToSavedLocation: ->
-            komoo.event.trigger this, 'goto_saved_location'
+            @publish 'goto_saved_location'
             true
 
         goToUserLocation: ->
-            komoo.event.trigger this, 'goto_user_location'
+            @publish 'goto_user_location'
 
         handleFeatureEvents: (feature) ->
             eventsNames = ['mouseover', 'mouseout', 'mousemove', 'click',
                 'dblclick', 'rightclick', 'highlight_changed']
             eventsNames.forEach (eventName) =>
                 komoo.event.addListener feature, eventName, (e) =>
-                    komoo.event.trigger this, "feature_#{eventName}", e, feature
+                    @publish "feature_#{eventName}", e, feature
 
         goTo: (position, displayMarker = true) ->
-            komoo.event.trigger this, 'goto', position, displayMarker
+            @publish 'goto', position, displayMarker
 
         panTo: (position, displayMarker = false) -> @goTo position, displayMarker
 
         makeFeature: (geojson, attach = true) ->
-            feature = komoo.features.makeFeature geojson, @featureTypes
+            feature = Features.makeFeature geojson, @featureTypes
             if attach then @addFeature feature
-            komoo.event.trigger this, 'feature_created', feature
+            @publish 'feature_created', feature
             feature
 
         addFeature: (feature) =>
@@ -166,7 +192,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
 
         centerFeature: (type, id) ->
             feature =
-                if type instanceof komoo.features.Feature
+                if type instanceof Features.Feature
                     type
                 else
                     @features.getById type, id
@@ -174,7 +200,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             @panTo feature?.getCenter(), false
 
         loadGeoJson: (geojson, panTo = false, attach = true) ->
-            features = komoo.collections.makeFeatureCollection map: @
+            features = Collections.makeFeatureCollection map: @
 
             if not geojson?.type? or not geojson.type is 'FeatureCollection'
                 return features
@@ -192,7 +218,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
             if panTo and features.getAt(0)?.getBounds()
                 @googleMap.fitBounds features.getAt(0).getBounds()
 
-            komoo.event.trigger this, 'features_loaded', features
+            @publish 'features_loaded', features
             features
 
         loadGeoJSON: (geojson, panTo, attach) ->
@@ -207,7 +233,7 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 if options.newOnly
                     @newFeatures
                 else if options.currentOnly
-                    komoo.collections.makeFeatureCollection
+                    Collections.makeFeatureCollection
                         map: @map
                         features: [@currentFeature]
                 else
@@ -226,24 +252,24 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
                 properties:
                     name: "New #{featureType}"
                     type: featureType
-            komoo.event.trigger this, 'draw_feature', geometryType, feature
+            @publish 'draw_feature', geometryType, feature
 
         editFeature: (feature = @features.getAt(0), newGeometry) ->
-            if newGeometry? and feature.getGeometryType() is komoo.geometries.types.EMPTY
-                feature.setGeometry komoo.geometries.makeGeometry geometry:
+            if newGeometry? and feature.getGeometryType() is geometries.types.EMPTY
+                feature.setGeometry geometries.makeGeometry geometry:
                     type: newGeometry
-                komoo.event.trigger this, 'draw_feature', newGeometry, feature
+                @publish 'draw_feature', newGeometry, feature
             else
-                komoo.event.trigger this, 'edit_feature', feature
+                @publish 'edit_feature', feature
 
         setMode: (@mode) ->
-            komoo.event.trigger this, 'mode_changed', @mode
+            @publish 'mode_changed', @mode
 
         selectCenter: (radius, callback) ->
             @selectPerimeter radius, callback
 
         selectPerimeter: (radius, callback) ->
-            komoo.event.trigger this, 'select_perimeter', radius, callback
+            @publish 'select_perimeter', radius, callback
 
         ## Delegations
 
@@ -264,22 +290,22 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
         constructor: (options) ->
             super options
 
-            @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
-            @addComponent komoo.controls.makeDrawingManager(), 'drawing'
+            @addComponent 'map/maptypes::CleanMapType', 'mapType'
+            @addComponent 'map/controls::DrawingManager', 'drawing'
 
 
     class Editor extends Map
         constructor: (options) ->
             super options
 
-            @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
-            @addComponent komoo.controls.makeSaveLocation()
-            @addComponent komoo.controls.makeStreetView()
-            @addComponent komoo.controls.makeDrawingManager(), 'drawing'
-            @addComponent komoo.controls.makeDrawingControl(), 'drawing'
-            @addComponent komoo.controls.makeGeometrySelector(), 'drawing'
-            @addComponent komoo.controls.makeSupporterBox()
-            @addComponent komoo.controls.makePerimeterSelector(), 'perimeter'
+            @addComponent 'map/maptypes::CleanMapType'
+            @addComponent 'map/controls::SaveLocation'
+            @addComponent 'map/controls::StreetView'
+            @addComponent 'map/controls::DrawingManager'
+            @addComponent 'map/controls::DrawingControl'
+            @addComponent 'map/controls::GeometrySelector'
+            @addComponent 'map/controls::SupporterBox'
+            @addComponent 'map/controls::PerimeterSelector'
 
 
     class Preview extends Map
@@ -299,13 +325,13 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
         constructor: (options) ->
             super options
 
-            @addComponent komoo.maptypes.makeCleanMapType(), 'mapType'
-            @addComponent komoo.controls.makeAutosaveLocation()
-            @addComponent komoo.controls.makeStreetView()
-            @addComponent komoo.controls.makeTooltip(), 'tooltip'
-            @addComponent komoo.controls.makeInfoWindow(), 'infoWindow'
-            @addComponent komoo.controls.makeSupporterBox()
-            @addComponent komoo.controls.makeLicenseBox()
+            @addComponent 'map/maptypes::CleanMapType', 'mapType'
+            @addComponent 'map/controls::AutosaveLocation'
+            @addComponent 'map/controls::StreetView'
+            @addComponent 'map/controls::Tooltip', 'tooltip'
+            @addComponent 'map/controls::InfoWindow', 'infoWindow'
+            @addComponent 'map/controls::SupporterBox'
+            @addComponent 'map/controls::LicenseBox'
 
         loadGeoJson: (geojson, panTo = false, attach = true) ->
             features = super geojson, panTo, attach
@@ -318,18 +344,21 @@ define ['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map
         constructor: (options) ->
             super options
 
-            @addComponent komoo.providers.makeFeatureProvider(), 'provider'
-            @addComponent komoo.controls.makeFeatureClusterer(featureType: 'Community', map: this), 'clusterer'
+            @addComponent 'map/providers::FeatureProvider', 'provider'
+            @addComponent 'map/controls::FeatureClusterer', 'clusterer', {featureType: 'Community', map: this}
 
 
     class AjaxEditor extends AjaxMap
         constructor: (options) ->
             super options
 
-            @addComponent komoo.controls.makeDrawingManager(), 'drawing'
-            @addComponent komoo.controls.makeDrawingControl(), 'drawing'
-            @addComponent komoo.controls.makeGeometrySelector(), 'drawing'
-            @addComponent komoo.controls.makePerimeterSelector(), 'perimeter'
+            @addComponent 'map/controls::DrawingManager'
+            @addComponent 'map/controls::DrawingControl'
+            @addComponent 'map/controls::GeometrySelector'
+            @addComponent 'map/controls::PerimeterSelector'
+
+            if not @goToSavedLocation()
+                @goToUserLocation()
 
 
     window.komoo.maps =

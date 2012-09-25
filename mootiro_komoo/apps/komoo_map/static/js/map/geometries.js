@@ -2,18 +2,19 @@
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  define(['map/multimarker', 'map/multipolyline'], function() {
+  define(['map/common', 'map/multimarker', 'map/multipolyline'], function(common) {
+    'use strict';
     var EMPTY, Empty, Geometry, LINESTRING, LineString, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, SinglePoint, defaults, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
-    EMPTY = 'Empty';
-    POINT = 'Point';
-    MULTIPOINT = 'MultiPoint';
-    POLYGON = 'Polygon';
-    POLYLINE = 'LineString';
-    LINESTRING = 'LineString';
-    MULTIPOLYLINE = 'MultiLineString';
-    MULTILINESTRING = 'MultiLineString';
+    EMPTY = common.geometries.types.EMPTY;
+    POINT = common.geometries.types.POINT;
+    MULTIPOINT = common.geometries.types.MULTIPOINT;
+    POLYGON = common.geometries.types.POLYGON;
+    POLYLINE = common.geometries.types.LINESTRING;
+    LINESTRING = common.geometries.types.LINESTRING;
+    MULTIPOLYLINE = common.geometries.types.MULTILINESTRING;
+    MULTILINESTRING = common.geometries.types.MULTILINESTRING;
     defaults = {
       BACKGROUND_COLOR: '#000',
       BACKGROUND_OPACITY: 0.6,
@@ -727,7 +728,7 @@
       return Polygon;
 
     })(LineString);
-    return window.komoo.geometries = {
+    window.komoo.geometries = {
       types: {
         EMPTY: EMPTY,
         POINT: POINT,
@@ -770,6 +771,7 @@
         return geometry;
       }
     };
+    return window.komoo.geometries;
   });
 
 }).call(this);

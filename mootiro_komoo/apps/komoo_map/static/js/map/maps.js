@@ -1,14 +1,16 @@
 (function() {
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
     __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
+    __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  define(['map/controls', 'map/maptypes', 'map/providers', 'map/collections', 'map/features'], function() {
+  define(['underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries'], function(_, core, Collections, Features, geometries) {
     var AjaxEditor, AjaxMap, Editor, Map, Preview, StaticMap, UserEditor, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = google.maps.event;
-    Map = (function() {
+    Map = (function(_super) {
+
+      __extends(Map, _super);
 
       Map.prototype.featureTypesUrl = '/map_info/feature_types/';
 
@@ -38,16 +40,21 @@
         var _ref;
         this.options = options != null ? options : {};
         this.addFeature = __bind(this.addFeature, this);
+        Map.__super__.constructor.call(this);
         this.element = (_ref = this.options.element) != null ? _ref : document.getElementById(this.options.elementId);
-        this.features = komoo.collections.makeFeatureCollectionPlus({
+        this.features = Collections.makeFeatureCollectionPlus({
           map: this
         });
         this.components = {};
-        this.addComponent(komoo.controls.makeLocation());
+        this.addComponent('map/controls::Location');
         this.initGoogleMap(this.options.googleMapOptions);
         this.initFeatureTypes();
         this.handleEvents();
       }
+
+      Map.prototype.addControl = function(pos, el) {
+        return this.googleMap.controls[pos].push(el);
+      };
 
       Map.prototype.loadGeoJsonFromOptons = function() {
         var bounds, features;
@@ -61,7 +68,7 @@
               icon: true
             });
           }
-          return this.setZoom(this.options.zoom);
+          return this.publish('set_zoom', this.options.zoom);
         }
       };
 
@@ -78,7 +85,7 @@
         eventNames = ['click', 'idle'];
         return eventNames.forEach(function(eventName) {
           return komoo.event.addListener(_this.googleMap, eventName, function(e) {
-            return komoo.event.trigger(_this, eventName, e);
+            return _this.publish(eventName, e);
           });
         });
       };
@@ -110,22 +117,52 @@
 
       Map.prototype.handleEvents = function() {
         var _this = this;
-        return komoo.event.addListener(this, "drawing_finished", function(feature, status) {
+        this.subscribe("features_loaded", function(features) {
+          return komoo.event.trigger(_this, "features_loaded", features);
+        });
+        this.subscribe("close_clicked", function() {
+          return komoo.event.trigger(_this, "close_clicked");
+        });
+        this.subscribe("drawing_finished", function(feature, status) {
+          komoo.event.trigger(_this, "drawing_finished", feature, status);
           if (status === false) {
             return _this.revertFeature(feature);
           } else if (!(feature.getProperty("id") != null)) {
             return _this.addFeature(feature);
           }
         });
+        this.subscribe("set_location", function(location) {
+          var center;
+          location = location.split(',');
+          center = new google.maps.LatLng(location[0], location[1]);
+          return _this.googleMap.setCenter(center);
+        });
+        return this.subscribe("set_zoom", function(zoom) {
+          return _this.setZoom(zoom);
+        });
       };
 
-      Map.prototype.addComponent = function(component, type) {
-        var _base2;
+      Map.prototype.addComponent = function(component, type, opts) {
+        var _this = this;
         if (type == null) type = 'generic';
-        component.setMap(this);
-        if ((_base2 = this.components)[type] == null) _base2[type] = [];
-        this.components[type].push(component);
-        return typeof component.enable === "function" ? component.enable() : void 0;
+        if (opts == null) opts = {};
+        if (_.isString(component)) {
+          component = this.start(component, '', opts);
+        } else {
+          component = this.start(component);
+        }
+        return this.data.when(component).done(function() {
+          var instance, _base2, _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = arguments.length; _i < _len; _i++) {
+            instance = arguments[_i];
+            instance.setMap(_this);
+            if ((_base2 = _this.components)[type] == null) _base2[type] = [];
+            _this.components[type].push(instance);
+            _results.push(typeof instance.enable === "function" ? instance.enable() : void 0);
+          }
+          return _results;
+        });
       };
 
       Map.prototype.enableComponents = function(type) {
@@ -172,16 +209,16 @@
       Map.prototype.saveLocation = function(center, zoom) {
         if (center == null) center = this.googleMap.getCenter();
         if (zoom == null) zoom = this.getZoom();
-        return komoo.event.trigger(this, 'save_location', center, zoom);
+        return this.publish('save_location', center, zoom);
       };
 
       Map.prototype.goToSavedLocation = function() {
-        komoo.event.trigger(this, 'goto_saved_location');
+        this.publish('goto_saved_location');
         return true;
       };
 
       Map.prototype.goToUserLocation = function() {
-        return komoo.event.trigger(this, 'goto_user_location');
+        return this.publish('goto_user_location');
       };
 
       Map.prototype.handleFeatureEvents = function(feature) {
@@ -190,14 +227,14 @@
         eventsNames = ['mouseover', 'mouseout', 'mousemove', 'click', 'dblclick', 'rightclick', 'highlight_changed'];
         return eventsNames.forEach(function(eventName) {
           return komoo.event.addListener(feature, eventName, function(e) {
-            return komoo.event.trigger(_this, "feature_" + eventName, e, feature);
+            return _this.publish("feature_" + eventName, e, feature);
           });
         });
       };
 
       Map.prototype.goTo = function(position, displayMarker) {
         if (displayMarker == null) displayMarker = true;
-        return komoo.event.trigger(this, 'goto', position, displayMarker);
+        return this.publish('goto', position, displayMarker);
       };
 
       Map.prototype.panTo = function(position, displayMarker) {
@@ -208,9 +245,9 @@
       Map.prototype.makeFeature = function(geojson, attach) {
         var feature;
         if (attach == null) attach = true;
-        feature = komoo.features.makeFeature(geojson, this.featureTypes);
+        feature = Features.makeFeature(geojson, this.featureTypes);
         if (attach) this.addFeature(feature);
-        komoo.event.trigger(this, 'feature_created', feature);
+        this.publish('feature_created', feature);
         return feature;
       };
 
@@ -255,7 +292,7 @@
 
       Map.prototype.centerFeature = function(type, id) {
         var feature;
-        feature = type instanceof komoo.features.Feature ? type : this.features.getById(type, id);
+        feature = type instanceof Features.Feature ? type : this.features.getById(type, id);
         return this.panTo(feature != null ? feature.getCenter() : void 0, false);
       };
 
@@ -264,7 +301,7 @@
           _this = this;
         if (panTo == null) panTo = false;
         if (attach == null) attach = true;
-        features = komoo.collections.makeFeatureCollection({
+        features = Collections.makeFeatureCollection({
           map: this
         });
         if (!((geojson != null ? geojson.type : void 0) != null) || !geojson.type === 'FeatureCollection') {
@@ -283,7 +320,7 @@
         if (panTo && ((_ref2 = features.getAt(0)) != null ? _ref2.getBounds() : void 0)) {
           this.googleMap.fitBounds(features.getAt(0).getBounds());
         }
-        komoo.event.trigger(this, 'features_loaded', features);
+        this.publish('features_loaded', features);
         return features;
       };
 
@@ -297,7 +334,7 @@
         if (options.newOnly == null) options.newOnly = false;
         if (options.currentOnly == null) options.currentOnly = false;
         if (options.geometryCollection == null) options.geometryCollection = false;
-        list = options.newOnly ? this.newFeatures : options.currentOnly ? komoo.collections.makeFeatureCollection({
+        list = options.newOnly ? this.newFeatures : options.currentOnly ? Collections.makeFeatureCollection({
           map: this.map,
           features: [this.currentFeature]
         }) : this.features;
@@ -322,26 +359,26 @@
             type: featureType
           }
         });
-        return komoo.event.trigger(this, 'draw_feature', geometryType, feature);
+        return this.publish('draw_feature', geometryType, feature);
       };
 
       Map.prototype.editFeature = function(feature, newGeometry) {
         if (feature == null) feature = this.features.getAt(0);
-        if ((newGeometry != null) && feature.getGeometryType() === komoo.geometries.types.EMPTY) {
-          feature.setGeometry(komoo.geometries.makeGeometry({
+        if ((newGeometry != null) && feature.getGeometryType() === geometries.types.EMPTY) {
+          feature.setGeometry(geometries.makeGeometry({
             geometry: {
               type: newGeometry
             }
           }));
-          return komoo.event.trigger(this, 'draw_feature', newGeometry, feature);
+          return this.publish('draw_feature', newGeometry, feature);
         } else {
-          return komoo.event.trigger(this, 'edit_feature', feature);
+          return this.publish('edit_feature', feature);
         }
       };
 
       Map.prototype.setMode = function(mode) {
         this.mode = mode;
-        return komoo.event.trigger(this, 'mode_changed', this.mode);
+        return this.publish('mode_changed', this.mode);
       };
 
       Map.prototype.selectCenter = function(radius, callback) {
@@ -349,7 +386,7 @@
       };
 
       Map.prototype.selectPerimeter = function(radius, callback) {
-        return komoo.event.trigger(this, 'select_perimeter', radius, callback);
+        return this.publish('select_perimeter', radius, callback);
       };
 
       Map.prototype.highlightFeature = function() {
@@ -376,15 +413,15 @@
 
       return Map;
 
-    })();
+    })(core.Mediator);
     UserEditor = (function(_super) {
 
       __extends(UserEditor, _super);
 
       function UserEditor(options) {
         UserEditor.__super__.constructor.call(this, options);
-        this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
-        this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
+        this.addComponent('map/maptypes::CleanMapType', 'mapType');
+        this.addComponent('map/controls::DrawingManager', 'drawing');
       }
 
       return UserEditor;
@@ -396,14 +433,14 @@
 
       function Editor(options) {
         Editor.__super__.constructor.call(this, options);
-        this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
-        this.addComponent(komoo.controls.makeSaveLocation());
-        this.addComponent(komoo.controls.makeStreetView());
-        this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
-        this.addComponent(komoo.controls.makeDrawingControl(), 'drawing');
-        this.addComponent(komoo.controls.makeGeometrySelector(), 'drawing');
-        this.addComponent(komoo.controls.makeSupporterBox());
-        this.addComponent(komoo.controls.makePerimeterSelector(), 'perimeter');
+        this.addComponent('map/maptypes::CleanMapType');
+        this.addComponent('map/controls::SaveLocation');
+        this.addComponent('map/controls::StreetView');
+        this.addComponent('map/controls::DrawingManager');
+        this.addComponent('map/controls::DrawingControl');
+        this.addComponent('map/controls::GeometrySelector');
+        this.addComponent('map/controls::SupporterBox');
+        this.addComponent('map/controls::PerimeterSelector');
       }
 
       return Editor;
@@ -439,13 +476,13 @@
 
       function StaticMap(options) {
         StaticMap.__super__.constructor.call(this, options);
-        this.addComponent(komoo.maptypes.makeCleanMapType(), 'mapType');
-        this.addComponent(komoo.controls.makeAutosaveLocation());
-        this.addComponent(komoo.controls.makeStreetView());
-        this.addComponent(komoo.controls.makeTooltip(), 'tooltip');
-        this.addComponent(komoo.controls.makeInfoWindow(), 'infoWindow');
-        this.addComponent(komoo.controls.makeSupporterBox());
-        this.addComponent(komoo.controls.makeLicenseBox());
+        this.addComponent('map/maptypes::CleanMapType', 'mapType');
+        this.addComponent('map/controls::AutosaveLocation');
+        this.addComponent('map/controls::StreetView');
+        this.addComponent('map/controls::Tooltip', 'tooltip');
+        this.addComponent('map/controls::InfoWindow', 'infoWindow');
+        this.addComponent('map/controls::SupporterBox');
+        this.addComponent('map/controls::LicenseBox');
       }
 
       StaticMap.prototype.loadGeoJson = function(geojson, panTo, attach) {
@@ -471,11 +508,11 @@
 
       function AjaxMap(options) {
         AjaxMap.__super__.constructor.call(this, options);
-        this.addComponent(komoo.providers.makeFeatureProvider(), 'provider');
-        this.addComponent(komoo.controls.makeFeatureClusterer({
+        this.addComponent('map/providers::FeatureProvider', 'provider');
+        this.addComponent('map/controls::FeatureClusterer', 'clusterer', {
           featureType: 'Community',
           map: this
-        }), 'clusterer');
+        });
       }
 
       return AjaxMap;
@@ -487,10 +524,11 @@
 
       function AjaxEditor(options) {
         AjaxEditor.__super__.constructor.call(this, options);
-        this.addComponent(komoo.controls.makeDrawingManager(), 'drawing');
-        this.addComponent(komoo.controls.makeDrawingControl(), 'drawing');
-        this.addComponent(komoo.controls.makeGeometrySelector(), 'drawing');
-        this.addComponent(komoo.controls.makePerimeterSelector(), 'perimeter');
+        this.addComponent('map/controls::DrawingManager');
+        this.addComponent('map/controls::DrawingControl');
+        this.addComponent('map/controls::GeometrySelector');
+        this.addComponent('map/controls::PerimeterSelector');
+        if (!this.goToSavedLocation()) this.goToUserLocation();
       }
 
       return AjaxEditor;

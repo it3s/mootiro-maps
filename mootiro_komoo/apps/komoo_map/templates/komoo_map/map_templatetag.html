@@ -102,9 +102,6 @@
 
       if (!map) return;
 
-      if (!map.goToSavedLocation()) {
-        map.goToUserLocation();
-      }
       {% if editable %}
         editor = {{ type }};
       {% endif %}
@@ -121,15 +118,16 @@
           $('#main-content').hide();
           if (!window.{{ type }}) {
             var map = initialize_map_{{ type }}();
-            closeBox = komoo.controls.makeCloseBox();
-            map.addComponent(closeBox);
-            komoo.event.addListener(map, 'close_click', function () {
-              $('#map-container-{{ type }}, #map-panel').slideUp(600);
-              $('#main-content').show();
+            map.addComponent('map/controls::CloseBox').done(function (closeBox) {
+              var feature = map.features.getAt(0);
+              closeBox.setTitle(feature.getProperty('name'));
+              komoo.event.addListener(map, 'close_click', function () {
+                $('#map-container-{{ type }}, #map-panel').slideUp(600);
+                $('#main-content').show();
+              });
             });
           }
           var feature = map.features.getAt(0);
-          closeBox.setTitle(feature.getProperty('name'));
           if (feature && feature.getBounds())
             map.fitBounds(feature.getBounds());
           map.refresh();

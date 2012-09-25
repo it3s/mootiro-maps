@@ -1,6 +1,10 @@
 (function() {
 
+<<<<<<< Updated upstream
   define(['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery'], function($, _, Backbone, drawFeaturesList) {
+=======
+  define(['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
+>>>>>>> Stashed changes
     window.PartnersLogo = Backbone.Model.extend({
       toJSON: function(attr) {
         return Backbone.Model.prototype.toJSON.call(this, attr);
