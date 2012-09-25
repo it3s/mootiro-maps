@@ -27,8 +27,8 @@ O código do mapa é organizado em módulos utilizando AMD. Cada módulo pode co
                     * DrawingControl
                 * DrawingManager (Component)
                 * PerimeterSelector (Component)
-                * Ballon (Component) - Generic class
-                    * AjaxBallon - Generic class
+                * Balloon (Component) - Generic class
+                    * AjaxBalloon - Generic class
                         * InfoWindow
                         * Tooltip
                 * FeatureClusterer (Component)
@@ -82,7 +82,7 @@ Os componentes são carregados no mapa com o método `addComponent(name, [type],
 Exemplo:
 
     map = new Map({elementId: '#map-canvas'})
-    map.addComponent('map/controls::Tooltip', 'ballon')
+    map.addComponent('map/controls::Tooltip', 'balloon')
     map.addComponent('map/controls::LicenseBox')
 
 
