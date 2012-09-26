@@ -1,57 +1,21 @@
 # -*- coding: utf-8 -*-
-
-'''Django settings for mootiro_komoo project
-
-https://docs.djangoproject.com/en/dev/ref/settings/
-
-Installation instructions:
-
-   create a file named local_settings.py with your DB access info
-
-This module imports everything from common.py, which is
-under version control, and specializes it for development environment
-
-'''
-
 from common import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mootiro_komoo',  # Or path to database file if using sqlite3.
-        'USER': 'user',         # Not used with sqlite3.
-        'PASSWORD': 'pass',   # Not used with sqlite3.
-        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',    # Set to empty string for default. Not used with sqlite3.
-    }
-}
-
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# On Unix systems, a value of None will cause Django to use the same
-# timezone as the operating system.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
-TIME_ZONE = None  # 'America/Chicago'
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
+TIME_ZONE = None
 LANGUAGE_CODE = 'en-us'
-# LANGUAGE_CODE = 'pt-br'
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'ycx!))zk0_w(557x3rwvw)okxb^iai$ldtzno&pv*6^^iz1q=x'
+SECRET_KEY = 'superawesomeninjapandasflyingintheskywithdoublerainbows'
 
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
         'standard': {
-            'format': '[%(levelname)s] [%(name)s : %(funcName)s] - %(asctime)s :\n%(message)s'
+            'format': '[%(levelname)s] [%(name)s:%(funcName)s] - %(asctime)s:'
+                      '\n%(message)s'
         },
     },
     'handlers': {
@@ -82,11 +46,6 @@ LOGGING = {
         },
     },
     'loggers': {
-#        'django': {
-#            'handlers':['null'],
-#            'propagate': True,
-#            'level':'INFO',
-#        },
         'django.request': {
             'handlers': ['request_handler'],
             'level': 'ERROR',
@@ -109,24 +68,37 @@ my_app_logger = {
     'level': 'DEBUG',
     'propagate': True
 }
-LOGGING['loggers'].update({'{}.views'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
-LOGGING['loggers'].update({'{}.models'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
-LOGGING['loggers'].update({'{}.forms'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
-LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.listdir('apps/') + os.listdir('lib/')})
+for mod in ['views', 'models', 'forms', 'utils']:
+    LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
+                    for app in os.listdir('apps/') + os.listdir('lib/')})
 
 WANT_DEBUG_TOOLBAR = True
 
-# This for local_settings (user specific, like db access)
+PROFILE_DATABASE = 'localhost|profile|username|password'
+CAS_SERVER_URL = 'https://localhost:8443/cas/'
+
+# Celery task queue config
+BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
+
+FACEBOOK_APP_ID = '428903733789454'
+FACEBOOK_API_SECRET = 'f286aad6b17af279e622d4350b077081'
+FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+
+GOOGLE_OAUTH2_CLIENT_ID = '37410049822.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET = 'VYPUXk4GraHit4n72nh5CwhX'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'it3sdev@gmail.com'
+EMAIL_HOST_PASSWORD = '...'  # password on local settings
+
+# user specific or secret settings
 from local_settings import *
 
 if WANT_DEBUG_TOOLBAR:
-    MIDDLEWARE_CLASSES += [
-        'debug_toolbar.middleware.DebugToolbarMiddleware'
-    ]
-
-    INSTALLED_APPS += [
-        'debug_toolbar'
-    ]
+    MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware']
+    INSTALLED_APPS += ['debug_toolbar']
 
     INTERNAL_IPS = ('127.0.0.1', )
     DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}

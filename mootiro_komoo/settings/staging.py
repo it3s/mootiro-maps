@@ -1,51 +1,30 @@
 # -*- coding: utf-8 -*-
-
-'''
-This module imports everything from common.py, which is
-under version control, and specializes it for staging environment
-
-'''
-
-from __future__ import unicode_literals  # unicode by default
 from common import *
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mootiro_komoo',  # Or path to database file if using sqlite3.
-        'USER': 'login',         # Not used with sqlite3.
-        'PASSWORD': '',   # Not used with sqlite3.
-        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',    # Set to empty string for default. Not used with sqlite3.
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
+#         'NAME': 'mootiro_komoo',
+#         'USER': 'komoo_password_goes_here',
+#         'PASSWORD': '',
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }
 
-# Local time zone for this installation. Choices can be found here:
-# http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-# although not all choices may be available on all operating systems.
-# On Unix systems, a value of None will cause Django to use the same
-# timezone as the operating system.
-# If running in a Windows environment this must be set to the same as your
-# system time zone.
-TIME_ZONE = None  # 'America/Chicago'
-
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
+TIME_ZONE = None
 LANGUAGE_CODE = 'pt-br'
 
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 'acwAJKSHKJSHKJS$%#%$#!!LKAJKSMLASMLMKAmkmlalkams'
-
-# staging LOG goes here
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'formatters': {
         'standard': {
-            'format': '[%(levelname)s] [%(name)s : %(funcName)s] - %(asctime)s :\n%(message)s'
+            'format': '[%(levelname)s] [%(name)s:%(funcName)s] - %(asctime)s:'
+                      '\n%(message)s'
         },
     },
     'handlers': {
@@ -76,11 +55,6 @@ LOGGING = {
         },
     },
     'loggers': {
-#        'django': {
-#            'handlers':['null'],
-#            'propagate': True,
-#            'level':'INFO',
-#        },
         'django.request': {
             'handlers': ['request_handler'],
             'level': 'ERROR',
@@ -103,23 +77,24 @@ my_app_logger = {
     'level': 'WARN',
     'propagate': True
 }
-LOGGING['loggers'].update({'{}.views'.format(app): my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.models'.format(app): my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.forms'.format(app): my_app_logger for app in os.listdir('apps/')})
-LOGGING['loggers'].update({'{}.utils'.format(app): my_app_logger for app in os.listdir('apps/')})
-
-#CAS config
-PROFILE_DATABASE = 'localhost|mootiro_profile|mootiro_profile|.Pr0f1l3.'
-CAS_SERVER_URL = 'https://login.mootiro.org/'
-
-GOOGLE_OAUTH2_CLIENT_ID = '778199195797.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'j00dS0i-XQB--ookP98r2q1L'
+for mod in ['views', 'models', 'forms', 'utils']:
+    LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
+        for app in os.listdir('apps/')})
 
 
-FACEBOOK_APP_ID = '401285966577597'
-FACEBOOK_API_SECRET = 'dc974ed41ddd0acc9b71f94d4907160e'
-
-# Mailer settings
+# ========= To override on local settings =====================================
+# PROFILE_DATABASE = 'localhost|profile|username|password'
+# CAS_SERVER_URL = 'https://localhost:8443/cas/'
+#
+# BROKER_URL = "amqp://user:pass@localhost:5672/mootiro_maps_mq"
+#
+# FACEBOOK_APP_ID = '...'
+# FACEBOOK_API_SECRET = '....'
+# FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+#
+# GOOGLE_OAUTH2_CLIENT_ID = '...'
+# GOOGLE_OAUTH2_CLIENT_SECRET = '...'
+#
 # EMAIL_USE_TLS = True
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_PORT = 587
