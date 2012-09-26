@@ -14,7 +14,6 @@ env_ = os.environ.get('KOMOO_ENV', 'dev')
 
 sys.path.append(PROJ_DIR)
 sys.path.append(SITE_ROOT)
-print sys.path
 
 from django.core.management import setup_environ
 

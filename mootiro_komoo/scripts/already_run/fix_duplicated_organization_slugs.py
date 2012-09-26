@@ -29,10 +29,8 @@ os = []
 for o in Organization.objects.all():
     if Organization.objects.filter(slug=o.slug).count() > 1:
         os.append(o)
-        # print o.slug, ': ', o.id, ' -> ', o.name, ' => ', o.community.all()[0].name
 
 
 for o in os:
     o.name = o.name + ' - ' + o.community.all()[0].name
     o.save()
-    # print o.slug

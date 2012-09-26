@@ -305,7 +305,6 @@ def populate_history():
                             field.auto_now = False
                     obj.last_update = last.revision.date_created
                     obj.save()
-                    print obj, "updated."
 
 
 def help():

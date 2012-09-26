@@ -36,8 +36,6 @@ def parse_json_file(file_):
 
 
 def main():
-    if len(sys.argv) < 2:
-        print 'Please provide a json file'
     parse_json_file(sys.argv[1])
 
 

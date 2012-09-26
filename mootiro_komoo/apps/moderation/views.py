@@ -48,7 +48,6 @@ def moderation_delete(request, app_label, model_name, obj_id):
                 comment = request.POST.get('comment', '')
                 report = create_report(obj=obj, user=request.user,
                         reason=Report.DELETION_REQUEST, comment=comment)
-                print report
                 data_dict = {'next': 'showRequestFeedback',
                              'success': 'true'}
             else:

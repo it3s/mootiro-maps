@@ -111,8 +111,6 @@ def project_map(request, project_slug=''):
 
     related_items.sort(key=lambda o: o['name'])
 
-    print related_items
-
     related_items = [o['obj'] for o in related_items]
 
     geojson = create_geojson(related_items)

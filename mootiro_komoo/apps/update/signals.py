@@ -95,7 +95,6 @@ def create_project_update(sender, **kwargs):
 
 @receiver(create_update, sender=ProjectRelatedObject)
 def create_object_related_to_project_update(sender, **kwargs):
-    print "ABEBUBABA"
     instance = kwargs["instance"]
     instances = [instance.content_object, instance.project]
     communities = []
