@@ -314,7 +314,7 @@
       CloseBox.prototype.handleButtonEvents = function() {
         var _this = this;
         return $("#drawing-control-cancel", this.box).click(function() {
-          return komoo.event.trigger(_this.map, 'close_click');
+          return _this.map.publish('close_clicked');
         });
       };
 

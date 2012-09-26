@@ -2,9 +2,9 @@
 
 ## Organização do Código
 
-O código do mapa é organizado em módulos utilizando AMD. Cada módulo pode conter uma ou mais classes ou componentes (trataremos dos componentes a seguir).
+O código do mapa é organizado em módulos utilizando AMD (Asynchronous Module Definition). Cada módulo pode conter uma ou mais classes ou componentes (trataremos dos componentes mais adiante).
 
-É seguida a seguinte hierarquia (pasta > arquivo > classe > subclasses):
+É seguida a seguinte hierarquia para o código client-side relativo ao mapa:
 
 * komoo\_map/static
     * coffee/
@@ -73,63 +73,106 @@ O código do mapa é organizado em módulos utilizando AMD. Cada módulo pode co
 
 ## Componentes
 
-Devido a necessidade de utilização da visualização no mapa em diversas áreas diferentes do sistema, cada uma com caracteristicas próprias, as diversas funcionalidades foram implementadas como componentes plugáveis com baixo acoplamento. Para garantir o baixo acoplamento foram utilizados os padrões publish/subscribe e mediator, que serão tratados mais adiante.
+Devido a necessidade de utilização da visualização no mapa em diversas áreas diferentes do sistema, cada uma com caracteristicas próprias, as diversas funcionalidades foram implementadas como componentes plugáveis com baixo acoplamento. É utilizado aqui o termo componente e não módulo para que haja uma distinção em relação aos módulos relativos ao AMD.
 
-Um componente pode ser usado independentemente de quais outros estejam ou não sendo utilizados. Pode-se também reimplementar qualquer um dos componentes substituindo o antigo para alterar alguma característica funcionalidade pela qual ele é responsável.
+Um componente pode ser usado independentemente de quais outros estejam ou não sendo utilizados. Para alterar uma funcionalidade do mapa basta que se altere o componente responsável por ela.
 
-Os componentes são carregados no mapa com o método `addComponent(name, [type], [options])` no qual o parâmetro `name` é no formato `path/to/module::ComponentClass`. É importante que o módulo exporte a classe do componente.
+A adição de componentes no mapa é feita com o método `addComponent(name, [type], [options])`. O parâmetro **name** deve estar no formato `module::ComponentClass`, onde _module_ é o módulo que será carregado internamente usando [RequireJS](http://requirejs.org/), o qual deve exportar um objeto contendo a classe do componente. Mais adiante será dado um exemplo.
 
-Exemplo:
+O componente será instanciada recebendo a instância do mediador como parâmetro do construtor (o mapa terá o papel de mediador, como será explicado) e logo em seguida será chamado o método `init` do componente, passando como parâmetro o objeto de opções passado pelo método `addComponent` do mapa.
 
+O método `init` poderá ser implementado como síncrono ou assíncrono. No primeiro caso não há necessidade de devolver valor algum, no segundo deve-se devolver uma promessa de um objeto deferred. O componente só será considerado inicializado quando a promessa for resolvida. Veja o exemplo a seguir.
+
+
+    # Arquivo map/controls.coffee
+    define ['jquery', 'map/component'], ($, Component) ->
+
+      class Foo extends Component
+        init: (opts) ->
+          # Componente com inicialização síncrona
+          content = opts?.content ? 'Nothing?!?'
+          console?.log "Fui inicializado com o conteúdo '#{content}'"
+
+
+      class Bar extends Component
+        init: (opts) ->
+          # Componente com inicialização assíncrona
+          url = opts?.url ? '/default'
+          dfd = @map.data.deferred()
+          $.ajax(url).done(
+            # Faz o que deve ser feito
+          ).always () ->
+            dfd.resolve()
+
+          # Devolve uma promessa
+          return dfd.promise()
+
+      return
+        Foo: Foo
+        Bar: Bar
+
+
+    # Arquivo app.coffee
     map = new Map({elementId: '#map-canvas'})
-    map.addComponent('map/controls::Tooltip', 'balloon')
-    map.addComponent('map/controls::LicenseBox')
+    map.addComponent('map/controls::Foo', 'dummy', {content: 'Spock Spock Spock!'})
+    map.addComponent('map/controls::Bar', 'dummy', {url: '/bar'})
 
 
-Os componentes estão divididos em 3 tipos:
+No caso de métodos assíncronos, deve-se utilizar `@map.data.deferred` e `@map.data.when` para garantir que os componentes utilizarão sempre a mesma implementação de objetos deferred que o mapa. Atualmente ambos são mapeados para a implementação do [jQuery](http://api.jquery.com/category/deferred-object/).
 
-  * Controls
-  * MapTypes
-  * Providers
 
-Abaixo está a descrição da responsabilidade de cada componente junto com a lista das mensagens que cada um publica, no formato *mensagem (parâmetros)*
+Há basicamente 3 categorias de componente: **Controls**, **MapTypes** e **Providers**. Abaixo há uma descrição de cada categoria, quais componentes pertencem a cada categoria e a responsabilidade de cada um. É apresentada também uma lista de mensagens publicadas e subscritas por cada componente, no formato _mensagem (lista de parâmetros)_.
 
 ### Controls
 
-Na categoria de controles ficam basicamente as funcionalidades com as quais o usuário interage para realizar tarefa.
+Na categoria de controles ficam basicamente as funcionalidades com as quais o usuário interage ou que desenhem caixas no mapa.
 
 #### SupporterBox
 
-Caixa que exibe os logos das organizações que dão suporte ao projeto.
+Desenha os logos das organizações que suportam o projeto.
 
 #### LicenseBox
 
-Caixa que exibe informações sobre a licença do conteúdo do sistema.
+Exibe informações sobre a licença do conteúdo do sistema.
 
 #### CloseBox
 
-Caixa simples que exibe um botão para fechar mapas que abrem se sobrepondo ao conteúdo original da página.
+Inclui uma caixa simples que exibe um botão para fechar mapas que foram abertos se sobrepondo ao conteúdo original da página.
+
+Publica:
+
+* close\_clicked
 
 #### GeometrySelector
 
-Caixa para seleção de geometria (ponto, linha, polígono) na ediçõ de elementos criados sem.
+Possibilita a escolha de geometria (ponto, linha, polígono) na edição de elementos criados sem.
 
 Publica:
 
 * cancel\_drawing
 
+Subscreve:
+
+* select\_new\_geometry
+
 #### DrawingControl
 
-Caixa com controles de edição, por exemplo botões para adicionar mais pontos, apagar polígonos, etc.
+Inclui os controles de edição (botões para adicionar mais pontos, apagar polígonos, etc).
 
 Publica:
 
 * finish\_drawing
 * cancel\_drawing
 
+Subscreve:
+
+* drawing\_started
+* drawing\_finished
+* mode\_changed
+
 #### DrawingManager
 
-Ativa a funcionalidade de edição fornecida pelo Google e interage com as personalizações do nosso sistema.
+Ativa a funcionalidade de edição.
 
 Publica:
 
@@ -137,6 +180,15 @@ Publica:
 * select\_new\_geometry (feature)
 * drawing\_started (feature)
 
+Subscreve:
+
+* draw\_feature
+* edit\_feature
+* drawing\_finished
+* finish\_drawing
+* cancel\_drawing
+* mode\_changed
+* feature\_rightclick
 
 #### PerimeterSelector
 
@@ -146,9 +198,22 @@ Publica:
 
 * perimeter\_selected (latLng, circleObj)
 
+Subscreve:
+
+* select\_perimeter
+* click
+* feature\_click
+
 #### InfoWindow
 
 Exibe informações sobre elementos quando clicados.
+
+Subscreve:
+
+* drawing\_started
+* drawing\_finished
+* feature\_click
+* feature\_highlight\_changed
 
 #### Tooltip
 
@@ -158,9 +223,20 @@ Publica:
 
 * feature\_click (mouseEvent, feature)
 
+Subscreve:
+
+* drawing\_started
+* drawing\_finished
+* feature\_mousemove
+* feature\_mouseout
+* feature\_click
+* cluster\_mouseover
+* cluster\_mouseout
+* cluster\_click
+
 #### FeatureClusterer
 
-Agrupa elementos em clusters.
+Agrupa elementos próximos em clusters.
 
 Publica:
 
@@ -168,17 +244,40 @@ Publica:
 * cluster\_mouseover (features, clusterCenter)
 * cluster\_mouseout (features, clusterCenter)
 
+Subscreve:
+
+* feature_created
+
 #### Location
 
-Permite utilizar tanto coordenadas espaciais quanto endereços por extenso para selecionar locais no mapa e fornece a localização do usuário utilizando geolocalização fornecida pelo navegador ou localização por ip via serviço do Google.
+Permite utilizar tanto coordenadas espaciais quanto endereços por extenso para definir a posição do mapa. Fornece também a localização do usuário utilizando geolocalização fornecida pelo navegador ou localização por ip via serviço do Google.
+
+Subscreve:
+
+* goto
+* goto\_user\_location
 
 #### SaveLocation
 
 Permite salvar e recuperar a posição e o zoom atuais do mapa.
 
+Publica:
+
+* set\_location
+* set\_zoom
+
+Subscreve:
+
+* save_location
+* goto\_saved\_location
+
 #### AutosaveLocation
 
 Salva automaticamente a posição e o zoom do mapa sempre que alterados.
+
+Subscreve:
+
+* idle
 
 #### StreetView
 
@@ -187,7 +286,7 @@ Adiciona o Google StreetView ao mapa.
 
 ### Maptype
 
-Fornce opções de visualização do mapa em si, acrescentando outras opções além do *Mapa* e do *Hibrido*.
+Componentes deste tipo forncem opções visuais para o mapa, adicionando mais opções além dos padrões _Mapa_ e _Hibrido_.
 
 #### CleanMapType
 
@@ -200,12 +299,12 @@ Componentes que fornecem os elementos registrados no sistema para exibição no 
 
 #### FeatureProvider
 
-Provê elementos via requisições AJAX.
+Provê elementos via requisições AJAX, interpretando o GEOjson recebido do servidor, instanciando e adicionando _Features_ ao mapa.
 
 
-## Mediator
+## Mediador
 
-Por simplicidade a própria classe do mapa faz o papel de mediator, visto que nenhum componente tem função sem um mapa. Isto quer dizer todos os componentes que forem carregados terão sempre acesso à instância do mapa usando a variável de instancia `map` ou `mediator`.
+Por simplicidade a própria classe do mapa faz o papel de mediador. Esta escolha foi feita pois nenhum componente tem utilidade sem um mapa. Isto quer dizer todos os componentes que forem adicionados terão sempre acesso à instância do mapa, com a qual interagem através das variáveis de instância `map` ou `mediator`.
 
 
     class Foo extends Component
@@ -214,7 +313,7 @@ Por simplicidade a própria classe do mapa faz o papel de mediator, visto que ne
         console?.log "The current zoom level is #{zoom}"
 
 
-Como já explicado antes, um componente não possui acesso direto a outro componente. Para se comunicarem deve-se utilizar o padrão publish/subscribe através dos métodos `subscribe` e `publish` do mediator, isto é, do mapa.
+Como já explicado antes, um componente não possui acesso direto a outro componente. Para comunicação entre componentes deve-se utilizar o padrão publish/subscribe, através dos métodos `subscribe` e `publish` do mapa.
 
 
     class Foo extends Component
@@ -228,21 +327,57 @@ Como já explicado antes, um componente não possui acesso direto a outro compon
         @map.publish 'Bar_changed'
 
 
-Esse padrão permite que ambos os componentes se comuniquem ao mesmo tempo que permite que se utilize apenas um deles sem precisar carregar o outro como dependência.
+Esse padrão permite que ambos os componentes se comuniquem ao mesmo tempo que permite que se utilize apenas um deles sem precisar adicionar qualquer outro como dependência.
+
 
 ## Map
 
+_TODO_
+
+
 ## Features
+
+_TODO_
 
 
 ## Geometries
 
 ### Empty
+
+_TODO_
+
+
 ### Point
+
+_TODO_
+
+
 ### MultiPoint
+
+_TODO_
+
+
 ### SinglePoint
+
+_TODO_
+
+
 ### LineString
+
+_TODO_
+
+
 ### MultiLineString
+
+_TODO_
+
+
 ### Polygon
 
+_TODO_
+
+
 ## JQuery Plugin
+
+_TODO_
+

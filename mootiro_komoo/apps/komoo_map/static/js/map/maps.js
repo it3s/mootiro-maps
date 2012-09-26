@@ -121,7 +121,7 @@
           return komoo.event.trigger(_this, "features_loaded", features);
         });
         this.subscribe("close_clicked", function() {
-          return komoo.event.trigger(_this, "close_clicked");
+          return komoo.event.trigger(_this, "close_click");
         });
         this.subscribe("drawing_finished", function(feature, status) {
           komoo.event.trigger(_this, "drawing_finished", feature, status);

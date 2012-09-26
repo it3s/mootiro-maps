@@ -241,7 +241,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
 
         handleButtonEvents: ->
             $("#drawing-control-cancel", @box).click =>
-                komoo.event.trigger @map, 'close_click'
+                @map.publish 'close_clicked'
 
 
     class GeometrySelector extends Box

@@ -84,7 +84,7 @@ define ['underscore', 'map/core', 'map/collections', 'map/features', 'map/geomet
                 komoo.event.trigger this, "features_loaded", features
 
             @subscribe "close_clicked", =>
-                komoo.event.trigger this, "close_clicked"
+                komoo.event.trigger this, "close_click"
 
             @subscribe "drawing_finished", (feature, status) =>
                 komoo.event.trigger this, "drawing_finished", feature, status
