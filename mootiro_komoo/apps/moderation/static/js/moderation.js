@@ -268,7 +268,6 @@ $(function () {
                             });
                     } else if (data.next == "request") {
                         openDeletionRequestDialog(button);
-                        console.log("display request dialog");
                     } else if (data.next == "showDeleteFeedback") {
                         button.addClass("disabled");
                         flash(gettext("The content was successfully deleted"), -1);

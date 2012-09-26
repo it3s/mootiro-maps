@@ -194,7 +194,6 @@
             var close_panel;
 
             $("#about-mootiro.closed").live("mouseenter", function (evt) {
-                if (window.console) console.log("close enter");
                 $(this).toggleClass("closed open");
                 $(this).animate({
                     width: closed_panel_width + 105,
@@ -204,7 +203,6 @@
             });
 
             $("#about-mootiro.open").live("mouseleave", function (evt) {
-                if (window.console) console.log("open leave");
                 var about_mootiro = $(this);
                 close_panel = setTimeout(function(){
                   about_mootiro.toggleClass("closed open");
@@ -259,7 +257,6 @@
                 $('.frontpage-filter-item.active-filter').each(function(idx, obj){
                     apps.push($(obj).find('img').first().attr('alt'));
                 });
-                console.log(apps.join());
                 window.location = window.location.pathname + '?filters=' + apps.join();
             });
 
@@ -279,13 +276,11 @@
 
             var uri_query = window.location.search;
             uri_query = uri_query.substring(1, uri_query.length);
-            console.log(uri_query);
             if (uri_query.length) {
                 $('.komoo-pagination a').each(function(idx, obj){
                     var el = $(obj);
                     var href = el.attr('href');
                     el.attr('href', href + '&' +  uri_query);
-                    console.log('new href', href + uri_query);
                 });
             }
 

@@ -22,13 +22,11 @@
     },
     deleteSignature: function() {
       var self;
-      console.log('Deleting signature ', this.attributes);
       if (confirm(gettext('Are you sure you want to delete your signature for this object?'))) {
         self = this;
         return $.post('/user/profile/signature/delete/', {
           id: this.get('signature_id')
         }, function(data) {
-          console.dir(data);
           return self.trigger('deleteSignature', self);
         }, 'json');
       }
@@ -47,7 +45,6 @@
     },
     render: function() {
       var renderedContent;
-      console.log('rendering model: ', this.model.toJSON());
       renderedContent = this.template(this.model.toJSON());
       $(this.el).html(renderedContent);
       return this;
@@ -116,7 +113,6 @@
       clean: false,
       onSuccess: function(data) {
         var $messageBox, msgTemplate, renderedContent;
-        console.log(data);
         $messageBox = $('.form-message-box');
         if ($messageBox.length) $messageBox.remove();
         msgTemplate = _.template($('#form-message-box').html());
@@ -141,7 +137,6 @@
       clean: false,
       onSuccess: function(data) {
         var $messageBox, msgTemplate, renderedContent;
-        console.log(data);
         $messageBox = $('.form-message-box');
         if ($messageBox.length) $messageBox.remove();
         msgTemplate = _.template($('#form-message-box').html());

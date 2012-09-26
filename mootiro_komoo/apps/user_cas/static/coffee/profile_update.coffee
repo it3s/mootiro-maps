@@ -19,14 +19,12 @@ window.Signature = Backbone.Model.extend
         }
 
     deleteSignature: () ->
-        console.log 'Deleting signature ', @attributes
         if confirm(gettext 'Are you sure you want to delete your signature for this object?')
             self = this
             $.post(
                 '/user/profile/signature/delete/',
                 {id: @get 'signature_id'},
                 (data) ->
-                    console.dir(data)
                     self.trigger 'deleteSignature', self
                 ,
                 'json'
@@ -43,7 +41,6 @@ window.SignatureView = Backbone.View.extend
         @model.bind 'deleteSignature', @remove
 
     render: () ->
-        console.log 'rendering model: ', @model.toJSON()
         renderedContent = @template @model.toJSON()
         $(@el).html renderedContent
         this
@@ -110,7 +107,6 @@ $ () ->
     $('#form-profile').ajaxform
         clean: false
         onSuccess: (data) ->
-            console.log data
             $messageBox = $ '.form-message-box'
             if $messageBox.length
                 $messageBox.remove()
@@ -139,7 +135,6 @@ $ () ->
     $('#form-personal').ajaxform
         clean: false
         onSuccess: (data) ->
-            console.log data
             $messageBox = $ '.form-message-box'
             if $messageBox.length
                 $messageBox.remove()

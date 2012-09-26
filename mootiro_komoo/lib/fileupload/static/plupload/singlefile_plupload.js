@@ -116,7 +116,6 @@ $(function(){
                     csrfmiddlewaretoken: getCookie('csrftoken')
                 },
                 function(data){
-                    console.dir(data);
                     $('#subtitle-modal').modal('hide');
                     $('.file-entry[file-id=' + file_id + ']').fadeOut('slow', function(){
                         $(this).remove();

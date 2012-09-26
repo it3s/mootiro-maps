@@ -17,7 +17,6 @@ define ['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery']
             """
 
         render: () ->
-            console.log 'rendering model: ', @model.toJSON()
             renderedContent = @template @model.toJSON()
             $(@el).html renderedContent
             this

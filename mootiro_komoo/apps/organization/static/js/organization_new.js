@@ -80,7 +80,6 @@ $(function(){
         // change_msg('Entre com os dados da Organização que detém a unidade que você marcou no mapa.')
         change_msg(gettext('Enter with the data from the Organization which owns the branch you have marked on map.'));
         var name = $('#id_org_name_autocomplete').val();
-        console.log('name: ' + name)
         $('#form_organization #id_name').val(name);
         $('#id_filial_org_name').val(name);
     });
