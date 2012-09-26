@@ -60,7 +60,6 @@ def prepare_investment_objects(community_slug="", need_slug="",
 @ajax_form('investment/edit.html', form_class=InvestmentForm)
 def edit(request, community_slug="", need_slug="", proposal_number="",
         organization_slug="", resource_id="", investment_slug=""):
-    logger.debug('acessing investment > new')
 
     kw = locals()
     kw.pop('request')
@@ -85,7 +84,6 @@ def edit(request, community_slug="", need_slug="", proposal_number="",
 @render_to('investment/view.html')
 def view(request, community_slug="", need_slug="", proposal_number="",
         organization_slug="", resource_id="", investment_slug=""):
-    logger.debug('acessing investment > view_<grantee>_investment')
 
     kw = locals()
     kw.pop('request')
@@ -96,7 +94,6 @@ def view(request, community_slug="", need_slug="", proposal_number="",
 
 @render_to('investment/list.html')
 def list(request, community_slug=''):
-    logger.debug('acessing investment > list')
 
     sort_fields = ['creation_date', 'votes', 'title']
 
@@ -117,7 +114,6 @@ def list(request, community_slug=''):
 
 
 def tag_search(request):
-    logger.debug('acessing investment > tag_search')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Investment).filter(name__istartswith=term)
     tags = [t.name for t in qset]

@@ -79,7 +79,6 @@ def organization_list(request, community_slug=''):
 
 @render_to('organization/show.html')
 def show(request, organization_slug='', community_slug=''):
-    logger.debug('acessing organization > show')
 
     organization, community = prepare_organization_objects(
         community_slug=community_slug, organization_slug=organization_slug)
@@ -96,7 +95,6 @@ def show(request, organization_slug='', community_slug=''):
 
 @render_to('organization/related_items.html')
 def related_items(request, organization_slug='', community_slug=''):
-    logger.debug('acessing organization > related_items')
 
     organization, community = prepare_organization_objects(
         community_slug=community_slug, organization_slug=organization_slug)
@@ -110,7 +108,6 @@ def related_items(request, organization_slug='', community_slug=''):
 @login_required
 @ajax_form('organization/new.html', FormOrganization, 'form_organization')
 def new_organization(request, community_slug='', *arg, **kwargs):
-    logger.debug('acessing organization > new_organization')
 
     organization, community = prepare_organization_objects(
         community_slug=community_slug)
@@ -142,7 +139,6 @@ def new_organization(request, community_slug='', *arg, **kwargs):
 @login_required
 @render_to('organization/new_frommap.html')
 def new_organization_from_map(request, community_slug='', *args, **kwargs):
-    logger.debug('acessing organization > new_organization_from_map')
 
     organization, community = prepare_organization_objects(
         community_slug=community_slug)
@@ -163,7 +159,6 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
 @ajax_form('organization/edit.html', FormOrganization, 'form_organization')
 def edit_organization(request, community_slug='', organization_slug='',
                       *arg, **kwargs):
-    logger.debug('acessing organization > edit_organization')
 
     organization, community = prepare_organization_objects(
         community_slug=community_slug, organization_slug=organization_slug)
@@ -201,14 +196,12 @@ def edit_organization(request, community_slug='', organization_slug='',
 @login_required
 @ajax_form(form_class=FormBranch)
 def add_branch_from_map(request):
-    logger.debug('acessing organization > add_branch_from_map')
     return {}
 
 
 @login_required
 @ajax_form(form_class=FormOrganization)
 def add_org_from_map(request):
-    logger.debug('acessing organization > add_org_from_map')
     return {}
 
 
@@ -266,7 +259,6 @@ def verify_org_name(request):
 
 
 def search_by_name(request):
-    logger.debug('acessing organization > search_by_name')
     term = request.GET.get('term', '')
     orgs = Organization.objects.filter(Q(name__icontains=term) |
         Q(slug__icontains=term))
@@ -276,7 +268,6 @@ def search_by_name(request):
 
 
 def search_tags(request):
-    logger.debug('acessing organization > search_tags')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Organization).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')

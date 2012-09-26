@@ -51,7 +51,6 @@ def resources_to_resource(self):
 @render_to('resource/list.html')
 @fix_community_url('resource_list')
 def resource_list(request, community_slug=''):
-    logger.debug('acessing komoo_resource > list')
 
     sort_order = ['creation_date', 'votes', 'name']
 
@@ -75,7 +74,6 @@ def resource_list(request, community_slug=''):
 
 @render_to('resource/show.html')
 def show(request, community_slug=None, resource_id=None):
-    logger.debug('acessing komoo_resource > show')
 
     resource, community = prepare_resource_objects(
         community_slug=community_slug, resource_id=resource_id)
@@ -90,14 +88,12 @@ def show(request, community_slug=None, resource_id=None):
 @login_required
 @ajax_form('resource/new.html', FormResource, 'form_resource')
 def new_resource(request, community_slug='', *arg, **kwargs):
-    logger.debug('acessing komoo_resource > new_resource')
 
     resource, community = prepare_resource_objects(
         community_slug=community_slug)
 
     def on_get(request, form_resource):
         # if community:
-            # logger.debug('community_slug: {}'.format(community_slug))
             # form_resource.fields['community'].widget = forms.HiddenInput()
             # form_resource.initial['community'] = community.id
         form_resource.helper.form_action = reverse('new_resource')
@@ -115,12 +111,10 @@ def new_resource(request, community_slug='', *arg, **kwargs):
 @login_required
 @ajax_form('resource/new_frommap.html', FormResourceGeoRef, 'form_resource')
 def new_resource_from_map(request, community_slug='', *args, **kwargs):
-    logger.debug('acessing komoo_resource > new_resource_from_map')
     community = get_object_or_None(Community, slug=community_slug)
 
     def on_get(request, form_resource):
         # if community:
-            # logger.debug('community_slug: {}'.format(community_slug))
             # form_resource.fields['community'].widget = forms.HiddenInput()
             # form_resource.initial['community'] = community.id
         form_resource.helper.form_action = reverse('new_resource_from_map')
@@ -138,7 +132,6 @@ def new_resource_from_map(request, community_slug='', *args, **kwargs):
 @login_required
 @ajax_form('resource/edit.html', FormResourceGeoRef, 'form_resource')
 def edit_resource(request, community_slug='', resource_id='', *arg, **kwargs):
-    logger.debug('acessing komoo_resource > edit_resource')
 
     resource, community = prepare_resource_objects(
         community_slug=community_slug, resource_id=resource_id)
@@ -152,7 +145,6 @@ def edit_resource(request, community_slug='', resource_id='', *arg, **kwargs):
     def on_get(request, form):
         form = FormResourceGeoRef(instance=resource)
         # if community:
-            # logger.debug('community_slug: {}'.format(community_slug))
             # form_resource.fields['community'].widget = forms.HiddenInput()
             # form_resource.initial['community'] = community.id
         kwargs = dict(resource_id=resource_id)
@@ -172,7 +164,6 @@ def edit_resource(request, community_slug='', resource_id='', *arg, **kwargs):
 
 
 def search_by_kind(request):
-    logger.debug('acessing komoo_resource > search_by_kind')
     term = request.GET.get('term', '')
     kinds = ResourceKind.objects.filter(Q(name__icontains=term) |
         Q(slug__icontains=term))
@@ -182,7 +173,6 @@ def search_by_kind(request):
 
 
 def search_tags(request):
-    logger.debug('acessing resource > search_tags')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Resource).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')
@@ -202,7 +192,6 @@ def show_on_map(request, geojson=''):
 # @login_required
 # @ajax_request
 # def resource_get_or_add_kind(request):
-#     logger.debug('acessing resource > resource_get_or_add_kind')
 #     term = request.POST.get('value', '')
 #     kinds = ResourceKind.objects.filter(Q(name__iexact=term) |
 #         Q(slug__iexact=term))

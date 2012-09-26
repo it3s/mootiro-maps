@@ -33,11 +33,9 @@ logger = logging.getLogger(__name__)
 @render_to('user_cas/login.html')
 def login(request):
     """Displays a page with login options."""
-    logger.debug('accessing user > login')
     return {}
 
 def logout(request):
-    logger.debug('accessing user_cas > logout')
     next_page = request.GET.get('next', '/')
     auth_logout(request)
     # Is it the right thing to logout from SSO?
@@ -99,7 +97,7 @@ def _prepare_contrib_data(version, created_date):
 
 @render_to('user_cas/profile.html')
 def profile(request, user_id=''):
-    logger.debug('acessing user_cas > profile : {}'.format(user_id))
+    logger.debug('user_id : {}'.format(user_id))
     if not user_id:
         if request.user.is_authenticated():
             user = request.user
@@ -124,7 +122,6 @@ def profile(request, user_id=''):
 @render_to('user_cas/profile_update.html')
 @login_required
 def profile_update(request):
-    logger.debug('accessing user_cas > profile')
     signatures = []
     for sig in Signature.objects.filter(user=request.user):
         try:
@@ -164,7 +161,6 @@ def profile_update_public_settings(request):
 @login_required
 @ajax_request
 def profile_update_personal_settings(request):
-    logger.debug('accessing user_cas > profile_update_personal_settings')
     # username = request.POST.get('username', '')
     try:
         # if not username:
@@ -194,7 +190,6 @@ def profile_update_personal_settings(request):
 @login_required
 @ajax_request
 def digest_update(request):
-    logger.debug('acessing user_cas > digest_update')
     logger.debug('POST: {}'.format(request.POST))
     digest_type = request.POST.get('digest_type', '')
 
@@ -217,7 +212,6 @@ def digest_update(request):
 @login_required
 @ajax_request
 def signature_delete(request):
-    logger.debug('acessing user_cas > signature_delete')
     id_ = request.POST.get('id', '')
     signature = get_object_or_404(Signature, pk=id_)
     if signature.user == request.user:

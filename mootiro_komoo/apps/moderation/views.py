@@ -59,19 +59,16 @@ def moderation_delete(request, app_label, model_name, obj_id):
 
 @render_to('moderation/deletion_request_box.html')
 def deletion_request_box(request):
-    logger.debug('accessing Moderation > deletion_request_box')
     return {}
 
 
 @render_to('moderation/report_content_box.html')
 def report_content_box(request):
-    logger.debug('accessing Moderation > report_context_box')
     return {}
 
 
 @render_to('moderation/list.html')
 def list_reports(request):
-    logger.debug('accessing Moderation > list_reports')
     moderations = Moderation.objects.all()
     moderations_count = moderations.count()
     moderations = paginated_query(moderations, request)
@@ -80,7 +77,7 @@ def list_reports(request):
 
 @ajax_request
 def moderation_report(request, app_label, model_name, obj_id):
-    logger.debug('accessing Moderation > moderation_report : POST={}'.format(
+    logger.debug('POST={}'.format(
         request.POST))
     if request.user.is_anonymous():
         return {'message': _('Please log in first to report a content'), 'success': 'false'}

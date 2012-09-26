@@ -31,7 +31,6 @@ logger = logging.getLogger(__name__)
 @login_required
 @ajax_form('need/edit.html', NeedForm)
 def new_need(request, community_slug="", need_slug=""):
-    logger.debug('acessing need > new_need')
 
     community = get_object_or_None(Community, slug=community_slug)
     geojson = {}
@@ -39,7 +38,6 @@ def new_need(request, community_slug="", need_slug=""):
 
     def on_get(request, form):
         # if community:
-            # logger.debug('community_slug: {}'.format(community_slug))
             # form.fields['community'].widget = forms.HiddenInput()
             # form.initial['community'] = community.id
         form.helper.form_action = reverse('new_need')
@@ -58,14 +56,12 @@ def new_need(request, community_slug="", need_slug=""):
 @login_required
 @ajax_form('need/edit_ajax.html', NeedFormGeoRef)
 def new_need_from_map(request, community_slug="", need_slug=""):
-    logger.debug('acessing need > new_need_from_map')
 
     community = get_object_or_None(Community, slug=community_slug)
     geojson, need = {}, None
 
     def on_get(request, form):
         # if community:
-            # logger.debug('community_slug: {}'.format(community_slug))
             # form.fields['community'].widget = forms.HiddenInput()
             # form.initial['community'] = community.id
         form.helper.form_action = reverse('new_need_from_map')
@@ -84,7 +80,6 @@ def new_need_from_map(request, community_slug="", need_slug=""):
 @login_required
 @ajax_form('need/edit.html', NeedFormGeoRef)
 def edit_need(request, community_slug="", need_slug=""):
-    logger.debug('acessing need > new_need')
 
     community = get_object_or_None(Community, slug=community_slug)
     need = get_object_or_404(Need, slug=need_slug, community=community) \
@@ -98,7 +93,6 @@ def edit_need(request, community_slug="", need_slug=""):
     def on_get(request, form):
         form = NeedFormGeoRef(instance=need)
         # if community:
-            # logger.debug('community_slug: {}'.format(community_slug))
             # form.fields['community'].widget = forms.HiddenInput()
             # form.initial['community'] = community.id
         form.helper.form_action = reverse('new_need')
@@ -117,7 +111,6 @@ def edit_need(request, community_slug="", need_slug=""):
 @render_to('need/view.html')
 def view(request, community_slug=None, need_slug=None):
     # if the need has no community pass an empty string
-    logger.debug('acessing need > view')
     filters = dict(slug=need_slug)
     if community_slug:
         filters['community__slug'] = community_slug
@@ -130,7 +123,6 @@ def view(request, community_slug=None, need_slug=None):
 @render_to('need/list.html')
 @fix_community_url('list_community_needs')
 def list(request, community_slug=''):
-    logger.debug('acessing need > list')
 
     sort_fields = ['creation_date', 'votes', 'title']
 
@@ -149,7 +141,6 @@ def list(request, community_slug=''):
 
 
 def tag_search(request):
-    logger.debug('acessing need > tag_search')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
     # qset = TaggedItem.tags_for(Need)
@@ -159,7 +150,6 @@ def tag_search(request):
 
 
 def target_audience_search(request):
-    logger.debug('acessing need > target_audience_search')
     term = request.GET['term']
     qset = TargetAudience.objects.filter(name__istartswith=term)
     target_audiences = [ta.name for ta in qset]

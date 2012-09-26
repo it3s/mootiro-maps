@@ -22,7 +22,6 @@ logger = logging.getLogger(__name__)
 
 @render_to('comments/comments_poc.html')
 def comments_index(request):
-    logger.debug('accessing Comments > comments_index')
     from need.models import Need
     return {'content_object': Need.objects.get(pk=1)}
     # return {'content_object': None}
@@ -31,7 +30,7 @@ def comments_index(request):
 @login_required
 @ajax_request
 def comments_add(request):
-    logger.debug('accessing Comments > comments_add : POST={}'.format(request.POST))
+    logger.debug('POST={}'.format(request.POST))
 
     form_comment = FormComment(request.POST)
     if form_comment.is_valid():
@@ -109,7 +108,7 @@ def comments_list(content_object=None, parent_id=None, page=0,  root=False,
 
 @ajax_request
 def comments_load(request):
-    logger.debug('accessing komoo_comments > comments_load : GET={}'.format(request.GET))
+    logger.debug('GET={}'.format(request.GET))
     content_object = None
     if 'content_type' in request.GET and 'object_id' in request.GET:
         content_object = ContentType.objects.get_for_id(request.GET['content_type']

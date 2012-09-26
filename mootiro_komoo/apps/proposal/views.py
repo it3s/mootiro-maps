@@ -41,7 +41,6 @@ def prepare_proposal_objects(community_slug="", need_slug="", proposal_number=""
 @login_required
 @ajax_form('proposal/edit.html', ProposalForm)
 def edit(request, community_slug="", need_slug="", proposal_number=""):
-    logger.debug('acessing proposal > edit')
     proposal, need, community = prepare_proposal_objects(community_slug,
         need_slug, proposal_number)
 
@@ -68,7 +67,6 @@ def edit(request, community_slug="", need_slug="", proposal_number=""):
 
 @render_to('proposal/view.html')
 def view(request, community_slug="", need_slug="", proposal_number=""):
-    logger.debug('accessing proposal > view')
 
     proposal, need, community = prepare_proposal_objects(community_slug,
         need_slug, proposal_number)

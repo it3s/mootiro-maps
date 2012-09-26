@@ -31,8 +31,6 @@ logger = logging.getLogger(__name__)
 @login_required
 @ajax_form('community/edit_ajax.html', CommunityForm)
 def new_community(request, *args, **kwargs):
-    logger.debug('acessing community > new_community')
-
     def on_get(request,  form_community):
         form_community.helper.form_action = reverse('new_community')
         return form_community
@@ -46,9 +44,6 @@ def new_community(request, *args, **kwargs):
 @login_required
 @ajax_form('community/edit.html', CommunityForm)
 def edit_community(request, community_slug='', *args, **kwargs):
-    logger.debug('acessing community > edit_community : community_slug={}'
-        ''.format(community_slug))
-
     if community_slug:
         community = get_object_or_404(Community, slug=community_slug)
     else:
@@ -72,9 +67,6 @@ def edit_community(request, community_slug='', *args, **kwargs):
 
 @render_to('community/on_map.html')
 def on_map(request, community_slug):
-    logger.debug('acessing Community > on_map : community_slug={}'.format(
-            community_slug))
-
     community = get_object_or_404(Community, slug=community_slug)
     geojson = create_geojson([community])
     return dict(community=community, geojson=geojson)
@@ -82,9 +74,6 @@ def on_map(request, community_slug):
 
 @render_to('community/view.html')
 def view(request, community_slug):
-    logger.debug('acessing Community > view : community_slug={}'.format(
-            community_slug))
-
     community = get_object_or_404(Community, slug=community_slug)
     geojson = create_geojson([community])
 
@@ -95,7 +84,6 @@ def view(request, community_slug):
 
 @render_to('community/map.html')
 def map(request):
-    logger.debug('acessing Community > map')
     return dict(geojson={})
 
 
@@ -105,8 +93,6 @@ def communities_to_community(self):
 
 @render_to('community/list.html')
 def list(request):
-    logger.debug('acessing community > list')
-
     sort_order = ['creation_date', 'name']
 
     query_set = filtered_query(Community.objects, request)
@@ -131,7 +117,6 @@ def communities_geojson(request):
 
 
 def search_by_name(request):
-    logger.debug('acessing community > search_by_name')
     term = request.GET['term']
     # rx = "^{0}|\s{0}".format(term)  # matches only beginning of words
     # communities = Community.objects.filter(Q(name__iregex=rx) | Q(slug__iregex=rx))
@@ -142,7 +127,6 @@ def search_by_name(request):
 
 
 def search_tags(request):
-    logger.debug('acessing community > search_tags')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Community).filter(name__istartswith=term
             ).annotate(count=Count('taggit_taggeditem_items__id')
@@ -154,7 +138,6 @@ def search_tags(request):
 
 @ajax_request
 def autocomplete_get_or_add(request):
-    logger.debug('accessing community > add_new_from_autocomplete')
     logger.debug(request.POST)
     term = request.POST['name']
     communities = Community.objects.filter(Q(name__icontains=term) |
@@ -169,7 +152,6 @@ def autocomplete_get_or_add(request):
 
 @ajax_request
 def get_name_for(request, id):
-    logger.debug('acessing Community > get_name_for id: {}'.format(id))
     community_name = Community.objects.get(pk=id).name
     return {'name': community_name}
 

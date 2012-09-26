@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-import logging
 import itertools
 
 from annoying.decorators import render_to
@@ -12,12 +11,8 @@ from main.utils import paginated_query, sorted_query, filtered_query
 from .models import Update, News
 
 
-logger = logging.getLogger(__name__)
-
-
 @render_to("update/frontpage.html")
 def frontpage(request):
-    logger.debug('acessing update > frontpage')
     filters = request.GET.get('filters', [])
     if filters:
         filters = filters.split(',')

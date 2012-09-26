@@ -17,7 +17,6 @@ logger = logging.getLogger(__name__)
 @render_to('vote/vote_poc.html')
 def vote_poc(request):
     """Proof of concept (test) for voting"""
-    logger.debug('acessing vote > vote_poc')
     from need.models import Need
     need = Need.objects.get(pk=1)
     return dict(content_object=need)
@@ -35,7 +34,7 @@ def vote(request):
         object_id: id of the object you are voting
         content_type: id of the content_type you are voting
     """
-    logger.debug('acessing vote > vote : request:\n{}'.format(request.POST))
+    logger.debug('request:{}'.format(request.POST))
     if request.user and not request.user.is_anonymous():
         vote = request.POST['vote'] if 'vote' in request.POST else None
         content_type = request.POST['content_type'] \

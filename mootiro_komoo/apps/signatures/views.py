@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 @ajax_request
 @login_required
 def follow(request):
-    logger.debug('acessing signatures > follow')
     content_type = request.POST.get('content_type', None)
     obj_id = request.POST.get('obj', None)
     sign = request.POST.get('sign', 'true')

@@ -67,7 +67,7 @@ def edit_discussion(request, identifier='', *args, **kwargs):
     if hasattr(obj, 'user_can_discuss'):
         if not obj.user_can_discuss(request.user):
             return redirect(obj.view_url)
-    
+
     def on_get(request, form_discussion):
         return DiscussionForm(instance=discussion)
 

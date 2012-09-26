@@ -96,7 +96,6 @@ def project_view(request, project_slug=''):
 
 @render_to('project/related_items.html')
 def project_map(request, project_slug=''):
-    logger.debug('acessing project > related_items')
 
     project = get_object_or_404(Project, slug=project_slug)
 
@@ -121,7 +120,6 @@ def project_map(request, project_slug=''):
 @login_required
 @ajax_form('project/edit.html', FormProject)
 def project_new(request):
-    logger.debug('acessing project > project_new')
 
     def on_get(request, form):
         form.helper.form_action = reverse('project_new')
@@ -137,7 +135,6 @@ def project_new(request):
 @login_required
 @ajax_form('project/edit.html', FormProject)
 def project_edit(request, project_slug='', *arg, **kwargs):
-    logger.debug('acessing komoo_project > edit_project')
 
     project = get_object_or_404(Project, slug=project_slug)
 
@@ -160,8 +157,6 @@ def project_edit(request, project_slug='', *arg, **kwargs):
 
 @ajax_request
 def add_related_object(request):
-    logger.debug('acessing project > add_related_object')
-
     ct = request.POST.get('content_type', '')
     obj_id = request.POST.get('object_id', '')
     proj_id = request.POST.get('project_id', '')
@@ -188,7 +183,7 @@ def add_related_object(request):
 @login_required
 @ajax_request
 def delete_relations(request):
-    logger.debug('acessing project > delete_relations : {}'.format(request.POST))
+    logger.debug('POST: {}'.format(request.POST))
     project = request.POST.get('project', '')
     relations = request.POST.get('associations', '')
 
@@ -210,7 +205,6 @@ def delete_relations(request):
 
 
 def tag_search(request):
-    logger.debug('acessing project > tag_search')
     term = request.GET['term']
     qset = TaggedItem.tags_for(Project).filter(name__istartswith=term)
     # qset = TaggedItem.tags_for(project)
@@ -220,7 +214,6 @@ def tag_search(request):
 
 
 def search_by_name(request):
-    logger.debug('acessing project > search_by_name')
     term = request.GET['term']
     projects = Project.objects.filter(Q(name__icontains=term) |
                                            Q(slug__icontains=term))
