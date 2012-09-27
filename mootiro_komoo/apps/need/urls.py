@@ -1,35 +1,20 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals  # unicode by default
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns, url
 
 from mootiro_komoo.urls import prepare_regex as pr
 
 
 urlpatterns = patterns('need.views',
-    url(pr(r'^need/new/?$'), 'new_need',
-            name='new_need'),
-    url(pr(r'^need/new/from_map/?$'), 'new_need_from_map',
+    url(r'^need/new/?$', 'new_need', name='new_need'),
+    url(r'^need/new/from_map/?$', 'new_need_from_map',
             name='new_need_from_map'),
-
     url(pr(r'^need/NEED_SLUG/edit/?$'), 'edit_need',
-            name='edit_need'),
-    url(pr(r'^COMMUNITY_SLUG/need/new/?$'), 'new_need',
-            name='new_need'),
-    url(pr(r'^COMMUNITY_SLUG/need/new/from_map/?$'), 'new_need_from_map',
-            name='new_need_from_map'),
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/edit/?$'), 'edit_need',
             name='edit_need'),
 
     url(pr(r'^need/NEED_SLUG/?$'), 'view',
             name='view_need'),
-    url(pr(r'^COMMUNITY_SLUG/need/NEED_SLUG/?$'), 'view',
-            name='view_need'),
 
-    url(pr(r'^needs$'), 'list',
-            name='list_all_needs'),
-    url(pr(r'^COMMUNITY_SLUG/needs$'), 'list',
-            name='list_community_needs'),
+    url(r'^need/?$', 'list', name='list_all_needs'),
 
     url(r'^need/tag_search$', 'tag_search',
             name='need_tag_search'),
