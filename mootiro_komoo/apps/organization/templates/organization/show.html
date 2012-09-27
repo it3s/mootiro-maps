@@ -12,13 +12,7 @@
 {% load upload_tags %}
 {% load project_tags %}
 
-{% block title %}
-  {% if community %}
-    {% blocktrans with organization.name as organization and community as community %}{{organization}} at {{community}}{% endblocktrans %}
-  {% else %}
-    {{ organization.name }}
-  {% endif %}
-{% endblock %}
+{% block title %} {{ organization.name }} {% endblock %}
 
 {% block menu %} {% menu "organization" %} {% endblock %}
 
@@ -249,7 +243,7 @@
         </div>
 
         {% projects_for_object organization %}
-        {% taglist organization community %}
+        {% taglist organization %}
 
     </div>
 

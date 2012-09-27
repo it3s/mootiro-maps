@@ -4,7 +4,6 @@ import logging
 import json
 import markdown
 
-from django import forms
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import (render_to_response, RequestContext,
@@ -16,7 +15,6 @@ from django.db.models import Count
 from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
-from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
@@ -24,29 +22,24 @@ from ajaxforms import ajax_form
 
 from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganization, FormBranch
-from community.models import Community
 from main.utils import (paginated_query, create_geojson, sorted_query,
-                        filtered_query, fix_community_url)
+                        filtered_query)
 from main.widgets import Autocomplete
 from signatures.signals import send_notifications
 
 logger = logging.getLogger(__name__)
 
 
-def prepare_organization_objects(community_slug="", organization_slug=""):
-    """Retrieves a tuple (organization, community). According to given
-    parameters may raise an 404. Creates a new organization if
-    organization_slug is evaluated as false."""
-    community = get_object_or_404(Community, slug=community_slug) \
-                    if community_slug else None
+def prepare_organization_objects(organization_slug=""):
+    """
+    Retrieves a organization according to given parameters may raise an 404.
+    Creates a new organization if organization_slug is evaluated as false.
+    """
     if organization_slug:
-        filters = dict(slug=organization_slug)
-        if community:
-            filters["community"] = community.id
-        organization = get_object_or_404(Organization, **filters)
+        organization = get_object_or_404(Organization, slug=organization_slug)
     else:
         organization = Organization()
-    return organization, community
+    return organization
 
 
 def organizations_to_organization(self):
@@ -54,34 +47,23 @@ def organizations_to_organization(self):
 
 
 @render_to('organization/list.html')
-@fix_community_url('organization_list')
-def organization_list(request, community_slug=''):
-    logging.debug('acessing organization > list')
-
+def organization_list(request):
     org_sort_order = ['creation_date', 'votes', 'name']
 
-    if community_slug:
-        logger.debug('community_slug: {}'.format(community_slug))
-        community = get_object_or_None(Community, slug=community_slug)
-        query_set = community.organization_set
-    else:
-        community = None
-        query_set = Organization.objects
-
-    query_set = filtered_query(query_set, request)
+    query_set = filtered_query(Organization.objects, request)
     organizations_list = sorted_query(query_set, org_sort_order,
                                          request)
     organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
-    return dict(community=community, organizations=organizations,
+    return dict(organizations=organizations,
                 organizations_count=organizations_count)
 
 
 @render_to('organization/show.html')
-def show(request, organization_slug='', community_slug=''):
+def show(request, organization_slug=''):
 
-    organization, community = prepare_organization_objects(
-        community_slug=community_slug, organization_slug=organization_slug)
+    organization = prepare_organization_objects(
+                        organization_slug=organization_slug)
 
     branches = organization.organizationbranch_set.all().order_by('name')
     geojson = create_geojson(branches)
@@ -89,59 +71,38 @@ def show(request, organization_slug='', community_slug=''):
     if organization.logo_id:
         files = files.exclude(pk=organization.logo_id)
 
-    return dict(organization=organization, geojson=geojson,
-                community=community)
+    return dict(organization=organization, geojson=geojson)
 
 
 @render_to('organization/related_items.html')
-def related_items(request, organization_slug='', community_slug=''):
+def related_items(request, organization_slug=''):
 
-    organization, community = prepare_organization_objects(
-        community_slug=community_slug, organization_slug=organization_slug)
+    organization = prepare_organization_objects(
+                        organization_slug=organization_slug)
 
     geojson = create_geojson(organization.related_items)
 
-    return dict(organization=organization, geojson=geojson,
-                community=community)
+    return dict(organization=organization, geojson=geojson)
 
 
 @login_required
 @ajax_form('organization/new.html', FormOrganization, 'form_organization')
-def new_organization(request, community_slug='', *arg, **kwargs):
-
-    organization, community = prepare_organization_objects(
-        community_slug=community_slug)
+def new_organization(request, *arg, **kwargs):
 
     def on_get(request, form):
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form.fields['community'].widget = forms.HiddenInput()
-            form.initial['community'] = community.id
-        if community_slug:
-            form.helper.form_action = reverse('new_organization',
-                    kwargs={'community_slug': community_slug})
-        else:
-            form.helper.form_action = reverse('new_organization')
+        form.helper.form_action = reverse('new_organization')
         return form
 
     def on_after_save(request, obj):
-        if community_slug:
-            kwargs_ = {'organization_slug': obj.slug,
-                      'community_slug': community_slug}
-        else:
-            kwargs_ = {'organization_slug': obj.slug}
+        kwargs_ = {'organization_slug': obj.slug}
         return {'redirect': reverse('view_organization', kwargs=kwargs_)}
 
-    return {'on_get': on_get, 'on_after_save': on_after_save,
-            'community': community}
+    return {'on_get': on_get, 'on_after_save': on_after_save}
 
 
 @login_required
 @render_to('organization/new_frommap.html')
-def new_organization_from_map(request, community_slug='', *args, **kwargs):
-
-    organization, community = prepare_organization_objects(
-        community_slug=community_slug)
+def new_organization_from_map(request, *args, **kwargs):
 
     form_org = FormOrganization()
     form_org.helper.form_action = reverse('add_org_from_map')
@@ -151,17 +112,16 @@ def new_organization_from_map(request, community_slug='', *args, **kwargs):
     org_name_widget = Autocomplete(Organization,
         "/organization/search_by_name/", clean_on_change=False
         ).render('org_name')
-    return {'community': community, 'form_org': form_org,
-            'form_branch': form_branch, 'org_name_widget': org_name_widget}
+    return {'form_org': form_org, 'form_branch': form_branch,
+            'org_name_widget': org_name_widget}
 
 
 @login_required
 @ajax_form('organization/edit.html', FormOrganization, 'form_organization')
-def edit_organization(request, community_slug='', organization_slug='',
-                      *arg, **kwargs):
+def edit_organization(request, organization_slug='', *arg, **kwargs):
 
-    organization, community = prepare_organization_objects(
-        community_slug=community_slug, organization_slug=organization_slug)
+    organization = prepare_organization_objects(
+                        organization_slug=organization_slug)
 
     geojson = create_geojson([organization], convert=False)
     if geojson and geojson.get('features'):
@@ -170,27 +130,16 @@ def edit_organization(request, community_slug='', organization_slug='',
 
     def on_get(request, form):
         form = FormOrganization(instance=organization)
-        if community:
-            logger.debug('community_slug: {}'.format(community_slug))
-            form.fields['community'].widget = forms.HiddenInput()
-            form.initial['community'] = community.id
         kwargs = dict(organization_slug=organization_slug)
-        if community_slug:
-            kwargs['community_slug'] = community_slug
         form.helper.form_action = reverse('edit_organization', kwargs=kwargs)
         return form
 
     def on_after_save(request, obj):
-        if community_slug:
-            kwargs_ = {'organization_slug': obj.slug,
-                      'community_slug': community_slug}
-        else:
-            kwargs_ = {'organization_slug': obj.slug}
+        kwargs_ = {'organization_slug': obj.slug}
         return {'redirect': reverse('view_organization', kwargs=kwargs_)}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
-            'community': community, 'geojson': geojson,
-            'organization': organization}
+            'geojson': geojson, 'organization': organization}
 
 
 @login_required
