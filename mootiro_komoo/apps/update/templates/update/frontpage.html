@@ -8,12 +8,6 @@
 {% load humanize %}
 
 
-{% block menu %}
-  {% with obj=community selected_area="" %}
-    {% menu obj selected_area %}
-  {% endwith %}
-{% endblock %}
-
 {% block content %}
 {% komoo_map_tooltip %}
 <div id="updates-header">

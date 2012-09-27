@@ -41,7 +41,7 @@ def new_need(request, need_slug=""):
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
-            'community': None, 'geojson': geojson, 'need': need}
+            'geojson': geojson, 'need': need}
 
 
 @login_required
@@ -59,7 +59,7 @@ def new_need_from_map(request, need_slug=""):
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
-            'community': None, 'geojson': geojson, 'need': need}
+            'geojson': geojson, 'need': need}
 
 
 @login_required
@@ -83,14 +83,14 @@ def edit_need(request, need_slug=""):
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
-            'community': None, 'geojson': geojson, 'need': need}
+            'geojson': geojson, 'need': need}
 
 
 @render_to('need/view.html')
 def view(request, need_slug=None):
     need = get_object_or_404(Need, slug=need_slug)
     geojson = create_geojson([need])
-    return dict(need=need, community=None, geojson=geojson)
+    return dict(need=need, geojson=geojson)
 
 
 @render_to('need/list.html')
@@ -102,7 +102,7 @@ def list(request):
                          default_order='title')
     needs_count = needs.count()
     needs = paginated_query(needs, request=request)
-    return dict(community=None, needs=needs, needs_count=needs_count)
+    return dict(needs=needs, needs_count=needs_count)
 
 
 def tag_search(request):
