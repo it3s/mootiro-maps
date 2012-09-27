@@ -5,7 +5,7 @@
 {% load vote_tags %}
 {% load i18n %}
 
-{% block title %}{% trans 'Resources for' %} {{ community.name }}{% endblock %}
+{% block title %}{% trans 'Resources' %}{% endblock %}
 
 {% block menu %} {% menu "resource" %} {% endblock %}
 
@@ -15,11 +15,7 @@
   <div class="highlight">
 
     <div class="button-new">
-      {% if community %}
-      <a class="button login-required" href="{% url new_resource community.slug %}">{% trans "New Resource" %}</a>
-      {% else %}
       <a class="button login-required" href="{% url new_resource %}">{% trans "New Resource" %}</a>
-      {% endif %}
     </div>
 
   <div class="view-list-top">
@@ -40,11 +36,7 @@
 
       <h4>
         <span class="apart">
-          {% if community %}
-          <a href="/{{ community.slug }}/resource/{{ resource.id }}">{{ resource.name }}</a>
-          {% else %}
-          <a href="/resource/{{ resource.id }}">{{ resource.name }}</a>
-          {% endif %}
+          <a href="{{ resource.view_url }}">{{ resource.name }}</a>
           {% if resource.community.count %}
             &nbsp;{% trans 'at' %}&nbsp;
             {% for comm in resource.community.all %}
@@ -82,7 +74,7 @@
       <div class="view-list-footer">
         {% if resource.tags.count %}
         <div class="view-list-item-tags">
-          {% taglist resource community %}
+          {% taglist resource %}
         </div>
         {% endif %}
       </div>

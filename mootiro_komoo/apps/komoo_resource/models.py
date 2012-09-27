@@ -70,19 +70,6 @@ class Resource(GeoRefModel, VotableModel):
     def __unicode__(self):
         return unicode(self.name)
 
-    ### Needed to slugify items ###
-    # def slug_exists(self, slug):
-    #     """Answers if a given slug is valid in the needs namespace of the
-    #     community.
-    #     """
-    #     return Resource.objects.filter(slug=slug).exists()
-
-    # def save(self, *args, **kwargs):
-    #     old_name = Resource.objects.get(id=self.id).name if self.id else None
-    #     if not self.id or old_name != self.name:
-    #         self.slug = slugify(self.name, self.slug_exists)
-    #     return super(Resource, self).save(*args, **kwargs)
-    ### END ###
 
     image = "img/resource.png"
     image_off = "img/resource-off.png"
@@ -93,8 +80,7 @@ class Resource(GeoRefModel, VotableModel):
 
     @property
     def home_url_params(self):
-        d = dict(resource_id=self.id)
-        return d
+        return dict(resource_id=self.id)
 
     @property
     def view_url(self):

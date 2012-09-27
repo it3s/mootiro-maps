@@ -12,7 +12,7 @@
 {% load project_tags %}
 {% load i18n %}
 
-{% block title %}{{ resource.name }} at {{ community.name }}{% endblock %}
+{% block title %}{{ resource.name }}{% endblock %}
 
 {% block menu %} {% menu "resource" %} {% endblock %}
 
@@ -109,7 +109,7 @@
 
         {% projects_for_object resource %}
 
-        {% taglist resource community %}
+        {% taglist resource %}
 
     </div>
 

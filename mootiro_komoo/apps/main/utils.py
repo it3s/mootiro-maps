@@ -224,14 +224,14 @@ def templatetag_args_parser(*args):
     Usage:
 
     def mytemplatetag(..., arg1='', arg2='', arg3=''):
-        parsed_args = templatetag_args_parser(arg1, arg2, arg3)
+      parsed_args = templatetag_args_parser(arg1, arg2, arg3)
 
-        label = parsed_args.get('label', 'Default')
-        use_border = parsed_args.get('use_border', False)
-        zoom = parsed_args.get('zoom', 16)
+      label = parsed_args.get('label', 'Default')
+      use_border = parsed_args.get('use_border', False)
+      zoom = parsed_args.get('zoom', 16)
 
     And in the template...
-        {% mytemplatetag 'zoom=12' 'label=Your name' %}
+      {% mytemplatetag 'zoom=12' 'label=Your name' %}
 
     """
     parsed_args = {}
