@@ -55,12 +55,6 @@ def menu(context, selected_area=''):
     return dict(selected_area=selected_area)
 
 
-@register.inclusion_tag('main/templatetags/community_tabs.html')
-def community_tabs(obj=None):
-    community = _get_related_community(obj)
-    return dict(community=community)
-
-
 @register.inclusion_tag('main/templatetags/geo_objects_listing.html')
 def geo_objects_listing(arg1='', arg2='', arg3='', arg4=''):
     """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] [hide_names] %}"""
