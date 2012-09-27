@@ -5,8 +5,9 @@ from django.conf.urls.defaults import url, patterns
 
 
 urlpatterns = patterns('user_cas.views',
-    url(r'^login/?$', 'login', name="user_login"),
-    url(r'^logout/?$', 'logout', name="user_logout"),
+    url(r'^new/?$', 'user_new', name='user_new'),
+    url(r'^login/?$', 'login', name='user_login'),
+    url(r'^logout/?$', 'logout', name='user_logout'),
 
     url(r'^profile/update/?$', 'profile_update', name='profile_update'),
     url(r'^profile/update/public_settings/?$', 'profile_update_public_settings',

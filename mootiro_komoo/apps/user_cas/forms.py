@@ -3,6 +3,8 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+
 from ajaxforms import AjaxModelForm
 from komoo_map.forms import MapButtonWidget
 from fileupload.forms import FileuploadField
@@ -42,3 +44,25 @@ class FormProfile(AjaxModelForm):
         UploadedFile.bind_files(
             self.cleaned_data.get('photo', '').split('|'), profile)
         return profile
+
+
+class FormUser(AjaxModelForm):
+    '''Simplified use form with the minimun required info.'''
+
+    class Meta:
+        model = User
+        fields = ('name', 'email', 'password')
+
+    _field_labels = {
+        'name': _('Name'),
+        'email': _('Email'),
+        'password': _('Password'),
+    }
+
+    name = forms.CharField(required=True)
+    email = forms.CharField(required=True)
+    password = forms.CharField(required=True, widget=forms.PasswordInput)
+
+    def __init__(self, *a, **kw):
+        self.helper = MooHelper(form_id="form_user")
+        return super(FormUser, self).__init__(*a, **kw)

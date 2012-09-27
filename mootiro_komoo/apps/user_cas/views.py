@@ -24,7 +24,7 @@ from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
 from main.utils import create_geojson
 
-from .forms import FormProfile
+from .forms import FormProfile, FormUser
 
 
 logger = logging.getLogger(__name__)
@@ -219,3 +219,21 @@ def signature_delete(request):
         return dict(success=True)
     return dict(success=False)
 
+
+########## DJANGO USERS ##########
+@ajax_form('user_cas/new.html', FormUser)
+def user_new(request):
+    '''Displays user creation form.'''
+
+    def on_get(request, form):
+        form.helper.form_action = reverse('user_new')
+        return form
+
+    def on_after_save(request, need):
+        # redirect_url = reverse('view_need', args=args)
+        redirect_url = 'http://www.google.com'
+        return {'redirect': redirect_url}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save}
+
+##################################
