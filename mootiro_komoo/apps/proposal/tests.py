@@ -40,17 +40,7 @@ class ProposalViewsTestCase(KomooTestCase):
         self.assert_200(url)
         self.assert_200(url, ajax=True)
 
-        kwargs = dict(community_slug='sao-remo', need_slug='parquinho')
-        url = reverse('new_proposal', kwargs=kwargs)
-        self.assert_200(url)
-        self.assert_200(url, ajax=True)
-
         kwargs = dict(need_slug='invalid')
-        url = reverse('new_proposal', kwargs=kwargs)
-        self.assert_404(url)
-        self.assert_404(url, ajax=True)
-
-        kwargs = dict(community_slug='invalid', need_slug='parquinho')
         url = reverse('new_proposal', kwargs=kwargs)
         self.assert_404(url)
         self.assert_404(url, ajax=True)
@@ -60,7 +50,7 @@ class ProposalViewsTestCase(KomooTestCase):
 
         data = A_PROPOSAL_DATA()
         n0 = Proposal.objects.count()
-        kwargs = dict(community_slug='sao-remo', need_slug='parquinho')
+        kwargs = dict(need_slug='parquinho')
         url = reverse('new_proposal', kwargs=kwargs)
         self.client.post(url, data)
         self.assertEquals(Proposal.objects.count(), n0 + 1)
@@ -73,10 +63,6 @@ class ProposalViewsTestCase(KomooTestCase):
         url = reverse('edit_proposal', kwargs=kwargs)
         self.assert_200(url)
 
-        kwargs = dict(community_slug='higienopolis', proposal_number='1',
-            need_slug='alfabetizacao-de-adultos')
-        url = reverse('edit_proposal', kwargs=kwargs)
-        self.assert_200(url)
 
     def test_proposal_edition(self):
         self.login_user()
@@ -84,7 +70,7 @@ class ProposalViewsTestCase(KomooTestCase):
         p = Proposal.objects.get(need__slug='alfabetizacao-de-adultos', number=1)
         data = A_PROPOSAL_DATA()
         data['id'] = p.id
-        kwargs = dict(community_slug='higienopolis',
+        kwargs = dict(
             need_slug='alfabetizacao-de-adultos', proposal_number='1')
         url = reverse('edit_proposal', kwargs=kwargs)
         http_resp = self.client.post(url, data)
@@ -98,7 +84,7 @@ class ProposalViewsTestCase(KomooTestCase):
     def test_proposal_empty_form_validation(self):
         self.login_user()
 
-        kwargs = dict(community_slug='sao-remo', need_slug='parquinho')
+        kwargs = dict(need_slug='parquinho')
         url = reverse('new_proposal', kwargs=kwargs)
         http_resp = self.client.post(url, data={})
         json = simplejson.loads(http_resp.content)
@@ -116,14 +102,8 @@ class ProposalViewsTestCase(KomooTestCase):
     def test_proposal_view_page(self):
         url = reverse('view_proposal', args=('alfabetizacao-de-adultos', '2'))
         self.assert_200(url)
-        url = reverse('view_proposal', args=('higienopolis',
-                'alfabetizacao-de-adultos', '2'))
-        self.assert_200(url)
 
         url = reverse('view_proposal', args=('invalid', '2'))
-        self.assert_404(url)
-        url = reverse('view_proposal', args=('invalid',
-                'alfabetizacao-de-adultos', '2'))
         self.assert_404(url)
         url = reverse('view_proposal', args=('alfabetizacao-de-adultos', '99'))
         self.assert_404(url)

@@ -121,11 +121,6 @@ class InvestmentViewsTestCase(KomooTestCase):
         self.assertContains(http_resp, "Investments")
         self.assertContains(http_resp, "Aluguel de sala")
         
-        url = reverse('investment_list', args=('sao-remo',))
-        self.assert_200(url)
-        self.assertContains(http_resp, "Investments")
-        self.assertContains(http_resp, "remo")
-        self.assertNotContains(http_resp, "Aluguel de sala")
 
     # ####### SEARCHES #######
     # @logged_and_unlogged

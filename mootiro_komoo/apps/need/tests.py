@@ -34,8 +34,6 @@ class NeedViewsTestCase(KomooTestCase):
         self.login_user()
         self.assert_200(reverse('new_need'))
         self.assert_200(reverse('new_need'), ajax=True)
-        self.assert_200(reverse('new_need', args=('sao-remo',)))
-        self.assert_200(reverse('new_need', args=('sao-remo',)), ajax=True)
 
     def test_new_need_creation(self):
         self.login_user()
@@ -48,11 +46,11 @@ class NeedViewsTestCase(KomooTestCase):
     def test_need_edit_page_is_up(self):
         self.login_user()
         self.assert_200(reverse('edit_need', args=('policiamento',)))
-        self.assert_200(reverse('edit_need', args=('sao-remo', 'parquinho')))
 
     def test_need_edition(self):
         self.login_user()
-        n = Need.objects.get(slug='coleta-de-lixo', community__slug='complexo-da-alema')
+        n = Need.objects.get(slug='coleta-de-lixo', 
+                community__slug='complexo-da-alema')
         data = {
             'id': n.id,  # must set with ajax_form decorator
             'community': [1, 2],
@@ -63,7 +61,7 @@ class NeedViewsTestCase(KomooTestCase):
             'tags': n.tags,
             'geometry': str(n.geometry),
         }
-        url = reverse('edit_need', args=('complexo-da-alema', 'coleta-de-lixo'))
+        url = reverse('edit_need', kwargs={'need_slug': 'coleta-de-lixo'})
         http_resp = self.client.post(url, data)
         self.assertEqual(http_resp.status_code, 200)
         n2 = Need.objects.get(slug='coleta-de-sujeira')
@@ -74,7 +72,7 @@ class NeedViewsTestCase(KomooTestCase):
     def test_need_edition_persists_m2m(self):
         # Related to Bug #2391 on redmine.
         self.login_user()
-        
+
         n0 = Need.objects.get(slug='coleta-de-lixo')
         ct0 = [ct.id for ct in n0.categories.all()]
         ta0 = [ta.id for ta in n0.target_audiences.all()]
@@ -89,10 +87,10 @@ class NeedViewsTestCase(KomooTestCase):
             'tags': n0.tags,
             'geometry': str(n0.geometry),
         }
-        url = reverse('edit_need', args=('complexo-da-alema', 'coleta-de-lixo'))
+        url = reverse('edit_need', kwargs={'need_slug': 'coleta-de-lixo'})
         http_resp = self.client.post(url, data)
         self.assertEqual(http_resp.status_code, 200)
-        
+
         n = Need.objects.get(slug='coleta-de-lixo')
         ct = [ct.id for ct in n.categories.all()]
         ta = [ta.id for ta in n.target_audiences.all()]
@@ -114,7 +112,7 @@ class NeedViewsTestCase(KomooTestCase):
             'target_audiences': [3, 4, 5],
             'geometry': str(n.geometry),
         }
-        url = reverse('edit_need', args=('complexo-da-alema', 'coleta-de-lixo'))
+        url = reverse('edit_need', kwargs={'need_slug': 'coleta-de-lixo'})
         http_resp = self.client.post(url, data)
         n = Need.objects.get(id=id0)
         self.assertEquals(n.slug, slug0)
@@ -140,19 +138,13 @@ class NeedViewsTestCase(KomooTestCase):
     def test_need_view_page(self):
         url = reverse('view_need', args=('policiamento',))
         self.assert_200(url)
-        url = reverse('view_need', args=('sao-remo', 'parquinho'))
-        self.assert_200(url)
         url = reverse('view_need', args=('lalala',))
-        self.assert_404(url)
-        url = reverse('view_need', args=('lalala', 'parquinho'))
         self.assert_404(url)
 
     # list
     @logged_and_unlogged
-    def test_communities_list_page_is_up(self):
+    def test_need_list_page_is_up(self):
         url = reverse('list_all_needs')
-        self.assert_200(url)
-        url = reverse('list_community_needs', args=('sao-remo',))
         self.assert_200(url)
 
     # searches
