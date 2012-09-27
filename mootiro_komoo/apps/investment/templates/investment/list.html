@@ -5,9 +5,7 @@
 {% load markitup_tags %}
 {% load i18n %}
 
-{% block title %}
-{% if community %} {% blocktrans %}Investiments for {{ community }}{% endblocktrans %}{% else %}{% trans 'Investments' %}{% endif %}
-{% endblock %}
+{% block title %} {% trans 'Investments' %} {% endblock %}
 
 {% block menu %} {% menu "investment" %} {% endblock %}
 
@@ -53,7 +51,7 @@
         <div class="view-list-footer">
           {% if investment.tags.count %}
           <div class="view-list-item-tags">
-            {% taglist investment community %}
+            {% taglist investment %}
           </div>
           {% endif %}
         </div>
