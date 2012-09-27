@@ -241,24 +241,24 @@ def templatetag_args_parser(*args):
             parsed_args[a[0]] = a[1]
     return parsed_args
 
-
-def fix_community_url(view_name):
-    def renderer(function):
-        @wraps(function)
-        def wrapper(request, community_slug='', *args, **kwargs):
-            from community.models import Community
-
-            comm_id = request.GET.get('community', '')
-            comm = Community.objects.get(pk=comm_id) if comm_id else None
-            if (community_slug and comm and comm.slug != community_slug) or (not community_slug and comm):
-                current_url = request.get_full_path()
-                url = reverse(view_name, kwargs={'community_slug': comm.slug})
-                url += current_url[current_url.index('?'):]
-                return HttpResponseRedirect(url)
-
-            return function(request, community_slug=community_slug, *args, **kwargs)
-        return wrapper
-    return renderer
+# deprecated ???
+# def fix_community_url(view_name):
+#     def renderer(function):
+#         @wraps(function)
+#         def wrapper(request, community_slug='', *args, **kwargs):
+#             from community.models import Community
+# 
+#             comm_id = request.GET.get('community', '')
+#             comm = Community.objects.get(pk=comm_id) if comm_id else None
+#             if (community_slug and comm and comm.slug != community_slug) or (not community_slug and comm):
+#                 current_url = request.get_full_path()
+#                 url = reverse(view_name, kwargs={'community_slug': comm.slug})
+#                 url += current_url[current_url.index('?'):]
+#                 return HttpResponseRedirect(url)
+# 
+#             return function(request, community_slug=community_slug, *args, **kwargs)
+#         return wrapper
+#     return renderer
 
 
 def clean_autocomplete_field(field_data, model):
