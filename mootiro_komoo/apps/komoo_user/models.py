@@ -1,9 +1,50 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
+
 from fileupload.models import UploadedFile
+
 from komoo_map.models import GeoRefModel, POINT
+
+
+class KomooUser(GeoRefModel):
+
+    # required info
+    # username = models.CharField(max_length=256, null=False)
+    name = models.CharField(max_length=256, null=False)
+    email = models.CharField(max_length=512, null=False)
+    
+    # password is only if not created through external provider
+    # TODO: encrypt password
+    _password = models.CharField(max_length=256, null=False)
+
+    def set_password(self, s):
+        # TODO: use some hash solution
+        self._password = s + 'hash'
+
+    def verify_password(self, s):
+        # TODO: use some hash solution
+        return self._password == s + 'hash'
+
+    # other useful info to collect
+    contact = models.TextField(null=True)
+
+    # user management info
+    is_active = models.BooleanField(default=False)
+    verification_key = models.CharField(max_length=32, null=True)
+
+    def __repr__(self):
+        return "<User: {}>".format(unicode(self.name))
+
+    def __unicode__(self):
+        return self.name
+
+    @property
+    def view_url(self):
+        return reverse('user_profile', kwargs={'user_id': self.id})
 
 
 class KomooProfile(GeoRefModel):

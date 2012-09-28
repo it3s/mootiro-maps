@@ -11,7 +11,7 @@ from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
-from .models import KomooProfile
+from .models import KomooUser, KomooProfile
 
 
 class FormProfile(AjaxModelForm):
@@ -46,11 +46,11 @@ class FormProfile(AjaxModelForm):
         return profile
 
 
-class FormUser(AjaxModelForm):
+class FormKomooUser(AjaxModelForm):
     '''Simplified use form with the minimun required info.'''
 
     class Meta:
-        model = User
+        model = KomooUser
         fields = ('name', 'email', 'password')
 
     _field_labels = {
@@ -65,4 +65,16 @@ class FormUser(AjaxModelForm):
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="form_user")
-        return super(FormUser, self).__init__(*a, **kw)
+        return super(FormKomooUser, self).__init__(*a, **kw)
+
+    def clean(self):
+        '''Form validations.'''
+        super(FormKomooUser, self).clean()
+        email = self.cleaned_data['email']
+
+        # TODO: if email is in use but was connected through external provider
+        #       (facebook, google, etc...) show specific error.
+        self.validation('email', _('This email is already in use.'),
+                KomooUser.objects.filter(email=email).exists())
+
+        return self.cleaned_data

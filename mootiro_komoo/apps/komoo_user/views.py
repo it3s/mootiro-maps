@@ -17,14 +17,16 @@ from django.utils import simplejson
 from django.forms.models import model_to_dict
 
 from annoying.decorators import render_to, ajax_request
+from annoying.functions import get_object_or_None
 from reversion.models import Revision
 
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
-from main.utils import create_geojson
+from main.utils import create_geojson, randstr
 
-from .forms import FormProfile, FormUser
+from .forms import FormProfile, FormKomooUser
+from .models import KomooUser
 
 
 logger = logging.getLogger(__name__)
@@ -221,7 +223,7 @@ def signature_delete(request):
 
 
 ########## DJANGO USERS ##########
-@ajax_form('komoo_user/new.html', FormUser)
+@ajax_form('komoo_user/new.html', FormKomooUser)
 def user_new(request):
     '''Displays user creation form.'''
 
@@ -229,11 +231,37 @@ def user_new(request):
         form.helper.form_action = reverse('user_new')
         return form
 
-    def on_after_save(request, need):
+    def on_after_save(request, user):
+        user.is_active = False
+        key = randstr(32)
+        while KomooUser.objects.filter(verification_key=key).exists():
+            key = randstr(32)
+        user.verification_key = key
+        # TODO: send confirmation email
+        print '\n\nEMAIL USER VERIFICATION KEY\n%s\n\n' % user.verification_key
+        user.save()
         # redirect_url = reverse('view_need', args=args)
-        redirect_url = 'http://www.google.com'
+        redirect_url = reverse('user_check_inbox')
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
+
+
+@render_to('komoo_user/verification.html')
+def user_verification(request, key=''):
+    '''
+    Displays verification needed message if no key provided, or try to verify
+    the user by the given key.
+    '''
+    if not key:
+        return dict(message='check_email')
+    user = get_object_or_None(KomooUser, verification_key=key)
+    if not user:
+        return dict(message='invalid_key')
+    if user.is_active:
+        return dict(message='already_verified')
+    # user.is_active = True
+    # user.save()
+    return dict(message='activated')
 
 ##################################

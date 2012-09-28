@@ -5,6 +5,8 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import re
 from markdown import markdown
+from string import letters, digits
+from random import choice
 
 from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
@@ -273,3 +275,12 @@ def clean_autocomplete_field(field_data, model):
 
 def render_markup(text):
     return markdown(text, safe_mode=True) if text else ''
+
+
+def randstr(l=10):
+    chars = letters + digits
+    s = ''
+    for i in range(l):
+        s = s + choice(chars)
+    return s
+

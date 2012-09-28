@@ -1,0 +1,24 @@
+{% extends 'global.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+  {% if message == 'check_email' %}
+    CHECK YOUR EMAIL
+  {% endif %}
+
+  {% if message == 'invalid_key' %}
+    INVALID KEY
+  {% endif %}
+
+  {% if message == 'already_verified' %}
+    ACCOUNT ALREADY VERIFIED
+  {% endif %}
+
+  {% if message == 'activated' %}
+    SUCCESFULLY ACTIVATED. DO LOGIN =D <br/>
+    {% include "main/login_box.html" %}
+  {% endif %}
+
+{% endblock %}
