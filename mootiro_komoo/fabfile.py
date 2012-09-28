@@ -62,7 +62,7 @@ def build_environment():
 def coffee_maker():
     """ runs coffeescript compiler"""
     # apps we want to compile our coffee files
-    COFFEE_SHOP = ['main', 'komoo_map', 'user_cas', 'discussion',
+    COFFEE_SHOP = ['main', 'komoo_map', 'komoo_user', 'discussion',
                    'organization', 'komoo_project']
     for app in COFFEE_SHOP:
         local(
@@ -108,7 +108,7 @@ def kill_manage_tasks():
 def test(
         apps=" ".join([
             'community', 'need', 'organization', 'proposal', 'komoo_resource',
-            'investment', 'main', 'user_cas', 'moderation']),
+            'investment', 'main', 'komoo_user', 'moderation']),
         recreate_db=False):
     """Run application tests"""
     if recreate_db:

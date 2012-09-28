@@ -30,7 +30,7 @@ from .forms import FormProfile, FormUser
 logger = logging.getLogger(__name__)
 
 
-@render_to('user_cas/login.html')
+@render_to('komoo_user/login.html')
 def login(request):
     """Displays a page with login options."""
     return {}
@@ -95,7 +95,7 @@ def _prepare_contrib_data(version, created_date):
     return contrib
 
 
-@render_to('user_cas/profile.html')
+@render_to('komoo_user/profile.html')
 def profile(request, user_id=''):
     logger.debug('user_id : {}'.format(user_id))
     if not user_id:
@@ -119,7 +119,7 @@ def profile(request, user_id=''):
     return dict(user_profile=user, contributions=contributions, geojson=geojson)
 
 
-@render_to('user_cas/profile_update.html')
+@render_to('komoo_user/profile_update.html')
 @login_required
 def profile_update(request):
     signatures = []
@@ -221,7 +221,7 @@ def signature_delete(request):
 
 
 ########## DJANGO USERS ##########
-@ajax_form('user_cas/new.html', FormUser)
+@ajax_form('komoo_user/new.html', FormUser)
 def user_new(request):
     '''Displays user creation form.'''
 

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.conf.urls.defaults import url, patterns
 
 
-urlpatterns = patterns('user_cas.views',
+urlpatterns = patterns('komoo_user.views',
     url(r'^new/?$', 'user_new', name='user_new'),
     url(r'^login/?$', 'login', name='user_login'),
     url(r'^logout/?$', 'logout', name='user_logout'),

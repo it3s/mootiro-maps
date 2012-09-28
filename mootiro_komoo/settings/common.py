@@ -86,14 +86,12 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.facebook.FacebookBackend',
     'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
-    'user_cas.KomooCASBackend',  # http://code.google.com/p/django-cas/
 )
 
 
 # ========== Application ======================================================
 
 LOGIN_URL = '/user/login'
-AUTH_PROFILE_MODULE = 'user_cas.KomooProfile'
 
 ROOT_URLCONF = 'mootiro_komoo.urls'
 
@@ -135,7 +133,7 @@ INSTALLED_APPS = [
     'komoo_comments',
     'vote',
     'komoo_resource',
-    'user_cas',
+    'komoo_user',
     'organization',
     'investment',
     'moderation',
@@ -179,7 +177,7 @@ AJAX_LOOKUP_CHANNELS = {
     'community': ('community.lookups', 'CommunityLookup'),
     'organizationcategory': ('organization.lookups',
                              'OrganizationCategoryLookup'),
-    'user': ('user_cas.lookups', 'UserLookup'),
+    'user': ('komoo_user.lookups', 'UserLookup'),
 }
 AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = False
