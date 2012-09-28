@@ -28,7 +28,6 @@ def project_list(request):
 
     sort_order = ['creation_date', 'votes', 'name']
 
-    community = None
     query_set = Project.objects
 
     query_set = filtered_query(query_set, request)
@@ -37,8 +36,7 @@ def project_list(request):
     projects_count = projects_list.count()
     projects = paginated_query(projects_list, request)
 
-    return dict(projects=projects, community=community,
-                projects_count=projects_count)
+    return dict(projects=projects, projects_count=projects_count)
 
 
 @render_to('project/view.html')
@@ -48,7 +46,7 @@ def project_view(request, project_slug=''):
     proj_objects = {}
     items = []
 
-    proj_objects['User']= {'app_name': 'user_cas', 'objects_list': [{
+    proj_objects['User'] = {'app_name': 'user_cas', 'objects_list': [{
         'name': project.creator.get_name,
         'link': project.creator.profile.view_url,
         'id': project.creator.profile.id,
@@ -105,8 +103,7 @@ def project_map(request, project_slug=''):
         name = getattr(obj, 'get_name', '')
         if not name:
             name = getattr(obj, 'name', '')
-        related_items.append({'name': name.strip() , 'obj':obj})
-
+        related_items.append({'name': name.strip(), 'obj': obj})
 
     related_items.sort(key=lambda o: o['name'])
 
@@ -128,8 +125,7 @@ def project_new(request):
     def on_after_save(request, project):
         return {'redirect': project.view_url}
 
-    return {'on_get': on_get, 'on_after_save': on_after_save,
-            'project': None}
+    return {'on_get': on_get, 'on_after_save': on_after_save, 'project': None}
 
 
 @login_required
@@ -163,8 +159,8 @@ def add_related_object(request):
     proj = get_object_or_404(Project, pk=proj_id)
 
     if proj and obj_id and ct:
-        obj, created = ProjectRelatedObject.objects.get_or_create(content_type_id=ct,
-                object_id=obj_id, project_id=proj_id)
+        obj, created = ProjectRelatedObject.objects.get_or_create(
+                content_type_id=ct, object_id=obj_id, project_id=proj_id)
         if created:
             from update.models import Update
             from update.signals import create_update

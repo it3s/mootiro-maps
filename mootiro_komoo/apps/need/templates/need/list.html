@@ -5,15 +5,15 @@
 {% load markitup_tags %}
 {% load i18n %}
 
-{% block title %}{% trans 'Needs for' %} {{ community.name }}{% endblock %}
+{% block title %}{% trans 'Needs' %}{% endblock %}
 
-{% block menu %} {% menu community "need" %} {% endblock %}
+{% block menu %} {% menu "need" %} {% endblock %}
 
 {% block content %}
 <div id="main-content">
   <div class="highlight">
     <div class="button-new">
-      <a class="button login-required" href="{% if community %}{% url new_need community.slug %}{% else %}{% url new_need %}{% endif %}">{% trans 'New need' %}</a>
+      <a class="button login-required" href="{% url new_need %}">{% trans 'New need' %}</a>
     </div>
     <div class="view-list">
       <div class="view-list-top">
@@ -34,8 +34,8 @@
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
           <span class="apart big">
-            <a href="{% if community %}{% url view_need community.slug need.slug %}{% else %}{% url view_need need.slug %}{% endif %}"> {{ need.title }} </a>
-            {% if not community and need.community.all.count %}
+            <a href="{{ need.view_url }}"> {{ need.title }} </a>
+            {% if need.community.all.count %}
             {% trans 'at' %}
             {% for comm in need.community.all %}
               <a href="{% url view_community comm.slug %}">{{ comm.name }}</a>
@@ -62,7 +62,7 @@
         <div class="view-list-footer">
           {% if need.tags.count %}
           <div class="view-list-item-tags">
-            {% taglist need community %}
+            {% taglist need %}
           </div>
           {% endif %}
         </div>

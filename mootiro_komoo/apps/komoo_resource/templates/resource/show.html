@@ -12,9 +12,9 @@
 {% load project_tags %}
 {% load i18n %}
 
-{% block title %}{{ resource.name }} at {{ community.name }}{% endblock %}
+{% block title %}{{ resource.name }}{% endblock %}
 
-{% block menu %} {% menu community "resource" %} {% endblock %}
+{% block menu %} {% menu "resource" %} {% endblock %}
 
 {% block content %}
   {% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'ajax=True' 'lazy=True' %}
@@ -109,7 +109,7 @@
 
         {% projects_for_object resource %}
 
-        {% taglist resource community %}
+        {% taglist resource %}
 
     </div>
 

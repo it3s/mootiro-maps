@@ -51,17 +51,8 @@ def geojson(obj=None):
 
 
 @register.inclusion_tag('main/templatetags/menu.html', takes_context=True)
-def menu(context, obj=None, selected_area=''):
-    community = context.get('community', None)
-    # if not community:
-    #     community = _get_related_community(obj)
-    return dict(community=community, selected_area=selected_area)
-
-
-@register.inclusion_tag('main/templatetags/community_tabs.html')
-def community_tabs(obj=None):
-    community = _get_related_community(obj)
-    return dict(community=community)
+def menu(context, selected_area=''):
+    return dict(selected_area=selected_area)
 
 
 @register.inclusion_tag('main/templatetags/geo_objects_listing.html')

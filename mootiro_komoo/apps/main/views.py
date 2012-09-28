@@ -49,7 +49,7 @@ ENTITY_MODEL_REV = {v: k for k, v in ENTITY_MODEL.items()}
 
 @render_to('main/root.html')
 def root(request):
-    return dict(community=None, geojson={})
+    return dict(geojson={})
 
 
 def _fetch_geo_objects(Q, zoom):

@@ -37,11 +37,7 @@ class ResourceViewsTestCase(KomooTestCase):
 
         self.assert_200(reverse('new_resource'))
         self.assert_200(reverse('new_resource'), ajax=True)
-        self.assert_200(reverse('new_resource', args=('sao-remo',)))
-        self.assert_200(reverse('new_resource', args=('sao-remo',)), ajax=True)
 
-        self.assert_404(reverse('new_resource', args=('invalid',)))
-        self.assert_404(reverse('new_resource', args=('invalid',)), ajax=True)
 
     def test_new_resource_creation(self):
         self.login_user()
@@ -92,24 +88,14 @@ class ResourceViewsTestCase(KomooTestCase):
     def test_organization_view_page_is_up(self):
         url = reverse('view_resource', args=('1',))
         self.assert_200(url)
-        url = reverse('view_resource', args=('sao-remo', '1',))
-        self.assert_200(url)
-        url = reverse('view_resource', args=('parque-jurassico', '1',))
-        self.assert_200(url)
 
-        url = reverse('view_resource', args=('higienopolis', '1',))
-        self.assert_404(url)
         url = reverse('view_resource', args=('999',))
-        self.assert_404(url)
-        url = reverse('view_resource', args=('sao-remo', '999',))
         self.assert_404(url)
 
     ####### LISTING #######
     @logged_and_unlogged
     def test_resource_list_page_is_up(self):
         url = reverse('resource_list')
-        self.assert_200(url)
-        url = reverse('resource_list', args=('sao-remo',))
         self.assert_200(url)
 
     ####### SEARCHES #######

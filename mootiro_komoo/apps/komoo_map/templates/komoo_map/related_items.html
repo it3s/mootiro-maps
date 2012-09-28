@@ -2,7 +2,7 @@
 {% load komoo_tags %}
 {% block title %}Mootiro Maps{% endblock %}
 
-{% block menu %} {% menu community "map" %} {% endblock %}
+{% block menu %} {% menu "map" %} {% endblock %}
 
 {% block content %}
   {% include 'komoo_map/map_with_panel.html' with type='static' panel='komoo_map/related_items_panel.html' %}

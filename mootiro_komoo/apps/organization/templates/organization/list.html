@@ -8,7 +8,7 @@
 
 {% block title %}{% trans 'Organizations' %}{% endblock %}
 
-{% block menu %} {% menu community "organization" %} {% endblock %}
+{% block menu %} {% menu "organization" %} {% endblock %}
 
 {% block content %}
   <div id="main-content">
@@ -16,11 +16,7 @@
     <div class="highlight">
 
       <div class="button-new">
-        {% if community %}
-        <a class="button login-required" href="{% url new_organization community.slug %}">{% trans "New Organization" %}</a>
-        {% else %}
         <a class="button login-required" href="{% url new_organization %}">{% trans "New Organization" %}</a>
-        {% endif %}
       </div>
 
     <div class="view-list-top">
@@ -42,15 +38,9 @@
           </div>
           <div class="inline-block org-list-header">
             <div>
-              {% if community %}
-                <a href="/{{ community.slug }}/organization/{{ org.slug }}" class="org-name">
-                    {{ org.name }}
-                </a>
-              {% else %}
-                <a href="/organization/{{ org.slug }}" class="org-list-name">
+                <a href="{{ org.view_url }}" class="org-list-name">
                   {{ org.name }}
                 </a>
-              {% endif %}
                 {# <a data-geojson="{% geojson org %}" href="#" class="small preview-on-map list-map-preview"> #}
                 {#     <i class="icon-see-on-map"></i> #}
                 {# </a> #}
@@ -108,7 +98,7 @@
         <div class="view-list-footer">
           {% if org.tags.count %}
           <div class="view-list-item-tags">
-            {% taglist org community %}
+            {% taglist org %}
           </div>
           {% endif %}
         </div>

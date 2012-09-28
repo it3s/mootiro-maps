@@ -37,8 +37,6 @@ class OrganizationViewsTestCase(KomooTestCase):
         self.login_user()
         self.assert_200(reverse('new_organization'))
         self.assert_200(reverse('new_organization'), ajax=True)
-        self.assert_200(reverse('new_organization', args=('sao-remo',)))
-        self.assert_200(reverse('new_organization', args=('sao-remo',)), ajax=True)
 
     def test_new_organization_creation(self):
         self.login_user()
@@ -51,7 +49,6 @@ class OrganizationViewsTestCase(KomooTestCase):
     def test_organization_edit_page_is_up(self):
         self.login_user()
         self.assert_200(reverse('edit_organization', args=('alavanca-brasil',)))
-        self.assert_200(reverse('edit_organization', args=('sao-remo', 'alavanca-brasil')))
 
     def test_organization_edition(self):
         self.login_user()
@@ -84,19 +81,11 @@ class OrganizationViewsTestCase(KomooTestCase):
     def test_organization_view_page_is_up(self):
         url = reverse('view_organization', args=('alavanca-brasil',))
         self.assert_200(url)
-        url = reverse('view_organization', args=('sao-remo', 'alavanca-brasil',))
-        self.assert_200(url)
-        url = reverse('view_organization', args=('lalala', 'alavanca-brasil',))
-        self.assert_404(url)
-        url = reverse('view_organization', args=('sao-remo', 'lalala',))
-        self.assert_404(url)
 
     # list
     @logged_and_unlogged
     def test_organization_list_page_is_up(self):
         url = reverse('organization_list')
-        self.assert_200(url)
-        url = reverse('organization_list', args=('sao-remo',))
         self.assert_200(url)
 
     # searches

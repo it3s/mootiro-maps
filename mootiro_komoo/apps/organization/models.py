@@ -130,8 +130,7 @@ class Organization(VotableModel):
     # url aliases
     @property
     def home_url_params(self):
-        d = dict(organization_slug=self.slug)
-        return d
+        return dict(organization_slug=self.slug)
 
     @property
     def view_url(self):

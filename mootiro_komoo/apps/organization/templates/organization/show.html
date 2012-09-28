@@ -12,15 +12,9 @@
 {% load upload_tags %}
 {% load project_tags %}
 
-{% block title %}
-  {% if community %}
-    {% blocktrans with organization.name as organization and community as community %}{{organization}} at {{community}}{% endblocktrans %}
-  {% else %}
-    {{ organization.name }}
-  {% endif %}
-{% endblock %}
+{% block title %} {{ organization.name }} {% endblock %}
 
-{% block menu %} {% menu organization "organization" %} {% endblock %}
+{% block menu %} {% menu "organization" %} {% endblock %}
 
 {% block content %}
 {% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=' 'lazy=True' %}
@@ -249,7 +243,7 @@
         </div>
 
         {% projects_for_object organization %}
-        {% taglist organization community %}
+        {% taglist organization %}
 
     </div>
 

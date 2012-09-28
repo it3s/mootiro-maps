@@ -88,14 +88,10 @@
           <div id="search-results-box"></div>
 
           {% block menu %}
-            {% with obj=community selected_area="" %}
-              {% menu obj selected_area %}
-            {% endwith %}
+              {% menu "" %}
           {% endblock %}
 
         </div>
-
-      {% with c=community %} {% community_tabs c %} {% endwith %}
 
       </div>
       <div id="content">

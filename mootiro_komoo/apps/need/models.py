@@ -106,7 +106,7 @@ class Need(GeoRefModel, VotableModel):
             ('Security'),
         ]
         form_view_name = 'new_need_from_map'
-        form_view_kwargs = {'community_slug': 'communitySlug'}
+        form_view_kwargs = {}
 
     def __unicode__(self):
         return unicode(self.title)
@@ -130,17 +130,8 @@ class Need(GeoRefModel, VotableModel):
 
     # Url aliases
     @property
-    def base_url_params(self):
-        d = dict()
-        if self.community and self.community.all():
-            d['community_slug'] = self.community.all()[0].slug
-        return d
-
-    @property
     def home_url_params(self):
-        d = self.base_url_params
-        d.update(dict(need_slug=self.slug))
-        return d
+        return {'need_slug': self.slug}
 
     @property
     def view_url(self):

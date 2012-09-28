@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 @login_required
 @ajax_form('community/edit_ajax.html', CommunityForm)
 def new_community(request, *args, **kwargs):
-    def on_get(request,  form_community):
+    def on_get(request, form_community):
         form_community.helper.form_action = reverse('new_community')
         return form_community
 
@@ -61,8 +61,8 @@ def edit_community(request, community_slug='', *args, **kwargs):
         url = reverse('view_community', args=(obj.slug,))
         return {'redirect': url}
 
-    return {'on_get': on_get, 'on_after_save': on_after_save, 'community': community,
-            'geojson': geojson}
+    return {'on_get': on_get, 'on_after_save': on_after_save,
+            'community': community, 'geojson': geojson}
 
 
 @render_to('community/on_map.html')
@@ -118,12 +118,11 @@ def communities_geojson(request):
 
 def search_by_name(request):
     term = request.GET['term']
-    # rx = "^{0}|\s{0}".format(term)  # matches only beginning of words
-    # communities = Community.objects.filter(Q(name__iregex=rx) | Q(slug__iregex=rx))
     communities = Community.objects.filter(Q(name__icontains=term) |
                                            Q(slug__icontains=term))
     d = [{'value': c.id, 'label': c.name} for c in communities]
-    return HttpResponse(simplejson.dumps(d), mimetype="application/x-javascript")
+    return HttpResponse(simplejson.dumps(d),
+                        mimetype="application/x-javascript")
 
 
 def search_tags(request):
