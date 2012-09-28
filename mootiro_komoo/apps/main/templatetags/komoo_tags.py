@@ -157,17 +157,11 @@ def social_buttons():
 def taglist(obj, community=None):
     sorter = 'name'
     if isinstance(obj, Resource):
-        link = reverse('resource_list',
-                    kwargs={'community_slug': community.slug}) if community \
-                else reverse('resource_list')
+        link = reverse('resource_list')
     elif isinstance(obj, Organization):
-        link = reverse('organization_list',
-                    kwargs={'community_slug': community.slug}) if community \
-                else reverse('organization_list')
+        link = reverse('organization_list')
     elif isinstance(obj, Need):
-        link = reverse('list_community_needs',
-                    kwargs={'community_slug': community.slug}) if community \
-                else reverse('list_all_needs')
+        link = reverse('need_list')
         sorter = 'title'
     elif isinstance(obj, Community):
         link = reverse('list_communities')

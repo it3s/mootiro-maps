@@ -14,7 +14,7 @@ urlpatterns = patterns('need.views',
     url(pr(r'^need/NEED_SLUG/?$'), 'view',
             name='view_need'),
 
-    url(r'^need/?$', 'list', name='list_all_needs'),
+    url(r'^need/?$', 'list', name='need_list'),
 
     url(r'^need/tag_search$', 'tag_search',
             name='need_tag_search'),

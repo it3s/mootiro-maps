@@ -144,7 +144,7 @@ class NeedViewsTestCase(KomooTestCase):
     # list
     @logged_and_unlogged
     def test_need_list_page_is_up(self):
-        url = reverse('list_all_needs')
+        url = reverse('need_list')
         self.assert_200(url)
 
     # searches
