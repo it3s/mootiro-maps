@@ -69,7 +69,7 @@ define ['map/geometries'], (geometries) ->
                     community_slug: @properties.community_slug
             else if @properties.type is 'Resource'
                 dutils.url.resolve('view_resource',
-                    resource_id: @properties.id
+                    id: @properties.id
                 ).replace '//', '/'
             else if @properties.type is 'OrganizationBranch'
                 dutils.url.resolve('view_organization',

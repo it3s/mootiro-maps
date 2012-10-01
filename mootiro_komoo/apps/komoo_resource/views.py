@@ -11,6 +11,7 @@ from django.db.models import Count
 from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to
+from annoying.functions import get_object_or_None
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
@@ -21,15 +22,6 @@ from main.utils import (create_geojson, paginated_query, sorted_query,
 
 
 logger = logging.getLogger(__name__)
-
-
-def prepare_resource_objects(resource_id=""):
-    """
-    Retrieves a resource. According to given parameters may raise an 404.
-    Creates a new resource if resource_id is evaluated as false.
-    """
-    return get_object_or_404(Resource, pk=resource_id) if resource_id else \
-           Resource()
 
 
 def resources_to_resource(self):
@@ -50,8 +42,8 @@ def resource_list(request):
 
 
 @render_to('resource/show.html')
-def show(request, community_slug=None, resource_id=None):
-    resource = prepare_resource_objects(resource_id=resource_id)
+def show(request, id=None):
+    resource = get_object_or_None(Resource, pk=id)
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]
@@ -61,7 +53,7 @@ def show(request, community_slug=None, resource_id=None):
 
 @login_required
 @ajax_form('resource/new.html', FormResource, 'form_resource')
-def new_resource(request, community_slug='', *arg, **kwargs):
+def new_resource(request, *arg, **kwargs):
     def on_get(request, form_resource):
         form_resource.helper.form_action = reverse('new_resource')
         return form_resource
@@ -88,8 +80,8 @@ def new_resource_from_map(request, *args, **kwargs):
 
 @login_required
 @ajax_form('resource/edit.html', FormResourceGeoRef, 'form_resource')
-def edit_resource(request, resource_id='', *arg, **kwargs):
-    resource = prepare_resource_objects(resource_id=resource_id)
+def edit_resource(request, id='', *arg, **kwargs):
+    resource = get_object_or_None(Resource, pk=id)
     geojson = create_geojson([resource], convert=False)
 
     if geojson and geojson.get('features'):
@@ -99,7 +91,7 @@ def edit_resource(request, resource_id='', *arg, **kwargs):
     def on_get(request, form):
         form = FormResourceGeoRef(instance=resource)
         form.helper.form_action = reverse('edit_resource',
-                                          kwargs={'resource_id': resource_id})
+                                          kwargs={'id': id})
 
         return form
 

@@ -14,6 +14,8 @@ ORGANIZATION_SLUG = r'(?P<organization_slug>[a-zA-Z0-9-]+)'
 RESOURCE_ID = r'(?P<resource_id>\d+)'
 INVESTMENT_SLUG = r'(?P<investment_slug>[a-zA-Z0-9-]+)'
 PROJECT_SLUG = r'(?P<project_slug>[a-zA-Z0-9-]+)'
+SLUG = r'(?P<slug>[a-zA-Z0-9-]+)'
+ID = r'(?P<id>\d+)'
 
 handler500 = 'main.views.custom_500'
 handler404 = 'main.views.custom_404'
@@ -32,7 +34,9 @@ def prepare_regex(regex):
                 .replace('ORGANIZATION_SLUG', ORGANIZATION_SLUG) \
                 .replace('RESOURCE_ID', RESOURCE_ID) \
                 .replace('INVESTMENT_SLUG', INVESTMENT_SLUG) \
-                .replace('PROJECT_SLUG', PROJECT_SLUG)
+                .replace('PROJECT_SLUG', PROJECT_SLUG) \
+                .replace('SLUG', SLUG) \
+                .replace('ID', ID)
 
 
 def multiurls(prefixes, view_defs):

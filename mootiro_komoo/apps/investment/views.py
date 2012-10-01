@@ -9,14 +9,15 @@ from django.http import HttpResponse
 from django.utils import simplejson
 
 from annoying.decorators import render_to
+from annoying.functions import get_object_or_None
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
 from proposal.views import prepare_proposal_objects
 from organization.views import prepare_organization_objects
-from komoo_resource.views import prepare_resource_objects
 from investment.models import Investment
 from investment.forms import InvestmentForm
+from komoo_resource.models import Resource
 from main.utils import paginated_query, filtered_query, sorted_query
 
 
@@ -36,7 +37,7 @@ def prepare_investment_objects(community_slug="", need_slug="",
         grantee = prepare_organization_objects(organization_slug)
     elif resource_id:
         # grantee is a resource
-        grantee = prepare_resource_objects(resource_id)
+        grantee = get_object_or_None(Resource, pk=resource_id) or Resource()
     else:
         grantee = None
 

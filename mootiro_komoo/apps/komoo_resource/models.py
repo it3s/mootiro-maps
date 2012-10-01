@@ -80,7 +80,7 @@ class Resource(GeoRefModel, VotableModel):
 
     @property
     def home_url_params(self):
-        return dict(resource_id=self.id)
+        return dict(id=self.id)
 
     @property
     def view_url(self):

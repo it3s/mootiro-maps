@@ -108,7 +108,7 @@
           });
         } else if (this.properties.type === 'Resource') {
           return dutils.url.resolve('view_resource', {
-            resource_id: this.properties.id
+            id: this.properties.id
           }).replace('//', '/');
         } else if (this.properties.type === 'OrganizationBranch') {
           return dutils.url.resolve('view_organization', {

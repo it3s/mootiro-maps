@@ -51,7 +51,7 @@ class ResourceViewsTestCase(KomooTestCase):
     def test_resource_edit_page_is_up(self):
         self.login_user()
 
-        kwargs = dict(resource_id='1')
+        kwargs = dict(id='1')
         url = reverse('edit_resource', kwargs=kwargs)
         self.assert_200(url)
         self.assert_200(url, ajax=True)
@@ -61,7 +61,7 @@ class ResourceViewsTestCase(KomooTestCase):
         r = Resource.objects.get(id=1)
         data = A_RESOURCE_DATA()
         data['id'] = r.id
-        url = reverse('edit_resource', kwargs=dict(resource_id='1'))
+        url = reverse('edit_resource', kwargs=dict(id='1'))
         http_resp = self.client.post(url, data)
         self.assertEqual(http_resp.status_code, 200)
         r2 = Resource.objects.get(name=data["name"])
