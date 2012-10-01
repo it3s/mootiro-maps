@@ -1,12 +1,25 @@
 # -*- coding: utf-8 -*-
 from django.test import TestCase
+from django.test.client import Client
 from django.contrib.contenttypes.models import ContentType
 from functools import wraps
 
 from django.contrib.auth.models import User
 
 
-A_POLYGON_GEOMETRY = '{"type":"GeometryCollection","geometries":[{"type":"Polygon","coordinates":[[[0,0],[1,1],[2,2],[0,0]]]}]}'
+A_POLYGON_GEOMETRY = '''
+    {
+        "type":"GeometryCollection",
+        "geometries":[
+            {
+                "type":"Polygon",
+                "coordinates":[
+                        [[0,0],[1,1],[2,2],[0,0]]
+                ]
+            }
+        ]
+    }
+'''
 
 
 def logged_and_unlogged(test_method):
@@ -22,7 +35,8 @@ def logged_and_unlogged(test_method):
             self.client.logout()
             test_method(self)
         except Exception as err:
-            err.args = (err.args[0] + "\n\nUnlogged run failed",) + err.args[1:]
+            err.args = (err.args[0] + "\n\nUnlogged run failed",
+                    ) + err.args[1:]
             raise
     return test_wrapper
 
@@ -97,3 +111,37 @@ class MainViewsTestCase(KomooTestCase):
         new_query_set = filtered_query(query_set, req)
         self.assertEquals(new_query_set.count(), 1)
         self.assertEquals(new_query_set[0].name, u'Biblioteca comunitária')
+
+#
+# ================== Tests for module Utils ===================================
+#
+
+
+class UtilsTestCase(KomooTestCase):
+
+    def test_rest_resource_get(self):
+        # this url only exists on TESTING mode
+        r = Client().get('/test_resource/')
+        self.assertTrue(r.status_code, 200)
+        self.assertContains(r, 'Resource::GET')
+
+    def test_rest_resource_post(self):
+        r = Client().post('/test_resource/')
+        self.assertTrue(r.status_code, 200)
+        self.assertContains(r, 'Resource::POST')
+
+    def test_rest_resource_put(self):
+        r = Client().put('/test_resource/')
+        self.assertTrue(r.status_code, 200)
+        self.assertContains(r, 'Resource::PUT')
+
+    def test_rest_resource_delete(self):
+        r = Client().delete('/test_resource/')
+        self.assertTrue(r.status_code, 200)
+        self.assertContains(r, 'Resource::DELETE')
+
+    def test_rest_resource_method_not_allowed(self):
+        r = Client().options('/test_resource/')
+        # assert method is not allowed
+        self.assertTrue(r.status_code, 405)
+

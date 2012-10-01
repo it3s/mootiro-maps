@@ -12,6 +12,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.urlresolvers import reverse
 from django.shortcuts import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
+from django.http import Http404, HttpResponseNotAllowed
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
@@ -220,9 +221,8 @@ def filtered_query(query_set, request):
 
 def templatetag_args_parser(*args):
     """
-    Keyword-arguments like function parser. Designed to be used in templatetags.
+    Keyword-arguments like function parser. Designed to be used in templatetags
     Usage:
-
     def mytemplatetag(..., arg1='', arg2='', arg3=''):
       parsed_args = templatetag_args_parser(arg1, arg2, arg3)
 
@@ -241,25 +241,6 @@ def templatetag_args_parser(*args):
             parsed_args[a[0]] = a[1]
     return parsed_args
 
-# deprecated ???
-# def fix_community_url(view_name):
-#     def renderer(function):
-#         @wraps(function)
-#         def wrapper(request, community_slug='', *args, **kwargs):
-#             from community.models import Community
-# 
-#             comm_id = request.GET.get('community', '')
-#             comm = Community.objects.get(pk=comm_id) if comm_id else None
-#             if (community_slug and comm and comm.slug != community_slug) or (not community_slug and comm):
-#                 current_url = request.get_full_path()
-#                 url = reverse(view_name, kwargs={'community_slug': comm.slug})
-#                 url += current_url[current_url.index('?'):]
-#                 return HttpResponseRedirect(url)
-# 
-#             return function(request, community_slug=community_slug, *args, **kwargs)
-#         return wrapper
-#     return renderer
-
 
 def clean_autocomplete_field(field_data, model):
     try:
@@ -273,3 +254,51 @@ def clean_autocomplete_field(field_data, model):
 
 def render_markup(text):
     return markdown(text, safe_mode=True) if text else ''
+
+
+def get_handler_method(request_handler, http_method):
+    """Utility function for the Resource Class dispacther."""
+    try:
+        handler_method = getattr(request_handler, http_method.lower())
+        if callable(handler_method):
+            return handler_method
+    except AttributeError:
+        pass
+
+
+class ResourceHandler:
+    """
+    Base class for REST-like resources.
+    usage:
+
+      on views.py
+      class SomeResource(ResourceHandler):
+
+        def get(self, request, document_id):
+          # your view code for GET requests go here
+
+        def post(self, request, document_id):
+          # your viewcode for POST request go here
+
+      on urls.py
+        url('^my_resource/$', views.SomeResource.dispatch, name='resource')
+    """
+    http_methods = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE']
+
+    @classmethod
+    def dispatch(cls, request, *args, **kwargs):
+        request_handler = cls()
+
+        if request.method in cls.http_methods:
+            handler_method = get_handler_method(request_handler,
+                                                request.method)
+            if handler_method:
+                return handler_method(request, *args, **kwargs)
+
+        methods = [method for method in cls.http_methods if get_handler_method(
+                                            request_handler, method)]
+        if len(methods) > 0:
+            # http 405: method not allowed
+            return HttpResponseNotAllowed(methods)
+        else:
+            raise Http404

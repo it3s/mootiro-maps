@@ -190,4 +190,7 @@ if 'test' in sys.argv:
     import logging
     logging.disable(logging.CRITICAL)
     FIXTURE_DIRS = ('fixtures/test/',)
+    TESTING = True
+else:
+    TESTING = False
 

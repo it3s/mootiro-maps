@@ -8,11 +8,6 @@ urlpatterns = patterns('need.views',
     url(r'^need/new/?$', 'new_need', name='new_need'),
     url(r'^need/new/from_map/?$', 'new_need_from_map',
             name='new_need_from_map'),
-    url(pr(r'^need/NEED_SLUG/edit/?$'), 'edit_need',
-            name='edit_need'),
-
-    url(pr(r'^need/NEED_SLUG/?$'), 'view',
-            name='view_need'),
 
     url(r'^need/?$', 'list', name='need_list'),
 
@@ -24,4 +19,10 @@ urlpatterns = patterns('need.views',
             name='target_audience_search'),
     url(r'^need/get_geojson$', 'needs_geojson',
             name='needs_geojson'),
+
+    url(pr(r'^need/NEED_SLUG/edit/?$'), 'edit_need',
+            name='edit_need'),
+
+    url(pr(r'^need/NEED_SLUG/?$'), 'view',
+            name='view_need'),
 )
