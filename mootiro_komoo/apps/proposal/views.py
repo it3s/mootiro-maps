@@ -17,27 +17,25 @@ from proposal.forms import ProposalForm
 logger = logging.getLogger(__name__)
 
 
-def prepare_proposal_objects(need_slug="", proposal_number=""):
+def prepare_proposal_objects(need_id='' ,proposal_number=''):
     """
     Retrieves a tuple (proposal, need). According to given
     parameters may raise an 404. Creates a new proposal if proposal_number is
     evaluated as false.
     """
-    need = get_object_or_404(Need, slug=need_slug)
-
+    need = get_object_or_404(Need, pk=need_id)
     if proposal_number:
-        proposal = get_object_or_404(Proposal, number=proposal_number,
-                                     need=need)
+        proposal = get_object_or_404(Proposal, number=proposal_number)
     else:
         proposal = Proposal(need=need)
-
     return proposal, need
 
 
 @login_required
 @ajax_form('proposal/edit.html', ProposalForm)
-def edit(request, need_slug="", proposal_number=""):
-    proposal, need = prepare_proposal_objects(need_slug, proposal_number)
+def edit(request, proposal_number=""):
+    need_id = request.GET.get('need_id', '')
+    proposal, need = prepare_proposal_objects(need_id, proposal_number)
 
     def on_get(request, form):
         return ProposalForm(instance=proposal)
@@ -50,8 +48,7 @@ def edit(request, need_slug="", proposal_number=""):
         return form
 
     def on_after_save(request, proposal):
-        kw = dict(need_slug=proposal.need.slug,
-                  proposal_number=proposal.number)
+        kw = dict(proposal_number=proposal.number, need_id=proposal.need.id)
         return {'redirect': reverse('view_proposal', kwargs=kw)}
 
     return {'on_get': on_get, 'on_before_validation': on_before_validation,
@@ -59,7 +56,7 @@ def edit(request, need_slug="", proposal_number=""):
 
 
 @render_to('proposal/view.html')
-def view(request, need_slug="", proposal_number=""):
-
-    proposal, need = prepare_proposal_objects(need_slug, proposal_number)
+def view(request, proposal_number=""):
+    need_id = request.GET.get('need_id', '')
+    proposal, need = prepare_proposal_objects(need_id, proposal_number)
     return dict(proposal=proposal)

@@ -131,7 +131,7 @@ class Need(GeoRefModel, VotableModel):
     # Url aliases
     @property
     def home_url_params(self):
-        return {'need_slug': self.slug}
+        return {'id': self.id}
 
     @property
     def view_url(self):

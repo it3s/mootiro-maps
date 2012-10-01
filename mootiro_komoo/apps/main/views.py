@@ -134,8 +134,7 @@ queries = {
             'description'
         ],
         'repr': 'name',
-        'link': lambda o: reverse('view_resource',
-                                  kwargs={'id': o.id})
+        'link': lambda o: reverse('view_resource', kwargs={'id': o.id})
     },
     'need': {
         'model': Need,
@@ -145,8 +144,7 @@ queries = {
             'description'
         ],
         'repr': 'title',
-        'link': lambda o: reverse('view_need',
-                                  kwargs={'need_slug': o.slug})
+        'link': lambda o: reverse('view_need', kwargs={'id': o.id})
     },
     'community': {
         'model': Community,

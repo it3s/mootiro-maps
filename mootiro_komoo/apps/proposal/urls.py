@@ -3,16 +3,16 @@ from django.conf.urls.defaults import patterns, url
 from mootiro_komoo.urls import prepare_regex as pr
 
 home_urls = [
-    r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER/',
+    r'^proposal/PROPOSAL_NUMBER/',
 ]
 
 urlpatterns = patterns('proposal.views',
-    url(pr(r'^need/NEED_SLUG/proposal/new$'), 'edit',
+    url(pr(r'^proposal/new/?$'), 'edit',
             name='new_proposal'),
 
-    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER/edit$'), 'edit',
+    url(pr(r'^proposal/ID/edit/?$'), 'edit',
             name='edit_proposal'),
 
-    url(pr(r'^need/NEED_SLUG/proposal/PROPOSAL_NUMBER$'), 'view',
+    url(pr(r'^proposal/ID/?$'), 'view',
             name='view_proposal'),
 )

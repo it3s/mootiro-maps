@@ -45,11 +45,11 @@ class NeedViewsTestCase(KomooTestCase):
     # edit_need
     def test_need_edit_page_is_up(self):
         self.login_user()
-        self.assert_200(reverse('edit_need', args=('policiamento',)))
+        self.assert_200(reverse('edit_need', args=(4,)))
 
     def test_need_edition(self):
         self.login_user()
-        n = Need.objects.get(slug='coleta-de-lixo', 
+        n = Need.objects.get(slug='coleta-de-lixo',
                 community__slug='complexo-da-alema')
         data = {
             'id': n.id,  # must set with ajax_form decorator
@@ -61,7 +61,7 @@ class NeedViewsTestCase(KomooTestCase):
             'tags': n.tags,
             'geometry': str(n.geometry),
         }
-        url = reverse('edit_need', kwargs={'need_slug': 'coleta-de-lixo'})
+        url = reverse('edit_need', kwargs={'id': n.id})
         http_resp = self.client.post(url, data)
         self.assertEqual(http_resp.status_code, 200)
         n2 = Need.objects.get(slug='coleta-de-sujeira')
@@ -87,7 +87,7 @@ class NeedViewsTestCase(KomooTestCase):
             'tags': n0.tags,
             'geometry': str(n0.geometry),
         }
-        url = reverse('edit_need', kwargs={'need_slug': 'coleta-de-lixo'})
+        url = reverse('edit_need', kwargs={'id': n0.id})
         http_resp = self.client.post(url, data)
         self.assertEqual(http_resp.status_code, 200)
 
@@ -98,9 +98,10 @@ class NeedViewsTestCase(KomooTestCase):
         self.assertNotEqual(ct0, ct)
         self.assertNotEqual(ta0, ta)
 
-    def test_need_slug_edition(self):
+    def test_need_edition(self):
         self.login_user()
-        n = Need.objects.get(slug='coleta-de-lixo', community__slug='complexo-da-alema')
+        n = Need.objects.get(slug='coleta-de-lixo',
+                             community__slug='complexo-da-alema')
         slug0 = n.slug
         id0 = n.id
         data = {
@@ -112,7 +113,7 @@ class NeedViewsTestCase(KomooTestCase):
             'target_audiences': [3, 4, 5],
             'geometry': str(n.geometry),
         }
-        url = reverse('edit_need', kwargs={'need_slug': 'coleta-de-lixo'})
+        url = reverse('edit_need', kwargs={'id': n.id})
         http_resp = self.client.post(url, data)
         n = Need.objects.get(id=id0)
         self.assertEquals(n.slug, slug0)
@@ -136,9 +137,9 @@ class NeedViewsTestCase(KomooTestCase):
     # view
     @logged_and_unlogged
     def test_need_view_page(self):
-        url = reverse('view_need', args=('policiamento',))
+        url = reverse('view_need', args=(4,))
         self.assert_200(url)
-        url = reverse('view_need', args=('lalala',))
+        url = reverse('view_need', args=(415,))
         self.assert_404(url)
 
     # list

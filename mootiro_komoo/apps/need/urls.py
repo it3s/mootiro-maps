@@ -17,12 +17,9 @@ urlpatterns = patterns('need.views',
             name='need_tag_search'),
     url(r'^need/target_audience_search/?$', 'target_audience_search',
             name='target_audience_search'),
-    url(r'^need/get_geojson$', 'needs_geojson',
-            name='needs_geojson'),
+    url(r'^need/get_geojson$', 'needs_geojson', name='needs_geojson'),
 
-    url(pr(r'^need/NEED_SLUG/edit/?$'), 'edit_need',
-            name='edit_need'),
+    url(pr(r'^need/ID/edit/?$'), 'edit_need', name='edit_need'),
 
-    url(pr(r'^need/NEED_SLUG/?$'), 'view',
-            name='view_need'),
+    url(pr(r'^need/ID/?$'), 'view', name='view_need'),
 )

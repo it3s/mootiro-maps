@@ -66,7 +66,7 @@
         {% proposal_summary proposal %}
       {% endfor %}
       <div class="centralizer">
-        <a class="button" href="{% url new_proposal need.slug %}">
+        <a class="button" href="{% url new_proposal %}?need_id={{ need.id }}">
         {% trans "New proposal" %}
         </a>
       </div>
@@ -79,7 +79,7 @@
         <ul>
           {% for n in similar_needs %}
           <li {% if forloop.counter > 3 %}class="overflow hidden"{% endif %}>
-            <a href="{% url view_need n.slug %}"> {{ n.title }} </a>
+            <a href="{% url view_need n.id %}"> {{ n.title }} </a>
             {% if n.community.all.count %}
               <span class="attenuate">
               {% for comm in n.community.all %}

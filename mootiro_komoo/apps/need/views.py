@@ -27,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 @login_required
 @ajax_form('need/edit.html', NeedForm)
-def new_need(request, need_slug=""):
+def new_need(request, id=""):
     geojson = {}
     need = None
 
@@ -36,8 +36,7 @@ def new_need(request, need_slug=""):
         return form
 
     def on_after_save(request, need):
-        args = (need.slug, )
-        redirect_url = reverse('view_need', args=args)
+        redirect_url = reverse('view_need', kwargs={'id': need.id})
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
@@ -46,7 +45,7 @@ def new_need(request, need_slug=""):
 
 @login_required
 @ajax_form('need/edit_ajax.html', NeedFormGeoRef)
-def new_need_from_map(request, need_slug=""):
+def new_need_from_map(request, id=""):
     geojson, need = {}, None
 
     def on_get(request, form):
@@ -54,8 +53,7 @@ def new_need_from_map(request, need_slug=""):
         return form
 
     def on_after_save(request, need):
-        args = (need.slug,)
-        redirect_url = reverse('view_need', args=args)
+        redirect_url = reverse('view_need', kwargs={'id': need.id})
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
@@ -64,8 +62,8 @@ def new_need_from_map(request, need_slug=""):
 
 @login_required
 @ajax_form('need/edit.html', NeedFormGeoRef)
-def edit_need(request, need_slug=""):
-    need = get_object_or_404(Need, slug=need_slug)
+def edit_need(request, id=""):
+    need = get_object_or_404(Need, pk=id)
 
     geojson = create_geojson([need], convert=False)
     if geojson and geojson.get('features'):
@@ -78,8 +76,7 @@ def edit_need(request, need_slug=""):
         return form
 
     def on_after_save(request, need):
-        args = (need.slug,)
-        redirect_url = reverse('view_need', args=args)
+        redirect_url = reverse('view_need', kwargs={'id': need.pk})
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
@@ -87,8 +84,8 @@ def edit_need(request, need_slug=""):
 
 
 @render_to('need/view.html')
-def view(request, need_slug=None):
-    need = get_object_or_404(Need, slug=need_slug)
+def view(request, id=None):
+    need = get_object_or_404(Need, pk=id)
     geojson = create_geojson([need])
     return dict(need=need, geojson=geojson)
 
@@ -108,7 +105,6 @@ def list(request):
 def tag_search(request):
     term = request.GET['term']
     qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
-    # qset = TaggedItem.tags_for(Need)
     tags = [t.name for t in qset]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
