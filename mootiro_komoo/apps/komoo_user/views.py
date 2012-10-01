@@ -15,6 +15,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.utils import simplejson
 from django.forms.models import model_to_dict
+from django.views.decorators.csrf import csrf_protect
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
@@ -25,24 +26,11 @@ from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
 from main.utils import create_geojson, randstr
 
-from .forms import FormProfile, FormKomooUser
+from .forms import FormProfile, FormKomooUser, FormKomooUserLogin
 from .models import KomooUser
 
 
 logger = logging.getLogger(__name__)
-
-
-@render_to('komoo_user/login.html')
-def login(request):
-    """Displays a page with login options."""
-    return {}
-
-def logout(request):
-    next_page = request.GET.get('next', '/')
-    auth_logout(request)
-    # Is it the right thing to logout from SSO?
-    # requests.get(cas_logout_url(request, next_page))
-    return redirect(next_page)
 
 
 def _prepare_contrib_data(version, created_date):
@@ -233,14 +221,17 @@ def user_new(request):
 
     def on_after_save(request, user):
         user.is_active = False
+        user.set_password(request.POST['password'])
+
+        # Email verification
         key = randstr(32)
         while KomooUser.objects.filter(verification_key=key).exists():
             key = randstr(32)
         user.verification_key = key
-        # TODO: send confirmation email
+        # TODO: send email
         print '\n\nEMAIL USER VERIFICATION KEY\n%s\n\n' % user.verification_key
+
         user.save()
-        # redirect_url = reverse('view_need', args=args)
         redirect_url = reverse('user_check_inbox')
         return {'redirect': redirect_url}
 
@@ -260,8 +251,62 @@ def user_verification(request, key=''):
         return dict(message='invalid_key')
     if user.is_active:
         return dict(message='already_verified')
-    # user.is_active = True
-    # user.save()
+    user.is_active = True
+    user.save()
     return dict(message='activated')
 
+
+@render_to('komoo_user/login.html')
+def login(request):
+    '''
+    GET: Displays a page with login options.
+    POST: Receives email and password and authenticate the user.
+    '''
+
+    if request.method == 'GET':
+        next = request.GET.get('next', '')
+        return dict(next=next)
+
+    email = request.POST['email']
+    password = request.POST['password']
+    if not email or not password:
+        return dict(login_error='wrong_credentials')
+
+    password = KomooUser.calc_hash(password)
+    q = KomooUser.objects.filter(email=email, _password=password)
+    if not q.exists():
+        return dict(login_error='wrong_credentials')
+
+    user = q.get()
+    if not user.is_active:
+        return dict(login_error='user_not_active')
+
+    _auth_login(request, user)
+
+    next = request.POST.get('next', '') or reverse('root')
+    return redirect(next)
+
+
+def logout(request):
+    next_page = request.GET.get('next', '/')
+    auth_logout(request)
+    # Is it the right thing to logout from SSO?
+    # requests.get(cas_logout_url(request, next_page))
+    return redirect(next_page)
+
 ##################################
+
+def _auth_login(request, user):
+    '''Persists user authentication in session.'''
+    # Based in django.contrib.auth.login (auth_login)
+
+    if 'user_id' in request.session:
+        if request.session['user_id'] != user.id:
+            # To avoid reusing another user's session, create a new, empty
+            # session if the existing session corresponds to a different
+            # authenticated user.
+            request.session.flush()
+    else:
+        request.session.cycle_key()
+    request.session['user_id'] = user.id
+    request.user = user

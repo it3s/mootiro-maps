@@ -1,0 +1,39 @@
+{% load i18n %}
+<section id="login">
+  <header>
+    {% trans "Log in" %}
+  </header>
+
+  <div id="external_providers">
+    <button>{% trans "Log in with Google" %}</button>
+    <button>{% trans "Log in with Facebook" %}</button>
+    <button>{% trans "Log in with Twitter" %}</button>
+  </div>
+
+  <br/><br/><br/>
+
+  {% if login_error %}
+    Errors: <br/>
+  {% endif %}
+
+  {% if login_error == 'wrong_credentials' %}
+    {% trans "Wrong credentials." %}
+  {% endif %}
+
+  {% if login_error == 'user_not_active' %}
+    {% trans "User email is not verificated." %}
+  {% endif %}
+
+  <br/><br/>
+
+  <form action="{% url user_login %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}"/>
+    <label for="email">Email</label>
+    <input id="email" type="email" name="email"/>
+    <label for="password">Password</label>
+    <input id="password" type="password" name="password"/>
+    <input type="submit"/>
+  </form>
+
+</section>
