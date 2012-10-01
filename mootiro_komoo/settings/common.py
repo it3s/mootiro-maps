@@ -112,7 +112,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     # 3rd party apps
-    'tinymce',
     'taggit',
     'django_js_utils',
     'crispy_forms',
