@@ -67,14 +67,8 @@ class Proposal(VotableModel):
 
     # Url aliases
     @property
-    def base_url_params(self):
-        return self.need.home_url_params
-
-    @property
     def home_url_params(self):
-        d = self.base_url_params
-        d.update(dict(proposal_number=self.number))
-        return d
+        return dict(id=self.id)
 
     @property
     def view_url(self):

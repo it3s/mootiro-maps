@@ -56,7 +56,7 @@
         {% endif %}
         {% endfor %}
       <div class="centralizer">  
-      <a class="button" href="{% url new_proposal proposal.need.slug %}">
+        <a class="button" href="{% url new_proposal %}?need={{ proposal.need.id }}">
           {%trans 'New proposal' %}
       </a>
       </div>
