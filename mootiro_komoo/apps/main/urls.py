@@ -20,24 +20,10 @@ urlpatterns = patterns('main.views',
 
 if settings.TESTING:
     # This is a little bit ugly but its for testing
-    from .utils import ResourceHandler
-    from django.http import HttpResponse
-
-    class MyResource(ResourceHandler):
-        def get(self, request):
-            return HttpResponse('Resource::GET')
-
-        def post(self, request):
-            return HttpResponse('Resource::POST')
-
-        def put(self, request):
-            return HttpResponse('Resource::PUT')
-
-        def delete(self, request):
-            return HttpResponse('Resource::DELETE')
+    from .views import TestResourceHandler
 
     urlpatterns += patterns('',
-        url(r'^test_resource/$', MyResource.dispatch),
+        url(r'^test_resource/$', TestResourceHandler.dispatch),
     )
 
 if settings.DEBUG:

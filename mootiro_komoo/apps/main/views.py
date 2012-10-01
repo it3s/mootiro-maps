@@ -16,6 +16,7 @@ from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
@@ -28,7 +29,7 @@ from organization.models import OrganizationBranch, Organization
 from komoo_resource.models import Resource
 from investment.models import Investment
 from komoo_project.models import Project
-from main.utils import create_geojson
+from main.utils import create_geojson, ResourceHandler
 
 logger = logging.getLogger(__name__)
 
@@ -310,3 +311,18 @@ def get_geojson_from_hashlink(request):
 
     return {'geojson': geojson}
 
+
+if settings.TESTING:
+    class TestResourceHandler(ResourceHandler):
+        """This is only a dummy handler used for testing"""
+        def get(self, request):
+            return HttpResponse('Resource::GET')
+
+        def post(self, request):
+            return HttpResponse('Resource::POST')
+
+        def put(self, request):
+            return HttpResponse('Resource::PUT')
+
+        def delete(self, request):
+            return HttpResponse('Resource::DELETE')
