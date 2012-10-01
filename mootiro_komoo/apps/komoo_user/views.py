@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import json
@@ -8,8 +7,6 @@ import requests
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
@@ -26,8 +23,11 @@ from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
 from main.utils import create_geojson, randstr
 
-from .forms import FormProfile, FormKomooUser, FormKomooUserLogin
 from .models import KomooUser
+from .forms import FormProfile, FormKomooUser
+from .utils import login_required
+from .utils import logout as auth_logout
+from .utils import login as auth_login
 
 
 logger = logging.getLogger(__name__)
@@ -262,7 +262,6 @@ def login(request):
     GET: Displays a page with login options.
     POST: Receives email and password and authenticate the user.
     '''
-
     if request.method == 'GET':
         next = request.GET.get('next', '')
         return dict(next=next)
@@ -281,8 +280,7 @@ def login(request):
     if not user.is_active:
         return dict(login_error='user_not_active')
 
-    _auth_login(request, user)
-
+    auth_login(request, user)
     next = request.POST.get('next', '') or reverse('root')
     return redirect(next)
 
@@ -290,23 +288,11 @@ def login(request):
 def logout(request):
     next_page = request.GET.get('next', '/')
     auth_logout(request)
-    # Is it the right thing to logout from SSO?
-    # requests.get(cas_logout_url(request, next_page))
     return redirect(next_page)
 
 ##################################
 
-def _auth_login(request, user):
-    '''Persists user authentication in session.'''
-    # Based in django.contrib.auth.login (auth_login)
-
-    if 'user_id' in request.session:
-        if request.session['user_id'] != user.id:
-            # To avoid reusing another user's session, create a new, empty
-            # session if the existing session corresponds to a different
-            # authenticated user.
-            request.session.flush()
-    else:
-        request.session.cycle_key()
-    request.session['user_id'] = user.id
-    request.user = user
+@render_to('komoo_user/secret.html')
+@login_required
+def secret(request):
+    return {}

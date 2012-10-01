@@ -10,8 +10,6 @@
     <button>{% trans "Log in with Twitter" %}</button>
   </div>
 
-  <br/><br/><br/>
-
   {% if login_error %}
     Errors: <br/>
   {% endif %}
@@ -33,6 +31,7 @@
     <input id="email" type="email" name="email"/>
     <label for="password">Password</label>
     <input id="password" type="password" name="password"/>
+    <br/>
     <input type="submit"/>
   </form>
 

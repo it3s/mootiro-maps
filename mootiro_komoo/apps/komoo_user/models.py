@@ -39,12 +39,16 @@ class KomooUser(GeoRefModel):
     is_active = models.BooleanField(default=False)
     verification_key = models.CharField(max_length=32, null=True)
 
+    def is_authenticated(self):
+        return True
+
     def __unicode__(self):
         return self.name
 
     @property
     def view_url(self):
         return reverse('user_profile', kwargs={'user_id': self.id})
+
 
 
 class KomooProfile(GeoRefModel):
