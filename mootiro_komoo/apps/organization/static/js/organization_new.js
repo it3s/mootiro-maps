@@ -55,7 +55,7 @@ $(function(){
                     $('.step_1_row_1').hide();
                     $('.step_1_row_2').show();
                     $('#form_branch #id_branch_organization').val(data.id);
-                    $('#btn_concluir').attr('slug', data.slug);
+                    $('#btn_concluir').attr('id', data.id);
                 } else {
                     // change_msg('Esta organização ainda não foi cadastrada. Deseja adicionar esta organização?');
                     change_msg(gettext("This organization is not registered yet. Do you want to add this organization?"));
@@ -92,8 +92,9 @@ $(function(){
     });
 
     $('#btn_concluir').click(function(){
-        var slug = $(this).attr('slug');
-        window.location.pathname = dutils.urls.resolve('view_organization', {'organization_slug': slug});
+        var id = $(this).attr('id');
+        url =  dutils.urls.resolve('view_organization', {'id': id });
+        window.location.pathname =  url;
     });
 
     $('#form_organization').ajaxform({
@@ -103,7 +104,7 @@ $(function(){
             change_msg(gettext('Congratulations, your organization was successfully saved. Please, now add the data from the branch you have marked on the map'));
             $('#form_branch #id_branch_organization').val(data.obj.id);
             $('#id_filial_org_name').val(data.obj.name);
-            $('#btn_concluir').attr('slug', data.obj.slug);
+            $('#btn_concluir').attr('id', data.obj.id);
         }
     });
     $('#form_branch').ajaxform({

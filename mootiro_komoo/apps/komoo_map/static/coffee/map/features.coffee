@@ -73,7 +73,7 @@ define ['map/geometries'], (geometries) ->
                 ).replace '//', '/'
             else if @properties.type is 'OrganizationBranch'
                 dutils.url.resolve('view_organization',
-                    organization_slug: @properties.organization_slug
+                    id: @properties.id
                 ).replace '//', '/'
             else
                 slugname = "#{@properties.type.toLowerCase()}_slug"

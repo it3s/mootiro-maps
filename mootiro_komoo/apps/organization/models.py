@@ -68,7 +68,8 @@ class Organization(VotableModel):
             [b for b in self.organizationbranch_set.all()] + \
             [r for r in self.supported_resources] + \
             [p.need for p in self.supported_proposals] + \
-            [b for o in self.supported_organizations for b in o.organizationbranch_set.all()]
+            [b for o in self.supported_organizations
+                    for b in o.organizationbranch_set.all()]
 
     @property
     def as_investor(self):
@@ -102,7 +103,7 @@ class Organization(VotableModel):
         return super(Organization, self).save(*args, **kwargs)
 
     def files_set(self):
-        """ pseudo-reverse query for retrieving Resource Files"""
+        """ pseudo-reverse query for retrieving Organization Files"""
         return UploadedFile.get_files_for(self)
 
     @property
@@ -130,7 +131,7 @@ class Organization(VotableModel):
     # url aliases
     @property
     def home_url_params(self):
-        return dict(organization_slug=self.slug)
+        return dict(id=self.id)
 
     @property
     def view_url(self):
@@ -150,9 +151,9 @@ class Organization(VotableModel):
         return reverse('new_investment', kwargs=self.home_url_params)
 
     @property
-
     def related_items_url(self):
-        return reverse('view_organization_related_items', kwargs=self.home_url_params)
+        return reverse('view_organization_related_items',
+                       kwargs=self.home_url_params)
 
     @property
     def json(self):

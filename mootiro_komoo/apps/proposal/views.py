@@ -17,7 +17,7 @@ from proposal.forms import ProposalForm
 logger = logging.getLogger(__name__)
 
 
-def prepare_proposal_objects(need_id='' ,proposal_id=''):
+def prepare_proposal_objects(need_id='', proposal_id=''):
     """
     Retrieves a tuple (proposal, need). According to given
     parameters may raise an 404. Creates a new proposal if proposal_id is
@@ -38,8 +38,6 @@ def prepare_proposal_objects(need_id='' ,proposal_id=''):
 @ajax_form('proposal/edit.html', ProposalForm)
 def edit(request, id=""):
     need_id = request.GET.get('need', '')
-    print '>>>>>>NEED ID', need_id
-
     proposal, need = prepare_proposal_objects(need_id, id)
 
     def on_get(request, form):
@@ -48,8 +46,7 @@ def edit(request, id=""):
     def on_after_save(request, obj):
         return {'redirect': reverse('view_proposal', kwargs={'id': obj.id})}
 
-    return {'on_get': on_get,#'on_before_validation': on_before_validation,
-            'on_after_save': on_after_save, 'need': need}
+    return {'on_get': on_get, 'on_after_save': on_after_save, 'need': need}
 
 
 @render_to('proposal/view.html')

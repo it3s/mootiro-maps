@@ -112,7 +112,7 @@
           }).replace('//', '/');
         } else if (this.properties.type === 'OrganizationBranch') {
           return dutils.url.resolve('view_organization', {
-            organization_slug: this.properties.organization_slug
+            id: this.properties.id
           }).replace('//', '/');
         } else {
           slugname = "" + (this.properties.type.toLowerCase()) + "_slug";

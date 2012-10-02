@@ -14,10 +14,10 @@ from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
 from proposal.views import prepare_proposal_objects
-from organization.views import prepare_organization_objects
 from investment.models import Investment
 from investment.forms import InvestmentForm
 from komoo_resource.models import Resource
+from organization.models import Organization
 from main.utils import paginated_query, filtered_query, sorted_query
 
 
@@ -34,7 +34,7 @@ def prepare_investment_objects(community_slug="", need_slug="",
         grantee, need = prepare_proposal_objects(need_slug, proposal_number)
     elif organization_slug:
         # grantee is an organization
-        grantee = prepare_organization_objects(organization_slug)
+        grantee = get_object_or_None(Organization, slug=organization_slug)
     elif resource_id:
         # grantee is a resource
         grantee = get_object_or_None(Resource, pk=resource_id) or Resource()

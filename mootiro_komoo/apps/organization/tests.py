@@ -48,14 +48,14 @@ class OrganizationViewsTestCase(KomooTestCase):
     # edit_need
     def test_organization_edit_page_is_up(self):
         self.login_user()
-        self.assert_200(reverse('edit_organization', args=('alavanca-brasil',)))
+        self.assert_200(reverse('edit_organization', args=(2,)))
 
     def test_organization_edition(self):
         self.login_user()
         o = Organization.objects.get(slug='it3s')
         data = AN_ORGANIZATION_DATA()
         data['id'] = o.id
-        url = reverse('edit_organization', kwargs=dict(organization_slug='it3s'))
+        url = reverse('edit_organization', kwargs={'id': 1})
         http_resp = self.client.post(url, data)
         self.assertEqual(http_resp.status_code, 200)
         o2 = Organization.objects.get(slug='it15s')
@@ -79,7 +79,7 @@ class OrganizationViewsTestCase(KomooTestCase):
     # view
     @logged_and_unlogged
     def test_organization_view_page_is_up(self):
-        url = reverse('view_organization', args=('alavanca-brasil',))
+        url = reverse('view_organization', args=(2,))
         self.assert_200(url)
 
     # list

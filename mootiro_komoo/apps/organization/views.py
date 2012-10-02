@@ -7,7 +7,7 @@ import markdown
 from django.template.defaultfilters import slugify
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import (render_to_response, RequestContext,
-    get_object_or_404, HttpResponse, redirect)
+    get_object_or_404, HttpResponse)
 from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.utils.html import escape
@@ -15,6 +15,7 @@ from django.db.models import Count
 from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to, ajax_request
+from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
@@ -28,22 +29,6 @@ from main.widgets import Autocomplete
 from signatures.signals import send_notifications
 
 logger = logging.getLogger(__name__)
-
-
-def prepare_organization_objects(organization_slug=""):
-    """
-    Retrieves a organization according to given parameters may raise an 404.
-    Creates a new organization if organization_slug is evaluated as false.
-    """
-    if organization_slug:
-        organization = get_object_or_404(Organization, slug=organization_slug)
-    else:
-        organization = Organization()
-    return organization
-
-
-def organizations_to_organization(self):
-    return redirect(reverse('organization_list'), permanent=True)
 
 
 @render_to('organization/list.html')
@@ -60,10 +45,8 @@ def organization_list(request):
 
 
 @render_to('organization/show.html')
-def show(request, organization_slug=''):
-
-    organization = prepare_organization_objects(
-                        organization_slug=organization_slug)
+def show(request, id=''):
+    organization = get_object_or_None(Organization, pk=id) or Organization()
 
     branches = organization.organizationbranch_set.all().order_by('name')
     geojson = create_geojson(branches)
@@ -75,14 +58,10 @@ def show(request, organization_slug=''):
 
 
 @render_to('organization/related_items.html')
-def related_items(request, organization_slug=''):
-
-    organization = prepare_organization_objects(
-                        organization_slug=organization_slug)
-
+def related_items(request, id=''):
+    organization = get_object_or_None(Organization, pk=id) or Organization()
     geojson = create_geojson(organization.related_items)
-
-    return dict(organization=organization, geojson=geojson)
+    return {'organization': organization, 'geojson': geojson}
 
 
 @login_required
@@ -94,8 +73,8 @@ def new_organization(request, *arg, **kwargs):
         return form
 
     def on_after_save(request, obj):
-        kwargs_ = {'organization_slug': obj.slug}
-        return {'redirect': reverse('view_organization', kwargs=kwargs_)}
+        return {'redirect': reverse('view_organization',
+                                    kwargs={'id': obj.id})}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
 
@@ -118,10 +97,8 @@ def new_organization_from_map(request, *args, **kwargs):
 
 @login_required
 @ajax_form('organization/edit.html', FormOrganization, 'form_organization')
-def edit_organization(request, organization_slug='', *arg, **kwargs):
-
-    organization = prepare_organization_objects(
-                        organization_slug=organization_slug)
+def edit_organization(request, id='', *arg, **kwargs):
+    organization = get_object_or_None(Organization, pk=id) or Organization()
 
     geojson = create_geojson([organization], convert=False)
     if geojson and geojson.get('features'):
@@ -130,13 +107,13 @@ def edit_organization(request, organization_slug='', *arg, **kwargs):
 
     def on_get(request, form):
         form = FormOrganization(instance=organization)
-        kwargs = dict(organization_slug=organization_slug)
-        form.helper.form_action = reverse('edit_organization', kwargs=kwargs)
+        form.helper.form_action = reverse('edit_organization',
+                                          kwargs={'id': organization.id})
         return form
 
     def on_after_save(request, obj):
-        kwargs_ = {'organization_slug': obj.slug}
-        return {'redirect': reverse('view_organization', kwargs=kwargs_)}
+        return {'redirect': reverse('view_organization',
+                                    kwargs={'id': obj.id})}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
             'geojson': geojson, 'organization': organization}
