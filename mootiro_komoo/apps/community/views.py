@@ -36,7 +36,7 @@ def new_community(request, *args, **kwargs):
         return form_community
 
     def on_after_save(request, obj):
-        return {'redirect': reverse('view_community', args=(obj.slug,))}
+        return {'redirect': reverse('view_community', args=(obj.id,))}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
 
@@ -55,7 +55,8 @@ def edit_community(request, id='', *args, **kwargs):
         return CommunityForm(instance=community)
 
     def on_after_save(request, obj):
-        return {'redirect': obj.view_url}
+        url = reverse('view_community', args=(obj.id,))
+        return {'redirect': url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
             'community': community, 'geojson': geojson}
