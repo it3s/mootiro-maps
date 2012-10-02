@@ -20,7 +20,7 @@
     <div class="view-edit-btn">
       {% history community %}
       <a href="{% url view_discussion community.perm_id %}" class="btn login-required"><i class="icon-comment"></i></a>
-      <a href="{% url edit_community community.slug %}" class="btn login-required"><i class="icon-pencil"></i></a>
+      <a href="{% url edit_community community.id %}" class="btn login-required"><i class="icon-pencil"></i></a>
     </div>
 
     <div class="clear-both"></div>
@@ -40,7 +40,7 @@
     <div id="map-preview">
       <div id="map-preview-canvas"></div>
     </div>
-    <a href="{% url community_on_map community.slug %}">{% trans 'see on map' %}</a>
+    <a href="{% url community_on_map community.id %}">{% trans 'see on map' %}</a>
 
     {% taglist community %}
 
@@ -48,7 +48,7 @@
       <h3>{% trans "Nearby communities" %}</h3>
       <ul>
         {% for c in community.closest_communities %}
-        <li><a href="{% url view_community c.slug %}">{{ c.name }}</a></li>
+        <li><a href="{% url view_community c.id %}">{{ c.name }}</a></li>
         {% endfor %}
       </ul>
     </div>

@@ -153,8 +153,7 @@ queries = {
             'description'
         ],
         'repr': 'name',
-        'link': lambda o: reverse('view_community',
-                                  kwargs={'community_slug': o.slug})
+        'link': lambda o: reverse('view_community', kwargs={'id': o.id})
     },
     'user': {
         'model': User,

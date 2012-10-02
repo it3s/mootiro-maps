@@ -78,7 +78,7 @@ class Community(GeoRefModel, VotableModel):
     # url aliases
     @property
     def home_url_params(self):
-        return dict(community_slug=self.slug)
+        return dict(id=self.id)
 
     @property
     def view_url(self):

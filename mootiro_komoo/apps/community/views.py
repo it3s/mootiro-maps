@@ -43,11 +43,8 @@ def new_community(request, *args, **kwargs):
 
 @login_required
 @ajax_form('community/edit.html', CommunityForm)
-def edit_community(request, community_slug='', *args, **kwargs):
-    if community_slug:
-        community = get_object_or_404(Community, slug=community_slug)
-    else:
-        community = Community()
+def edit_community(request, id='', *args, **kwargs):
+    community = get_object_or_404(Community, pk=id) if id else Community()
 
     geojson = create_geojson([community], convert=False)
     if geojson and geojson.get('features'):
@@ -58,25 +55,23 @@ def edit_community(request, community_slug='', *args, **kwargs):
         return CommunityForm(instance=community)
 
     def on_after_save(request, obj):
-        url = reverse('view_community', args=(obj.slug,))
-        return {'redirect': url}
+        return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
             'community': community, 'geojson': geojson}
 
 
 @render_to('community/on_map.html')
-def on_map(request, community_slug):
-    community = get_object_or_404(Community, slug=community_slug)
+def on_map(request, id):
+    community = get_object_or_404(Community, pk=id)
     geojson = create_geojson([community])
     return dict(community=community, geojson=geojson)
 
 
 @render_to('community/view.html')
-def view(request, community_slug):
-    community = get_object_or_404(Community, slug=community_slug)
+def view(request, id):
+    community = get_object_or_404(Community, pk=id)
     geojson = create_geojson([community])
-
     photos = paginated_query(UploadedFile.get_files_for(community),
                              request, size=3)
     return dict(community=community, geojson=geojson, photos=photos)
@@ -85,10 +80,6 @@ def view(request, community_slug):
 @render_to('community/map.html')
 def map(request):
     return dict(geojson={})
-
-
-def communities_to_community(self):
-    return redirect(reverse('list_communities'), permanent=True)
 
 
 @render_to('community/list.html')
@@ -135,6 +126,7 @@ def search_tags(request):
                 mimetype="application/x-javascript")
 
 
+# This is ever used????
 @ajax_request
 def autocomplete_get_or_add(request):
     logger.debug(request.POST)

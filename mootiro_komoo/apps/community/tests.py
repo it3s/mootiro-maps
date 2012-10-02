@@ -49,7 +49,7 @@ class CommunityViewsTestCase(KomooTestCase):
     # edit_community
     def test_community_edit_page_is_up(self):
         self.login_user()
-        self.assert_200(reverse('edit_community', args=('sao-remo',)))
+        self.assert_200(reverse('edit_community', args=(1,)))
 
     def test_community_edition(self):
         self.login_user()
@@ -62,7 +62,7 @@ class CommunityViewsTestCase(KomooTestCase):
             'tags': 'favela, usp',
             'geometry': str(c.geometry),
         }
-        url = reverse('edit_community', args=('sao-remo',))
+        url = reverse('edit_community', args=(1,))
         http_resp = self.client.post(url, data)
         self.assertEqual(http_resp.status_code, 200)
         c2 = Community.objects.get(slug='sao-removski')
@@ -102,16 +102,16 @@ class CommunityViewsTestCase(KomooTestCase):
     # on_map
     @logged_and_unlogged
     def test_community_on_map_page_is_up(self):
-        url = reverse('community_on_map', args=('sao-remo',))
+        url = reverse('community_on_map', args=(1,))
         http_resp = self.assert_200(url)
         self.assertContains(http_resp, "map-canvas-editor")
 
     # view
     @logged_and_unlogged
     def test_community_about_page_is_up(self):
-        url = reverse('view_community', args=('sao-remo',))
+        url = reverse('view_community', args=(1,))
         self.assert_200(url)
-        url = reverse('view_community', args=('lalala',))
+        url = reverse('view_community', args=(9776,))
         self.assert_404(url)
 
     # list
