@@ -24,27 +24,19 @@ logger = logging.getLogger(__name__)
 
 @render_to('project/list.html')
 def project_list(request):
-    logger.debug('acessing komoo_project > list')
-
     sort_order = ['creation_date', 'votes', 'name']
-
-    query_set = Project.objects
-
-    query_set = filtered_query(query_set, request)
-
+    query_set = filtered_query(Project.objects, request)
     projects_list = sorted_query(query_set, sort_order, request)
     projects_count = projects_list.count()
     projects = paginated_query(projects_list, request)
-
     return dict(projects=projects, projects_count=projects_count)
 
 
 @render_to('project/view.html')
-def project_view(request, project_slug=''):
-    project = get_object_or_404(Project, slug=project_slug)
+def project_view(request, id=''):
+    project = get_object_or_404(Project, pk=id)
 
-    proj_objects = {}
-    items = []
+    proj_objects, items = {}, []
 
     proj_objects['User'] = {'app_name': 'user_cas', 'objects_list': [{
         'name': project.creator.get_name,
@@ -93,10 +85,8 @@ def project_view(request, project_slug=''):
 
 
 @render_to('project/related_items.html')
-def project_map(request, project_slug=''):
-
-    project = get_object_or_404(Project, slug=project_slug)
-
+def project_map(request, id=''):
+    project = get_object_or_404(Project, pk=id)
     related_items = []
 
     for obj in project.related_items:
@@ -106,11 +96,9 @@ def project_map(request, project_slug=''):
         related_items.append({'name': name.strip(), 'obj': obj})
 
     related_items.sort(key=lambda o: o['name'])
-
     related_items = [o['obj'] for o in related_items]
 
     geojson = create_geojson(related_items)
-
     return dict(project=project, geojson=geojson)
 
 
@@ -130,18 +118,16 @@ def project_new(request):
 
 @login_required
 @ajax_form('project/edit.html', FormProject)
-def project_edit(request, project_slug='', *arg, **kwargs):
-
-    project = get_object_or_404(Project, slug=project_slug)
+def project_edit(request, id='', *arg, **kwargs):
+    project = get_object_or_404(Project, pk=id)
 
     if not project.user_can_edit(request.user):
         return redirect(project.view_url)
 
     def on_get(request, form):
         form = FormProject(instance=project)
-        kwargs = dict(project_slug=project_slug)
-        form.helper.form_action = reverse('project_edit', kwargs=kwargs)
-
+        form.helper.form_action = reverse('project_edit',
+                                          kwargs={'id': project.id})
         return form
 
     def on_after_save(request, obj):

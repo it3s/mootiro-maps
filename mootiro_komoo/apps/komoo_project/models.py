@@ -78,7 +78,7 @@ class Project(models.Model):
 
     @property
     def home_url_params(self):
-        return dict(project_slug=self.slug)
+        return dict(id=self.id)
 
     @property
     def view_url(self):

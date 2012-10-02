@@ -54,7 +54,7 @@
 
         <div class="view-body">
             <div class="mark-down">{{ project.description|render_markup|safe }}</div>
-            <div class="related-button"><a class="button" href="{% url project_map project.slug %}">{% trans 'See all objects on map' %}</a></div>
+            <div class="related-button"><a class="button" href="{% url project_map project.id %}">{% trans 'See all objects on map' %}</a></div>
         </div>
 
         <div>
@@ -237,7 +237,7 @@
         <div id="map-main-preview">
           <div id="map-main-preview-canvas"></div>
         </div>
-        <a class="see-on-map" href="{% url project_map project.slug %}">{% trans 'see on map' %}</a>
+        <a class="see-on-map" href="{% url project_map project.id %}">{% trans 'see on map' %}</a>
 
         {% with similar_projects=project.tags.similar_objects|slice:"5" %}
 

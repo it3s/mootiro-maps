@@ -35,13 +35,11 @@ class ProposalViewsTestCase(KomooTestCase):
     def test_new_proposal_page(self):
         self.login_user()
 
-        kwargs = dict(need=1)
-        url = reverse('new_proposal', kwargs=kwargs)
+        url = reverse('new_proposal', ) + '?need=1'
         self.assert_200(url)
         self.assert_200(url, ajax=True)
 
-        kwargs = dict(need_=8756)
-        url = reverse('new_proposal', kwargs=kwargs)
+        url = reverse('new_proposal', ) + '?need=8756'
         self.assert_404(url)
         self.assert_404(url, ajax=True)
 
@@ -50,8 +48,7 @@ class ProposalViewsTestCase(KomooTestCase):
 
         data = A_PROPOSAL_DATA()
         n0 = Proposal.objects.count()
-        kwargs = dict(need=1)
-        url = reverse('new_proposal', kwargs=kwargs)
+        url = reverse('new_proposal', ) + '?need=1'
         self.client.post(url, data)
         self.assertEquals(Proposal.objects.count(), n0 + 1)
 
@@ -82,8 +79,8 @@ class ProposalViewsTestCase(KomooTestCase):
     ####### FORM VALIDATION #######
     def test_proposal_empty_form_validation(self):
         self.login_user()
-        url = reverse('new_proposal', kwargs=kwargs) + '?need=1'
-        http_resp = self.client.post(url, data={})
+        url = reverse('new_proposal', )
+        http_resp = self.client.post(url, data={'need': 1})
         json = simplejson.loads(http_resp.content)
         expected = {
             'success': 'false',
@@ -97,8 +94,6 @@ class ProposalViewsTestCase(KomooTestCase):
     ####### VIEW #######
     @logged_and_unlogged
     def test_proposal_view_page(self):
-        url = reverse('view_proposal', kwargs={'id': 2}) + '?need=3'
+        url = reverse('view_proposal', kwargs={'id': 2})
         self.assert_200(url)
 
-        url = reverse('view_proposal', kwargs={'id': 2}) + '?need=9765'
-        self.assert_404(url)

@@ -43,7 +43,7 @@ def resource_list(request):
 
 @render_to('resource/show.html')
 def show(request, id=None):
-    resource = get_object_or_None(Resource, pk=id)
+    resource = get_object_or_404(Resource, pk=id)
     geojson = create_geojson([resource])
     similar = Resource.objects.filter(Q(kind=resource.kind) |
         Q(tags__in=resource.tags.all())).exclude(pk=resource.id).distinct()[:5]

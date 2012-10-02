@@ -165,8 +165,7 @@ queries = {
             'komooprofile__public_name'
         ],
         'repr': 'get_name',
-        'link': lambda o: reverse('user_profile',
-                                  kwargs={'user_id': o.id})
+        'link': lambda o: reverse('user_profile', kwargs={'user_id': o.id})
     },
     'project': {
         'model': Project,
@@ -176,8 +175,7 @@ queries = {
             'description',
         ],
         'repr': 'name',
-        'link': lambda o: reverse('project_view',
-                                  kwargs={'project_slug': o.slug})
+        'link': lambda o: reverse('project_view', kwargs={'id': o.id})
     }
 }
 
