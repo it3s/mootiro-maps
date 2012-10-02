@@ -1,5 +1,7 @@
+{% load i18n %}
 <div class="block">
-  <h4><a href="{% url view_proposal proposal.id %}?need={{ proposal.need.id }}">
+  <h4><a href="{% url view_proposal proposal.id %}">
     {{ proposal.title|truncatewords:3 }}</a></h4>
-  <span class="meta-info">created by</span> {{ proposal.creator }}
+<span class="meta-info">{% trans 'created by' %}</span>
+<a href="{{ proposal.creator.get_profile.view_url }}" >{{ proposal.creator.get_name }}</a>
 </div>

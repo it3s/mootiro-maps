@@ -7,12 +7,9 @@ home_urls = [
 ]
 
 urlpatterns = patterns('proposal.views',
-    url(pr(r'^proposal/new/?$'), 'edit',
-            name='new_proposal'),
+    url(pr(r'^proposal/new/?$'), 'edit', name='new_proposal'),
 
-    url(pr(r'^proposal/ID/edit/?$'), 'edit',
-            name='edit_proposal'),
+    url(pr(r'^proposal/ID/edit/?$'), 'edit', name='edit_proposal'),
 
-    url(pr(r'^proposal/ID/?$'), 'view',
-            name='view_proposal'),
+    url(pr(r'^proposal/ID/?$'), 'view', name='view_proposal'),
 )
