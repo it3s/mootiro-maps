@@ -6,7 +6,7 @@ import datetime
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooTestCase
+from main.tests import KomooUserTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from organization.tests import AN_UNSAVED_ORGANIZATION
@@ -38,11 +38,12 @@ def AN_INVESTMENT_DATA():
 
 
 # TODO: implement tests for investment
-class InvestmentViewsTestCase(KomooTestCase):
+class InvestmentViewsTestCase(KomooUserTestCase):
 
-    fixtures = KomooTestCase.fixtures + \
-        ['communities.json', 'needs.json', 'proposals.json',
-         'organizations.json', 'resources.json', 'investments.json']
+    #fixtures = KomooTestCase.fixtures + \
+    #    ['communities.json', 'needs.json', 'proposals.json',
+    #     'organizations.json', 'resources.json', 'investments.json']
+    fixtures = KomooUserTestCase.fixtures + ['investments.json']
 
     # ####### CREATION #######
     # def test_new_resource_page(self):
@@ -120,7 +121,7 @@ class InvestmentViewsTestCase(KomooTestCase):
         http_resp = self.assert_200(url)
         self.assertContains(http_resp, "Investments")
         self.assertContains(http_resp, "Aluguel de sala")
-        
+
 
     # ####### SEARCHES #######
     # @logged_and_unlogged

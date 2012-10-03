@@ -4,28 +4,36 @@ import simplejson
 from django.core import mail
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooTestCase
+from main.tests import KomooBaseTestCase, KomooUserTestCase
 
 from moderation.models import Moderation, Report
 from moderation.utils import create_report
 from need.models import Need
+from need.tests import AN_UNSAVED_NEED
 
 
-class ModerationTestCase(KomooTestCase):
+class ModerationSimpleTestCase(KomooBaseTestCase):
 
-    fixtures = KomooTestCase.fixtures + ['needs.json']
+    def setUp(self):
+        self.need = AN_UNSAVED_NEED()
 
     def test_get_for_object_or_create(self):
-        need = Need.objects.all()[0]
+        need = self.need
         moderation = Moderation.objects.get_for_object(need)
         self.assertFalse(moderation)
         moderation = Moderation.objects.get_for_object_or_create(need)
         self.assertTrue(moderation)
 
+
+class ModerationTestCase(KomooUserTestCase):
+
+    fixtures = KomooUserTestCase.fixtures
+
     def test_create_report(self):
         """You need to set ADMINS on your settings file for this test"""
         user = self.login_user(username='noobzin')
-        need = Need.objects.all()[0]
+        need = AN_UNSAVED_NEED()
+        need.save()
         moderation = Moderation.objects.get_for_object(need)
         self.assertFalse(moderation)
 
@@ -51,7 +59,8 @@ class ModerationTestCase(KomooTestCase):
         self.assert_200(reverse('deletion_request_box'))
 
     def test_report_view_notloggedin(self):
-        need = Need.objects.all()[0]
+        need = AN_UNSAVED_NEED()
+        need.save()
         response = self.client.post(reverse('moderation_report', args=[],
             kwargs={'app_label': need._meta.app_label,
                     'model_name': need._meta.module_name,
@@ -62,7 +71,8 @@ class ModerationTestCase(KomooTestCase):
 
     def test_report_view_loggedin(self):
         user = self.login_user(username='noobzin')
-        need = Need.objects.all()[0]
+        need = AN_UNSAVED_NEED()
+        need.save()
         moderation = Moderation.objects.get_for_object(need)
         self.assertFalse(moderation)
 
