@@ -13,7 +13,6 @@ django-annoying==0.7.6
 django-cas==2.0.3
 django-celery==2.5.5
 django-crispy-forms==1.1.1
-django-debug-toolbar==0.9.4
 django-easy-maps==0.7.2
 django-markitup==1.0.0
 django-nose==1.0
@@ -35,9 +34,12 @@ psycopg2==2.4.4
 pycrypto==2.5
 python-dateutil==1.5
 python-openid==2.2.5
+python-termstyle==0.1.10
+rednose==0.3.3
 requests==0.11.1
 simplejson==2.5.0
 ssh==1.7.12
+unicodecsv==0.9.0
 wsgiref==0.1.2
 xlrd==0.7.1
 xlwt==0.7.2

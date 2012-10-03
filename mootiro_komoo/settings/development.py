@@ -76,8 +76,6 @@ for mod in ['views', 'models', 'forms', 'utils']:
     LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
                     for app in os.listdir('apps/') + os.listdir('lib/')})
 
-WANT_DEBUG_TOOLBAR = True
-
 PROFILE_DATABASE = 'localhost|profile|username|password'
 CAS_SERVER_URL = 'https://localhost:8443/cas/'
 
@@ -99,11 +97,4 @@ EMAIL_HOST_PASSWORD = '...'  # password on local settings
 
 # user specific or secret settings
 from local_settings import *
-
-if WANT_DEBUG_TOOLBAR:
-    MIDDLEWARE_CLASSES += ['debug_toolbar.middleware.DebugToolbarMiddleware']
-    INSTALLED_APPS += ['debug_toolbar']
-
-    INTERNAL_IPS = ('127.0.0.1', )
-    DEBUG_TOOLBAR_CONFIG = {'INTERCEPT_REDIRECTS': False}
 

@@ -32,5 +32,3 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'it3sdev@gmail.com'
 EMAIL_HOST_PASSWORD = '...'
 
-WANT_DEBUG_TOOLBAR = False
-

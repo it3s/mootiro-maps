@@ -145,7 +145,6 @@ INSTALLED_APPS = [
     'discussion',
 ]
 
-COMMENT_MAX_LENGTH = 80 * 500  # ?? probably deprecated!
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 
 # ==========  markiItUp =======================================================
