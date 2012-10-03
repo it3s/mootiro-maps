@@ -4,7 +4,7 @@ import simplejson
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooTestCase
+from main.tests import KomooUserTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from .models import Resource
@@ -26,10 +26,7 @@ def A_RESOURCE_DATA():
     }.copy()
 
 
-class ResourceViewsTestCase(KomooTestCase):
-
-    fixtures = KomooTestCase.fixtures + \
-        ['communities.json', 'resources.json']
+class ResourceUserViewsTestCase(KomooUserTestCase):
 
     ####### CREATION #######
     def test_new_resource_page(self):
@@ -37,7 +34,6 @@ class ResourceViewsTestCase(KomooTestCase):
 
         self.assert_200(reverse('new_resource'))
         self.assert_200(reverse('new_resource'), ajax=True)
-
 
     def test_new_resource_creation(self):
         self.login_user()
@@ -47,6 +43,7 @@ class ResourceViewsTestCase(KomooTestCase):
         self.assertEquals(http_resp.status_code, 200)
         self.assertEquals(Resource.objects.count(), r0 + 1)
 
+
     ####### EDITION #######
     def test_resource_edit_page_is_up(self):
         self.login_user()
@@ -55,19 +52,6 @@ class ResourceViewsTestCase(KomooTestCase):
         url = reverse('edit_resource', kwargs=kwargs)
         self.assert_200(url)
         self.assert_200(url, ajax=True)
-
-    def test_resource_edition(self):
-        self.login_user()
-        r = Resource.objects.get(id=1)
-        data = A_RESOURCE_DATA()
-        data['id'] = r.id
-        url = reverse('edit_resource', kwargs=dict(id='1'))
-        http_resp = self.client.post(url, data)
-        self.assertEqual(http_resp.status_code, 200)
-        r2 = Resource.objects.get(name=data["name"])
-        self.assertEquals(r.id, r2.id)
-        with self.assertRaises(Exception):
-            Resource.objects.get(name="Quadra poliesportiva")
 
     ####### FORM VALIDATION #######
     def test_resource_empty_form_validation(self):
@@ -98,6 +82,26 @@ class ResourceViewsTestCase(KomooTestCase):
         url = reverse('resource_list')
         self.assert_200(url)
 
+
+class ResourceViewsTestCase(KomooUserTestCase):
+
+    fixtures = KomooUserTestCase.fixtures + \
+        ['resources.json']
+
+    ####### EDITION #######
+    def test_resource_edition(self):
+        self.login_user()
+        r = Resource.objects.get(id=1)
+        data = A_RESOURCE_DATA()
+        data['id'] = r.id
+        url = reverse('edit_resource', kwargs=dict(id='1'))
+        http_resp = self.client.post(url, data)
+        self.assertEqual(http_resp.status_code, 200)
+        r2 = Resource.objects.get(name=data["name"])
+        self.assertEquals(r.id, r2.id)
+        with self.assertRaises(Exception):
+            Resource.objects.get(name="Quadra poliesportiva")
+
     ####### SEARCHES #######
     @logged_and_unlogged
     def test_resource_search_tags(self):
@@ -126,3 +130,30 @@ class ResourceViewsTestCase(KomooTestCase):
         http_resp = self.client.get(url + "?term=xwyk")
         self.assertEqual(http_resp.status_code, 200)
         self.assertEquals(simplejson.loads(http_resp.content), [])
+
+    def test_tags_filter(self):
+        from main.utils import filtered_query
+
+        query_set = Resource.objects
+
+        original_count = query_set.count()
+        assert original_count > 0
+
+        # Mock a request
+        req = type(b'MockHttpRequest', (object,), {})
+
+        # Test simple tag filtering with single result
+        req.GET = {'filters': 'tags', 'tags': 'esporte'}
+        new_query_set = filtered_query(query_set, req)
+        self.assertEquals(new_query_set.count(), 1)
+
+        # Test simple tag filtering with more than 1 result
+        req.GET = {'filters': 'tags', 'tags': u'Educação'}
+        new_query_set = filtered_query(query_set, req)
+        self.assertEquals(new_query_set.count(), 2)
+
+        # Test multiple (& clause) tag filtering
+        req.GET = {'filters': 'tags', 'tags': u'Educação,leitura'}
+        new_query_set = filtered_query(query_set, req)
+        self.assertEquals(new_query_set.count(), 1)
+        self.assertEquals(new_query_set[0].name, u'Biblioteca comunitária')
