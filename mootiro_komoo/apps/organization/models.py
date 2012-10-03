@@ -148,7 +148,8 @@ class Organization(VotableModel):
 
     @property
     def new_investment_url(self):
-        return reverse('new_investment', kwargs=self.home_url_params)
+        return reverse('new_investment') + ('?type=organization&obj=%(id)s' % {
+                'id': self.id})
 
     @property
     def related_items_url(self):

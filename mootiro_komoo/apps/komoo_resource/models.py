@@ -53,15 +53,17 @@ class Resource(GeoRefModel, VotableModel):
                         object_id_field='grantee_object_id')
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_resources')
+    creator = models.ForeignKey(User, editable=False, null=True,
+                                related_name='created_resources')
     creation_date = models.DateTimeField(auto_now_add=True)
-    last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
+    last_editor = models.ForeignKey(User, editable=False, null=True,
+                                    blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
     class Map:
         title = _('Resource')
         editable = True
-        background_color =  '#28CB05'
+        background_color = '#28CB05'
         border_color = '#1D9104'
         geometries = (POLYGON, LINESTRING, POINT)
         form_view_name = 'new_resource_from_map'
@@ -69,7 +71,6 @@ class Resource(GeoRefModel, VotableModel):
 
     def __unicode__(self):
         return unicode(self.name)
-
 
     image = "img/resource.png"
     image_off = "img/resource-off.png"
@@ -97,7 +98,8 @@ class Resource(GeoRefModel, VotableModel):
 
     @property
     def new_investment_url(self):
-        return reverse('new_investment', kwargs=self.home_url_params)
+        return reverse('new_investment') + '?type=resource&obj={id}'.format(
+                id=self.id)
 
     @property
     def perm_id(self):

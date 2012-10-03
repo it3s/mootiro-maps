@@ -7,7 +7,7 @@
     </span>
     {% for comm in branch.community.all %}
         <div>
-            <a href="{% url view_community comm.slug %}">{{ comm.name }}</a>
+            <a href="{% url view_community comm.id %}">{{ comm.name }}</a>
         </div>
         {% if not forloop.last %}
              ,&nbsp;

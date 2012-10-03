@@ -5,6 +5,6 @@ from django.conf import settings
 
 
 urlpatterns = patterns('discussion.views',
-    url(r'^discussion/(?P<identifier>\w+)/?$', 'view_discussion', name='view_discussion'),
-    url(r'^discussion/(?P<identifier>\w+)/edit/?$', 'edit_discussion', name='edit_discussion'),
+    url(r'^(?P<identifier>\w+)/?$', 'view_discussion', name='view_discussion'),
+    url(r'^(?P<identifier>\w+)/edit/?$', 'edit_discussion', name='edit_discussion'),
 )

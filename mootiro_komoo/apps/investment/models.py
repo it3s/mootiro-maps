@@ -184,14 +184,8 @@ class Investment(VotableModel):
 
     # Url aliases
     @property
-    def base_url_params(self):
-        return self.grantee.home_url_params
-
-    @property
     def home_url_params(self):
-        d = self.base_url_params
-        d.update(dict(investment_slug=self.slug))
-        return d
+        return {'id': self.id}
 
     @property
     def view_url(self):

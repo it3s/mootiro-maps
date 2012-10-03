@@ -2,7 +2,7 @@
 
 {% with shown=communities|slice:":2" aggregated=communities|slice:"2:" %}
   {% for c in shown %}
-    <a href="{% url view_community c.slug %}" class="update-community">
+    <a href="{{ c.view_url }}" class="update-community">
       <i class="icon-community-white"></i> {{ c.name }}
     </a>
   {% endfor %}
@@ -11,7 +11,7 @@
     {% trans "and" %}
     <a class="more community" title="
       {% for c in aggregated %}
-        <a href='{% url view_community c.slug %}'>
+        <a href='{{c.view_url }}'>
           {{ c.name }}
         </a>{% if not forloop.last %},{% endif %}
       {% endfor %}

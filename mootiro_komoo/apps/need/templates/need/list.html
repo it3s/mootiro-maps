@@ -38,7 +38,7 @@
             {% if need.community.all.count %}
             {% trans 'at' %}
             {% for comm in need.community.all %}
-              <a href="{% url view_community comm.slug %}">{{ comm.name }}</a>
+              <a href="{% url view_community comm.id %}">{{ comm.name }}</a>
               {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
             {% endfor %}
             {% endif %}

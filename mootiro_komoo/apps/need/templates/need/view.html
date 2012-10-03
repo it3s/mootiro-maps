@@ -83,7 +83,7 @@
             {% if n.community.all.count %}
               <span class="attenuate">
               {% for comm in n.community.all %}
-                <a href="{% url view_community comm.slug %}">
+                <a href="{% url view_community comm.id %}">
                   {{ comm.name }}
                 </a>
                 {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}

@@ -34,7 +34,7 @@
           <div class="investment-info">
             <span class="meta-info">{% trans "Community" %}:</span>
             {% for c in investment.community.all %}
-              <a href="{% url view_community c.slug %}">{{ c.name }}</a>{% if not forloop.last %},&nbsp;{% endif %}
+              <a href="{% url view_community c.id %}">{{ c.name }}</a>{% if not forloop.last %},&nbsp;{% endif %}
             {% endfor %}
           </div>
           <div class="investment-info">

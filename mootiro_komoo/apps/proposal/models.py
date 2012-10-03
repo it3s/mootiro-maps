@@ -25,16 +25,19 @@ class Proposal(VotableModel):
     number = models.IntegerField(null=False, blank=True, editable=False)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_proposals')
+    creator = models.ForeignKey(User, editable=False, null=True,
+                                related_name='created_proposals')
     creation_date = models.DateTimeField(auto_now_add=True)
-    last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
+    last_editor = models.ForeignKey(User, editable=False, null=True,
+                                    blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
     # Relationships
     need = models.ForeignKey(Need, related_name='proposals')
 
     # TODO: Also: organizations = model.ManyToManyField(Organization)
-    cost = models.DecimalField(decimal_places=2, max_digits=14, null=True, blank=True)
+    cost = models.DecimalField(decimal_places=2, max_digits=14, null=True,
+                               blank=True)
     report = models.TextField(null=True, blank=True)
 
     investments = generic.GenericRelation(Investment,
@@ -42,7 +45,6 @@ class Proposal(VotableModel):
                         object_id_field='grantee_object_id')
     #dummy? readding to data charge to work
     realizers = models.ManyToManyField(User, related_name='user_realizers')
-
 
     @property
     def name(self):
@@ -85,7 +87,8 @@ class Proposal(VotableModel):
 
     @property
     def new_investment_url(self):
-        return reverse('new_investment', kwargs=self.home_url_params)
+        return reverse('new_investment') + '?type=proposal&obj={id}'.format(
+                id=self.id)
 
     @property
     def perm_id(self):

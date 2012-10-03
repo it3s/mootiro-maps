@@ -3,7 +3,6 @@ from __future__ import unicode_literals  # unicode by default
 import logging
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -13,53 +12,45 @@ from annoying.functions import get_object_or_None
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
-from proposal.views import prepare_proposal_objects
+from proposal.models import Proposal
 from investment.models import Investment
 from investment.forms import InvestmentForm
 from komoo_resource.models import Resource
 from organization.models import Organization
+
 from main.utils import paginated_query, filtered_query, sorted_query
 
 
 logger = logging.getLogger(__name__)
 
 
-def prepare_investment_objects(community_slug="", need_slug="",
-        proposal_number="", organization_slug="", resource_id="",
-        investment_slug=""):
+def prepare_investment_objects(grantee_type='', grantee_id=None,
+        investment_id=None):
 
-    # determine the grantee to find the
-    if proposal_number:
-        # grantee is a proposal
-        grantee, need = prepare_proposal_objects(need_slug, proposal_number)
-    elif organization_slug:
-        # grantee is an organization
-        grantee = get_object_or_None(Organization, slug=organization_slug)
-    elif resource_id:
-        # grantee is a resource
-        grantee = get_object_or_None(Resource, pk=resource_id) or Resource()
+    if grantee_type == 'proposal':
+        grantee = get_object_or_None(Proposal, pk=grantee_id)
+    elif grantee_type == 'organization':
+        grantee = get_object_or_None(Organization, pk=grantee_id)
+    elif grantee_type == 'resource':
+        grantee = get_object_or_None(Resource, pk=grantee_id)
     else:
         grantee = None
 
-    if investment_slug:
-        # TODO: make this query on a centralized place. Is it good enough here?
-        investment = get_object_or_404(Investment, slug=investment_slug,
-            grantee_content_type=ContentType.objects.get_for_model(grantee),
-            grantee_object_id=grantee.id)
+    if investment_id:
+        investment = get_object_or_404(Investment, pk=investment_id)
     else:
         investment = Investment(grantee=grantee)
-
     return investment
 
 
 @login_required
 @ajax_form('investment/edit.html', form_class=InvestmentForm)
-def edit(request, need_slug="", proposal_number="",
-        organization_slug="", resource_id="", investment_slug=""):
+def edit(request, id=None):
+    grantee_type = request.GET.get('type', None)
+    grantee_id = request.GET.get('obj', None)
 
-    kw = locals()
-    kw.pop('request')
-    investment = prepare_investment_objects(**kw)
+    investment = prepare_investment_objects(investment_id=id,
+            grantee_type=grantee_type, grantee_id=grantee_id)
 
     def on_get(request, form):  # necessary?
         data = {}
@@ -78,13 +69,8 @@ def edit(request, need_slug="", proposal_number="",
 
 
 @render_to('investment/view.html')
-def view(request, need_slug="", proposal_number="",
-        organization_slug="", resource_id="", investment_slug=""):
-
-    kw = locals()
-    kw.pop('request')
-    investment = prepare_investment_objects(**kw)
-
+def view(request, id=None):
+    investment = get_object_or_404(Investment, pk=id)
     return dict(investment=investment)
 
 
