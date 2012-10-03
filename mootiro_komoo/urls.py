@@ -68,8 +68,7 @@ urlpatterns = patterns('',
 
     # user and CAS urls
     url(r'^user/', include('komoo_user.urls')),
-    url(r'^login/cas?$', 'django_cas.views.login'),
-    url(r'', include('social_auth.urls')),
+    url(r'^user/login/', include('login_providers.urls')),
 
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^markitup/', include('markitup.urls')),

@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     'vote',
     'komoo_resource',
     'komoo_user',
+    'login_providers',
     'organization',
     'investment',
     'moderation',
