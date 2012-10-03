@@ -3,7 +3,7 @@ import simplejson
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooUserTestCase
+from main.tests import KomooUserTestCase, KomooTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from .models import Organization
@@ -31,19 +31,6 @@ class OrganizationSimpleViewsTestCase(KomooUserTestCase):
 
     fixtures = KomooUserTestCase.fixtures
 
-    # new_organization
-    def test_new_organization_page_is_up(self):
-        self.login_user()
-        self.assert_200(reverse('new_organization'))
-        self.assert_200(reverse('new_organization'), ajax=True)
-
-    def test_new_organization_creation(self):
-        self.login_user()
-        data = AN_ORGANIZATION_DATA()
-        n0 = Organization.objects.count()
-        self.client.post(reverse('new_organization'), data)
-        self.assertEquals(Organization.objects.count(), n0 + 1)
-
     # form validation
     def test_organization_empty_form_validation(self):
         self.login_user()
@@ -64,9 +51,65 @@ class OrganizationSimpleViewsTestCase(KomooUserTestCase):
         self.assert_200(url)
 
 
+class OrganizationViewsSimpleWithContentTypeTestCase(KomooTestCase):
+
+    fixtures = KomooTestCase.fixtures
+
+    # new_organization
+    def test_new_organization_page_is_up(self):
+        self.login_user()
+        self.assert_200(reverse('new_organization'))
+        self.assert_200(reverse('new_organization'), ajax=True)
+
+    def test_new_organization_creation(self):
+        self.login_user()
+        data = AN_ORGANIZATION_DATA()
+        n0 = Organization.objects.count()
+        self.client.post(reverse('new_organization'), data)
+        self.assertEquals(Organization.objects.count(), n0 + 1)
+
 class OrganizationViewsTestCase(KomooUserTestCase):
 
     fixtures = KomooUserTestCase.fixtures + \
+        ['organizations.json']
+
+    # view
+    @logged_and_unlogged
+    def test_organization_view_page_is_up(self):
+        url = reverse('view_organization', args=(2,))
+        self.assert_200(url)
+
+    # searches
+    @logged_and_unlogged
+    def test_organization_search_by_name(self):
+        url = reverse('organization_search_by_name')
+        http_resp = self.client.get(url + "?term=Fomento")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(simplejson.loads(http_resp.content), [])
+        http_resp = self.client.get(url + "?term=xdfg")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])
+
+    @logged_and_unlogged
+    def test_verify_org_name(self):
+        url = reverse('verify_org_name')
+
+        http_resp = self.client.post(url, dict(org_name="Minha ONG"))
+        self.assertEqual(http_resp.status_code, 200)
+        json = simplejson.loads(http_resp.content)
+        expected = {'exists': False}
+        self.assertEquals(json, expected)
+
+        http_resp = self.client.post(url, dict(org_name="Alavanca Brasil"))
+        self.assertEqual(http_resp.status_code, 200)
+        json = simplejson.loads(http_resp.content)
+        expected_subset = {'exists': True}
+        self.assertDictContainsSubset(expected_subset, json)
+
+
+class OrganizationViewsWithContentTypeTestCase(KomooTestCase):
+
+    fixtures = KomooTestCase.fixtures + \
         ['organizations.json']
 
     # edit_need
@@ -87,23 +130,6 @@ class OrganizationViewsTestCase(KomooUserTestCase):
         with self.assertRaises(Exception):
             Organization.objects.get(slug='it3s')
 
-    # view
-    @logged_and_unlogged
-    def test_organization_view_page_is_up(self):
-        url = reverse('view_organization', args=(2,))
-        self.assert_200(url)
-
-    # searches
-    @logged_and_unlogged
-    def test_organization_search_by_name(self):
-        url = reverse('organization_search_by_name')
-        http_resp = self.client.get(url + "?term=Fomento")
-        self.assertEqual(http_resp.status_code, 200)
-        self.assertNotEquals(simplejson.loads(http_resp.content), [])
-        http_resp = self.client.get(url + "?term=xdfg")
-        self.assertEqual(http_resp.status_code, 200)
-        self.assertEquals(simplejson.loads(http_resp.content), [])
-
     @logged_and_unlogged
     def test_organization_search_tags(self):
         url = reverse('organization_search_tags')
@@ -119,20 +145,4 @@ class OrganizationViewsTestCase(KomooUserTestCase):
         http_resp = self.client.get(url + "?term=saú")
         self.assertEqual(http_resp.status_code, 200)
         self.assertEquals(simplejson.loads(http_resp.content), [])
-
-    @logged_and_unlogged
-    def test_verify_org_name(self):
-        url = reverse('verify_org_name')
-
-        http_resp = self.client.post(url, dict(org_name="Minha ONG"))
-        self.assertEqual(http_resp.status_code, 200)
-        json = simplejson.loads(http_resp.content)
-        expected = {'exists': False}
-        self.assertEquals(json, expected)
-
-        http_resp = self.client.post(url, dict(org_name="Alavanca Brasil"))
-        self.assertEqual(http_resp.status_code, 200)
-        json = simplejson.loads(http_resp.content)
-        expected_subset = {'exists': True}
-        self.assertDictContainsSubset(expected_subset, json)
 

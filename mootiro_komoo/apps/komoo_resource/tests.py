@@ -4,7 +4,7 @@ import simplejson
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooUserTestCase
+from main.tests import KomooUserTestCase, KomooTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from .models import Resource
@@ -26,7 +26,7 @@ def A_RESOURCE_DATA():
     }.copy()
 
 
-class ResourceUserViewsTestCase(KomooUserTestCase):
+class ResourceViewsSimpleWithContentTypeTestCase(KomooTestCase):
 
     ####### CREATION #######
     def test_new_resource_page(self):
@@ -42,16 +42,6 @@ class ResourceUserViewsTestCase(KomooUserTestCase):
         http_resp = self.client.post(reverse('new_resource'), data)
         self.assertEquals(http_resp.status_code, 200)
         self.assertEquals(Resource.objects.count(), r0 + 1)
-
-
-    ####### EDITION #######
-    def test_resource_edit_page_is_up(self):
-        self.login_user()
-
-        kwargs = dict(id='1')
-        url = reverse('edit_resource', kwargs=kwargs)
-        self.assert_200(url)
-        self.assert_200(url, ajax=True)
 
     ####### FORM VALIDATION #######
     def test_resource_empty_form_validation(self):
@@ -89,6 +79,34 @@ class ResourceViewsTestCase(KomooUserTestCase):
         ['resources.json']
 
     ####### EDITION #######
+    def test_resource_edit_page_is_up(self):
+        self.login_user()
+
+        kwargs = dict(id='1')
+        url = reverse('edit_resource', kwargs=kwargs)
+        self.assert_200(url)
+        self.assert_200(url, ajax=True)
+
+    @logged_and_unlogged
+    def test_resource_search_by_kind(self):
+        url = reverse('resource_search_by_kind')
+
+        http_resp = self.client.get(url + "?term=Espaç")
+        self.assertEqual(http_resp.status_code, 200)
+        expected = [{'value': 1, 'label': 'Espaço'}]
+        self.assertEquals(simplejson.loads(http_resp.content), expected)
+
+        http_resp = self.client.get(url + "?term=xwyk")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])
+
+
+class ResourceViewsWithContentTypeTestCase(KomooTestCase):
+
+    fixtures = KomooTestCase.fixtures + \
+        ['resources.json']
+
+    ####### EDITION #######
     def test_resource_edition(self):
         self.login_user()
         r = Resource.objects.get(id=1)
@@ -116,19 +134,6 @@ class ResourceViewsTestCase(KomooUserTestCase):
 
         # 'saúde' is a tag for need, not resource
         http_resp = self.client.get(url + "?term=saú")
-        self.assertEquals(simplejson.loads(http_resp.content), [])
-
-    @logged_and_unlogged
-    def test_resource_search_by_kind(self):
-        url = reverse('resource_search_by_kind')
-
-        http_resp = self.client.get(url + "?term=Espaç")
-        self.assertEqual(http_resp.status_code, 200)
-        expected = [{'value': 1, 'label': 'Espaço'}]
-        self.assertEquals(simplejson.loads(http_resp.content), expected)
-
-        http_resp = self.client.get(url + "?term=xwyk")
-        self.assertEqual(http_resp.status_code, 200)
         self.assertEquals(simplejson.loads(http_resp.content), [])
 
     def test_tags_filter(self):

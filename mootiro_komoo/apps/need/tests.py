@@ -26,25 +26,12 @@ def A_NEED_DATA():
 
 
 
-class NeedSimpleViewsTestCase(KomooUserTestCase):
-    # list
-    @logged_and_unlogged
-    def test_need_list_page_is_up(self):
-        url = reverse('need_list')
-        self.assert_200(url)
-
+class NeedViewsSimpleTestCase(KomooUserTestCase):
     # new_need
     def test_new_need_page_is_up(self):
         self.login_user()
         self.assert_200(reverse('new_need'))
         self.assert_200(reverse('new_need'), ajax=True)
-
-    def test_new_need_creation(self):
-        self.login_user()
-        data = A_NEED_DATA()
-        n0 = Need.objects.count()
-        self.client.post(reverse('new_need'), data)
-        self.assertEquals(Need.objects.count(), n0 + 1)
 
     # form validation
     def test_need_empty_form_validation(self):
@@ -67,6 +54,34 @@ class NeedViewsTestCase(KomooUserTestCase):
 
     fixtures = KomooUserTestCase.fixtures + ['needs.json']
 
+    @logged_and_unlogged
+    def test_need_target_audience_search_is_up(self):
+        url = reverse('target_audience_search')
+        http_resp = self.client.get(url + "?term=crian")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(simplejson.loads(http_resp.content), [])
+        http_resp = self.client.get(url + "?term=xwyk")
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])
+
+
+class NeedViewsWithContentTypeTestCase(KomooTestCase):
+
+    fixtures = KomooTestCase.fixtures + ['needs.json']
+
+    # list
+    @logged_and_unlogged
+    def test_need_list_page_is_up(self):
+        url = reverse('need_list')
+        self.assert_200(url)
+
+    def test_new_need_creation(self):
+        self.login_user()
+        data = A_NEED_DATA()
+        n0 = Need.objects.count()
+        self.client.post(reverse('new_need'), data)
+        self.assertEquals(Need.objects.count(), n0 + 1)
+
     # edit_need
     def test_need_edit_page_is_up(self):
         self.login_user()
@@ -80,6 +95,11 @@ class NeedViewsTestCase(KomooUserTestCase):
         url = reverse('view_need', args=(415,))
         self.assert_404(url)
 
+
+class NeedViewsWithCommunitiesTestCase(KomooTestCase):
+
+    fixtures = KomooTestCase.fixtures + ['communities.json', 'needs.json']
+
     # searches
     @logged_and_unlogged
     def test_need_tag_search_is_up(self):
@@ -90,21 +110,6 @@ class NeedViewsTestCase(KomooUserTestCase):
         http_resp = self.client.get(url + "?term=xwyk")
         self.assertEqual(http_resp.status_code, 200)
         self.assertEquals(simplejson.loads(http_resp.content), [])
-
-    @logged_and_unlogged
-    def test_need_target_audience_search_is_up(self):
-        url = reverse('target_audience_search')
-        http_resp = self.client.get(url + "?term=crian")
-        self.assertEqual(http_resp.status_code, 200)
-        self.assertNotEquals(simplejson.loads(http_resp.content), [])
-        http_resp = self.client.get(url + "?term=xwyk")
-        self.assertEqual(http_resp.status_code, 200)
-        self.assertEquals(simplejson.loads(http_resp.content), [])
-
-
-class NeedViewsWithCommunitiesTestCase(KomooTestCase):
-
-    fixtures = KomooTestCase.fixtures + ['communities.json', 'needs.json']
 
     def test_need_edition(self):
         self.login_user()

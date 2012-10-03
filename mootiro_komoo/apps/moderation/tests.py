@@ -4,12 +4,12 @@ import simplejson
 from django.core import mail
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooBaseTestCase, KomooUserTestCase
+from main.tests import KomooBaseTestCase, KomooUserTestCase, KomooTestCase
 
 from moderation.models import Moderation, Report
 from moderation.utils import create_report
-from need.models import Need
 from need.tests import AN_UNSAVED_NEED
+from need.models import Need
 
 
 class ModerationSimpleTestCase(KomooBaseTestCase):
@@ -25,7 +25,7 @@ class ModerationSimpleTestCase(KomooBaseTestCase):
         self.assertTrue(moderation)
 
 
-class ModerationTestCase(KomooUserTestCase):
+class ModerationUserTestCase(KomooUserTestCase):
 
     fixtures = KomooUserTestCase.fixtures
 
@@ -69,10 +69,23 @@ class ModerationTestCase(KomooUserTestCase):
         content = simplejson.loads(response.content)
         self.assertEqual(content['success'], 'false')
 
+#    def test_delete_view_notloggedin(self):
+#        # TODO
+#        pass
+#
+#    def test_delete_view_loggedin(self):
+#        # TODO
+#        pass
+#
+
+
+class ModerationTestCase(KomooTestCase):
+
+    fixtures = KomooTestCase.fixtures + ['needs.json']
+
     def test_report_view_loggedin(self):
         user = self.login_user(username='noobzin')
-        need = AN_UNSAVED_NEED()
-        need.save()
+        need = Need.objects.all()[0]
         moderation = Moderation.objects.get_for_object(need)
         self.assertFalse(moderation)
 
@@ -100,11 +113,3 @@ class ModerationTestCase(KomooUserTestCase):
         self.assertEqual(content['success'], 'true')
         self.assertEqual(moderation.reports.count(), 1)
 
-#    def test_delete_view_notloggedin(self):
-#        # TODO
-#        pass
-#
-#    def test_delete_view_loggedin(self):
-#        # TODO
-#        pass
-#

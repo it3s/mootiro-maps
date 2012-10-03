@@ -6,7 +6,7 @@ import datetime
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooUserTestCase
+from main.tests import KomooTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from organization.tests import AN_UNSAVED_ORGANIZATION
@@ -38,12 +38,12 @@ def AN_INVESTMENT_DATA():
 
 
 # TODO: implement tests for investment
-class InvestmentViewsTestCase(KomooUserTestCase):
+class InvestmentViewsTestCase(KomooTestCase):
 
     #fixtures = KomooTestCase.fixtures + \
     #    ['communities.json', 'needs.json', 'proposals.json',
     #     'organizations.json', 'resources.json', 'investments.json']
-    fixtures = KomooUserTestCase.fixtures + ['investments.json']
+    fixtures = KomooTestCase.fixtures + ['investments.json']
 
     # ####### CREATION #######
     # def test_new_resource_page(self):

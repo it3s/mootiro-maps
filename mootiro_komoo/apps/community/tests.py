@@ -31,19 +31,6 @@ class CommunitySimpleViewsTestCase(KomooUserTestCase):
         self.assert_200(reverse('new_community'))
         self.assert_200(reverse('new_community'), ajax=True)
 
-    def test_new_community_creation(self):
-        self.login_user()
-        data = {
-            'name': 'Vila do Tanque',
-            'population': 20000,
-            'description': 'Lava roupa todo dia sem perder a alegria!',
-            'tags': 'sbc, prédio, condomínio',
-            'geometry': A_POLYGON_GEOMETRY,
-        }
-        self.client.post(reverse('new_community'), data)
-        if not Community.objects.filter(slug='vila-do-tanque'):
-            self.fail("Community was not created")
-
     # form validation
     def test_community_empty_form_validation(self):
         self.login_user()
@@ -84,6 +71,43 @@ class CommunityViewsTestCase(KomooUserTestCase):
 
     fixtures = KomooUserTestCase.fixtures + ['communities.json']
 
+    # on_map
+    @logged_and_unlogged
+    def test_community_on_map_page_is_up(self):
+        url = reverse('community_on_map', args=(1,))
+        http_resp = self.assert_200(url)
+        self.assertContains(http_resp, "map-canvas-editor")
+
+    # searches
+    @logged_and_unlogged
+    def test_community_search_by_name(self):
+        url = reverse('search_community_by_name') + "?term=Higi"
+        http_resp = self.client.get(url)
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertNotEquals(simplejson.loads(http_resp.content), [])
+        url = reverse('search_community_by_name') + "?term=xdfg"
+        http_resp = self.client.get(url)
+        self.assertEqual(http_resp.status_code, 200)
+        self.assertEquals(simplejson.loads(http_resp.content), [])
+
+
+class CommunityViewswithContentTypeTestCase(KomooTestCase):
+
+    fixtures = KomooTestCase.fixtures + ['communities.json']
+
+    def test_new_community_creation(self):
+        self.login_user()
+        data = {
+            'name': 'Vila do Tanque',
+            'population': 20000,
+            'description': 'Lava roupa todo dia sem perder a alegria!',
+            'tags': 'sbc, prédio, condomínio',
+            'geometry': A_POLYGON_GEOMETRY,
+        }
+        self.client.post(reverse('new_community'), data)
+        if not Community.objects.filter(slug='vila-do-tanque'):
+            self.fail("Community was not created")
+
     # edit_community
     def test_community_edit_page_is_up(self):
         self.login_user()
@@ -108,13 +132,6 @@ class CommunityViewsTestCase(KomooUserTestCase):
         with self.assertRaises(Exception):
             Community.objects.get(slug='sao-remo')
 
-    # on_map
-    @logged_and_unlogged
-    def test_community_on_map_page_is_up(self):
-        url = reverse('community_on_map', args=(1,))
-        http_resp = self.assert_200(url)
-        self.assertContains(http_resp, "map-canvas-editor")
-
     # view
     @logged_and_unlogged
     def test_community_about_page_is_up(self):
@@ -122,18 +139,6 @@ class CommunityViewsTestCase(KomooUserTestCase):
         self.assert_200(url)
         url = reverse('view_community', args=(9776,))
         self.assert_404(url)
-
-    # searches
-    @logged_and_unlogged
-    def test_community_search_by_name(self):
-        url = reverse('search_community_by_name') + "?term=Higi"
-        http_resp = self.client.get(url)
-        self.assertEqual(http_resp.status_code, 200)
-        self.assertNotEquals(simplejson.loads(http_resp.content), [])
-        url = reverse('search_community_by_name') + "?term=xdfg"
-        http_resp = self.client.get(url)
-        self.assertEqual(http_resp.status_code, 200)
-        self.assertEquals(simplejson.loads(http_resp.content), [])
 
     @logged_and_unlogged
     def test_community_search_tags(self):

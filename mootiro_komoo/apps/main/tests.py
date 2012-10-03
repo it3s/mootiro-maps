@@ -60,7 +60,8 @@ class KomooBaseTestCase(TestCase):
 
 class KomooUserTestCase(KomooBaseTestCase):
 
-    fixtures = ['contenttypes_fixtures.json', 'users.json']
+    fixtures = ['users.json']
+    #fixtures += ['contenttypes_fixtures.json']
 
     def login_user(self, username="tester"):
         """Logs a user in assuming its password is 'testpass'. The
@@ -71,7 +72,7 @@ class KomooUserTestCase(KomooBaseTestCase):
 
 class KomooTestCase(KomooUserTestCase):
 
-    fixtures = ['contenttypes_fixtures.json', 'users.json']
+    fixtures = KomooUserTestCase.fixtures + ['contenttypes_fixtures.json']
 
     @classmethod
     def setUpClass(cls):
