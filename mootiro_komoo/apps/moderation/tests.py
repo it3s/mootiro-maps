@@ -23,6 +23,7 @@ class ModerationTestCase(KomooTestCase):
         self.assertTrue(moderation)
 
     def test_create_report(self):
+        """You need to set ADMINS on your settings file for this test"""
         user = self.login_user(username='noobzin')
         need = Need.objects.all()[0]
         moderation = Moderation.objects.get_for_object(need)

@@ -18,7 +18,7 @@ sys.path.append(LIB_ROOT)
 
 
 # ========== admin, managers and site =========================================
-ADMINS = ()
+ADMINS = (('it3sdev', 'it3sdev@gmail.com'),)
 MANAGERS = ADMINS
 SITE_ID = 1
 

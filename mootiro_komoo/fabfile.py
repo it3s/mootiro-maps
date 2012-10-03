@@ -15,22 +15,21 @@ django_settings = {
 env_ = 'dev'
 
 
-def dev():
-    """Set environment to development"""
+def _set_env(type_):
     global env_
-    env_ = 'dev'
+    env_ = type_
+
+
+def dev():
+    _set_env('dev')
 
 
 def stage():
-    """Set environment to staging"""
-    global env_
-    env_ = 'stage'
+    _set_env('stage')
 
 
 def prod():
-    """Set environment to production"""
-    global env_
-    env_ = 'prod'
+    _set_env('prod')
 
 
 def setup_django():
@@ -59,21 +58,20 @@ def build_environment():
         "../docs/postgis-adapter-2.patch")
 
 
-def coffee_maker():
-    """ runs coffeescript compiler"""
-    # apps we want to compile our coffee files
-    COFFEE_SHOP = ['main', 'komoo_map', 'user_cas', 'discussion',
-                   'organization', 'komoo_project']
-    for app in COFFEE_SHOP:
+def work():
+    """Start watchers"""
+    # compilers
+    local('coffee -cw apps/ &')
+    local('sass --watch ./ &')
+
+    # test runners go here!
+
+
+def kill_background_tasks():
+    for task in ['coffee', 'sass']:
         local(
-            'coffee -o apps/{app}/static/js/ -cw apps/{app}/static/coffee/ &'
-            .format(app=app))
-
-
-def kill_coffee_tasks():
-    """kill all coffe node.js background tasks"""
-    local('ps -eo pid,args | grep coffee | grep -v grep | grep -v [.]coffee | '
-          'cut -c1-6 | xargs kill')
+            "ps -eo pid,args | grep %s | grep -v grep | "
+            "cut -c1-6 | xargs kill" % task)
 
 
 def run_celery():
