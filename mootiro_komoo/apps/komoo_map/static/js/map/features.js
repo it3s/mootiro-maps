@@ -101,27 +101,15 @@
       };
 
       Feature.prototype.getUrl = function() {
-        var params, slugname;
-        if (this.properties.type === 'Community') {
-          return dutils.urls.resolve('view_community', {
-            community_slug: this.properties.community_slug
-          });
-        } else if (this.properties.type === 'Resource') {
-          return dutils.url.resolve('view_resource', {
-            id: this.properties.id
-          }).replace('//', '/');
-        } else if (this.properties.type === 'OrganizationBranch') {
-          return dutils.url.resolve('view_organization', {
-            id: this.properties.id
-          }).replace('//', '/');
+        var viewName;
+        if (this.properties.type === 'OrganizationBranch') {
+          viewName = 'view_organization';
         } else {
-          slugname = "" + (this.properties.type.toLowerCase()) + "_slug";
-          params = {
-            community_slug: this.properties.community_slug
-          };
-          params[slugname] = this.properties[slugname];
-          return dutils.url.resolve("view_" + (this.properties.type.toLowerCase()), params).replace('//', '/');
+          viewName = "view_" + (this.properties.type.toLowerCase());
         }
+        return dutils.urls.resolve(viewName, {
+          id: this.properties.id
+        }).replace('//', '/');
       };
 
       Feature.prototype.isHighlighted = function() {

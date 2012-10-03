@@ -64,24 +64,12 @@ define ['map/geometries'], (geometries) ->
                 komoo.event.trigger this, 'coordinates_changed', args
 
         getUrl: ->
-            if @properties.type is 'Community'
-                dutils.urls.resolve 'view_community',
-                    community_slug: @properties.community_slug
-            else if @properties.type is 'Resource'
-                dutils.url.resolve('view_resource',
-                    id: @properties.id
-                ).replace '//', '/'
-            else if @properties.type is 'OrganizationBranch'
-                dutils.url.resolve('view_organization',
-                    id: @properties.id
-                ).replace '//', '/'
+            if @properties.type is 'OrganizationBranch'
+                viewName = 'view_organization'
             else
-                slugname = "#{@properties.type.toLowerCase()}_slug"
-                params =
-                    community_slug: @properties.community_slug
-                params[slugname] = @properties[slugname]
-                dutils.url.resolve("view_#{@properties.type.toLowerCase()}",
-                params).replace('//', '/')
+                viewName = "view_#{@properties.type.toLowerCase()}"
+
+            dutils.urls.resolve(viewName, id: @properties.id).replace('//', '/')
 
         isHighlighted: -> @highlighted
         highlight: -> @setHighlight(on)
