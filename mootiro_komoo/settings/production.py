@@ -104,3 +104,6 @@ for mod in ['views', 'models', 'forms', 'utils']:
 # EMAIL_PORT = 587
 # EMAIL_HOST_USER = 'it3sdev@gmail.com'
 # EMAIL_HOST_PASSWORD = '...'
+#
+# # the admin setting is necessary for sending mails when we have errors
+# ADMINS =((,),)

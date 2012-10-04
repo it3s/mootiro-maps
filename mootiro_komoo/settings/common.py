@@ -20,7 +20,6 @@ sys.path.append(LIB_ROOT)
 # ========== admin, managers and site =========================================
 ADMINS = (('it3sdev', 'it3sdev@gmail.com'),)
 MANAGERS = ADMINS
-SITE_ID = 1
 
 # ========== Localization =====================================================
 USE_I18N = True
@@ -102,11 +101,9 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
-    'django.contrib.comments',
     'django.contrib.gis',
     'django.contrib.markup',
     'django.contrib.humanize',
