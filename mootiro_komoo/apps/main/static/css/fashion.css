@@ -1,2 +1,12 @@
 .lalala {
   background: red; }
+
+#external_providers button {
+  padding: 3px 6px; }
+#external_providers .facebook button {
+  background: #3c5a98;
+  color: #fff;
+  border: 0;
+  border-radius: 5px; }
+#external_providers .facebook button:hover {
+  background: #728ec8; }

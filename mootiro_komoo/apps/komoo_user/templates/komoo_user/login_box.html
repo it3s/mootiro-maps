@@ -4,12 +4,13 @@
     {% trans "Log in" %}
   </header>
 
-  <div id="external_providers">
-    <button>{% trans "Log in with Google" %}</button>
-    <a href="{% url login_facebook %}?next={{ next }}">
-      <button>{% trans "Log in with Facebook" %}</button></a><br/>
-    <button>{% trans "Log in with Twitter" %}</button>
-  </div>
+  <ul id="external_providers">
+    <li class="facebook">
+      <a href="{% url login_facebook %}?next={{ next }}">
+        <button class="facebook">{% trans "Log in with Facebook" %}</button>
+      </a>
+    </li>
+  </ul>
 
   {% if login_error %}
     Errors: <br/>
