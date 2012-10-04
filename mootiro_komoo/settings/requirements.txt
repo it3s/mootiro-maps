@@ -14,6 +14,7 @@ django-cas==2.0.3
 django-celery==2.5.5
 django-crispy-forms==1.1.1
 django-easy-maps==0.7.2
+django-jsonfield==0.8.11
 django-markitup==1.0.0
 django-nose==1.0
 django-picklefield==0.2.1
