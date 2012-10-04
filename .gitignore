@@ -16,3 +16,4 @@ backups/
 *.xls
 .ropeproject/
 celerybeat-schedule
+mootiro_komoo/.sass-cache/

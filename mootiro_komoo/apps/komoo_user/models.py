@@ -23,6 +23,7 @@ class KomooUser(GeoRefModel):
 
     @classmethod
     def calc_hash(self, s):
+        # TODO: export this to config
         salt = 'mateabesta'
         return unicode(sha1(salt + s).hexdigest())
 
