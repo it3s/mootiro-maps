@@ -190,3 +190,7 @@ if 'test' in sys.argv:
 else:
     TESTING = False
 
+# ========== Mailgun ==========================================================
+MAILGUN_API_URL = 'https://api.mailgun.net/v2/it3s.mailgun.org/messages'
+MAILGUN_API_KEY = 'override me on local_settings'
+

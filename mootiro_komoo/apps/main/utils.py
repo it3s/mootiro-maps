@@ -5,6 +5,7 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import re
 from markdown import markdown
+import requests
 
 from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
@@ -12,6 +13,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponseNotAllowed
 from django.core.mail import send_mail as django_send_mail
+from django.conf import settings
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
@@ -257,11 +259,22 @@ def render_markup(text):
 
 def send_mail(title='', message='', sender='', receivers=[]):
     '''
-    function for sending mails. Currently its only a wrapper over django's
+    function for sending mails. If we are on debug (development) se will be
+    sent by django mailer else will use the mailgun api.
     mailer.
     '''
-    return django_send_mail(title, message, sender, receivers,
+    if settings.DEBUG:
+        django_send_mail(title, message, sender, receivers,
                             fail_silently=False)
+    else:
+        requests.post(
+            settings.MAILGUN_API_URL,
+            auth=('api', settings.MAILGUN_API_KEY),
+            data={
+                'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
+                'to': receivers,
+                'subject': title,
+                'text': message})
 
 
 def get_handler_method(request_handler, http_method):

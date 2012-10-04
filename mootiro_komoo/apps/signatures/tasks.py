@@ -29,14 +29,15 @@ a equipe IT3S.
             mail_message,
             'no-reply@mootiro.org',
             [user.email],
-            fail_silently=False
         )
 
 
 def periodic_mail_digest(digest_type=''):
     if digest_type:
-        for signature in DigestSignature.objects.filter(digest_type=digest_type):
-            user_digest = Digest.objects.filter(digest_type=digest_type, user=signature.user)
+        for signature in DigestSignature.objects.filter(
+                digest_type=digest_type):
+            user_digest = Digest.objects.filter(digest_type=digest_type,
+                                                user=signature.user)
             if user_digest.count():
                 msg = '''
 Olá {},
@@ -46,7 +47,8 @@ Alguns objetos que você está seguindo no MootiroMaps foram atualizados:
                 for content in user_digest:
                     msg += "\n -  Atualização em {} : {}".format(
                         content.content_object.__class__.__name__,
-                        'http://maps.mootiro.org' + komoo_permalink(content.content_object)
+                        'http://maps.mootiro.org' + komoo_permalink(
+                            content.content_object)
                     )
                     content.delete()
 

@@ -107,3 +107,5 @@ for mod in ['views', 'models', 'forms', 'utils']:
 #
 # # the admin setting is necessary for sending mails when we have errors
 # ADMINS =((,),)
+#
+# MAILGUN_API_KEY = "..."
