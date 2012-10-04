@@ -106,7 +106,7 @@ def kill_manage_tasks():
 def test(
         apps=" ".join([
             'community', 'need', 'organization', 'proposal', 'komoo_resource',
-            'investment', 'main', 'user_cas', 'moderation']),
+            'investment', 'main', 'komoo_user', 'moderation']),
         recreate_db=False):
     """Run application tests"""
     if recreate_db:

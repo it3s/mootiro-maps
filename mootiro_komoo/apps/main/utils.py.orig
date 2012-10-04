@@ -5,9 +5,12 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import re
 from markdown import markdown
+<<<<<<< HEAD
 import requests
+=======
 from string import letters, digits
 from random import choice
+>>>>>>> 48df94a12ac0ac61366450ac9484c0240a4763b4
 
 from django import forms
 from django.template.defaultfilters import slugify as simple_slugify

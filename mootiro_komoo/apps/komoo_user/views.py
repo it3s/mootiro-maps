@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import json
@@ -8,39 +7,30 @@ import requests
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.utils import simplejson
 from django.forms.models import model_to_dict
+from django.views.decorators.csrf import csrf_protect
 
 from annoying.decorators import render_to, ajax_request
+from annoying.functions import get_object_or_None
 from reversion.models import Revision
 
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
-from main.utils import create_geojson
+from main.utils import create_geojson, randstr
 
-from .forms import FormProfile
+from .models import KomooUser
+from .forms import FormProfile, FormKomooUser
+from .utils import login_required
+from .utils import logout as auth_logout
+from .utils import login as auth_login
 
 
 logger = logging.getLogger(__name__)
-
-
-@render_to('user_cas/login.html')
-def login(request):
-    """Displays a page with login options."""
-    return {}
-
-def logout(request):
-    next_page = request.GET.get('next', '/')
-    auth_logout(request)
-    # Is it the right thing to logout from SSO?
-    # requests.get(cas_logout_url(request, next_page))
-    return redirect(next_page)
 
 
 def _prepare_contrib_data(version, created_date):
@@ -95,7 +85,7 @@ def _prepare_contrib_data(version, created_date):
     return contrib
 
 
-@render_to('user_cas/profile.html')
+@render_to('komoo_user/profile.html')
 def profile(request, user_id=''):
     logger.debug('user_id : {}'.format(user_id))
     if not user_id:
@@ -119,7 +109,7 @@ def profile(request, user_id=''):
     return dict(user_profile=user, contributions=contributions, geojson=geojson)
 
 
-@render_to('user_cas/profile_update.html')
+@render_to('komoo_user/profile_update.html')
 @login_required
 def profile_update(request):
     signatures = []
@@ -219,3 +209,90 @@ def signature_delete(request):
         return dict(success=True)
     return dict(success=False)
 
+
+########## DJANGO USERS ##########
+@ajax_form('komoo_user/new.html', FormKomooUser)
+def user_new(request):
+    '''Displays user creation form.'''
+
+    def on_get(request, form):
+        form.helper.form_action = reverse('user_new')
+        return form
+
+    def on_after_save(request, user):
+        user.is_active = False
+        user.set_password(request.POST['password'])
+
+        # Email verification
+        key = randstr(32)
+        while KomooUser.objects.filter(verification_key=key).exists():
+            key = randstr(32)
+        user.verification_key = key
+        # TODO: send email
+        print '\n\nEMAIL USER VERIFICATION KEY\n%s\n\n' % user.verification_key
+
+        user.save()
+        redirect_url = reverse('user_check_inbox')
+        return {'redirect': redirect_url}
+
+    return {'on_get': on_get, 'on_after_save': on_after_save}
+
+
+@render_to('komoo_user/verification.html')
+def user_verification(request, key=''):
+    '''
+    Displays verification needed message if no key provided, or try to verify
+    the user by the given key.
+    '''
+    if not key:
+        return dict(message='check_email')
+    user = get_object_or_None(KomooUser, verification_key=key)
+    if not user:
+        return dict(message='invalid_key')
+    if user.is_active:
+        return dict(message='already_verified')
+    user.is_active = True
+    user.save()
+    return dict(message='activated')
+
+
+@render_to('komoo_user/login.html')
+def login(request):
+    '''
+    GET: Displays a page with login options.
+    POST: Receives email and password and authenticate the user.
+    '''
+    if request.method == 'GET':
+        next = request.GET.get('next', '')
+        return dict(next=next)
+
+    email = request.POST['email']
+    password = request.POST['password']
+    if not email or not password:
+        return dict(login_error='wrong_credentials')
+
+    password = KomooUser.calc_hash(password)
+    q = KomooUser.objects.filter(email=email, _password=password)
+    if not q.exists():
+        return dict(login_error='wrong_credentials')
+
+    user = q.get()
+    if not user.is_active:
+        return dict(login_error='user_not_active')
+
+    auth_login(request, user)
+    next = request.POST.get('next', '') or reverse('root')
+    return redirect(next)
+
+
+def logout(request):
+    next_page = request.GET.get('next', '/')
+    auth_logout(request)
+    return redirect(next_page)
+
+##################################
+
+@render_to('komoo_user/secret.html')
+@login_required
+def secret(request):
+    return {}

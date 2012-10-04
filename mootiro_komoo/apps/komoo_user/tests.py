@@ -31,6 +31,13 @@ class UserCasTestCase(KomooTestCase):
         response = self.client.get(reverse('profile_update'))
         self.assertContains(response, 'Parquinho')
 
+    def test_new_user_page(self):
+        resp = self.assert_200(reverse('user_new'))
+        self.assertContains(resp, 'id_name')
+        self.assertContains(resp, 'id_email')
+        self.assertContains(resp, 'id_password')
+
+
     # FIXME: seems this test is old. It does not make sense in the current
     # implementation of profile_update view
     @unittest.skip("FIXME")
