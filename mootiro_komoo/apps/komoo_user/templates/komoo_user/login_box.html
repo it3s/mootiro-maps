@@ -6,7 +6,8 @@
 
   <div id="external_providers">
     <button>{% trans "Log in with Google" %}</button>
-    <a href="{% url login_facebook %}"><button>{% trans "Log in with Facebook" %}</button></a><br/>
+    <a href="{% url login_facebook %}?next={{ next }}">
+      <button>{% trans "Log in with Facebook" %}</button></a><br/>
     <button>{% trans "Log in with Twitter" %}</button>
   </div>
 

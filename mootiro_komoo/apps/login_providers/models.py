@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from jsonfield import JSONField  # TODO: add this dependency
+from jsonfield import JSONField  # TODO: add this dependency to requirements.txt
 
 from komoo_user.models import KomooUser
 
-PROVIDERS = (
-    ('google-oauth2', 'google-oauth2'),
-    ('facebook-oauth2', 'facebook-oauth2'),
-    ('twitter-oauth', 'twitter-oauth'),
-)
+PROVIDERS = {
+    # 'provider label': 'db info'
+    'facebook': 'facebook-oauth2',
+    'google': 'google-oauth2',
+    'twitter': 'twitter-oauth2',
+}
+PROVIDERS_CHOICES = [(t[1], t[0]) for t in PROVIDERS.items()]
 
 class ExternalCredentials(models.Model):
     '''
@@ -17,6 +19,6 @@ class ExternalCredentials(models.Model):
     '''
 
     user = models.ForeignKey(KomooUser)
-    provider = models.CharField(max_length=32, choices=PROVIDERS)
+    provider = models.CharField(max_length=32, choices=PROVIDERS_CHOICES)
     email = models.CharField(max_length=256)
     data = JSONField()  # provider specific data for user login
