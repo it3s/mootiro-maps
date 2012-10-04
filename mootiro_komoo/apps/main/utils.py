@@ -5,6 +5,8 @@ from __future__ import unicode_literals  # unicode by default
 import json
 import re
 from markdown import markdown
+from string import letters, digits
+from random import choice
 
 from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
@@ -310,3 +312,11 @@ class ResourceHandler:
             return HttpResponseNotAllowed(methods)
         else:
             raise Http404
+
+
+def randstr(l=10):
+    chars = letters + digits
+    s = ''
+    for i in range(l):
+        s = s + choice(chars)
+    return s

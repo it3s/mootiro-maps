@@ -31,10 +31,9 @@ urlpatterns = patterns('',
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 
-    # user and profile urls
-    url(r'^user/', include('user_cas.urls')),
-    url(r'^login/cas?$', 'django_cas.views.login'),
-    url(r'', include('social_auth.urls')),
+    # user
+    url(r'^user/', include('komoo_user.urls')),
+    url(r'^user/login/', include('login_providers.urls')),
 
     # 3rd party apps
     url(r'^markitup/', include('markitup.urls')),

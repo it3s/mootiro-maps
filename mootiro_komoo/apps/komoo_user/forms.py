@@ -3,13 +3,15 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
+
 from ajaxforms import AjaxModelForm
 from komoo_map.forms import MapButtonWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
-from .models import KomooProfile
+from .models import KomooUser, KomooProfile
 
 
 class FormProfile(AjaxModelForm):
@@ -42,3 +44,37 @@ class FormProfile(AjaxModelForm):
         UploadedFile.bind_files(
             self.cleaned_data.get('photo', '').split('|'), profile)
         return profile
+
+
+class FormKomooUser(AjaxModelForm):
+    '''Simplified use form with the minimun required info.'''
+
+    class Meta:
+        model = KomooUser
+        fields = ('name', 'email', 'password')
+
+    _field_labels = {
+        'name': _('Name'),
+        'email': _('Email'),
+        'password': _('Password'),
+    }
+
+    name = forms.CharField(required=True)
+    email = forms.CharField(required=True)
+    password = forms.CharField(required=True, widget=forms.PasswordInput)
+
+    def __init__(self, *a, **kw):
+        self.helper = MooHelper(form_id="form_user")
+        return super(FormKomooUser, self).__init__(*a, **kw)
+
+    def clean(self):
+        '''Form validations.'''
+        super(FormKomooUser, self).clean()
+        email = self.cleaned_data['email']
+
+        # TODO: if email is in use but was connected through external provider
+        #       (facebook, google, etc...) show specific error.
+        self.validation('email', _('This email is already in use.'),
+                KomooUser.objects.filter(email=email).exists())
+
+        return self.cleaned_data

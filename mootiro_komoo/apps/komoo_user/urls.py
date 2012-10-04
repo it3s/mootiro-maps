@@ -4,10 +4,21 @@ from __future__ import unicode_literals
 from django.conf.urls.defaults import url, patterns
 
 
-urlpatterns = patterns('user_cas.views',
-    url(r'^login/?$', 'login', name="user_login"),
-    url(r'^logout/?$', 'logout', name="user_logout"),
+urlpatterns = patterns('komoo_user.views',
+    # general urls
+    url(r'^login/?$', 'login', name='user_login'),
+    url(r'^logout/?$', 'logout', name='user_logout'),
+    url(r'^secret/?$', 'secret', name='user_secret'),
 
+    # user creation urls
+    url(r'^new/?$', 'user_new', name='user_new'),
+    url(r'^verification/?$', 'user_verification', name='user_check_inbox'),
+    url(r'^verification/(?P<key>\S+)/?$', 'user_verification', name='user_verification'),
+
+    # per user urls
+    url(r'^(?P<user_id>\d+)/?$', 'profile', name='user_prof'),
+
+    # old stuff to be reviewed
     url(r'^profile/update/?$', 'profile_update', name='profile_update'),
     url(r'^profile/update/public_settings/?$', 'profile_update_public_settings',
         name='profile_update_public_settings'),

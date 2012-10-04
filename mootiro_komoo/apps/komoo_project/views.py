@@ -38,7 +38,7 @@ def project_view(request, id=''):
 
     proj_objects, items = {}, []
 
-    proj_objects['User'] = {'app_name': 'user_cas', 'objects_list': [{
+    proj_objects['User'] = {'app_name': 'komoo_user', 'objects_list': [{
         'name': project.creator.get_name,
         'link': project.creator.profile.view_url,
         'id': project.creator.profile.id,
