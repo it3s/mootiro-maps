@@ -9,10 +9,9 @@ from markdown import markdown
 from django import forms
 from django.template.defaultfilters import slugify as simple_slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.core.urlresolvers import reverse
-from django.shortcuts import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponseNotAllowed
+from django.core.mail import send_mail as django_send_mail
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
@@ -51,7 +50,8 @@ def komoo_permalink(obj):
     return '/permalink/{}{}'.format(ENTITY_MODEL_REV[obj.__class__], obj.id)
 
 
-def create_geojson(objects, type_='FeatureCollection', convert=True, discard_empty=False):
+def create_geojson(objects, type_='FeatureCollection', convert=True,
+                   discard_empty=False):
     if type_ == 'FeatureCollection':
         geojson = {
             'type': 'FeatureCollection',
@@ -124,7 +124,6 @@ class MooHelper(FormHelper):
         if form_id:
             self.form_id = form_id
         self.add_input(Submit('submit', _('Submit'), css_class='button'))
-        # self.add_input(Reset('reset', 'Reset'))
         return r
 
 
@@ -254,6 +253,15 @@ def clean_autocomplete_field(field_data, model):
 
 def render_markup(text):
     return markdown(text, safe_mode=True) if text else ''
+
+
+def send_mail(title='', message='', sender='', receivers=[]):
+    '''
+    function for sending mails. Currently its only a wrapper over django's
+    mailer.
+    '''
+    return django_send_mail(title, message, sender, receivers,
+                            fail_silently=False)
 
 
 def get_handler_method(request_handler, http_method):

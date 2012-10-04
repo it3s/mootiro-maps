@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from django.core.mail import send_mail
 from celery.task import task
 from celery.task.schedules import crontab
 from celery.decorators import periodic_task
 from signatures.models import Digest, DigestSignature
-from main.utils import komoo_permalink
+from main.utils import komoo_permalink, send_mail
 
 
 @task
