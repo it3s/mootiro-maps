@@ -1,12 +1,69 @@
-.lalala {
-  background: red; }
-
-#external_providers button {
-  padding: 3px 6px; }
-#external_providers .facebook button {
-  background: #3c5a98;
-  color: #fff;
-  border: 0;
-  border-radius: 5px; }
-#external_providers .facebook button:hover {
-  background: #728ec8; }
+#login_box {
+  background: #dceff4;
+  width: 500px; }
+  #login_box * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+  #login_box h1 {
+    text-align: center;
+    font-size: 20px; }
+  #login_box .errors {
+    color: #c00;
+    text-align: center; }
+  #login_box ul#external_providers, #login_box div#separator, #login_box form {
+    float: left; }
+  #login_box ul#external_providers, #login_box form {
+    padding: 10px; }
+  #login_box ul#external_providers {
+    width: 200px; }
+    #login_box ul#external_providers li {
+      margin: 10px 0; }
+      #login_box ul#external_providers li button {
+        width: 100%;
+        padding: 3px 6px;
+        border: 0;
+        border-radius: 5px;
+        color: #fff; }
+      #login_box ul#external_providers li button.google {
+        background: #d84a38; }
+      #login_box ul#external_providers li button.google:hover {
+        background: #e9988d; }
+      #login_box ul#external_providers li button.facebook {
+        background: #3c5a98; }
+      #login_box ul#external_providers li button.facebook:hover {
+        background: #728ec8; }
+      #login_box ul#external_providers li button.twitter {
+        background: #46c8f5; }
+      #login_box ul#external_providers li button.twitter:hover {
+        background: #a7e5fa; }
+  #login_box div#separator {
+    width: 50px;
+    height: 130px;
+    text-align: center;
+    line-height: 130px;
+    font-style: italic;
+    font-weight: bold; }
+  #login_box form {
+    width: 250px; }
+    #login_box form input {
+      width: 100%;
+      height: 28px; }
+    #login_box form input[type=submit] {
+      width: 100%;
+      padding: 3px 6px;
+      border: 0;
+      border-radius: 5px;
+      font-weight: bold;
+      font-size: 120%;
+      color: #fff;
+      /* fallback/image non-cover color */
+      background-color: #1e9c5b;
+      /* Firefox 3.6+ */
+      background-image: -moz-linear-gradient(#1e9c5b, #125c36);
+      /* Safari 4+, Chrome 1+ */
+      background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#1e9c5b), to(#125c36));
+      /* Safari 5.1+, Chrome 10+ */
+      background-image: -webkit-linear-gradient(#1e9c5b, #125c36);
+      /* Opera 11.10+ */
+      background-image: -o-linear-gradient(#1e9c5b, #125c36); }

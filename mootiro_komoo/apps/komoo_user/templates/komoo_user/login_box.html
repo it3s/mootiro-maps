@@ -1,40 +1,55 @@
 {% load i18n %}
-<section id="login">
+<section id="login_box">
   <header>
-    {% trans "Log in" %}
+    <h1>{% trans "Log in" %}</h1>
   </header>
 
-  <ul id="external_providers">
-    <li class="facebook">
-      <a href="{% url login_facebook %}?next={{ next }}">
-        <button class="facebook">{% trans "Log in with Facebook" %}</button>
-      </a>
-    </li>
-  </ul>
-
   {% if login_error %}
-    Errors: <br/>
+  <p class="errors">
+    {% trans "An error ocurred." %}
+    {% if login_error == 'wrong_credentials' %}
+      {% trans "You provided wrong credentials." %}
+    {% endif %}
+    {% if login_error == 'user_not_active' %}
+      {% trans "You have not verified your email yet." %}
+    {% endif %}
+  </p>
   {% endif %}
 
-  {% if login_error == 'wrong_credentials' %}
-    {% trans "Wrong credentials." %}
-  {% endif %}
+  <div>
+    <ul id="external_providers">
+      <li class="google">
+        <a href="{#% url login_google %}?next={{ next }#}">
+          <button class="google">{% trans "Log in with Google" %}</button>
+        </a>
+      </li>
+      <li class="facebook">
+        <a href="{% url login_facebook %}?next={{ next }}">
+          <button class="facebook">{% trans "Log in with Facebook" %}</button>
+        </a>
+      </li>
+      <li class="twitter">
+        <a href="{#% url login_twitter %}?next={{ next }#}">
+          <button class="twitter">{% trans "Log in with Twitter" %}</button>
+        </a>
+      </li>
+    </ul>
 
-  {% if login_error == 'user_not_active' %}
-    {% trans "User email is not verificated." %}
-  {% endif %}
+    <div id="separator"><span>{% trans "or" %}</span></div>
 
-  <br/><br/>
+    <form action="{% url user_login %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}"/>
+      <label for="email">Email</label>
+      <input id="email" type="email" name="email"/>
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password"/>
+      <span class="small">
+        <a href="{% url user_new %}">{% trans "Don't have an account?" %}<a/>
+      </span>
+      <input type="submit" value="{% trans 'Log in' %}"/>
+    </form>
+  </div>
 
-  <form action="{% url user_login %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="next" value="{{ next }}"/>
-    <label for="email">Email</label>
-    <input id="email" type="email" name="email"/>
-    <label for="password">Password</label>
-    <input id="password" type="password" name="password"/>
-    <br/>
-    <input type="submit"/>
-  </form>
-
+  <div class="clear-both"></div>
 </section>
