@@ -21,7 +21,7 @@ from reversion.models import Revision
 from signatures.models import Signature, DigestSignature
 from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
-from main.utils import create_geojson, randstr
+from main.utils import create_geojson, randstr, send_mail
 
 from .models import KomooUser
 from .forms import FormProfile, FormKomooUser
@@ -228,8 +228,21 @@ def user_new(request):
         while KomooUser.objects.filter(verification_key=key).exists():
             key = randstr(32)
         user.verification_key = key
-        # TODO: send email
-        print '\n\nEMAIL USER VERIFICATION KEY\n%s\n\n' % user.verification_key
+
+        send_mail(
+            title='Welcome to MootiroMaps',
+            receivers=[user.email],
+            message='''
+Hello, {name}.
+
+Before using our tool, please confirm your e-mail visiting the link below.
+{verification_url}
+
+Thanks,
+the IT3S team.
+'''.format(name=user.name, verification_url=request.build_absolute_uri(
+                                reverse('user_verification', args=(key,))))
+        )
 
         user.save()
         redirect_url = reverse('user_check_inbox')

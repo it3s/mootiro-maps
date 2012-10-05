@@ -5,6 +5,12 @@ from django.core.urlresolvers import reverse
 from .models import KomooUser
 
 
+class AnonymousUser(object):
+    '''Fake class to make it possible integration with other django apps.'''
+    def is_authenticated(self):
+        return False
+
+
 class AuthenticationMiddleware(object):
     '''Middleware that appends the logged user to the request.'''
 
@@ -15,6 +21,9 @@ class AuthenticationMiddleware(object):
                 request.user = KomooUser.objects.get(id=request.session['user_id'])
             except:
                 request.session.pop('user_id')
+                request.user = AnonymousUser()
+        else:
+            request.user = AnonymousUser()
         return None
 
 
@@ -37,8 +46,7 @@ def logout(request):
     request.session.flush()
     if 'user_id' in request.session:
         request.session.pop('user_id')
-    # appends a fake class to possibility integration
-    request.user = type('AnonymousUser', (), {'is_authenticated': lambda: False})()
+    request.user = AnonymousUser()
 
 
 def login_required(func=None):
