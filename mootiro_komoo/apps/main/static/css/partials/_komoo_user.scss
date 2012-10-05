@@ -84,3 +84,25 @@ $login_box_width: 500px;
     }
   }
 }
+
+#user_verification {
+  div.check_email {
+    height: 400px;
+
+    img, .message {
+      position: absolute;
+    }
+
+    .message {
+      width: 320px;
+      left: 450px;
+      top: 260px;
+    }
+
+    h1, p {
+      font-size: 28px;
+      line-height: 28px;
+      margin-bottom: 20px;
+    }
+  }
+}

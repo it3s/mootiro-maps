@@ -4,21 +4,31 @@
 
 {% block content %}
 
-  {% if message == 'check_email' %}
-    CHECK YOUR EMAIL
-  {% endif %}
-
-  {% if message == 'invalid_key' %}
-    INVALID KEY
-  {% endif %}
-
-  {% if message == 'already_verified' %}
-    ACCOUNT ALREADY VERIFIED. DO LOGIN =D
-  {% endif %}
-
-  {% if message == 'activated' %}
-    SUCCESFULLY ACTIVATED. DO LOGIN =D <br/>
-    {% include "main/login_box.html" %}
-  {% endif %}
+<div id="main-content">
+  <section id="user_verification">
+    {% if message == 'check_email' %}
+      <div class="check_email">
+        <img src="{{STATIC_URL}}img/spock-email.png" />
+        <div class="message">
+          <h1>{% trans "Your account was created!" %}</h1>
+          <p>{% trans "But before using you need to confirm your e-mail. Go check your inbox!" %}</p>
+        </div>
+      </div>
+    {% endif %}
+    
+    {% if message == 'invalid_key' %}
+      INVALID KEY
+    {% endif %}
+    
+    {% if message == 'already_verified' %}
+      ACCOUNT ALREADY VERIFIED. DO LOGIN =D
+    {% endif %}
+    
+    {% if message == 'activated' %}
+      SUCCESFULLY ACTIVATED. DO LOGIN =D <br/>
+      {% include "main/login_box.html" %}
+    {% endif %}
+  </section>
+</div>
 
 {% endblock %}

@@ -37,18 +37,7 @@
 
     <div id="separator"><span>{% trans "or" %}</span></div>
 
-    <form action="{% url user_login %}" method="post">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ next }}"/>
-      <label for="email">Email</label>
-      <input id="email" type="email" name="email"/>
-      <label for="password">Password</label>
-      <input id="password" type="password" name="password"/>
-      <span class="small">
-        <a href="{% url user_new %}">{% trans "Don't have an account?" %}<a/>
-      </span>
-      <input type="submit" value="{% trans 'Log in' %}"/>
-    </form>
+    {% include "komoo_user/komoo_login_form.html" %}
   </div>
 
   <div class="clear-both"></div>

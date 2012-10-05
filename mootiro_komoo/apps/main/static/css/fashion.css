@@ -67,3 +67,16 @@
       background-image: -webkit-linear-gradient(#1e9c5b, #125c36);
       /* Opera 11.10+ */
       background-image: -o-linear-gradient(#1e9c5b, #125c36); }
+
+#user_verification div.check_email {
+  height: 400px; }
+  #user_verification div.check_email img, #user_verification div.check_email .message {
+    position: absolute; }
+  #user_verification div.check_email .message {
+    width: 320px;
+    left: 450px;
+    top: 260px; }
+  #user_verification div.check_email h1, #user_verification div.check_email p {
+    font-size: 28px;
+    line-height: 28px;
+    margin-bottom: 20px; }
