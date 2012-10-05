@@ -12,6 +12,8 @@ pip install -r settings/requirements.txt
 
 sudo npm install -g coffee-script@1.2
 
+sudo gem install --version '~> 0.8.8' rb-inotify
+sudo gem install listen
 sudo gem install sass
 
 # apply patch for django 1.3

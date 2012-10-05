@@ -19,7 +19,7 @@ class KomooUser(GeoRefModel):
     email = models.CharField(max_length=512, null=False, unique=True)
     
     # password is set only if not created through external provider
-    _password = models.CharField(max_length=256, null=False)
+    password = models.CharField(max_length=256, null=False)
 
     @classmethod
     def calc_hash(self, s):
@@ -28,10 +28,10 @@ class KomooUser(GeoRefModel):
         return unicode(sha1(salt + s).hexdigest())
 
     def set_password(self, s):
-        self._password = self.calc_hash(s)
+        self.password = self.calc_hash(s)
 
     def verify_password(self, s):
-        return self._password == self.calc_hash(s)
+        return self.password == self.calc_hash(s)
 
     # other useful info to collect
     contact = models.TextField(null=True)

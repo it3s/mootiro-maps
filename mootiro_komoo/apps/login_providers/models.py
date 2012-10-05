@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from jsonfield import JSONField  # TODO: add this dependency to requirements.txt
+from jsonfield import JSONField
 
 from komoo_user.models import KomooUser
 
@@ -11,6 +11,7 @@ PROVIDERS = {
     'twitter': 'twitter-oauth2',
 }
 PROVIDERS_CHOICES = [(t[1], t[0]) for t in PROVIDERS.items()]
+
 
 class ExternalCredentials(models.Model):
     '''
