@@ -14,16 +14,19 @@ sys.path.append(SITE_ROOT)
 
 from django.core.management import setup_environ
 
-env_name = ['', 'development', 'staging', 'production'][\
-            3 * (int(env_ == 'prod')) +\
-            2 * (int(env_ == 'stage')) +\
-                (int(env_ == 'dev'))]
+env_name = {
+    'dev': 'development',
+    'stage': 'staging',
+    'prod': 'production'
+}[env_]
 environ = None
 exec 'from settings import {} as environ'.format(env_name)
 setup_environ(environ)
 
 # ======= script ====== ##
 from django.contrib.auth.models import User
+from user_cas.models import KomooProfile
+from komoo_user.models import KomooUser
 
 
 ####  mappings ####
@@ -31,7 +34,7 @@ from django.contrib.auth.models import User
 #  KomooUser       |     contrib.auth
 #  ------------------------------------
 #  id              |    preservar mesmo id
-#  name            |    user.get_profile().get_name
+#  name            |    user.get_name
 #  email           |    user.email
 #  password        |    CAS  (transformat para $sha1$salt$hash)
 #  contact         |    user.get_profile().contact
@@ -39,8 +42,21 @@ from django.contrib.auth.models import User
 #  LogginProviders |    social_auth
 #  ------------------------------------
 #  komoouser       |    auth.user
-#  provider        |    ???
-#  email           |    ???
-#  data            |    ???
+#  provider        |    ??? facebook / google-oauth2
+#  email           |    ??? google -> email / facebook -> uuid
+#  data            |    ??? 
 #
 
+for user in User.objects.all():
+    print user.id, user.get_name
+
+    id = user.id
+    name = user.get_name
+    email = user.email
+    # new_user.password = ??
+    contact = user.get_profile().contact
+    if id and name and email:
+        KomooUser.objects.create(id=id, name=name, email=email, contact=contact)
+    else:
+        print 'Sorry but this user has missing data, and cannot be imported: '
+        print ' | '.join(map(str, [id, name, email]))
