@@ -23,21 +23,13 @@ from main.utils import randstr
 from komoo_user.models import KomooUser
 from komoo_user.utils import login as auth_login
 from .models import ExternalCredentials as Credentials, PROVIDERS
+from .utils import encode_querystring, decode_querystring
+from .utils import get_or_create_user_by_credentials
 
 
 # TODO: move these configurations to settings/common.py
 FACEBOOK_APP_ID = '186391648162058'
 FACEBOOK_APP_SECRET = 'd6855cacdb51225519e8aa941cf7cfee'
-
-
-# TODO: move to some utils.py
-def encode_querystring(params):
-    return '&'.join(['%s=%s' % (k, v) for k, v in params.items()])
-
-
-# TODO: move to some utils.py
-def decode_querystring(s):
-    return {p.split('=')[0]:p.split('=')[1] for p in s.split('&')}
 
 
 def login_facebook(request):
@@ -86,30 +78,12 @@ def facebook_authorized(request):
     url += '?' + encode_querystring(params)
     data = simplejson.loads(requests.get(url).text)
 
-    # TODO: extract the lines below to a generic function for other providers
-    # Let's try to find out if we have already have a user for this email
-    user = None
-    provider_credentials = None
+    user, created = get_or_create_user_by_credentials(data['email'],
+                                    PROVIDERS['facebook'], access_data)
 
-    matching_credentials = Credentials.objects.filter(email=data['email'])
-    for credential in matching_credentials:
-        if not user:  # any existing credential is already connected to a user
-            user = credential.user
-        if credential.provider == PROVIDERS['facebook']:
-            provider_credentials = credential
-
-    if not user:
-        user, created = KomooUser.objects.get_or_create(email=data['email'])
-        if created:
-            user.name = data['name']
-            user.save()
-
-    if not provider_credentials:
-        provider_credentials = Credentials(email=data['email'], provider=PROVIDERS['facebook'])
-        provider_credentials.user = user
-        # persist access_token and expiration date
-        provider_credentials.data = access_data
-        provider_credentials.save()
+    if created:
+        user.name = data['name']
+        user.save()
 
     auth_login(request, user)
 

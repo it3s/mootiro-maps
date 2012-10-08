@@ -52,7 +52,7 @@ def logout(request):
 def login_required(func=None):
     '''Decorator that requires a valid user in request.'''
     def wrapped_func(request, *a, **kw):
-        if not hasattr(request, 'user'):
+        if not request.user.is_authenticated():
             next = request.get_full_path()
             url = reverse('user_login') + '?next=' + next
             return redirect(url)

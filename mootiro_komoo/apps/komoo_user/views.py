@@ -285,7 +285,7 @@ def login(request):
         return dict(login_error='wrong_credentials')
 
     password = KomooUser.calc_hash(password)
-    q = KomooUser.objects.filter(email=email, _password=password)
+    q = KomooUser.objects.filter(email=email, password=password)
     if not q.exists():
         return dict(login_error='wrong_credentials')
 
@@ -308,4 +308,4 @@ def logout(request):
 @render_to('komoo_user/secret.html')
 @login_required
 def secret(request):
-    return {}
+    return dict(user=request.user)
