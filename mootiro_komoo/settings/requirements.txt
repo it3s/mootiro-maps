@@ -10,7 +10,6 @@ celery==2.5.3
 certifi==0.0.8
 chardet==1.0.1
 django-annoying==0.7.6
-django-cas==2.0.3
 django-celery==2.5.5
 django-crispy-forms==1.1.1
 django-easy-maps==0.7.2

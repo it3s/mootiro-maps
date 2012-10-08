@@ -13,6 +13,11 @@ class AnonymousUser(object):
     def is_anonymous(self):
         return True
 
+    def is_superuser(self):
+        return False
+
+    id = None
+
 
 class AuthenticationMiddleware(object):
     '''Middleware that appends the logged user to the request.'''
