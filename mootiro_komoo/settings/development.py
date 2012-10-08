@@ -76,9 +76,6 @@ for mod in ['views', 'models', 'forms', 'utils']:
     LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
                     for app in os.listdir('apps/') + os.listdir('lib/')})
 
-PROFILE_DATABASE = 'localhost|profile|username|password'
-CAS_SERVER_URL = 'https://localhost:8443/cas/'
-
 # Celery task queue config
 BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
 

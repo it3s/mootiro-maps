@@ -139,9 +139,7 @@ INSTALLED_APPS = [
     'update',
     'komoo_project',
     'discussion',
-    'user_cas',  # only for migration...this will be removed
 ]
-AUTH_PROFILE_MODULE = 'user_cas.KomooProfile' # remove with user_cas
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 

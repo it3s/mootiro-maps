@@ -1,20 +1,18 @@
 [
   {
-    "model": "auth.user",
+    "model": "komoo_user.komoouser",
     "pk": 1,
     "fields": {
-      "username": "tester",
       "email": "tester@test.com",
-      "password": "sha1$1a882$8f5a80cb32426102b8a2bab4398d045a082dff0b"
+      "password": "ccff6314e8cd1611724d6354c9e9a0f48cfb4c9e" 
     }
   },
   {
-    "model": "auth.user",
+    "model": "komoo_user.komoouser",
     "pk": 2,
     "fields": {
-      "username": "noobzin",
       "email": "noobzin@test.com",
-      "password": "sha1$1a882$8f5a80cb32426102b8a2bab4398d045a082dff0b"
+      "password": "ccff6314e8cd1611724d6354c9e9a0f48cfb4c9e"
     }
   }
 ]

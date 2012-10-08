@@ -19,7 +19,6 @@ from annoying.functions import get_object_or_None
 from reversion.models import Revision
 
 from signatures.models import Signature, DigestSignature
-from django_cas.views import _logout_url as cas_logout_url
 from ajaxforms import ajax_form
 from main.utils import create_geojson, randstr, send_mail
 

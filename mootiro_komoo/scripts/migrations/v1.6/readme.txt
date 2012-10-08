@@ -6,11 +6,16 @@ some instructions:
 
 on the old checkout version (before git pull):
 
-python manage.py dumpdata --exclude=sites --exclude=comments --settings=settings.settings_file > backupdb_filename.json
+1- python manage.py dumpdata --exclude=sites --exclude=comments --settings=settings.settings_file > backupdb_filename.json
 
-git pull
+2- git pull
 
-fab sync_all:backupdb_filename.json
+3- python scripts/migrations/v1.6/user_migration.py backupdb_filename.json
 
-another possibility is to create a pure sql migration script. (there is no one yet)
+4- se tudo correu bem: mv temp.json backupdb_filename.json
 
+4- fab sync_all:backupdb_filename.json
+
+5- local_settings:
+    - resetar chaves de api do facebook
+    - trocar chave do google

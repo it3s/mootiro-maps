@@ -87,9 +87,6 @@ for mod in ['views', 'models', 'forms', 'utils']:
 
 
 # ========= To override on local settings =====================================
-# PROFILE_DATABASE = 'localhost|profile|username|password'
-# CAS_SERVER_URL = 'https://localhost:8443/cas/'
-#
 # BROKER_URL = "amqp://user:pass@localhost:5672/mootiro_maps_mq"
 #
 # FACEBOOK_APP_ID = '...'
