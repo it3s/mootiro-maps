@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+from komoo_user.models import KomooUser
+
+from .models import ExternalCredentials
+
+
 def encode_querystring(params):
     return '&'.join(['%s=%s' % (k, v) for k, v in params.items()])
 
@@ -17,7 +22,7 @@ def get_or_create_user_by_credentials(email, provider, access_data=None):
     created = None
     provider_credentials = None
 
-    matching_credentials = Credentials.objects.filter(email=email)
+    matching_credentials = ExternalCredentials.objects.filter(email=email)
     for credential in matching_credentials:
         if not user:
             # any existing credential is already connected to a user
@@ -33,7 +38,7 @@ def get_or_create_user_by_credentials(email, provider, access_data=None):
 
     if not provider_credentials:
         # first login with this provider
-        provider_credentials = Credentials(email=email, provider=provider)
+        provider_credentials = ExternalCredentials(email=email, provider=provider)
         provider_credentials.user = user
         # persist access_token and expiration date inside access_data
         provider_credentials.data = access_data

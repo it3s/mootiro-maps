@@ -20,9 +20,8 @@ from django.core.urlresolvers import reverse
 from annoying.decorators import render_to
 
 from main.utils import randstr
-from komoo_user.models import KomooUser
 from komoo_user.utils import login as auth_login
-from .models import ExternalCredentials as Credentials, PROVIDERS
+from .models import PROVIDERS
 from .utils import encode_querystring, decode_querystring
 from .utils import get_or_create_user_by_credentials
 
