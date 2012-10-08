@@ -27,6 +27,9 @@ setup_environ(environ)
 from django.contrib.auth.models import User
 from user_cas.models import KomooProfile
 from komoo_user.models import KomooUser
+import logging
+
+logging.basicConfig(format='>> %(message)s', level=logging.DEBUG)
 
 
 ####  mappings ####
@@ -48,7 +51,7 @@ from komoo_user.models import KomooUser
 #
 
 for user in User.objects.all():
-    print user.id, user.get_name
+    logging.debug('%s -> %s' % (user.id, user.get_name))
 
     id = user.id
     name = user.get_name
@@ -56,7 +59,7 @@ for user in User.objects.all():
     # new_user.password = ??
     contact = user.get_profile().contact
     if id and name and email:
-        KomooUser.objects.create(id=id, name=name, email=email, contact=contact)
+        KomooUser.objects.get_or_create(id=id, name=name, email=email, contact=contact)
     else:
-        print 'Sorry but this user has missing data, and cannot be imported: '
-        print ' | '.join(map(str, [id, name, email]))
+        logging.info('Sorry but this user has missing data, and cannot be imported: ')
+        logging.info(' | '.join(map(str, [id, name, email])))

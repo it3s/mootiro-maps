@@ -10,6 +10,9 @@ class AnonymousUser(object):
     def is_authenticated(self):
         return False
 
+    def is_anonymous(self):
+        return True
+
 
 class AuthenticationMiddleware(object):
     '''Middleware that appends the logged user to the request.'''

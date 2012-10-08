@@ -41,6 +41,9 @@ class KomooUser(GeoRefModel):
     def is_authenticated(self):
         return True
 
+    def is_anonymous(self):
+        return False
+
     def __unicode__(self):
         return self.name
 
