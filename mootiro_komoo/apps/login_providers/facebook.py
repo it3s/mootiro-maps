@@ -13,6 +13,7 @@ from __future__ import unicode_literals
 import requests
 import simplejson
 
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
@@ -21,21 +22,17 @@ from annoying.decorators import render_to
 
 from main.utils import randstr
 from komoo_user.utils import login as auth_login
+
 from .models import PROVIDERS
 from .utils import encode_querystring, decode_querystring
 from .utils import get_or_create_user_by_credentials
-
-
-# TODO: move these configurations to settings/common.py
-FACEBOOK_APP_ID = '186391648162058'
-FACEBOOK_APP_SECRET = 'd6855cacdb51225519e8aa941cf7cfee'
 
 
 def login_facebook(request):
     csrf_token = randstr(10)
     redirect_uri = request.build_absolute_uri(reverse('facebook_authorized'))
     params = {
-        'client_id': FACEBOOK_APP_ID,  # app id from provider
+        'client_id': settings.FACEBOOK_APP_ID,  # app id from provider
         'redirect_uri': redirect_uri,  # where the user will be redirected to
         'scope': 'email',              # comma separated list of permissions
         'state': csrf_token,           # unique string to prevent CSRF
@@ -60,17 +57,17 @@ def facebook_authorized(request):
 
     redirect_uri = request.build_absolute_uri(reverse('facebook_authorized'))
     params = {
-        'client_id': FACEBOOK_APP_ID,          # app id from provider
-        'client_secret': FACEBOOK_APP_SECRET,  # app secret from provider.
-        'code': request.GET.get('code'),       # code to exchange for an access_token.
-        'redirect_uri': redirect_uri,          # must be the same as the one in step 1.
+        'client_id': settings.FACEBOOK_APP_ID,          # app id from provider
+        'client_secret': settings.FACEBOOK_APP_SECRET,  # app secret from provider.
+        'code': request.GET.get('code'),  # code to exchange for an access_token.
+        'redirect_uri': redirect_uri,     # must be the same as the one in step 1.
     }
     url = 'https://graph.facebook.com/oauth/access_token'
     url += '?' + encode_querystring(params)
     access_data = decode_querystring(requests.get(url).text)
 
     params = {
-        'fields': 'email,name',                # fields requested
+        'fields': 'email,name',                       # fields requested
         'access_token': access_data['access_token'],  # the so wanted access token
     }
     url = 'https://graph.facebook.com/me'
@@ -79,7 +76,6 @@ def facebook_authorized(request):
 
     user, created = get_or_create_user_by_credentials(data['email'],
                                     PROVIDERS['facebook'], access_data)
-
     if created:
         user.name = data['name']
         user.save()

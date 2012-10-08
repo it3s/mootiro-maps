@@ -79,12 +79,11 @@ for mod in ['views', 'models', 'forms', 'utils']:
 # Celery task queue config
 BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
 
-FACEBOOK_APP_ID = '428903733789454'
-FACEBOOK_API_SECRET = 'f286aad6b17af279e622d4350b077081'
-FACEBOOK_EXTENDED_PERMISSIONS = ['email']
-
-GOOGLE_OAUTH2_CLIENT_ID = '37410049822.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'VYPUXk4GraHit4n72nh5CwhX'
+# Development keys for external login providers
+FACEBOOK_APP_ID = '186391648162058'
+FACEBOOK_APP_SECRET = 'd6855cacdb51225519e8aa941cf7cfee'
+GOOGLE_APP_ID = '66239815630.apps.googleusercontent.com'
+GOOGLE_APP_SECRET = 'JNeq1VSkQzACfQ3yfNc5YYPL'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
