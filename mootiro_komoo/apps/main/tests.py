@@ -3,8 +3,13 @@ from django.test import TestCase
 from django.test.client import Client
 from django.contrib.contenttypes.models import ContentType
 from functools import wraps
-
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.http import HttpRequest
+from django.utils.importlib import import_module
+
+from komoo_user.models import KomooUser
+from komoo_user.utils import login
 
 
 A_POLYGON_GEOMETRY = '''
@@ -58,16 +63,57 @@ class KomooBaseTestCase(TestCase):
         return self._assert_status(url, 404, **kw)
 
 
+class KomooClient(Client):
+    def login(self, email='', password=''):
+        """
+        Overrides django cliente login to user our own authentication solution
+        """
+        user = KomooUser.objects.get(email=email)
+
+        if user.verify_password(password):
+            engine = import_module(settings.SESSION_ENGINE)
+
+            # Create a fake request to store login details.
+            request = HttpRequest()
+            if self.session:
+                request.session = self.session
+            else:
+                request.session = engine.SessionStore()
+            login(request, user)
+
+            # Save the session values.
+            request.session.save()
+
+            # Set the cookie to represent the session.
+            session_cookie = settings.SESSION_COOKIE_NAME
+            self.cookies[session_cookie] = request.session.session_key
+            cookie_data = {
+                'max-age': None,
+                'path': '/',
+                'domain': settings.SESSION_COOKIE_DOMAIN,
+                'secure': settings.SESSION_COOKIE_SECURE or None,
+                'expires': None,
+            }
+            self.cookies[session_cookie].update(cookie_data)
+
+            return True
+        else:
+            return False
+
+
 class KomooUserTestCase(KomooBaseTestCase):
 
     fixtures = ['users.json']
     #fixtures += ['contenttypes_fixtures.json']
 
+    client_class = KomooClient
+
     def login_user(self, username="tester"):
         """Logs a user in assuming its password is 'testpass'. The
         test_fixtures defines two users: 'tester' and 'noobzin'."""
-        self.client.login(username=username, password="testpass")
-        return User.objects.get(username=username)
+        email = '{username}@test.com'.format(username=username)
+        self.client.login(email=email, password="testpass")
+        return KomooUser.objects.get(email=email)
 
 
 class KomooTestCase(KomooUserTestCase):
