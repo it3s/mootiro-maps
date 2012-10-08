@@ -39,6 +39,14 @@ MultiMarker = function (opt_options) {
 
 
 /**
+ * @return {google.maps.LatLng}
+ */
+MultiMarker.prototype.getPosition = function () {
+    return this.markers_.getAt(0).getPosition();
+};
+
+
+/**
  * @return {google.maps.LatLng[]}
  */
 MultiMarker.prototype.getPositions = function () {
