@@ -11,16 +11,14 @@
         return map.refresh();
       };
       fixMapHeight = function(map, mapPanel) {
-        var height, panelInfo, _ref;
+        var height, panelInfo;
         if (mapPanel == null) mapPanel = $('#map-panel');
         height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
         $(map.element).height(height);
         mapPanel.height(height);
         panelInfo = $('.panel-info-wrapper');
         if (panelInfo) height -= panelInfo.height() + 30;
-        return $('.panel', mapPanel).height(height - ((_ref = window.community_slug) != null ? _ref : {
-          170: 146
-        }));
+        return $('.panel', mapPanel).height(height - 146);
       };
       fixMapWidth = function(map, mapPanel) {
         var panelLeft, panelWidth;

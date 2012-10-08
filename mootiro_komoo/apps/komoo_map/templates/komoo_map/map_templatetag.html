@@ -48,7 +48,7 @@
           if (gotoNextStep && feature) {
             featureType = feature.getFeatureType();
             geojson = feature.getGeometryCollectionGeoJson();
-            url = featureType.formUrl.replace('/communitySlug', (window.community_slug) ? ('/' + community_slug) : '');
+            url = featureType.formUrl;
             $.ajax({
               url: url,
               cache: true,

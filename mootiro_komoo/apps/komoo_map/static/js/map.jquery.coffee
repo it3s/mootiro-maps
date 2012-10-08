@@ -13,7 +13,7 @@ define ['jquery', 'map/maps'], ($, maps) ->
             panelInfo = $('.panel-info-wrapper')
             if panelInfo
                 height -= panelInfo.height() + 30
-            $('.panel', mapPanel).height(height - (window.community_slug ? 170 : 146))
+            $('.panel', mapPanel).height(height - 146)
 
         fixMapWidth = (map, mapPanel = $('#map-panel')) ->
             panelWidth = mapPanel.innerWidth()

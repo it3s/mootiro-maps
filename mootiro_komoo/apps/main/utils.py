@@ -100,17 +100,12 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
                     'lastUpdate': last_update
                 }
             }
-            if hasattr(obj, 'community'):
-                feature['properties']['community_slug'] = getattr(obj.community, 'slug', '')
-            if hasattr(obj, 'slug'):
-                feature['properties']['{}_slug'.format(type_.lower())] = obj.slug
             if hasattr(obj, 'categories'):
                 feature['properties']['categories'] = [{'name': c.name, 'image': c.image} for c in obj.categories.all()]
             if hasattr(obj, 'population'):
                 feature['properties']['population'] = obj.population
 
             if type_ == 'OrganizationBranch':
-                feature['properties']['organization_slug'] = obj.organization.slug
                 feature['properties']['organization_name'] = obj.organization.name
                 feature['properties']['last_update'] = obj.organization.last_update.isoformat(b' ')
 
