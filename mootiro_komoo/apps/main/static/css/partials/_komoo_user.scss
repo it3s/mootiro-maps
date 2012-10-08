@@ -1,7 +1,9 @@
 $facebook_blue: #3c5a98;
 $google_red: #d84a38;
 $twitter_blue: #46c8f5;
-$login_box_width: 500px;
+$login_box_width: 560px;
+
+
 
 #login_box {
   * {
@@ -43,6 +45,13 @@ $login_box_width: 500px;
         border: 0;
         border-radius: 5px;
         color: #fff;
+
+        img {
+          width: 22px;
+          height: 22px;
+          float: left;
+          display: block;
+        }
       }
 
       button.google { background: $google_red }
