@@ -739,6 +739,7 @@
         MULTIPOLYLINE: MULTIPOLYLINE,
         MULTILINESTRING: MULTILINESTRING
       },
+      MultiMarker: MultiMarker,
       Geometry: Geometry,
       Empty: Empty,
       Point: SinglePoint,

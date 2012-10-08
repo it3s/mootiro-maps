@@ -1,50 +1,47 @@
 <html>
   <head>
     <script src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing&language=pt-br"></script>
-    <script src="/static/lib/jquery-1.7.1.min.js"></script>
-    <script type="text/javascript" src="/static/js/map/multimarker.js"></script>
-    <script type="text/javascript" src="/static/js/map/multipolyline.js"></script>
-    <script type="text/javascript" src="/static/js/map/geometries.js"></script>
+    <script type="text/javascript" src="/static/js/config.js"></script>
+    <script type="text/javascript" data-main="app" src="/static/lib/require.js"></script>
     <link rel="stylesheet" href="/static/lib/qunit/qunit.css" type="text/css" media="screen" />
     <script type="text/javascript" src="/static/lib/qunit/qunit.js"></script>
 
     <script type="text/javascript">
-      $(document).ready(function (){
+      require(['map/geometries'], function (geometries) {
 
         test('Basic requirements', function () {
-          expect(4);
+          expect(3);
           ok(Function.call, 'Function.call()');
           ok(Object.create, 'Object.create()');
           ok(google.maps, 'Google maps API');
-          ok($, 'JQuery');
         });
 
         test('Get geometry default properties', function () {
           expect(6);
-          var simpleGeometry = new komoo.geometries.Polygon();
+          var simpleGeometry = new geometries.Polygon();
           equal(simpleGeometry.getBackgroundColor(),
-              komoo.geometries.defaults.BACKGROUND_COLOR,
+              geometries.defaults.BACKGROUND_COLOR,
               'Should return the default background color');
           equal(simpleGeometry.getBackgroundOpacity(),
-              komoo.geometries.defaults.BACKGROUND_OPACITY,
+              geometries.defaults.BACKGROUND_OPACITY,
               'Should return the default background opacity');
           equal(simpleGeometry.getBorderColor(),
-              komoo.geometries.defaults.BORDER_COLOR,
+              geometries.defaults.BORDER_COLOR,
               'Should return the default border color');
           equal(simpleGeometry.getBorderOpacity(),
-              komoo.geometries.defaults.BORDER_OPACITY,
+              geometries.defaults.BORDER_OPACITY,
               'Should return the default border opacity');
           equal(simpleGeometry.getBorderSize(),
-              komoo.geometries.defaults.BORDER_SIZE,
+              geometries.defaults.BORDER_SIZE,
               'Should return the default border size');
           equal(simpleGeometry.getDefaultZIndex(),
-              komoo.geometries.defaults.ZINDEX,
+              geometries.defaults.ZINDEX,
               'Should return the default z-index');
         });
 
         test('Get geometry properties from "feature"', function () {
           expect(6);
-          var simpleGeometry = new komoo.geometries.Polygon();
+          var simpleGeometry = new geometries.Polygon();
           var fakeFeature = {
             getBackgroundColor: function () { return '#fff'; },
             getBackgroundOpacity: function () { return 0.5; },
@@ -71,9 +68,9 @@
 
         test('Create point geometry with googles marker object', function () {
           expect(3);
-          var simplePoint = new komoo.geometries.Point();
+          var simplePoint = new geometries.Point();
           ok(simplePoint.overlay, 'Should create googleObject');
-          ok(google.maps.Marker.prototype.isPrototypeOf(
+          ok(geometries.MultiMarker.prototype.isPrototypeOf(
                 simplePoint.overlay),
               'object should be a google.maps.Marker object')
           equal(simplePoint.getGeometryType(), 'Point',
@@ -82,7 +79,7 @@
 
         test('Create polyline geometry with googles polyline object', function () {
           expect(3);
-          var simplePolyline = new komoo.geometries.LineString();
+          var simplePolyline = new geometries.LineString();
           ok(simplePolyline.overlay, 'Should create googleObject');
           ok(google.maps.Polyline.prototype.isPrototypeOf(
                 simplePolyline.overlay),
@@ -93,7 +90,7 @@
 
         test('Create polygon geometry with googles polygon object', function () {
           expect(3);
-          var simplePolygon = new komoo.geometries.Polygon();
+          var simplePolygon = new geometries.Polygon();
           ok(simplePolygon.overlay, 'Should create googleObject');
           ok(google.maps.Polygon.prototype.isPrototypeOf(
                 simplePolygon.overlay),
@@ -104,7 +101,7 @@
 
         test('Create multipoint geometry with MultiMarker object', function () {
           expect(3);
-          var simpleMultiPoint = new komoo.geometries.MultiPoint();
+          var simpleMultiPoint = new geometries.MultiPoint();
           ok(simpleMultiPoint.overlay, 'Should create googleObject');
           ok(MultiMarker.prototype.isPrototypeOf(simpleMultiPoint.overlay),
               'object should be a MultiMarker object');
@@ -114,7 +111,7 @@
 
         test('Set coordinates to point geometry', function () {
           expect(2);
-          var point = new komoo.geometries.Point();
+          var point = new geometries.Point();
           var coordinates = [0, 1];
           point.setCoordinates(coordinates);
           var position = point.overlay.getPosition();
@@ -124,8 +121,8 @@
 
         test('Get coordinates from point geometry', function () {
           expect(1);
-          var point = new komoo.geometries.Point();
-          var coordinates = [1, 2];
+          var point = new geometries.Point();
+          var coordinates = [[1, 2]];
           point.setCoordinates(coordinates);
           deepEqual(point.getCoordinates(), coordinates,
               'Should return the same coordinates it received');
@@ -133,7 +130,7 @@
 
         test('Get coordinates from empty point geometry', function () {
           expect(1);
-          var point = new komoo.geometries.Point();
+          var point = new geometries.Point();
           deepEqual(point.getCoordinates(), [],
               'Should return null');
         });
@@ -141,7 +138,7 @@
 
         test('Set coordinates to polyline geometry', function () {
           expect(10);
-          var polyline = new komoo.geometries.LineString();
+          var polyline = new geometries.LineString();
           var coordinates = [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]];
           polyline.setCoordinates(coordinates);
           var googlePath = polyline.overlay.getPath();
@@ -153,7 +150,7 @@
 
         test('Get coordinates from polyline geometry', function () {
           expect(1);
-          var polyline = new komoo.geometries.LineString();
+          var polyline = new geometries.LineString();
           var coordinates = [[0, 0], [0, 1], [1, 1], [1, 0], [1, 2]];
           polyline.setCoordinates(coordinates);
           deepEqual(polyline.getCoordinates(), coordinates,
@@ -162,14 +159,14 @@
 
         test('Get coordinates from empty polyline geometry', function () {
           expect(1);
-          var polyline = new komoo.geometries.LineString();
+          var polyline = new geometries.LineString();
           deepEqual(polyline.getCoordinates(), [],
               'Should return an empty array');
         });
 
         test('Set coordinates to polygon geometry', function () {
           expect(16);
-          var polygon = new komoo.geometries.Polygon();
+          var polygon = new geometries.Polygon();
           var coordinates = [
             [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]],
             [[2, 2], [2, 3], [3, 3], [3, 2], [2, 2]]];
@@ -185,7 +182,7 @@
 
         test('Get coordinates from polygon geometry', function () {
           expect(1);
-          var polygon = new komoo.geometries.Polygon();
+          var polygon = new geometries.Polygon();
           var coordinates = [
             [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]],
             [[2, 2], [2, 3], [3, 3], [3, 2], [2, 2]]];
@@ -196,14 +193,14 @@
 
         test('Get coordinates from empty polygon geometry', function () {
           expect(1);
-          var polygon = new komoo.geometries.Polygon();
+          var polygon = new geometries.Polygon();
           deepEqual(polygon.getCoordinates(), [],
               'Should return an empty array');
         });
 
         test('Set coordinates to multpoint geometry', function () {
           expect(4);
-          var multiPoint = new komoo.geometries.MultiPoint();
+          var multiPoint = new geometries.MultiPoint();
           var coordinates = [[0,1], [3,4]];
           multiPoint.setCoordinates(coordinates);
           var positions = multiPoint.getPositions();
@@ -215,7 +212,7 @@
 
         test('Get coordinates from multipoint geometry', function () {
           expect(1);
-          var multiPoint = new komoo.geometries.MultiPoint();
+          var multiPoint = new geometries.MultiPoint();
           var coordinates = [[0, 1], [3, 4]];
           multiPoint.setCoordinates(coordinates);
           deepEqual(multiPoint.getCoordinates(), coordinates,
@@ -224,7 +221,7 @@
 
         test('Get coordinates from empty multipoint geometry', function () {
           expect(1);
-          var multiPoint = new komoo.geometries.MultiPoint();
+          var multiPoint = new geometries.MultiPoint();
           deepEqual(multiPoint.getCoordinates(), [],
               'Should return an empty array');
         });
@@ -239,9 +236,9 @@
             },
             'properties': null
           };
-          var point = komoo.geometries.makeGeometry(pointFeature);
-          ok(point instanceof komoo.geometries.MultiPoint,
-              'Geometry object shoud be an instance of komoo.geometries.MultiPoint');
+          var point = geometries.makeGeometry(pointFeature);
+          ok(point instanceof geometries.MultiPoint,
+              'Geometry object shoud be an instance of geometries.MultiPoint');
 
           var polylineFeature = {
             'type': 'Feature',
@@ -251,9 +248,9 @@
             },
             'properties': null
           };
-          var polyline = komoo.geometries.makeGeometry(polylineFeature);
-          ok(polyline instanceof komoo.geometries.MultiLineString,
-              'Geometry object shoud be an instance of komoo.geometries.MultiLineString');
+          var polyline = geometries.makeGeometry(polylineFeature);
+          ok(polyline instanceof geometries.MultiLineString,
+              'Geometry object shoud be an instance of geometries.MultiLineString');
 
           var polygonFeature = {
             'type': 'Feature',
@@ -263,9 +260,9 @@
             },
             'properties': null
           };
-          var polygon = komoo.geometries.makeGeometry(polygonFeature);
-          ok(polygon instanceof komoo.geometries.Polygon,
-              'Geometry object shoud be an instance of komoo.geometries.Polygon');
+          var polygon = geometries.makeGeometry(polygonFeature);
+          ok(polygon instanceof geometries.Polygon,
+              'Geometry object shoud be an instance of geometries.Polygon');
         });
 
       });
