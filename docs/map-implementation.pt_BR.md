@@ -337,44 +337,57 @@ _TODO_
 
 ## Features
 
-_TODO_
+A classe Feature representa os vários objetos georreferenciados que serão desenhados no mapa. O comportamento e a aparência de cada _objeto_ é em parte determinados pela agregação de um objeto do tipo _Geometry_ e de um do tipo _FeatureType_.
+Os objetos _Geometry_ serão descritos a seguir. Os objetos do tipo _FeatureType_ criados automaticamente a partir de declarações nos modelos python de cada _objeto_, seguindo a seguinte estrutura:
 
+    class Model(GeoRefModel):
+        class Map:
+            editable = True
+
+            title = ''
+            tooltip = ''
+
+            background_color = '#000'
+            background_opacity = 0.6
+            border_color = '#000'
+            border_opacity = 0.6
+            border_size = 1.5
+            border_size_hover = 2.5
+
+            geometries = []
+            categories = []
+
+            form_view_name = ''
+            form_view_args = []
+            form_view_kwargs = {}
+
+            min_zoom_geometry = 16
+            max_zoom_geometry = 100
+            min_zoom_point = 14
+            max_zoom_point = 15
+            min_zoom_icon = 18
+            max_zoom_icon = 100
+
+            zindex = 10
+
+As propriedades de cada modelo são convertidas para um objeto javascript e carregadas automaticamente pela classe Map via AJAX.
+
+No modulo _Features_ há também uma função factory, `makeFeature`, que facilita a criação de instâncias da classe _Feature_ a partir de um objeto _geojson_. Já é criada junto uma instância de _Geometry_ e associado o _FeatureType_ correto.
 
 ## Geometries
 
-### Empty
+No módulo _Geometries_ são definidas várias classes que abstraem os _overlays_ do Google Maps. São elas
+* **Empty** - Objeto dummy para implementar Null Object pattern
+* **Point** - Ponto único no mapa
+* **MultiPoint** - Conjunto de vários pontos com características e comportamentos iguais
+* **SinglePoint** - Conjunto de vários pontos mas que permite a inclusão de apenas um ponto no conjunto (implementado por motívos de compatibilidade com dados antigos)
+* **LineString** - Linha única
+* **MultiLineString** - Conjunto de várias linhas com características e comportamentos iguais
+* **Polygon** - Polígono que permite vários caminhos
 
-_TODO_
+Neste módulo também há uma função factory, `makeGeometry`, que devolve a instância adequada para um _geojson_ recebido. Em geral este método só será utilizado pela função `makeFeature` e pela função responsável por alterar o tipo de geometria de uma instânica de _Feature_ já existente.
 
-
-### Point
-
-_TODO_
-
-
-### MultiPoint
-
-_TODO_
-
-
-### SinglePoint
-
-_TODO_
-
-
-### LineString
-
-_TODO_
-
-
-### MultiLineString
-
-_TODO_
-
-
-### Polygon
-
-_TODO_
+A aparência e o comportamento de cada instância de _Geometry_ são controlados pela instância de _Feature_ a qual está associada.
 
 
 ## JQuery Plugin
