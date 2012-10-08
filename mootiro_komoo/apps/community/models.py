@@ -3,7 +3,6 @@
 from __future__ import unicode_literals
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext as _
@@ -13,20 +12,22 @@ from main.utils import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON
 from vote.models import VotableModel
-from discussion.models import Discussion
+from komoo_user.models import KomooUser as User
 
 
 class Community(GeoRefModel, VotableModel):
     name = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.SlugField(max_length=256, blank=False, db_index=True)
-    population = models.IntegerField(null=True, blank=True)  # number of inhabitants
+    population = models.IntegerField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_communities')
+    creator = models.ForeignKey(User, editable=False, null=True,
+                                related_name='created_communities')
     creation_date = models.DateTimeField(auto_now_add=True)
-    last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
+    last_editor = models.ForeignKey(User, editable=False, null=True,
+                                    blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
     tags = TaggableManager()
@@ -71,7 +72,8 @@ class Community(GeoRefModel, VotableModel):
     # TODO: order communities from the database
     def closest_communities(self, max=3, radius=Distance(km=25)):
         center = self.geometry.centroid
-        unordered = Community.objects.filter(polys__distance_lte=(center, radius))
+        unordered = Community.objects.filter(
+                        polys__distance_lte=(center, radius))
         closest = sorted(unordered, key=lambda c: c.geometry.distance(center))
         return closest[1:(max + 1)]
 

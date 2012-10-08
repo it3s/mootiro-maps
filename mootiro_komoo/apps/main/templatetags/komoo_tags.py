@@ -123,7 +123,7 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 def history(obj):
     if hasattr(obj, 'creator') and obj.creator:
         creator_link = '<a href="/permalink/u{}">{}</a>'.format(
-                obj.creator.id, obj.creator.get_name)
+                obj.creator.id, obj.creator.get_name if hasattr(obj.creator, 'get_name') else obj.creator.name)
     else:
         creator_link = ''
     if hasattr(obj, 'last_editor') and obj.last_editor:

@@ -6,7 +6,6 @@ import json
 import logging
 
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.core.urlresolvers import reverse
@@ -14,6 +13,8 @@ from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
 from django.db.models import Count
 from django.shortcuts import redirect
+
+from komoo_user.utils import login_required
 
 from ajaxforms import ajax_form
 from annoying.decorators import render_to, ajax_request
