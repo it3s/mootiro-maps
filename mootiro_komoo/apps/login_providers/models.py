@@ -8,7 +8,7 @@ PROVIDERS = {
     # 'provider label': 'db info'
     'facebook': 'facebook-oauth2',
     'google': 'google-oauth2',
-    'twitter': 'twitter-oauth2',
+    # 'twitter': 'twitter-oauth2',
 }
 PROVIDERS_CHOICES = [(t[1], t[0]) for t in PROVIDERS.items()]
 

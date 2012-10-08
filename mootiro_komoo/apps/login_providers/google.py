@@ -19,6 +19,7 @@ from __future__ import unicode_literals
 import requests
 import simplejson
 
+from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
@@ -27,13 +28,10 @@ from annoying.decorators import render_to
 
 from main.utils import randstr
 from komoo_user.utils import login as auth_login
+
 from .models import PROVIDERS
 from .utils import encode_querystring
 from .utils import get_or_create_user_by_credentials
-
-# TODO: move these configurations to settings/common.py
-GOOGLE_APP_ID = '806210666216.apps.googleusercontent.com'
-GOOGLE_APP_SECRET = 'wWFaxUXs3C7atzHThA-YD8T3'
 
 
 def login_google(request):
@@ -42,7 +40,7 @@ def login_google(request):
     csrf_token = randstr(10)
     redirect_uri = request.build_absolute_uri(reverse('google_authorized'))
     params = {
-        'client_id': GOOGLE_APP_ID,    # app id from provider
+        'client_id': settings.GOOGLE_APP_ID,    # app id from provider
         'redirect_uri': redirect_uri,  # where the user will be redirected to
         'scope': 'https://www.googleapis.com/auth/userinfo.profile '  # space separated
                  'https://www.googleapis.com/auth/userinfo.email',    # list of permissions
@@ -70,8 +68,8 @@ def google_authorized(request):
     # Step 2: Exchange the authorization code for an access_token
     redirect_uri = request.build_absolute_uri(reverse('google_authorized'))
     params = {
-        'client_id': GOOGLE_APP_ID,          # app id from provider
-        'client_secret': GOOGLE_APP_SECRET,  # app secret from provider
+        'client_id': settings.GOOGLE_APP_ID,          # app id from provider
+        'client_secret': settings.GOOGLE_APP_SECRET,  # app secret from provider
         'code': request.GET.get('code'),     # code to exchange for an access_token
         'redirect_uri': redirect_uri,        # must be the same as the one in step 1
         'grant_type': 'authorization_code',  # just to fulfill the OAuth2 spec
@@ -92,7 +90,6 @@ def google_authorized(request):
 
     user, created = get_or_create_user_by_credentials(data['email'],
                             PROVIDERS['google'], access_data=access_data)
-
     if created:
         user.name = data['name']
         user.save()

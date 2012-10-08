@@ -20,11 +20,10 @@ CAS_SERVER_URL = 'https://localhost:8443/cas/'
 BROKER_URL = "amqp://user:pass@localhost:5672/mootiro_maps_mq"
 
 FACEBOOK_APP_ID = '...'
-FACEBOOK_API_SECRET = '...'
-FACEBOOK_EXTENDED_PERMISSIONS = ['email']
+FACEBOOK_APP_SECRET = '...'
 
-GOOGLE_OAUTH2_CLIENT_ID = '...'
-GOOGLE_OAUTH2_CLIENT_SECRET = '...'
+GOOGLE_APP_ID = '...'
+GOOGLE_APP_SECRET = '...'
 
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
