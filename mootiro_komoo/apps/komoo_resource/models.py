@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.gis.db import models
-from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.template.defaultfilters import slugify
 from django.db.models import Count
@@ -11,6 +10,7 @@ from django.core.urlresolvers import reverse
 import reversion
 from lib.taggit.managers import TaggableManager
 
+from komoo_user.models import KomooUser as User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
 from investment.models import Investment
