@@ -18,7 +18,7 @@
   #login_box ul#external_providers {
     width: 224px; }
     #login_box ul#external_providers li {
-      margin: 10px 0; }
+      margin: 15px 0; }
       #login_box ul#external_providers li button {
         width: 100%;
         padding: 3px 6px;
@@ -48,7 +48,19 @@
     text-align: center;
     line-height: 130px;
     font-style: italic;
-    font-weight: bold; }
+    font-weight: bold;
+    margin-top: 15px;
+    position: relative; }
+    #login_box div#separator .vertical_line {
+      position: absolute;
+      left: 50%;
+      height: 45.5px;
+      border-left: 1px solid #333;
+      width: 1px; }
+    #login_box div#separator .vertical_line.top {
+      top: 0; }
+    #login_box div#separator .vertical_line.bottom {
+      bottom: 0; }
   #login_box form {
     width: 280px; }
     #login_box form input {
@@ -72,6 +84,9 @@
       background-image: -webkit-linear-gradient(#1e9c5b, #125c36);
       /* Opera 11.10+ */
       background-image: -o-linear-gradient(#1e9c5b, #125c36); }
+    #login_box form span {
+      margin-bottom: 5px;
+      display: block; }
 
 #user_verification div.check_email {
   height: 400px; }

@@ -37,7 +37,7 @@ $login_box_width: 560px;
     width: $login_box_width * 0.4;
 
     li {
-      margin: 10px 0;
+      margin: 15px 0;
 
       button {
         width: 100%;
@@ -65,12 +65,25 @@ $login_box_width: 560px;
 
   div#separator {
     width: $login_box_width * 0.10;
-    $height: 130px;
-    height: $height;
+    $separator_height: 130px;
+    height: $separator_height;
     text-align: center;
-    line-height: $height;
+    line-height: $separator_height;
     font-style: italic;
     font-weight: bold;
+    margin-top: 15px;
+
+    position: relative;
+
+    .vertical_line {
+      position: absolute;
+      left: 50%;
+      height: $separator_height * 0.35;
+      border-left: 1px solid #333;
+      width: 1px;
+    }
+    .vertical_line.top { top: 0 }
+    .vertical_line.bottom { bottom: 0 }
   }
 
   form {
@@ -90,6 +103,11 @@ $login_box_width: 560px;
       font-size: 120%;
       color: #fff;
       @include gradient(#1e9c5b, darken(#1e9c5b, 15%));
+    }
+
+    span { 
+      margin-bottom: 5px;
+      display: block;
     }
   }
 }

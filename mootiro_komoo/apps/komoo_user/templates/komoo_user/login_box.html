@@ -36,7 +36,11 @@
       </li>
     </ul>
 
-    <div id="separator"><span>{% trans "or" %}</span></div>
+    <div id="separator">
+      <div class="vertical_line top"></div>
+      <span>{% trans "or" %}</span>
+      <div class="vertical_line bottom"></div>
+    </div>
 
     {% include "komoo_user/komoo_login_form.html" %}
   </div>
