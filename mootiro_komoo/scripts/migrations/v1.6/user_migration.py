@@ -88,6 +88,30 @@ def migrate_profile_from_usercas_to_komoouser(data):
     return data
 
 
+def migrate_mootiro_profile_users_to_komoo_users():
+    '''
+        Usa a seguinte estratégia para
+    '''
+    import psycopg2
+    import csv
+    import json
+
+    db_user = 'it3s_andre'
+    db_pass = '1234'
+    conn_string = "host='localhost' dbname='mootiro_profile' user='%s' password='%s'" % (db_user, db_pass)
+    conn = psycopg2.connect(conn_string)
+    cursor = conn.cursor()
+
+    file_path = '/tmp/mootiro_profile_user.csv'
+    query = '''COPY (SELECT * FROM "user") TO '%s' WITH (FORMAT CSV, HEADER TRUE);''' % file_path
+    cursor.execute(query)
+
+    f = open(file_path, 'r' )
+    reader = csv.DictReader(f)
+    out = json.dumps([row for row in reader])
+    print out
+
+
 def parse_json_file(file_):
     new_data = {}
     with codecs.open(file_, 'r', 'utf-8') as f:
