@@ -76,27 +76,38 @@ class Update(models.Model):
 
     @property
     def users(self):
-        names = simplejson.loads(self._users)
-        ids = simplejson.loads(self._user_ids) if self._user_ids \
+        try:
+            names = simplejson.loads(self._users)
+            ids = simplejson.loads(self._user_ids) if self._user_ids \
                     else ['' for n in names]
-        return [dict(username=z[0], id=z[1]) for z in zip(names, ids)]
+            return [dict(name=z[0], id=z[1]) for z in zip(names, ids)]
+        except:
+            return []
 
     @users.setter
     def users(self, l):
-        self._users = simplejson.dumps([user.username for user in l])
-        self._user_ids = simplejson.dumps([user.id for user in l])
+        try:
+            self._users = simplejson.dumps([user.name for user in l])
+            self._user_ids = simplejson.dumps([user.id for user in l])
+        except:
+            # dont know what to do =/
+            pass
 
     @property
     def user(self):
         return self.users[0]
 
     def push_user(self, u):
-        names = simplejson.loads(self._users)
-        ids = simplejson.loads(self._user_ids)
-        names.insert(0, u.username)
-        ids.insert(0, u.id)
-        self._users = simplejson.dumps(names)
-        self._user_ids = simplejson.dumps(ids)
+        try:
+            names = simplejson.loads(self._users)
+            ids = simplejson.loads(self._user_ids)
+            names.insert(0, u.name)
+            ids.insert(0, u.id)
+            self._users = simplejson.dumps(names)
+            self._user_ids = simplejson.dumps(ids)
+        except:
+            # really... this code is really messed up
+            pass
 
     @property
     def communities(self):

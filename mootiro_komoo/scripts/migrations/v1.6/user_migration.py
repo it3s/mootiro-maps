@@ -88,6 +88,13 @@ def migrate_profile_from_usercas_to_komoouser(data):
     return data
 
 
+def migrate_login_providers(data):
+    for entry in data:
+        if entry['model'] == 'social_auth.usersocialauth':
+            logging.info(entry['fields'])
+    return data
+
+
 def migrate_mootiro_profile_users_to_komoo_users():
     '''
         Usa a seguinte estratégia para
@@ -106,7 +113,7 @@ def migrate_mootiro_profile_users_to_komoo_users():
     query = '''COPY (SELECT * FROM "user") TO '%s' WITH (FORMAT CSV, HEADER TRUE);''' % file_path
     cursor.execute(query)
 
-    f = open(file_path, 'r' )
+    f = open(file_path, 'r')
     reader = csv.DictReader(f)
     out = json.dumps([row for row in reader])
     print out
@@ -118,6 +125,7 @@ def parse_json_file(file_):
         data = json.loads(f.read())
         data = migrate_auth_users_to_komoouser(data)
         data = migrate_profile_from_usercas_to_komoouser(data)
+        data = migrate_login_providers(data)
 
         new_data = json.dumps(data)
 

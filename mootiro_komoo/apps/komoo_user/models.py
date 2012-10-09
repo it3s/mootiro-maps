@@ -114,4 +114,9 @@ def get_name(user):
         return name
     else:
         return ''
+
+def name(user):
+    return get_name(user)
+
 User.get_name = property(get_name)
+User.name = property(name)

@@ -108,7 +108,7 @@ INSTALLED_APPS = [
     'taggit',
     'django_js_utils',
     'crispy_forms',
-    'reversion',
+    'lib.reversion',
     'markitup',
     'lib.ajax_select',
     'fileupload',
