@@ -1,46 +1,49 @@
 {% load i18n %}
-<div id="login-box">
-  <h2>
-    {% trans "You must be logged in" %}
-  </h2>
-  <!-- <ul> -->
-    <div id="login-option" class="option">
-        <div>{% trans "Log in with one the accounts bellow!" %}</div>
-        <div><img src="{{STATIC_URL}}img/login_guy.png"></div>
-        <div class="login-btns">
-          <a id="login-button" class="social-link" social-app="cas" href="#cas">
-            <div class="button"><img id="login-mootiro" src="{{STATIC_URL}}img/login-mootiro-02.png"><b>Mootiro</b></div>
-          </a>
-          <a rel="nofollow" class="social-link" social-app="google-oauth2" href="#google-oauth2">
-            <div class="button"><img id="login-mootiro" src="{{STATIC_URL}}img/login-google-02.png"><b>Google</b></div>
-          </a>
-          <a rel="nofollow" class="social-link" social-app="facebook" href="#facebook">
-            <div class="button"><img id="login-mootiro" src="{{STATIC_URL}}img/login-facebook-02.png"><b>Facebook</b></div>
-          </a>
-        </div>
-    </div>
-    <div id="signup_option" class="option">
-      <a href="http://www.mootiro.org/user/new">
-        <div>{% trans "Don't have an account? Sign up!" %}</div>
-        <div><img src="{{STATIC_URL}}img/signup_guy.png"></div>
-        <div class="button" id="signup-btn">{% trans "Create an account" %}</div>
-      </a>
+<section id="login_box">
+  <header>
+    <h1>{% trans "Log in" %}</h1>
+  </header>
+
+  {% if login_error %}
+  <p class="errors">
+    {% trans "An error ocurred." %}
+    {% if login_error == 'wrong_credentials' %}
+      {% trans "You provided wrong credentials." %}
+    {% endif %}
+    {% if login_error == 'user_not_active' %}
+      {% trans "You have not verified your email yet." %}
+    {% endif %}
+  </p>
+  {% endif %}
+
+  <div>
+    <ul id="external_providers">
+      <li class="google">
+        <a href="{% url login_google %}?next={{ next }}">
+          <button class="google">
+            <img src="{{STATIC_URL}}img/login-google.png" />
+            {% trans "Log in with Google" %}
+          </button>
+        </a>
+      </li>
+      <li class="facebook">
+        <a href="{% url login_facebook %}?next={{ next }}">
+          <button class="facebook">
+            <img src="{{STATIC_URL}}img/login-facebook.png" />
+            {% trans "Log in with Facebook" %}
+          </button>
+        </a>
+      </li>
+    </ul>
+
+    <div id="separator">
+      <div class="vertical_line top"></div>
+      <span>{% trans "or" %}</span>
+      <div class="vertical_line bottom"></div>
     </div>
 
+    {% include "komoo_user/komoo_login_form.html" %}
+  </div>
 
-  <!-- </ul> -->
-</div>
-<script type="text/javascript">
-  $(function(){
-    $('.social-link').click(function(){
-      var social_app = $(this).attr('social-app');
-      var urlVars = getUrlVars();
-      if (urlVars.next)
-        window.location = '/login/'+ social_app +'?next=' + urlVars.next;
-      else {
-        window.location = '/login/'+ social_app +'?next=' + location.pathname;
-      }
-      return false;
-    })
-  });
-</script>
+  <div class="clear-both"></div>
+</section>

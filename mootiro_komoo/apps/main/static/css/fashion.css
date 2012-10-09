@@ -1,6 +1,10 @@
+#main-content > #login_box {
+  display: block; }
+
 #login_box {
   background: #dceff4;
-  width: 560px; }
+  width: 560px;
+  display: none; }
   #login_box * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -24,7 +28,8 @@
         padding: 3px 6px;
         border: 0;
         border-radius: 5px;
-        color: #fff; }
+        color: #fff;
+        font-size: 13px; }
         #login_box ul#external_providers li button img {
           width: 22px;
           height: 22px;

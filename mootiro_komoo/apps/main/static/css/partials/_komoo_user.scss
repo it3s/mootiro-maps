@@ -4,16 +4,18 @@ $twitter_blue: #46c8f5;
 $login_box_width: 560px;
 
 
+#main-content > #login_box { display: block }
 
 #login_box {
+  background: #dceff4;
+  width: $login_box_width;
+  display: none;
+
   * {
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
   }
-
-  background: #dceff4;
-  width: $login_box_width;
 
   h1 {
     text-align: center;
@@ -45,6 +47,7 @@ $login_box_width: 560px;
         border: 0;
         border-radius: 5px;
         color: #fff;
+        font-size: 13px;
 
         img {
           width: 22px;

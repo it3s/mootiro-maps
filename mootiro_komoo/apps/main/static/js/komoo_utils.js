@@ -340,9 +340,9 @@ $(function () {
             } else if (url.charAt(0) == "#") {
                 url = document.location.pathname + url;
             }
-            $("#login-box #login-button").attr("href", "/user/login?next=" + encodeURIComponent(url));
-            $("#login-box").dialog({
-                width: 850,
+            $("#login_box #login-button").attr("href", "/user/login?next=" + encodeURIComponent(url));
+            $("#login_box").dialog({
+                width: 600,
                 modal: true,
                 resizable: false,
                 draggable: false
