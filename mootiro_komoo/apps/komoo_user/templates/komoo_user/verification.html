@@ -14,20 +14,17 @@
           <p>{% trans "But before using you need to confirm your e-mail. Go check your inbox!" %}</p>
         </div>
       </div>
+    {% else %}
+      {% if message == 'activated' %}
+        {% trans "Your email was succesfully verified! Now, do login!" %}
+      {% endif %}
+      {% if message == 'already_verified' %}
+        {% trans "Your email had already been verified! Now, do login!" %}
+      {% endif %}
+      <br/><br/>
+      {% include "komoo_user/komoo_login_form.html" %}
     {% endif %}
     
-    {% if message == 'invalid_key' %}
-      INVALID KEY
-    {% endif %}
-    
-    {% if message == 'already_verified' %}
-      ACCOUNT ALREADY VERIFIED. DO LOGIN =D
-    {% endif %}
-    
-    {% if message == 'activated' %}
-      SUCCESFULLY ACTIVATED. DO LOGIN =D <br/>
-      {% include "main/login_box.html" %}
-    {% endif %}
   </section>
 </div>
 

@@ -1,5 +1,5 @@
 {% load i18n %}
-<form action="{% url user_login %}" method="post">
+<form id="form_login" action="{% url user_login %}" method="post">
   {% csrf_token %}
   <input type="hidden" name="next" value="{{ next }}"/>
   <label for="email">Email</label>

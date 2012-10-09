@@ -6,7 +6,38 @@ $login_box_width: 560px;
 
 #main-content > #login_box { display: block }
 
+
+form#form_login {
+  // Simple login form for internal accounts (not external providers).
+
+  width: $login_box_width * 0.5;
+
+  input {
+    width: 100%;
+    height: 28px;
+  }
+
+  input[type=submit] {
+    width: 100%;
+    padding: 3px 6px;
+    border: 0;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 120%;
+    color: #fff;
+    @include gradient(#1e9c5b, darken(#1e9c5b, 15%));
+  }
+
+  span { 
+    margin-bottom: 5px;
+    display: block;
+  }
+}
+
+
 #login_box {
+  // Login box with login form and external login providers
+
   background: #dceff4;
   width: $login_box_width;
   display: none;
@@ -89,30 +120,6 @@ $login_box_width: 560px;
     .vertical_line.bottom { bottom: 0 }
   }
 
-  form {
-    width: $login_box_width * 0.5;
-
-    input {
-      width: 100%;
-      height: 28px;
-    }
-
-    input[type=submit] {
-      width: 100%;
-      padding: 3px 6px;
-      border: 0;
-      border-radius: 5px;
-      font-weight: bold;
-      font-size: 120%;
-      color: #fff;
-      @include gradient(#1e9c5b, darken(#1e9c5b, 15%));
-    }
-
-    span { 
-      margin-bottom: 5px;
-      display: block;
-    }
-  }
 }
 
 #user_verification {

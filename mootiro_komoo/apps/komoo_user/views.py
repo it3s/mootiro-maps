@@ -6,6 +6,7 @@ import requests
 
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
+from django.http import Http404
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
@@ -260,7 +261,8 @@ def user_verification(request, key=''):
         return dict(message='check_email')
     user = get_object_or_None(KomooUser, verification_key=key)
     if not user:
-        return dict(message='invalid_key')
+        # invalid key => invalid link
+        raise Http404
     if user.is_active:
         return dict(message='already_verified')
     user.is_active = True
