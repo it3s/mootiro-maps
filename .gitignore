@@ -5,6 +5,7 @@ local_settings.py
 *.egg-info
 .idea/
 .codeintel/
+.DS_Store
 mootiro_komoo/.ropeproject/
 build/
 logs/
