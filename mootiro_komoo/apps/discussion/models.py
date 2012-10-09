@@ -2,10 +2,11 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
+
+from komoo_user.models import KomooUser as User
 
 import reversion
 

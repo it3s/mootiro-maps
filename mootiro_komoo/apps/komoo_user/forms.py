@@ -38,7 +38,7 @@ class FormProfile(AjaxModelForm):
         r = super(FormProfile, self).__init__(*a, **kw)
         inst = kw.get('instance', None)
         if inst and not inst.public_name:
-            self.fields['public_name'].initial = inst.user.get_name
+            self.fields['public_name'].initial = inst.user.name
     def save(self, *args, **kwargs):
         profile = super(FormProfile, self).save(*args, **kwargs)
         UploadedFile.bind_files(

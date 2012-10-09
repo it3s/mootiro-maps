@@ -93,7 +93,7 @@
             $('#id_contributors_on_deck.results_on_deck').prepend(
                 '<div id="id_contributors_on_deck_{{ project.creator.id}}" >' +
                     '<div class="contributors_deck_project_creator">' +
-                    '{{ project.creator.get_name }} ({% trans "creator" %})' +
+                    '{{ project.creator.name }} ({% trans "creator" %})' +
                     '</div>'+
                 '</div>'
             );

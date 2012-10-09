@@ -163,7 +163,7 @@ queries = {
             'last_name',
             'komooprofile__public_name'
         ],
-        'repr': 'get_name',
+        'repr': 'name',
         'link': lambda o: reverse('user_profile', kwargs={'user_id': o.id})
     },
     'project': {

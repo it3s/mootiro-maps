@@ -245,7 +245,7 @@
 
                 <h4>{% trans 'Administrator' %}</h4>
                 <p>
-                    {{ project.creator.get_name }}
+                    {{ project.creator.name }}
                 </p>
 
                 {% if project.contributors.count %}
@@ -253,7 +253,7 @@
                 <p>
                     <ul>
                         {% for contributor in project.contributors.all %}
-                        <li>{{ contributor.get_name }}</li>
+                        <li>{{ contributor.name }}</li>
                         {% endfor %}
                     </ul>
                 </p>

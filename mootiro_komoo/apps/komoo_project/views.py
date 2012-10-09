@@ -39,20 +39,21 @@ def project_view(request, id=''):
     proj_objects, items = {}, []
 
     proj_objects['User'] = {'app_name': 'komoo_user', 'objects_list': [{
-        'name': project.creator.get_name,
-        'link': project.creator.profile.view_url,
-        'id': project.creator.profile.id,
-        'has_geojson': bool(getattr(project.creator.profile, 'geometry', ''))
+        'name': project.creator.name,
+        'link': project.creator.view_url,
+        'id': project.creator.id,
+        'has_geojson': bool(getattr(project.creator, 'geometry', ''))
 
     }]}
 
     for c in project.contributors.all():
-        proj_objects['User']['objects_list'].append({
-            'name': c.get_name,
-            'link': c.profile.view_url,
-            'id': c.profile.id,
-            'has_geojson': bool(getattr(c.profile, 'geometry', ''))
-        })
+        if c != project.creator:
+            proj_objects['User']['objects_list'].append({
+                'name': c.name,
+                'link': c.view_url,
+                'id': c.id,
+                'has_geojson': bool(getattr(c, 'geometry', ''))
+            })
 
     for p in project.related_objects:
         obj = p.content_object
@@ -90,10 +91,7 @@ def project_map(request, id=''):
     related_items = []
 
     for obj in project.related_items:
-        name = getattr(obj, 'get_name', '')
-        if not name:
-            name = getattr(obj, 'name', '')
-        related_items.append({'name': name.strip(), 'obj': obj})
+        related_items.append({'name': obj.name, 'obj': obj})
 
     related_items.sort(key=lambda o: o['name'])
     related_items = [o['obj'] for o in related_items]

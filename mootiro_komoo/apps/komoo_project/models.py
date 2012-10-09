@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 import simplejson
 
 from django.db import models
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
@@ -13,6 +12,7 @@ from lib.taggit.managers import TaggableManager
 from fileupload.models import UploadedFile
 import reversion
 
+from komoo_user.models import KomooUser as User
 from main.utils import slugify
 from community.models import Community
 from organization.models import Organization
@@ -111,9 +111,9 @@ class Project(models.Model):
 
     @property
     def related_items(self):
-        items = [self.creator.profile]
+        items = [self.creator]
         for c in self.contributors.all():
-            items.append(c.profile)
+            items.append(c)
         for obj in [o.content_object for o in self.related_objects]:
             if isinstance(obj, Organization):
                 branchs = [b for b in obj.organizationbranch_set.all()]

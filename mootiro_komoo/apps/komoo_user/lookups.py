@@ -1,7 +1,7 @@
 from ajax_select import LookupChannel
 from django.utils.html import escape
 from django.db.models import Q
-from django.contrib.auth.models import User
+from .models import KomooUser as User
 
 
 class UserLookup(LookupChannel):
@@ -9,18 +9,14 @@ class UserLookup(LookupChannel):
     model = User
 
     def get_query(self, q, request):
-        return User.objects.filter(
-            Q(username__icontains=q) |
-            Q(first_name__icontains=q) |
-            Q(last_name__icontains=q) |
-            Q(komooprofile__public_name=q)
-        )
+        return User.objects.filter(Q(name__icontains=q))
 
     def get_result(self, obj):
         u"""
         simple text that is the completion of what the person typed
         """
-        return obj.get_name
+        return obj.name
+
 
     def format_match(self, obj):
         """ (HTML) formatted item for display in the dropdown """
@@ -30,7 +26,7 @@ class UserLookup(LookupChannel):
         """
         (HTML) formatted item for displaying item in the selected deck area
         """
-        return u"<div>%s</div>" % (escape(obj.get_name))
+        return u"<div>%s</div>" % (escape(obj.name))
 
     def check_auth(self, request):
         return True

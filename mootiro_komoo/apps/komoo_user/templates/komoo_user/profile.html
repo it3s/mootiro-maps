@@ -15,7 +15,7 @@
 
         <!-- profile header (name and edit button) -->
         <div class="profile-lp-header">
-            <span class="profile-lp-header-username">{{ user_profile.get_name }}</span>
+            <span class="profile-lp-header-username">{{ user_profile.name }}</span>
             {% if user.id == user_profile.id %}
             <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn">
                 <i class="icon-pencil"></i>
