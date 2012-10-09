@@ -55,8 +55,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'reversion.middleware.RevisionMiddleware',
-    'mootiro_bar.DjangoMiddleware',
-    'lib.mootiro_bar.DjangoMiddleware',
 ]
 
 CONTEXT_PROCESSORS = (
@@ -165,8 +163,6 @@ KOMOO_COMMENTS_WIDTH = 3
 KOMOO_COMMENTS_HEIGHT = 20
 KOMOO_DISABLE_MAP = False
 DELETE_HOURS = 24
-MOOTIRO_BAR_LOGIN_URL = '#'  # LOGIN_URL
-MOOTIRO_BAR_LOGOUT_URL = '/user/logout'
 
 # ========== Ajax-select ======================================================
 AJAX_LOOKUP_CHANNELS = {

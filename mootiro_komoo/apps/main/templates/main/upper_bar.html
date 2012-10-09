@@ -1,0 +1,15 @@
+{% load i18n %}
+<nav class="upper_bar">
+  <ul>
+  {% if not user.is_anonymous %}
+  <li><a href="{% url user_logout %}" >{% trans 'Logout' %}</a></li>
+  <!-- <li><a href="#" >{% trans 'Settings' %}</a></li> -->
+  <!-- <li><a href="#" >{% trans 'Notifications' %}</a></li> -->
+  <li><a href="{{ user.view_url }}" >{{ user.name }}</a></li>
+  <!-- <li><a href="#" >{% trans 'Help' %}</a></li> -->
+  {% else %}
+  <li><a href="{% url user_login %}" >{% trans 'Login'%}</a></li>
+  <!-- <li><a href="#" >{% trans 'Help' %}</a></li> -->
+  {% endif %}
+  </ul>
+</nav>

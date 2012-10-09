@@ -28,7 +28,7 @@ form#form_login {
     @include gradient(#1e9c5b, darken(#1e9c5b, 15%));
   }
 
-  span { 
+  span {
     margin-bottom: 5px;
     display: block;
   }
@@ -62,7 +62,7 @@ form#form_login {
     float: left;
   }
 
-  ul#external_providers, form { 
+  ul#external_providers, form {
     padding: 10px;
   }
 
@@ -89,7 +89,7 @@ form#form_login {
       }
 
       button.google { background: $google_red }
-      button.google:hover { background: lighten($google_red, 20%%) }  
+      button.google:hover { background: lighten($google_red, 20%%) }
       button.facebook { background: $facebook_blue }
       button.facebook:hover { background: lighten($facebook_blue, 20%%) }
       button.twitter { background: $twitter_blue }

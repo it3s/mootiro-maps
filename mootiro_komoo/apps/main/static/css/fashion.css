@@ -1,3 +1,21 @@
+.upper_bar {
+  background-color: #dceff4;
+  color: #009cb4;
+  width: 100%;
+  height: 2em;
+  display: block; }
+  .upper_bar ul {
+    margin: 0 20px; }
+  .upper_bar li a {
+    float: right;
+    padding: 3px 20px;
+    cursor: pointer;
+    text-decoration: none; }
+    .upper_bar li a:hover {
+      color: #333333;
+      background: #c9e6ee;
+      border-radius: 0 0 4px 4px; }
+
 #main-content > #login_box {
   display: block; }
 
