@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from komoo_user.models import KomooUser as User
+
 
 DIGEST_CHOICES = (
         ('D', 'Daily'),

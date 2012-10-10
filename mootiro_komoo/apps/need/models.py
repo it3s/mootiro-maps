@@ -3,13 +3,13 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django.contrib.gis.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 
 import reversion
 from lib.taggit.managers import TaggableManager
 
+from komoo_user.models import KomooUser as User
 from community.models import Community
 from main.utils import slugify
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT

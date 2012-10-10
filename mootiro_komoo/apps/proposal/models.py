@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 from django.db import models
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes import generic
 
 import reversion
 
+from komoo_user.models import KomooUser as User
 from need.models import Need
 from investment.models import Investment
 from vote.models import VotableModel
