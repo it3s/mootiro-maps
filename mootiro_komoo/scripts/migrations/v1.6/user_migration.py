@@ -24,6 +24,9 @@ import sys
 import codecs
 import logging
 import requests
+import psycopg2
+import csv
+import json
 
 logging.basicConfig(format='>> %(message)s', level=logging.DEBUG)
 
@@ -52,6 +55,13 @@ def get_user_email(pk, data):
     else:
         return ''
 
+def remove_django_melecas(data):
+    for entry in data[::]:
+        if entry['model'] == 'sites.site' or \
+           entry['model'] == 'comments.comment' or \
+           entry['model'] == 'comments.commentflag':
+            data.remove(entry)
+    return data
 
 def migrate_auth_users_to_komoouser(data):
     for entry in data[::]:
@@ -129,37 +139,48 @@ def migrate_login_providers(data):
     return data
 
 
-def migrate_mootiro_profile_users_to_komoo_users():
-    '''
-        Usa a seguinte estratégia para
-    '''
-    import psycopg2
-    import csv
-    import json
+def migrate_mootiro_profile_users_to_komoo_users(data):
+    db_user, db_pass = ('mootiro_profile', '.Pr0f1l3.')
+    file_path = '/tmp/mootiro_profile_users.csv'
 
-    db_user = 'it3s_andre'
-    db_pass = '1234'
     conn_string = "host='localhost' dbname='mootiro_profile' user='%s' password='%s'" % (db_user, db_pass)
     conn = psycopg2.connect(conn_string)
     cursor = conn.cursor()
-
-    file_path = '/tmp/mootiro_profile_user.csv'
     query = '''COPY (SELECT * FROM "user") TO '%s' WITH (FORMAT CSV, HEADER TRUE);''' % file_path
     cursor.execute(query)
 
     f = open(file_path, 'r')
     reader = csv.DictReader(f)
-    out = json.dumps([row for row in reader])
-    print out
+
+    for row in reader:
+        email = row['email']
+        password_hash = row['password_hash']
+
+        if password_hash.startswith('sha1$'):
+            password_hash = password_hash[5:]
+
+        for entry in data:
+            fields = entry['fields']
+            if entry['model'] == 'komoo_user.komoouser' and fields['email'] == email:
+
+                if password_hash == '!':
+                    logging.info('User with email {} has no password!'.format(email))
+
+                fields['password'] = password_hash
+
+    return data
+
 
 
 def parse_json_file(file_):
     new_data = {}
     with codecs.open(file_, 'r', 'utf-8') as f:
         data = json.loads(f.read())
+        data = remove_django_melecas(data)
         data = migrate_auth_users_to_komoouser(data)
         data = migrate_profile_from_usercas_to_komoouser(data)
         data = migrate_login_providers(data)
+        data = migrate_mootiro_profile_users_to_komoo_users(data)
 
         new_data = json.dumps(data)
 

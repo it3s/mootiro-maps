@@ -16,6 +16,8 @@ DATABASES = {
 # Celery task queue config
 BROKER_URL = "amqp://user:pass@localhost:5672/mootiro_maps_mq"
 
+USER_PASSWORD_SALT = '...'
+
 FACEBOOK_APP_ID = '...'
 FACEBOOK_APP_SECRET = '...'
 

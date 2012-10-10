@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from hashlib import sha1
 
+from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
 
@@ -33,8 +34,7 @@ class KomooUser(GeoRefModel):
 
     @classmethod
     def calc_hash(self, s):
-        # TODO: export this to config
-        salt = 'batatinhaquandonasceespalharramapelochao'
+        salt = settings.USER_PASSWORD_SALT
         return unicode(sha1(salt + s).hexdigest())
 
     def set_password(self, s):
