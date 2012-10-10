@@ -106,7 +106,6 @@ class Update(models.Model):
             self._users = simplejson.dumps(names)
             self._user_ids = simplejson.dumps(ids)
         except:
-            # really... this code is really messed up
             pass
 
     @property
