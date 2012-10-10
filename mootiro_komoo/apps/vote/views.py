@@ -5,7 +5,7 @@ import logging
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import F
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.decorators import login_required
+from komoo_user.utils import login_required
 
 from annoying.decorators import ajax_request, render_to
 

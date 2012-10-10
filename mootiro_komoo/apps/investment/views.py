@@ -2,7 +2,6 @@
 from __future__ import unicode_literals  # unicode by default
 import logging
 
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.utils import simplejson
@@ -11,6 +10,8 @@ from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
+
+from komoo_user.utils import login_required
 
 from proposal.models import Proposal
 from investment.models import Investment

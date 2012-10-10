@@ -3,7 +3,7 @@ from __future__ import unicode_literals  # unicode by default
 from django.db import models
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
+from komoo_user.models import KomooUser as User
 
 
 class Vote(models.Model):
@@ -36,9 +36,6 @@ class VotableModel(models.Model):
     """
     votes_up = models.PositiveIntegerField(blank=True, default=0)
     votes_down = models.PositiveIntegerField(blank=True, default=0)
-
-    # def save(self, *a, **kw):
-    #     return super(Votable, self).save(*a, **kw)
 
     class Meta:
         abstract = True

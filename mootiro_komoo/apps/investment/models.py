@@ -2,15 +2,15 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 
 from annoying.functions import get_object_or_None
-
 import reversion
+
+from komoo_user.models import KomooUser as User
 from lib.taggit.managers import TaggableManager
 from vote.models import VotableModel
 from main.utils import slugify
