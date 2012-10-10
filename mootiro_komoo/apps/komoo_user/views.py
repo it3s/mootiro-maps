@@ -86,15 +86,15 @@ def _prepare_contrib_data(version, created_date):
 
 
 @render_to('komoo_user/profile.html')
-def profile(request, user_id=''):
-    logger.debug('user_id : {}'.format(user_id))
-    if not user_id:
+def profile(request, id=''):
+    logger.debug('id : {}'.format(id))
+    if not id:
         if request.user.is_authenticated():
             user = request.user
         else:
             return redirect(reverse('user_login'))
     else:
-        user = get_object_or_404(User, id=user_id)
+        user = get_object_or_404(User, id=id)
     contributions = []
     for rev in Revision.objects.filter(user=user
                ).order_by('-date_created')[:20]:

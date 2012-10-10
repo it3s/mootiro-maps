@@ -57,7 +57,7 @@ class KomooUser(GeoRefModel):
 
     @property
     def view_url(self):
-        return reverse('user_profile', kwargs={'user_id': self.id})
+        return reverse('user_profile', kwargs={'id': self.id})
 
 
 class KomooProfile(GeoRefModel):

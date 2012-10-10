@@ -3,12 +3,11 @@ from django.test import TestCase
 from django.test.client import Client
 from django.contrib.contenttypes.models import ContentType
 from functools import wraps
-from django.contrib.auth.models import User
 from django.conf import settings
 from django.http import HttpRequest
 from django.utils.importlib import import_module
 
-from komoo_user.models import KomooUser
+from komoo_user.models import KomooUser as User
 from komoo_user.utils import login
 
 
@@ -68,7 +67,7 @@ class KomooClient(Client):
         """
         Overrides django cliente login to user our own authentication solution
         """
-        user = KomooUser.objects.get(email=email)
+        user = User.objects.get(email=email)
 
         if user.verify_password(password):
             engine = import_module(settings.SESSION_ENGINE)
@@ -113,7 +112,7 @@ class KomooUserTestCase(KomooBaseTestCase):
         test_fixtures defines two users: 'tester' and 'noobzin'."""
         email = '{username}@test.com'.format(username=username)
         self.client.login(email=email, password="testpass")
-        return KomooUser.objects.get(email=email)
+        return User.objects.get(email=email)
 
 
 class KomooTestCase(KomooUserTestCase):

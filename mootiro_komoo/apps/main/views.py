@@ -15,13 +15,13 @@ from django.core.urlresolvers import reverse
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
-from django.contrib.auth.models import User
 from django.conf import settings
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 import requests
 
+from komoo_user.models import KomooUser as User
 from community.models import Community
 from need.models import Need
 from proposal.models import Proposal
@@ -158,13 +158,10 @@ queries = {
     'user': {
         'model': User,
         'query_fields': [
-            'username',
-            'first_name',
-            'last_name',
-            'komooprofile__public_name'
+            'name',
         ],
         'repr': 'name',
-        'link': lambda o: reverse('user_profile', kwargs={'user_id': o.id})
+        'link': lambda o: reverse('user_profile', kwargs={'id': o.id})
     },
     'project': {
         'model': Project,
@@ -287,10 +284,7 @@ def permalink(request, identifier=''):
         obj = get_object_or_None(ENTITY_MODEL[entity], pk=id_)
         if not obj:
             return {}
-        if entity == 'u':
-            url = reverse('user_profile', kwargs={'user_id': obj.id})
-        else:
-            url = getattr(obj, 'view_url', '/')
+        url = getattr(obj, 'view_url', '/')
     return redirect(url)
 
 

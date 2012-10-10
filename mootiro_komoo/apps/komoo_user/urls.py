@@ -16,7 +16,7 @@ urlpatterns = patterns('komoo_user.views',
     url(r'^verification/(?P<key>\S+)/?$', 'user_verification', name='user_verification'),
 
     # per user urls
-    url(r'^(?P<user_id>\d+)/?$', 'profile', name='user_prof'),
+    url(r'^(?P<id>\d+)/?$', 'profile', name='user_profile'),
 
     # old stuff to be reviewed
     url(r'^profile/update/?$', 'profile_update', name='profile_update'),
@@ -27,5 +27,5 @@ urlpatterns = patterns('komoo_user.views',
     url(r'^profile/update/digest/?$', 'digest_update', name='digest_update'),
     url(r'^profile/signature/delete/?$', 'signature_delete',
         name='signature_delete'),
-    url(r'profile/(?P<user_id>\d+)?/?$', 'profile', name='user_profile'),
+    # url(r'profile/(?P<user_id>\d+)?/?$', 'profile', name='user_profile'),
 )
