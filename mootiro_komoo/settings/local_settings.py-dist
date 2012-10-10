@@ -13,6 +13,8 @@ DATABASES = {
     }
 }
 
+USER_PASSWORD_SALT = '...'
+
 # Celery task queue config
 BROKER_URL = "amqp://user:pass@localhost:5672/mootiro_maps_mq"
 

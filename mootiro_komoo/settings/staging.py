@@ -87,6 +87,8 @@ for mod in ['views', 'models', 'forms', 'utils']:
 
 
 # ========= To override on local settings =====================================
+# USER_PASSWORD_SALT = '...'
+#
 # BROKER_URL = "amqp://user:pass@localhost:5672/mootiro_maps_mq"
 #
 # FACEBOOK_APP_ID = '...'
