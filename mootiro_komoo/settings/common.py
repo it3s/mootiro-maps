@@ -30,7 +30,7 @@ LOCALE_PATHS = (
 
 # ========== Static and Media =================================================
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
-MEDIA_URL = '/media/'  # needs a trailing slash
+MEDIA_URL = '/media/' 
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 STATIC_URL = '/static/'
@@ -80,15 +80,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
 
 # ========== Application ======================================================
-
-LOGIN_URL = '/user/login'
 
 ROOT_URLCONF = 'mootiro_komoo.urls'
 
@@ -113,7 +109,6 @@ INSTALLED_APPS = [
     'lib.ajax_select',
     'fileupload',
     'gunicorn',
-    'social_auth',
     'django_nose',
     'ajaxforms',
     'djcelery',
@@ -147,15 +142,6 @@ MARKITUP_SET = 'markitup/sets/markdown_pt_BR'
 MARKITUP_FILTER = ('main.utils.render_markup', {})
 MARKITUP_AUTO_PREVIEW = True
 JQUERY_URL = 'dummy.js'
-
-
-# ========== Social Auth ======================================================
-SOCIAL_AUTH_DEFAULT_USERNAME = 'mootiro_user'
-SOCIAL_AUTH_UUID_LENGTH = 16
-# SOCIAL_AUTH_EXPIRATION = 3600
-SOCIAL_AUTH_SESSION_EXPIRATION = False
-SOCIAL_AUTH_NEW_USER_REDIRECT_URL = '/'
-# specific settings like tokens are on specialized settings
 
 
 # ========== Komoo ============================================================
