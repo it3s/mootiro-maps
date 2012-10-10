@@ -260,9 +260,9 @@ def supercow(email=None):
     """Grants admin supercow rights to a user."""
     setup_django()
     from django.contrib.auth.models import User
+    from komoo_user.models import KomooUser as User
     user = User.objects.get(email=email)
-    user.is_staff = True
-    user.is_superuser = True
+    user.is_admin = True
     user.save()
     logging.info('success')
 
