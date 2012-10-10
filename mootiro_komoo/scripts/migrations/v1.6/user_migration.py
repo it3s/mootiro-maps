@@ -23,6 +23,7 @@ import simplejson as json
 import sys
 import codecs
 import logging
+import requests
 
 logging.basicConfig(format='>> %(message)s', level=logging.DEBUG)
 
@@ -44,9 +45,16 @@ def get_full_name(fields):
     else:
         return ''
 
+def get_user_email(pk, data):
+    for entry in data:
+        if entry['model'] == 'komoo_user.komoouser' and entry['pk'] == pk:
+            return entry['fields']['email']
+    else:
+        return ''
+
 
 def migrate_auth_users_to_komoouser(data):
-    for entry in data:
+    for entry in data[::]:
         if entry['model'] == 'auth.user':
             fields = entry['fields']
 
@@ -56,7 +64,8 @@ def migrate_auth_users_to_komoouser(data):
             name = profile.get('public_name', '') or \
                    get_full_name(fields) or \
                    fields.get('username', '')
-            email = fields.get('email', '')
+            # dont know what to do when dont have an email
+            email = fields.get('email', '') or '%s@email.com' % entry['pk']
             contact = profile.get('contact', '') or ''
 
             if id and name and email:
@@ -89,9 +98,34 @@ def migrate_profile_from_usercas_to_komoouser(data):
 
 
 def migrate_login_providers(data):
-    for entry in data:
+    seq = 0
+    for entry in data[::]:
         if entry['model'] == 'social_auth.usersocialauth':
-            logging.info(entry['fields'])
+            fields = entry['fields']
+
+            if 'google-oauth2' == fields['provider']:
+                provider = fields['provider']
+                email = fields['uid']
+            else:
+                provider = 'facebook-oauth2'
+                email = get_user_email(fields['user'], data)
+
+            seq += 1
+
+            credentials = {
+                'pk': seq,
+                'model': 'login_providers.externalcredentials',
+                'fields': {
+                    'user': fields['user'],
+                    'provider': provider,
+                    'email': email,
+                    'data': fields['extra_data'],
+                }
+            }
+
+            data.remove(entry)
+            data.append(credentials)
+
     return data
 
 
