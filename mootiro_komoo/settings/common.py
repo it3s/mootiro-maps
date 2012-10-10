@@ -54,7 +54,7 @@ MIDDLEWARE_CLASSES = [
     'komoo_user.utils.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
-    'reversion.middleware.RevisionMiddleware',
+    'lib.reversion.middleware.RevisionMiddleware',
 ]
 
 CONTEXT_PROCESSORS = (

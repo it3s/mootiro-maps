@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import simplejson
 
 from django.db import models
-from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.template.defaultfilters import slugify
 from django.conf import settings
@@ -11,6 +10,7 @@ from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext as _
 
+from komoo_user.models import KomooUser as User
 from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
 from need.models import TargetAudience
