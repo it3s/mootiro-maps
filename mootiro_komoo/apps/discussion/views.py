@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-from django.contrib.auth.decorators import login_required
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
@@ -13,6 +12,7 @@ from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 from ajaxforms import ajax_form
 
+from komoo_user.utils import login_required
 from .models import Discussion
 from community.models import Community
 from need.models import Need

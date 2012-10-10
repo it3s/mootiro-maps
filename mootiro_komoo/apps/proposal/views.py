@@ -4,12 +4,12 @@ from __future__ import unicode_literals  # unicode by default
 import logging
 
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to
 from ajaxforms import ajax_form
 
+from komoo_user.utils import login_required
 from need.models import Need
 from proposal.models import Proposal
 from proposal.forms import ProposalForm

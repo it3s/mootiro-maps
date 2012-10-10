@@ -6,14 +6,13 @@ from django.conf import settings
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext_lazy as _
 
 from annoying.decorators import render_to, ajax_request
 
 from komoo_comments.forms import FormComment
 from komoo_comments.models import Comment
-
+from komoo_user.utils import login_required
 from update.models import Update
 from update.signals import create_update
 
@@ -48,9 +47,10 @@ def comments_add(request):
         return {'success': False, 'errors': form_comment.errors}
 
 
-def comments_list(content_object=None, parent_id=None, page=0,  root=False,
-        width=settings.KOMOO_COMMENTS_WIDTH, height=settings.KOMOO_COMMENTS_HEIGHT,
-        context=None, comment_class='', wrap=True, *args, **kwargs):
+def comments_list(content_object=None, parent_id=None, page=0, root=False,
+        width=settings.KOMOO_COMMENTS_WIDTH,
+        height=settings.KOMOO_COMMENTS_HEIGHT, context=None, comment_class='',
+        wrap=True, *args, **kwargs):
     """
     builds a list o comments recursivelly and returns its rendered template
     params:

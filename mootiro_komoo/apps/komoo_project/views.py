@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import logging
 
 from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
 from django.http import HttpResponse
@@ -15,6 +14,7 @@ from annoying.decorators import render_to, ajax_request
 from main.utils import (paginated_query, sorted_query, filtered_query,
         create_geojson)
 
+from komoo_user.utils import login_required
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
 from organization.models import Organization

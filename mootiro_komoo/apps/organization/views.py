@@ -5,7 +5,6 @@ import json
 import markdown
 
 from django.template.defaultfilters import slugify
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import (render_to_response, RequestContext,
     get_object_or_404, HttpResponse)
 from django.db.models.query_utils import Q
@@ -19,7 +18,7 @@ from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
-
+from komoo_user.utils import login_required
 
 from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganization, FormBranch

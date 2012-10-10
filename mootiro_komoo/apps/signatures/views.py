@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import logging
-from django.contrib.auth.decorators import login_required
 from annoying.decorators import ajax_request
+from komoo_user.utils import login_required
 
 from models import Signature
 

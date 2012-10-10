@@ -10,13 +10,13 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.utils import simplejson
-from django.contrib.auth.decorators import login_required
 from django.contrib.gis.geos import Polygon
 
 from annoying.decorators import render_to
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
+from komoo_user.utils import login_required
 from need.models import Need, TargetAudience
 from need.forms import NeedForm, NeedFormGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,

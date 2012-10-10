@@ -6,7 +6,6 @@ import json
 from django.db.models.query_utils import Q
 from django.shortcuts import HttpResponse, get_object_or_404, redirect
 from django.utils import simplejson
-from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 
@@ -15,6 +14,7 @@ from annoying.functions import get_object_or_None
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
+from komoo_user.utils import login_required
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource, FormResourceGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
