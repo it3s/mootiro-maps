@@ -3,7 +3,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
 
 from ajaxforms import AjaxModelForm
 from komoo_map.forms import MapButtonWidget
@@ -11,22 +10,22 @@ from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
-from .models import KomooUser, KomooProfile
+from .models import KomooUser as User
 
 
 class FormProfile(AjaxModelForm):
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
-    public_name = forms.CharField(required=False)
+    name = forms.CharField(required=False)
     geometry = forms.CharField(required=False, widget=MapButtonWidget)
     #geometry = forms.CharField(required=False, widget=forms.HiddenInput())
     photo = FileuploadField(required=False)
 
     class Meta:
-        model = KomooProfile
-        fields = ['public_name', 'contact', 'id', 'geometry']
+        model = User
+        fields = ['name', 'contact', 'id', 'geometry']
 
     _field_labels = {
-        'public_name': _('Full Name'),
+        'name': _('Full Name'),
         'contact': _('Public Contact'),
         'photo': _('Photo'),
         'geometry': _('Location'),
@@ -37,8 +36,9 @@ class FormProfile(AjaxModelForm):
         self.helper.form_action = reverse('profile_update_public_settings')
         r = super(FormProfile, self).__init__(*a, **kw)
         inst = kw.get('instance', None)
-        if inst and not inst.public_name:
+        if inst and not inst.name:
             self.fields['public_name'].initial = inst.user.name
+
     def save(self, *args, **kwargs):
         profile = super(FormProfile, self).save(*args, **kwargs)
         UploadedFile.bind_files(
@@ -50,7 +50,7 @@ class FormKomooUser(AjaxModelForm):
     '''Simplified use form with the minimun required info.'''
 
     class Meta:
-        model = KomooUser
+        model = User
         fields = ('name', 'email', 'password')
 
     _field_labels = {

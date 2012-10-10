@@ -59,7 +59,12 @@ class KomooUser(GeoRefModel):
     def view_url(self):
         return reverse('user_profile', kwargs={'id': self.id})
 
+    def files_set(self):
+        """ pseudo-reverse query for retrieving Resource Files"""
+        return UploadedFile.get_files_for(self)
 
+
+# Deprecated!
 class KomooProfile(GeoRefModel):
     # class KomooProfile(models.Model):
     user = models.OneToOneField(User)

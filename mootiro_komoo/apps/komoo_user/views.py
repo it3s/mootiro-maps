@@ -102,10 +102,13 @@ def profile(request, id=''):
         contrib = _prepare_contrib_data(version, rev.date_created)
         if contrib:
             contributions.append(contrib)
-    geojson = create_geojson([user.profile], convert=False, discard_empty=True)
+    geojson = create_geojson([user], convert=False, discard_empty=True)
+    if len(geojson['features']) == 0:
+        geojson = {}
     if geojson:
         geojson['features'][0]['properties']['image'] = '/static/img/user.png'
         geojson = json.dumps(geojson)
+
     return dict(user_profile=user, contributions=contributions, geojson=geojson)
 
 
@@ -134,8 +137,8 @@ def profile_update(request):
     digest_obj = DigestSignature.objects.filter(user=request.user)
     digest = digest_obj[0].digest_type if digest_obj.count() \
                   else ''
-    form_profile = FormProfile(instance=request.user.profile)
-    geojson = create_geojson([request.user.profile], convert=False)
+    form_profile = FormProfile(instance=request.user)
+    geojson = create_geojson([request.user], convert=False)
     geojson['features'][0]['properties']['image'] = '/static/img/me.png'
     geojson = json.dumps(geojson)
     return dict(signatures=signatures, form_profile=form_profile,
