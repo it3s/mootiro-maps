@@ -210,7 +210,9 @@ def signature_delete(request):
     return dict(success=False)
 
 
-########## DJANGO USERS ##########
+#
+# ==================== Users ==================================================
+#
 @ajax_form('komoo_user/new.html', FormUser)
 def user_new(request):
     '''Displays user creation form.'''

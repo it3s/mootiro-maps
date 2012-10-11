@@ -24,8 +24,6 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 
-from annoying.decorators import render_to
-
 from main.utils import randstr
 from komoo_user.utils import login as auth_login
 
@@ -40,12 +38,14 @@ def login_google(request):
     csrf_token = randstr(10)
     redirect_uri = request.build_absolute_uri(reverse('google_authorized'))
     params = {
-        'client_id': settings.GOOGLE_APP_ID,    # app id from provider
+        'client_id': settings.GOOGLE_APP_ID,
         'redirect_uri': redirect_uri,  # where the user will be redirected to
-        'scope': 'https://www.googleapis.com/auth/userinfo.profile '  # space separated
-                 'https://www.googleapis.com/auth/userinfo.email',    # list of permissions
+        # below a space separated list of permissions
+        'scope': 'https://www.googleapis.com/auth/userinfo.profile '
+                 'https://www.googleapis.com/auth/userinfo.email',
         'state': csrf_token,           # unique string to prevent CSRF
-        'response_type': 'code',       # 'code' or 'token', depends on the application type.
+        'response_type': 'code',       # 'code' or 'token'
+                                       # depends on the application type.
     }
     request.session['state'] = csrf_token
     request.session['next'] = request.GET.get('next', reverse('root'))
@@ -68,10 +68,10 @@ def google_authorized(request):
     # Step 2: Exchange the authorization code for an access_token
     redirect_uri = request.build_absolute_uri(reverse('google_authorized'))
     params = {
-        'client_id': settings.GOOGLE_APP_ID,          # app id from provider
-        'client_secret': settings.GOOGLE_APP_SECRET,  # app secret from provider
-        'code': request.GET.get('code'),     # code to exchange for an access_token
-        'redirect_uri': redirect_uri,        # must be the same as the one in step 1
+        'client_id': settings.GOOGLE_APP_ID,
+        'client_secret': settings.GOOGLE_APP_SECRET,
+        'code': request.GET.get('code'),     # code to exchange access_token
+        'redirect_uri': redirect_uri,        # must be the same as in step 1
         'grant_type': 'authorization_code',  # just to fulfill the OAuth2 spec
     }
     url = 'https://accounts.google.com/o/oauth2/token'
@@ -81,8 +81,8 @@ def google_authorized(request):
 
     # Step 3: Accessing the API
     params = {
-        # 'scope': 'https://www.googleapis.com/auth/userinfo.email',  # fields requested
-        'access_token': access_data['access_token'],  # the so wanted access token
+        # 'scope': 'https://www.googleapis.com/auth/userinfo.email',
+        'access_token': access_data['access_token'],
     }
     url = 'https://www.googleapis.com/oauth2/v1/userinfo/'
     url += '?' + encode_querystring(params)

@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-
 from annoying.decorators import render_to
 
 from .models import KomooUser

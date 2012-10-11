@@ -1,31 +1,21 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
-
+from .models import AnonymousUser
 from .models import KomooUser as User
-
-
-class AnonymousUser(object):
-    '''Fake class to make it possible integration with other django apps.'''
-    def is_authenticated(self):
-        return False
-
-    def is_anonymous(self):
-        return True
-
-    def is_superuser(self):
-        return False
-
-    id = None
 
 
 class AuthenticationMiddleware(object):
     '''Middleware that appends the logged user to the request.'''
 
     def process_request(self, request):
-        assert hasattr(request, 'session'), "The authentication middleware requires session middleware to be installed. Edit your MIDDLEWARE_CLASSES setting to insert 'django.contrib.sessions.middleware.SessionMiddleware'."
+        assert hasattr(request, 'session'), '''
+            The authentication middleware requires session middleware to be
+            installed. Edit your MIDDLEWARE_CLASSES setting to insert
+            'django.contrib.sessions.middleware.SessionMiddleware'.'''
+
         if 'user_id' in request.session:
-            try :
+            try:
                 request.user = User.objects.get(id=request.session['user_id'])
             except:
                 request.session.pop('user_id')

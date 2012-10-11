@@ -57,18 +57,18 @@ def facebook_authorized(request):
 
     redirect_uri = request.build_absolute_uri(reverse('facebook_authorized'))
     params = {
-        'client_id': settings.FACEBOOK_APP_ID,          # app id from provider
-        'client_secret': settings.FACEBOOK_APP_SECRET,  # app secret from provider.
-        'code': request.GET.get('code'),  # code to exchange for an access_token.
-        'redirect_uri': redirect_uri,     # must be the same as the one in step 1.
+        'client_id': settings.FACEBOOK_APP_ID,
+        'client_secret': settings.FACEBOOK_APP_SECRET,
+        'code': request.GET.get('code'),  # code to exchange for access_token
+        'redirect_uri': redirect_uri,     # must be the same as in step1
     }
     url = 'https://graph.facebook.com/oauth/access_token'
     url += '?' + encode_querystring(params)
     access_data = decode_querystring(requests.get(url).text)
 
     params = {
-        'fields': 'email,name',                       # fields requested
-        'access_token': access_data['access_token'],  # the so wanted access token
+        'fields': 'email,name',
+        'access_token': access_data['access_token'],
     }
     url = 'https://graph.facebook.com/me'
     url += '?' + encode_querystring(params)

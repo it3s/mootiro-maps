@@ -82,3 +82,16 @@ class KomooUser(GeoRefModel):
     def has_perm(self, perm):
         return self.is_admin
 
+
+class AnonymousUser(object):
+    '''Dummy Class to integrate with other django apps.'''
+    def is_authenticated(self):
+        return False
+
+    def is_anonymous(self):
+        return True
+
+    def is_superuser(self):
+        return False
+
+    id = None
