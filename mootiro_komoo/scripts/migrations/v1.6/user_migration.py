@@ -86,6 +86,10 @@ def migrate_auth_users_to_komoouser(data):
                         'name': name,
                         'email': email,
                         'contact': contact,
+                        'points': profile.get('points', None),
+                        'lines': profile.get('lines', None ),
+                        'polys': profile.get('polys', None),
+                        'geometry': profile.get('geometry', None),
                         'is_active': fields['is_active'],
                         'is_admin': fields['is_superuser'],
                     }
@@ -140,14 +144,14 @@ def migrate_login_providers(data):
 
 
 def migrate_mootiro_profile_users_to_komoo_users(data):
-    db_user, db_pass = ('mootiro_profile', '.Pr0f1l3.')
+    # db_user, db_pass = ('mootiro_profile', '.Pr0f1l3.')
     file_path = '/tmp/mootiro_profile_users.csv'
 
-    conn_string = "host='localhost' dbname='mootiro_profile' user='%s' password='%s'" % (db_user, db_pass)
-    conn = psycopg2.connect(conn_string)
-    cursor = conn.cursor()
-    query = '''COPY (SELECT * FROM "user") TO '%s' WITH (FORMAT CSV, HEADER TRUE);''' % file_path
-    cursor.execute(query)
+    # conn_string = "host='localhost' dbname='mootiro_profile' user='%s' password='%s'" % (db_user, db_pass)
+    # conn = psycopg2.connect(conn_string)
+    # cursor = conn.cursor()
+    # query = '''COPY (SELECT * FROM "user") TO '%s' WITH (FORMAT CSV, HEADER TRUE);''' % file_path
+    # cursor.execute(query)
 
     f = open(file_path, 'r')
     reader = csv.DictReader(f)
