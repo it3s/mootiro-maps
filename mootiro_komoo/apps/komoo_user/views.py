@@ -8,7 +8,6 @@ from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.utils import simplejson
@@ -23,7 +22,7 @@ from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
 from main.utils import create_geojson, randstr, send_mail
 
-from .models import KomooUser
+from .models import KomooUser as User
 from .forms import FormProfile, FormKomooUser
 from .utils import login_required
 from .utils import logout as auth_logout
@@ -103,8 +102,6 @@ def profile(request, id=''):
         if contrib:
             contributions.append(contrib)
     geojson = create_geojson([user], convert=False, discard_empty=True)
-    if len(geojson['features']) == 0:
-        geojson = {}
     if geojson:
         geojson['features'][0]['properties']['image'] = '/static/img/user.png'
         geojson = json.dumps(geojson)
