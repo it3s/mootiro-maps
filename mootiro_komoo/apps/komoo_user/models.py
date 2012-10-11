@@ -74,11 +74,11 @@ class KomooUser(GeoRefModel):
 
     # The interface bellow is for django admin to work
     def is_staff(self):
-        return self.is_superuser()
+        return self.is_admin
 
     def has_module_perms(self, mod):
-        return self.is_superuser()
+        return self.is_admin
 
     def has_perm(self, perm):
-        return self.is_superuser()
+        return self.is_admin
 
