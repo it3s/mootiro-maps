@@ -30,6 +30,17 @@ class KomooUser(GeoRefModel):
     is_active = models.BooleanField(default=False)
     verification_key = models.CharField(max_length=32, null=True)
 
+    class Map:
+        editable = False
+        geometries = [POINT]
+        categories = ['me', 'user']
+        min_zoom_geometry = 0
+        max_zoom_geometry = 100
+        min_zoom_point = 100
+        max_zoom_point = 100
+        min_zoom_icon = 100
+        max_zoom_icon = 10
+
     @classmethod
     def calc_hash(self, s):
         salt = settings.USER_PASSWORD_SALT
@@ -61,15 +72,13 @@ class KomooUser(GeoRefModel):
         """ pseudo-reverse query for retrieving Resource Files"""
         return UploadedFile.get_files_for(self)
 
-    class Map:
-        editable = False
-        geometries = [POINT]
-        categories = ['me', 'user']
-        min_zoom_geometry = 0
-        max_zoom_geometry = 100
-        min_zoom_point = 100
-        max_zoom_point = 100
-        min_zoom_icon = 100
-        max_zoom_icon = 10
+    # The interface bellow is for django admin to work
+    def is_staff(self):
+        return self.is_superuser()
 
+    def has_module_perms(self, mod):
+        return self.is_superuser()
+
+    def has_perm(self, perm):
+        return self.is_superuser()
 
