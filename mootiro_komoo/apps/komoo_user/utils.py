@@ -2,7 +2,7 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 
-from .models import KomooUser
+from .models import KomooUser as User
 
 
 class AnonymousUser(object):
@@ -26,7 +26,7 @@ class AuthenticationMiddleware(object):
         assert hasattr(request, 'session'), "The authentication middleware requires session middleware to be installed. Edit your MIDDLEWARE_CLASSES setting to insert 'django.contrib.sessions.middleware.SessionMiddleware'."
         if 'user_id' in request.session:
             try :
-                request.user = KomooUser.objects.get(id=request.session['user_id'])
+                request.user = User.objects.get(id=request.session['user_id'])
             except:
                 request.session.pop('user_id')
                 request.user = AnonymousUser()

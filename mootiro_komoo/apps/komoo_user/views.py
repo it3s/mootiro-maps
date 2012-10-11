@@ -23,7 +23,7 @@ from ajaxforms import ajax_form
 from main.utils import create_geojson, randstr, send_mail
 
 from .models import KomooUser as User
-from .forms import FormProfile, FormKomooUser
+from .forms import FormProfile, FormUser
 from .utils import login_required
 from .utils import logout as auth_logout
 from .utils import login as auth_login
@@ -211,7 +211,7 @@ def signature_delete(request):
 
 
 ########## DJANGO USERS ##########
-@ajax_form('komoo_user/new.html', FormKomooUser)
+@ajax_form('komoo_user/new.html', FormUser)
 def user_new(request):
     '''Displays user creation form.'''
 
@@ -225,7 +225,7 @@ def user_new(request):
 
         # Email verification
         key = randstr(32)
-        while KomooUser.objects.filter(verification_key=key).exists():
+        while User.objects.filter(verification_key=key).exists():
             key = randstr(32)
         user.verification_key = key
 
@@ -259,7 +259,7 @@ def user_verification(request, key=''):
     '''
     if not key:
         return dict(message='check_email')
-    user = get_object_or_None(KomooUser, verification_key=key)
+    user = get_object_or_None(User, verification_key=key)
     if not user:
         # invalid key => invalid link
         raise Http404
@@ -285,8 +285,8 @@ def login(request):
     if not email or not password:
         return dict(login_error='wrong_credentials')
 
-    password = KomooUser.calc_hash(password)
-    q = KomooUser.objects.filter(email=email, password=password)
+    password = User.calc_hash(password)
+    q = User.objects.filter(email=email, password=password)
     if not q.exists():
         return dict(login_error='wrong_credentials')
 

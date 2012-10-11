@@ -23,10 +23,7 @@ import simplejson as json
 import sys
 import codecs
 import logging
-import requests
-import psycopg2
 import csv
-import json
 
 logging.basicConfig(format='>> %(message)s', level=logging.DEBUG)
 
@@ -34,7 +31,7 @@ logging.basicConfig(format='>> %(message)s', level=logging.DEBUG)
 def get_profile_fields(user, data):
     for entry in data:
         if entry['model'] == 'user_cas.komooprofile' and \
-           entry['fields']['user'] == user:
+           int(entry['fields']['user']) == int(user):
             return entry['fields']
     return {}
 
@@ -48,6 +45,7 @@ def get_full_name(fields):
     else:
         return ''
 
+
 def get_user_email(pk, data):
     for entry in data:
         if entry['model'] == 'komoo_user.komoouser' and entry['pk'] == pk:
@@ -55,13 +53,16 @@ def get_user_email(pk, data):
     else:
         return ''
 
-def remove_django_melecas(data):
+
+def remove_deprecated_tables(data):
     for entry in data[::]:
         if entry['model'] == 'sites.site' or \
            entry['model'] == 'comments.comment' or \
-           entry['model'] == 'comments.commentflag':
+           entry['model'] == 'comments.commentflag' or \
+           entry['model'] == 'user_cas.komooprofile':
             data.remove(entry)
     return data
+
 
 def migrate_auth_users_to_komoouser(data):
     for entry in data[::]:
@@ -70,13 +71,16 @@ def migrate_auth_users_to_komoouser(data):
 
             # user convertion
             new_user = {}
-            profile = get_profile_fields(entry['pk'], data)
+            profile = get_profile_fields(int(entry['pk']), data)
             name = profile.get('public_name', '') or \
                    get_full_name(fields) or \
                    fields.get('username', '')
             # dont know what to do when dont have an email
             email = fields.get('email', '') or '%s@email.com' % entry['pk']
-            contact = profile.get('contact', '') or ''
+
+            contact = profile.get('contact', '')
+            if contact is None:
+                contact = ''
 
             if id and name and email:
                 new_user = {
@@ -87,7 +91,7 @@ def migrate_auth_users_to_komoouser(data):
                         'email': email,
                         'contact': contact,
                         'points': profile.get('points', None),
-                        'lines': profile.get('lines', None ),
+                        'lines': profile.get('lines', None),
                         'polys': profile.get('polys', None),
                         'geometry': profile.get('geometry', None),
                         'is_active': fields['is_active'],
@@ -101,13 +105,6 @@ def migrate_auth_users_to_komoouser(data):
 
             if new_user:
                 data.append(new_user)
-    return data
-
-
-def migrate_profile_from_usercas_to_komoouser(data):
-    for entry in data:
-        if entry['model'] == 'user_cas.komooprofile':
-            entry['model'] = 'komoo_user.komooprofile'
     return data
 
 
@@ -165,27 +162,27 @@ def migrate_mootiro_profile_users_to_komoo_users(data):
 
         for entry in data:
             fields = entry['fields']
-            if entry['model'] == 'komoo_user.komoouser' and fields['email'] == email:
+            if entry['model'] == 'komoo_user.komoouser' and \
+               fields['email'] == email:
 
                 if password_hash == '!':
-                    logging.info('User with email {} has no password!'.format(email))
+                    logging.info('User with email {} has no password!'.format(
+                                    email))
 
                 fields['password'] = password_hash
 
     return data
 
 
-
 def parse_json_file(file_):
     new_data = {}
     with codecs.open(file_, 'r', 'utf-8') as f:
         data = json.loads(f.read())
-        data = remove_django_melecas(data)
         data = migrate_auth_users_to_komoouser(data)
-        data = migrate_profile_from_usercas_to_komoouser(data)
         data = migrate_login_providers(data)
         data = migrate_mootiro_profile_users_to_komoo_users(data)
 
+        data = remove_deprecated_tables(data)
         new_data = json.dumps(data)
 
     with codecs.open('temp.json', 'w', 'utf-8') as f_:

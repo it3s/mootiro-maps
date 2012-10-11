@@ -25,14 +25,14 @@
 
         <!-- User photo -->
         <div class="profile-lp-photo">
-            <img src="{{ user_profile.profile.files_set.0.file.url }}" alt="user photo" />
+            <img src="{{ user_profile.files_set.0.file.url }}" alt="user photo" />
         </div>
 
         <!-- user contact info -->
         <div class="profile-lp-contact">
             <div class="profile-lp-contact-header">{% trans 'Public Contact' %}</div>
-            {% if user_profile.profile.contact %}
-                {{ user_profile.profile.contact|render_markup|safe }}
+            {% if user_profile.contact %}
+                {{ user_profile.contact|render_markup|safe }}
             {% else %}
                 {% trans 'Information Not Provided!' %}
             {% endif %}

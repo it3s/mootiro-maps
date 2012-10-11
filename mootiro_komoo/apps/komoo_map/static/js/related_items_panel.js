@@ -72,7 +72,7 @@
       },
       title: function(count) {
         var msg;
-        msg = this.type === 'OrganizationBranch' ? ngettext("%s organization branch", "%s organization branchs", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%s needs", count) : this.type === 'KomooProfile' ? ngettext("%s contributors", "%s contributors", count) : "";
+        msg = this.type === 'OrganizationBranch' ? ngettext("%s organization branch", "%s organization branchs", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%s needs", count) : this.type === 'KomooUser' ? ngettext("%s contributors", "%s contributors", count) : "";
         return interpolate(msg, [count]);
       },
       iconClass: function() {
@@ -141,8 +141,8 @@
       });
       $('.features-wrapper').append(branchsView.render().$el);
       branchsView = new FeaturesViewClass({
-        type: 'KomooProfile',
-        collection: new Features().reset(KomooNS.features['KomooProfile'])
+        type: 'KomooUser',
+        collection: new Features().reset(KomooNS.features['KomooUser'])
       });
       $('.features-wrapper').append(branchsView.render().$el);
       return geoObjectsListing($('.features-wrapper'));

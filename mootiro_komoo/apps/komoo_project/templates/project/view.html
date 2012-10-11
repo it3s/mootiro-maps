@@ -208,7 +208,7 @@
                 <div class="view-info-object">
                     <a href="{{ o.link }}" >{{ o.name }}</a>
                     <div class="right">
-                        <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{proj_objects.User.app_name}}" data-model-name="KomooProfile" data-object-id="{{ o.id }}"><i class="icon-see-on-map"></i></a>
+                        <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{proj_objects.User.app_name}}" data-model-name="KomooUser" data-object-id="{{ o.id }}"><i class="icon-see-on-map"></i></a>
                     </div>
                 </div>
                 {% empty %}
