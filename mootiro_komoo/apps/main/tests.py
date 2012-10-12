@@ -68,8 +68,9 @@ class KomooClient(Client):
         Overrides django cliente login to user our own authentication solution
         """
         user = User.objects.get(email=email)
+        salt = 'batatinhaquandonasceespalharramapelochao'
 
-        if user.verify_password(password):
+        if user.verify_password(password, salt):
             engine = import_module(settings.SESSION_ENGINE)
 
             # Create a fake request to store login details.

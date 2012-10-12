@@ -42,15 +42,16 @@ class KomooUser(GeoRefModel):
         max_zoom_icon = 10
 
     @classmethod
-    def calc_hash(self, s):
-        salt = settings.USER_PASSWORD_SALT
+    def calc_hash(self, s, salt=None):
+        if not salt:
+            salt = settings.USER_PASSWORD_SALT
         return unicode(sha1(salt + s).hexdigest())
 
     def set_password(self, s):
         self.password = self.calc_hash(s)
 
-    def verify_password(self, s):
-        return self.password == self.calc_hash(s)
+    def verify_password(self, s, salt=None):
+        return self.password == self.calc_hash(s, salt)
 
     def is_authenticated(self):
         return True
