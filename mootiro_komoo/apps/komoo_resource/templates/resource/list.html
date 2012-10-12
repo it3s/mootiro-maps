@@ -2,7 +2,6 @@
 {% load komoo_tags %}
 {% load komoo_map_tags %}
 {% load comment_tags %}
-{% load vote_tags %}
 {% load i18n %}
 
 {% block title %}{% trans 'Resources' %}{% endblock %}
@@ -26,7 +25,7 @@
       {% pagination resources %}
     </div>
 
-    {% visualization_opts 'resource' "filters=['tags','community']" "sorters=['name', 'creation_date', 'votes']" %}
+    {% visualization_opts 'resource' "filters=['tags','community']" "sorters=['name', 'creation_date']" %}
   </div>
 
 
@@ -51,7 +50,6 @@
             <i class="icon-see-on-map"></i>
         </a>
         <div class="view-list-reactions">
-          {% vote resource %}
           {% comments_summary resource %}
         </div>
 
@@ -89,6 +87,5 @@
 {% endblock %}
 
 {% block page_scripts %}
-  {% vote_staticfiles %}
   {% visualization_opts_js %}
 {% endblock %}

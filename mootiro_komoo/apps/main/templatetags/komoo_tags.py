@@ -324,7 +324,6 @@ def visualization_opts(context, obj, arg1='', arg2=''):
         'name': _('Name'),
         'title': _('Name'),
         'creation_date': _('Date'),
-        'votes': _('Votes'),
         'community': _('Community'),
         'need_categories': _('Need categories'),
         'target_audiences': _('Target audiences'),

@@ -1,4 +1,3 @@
-{% load vote_tags %}
 {% load markitup_tags %}
 {% load moderation_tags %}
 {% load i18n %}
@@ -9,9 +8,6 @@
             {% blocktrans count num=comment.sub_comments %}{{ num }} answer{% plural %}{{ num }} answers{% endblocktrans %}
         {% endif %}
         {% report_content comment 'link' %}
-        <div class="comment-vote">
-            {% vote comment %}
-        </div>
     </div>
 
     <div class="comment mark-down" >

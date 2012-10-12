@@ -6,10 +6,9 @@ from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 
 from komoo_user.models import KomooUser as User
-from vote.models import VotableModel
 
 
-class Comment(VotableModel):
+class Comment(models.Model):
     """
     Comments models. Should dinamically reference any table/object.
     For querying purposes we need to add the above entry on those models that

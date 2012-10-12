@@ -4,7 +4,6 @@
 {% load komoo_map_tags %}
 {% load moderation_tags %}
 {% load comment_tags %}
-{% load vote_tags %}
 {% load proposal_tags %}
 {% load komoo_tags %}
 {% load markitup_tags %}
@@ -24,8 +23,6 @@
         <a href="{% url view_discussion investment.perm_id %}" class="btn login-required"><i class="icon-comment"></i></a>
         <a class="btn login-required" href="{{ investment.edit_url }}" ><i class="icon-pencil"></i></a>
       </div>
-
-      {% vote investment %}
 
       <div class="clear-both"></div>
 

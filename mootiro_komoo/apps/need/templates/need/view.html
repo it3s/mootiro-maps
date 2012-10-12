@@ -3,7 +3,6 @@
 {% load i18n %}
 {% load komoo_map_tags %}
 {% load comment_tags %}
-{% load vote_tags %}
 {% load proposal_tags %}
 {% load komoo_tags %}
 {% load moderation_tags %}
@@ -35,7 +34,6 @@
       </div>
 
       <div class="clear-both"></div>
-      {% vote need %}
 
       <div class="apart">
         <div><span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}</div>

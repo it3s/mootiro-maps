@@ -4,7 +4,6 @@
 {% load moderation_tags %}
 {% load investment_tags %}
 {% load crispy_forms_tags %}
-{% load vote_tags %}
 {% load comment_tags %}
 {% load markitup_tags %}
 {% load komoo_tags %}
@@ -44,10 +43,6 @@
                 </a>
 
                 {% endif %}
-            </div>
-
-            <div class="view-votes">
-                {% vote project %}
             </div>
 
         </div>
@@ -294,7 +289,6 @@
 {% endblock %}
 
 {% block page_scripts %}
-    {% vote_staticfiles %}
     {% comments_staticfiles %}
     <script type="text/javascript">
         $(function(){

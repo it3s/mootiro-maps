@@ -174,10 +174,6 @@ def sorted_query(query_set, sort_fields, request, default_order='name'):
         if 'date' in sorter:
             date_order = request.GET.get(sorter, '-')
             sorters[i] = date_order_map[date_order] + sorter
-        if 'votes' in sorter:
-            query_set = query_set.extra(
-                select={'votes_diff': 'votes_up - votes_down'})
-            sorters[i] = '-votes_diff'
 
     if sorters:
         return query_set.order_by(*sorters)

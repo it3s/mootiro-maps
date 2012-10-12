@@ -19,7 +19,6 @@ from komoo_resource.models import Resource
 from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
-from vote.models import VotableModel
 
 
 LOGO_CHOICES = (
@@ -28,7 +27,7 @@ LOGO_CHOICES = (
 )
 
 
-class Organization(VotableModel):
+class Organization(models.Model):
     name = models.CharField(max_length=320, unique=True)
     slug = models.SlugField(max_length=320, db_index=True)
     description = models.TextField(null=True, blank=True)
@@ -169,7 +168,7 @@ class Organization(VotableModel):
         return 'o%d' % self.id
 
 
-class OrganizationBranch(GeoRefModel, VotableModel):
+class OrganizationBranch(GeoRefModel, models.Model):
     name = models.CharField(max_length=320)
     slug = models.SlugField(max_length=320)
 

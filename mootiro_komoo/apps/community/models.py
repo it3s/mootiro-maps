@@ -11,11 +11,10 @@ import reversion
 from main.utils import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON
-from vote.models import VotableModel
 from komoo_user.models import KomooUser as User
 
 
-class Community(GeoRefModel, VotableModel):
+class Community(GeoRefModel):
     name = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.SlugField(max_length=256, blank=False, db_index=True)

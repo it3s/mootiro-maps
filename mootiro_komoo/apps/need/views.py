@@ -92,7 +92,7 @@ def view(request, id=None):
 
 @render_to('need/list.html')
 def list(request):
-    sort_fields = ['creation_date', 'votes', 'title']
+    sort_fields = ['creation_date', 'title']
 
     query_set = filtered_query(Need.objects, request)
     needs = sorted_query(query_set, sort_fields, request,

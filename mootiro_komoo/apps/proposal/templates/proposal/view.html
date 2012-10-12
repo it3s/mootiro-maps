@@ -2,7 +2,6 @@
 
 {% load komoo_map_tags %}
 {% load comment_tags %}
-{% load vote_tags %}
 {% load proposal_tags %}
 {% load investment_tags %}
 {% load komoo_tags %}
@@ -28,7 +27,6 @@
       <a href="{{ proposal.edit_url }}" class="btn login-required"><i class="icon-pencil"></i></a>
     </div>
     
-    {% vote proposal %}
     <p>
     <span class="apart">{% trans 'created by' %} {{ proposal.creator }} {%trans 'on' %} {{ proposal.creation_date }}</span>
     </p>

@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 
 @render_to('project/list.html')
 def project_list(request):
-    sort_order = ['creation_date', 'votes', 'name']
+    sort_order = ['creation_date', 'name']
     query_set = filtered_query(Project.objects, request)
     projects_list = sorted_query(query_set, sort_order, request)
     projects_count = projects_list.count()

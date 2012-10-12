@@ -12,7 +12,6 @@ import reversion
 
 from komoo_user.models import KomooUser as User
 from lib.taggit.managers import TaggableManager
-from vote.models import VotableModel
 from main.utils import slugify
 
 
@@ -112,7 +111,7 @@ class Investor(models.Model):
         return self.content_object.view_url
 
 
-class Investment(VotableModel):
+class Investment(models.Model):
     """A donation of money (or any other stuff) for either an Organization, a
     Proposal or a Resource in the system.
     """

@@ -1482,70 +1482,10 @@ a.btnShowForm{
     font-size: 1.2em;
     color: #4f4f4f;
 }
-.comment-vote{
-    margin-left: 10px;
-}
 .comments-summary {
     display: block;
 }
 /* =========== end of COMMENT section ======= */
-
-
-/* =============  VOTES section ============ */
-
-.vote{
-    display: inline-block;
-    margin: 5px 0 10px 0;
-}
-.vote a{
-    margin: 0 5px;
-}
-.vote-num{
-    color: #777777;
-    font-size: 0.9em;
-    font-weight:bold;
-    vertical-align: top;
-    padding-bottom: 2px;
-    margin-right: 2px;
-}
-.vote-up a{
-    display: inline-block;
-    background: #dddddd url("/static/img/up.png") no-repeat center;
-    padding: 3px;
-    border-radius: 4px;
-    width: 10px;
-    height: 10px;
-    /*margin: 0 4px;*/
-    border: solid 1px #bbbbbb;
-}
-.vote-up a:hover{
-    background-color: #cecece;
-    box-shadow: 1px 1px 1px #666666 inset;
-    background-image: url("/static/img/up-hover.png");
-}
-.vote-up.active a{
-    background: #dddddd url("/static/img/up-active.png") no-repeat center;
-}
-.vote-down a{
-    display: inline-block;
-    background: #dddddd url("/static/img/down.png") no-repeat center;
-    padding: 3px;
-    border-radius: 4px;
-    width: 10px;
-    height: 10px;
-    /*margin: 0 4px;*/
-    border: solid 1px #bbbbbb;
-}
-.vote-down a:hover{
-    background-color: #cecece;
-    box-shadow: 1px 1px 1px #666666 inset;
-    background-image: url("/static/img/down-hover.png");
-}
-.vote-down.active a{
-    background: #dddddd url("/static/img/down-active.png") no-repeat center;
-}
-
-/* =========== end of VOTE section ======= */
 
 /* ======= Pagination (it may clash/overlap with bootstrap) =========*/
 .pagination{

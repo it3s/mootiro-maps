@@ -10,10 +10,9 @@ import reversion
 from komoo_user.models import KomooUser as User
 from need.models import Need
 from investment.models import Investment
-from vote.models import VotableModel
 
 
-class Proposal(VotableModel):
+class Proposal(models.Model):
     """A proposed solution for solving a need"""
 
     class Meta:

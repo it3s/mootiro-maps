@@ -13,7 +13,6 @@ from komoo_user.models import KomooUser as User
 from community.models import Community
 from main.utils import slugify
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
-from vote.models import VotableModel
 
 
 class NeedCategory(models.Model):
@@ -61,7 +60,7 @@ class TargetAudience(models.Model):
         return self.name
 
 
-class Need(GeoRefModel, VotableModel):
+class Need(GeoRefModel):
     """A need of a Community"""
 
     class Meta:

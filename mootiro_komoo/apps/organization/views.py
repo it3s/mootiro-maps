@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 @render_to('organization/list.html')
 def organization_list(request):
-    org_sort_order = ['creation_date', 'votes', 'name']
+    org_sort_order = ['creation_date', 'name']
 
     query_set = filtered_query(Organization.objects, request)
     organizations_list = sorted_query(query_set, org_sort_order,

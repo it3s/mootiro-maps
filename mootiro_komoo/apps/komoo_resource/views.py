@@ -30,7 +30,7 @@ def resources_to_resource(self):
 
 @render_to('resource/list.html')
 def resource_list(request):
-    sort_order = ['creation_date', 'votes', 'name']
+    sort_order = ['creation_date', 'name']
 
     query_set = filtered_query(Resource.objects, request)
 

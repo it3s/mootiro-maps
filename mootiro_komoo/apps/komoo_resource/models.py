@@ -15,7 +15,6 @@ from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
 from investment.models import Investment
 from fileupload.models import UploadedFile
-from vote.models import VotableModel
 
 
 class ResourceKind(models.Model):
@@ -37,7 +36,7 @@ class ResourceKind(models.Model):
             ).order_by('-count', 'slug')[:number]
 
 
-class Resource(GeoRefModel, VotableModel):
+class Resource(GeoRefModel):
     """Resources model"""
     name = models.CharField(max_length=256, default=_('Resource without name'))
     # slug = models.CharField(max_length=256, blank=False, db_index=True)

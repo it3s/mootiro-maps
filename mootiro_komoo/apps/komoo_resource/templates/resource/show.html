@@ -4,7 +4,6 @@
 {% load moderation_tags %}
 {% load investment_tags %}
 {% load crispy_forms_tags %}
-{% load vote_tags %}
 {% load comment_tags %}
 {% load markitup_tags %}
 {% load komoo_tags %}
@@ -34,10 +33,6 @@
 
                 </div>
 
-            </div>
-
-            <div class="view-votes">
-                {% vote resource %}
             </div>
 
             <span class="resource-type">{% trans 'type:' %} &nbsp;<strong>{{ resource.kind }}</strong></span>
@@ -119,7 +114,6 @@
 {% endblock %}
 
 {% block page_scripts %}
-    {% vote_staticfiles %}
     {% comments_staticfiles %}
 
 {% endblock %}

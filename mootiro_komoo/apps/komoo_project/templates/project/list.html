@@ -2,7 +2,6 @@
 {% load komoo_tags %}
 {% load komoo_map_tags %}
 {% load comment_tags %}
-{% load vote_tags %}
 {% load i18n %}
 
 {% block title %}{% trans 'Projects' %}{% endblock %}
@@ -26,7 +25,7 @@
       {% pagination projects %}
     </div>
 
-    {% visualization_opts 'project' "filters=['tags']" "sorters=['name', 'creation_date', 'votes']" %}
+    {% visualization_opts 'project' "filters=['tags']" "sorters=['name', 'creation_date']" %}
   </div>
 
 
@@ -47,7 +46,6 @@
           <!--     <i class="icon-see-on-map"></i> -->
           <!-- </a> -->
           <div class="right view-list-reactions">
-            {% vote proj %}
             {% comments_summary proj %}
           </div>
           <div class="project-header-extras">
@@ -80,6 +78,5 @@
 {% endblock %}
 
 {% block page_scripts %}
-  {% vote_staticfiles %}
   {% visualization_opts_js %}
 {% endblock %}

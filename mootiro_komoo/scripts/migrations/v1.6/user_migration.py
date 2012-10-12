@@ -55,6 +55,7 @@ def get_user_email(pk, data):
 
 
 def remove_deprecated_tables(data):
+    logging.info('Removing deprecated tables (sites, comment, komooprofile)')
     for entry in data[::]:
         if entry['model'] == 'sites.site' or \
            entry['model'] == 'comments.comment' or \
@@ -65,6 +66,7 @@ def remove_deprecated_tables(data):
 
 
 def migrate_auth_users_to_komoouser(data):
+    logging.info('migrating contrib.auth.User to komoo_user.KomooUser')
     for entry in data[::]:
         if entry['model'] == 'auth.user':
             fields = entry['fields']
@@ -98,7 +100,7 @@ def migrate_auth_users_to_komoouser(data):
                         'is_admin': fields['is_superuser'],
                     }
                 }
-                logging.info(new_user)
+                # logging.info(new_user)
             else:
                 logging.info('Sorry but this user has missing data, and '
                              'cannot be imported: ')
@@ -109,6 +111,7 @@ def migrate_auth_users_to_komoouser(data):
 
 
 def migrate_login_providers(data):
+    logging.info('Migrating Logging Provides')
     seq = 0
     for entry in data[::]:
         if entry['model'] == 'social_auth.usersocialauth':
@@ -141,6 +144,7 @@ def migrate_login_providers(data):
 
 
 def migrate_mootiro_profile_users_to_komoo_users(data):
+    logging.info('Migrating mootiro profile passwords')
     # db_user, db_pass = ('mootiro_profile', '.Pr0f1l3.')
     file_path = '/tmp/mootiro_profile_users.csv'
 
@@ -174,6 +178,19 @@ def migrate_mootiro_profile_users_to_komoo_users(data):
     return data
 
 
+def remove_votes(data):
+    logging.info('Removing Vote app entries')
+    for entry in data[::]:
+        if entry['model'].startswith('vote.'):
+            data.remove(entry)
+        elif 'votes_down' in entry['fields']:
+            idx = data.index(entry)
+            d = data[idx]['fields']
+            del d['votes_up']
+            del d['votes_down']
+    return data
+
+
 def parse_json_file(file_):
     new_data = {}
     with codecs.open(file_, 'r', 'utf-8') as f:
@@ -183,6 +200,8 @@ def parse_json_file(file_):
         data = migrate_mootiro_profile_users_to_komoo_users(data)
 
         data = remove_deprecated_tables(data)
+        data = remove_votes(data)
+
         new_data = json.dumps(data)
 
     with codecs.open('temp.json', 'w', 'utf-8') as f_:

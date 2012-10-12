@@ -4,7 +4,6 @@
 {% load comment_tags %}
 {% load i18n %}
 {% load markitup_tags %}
-{% load vote_tags %}
 
 {% block title %}{% trans 'Organizations' %}{% endblock %}
 
@@ -27,7 +26,7 @@
         {% pagination organizations %}
       </div>
 
-      {% visualization_opts 'organization' "sorters=['name','creation_date', 'votes']" "filters=['tags','community', 'target_audiences']" %}
+      {% visualization_opts 'organization' "sorters=['name','creation_date']" "filters=['tags','community', 'target_audiences']" %}
 
     </div>
     {% for org in organizations.object_list %}
@@ -45,9 +44,6 @@
                 {#     <i class="icon-see-on-map"></i> #}
                 {# </a> #}
 
-            </div>
-            <div>
-              {% vote org %}
             </div>
             <div>
               <div class="inline-block org-list-extra-info">
@@ -112,6 +108,5 @@
 {% endblock %}
 
 {% block page_scripts %}
-  {% vote_staticfiles %}
   {% visualization_opts_js %}
 {% endblock %}

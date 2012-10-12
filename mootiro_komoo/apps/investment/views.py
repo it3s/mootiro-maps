@@ -77,7 +77,7 @@ def view(request, id=None):
 
 @render_to('investment/list.html')
 def list(request):
-    sort_fields = ['creation_date', 'votes', 'title']
+    sort_fields = ['creation_date', 'title']
 
     query_set = Investment.objects
     query_set = filtered_query(query_set, request)
