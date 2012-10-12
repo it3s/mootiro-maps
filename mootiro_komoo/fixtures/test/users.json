@@ -3,14 +3,16 @@
     "model": "komoo_user.komoouser",
     "pk": 1,
     "fields": {
+      "name": "tester",
       "email": "tester@test.com",
-      "password": "ccff6314e8cd1611724d6354c9e9a0f48cfb4c9e" 
+      "password": "ccff6314e8cd1611724d6354c9e9a0f48cfb4c9e"
     }
   },
   {
     "model": "komoo_user.komoouser",
     "pk": 2,
     "fields": {
+      "name": "noobzin",
       "email": "noobzin@test.com",
       "password": "ccff6314e8cd1611724d6354c9e9a0f48cfb4c9e"
     }

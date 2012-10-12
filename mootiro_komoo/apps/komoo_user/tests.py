@@ -10,22 +10,22 @@ from signatures.models import Signature
 from need.models import Need
 
 
-class UserCasTestCase(KomooTestCase):
+class UserTestCase(KomooTestCase):
 
     fixtures = KomooTestCase.fixtures + ['needs.json']
 
     def test_profile_page_is_up(self):
-        self.login_user()
-        self.assert_200(reverse('user_profile'))
+        user = self.login_user()
+        self.assert_200(reverse('user_profile', kwargs={'id': user.id}))
 
     def test_loads_proper_username(self):
-        self.login_user(username='noobzin')
-        response = self.client.get(reverse('user_profile'))
+        user = self.login_user(username='noobzin')
+        response = self.client.get(reverse('user_profile', kwargs={'id': user.id}))
         self.assertContains(response, 'noobzin')
 
     def test_loads_signatures(self):
         need = Need.objects.get(title='Parquinho')
-        user = User.objects.get(username='tester')
+        user = User.objects.get(email='tester@test.com')
         Signature(user=user, content_object=need).save()
         self.login_user()
         response = self.client.get(reverse('profile_update'))
