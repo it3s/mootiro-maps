@@ -11,10 +11,10 @@ from .utils import login as auth_login
 
 @render_to('komoo_user/login.html')
 def login(request):
-    '''
+    """
     GET: Displays a page with login options.
     POST: Receives email and password and authenticate the user.
-    '''
+    """
     if request.method == 'GET':
         next = request.GET.get('next', '')
         return dict(next=next)

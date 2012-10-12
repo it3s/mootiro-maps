@@ -14,10 +14,10 @@ PROVIDERS_CHOICES = [(t[1], t[0]) for t in PROVIDERS.items()]
 
 
 class ExternalCredentials(models.Model):
-    '''
+    """
     User credentials for login on external authentication providers as Google,
     Facebook and Twitter.
-    '''
+    """
 
     user = models.ForeignKey(KomooUser)
     provider = models.CharField(max_length=32, choices=PROVIDERS_CHOICES)

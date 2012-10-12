@@ -246,6 +246,8 @@ def sync_all(data_fixtures='fixtures/backupdb.json'):
         load_fixtures(data_fixtures)
     else:
         loaddata(data_fixtures)
+    loaddata('fixtures/contenttypes_fixtures.json')
+
 
 
 def dumpdata():

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-
 from komoo_user.models import KomooUser
-
 from .models import ExternalCredentials
 
 
@@ -14,10 +12,10 @@ def decode_querystring(s):
 
 
 def get_or_create_user_by_credentials(email, provider, access_data=None):
-    '''
+    """
     Returns an user with the matching email if it exists, otherwise creates
     a new one with the e-mail already verified (user.is_active=True).
-    '''
+    """
     user = None
     created = None
     provider_credentials = None

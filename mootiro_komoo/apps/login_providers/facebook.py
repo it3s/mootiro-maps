@@ -29,6 +29,8 @@ from .utils import get_or_create_user_by_credentials
 
 
 def login_facebook(request):
+
+    # Step 1: Getting authorization from the user
     csrf_token = randstr(10)
     redirect_uri = request.build_absolute_uri(reverse('facebook_authorized'))
     params = {
@@ -55,6 +57,7 @@ def facebook_authorized(request):
         error_description = request.GET.get('error_description', None)
         return dict(login_error='facebook', error_msg=error_description)
 
+    # Step 2: Exchange the authorization code for an access_token
     redirect_uri = request.build_absolute_uri(reverse('facebook_authorized'))
     params = {
         'client_id': settings.FACEBOOK_APP_ID,
@@ -66,6 +69,7 @@ def facebook_authorized(request):
     url += '?' + encode_querystring(params)
     access_data = decode_querystring(requests.get(url).text)
 
+    # Step 3: Accessing the API
     params = {
         'fields': 'email,name',
         'access_token': access_data['access_token'],
