@@ -2,11 +2,11 @@
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  define([], function() {
+  define(['googlemaps'], function(googleMaps) {
     'use strict';
     var FeatureCollection, FeatureCollectionPlus, GenericCollection, Layer, _base;
     if (window.komoo == null) window.komoo = {};
-    if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+    if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     GenericCollection = (function() {
 
       function GenericCollection(options) {
@@ -85,7 +85,7 @@
         if (firstFeature && firstFeature.getGeometryType() !== 'Empty') {
           geometry = firstFeature.getGeometry();
           point = geometry.getLatLngFromArray(geometry.getCenter());
-          this.bounds = new google.maps.LatLngBounds(point, point);
+          this.bounds = new googleMaps.LatLngBounds(point, point);
           this.forEach(function(feature) {
             var _ref;
             return (_ref = _this.bounds) != null ? _ref.union(feature.getBounds()) : void 0;

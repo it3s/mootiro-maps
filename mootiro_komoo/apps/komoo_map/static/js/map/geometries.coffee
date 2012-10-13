@@ -1,9 +1,9 @@
-define ['map/common', 'map/multimarker', 'map/multipolyline'],
-(common) ->
+define ['googlemaps', 'map/common', 'map/multimarker', 'map/multipolyline'],
+(googleMaps, common) ->
     'use strict'
 
     window.komoo ?= {}
-    window.komoo.event ?= google.maps.event
+    window.komoo.event ?= googleMaps.event
 
     EMPTY = common.geometries.types.EMPTY
     POINT = common.geometries.types.POINT
@@ -64,7 +64,7 @@ define ['map/common', 'map/multimarker', 'map/multipolyline'],
                 for position in path
                     bounds = getBounds position
             if bounds?
-                @bounds = new google.maps.LatLngBounds \
+                @bounds = new googleMaps.LatLngBounds \
                     @getLatLngFromArray(bounds[0]), @getLatLngFromArray(bounds[1])
             @bounds
 
@@ -88,7 +88,7 @@ define ['map/common', 'map/multimarker', 'map/multipolyline'],
         getDefaultZIndex: -> @feature?.getDefaultZIndex() or defaults.ZINDEX
 
         getLatLngFromArray: (pos) ->
-            if pos? then new google.maps.LatLng pos[0], pos[1] else null
+            if pos? then new googleMaps.LatLng pos[0], pos[1] else null
 
         getArrayFromLatLng: (latLng) ->
             if latLng then [latLng.lat(), latLng.lng()] else []
@@ -140,7 +140,7 @@ define ['map/common', 'map/multimarker', 'map/multipolyline'],
             icon: options.icon ? @getIconUrl options.zoom
 
         initOverlay: (options) ->
-            @setOverlay new google.maps.Marker @getOverlayOptions options
+            @setOverlay new googleMaps.Marker @getOverlayOptions options
 
         initEvents: (object = @overlay) ->
             super object
@@ -186,7 +186,7 @@ define ['map/common', 'map/multimarker', 'map/multipolyline'],
             if points.length >= len
                 points.pop() for i in [0.. points.length - len - 1]
             else
-                @overlay.addMarker(new google.maps.Marker @options) for i in [0..len - points.length - 1]
+                @overlay.addMarker(new googleMaps.Marker @options) for i in [0..len - points.length - 1]
 
         getCoordinates: -> @getArrayFromLatLng(point.getPosition()) for point in @getPoints()
         setCoordinates: (coords) ->
@@ -230,7 +230,7 @@ define ['map/common', 'map/multimarker', 'map/multipolyline'],
             strokeWeight: options.strokeWeight ? @getBorderSize()
 
         initOverlay: (options) ->
-            @setOverlay new google.maps.Polyline @getOverlayOptions options
+            @setOverlay new googleMaps.Polyline @getOverlayOptions options
 
         handleEvents: ->
             komoo.event.addListener @, 'mousemove', (e) =>
@@ -265,7 +265,7 @@ define ['map/common', 'map/multimarker', 'map/multipolyline'],
             if lines.length >= len
                 lines.pop() for i in [0.. lines.length - len - 1]
             else
-                @overlay.addPolyline(new google.maps.Polyline @options) for i in [0..len - lines.length - 1]
+                @overlay.addPolyline(new googleMaps.Polyline @options) for i in [0..len - lines.length - 1]
 
         getCoordinates: -> @getArrayFromLatLngArray(line.getPath().getArray()) for line in @overlay.getPolylines().getArray()
         setCoordinates: (coords) ->
@@ -304,7 +304,7 @@ define ['map/common', 'map/multimarker', 'map/multipolyline'],
             strokeWeight: options.strokeWeight ? @getBorderSize()
 
         initOverlay: (options) ->
-            @setOverlay new google.maps.Polygon @getOverlayOptions options
+            @setOverlay new googleMaps.Polygon @getOverlayOptions options
 
         getBackgroundColor: -> @feature?.getBackgroundColor() or defaults.BACKGROUND_COLOR
         getBackgroundOpacity: -> @feature?.getBackgroundOpacity() or defaults.BACKGROUND_OPACITY

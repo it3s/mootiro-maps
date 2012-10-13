@@ -1,8 +1,8 @@
-define [], ->
+define ['googlemaps'], (googleMaps) ->
     'use strict'
 
     window.komoo ?= {}
-    window.komoo.event ?= google.maps.event
+    window.komoo.event ?= googleMaps.event
 
     class GenericCollection
         constructor: (@options = {}) ->
@@ -52,7 +52,7 @@ define [], ->
             if firstFeature and firstFeature.getGeometryType() isnt 'Empty'
                 geometry = firstFeature.getGeometry()
                 point = geometry.getLatLngFromArray geometry.getCenter()
-                @bounds = new google.maps.LatLngBounds point, point
+                @bounds = new googleMaps.LatLngBounds point, point
                 @forEach (feature) =>
                     @bounds?.union feature.getBounds()
             @bounds

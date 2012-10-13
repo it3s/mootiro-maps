@@ -2,11 +2,11 @@
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  define(['map/common', 'map/multimarker', 'map/multipolyline'], function(common) {
+  define(['googlemaps', 'map/common', 'map/multimarker', 'map/multipolyline'], function(googleMaps, common) {
     'use strict';
     var EMPTY, Empty, Geometry, LINESTRING, LineString, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, SinglePoint, defaults, _base;
     if (window.komoo == null) window.komoo = {};
-    if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+    if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     EMPTY = common.geometries.types.EMPTY;
     POINT = common.geometries.types.POINT;
     MULTIPOINT = common.geometries.types.MULTIPOINT;
@@ -86,7 +86,7 @@
           }
         }
         if (bounds != null) {
-          this.bounds = new google.maps.LatLngBounds(this.getLatLngFromArray(bounds[0]), this.getLatLngFromArray(bounds[1]));
+          this.bounds = new googleMaps.LatLngBounds(this.getLatLngFromArray(bounds[0]), this.getLatLngFromArray(bounds[1]));
         }
         return this.bounds;
       };
@@ -136,7 +136,7 @@
 
       Geometry.prototype.getLatLngFromArray = function(pos) {
         if (pos != null) {
-          return new google.maps.LatLng(pos[0], pos[1]);
+          return new googleMaps.LatLng(pos[0], pos[1]);
         } else {
           return null;
         }
@@ -280,7 +280,7 @@
       };
 
       Point.prototype.initOverlay = function(options) {
-        return this.setOverlay(new google.maps.Marker(this.getOverlayOptions(options)));
+        return this.setOverlay(new googleMaps.Marker(this.getOverlayOptions(options)));
       };
 
       Point.prototype.initEvents = function(object) {
@@ -369,7 +369,7 @@
         } else {
           _results2 = [];
           for (i = 0, _ref2 = len - points.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
-            _results2.push(this.overlay.addMarker(new google.maps.Marker(this.options)));
+            _results2.push(this.overlay.addMarker(new googleMaps.Marker(this.options)));
           }
           return _results2;
         }
@@ -477,7 +477,7 @@
       };
 
       LineString.prototype.initOverlay = function(options) {
-        return this.setOverlay(new google.maps.Polyline(this.getOverlayOptions(options)));
+        return this.setOverlay(new googleMaps.Polyline(this.getOverlayOptions(options)));
       };
 
       LineString.prototype.handleEvents = function() {
@@ -579,7 +579,7 @@
         } else {
           _results2 = [];
           for (i = 0, _ref2 = len - lines.length - 1; 0 <= _ref2 ? i <= _ref2 : i >= _ref2; 0 <= _ref2 ? i++ : i--) {
-            _results2.push(this.overlay.addPolyline(new google.maps.Polyline(this.options)));
+            _results2.push(this.overlay.addPolyline(new googleMaps.Polyline(this.options)));
           }
           return _results2;
         }
@@ -674,7 +674,7 @@
       };
 
       Polygon.prototype.initOverlay = function(options) {
-        return this.setOverlay(new google.maps.Polygon(this.getOverlayOptions(options)));
+        return this.setOverlay(new googleMaps.Polygon(this.getOverlayOptions(options)));
       };
 
       Polygon.prototype.getBackgroundColor = function() {

@@ -1,29 +1,31 @@
-define ['underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries'],
-(_, core, Collections, Features, geometries) ->
+define ['googlemaps', 'underscore', 'map/core', 'map/collections',
+        'map/features', 'map/geometries'],
+(googleMaps, _, core, Collections, Features, geometries) ->
+    'use strict'
 
     window.komoo ?= {}
-    window.komoo.event ?= google.maps.event
+    window.komoo.event ?= googleMaps.event
 
     class Map extends core.Mediator
         featureTypesUrl: '/map_info/feature_types/'
 
         googleMapDefaultOptions:
             zoom: 12
-            center: new google.maps.LatLng(-23.55, -46.65)
+            center: new googleMaps.LatLng(-23.55, -46.65)
             disableDefaultUI: false
             streetViewControl: true
             scaleControl: true
             panControlOptions:
-                position: google.maps.ControlPosition.RIGHT_TOP
+                position: googleMaps.ControlPosition.RIGHT_TOP
             zoomControlOptions:
-                position: google.maps.ControlPosition.RIGHT_TOP
+                position: googleMaps.ControlPosition.RIGHT_TOP
             scaleControlOptions:
-                position: google.maps.ControlPosition.RIGHT_BOTTOM
-                style: google.maps.ScaleControlStyle.DEFAULT
+                position: googleMaps.ControlPosition.RIGHT_BOTTOM
+                style: googleMaps.ScaleControlStyle.DEFAULT
             mapTypeControlOptions:
-                mapTypeIds: [google.maps.MapTypeId.ROADMAP,
-                             google.maps.MapTypeId.HYBRID]
-            mapTypeId: google.maps.MapTypeId.HYBRID
+                mapTypeIds: [googleMaps.MapTypeId.ROADMAP,
+                             googleMaps.MapTypeId.HYBRID]
+            mapTypeId: googleMaps.MapTypeId.HYBRID
 
         constructor: (@options = {}) ->
             super()
@@ -52,7 +54,7 @@ define ['underscore', 'map/core', 'map/collections', 'map/features', 'map/geomet
                 @publish 'set_zoom', @options.zoom
 
         initGoogleMap: (options = @googleMapDefaultOptions) ->
-            @googleMap = new google.maps.Map @element, options
+            @googleMap = new googleMaps.Map @element, options
             @handleGoogleMapEvents()
             $(@element).trigger 'initialized', @
 
@@ -95,7 +97,7 @@ define ['underscore', 'map/core', 'map/collections', 'map/features', 'map/geomet
 
             @subscribe "set_location", (location) =>
                 location = location.split ','
-                center = new google.maps.LatLng location[0], location[1]
+                center = new googleMaps.LatLng location[0], location[1]
                 @googleMap.setCenter center
 
             @subscribe "set_zoom", (zoom) =>
@@ -135,7 +137,7 @@ define ['underscore', 'map/core', 'map/collections', 'map/features', 'map/geomet
             @features.removeAllFromMap()
             @features.clear()
 
-        refresh: -> google.maps.event.trigger @googleMap, 'resize'
+        refresh: -> googleMaps.event.trigger @googleMap, 'resize'
 
         saveLocation: (center = @googleMap.getCenter(), zoom = @getZoom()) ->
             @publish 'save_location', center, zoom
@@ -311,14 +313,14 @@ define ['underscore', 'map/core', 'map/collections', 'map/features', 'map/geomet
     class Preview extends Map
         googleMapDefaultOptions:
             zoom: 12
-            center: new google.maps.LatLng(-23.55, -46.65)
+            center: new googleMaps.LatLng(-23.55, -46.65)
             disableDefaultUI: true
             streetViewControl: false
             scaleControl: true
             scaleControlOptions:
-                position: google.maps.ControlPosition.RIGHT_BOTTOM
-                style: google.maps.ScaleControlStyle.DEFAULT
-            mapTypeId: google.maps.MapTypeId.HYBRID
+                position: googleMaps.ControlPosition.RIGHT_BOTTOM
+                style: googleMaps.ScaleControlStyle.DEFAULT
+            mapTypeId: googleMaps.MapTypeId.HYBRID
 
 
     class StaticMap extends Map

@@ -6,8 +6,6 @@
         height: 200px;
       }
     </style>
-    <script src="http://maps.google.com/maps/api/js?sensor=false&libraries=drawing&language=pt-br"></script>
-    <script src="/static/lib/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="/jsi18n/"></script>
     <script type="text/javascript" src="/static/lib/django-js-utils/dutils.js"></script>
     <script type="text/javascript" src="/static/lib/django-js-utils/dutils.conf.urls.js"></script>
@@ -69,7 +67,7 @@
         ]
       };
       var map;
-      define(['map/maps'], function (maps) {
+      define(['jquery', 'map/maps'], function ($, maps) {
         var mapOptions = {
           editable: true,
           featureTypes: [

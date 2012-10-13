@@ -6,6 +6,9 @@ config =
         'jquery': '../lib/jquery-1.7.1.min'
         'underscore': '../lib/underscore-min'
         'backbone': '../lib/backbone-min'
+        'async': '../lib/requirejs/async'
+        'goog': '../lib/requirejs/goog'
+        'propertyParser': '../lib/requirejs/propertyParser'
     shim:
         'underscore':
             exports: '_'

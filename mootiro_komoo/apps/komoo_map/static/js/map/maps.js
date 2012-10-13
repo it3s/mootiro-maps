@@ -4,10 +4,11 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  define(['underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries'], function(_, core, Collections, Features, geometries) {
+  define(['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries'], function(googleMaps, _, core, Collections, Features, geometries) {
+    'use strict';
     var AjaxEditor, AjaxMap, Editor, Map, Preview, StaticMap, UserEditor, _base;
     if (window.komoo == null) window.komoo = {};
-    if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+    if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     Map = (function(_super) {
 
       __extends(Map, _super);
@@ -16,24 +17,24 @@
 
       Map.prototype.googleMapDefaultOptions = {
         zoom: 12,
-        center: new google.maps.LatLng(-23.55, -46.65),
+        center: new googleMaps.LatLng(-23.55, -46.65),
         disableDefaultUI: false,
         streetViewControl: true,
         scaleControl: true,
         panControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_TOP
+          position: googleMaps.ControlPosition.RIGHT_TOP
         },
         zoomControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_TOP
+          position: googleMaps.ControlPosition.RIGHT_TOP
         },
         scaleControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_BOTTOM,
-          style: google.maps.ScaleControlStyle.DEFAULT
+          position: googleMaps.ControlPosition.RIGHT_BOTTOM,
+          style: googleMaps.ScaleControlStyle.DEFAULT
         },
         mapTypeControlOptions: {
-          mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID]
+          mapTypeIds: [googleMaps.MapTypeId.ROADMAP, googleMaps.MapTypeId.HYBRID]
         },
-        mapTypeId: google.maps.MapTypeId.HYBRID
+        mapTypeId: googleMaps.MapTypeId.HYBRID
       };
 
       function Map(options) {
@@ -74,7 +75,7 @@
 
       Map.prototype.initGoogleMap = function(options) {
         if (options == null) options = this.googleMapDefaultOptions;
-        this.googleMap = new google.maps.Map(this.element, options);
+        this.googleMap = new googleMaps.Map(this.element, options);
         this.handleGoogleMapEvents();
         return $(this.element).trigger('initialized', this);
       };
@@ -134,7 +135,7 @@
         this.subscribe("set_location", function(location) {
           var center;
           location = location.split(',');
-          center = new google.maps.LatLng(location[0], location[1]);
+          center = new googleMaps.LatLng(location[0], location[1]);
           return _this.googleMap.setCenter(center);
         });
         return this.subscribe("set_zoom", function(zoom) {
@@ -203,7 +204,7 @@
       };
 
       Map.prototype.refresh = function() {
-        return google.maps.event.trigger(this.googleMap, 'resize');
+        return googleMaps.event.trigger(this.googleMap, 'resize');
       };
 
       Map.prototype.saveLocation = function(center, zoom) {
@@ -456,15 +457,15 @@
 
       Preview.prototype.googleMapDefaultOptions = {
         zoom: 12,
-        center: new google.maps.LatLng(-23.55, -46.65),
+        center: new googleMaps.LatLng(-23.55, -46.65),
         disableDefaultUI: true,
         streetViewControl: false,
         scaleControl: true,
         scaleControlOptions: {
-          position: google.maps.ControlPosition.RIGHT_BOTTOM,
-          style: google.maps.ScaleControlStyle.DEFAULT
+          position: googleMaps.ControlPosition.RIGHT_BOTTOM,
+          style: googleMaps.ScaleControlStyle.DEFAULT
         },
-        mapTypeId: google.maps.MapTypeId.HYBRID
+        mapTypeId: googleMaps.MapTypeId.HYBRID
       };
 
       return Preview;
