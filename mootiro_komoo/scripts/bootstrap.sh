@@ -11,6 +11,7 @@ sudo rabbitmqctl set_permissions -p mootiro_maps_mq komoo ".*" ".*" ".*"
 pip install -r settings/requirements.txt
 
 sudo npm install -g coffee-script@1.2
+sudo npm install -g requirejs@2.1
 
 sudo gem install --version '~> 0.8.8' rb-inotify
 sudo gem install listen

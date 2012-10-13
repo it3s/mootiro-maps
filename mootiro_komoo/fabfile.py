@@ -58,6 +58,16 @@ def build_environment():
         "../docs/postgis-adapter-2.patch")
 
 
+def compile_coffee():
+    """Compiles coffeescript to javascript"""
+    local('coffee -c apps/')
+
+
+def compile_sass():
+    """Compiles sass to css"""
+    local('sass --update ./')
+
+
 def work():
     """Start watchers"""
     # compilers
@@ -304,6 +314,60 @@ def populate_history():
                             field.auto_now = False
                     obj.last_update = last.revision.date_created
                     obj.save()
+
+
+def collect_js(apps=None):
+    """Collect javascript files from apps"""
+    setup_django()
+    import os
+    from distutils.dir_util import copy_tree, remove_tree
+    from django.conf import settings
+    from django.utils.importlib import import_module
+    # Get all apps
+    if not apps:
+        apps = settings.INSTALLED_APPS
+    # Get the project base path
+    proj_path = os.path.dirname(__file__)
+    build_path = os.path.join(proj_path, '.build')
+    try:
+        logging.info('cleaning build path ... ')
+        remove_tree(build_path)
+    except OSError, e:
+        logging.info(e)
+    logging.info('copying javascript files ... ')
+    os.mkdir(build_path)
+    for app in apps:
+        mod = import_module(app)
+        mod_path = os.path.dirname(mod.__file__)
+        # Get only project apps
+        if mod_path.startswith(proj_path):
+            location = os.path.join(mod_path, 'static', 'js')
+            if os.path.exists(location):
+                copy_tree(location, build_path)
+
+
+def build_js():
+    """Combine and minify RequireJS modules"""
+    import os
+    from shutil import copytree, rmtree, ignore_patterns
+    collect_js()
+    proj_path = os.path.dirname(__file__)
+    build_path = os.path.join(proj_path, '.build')
+    local('r.js -o app.build.js')
+    from_ = os.path.join(build_path, 'min')
+    to = os.path.join(proj_path, 'apps', 'main', 'static', 'js.build')
+    rmtree(to)
+    logging.info('copying compiled javascripts to {}'.format(to))
+    copytree(from_, to, ignore=ignore_patterns('*.coffee', '*~'))
+
+
+def build():
+    """Build step"""
+    compilemessages()
+    js_urls()
+    compile_coffee()
+    compile_sass()
+    build_js()
 
 
 def help():
