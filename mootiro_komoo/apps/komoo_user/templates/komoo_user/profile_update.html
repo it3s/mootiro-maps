@@ -39,30 +39,51 @@
                 <div class="form-profile-wrapper">
                     <form methos=POST action="{% url profile_update_personal_settings %}" id="form-personal">
                         {% csrf_token %}
-                       	<div id="div_id_username" class="clearfix control-group ">
-                            <label for="id_username">Nome de Usuário</label>
+                       	<div id="div_id_email" class="clearfix control-group ">
+                          <label for="id_email">{% trans 'E-mail' %}</label>
                             <div class="controls">
-                                <input id="id_username" type="text"
+                                <input id="id_email" type="text"
                                        class="textinput textInput"
-                                       value="{{ user.username }}"
-                                       name="username" disabled='true' />
+                                       value="{{ user.email }}"
+                                       name="email" disabled='true' 
+                                       title="{% trans 'emails cannot be changed, if you have a problem with you email address please contact us' %}"/>
                             </div>
                         </div>
 
                         <div class="clearfix control-group">
-                            <label for="id_email">Email</label>
+                          <label for="id_current_password">{% trans 'Current Password' %}</label>
                             <div class="controls">
                                 <input class="textinput textInput"
-                                       type="text" id="id_email"
-                                       value="{{ user.email }}"
-                                       name="email" disabled='true' />
+                                       type="password" id="id_current_password"
+                                       name="current_password"
+                                       title="{% trans 'Enter your current password if you want change to a new one. If you did not set a password yet, then leave it blank' %}"/>
+                            </div>
+                        </div>
+                          
+                        <div class="clearfix control-group">
+                          <label for="id_password">{% trans 'New Password' %}</label>
+                            <div class="controls">
+                                <input class="textinput textInput"
+                                       type="password" id="id_password"
+                                       name="password"
+                                       title="{% trans 'Enter a new password' %}"/>
                             </div>
                         </div>
 
-                        {# <div class="form-actions"> #}
-                        {#     <input type="submit" name="submit" value="Enviar" #}
-                        {#            class="btn button" id="submit-id-submit" /> #}
-                        {# </div> #}
+                        <div class="clearfix control-group">
+                          <label for="id_confirm_password">{% trans 'Confirm New Password' %}</label>
+                            <div class="controls">
+                                <input class="textinput textInput"
+                                       type="password" id="id_confirm_password"
+                                       name="confirm_password" autocomplete="off"
+                                       title="{% trans 'Confirm your new password' %}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <input type="submit" name="submit" value="Enviar"
+                                   class="btn button" id="submit-id-submit" />
+                        </div>
 
 
                     </form>

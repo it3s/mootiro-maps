@@ -2,17 +2,14 @@
 from __future__ import unicode_literals
 import json
 import logging
-import requests
 
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import Http404
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
 from django.utils import simplejson
 from django.forms.models import model_to_dict
-from django.views.decorators.csrf import csrf_protect
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
@@ -66,7 +63,8 @@ def _prepare_contrib_data(version, created_date):
             contrib['type'] = ['A', 'E', 'D'][version.type]
 
         elif data['model'] in weird_types:
-            ctype = ContentType.objects.get_for_id(data['fields']['content_type'])
+            ctype = ContentType.objects.get_for_id(
+                            data['fields']['content_type'])
             obj = model_to_dict(ctype.get_object_for_this_type(
                     pk=data['fields']['object_id']))
             contrib['id'] = obj.get('id', '') or obj.get('pk', '')
@@ -77,7 +75,8 @@ def _prepare_contrib_data(version, created_date):
         contrib['name'] = obj.get('name', '') or obj.get('title', '')
         contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
         contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
-        contrib['permalink'] = "/permalink/{}{}".format(contrib['model_name'][0]
+        contrib['permalink'] = "/permalink/{}{}".format(
+                                    contrib['model_name'][0]
                 if data['model'] != 'organization.organizationbranch' else 'o',
                 contrib['id'])
 
@@ -106,7 +105,8 @@ def profile(request, id=''):
         geojson['features'][0]['properties']['image'] = '/static/img/user.png'
         geojson = json.dumps(geojson)
 
-    return dict(user_profile=user, contributions=contributions, geojson=geojson)
+    return dict(user_profile=user, contributions=contributions,
+                geojson=geojson)
 
 
 @render_to('komoo_user/profile_update.html')
@@ -120,15 +120,17 @@ def profile_update(request):
 
             signatures.append({
                 'signature_id': sig.id,
-                'obj_name': getattr(obj, 'name', '') or getattr(obj, 'title', ''),
+                'obj_name': getattr(obj, 'name', '') or getattr(
+                                    obj, 'title', ''),
                 'obj_id': obj.id,
                 'model_name': ct.name,
                 'app_name': ct.app_label,
                 'permalink': '/permalink/{}{}'.format(ct.name[0], obj.id),
-                'has_geojson': not 'EMPTY' in getattr(obj, 'geometry', 'EMPTY'),
+                'has_geojson': not 'EMPTY' in getattr(
+                                    obj, 'geometry', 'EMPTY'),
             })
         except:
-            #assinatura para um objeto que nao podeser encontrado
+            # signature for an object that cannot be found (probably deleted)
             sig.delete()
 
     digest_obj = DigestSignature.objects.filter(user=request.user)
@@ -151,26 +153,44 @@ def profile_update_public_settings(request):
 @login_required
 @ajax_request
 def profile_update_personal_settings(request):
-    # username = request.POST.get('username', '')
+    logging.debug('POST: {}'.format(request.POST))
+    email = request.POST.get('email', '')
+    current_password = request.POST.get('current_password', '')
+    new_password = request.POST.get('password', '')
+    confirm_password = request.POST.get('confirm_password', '')
     try:
-        # if not username:
-        #     return dict(success='false',
-        #                 errors={'username': _('Username Required')})
+        # if not email or email != request.user.email:
+        #     return {
+        #         'success': 'false',
+        #         'errors': {
+        #             'email': _('Email does not match with current user')}}
+        if (not request.user.password or request.user.verify_password(
+                                            current_password)):
+            if not new_password:
+                return {
+                    'success': 'false',
+                    'errors': {
+                        'password': _('You must provide a valid password')}}
+            if new_password != confirm_password:
+                return {
+                    'success': 'false',
+                    'errors': {
+                        'confirm_password': _('Passwords did not match')}}
+                    
+            # current password verifies, has new password and
+            # confirmation is equal,then saves new pass
+            request.user.set_password(new_password)
+            request.user.save()
+            return {
+                'success': 'true',
+                'data': {}}
 
-        # user_with_this_username = User.objects.filter(username=username)
-        # if user_with_this_username.count():
-        #     if user_with_this_username[0] != request.user:
-        #         # same username , different users -> no no no
-        #         return dict(success='false',
-        #             errors={'username': _('This username already exists')})
-        #     else:
-        #         # same user, same username -> do nothing
-        #         return dict(success='true', data={})
-        # else:
-        #     # new username =]
-        #     request.user.username = username
-        #     request.user.save()
-            return dict(success='true', data={})
+        else:
+            # wrong pass (same as: has_passwd and not verify )
+            return {
+                    'success': 'false',
+                    'errors': {
+                        'current_password': _('Wrong password!')}}
     except Exception as err:
         logger.error('OPS: ', err)
         return dict(success='false',
@@ -306,7 +326,8 @@ def logout(request):
     auth_logout(request)
     return redirect(next_page)
 
-##################################
+################ for testing ##################
+
 
 @render_to('komoo_user/secret.html')
 @login_required
