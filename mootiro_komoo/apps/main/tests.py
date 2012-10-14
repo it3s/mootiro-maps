@@ -7,7 +7,7 @@ from django.conf import settings
 from django.http import HttpRequest
 from django.utils.importlib import import_module
 
-from komoo_user.models import KomooUser as User
+from komoo_user.models import User
 from komoo_user.utils import login
 
 
@@ -101,7 +101,7 @@ class KomooClient(Client):
             return False
 
 
-class KomooUserTestCase(KomooBaseTestCase):
+class UserTestCase(KomooBaseTestCase):
 
     fixtures = ['users.json']
     #fixtures += ['contenttypes_fixtures.json']
@@ -116,9 +116,9 @@ class KomooUserTestCase(KomooBaseTestCase):
         return User.objects.get(email=email)
 
 
-class KomooTestCase(KomooUserTestCase):
+class KomooTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures + ['contenttypes_fixtures.json']
+    fixtures = UserTestCase.fixtures + ['contenttypes_fixtures.json']
 
     @classmethod
     def setUpClass(cls):

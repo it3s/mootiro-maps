@@ -1,7 +1,7 @@
 from ajax_select import LookupChannel
 from django.utils.html import escape
 from django.db.models import Q
-from .models import KomooUser as User
+from .models import User
 
 
 class UserLookup(LookupChannel):

@@ -2,7 +2,7 @@
 
 ####  mappings ####
 #
-#  KomooUser       |     contrib.auth
+#  User            |     contrib.auth
 #  ------------------------------------
 #  id              |    preservar mesmo id
 #  name            |    user.get_name
@@ -12,7 +12,7 @@
 
 #  LogginProviders |    social_auth
 #  ------------------------------------
-#  komoouser       |    auth.user
+#  user            |    auth.user
 #  provider        |    ??? facebook / google-oauth2
 #  email           |    ??? google -> email / facebook -> uuid
 #                         (pegar email via api)
@@ -48,7 +48,7 @@ def get_full_name(fields):
 
 def get_user_email(pk, data):
     for entry in data:
-        if entry['model'] == 'komoo_user.komoouser' and entry['pk'] == pk:
+        if entry['model'] == 'komoo_user.user' and entry['pk'] == pk:
             return entry['fields']['email']
     else:
         return ''
@@ -65,8 +65,8 @@ def remove_deprecated_tables(data):
     return data
 
 
-def migrate_auth_users_to_komoouser(data):
-    logging.info('migrating contrib.auth.User to komoo_user.KomooUser')
+def migrate_auth_users_to_user(data):
+    logging.info('migrating contrib.auth.User to komoo_user.User')
     for entry in data[::]:
         if entry['model'] == 'auth.user':
             fields = entry['fields']
@@ -87,7 +87,7 @@ def migrate_auth_users_to_komoouser(data):
             if id and name and email:
                 new_user = {
                     'pk': entry['pk'],
-                    'model': 'komoo_user.komoouser',
+                    'model': 'komoo_user.user',
                     'fields': {
                         'name': name,
                         'email': email,
@@ -166,7 +166,7 @@ def migrate_mootiro_profile_users_to_komoo_users(data):
 
         for entry in data:
             fields = entry['fields']
-            if entry['model'] == 'komoo_user.komoouser' and \
+            if entry['model'] == 'komoo_user.user' and \
                fields['email'] == email:
 
                 if password_hash == '!':
@@ -195,7 +195,7 @@ def parse_json_file(file_):
     new_data = {}
     with codecs.open(file_, 'r', 'utf-8') as f:
         data = json.loads(f.read())
-        data = migrate_auth_users_to_komoouser(data)
+        data = migrate_auth_users_to_user(data)
         data = migrate_login_providers(data)
         data = migrate_mootiro_profile_users_to_komoo_users(data)
 

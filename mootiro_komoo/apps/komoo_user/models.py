@@ -10,7 +10,7 @@ from fileupload.models import UploadedFile
 from komoo_map.models import GeoRefModel, POINT
 
 
-class KomooUser(GeoRefModel):
+class User(GeoRefModel):
     """
     User model. Replaces django.contrib.auth, CAS and social_auth
     with our own unified solution.

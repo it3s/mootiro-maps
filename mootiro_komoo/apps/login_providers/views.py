@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from annoying.decorators import render_to
 
-from .models import KomooUser
+from .models import User
 from .utils import logout as auth_logout
 from .utils import login as auth_login
 
@@ -24,8 +24,8 @@ def login(request):
     if not email or not password:
         return dict(login_error='wrong_credentials')
 
-    password = KomooUser.calc_hash(password)
-    q = KomooUser.objects.filter(email=email, _password=password)
+    password = User.calc_hash(password)
+    q = User.objects.filter(email=email, _password=password)
     if not q.exists():
         return dict(login_error='wrong_credentials')
 

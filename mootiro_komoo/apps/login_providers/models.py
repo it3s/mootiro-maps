@@ -2,7 +2,7 @@
 from django.db import models
 from jsonfield import JSONField
 
-from komoo_user.models import KomooUser
+from komoo_user.models import User
 
 PROVIDERS = {
     # 'provider label': 'db info'
@@ -19,7 +19,7 @@ class ExternalCredentials(models.Model):
     Facebook and Twitter.
     """
 
-    user = models.ForeignKey(KomooUser)
+    user = models.ForeignKey(User)
     provider = models.CharField(max_length=32, choices=PROVIDERS_CHOICES)
     email = models.CharField(max_length=256)
     data = JSONField()  # provider specific data for user login

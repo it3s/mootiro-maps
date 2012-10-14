@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from komoo_user.models import KomooUser
+from komoo_user.models import User
 from .models import ExternalCredentials
 
 
@@ -30,7 +30,7 @@ def get_or_create_user_by_credentials(email, provider, access_data=None):
 
     if not user:
         # first social login
-        user, created = KomooUser.objects.get_or_create(email=email)
+        user, created = User.objects.get_or_create(email=email)
         user.is_active = True
         user.save()
 

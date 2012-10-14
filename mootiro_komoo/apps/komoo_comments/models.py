@@ -5,7 +5,7 @@ from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse
 
-from komoo_user.models import KomooUser as User
+from komoo_user.models import User
 
 
 class Comment(models.Model):

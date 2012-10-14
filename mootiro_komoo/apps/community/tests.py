@@ -3,7 +3,7 @@ import simplejson
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooTestCase, KomooUserTestCase
+from main.tests import KomooTestCase, UserTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from .models import Community
@@ -23,7 +23,7 @@ def A_COMMUNITY_DATA():
     }.copy()
 
 
-class CommunitySimpleViewsTestCase(KomooUserTestCase):
+class CommunitySimpleViewsTestCase(UserTestCase):
 
     # new_community
     def test_new_community_page_is_up(self):
@@ -67,9 +67,9 @@ class CommunitySimpleViewsTestCase(KomooUserTestCase):
         self.assert_200(url)
 
 
-class CommunityViewsTestCase(KomooUserTestCase):
+class CommunityViewsTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures + ['communities.json']
+    fixtures = UserTestCase.fixtures + ['communities.json']
 
     # on_map
     @logged_and_unlogged

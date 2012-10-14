@@ -3,7 +3,7 @@ import simplejson
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooUserTestCase, KomooTestCase
+from main.tests import UserTestCase, KomooTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from .models import Organization
@@ -27,9 +27,9 @@ def AN_ORGANIZATION_DATA():
     }.copy()
 
 
-class OrganizationSimpleViewsTestCase(KomooUserTestCase):
+class OrganizationSimpleViewsTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures
+    fixtures = UserTestCase.fixtures
 
     # form validation
     def test_organization_empty_form_validation(self):
@@ -68,9 +68,9 @@ class OrganizationViewsSimpleWithContentTypeTestCase(KomooTestCase):
         self.client.post(reverse('new_organization'), data)
         self.assertEquals(Organization.objects.count(), n0 + 1)
 
-class OrganizationViewsTestCase(KomooUserTestCase):
+class OrganizationViewsTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures + \
+    fixtures = UserTestCase.fixtures + \
         ['organizations.json']
 
     # view

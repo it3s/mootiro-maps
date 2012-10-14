@@ -7,7 +7,7 @@ from django.contrib.contenttypes import generic
 from django.core import serializers
 from django.conf import settings
 from django.db import models, IntegrityError
-from komoo_user.models import KomooUser as User
+from komoo_user.models import User
 
 
 def deprecated(original, replacement):

@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse
 
 from main.tests import KomooTestCase
 
-from komoo_user.models import KomooUser as User
+from komoo_user.models import User
 from signatures.models import Signature
 from need.models import Need
 

@@ -4,7 +4,7 @@ import simplejson
 from django.core import mail
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooBaseTestCase, KomooUserTestCase, KomooTestCase
+from main.tests import KomooBaseTestCase, UserTestCase, KomooTestCase
 
 from moderation.models import Moderation, Report
 from moderation.utils import create_report
@@ -25,9 +25,9 @@ class ModerationSimpleTestCase(KomooBaseTestCase):
         self.assertTrue(moderation)
 
 
-class ModerationUserTestCase(KomooUserTestCase):
+class ModerationUserTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures
+    fixtures = UserTestCase.fixtures
 
     def test_create_report(self):
         """You need to set ADMINS on your settings file for this test"""

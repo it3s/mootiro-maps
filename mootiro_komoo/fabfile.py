@@ -271,7 +271,7 @@ def dumpdata():
 def supercow(email=None):
     """Grants admin supercow rights to a user."""
     setup_django()
-    from komoo_user.models import KomooUser as User
+    from komoo_user.models import User
     user = User.objects.get(email=email)
     user.is_admin = True
     user.save()

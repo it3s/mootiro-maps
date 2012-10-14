@@ -86,7 +86,7 @@ define ['jquery', 'underscore', 'backbone'], ($, _, Backbone) ->
                     ngettext("%s need",
                         "%s needs",
                         count)
-                else if @type is 'KomooUser'
+                else if @type is 'User'
                     ngettext("%s contributors",
                         "%s contributors",
                         count)
@@ -153,8 +153,8 @@ define ['jquery', 'underscore', 'backbone'], ($, _, Backbone) ->
         $('.features-wrapper').append branchsView.render().$el
 
         branchsView = new FeaturesViewClass
-            type: 'KomooUser'
-            collection: new Features().reset KomooNS.features['KomooUser']
+            type: 'User'
+            collection: new Features().reset KomooNS.features['User']
         $('.features-wrapper').append branchsView.render().$el
 
         geoObjectsListing $('.features-wrapper')

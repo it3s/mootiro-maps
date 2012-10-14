@@ -13,7 +13,7 @@ from lib.taggit.managers import TaggableManager
 from fileupload.models import UploadedFile
 import reversion
 
-from komoo_user.models import KomooUser as User
+from komoo_user.models import User
 from community.models import Community
 from organization.models import Organization
 

@@ -10,7 +10,7 @@ from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
-from .models import KomooUser as User
+from .models import User
 
 
 class FormProfile(AjaxModelForm):

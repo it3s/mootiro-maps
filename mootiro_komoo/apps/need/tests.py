@@ -3,7 +3,7 @@ import simplejson
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooTestCase, KomooUserTestCase
+from main.tests import KomooTestCase, UserTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from .models import Need
@@ -26,7 +26,7 @@ def A_NEED_DATA():
 
 
 
-class NeedViewsSimpleTestCase(KomooUserTestCase):
+class NeedViewsSimpleTestCase(UserTestCase):
     # new_need
     def test_new_need_page_is_up(self):
         self.login_user()
@@ -50,9 +50,9 @@ class NeedViewsSimpleTestCase(KomooUserTestCase):
         self.assertEquals(json, expected)
 
 
-class NeedViewsTestCase(KomooUserTestCase):
+class NeedViewsTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures + ['needs.json']
+    fixtures = UserTestCase.fixtures + ['needs.json']
 
     @logged_and_unlogged
     def test_need_target_audience_search_is_up(self):

@@ -3,7 +3,7 @@ import simplejson
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooUserTestCase
+from main.tests import UserTestCase
 from main.tests import logged_and_unlogged
 from need.tests import AN_UNSAVED_NEED
 from .models import Proposal
@@ -26,9 +26,9 @@ def A_PROPOSAL_DATA():
     }.copy()
 
 
-class ProposalSimpleViewsTestCase(KomooUserTestCase):
+class ProposalSimpleViewsTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures + \
+    fixtures = UserTestCase.fixtures + \
         ['needs.json']
 
     ####### CREATION #######
@@ -69,9 +69,9 @@ class ProposalSimpleViewsTestCase(KomooUserTestCase):
 
 
 
-class ProposalViewsTestCase(KomooUserTestCase):
+class ProposalViewsTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures + \
+    fixtures = UserTestCase.fixtures + \
         ['needs.json', 'proposals.json']
 
     ####### EDITION #######

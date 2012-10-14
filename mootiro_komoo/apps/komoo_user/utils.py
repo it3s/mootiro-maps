@@ -2,7 +2,7 @@
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from .models import AnonymousUser
-from .models import KomooUser as User
+from .models import User
 
 
 class AuthenticationMiddleware(object):

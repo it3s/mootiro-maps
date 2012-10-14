@@ -4,7 +4,7 @@ import simplejson
 
 from django.core.urlresolvers import reverse
 
-from main.tests import KomooUserTestCase, KomooTestCase
+from main.tests import UserTestCase, KomooTestCase
 from main.tests import logged_and_unlogged
 from main.tests import A_POLYGON_GEOMETRY
 from .models import Resource
@@ -73,9 +73,9 @@ class ResourceViewsSimpleWithContentTypeTestCase(KomooTestCase):
         self.assert_200(url)
 
 
-class ResourceViewsTestCase(KomooUserTestCase):
+class ResourceViewsTestCase(UserTestCase):
 
-    fixtures = KomooUserTestCase.fixtures + \
+    fixtures = UserTestCase.fixtures + \
         ['resources.json']
 
     ####### EDITION #######

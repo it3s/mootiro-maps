@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 from annoying.functions import get_object_or_None
 import reversion
 
-from komoo_user.models import KomooUser as User
+from komoo_user.models import User
 from lib.taggit.managers import TaggableManager
 from django.template.defaultfilters import slugify
 

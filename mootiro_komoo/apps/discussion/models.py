@@ -6,7 +6,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 
-from komoo_user.models import KomooUser as User
+from komoo_user.models import User
 
 import reversion
 

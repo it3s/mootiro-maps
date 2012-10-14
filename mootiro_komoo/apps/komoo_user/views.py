@@ -19,7 +19,7 @@ from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
 from main.utils import create_geojson, randstr, send_mail
 
-from .models import KomooUser as User
+from .models import User
 from .forms import FormProfile, FormUser
 from .utils import login_required
 from .utils import logout as auth_logout
