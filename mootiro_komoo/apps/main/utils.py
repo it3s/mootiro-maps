@@ -3,14 +3,12 @@
 from __future__ import unicode_literals  # unicode by default
 
 import json
-import re
 from markdown import markdown
 import requests
 from string import letters, digits
 from random import choice
 
 from django import forms
-from django.template.defaultfilters import slugify as simple_slugify
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponseNotAllowed
@@ -32,21 +30,6 @@ except ImportError:
                 getattr(wrapper, attr).update(getattr(wrapped, attr, {}))
             return wrapper
         return inner
-
-
-def slugify(term, slug_exists=lambda s: False):
-    """Receives a term and a validator for the created slug in a namespace.
-    Returns a slug that is unique according to the validator.
-    """
-    original = simple_slugify(term)
-    slug = original
-    n = 2
-    # If needed, append unique number prefix to slug
-    while slug_exists(slug):
-        slug = re.sub(r'\d+$', '', slug)  # removes trailing '-number'
-        slug = original + '-' + str(n)
-        n += 1
-    return slug
 
 
 def komoo_permalink(obj):

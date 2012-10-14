@@ -12,7 +12,7 @@ import reversion
 
 from komoo_user.models import KomooUser as User
 from lib.taggit.managers import TaggableManager
-from main.utils import slugify
+from django.template.defaultfilters import slugify
 
 
 class Investor(models.Model):
@@ -165,34 +165,20 @@ class Investment(models.Model):
     def community(self):
         return self.grantee.community
 
-    ### Needed to slugify items ###
-    def slug_exists(self, slug):
-        """Answers if a given slug is valid in grantee investment namespace."""
-        return Investment.objects.filter(slug=slug).exists()
-
     def save(self, *args, **kwargs):
         # TODO: validate grantee as either a Proposal, a Resource or an Organization
         # TODO: validate investor as either a User or an Organization
-
-        old_title = Investment.objects.get(id=self.id).title if self.id else None
-
-        if not self.id or old_title != self.title:
-            self.slug = slugify(self.title, self.slug_exists)
+        self.slug = slugify(self.title, self.slug_exists)
         super(Investment, self).save(*args, **kwargs)
-    ### END ###
 
     # Url aliases
     @property
-    def home_url_params(self):
-        return {'id': self.id}
-
-    @property
     def view_url(self):
-        return reverse('view_investment', kwargs=self.home_url_params)
+        return reverse('view_investment', kwargs={'id': self.id})
 
     @property
     def edit_url(self):
-        return reverse('edit_investment', kwargs=self.home_url_params)
+        return reverse('edit_investment', kwargs={'id': self.id})
 
     @property
     def perm_id(self):

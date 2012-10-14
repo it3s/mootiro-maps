@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
 import reversion
-from main.utils import slugify
+from django.template.defaultfilters import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON
 from komoo_user.models import KomooUser as User
@@ -53,17 +53,9 @@ class Community(GeoRefModel):
         verbose_name = "community"
         verbose_name_plural = "communities"
 
-    ### Needed to slugify items ###
-    def slug_exists(self, slug):
-        """Answers if a given slug is valid in the communities namespace."""
-        return Community.objects.filter(slug=slug).exists()
-
     def save(self, *args, **kwargs):
-        old_name = Community.objects.get(id=self.id).name if self.id else None
-        if not self.id or old_name != self.name:
-            self.slug = slugify(self.name, self.slug_exists)
+        self.slug = slugify(self.name)
         super(Community, self).save(*args, **kwargs)
-    ### END ###
 
     image = "img/community.png"
     image_off = "img/community-off.png"
@@ -78,16 +70,12 @@ class Community(GeoRefModel):
 
     # url aliases
     @property
-    def home_url_params(self):
-        return dict(id=self.id)
-
-    @property
     def view_url(self):
-        return reverse('view_community', kwargs=self.home_url_params)
+        return reverse('view_community', kwargs={'id': self.id})
 
     @property
     def edit_url(self):
-        return reverse('edit_community', kwargs=self.home_url_params)
+        return reverse('edit_community', kwargs={'id': self.id})
 
     @property
     def admin_url(self):

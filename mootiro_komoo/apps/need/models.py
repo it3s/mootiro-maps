@@ -5,13 +5,12 @@ from __future__ import unicode_literals  # unicode by default
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-
+from django.template.defaultfilters import slugify
 import reversion
 from lib.taggit.managers import TaggableManager
 
 from komoo_user.models import KomooUser as User
 from community.models import Community
-from main.utils import slugify
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
 
 
@@ -110,19 +109,9 @@ class Need(GeoRefModel):
     def __unicode__(self):
         return unicode(self.title)
 
-    ### Needed to slugify items ###
-    def slug_exists(self, slug):
-        """Answers if a given slug is valid in the needs namespace of the
-        community.
-        """
-        return Need.objects.filter(slug=slug).exists()
-
     def save(self, *args, **kwargs):
-        old_title = Need.objects.get(id=self.id).title if self.id else None
-        if not self.id or old_title != self.title:
-            self.slug = slugify(self.title, self.slug_exists)
+        self.slug = slugify(self.title)
         return super(Need, self).save(*args, **kwargs)
-    ### END ###
 
     image = "img/need.png"
     image_off = "img/need-off.png"

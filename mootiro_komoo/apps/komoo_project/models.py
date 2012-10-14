@@ -7,13 +7,13 @@ from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
+from django.template.defaultfilters import slugify
 
 from lib.taggit.managers import TaggableManager
 from fileupload.models import UploadedFile
 import reversion
 
 from komoo_user.models import KomooUser as User
-from main.utils import slugify
 from community.models import Community
 from organization.models import Organization
 
@@ -56,10 +56,7 @@ class Project(models.Model):
         return Project.objects.filter(slug=slug).exists()
 
     def save(self, *a, **kw):
-        old_title = Project.objects.get(id=self.id).name if self.id else None
-        if not self.id or old_title != self.name:
-            self.slug = slugify(self.name,
-                    lambda slug: Project.objects.filter(slug=slug).exists())
+        self.slug = slugify(self.name)
         return super(Project, self).save(*a, **kw)
 
     def partners_logo(self):
