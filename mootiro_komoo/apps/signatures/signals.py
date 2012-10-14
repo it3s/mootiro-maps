@@ -22,7 +22,7 @@ def notification_callback(sender, instance, *a, **kw):
     for signature in Signature.objects.filter(content_type=content_type,
         object_id=instance.id):
         digest = DigestSignature.objects.filter(user=signature.user)
-        if digest.count():
+        if digest.count() and digest[0].digest_type != 'N':
             # create entry on digest
             Digest.objects.get_or_create(
                 user=signature.user,
@@ -30,8 +30,8 @@ def notification_callback(sender, instance, *a, **kw):
                 object_id=signature.object_id,
                 digest_type=digest[0].digest_type
             )
-        else:
-            send_notification_mail.delay(obj=instance, user=signature.user)
+        # else:
+        #     send_notification_mail.delay(obj=instance, user=signature.user)
 
 
 def notify_on_update(fn):
@@ -39,10 +39,19 @@ def notify_on_update(fn):
     def _notify_on_update(self, *a, **kw):
         r = fn(self, *a, **kw)
         if self.cleaned_data.get('id', None):
+            user = getattr(r, 'last_editor', None)
             send_notifications.send(sender=self, instance=r)
         elif hasattr(r, 'creator') and r.creator:
+            user = r.creator
             # sign content on creation
             s = Signature(content_object=r, user=r.creator)
             s.save()
+
+        if user:
+            # create digest signature for user if he dont have any
+            d = DigestSignature.objects.filter(user=user)
+            if not d.count():
+                DigestSignature.objects.create(user=user, digest_type='D')
+
         return r
     return _notify_on_update

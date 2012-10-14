@@ -8,6 +8,7 @@ from authentication.models import User
 DIGEST_CHOICES = (
         ('D', 'Daily'),
         ('W', 'Weekly'),
+        ('N', 'None'),
     )
 
 

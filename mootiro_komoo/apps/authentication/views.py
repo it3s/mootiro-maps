@@ -135,7 +135,7 @@ def profile_update(request):
 
     digest_obj = DigestSignature.objects.filter(user=request.user)
     digest = digest_obj[0].digest_type if digest_obj.count() \
-                  else ''
+                  else 'N'
     form_profile = FormProfile(instance=request.user)
     geojson = create_geojson([request.user], convert=False)
     geojson['features'][0]['properties']['image'] = '/static/img/me.png'
@@ -210,7 +210,9 @@ def digest_update(request):
         DigestSignature.objects.create(user=request.user,
                 digest_type=digest_type)
     elif user_digest.count() and not digest_type:
-        DigestSignature.objects.get(user=request.user).delete()
+        d = DigestSignature.objects.get(user=request.user)
+        d.digest_type = 'N'
+        d.save()
     elif user_digest.count() and digest_type != user_digest[0].digest_type:
         d = DigestSignature.objects.get(user=request.user)
         d.digest_type = digest_type

@@ -163,12 +163,7 @@
         </div>
         <div class="modal-body">
             <p>
-                <form action="/user/profile/update/digest/" id="form-digest" method="POST">
-                    <div class="digest-radio-btn">
-                        <input type="radio" name="digest_type" value=""
-                            {% if not digest %}checked="checked"{% endif %}>
-                            <span>{% trans "I want to receive mails every time someone update an object I'm subscribed to" %}</span>
-                    </div>
+            <form action="{% url digest_update %}" id="form-digest" method="POST">
                     <div class="digest-radio-btn">
                         <input type="radio" name="digest_type" value="W"
                         {% if digest == 'W' %}checked="checked"{% endif %}>
@@ -178,6 +173,11 @@
                         <input type="radio" name="digest_type" value="D"
                             {% if digest == 'D' %}checked="checked"{% endif %}>
                             <span>{% trans "I want to receive only a <strong>daily</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
+                    </div>
+                    <div class="digest-radio-btn">
+                        <input type="radio" name="digest_type" value="N"
+                            {% if not digest or digest == 'N' %}checked="checked"{% endif %}>
+                            <span>{% trans "I <strong>don't</strong> want to receive mails for updates" %}</span>
                     </div>
                 </form>
             </p>
