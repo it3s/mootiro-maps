@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 import reversion
 from lib.taggit.managers import TaggableManager
 
-from komoo_user.models import User
+from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
 from investment.models import Investment

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from annoying.decorators import ajax_request
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 
 from models import Signature
 

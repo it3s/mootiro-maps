@@ -14,7 +14,7 @@ from annoying.functions import get_object_or_None
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource, FormResourceGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,

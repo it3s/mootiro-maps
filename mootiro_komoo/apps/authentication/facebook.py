@@ -21,7 +21,7 @@ from django.core.urlresolvers import reverse
 from annoying.decorators import render_to
 
 from main.utils import randstr
-from komoo_user.utils import login as auth_login
+from authentication.utils import login as auth_login
 
 from .models import PROVIDERS
 from .utils import encode_querystring, decode_querystring
@@ -46,7 +46,7 @@ def login_facebook(request):
     return redirect(url)
 
 
-@render_to('komoo_user/login.html')
+@render_to('authentication/login.html')
 def facebook_authorized(request):
     csrf_token = request.GET.get('state', None)
     if not csrf_token or csrf_token != request.session['state']:

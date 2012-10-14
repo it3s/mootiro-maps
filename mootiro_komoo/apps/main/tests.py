@@ -7,8 +7,8 @@ from django.conf import settings
 from django.http import HttpRequest
 from django.utils.importlib import import_module
 
-from komoo_user.models import User
-from komoo_user.utils import login
+from authentication.models import User
+from authentication.utils import login
 
 
 A_POLYGON_GEOMETRY = '''

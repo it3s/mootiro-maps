@@ -83,7 +83,7 @@ def _prepare_contrib_data(version, created_date):
     return contrib
 
 
-@render_to('komoo_user/profile.html')
+@render_to('authentication/profile.html')
 def profile(request, id=''):
     logger.debug('id : {}'.format(id))
     if not id:
@@ -109,7 +109,7 @@ def profile(request, id=''):
                 geojson=geojson)
 
 
-@render_to('komoo_user/profile_update.html')
+@render_to('authentication/profile_update.html')
 @login_required
 def profile_update(request):
     signatures = []
@@ -154,7 +154,7 @@ def profile_update_public_settings(request):
 @ajax_request
 def profile_update_personal_settings(request):
     logging.debug('POST: {}'.format(request.POST))
-    email = request.POST.get('email', '')
+    # email = request.POST.get('email', '')
     current_password = request.POST.get('current_password', '')
     new_password = request.POST.get('password', '')
     confirm_password = request.POST.get('confirm_password', '')
@@ -176,7 +176,7 @@ def profile_update_personal_settings(request):
                     'success': 'false',
                     'errors': {
                         'confirm_password': _('Passwords did not match')}}
-                    
+
             # current password verifies, has new password and
             # confirmation is equal,then saves new pass
             request.user.set_password(new_password)
@@ -233,7 +233,7 @@ def signature_delete(request):
 #
 # ==================== Users ==================================================
 #
-@ajax_form('komoo_user/new.html', FormUser)
+@ajax_form('authentication/new.html', FormUser)
 def user_new(request):
     '''Displays user creation form.'''
 
@@ -273,7 +273,7 @@ the IT3S team.
     return {'on_get': on_get, 'on_after_save': on_after_save}
 
 
-@render_to('komoo_user/verification.html')
+@render_to('authentication/verification.html')
 def user_verification(request, key=''):
     '''
     Displays verification needed message if no key provided, or try to verify
@@ -292,7 +292,7 @@ def user_verification(request, key=''):
     return dict(message='activated')
 
 
-@render_to('komoo_user/login.html')
+@render_to('authentication/login.html')
 def login(request):
     '''
     GET: Displays a page with login options.
@@ -329,7 +329,9 @@ def logout(request):
 ################ for testing ##################
 
 
-@render_to('komoo_user/secret.html')
+@render_to('authentication/secret.html')
 @login_required
 def secret(request):
     return dict(user=request.user)
+
+

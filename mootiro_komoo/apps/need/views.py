@@ -16,7 +16,7 @@ from annoying.decorators import render_to
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 from need.models import Need, TargetAudience
 from need.forms import NeedForm, NeedFormGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,

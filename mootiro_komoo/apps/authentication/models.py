@@ -5,6 +5,7 @@ from hashlib import sha1
 from django.conf import settings
 from django.db import models
 from django.core.urlresolvers import reverse
+from jsonfield import JSONField
 
 from fileupload.models import UploadedFile
 from komoo_map.models import GeoRefModel, POINT
@@ -96,3 +97,24 @@ class AnonymousUser(object):
         return False
 
     id = None
+
+
+PROVIDERS = {
+    # 'provider label': 'db info'
+    'facebook': 'facebook-oauth2',
+    'google': 'google-oauth2',
+    # 'twitter': 'twitter-oauth2',
+}
+PROVIDERS_CHOICES = [(t[1], t[0]) for t in PROVIDERS.items()]
+
+
+class SocialAuth(models.Model):
+    """
+    User credentials for login on external authentication providers as Google,
+    Facebook and Twitter.
+    """
+
+    user = models.ForeignKey(User)
+    provider = models.CharField(max_length=32, choices=PROVIDERS_CHOICES)
+    email = models.CharField(max_length=256)
+    data = JSONField()  # provider specific data for user login

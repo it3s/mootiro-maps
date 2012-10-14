@@ -32,8 +32,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # user
-    url(r'^user/', include('komoo_user.urls')),
-    url(r'^user/login/', include('login_providers.urls')),
+    url(r'^user/', include('authentication.urls')),
 
     # 3rd party apps
     url(r'^markitup/', include('markitup.urls')),

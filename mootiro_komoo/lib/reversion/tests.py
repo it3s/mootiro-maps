@@ -21,7 +21,7 @@ import reversion
 from reversion.revisions import RegistrationError, RevisionManager
 from reversion.models import Revision, Version, VERSION_ADD, VERSION_CHANGE, VERSION_DELETE
 from reversion.middleware import RevisionMiddleware
-from komoo_user.models import User
+from authentication.models import User
 
 
 class ReversionTestModelBase(models.Model):

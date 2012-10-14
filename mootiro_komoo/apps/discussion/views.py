@@ -12,7 +12,7 @@ from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 from ajaxforms import ajax_form
 
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 from .models import Discussion
 from community.models import Community
 from need.models import Need

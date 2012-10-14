@@ -11,7 +11,7 @@ import reversion
 from django.template.defaultfilters import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON
-from komoo_user.models import User
+from authentication.models import User
 
 
 class Community(GeoRefModel):

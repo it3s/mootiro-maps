@@ -14,7 +14,7 @@ from django.db.models.query_utils import Q
 from django.db.models import Count
 from django.shortcuts import redirect
 
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 
 from ajaxforms import ajax_form
 from annoying.decorators import render_to, ajax_request

@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.conf.urls.defaults import url, patterns
 
 
-urlpatterns = patterns('komoo_user.views',
+urlpatterns = patterns('authentication.views',
     # general urls
     url(r'^login/?$', 'login', name='user_login'),
     url(r'^logout/?$', 'logout', name='user_logout'),
@@ -36,4 +36,17 @@ urlpatterns = patterns('komoo_user.views',
     url(r'^edit/signature_delete/?$', 'signature_delete',
         name='signature_delete'),
 
+)
+
+
+urlpatterns += patterns('authentication.facebook',
+    url(r'^login/facebook?$', 'login_facebook', name="login_facebook"),
+    url(r'^login/facebook/authorized/?$', 'facebook_authorized',
+                name="facebook_authorized"),
+)
+
+urlpatterns += patterns('authentication.google',
+    url(r'^login/google?$', 'login_google', name="login_google"),
+    url(r'^login/google/authorized/?$', 'google_authorized',
+                name="google_authorized"),
 )

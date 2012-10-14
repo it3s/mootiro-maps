@@ -21,7 +21,7 @@ from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 import requests
 
-from komoo_user.models import User
+from authentication.models import User
 from community.models import Community
 from need.models import Need
 from proposal.models import Proposal

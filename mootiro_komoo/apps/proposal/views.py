@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from annoying.decorators import render_to
 from ajaxforms import ajax_form
 
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 from need.models import Need
 from proposal.models import Proposal
 from proposal.forms import ProposalForm

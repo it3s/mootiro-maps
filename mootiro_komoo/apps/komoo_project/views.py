@@ -14,7 +14,7 @@ from annoying.decorators import render_to, ajax_request
 from main.utils import (paginated_query, sorted_query, filtered_query,
         create_geojson)
 
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
 from organization.models import Organization
@@ -38,7 +38,7 @@ def project_view(request, id=''):
 
     proj_objects, items = {}, []
 
-    proj_objects['User'] = {'app_name': 'komoo_user', 'objects_list': [{
+    proj_objects['User'] = {'app_name': 'authentication', 'objects_list': [{
         'name': project.creator.name,
         'link': project.creator.view_url,
         'id': project.creator.id,

@@ -7,7 +7,7 @@ from django.contrib.contenttypes import generic
 
 import reversion
 
-from komoo_user.models import User
+from authentication.models import User
 from need.models import Need
 from investment.models import Investment
 

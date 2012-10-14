@@ -51,7 +51,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     # 'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'komoo_user.utils.AuthenticationMiddleware',
+    'authentication.utils.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'lib.reversion.middleware.RevisionMiddleware',
@@ -121,8 +121,7 @@ INSTALLED_APPS = [
     'proposal',
     'komoo_comments',
     'komoo_resource',
-    'komoo_user',
-    'login_providers',
+    'authentication',
     'organization',
     'investment',
     'moderation',
@@ -154,7 +153,7 @@ AJAX_LOOKUP_CHANNELS = {
     'community': ('community.lookups', 'CommunityLookup'),
     'organizationcategory': ('organization.lookups',
                              'OrganizationCategoryLookup'),
-    'user': ('komoo_user.lookups', 'UserLookup'),
+    'user': ('authentication.lookups', 'UserLookup'),
 }
 AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = False

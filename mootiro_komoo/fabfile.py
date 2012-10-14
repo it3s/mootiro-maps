@@ -116,7 +116,7 @@ def kill_manage_tasks():
 def test(
         apps=" ".join([
             'community', 'need', 'organization', 'proposal', 'komoo_resource',
-            'investment', 'main', 'komoo_user', 'moderation']),
+            'investment', 'main', 'authentication', 'moderation']),
         recreate_db=False):
     """Run application tests"""
     if recreate_db:
@@ -271,7 +271,7 @@ def dumpdata():
 def supercow(email=None):
     """Grants admin supercow rights to a user."""
     setup_django()
-    from komoo_user.models import User
+    from authentication.models import User
     user = User.objects.get(email=email)
     user.is_admin = True
     user.save()

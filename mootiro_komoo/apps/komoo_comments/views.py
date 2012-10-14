@@ -12,7 +12,7 @@ from annoying.decorators import render_to, ajax_request
 
 from komoo_comments.forms import FormComment
 from komoo_comments.models import Comment
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 from update.models import Update
 from update.signals import create_update
 

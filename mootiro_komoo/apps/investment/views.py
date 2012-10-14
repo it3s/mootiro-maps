@@ -11,7 +11,7 @@ from annoying.functions import get_object_or_None
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
 
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 
 from proposal.models import Proposal
 from investment.models import Investment

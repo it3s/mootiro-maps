@@ -18,7 +18,7 @@ from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
 from lib.taggit.models import TaggedItem
 from ajaxforms import ajax_form
-from komoo_user.utils import login_required
+from authentication.utils import login_required
 
 from organization.models import Organization, OrganizationBranch
 from organization.forms import FormOrganization, FormBranch

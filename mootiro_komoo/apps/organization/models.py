@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext as _
 
-from komoo_user.models import User
+from authentication.models import User
 from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
 from need.models import TargetAudience

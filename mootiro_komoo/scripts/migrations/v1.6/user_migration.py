@@ -48,7 +48,7 @@ def get_full_name(fields):
 
 def get_user_email(pk, data):
     for entry in data:
-        if entry['model'] == 'komoo_user.user' and entry['pk'] == pk:
+        if entry['model'] == 'authentication.user' and entry['pk'] == pk:
             return entry['fields']['email']
     else:
         return ''
@@ -66,7 +66,7 @@ def remove_deprecated_tables(data):
 
 
 def migrate_auth_users_to_user(data):
-    logging.info('migrating contrib.auth.User to komoo_user.User')
+    logging.info('migrating contrib.auth.User to authentication.User')
     for entry in data[::]:
         if entry['model'] == 'auth.user':
             fields = entry['fields']
@@ -87,7 +87,7 @@ def migrate_auth_users_to_user(data):
             if id and name and email:
                 new_user = {
                     'pk': entry['pk'],
-                    'model': 'komoo_user.user',
+                    'model': 'authentication.user',
                     'fields': {
                         'name': name,
                         'email': email,
@@ -128,7 +128,7 @@ def migrate_login_providers(data):
 
             credentials = {
                 'pk': seq,
-                'model': 'login_providers.externalcredentials',
+                'model': 'authentication.socialauth',
                 'fields': {
                     'user': fields['user'],
                     'provider': provider,
@@ -166,7 +166,7 @@ def migrate_mootiro_profile_users_to_komoo_users(data):
 
         for entry in data:
             fields = entry['fields']
-            if entry['model'] == 'komoo_user.user' and \
+            if entry['model'] == 'authentication.user' and \
                fields['email'] == email:
 
                 if password_hash == '!':

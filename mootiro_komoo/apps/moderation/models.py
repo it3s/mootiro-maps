@@ -6,7 +6,7 @@ from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext_lazy as _
-from komoo_user.models import User
+from authentication.models import User
 
 
 class ModerationManager(models.Manager):

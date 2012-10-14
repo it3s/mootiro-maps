@@ -25,7 +25,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 
 from main.utils import randstr
-from komoo_user.utils import login as auth_login
+from authentication.utils import login as auth_login
 
 from .models import PROVIDERS
 from .utils import encode_querystring
@@ -54,7 +54,7 @@ def login_google(request):
     return redirect(url)
 
 
-# @render_to('komoo_user/login.html')
+# @render_to('authentication/login.html')
 def google_authorized(request):
     csrf_token = request.GET.get('state', None)
     if not csrf_token or csrf_token != request.session['state']:
