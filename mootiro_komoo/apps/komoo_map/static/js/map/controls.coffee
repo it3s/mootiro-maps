@@ -1,8 +1,8 @@
-define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'],
-(Component, common, geometries)->
+define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/utils', 'infobox', 'markerclusterer'],
+(googleMaps, Component, common, geometries, utils, InfoBox, MarkerClusterer)->
 
     window.komoo ?= {}
-    window.komoo.event ?= google.maps.event
+    window.komoo.event ?= googleMaps.event
 
     EMPTY = common.geometries.types.EMPTY
     POINT = common.geometries.types.POINT
@@ -14,11 +14,11 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
     MULTILINESTRING = common.geometries.types.MULTILINESTRING
 
     OVERLAY = {}
-    OVERLAY[POINT] = google.maps.drawing.OverlayType.MARKER
-    OVERLAY[MULTIPOINT] = google.maps.drawing.OverlayType.MARKER
-    OVERLAY[LINESTRING] = google.maps.drawing.OverlayType.POLYLINE
-    OVERLAY[MULTILINESTRING] = google.maps.drawing.OverlayType.POLYLINE
-    OVERLAY[POLYGON] = google.maps.drawing.OverlayType.POLYGON
+    OVERLAY[POINT] = googleMaps.drawing.OverlayType.MARKER
+    OVERLAY[MULTIPOINT] = googleMaps.drawing.OverlayType.MARKER
+    OVERLAY[LINESTRING] = googleMaps.drawing.OverlayType.POLYLINE
+    OVERLAY[MULTILINESTRING] = googleMaps.drawing.OverlayType.POLYLINE
+    OVERLAY[POLYGON] = googleMaps.drawing.OverlayType.POLYGON
 
     EDIT = 'edit'
     DELETE = 'delete'
@@ -29,7 +29,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
     PERIMETER_SELECTION = 'perimeter_selection'
 
     class Box extends Component
-        position: google.maps.ControlPosition.RIGHT_BOTTOM
+        position: googleMaps.ControlPosition.RIGHT_BOTTOM
         init: ->
             super()
             @box = $ "<div>"
@@ -50,7 +50,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
 
     class LicenseBox extends Box
         id: "map-license"
-        position: google.maps.ControlPosition.BOTTOM_LEFT
+        position: googleMaps.ControlPosition.BOTTOM_LEFT
 
         init: ->
             super()
@@ -72,7 +72,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
                 @setMap @options.map
 
         initManager: (options = @defaultDrawingManagerOptions) ->
-            @manager = new google.maps.drawing.DrawingManager options
+            @manager = new googleMaps.drawing.DrawingManager options
             @handleManagerEvents()
 
         setMap: (@map) ->
@@ -136,15 +136,15 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
                     if @mode is NEW then paths.clear()
                     if paths?.length > 0
                         # Gets the paths orientations.
-                        sArea = google.maps.geometry.spherical.computeSignedArea path
-                        sAreaAdded = google.maps.geometry.spherical.computeSignedArea paths.getAt 0
+                        sArea = googleMaps.geometry.spherical.computeSignedArea path
+                        sAreaAdded = googleMaps.geometry.spherical.computeSignedArea paths.getAt 0
                         orientation = sArea / Math.abs sArea
                         orientationAdded = sAreaAdded / Math.abs sAreaAdded
                         # Verify the paths orientation.
                         if (orientation is orientationAdded and @mode is CUTOUT) or
                                 (orientation isnt orientationAdded and @mode in [ADD, NEW])
                             # Reverse path orientation to correspond to the action
-                            path = new google.maps.MVCArray path.getArray().reverse()
+                            path = new googleMaps.MVCArray path.getArray().reverse()
 
                     paths.push path
                     @feature.getGeometry().setPaths paths
@@ -175,7 +175,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
                         paths = @feature.getGeometry().getPaths()
                         paths.forEach (path, index) =>
                             # Delete the correct path.
-                            if komoo.utils.isPointInside e.latLng, path
+                            if utils.isPointInside e.latLng, path
                                 paths.removeAt index
                     else if o and @feature.getGeometryType() is MULTIPOINT
                         markers = @feature.getGeometry().getMarkers()
@@ -219,7 +219,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
     class CloseBox extends Box
         id: "map-drawing-box"
         class: "map-panel"
-        position: google.maps.ControlPosition.TOP_LEFT
+        position: googleMaps.ControlPosition.TOP_LEFT
 
         init: (opt = { title: '' }) ->
             super()
@@ -247,7 +247,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
     class GeometrySelector extends Box
         id: "map-drawing-box"
         class: "map-panel"
-        position: google.maps.ControlPosition.TOP_LEFT
+        position: googleMaps.ControlPosition.TOP_LEFT
 
         init: ->
             super()
@@ -306,7 +306,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
     class DrawingControl extends Box
         id: "map-drawing-box"
         class: "map-panel"
-        position: google.maps.ControlPosition.TOP_LEFT
+        position: googleMaps.ControlPosition.TOP_LEFT
 
         init: ->
             super()
@@ -403,14 +403,14 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
 
         init: ->
             super()
-            @circle = new google.maps.Circle
+            @circle = new googleMaps.Circle
                 visible: true
                 radius: 100
                 fillColor: "white"
                 fillOpacity: 0.0
                 strokeColor: "#ffbda8"
                 zIndex: -1
-            @marker = new google.maps.Marker
+            @marker = new googleMaps.Marker
                 icon: '/static/img/marker.png'
 
             komoo.event.addListener @circle, 'click', (e) =>
@@ -471,7 +471,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
 
         createInfoBox: (options) ->
             @setInfoBox new InfoBox
-                pixelOffset: new google.maps.Size(0, -20)
+                pixelOffset: new googleMaps.Size(0, -20)
                 enableEventPropagation: true
                 closeBoxMargin: "10px"
                 disableAutoPan: true
@@ -510,9 +510,9 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
             if position instanceof Array
                 empty = new komoo.geometries.Empty()  # WTF?!!? TODO: Move getLatLngFromArray to utils
                 position = empty.getLatLngFromArray position
-            point = komoo.utils.latLngToPoint @map, position
+            point = utils.latLngToPoint @map, position
             point.x += 5
-            newPosition = komoo.utils.pointToLatLng @map, point
+            newPosition = utils.pointToLatLng @map, point
             @infoBox.setPosition newPosition
             @infoBox.open(@map.googleMap ? @map)
 
@@ -537,12 +537,12 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
             @feature = null
 
         customize: ->
-            google.maps.event.addDomListener @infoBox, "domready", (e) =>
+            googleMaps.event.addDomListener @infoBox, "domready", (e) =>
                 div = @infoBox.div_
-                google.maps.event.addDomListener div, "click", (e) =>
+                googleMaps.event.addDomListener div, "click", (e) =>
                     e.cancelBubble = true
                     e.stopPropagation?()
-                google.maps.event.addDomListener div, "mouseout", (e) =>
+                googleMaps.event.addDomListener div, "mouseout", (e) =>
                     @isMouseover = false
 
 
@@ -628,19 +628,19 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
 
         customize: ->
             super()
-            google.maps.event.addDomListener @infoBox, "domready", (e) =>
+            googleMaps.event.addDomListener @infoBox, "domready", (e) =>
                 div = @content.get 0
                 closeBox = @infoBox.div_.firstChild
 
-                google.maps.event.addDomListener div, "mousemove", (e) =>
+                googleMaps.event.addDomListener div, "mousemove", (e) =>
                     @map.disableComponents 'tooltip'
 
-                google.maps.event.addDomListener div, "mouseout", (e) =>
+                googleMaps.event.addDomListener div, "mouseout", (e) =>
                     closeBox = @infoBox.div_.firstChild
                     if e.toElement isnt closeBox
                         @map.enableComponents 'tooltip'
 
-                google.maps.event.addDomListener closeBox, "click", (e) =>
+                googleMaps.event.addDomListener closeBox, "click", (e) =>
                     @close()
 
         handleMapEvents: ->
@@ -663,9 +663,9 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
 
         customize: ->
             super()
-            google.maps.event.addDomListener @infoBox, "domready", (e) =>
+            googleMaps.event.addDomListener @infoBox, "domready", (e) =>
                 div = @infoBox.div_
-                google.maps.event.addDomListener div, "click", (e) =>
+                googleMaps.event.addDomListener div, "click", (e) =>
                     e.latLng = @infoBox.getPosition()
                     @map.publish 'feature_click', e, @feature
                 closeBox = div.firstChild
@@ -788,8 +788,8 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
         enabled: on
 
         init: ->
-            @geocoder = new google.maps.Geocoder()
-            @marker = new google.maps.Marker
+            @geocoder = new googleMaps.Geocoder()
+            @marker = new googleMaps.Marker
                 icon: '/static/img/marker.png'
 
         handleMapEvents: ->
@@ -810,7 +810,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
                     region: this.region
                 }
                 @geocoder.geocode request, (result, status_) =>
-                    if status_ is google.maps.GeocoderStatus.OK
+                    if status_ is googleMaps.GeocoderStatus.OK
                         first_result = result[0]
                         latLng = first_result.geometry.location
                         _go latLng
@@ -818,7 +818,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
                 latLng =
                     if position instanceof Array
                         if position.length is 2
-                            new google.maps.LatLng position[0], position[1]
+                            new googleMaps.LatLng position[0], position[1]
                     else
                         position
                 _go latLng
@@ -826,13 +826,13 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
         goToUserLocation: ->
             clientLocation = google.loader.ClientLocation
             if clientLocation
-                pos = new google.maps.LatLng clientLocation.latitude,
+                pos = new googleMaps.LatLng clientLocation.latitude,
                                              clientLocation.longitude
                 @map.googleMap.setCenter pos
                 console?.log 'Getting location from Google...'
             if navigator.geolocation
                 navigator.geolocation.getCurrentPosition (position) =>
-                    pos = new google.maps.LatLng position.coords.latitude,
+                    pos = new googleMaps.LatLng position.coords.latitude,
                                                  position.coords.longitude
                     @map.googleMap.setCenter pos
                     console?.log 'Getting location from navigator.geolocation...'
@@ -860,12 +860,12 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
 
         saveLocation: (center = @map.googleMap.getCenter(), zoom = @map.getZoom()) ->
             #console?.log 'Location saved:', center.toUrlValue()
-            komoo.utils.createCookie 'lastLocation', center.toUrlValue(), 90
-            komoo.utils.createCookie 'lastZoom', zoom, 90
+            utils.createCookie 'lastLocation', center.toUrlValue(), 90
+            utils.createCookie 'lastZoom', zoom, 90
 
         goToSavedLocation: ->
-            lastLocation = komoo.utils.readCookie 'lastLocation'
-            zoom = parseInt komoo.utils.readCookie('lastZoom'), 10
+            lastLocation = utils.readCookie 'lastLocation'
+            zoom = parseInt utils.readCookie('lastZoom'), 10
             if lastLocation and zoom
                 console?.log 'Getting location from cookie...'
                 @map.publish 'set_location', lastLocation
@@ -890,7 +890,7 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
             @createObject()
 
         setMap: (@map) ->
-            @map.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(
+            @map.googleMap.controls[googleMaps.ControlPosition.TOP_LEFT].push(
                     this.streetViewPanel.get 0)
             if @streetView? then @map.googleMap.setStreetView @streetView
 
@@ -898,10 +898,10 @@ define ['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed'
             options =
                 enableCloseButton: true
                 visible: false
-            @streetView = new google.maps.StreetViewPanorama \
+            @streetView = new googleMaps.StreetViewPanorama \
                     this.streetViewPanel.get(0), options
             @map?.googleMap.setStreetView @streetView
-            google.maps.event.addListener @streetView, "visible_changed", =>
+            googleMaps.event.addListener @streetView, "visible_changed", =>
                 if @streetView.getVisible()
                     @streetViewPanel.show()
                 else

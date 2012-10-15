@@ -2,11 +2,11 @@
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  define(['map/component'], function(Component) {
+  define(['googlemaps', 'map/component'], function(googleMaps, Component) {
     'use strict';
     var FeatureProvider, GenericProvider, _base;
     if (window.komoo == null) window.komoo = {};
-    if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+    if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     GenericProvider = (function(_super) {
 
       __extends(GenericProvider, _super);
@@ -19,7 +19,7 @@
 
       GenericProvider.prototype.alt = 'Generic Data Provider';
 
-      GenericProvider.prototype.tileSize = new google.maps.Size(256, 256);
+      GenericProvider.prototype.tileSize = new googleMaps.Size(256, 256);
 
       GenericProvider.prototype.maxZoom = 32;
 
@@ -51,8 +51,8 @@
         if (this.addrLatLngCache[key]) return this.addrLatLngCache[key];
         numTiles = 1 << zoom;
         projection = this.map.googleMap.getProjection();
-        point1 = new google.maps.Point((coord.x + 1) * this.tileSize.width / numTiles, coord.y * this.tileSize.height / numTiles);
-        point2 = new google.maps.Point(coord.x * this.tileSize.width / numTiles, (coord.y + 1) * this.tileSize.height / numTiles);
+        point1 = new googleMaps.Point((coord.x + 1) * this.tileSize.width / numTiles, coord.y * this.tileSize.height / numTiles);
+        point2 = new googleMaps.Point(coord.x * this.tileSize.width / numTiles, (coord.y + 1) * this.tileSize.height / numTiles);
         ne = projection.fromPointToLatLng(point1);
         sw = projection.fromPointToLatLng(point2);
         return this.addrLatLngCache[key] = "bounds=" + (ne.toUrlValue()) + "," + (sw.toUrlValue()) + "&zoom=" + zoom;

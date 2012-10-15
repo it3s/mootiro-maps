@@ -11,12 +11,20 @@ config =
         'async': '../lib/requirejs/async'
         'goog': '../lib/requirejs/goog'
         'propertyParser': '../lib/requirejs/propertyParser'
+        'infobox': 'vendor/infobox_packed'
+        'markerclusterer': 'vendor/markerclusterer_packed'
     shim:
         'underscore':
             exports: '_'
         'backbone':
             deps: ['underscore', 'jquery']
             exports: 'Backbone'
+        'infobox':
+            deps: ['googlemaps']
+            exports: 'InfoBox'
+        'markerclusterer':
+            deps: ['googlemaps']
+            exports: 'MarkerClusterer'
     deps: [
         'map/compat',
         'map/utils'

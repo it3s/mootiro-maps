@@ -1,5 +1,5 @@
-define ['googlemaps', 'underscore', 'map/core', 'map/collections',
-        'map/features', 'map/geometries'],
+define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries',
+    'map/controls', 'map/maptypes', 'map/providers'],
 (googleMaps, _, core, Collections, Features, geometries) ->
     'use strict'
 

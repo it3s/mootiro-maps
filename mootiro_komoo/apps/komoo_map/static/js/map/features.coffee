@@ -1,8 +1,8 @@
-define ['map/geometries'], (geometries) ->
+define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
     'use strict'
 
     window.komoo ?= {}
-    window.komoo.event ?= google.maps.event
+    window.komoo.event ?= googleMaps.event
 
     class Feature
         displayTooltip: on

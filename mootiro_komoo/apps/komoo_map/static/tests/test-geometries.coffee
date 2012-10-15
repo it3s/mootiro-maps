@@ -1,10 +1,9 @@
 require ['map/geometries'], (geometries) ->
 
   test 'Basic requirements', ->
-    expect 3
+    expect 2
     ok Function.call, 'Function.call()'
     ok Object.create, 'Object.create()'
-    ok google.maps, 'Google maps API'
 
 
   test 'Get geometry default properties', ->

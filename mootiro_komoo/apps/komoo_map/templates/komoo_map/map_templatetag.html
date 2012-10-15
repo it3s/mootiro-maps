@@ -137,7 +137,9 @@
       {% endif %}
 
 {% if not lazy %}
-  require(['map.jquery'], initialize_map_{{ type }});
+    require(['app'], function() {
+      require(['map.jquery'], initialize_map_{{ type }});
+    });
 {% endif %}
 
   </script>

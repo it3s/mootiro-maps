@@ -1,13 +1,13 @@
-define ['map/component'], (Component) ->
+define ['googlemaps', 'map/component'], (googleMaps, Component) ->
     'use strict'
 
     window.komoo ?= {}
-    window.komoo.event ?= google.maps.event
+    window.komoo.event ?= googleMaps.event
 
     class CleanMapType extends Component
         id: 'clean'
         constructor: ->
-            @mapType = new google.maps.StyledMapType [
+            @mapType = new googleMaps.StyledMapType [
                 {
                     featureType: 'poi'
                     elementType: 'all'

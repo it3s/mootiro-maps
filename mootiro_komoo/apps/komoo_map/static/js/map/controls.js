@@ -2,10 +2,10 @@
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  define(['map/component', 'map/common', 'map/geometries', 'vendor/infobox_packed', 'vendor/markerclusterer_packed'], function(Component, common, geometries) {
+  define(['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/utils', 'infobox', 'markerclusterer'], function(googleMaps, Component, common, geometries, utils, InfoBox, MarkerClusterer) {
     var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
     if (window.komoo == null) window.komoo = {};
-    if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+    if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     EMPTY = common.geometries.types.EMPTY;
     POINT = common.geometries.types.POINT;
     MULTIPOINT = common.geometries.types.MULTIPOINT;
@@ -15,11 +15,11 @@
     MULTIPOLYLINE = common.geometries.types.MULTILINESTRING;
     MULTILINESTRING = common.geometries.types.MULTILINESTRING;
     OVERLAY = {};
-    OVERLAY[POINT] = google.maps.drawing.OverlayType.MARKER;
-    OVERLAY[MULTIPOINT] = google.maps.drawing.OverlayType.MARKER;
-    OVERLAY[LINESTRING] = google.maps.drawing.OverlayType.POLYLINE;
-    OVERLAY[MULTILINESTRING] = google.maps.drawing.OverlayType.POLYLINE;
-    OVERLAY[POLYGON] = google.maps.drawing.OverlayType.POLYGON;
+    OVERLAY[POINT] = googleMaps.drawing.OverlayType.MARKER;
+    OVERLAY[MULTIPOINT] = googleMaps.drawing.OverlayType.MARKER;
+    OVERLAY[LINESTRING] = googleMaps.drawing.OverlayType.POLYLINE;
+    OVERLAY[MULTILINESTRING] = googleMaps.drawing.OverlayType.POLYLINE;
+    OVERLAY[POLYGON] = googleMaps.drawing.OverlayType.POLYGON;
     EDIT = 'edit';
     DELETE = 'delete';
     NEW = 'new';
@@ -34,7 +34,7 @@
         Box.__super__.constructor.apply(this, arguments);
       }
 
-      Box.prototype.position = google.maps.ControlPosition.RIGHT_BOTTOM;
+      Box.prototype.position = googleMaps.ControlPosition.RIGHT_BOTTOM;
 
       Box.prototype.init = function() {
         Box.__super__.init.call(this);
@@ -76,7 +76,7 @@
 
       LicenseBox.prototype.id = "map-license";
 
-      LicenseBox.prototype.position = google.maps.ControlPosition.BOTTOM_LEFT;
+      LicenseBox.prototype.position = googleMaps.ControlPosition.BOTTOM_LEFT;
 
       LicenseBox.prototype.init = function() {
         LicenseBox.__super__.init.call(this);
@@ -114,7 +114,7 @@
 
       DrawingManager.prototype.initManager = function(options) {
         if (options == null) options = this.defaultDrawingManagerOptions;
-        this.manager = new google.maps.drawing.DrawingManager(options);
+        this.manager = new googleMaps.drawing.DrawingManager(options);
         return this.handleManagerEvents();
       };
 
@@ -187,12 +187,12 @@
             paths = _this.feature.getGeometry().getPaths();
             if (_this.mode === NEW) paths.clear();
             if ((paths != null ? paths.length : void 0) > 0) {
-              sArea = google.maps.geometry.spherical.computeSignedArea(path);
-              sAreaAdded = google.maps.geometry.spherical.computeSignedArea(paths.getAt(0));
+              sArea = googleMaps.geometry.spherical.computeSignedArea(path);
+              sAreaAdded = googleMaps.geometry.spherical.computeSignedArea(paths.getAt(0));
               orientation = sArea / Math.abs(sArea);
               orientationAdded = sAreaAdded / Math.abs(sAreaAdded);
               if ((orientation === orientationAdded && _this.mode === CUTOUT) || (orientation !== orientationAdded && ((_ref4 = _this.mode) === ADD || _ref4 === NEW))) {
-                path = new google.maps.MVCArray(path.getArray().reverse());
+                path = new googleMaps.MVCArray(path.getArray().reverse());
               }
             }
             paths.push(path);
@@ -225,7 +225,7 @@
             if (_this.feature.getGeometryType() === POLYGON) {
               paths = _this.feature.getGeometry().getPaths();
               paths.forEach(function(path, index) {
-                if (komoo.utils.isPointInside(e.latLng, path)) {
+                if (utils.isPointInside(e.latLng, path)) {
                   return paths.removeAt(index);
                 }
               });
@@ -290,7 +290,7 @@
 
       CloseBox.prototype["class"] = "map-panel";
 
-      CloseBox.prototype.position = google.maps.ControlPosition.TOP_LEFT;
+      CloseBox.prototype.position = googleMaps.ControlPosition.TOP_LEFT;
 
       CloseBox.prototype.init = function(opt) {
         var title, _ref;
@@ -333,7 +333,7 @@
 
       GeometrySelector.prototype["class"] = "map-panel";
 
-      GeometrySelector.prototype.position = google.maps.ControlPosition.TOP_LEFT;
+      GeometrySelector.prototype.position = googleMaps.ControlPosition.TOP_LEFT;
 
       GeometrySelector.prototype.init = function() {
         GeometrySelector.__super__.init.call(this);
@@ -408,7 +408,7 @@
 
       DrawingControl.prototype["class"] = "map-panel";
 
-      DrawingControl.prototype.position = google.maps.ControlPosition.TOP_LEFT;
+      DrawingControl.prototype.position = googleMaps.ControlPosition.TOP_LEFT;
 
       DrawingControl.prototype.init = function() {
         DrawingControl.__super__.init.call(this);
@@ -523,7 +523,7 @@
       PerimeterSelector.prototype.init = function() {
         var _this = this;
         PerimeterSelector.__super__.init.call(this);
-        this.circle = new google.maps.Circle({
+        this.circle = new googleMaps.Circle({
           visible: true,
           radius: 100,
           fillColor: "white",
@@ -531,7 +531,7 @@
           strokeColor: "#ffbda8",
           zIndex: -1
         });
-        this.marker = new google.maps.Marker({
+        this.marker = new googleMaps.Marker({
           icon: '/static/img/marker.png'
         });
         return komoo.event.addListener(this.circle, 'click', function(e) {
@@ -623,7 +623,7 @@
 
       Balloon.prototype.createInfoBox = function(options) {
         return this.setInfoBox(new InfoBox({
-          pixelOffset: new google.maps.Size(0, -20),
+          pixelOffset: new googleMaps.Size(0, -20),
           enableEventPropagation: true,
           closeBoxMargin: "10px",
           disableAutoPan: true,
@@ -674,9 +674,9 @@
           empty = new komoo.geometries.Empty();
           position = empty.getLatLngFromArray(position);
         }
-        point = komoo.utils.latLngToPoint(this.map, position);
+        point = utils.latLngToPoint(this.map, position);
         point.x += 5;
-        newPosition = komoo.utils.pointToLatLng(this.map, point);
+        newPosition = utils.pointToLatLng(this.map, point);
         this.infoBox.setPosition(newPosition);
         return this.infoBox.open((_ref4 = this.map.googleMap) != null ? _ref4 : this.map);
       };
@@ -711,14 +711,14 @@
 
       Balloon.prototype.customize = function() {
         var _this = this;
-        google.maps.event.addDomListener(this.infoBox, "domready", function(e) {
+        googleMaps.event.addDomListener(this.infoBox, "domready", function(e) {
           var div;
           div = _this.infoBox.div_;
-          google.maps.event.addDomListener(div, "click", function(e) {
+          googleMaps.event.addDomListener(div, "click", function(e) {
             e.cancelBubble = true;
             return typeof e.stopPropagation === "function" ? e.stopPropagation() : void 0;
           });
-          google.maps.event.addDomListener(div, "mouseout", function(e) {
+          googleMaps.event.addDomListener(div, "mouseout", function(e) {
             return _this.isMouseover = false;
           });
           return komoo.event.trigger(_this, "domready");
@@ -853,20 +853,20 @@
       InfoWindow.prototype.customize = function() {
         var _this = this;
         InfoWindow.__super__.customize.call(this);
-        return google.maps.event.addDomListener(this.infoBox, "domready", function(e) {
+        return googleMaps.event.addDomListener(this.infoBox, "domready", function(e) {
           var closeBox, div;
           div = _this.content.get(0);
           closeBox = _this.infoBox.div_.firstChild;
-          google.maps.event.addDomListener(div, "mousemove", function(e) {
+          googleMaps.event.addDomListener(div, "mousemove", function(e) {
             return _this.map.disableComponents('tooltip');
           });
-          google.maps.event.addDomListener(div, "mouseout", function(e) {
+          googleMaps.event.addDomListener(div, "mouseout", function(e) {
             closeBox = _this.infoBox.div_.firstChild;
             if (e.toElement !== closeBox) {
               return _this.map.enableComponents('tooltip');
             }
           });
-          return google.maps.event.addDomListener(closeBox, "click", function(e) {
+          return googleMaps.event.addDomListener(closeBox, "click", function(e) {
             return _this.close();
           });
         });
@@ -913,10 +913,10 @@
       Tooltip.prototype.customize = function() {
         var _this = this;
         Tooltip.__super__.customize.call(this);
-        return google.maps.event.addDomListener(this.infoBox, "domready", function(e) {
+        return googleMaps.event.addDomListener(this.infoBox, "domready", function(e) {
           var closeBox, div;
           div = _this.infoBox.div_;
-          google.maps.event.addDomListener(div, "click", function(e) {
+          googleMaps.event.addDomListener(div, "click", function(e) {
             e.latLng = _this.infoBox.getPosition();
             return _this.map.publish('feature_click', e, _this.feature);
           });
@@ -1128,8 +1128,8 @@
       Location.prototype.enabled = true;
 
       Location.prototype.init = function() {
-        this.geocoder = new google.maps.Geocoder();
-        return this.marker = new google.maps.Marker({
+        this.geocoder = new googleMaps.Geocoder();
+        return this.marker = new googleMaps.Marker({
           icon: '/static/img/marker.png'
         });
       };
@@ -1161,14 +1161,14 @@
           };
           return this.geocoder.geocode(request, function(result, status_) {
             var first_result, latLng;
-            if (status_ === google.maps.GeocoderStatus.OK) {
+            if (status_ === googleMaps.GeocoderStatus.OK) {
               first_result = result[0];
               latLng = first_result.geometry.location;
               return _go(latLng);
             }
           });
         } else {
-          latLng = position instanceof Array ? position.length === 2 ? new google.maps.LatLng(position[0], position[1]) : void 0 : position;
+          latLng = position instanceof Array ? position.length === 2 ? new googleMaps.LatLng(position[0], position[1]) : void 0 : position;
           return _go(latLng);
         }
       };
@@ -1178,7 +1178,7 @@
           _this = this;
         clientLocation = google.loader.ClientLocation;
         if (clientLocation) {
-          pos = new google.maps.LatLng(clientLocation.latitude, clientLocation.longitude);
+          pos = new googleMaps.LatLng(clientLocation.latitude, clientLocation.longitude);
           this.map.googleMap.setCenter(pos);
           if (typeof console !== "undefined" && console !== null) {
             console.log('Getting location from Google...');
@@ -1186,7 +1186,7 @@
         }
         if (navigator.geolocation) {
           return navigator.geolocation.getCurrentPosition(function(position) {
-            pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            pos = new googleMaps.LatLng(position.coords.latitude, position.coords.longitude);
             _this.map.googleMap.setCenter(pos);
             return typeof console !== "undefined" && console !== null ? console.log('Getting location from navigator.geolocation...') : void 0;
           }, function() {
@@ -1235,14 +1235,14 @@
       SaveLocation.prototype.saveLocation = function(center, zoom) {
         if (center == null) center = this.map.googleMap.getCenter();
         if (zoom == null) zoom = this.map.getZoom();
-        komoo.utils.createCookie('lastLocation', center.toUrlValue(), 90);
-        return komoo.utils.createCookie('lastZoom', zoom, 90);
+        utils.createCookie('lastLocation', center.toUrlValue(), 90);
+        return utils.createCookie('lastZoom', zoom, 90);
       };
 
       SaveLocation.prototype.goToSavedLocation = function() {
         var lastLocation, zoom;
-        lastLocation = komoo.utils.readCookie('lastLocation');
-        zoom = parseInt(komoo.utils.readCookie('lastZoom'), 10);
+        lastLocation = utils.readCookie('lastLocation');
+        zoom = parseInt(utils.readCookie('lastZoom'), 10);
         if (lastLocation && zoom) {
           if (typeof console !== "undefined" && console !== null) {
             console.log('Getting location from cookie...');
@@ -1296,7 +1296,7 @@
 
       StreetView.prototype.setMap = function(map) {
         this.map = map;
-        this.map.googleMap.controls[google.maps.ControlPosition.TOP_LEFT].push(this.streetViewPanel.get(0));
+        this.map.googleMap.controls[googleMaps.ControlPosition.TOP_LEFT].push(this.streetViewPanel.get(0));
         if (this.streetView != null) {
           return this.map.googleMap.setStreetView(this.streetView);
         }
@@ -1309,11 +1309,11 @@
           enableCloseButton: true,
           visible: false
         };
-        this.streetView = new google.maps.StreetViewPanorama(this.streetViewPanel.get(0), options);
+        this.streetView = new googleMaps.StreetViewPanorama(this.streetViewPanel.get(0), options);
         if ((_ref = this.map) != null) {
           _ref.googleMap.setStreetView(this.streetView);
         }
-        return google.maps.event.addListener(this.streetView, "visible_changed", function() {
+        return googleMaps.event.addListener(this.streetView, "visible_changed", function() {
           if (_this.streetView.getVisible()) {
             return _this.streetViewPanel.show();
           } else {

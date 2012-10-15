@@ -8,6 +8,8 @@
  * @copyright (c) 2012 it3s
  */
 
+define(['googlemaps'], function (googleMaps) {
+
 /**
  * @name MultiMarkerOptions
  * @class
@@ -27,8 +29,8 @@
  */
 MultiMarker = function (opt_options) {
     opt_options = opt_options || {};
-    this.markers_ = new google.maps.MVCArray(opt_options.markers || []);
-    this.positions_ = new google.maps.MVCArray(opt_options.positions || []);
+    this.markers_ = new googleMaps.MVCArray(opt_options.markers || []);
+    this.positions_ = new googleMaps.MVCArray(opt_options.positions || []);
     this.map_ = opt_options.map;
     this.visible_ = opt_options.visible;
     this.clickable_ = opt_options.clickable;
@@ -92,29 +94,29 @@ MultiMarker.prototype.addMarker = function (marker, opt_keep) {
      * @name komoo.MultiMarker#click
      * @event
      */
-    google.maps.event.addListener(marker, 'click', function (e) {
-        google.maps.event.trigger(me, 'click', e, marker);
+    googleMaps.event.addListener(marker, 'click', function (e) {
+        googleMaps.event.trigger(me, 'click', e, marker);
     });
     /**
      * @name komoo.MultiMarker#mouseover
      * @event
      */
-    google.maps.event.addListener(marker, 'mouseover', function (e) {
-        google.maps.event.trigger(me, 'mouseover', e, marker);
+    googleMaps.event.addListener(marker, 'mouseover', function (e) {
+        googleMaps.event.trigger(me, 'mouseover', e, marker);
     });
     /**
      * @name komoo.MultiMarker#mouseout
      * @event
      */
-    google.maps.event.addListener(marker, 'mouseout', function (e) {
-        google.maps.event.trigger(me, 'mouseout', e, marker);
+    googleMaps.event.addListener(marker, 'mouseout', function (e) {
+        googleMaps.event.trigger(me, 'mouseout', e, marker);
     });
     /**
      * @name komoo.MultiMarker#mousemove
      * @event
      */
-    google.maps.event.addListener(marker, 'mousemove', function (e) {
-        google.maps.event.trigger(me, 'mousemove', e, marker);
+    googleMaps.event.addListener(marker, 'mousemove', function (e) {
+        googleMaps.event.trigger(me, 'mousemove', e, marker);
     });
 };
 
@@ -213,3 +215,6 @@ MultiMarker.prototype.getVisible = function () {
     return this.visible_;
 };
 
+return MultiMarker;
+
+});

@@ -8,6 +8,7 @@
  * @copyright (c) 2012 it3s
  */
 
+define(['googlemaps'], function (googleMaps) {
 /**
  * @name MultiPolyineOptions
  * @class
@@ -25,8 +26,8 @@
  */
 MultiPolyline = function (opt_options) {
     opt_options = opt_options || {};
-    this.polylines_ = new google.maps.MVCArray(opt_options.polylines || []);
-    this.paths_ = new google.maps.MVCArray(opt_options.paths || []);
+    this.polylines_ = new googleMaps.MVCArray(opt_options.polylines || []);
+    this.paths_ = new googleMaps.MVCArray(opt_options.paths || []);
     this.map_ = opt_options.map;
     this.visible_ = opt_options.visible;
     this.clickable_ = opt_options.clickable;
@@ -86,29 +87,29 @@ MultiPolyline.prototype.addPolyline = function (polyline, opt_keep) {
      * @name komoo.MultiLine#click
      * @event
      */
-    google.maps.event.addListener(polyline, 'click', function (e) {
-        google.maps.event.trigger(me, 'click', e, polyline);
+    googleMaps.event.addListener(polyline, 'click', function (e) {
+        googleMaps.event.trigger(me, 'click', e, polyline);
         });
     /**
      * @name komoo.MultiLine#mouseover
      * @event
      */
-    google.maps.event.addListener(polyline, 'mouseover', function (e) {
-        google.maps.event.trigger(me, 'mouseover', e, polyline);
+    googleMaps.event.addListener(polyline, 'mouseover', function (e) {
+        googleMaps.event.trigger(me, 'mouseover', e, polyline);
     });
     /**
      * @name komoo.MultiLine#mouseout
      * @event
      */
-    google.maps.event.addListener(polyline, 'mouseout', function (e) {
-        google.maps.event.trigger(me, 'mouseout', e, polyline);
+    googleMaps.event.addListener(polyline, 'mouseout', function (e) {
+        googleMaps.event.trigger(me, 'mouseout', e, polyline);
     });
     /**
      * @name komoo.MultiLine#mousemove
      * @event
      */
-    google.maps.event.addListener(polyline, 'mousemove', function (e) {
-        google.maps.event.trigger(me, 'mousemove', e, polyline);
+    googleMaps.event.addListener(polyline, 'mousemove', function (e) {
+        googleMaps.event.trigger(me, 'mousemove', e, polyline);
     });
 };
 
@@ -187,3 +188,6 @@ MultiPolyline.prototype.getVisible = function () {
     return this.visible_;
 };
 
+return MultiPolyline;
+
+});

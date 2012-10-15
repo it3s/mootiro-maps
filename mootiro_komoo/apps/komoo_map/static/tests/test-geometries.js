@@ -2,10 +2,9 @@
 
   require(['map/geometries'], function(geometries) {
     test('Basic requirements', function() {
-      expect(3);
+      expect(2);
       ok(Function.call, 'Function.call()');
-      ok(Object.create, 'Object.create()');
-      return ok(google.maps, 'Google maps API');
+      return ok(Object.create, 'Object.create()');
     });
     test('Get geometry default properties', function() {
       var simpleGeometry;

@@ -1,13 +1,13 @@
-define ['map/component'], (Component) ->
+define ['googlemaps', 'map/component'], (googleMaps, Component) ->
     'use strict'
 
     window.komoo ?= {}
-    window.komoo.event ?= google.maps.event
+    window.komoo.event ?= googleMaps.event
 
     class GenericProvider extends Component
         name: 'Generic Provider'
         alt: 'Generic Data Provider'
-        tileSize: new google.maps.Size 256, 256
+        tileSize: new googleMaps.Size 256, 256
         maxZoom: 32
 
         enabled: on
@@ -30,10 +30,10 @@ define ['map/component'], (Component) ->
 
             numTiles = 1 << zoom
             projection = @map.googleMap.getProjection()
-            point1 = new google.maps.Point \
+            point1 = new googleMaps.Point \
                 (coord.x + 1) * @tileSize.width / numTiles,
                 coord.y * @tileSize.height / numTiles
-            point2 = new google.maps.Point \
+            point2 = new googleMaps.Point \
                 coord.x * @tileSize.width / numTiles,
                 (coord.y + 1) * @tileSize.height / numTiles
             ne = projection.fromPointToLatLng point1

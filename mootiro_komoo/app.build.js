@@ -1,22 +1,26 @@
 ({
+    findNestedDependencies: true,
+
     appDir: '',
     baseUrl: '.build',
     dir: '.build/min',
+
     paths: {
-        'jquery': "empty:",
-        'underscore': "empty:",
-        'backbone': "empty:",
+        'jquery': 'empty:',
+        'underscore': 'empty:',
+        'backbone': 'empty:',
         'async': '../apps/main/static/lib/requirejs/async',
         'goog': '../apps/main/static/lib/requirejs/goog',
-        'propertyParser': '../apps/main/static/lib/requirejs/propertyParser'
+        'propertyParser': '../apps/main/static/lib/requirejs/propertyParser',
+        'infobox': 'empty:',
+        'markerclusterer': 'empty:'
     },
-    modules: [
-        {
-            name: 'app',
-            include: [
-                'app',
-                'map/maps'
-            ]
-        }
+
+    name: 'app',
+    include: [
+        'app'
+     ],
+
+    excludeShallow: [
     ]
 })

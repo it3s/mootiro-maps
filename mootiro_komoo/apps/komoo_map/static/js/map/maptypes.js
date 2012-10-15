@@ -2,11 +2,11 @@
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  define(['map/component'], function(Component) {
+  define(['googlemaps', 'map/component'], function(googleMaps, Component) {
     'use strict';
     var CleanMapType, _base;
     if (window.komoo == null) window.komoo = {};
-    if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+    if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     CleanMapType = (function(_super) {
 
       __extends(CleanMapType, _super);
@@ -14,7 +14,7 @@
       CleanMapType.prototype.id = 'clean';
 
       function CleanMapType() {
-        this.mapType = new google.maps.StyledMapType([
+        this.mapType = new googleMaps.StyledMapType([
           {
             featureType: 'poi',
             elementType: 'all',
