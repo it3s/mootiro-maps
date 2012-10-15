@@ -1,5 +1,5 @@
 config =
-    baseUrl: '/static/js'
+    baseUrl: window.komooNS.require_baseUrl or '/static/js'
     paths:
         'lib': '../lib'
         'ad-gallery': '../ad_gallery/jquery.ad-gallery.min'

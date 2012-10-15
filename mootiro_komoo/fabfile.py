@@ -367,6 +367,7 @@ def build_js():
     rmtree(to)
     logging.info('copying compiled javascripts to {}'.format(to))
     copytree(from_, to, ignore=ignore_patterns('*.coffee', '*~'))
+    test_js()
 
 
 def build():
