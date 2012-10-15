@@ -1,8 +1,10 @@
 (function() {
-  var config;
+  var baseUrl, config, _ref;
+
+  baseUrl = ((_ref = window.komooNS) != null ? _ref.require_baseUrl : void 0) || '/static/js';
 
   config = {
-    baseUrl: window.komooNS.require_baseUrl || '/static/js',
+    baseUrl: baseUrl,
     paths: {
       'lib': '../lib',
       'ad-gallery': '../ad_gallery/jquery.ad-gallery.min',
