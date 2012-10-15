@@ -2,6 +2,11 @@
 app.js
 ----------------
 app.js
+async.js
+propertyParser.js
+goog.js
+goog!maps,3,other_params:[sensor=false&libraries=drawing&language=pt-br]
+googlemaps.js
 map/core.js
 map/collections.js
 map/common.js

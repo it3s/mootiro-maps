@@ -127,6 +127,14 @@ def test(
             .format(apps, django_settings[env_]))
 
 
+def test_js(
+        apps=" ".join(['komoo_map'])):
+    """Run javascript tests"""
+    local('phantomjs scripts/run-qunit.js {}'.format(
+            ' '.join(['apps/{}/static/tests/tests.html'.format(app) for app in apps.split(' ')])
+        ))
+
+
 def js_urls():
     """Creates a javascript file containing urls"""
     local('python manage.py js_urls {}'.format(django_settings[env_]))
