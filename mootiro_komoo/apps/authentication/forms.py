@@ -10,7 +10,7 @@ from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
-from .models import User
+from .models import User, SocialAuth
 
 
 class FormProfile(AjaxModelForm):
@@ -57,24 +57,41 @@ class FormUser(AjaxModelForm):
         'name': _('Name'),
         'email': _('Email'),
         'password': _('Password'),
+        'password_confirmation': _('Confirm your Password'),
     }
 
     name = forms.CharField(required=True)
     email = forms.CharField(required=True)
-    password = forms.CharField(required=True, widget=forms.PasswordInput)
+    password = forms.CharField(required=True, widget=forms.PasswordInput(
+                attrs={'autocomplete': 'off'}))
+    password_confirmation = forms.CharField(required=True,
+                widget=forms.PasswordInput(attrs={'autocomplete': 'off'}))
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="form_user")
         return super(FormUser, self).__init__(*a, **kw)
 
     def clean(self):
-        '''Form validations.'''
+        """Form validations."""
         super(FormUser, self).clean()
-        email = self.cleaned_data['email']
+        try:
+            email = self.cleaned_data['email']
 
-        # TODO: if email is in use but was connected through external provider
-        #       (facebook, google, etc...) show specific error.
-        self.validation('email', _('This email is already in use.'),
-                User.objects.filter(email=email).exists())
+            if email:
+                self.validation('email', _('This email is already in use.'),
+                        User.objects.filter(email=email).exists())
+                self.validation('email',
+                    _('This email is registered on our system. Probably '
+                      'you\'ve logged before with a social account (facebook '
+                      'or google). You can skip this step and just login.'),
+                    SocialAuth.objects.filter(email=email).exists())
 
-        return self.cleaned_data
+            self.validation('password_confirmation',
+                    _('Passwords did not match.'),
+                    self.cleaned_data['password'] != \
+                    self.cleaned_data['password_confirmation'])
+        except Exception as err:
+            logger.error('Validation Error: {}'.format(err))
+        finally:
+            return self.cleaned_data
+
