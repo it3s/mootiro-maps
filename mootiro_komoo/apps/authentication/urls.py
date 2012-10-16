@@ -19,7 +19,6 @@ urlpatterns = patterns('authentication.views',
     # per user urls
     url(r'^(?P<id>\d+)/?$', 'profile', name='user_profile'),
 
-    # old stuff to be reviewed
     url(r'^edit/?$', 'profile_update', name='profile_update'),
 
     url(r'^edit/public_settings/?$',

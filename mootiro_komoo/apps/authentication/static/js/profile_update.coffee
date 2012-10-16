@@ -22,7 +22,7 @@ window.Signature = Backbone.Model.extend
         if confirm(gettext 'Are you sure you want to delete your signature for this object?')
             self = this
             $.post(
-                '/user/profile/signature/delete/',
+                dutils.urls.resolve('signature_delete'),
                 {id: @get 'signature_id'},
                 (data) ->
                     self.trigger 'deleteSignature', self

@@ -24,7 +24,7 @@
       var self;
       if (confirm(gettext('Are you sure you want to delete your signature for this object?'))) {
         self = this;
-        return $.post('/user/profile/signature/delete/', {
+        return $.post(dutils.urls.resolve('signature_delete'), {
           id: this.get('signature_id')
         }, function(data) {
           return self.trigger('deleteSignature', self);
