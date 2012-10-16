@@ -1,8 +1,4 @@
-/**
- * utils.js
- * requires compat.js
- */
-
+define(['googlemaps'], function (googleMaps) {
 
 if (!window.komoo) komoo = {};
 komoo.utils = {};
@@ -88,7 +84,7 @@ komoo.utils.latLngToPoint = function (map, latLng, opt_zoom) {
     var zoom = opt_zoom || map.getZoom();
     var normalizedPoint = map.getProjection().fromLatLngToPoint(latLng); // returns x,y normalized to 0~255
     var scale = Math.pow(2, zoom);
-    var pixelCoordinate = new google.maps.Point(normalizedPoint.x * scale, normalizedPoint.y * scale);
+    var pixelCoordinate = new googleMaps.Point(normalizedPoint.x * scale, normalizedPoint.y * scale);
     return pixelCoordinate;
 };
 
@@ -102,7 +98,11 @@ komoo.utils.pointToLatLng = function (map, point, opt_zoom) {
     if (map.googleMap) map = map.googleMap;
     var zoom = opt_zoom || map.getZoom();
     var scale = Math.pow(2, zoom);
-    var normalizedPoint = new google.maps.Point(point.x / scale, point.y / scale);
+    var normalizedPoint = new googleMaps.Point(point.x / scale, point.y / scale);
     var latlng = map.getProjection().fromPointToLatLng(normalizedPoint);
     return latlng;
 };
+
+return komoo.utils;
+
+});

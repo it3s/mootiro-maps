@@ -1,10 +1,10 @@
 (function() {
 
-  define(['map/geometries'], function(geometries) {
+  define(['googlemaps', 'map/geometries'], function(googleMaps, geometries) {
     'use strict';
     var Feature, _base;
     if (window.komoo == null) window.komoo = {};
-    if ((_base = window.komoo).event == null) _base.event = google.maps.event;
+    if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     Feature = (function() {
 
       Feature.prototype.displayTooltip = true;

@@ -1,7 +1,6 @@
 
 app.js
 ----------------
-app.js
 async.js
 propertyParser.js
 goog.js
@@ -14,4 +13,11 @@ map/multimarker.js
 map/multipolyline.js
 map/geometries.js
 map/features.js
+map/component.js
+map/utils.js
+map/controls.js
+map/maptypes.js
+map/providers.js
 map/maps.js
+map.jquery.js
+app.js

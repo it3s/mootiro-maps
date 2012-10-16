@@ -4,7 +4,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  define(['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries'], function(googleMaps, _, core, Collections, Features, geometries) {
+  define(['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries', 'map/controls', 'map/maptypes', 'map/providers'], function(googleMaps, _, core, Collections, Features, geometries) {
     'use strict';
     var AjaxEditor, AjaxMap, Editor, Map, Preview, StaticMap, UserEditor, _base;
     if (window.komoo == null) window.komoo = {};
