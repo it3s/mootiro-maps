@@ -124,3 +124,8 @@ form#form_login {
     font-size: 28px;
     line-height: 28px;
     margin-bottom: 20px; }
+
+#ie-warning {
+  padding: 5px 50px 5px 50px;
+  background-color: #ffe5af;
+  color: #353535; }

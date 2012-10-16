@@ -6,9 +6,6 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-    <!-- Chrome Frame for IE loosers -->
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 
@@ -50,15 +47,12 @@
     <script type="text/javascript" src="{{STATIC_URL}}js/komoo_search.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/moderation.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/ajaxforms.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/no-ie.js"></script>
 
     {{ form.media.js }}
     {% block css %}{% endblock %}
   </head>
   <body class="{% if community %}community{% endif %}">
-
-    <div id="prompt">
-        <!-- if IE without GoogleChromeFrame, prompt goes here -->
-    </div>
 
     <!-- Facebook stuff -->
     <div id="fb-root"></div>
@@ -113,30 +107,6 @@
     </div>
     {% block page_scripts %}{% endblock %}
 
-    <!-- Chrome Frame -->
-    <script type="text/javascript"
-        src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
-    </script>
-    <script>
-      jQuery(window).ready(function () {
-        //Chrome Frame
-        try{
-            CFInstall.check({
-                mode:"overlay"
-            });
-        } catch(err){}
-
-        // fixes annoying behaviour on leaving a community context
-        var areas = ['organization', 'needs', 'resource', 'investments'],
-            path_split = location.pathname.split('/');
-
-        if ( ($.inArray(path_split[1], areas) == -1) &&
-             ($.inArray(path_split[2], areas) > -1) ){
-          $('#tabs .tab a').attr('href',
-              '/' + path_split.slice(2).join('/') );
-        }
-
-      });
     </script>
 
     <!-- Google Analytics -->
