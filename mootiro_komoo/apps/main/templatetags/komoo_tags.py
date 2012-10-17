@@ -122,13 +122,13 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 @register.inclusion_tag('main/templatetags/history.html')
 def history(obj):
     if hasattr(obj, 'creator') and obj.creator:
-        creator_link = '<a href="/permalink/u{}">{}</a>'.format(
-                obj.creator.id, obj.creator.name)
+        creator_link = '<a href="{}">{}</a>'.format(
+                obj.creator.view_url, obj.creator.name)
     else:
         creator_link = ''
     if hasattr(obj, 'last_editor') and obj.last_editor:
-        lasteditor_link = '<a href="/permalink/u{}">{}</a>'.format(
-                obj.last_editor.id, obj.last_editor.name)
+        lasteditor_link = '<a href="{}">{}</a>'.format(
+                obj.last_editor.view_url, obj.last_editor.name)
     else:
         lasteditor_link = ''
     return dict(obj=obj, creator_link=creator_link, last_editor=lasteditor_link)

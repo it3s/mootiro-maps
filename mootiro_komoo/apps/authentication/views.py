@@ -125,7 +125,7 @@ def profile_update(request):
                 'obj_id': obj.id,
                 'model_name': ct.name,
                 'app_name': ct.app_label,
-                'permalink': '/permalink/{}{}'.format(ct.name[0], obj.id),
+                'permalink': obj.view_url,
                 'has_geojson': not 'EMPTY' in getattr(
                                     obj, 'geometry', 'EMPTY'),
             })

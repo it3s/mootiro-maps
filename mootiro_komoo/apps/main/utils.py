@@ -32,9 +32,10 @@ except ImportError:
         return inner
 
 
-def komoo_permalink(obj):
-    from main.views import ENTITY_MODEL_REV
-    return '/permalink/{}{}'.format(ENTITY_MODEL_REV[obj.__class__], obj.id)
+# DEPRECATED ???
+# def komoo_permalink(obj):
+#     from main.views import ENTITY_MODEL_REV
+#     return '/permalink/{}{}'.format(ENTITY_MODEL_REV[obj.__class__], obj.id)
 
 
 def create_geojson(objects, type_='FeatureCollection', convert=True,

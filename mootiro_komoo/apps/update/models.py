@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext
 
 from komoo_resource.models import Resource
-from main.utils import komoo_permalink
 from proposal.models import Proposal
 
 
@@ -67,8 +66,7 @@ class Update(models.Model):
                 key = i.slug
             keys.append(key)
         self._keys = simplejson.dumps(keys)
-        # self._links = simplejson.dumps([i.view_url for i in instances])
-        self._links = simplejson.dumps([komoo_permalink(i) for i in instances])
+        self._links = simplejson.dumps([i.view_url for i in instances])
 
     @property
     def instance(self):

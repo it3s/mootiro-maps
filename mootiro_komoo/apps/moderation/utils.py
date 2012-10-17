@@ -8,6 +8,7 @@ from smtplib import SMTPException
 from django.utils.translation import ugettext as _
 from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse
+from django.core.exceptions import MultipleObjectsReturned
 from django.conf import settings
 from moderation.models import Moderation, Report
 
@@ -48,7 +49,11 @@ def get_reports_by_user(user, obj=None, reason=None):
             query['reason'] = reason
         else:
             query['reason__gt'] = 0
-        query['moderation'] = Moderation.objects.get_for_object_or_create(obj)
+
+        try:
+            query['moderation'] = Moderation.objects.get_for_object_or_create(obj)
+        except MultipleObjectsReturned as err:
+            query['moderation'] = Moderation.objects.get_for_object(obj)[0]
     return Report.objects.filter(**query).all()
 
 

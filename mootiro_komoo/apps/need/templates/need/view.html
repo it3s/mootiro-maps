@@ -37,7 +37,7 @@
 
       <div class="apart">
         <div><span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}</div>
-        <div>{% trans 'created by' %} <a href="/permalink/u{% firstof need.creator.id '#' %}">{% firstof need.creator.name  '---' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</div>
+        <div>{% trans 'created by' %} <a href="{{ need.creator.view_url }}">{% firstof need.creator.name  '---' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</div>
       </div>
       <div class="mark-down">{{ need.description|render_markup|safe }}</div>
 
