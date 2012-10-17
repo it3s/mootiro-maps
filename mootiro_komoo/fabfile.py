@@ -130,9 +130,11 @@ def test(
 def test_js(
         apps=" ".join(['komoo_map'])):
     """Run javascript tests"""
-    local('phantomjs scripts/run-qunit.js {}'.format(
-            ' '.join(['apps/{}/static/tests/tests.html'.format(app) for app in apps.split(' ')])
-        ))
+    # local('phantomjs scripts/run-qunit.js {}'.format(
+    #         ' '.join(['apps/{}/static/tests/tests.html'.format(app) for app in apps.split(' ')])
+    #     ))
+    # TODO fix this properly 
+    local('phantomjs scripts/run-qunit.js static/tests/tests.html')
 
 
 def js_urls():
@@ -352,6 +354,8 @@ def collect_js(apps=None):
             location = os.path.join(mod_path, 'static', 'js')
             if os.path.exists(location):
                 copy_tree(location, build_path)
+        # add static folder 
+        copy_tree(os.path.join(proj_path, 'static', 'js'), build_path)
 
 
 def build_js():
@@ -363,7 +367,7 @@ def build_js():
     build_path = os.path.join(proj_path, '.build')
     local('r.js -o app.build.js')
     from_ = os.path.join(build_path, 'min')
-    to = os.path.join(proj_path, 'apps', 'main', 'static', 'js.build')
+    to = os.path.join(proj_path, 'static', 'js.build')
     rmtree(to)
     logging.info('copying compiled javascripts to {}'.format(to))
     copytree(from_, to, ignore=ignore_patterns('*.coffee', '*~'))

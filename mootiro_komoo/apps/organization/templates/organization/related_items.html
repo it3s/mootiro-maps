@@ -17,6 +17,6 @@
   <script type="text/javascript">
     if (typeof window.KomooNS === 'undefined') window.KomooNS = {};
     KomooNS.obj = {{ organization|jsonify|safe }};
-    require(['organization_related_items']);
+    require(['organization/organization_related_items']);
   </script>
 {% endblock %}

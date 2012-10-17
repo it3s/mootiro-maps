@@ -9,9 +9,9 @@
         'jquery': 'empty:',
         'underscore': 'empty:',
         'backbone': 'empty:',
-        'async': '../apps/main/static/lib/requirejs/async',
-        'goog': '../apps/main/static/lib/requirejs/goog',
-        'propertyParser': '../apps/main/static/lib/requirejs/propertyParser',
+        'async': '../static/lib/requirejs/async',
+        'goog': '../static/lib/requirejs/goog',
+        'propertyParser': '../static/lib/requirejs/propertyParser',
         'infobox': 'empty:',
         'markerclusterer': 'empty:'
     },
