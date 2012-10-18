@@ -168,7 +168,7 @@ class Investment(models.Model):
     def save(self, *args, **kwargs):
         # TODO: validate grantee as either a Proposal, a Resource or an Organization
         # TODO: validate investor as either a User or an Organization
-        self.slug = slugify(self.title, self.slug_exists)
+        self.slug = slugify(self.title)
         super(Investment, self).save(*args, **kwargs)
 
     # Url aliases
