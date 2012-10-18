@@ -82,25 +82,28 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                         @loadGeoJsonFromOptons()
 
         handleEvents: ->
-            @subscribe "features_loaded", (features) =>
-                komoo.event.trigger this, "features_loaded", features
+            @subscribe 'features_loaded', (features) =>
+                komoo.event.trigger this, 'features_loaded', features
 
-            @subscribe "close_clicked", =>
-                komoo.event.trigger this, "close_click"
+            @subscribe 'close_clicked', =>
+                komoo.event.trigger this, 'close_click'
 
-            @subscribe "drawing_finished", (feature, status) =>
-                komoo.event.trigger this, "drawing_finished", feature, status
+            @subscribe 'drawing_started', (feature) =>
+                komoo.event.trigger this, 'drawing_started', feature
+
+            @subscribe 'drawing_finished', (feature, status) =>
+                komoo.event.trigger this, 'drawing_finished', feature, status
                 if status is false
                     @revertFeature feature
                 else if not feature.getProperty("id")?
                     @addFeature feature
 
-            @subscribe "set_location", (location) =>
+            @subscribe 'set_location', (location) =>
                 location = location.split ','
                 center = new googleMaps.LatLng location[0], location[1]
                 @googleMap.setCenter center
 
-            @subscribe "set_zoom", (zoom) =>
+            @subscribe 'set_zoom', (zoom) =>
                 @setZoom zoom
 
         addComponent: (component, type = 'generic', opts = {}) ->

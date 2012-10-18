@@ -118,27 +118,30 @@
 
       Map.prototype.handleEvents = function() {
         var _this = this;
-        this.subscribe("features_loaded", function(features) {
-          return komoo.event.trigger(_this, "features_loaded", features);
+        this.subscribe('features_loaded', function(features) {
+          return komoo.event.trigger(_this, 'features_loaded', features);
         });
-        this.subscribe("close_clicked", function() {
-          return komoo.event.trigger(_this, "close_click");
+        this.subscribe('close_clicked', function() {
+          return komoo.event.trigger(_this, 'close_click');
         });
-        this.subscribe("drawing_finished", function(feature, status) {
-          komoo.event.trigger(_this, "drawing_finished", feature, status);
+        this.subscribe('drawing_started', function(feature) {
+          return komoo.event.trigger(_this, 'drawing_started', feature);
+        });
+        this.subscribe('drawing_finished', function(feature, status) {
+          komoo.event.trigger(_this, 'drawing_finished', feature, status);
           if (status === false) {
             return _this.revertFeature(feature);
           } else if (!(feature.getProperty("id") != null)) {
             return _this.addFeature(feature);
           }
         });
-        this.subscribe("set_location", function(location) {
+        this.subscribe('set_location', function(location) {
           var center;
           location = location.split(',');
           center = new googleMaps.LatLng(location[0], location[1]);
           return _this.googleMap.setCenter(center);
         });
-        return this.subscribe("set_zoom", function(zoom) {
+        return this.subscribe('set_zoom', function(zoom) {
           return _this.setZoom(zoom);
         });
       };
