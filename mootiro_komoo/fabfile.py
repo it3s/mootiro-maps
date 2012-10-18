@@ -130,10 +130,7 @@ def test(
 def test_js(
         apps=" ".join(['komoo_map'])):
     """Run javascript tests"""
-    # local('phantomjs scripts/run-qunit.js {}'.format(
-    #         ' '.join(['apps/{}/static/tests/tests.html'.format(app) for app in apps.split(' ')])
-    #     ))
-    # TODO fix this properly 
+    # TODO fix this properly
     local('phantomjs scripts/run-qunit.js static/tests/tests.html')
 
 
@@ -146,12 +143,12 @@ def js_urls():
     import os
     s = ''
     with open(os.path.abspath(
-                './apps/main/static/lib/django-js-utils/dutils.conf.urls.js'),
+                './static/lib/django-js-utils/dutils.conf.urls.js'),
                 'r') as f:
         s = f.read()
         s = s.replace('?', '')
     with open(os.path.abspath(
-                './apps/main/static/lib/django-js-utils/dutils.conf.urls.js'),
+                './static/lib/django-js-utils/dutils.conf.urls.js'),
                 'w') as f:
         f.write(s)
 
@@ -269,7 +266,6 @@ def sync_all(data_fixtures='fixtures/backupdb.json'):
     loaddata('fixtures/contenttypes_fixtures.json')
 
 
-
 def dumpdata():
     """Dump DB data, for backup purposes """
     import datetime
@@ -328,34 +324,23 @@ def populate_history():
 
 def collect_js(apps=None):
     """Collect javascript files from apps"""
-    setup_django()
     import os
-    from distutils.dir_util import copy_tree, remove_tree
-    from django.conf import settings
-    from django.utils.importlib import import_module
-    # Get all apps
-    if not apps:
-        apps = settings.INSTALLED_APPS
-    # Get the project base path
+    from shutil import copytree, rmtree, ignore_patterns
+
+    ## Get the project base path
     proj_path = os.path.dirname(__file__)
     build_path = os.path.join(proj_path, '.build')
+
     try:
         logging.info('cleaning build path ... ')
-        remove_tree(build_path)
+        rmtree(build_path)
     except OSError, e:
         logging.info(e)
+
     logging.info('copying javascript files ... ')
-    os.mkdir(build_path)
-    for app in apps:
-        mod = import_module(app)
-        mod_path = os.path.dirname(mod.__file__)
-        # Get only project apps
-        if mod_path.startswith(proj_path):
-            location = os.path.join(mod_path, 'static', 'js')
-            if os.path.exists(location):
-                copy_tree(location, build_path)
-        # add static folder 
-        copy_tree(os.path.join(proj_path, 'static', 'js'), build_path)
+    from_ = os.path.join(proj_path, 'static', 'js')
+    to = build_path
+    copytree(from_, to, ignore=ignore_patterns('*.coffee', '*~'))
 
 
 def build_js():
@@ -363,6 +348,7 @@ def build_js():
     import os
     from shutil import copytree, rmtree, ignore_patterns
     collect_js()
+
     proj_path = os.path.dirname(__file__)
     build_path = os.path.join(proj_path, '.build')
     local('r.js -o app.build.js')
@@ -371,6 +357,10 @@ def build_js():
     rmtree(to)
     logging.info('copying compiled javascripts to {}'.format(to))
     copytree(from_, to, ignore=ignore_patterns('*.coffee', '*~'))
+
+    # Removes the build dir
+    rmtree(build_path)
+
     test_js()
 
 
@@ -386,4 +376,3 @@ def build():
 def help():
     """Fabfile documentation"""
     local('python -c "import fabfile; help(fabfile)"')
-
