@@ -61,7 +61,7 @@ a equipe IT3S.
                 send_notification_mail('dummy_obj', signature.user, msg)
 
 
-@periodic_task(run_every=crontab(minute=0, hour=0, day_of_week='sat'))
+@periodic_task(run_every=crontab(minute=0, hour=0, day_of_week='sun'))
 def weekly_mail_digest():
     periodic_mail_digest(digest_type='W')
 
