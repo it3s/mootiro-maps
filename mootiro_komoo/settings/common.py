@@ -30,7 +30,7 @@ LOCALE_PATHS = (
 
 # ========== Static and Media =================================================
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
-MEDIA_URL = '/media/' 
+MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'public')
 STATIC_URL = '/static/'
@@ -67,7 +67,7 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
 )
-TEMPLATE_DIRS = []
+TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'templates'), )
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
