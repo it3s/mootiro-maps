@@ -44,7 +44,11 @@ MultiMarker = function (opt_options) {
  * @return {google.maps.LatLng}
  */
 MultiMarker.prototype.getPosition = function () {
-    return this.markers_.getAt(0).getPosition();
+    var ref_
+    if (ref_ = this.markers_.getAt(0))
+        return ref_.getPosition();
+    else
+        return null
 };
 
 
