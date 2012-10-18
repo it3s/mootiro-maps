@@ -4,6 +4,17 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
 
+    # Defining translatable strings here as constantes to prevent an mysterious issue
+    _NEXT_STEP = gettext 'Next Step'
+    _CANCEL = gettext 'Cancel'
+    _CLOSE = gettext 'Close'
+    _ADD_SHAPE = gettext 'Add shape'
+    _ADD_LINE = gettext 'Add line'
+    _ADD_POINT = gettext 'Add point'
+    _SUM = gettext 'Sum'
+    _CUT_OUT = gettext 'Cut out'
+    _LOADING = gettext 'Loading...'
+
     EMPTY = common.geometries.types.EMPTY
     POINT = common.geometries.types.POINT
     MULTIPOINT = common.geometries.types.MULTIPOINT
@@ -229,7 +240,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
               <div class="map-panel-title" id="drawing-control-title">#{title}</div>
               <div class="content" id="drawing-control-content"></div>
               <div class="map-panel-buttons">
-                <div class="map-button" id="drawing-control-cancel">#{gettext 'Close'}</div>
+                <div class="map-button" id="drawing-control-cancel">#{_CLOSE}</div>
               </div>
             </div>
             """
@@ -267,7 +278,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 </li>
               </ul>
               <div class="map-panel-buttons">
-                <div class="map-button" id="drawing-control-cancel">#{gettext 'Cancel'}</div>
+                <div class="map-button" id="drawing-control-cancel">#{_CANCEL}</div>
               </div>
             </div>
             """
@@ -316,8 +327,8 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
               <div class="map-panel-title" id="drawing-control-title"></div>
               <div class="content" id="drawing-control-content"></div>
               <div class="map-panel-buttons">
-                <div class="map-button" id="drawing-control-finish">#{gettext 'Next Step'}</div>
-                <div class="map-button" id="drawing-control-cancel">#{gettext 'Cancel'}</div>
+                <div class="map-button" id="drawing-control-finish">#{_NEXT_STEP}</div>
+                <div class="map-button" id="drawing-control-cancel">#{_CANCEL}</div>
               </div>
             </div>
             """
@@ -365,18 +376,18 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         getTitle: ->
             if @feature.getGeometryType() is POLYGON
                 geometry = 'polygon'
-                title = gettext 'Add shape'
+                title = _ADD_SHAPE
             else if @feature.getGeometryType() in [LINESTRING, MULTILINESTRING]
                 geometry = 'linestring'
-                title = gettext 'Add line'
+                title = _ADD_LINE
             else if @feature.getGeometryType() in [POINT, MULTIPOINT]
                 geometry = 'point'
-                title = gettext 'Add point'
+                title = _ADD_POINT
             """<i class="icon-#{geometry} middle"></i><span class="middle">#{title}</span>"""
 
         getContent: ->
-            add = $("""<div class="map-button" id="drawing-control-add"><i class="icon-komoo-plus middle"></i><span class="middle">#{gettext 'Sum'}</span></div>""")
-            cutout = $("""<div class="map-button" id="drawing-control-cutout"><i class="icon-komoo-minus middle"></i><span class="middle">#{gettext 'Cut out'}</span></div>""")
+            add = $("""<div class="map-button" id="drawing-control-add"><i class="icon-komoo-plus middle"></i><span class="middle">#{_SUM}</span></div>""")
+            cutout = $("""<div class="map-button" id="drawing-control-cutout"><i class="icon-komoo-minus middle"></i><span class="middle">#{_CUT_OUT}</span></div>""")
             remove = $("""<div class="map-button" id="drawing-control-delete"><i class="icon-komoo-trash middle"></i></div>""")
 
             content = $("<div>").addClass @feature.getGeometryType().toLowerCase()
@@ -607,7 +618,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 feature[@contentViewName] = data
                 @setContent data
 
-            gettext "Loading..."
+            _LOADING
 
 
     class InfoWindow extends AjaxBalloon

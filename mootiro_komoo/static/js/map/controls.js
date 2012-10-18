@@ -3,9 +3,18 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
   define(['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/utils', 'infobox', 'markerclusterer'], function(googleMaps, Component, common, geometries, utils, InfoBox, MarkerClusterer) {
-    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, StreetView, SupporterBox, Tooltip, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
+    _NEXT_STEP = gettext('Next Step');
+    _CANCEL = gettext('Cancel');
+    _CLOSE = gettext('Close');
+    _ADD_SHAPE = gettext('Add shape');
+    _ADD_LINE = gettext('Add line');
+    _ADD_POINT = gettext('Add point');
+    _SUM = gettext('Sum');
+    _CUT_OUT = gettext('Cut out');
+    _LOADING = gettext('Loading...');
     EMPTY = common.geometries.types.EMPTY;
     POINT = common.geometries.types.POINT;
     MULTIPOINT = common.geometries.types.MULTIPOINT;
@@ -301,7 +310,7 @@
         }
         CloseBox.__super__.init.call(this);
         title = (_ref = opt.title) != null ? _ref : '';
-        this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\">" + title + "</div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Close')) + "</div>\n  </div>\n</div>");
+        this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\">" + title + "</div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + _CLOSE + "</div>\n  </div>\n</div>");
         this.box.show();
         return this.handleButtonEvents();
       };
@@ -338,7 +347,7 @@
       GeometrySelector.prototype.init = function() {
         GeometrySelector.__super__.init.call(this);
         this.box.hide();
-        this.box.html("<div id=\"geometry-selector\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <ul class=\"content\" id=\"drawing-control-content\">\n    <li class=\"polygon btn\" data-geometry-type=\"Polygon\">\n      <i class=\"icon-polygon middle\"></i><span class=\"middle\">Adicionar área</span>\n    </li>\n    <li class=\"linestring btn\" data-geometry-type=\"LineString\">\n      <i class=\"icon-linestring middle\"></i><span class=\"middle\">Adicionar linha</span>\n    </li>\n    <li class=\"point btn\" data-geometry-type=\"Point\">\n      <i class=\"icon-point middle\"></i><span class=\"middle\">Adicionar ponto</span>\n    </li>\n  </ul>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Cancel')) + "</div>\n  </div>\n</div>");
+        this.box.html("<div id=\"geometry-selector\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <ul class=\"content\" id=\"drawing-control-content\">\n    <li class=\"polygon btn\" data-geometry-type=\"Polygon\">\n      <i class=\"icon-polygon middle\"></i><span class=\"middle\">Adicionar área</span>\n    </li>\n    <li class=\"linestring btn\" data-geometry-type=\"LineString\">\n      <i class=\"icon-linestring middle\"></i><span class=\"middle\">Adicionar linha</span>\n    </li>\n    <li class=\"point btn\" data-geometry-type=\"Point\">\n      <i class=\"icon-point middle\"></i><span class=\"middle\">Adicionar ponto</span>\n    </li>\n  </ul>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + _CANCEL + "</div>\n  </div>\n</div>");
         return this.handleBoxEvents();
       };
 
@@ -413,7 +422,7 @@
       DrawingControl.prototype.init = function() {
         DrawingControl.__super__.init.call(this);
         this.box.hide();
-        this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-finish\">" + (gettext('Next Step')) + "</div>\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + (gettext('Cancel')) + "</div>\n  </div>\n</div>");
+        this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-finish\">" + _NEXT_STEP + "</div>\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + _CANCEL + "</div>\n  </div>\n</div>");
         return this.handleBoxEvents();
       };
 
@@ -472,21 +481,21 @@
         var geometry, title, _ref, _ref2;
         if (this.feature.getGeometryType() === POLYGON) {
           geometry = 'polygon';
-          title = gettext('Add shape');
+          title = _ADD_SHAPE;
         } else if ((_ref = this.feature.getGeometryType()) === LINESTRING || _ref === MULTILINESTRING) {
           geometry = 'linestring';
-          title = gettext('Add line');
+          title = _ADD_LINE;
         } else if ((_ref2 = this.feature.getGeometryType()) === POINT || _ref2 === MULTIPOINT) {
           geometry = 'point';
-          title = gettext('Add point');
+          title = _ADD_POINT;
         }
         return "<i class=\"icon-" + geometry + " middle\"></i><span class=\"middle\">" + title + "</span>";
       };
 
       DrawingControl.prototype.getContent = function() {
         var add, content, cutout, remove;
-        add = $("<div class=\"map-button\" id=\"drawing-control-add\"><i class=\"icon-komoo-plus middle\"></i><span class=\"middle\">" + (gettext('Sum')) + "</span></div>");
-        cutout = $("<div class=\"map-button\" id=\"drawing-control-cutout\"><i class=\"icon-komoo-minus middle\"></i><span class=\"middle\">" + (gettext('Cut out')) + "</span></div>");
+        add = $("<div class=\"map-button\" id=\"drawing-control-add\"><i class=\"icon-komoo-plus middle\"></i><span class=\"middle\">" + _SUM + "</span></div>");
+        cutout = $("<div class=\"map-button\" id=\"drawing-control-cutout\"><i class=\"icon-komoo-minus middle\"></i><span class=\"middle\">" + _CUT_OUT + "</span></div>");
         remove = $("<div class=\"map-button\" id=\"drawing-control-delete\"><i class=\"icon-komoo-trash middle\"></i></div>");
         content = $("<div>").addClass(this.feature.getGeometryType().toLowerCase());
         if (this.feature.getGeometryType() !== POINT) content.append(add);
@@ -816,7 +825,7 @@
           feature[_this.contentViewName] = data;
           return _this.setContent(data);
         });
-        return gettext("Loading...");
+        return _LOADING;
       };
 
       return AjaxBalloon;

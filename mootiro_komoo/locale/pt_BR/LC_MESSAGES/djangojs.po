@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-05 18:21-0300\n"
-"PO-Revision-Date: 2012-06-06 14:01-0300\n"
-"Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
+"POT-Creation-Date: 2012-10-18 17:41-0300\n"
+"PO-Revision-Date: 2012-10-18 17:15-0300\n"
+"Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -17,232 +17,167 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: apps/komoo_map/static/js/komoo_map.js:981
-msgid "Edit"
-msgstr "Editar"
+#: lib/fileupload/static/plupload/komoo_plupload.js:163
+#: lib/fileupload/static/plupload/singlefile_plupload.js:109
+msgid "Are you sure you want to delete this file?"
+msgstr "Você deseja realmente apagar este arquivo?"
 
-#: apps/komoo_map/static/js/komoo_map.js:1112
-msgid "Add shape"
-msgstr "Adicionar área"
-
-#: apps/komoo_map/static/js/komoo_map.js:1113
-msgid "Add line"
-msgstr "Adicionar linha"
-
-#: apps/komoo_map/static/js/komoo_map.js:1114
-msgid "Add point"
-msgstr "Adicionar ponto"
-
-#: apps/komoo_map/static/js/komoo_map.js:1264
-msgid "Add"
-msgstr "Adicionar"
-
-#: apps/komoo_map/static/js/komoo_map.js:1264
-msgid "Add another region"
-msgstr "Adicionar outra região"
-
-#: apps/komoo_map/static/js/komoo_map.js:1276
-msgid "Cut out"
-msgstr "Cortar"
-
-#: apps/komoo_map/static/js/komoo_map.js:1276
-msgid "Cut out a hole from a region"
-msgstr "Adicionar um buraco a região"
-
-#: apps/komoo_map/static/js/komoo_map.js:1288
-#: apps/moderation/static/js/moderation.js:259
-msgid "Delete"
-msgstr "Apagar"
-
-#: apps/komoo_map/static/js/komoo_map.js:1288
-msgid "Delete a region"
-msgstr "Apagar uma região"
-
-#: apps/komoo_map/static/js/komoo_map.js:1543
-#: apps/komoo_map/static/js/map/controls.js:304
-msgid "Close"
-msgstr "Fechar"
-
-#: apps/komoo_map/static/js/komoo_map.js:1570
-msgid "Title"
-msgstr "Título"
-
-#: apps/komoo_map/static/js/komoo_map.js:1572
-msgid "Finish"
-msgstr "Concluir"
-
-#: apps/komoo_map/static/js/komoo_map.js:1573
-#: apps/komoo_map/static/js/map/controls.js:341
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: apps/komoo_map/static/js/related_items_panel.js:75
-#, perl-format
-msgid "%s organization branch"
-msgid_plural "%s organization branchs"
-msgstr[0] "%s unidade de uma organização"
-msgstr[1] "%s unidades de um organização"
-
-#: apps/komoo_map/static/js/related_items_panel.js:75
-#, perl-format
-msgid "%s community"
-msgid_plural "%s communities"
-msgstr[0] "%s comunidade"
-msgstr[1] "%s comunidades"
-
-#: apps/komoo_map/static/js/related_items_panel.js:75
-#, perl-format
-msgid "%s resource"
-msgid_plural "%s resources"
-msgstr[0] "%s recurso"
-msgstr[1] "%s recursos"
-
-#: apps/komoo_map/static/js/related_items_panel.js:75
-#, perl-format
-msgid "%s need"
-msgid_plural "%s needs"
-msgstr[0] "%s necessidade"
-msgstr[1] "%s necessidades"
-
-#: apps/komoo_map/static/js/related_items_panel.js:75
-#, perl-format
-msgid "%s contributors"
-msgid_plural "%s contributors"
-msgstr[0] ""
-msgstr[1] ""
-
-#: apps/komoo_map/static/js/map/controls.js:753
-#, perl-format
-msgid "%s Community"
-msgid_plural "%s Communities"
-msgstr[0] "Comunidade"
-msgstr[1] "Comunidade"
-
-#: apps/komoo_map/static/js/map/controls.js:819
-msgid "Loading..."
-msgstr "Carregando..."
-
-#: apps/komoo_map/static/js/map/maptypes.js:60
-msgid "Clean"
-msgstr "Limpo"
-
-#: apps/komoo_user/static/js/profile.js:34
-#: apps/komoo_user/static/js/profile.js:35
-msgid "Organization"
-msgstr "Organização"
-
-#: apps/komoo_user/static/js/profile.js:36
-msgid "Need"
-msgstr "Necessidade"
-
-#: apps/komoo_user/static/js/profile.js:37
-msgid "Community"
-msgstr "Comunidade"
-
-#: apps/komoo_user/static/js/profile.js:38
-msgid "Resource"
-msgstr "Recurso"
-
-#: apps/komoo_user/static/js/profile.js:44
-msgid "at"
-msgstr "em"
-
-#: apps/komoo_user/static/js/profile_update.js:25
-msgid "Are you sure you want to delete your signature for this object?"
-msgstr "Você tem certeza que deseja deletar sua assinatura para este objeto?"
-
-#: apps/komoo_user/static/js/profile_update.js:120
-msgid "Seus dados públicos foram salvos com sucesso!"
-msgstr "Seus dados públicos foram salvos com sucesso!"
-
-#: apps/komoo_user/static/js/profile_update.js:144
-msgid "Seus dados pessoais foram salvos com sucesso!"
-msgstr "Seus dados pessoais foram salvos com sucesso!"
-
-#: apps/main/static/js/komoo_search.js:16
+#: static/js/komoo_search.js:16 static/js.build/komoo_search.js:1
 msgid "Communities"
 msgstr "Comunidades"
 
-#: apps/main/static/js/komoo_search.js:17
+#: static/js/komoo_search.js:17 static/js.build/komoo_search.js:1
 msgid "Needs"
 msgstr "Necessidades"
 
-#: apps/main/static/js/komoo_search.js:18
+#: static/js/komoo_search.js:18 static/js.build/komoo_search.js:1
 msgid "Organizations"
 msgstr "Organizações"
 
-#: apps/main/static/js/komoo_search.js:19
+#: static/js/komoo_search.js:19 static/js.build/komoo_search.js:1
 msgid "Resources"
 msgstr "Recursos"
 
-#: apps/main/static/js/komoo_search.js:20
+#: static/js/komoo_search.js:20 static/js.build/komoo_search.js:1
 msgid "Investments"
 msgstr "Investimentos"
 
-#: apps/main/static/js/komoo_search.js:21
+#: static/js/komoo_search.js:21 static/js.build/komoo_search.js:1
 msgid "Google Results"
 msgstr "Resultados do Google"
 
-#: apps/main/static/js/komoo_search.js:22
+#: static/js/komoo_search.js:22 static/js.build/komoo_search.js:1
 msgid "User"
 msgstr "Usuário"
 
-#: apps/main/static/js/komoo_search.js:23
+#: static/js/komoo_search.js:23 static/js.build/komoo_search.js:1
 msgid "Project"
-msgstr ""
+msgstr "Projeto"
 
-#: apps/main/static/js/komoo_search.js:96
+#: static/js/komoo_search.js:96
 #, perl-format
 msgid "%s result"
 msgid_plural "%s results"
 msgstr[0] "%s resultado"
 msgstr[1] "%s resultados"
 
-#: apps/main/static/js/komoo_search.js:109
+#: static/js/komoo_search.js:109
 msgid "No results found!"
 msgstr "Nenhum resultado encontrado!"
 
-#: apps/main/static/js/komoo_utils.js:388
+#: static/js/komoo_utils.js:386 static/js.build/komoo_utils.js:1
 msgid "Yes"
 msgstr "Sim"
 
-#: apps/main/static/js/komoo_utils.js:393
+#: static/js/komoo_utils.js:391 static/js.build/komoo_utils.js:1
 msgid "No"
 msgstr "Não"
 
-#: apps/moderation/static/js/moderation.js:112
+#: static/js/related_items_panel.js:75
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s organization branch"
+msgid_plural "%s organization branchs"
+msgstr[0] "%s unidade de uma organização"
+msgstr[1] "%s unidades de um organização"
+
+#: static/js/related_items_panel.js:75
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s community"
+msgid_plural "%s communities"
+msgstr[0] "%s comunidade"
+msgstr[1] "%s comunidades"
+
+#: static/js/related_items_panel.js:75
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s resource"
+msgid_plural "%s resources"
+msgstr[0] "%s recurso"
+msgstr[1] "%s recursos"
+
+#: static/js/related_items_panel.js:75
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s need"
+msgid_plural "%s needs"
+msgstr[0] "%s necessidade"
+msgstr[1] "%s necessidades"
+
+#: static/js/related_items_panel.js:75
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s contributors"
+msgid_plural "%s contributors"
+msgstr[0] "%s contribuidor"
+msgstr[1] "%s contribuidores"
+
+#: static/js.build/authentication/profile_update.js:1
+#: static/js/authentication/profile_update.js:25
+msgid "Are you sure you want to delete your signature for this object?"
+msgstr "Você tem certeza que deseja deletar sua assinatura para este objeto?"
+
+#: static/js.build/authentication/profile_update.js:1
+#: static/js/authentication/profile_update.js:120
+msgid "Seus dados públicos foram salvos com sucesso!"
+msgstr "Seus dados públicos foram salvos com sucesso!"
+
+#: static/js.build/authentication/profile_update.js:1
+#: static/js/authentication/profile_update.js:144
+msgid "Seus dados pessoais foram salvos com sucesso!"
+msgstr "Seus dados pessoais foram salvos com sucesso!"
+
+#: static/js.build/map/maptypes.js:1 static/js/map/maptypes.js:60
+msgid "Clean"
+msgstr "Limpo"
+
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:112
 msgid "Report Abuse"
 msgstr "Denunciar abuso"
 
-#: apps/moderation/static/js/moderation.js:167
-#: apps/moderation/static/js/moderation.js:278
-msgid "Your request was successfully sent"
-msgstr "A requisição foi enviada com sucesso"
-
-#: apps/moderation/static/js/moderation.js:230
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:230
 msgid "Deletion Request"
 msgstr "Requisição de remoção"
 
-#: apps/moderation/static/js/moderation.js:260
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:259
+msgid "Delete"
+msgstr "Apagar"
+
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:260
 msgid "Do you really want to delete this content?"
 msgstr "Você deseja realmente apagar este conteúdo?"
 
-#: apps/moderation/static/js/moderation.js:271
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:271
 msgid "The content was successfully deleted"
 msgstr "O conteúdo foi apagado com sucesso"
 
-#: apps/organization/static/js/organization_new.js:14
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:167
+#: static/js/moderation/moderation.js:278
+msgid "Your request was successfully sent"
+msgstr "A requisição foi enviada com sucesso"
+
+#: static/js.build/organization/organization_new.js:1
+#: static/js/organization/organization_new.js:14
 msgid "complete"
 msgstr "completo"
 
-#: apps/organization/static/js/organization_new.js:33
+#: static/js.build/organization/organization_new.js:1
+#: static/js/organization/organization_new.js:33
 msgid ""
 "Congratulations, you have concluded the organization/branch addition process"
 msgstr ""
 "Parabéns, você concluiu o processo de adição de uma organização/unidade."
 
-#: apps/organization/static/js/organization_new.js:41
-#: apps/organization/static/js/organization_new.js:90
+#: static/js.build/organization/organization_new.js:1
+#: static/js/organization/organization_new.js:41
+#: static/js/organization/organization_new.js:90
 msgid ""
 "Provide the organization name so we can verify if it's already registered on "
 "our system"
@@ -250,11 +185,115 @@ msgstr ""
 "Forneça o nome da organização para verificarmos se ela ainda não foi "
 "cadastrada no sistema."
 
-#: apps/organization/static/js/organization_new.js:54
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "%s point on map"
+msgid_plural "%s points on map"
+msgstr[0] "%s ponto no mapa"
+msgstr[1] "%s pontos no mapa"
+
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "Supported %s organization"
+msgid_plural "Supported %s organizations"
+msgstr[0] "apoiou %s organização"
+msgstr[1] "apoiou %s organizações"
+
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "On %s community"
+msgid_plural "On %s communities"
+msgstr[0] "Em %s comunidade"
+msgstr[1] "Em %s comunidades"
+
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "Supported %s resource"
+msgid_plural "Supported %s resources"
+msgstr[0] "%s recurso apoiado"
+msgstr[1] "%s recursos apoiados"
+
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "Supported %s need"
+msgid_plural "Supported %s needs"
+msgstr[0] "%s necessidade apoiada"
+msgstr[1] "%s necessidades apoiadas"
+
+#: static/js/authentication/profile.js:34
+#: static/js/authentication/profile.js:35
+msgid "Organization"
+msgstr "Organização"
+
+#: static/js/authentication/profile.js:36
+msgid "Need"
+msgstr "Necessidade"
+
+#: static/js/authentication/profile.js:37
+msgid "Community"
+msgstr "Comunidade"
+
+#: static/js/authentication/profile.js:38
+msgid "Resource"
+msgstr "Recurso"
+
+#: static/js/authentication/profile.js:44
+msgid "at"
+msgstr "em"
+
+#: static/js/map/controls.js:9
+msgid "Next Step"
+msgstr "Avançar"
+
+#: static/js/map/controls.js:10
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: static/js/map/controls.js:11
+msgid "Close"
+msgstr "Fechar"
+
+#: static/js/map/controls.js:12
+msgid "Add shape"
+msgstr "Adicionar área"
+
+#: static/js/map/controls.js:13
+msgid "Add line"
+msgstr "Adicionar linha"
+
+#: static/js/map/controls.js:14
+msgid "Add point"
+msgstr "Adicionar ponto"
+
+#: static/js/map/controls.js:15
+msgid "Sum"
+msgstr "Somar"
+
+#: static/js/map/controls.js:16
+msgid "Cut out"
+msgstr "Cortar"
+
+#: static/js/map/controls.js:17
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: static/js/map/controls.js:762
+#, perl-format
+msgid "%s Community"
+msgid_plural "%s Communities"
+msgstr[0] "%s Comunidade"
+msgstr[1] "%s Comunidades"
+
+#: static/js/organization/organization_new.js:54
 msgid "This organization already exists. Do you want to add a branch?"
 msgstr "Essa organização já existe. Deseja adicionar uma unidade (filial) ?"
 
-#: apps/organization/static/js/organization_new.js:61
+#: static/js/organization/organization_new.js:61
 msgid ""
 "This organization is not registered yet. Do you want to add this "
 "organization?"
@@ -262,11 +301,11 @@ msgstr ""
 "Esta organização não foi cadastrada ainda. Você deseja adicionar esta "
 "organização?"
 
-#: apps/organization/static/js/organization_new.js:73
+#: static/js/organization/organization_new.js:73
 msgid "Enter with the data from the branch you have marked on map"
 msgstr "Entre com os dados para a unidade que você marcou no mapa"
 
-#: apps/organization/static/js/organization_new.js:81
+#: static/js/organization/organization_new.js:81
 msgid ""
 "Enter with the data from the Organization which owns the branch you have "
 "marked on map."
@@ -274,7 +313,7 @@ msgstr ""
 "Entre com os dados para a Organização a qual pertence a unidade que você "
 "marcou no mapa"
 
-#: apps/organization/static/js/organization_new.js:104
+#: static/js/organization/organization_new.js:104
 msgid ""
 "Congratulations, your organization was successfully saved. Please, now add "
 "the data from the branch you have marked on the map"
@@ -282,49 +321,29 @@ msgstr ""
 "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
 "adicione os dados da unidade que você marcou no mapa"
 
-#: apps/organization/static/js/organization_related_items.js:7
-#, perl-format
-msgid "%s point on map"
-msgid_plural "%s points on map"
-msgstr[0] "%s ponto no mapa"
-msgstr[1] "%s pontos no mapa"
+#~ msgid "Edit"
+#~ msgstr "Editar"
 
-#: apps/organization/static/js/organization_related_items.js:7
-#, perl-format
-msgid "Supported %s organization"
-msgid_plural "Supported %s organizations"
-msgstr[0] "apoiou %s organização"
-msgstr[1] "apoiou %s organizações"
+#~ msgid "Add"
+#~ msgstr "Adicionar"
 
-#: apps/organization/static/js/organization_related_items.js:7
-#, perl-format
-msgid "On %s community"
-msgid_plural "On %s communities"
-msgstr[0] "Em %s comunidade"
-msgstr[1] "Em %s comunidades"
+#~ msgid "Add another region"
+#~ msgstr "Adicionar outra região"
 
-#: apps/organization/static/js/organization_related_items.js:7
-#, perl-format
-msgid "Supported %s resource"
-msgid_plural "Supported %s resources"
-msgstr[0] "%s recurso apoiado"
-msgstr[1] "%s recursos apoiados"
+#~ msgid "Cut out a hole from a region"
+#~ msgstr "Adicionar um buraco a região"
 
-#: apps/organization/static/js/organization_related_items.js:7
-#, perl-format
-msgid "Supported %s need"
-msgid_plural "Supported %s needs"
-msgstr[0] "%s necessidade apoiada"
-msgstr[1] "%s necessidades apoiadas"
+#~ msgid "Delete a region"
+#~ msgstr "Apagar uma região"
 
-#: apps/vote/static/js/vote.js:38
-msgid "error : "
-msgstr "erro : "
+#~ msgid "Title"
+#~ msgstr "Título"
 
-#: lib/fileupload/static/plupload/komoo_plupload.js:163
-#: lib/fileupload/static/plupload/singlefile_plupload.js:109
-msgid "Are you sure you want to delete this file?"
-msgstr "Você deseja realmente apagar este arquivo?"
+#~ msgid "Finish"
+#~ msgstr "Concluir"
+
+#~ msgid "error : "
+#~ msgstr "erro : "
 
 #~ msgid "added"
 #~ msgstr "adicionado(a)"
