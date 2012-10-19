@@ -112,18 +112,23 @@ form#form_login {
     #login_box div#separator .vertical_line.bottom {
       bottom: 0; }
 
-#user_verification div.check_email {
-  height: 400px; }
-  #user_verification div.check_email img, #user_verification div.check_email .message {
-    position: absolute; }
-  #user_verification div.check_email .message {
-    width: 320px;
-    left: 450px;
-    top: 260px; }
-  #user_verification div.check_email h1, #user_verification div.check_email p {
+#user_verification {
+  width: 700px;
+  height: 400px;
+  position: relative; }
+  #user_verification h1, #user_verification p {
     font-size: 28px;
     line-height: 28px;
     margin-bottom: 20px; }
+  #user_verification .check_email .right {
+    margin-top: 100px;
+    width: 320px; }
+  #user_verification .verified .left {
+    margin-top: 100px;
+    margin-left: 30px;
+    width: 320px; }
+  #user_verification .verified .right {
+    margin-top: 60px; }
 
 #ie-warning {
   padding: 5px 50px 5px 50px;

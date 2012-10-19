@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-18 17:41-0300\n"
+"POT-Creation-Date: 2012-10-19 11:19-0300\n"
 "PO-Revision-Date: 2012-10-18 17:41-0300\n"
-"Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
+"Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -1042,23 +1042,27 @@ msgstr "Salvar mudanças"
 msgid "Close"
 msgstr "Fechar"
 
-#: templates/authentication/verification.html:13
+#: templates/authentication/verification.html:15
 msgid "Your account was created!"
 msgstr "Sua conta foi criada!"
 
-#: templates/authentication/verification.html:14
+#: templates/authentication/verification.html:16
 msgid "But before using you need to confirm your e-mail. Go check your inbox!"
 msgstr ""
 "Mas antes de começar a usar, você precisa confirmar seu email. Vá checar sua "
 "caixa postal!"
 
-#: templates/authentication/verification.html:19
-msgid "Your email was succesfully verified! Now, do login!"
-msgstr "Seu email foi verificado com sucesso! Agora, entre no sistema!"
+#: templates/authentication/verification.html:24
+msgid "Your email was succesfully verified!"
+msgstr "Seu email foi verificado com sucesso!"
 
-#: templates/authentication/verification.html:22
-msgid "Your email had already been verified! Now, do login!"
-msgstr "Seu email já foi verificado! Agora, entre no sistema!"
+#: templates/authentication/verification.html:27
+msgid "Your email had already been verified!"
+msgstr "Seu email já foi verificado!"
+
+#: templates/authentication/verification.html:30
+msgid "Now, do login!"
+msgstr "Agora, faça login!"
 
 #: templates/comments/comment.html:8 templates/comments/comment.html.py:20
 #, python-format

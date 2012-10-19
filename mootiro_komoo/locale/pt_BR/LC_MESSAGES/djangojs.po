@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-18 17:41-0300\n"
+"POT-Creation-Date: 2012-10-19 11:19-0300\n"
 "PO-Revision-Date: 2012-10-18 17:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -128,6 +128,38 @@ msgstr "Seus dados públicos foram salvos com sucesso!"
 msgid "Seus dados pessoais foram salvos com sucesso!"
 msgstr "Seus dados pessoais foram salvos com sucesso!"
 
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:9
+msgid "Next Step"
+msgstr "Avançar"
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:10
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:11
+msgid "Close"
+msgstr "Fechar"
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:12
+msgid "Add shape"
+msgstr "Adicionar área"
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:14
+msgid "Add point"
+msgstr "Adicionar ponto"
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:15
+msgid "Sum"
+msgstr "Somar"
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:16
+msgid "Cut out"
+msgstr "Cortar"
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:17
+msgid "Loading..."
+msgstr "Carregando..."
+
 #: static/js.build/map/maptypes.js:1 static/js/map/maptypes.js:60
 msgid "Clean"
 msgstr "Limpo"
@@ -246,41 +278,9 @@ msgstr "Recurso"
 msgid "at"
 msgstr "em"
 
-#: static/js/map/controls.js:9
-msgid "Next Step"
-msgstr "Avançar"
-
-#: static/js/map/controls.js:10
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: static/js/map/controls.js:11
-msgid "Close"
-msgstr "Fechar"
-
-#: static/js/map/controls.js:12
-msgid "Add shape"
-msgstr "Adicionar área"
-
 #: static/js/map/controls.js:13
 msgid "Add line"
 msgstr "Adicionar linha"
-
-#: static/js/map/controls.js:14
-msgid "Add point"
-msgstr "Adicionar ponto"
-
-#: static/js/map/controls.js:15
-msgid "Sum"
-msgstr "Somar"
-
-#: static/js/map/controls.js:16
-msgid "Cut out"
-msgstr "Cortar"
-
-#: static/js/map/controls.js:17
-msgid "Loading..."
-msgstr "Carregando..."
 
 #: static/js/map/controls.js:762
 #, perl-format

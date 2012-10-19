@@ -122,24 +122,31 @@ form#form_login {
 
 }
 
+
 #user_verification {
-  div.check_email {
-    height: 400px;
+  width: 700px;
+  height: 400px;
+  position: relative;
 
-    img, .message {
-      position: absolute;
-    }
+  h1, p {
+    font-size: 28px;
+    line-height: 28px;
+    margin-bottom: 20px;
+    // text-align: center;
+  }
 
-    .message {
-      width: 320px;
-      left: 450px;
-      top: 260px;
-    }
+  .check_email .right {
+    margin-top: 100px;
+    width: 320px;
+  }
 
-    h1, p {
-      font-size: 28px;
-      line-height: 28px;
-      margin-bottom: 20px;
-    }
+  .verified .left {
+    margin-top: 100px;
+    margin-left: 30px;
+    width: 320px;
+  }
+
+  .verified .right {
+    margin-top: 60px;
   }
 }

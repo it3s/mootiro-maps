@@ -8,21 +8,31 @@
   <section id="user_verification">
     {% if message == 'check_email' %}
       <div class="check_email">
-        <img src="{{STATIC_URL}}img/spock-email.png" />
-        <div class="message">
+        <div class="left">
+          <img src="{{STATIC_URL}}img/spock-email.png" />
+        </div>
+        <div class="right">
           <h1>{% trans "Your account was created!" %}</h1>
           <p>{% trans "But before using you need to confirm your e-mail. Go check your inbox!" %}</p>
         </div>
       </div>
     {% else %}
-      {% if message == 'activated' %}
-        {% trans "Your email was succesfully verified! Now, do login!" %}
-      {% endif %}
-      {% if message == 'already_verified' %}
-        {% trans "Your email had already been verified! Now, do login!" %}
-      {% endif %}
-      <br/><br/>
-      {% include "authentication/komoo_login_form.html" %}
+      <div class="verified">
+        <div class="left">
+          <h1>
+            {% if message == 'activated' %}
+              {% trans "Your email was succesfully verified!" %}
+            {% endif %}
+            {% if message == 'already_verified' %}
+              {% trans "Your email had already been verified!" %}
+            {% endif %}
+          </h1>
+            <p>{% trans "Now, do login!" %} ---------></p>
+        </div>
+        <div class="right">
+          {% include "authentication/komoo_login_form.html" %}
+        </div>
+      </div>
     {% endif %}
     
   </section>
