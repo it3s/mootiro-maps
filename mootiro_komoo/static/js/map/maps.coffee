@@ -1,5 +1,4 @@
-define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries',
-    'map/controls', 'map/maptypes', 'map/providers'],
+define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries'],
 (googleMaps, _, core, Collections, Features, geometries) ->
     'use strict'
 
@@ -31,6 +30,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             super()
             @element = @options.element ? \
                        document.getElementById @options.elementId
+            @el = @element
 
             @features = Collections.makeFeatureCollectionPlus map: @
 
@@ -52,6 +52,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                     @fitBounds bounds
                 features?.setMap this, geometry: on, icon: on
                 @publish 'set_zoom', @options.zoom
+                @publish 'features_loaded_from_options', features
 
         initGoogleMap: (options = @googleMapDefaultOptions) ->
             @googleMap = new googleMaps.Map @element, options
@@ -362,8 +363,10 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             @addComponent 'map/controls::GeometrySelector'
             @addComponent 'map/controls::PerimeterSelector'
 
-            if not @goToSavedLocation()
-                @goToUserLocation()
+            console.log options
+            if not options?.geojson?.features
+                if not @goToSavedLocation()
+                    @goToUserLocation()
 
 
     window.komoo.maps =

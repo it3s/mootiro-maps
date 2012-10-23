@@ -356,6 +356,9 @@ def build_js():
     """Combine and minify RequireJS modules"""
     import os
     from shutil import copytree, rmtree, ignore_patterns
+
+    compile_coffee()
+
     collect_js()
 
     proj_path = os.path.dirname(__file__)
@@ -377,7 +380,6 @@ def build():
     """Build step"""
     compilemessages()
     js_urls()
-    compile_coffee()
     compile_sass()
     build_js()
 

@@ -52,7 +52,9 @@
         {% endfor %}
       </ul>
     </div>
-    {% projects_for_object community %}
+    {#% projects_for_object community %#}
+    <div id="projectsBox" class="block">
+    </div>
   </div>
 
   <div class="view-extras">
@@ -69,14 +71,28 @@
 
 {% block page_scripts %}
 <script type="text/javascript">
-    require(['map.jquery'], function () {
+  var KomooNS = (function (KomooNS) {
+
+    KomooNS.current_object = {
+      id: {{ community.id }},
+      type: '{{ community.classname }}',
+      appLabel: '{{ community.app_label }}',
+      modelName: '{{ community.modelname }}',
+      geojson: {{ community.geojson|safe }}
+    };
+
+    require(['jquery', 'map.jquery'], function ($) {
       $("#map-preview-canvas").komooMap({
         type: 'preview',
-        geojson: {{ geojson|safe }},
+        geojson: KomooNS.current_object.geojson,
         width: '200px',
         height: '200px'
       });
     });
+
+    return KomooNS;
+  }(KomooNS || {}));
+
   </script>
   {% comments_staticfiles %}
 {% endblock %}

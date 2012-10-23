@@ -2,6 +2,7 @@
 
   require(['map/features'], function(features) {
     var _this = this;
+    module('Map Features');
     test('Basic requirements', function() {
       expect(3);
       ok(Function.call, 'Function.call()');

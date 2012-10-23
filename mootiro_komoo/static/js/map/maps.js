@@ -4,7 +4,7 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  define(['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries', 'map/controls', 'map/maptypes', 'map/providers'], function(googleMaps, _, core, Collections, Features, geometries) {
+  define(['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries'], function(googleMaps, _, core, Collections, Features, geometries) {
     'use strict';
     var AjaxEditor, AjaxMap, Editor, Map, Preview, StaticMap, UserEditor, _base;
     if (window.komoo == null) window.komoo = {};
@@ -43,6 +43,7 @@
         this.addFeature = __bind(this.addFeature, this);
         Map.__super__.constructor.call(this);
         this.element = (_ref = this.options.element) != null ? _ref : document.getElementById(this.options.elementId);
+        this.el = this.element;
         this.features = Collections.makeFeatureCollectionPlus({
           map: this
         });
@@ -69,7 +70,8 @@
               icon: true
             });
           }
-          return this.publish('set_zoom', this.options.zoom);
+          this.publish('set_zoom', this.options.zoom);
+          return this.publish('features_loaded_from_options', features);
         }
       };
 
@@ -527,12 +529,16 @@
       __extends(AjaxEditor, _super);
 
       function AjaxEditor(options) {
+        var _ref;
         AjaxEditor.__super__.constructor.call(this, options);
         this.addComponent('map/controls::DrawingManager');
         this.addComponent('map/controls::DrawingControl');
         this.addComponent('map/controls::GeometrySelector');
         this.addComponent('map/controls::PerimeterSelector');
-        if (!this.goToSavedLocation()) this.goToUserLocation();
+        console.log(options);
+        if (!(options != null ? (_ref = options.geojson) != null ? _ref.features : void 0 : void 0)) {
+          if (!this.goToSavedLocation()) this.goToUserLocation();
+        }
       }
 
       return AjaxEditor;

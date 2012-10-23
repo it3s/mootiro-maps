@@ -31,6 +31,8 @@
 
 {% block page_scripts %}
   <script type="text/javascript">
-    $(".more.user").komooTooltip();
+    require(['jquery', 'utils'], function ($) {
+      $(".more.user").komooTooltip();
+    });
   </script>
 {% endblock %}

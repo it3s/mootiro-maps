@@ -63,21 +63,5 @@
 {% endblock %}
 
 {% block panel_scripts %}
-<script type="text/javascript">
-  $(function() {
-      var onhashchange = function() {
-        hash = window.location.hash;
-        $(hash + '-tab').click();
-      };
-      var tabs = new Tabs('.panel-tab', '.panel');
-      onhashchange();
-      window.onhashchange = onhashchange;
-  });
-  window.csrf_token = '{{ csrf_token }}';
-
-</script>
-
-<script type="text/javascript" src="{{STATIC_URL}}/js/map_filter.js"></script>
-
 <!-- <script type="text/javascript" src="{{ STATIC_URL }}js/komoo_search.js"></script> -->
 {% endblock %}

@@ -108,7 +108,7 @@ $('.close').live('click', function(){
 });
 
 $('.file-thumb').live('click', function(ev){
-    if (isAuthenticated){
+    if (KomooNS && KomooNS.isAuthenticated){
         var file_id  = $(this).parent().attr('file-id');
 
         $.get(

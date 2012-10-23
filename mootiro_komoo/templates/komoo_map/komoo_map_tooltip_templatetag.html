@@ -1,7 +1,21 @@
-{% load komoo_map_tags %}
-
-<div id="map-tooltip" class="map-tooltip">{% komoo_map '{"features": [{}, {}]}' 'type=tooltip' 'width=400px' 'height=400px'%}<div class="close-bttn"><i class="icon-remove"></i></div></div>
+<div id="map-tooltip" class="map-tooltip">
+  <div id="map-tooltip-container">
+    <div id="map-tooltip-canvas" class="komoo-map-googlemap"></div>
+  </div>
+  <div class="close-bttn"><i class="icon-remove"></i></div></div>
 <script type="text/javascript" charset="utf-8">
+  require(['jquery', 'map.jquery'], function ($) {
+    var $map = $('#map-tooltip-canvas').komooMap({
+      type: 'tooltip',
+      // should set 'force: true' because we are not setting a geometry info
+      force: true,
+      geojson: {},
+      height: '400px',
+      width: '400px'
+    });
+    var map = $map.data('map');
+    window.tooltip = map;
+  });
   $(function () {
       var $mapTooltip = $(".map-tooltip").hide();
        $(".map-tooltip .close-bttn").click(function () {

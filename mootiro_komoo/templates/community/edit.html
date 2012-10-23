@@ -32,28 +32,30 @@
 {% block page_scripts %}
     {% load_files community %}
     <script type="text/javascript">
-      $(function(){
-        $('#community_form').ajaxform();
+      require(['jquery', 'utils', 'ajaxforms'], function ($) {
+        $(function(){
+          $('#community_form').ajaxform();
 
-        $('#community_form').komooFormHintBoxes({
-            'name': {
-                hint: 'Coloque o nome da comunidade.'
-            },
-            'population': {
-                hint: 'Coloque aqui o número de moradores da comunidade.',
-                top: '-8px'
-            },
-            'description': {
-                hint: 'Fale um pouco sobre a comunidade, sobre como ela começou, aonde ela fica, se ela é um bairro, uma favela, uma vila.',
-                top: '40%'
-            },
-            'tags': {
-                hint: 'Coloque palavras que classifiquem a comunidade, ou que localizem a comunidade, tal como a "Zona Sul", "Guarapiranga", "favela".',
-                top: '-28px'
-            },
-            'files': {
-                hint: 'Você pode carregar fotos da comunidade.'
-            }
+          $('#community_form').komooFormHintBoxes({
+              'name': {
+                  hint: 'Coloque o nome da comunidade.'
+              },
+              'population': {
+                  hint: 'Coloque aqui o número de moradores da comunidade.',
+                  top: '-8px'
+              },
+              'description': {
+                  hint: 'Fale um pouco sobre a comunidade, sobre como ela começou, aonde ela fica, se ela é um bairro, uma favela, uma vila.',
+                  top: '40%'
+              },
+              'tags': {
+                  hint: 'Coloque palavras que classifiquem a comunidade, ou que localizem a comunidade, tal como a "Zona Sul", "Guarapiranga", "favela".',
+                  top: '-28px'
+              },
+              'files': {
+                  hint: 'Você pode carregar fotos da comunidade.'
+              }
+          });
         });
       });
     </script>

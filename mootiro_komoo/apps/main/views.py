@@ -49,9 +49,12 @@ ENTITY_MODEL = {
 ENTITY_MODEL_REV = {v: k for k, v in ENTITY_MODEL.items()}
 
 
-@render_to('main/root.html')
-def root(request):
-    return dict(geojson={})
+@render_to('main/map.html')
+def map(request):
+    return {
+        'js_module': 'map/pages/map',  # Load map_page module using RequireJS
+        'geojson': {}
+    }
 
 
 def _fetch_geo_objects(Q, zoom):
