@@ -90,16 +90,16 @@ def run_celery():
           .format(django_settings[env_]))
 
 
-def run():
+def run(port=8001):
     """Runs django's development server"""
     run_celery()
     if env_ != 'dev':
         local(
             'python manage.py run_gunicorn --workers=2 '
-            '--bind=127.0.0.1:8001 {}'.format(django_settings[env_]))
+            '--bind=127.0.0.1:{} {}'.format(port, django_settings[env_]))
     else:
-        local('python manage.py runserver --insecure 8001 {}'
-              .format(django_settings[env_]))
+        local('python manage.py runserver --insecure {} {}'
+              .format(port, django_settings[env_]))
 
 
 def collectstatic():
@@ -162,8 +162,11 @@ def syncdb(create_superuser=""):
 
 def recreate_db():
     """Drops komoo database and recreates it with postgis template."""
-    logging.info("Recreating database 'komoo'")
-    local('dropdb mootiro_komoo && createdb -T template_postgis mootiro_komoo')
+    setup_django()
+    from django.conf import settings
+    db_name = settings.DATABASES['default']['NAME']
+    logging.info("Recreating database '{}'".format(db_name))
+    local('dropdb {} && createdb -T template_postgis {}'.format(db_name, db_name))
 
 
 def shell():
