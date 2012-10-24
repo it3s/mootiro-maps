@@ -85,6 +85,8 @@ for mod in ['views', 'models', 'forms', 'utils']:
     LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
         for app in os.listdir('apps/')})
 
+# user specific or secret settings
+from local_settings import *
 
 # ========= To override on local settings =====================================
 # USER_PASSWORD_SALT = '...'
