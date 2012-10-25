@@ -56,8 +56,8 @@ def login_google(request):
 
 def google_authorized(request):
     '''
-    Connect google account information to a user with same email or the current
-    logged one. If no user is matched, creates a new one.
+    Connect google account information to the current logged user or one with
+    same email. If no user is matched, creates a new one.
     '''
     csrf_token = request.GET.get('state', None)
     if not csrf_token or csrf_token != request.session['state']:
@@ -101,7 +101,6 @@ def google_authorized(request):
         if created:
             user.name = data['name']
             user.save()
-
         auth_login(request, user)
 
     return redirect(request.session['next'] or reverse('root'))
