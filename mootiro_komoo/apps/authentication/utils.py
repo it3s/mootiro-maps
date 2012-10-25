@@ -92,8 +92,7 @@ def get_or_create_user_by_credentials(email, provider, access_data=None):
 
     if not provider_credentials:
         # first login with this provider
-        provider_credentials = SocialAuth(email=email,
-                                                   provider=provider)
+        provider_credentials = SocialAuth(email=email, provider=provider)
         provider_credentials.user = user
         # persist access_token and expiration date inside access_data
         provider_credentials.data = access_data
