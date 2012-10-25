@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 14:37-0200\n"
+"POT-Creation-Date: 2012-10-25 20:58-0200\n"
 "PO-Revision-Date: 2012-10-18 17:41-0300\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -687,7 +687,7 @@ msgstr "Entre a legenda para essa imagem"
 msgid "Delete"
 msgstr "Apagar"
 
-#: lib/fileupload/forms.py:131 templates/main/login_box.html:41
+#: lib/fileupload/forms.py:131 templates/authentication/login_box.html:41
 msgid "or"
 msgstr "ou"
 
@@ -921,9 +921,31 @@ msgid "Don't have an account?"
 msgstr "Não possui uma conta? Registre-se!"
 
 #: templates/authentication/komoo_login_form.html:12
-#: templates/main/login_box.html:4
+#: templates/authentication/login_box.html:4
 msgid "Log in"
 msgstr "Entre"
+
+#: templates/authentication/login_box.html:9
+msgid "An error ocurred."
+msgstr "Um erro ocorreu."
+
+#: templates/authentication/login_box.html:11
+msgid "You provided wrong credentials."
+msgstr "Usuário e senha inválidos."
+
+#: templates/authentication/login_box.html:14
+msgid "You have not verified your email yet."
+msgstr "Você ainda não verificou seu email."
+
+#: templates/authentication/login_box.html:25
+#: templates/authentication/profile_update.html:121
+msgid "Log in with Google"
+msgstr "Entre com Google"
+
+#: templates/authentication/login_box.html:33
+#: templates/authentication/profile_update.html:129
+msgid "Log in with Facebook"
+msgstr "Entre com Facebook"
 
 #: templates/authentication/new.html:8
 msgid "New User"
@@ -947,21 +969,25 @@ msgstr "Últimas contribuições"
 
 #: templates/authentication/profile_update.html:17
 msgid "Personal Settings"
-msgstr "Configurações Pessoais"
+msgstr "Dados Pessoais"
 
 #: templates/authentication/profile_update.html:22
 msgid "Public Settings"
-msgstr "Configurações Públicas"
+msgstr "Dados Públicas"
 
 #: templates/authentication/profile_update.html:27
 msgid "Signature Settings"
-msgstr "Configurações de Assinaturas"
+msgstr "Assinaturas"
 
-#: templates/authentication/profile_update.html:43
+#: templates/authentication/profile_update.html:32
+msgid "External Accounts"
+msgstr "Contas Externas"
+
+#: templates/authentication/profile_update.html:48
 msgid "E-mail"
 msgstr "Email"
 
-#: templates/authentication/profile_update.html:49
+#: templates/authentication/profile_update.html:54
 msgid ""
 "emails cannot be changed, if you have a problem with you email address "
 "please contact us"
@@ -969,11 +995,11 @@ msgstr ""
 "não é possível alterar emails, entre em contato se tiver algum problema com "
 "seu endereço de email"
 
-#: templates/authentication/profile_update.html:54
+#: templates/authentication/profile_update.html:59
 msgid "Current Password"
 msgstr "Senha atual"
 
-#: templates/authentication/profile_update.html:59
+#: templates/authentication/profile_update.html:64
 msgid ""
 "Enter your current password if you want change to a new one. If you did not "
 "set a password yet, then leave it blank"
@@ -981,39 +1007,39 @@ msgstr ""
 "Digite sua senha atual caso queira alterá-la para uma nova. Deixe em branco "
 "se você ainda não definiu uma senha"
 
-#: templates/authentication/profile_update.html:64
+#: templates/authentication/profile_update.html:69
 msgid "New Password"
 msgstr "Nova senha"
 
-#: templates/authentication/profile_update.html:69
+#: templates/authentication/profile_update.html:74
 msgid "Enter a new password"
 msgstr "Digite uma nova senha"
 
-#: templates/authentication/profile_update.html:74
+#: templates/authentication/profile_update.html:79
 msgid "Confirm New Password"
 msgstr "Confirme sua nova senha"
 
-#: templates/authentication/profile_update.html:79
+#: templates/authentication/profile_update.html:84
 msgid "Confirm your new password"
 msgstr "Confirme a sua senha"
 
-#: templates/authentication/profile_update.html:139
+#: templates/authentication/profile_update.html:167
 msgid "Cancel Subscription"
 msgstr "Cancelar Assinatura"
 
-#: templates/authentication/profile_update.html:148
+#: templates/authentication/profile_update.html:176
 msgid "Signatures"
 msgstr "Assinaturas"
 
-#: templates/authentication/profile_update.html:152
+#: templates/authentication/profile_update.html:180
 msgid "Receivings Options"
 msgstr "Opções de Recebimentos"
 
-#: templates/authentication/profile_update.html:161
+#: templates/authentication/profile_update.html:189
 msgid "Update your mailing settings"
 msgstr "Atualize suas opções de emails"
 
-#: templates/authentication/profile_update.html:170
+#: templates/authentication/profile_update.html:198
 msgid ""
 "I want to receive only a <strong>weekly</strong> digest mail with the "
 "updates for the objects I'm subescribed to"
@@ -1021,7 +1047,7 @@ msgstr ""
 "Eu quero receber somente notificações com o resumo <strong>semanal</strong> "
 "contendo as atualizações dos objetos que estou observando"
 
-#: templates/authentication/profile_update.html:175
+#: templates/authentication/profile_update.html:203
 msgid ""
 "I want to receive only a <strong>daily</strong> digest mail with the updates "
 "for the objects I'm subescribed to"
@@ -1029,16 +1055,16 @@ msgstr ""
 "Eu quero receber somente notificações com o resumo <strong>diário</strong> "
 "contendo as atualizações dos objetos que estou observando"
 
-#: templates/authentication/profile_update.html:180
+#: templates/authentication/profile_update.html:208
 msgid "I <strong>don't</strong> want to receive mails for updates"
 msgstr "E <strong>não</strong> desejo receber emails de atualizações"
 
-#: templates/authentication/profile_update.html:187
+#: templates/authentication/profile_update.html:215
 #: templates/project/projects_tag.html:46
 msgid "Save changes"
 msgstr "Salvar mudanças"
 
-#: templates/authentication/profile_update.html:190
+#: templates/authentication/profile_update.html:218
 msgid "Close"
 msgstr "Fechar"
 
@@ -1263,26 +1289,6 @@ msgid ""
 "Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, "
 "consulte as Condições de Uso."
 msgstr ""
-
-#: templates/main/login_box.html:9
-msgid "An error ocurred."
-msgstr "Um erro ocorreu."
-
-#: templates/main/login_box.html:11
-msgid "You provided wrong credentials."
-msgstr "Usuário e senha inválidos."
-
-#: templates/main/login_box.html:14
-msgid "You have not verified your email yet."
-msgstr "Você ainda não verificou seu email."
-
-#: templates/main/login_box.html:25
-msgid "Log in with Google"
-msgstr "Entre com Google"
-
-#: templates/main/login_box.html:33
-msgid "Log in with Facebook"
-msgstr "Entre com Facebook"
 
 #: templates/main/supporters.html:3
 msgid "Support"
