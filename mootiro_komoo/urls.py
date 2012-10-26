@@ -64,6 +64,7 @@ urlpatterns = patterns('',
     url(r'^about', 'hotsite.views.root'),
     url(r'^signatures/', include('signatures.urls')),
     url(r'^community/', include('community.urls')),
+    url(r'^importsheet/', include('importsheet.urls')),
 )
 
 if settings.DEBUG:

@@ -130,6 +130,7 @@ INSTALLED_APPS = [
     'update',
     'komoo_project',
     'discussion',
+    'importsheet',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
