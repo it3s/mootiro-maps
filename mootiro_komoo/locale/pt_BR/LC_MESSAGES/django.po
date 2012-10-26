@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-25 20:58-0200\n"
+"POT-Creation-Date: 2012-10-25 22:39-0200\n"
 "PO-Revision-Date: 2012-10-18 17:41-0300\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -938,12 +938,10 @@ msgid "You have not verified your email yet."
 msgstr "Você ainda não verificou seu email."
 
 #: templates/authentication/login_box.html:25
-#: templates/authentication/profile_update.html:121
 msgid "Log in with Google"
 msgstr "Entre com Google"
 
 #: templates/authentication/login_box.html:33
-#: templates/authentication/profile_update.html:129
 msgid "Log in with Facebook"
 msgstr "Entre com Facebook"
 
@@ -1023,23 +1021,39 @@ msgstr "Confirme sua nova senha"
 msgid "Confirm your new password"
 msgstr "Confirme a sua senha"
 
-#: templates/authentication/profile_update.html:167
+#: templates/authentication/profile_update.html:118
+msgid "Your Google account is:"
+msgstr "Sua conta do Google é:"
+
+#: templates/authentication/profile_update.html:124
+msgid "Connect with Google"
+msgstr "Conecte sua conta do Google"
+
+#: templates/authentication/profile_update.html:131
+msgid "Your facebook account is:"
+msgstr "Sua conta do facebook é:"
+
+#: templates/authentication/profile_update.html:137
+msgid "Connect with facebook"
+msgstr "Conecte sua conta do facebook"
+
+#: templates/authentication/profile_update.html:176
 msgid "Cancel Subscription"
 msgstr "Cancelar Assinatura"
 
-#: templates/authentication/profile_update.html:176
+#: templates/authentication/profile_update.html:185
 msgid "Signatures"
 msgstr "Assinaturas"
 
-#: templates/authentication/profile_update.html:180
+#: templates/authentication/profile_update.html:189
 msgid "Receivings Options"
 msgstr "Opções de Recebimentos"
 
-#: templates/authentication/profile_update.html:189
+#: templates/authentication/profile_update.html:198
 msgid "Update your mailing settings"
 msgstr "Atualize suas opções de emails"
 
-#: templates/authentication/profile_update.html:198
+#: templates/authentication/profile_update.html:207
 msgid ""
 "I want to receive only a <strong>weekly</strong> digest mail with the "
 "updates for the objects I'm subescribed to"
@@ -1047,7 +1061,7 @@ msgstr ""
 "Eu quero receber somente notificações com o resumo <strong>semanal</strong> "
 "contendo as atualizações dos objetos que estou observando"
 
-#: templates/authentication/profile_update.html:203
+#: templates/authentication/profile_update.html:212
 msgid ""
 "I want to receive only a <strong>daily</strong> digest mail with the updates "
 "for the objects I'm subescribed to"
@@ -1055,16 +1069,16 @@ msgstr ""
 "Eu quero receber somente notificações com o resumo <strong>diário</strong> "
 "contendo as atualizações dos objetos que estou observando"
 
-#: templates/authentication/profile_update.html:208
+#: templates/authentication/profile_update.html:217
 msgid "I <strong>don't</strong> want to receive mails for updates"
 msgstr "E <strong>não</strong> desejo receber emails de atualizações"
 
-#: templates/authentication/profile_update.html:215
+#: templates/authentication/profile_update.html:224
 #: templates/project/projects_tag.html:46
 msgid "Save changes"
 msgstr "Salvar mudanças"
 
-#: templates/authentication/profile_update.html:218
+#: templates/authentication/profile_update.html:227
 msgid "Close"
 msgstr "Fechar"
 
