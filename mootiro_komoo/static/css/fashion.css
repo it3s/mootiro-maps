@@ -137,3 +137,37 @@ ul#external_providers {
   padding: 5px 50px 5px 50px;
   background-color: #ffe5af;
   color: #353535; }
+
+div.importsheet_controls a {
+  color: #fff; }
+div.importsheet_controls a.insert {
+  float: right; }
+
+div.importsheet_missing_column {
+  background: #daa;
+  border: 1px solid #b33;
+  padding: 2px 5px; }
+
+#importsheet_simulation_results div.result {
+  border: 1px solid #ccc;
+  padding: 5px 15px;
+  margin: 15px 0;
+  width: 940px;
+  display: inline-block; }
+  #importsheet_simulation_results div.result div.metadata h3 {
+    font-size: 16px; }
+  #importsheet_simulation_results div.result div.metadata div.errors, #importsheet_simulation_results div.result div.metadata div.warnings {
+    margin: 5px; }
+  #importsheet_simulation_results div.result div.metadata div.errors {
+    background: #daa;
+    border: 1px solid #b33;
+    padding: 2px 5px; }
+  #importsheet_simulation_results div.result div.metadata div.warnings {
+    background: #ee8;
+    border: 1px solid #ed0;
+    padding: 2px 5px; }
+  #importsheet_simulation_results div.result div.importsheet_main_column {
+    width: 700px;
+    margin-right: 20px; }
+  #importsheet_simulation_results div.result div.importsheet_right_bar {
+    width: 200px; }

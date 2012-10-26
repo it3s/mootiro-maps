@@ -130,23 +130,26 @@ INSTALLED_APPS = [
     'update',
     'komoo_project',
     'discussion',
+    'importsheet',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
 
-# ==========  markiItUp =======================================================
+# ========== markiItUp ========================================================
 
 MARKITUP_SET = 'markitup/sets/markdown_pt_BR'
 MARKITUP_FILTER = ('main.utils.render_markup', {})
 MARKITUP_AUTO_PREVIEW = True
 JQUERY_URL = 'dummy.js'
 
-
 # ========== Komoo ============================================================
 KOMOO_COMMENTS_WIDTH = 3
 KOMOO_COMMENTS_HEIGHT = 20
 KOMOO_DISABLE_MAP = False
 DELETE_HOURS = 24
+
+# ========== Importhseet ======================================================
+IMPORTSHEET_TEMPLATE_KEY = '0Ahdnyvg2LXX-dExXeXNpWlFCZlZKcU5pS2NOTC1uanc'
 
 # ========== Ajax-select ======================================================
 AJAX_LOOKUP_CHANNELS = {

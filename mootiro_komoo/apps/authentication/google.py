@@ -94,7 +94,12 @@ def google_authorized(request):
     if request.user.is_authenticated():
         # if a user is already logged, then just connect social auth account
         credential, created = SocialAuth.objects.get_or_create(
-            email=data['email'], user=request.user, provider=PROVIDERS['google'])
+            email=data['email'], provider=PROVIDERS['google'])
+        if created:
+            credential.user = request.user
+        else:
+            # merge users information
+            pass
     else:
         user, created = get_or_create_user_by_credentials(data['email'],
                             PROVIDERS['google'], access_data=access_data)
