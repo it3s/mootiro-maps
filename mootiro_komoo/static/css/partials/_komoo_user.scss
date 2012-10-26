@@ -58,45 +58,6 @@ form#form_login {
     text-align: center;
   }
 
-  ul#external_providers, div#separator, form {
-    float: left;
-  }
-
-  ul#external_providers, form {
-    padding: 10px;
-  }
-
-  ul#external_providers {
-    width: $login_box_width * 0.4;
-
-    li {
-      margin: 15px 0;
-
-      button {
-        width: 100%;
-        padding: 3px 6px;
-        border: 0;
-        border-radius: 5px;
-        color: #fff;
-        font-size: 13px;
-
-        img {
-          width: 22px;
-          height: 22px;
-          float: left;
-          display: block;
-        }
-      }
-
-      button.google { background: $google_red }
-      button.google:hover { background: lighten($google_red, 20%%) }
-      button.facebook { background: $facebook_blue }
-      button.facebook:hover { background: lighten($facebook_blue, 20%%) }
-      button.twitter { background: $twitter_blue }
-      button.twitter:hover { background: lighten($twitter_blue, 20%%) }
-    }
-  }
-
   div#separator {
     width: $login_box_width * 0.10;
     $separator_height: 130px;
@@ -119,7 +80,45 @@ form#form_login {
     .vertical_line.top { top: 0 }
     .vertical_line.bottom { bottom: 0 }
   }
+}
 
+ul#external_providers, div#separator, form {
+  float: left;
+}
+
+ul#external_providers, form {
+  padding: 10px;
+}
+
+ul#external_providers {
+  width: $login_box_width * 0.4;
+
+  li {
+    margin: 15px 0;
+
+    button {
+      width: 100%;
+      padding: 3px 6px;
+      border: 0;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 13px;
+
+      img {
+        width: 22px;
+        height: 22px;
+        float: left;
+        display: block;
+      }
+    }
+
+    button.google { background: $google_red }
+    button.google:hover { background: lighten($google_red, 20%%) }
+    button.facebook { background: $facebook_blue }
+    button.facebook:hover { background: lighten($facebook_blue, 20%%) }
+    button.twitter { background: $twitter_blue }
+    button.twitter:hover { background: lighten($twitter_blue, 20%%) }
+  }
 }
 
 

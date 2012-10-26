@@ -17,7 +17,7 @@
                     {% trans 'Personal Settings' %}
                 </a>
             </li>
-            <li class="deactive">
+            <li class="active">
                 <a href="#tab-pane-public" data-toggle="tab">
                     {% trans 'Public Settings' %}
                 </a>
@@ -27,7 +27,7 @@
                     {% trans 'Signature Settings' %}
                 </a>
             </li>
-            <li class="active">
+            <li>
                 <a href="#tab-pane-accounts" data-toggle="tab">
                     {% trans 'External Accounts' %}
                 </a>
@@ -96,7 +96,7 @@
 
 
             <!-- Tab pane public settings -->
-            <div class="tab-pane deactive" id="tab-pane-public">
+            <div class="tab-pane active" id="tab-pane-public">
                 <div class="form-profile-wrapper">
                     {% crispy form_profile form_profile.helper %}
                 </div>
@@ -111,24 +111,33 @@
 
 
             <!-- Tab pane public settings -->
-            <div class="tab-pane active" id="tab-pane-accounts">
-              <h2>External Accounts</h2>
+            <div class="tab-pane" id="tab-pane-accounts">
               <ul id="external_providers">
                 <li class="google">
+                  {% if user.google %}
+                  <p>{% trans "Your Google account is:" %}</p>
+                  <input type="text" value="{{ user.google.email }}" disabled="true" /> 
+                  {% else %}
                   <a href="{% url login_google %}?next=/user/edit">
                     <button class="google">
                       <img src="{{STATIC_URL}}img/login-google.png" />
-                      {% trans "Log in with Google" %}
+                      {% trans "Connect with Google" %}
                     </button>
                   </a>
+                  {% endif %}
                 </li>
                 <li class="facebook">
-                  <a href="{% url login_facebook %}?next={{ next }}">
+                  {% if user.facebook %}
+                  <p>{% trans "Your facebook account is:" %}</p>
+                  <input type="text" value="{{ user.facebook.email }}" disabled="true" /> 
+                  {% else %}
+                  <a href="{% url login_facebook %}?next=/user/edit">
                     <button class="facebook">
                       <img src="{{STATIC_URL}}img/login-facebook.png" />
-                      {% trans "Log in with Facebook" %}
+                      {% trans "Connect with facebook" %}
                     </button>
                   </a>
+                  {% endif %}
                 </li>
               </ul>
             </div>
