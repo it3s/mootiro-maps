@@ -1,0 +1,23 @@
+<html>
+
+<head>
+  <title>Refresh Token</title>
+</head>
+
+<body>
+  {% if error %}
+  Error:
+    <pre>
+      refresh_token: {{refresh_token}}
+    </pre>
+  {% else %}
+  Refresh token:
+    <pre>
+      refresh_token: {{refresh_token}}
+    </pre>
+  {% endif %}
+
+  <a href="{% url importsheet_refresh_token %}">Refresh!</a>
+</body>
+
+</html>
