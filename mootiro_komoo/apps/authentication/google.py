@@ -27,13 +27,13 @@ from django.core.urlresolvers import reverse
 from main.utils import randstr
 from authentication.utils import login as auth_login
 
-from .models import PROVIDERS
+from .models import PROVIDERS, SocialAuth
 from .utils import encode_querystring
 from .utils import get_or_create_user_by_credentials
 
 
 def login_google(request):
-
+    '''Redirect user to google login and authorization page.'''
     # Step 1: Getting authorization from the user
     csrf_token = randstr(10)
     redirect_uri = request.build_absolute_uri(reverse('google_authorized'))
@@ -54,8 +54,11 @@ def login_google(request):
     return redirect(url)
 
 
-# @render_to('authentication/login.html')
 def google_authorized(request):
+    '''
+    Connect google account information to the current logged user or one with
+    same email. If no user is matched, creates a new one.
+    '''
     csrf_token = request.GET.get('state', None)
     if not csrf_token or csrf_token != request.session['state']:
         return HttpResponse(status=403)  # csrf attack! get that bastard!
@@ -88,12 +91,21 @@ def google_authorized(request):
     url += '?' + encode_querystring(params)
     data = simplejson.loads(requests.get(url).text)
 
-    user, created = get_or_create_user_by_credentials(data['email'],
+    if request.user.is_authenticated():
+        # if a user is already logged, then just connect social auth account
+        credential, created = SocialAuth.objects.get_or_create(
+            email=data['email'], provider=PROVIDERS['google'])
+        if created:
+            credential.user = request.user
+        else:
+            # merge users information
+            pass
+    else:
+        user, created = get_or_create_user_by_credentials(data['email'],
                             PROVIDERS['google'], access_data=access_data)
-    if created:
-        user.name = data['name']
-        user.save()
-
-    auth_login(request, user)
+        if created:
+            user.name = data['name']
+            user.save()
+        auth_login(request, user)
 
     return redirect(request.session['next'] or reverse('root'))

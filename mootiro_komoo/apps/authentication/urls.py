@@ -8,7 +8,6 @@ urlpatterns = patterns('authentication.views',
     # general urls
     url(r'^login/?$', 'login', name='user_login'),
     url(r'^logout/?$', 'logout', name='user_logout'),
-    url(r'^secret/?$', 'secret', name='user_secret'),
 
     # user creation urls
     url(r'^new/?$', 'user_new', name='user_new'),

@@ -27,6 +27,11 @@
                     {% trans 'Signature Settings' %}
                 </a>
             </li>
+            <li>
+                <a href="#tab-pane-accounts" data-toggle="tab">
+                    {% trans 'External Accounts' %}
+                </a>
+            </li>
         </ul>
 
         <!-- tab content section -->
@@ -85,7 +90,6 @@
                                    class="btn button" id="submit-id-submit" />
                         </div>
 
-
                     </form>
                 </div>
             </div><!-- end of tab pane personal settings -->
@@ -104,6 +108,39 @@
                 <div class="signatures-list-wrapper"></div>
 
             </div> <!-- end of signatures tab pane -->
+
+
+            <!-- Tab pane public settings -->
+            <div class="tab-pane" id="tab-pane-accounts">
+              <ul id="external_providers">
+                <li class="google">
+                  {% if user.google %}
+                  <p>{% trans "Your Google account is:" %}</p>
+                  <input type="text" value="{{ user.google.email }}" disabled="true" /> 
+                  {% else %}
+                  <a href="{% url login_google %}?next=/user/edit">
+                    <button class="google">
+                      <img src="{{STATIC_URL}}img/login-google.png" />
+                      {% trans "Connect with Google" %}
+                    </button>
+                  </a>
+                  {% endif %}
+                </li>
+                <li class="facebook">
+                  {% if user.facebook %}
+                  <p>{% trans "Your facebook account is:" %}</p>
+                  <input type="text" value="{{ user.facebook.email }}" disabled="true" /> 
+                  {% else %}
+                  <a href="{% url login_facebook %}?next=/user/edit">
+                    <button class="facebook">
+                      <img src="{{STATIC_URL}}img/login-facebook.png" />
+                      {% trans "Connect with facebook" %}
+                    </button>
+                  </a>
+                  {% endif %}
+                </li>
+              </ul>
+            </div>
 
         </div><!-- end of tab content-->
     </div>
