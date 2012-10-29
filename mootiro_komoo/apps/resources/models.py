@@ -106,3 +106,37 @@ class Resource(GeoRefModel):
 
 if not reversion.is_registered(Resource):
     reversion.register(Resource)
+
+
+## ====================== New implementation ===============================###
+from main.models import CommonObject, CommonDataMixin
+from jsonfield import JSONField
+
+
+class Resource_CO(CommonObject, CommonDataMixin):
+    """ New CommonObject inherited Resources model"""
+    common_object_type = 'resource'
+
+    # kind still makes sense? new global 'area' tags?
+    kind = models.ForeignKey(ResourceKind, null=True, blank=True)
+
+    contact = JSONField(null=True, blank=True)
+
+    class Map:
+        title = _('Resource')
+        editable = True
+        background_color = '#28CB05'
+        border_color = '#1D9104'
+        geometries = (POLYGON, LINESTRING, POINT)
+        form_view_name = 'new_resource_from_map'
+        zindex = 15
+
+    def to_dict(self):
+        data = super(Resource_CO, self).to_dict()
+        data.update({
+            'kind': self.kind,
+            'contact': self.contact,
+        })
+        return data
+
+

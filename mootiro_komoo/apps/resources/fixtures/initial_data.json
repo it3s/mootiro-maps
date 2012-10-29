@@ -1,6 +1,6 @@
 [
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 1,
     "fields": {
       "name": "Espaço",
@@ -8,7 +8,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 2,
     "fields": {
       "name": "Material",
@@ -16,7 +16,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 3,
     "fields": {
       "name": "Equipamento",
@@ -24,7 +24,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 4,
     "fields": {
       "name": "Veículo",
@@ -32,7 +32,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 5,
     "fields": {
       "name": "Outros",
