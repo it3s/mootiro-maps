@@ -89,3 +89,40 @@ class Community(GeoRefModel):
 
 if not reversion.is_registered(Community):
     reversion.register(Community)
+
+
+## =================== New implementation ================================== ##
+from main.models import CommonObject, CommonDataMixin
+
+
+class Community_CO(CommonObject, CommonDataMixin):
+    """ Common Object inherited Community"""
+    common_object_type = 'community'
+
+    population = models.IntegerField(null=True, blank=True)
+
+    class Map:
+        title = _('Community')
+        editable = True
+        background_color = '#ffc166'
+        border_color = '#ff2e2e'
+        geometries = (POLYGON, )
+        form_view_name = 'new_community'
+        min_zoom_geometry = 10
+        max_zoom_geometry = 100
+        min_zoom_point = 0
+        max_zoom_point = 0
+        min_zoom_icon = 0
+        max_zoom_icon = 0
+        zindex = 5
+
+    def to_json(self):
+        data = super(Community_CO, self).to_json()
+        data.update({
+            'population': self.population,
+        })
+        return data
+
+    def is_valid(self):
+        res = super(Community_CO, self).is_valid()
+        return res

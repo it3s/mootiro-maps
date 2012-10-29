@@ -139,4 +139,9 @@ class Resource_CO(CommonObject, CommonDataMixin):
         })
         return data
 
+    def is_valid(self):
+        # do some validations here
+        res = super(Resource_CO, self).is_valid()
+        return res
+
 

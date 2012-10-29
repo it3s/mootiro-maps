@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.contrib.gis.db import models
+from django.db import models
 from django.conf import settings
 
 from lib.taggit.managers import TaggableManager
@@ -21,11 +21,14 @@ class CommonDataMixin(models.Model):
 
     tags = TaggableManager()
 
+    def __unicode__(self):
+        return unicode(self.name)
+
     class Meta:
         abstract = True
 
 
-class CommonObject(GeoRefModel, CommonDataMixin):
+class CommonObject(GeoRefModel):
     """
     All mapped objects inherit from this object so then can be
     inter-changeable. This model holds the 'true PK'' for a mapped
@@ -44,9 +47,6 @@ class CommonObject(GeoRefModel, CommonDataMixin):
         super(CommonObject, self).__init__(*args, **kwargs)
         if hasattr(self, 'common_object_type') and self.common_object_type:
             self.type = self.common_object_type
-
-    def __unicode__(self):
-        return unicode('[{}] {}'.format(self.type, self.name))
 
 
 class RelationType(models.Model):
