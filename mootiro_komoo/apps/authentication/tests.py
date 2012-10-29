@@ -37,6 +37,10 @@ class UserTestCase(KomooTestCase):
         self.assertContains(resp, 'id_email')
         self.assertContains(resp, 'id_password')
 
+    def test_external_accounts_tab_exists(self):
+        user = self.login_user()
+        response = self.assert_200(reverse('profile_update'))
+        self.assertContains(response, 'External Accounts')
 
     # FIXME: seems this test is old. It does not make sense in the current
     # implementation of profile_update view
