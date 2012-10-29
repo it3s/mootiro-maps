@@ -1,7 +1,7 @@
 #! coding: utf-8 -*-
 from django import template
 from django.contrib.contenttypes.models import ContentType
-from komoo_project.models import Project, ProjectRelatedObject
+from projects.models import Project, ProjectRelatedObject
 from main.widgets import Autocomplete
 
 

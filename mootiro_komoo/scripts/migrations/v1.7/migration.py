@@ -19,12 +19,25 @@ def migrate_resources(data):
             entry['model'] = 'resources.resourcekind'
     return data
 
+
+def migrate_projects(data):
+    logging.info('Migrating Projects')
+
+    for entry in data:
+        if entry['model'] == 'komoo_project.projects':
+            entry['model'] = 'projects.project'
+        elif entry['model'] == 'komoo_project.projectrelatedobject':
+            entry['model'] = 'projects.projectrelatedobject'
+    return data
+
+
 def parse_json_file(file_):
     new_data = {}
     with codecs.open(file_, 'r', 'utf-8') as f:
         data = json.loads(f.read())
 
         data = migrate_resources(data)
+        data = migrate_projects(data)
 
         new_data = json.dumps(data)
 

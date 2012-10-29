@@ -20,7 +20,7 @@ from proposal.models import Proposal
 from resources.models import Resource
 from organization.models import Organization
 from investment.models import Investment
-from komoo_project.models import Project
+from projects.models import Project
 from .forms import DiscussionForm
 from main.views import ENTITY_MODEL
 

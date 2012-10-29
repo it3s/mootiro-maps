@@ -128,7 +128,7 @@ INSTALLED_APPS = [
     'hotsite',
     'signatures',
     'update',
-    'komoo_project',
+    'projects',
     'discussion',
 ]
 

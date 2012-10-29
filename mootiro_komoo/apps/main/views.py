@@ -28,7 +28,7 @@ from proposal.models import Proposal
 from organization.models import OrganizationBranch, Organization
 from resources.models import Resource
 from investment.models import Investment
-from komoo_project.models import Project
+from projects.models import Project
 from main.utils import create_geojson, ResourceHandler
 
 logger = logging.getLogger(__name__)
