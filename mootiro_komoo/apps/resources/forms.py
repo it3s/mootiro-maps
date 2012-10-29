@@ -13,7 +13,7 @@ from ajaxforms import AjaxModelForm
 from main.utils import MooHelper
 from main.widgets import TaggitWidget, AutocompleteWithFavorites
 from ajax_select.fields import AutoCompleteSelectMultipleField
-from komoo_resource.models import Resource, ResourceKind
+from resources.models import Resource, ResourceKind
 from signatures.signals import notify_on_update
 
 logger = logging.getLogger(__name__)

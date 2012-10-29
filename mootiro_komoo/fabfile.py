@@ -115,7 +115,7 @@ def kill_manage_tasks():
 
 def test(
         apps=" ".join([
-            'community', 'need', 'organization', 'proposal', 'komoo_resource',
+            'community', 'need', 'organization', 'proposal', 'resources',
             'investment', 'main', 'authentication', 'moderation']),
         recreate_db=False):
     """Run application tests"""
@@ -304,7 +304,7 @@ def populate_history():
     from need.models import Need
     from proposal.models import Proposal
     from organization.models import Organization
-    from komoo_resource.models import Resource
+    from resources.models import Resource
     from investment.models import Investment
 
     for model in [Community, Need, Proposal, Organization, Resource,

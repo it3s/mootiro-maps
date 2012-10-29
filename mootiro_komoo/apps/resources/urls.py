@@ -3,7 +3,7 @@ from django.conf.urls.defaults import patterns, url
 from mootiro_komoo.urls import prepare_regex as pr
 
 
-urlpatterns = patterns('komoo_resource.views',
+urlpatterns = patterns('resources.views',
     url(r'^new/?$', 'new_resource', name='new_resource'),
     url(r'^new/from_map/?$', 'new_resource_from_map',
                 name='new_resource_from_map'),

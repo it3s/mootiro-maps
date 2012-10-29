@@ -120,7 +120,7 @@ INSTALLED_APPS = [
     'need',
     'proposal',
     'komoo_comments',
-    'komoo_resource',
+    'resources',
     'authentication',
     'organization',
     'investment',

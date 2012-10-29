@@ -26,7 +26,7 @@ from community.models import Community
 from need.models import Need
 from proposal.models import Proposal
 from organization.models import OrganizationBranch, Organization
-from komoo_resource.models import Resource
+from resources.models import Resource
 from investment.models import Investment
 from komoo_project.models import Project
 from main.utils import create_geojson, ResourceHandler

@@ -44,7 +44,7 @@ def _prepare_contrib_data(version, created_date):
 
     regular_types = [
         'need.need',
-        'komoo_resource.resource',
+        'resources.resource',
         'community.community',
         'organization.organization',
         'organization.organizationbranch',

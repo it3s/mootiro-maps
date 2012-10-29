@@ -10,7 +10,7 @@ from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import pgettext
 
-from komoo_resource.models import Resource
+from resources.models import Resource
 from proposal.models import Proposal
 
 
@@ -139,7 +139,7 @@ class Update(models.Model):
     @property
     def object_app_name(self):
         if self.object_type == 'resource':
-            return 'komoo_resource'
+            return 'resources'
         elif self.object_type == 'organizationbranch':
             return 'organization'
         else:

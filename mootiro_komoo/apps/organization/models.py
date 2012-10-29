@@ -15,7 +15,7 @@ from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
 from need.models import TargetAudience
 from proposal.models import Proposal
-from komoo_resource.models import Resource
+from resources.models import Resource
 from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
