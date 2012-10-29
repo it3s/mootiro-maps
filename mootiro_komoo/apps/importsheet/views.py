@@ -2,35 +2,45 @@
 '''
 
 Reference:
+    https://developers.google.com/accounts/docs/OAuth2WebServer#offline
     https://developers.google.com/api-client-library/python/reference/pydoc
     https://developers.google.com/apis-explorer/
 '''
 from __future__ import unicode_literals
+import httplib2
 
+# Google API
 from apiclient.discovery import build
+from oauth2client.client import AccessTokenCredentials
 
 from annoying.decorators import render_to
+from .token import get_access_token
+
+
+def google_drive_service(request):
+    access_token = get_access_token()
+    user_agent = request.META['HTTP_USER_AGENT']
+    credentials = AccessTokenCredentials(access_token, user_agent)
+    http = httplib2.Http()
+    http = credentials.authorize(http)
+    service = build('drive', 'v2', http)
+    return service
 
 
 @render_to('importsheet/poc.html')
 def poc(request):
-    return dict()
+
+    k = '0Ahdnyvg2LXX-dDFITkdXd0hBNFBDczA4RFV2dVBVM0E'
+    service = google_drive_service(request)
+
+    # Copiar um documento
+    d = service.files().copy(fileId=k, body=dict(title="Copia")).execute()
+    
+    # Baixar uma worksheet especifica
 
 
 
-import httplib2
-from oauth2client.client import OAuth2WebServerFlow
+    return dict(
+        copy=d['id']
 
-# Run through the OAuth flow and retrieve credentials
-flow = OAuth2WebServerFlow(CLIENT_ID, CLIENT_SECRET, OAUTH_SCOPE)
-authorize_url = flow.step1_get_authorize_url()
-print 'Go to the following link in your browser: ' + authorize_url
-code = raw_input('Enter verification code: ').strip()
-credentials = flow.step2_exchange(code)
-
-# Create an httplib2.Http object and authorize it with our credentials
-http = httplib2.Http()
-http = credentials.authorize(http)
-
-drive_service = build('drive', 'v2', http=http)
-drive_service.files().copy(fileId=origin_file_id, body=copied_file).execute()
+    )

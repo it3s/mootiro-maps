@@ -17,7 +17,8 @@ from authentication.utils import encode_querystring
 
 def refresh_token(request):
     '''Getting authorization from the user'''
-    redirect_uri = request.build_absolute_uri(reverse('importsheet_refresh_token_authorized'))
+    redirect_uri = request.build_absolute_uri(
+                        reverse('importsheet_refresh_token_authorized'))
     params = {
         'client_id': settings.GOOGLE_APP_ID,
         'redirect_uri': redirect_uri,
@@ -41,7 +42,8 @@ def refresh_token_authorized(request):
         error_description = request.GET.get('error_description', None)
         return dict(error=error_description)
 
-    redirect_uri = request.build_absolute_uri(reverse('importsheet_refresh_token_authorized'))
+    redirect_uri = request.build_absolute_uri(
+                        reverse('importsheet_refresh_token_authorized'))
     params = {
         'client_id': settings.GOOGLE_APP_ID,
         'client_secret': settings.GOOGLE_APP_SECRET,
@@ -54,4 +56,21 @@ def refresh_token_authorized(request):
     access_data = simplejson.loads(resp.text)
     refresh_token = access_data['refresh_token']
 
-    return dict(refresh_token=refresh_token)
+    return dict(refresh_token=access_data)
+
+
+REFRESH_TOKEN = '1/jb0f_r6DC7sodr8te4chKfVIHZQWaI5ZHl26eHfIhss'
+
+def get_access_token():
+    # TODO: only refresh the token if expired
+    params = {
+        'client_id': settings.GOOGLE_APP_ID,
+        'client_secret': settings.GOOGLE_APP_SECRET,
+        'refresh_token': REFRESH_TOKEN,
+        'grant_type': 'refresh_token',
+    }
+    url = 'https://accounts.google.com/o/oauth2/token'
+    resp = requests.post(url, data=params)
+    data = simplejson.loads(resp.text)
+    access_token = data['access_token']
+    return access_token
