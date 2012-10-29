@@ -6,10 +6,15 @@ account. Once you get the refresh code store it securely!
 from __future__ import unicode_literals
 import requests
 import simplejson
+import httplib2
 
 from django.conf import settings
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+
+# Google API
+from apiclient.discovery import build
+from oauth2client.client import AccessTokenCredentials
 
 from annoying.decorators import render_to
 from authentication.utils import encode_querystring
@@ -74,3 +79,26 @@ def get_access_token():
     data = simplejson.loads(resp.text)
     access_token = data['access_token']
     return access_token
+
+
+def authorized_http(request):
+    access_token = get_access_token()
+    user_agent = request.META['HTTP_USER_AGENT']
+    credentials = AccessTokenCredentials(access_token, user_agent)
+    http = httplib2.Http()
+    http = credentials.authorize(http)
+    return http
+
+
+def google_drive_service(request):
+    '''Build and return a google drive service to interact with.'''
+    http = authorized_http(request)
+    service = build('drive', 'v2', http)
+    return service
+
+
+def google_spreadsheets_service(request):
+    '''Build and return a google spreadsheets service to interact with.'''
+    http = authorized_http(request)
+    service = build('spreadsheets', 'v3', http)
+    return service
