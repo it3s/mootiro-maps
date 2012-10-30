@@ -15,6 +15,8 @@ from django.core.urlresolvers import reverse
 # Google API
 from apiclient.discovery import build
 from oauth2client.client import AccessTokenCredentials
+from gdata.spreadsheet.service import SpreadsheetsService
+from gdata.gauth import AuthSubToken
 
 from annoying.decorators import render_to
 from authentication.utils import encode_querystring
@@ -29,7 +31,8 @@ def refresh_token(request):
         'redirect_uri': redirect_uri,
         # below a space separated list of permissions
         'scope': 'https://www.googleapis.com/auth/drive '
-                 'https://www.googleapis.com/auth/drive.file',
+                 'https://www.googleapis.com/auth/drive.file '
+                 'https://spreadsheets.google.com/feeds',
         'access_type': 'offline',
         'response_type': 'code',
         'approval_prompt': 'force',
@@ -64,7 +67,11 @@ def refresh_token_authorized(request):
     return dict(refresh_token=access_data)
 
 
-REFRESH_TOKEN = '1/jb0f_r6DC7sodr8te4chKfVIHZQWaI5ZHl26eHfIhss'
+REFRESH_TOKEN = '1/DgY8HwFHcpj-SV-jQUULbC0_h_c-CY_CZswxz8RUbyE'
+
+def get_tok():
+    return AuthSubToken(token_string=get_access_token())
+
 
 def get_access_token():
     # TODO: only refresh the token if expired
@@ -99,6 +106,10 @@ def google_drive_service(request):
 
 def google_spreadsheets_service(request):
     '''Build and return a google spreadsheets service to interact with.'''
+    
     http = authorized_http(request)
     service = build('spreadsheets', 'v3', http)
     return service
+
+
+
