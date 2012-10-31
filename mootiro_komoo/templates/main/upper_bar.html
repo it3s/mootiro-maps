@@ -6,7 +6,8 @@
   <!-- <li><a href="#" >{% trans 'Settings' %}</a></li> -->
   <!-- <li><a href="#" >{% trans 'Notifications' %}</a></li> -->
   <li><a href="{{ user.view_url }}" >{{ user.name }}</a></li>
-  <!-- <li><a href="#" >{% trans 'Help' %}</a></li> -->
+  {# FIXME: change the help link #}
+  <li><a href="http://pt.wikibooks.org/wiki/MootiroMaps" target="_blank">{% trans 'Help' %}</a></li>
   {% else %}
   <li><a href="{% url user_login %}" class="login-required" >{% trans 'Login'%}</a></li>
   <!-- <li><a href="#" >{% trans 'Help' %}</a></li> -->
