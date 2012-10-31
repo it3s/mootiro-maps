@@ -28,6 +28,9 @@ class GeoRefModel(geomodels.Model):
     def related_items(self):
         return []
 
+    def is_empty(self):
+        return self.geometry.empty
+
     @property
     def geojson(self):
         geojson = create_geojson([self], convert=False)
