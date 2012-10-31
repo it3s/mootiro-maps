@@ -329,3 +329,11 @@ def logout(request):
     return redirect(next_page)
 
 ################ for testing ##################
+
+
+@render_to('authentication/secret.html')
+@login_required
+def secret(request):
+    return dict(user=request.user)
+
+

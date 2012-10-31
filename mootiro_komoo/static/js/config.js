@@ -7,6 +7,8 @@
     baseUrl: baseUrl,
     paths: {
       'lib': '../lib',
+      'text': '../lib/requirejs/text',
+      'templates': '../templates',
       'ad-gallery': '../ad_gallery/jquery.ad-gallery.min',
       'jquery': '../lib/jquery-1.7.1.min',
       'underscore': '../lib/underscore-min',

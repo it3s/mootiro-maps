@@ -71,7 +71,7 @@ def compile_sass():
 def work():
     """Start watchers"""
     # compilers
-    local('coffee -cw apps/ &')
+    local('coffee -cw static/js/ &')
     local('sass --watch ./ &')
 
     # test runners go here!
