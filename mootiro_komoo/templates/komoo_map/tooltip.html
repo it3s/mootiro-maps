@@ -16,7 +16,7 @@
       {% if object.needs %}
       <li><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}</li>
       {% endif %}
-      {% if object.organization_set %}
+      {% if object.organization_set and object.branch_count >= 0 %}
         <li><i class="icon-organization no-hover"></i>{% blocktrans count counter=object.organization_set.count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}</li>
       {% endif %}
       {% if object.resources %}

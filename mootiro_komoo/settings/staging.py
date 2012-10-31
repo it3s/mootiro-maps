@@ -15,7 +15,6 @@ TEMPLATE_DEBUG = DEBUG
 #     }
 # }
 
-TIME_ZONE = None
 LANGUAGE_CODE = 'pt-br'
 
 LOGGING = {

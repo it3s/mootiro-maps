@@ -4,7 +4,6 @@ from common import *
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-TIME_ZONE = None
 LANGUAGE_CODE = 'en-us'
 
 SECRET_KEY = 'superawesomeninjapandasflyingintheskywithdoublerainbows'

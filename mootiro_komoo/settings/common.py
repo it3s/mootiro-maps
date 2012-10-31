@@ -27,6 +27,7 @@ USE_L10N = True
 LOCALE_PATHS = (
     os.path.join(PROJECT_ROOT, 'locale'),
 )
+TIME_ZONE = 'America/Sao_Paulo'
 
 # ========== Static and Media =================================================
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')

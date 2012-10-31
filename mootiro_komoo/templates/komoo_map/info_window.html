@@ -23,7 +23,7 @@
       {% if object.needs %}
       <li><a href="{% url need_list %}?filters=community&community={{ object.id }}"><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}</a></li>
       {% endif %}
-      {% if object.organization_set %}
+      {% if object.organization_set and object.branch_count >= 0 %}
       <li><a href="{% url organization_list %}?filters=community&community={{ object.id }}"><i class="icon-organization no-hover"></i>{% blocktrans count counter=object.organization_set.count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}</a></li>
       {% endif %}
       {% if object.resources %}
