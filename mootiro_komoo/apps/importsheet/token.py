@@ -15,7 +15,6 @@ from django.core.urlresolvers import reverse
 # Google API
 from apiclient.discovery import build
 from oauth2client.client import AccessTokenCredentials
-from gdata.spreadsheet.service import SpreadsheetsService
 from gdata.gauth import AuthSubToken
 
 from annoying.decorators import render_to
