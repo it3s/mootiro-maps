@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
 from django.http import HttpResponse
 from django.utils import simplejson
+from django.utils.translation import gettext_lazy as _
 
 from lib.taggit.models import TaggedItem
 from ajaxforms.forms import ajax_form
@@ -91,7 +92,8 @@ def project_map(request, id=''):
     related_items = []
 
     for obj in project.related_items:
-        related_items.append({'name': obj.name, 'obj': obj})
+        if obj and not obj.is_empty():
+            related_items.append({'name': getattr(obj, 'name', _('Unnamed')), 'obj': obj})
 
     related_items.sort(key=lambda o: o['name'])
     related_items = [o['obj'] for o in related_items]
