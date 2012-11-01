@@ -18,16 +18,17 @@ from importsheet.token import get_access_token
 
 access_token = get_access_token()
 tok = AuthSubToken(token_string=access_token)
+gs = SpreadsheetsClient()
+
 skey = '0Ahdnyvg2LXX-dDFITkdXd0hBNFBDczA4RFV2dVBVM0E'
-wkey = 'od6'
-cs = SpreadsheetsClient()
+wname = 'config'
 
-params = {'min-row': '1', 'max-row': '1'}
-data = cs.get_cells(skey, wkey, auth_token=tok, **params)
-h = feedparser.parse(str(data))
+data = gs.get_worksheets(skey, auth_token=tok)
+d = feedparser.parse(str(data))
+worksheet_keys = {e['title']:e['id'].split('/')[-1] for e in d['entries']}
+wkey = worksheet_keys[wname]
 
-params = {'min-row': '2'}
-data = cs.get_cells(skey, wkey, auth_token=tok, **params)
+data = gs.get_cell(skey, wkey, 1, 1, auth_token=tok)
 d = feedparser.parse(str(data))
 
 # ... d is a browseable dict ... Good Luck!

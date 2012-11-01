@@ -53,7 +53,7 @@ def poc(request):
         params = {'min-row': '2'}
         data = gs.get_cells(skey, wkey, auth_token=get_tok(), **params)
         d = feedparser.parse(str(data))
-        rows = {}
+        rows = {}  # a line number indexed dict of dict objects
         for e in d['entries']:
             e = e['ns3_cell']
             if not e['row'] in rows:
@@ -63,6 +63,20 @@ def poc(request):
             obj[attr] = e['inputvalue']
         data = rows
 
-    print get_access_token()
+    if request.GET['action'] == 'config':
+        # pegar o endereço de uma worksheet pelo nome
+        # data = cs.get_worksheets(skey, auth_token=tok)
+        # d = feedparser.parse(str(data))
+        # worksheet_keys = {e['title']:e['id'].split('/')[-1] for e in d['entries']}
+        # wkey = worksheet_keys['config']
+
+        # TODO: se for usar essa lib, precisa remover as libs não usadas do
+        # arquivo de dependências (requirements.txt)
+        import gspread
+        gc = gspread.login('it3sdev@gmail.com','weareawesome')
+        sh = gc.open_by_key(skey)
+        worksheet = sh.worksheet('config')
+        worksheet.update_cell(1, 1, 'Bingo!')
+        data = "bingo"
 
     return dict(action=request.GET['action'], data=data)
