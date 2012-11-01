@@ -18,6 +18,7 @@ django-markitup==1.0.0
 django-nose==1.0
 django-picklefield==0.2.1
 django-taggit==0.9.3
+feedparser==5.1.2
 gdata==2.0.17
 geopy==0.94.1
 gunicorn==0.14.2
