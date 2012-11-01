@@ -27,6 +27,7 @@ USE_L10N = True
 LOCALE_PATHS = (
     os.path.join(PROJECT_ROOT, 'locale'),
 )
+TIME_ZONE = 'America/Sao_Paulo'
 
 # ========== Static and Media =================================================
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
@@ -120,7 +121,7 @@ INSTALLED_APPS = [
     'need',
     'proposal',
     'komoo_comments',
-    'komoo_resource',
+    'resources',
     'authentication',
     'organization',
     'investment',
@@ -128,7 +129,7 @@ INSTALLED_APPS = [
     'hotsite',
     'signatures',
     'update',
-    'komoo_project',
+    'projects',
     'discussion',
     'importsheet',
 ]

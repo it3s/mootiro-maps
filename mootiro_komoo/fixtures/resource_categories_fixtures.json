@@ -1,6 +1,6 @@
 [
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 1,
     "fields": {
       "name": "Espaço Externo",
@@ -8,7 +8,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 2,
     "fields": {
       "name": "Material Escolar",
@@ -16,7 +16,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 3,
     "fields": {
       "name": "Equipamento",
@@ -24,7 +24,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 4,
     "fields": {
       "name": "Veículo",
@@ -32,7 +32,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 5,
     "fields": {
       "name": "Outros",
@@ -40,7 +40,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 6,
     "fields": {
       "name": "Outros",
@@ -48,7 +48,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 7,
     "fields": {
       "name": "Espaço Interno",
@@ -56,7 +56,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 8,
     "fields": {
       "name": "Material Esportivo",
@@ -64,7 +64,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 9,
     "fields": {
       "name": "Comunicação",
@@ -72,7 +72,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 10,
     "fields": {
       "name": "Serviço",
@@ -80,7 +80,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 11,
     "fields": {
       "name": "Grupo Articulador",
@@ -88,7 +88,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 12,
     "fields": {
       "name": "Laboratório de Computação",
@@ -96,7 +96,7 @@
     }
   },
   {
-    "model": "komoo_resource.resourcekind",
+    "model": "resources.resourcekind",
     "pk": 13,
     "fields": {
       "name": "Piscina",

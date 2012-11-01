@@ -12,7 +12,7 @@ from main.tests import KomooTestCase
 from community.tests import A_COMMUNITY_DATA
 from need.tests import A_NEED_DATA
 from organization.tests import AN_ORGANIZATION_DATA
-from komoo_resource.tests import A_RESOURCE_DATA
+from resources.tests import A_RESOURCE_DATA
 from komoo_comments.tests import A_COMMENT_DATA
 
 

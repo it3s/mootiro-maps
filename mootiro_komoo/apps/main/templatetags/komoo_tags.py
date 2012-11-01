@@ -23,7 +23,7 @@ from main.widgets import (ImageSwitch, ImageSwitchMultiple, TaggitWidget,
 from community.models import Community
 from need.models import Need, NeedCategory
 from organization.models import Organization
-from komoo_resource.models import Resource
+from resources.models import Resource
 from proposal.models import Proposal
 from signatures.models import Signature
 

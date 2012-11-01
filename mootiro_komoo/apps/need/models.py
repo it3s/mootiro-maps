@@ -145,3 +145,38 @@ class Need(GeoRefModel):
 
 if not reversion.is_registered(Need):
     reversion.register(Need)
+
+
+## ==================== New implementation ================================= ##
+from main.models import CommonObject, CommonDataMixin
+
+
+
+class Need_CO(CommonObject, CommonDataMixin):
+    """ CommonObject inherited Need """
+    common_object_type = 'need'
+
+    categories = models.ManyToManyField(NeedCategory)
+    target_audiences = models.ManyToManyField(TargetAudience, blank=False)
+
+    class Map:
+        title = _('Need')
+        editable = True
+        background_color =  '#f42c5e'
+        border_color = '#d31e52'
+        geometries = (POLYGON, LINESTRING, POINT)
+        categories = [
+            ('Culture'),
+            ('Education'),
+            ('Environment'),
+            ('Health'),
+            ('Housing'),
+            ('Local Economy'),
+            ('Mobility'),
+            ('Social Service'),
+            ('Sport'),
+            ('Security'),
+        ]
+        form_view_name = 'new_need_from_map'
+        form_view_kwargs = {}
+

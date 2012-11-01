@@ -30,9 +30,6 @@
 
   {"pk": 31, "model": "contenttypes.contenttype", "fields": {"model": "investment", "name": "investment", "app_label": "investment"}},
   {"pk": 32, "model": "contenttypes.contenttype", "fields": {"model": "investor", "name": "investor", "app_label": "investment"}},
-  {"pk": 33, "model": "contenttypes.contenttype", "fields": {"model": "usersocialauth", "name": "user social auth", "app_label": "social_auth"}},
-  {"pk": 34, "model": "contenttypes.contenttype", "fields": {"model": "nonce", "name": "nonce", "app_label": "social_auth"}},
-  {"pk": 35, "model": "contenttypes.contenttype", "fields": {"model": "association", "name": "association", "app_label": "social_auth"}},
 
   {"pk": 36, "model": "contenttypes.contenttype", "fields": {"model": "taskmeta", "name": "task meta", "app_label": "djcelery"}},
   {"pk": 37, "model": "contenttypes.contenttype", "fields": {"model": "tasksetmeta", "name": "taskset meta", "app_label": "djcelery"}},
@@ -50,13 +47,15 @@
   {"pk": 47, "model": "contenttypes.contenttype", "fields": {"model": "digestsignature", "name": "digest signature", "app_label": "signatures"}},
   {"pk": 48, "model": "contenttypes.contenttype", "fields": {"model": "digest", "name": "digest", "app_label": "signatures"}},
 
-  {"pk": 49, "model": "contenttypes.contenttype", "fields": {"model": "komoouser", "name": "komoo user", "app_label": "komoo_user"}},
+  {"pk": 49, "model": "contenttypes.contenttype", "fields": {"model": "user", "name": "user", "app_label": "authentication"}},
 
   {"pk": 50, "model": "contenttypes.contenttype", "fields": {"model": "project", "name": "project", "app_label": "komoo_project"}},
   {"pk": 51, "model": "contenttypes.contenttype", "fields": {"model": "projectrelatedobject", "name": "project related object", "app_label": "komoo_project"}},
 
   {"pk": 52, "model": "contenttypes.contenttype", "fields": {"model": "discussion", "name": "discussion", "app_label": "discussion"}},
 
-  {"pk": 53, "model": "contenttypes.contenttype", "fields": {"model": "externalcredentials", "name": "external credentials", "app_label": "login_providers"}}
+  {"pk": 53, "model": "contenttypes.contenttype", "fields": {"model": "socialauth", "name": "social auth", "app_label": "authentication"}},
+
+  {"pk": 54, "model": "contenttypes.contenttype", "fields": {"model": "commonobject", "name": "common object", "app_label": "main"}}
 
 ]

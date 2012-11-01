@@ -1,0 +1,42 @@
+[
+  {
+    "model": "resources.resourcekind",
+    "pk": 1,
+    "fields": {
+      "name": "Espaço",
+      "slug": "espaco"
+    }
+  },
+  {
+    "model": "resources.resourcekind",
+    "pk": 2,
+    "fields": {
+      "name": "Material",
+      "slug": "material"
+    }
+  },
+  {
+    "model": "resources.resourcekind",
+    "pk": 3,
+    "fields": {
+      "name": "Equipamento",
+      "slug": "equipamento"
+    }
+  },
+  {
+    "model": "resources.resourcekind",
+    "pk": 4,
+    "fields": {
+      "name": "Veículo",
+      "slug": "veiculo"
+    }
+  },
+  {
+    "model": "resources.resourcekind",
+    "pk": 5,
+    "fields": {
+      "name": "Outros",
+      "slug": "outros"
+    }
+  }
+]

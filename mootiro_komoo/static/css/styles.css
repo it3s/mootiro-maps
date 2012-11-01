@@ -280,7 +280,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 #tabs .tab.placeholder { background: none }
 #tabs .tab:first-child { margin-left: 10px }
 #top {
-    z-index: 9999;
+    z-index: 1039;  /* Should stay behind of .modal-backdrop */
     position: relative;
     padding: 20px 0 0;
     background: #dceff4;
@@ -691,6 +691,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: url("../img/menu/resource.png");
 }
 
+.icon-user-big,
 .icon-komooprofile-big {
     background-image: url("../img/komooprofile.png");
     background-position: 0 0;

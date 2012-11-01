@@ -15,7 +15,7 @@ from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
 from need.models import TargetAudience
 from proposal.models import Proposal
-from komoo_resource.models import Resource
+from resources.models import Resource
 from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
@@ -279,4 +279,37 @@ class OrganizationCategoryTranslation(models.Model):
     def save(self, *a, **kw):
         self.slug = slugify(self.name)
         return super(OrganizationCategoryTranslation, self).save(*a, **kw)
+
+
+## ==================== New Implementation ================================= ##
+from main.models import CommonObject, CommonDataMixin
+from jsonfield import JSONField
+
+
+class Organization_CO(CommonObject, CommonDataMixin):
+    """ CommonObject inherited model """
+    logo = models.ForeignKey(UploadedFile, null=True, blank=True,
+                        related_name="logo_for_organization")
+    logo_category = models.ForeignKey('OrganizationCategory', null=True,
+                       blank=True, related_name='logo_for_organization_category')
+    logo_choice = models.CharField(max_length=3, choices=LOGO_CHOICES,
+                        null=True, blank=True)
+
+    link = models.CharField(max_length=250, null=True, blank=True)
+    contact = JSONField(null=True, blank=True)
+
+    categories = models.ManyToManyField('OrganizationCategory', null=True,
+                        blank=True)
+    target_audiences = models.ManyToManyField(TargetAudience, null=True,
+                        blank=True)
+
+
+    class Map:
+        editable = True
+        title = _('Organization')
+        tooltip = _('Add Organization')
+        background_color = '#3a61d6'
+        border_color = '#1f49b2'
+        geometries = (POLYGON, POINT)
+        form_view_name = 'new_organization_from_map'
 

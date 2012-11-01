@@ -16,7 +16,7 @@ from authentication.utils import login_required
 from proposal.models import Proposal
 from investment.models import Investment
 from investment.forms import InvestmentForm
-from komoo_resource.models import Resource
+from resources.models import Resource
 from organization.models import Organization
 
 from main.utils import paginated_query, filtered_query, sorted_query

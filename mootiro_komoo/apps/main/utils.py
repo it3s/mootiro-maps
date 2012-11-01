@@ -32,11 +32,18 @@ except ImportError:
         return inner
 
 
-# DEPRECATED ???
-# def komoo_permalink(obj):
-#     from main.views import ENTITY_MODEL_REV
-#     return '/permalink/{}{}'.format(ENTITY_MODEL_REV[obj.__class__], obj.id)
+def datetime_to_iso(datetime_obj):
+    """parses a python datetime object to a ISO-8601 string"""
+    if datetime_obj is None:
+        return None
+    return datetime_obj.isoformat()
 
+
+def iso_to_datetime(iso_string):
+    """parses a ISO-8601 string into a python datetime object"""
+    if iso_string is None:
+        return None
+    return dateutil.parser.parse(iso_string)
 
 def create_geojson(objects, type_='FeatureCollection', convert=True,
                    discard_empty=False):
