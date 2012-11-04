@@ -17,6 +17,9 @@ from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
 from django.conf import settings
 
+from django.views.generic.detail import BaseDetailView
+from django.views.generic.detail import SingleObjectTemplateResponseMixin
+
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 import requests
@@ -30,6 +33,67 @@ from resources.models import Resource
 from investment.models import Investment
 from projects.models import Project
 from main.utils import create_geojson, ResourceHandler
+
+
+class JSONResponseMixin(object):
+    def render_to_response(self, context):
+        "Returns a JSON response containing 'context' as payload"
+        return self.get_json_response(self.convert_context_to_json(context))
+
+    def get_json_response(self, content, **httpresponse_kwargs):
+        "Construct an `HttpResponse` object."
+        return HttpResponse(content,
+                                 content_type='application/json',
+                                 **httpresponse_kwargs)
+
+    def convert_context_to_json(self, context):
+        "Convert the context dictionary into a JSON object"
+        # Note: This is *EXTREMELY* naive; in reality, you'll need
+        # to do much more complex handling to ensure that arbitrary
+        # objects -- such as Django model instances or querysets
+        # -- can be serialized as JSON.
+        return json.dumps(context)
+
+
+class JSONDetailView(JSONResponseMixin, BaseDetailView):
+    pass
+
+
+class HybridDetailView(JSONResponseMixin, SingleObjectTemplateResponseMixin, BaseDetailView):
+    def parse_accept_header(self, request):
+        """Parse the Accept header *accept*, returning a list with pairs of
+        (media_type, q_value), ordered by q values.
+        ref: http://djangosnippets.org/snippets/1042/
+        """
+        accept = request.META.get('HTTP_ACCEPT', '')
+        result = []
+        for media_range in accept.split(','):
+            parts = media_range.split(';')
+            media_type = parts.pop(0)
+            media_params = []
+            q = 1.0
+            for part in parts:
+                (key, value) = part.lstrip().split('=', 1)
+                if key == 'q':
+                    q = float(value)
+                else:
+                    media_params.append((key, value))
+            result.append((media_type, tuple(media_params), q))
+        result.sort(lambda x, y: -cmp(x[2], y[2]))
+        return result
+
+    def dispatch(self, request, *args, **kwargs):
+        accept = self.parse_accept_header(request)
+        self.format = accept[0][0]
+        return super(HybridDetailView, self).dispatch(request, *args, **kwargs)
+
+    def render_to_response(self, context):
+        # Look for a 'format=json' GET argument
+        if self.format == 'application/json':
+            return JSONResponseMixin.render_to_response(self, context)
+        else:
+            return SingleObjectTemplateResponseMixin.render_to_response(self, context)
+
 
 logger = logging.getLogger(__name__)
 
