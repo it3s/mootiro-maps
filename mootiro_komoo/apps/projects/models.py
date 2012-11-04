@@ -123,6 +123,7 @@ class Project(models.Model):
     @property
     def json(self):
         return simplejson.dumps({
+            'id': self.id,
             'name': self.name,
             'slug': self.slug,
             'logo_url': self.logo_url,
