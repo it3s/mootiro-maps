@@ -13,6 +13,11 @@ def user_can_edit_this_project(project, user):
     return project.user_can_edit(user)
 
 
+@register.filter
+def user_can_discuss_this_project(project, user):
+    return project.user_can_discuss(user)
+
+
 @register.inclusion_tag('project/projects_tag.html', takes_context=True)
 def projects_for_object(context, obj):
     ct = ContentType.objects.get_for_model(obj)
@@ -23,4 +28,3 @@ def projects_for_object(context, obj):
                                      project_widget.render('project'))
     return dict(projects=projects, project_widget=project_widget,
                 contenttype=ct.id, object_id=obj.id)
-
