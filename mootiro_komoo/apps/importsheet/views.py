@@ -29,6 +29,24 @@ def poc(request):
     # Copiar um documento
     if request.GET['action'] == 'copy':
         data = gd.files().copy(fileId=skey, body=dict(title="Copia")).execute()
+
+    if request.GET['action'] == 'new':
+        project_folder_template_key = '0Bxdnyvg2LXX-MDdZcmE0aDFnS2c'
+        PROJECTS_FOLDER = '0Bxdnyvg2LXX-MDdZcmE0aDFnS2c'
+
+        data = gd.files().insert(
+                    body=dict(
+                        title="Projeto Novo",
+                        parents=[{'id': PROJECTS_FOLDER}],
+                        mimeType="application/vnd.google-apps.folder"
+                    )
+                ).execute()
+
+        gd.files().copy(
+            fileId=skey,
+            body=dict(parents=[{'id': data['id']}])
+        ).execute()
+
     
     # Baixar uma worksheet especifica
     if request.GET['action'] == 'worksheet':
@@ -78,5 +96,7 @@ def poc(request):
         worksheet = sh.worksheet('config')
         worksheet.update_cell(1, 1, 'Bingo!')
         data = "bingo"
+
+
 
     return dict(action=request.GET['action'], data=data)

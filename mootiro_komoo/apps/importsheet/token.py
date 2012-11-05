@@ -109,6 +109,3 @@ def google_spreadsheets_service(request):
     http = authorized_http(request)
     service = build('spreadsheets', 'v3', http)
     return service
-
-
-
