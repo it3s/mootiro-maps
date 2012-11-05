@@ -74,7 +74,7 @@ def project_view(request, id=''):
                 branchs = [b for b in obj.organizationbranch_set.all()]
                 if branchs:
                     items += branchs
-            else:
+            elif not obj.is_empty():
                 items.append(obj)
     geojson = create_geojson(items)
 
