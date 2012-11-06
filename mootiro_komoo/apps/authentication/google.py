@@ -24,7 +24,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 
-from main.utils import randstr
+from lib.locker.utils import randstr
 from authentication.utils import login as auth_login
 
 from .models import PROVIDERS, SocialAuth
