@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-25 22:39-0200\n"
+"POT-Creation-Date: 2012-11-06 10:43-0200\n"
 "PO-Revision-Date: 2012-10-18 17:41-0300\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -35,9 +35,9 @@ msgid "Location"
 msgstr "Localização"
 
 #: apps/authentication/forms.py:57 apps/community/forms.py:25
-#: apps/komoo_project/forms.py:50 apps/komoo_resource/forms.py:40
 #: apps/main/templatetags/komoo_tags.py:324
 #: apps/main/templatetags/komoo_tags.py:325 apps/organization/forms.py:63
+#: apps/projects/forms.py:50 apps/resources/forms.py:40
 #: lib/taggit/models.py:10 templates/organization/branch_form.html:13
 #: templates/organization/new_frommap.html:35
 msgid "Name"
@@ -88,10 +88,35 @@ msgstr "Senha incorreta!"
 msgid "Failed to save data"
 msgstr "Houve uma falha ao tentar salvar os dados"
 
+#: apps/authentication/views.py:257
+msgid "Welcome to MootiroMaps"
+msgstr "Bem-vindo ao MootiroMaps"
+
+#: apps/authentication/views.py:259
+msgid ""
+"\n"
+"Hello, {name}.\n"
+"\n"
+"Before using our tool, please confirm your e-mail visiting the link below.\n"
+"{verification_url}\n"
+"\n"
+"Thanks,\n"
+"the IT3S team.\n"
+msgstr ""
+"\n"
+"Olá, {name}.\n"
+"\n"
+"Antes de usar nossa ferramenta, por favor confirme seu e-mail visitando o "
+"link abaixo.\n"
+"{verification_url}\n"
+"\n"
+"Obrigado,\n"
+"a equipe IT3S.\n"
+
 #: apps/community/forms.py:26 apps/investment/forms.py:32
-#: apps/komoo_project/forms.py:51 apps/komoo_resource/forms.py:41
 #: apps/need/forms.py:26 apps/organization/forms.py:64
-#: apps/proposal/forms.py:28 templates/organization/branch_form.html:16
+#: apps/projects/forms.py:51 apps/proposal/forms.py:28
+#: apps/resources/forms.py:41 templates/organization/branch_form.html:16
 msgid "Description"
 msgstr "Descrição"
 
@@ -101,9 +126,9 @@ msgid "Population"
 msgstr "População"
 
 #: apps/community/forms.py:28 apps/investment/forms.py:42
-#: apps/komoo_project/forms.py:52 apps/komoo_resource/forms.py:44
 #: apps/main/templatetags/komoo_tags.py:323 apps/need/forms.py:29
-#: apps/organization/forms.py:67 lib/taggit/managers.py:39
+#: apps/organization/forms.py:67 apps/projects/forms.py:52
+#: apps/resources/forms.py:44 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57 templates/main/templatetags/taglist.html:5
 msgid "Tags"
 msgstr "Palavras-Chave"
@@ -112,11 +137,12 @@ msgstr "Palavras-Chave"
 msgid " "
 msgstr " "
 
-#: apps/community/models.py:38 apps/komoo_project/forms.py:56
-#: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:228
+#: apps/community/models.py:38 apps/community/models.py:105
+#: apps/main/templatetags/komoo_tags.py:228
 #: apps/main/templatetags/komoo_tags.py:327 apps/need/forms.py:24
 #: apps/organization/forms.py:65 apps/organization/forms.py:125
 #: apps/organization/templatetags/organization_tags.py:19
+#: apps/projects/forms.py:56 apps/resources/forms.py:45
 #: templates/investment/list.html:35
 msgid "Community"
 msgstr "Comunidade"
@@ -171,7 +197,7 @@ msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
 #: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:223
-#: apps/organization/models.py:185
+#: apps/organization/models.py:185 apps/organization/models.py:309
 msgid "Organization"
 msgstr "Organização"
 
@@ -227,66 +253,15 @@ msgstr "Adicionar linha"
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: apps/komoo_project/forms.py:23 templates/organization/list.html:61
-msgid "Public"
-msgstr "Público"
-
-#: apps/komoo_project/forms.py:24
-msgid "Private"
-msgstr "Privado"
-
-#: apps/komoo_project/forms.py:53 apps/organization/forms.py:71
-msgid "Logo"
-msgstr "Logotipo"
-
-#: apps/komoo_project/forms.py:54 apps/komoo_resource/forms.py:43
-#: apps/organization/forms.py:66 templates/organization/show.html:207
-#: templates/project/view.html:258 templates/resource/show.html:93
-msgid "Contact"
-msgstr "Contato"
-
-#: apps/komoo_project/forms.py:55 templates/project/view.html:247
-msgid "Contributors"
-msgstr "Contribuidores"
-
-#: apps/komoo_project/forms.py:57
-msgid "Partners Logo"
-msgstr "Logo de Parceiros"
-
-#: apps/komoo_project/forms.py:58
-msgid "Access to edit this project"
-msgstr "Acesso para editar este projeto"
-
-#: apps/komoo_project/forms.py:59
-msgid "Access to this project's discussion page"
-msgstr "Acesso a página de discussão deste projeto"
-
-#: apps/komoo_resource/forms.py:42
-msgid "Kind"
-msgstr "Tipo"
-
-#: apps/komoo_resource/forms.py:46 apps/need/forms.py:30
-#: apps/organization/forms.py:70
-msgid "Images"
-msgstr "Imagens"
-
-#: apps/komoo_resource/forms.py:76 apps/main/utils.py:230
-msgid "invalid field data"
-msgstr "campo com dados inválidos"
-
-#: apps/komoo_resource/models.py:41
-msgid "Resource without name"
-msgstr "Recurso sem nome"
-
-#: apps/komoo_resource/models.py:63 apps/main/templatetags/komoo_tags.py:224
-msgid "Resource"
-msgstr "Recurso"
-
-#: apps/main/utils.py:109
+#: apps/main/utils.py:116
 msgid "Submit"
 msgstr "Enviar"
 
-#: apps/main/views.py:240
+#: apps/main/utils.py:237 apps/resources/forms.py:76
+msgid "invalid field data"
+msgstr "campo com dados inválidos"
+
+#: apps/main/views.py:304
 msgid ""
 "\n"
 "Url: {0}\n"
@@ -302,7 +277,7 @@ msgstr ""
 "Mensagem: {5}\n"
 "    "
 
-#: apps/main/views.py:248
+#: apps/main/views.py:312
 msgid "Error report"
 msgstr "Relatório de erro"
 
@@ -371,7 +346,13 @@ msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
 msgstr[1] "daqui a %(count)s horas"
 
+#: apps/main/templatetags/komoo_tags.py:224 apps/resources/models.py:63
+#: apps/resources/models.py:126
+msgid "Resource"
+msgstr "Recurso"
+
 #: apps/main/templatetags/komoo_tags.py:225 apps/need/models.py:89
+#: apps/need/models.py:163
 msgid "Need"
 msgstr "Necessidade"
 
@@ -499,6 +480,11 @@ msgstr "O conteúdo foi denunciado com sucesso"
 msgid "Need Categories"
 msgstr "Áreas"
 
+#: apps/need/forms.py:30 apps/organization/forms.py:70
+#: apps/resources/forms.py:46
+msgid "Images"
+msgstr "Imagens"
+
 #: apps/need/models.py:23
 msgid "Culture"
 msgstr "Cultura"
@@ -539,6 +525,12 @@ msgstr "Esporte"
 msgid "Security"
 msgstr "Segurança"
 
+#: apps/organization/forms.py:66 apps/projects/forms.py:54
+#: apps/resources/forms.py:43 templates/organization/show.html:207
+#: templates/project/view.html:258 templates/resource/show.html:93
+msgid "Contact"
+msgstr "Contato"
+
 #: apps/organization/forms.py:68
 msgid "Target Audiences"
 msgstr "Públicos alvo"
@@ -546,6 +538,10 @@ msgstr "Públicos alvo"
 #: apps/organization/forms.py:69
 msgid "Categories"
 msgstr "Categorias"
+
+#: apps/organization/forms.py:71 apps/projects/forms.py:53
+msgid "Logo"
+msgstr "Logotipo"
 
 #: apps/organization/forms.py:123
 msgid "Branch Name"
@@ -555,14 +551,50 @@ msgstr "Nome da Unidade"
 msgid "Info"
 msgstr "Informações"
 
-#: apps/organization/models.py:186
+#: apps/organization/models.py:186 apps/organization/models.py:310
 msgid "Add Organization"
 msgstr "Adicionar organização"
+
+#: apps/projects/forms.py:23 templates/organization/list.html:61
+msgid "Public"
+msgstr "Público"
+
+#: apps/projects/forms.py:24
+msgid "Private"
+msgstr "Privado"
+
+#: apps/projects/forms.py:55 templates/project/view.html:247
+msgid "Contributors"
+msgstr "Contribuidores"
+
+#: apps/projects/forms.py:57
+msgid "Partners Logo"
+msgstr "Logo de Parceiros"
+
+#: apps/projects/forms.py:58
+msgid "Access to edit this project"
+msgstr "Acesso para editar este projeto"
+
+#: apps/projects/forms.py:59
+msgid "Access to this project's discussion page"
+msgstr "Acesso a página de discussão deste projeto"
+
+#: apps/projects/views.py:96
+msgid "Unnamed"
+msgstr "Sem nome"
 
 #: apps/proposal/forms.py:29 templates/investment/list.html:29
 #: templates/proposal/view.html:36
 msgid "Cost"
 msgstr "Custo"
+
+#: apps/resources/forms.py:42
+msgid "Kind"
+msgstr "Tipo"
+
+#: apps/resources/models.py:41
+msgid "Resource without name"
+msgstr "Recurso sem nome"
 
 #: apps/update/models.py:152
 msgid "community added"
@@ -899,8 +931,8 @@ msgstr "Investimentos"
 msgid "Organizations"
 msgstr "Organizações"
 
-#: templates/404.html:34 templates/main/upper_bar.html:9
-#: templates/main/upper_bar.html.py:12
+#: templates/404.html:34 templates/main/upper_bar.html:10
+#: templates/main/upper_bar.html.py:14
 msgid "Help"
 msgstr "Ajuda"
 
@@ -1320,7 +1352,7 @@ msgstr "Configurações"
 msgid "Notifications"
 msgstr "Notificações"
 
-#: templates/main/upper_bar.html:11
+#: templates/main/upper_bar.html:12
 msgid "Login"
 msgstr "Entrar"
 
