@@ -2,31 +2,37 @@
 from __future__ import unicode_literals
 import logging
 
-from main.utils import create_geojson
+from django.shortcuts import get_object_or_404
+from django.utils.decorators import method_decorator
+
+from annoying.decorators import render_to, ajax_request
 
 from organization.models import Organization
 from projects.models import Project
+from main.utils import create_geojson, ResourceHandler
 
-from main.views import HybridDetailView
 
 logger = logging.getLogger(__name__)
 
 
-class ProjectItemView(HybridDetailView):
-    template_name = 'project/view.html'
-    model = Project
-    slug_field = 'id'
+class ProjectItemView(ResourceHandler):
 
-    def convert_context_to_json(self, context):
-        return self.object.json
+    def get(self, request, *args, **kwargs):
+        if self.accept_type == 'application/json':
+            return self.get_json(request, *args, **kwargs)
+        return self.get_html(request, *args, **kwargs)
 
-    def get_context_data(self, **kwargs):
-        context = super(ProjectItemView, self).get_context_data(**kwargs)
+    @method_decorator(ajax_request)
+    def get_json(self, request, pk):
+        project = get_object_or_404(Project, pk=pk)
+        return project.as_dict
 
-        if self.format == 'application/json':
-            return context
+    @method_decorator(render_to('project/view.html'))
+    def get_html(self, request, pk):
+        context = {}
 
-        project = context['project']
+        project = get_object_or_404(Project, pk=pk)
+        context['project'] = project
 
         proj_objects, items = {}, []
 
@@ -81,4 +87,3 @@ class ProjectItemView(HybridDetailView):
         context['proj_objects'] = proj_objects
 
         return context
-
