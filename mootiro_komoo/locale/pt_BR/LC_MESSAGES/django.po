@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-10-23 14:37-0200\n"
+"POT-Creation-Date: 2012-11-06 17:33-0200\n"
 "PO-Revision-Date: 2012-10-18 17:41-0300\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -87,6 +87,31 @@ msgstr "Senha incorreta!"
 #: apps/authentication/views.py:197
 msgid "Failed to save data"
 msgstr "Houve uma falha ao tentar salvar os dados"
+
+#: apps/authentication/views.py:257
+msgid "Welcome to MootiroMaps"
+msgstr "Bem-vindo ao MootiroMaps"
+
+#: apps/authentication/views.py:259
+msgid ""
+"\n"
+"Hello, {name}.\n"
+"\n"
+"Before using our tool, please confirm your e-mail visiting the link below.\n"
+"{verification_url}\n"
+"\n"
+"Thanks,\n"
+"the IT3S team.\n"
+msgstr ""
+"\n"
+"Olá, {name}.\n"
+"\n"
+"Antes de usar nossa ferramenta, por favor confirme seu e-mail visitando o "
+"link abaixo.\n"
+"{verification_url}\n"
+"\n"
+"Obrigado,\n"
+"a equipe IT3S.\n"
 
 #: apps/community/forms.py:26 apps/investment/forms.py:32
 #: apps/komoo_project/forms.py:51 apps/komoo_resource/forms.py:41
@@ -260,6 +285,10 @@ msgstr "Acesso para editar este projeto"
 #: apps/komoo_project/forms.py:59
 msgid "Access to this project's discussion page"
 msgstr "Acesso a página de discussão deste projeto"
+
+#: apps/komoo_project/views.py:96
+msgid "Unnamed"
+msgstr "Sem nome"
 
 #: apps/komoo_resource/forms.py:42
 msgid "Kind"
@@ -900,7 +929,7 @@ msgid "Organizations"
 msgstr "Organizações"
 
 #: templates/404.html:34 templates/main/upper_bar.html:9
-#: templates/main/upper_bar.html.py:12
+#: templates/main/upper_bar.html.py:13
 msgid "Help"
 msgstr "Ajuda"
 
@@ -947,15 +976,15 @@ msgstr "Últimas contribuições"
 
 #: templates/authentication/profile_update.html:17
 msgid "Personal Settings"
-msgstr "Configurações Pessoais"
+msgstr "Dados Pessoais"
 
 #: templates/authentication/profile_update.html:22
 msgid "Public Settings"
-msgstr "Configurações Públicas"
+msgstr "Dados Públicas"
 
 #: templates/authentication/profile_update.html:27
 msgid "Signature Settings"
-msgstr "Configurações de Assinaturas"
+msgstr "Assinaturas"
 
 #: templates/authentication/profile_update.html:43
 msgid "E-mail"
@@ -1825,6 +1854,21 @@ msgstr "por"
 #: templates/update/frontpage.html:155
 msgid "News"
 msgstr "Notícias"
+
+#~ msgid "External Accounts"
+#~ msgstr "Contas Externas"
+
+#~ msgid "Your Google account is:"
+#~ msgstr "Sua conta do Google é:"
+
+#~ msgid "Connect with Google"
+#~ msgstr "Conecte sua conta do Google"
+
+#~ msgid "Your facebook account is:"
+#~ msgstr "Sua conta do facebook é:"
+
+#~ msgid "Connect with facebook"
+#~ msgstr "Conecte sua conta do facebook"
 
 #~ msgid "Geometric data not available"
 #~ msgstr "Informação geométrica não disponível"

@@ -254,9 +254,9 @@ def user_new(request):
         user.verification_key = key
 
         send_mail(
-            title='Welcome to MootiroMaps',
+            title=_('Welcome to MootiroMaps'),
             receivers=[user.email],
-            message='''
+            message=_('''
 Hello, {name}.
 
 Before using our tool, please confirm your e-mail visiting the link below.
@@ -264,7 +264,7 @@ Before using our tool, please confirm your e-mail visiting the link below.
 
 Thanks,
 the IT3S team.
-'''.format(name=user.name, verification_url=request.build_absolute_uri(
+''').format(name=user.name, verification_url=request.build_absolute_uri(
                                 reverse('user_verification', args=(key,))))
         )
 
