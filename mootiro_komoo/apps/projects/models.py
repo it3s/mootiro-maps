@@ -121,15 +121,19 @@ class Project(models.Model):
         return items
 
     @property
-    def json(self):
-        return simplejson.dumps({
+    def as_dict(self):
+        return {
             'id': self.id,
             'name': self.name,
             'slug': self.slug,
             'logo_url': self.logo_url,
             'view_url': self.view_url,
             'partners_logo': [{'url': logo.file.url} for logo in self.partners_logo()]
-        })
+        }
+
+    @property
+    def json(self):
+        return simplejson.dumps(self.as_dict)
 
 
 if not reversion.is_registered(Project):
