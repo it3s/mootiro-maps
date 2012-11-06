@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+
+from main.utils import randstr, send_mail
+
 from .models import AnonymousUser
 from .models import User, SocialAuth
 
@@ -99,3 +103,24 @@ def get_or_create_user_by_credentials(email, provider, access_data=None):
         provider_credentials.save()
 
     return user, created
+
+
+def connect_or_merge_user_by_credentials(logged_user, email, provider):
+    """
+    Receives information about logged user and a social account to be connected
+    (if not associated to any user) or merged into the logged user account
+    information.
+    """
+    credentials = SocialAuth.objects.filter(email=email, provider=provider)
+
+    if not credentials:
+        credential = SocialAuth(email=email, provider=provider, user=logged_user)
+        credential.save()
+    else:
+        credential = credentials[0]
+        if credential.user == logged_user:
+            return  # do nothing
+        
+        # merge users
+        pass
+

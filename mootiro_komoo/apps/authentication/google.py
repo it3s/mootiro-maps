@@ -30,6 +30,7 @@ from authentication.utils import login as auth_login
 from .models import PROVIDERS, SocialAuth
 from .utils import encode_querystring
 from .utils import get_or_create_user_by_credentials
+from .utils import connect_or_merge_user_by_credentials
 
 
 def login_google(request):
@@ -93,13 +94,8 @@ def google_authorized(request):
 
     if request.user.is_authenticated():
         # if a user is already logged, then just connect social auth account
-        credential, created = SocialAuth.objects.get_or_create(
-            email=data['email'], provider=PROVIDERS['google'])
-        if created:
-            credential.user = request.user
-        else:
-            # merge users information
-            pass
+        connect_or_merge_user_by_credentials(logged_user=request.user,
+                        email=data['email'], provider=PROVIDERS['google'])
     else:
         user, created = get_or_create_user_by_credentials(data['email'],
                             PROVIDERS['google'], access_data=access_data)
