@@ -4,7 +4,7 @@
 
 {% block content %}
   <div id="main-content">
-    {% include "authentication/login_box.html" %}
+    {#% include "authentication/login_box.html" %#}
   </div>
 {% endblock %}
 
@@ -12,4 +12,7 @@
   <script type="text/javascript" 
     src="{{ STATIC_URL }}js/authentication/login.js">
   </script>
+  <!--script type="text/javascript" 
+    src="{{ STATIC_URL }}js/authentication/login_app.js">
+  </script-->
 {% endblock %}
