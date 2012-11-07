@@ -1,6 +1,6 @@
 [
   {
-    "model": "komoo_project.project",
+    "model": "projects.project",
     "pk": 1,
     "fields": {
       "name": "Mapeamento da Zona Leste",
@@ -21,7 +21,7 @@
     
   {
     "pk": 2,
-    "model": "komoo_project.project",
+    "model": "projects.project",
     "fields": {
       "name": "Planta\u00e7\u00e3o de Jardim Vertical",
       "slug": "plantacao-de-jardim-vertical",

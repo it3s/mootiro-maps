@@ -45,6 +45,7 @@ def iso_to_datetime(iso_string):
         return None
     return dateutil.parser.parse(iso_string)
 
+
 def create_geojson(objects, type_='FeatureCollection', convert=True,
                    discard_empty=False):
     if type_ == 'FeatureCollection':
@@ -271,6 +272,29 @@ def get_handler_method(request_handler, http_method):
         pass
 
 
+def parse_accept_header(request):
+    """Parse the Accept header *accept*, returning a list with pairs of
+    (media_type, q_value), ordered by q values.
+    ref: http://djangosnippets.org/snippets/1042/
+    """
+    accept = request.META.get('HTTP_ACCEPT', '')
+    result = []
+    for media_range in accept.split(','):
+        parts = media_range.split(';')
+        media_type = parts.pop(0)
+        media_params = []
+        q = 1.0
+        for part in parts:
+            (key, value) = part.lstrip().split('=', 1)
+            if key == 'q':
+                q = float(value)
+            else:
+                media_params.append((key, value))
+        result.append((media_type, tuple(media_params), q))
+    result.sort(lambda x, y: -cmp(x[2], y[2]))
+    return result
+
+
 class ResourceHandler:
     """
     Base class for REST-like resources.
@@ -291,8 +315,16 @@ class ResourceHandler:
     http_methods = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE']
 
     @classmethod
+    def as_view(cls, *args, **kwargs):
+        # Keeps compatibility with Django's class-view interface
+        return cls.dispatch
+
+    @classmethod
     def dispatch(cls, request, *args, **kwargs):
         request_handler = cls()
+
+        request_handler.accept = parse_accept_header(request)
+        request_handler.accept_type = request_handler.accept[0][0]
 
         if request.method in cls.http_methods:
             handler_method = get_handler_method(request_handler,

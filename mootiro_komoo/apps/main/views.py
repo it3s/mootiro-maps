@@ -31,6 +31,7 @@ from investment.models import Investment
 from projects.models import Project
 from main.utils import create_geojson, ResourceHandler
 
+
 logger = logging.getLogger(__name__)
 
 
