@@ -21,6 +21,8 @@ django-taggit==0.9.3
 feedparser==5.1.2
 gdata==2.0.17
 geopy==0.94.1
+google-api-python-client==1.0
+gspread==0.0.13
 gunicorn==0.14.2
 httplib2==0.7.4
 kombu==2.1.8
