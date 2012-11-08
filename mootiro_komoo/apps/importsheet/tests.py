@@ -8,8 +8,9 @@ class TestImportSpreadhseet(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_fail(self):
-        self.fail("lala")
+    def test_creation_with_spreadsheet_key_raises_KeyError(self):
+        with self.assertRaises(KeyError):
+            BulkImport(spreadsheet_key='abc123')
 
 
 if __name__ == '__main__':
