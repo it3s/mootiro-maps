@@ -1,1 +1,1 @@
-(function(){require(["jquery","underscore","backbone","text!templates/authentication/login_box.html"],function(e,t,n,r){var i,s,o,u;return s=n.Model.extend({}),o=n.View.extend({}),u=n.View.extend({}),i=n.View.extend({}),console.log(r)})}).call(this)
+(function(){require(["jquery","authentication/views"],function(e,t){return e(function(){var n;return n=new t.LoginView({}),e("#main-content").html(n.render().el)})})}).call(this)
