@@ -77,6 +77,12 @@ def work():
     # test runners go here!
 
 
+def update_reForm():
+    """ update reForm fro, repo """
+    local('wget -O static/lib/reForm.js '
+          'https://raw.github.com/it3s/reform/master/src/reForm.js')
+
+
 def kill_background_tasks():
     for task in ['coffee', 'sass']:
         local(
