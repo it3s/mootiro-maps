@@ -5,7 +5,7 @@ account. Once you get the refresh code store it securely!
 '''
 from __future__ import unicode_literals
 import requests
-import simplejson
+import simplejson as json
 import httplib2
 
 from django.conf import settings
@@ -22,7 +22,7 @@ from authentication.utils import encode_querystring
 
 
 def refresh_token(request):
-    '''Getting authorization from the user'''
+    '''Getting authorization from the user.'''
     redirect_uri = request.build_absolute_uri(
                         reverse('importsheet_refresh_token_authorized'))
     params = {
@@ -60,10 +60,14 @@ def refresh_token_authorized(request):
     }
     url = 'https://accounts.google.com/o/oauth2/token'
     resp = requests.post(url, data=params)
-    access_data = simplejson.loads(resp.text)
+    access_data = json.loads(resp.text)
     refresh_token = access_data['refresh_token']
 
-    return dict(refresh_token=access_data)
+    print "\n\n"
+    print 'REFRESH_TOKEN:', refresh_token
+    print "\n\n"
+
+    return dict()
 
 
 REFRESH_TOKEN = '1/DgY8HwFHcpj-SV-jQUULbC0_h_c-CY_CZswxz8RUbyE'
@@ -82,30 +86,21 @@ def get_access_token():
     }
     url = 'https://accounts.google.com/o/oauth2/token'
     resp = requests.post(url, data=params)
-    data = simplejson.loads(resp.text)
+    data = json.loads(resp.text)
     access_token = data['access_token']
     return access_token
 
 
-def authorized_http(request):
-    access_token = get_access_token()
-    user_agent = request.META['HTTP_USER_AGENT']
-    credentials = AccessTokenCredentials(access_token, user_agent)
+def google_drive_service():
+    '''Build and return a google drive service via OAuth2 to interact with.'''
+    user_agent = 'Python-urllib/2.7'  # it could be anything
+    credentials = AccessTokenCredentials(get_access_token(), user_agent)
     http = httplib2.Http()
     http = credentials.authorize(http)
-    return http
-
-
-def google_drive_service(request):
-    '''Build and return a google drive service to interact with.'''
-    http = authorized_http(request)
     service = build('drive', 'v2', http)
     return service
 
 
 def google_spreadsheets_service(request):
     '''Build and return a google spreadsheets service to interact with.'''
-    
-    http = authorized_http(request)
-    service = build('spreadsheets', 'v3', http)
-    return service
+    pass

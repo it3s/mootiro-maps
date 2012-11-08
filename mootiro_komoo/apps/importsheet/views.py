@@ -21,7 +21,7 @@ def poc(request):
 
     skey = '0Ahdnyvg2LXX-dDFITkdXd0hBNFBDczA4RFV2dVBVM0E'
     wkey = 'od6'
-    gd = google_drive_service(request)
+    gd = google_drive_service()
     # gs = google_spreadsheets_service(request)
     gs = SpreadsheetsClient()
     data = None
