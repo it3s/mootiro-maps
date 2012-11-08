@@ -2529,6 +2529,40 @@ ul.two-cols li {
     margin: 10px 10px 10px 30px;
 }
 
+#map-searchbox {
+    margin: 5px;
+}
+
+#map-searchbox form {
+    margin: 0;
+    padding: 0;
+}
+
+#map-searchbox .search {
+    margin-top: -8px;
+}
+
+#map-searchbox input {
+    background: rgba(255, 255, 255, 0.8)
+}
+
+#map-searchbox .location-type {
+    width: auto;
+}
+
+#map-searchbox .address {
+    width: 135px;
+}
+#map-searchbox .input-container {
+    display: inline-block;
+    width: 145px;
+}
+#map-searchbox .lat,
+#map-searchbox .lng {
+    width: 61px;
+}
+
+
 #map-supporters {
     background: #dceff4;
     padding: 5px;

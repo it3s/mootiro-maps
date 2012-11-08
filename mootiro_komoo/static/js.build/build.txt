@@ -15,6 +15,9 @@ map/multimarker.js
 map/multipolyline.js
 map/geometries.js
 map/utils.js
+text.js
+text!templates/map/_searchbox.html
+map/views.js
 map/controls.js
 map/maptypes.js
 map/providers.js
@@ -24,7 +27,6 @@ map/features.js
 map/maps.js
 map.jquery.js
 project/model.js
-text.js
 text!templates/widgets/_autocomplete.html
 widgets/autocomplete.js
 text!templates/project/_add_dialog.html

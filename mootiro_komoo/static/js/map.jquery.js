@@ -13,7 +13,7 @@
       fixMapHeight = function(map, mapPanel) {
         var height, panelInfo;
         if (mapPanel == null) mapPanel = $('#map-panel');
-        height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
+        height = $('body').innerHeight() - $('#top').innerHeight() - $('.upper_bar').innerHeight() - 5;
         $(map.element).height(height);
         mapPanel.height(height);
         panelInfo = $('.panel-info-wrapper');

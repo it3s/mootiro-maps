@@ -7,7 +7,7 @@ define ['jquery', 'map/maps'], ($, maps) ->
             map.refresh()
 
         fixMapHeight = (map, mapPanel = $('#map-panel')) ->
-            height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5
+            height = $('body').innerHeight() - $('#top').innerHeight() - $('.upper_bar').innerHeight() - 5
             $(map.element).height height
             mapPanel.height height
             panelInfo = $('.panel-info-wrapper')
