@@ -71,10 +71,16 @@ def compile_sass():
 def work():
     """Start watchers"""
     # compilers
-    local('coffee -cw apps/ &')
+    local('coffee -cw static/js/ &')
     local('sass --watch ./ &')
 
     # test runners go here!
+
+
+def update_reForm():
+    """ update reForm fro, repo """
+    local('wget -O static/lib/reForm.js '
+          'https://raw.github.com/it3s/reform/master/src/reForm.js')
 
 
 def kill_background_tasks():

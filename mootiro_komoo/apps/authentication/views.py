@@ -316,7 +316,7 @@ def login(request):
 
     user = q.get()
     if not user.is_active:
-        return dict(login_error='user_not_active')
+         return dict(login_error='user_not_active')
 
     auth_login(request, user)
     next = request.POST.get('next', '') or reverse('root')
@@ -329,3 +329,11 @@ def logout(request):
     return redirect(next_page)
 
 ################ for testing ##################
+
+
+@render_to('authentication/secret.html')
+@login_required
+def secret(request):
+    return dict(user=request.user)
+
+

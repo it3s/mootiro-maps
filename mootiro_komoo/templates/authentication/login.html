@@ -4,6 +4,12 @@
 
 {% block content %}
   <div id="main-content">
-    {% include "authentication/login_box.html" %}
+    {#% include "authentication/login_box.html" %#}
   </div>
+{% endblock %}
+
+{% block page_scripts %}
+  <script type="text/javascript"
+    src="{{ STATIC_URL }}js/authentication/login.js">
+  </script>
 {% endblock %}
