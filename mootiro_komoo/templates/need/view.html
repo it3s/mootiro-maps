@@ -1,9 +1,9 @@
 {% extends "global.html" %}
 
 {% load i18n %}
-{% load komoo_map_tags %}
 {% load comment_tags %}
 {% load proposal_tags %}
+  {% load komoo_map_tags %}
 {% load komoo_tags %}
 {% load moderation_tags %}
 {% load markitup_tags %}
@@ -55,7 +55,9 @@
     </div>
 
   <div class="right-bar">
-    <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
+    <div id="map-preview">
+      <div id="map-preview-canvas"></div>
+    </div>
     <a class="see-on-map" href="#">{% trans "see on map" %}</a>
 
     <div class="block">
@@ -129,5 +131,27 @@
         $('#related-needs .show-less').parent().toggle();
         $('#related-needs .show-more').parent().toggle();
       });
+
+      var KomooNS = (function (KomooNS) {
+
+        KomooNS.current_object = {
+          id: {{ need.id }},
+          type: '{{ need.classname }}',
+          appLabel: '{{ need.app_label }}',
+          modelName: '{{ need.modelname }}',
+          geojson: {{ need.geojson|safe }}
+        };
+
+        require(['jquery', 'map.jquery'], function ($) {
+          $("#map-preview-canvas").komooMap({
+            type: 'preview',
+            geojson: KomooNS.current_object.geojson,
+            width: '200px',
+            height: '200px'
+          });
+        });
+
+        return KomooNS;
+      }(KomooNS || {}));
     </script>
 {% endblock %}

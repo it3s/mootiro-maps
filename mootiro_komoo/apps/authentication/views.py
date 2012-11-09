@@ -300,26 +300,26 @@ def login(request):
     POST: Receives email and password and authenticate the user.
     '''
     if request.method == 'GET':
-        next = request.GET.get('next', '')
-        return dict(next=next)
+        next_page = request.GET.get('next', '')
+        return dict(next=next_page, js_module='authentication/login')
 
     email = request.POST['email']
     password = request.POST['password']
     if not email or not password:
-        return dict(login_error='wrong_credentials')
+        return dict(login_error='wrong_credentials', js_module='authentication/login')
 
     password = User.calc_hash(password)
     q = User.objects.filter(email=email, password=password)
     if not q.exists():
-        return dict(login_error='wrong_credentials')
+        return dict(login_error='wrong_credentials', js_module='authentication/login')
 
     user = q.get()
     if not user.is_active:
-        return dict(login_error='user_not_active')
+         return dict(login_error='user_not_active', js_module='authentication/login')
 
     auth_login(request, user)
-    next = request.POST.get('next', '') or reverse('root')
-    return redirect(next)
+    next_page = request.POST.get('next', '') or reverse('root')
+    return redirect(next_page)
 
 
 def logout(request):
@@ -328,3 +328,11 @@ def logout(request):
     return redirect(next_page)
 
 ################ for testing ##################
+
+
+@render_to('authentication/secret.html')
+@login_required
+def secret(request):
+    return dict(user=request.user)
+
+

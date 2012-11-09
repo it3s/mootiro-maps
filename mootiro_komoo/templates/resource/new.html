@@ -26,7 +26,8 @@
   <script type="text/javascript" src="/static/js/ajax_select.js"></script>
   {{ form_resource.media }}
   <script type="text/javascript">
-    $(function(){
+    require(['jquery', 'utils', 'ajaxforms'], function ($) {
+      $(function(){
         $('#form_resource').ajaxform();
 
         $('#form_resource').komooFormHintBoxes({
@@ -54,6 +55,7 @@
              top: '10%'
           }
         });
+      });
     });
 
   </script>

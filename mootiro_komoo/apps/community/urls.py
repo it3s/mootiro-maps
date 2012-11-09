@@ -18,5 +18,6 @@ urlpatterns = patterns('community.views',
 
     url(pr(r'^ID/edit/?$'), 'edit_community', name='edit_community'),
     url(pr(r'^ID/about/?$'), 'view', name='view_community'),
+    url(pr(r'^ID/projects/?$'), 'projects', name='community_projects'),
     url(pr(r'^ID/?$'), 'on_map', name='community_on_map'),
 )

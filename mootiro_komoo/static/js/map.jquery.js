@@ -13,7 +13,7 @@
       fixMapHeight = function(map, mapPanel) {
         var height, panelInfo;
         if (mapPanel == null) mapPanel = $('#map-panel');
-        height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5;
+        height = $('body').innerHeight() - $('#top').innerHeight() - $('.upper_bar').innerHeight() - 5;
         $(map.element).height(height);
         mapPanel.height(height);
         panelInfo = $('.panel-info-wrapper');
@@ -47,6 +47,7 @@
             if (opts.height != null) $this.height(opts.height);
             if ((opts != null ? opts.type : void 0) === 'preview' && !(opts != null ? (_ref = opts.geojson) != null ? (_ref2 = _ref.features) != null ? (_ref3 = _ref2[0]) != null ? _ref3.geometry : void 0 : void 0 : void 0 : void 0) && !(opts != null ? opts.force : void 0)) {
               $this.html($('<div>').addClass('placeholder').text('Informação geométrica não disponível'));
+              $this.parent().parent().find('.see-on-map').hide();
               return;
             }
             map = maps.makeMap(opts);

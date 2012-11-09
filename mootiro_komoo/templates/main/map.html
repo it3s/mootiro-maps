@@ -1,0 +1,25 @@
+{% extends "global.html" %}
+{% load komoo_tags %}
+
+{% block title %}Mootiro Maps{% endblock %}
+
+{% block menu %} {% menu "map" %} {% endblock %}
+
+{% block content %}
+  {% include "main/supporters.html" %}
+  <div id="main-map-container" class="with-panel" style="height: 100%">
+    <div id="main-map-panel">{% include 'komoo_map/panel.html' %}</div>
+    <div id="main-map-canvas" class="komoo-map-googlemap"></div>
+    <div style="clear: both;"></div>
+  </div>
+  <div id="dinamic-form"></div>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block page_scripts %}
+  <script type="text/javascript">
+    var KomooNS = KomooNS || {};
+    KomooNS.mainMapGeojson = {{ geojson|safe }};
+  </script>
+{% endblock %}

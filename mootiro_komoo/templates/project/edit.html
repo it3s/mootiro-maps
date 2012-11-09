@@ -66,6 +66,7 @@
     {% load_files project %}
 
     <script type="text/javascript" charset="utf-8">
+      require(['jquery', 'utils', 'ajaxforms'], function ($) {
         // "providential workaround" for the contributors widget ;)
         $(function(){
             var clean_contributors = function(){
@@ -124,5 +125,6 @@
             });
             {% endif %}
         });
+      });
     </script>
 {% endblock %}

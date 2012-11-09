@@ -872,6 +872,7 @@ body.community #collapse-panel {
     margin: 2px;
 }
 #map-canvas-preview .placeholder,
+#map-preview-canvas .placeholder,
 .map-canvas .placeholder {
     font-size: 16px;
     padding: 80px 35px;
@@ -1408,7 +1409,8 @@ form #uploader_container { padding: 0 }
     padding: 0 0 0 15px;
     background: url("/static/img/infowindow-arrow.png") no-repeat 0 50%;
 }
-.map-tooltip #map-container-tooltip {
+.map-tooltip #map-container-tooltip,
+.map-tooltip #map-tooltip-container {
     background: white;
     padding: 10px;
     border-radius: 5px;
@@ -2526,6 +2528,40 @@ ul.two-cols li {
 .collapsed #map-drawing-box {
     margin: 10px 10px 10px 30px;
 }
+
+#map-searchbox {
+    margin: 5px;
+}
+
+#map-searchbox form {
+    margin: 0;
+    padding: 0;
+}
+
+#map-searchbox .search {
+    margin-top: -8px;
+}
+
+#map-searchbox input {
+    background: rgba(255, 255, 255, 0.8)
+}
+
+#map-searchbox .location-type {
+    width: auto;
+}
+
+#map-searchbox .address {
+    width: 135px;
+}
+#map-searchbox .input-container {
+    display: inline-block;
+    width: 145px;
+}
+#map-searchbox .lat,
+#map-searchbox .lng {
+    width: 61px;
+}
+
 
 #map-supporters {
     background: #dceff4;

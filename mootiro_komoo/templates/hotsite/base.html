@@ -18,8 +18,17 @@
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.conf.urls.js"></script>
     <!-- Our utilities lib -->
-    <script type="text/javascript">var isAuthenticated = {{ user.is_authenticated|lower }};</script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/komoo_utils.js"></script>
+    <script type="text/javascript">
+      var KomooNS = (function (KomooNS) {
+        KomooNS.isAuthenticated = {{ user.is_authenticated|lower }};
+        return KomooNS;
+      }(KomooNS || {}));
+    </script>
+    <!-- RequireJS stuffs -->
+    <script type="text/javascript" src="{{STATIC_URL}}js/config.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/require.js"></script>
+
+    <script type="text/javascript" src="{{STATIC_URL}}js/utils.js"></script>
 
     {{ form.media.js }}
     {% block css %}{% endblock %}

@@ -51,6 +51,24 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @handleMapEvents?()
 
 
+    class SearchBox extends Box
+        position: googleMaps.ControlPosition.TOP_RIGHT
+        id: 'map-searchbox'
+
+        init: ->
+            super()
+            require ['map/views'], (Views) =>
+                @view = new Views.SearchBoxView()
+                @box.append @view.render().el
+                @handleViewEvents()
+
+        handleViewEvents: ->
+            @view.on 'search', (location) =>
+                type = location.type
+                position = location.position
+                @map.publish 'goto', position, no
+
+
     class SupporterBox extends Box
         id: "map-supporters"
 
@@ -818,7 +836,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             if typeof position is "string"  # Got an address
                 request = {
                     address: position
-                    region: this.region
+                    region: @region
                 }
                 @geocoder.geocode request, (result, status_) =>
                     if status_ is googleMaps.GeocoderStatus.OK
@@ -931,6 +949,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         CloseBox: CloseBox
         SupporterBox: SupporterBox
         LicenseBox: LicenseBox
+        SearchBox: SearchBox
         PerimeterSelector: PerimeterSelector
         Location: Location
         SaveLocation: SaveLocation

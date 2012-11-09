@@ -1,17 +1,25 @@
 {% extends "global.html" %}
 {% load komoo_tags %}
-{% load komoo_map_tags %}
 
 {% block title %}{{ community.name }}{% endblock %}
 
 {% block menu %} {% menu "map" %} {% endblock %}
 
 {% block content %}
-  {% komoo_map geojson 'type=main' 'width=100%' 'height=100%' 'zoom=13' %}
+  {% include "main/supporters.html" %}
+  <div id="main-map-container" class="with-panel" style="height: 100%">
+    <div id="main-map-panel">{% include 'komoo_map/panel.html' %}</div>
+    <div id="main-map-canvas" class="komoo-map-googlemap"></div>
+    <div style="clear: both;"></div>
+  </div>
+  <div id="dinamic-form"></div>
 {% endblock %}
 
-{% block footer %}
-{% endblock %}
+{% block footer %}{% endblock %}
 
 {% block page_scripts %}
+  <script type="text/javascript">
+    var KomooNS = KomooNS || {};
+    KomooNS.mainMapGeojson = {{ geojson|safe }};
+  </script>
 {% endblock %}

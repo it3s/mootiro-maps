@@ -14,6 +14,9 @@ from django.db.models.query_utils import Q
 from django.db.models import Count
 from django.shortcuts import redirect
 
+from django.contrib.contenttypes.models import ContentType
+from projects.models import ProjectRelatedObject
+
 from authentication.utils import login_required
 
 from ajaxforms import ajax_form
@@ -67,7 +70,11 @@ def edit_community(request, id='', *args, **kwargs):
 def on_map(request, id):
     community = get_object_or_404(Community, pk=id)
     geojson = create_geojson([community])
-    return dict(community=community, geojson=geojson)
+    return {
+        'js_module': 'map/pages/map',  # Load map_page module using RequireJS
+        'community': community,
+        'geojson': geojson
+    }
 
 
 @render_to('community/view.html')
@@ -76,12 +83,13 @@ def view(request, id):
     geojson = create_geojson([community])
     photos = paginated_query(UploadedFile.get_files_for(community),
                              request, size=3)
-    return dict(community=community, geojson=geojson, photos=photos)
-
-
-@render_to('community/map.html')
-def map(request):
-    return dict(geojson={})
+    return {
+        'js_module': 'community/pages/about',
+        'community': community,
+        'object': community,
+        'geojson': geojson,
+        'photos': photos
+    }
 
 
 @render_to('community/list.html')
@@ -93,6 +101,15 @@ def list(request):
     communities_count = communities.count()
     communities = paginated_query(communities, request)
     return dict(communities=communities, communities_count=communities_count)
+
+
+@ajax_request
+def projects(request, id):
+    community = get_object_or_404(Community, pk=id)
+    ct = ContentType.objects.get_for_model(community)
+    return {'results': [p.project.as_dict for p in
+        ProjectRelatedObject.objects.filter(content_type=ct,
+                                            object_id=community.id)]}
 
 
 def communities_geojson(request):

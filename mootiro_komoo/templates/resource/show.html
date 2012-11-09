@@ -58,7 +58,9 @@
 
     </div>
     <div class="right-bar right-bar-modif">
-        <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
+      <div id="map-preview">
+        <div id="map-preview-canvas"></div>
+      </div>
         <a class="see-on-map" href="#">{% trans 'see on map' %}</a>
 
         <div class="centralizer apart">
@@ -115,5 +117,31 @@
 
 {% block page_scripts %}
     {% comments_staticfiles %}
+
+
+<script type="text/javascript">
+  var KomooNS = (function (KomooNS) {
+
+    KomooNS.current_object = {
+      id: {{ resource.id }},
+      type: '{{ resource.classname }}',
+      appLabel: '{{ resource.app_label }}',
+      modelName: '{{ resource.modelname }}',
+      geojson: {{ resource.geojson|safe }}
+    };
+
+    require(['jquery', 'map.jquery'], function ($) {
+      $("#map-preview-canvas").komooMap({
+        type: 'preview',
+        geojson: KomooNS.current_object.geojson,
+        width: '200px',
+        height: '200px'
+      });
+    });
+
+    return KomooNS;
+  }(KomooNS || {}));
+
+  </script>
 
 {% endblock %}

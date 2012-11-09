@@ -28,6 +28,7 @@
 
 {% block page_scripts %}
 <script type="text/javascript">
+  require(['jquery', 'utils', 'ajaxforms'], function ($) {
     var $form = $("#investment_form");
 
     $form.ajaxform();
@@ -47,6 +48,6 @@
     $(function (event) {
         $("input[name=investor_type]:checked", $form).change();
     });
-
+  });
 </script>
 {% endblock %}

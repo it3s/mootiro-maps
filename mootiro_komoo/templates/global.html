@@ -21,51 +21,58 @@
     <link rel="shortcut icon" HREF="{{STATIC_URL}}/img/favicon.png" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
+
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/fashion.css" />
+
+    <!-- Django utilities -->
     <script type="text/javascript" src="{% url javascript_catalog %}"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.conf.urls.js"></script>
+
     <script type="text/javascript">
-      var isAuthenticated = {{ user.is_authenticated|lower }};
-      var lang = '{{ LANGUAGE_CODE }}';
-      var komooNS = komooNS || {};
-      {% if not debug %}
-      komooNS.require_baseUrl = '{{STATIC_URL}}js.build';
+      var KomooNS = (function (KomooNS) {
+        KomooNS.isAuthenticated = {{ user.is_authenticated|lower }};
+        KomooNS.lang = '{{ LANGUAGE_CODE }}';
+        KomooNS.facebookAppId = '{{ FACEBOOK_APP_ID }}';
+        {% if not debug %}
+        // Loads optimized scripts
+        KomooNS.require_baseUrl = '{{STATIC_URL}}js.build';
+        {% else %}
+        KomooNS.require_baseUrl = '{{STATIC_URL}}js';
+        {% endif %}
+
+        {% if object %}
+        KomooNS.object = {{ object.json|safe|default:'{}' }};
+        {% endif %}
+
+        return KomooNS;
+      }(KomooNS || {}));
+
+      {% if csrf_token %}
+      window.csrf_token = '{{ csrf_token }}';
       {% endif %}
+
     </script>
+
+    <!-- RequireJS stuffs -->
     <script type="text/javascript" src="{{STATIC_URL}}js/config.js"></script>
     <script type="text/javascript" data-main="app" src="{{STATIC_URL}}lib/require.js"></script>
+
+    <!-- Main libs -->
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/bootstrap.min.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.conf.urls.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}lib/heartcode-canvasloader-min.js"></script>
-    <!-- Our utilities lib -->
+
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}lib/shortcut.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/komoo_utils.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/komoo_search.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/moderation/moderation.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/ajaxforms.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}js/no-ie.js"></script>
+
+    <script type="text/javascript" src="{{STATIC_URL}}js/utils.js"></script>
 
     {{ form.media.js }}
     {% block css %}{% endblock %}
+
   </head>
   <body class="{% if community %}community{% endif %}">
-
-    <!-- Facebook stuff -->
-    <div id="fb-root"></div>
-    <script>
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId={{ FACEBOOK_APP_ID }}";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-
 
     {% include 'main/upper_bar.html' %}
 
@@ -107,22 +114,13 @@
     </div>
     {% block page_scripts %}{% endblock %}
 
-    </script>
-
-    <!-- Google Analytics -->
+    {% if js_module %}
     <script type="text/javascript">
-
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-31165229-1']);
-      _gaq.push(['_setDomainName', 'mootiro.org']);
-      _gaq.push(['_setAllowLinker', true]);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+      // Loads the page specific module
+      require(['common'], function (common) {
+        require(['{{ js_module }}']);
+      });
     </script>
+    {% endif %}
   </body>
 </html>
