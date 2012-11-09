@@ -8,27 +8,16 @@ This is script is an interactive way of exploring google spreadsheet API XMLs.
 
   ... inspect your variables. Good Luck! ...
 '''
-import feedparser
-
 from gdata.spreadsheets.client import SpreadsheetsClient
 from gdata.gauth import AuthSubToken
 
-from importsheet.token import get_access_token
-
-
-access_token = get_access_token()
-tok = AuthSubToken(token_string=access_token)
-gs = SpreadsheetsClient()
+import gspread
+from django.conf import settings
+from importsheet.models import WorksheetInterpreter
 
 skey = '0Ahdnyvg2LXX-dDFITkdXd0hBNFBDczA4RFV2dVBVM0E'
-wname = 'config'
-
-data = gs.get_worksheets(skey, auth_token=tok)
-d = feedparser.parse(str(data))
-worksheet_keys = {e['title']:e['id'].split('/')[-1] for e in d['entries']}
-wkey = worksheet_keys[wname]
-
-data = gs.get_cell(skey, wkey, 1, 1, auth_token=tok)
-d = feedparser.parse(str(data))
-
-# ... d is a browseable dict ... Good Luck!
+gc = gspread.login(settings.IMPORTSHEET_GOOGLE_USER,
+                   settings.IMPORTSHEET_GOOGLE_PASSWORD)
+sh = gc.open_by_key(skey)
+worksheet = sh.worksheet('organization')
+l = WorksheetInterpreter.get_records_tree(worksheet)
