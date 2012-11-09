@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext as _
 
-from main.utils import randstr, send_mail
+from main.utils import send_mail
 
 from .models import AnonymousUser
 from .models import User, SocialAuth

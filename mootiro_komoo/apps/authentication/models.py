@@ -29,7 +29,6 @@ class User(GeoRefModel):
 
     # user management info
     is_active = models.BooleanField(default=False)
-    verification_key = models.CharField(max_length=32, null=True)
 
     class Map:
         editable = False

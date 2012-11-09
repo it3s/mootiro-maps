@@ -17,7 +17,8 @@ from reversion.models import Revision
 
 from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
-from main.utils import create_geojson, randstr, send_mail
+from main.utils import create_geojson, send_mail
+from lib.locker.models import Locker
 
 from .models import User
 from .forms import FormProfile, FormUser
@@ -248,10 +249,7 @@ def user_new(request):
         user.set_password(request.POST['password'])
 
         # Email verification
-        key = randstr(32)
-        while User.objects.filter(verification_key=key).exists():
-            key = randstr(32)
-        user.verification_key = key
+        key = Locker.deposit(user.id)
 
         send_mail(
             title='Welcome to MootiroMaps',
@@ -283,7 +281,8 @@ def user_verification(request, key=''):
     '''
     if not key:
         return dict(message='check_email')
-    user = get_object_or_None(User, verification_key=key)
+    user_id = Locker.withdraw(key=key)
+    user = get_object_or_None(User, id=user_id)
     if not user:
         # invalid key => invalid link
         raise Http404
