@@ -416,7 +416,6 @@
       GeometrySelector.prototype.showContent = function() {
         var geometryType, _i, _len, _ref, _ref2, _results;
         this.box.find('li').hide();
-        console.log(this.feature.getFeatureType());
         _ref2 = (_ref = this.feature.getFeatureType()) != null ? _ref.geometryTypes : void 0;
         _results = [];
         for (_i = 0, _len = _ref2.length; _i < _len; _i++) {

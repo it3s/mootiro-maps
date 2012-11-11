@@ -5,6 +5,7 @@
 
   config = {
     baseUrl: baseUrl,
+    waitSeconds: 30,
     paths: {
       'lib': '../lib',
       'text': '../lib/requirejs/text',

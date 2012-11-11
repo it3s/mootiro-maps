@@ -70,8 +70,9 @@
 
       return map;
     };
-
-  require(['map.jquery'], initialize_map);
+    require(['common'], function() {
+        require(['map.jquery'], initialize_map);
+    });
 
   </script>
 {% endblock %}
