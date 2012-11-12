@@ -36,7 +36,7 @@ class Importsheet(models.Model):
         if not hasattr(self, '_spreadsheet'):
             client = gspread.login(settings.IMPORTSHEET_GOOGLE_USER,
                                    settings.IMPORTSHEET_GOOGLE_PASSWORD)
-            self._spreadsheet = client.open_by_key(self.key)
+            self._spreadsheet = client.open_by_key(self.spreadsheet_key)
         return self._spreadsheet
 
     @classmethod
@@ -45,7 +45,6 @@ class Importsheet(models.Model):
         if 'spreadsheet_key' in kw:
             raise KeyError('spreadsheet_key should not be provided it is \
                             automatically retrieved from google api.')
-        # database object creation
         obj = super(Importsheet, cls).__new__(cls, *a, **kw)
         return obj
 
@@ -85,6 +84,9 @@ class Importsheet(models.Model):
                             body=body).execute()
         self.spreadsheet_key = data['id']
 
-    # def simulate(self, worksheet):
-    #     interpreter = InterpreterFactory.make_interpreter(worksheet)
-    #     return interpreter.get_rows_dicts()
+    def __unicode__(self):
+        return self.name
+
+    def simulate(self, worksheet):
+        interpreter = InterpreterFactory.make_interpreter(worksheet)
+        return interpreter.get_rows_dicts()

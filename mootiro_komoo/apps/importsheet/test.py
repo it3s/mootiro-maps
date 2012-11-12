@@ -24,13 +24,9 @@ from projects.models import Project
 from importsheet.models import Importsheet
 
 p = Project.objects.all()[1]
+ish = Importsheet.objects.all()[0] or Importsheet(name='Mapeamento de Mapas', project=p)
+ish.save()
 
-print 1
-ish = Importsheet(name='Uno', project=p)
-print 2
-ish.save()
-print 3
-ish = Importsheet(name='Duni', project=p)
-print 4
-ish.save()
-print 5
+s = ish.spreadsheet
+o = s.worksheet('organization')
+r = ish.simulate(o)
