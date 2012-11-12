@@ -27,6 +27,4 @@ p = Project.objects.all()[1]
 ish = Importsheet.objects.all()[0] or Importsheet(name='Mapeamento de Mapas', project=p)
 ish.save()
 
-s = ish.spreadsheet
-o = s.worksheet('organization')
-r = ish.simulate(o)
+s = ish.simulate('organization')
