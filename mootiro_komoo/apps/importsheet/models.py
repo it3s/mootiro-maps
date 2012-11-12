@@ -19,12 +19,12 @@ class Importsheet(models.Model):
     It interacts with google APIs and stores all information needed to do so.
     '''
     name = models.CharField(max_length=256, null=False)
-    # description = models.TextField(null=False)
+    description = models.TextField(null=False)
     project = models.ForeignKey(Project, editable=False, null=False,
                                     related_name='importsheets')
-    # creator = models.ForeignKey(User, editable=False, null=False,
-    #                                 related_name='created_importsheets')
-    # creation_date = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(User, editable=False, null=False,
+                                    related_name='created_importsheets')
+    creation_date = models.DateTimeField(auto_now_add=True)
 
     # Google Spreadsheets API data
     spreadsheet_key = models.CharField(max_length=128, null=True)
@@ -55,7 +55,21 @@ class Importsheet(models.Model):
         return ret
 
     def _set_google_spreadsheet(self):
-        '''Create the needed objects on Google API.'''
+        '''
+        Using Google Drive API and Google Spreadsheet API, creates new google
+        spreadsheet inside its project folder. If it is the projects first
+        importsheet, also creates the projects folder. 
+
+        The structure in Google Drive is the following:
+
+        "Projects Root" (settings.IMPORTSHEET_PROJECTS_FOLDER_KEY)
+          |- "project1.id - project1.name"
+          |    |- "importsheet1.name"
+          |    |- "importsheet2.name"
+          |- "project2.id - project2.name"
+          |    |- "importsheet3.name"
+          ...
+        '''
         # Google API objects handling
         gd = google_drive_service()
         
@@ -87,6 +101,16 @@ class Importsheet(models.Model):
     def __unicode__(self):
         return self.name
 
-    def simulate(self, worksheet):
+    def simulate(self, worksheet_name):
+        '''
+        Receives a worksheet name, parses it, and returns a list of annotated
+        dicts with errors and warnings.
+
+        Example:
+            ish = Importsheet(name='Schools Mapping', project=p, ...)
+            ish.simulate('organization')
+        '''
+        worksheet = self.spreadsheet.worksheet(worksheet_name)
         interpreter = InterpreterFactory.make_interpreter(worksheet)
-        return interpreter.get_rows_dicts()
+        annotated_rows_dict = interpreter.validate_rows()
+        return annotated_rows_dict

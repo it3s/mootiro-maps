@@ -7,53 +7,69 @@ from copy import deepcopy
 
 class Interpreter(gspread.Worksheet):
     '''
-    Interface for each worksheet type interpreter.
+    Interface class for each **worksheet** type interpreter.
+    You can use the template below to implement a new worksheet interpreter.
+    
+    class MyAwesomeInterpreter(Interpreter):
+        """
+        A model of this worksheet is public available in:
+        https://docs.google.com/spreadsheet/ccc?key=
+        """
+        header_rows = 2  # see get_row_dicts method
+        worksheet_name = 'my_worksheet_template_name'
+        
+        def validate_row(self, row_dict):
+            raise NotImplementedError()
+
+        def arrange_row_dict(self, row_dict):
+            return row_dict
     '''
 
     def __init__(self, gspread_worksheet):
         self.worksheet = gspread_worksheet
 
-    def get_rows_dicts(self):
+    def get_row_dicts(self):
         '''
         Receives the number of header rows, and return rows values organized as
         a tree dict of the headers.
 
         Example:
-           ____________________ _______________________________
-          |       Place        |          Description          |
-          |    Name    | Title | Location | Partner? | History |
-          |------------|-------|----------|----------|---------|
-          | John Doe   | Mr.   | 5th ave  | Yes      | lorem   |
-          | Mary Doe   | Mrs.  | 6th ave  |          | ipsum   |
-          | Peter Poe  |       | 7th ave  | Yes      |         |
-           ------------ ------- ---------- ---------- ---------
+             ____________________ _______________________________
+            |       Place        |          Description          |
+            |    Name    | Title | Location | Partner? | History |
+            |------------|-------|----------|----------|---------|
+            | John Doe   | Mr.   | 5th ave  | Yes      | lorem   |
+            | Mary Doe   | Mrs.  | 6th ave  |          | ipsum   |
+            | Peter Poe  |       | 7th ave  | Yes      |         |
+             ------------ ------- ---------- ---------- ---------
+            
             wsi = WorksheetInterpreter(gspread_worksheet)
             wsi.get_rows_dicts() ->
-              [
-                {
-                  'Place': {
-                    'Name': 'John Doe',
-                    'Title': 'Mr.'
-                  },
-                  'Description': {
-                    'Location': '5th ave',
-                    'Partner?': 'Yes',
-                    'History': 'lorem'
-                  }
-                },
-                {
-                  'Place': {
-                    'Name': 'Mary Doe',
-                    'Title': 'Mrs.'
-                  },
-                  'Description': {
-                    'Location': '6th ave',
-                    'Partner?': '',
-                    'History': 'ipsum'
-                  }
-                },
-                ...
-              ]
+                [
+                    {
+                        'Place': {
+                            'Name': 'John Doe',
+                            'Title': 'Mr.'
+                        },
+                        'Description': {
+                            'Location': '5th ave',
+                            'Partner?': 'Yes',
+                            'History': 'lorem'
+                        }
+                    },
+                    {
+                        'Place': {
+                            'Name': 'Mary Doe',
+                            'Title': 'Mrs.'
+                        },
+                        'Description': {
+                            'Location': '6th ave',
+                            'Partner?': '',
+                            'History': 'ipsum'
+                        }
+                    },
+                    ...
+                ]
         '''
         row_values = self.worksheet.get_all_values()
 
@@ -80,18 +96,31 @@ class Interpreter(gspread.Worksheet):
 
         # Organize data rows following the structure given by the headers ones
         raw_data = row_values[self.header_rows:]
-        objects = []  # list of object dicts
+        self.objects = []  # list of object dicts
         for r in xrange(len(raw_data)):
-            obj = deepcopy(data_structure)  # a object dict for each row
+            row_dict = deepcopy(data_structure)  # a object dict for each row
             for c in xrange(len(raw_data[r])):
                 attr_value = raw_data[r][c]
-                node = obj
+                node = row_dict
                 for hr in xrange(len(headers)):  # iterate over header rows
                     key = headers[hr][c]
                     if node[key] != {}:
                         node = node[key]  # not a leaf node, continue
                     else:
                         node[key] = attr_value  # copy attribute
-            objects.append(obj)
+            row_dict = self.arrange_row_dict(row_dict)
+            self.objects.append(row_dict)
 
-        return objects
+        return self.objects
+    
+    def arrange_row_dict(self, row_dict):
+        '''Default implemantation does nothing.'''
+        return row_dict
+
+    def validate_row(self, obj):
+        raise NotImplementedError('Subclass responsability')
+
+    def validated_rows(self):
+        '''Returns a list of row_dicts annotated with errors and warnings.'''
+        for obj in self.get_row_dicts():
+            yield self.validate_row(obj)
