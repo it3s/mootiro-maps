@@ -12,8 +12,13 @@ import feedparser
 from gdata.spreadsheets.client import SpreadsheetsClient
 
 from annoying.decorators import render_to
-from .token import google_drive_service, google_spreadsheets_service
-from .token import get_access_token, get_tok
+from .google import google_drive_service
+from .google import get_access_token
+
+
+def get_tok():
+    from gdata.gauth import AuthSubToken
+    return AuthSubToken(token_string=get_access_token())
 
 
 @render_to('importsheet/poc.html')

@@ -26,6 +26,7 @@ GOOGLE_APP_SECRET = '...'
 # ========== Importhseet ======================================================
 IMPORTSHEET_GOOGLE_USER = '...'
 IMPORTSHEET_GOOGLE_PASSWORD = '...'
+IMPORTSHEET_REFRESH_TOKEN = '...'
 IMPORTSHEET_PROJECTS_FOLDER_KEY = '...'
 
 # ========== Email sending ====================================================

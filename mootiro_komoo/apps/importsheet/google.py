@@ -15,7 +15,6 @@ from django.core.urlresolvers import reverse
 # Google API
 from apiclient.discovery import build
 from oauth2client.client import AccessTokenCredentials
-from gdata.gauth import AuthSubToken
 
 from annoying.decorators import render_to
 from authentication.utils import encode_querystring
@@ -41,6 +40,7 @@ def refresh_token(request):
     return redirect(url)
 
 
+# TODO: remove this!
 @render_to('importsheet/refresh_token.html')
 def refresh_token_authorized(request):
     '''Exchange the authorization code for an refresh token and displays it.'''
@@ -70,18 +70,12 @@ def refresh_token_authorized(request):
     return dict()
 
 
-REFRESH_TOKEN = '1/DgY8HwFHcpj-SV-jQUULbC0_h_c-CY_CZswxz8RUbyE'
-
-def get_tok():
-    return AuthSubToken(token_string=get_access_token())
-
-
 def get_access_token():
     # TODO: only refresh the token if expired
     params = {
         'client_id': settings.GOOGLE_APP_ID,
         'client_secret': settings.GOOGLE_APP_SECRET,
-        'refresh_token': REFRESH_TOKEN,
+        'refresh_token': settings.IMPORTSHEET_REFRESH_TOKEN,
         'grant_type': 'refresh_token',
     }
     url = 'https://accounts.google.com/o/oauth2/token'
@@ -99,8 +93,3 @@ def google_drive_service():
     http = credentials.authorize(http)
     service = build('drive', 'v2', http)
     return service
-
-
-def google_spreadsheets_service(request):
-    '''Build and return a google spreadsheets service to interact with.'''
-    pass
