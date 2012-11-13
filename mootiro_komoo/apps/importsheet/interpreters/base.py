@@ -96,7 +96,7 @@ class Interpreter(gspread.Worksheet):
 
         # Organize data rows following the structure given by the headers ones
         raw_data = row_values[self.header_rows:]
-        self.objects = []  # list of object dicts
+        rows_dicts = []  # list of object dicts
         for r in xrange(len(raw_data)):
             row_dict = deepcopy(data_structure)  # a object dict for each row
             for c in xrange(len(raw_data[r])):
@@ -108,19 +108,27 @@ class Interpreter(gspread.Worksheet):
                         node = node[key]  # not a leaf node, continue
                     else:
                         node[key] = attr_value  # copy attribute
-            row_dict = self.arrange_row_dict(row_dict)
-            self.objects.append(row_dict)
+            # give each interpreter the chance to organize the row_dict better
+            row_dict = self.a_better_row_dict(row_dict)
+            rows_dicts.append(row_dict)
 
-        return self.objects
+        return rows_dicts
     
-    def arrange_row_dict(self, row_dict):
+    def a_better_row_dict(self, row_dict):
         '''Default implemantation does nothing.'''
         return row_dict
 
-    def validate_row(self, obj):
+    def validate_row_dict(self, obj):
         raise NotImplementedError('Subclass responsability')
 
-    def validated_rows(self):
-        '''Returns a list of row_dicts annotated with errors and warnings.'''
+    def simulate(self):
+        '''asd'''
+        objects = []
+        warnings = []
+        errors = []
         for obj in self.get_row_dicts():
-            yield self.validate_row(obj)
+            d = self.validate_row_dict(obj)
+            objects.append(d['object'])
+            warnings.append(d['warnings'])
+            errors.append(d['errors'])
+            yield d

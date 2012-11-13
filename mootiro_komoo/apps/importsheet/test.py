@@ -21,10 +21,15 @@ This is script is an interactive way of exploring google spreadsheet API XMLs.
 # worksheet = sh.worksheet('organization')
 
 from projects.models import Project
+from authentication.models import User
 from importsheet.models import Importsheet
 
 p = Project.objects.all()[1]
-ish = Importsheet.objects.all()[0] or Importsheet(name='Mapeamento de Mapas', project=p)
-ish.save()
+u = User.objects.all()[0]
 
-s = ish.simulate('organization')
+l = Importsheet.objects.all()
+importsheet = l[0] if l else \
+                Importsheet(name='Mapeamento de Mapas', project=p, creator=u)
+importsheet.save()
+
+s = importsheet.simulate('organization')

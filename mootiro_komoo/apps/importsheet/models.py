@@ -19,7 +19,7 @@ class Importsheet(models.Model):
     It interacts with google APIs and stores all information needed to do so.
     '''
     name = models.CharField(max_length=256, null=False)
-    description = models.TextField(null=False)
+    description = models.TextField(null=True)
     project = models.ForeignKey(Project, editable=False, null=False,
                                     related_name='importsheets')
     creator = models.ForeignKey(User, editable=False, null=False,
@@ -112,5 +112,23 @@ class Importsheet(models.Model):
         '''
         worksheet = self.spreadsheet.worksheet(worksheet_name)
         interpreter = InterpreterFactory.make_interpreter(worksheet)
-        annotated_rows_dict = interpreter.validate_rows()
-        return annotated_rows_dict
+        objects_dicts, warnings_dicts, errors_dicts = interpreter.simulate()
+        return {
+            'objects': objects_dicts,
+            'warnings': warnings_dicts,
+            'errors': errors_dicts,
+        }
+
+    def process(self):
+        '''
+        Imports data from each one of the worksheets in the spreadsheet.
+
+        Example:
+            ish = Importsheet(name='Schools Mapping', project=p, ...)
+            ish.process()
+        '''
+        for worksheet in self.spreadsheet.worksheets():
+            interpreter = InterpreterFactory.make_interpreter(worksheet)
+            for obj in interpreter.objects():
+                # TODO: treat exceptions and integrity errors
+                obj.save()

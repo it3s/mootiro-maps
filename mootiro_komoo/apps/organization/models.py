@@ -61,6 +61,30 @@ class Organization(models.Model):
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
 
+    model_dict_keys = ['name', 'description', 'creator', 'creation_date',
+        'last_editor', 'last_update', 'link', 'contact', 'categories',
+        'target_audiences', 'tags', 'community']
+
+    @staticmethod
+    def from_dict(d):
+        filtered_attrs = {a:d[a] for a in model_dict_keys if a in d}
+        return Organization(**filtered_attrs)
+
+    def is_valid(self):
+        self.errors = {}
+ 
+        # required fields
+        if not self.name:
+            self.errors['name'] = 'required'
+        self.errors
+
+        # what else?
+ 
+        return bool(self.errors)
+
+    def to_dict(self):
+        return {a:getattr(self, k) for k in model_dict_keys}
+
     @property
     def related_items(self):
         return [c for c in self.community.all()] + \
