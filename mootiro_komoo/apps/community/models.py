@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
+import simplejson
+
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance
 from django.core.urlresolvers import reverse
@@ -85,6 +89,22 @@ class Community(GeoRefModel):
     @property
     def perm_id(self):
         return 'c%d' % self.id
+
+    @property
+    def as_dict(self):
+        ct = ContentType.objects.get_for_model(self)
+        return {
+            'id': self.id,
+            'content_type': ct.id,
+            'name': self.name,
+            'view_url': self.view_url,
+            'population': self.population,
+            'projects': [],
+        }
+
+    @property
+    def json(self):
+        return simplejson.dumps(self.as_dict)
 
 
 if not reversion.is_registered(Community):

@@ -23,6 +23,17 @@ class GeoRefModel(geomodels.Model):
     polys = geomodels.MultiPolygonField(null=True, blank=True, editable=False)
     geometry = CollectionFrom(points='points', lines='lines', polys='polys')
 
+    @property
+    def classname(self):
+        return self.__class__.__name__
+
+    @property
+    def app_label(self):
+        return self.__class__._meta.app_label
+
+    @property
+    def modelname(self):
+        return self.__class__.__name__
 
     @property
     def related_items(self):

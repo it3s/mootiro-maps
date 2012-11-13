@@ -132,6 +132,7 @@ INSTALLED_APPS = [
     'projects',
     'discussion',
     'importsheet',
+    'lib.locker',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024

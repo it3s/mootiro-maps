@@ -14,7 +14,8 @@
   {% crispy form form.helper %}
 
   <script type="text/javascript">
-    $(function(){
+    require(['jquery', 'utils', 'ajaxforms'], function ($) {
+      $(function(){
         $('#community_form').ajaxform();
 
         $('#community_form').komooFormHintBoxes({
@@ -37,6 +38,7 @@
                 hint: 'Você pode carregar fotos da comunidade.'
             }
         });
+      });
     });
   </script>
 {% endif %}

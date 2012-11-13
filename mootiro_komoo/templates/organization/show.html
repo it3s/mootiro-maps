@@ -2,7 +2,6 @@
 
 {% load komoo_tags %}
 {% load moderation_tags %}
-{% load komoo_map_tags %}
 {% load i18n %}
 {% load comment_tags %}
 {% load markitup_tags %}
@@ -16,7 +15,6 @@
 {% block menu %} {% menu "organization" %} {% endblock %}
 
 {% block content %}
-{% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=' 'lazy=True' %}
 <div id="main-content" class="inline-block">
     <div class="main-column">
 
@@ -196,7 +194,9 @@
     </div>
 
     <div class="right-bar right-bar-modif">
-        <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
+        <div id="map-preview">
+          <div id="map-preview-canvas"></div>
+        </div>
         <a href="{{ organization.related_items_url }}" class="see-on-map">{% trans 'see on map' %}</a>
 
         <div class="centralizer apart">
@@ -287,7 +287,7 @@
         });
 
         $('.branch-edit-btn').click(function(evt){
-            if (isAuthenticated){
+            if (KomooNS && KomooNS.isAuthenticated){
                 var branch = $(this).parent().parent().parent()
                 var form = branch.find('.branch-form');
                 var info = branch.find('.branch-info');
@@ -361,6 +361,18 @@
                         .css('padding-top', Math.abs(obj.offsetHeight - 200) /2);
             }
         });
+    </script>
+
+    <script type="text/javascript">
+      require(['jquery', 'map.jquery'], function ($) {
+        var $el = $("#map-preview-canvas").komooMap({
+          type: 'preview',
+          geojson: {{ geojson|safe }},
+          width: '200px',
+          height: '200px'
+        });
+        window.preview = $el.data('map');
+      });
     </script>
 {% endblock %}
 

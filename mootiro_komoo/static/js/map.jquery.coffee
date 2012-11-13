@@ -7,7 +7,7 @@ define ['jquery', 'map/maps'], ($, maps) ->
             map.refresh()
 
         fixMapHeight = (map, mapPanel = $('#map-panel')) ->
-            height = $('body').innerHeight() - $('#top').innerHeight() - $('.mootiro_bar').innerHeight() - 5
+            height = $('body').innerHeight() - $('#top').innerHeight() - $('.upper_bar').innerHeight() - 5
             $(map.element).height height
             mapPanel.height height
             panelInfo = $('.panel-info-wrapper')
@@ -34,6 +34,8 @@ define ['jquery', 'map/maps'], ($, maps) ->
                     if opts.height? then $this.height opts.height
                     if opts?.type is 'preview' and not opts?.geojson?.features?[0]?.geometry and not opts?.force
                         $this.html $('<div>').addClass('placeholder').text('Informação geométrica não disponível')
+                        # FIXME
+                        $this.parent().parent().find('.see-on-map').hide()
                         return
                     map = maps.makeMap opts
                     $this.data 'map', map

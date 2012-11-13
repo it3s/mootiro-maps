@@ -176,7 +176,7 @@
 
 {% block page_scripts %}
     <script type="text/javascript">
-
+      require(['jquery', 'utils'], function ($) {
         $(function(){
             var tabs = new Tabs('.content-updates .tab', '.content-updates .panel',
                           undefined, 'active');
@@ -278,6 +278,7 @@
             }
 
         });
+      });
 
     </script>
 {% endblock %}

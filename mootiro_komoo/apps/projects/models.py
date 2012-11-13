@@ -122,8 +122,10 @@ class Project(models.Model):
 
     @property
     def as_dict(self):
+        ct = ContentType.objects.get_for_model(self)
         return {
             'id': self.id,
+            'content_type': ct.id,
             'name': self.name,
             'slug': self.slug,
             'logo_url': self.logo_url,

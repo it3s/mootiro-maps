@@ -32,7 +32,7 @@ window.Signature = Backbone.Model.extend
 
 window.SignatureView = Backbone.View.extend
     className: 'signature'
-    events: 
+    events:
         'click .cancel-subscription-btn': 'cancelSubscription'
 
     initialize: () ->
@@ -98,62 +98,63 @@ window.SignaturesListView = Backbone.View.extend
         @digestForm.submit()
 
 
-# jQuery -> on document ready
-$ () ->
+require ['jquery', 'utils', 'ajaxforms'], ($) ->
+  # jQuery -> on document ready
+  $ () ->
 
-    #
-    #=========  Public Settings Tab ==========
-    #
-    $('#form-profile').ajaxform
-        clean: false
-        onSuccess: (data) ->
-            $messageBox = $ '.form-message-box'
-            if $messageBox.length
-                $messageBox.remove()
-            msgTemplate = _.template $('#form-message-box').html()
-            renderedContent = msgTemplate
-                msg: gettext 'Seus dados públicos foram salvos com sucesso!'
+      #
+      #=========  Public Settings Tab ==========
+      #
+      $('#form-profile').ajaxform
+          clean: false
+          onSuccess: (data) ->
+              $messageBox = $ '.form-message-box'
+              if $messageBox.length
+                  $messageBox.remove()
+              msgTemplate = _.template $('#form-message-box').html()
+              renderedContent = msgTemplate
+                  msg: gettext 'Seus dados públicos foram salvos com sucesso!'
 
-            $('#form-profile .form-actions').before renderedContent
-            $('#form-profile .alert').fadeIn()
-            false
-
-
-    $('#form-profile').komooFormHintBoxes
-        'contact':
-            hint: 'Este Contanto ficará visível para outros usuários do MootiroMaps!'
-            top: '30%'
+              $('#form-profile .form-actions').before renderedContent
+              $('#form-profile .alert').fadeIn()
+              false
 
 
-    # message box close when x button is clicked
-    $('.alert .close').live 'click', () ->
-        $(this).parent().slideUp()
+      $('#form-profile').komooFormHintBoxes
+          'contact':
+              hint: 'Este Contanto ficará visível para outros usuários do MootiroMaps!'
+              top: '30%'
 
-    #
-    #========== Personal Settings Tab ================
-    #
-    $('#form-personal').ajaxform
-        clean: false
-        onSuccess: (data) ->
-            $messageBox = $ '.form-message-box'
-            if $messageBox.length
-                $messageBox.remove()
-            msgTemplate = _.template $('#form-message-box').html()
-            renderedContent = msgTemplate
-                msg: gettext 'Seus dados pessoais foram salvos com sucesso!'
 
-            $('#form-personal .form-actions').before renderedContent
-            $('#form-personal .alert').fadeIn()
-            false
+      # message box close when x button is clicked
+      $('.alert .close').live 'click', () ->
+          $(this).parent().slideUp()
 
-    #
-    #=========== Signatures Settings Tab ==============
-    #
-    loadedSignatures = new SignaturesList()
-    loadedSignatures.reset window.KomooNS.signatures
+      #
+      #========== Personal Settings Tab ================
+      #
+      $('#form-personal').ajaxform
+          clean: false
+          onSuccess: (data) ->
+              $messageBox = $ '.form-message-box'
+              if $messageBox.length
+                  $messageBox.remove()
+              msgTemplate = _.template $('#form-message-box').html()
+              renderedContent = msgTemplate
+                  msg: gettext 'Seus dados pessoais foram salvos com sucesso!'
 
-    signaturesListView = new SignaturesListView
-        collection: loadedSignatures
+              $('#form-personal .form-actions').before renderedContent
+              $('#form-personal .alert').fadeIn()
+              false
 
-    $('.signatures-list-wrapper').append signaturesListView.render().el
+      #
+      #=========== Signatures Settings Tab ==============
+      #
+      loadedSignatures = new SignaturesList()
+      loadedSignatures.reset window.KomooNS.signatures
+
+      signaturesListView = new SignaturesListView
+          collection: loadedSignatures
+
+      $('.signatures-list-wrapper').append signaturesListView.render().el
 

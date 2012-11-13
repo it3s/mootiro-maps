@@ -66,6 +66,7 @@
 {% if both %}
 {% block page_scripts %}
     <script type="text/javascript">
+      require(['jquery', 'utils'], function ($) {
         var num_realized = {{ realized|length }};
         var num_received = {{ received|length }};
 
@@ -76,6 +77,7 @@
         } else {
             $('.tab-investment.realized').click();
         }
+      });
     </script>
 {% endblock %}
 {% endif %}

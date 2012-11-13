@@ -1,6 +1,7 @@
 (function() {
 
   require(['map/geometries'], function(geometries) {
+    module('Map Geometries');
     test('Basic requirements', function() {
       expect(2);
       ok(Function.call, 'Function.call()');

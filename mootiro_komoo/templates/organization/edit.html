@@ -37,6 +37,7 @@
     {% load_logo organization %}
 
     <script type="text/javascript">
+      require(['jquery', 'utils', 'ajaxforms'], function ($) {
         $(function(){
             $('#form_organization').ajaxform();
 
@@ -81,7 +82,8 @@
                     top: '-40px'
                 }
             });
-        })
+        });
+      });
     </script>
 
 {% endblock %}

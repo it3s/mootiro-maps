@@ -27,6 +27,8 @@
 
 {% block page_scripts %}
   <script type="text/javascript">
-    $(".more.community").komooTooltip();
+    require(['jquery', 'utils'], function ($) {
+      $(".more.community").komooTooltip();
+    });
   </script>
 {% endblock %}

@@ -28,10 +28,12 @@
 
 {% block page_scripts %}
     <script type="text/javascript">
+      require(['jquery', 'utils', 'ajaxforms'], function ($) {
         $(function(){
             $('#proposal_form').ajaxform();
 
             $('#proposal_form').komooFormHintBoxes();
         });
+      });
     </script>
 {% endblock %}

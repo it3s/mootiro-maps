@@ -29,37 +29,4 @@
   {% endif %}
 {% endfor %}
 </ul>
-
-<script type="text/javascript">
-  $(function () {
-    var menu = $("#map-add-menu");
-
-    // Listen map events
-    $("#map-canvas-main, #map-canvas-editor").bind('initialized', function (e, map) {
-      komoo.event.addListener(map, 'drawing_started', function (feature) {
-        $('.item', menu).removeClass('selected');
-        $('.sublist', menu).hide();
-        $('.collapser i.icon-chevron-down', menu).toggleClass("icon-chevron-right icon-chevron-down");
-        var menuItem = $('.' + feature.getType().toLowerCase() + ' .item', menu);
-        menuItem.addClass('selected');
-        menu.addClass("frozen");
-      });
-      komoo.event.addListener(map, 'drawing_finished', function (feature) {
-        $('.item', menu).removeClass('selected');
-        menu.removeClass("frozen");
-      });
-
-      // Add click event to add menu items
-      $('.item, .sublist li > div', menu).click(function (e) {
-        if (menu.hasClass('frozen')) return false;
-        var item = $(this);
-        if (item.attr("data-geometry-type"))
-          map.drawNewFeature(item.attr("data-geometry-type"),
-                             item.attr("data-feature-type"));
-        else
-          $('.collapser', item.parent()).click();
-      });
-
-    });
-  });
 </script>

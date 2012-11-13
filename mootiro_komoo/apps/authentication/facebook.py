@@ -20,7 +20,7 @@ from django.core.urlresolvers import reverse
 
 from annoying.decorators import render_to
 
-from main.utils import randstr
+from lib.locker.utils import randstr
 from authentication.utils import login as auth_login
 
 from .models import PROVIDERS, SocialAuth

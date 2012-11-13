@@ -107,53 +107,55 @@
     }
   });
 
-  $(function() {
-    var loadedSignatures, signaturesListView;
-    $('#form-profile').ajaxform({
-      clean: false,
-      onSuccess: function(data) {
-        var $messageBox, msgTemplate, renderedContent;
-        $messageBox = $('.form-message-box');
-        if ($messageBox.length) $messageBox.remove();
-        msgTemplate = _.template($('#form-message-box').html());
-        renderedContent = msgTemplate({
-          msg: gettext('Seus dados públicos foram salvos com sucesso!')
-        });
-        $('#form-profile .form-actions').before(renderedContent);
-        $('#form-profile .alert').fadeIn();
-        return false;
-      }
+  require(['jquery', 'utils', 'ajaxforms'], function($) {
+    return $(function() {
+      var loadedSignatures, signaturesListView;
+      $('#form-profile').ajaxform({
+        clean: false,
+        onSuccess: function(data) {
+          var $messageBox, msgTemplate, renderedContent;
+          $messageBox = $('.form-message-box');
+          if ($messageBox.length) $messageBox.remove();
+          msgTemplate = _.template($('#form-message-box').html());
+          renderedContent = msgTemplate({
+            msg: gettext('Seus dados públicos foram salvos com sucesso!')
+          });
+          $('#form-profile .form-actions').before(renderedContent);
+          $('#form-profile .alert').fadeIn();
+          return false;
+        }
+      });
+      $('#form-profile').komooFormHintBoxes({
+        'contact': {
+          hint: 'Este Contanto ficará visível para outros usuários do MootiroMaps!',
+          top: '30%'
+        }
+      });
+      $('.alert .close').live('click', function() {
+        return $(this).parent().slideUp();
+      });
+      $('#form-personal').ajaxform({
+        clean: false,
+        onSuccess: function(data) {
+          var $messageBox, msgTemplate, renderedContent;
+          $messageBox = $('.form-message-box');
+          if ($messageBox.length) $messageBox.remove();
+          msgTemplate = _.template($('#form-message-box').html());
+          renderedContent = msgTemplate({
+            msg: gettext('Seus dados pessoais foram salvos com sucesso!')
+          });
+          $('#form-personal .form-actions').before(renderedContent);
+          $('#form-personal .alert').fadeIn();
+          return false;
+        }
+      });
+      loadedSignatures = new SignaturesList();
+      loadedSignatures.reset(window.KomooNS.signatures);
+      signaturesListView = new SignaturesListView({
+        collection: loadedSignatures
+      });
+      return $('.signatures-list-wrapper').append(signaturesListView.render().el);
     });
-    $('#form-profile').komooFormHintBoxes({
-      'contact': {
-        hint: 'Este Contanto ficará visível para outros usuários do MootiroMaps!',
-        top: '30%'
-      }
-    });
-    $('.alert .close').live('click', function() {
-      return $(this).parent().slideUp();
-    });
-    $('#form-personal').ajaxform({
-      clean: false,
-      onSuccess: function(data) {
-        var $messageBox, msgTemplate, renderedContent;
-        $messageBox = $('.form-message-box');
-        if ($messageBox.length) $messageBox.remove();
-        msgTemplate = _.template($('#form-message-box').html());
-        renderedContent = msgTemplate({
-          msg: gettext('Seus dados pessoais foram salvos com sucesso!')
-        });
-        $('#form-personal .form-actions').before(renderedContent);
-        $('#form-personal .alert').fadeIn();
-        return false;
-      }
-    });
-    loadedSignatures = new SignaturesList();
-    loadedSignatures.reset(window.KomooNS.signatures);
-    signaturesListView = new SignaturesListView({
-      collection: loadedSignatures
-    });
-    return $('.signatures-list-wrapper').append(signaturesListView.render().el);
   });
 
 }).call(this);

@@ -17,7 +17,8 @@ from reversion.models import Revision
 
 from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
-from main.utils import create_geojson, randstr, send_mail
+from main.utils import create_geojson, send_mail
+from lib.locker.models import Locker
 
 from .models import User
 from .forms import FormProfile, FormUser
@@ -248,10 +249,7 @@ def user_new(request):
         user.set_password(request.POST['password'])
 
         # Email verification
-        key = randstr(32)
-        while User.objects.filter(verification_key=key).exists():
-            key = randstr(32)
-        user.verification_key = key
+        key = Locker.deposit(user.id)
 
         send_mail(
             title='Welcome to MootiroMaps',
@@ -283,7 +281,8 @@ def user_verification(request, key=''):
     '''
     if not key:
         return dict(message='check_email')
-    user = get_object_or_None(User, verification_key=key)
+    user_id = Locker.withdraw(key=key)
+    user = get_object_or_None(User, id=user_id)
     if not user:
         # invalid key => invalid link
         raise Http404
@@ -301,26 +300,26 @@ def login(request):
     POST: Receives email and password and authenticate the user.
     '''
     if request.method == 'GET':
-        next = request.GET.get('next', '')
-        return dict(next=next)
+        next_page = request.GET.get('next', '')
+        return dict(next=next_page, js_module='authentication/login')
 
     email = request.POST['email']
     password = request.POST['password']
     if not email or not password:
-        return dict(login_error='wrong_credentials')
+        return dict(login_error='wrong_credentials', js_module='authentication/login')
 
     password = User.calc_hash(password)
     q = User.objects.filter(email=email, password=password)
     if not q.exists():
-        return dict(login_error='wrong_credentials')
+        return dict(login_error='wrong_credentials', js_module='authentication/login')
 
     user = q.get()
     if not user.is_active:
-        return dict(login_error='user_not_active')
+         return dict(login_error='user_not_active', js_module='authentication/login')
 
     auth_login(request, user)
-    next = request.POST.get('next', '') or reverse('root')
-    return redirect(next)
+    next_page = request.POST.get('next', '') or reverse('root')
+    return redirect(next_page)
 
 
 def logout(request):
@@ -329,3 +328,11 @@ def logout(request):
     return redirect(next_page)
 
 ################ for testing ##################
+
+
+@render_to('authentication/secret.html')
+@login_required
+def secret(request):
+    return dict(user=request.user)
+
+

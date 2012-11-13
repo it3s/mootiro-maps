@@ -1,0 +1,24 @@
+<!-- Modal form for adding this project to a project -->
+<div class="modal hide dialog" id="add-project-modal" style="display:none;">
+    <div class="modal-header">
+        <button type="button" id="add-project-close" class="close" data-dismiss="modal">×</button>
+        <div class="add-project-modal-header">
+          <%= gettext('Add this object to a project') %>
+        </div>
+    </div>
+    <div class="modal-body">
+        <p>
+        <div class="project-selector"></div>
+        </p>
+        <div id="add-project-msg" class="msg add-project-msg">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn cancel" id="add-project-cancel" >
+          <%= gettext('Cancel') %>
+        </a>
+        <a href="#" class="button disabled save" id="add-project-save">
+          <%= gettext('Save changes') %>
+        </a>
+    </div>
+</div>

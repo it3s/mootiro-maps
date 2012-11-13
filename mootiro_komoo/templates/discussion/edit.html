@@ -18,8 +18,10 @@
 
 {% block page_scripts %}
     <script type="text/javascript">
+      require(['ajaxforms'], function () {
         $(function(){
             $('#discussion_form').ajaxform();
         });
+      });
     </script>
 {% endblock %}

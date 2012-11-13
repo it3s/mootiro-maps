@@ -271,6 +271,7 @@ def _get_widgets_dict(obj):
         """.format(nc.image_off, nc.image, nc.id, nc.name)
     need_categories_widget += """
         <script type="text/javascript">
+          require(['jquery'], function ($) {
             var nc_filter_arr = [];
 
             $("img.nc_filter").on("click", function (evt) {
@@ -284,6 +285,7 @@ def _get_widgets_dict(obj):
                 $("#need_categories").val(nc_filter_arr.join()).change;
                 $(".nc_filter[ncid='"+id+"']").toggle();
             });
+          });
         </script>
     """
     ##################################
@@ -342,9 +344,10 @@ def visualization_opts(context, obj, arg1='', arg2=''):
 
 @register.simple_tag(takes_context=True)
 def visualization_opts_js(context):
+    # FIXME: this code should be somewhere else.
     return """
     <script type="text/javascript">
-
+      require(['jquery', 'utils'], function ($) {
         $(function(){
 
 
@@ -513,8 +516,9 @@ def visualization_opts_js(context):
             date_order = $(this).attr('order');
           });
 
+        });
       });
-      </script>
+    </script>
     """ % {
       'comm_id': context['community'].id if context.get('community', None) else '',
       'comm_name': context['community'].name if context.get('community', None) else ''}
