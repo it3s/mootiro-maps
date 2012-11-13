@@ -1,0 +1,47 @@
+.nav-list () {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px 10px;
+
+    li {
+        display: inline;
+
+        a {
+            padding: 3px 15px;
+        }
+    }
+}
+
+.border-radius (@radius: 5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.icon (@size: 24px) {
+    display: inline-block;
+    vertical-align: text-top;
+
+    i {
+        width: @size;
+        height: @size;
+        display: inline-block;
+        margin-right: 5px;
+        background-color: blue;  // temporary
+        vertical-align: middle;
+    }
+}
+
+.inset-border (@color, @size:1px, @percentage:15%) {
+    border-top: @size solid darken(@color, @percentage);
+    border-left: @size solid darken(@color, @percentage);
+    border-bottom: @size solid lighten(@color, @percentage);
+    border-right: @size solid lighten(@color, @percentage);
+}
+
+.input () {
+    .border-radius(3px);
+    .inset-border(@input-border-color, 1px);
+    background-color: @input-bg;
+    color: @input-fg;
+}

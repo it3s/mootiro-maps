@@ -1,0 +1,120 @@
+body {
+  font-size: 14px;
+  font-family: Calibri, "Trebuchet MS", Verdana, sans-serif;
+  padding: 0px;
+  margin: 0px;
+  background-color: #ffffff;
+}
+h1 {
+  font-size: 214%;
+}
+h2 {
+  font-size: 171%;
+}
+h3 {
+  font-size: 129%;
+}
+a {
+  color: #14636e;
+  background-color: transparent;
+  text-decoration: underline;
+}
+a:hover {
+  color: #14636e;
+  background-color: #b1dde8;
+}
+a:visited {
+  color: #004047;
+  background-color: transparent;
+}
+#upper-bar {
+  float: right;
+  text-align: right;
+  margin: 5px;
+}
+#upper-bar form.search,
+#upper-bar ul.nav {
+  display: inline-block;
+}
+header.main {
+  background-color: #dceff4;
+  width: 100%;
+}
+header.main .logo {
+  display: inline-block;
+  width: 105px;
+  height: 45px;
+  margin: 15px 15px 5px;
+  background-color: blue;
+}
+header.main nav {
+  text-align: center;
+}
+header.main nav li {
+  line-height: 24px;
+  display: inline-block;
+}
+header.main nav li a {
+  display: inline-block;
+  vertical-align: text-top;
+  text-decoration: none;
+  padding: 10px 40px;
+}
+header.main nav li a i {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  margin-right: 5px;
+  background-color: blue;
+  vertical-align: middle;
+}
+nav ul {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px 10px;
+}
+nav ul li {
+  display: inline;
+}
+nav ul li a {
+  padding: 3px 15px;
+}
+ul.nav {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px 10px;
+}
+ul.nav li {
+  display: inline;
+}
+ul.nav li a {
+  padding: 3px 15px;
+}
+form.search {
+  width: 350px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border-top: 1px solid #a2d4e2;
+  border-left: 1px solid #a2d4e2;
+  border-bottom: 1px solid #ffffff;
+  border-right: 1px solid #ffffff;
+  background-color: #ffffff;
+  color: #000000;
+}
+form.search input {
+  border: none;
+  background-color: transparent;
+}
+form.search input:focus {
+  outline: none;
+}
+form.search input[type=text] {
+  width: 316px;
+}
+form.search input[type=submit] {
+  width: 24px;
+  height: 24px;
+  color: transparent;
+  background-color: blue;
+}
