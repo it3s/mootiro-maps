@@ -6,41 +6,29 @@ body {
     background-color: @content-bg;
 }
 
-h1 {
-    .h1-font;
-}
-
-h2 {
-    .h2-font;
-}
-
-h3 {
-    .h3-font;
-}
+h1 { .h1-font; }
+h2 { .h2-font; }
+h3 { .h3-font; }
 
 a {
     color: @link-fg;
     background-color: @link-bg;
     text-decoration: underline;
 
+    &.hover,
     &:hover {
         color: @link-hover-fg;
         background-color: @link-hover-bg;
     }
 
+    &.visited,
     &:visited {
         color: @link-visited-fg;
         background-color: @link-visited-bg;
     }
 }
 
-
-.top-box() {
-    background-color: @main-bg;
-    width: @site-width;
-}
-
-#upper-bar {
+.upper-bar {
     float: right;
     text-align: right;
     margin: 5px;
@@ -75,10 +63,7 @@ header.main {
     }
 }
 
-nav {
-    ul { .nav-list; }
-}
-
+nav ul,
 ul.nav { .nav-list; }
 
 

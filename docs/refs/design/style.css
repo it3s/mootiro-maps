@@ -19,21 +19,23 @@ a {
   background-color: transparent;
   text-decoration: underline;
 }
+a.hover,
 a:hover {
   color: #14636e;
   background-color: #b1dde8;
 }
+a.visited,
 a:visited {
   color: #004047;
   background-color: transparent;
 }
-#upper-bar {
+.upper-bar {
   float: right;
   text-align: right;
   margin: 5px;
 }
-#upper-bar form.search,
-#upper-bar ul.nav {
+.upper-bar form.search,
+.upper-bar ul.nav {
   display: inline-block;
 }
 header.main {
@@ -68,25 +70,17 @@ header.main nav li a i {
   background-color: blue;
   vertical-align: middle;
 }
-nav ul {
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px 10px;
-}
-nav ul li {
-  display: inline;
-}
-nav ul li a {
-  padding: 3px 15px;
-}
+nav ul,
 ul.nav {
   list-style-type: none;
   margin: 0px;
   padding: 0px 10px;
 }
+nav ul li,
 ul.nav li {
   display: inline;
 }
+nav ul li a,
 ul.nav li a {
   padding: 3px 15px;
 }
