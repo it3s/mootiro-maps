@@ -14,6 +14,7 @@ class OrganizationInterpreter(Interpreter):
         https://docs.google.com/spreadsheet/ccc?key=
     '''
     header_rows = 2
+    # TODO: change this name
     worksheet_name = 'organization'
     
     def a_better_row_dict(self, row_dict):
@@ -27,25 +28,35 @@ class OrganizationInterpreter(Interpreter):
             'organização': Organization,
             'recurso': Resource,
         }[rd['Controle']['Tipo'].lower()]
-        d['creator'] = rd['Controle']['Nome do mapeador']
-        d['import'] = rd['Controle']['Importar'].lower() == 'sim'
+        try:
+            d['creator'] = User.objects.get(name=rd['Controle']['Nome do mapeador'])
+        except:
+            d['creator'] = None
 
         # Nome
-        d['name'] = '{} - {}'.format(rd['Nome']['Sigla'],
-                                     rd['Nome']['Nome da organização'])
+        if rd['Nome']['Sigla'] and rd['Nome']['Nome da organização']:
+            d['name'] = '{} - {}'.format(rd['Nome']['Sigla'],
+                                    rd['Nome']['Nome da organização'])
+        elif rd['Nome']['Sigla'] or rd['Nome']['Nome da organização']:
+            d['name'] = rd['Nome']['Sigla'] or rd['Nome']['Nome da organização']
+        else:
+            d['name'] = None
 
         return d
 
     def validate_row_dict(self, better_row_dict):
         d = better_row_dict
-        
+
         o = d['type'].from_dict(d)
-        if not o.is_valid():
+        if o.is_valid():
+            e = {}
+        else:
             e = o.errors
         w = {}
 
-        # Nome
+        # Duplicates
         # TODO: inexact title search
+        # TODO: use georef to enhance matches
         q = d['type'].objects.filter(name=d['name'])
         if q.exists():
             w['duplicates'] = []

@@ -28,7 +28,40 @@ class CommonDataMixin(models.Model):
         abstract = True
 
 
-class CommonObject(GeoRefModel):
+class DictMixin(object):
+    '''Mixin to facilitate model interaction through dicts.'''
+    dict_mixin_keys = []  # subclasses must overwrite this list
+
+    @classmethod
+    def from_dict(cls, d):
+        '''Builds the model based on the attributes dict received. Discards
+        keys that are not recognized.'''
+        filtered = {a:d[a] for a in cls.dict_mixin_keys if a in d}
+        instance = cls()
+        instance.errors = {}
+        for attr in filtered:
+            try:
+                setattr(instance, attr, filtered[attr])
+            except ValueError as e:
+                instance.errors[attr] = e.message
+        return instance
+
+    def is_valid(self):
+        if not getattr(self, 'errors', None):
+            self.errors = {}
+        try:
+            self.clean_fields()
+        except Exception as err:
+            e = err.message_dict
+            filtered = {a:e[a] for a in self.dict_mixin_keys if a in e}
+            self.errors = filtered
+        return (self.errors == {})  # valid if no errors
+
+    def to_dict(self):
+        return {a:getattr(self, k) for k in self.dict_mixin_keys}
+
+
+class CommonObject(GeoRefModel, DictMixin):
     """
     All mapped objects inherit from this object so then can be
     inter-changeable. This model holds the 'true PK'' for a mapped
@@ -36,12 +69,6 @@ class CommonObject(GeoRefModel):
     CommonObject's id.
     """
     type = models.CharField(max_length=256)
-
-    def to_dict(self):
-        return {}
-
-    def from_dict(self, data):
-        return None
 
     def __init__(self, *args, **kwargs):
         super(CommonObject, self).__init__(*args, **kwargs)

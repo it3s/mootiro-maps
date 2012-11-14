@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext as _
 
+from main.models import DictMixin
 from authentication.models import User
 from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
@@ -61,43 +62,9 @@ class Organization(models.Model):
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
 
-    model_dict_keys = ['name', 'description', 'creator', 'creation_date',
+    dict_mixin_keys = ['name', 'description', 'creator', 'creation_date',
         'last_editor', 'last_update', 'link', 'contact', 'categories',
         'target_audiences', 'tags', 'community']
-
-    @classmethod
-    def from_dict(cls, d):
-        filtered_attrs = {a:d[a] for a in cls.model_dict_keys if a in d}
-        obj = Organization()
-        obj.errors = {}
-        for attr in filtered_attrs:
-            try:
-                setattr(obj, attr, filtered_attrs[attr])
-            except ValueError as e:
-                obj.errors[attr] = e.message
-        return obj
-
-    def is_valid(self):
-        if getattr(self, 'errors', None):
-            self.errors = {}
-
-        try:
-            self.save(commit=False)
-        except:
-            # TODO: generate errors dict
-            return False
- 
-        # required fields
-        if not self.name:
-            self.errors['name'] = 'required'
-        self.errors
-
-        # what else?
- 
-        return bool(self.errors)
-
-    def to_dict(self):
-        return {a:getattr(self, k) for k in self.model_dict_keys}
 
     @property
     def related_items(self):
