@@ -65,13 +65,27 @@ class Organization(models.Model):
         'last_editor', 'last_update', 'link', 'contact', 'categories',
         'target_audiences', 'tags', 'community']
 
-    @staticmethod
-    def from_dict(d):
-        filtered_attrs = {a:d[a] for a in model_dict_keys if a in d}
-        return Organization(**filtered_attrs)
+    @classmethod
+    def from_dict(cls, d):
+        filtered_attrs = {a:d[a] for a in cls.model_dict_keys if a in d}
+        obj = Organization()
+        obj.errors = {}
+        for attr in filtered_attrs:
+            try:
+                setattr(obj, attr, filtered_attrs[attr])
+            except ValueError as e:
+                obj.errors[attr] = e.message
+        return obj
 
     def is_valid(self):
-        self.errors = {}
+        if getattr(self, 'errors', None):
+            self.errors = {}
+
+        try:
+            self.save(commit=False)
+        except:
+            # TODO: generate errors dict
+            return False
  
         # required fields
         if not self.name:
@@ -83,7 +97,7 @@ class Organization(models.Model):
         return bool(self.errors)
 
     def to_dict(self):
-        return {a:getattr(self, k) for k in model_dict_keys}
+        return {a:getattr(self, k) for k in self.model_dict_keys}
 
     @property
     def related_items(self):

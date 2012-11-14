@@ -118,17 +118,18 @@ class Interpreter(gspread.Worksheet):
         '''Default implemantation does nothing.'''
         return row_dict
 
-    def validate_row_dict(self, obj):
+    def validate_row_dict(self, better_row_dict):
+        '''Receives a row_dict and converts it to an object. Returns dict of
+        {'object': o, 'worksheet': w, 'errors': e}
+        '''
         raise NotImplementedError('Subclass responsability')
 
-    def simulate(self):
-        '''asd'''
-        objects = []
-        warnings = []
-        errors = []
-        for obj in self.get_row_dicts():
-            d = self.validate_row_dict(obj)
-            objects.append(d['object'])
-            warnings.append(d['warnings'])
-            errors.append(d['errors'])
-            yield d
+    def analyze(self):
+        '''
+        Parses each row_dict into a dict containing the object, its warnings
+        and its errors. Return a list with all of these dictionaries.
+        '''
+        l = []
+        for row_dict in self.get_row_dicts():
+            l.append(self.validate_row_dict(row_dict))
+        return l

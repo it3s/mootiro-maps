@@ -28,8 +28,7 @@ p = Project.objects.all()[1]
 u = User.objects.all()[0]
 
 l = Importsheet.objects.all()
-importsheet = l[0] if l else \
+ish = l[0] if l else \
                 Importsheet(name='Mapeamento de Mapas', project=p, creator=u)
-importsheet.save()
-
-s = importsheet.simulate('organization')
+ish.save()
+ret = ish.simulate('organization')

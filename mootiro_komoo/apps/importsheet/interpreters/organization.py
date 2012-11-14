@@ -1,12 +1,11 @@
 # -*- coding: utf8 -*-
 from __future__ import unicode_literals
 
-from authentication import User
-from organization.models import Organization
+from authentication.models import User
+from apps.organization.models import Organization
 from resources.models import Resource
 
 from .base import Interpreter
-
 
 
 class OrganizationInterpreter(Interpreter):
@@ -18,32 +17,39 @@ class OrganizationInterpreter(Interpreter):
     worksheet_name = 'organization'
     
     def a_better_row_dict(self, row_dict):
-        '''
-        Receives a row_dict and returns 3 dicts mimetizing object attributes
-        structure.
-        '''
+        '''Reorganize a row_dict to something better.'''
         rd = row_dict
         d = {}
 
         # Controle
         d['id'] = rd['Controle']['ID']
-        d['type'] = rd['Controle']['Tipo']
+        d['type'] = {
+            'organização': Organization,
+            'recurso': Resource,
+        }[rd['Controle']['Tipo'].lower()]
         d['creator'] = rd['Controle']['Nome do mapeador']
-        d['import'] = True if rd['Controle']['Importar'].lower() == 'sim' else False
+        d['import'] = rd['Controle']['Importar'].lower() == 'sim'
 
         # Nome
         d['name'] = '{} - {}'.format(rd['Nome']['Sigla'],
                                      rd['Nome']['Nome da organização'])
 
-        return dict(object=d, warnings=w, errors=e)
+        return d
 
-
-    def validate_row_dict(self, row_dict):
-        '''
-        Receives a row_dict and returns 3 dicts mimetizing object attributes
-        structure.
-        '''
-        o = {}
+    def validate_row_dict(self, better_row_dict):
+        d = better_row_dict
+        
+        o = d['type'].from_dict(d)
+        if not o.is_valid():
+            e = o.errors
         w = {}
-        e = {}
-        pass
+
+        # Nome
+        # TODO: inexact title search
+        q = d['type'].objects.filter(name=d['name'])
+        if q.exists():
+            w['duplicates'] = []
+            for obj in q:
+                w['duplicates'].append(obj)
+
+        return {'object': o, 'warnings': w, 'errors': e}

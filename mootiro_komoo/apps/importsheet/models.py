@@ -107,23 +107,20 @@ class Importsheet(models.Model):
         dicts with errors and warnings.
 
         Example:
+
             ish = Importsheet(name='Schools Mapping', project=p, ...)
             ish.simulate('organization')
         '''
         worksheet = self.spreadsheet.worksheet(worksheet_name)
         interpreter = InterpreterFactory.make_interpreter(worksheet)
-        objects_dicts, warnings_dicts, errors_dicts = interpreter.simulate()
-        return {
-            'objects': objects_dicts,
-            'warnings': warnings_dicts,
-            'errors': errors_dicts,
-        }
+        return interpreter.analyze()
 
     def process(self):
         '''
         Imports data from each one of the worksheets in the spreadsheet.
 
         Example:
+
             ish = Importsheet(name='Schools Mapping', project=p, ...)
             ish.process()
         '''
