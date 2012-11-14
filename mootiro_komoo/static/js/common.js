@@ -8,7 +8,7 @@
           return typeof console !== "undefined" && console !== null ? console.error(err) : void 0;
         });
       } else {
-        return thror(err);
+        throw err;
       }
     };
   });

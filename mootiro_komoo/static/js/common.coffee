@@ -6,5 +6,5 @@ define [], () ->
                 errorMessage 'Timeout', "Ocorreu uma falha ao carregar alguns serviços externos. Partes do Mootiro Maps poderão não funcionar corretamente."
                 console?.error err
         else
-            thror err
+            throw err
 

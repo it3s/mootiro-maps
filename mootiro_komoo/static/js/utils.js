@@ -438,7 +438,7 @@ function nestCollection(model, attributeName, nestedCollection) {
         model.attributes[attributeName][i] = nestedCollection.at(i).attributes;
     }
     //create empty arrays if none
- 
+
     nestedCollection.bind('add', function (initiative) {
         if (!model.get(attributeName)) {
             model.attributes[attributeName] = [];
@@ -455,7 +455,7 @@ function nestCollection(model, attributeName, nestedCollection) {
 }
 
 /* Komoo style tooltips. Based on bootstrap tooltip plugin. */
-(function($){
+require(['jquery', 'bootstrap'], function($){
     $.fn.komooTooltip = function() {
         var $target = $(this);
         $target.tooltip({
@@ -469,4 +469,4 @@ function nestCollection(model, attributeName, nestedCollection) {
             });
         });
     };
-})(jQuery);
+});

@@ -28,6 +28,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
 
         constructor: (@options = {}) ->
             super()
+            @initialized = @data.deferred()
             @element = @options.element ? \
                        document.getElementById @options.elementId
             @el = @element
@@ -37,22 +38,26 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             @components = {}
             @addComponent 'map/controls::Location'
 
-            @initGoogleMap @options.googleMapOptions
-            @initFeatureTypes()
-            @handleEvents()
+            im = @initGoogleMap @options.googleMapOptions
+            ft = @initFeatureTypes()
+            he = @handleEvents()
+
+            @data.when(im, ft, he).done () =>
+                @initialized.resolve()
 
         addControl: (pos, el) ->
             @googleMap.controls[pos].push el
 
         loadGeoJsonFromOptons: ->
-            if @options.geojson
-                features = @loadGeoJSON @options.geojson, not @options.zoom?
-                bounds = features.getBounds()
-                if bounds?
-                    @fitBounds bounds
-                features?.setMap this, geometry: on, icon: on
-                @publish 'set_zoom', @options.zoom
-                @publish 'features_loaded_from_options', features
+            @data.when(@initialized).done () =>
+                if @options.geojson
+                    features = @loadGeoJSON @options.geojson, not @options.zoom?
+                    bounds = features.getBounds()
+                    if bounds?
+                        @fitBounds bounds
+                    features?.setMap this, geometry: on, icon: on
+                    @publish 'set_zoom', @options.zoom
+                    @publish 'features_loaded_from_options', features
 
         initGoogleMap: (options = @googleMapDefaultOptions) ->
             @googleMap = new googleMaps.Map @element, options
@@ -66,12 +71,14 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                     @publish eventName, e
 
         initFeatureTypes: ->
+            dfd = @data.deferred()
             @featureTypes ?= {}
             if @options.featureTypes?
                 # Get Feature types from options
                 @options.featureTypes?.forEach (type) =>
                     @featureTypes[type.type] = type
                 @loadGeoJsonFromOptons()
+                dfd.resolve()
             else
                 # Load Feature types via ajax
                 $.ajax
@@ -81,6 +88,8 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                         data.forEach (type) =>
                             @featureTypes[type.type] = type
                         @loadGeoJsonFromOptons()
+                        dfd.resolve()
+            dfd.promise()
 
         handleEvents: ->
             @subscribe 'features_loaded', (features) =>
@@ -108,16 +117,17 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                 @setZoom zoom
 
         addComponent: (component, type = 'generic', opts = {}) ->
-            if _.isString component
-                component = @start component, '', opts
-            else
-                component = @start component
-            return @data.when(component).done () =>
-                for instance in arguments
-                    instance.setMap @
-                    @components[type] ?= []
-                    @components[type].push instance
-                    instance.enable?()
+            @data.when(@initialized).done () =>
+                if _.isString component
+                    component = @start component, '', opts
+                else
+                    component = @start component
+                return @data.when(component).done () =>
+                    for instance in arguments
+                        instance.setMap @
+                        @components[type] ?= []
+                        @components[type].push instance
+                        instance.enable?()
 
         enableComponents: (type) ->
             @components[type]?.forEach (component) =>
@@ -207,24 +217,24 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
 
         loadGeoJson: (geojson, panTo = false, attach = true) ->
             features = Collections.makeFeatureCollection map: @
+            @data.when(@initialized).done () =>
+                if not geojson?.type? or not geojson.type is 'FeatureCollection'
+                    return features
 
-            if not geojson?.type? or not geojson.type is 'FeatureCollection'
-                return features
+                geojson.features?.forEach (geojsonFeature) =>
+                    # Try to get the instance already created
+                    feature = @features.getById geojsonFeature.properties.type,
+                        geojsonFeature.properties.id
+                    # Otherwise create it
+                    feature ?= @makeFeature geojsonFeature, attach
+                    features.push feature
 
-            geojson.features?.forEach (geojsonFeature) =>
-                # Try to get the instance already created
-                feature = @features.getById geojsonFeature.properties.type,
-                    geojsonFeature.properties.id
-                # Otherwise create it
-                feature ?= @makeFeature geojsonFeature, attach
-                features.push feature
+                    #if attach then feature.setMap @
 
-                #if attach then feature.setMap @
+                if panTo and features.getAt(0)?.getBounds()
+                    @googleMap.fitBounds features.getAt(0).getBounds()
 
-            if panTo and features.getAt(0)?.getBounds()
-                @googleMap.fitBounds features.getAt(0).getBounds()
-
-            @publish 'features_loaded', features
+                @publish 'features_loaded', features
             features
 
         loadGeoJSON: (geojson, panTo, attach) ->
@@ -260,13 +270,15 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                     type: featureType
             @publish 'draw_feature', geometryType, feature
 
-        editFeature: (feature = @features.getAt(0), newGeometry) ->
-            if newGeometry? and feature.getGeometryType() is geometries.types.EMPTY
-                feature.setGeometry geometries.makeGeometry geometry:
-                    type: newGeometry
-                @publish 'draw_feature', newGeometry, feature
-            else
-                @publish 'edit_feature', feature
+        editFeature: (feature, newGeometry) ->
+            @data.when(@initialized).then () =>
+                feature ?= @features.getAt(0)
+                if newGeometry? and feature.getGeometryType() is geometries.types.EMPTY
+                    feature.setGeometry geometries.makeGeometry geometry:
+                        type: newGeometry
+                    @publish 'draw_feature', newGeometry, feature
+                else
+                    @publish 'edit_feature', feature
 
         setMode: (@mode) ->
             @publish 'mode_changed', @mode

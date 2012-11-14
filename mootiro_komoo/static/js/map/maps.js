@@ -38,10 +38,12 @@
       };
 
       function Map(options) {
-        var _ref;
+        var ft, he, im, _ref,
+          _this = this;
         this.options = options != null ? options : {};
         this.addFeature = __bind(this.addFeature, this);
         Map.__super__.constructor.call(this);
+        this.initialized = this.data.deferred();
         this.element = (_ref = this.options.element) != null ? _ref : document.getElementById(this.options.elementId);
         this.el = this.element;
         this.features = Collections.makeFeatureCollectionPlus({
@@ -49,9 +51,12 @@
         });
         this.components = {};
         this.addComponent('map/controls::Location');
-        this.initGoogleMap(this.options.googleMapOptions);
-        this.initFeatureTypes();
-        this.handleEvents();
+        im = this.initGoogleMap(this.options.googleMapOptions);
+        ft = this.initFeatureTypes();
+        he = this.handleEvents();
+        this.data.when(im, ft, he).done(function() {
+          return _this.initialized.resolve();
+        });
       }
 
       Map.prototype.addControl = function(pos, el) {
@@ -59,20 +64,23 @@
       };
 
       Map.prototype.loadGeoJsonFromOptons = function() {
-        var bounds, features;
-        if (this.options.geojson) {
-          features = this.loadGeoJSON(this.options.geojson, !(this.options.zoom != null));
-          bounds = features.getBounds();
-          if (bounds != null) this.fitBounds(bounds);
-          if (features != null) {
-            features.setMap(this, {
-              geometry: true,
-              icon: true
-            });
+        var _this = this;
+        return this.data.when(this.initialized).done(function() {
+          var bounds, features;
+          if (_this.options.geojson) {
+            features = _this.loadGeoJSON(_this.options.geojson, !(_this.options.zoom != null));
+            bounds = features.getBounds();
+            if (bounds != null) _this.fitBounds(bounds);
+            if (features != null) {
+              features.setMap(_this, {
+                geometry: true,
+                icon: true
+              });
+            }
+            _this.publish('set_zoom', _this.options.zoom);
+            return _this.publish('features_loaded_from_options', features);
           }
-          this.publish('set_zoom', this.options.zoom);
-          return this.publish('features_loaded_from_options', features);
-        }
+        });
       };
 
       Map.prototype.initGoogleMap = function(options) {
@@ -94,8 +102,9 @@
       };
 
       Map.prototype.initFeatureTypes = function() {
-        var _ref,
+        var dfd, _ref,
           _this = this;
+        dfd = this.data.deferred();
         if (this.featureTypes == null) this.featureTypes = {};
         if (this.options.featureTypes != null) {
           if ((_ref = this.options.featureTypes) != null) {
@@ -103,19 +112,22 @@
               return _this.featureTypes[type.type] = type;
             });
           }
-          return this.loadGeoJsonFromOptons();
+          this.loadGeoJsonFromOptons();
+          dfd.resolve();
         } else {
-          return $.ajax({
+          $.ajax({
             url: this.featureTypesUrl,
             dataType: 'json',
             success: function(data) {
               data.forEach(function(type) {
                 return _this.featureTypes[type.type] = type;
               });
-              return _this.loadGeoJsonFromOptons();
+              _this.loadGeoJsonFromOptons();
+              return dfd.resolve();
             }
           });
         }
+        return dfd.promise();
       };
 
       Map.prototype.handleEvents = function() {
@@ -152,22 +164,24 @@
         var _this = this;
         if (type == null) type = 'generic';
         if (opts == null) opts = {};
-        if (_.isString(component)) {
-          component = this.start(component, '', opts);
-        } else {
-          component = this.start(component);
-        }
-        return this.data.when(component).done(function() {
-          var instance, _base2, _i, _len, _results;
-          _results = [];
-          for (_i = 0, _len = arguments.length; _i < _len; _i++) {
-            instance = arguments[_i];
-            instance.setMap(_this);
-            if ((_base2 = _this.components)[type] == null) _base2[type] = [];
-            _this.components[type].push(instance);
-            _results.push(typeof instance.enable === "function" ? instance.enable() : void 0);
+        return this.data.when(this.initialized).done(function() {
+          if (_.isString(component)) {
+            component = _this.start(component, '', opts);
+          } else {
+            component = _this.start(component);
           }
-          return _results;
+          return _this.data.when(component).done(function() {
+            var instance, _base2, _i, _len, _results;
+            _results = [];
+            for (_i = 0, _len = arguments.length; _i < _len; _i++) {
+              instance = arguments[_i];
+              instance.setMap(_this);
+              if ((_base2 = _this.components)[type] == null) _base2[type] = [];
+              _this.components[type].push(instance);
+              _results.push(typeof instance.enable === "function" ? instance.enable() : void 0);
+            }
+            return _results;
+          });
         });
       };
 
@@ -303,30 +317,33 @@
       };
 
       Map.prototype.loadGeoJson = function(geojson, panTo, attach) {
-        var features, _ref, _ref2,
+        var features,
           _this = this;
         if (panTo == null) panTo = false;
         if (attach == null) attach = true;
         features = Collections.makeFeatureCollection({
           map: this
         });
-        if (!((geojson != null ? geojson.type : void 0) != null) || !geojson.type === 'FeatureCollection') {
-          return features;
-        }
-        if ((_ref = geojson.features) != null) {
-          _ref.forEach(function(geojsonFeature) {
-            var feature;
-            feature = _this.features.getById(geojsonFeature.properties.type, geojsonFeature.properties.id);
-            if (feature == null) {
-              feature = _this.makeFeature(geojsonFeature, attach);
-            }
-            return features.push(feature);
-          });
-        }
-        if (panTo && ((_ref2 = features.getAt(0)) != null ? _ref2.getBounds() : void 0)) {
-          this.googleMap.fitBounds(features.getAt(0).getBounds());
-        }
-        this.publish('features_loaded', features);
+        this.data.when(this.initialized).done(function() {
+          var _ref, _ref2;
+          if (!((geojson != null ? geojson.type : void 0) != null) || !geojson.type === 'FeatureCollection') {
+            return features;
+          }
+          if ((_ref = geojson.features) != null) {
+            _ref.forEach(function(geojsonFeature) {
+              var feature;
+              feature = _this.features.getById(geojsonFeature.properties.type, geojsonFeature.properties.id);
+              if (feature == null) {
+                feature = _this.makeFeature(geojsonFeature, attach);
+              }
+              return features.push(feature);
+            });
+          }
+          if (panTo && ((_ref2 = features.getAt(0)) != null ? _ref2.getBounds() : void 0)) {
+            _this.googleMap.fitBounds(features.getAt(0).getBounds());
+          }
+          return _this.publish('features_loaded', features);
+        });
         return features;
       };
 
@@ -369,17 +386,20 @@
       };
 
       Map.prototype.editFeature = function(feature, newGeometry) {
-        if (feature == null) feature = this.features.getAt(0);
-        if ((newGeometry != null) && feature.getGeometryType() === geometries.types.EMPTY) {
-          feature.setGeometry(geometries.makeGeometry({
-            geometry: {
-              type: newGeometry
-            }
-          }));
-          return this.publish('draw_feature', newGeometry, feature);
-        } else {
-          return this.publish('edit_feature', feature);
-        }
+        var _this = this;
+        return this.data.when(this.initialized).then(function() {
+          if (feature == null) feature = _this.features.getAt(0);
+          if ((newGeometry != null) && feature.getGeometryType() === geometries.types.EMPTY) {
+            feature.setGeometry(geometries.makeGeometry({
+              geometry: {
+                type: newGeometry
+              }
+            }));
+            return _this.publish('draw_feature', newGeometry, feature);
+          } else {
+            return _this.publish('edit_feature', feature);
+          }
+        });
       };
 
       Map.prototype.setMode = function(mode) {
