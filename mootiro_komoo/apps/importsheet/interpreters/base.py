@@ -3,9 +3,10 @@ from __future__ import unicode_literals
 
 import gspread
 from copy import deepcopy
+from collections import OrderedDict
 
 
-class Interpreter(gspread.Worksheet):
+class Interpreter(object):
     '''
     Interface class for each **worksheet** type interpreter.
     You can use the template below to implement a new worksheet interpreter.
@@ -84,13 +85,13 @@ class Interpreter(gspread.Worksheet):
                     headers[r][c] = headers[r][c-1]
 
         # Build worksheet structure dict
-        root = {}
+        root = OrderedDict()
         for c in xrange(len(headers[r])):
             node = root
             for r in xrange(len(headers)):
                 key = headers[r][c]
                 if not key in node:
-                    node[key] = {}
+                    node[key] = OrderedDict()
                 node = node[key]
         data_structure = root
 

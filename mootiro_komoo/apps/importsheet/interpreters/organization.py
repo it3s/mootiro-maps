@@ -10,8 +10,8 @@ from .base import Interpreter
 
 class OrganizationInterpreter(Interpreter):
     '''
-        A model of this worksheet is in:
-        https://docs.google.com/spreadsheet/ccc?key=
+    A model of this worksheet is public available in:
+    https://docs.google.com/spreadsheet/ccc?key=
     '''
     header_rows = 2
     # TODO: change this name
@@ -41,6 +41,22 @@ class OrganizationInterpreter(Interpreter):
             d['name'] = rd['Nome']['Sigla'] or rd['Nome']['Nome da organização']
         else:
             d['name'] = None
+
+        # Contato
+        pass
+
+        # Description
+        d['description'] = ''
+        for title, text in rd['Descrição'].items():
+            if not text:
+                continue
+            d['description'] += \
+'''
+####{title}
+
+{text}
+
+'''.format(title=title, text=text)
 
         return d
 
