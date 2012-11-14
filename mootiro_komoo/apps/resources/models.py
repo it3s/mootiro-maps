@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 import reversion
 from lib.taggit.managers import TaggableManager
 
+from main.models import DictMixin
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
@@ -36,8 +37,13 @@ class ResourceKind(models.Model):
             ).order_by('-count', 'slug')[:number]
 
 
-class Resource(GeoRefModel):
+class Resource(GeoRefModel, DictMixin):
     """Resources model"""
+
+    # DictMixin needs this
+    dict_mixin_keys = ['name', 'description', 'creator', 'creation_date',
+        'last_editor', 'last_update', 'contact', 'kind', 'tags', 'community']
+
     name = models.CharField(max_length=256, default=_('Resource without name'))
     # slug = models.CharField(max_length=256, blank=False, db_index=True)
     kind = models.ForeignKey(ResourceKind, null=True, blank=True)

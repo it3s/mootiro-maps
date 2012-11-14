@@ -70,6 +70,12 @@ class CommonObject(GeoRefModel, DictMixin):
     """
     type = models.CharField(max_length=256)
 
+    def to_dict(self):
+        return {}
+
+    def from_dict(self, data):
+        return None
+
     def __init__(self, *args, **kwargs):
         super(CommonObject, self).__init__(*args, **kwargs)
         if hasattr(self, 'common_object_type') and self.common_object_type:

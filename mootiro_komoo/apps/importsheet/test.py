@@ -24,7 +24,7 @@ from projects.models import Project
 from authentication.models import User
 from importsheet.models import Importsheet
 
-p = Project.objects.all()[1]
+p = Project.objects.all()[0]
 u = User.objects.all()[0]
 
 l = Importsheet.objects.all()
@@ -32,3 +32,5 @@ ish = l[0] if l else \
                 Importsheet(name='Mapeamento de Mapas', project=p, creator=u)
 ish.save()
 ret = ish.simulate('organization')
+# o = ret[0]['object']
+# o.save()

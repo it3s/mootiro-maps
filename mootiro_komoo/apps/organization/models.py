@@ -28,7 +28,12 @@ LOGO_CHOICES = (
 )
 
 
-class Organization(models.Model):
+class Organization(models.Model, DictMixin):
+    # DictMixin needs this
+    dict_mixin_keys = ['name', 'description', 'creator', 'creation_date',
+        'last_editor', 'last_update', 'link', 'contact', 'categories',
+        'target_audiences', 'tags', 'community']
+
     name = models.CharField(max_length=320, unique=True)
     slug = models.SlugField(max_length=320, db_index=True)
     description = models.TextField(null=True, blank=True)
@@ -61,10 +66,6 @@ class Organization(models.Model):
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
-
-    dict_mixin_keys = ['name', 'description', 'creator', 'creation_date',
-        'last_editor', 'last_update', 'link', 'contact', 'categories',
-        'target_audiences', 'tags', 'community']
 
     @property
     def related_items(self):
