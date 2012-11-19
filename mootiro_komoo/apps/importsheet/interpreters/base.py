@@ -110,16 +110,11 @@ class Interpreter(object):
                     else:
                         node[key] = attr_value  # copy attribute
             # give each interpreter the chance to organize the row_dict better
-            row_dict = self.a_better_row_dict(row_dict)
             rows_dicts.append(row_dict)
 
         return rows_dicts
     
-    def a_better_row_dict(self, row_dict):
-        '''Default implemantation does nothing.'''
-        return row_dict
-
-    def validate_row_dict(self, better_row_dict):
+    def row_dict_to_object(self, better_row_dict):
         '''Receives a row_dict and converts it to an object. Returns dict of
         {'object': o, 'worksheet': w, 'errors': e}
         '''
@@ -132,5 +127,5 @@ class Interpreter(object):
         '''
         l = []
         for row_dict in self.get_row_dicts():
-            l.append(self.validate_row_dict(row_dict))
+            l.append(self.row_dict_to_object(row_dict))
         return l

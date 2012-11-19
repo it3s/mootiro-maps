@@ -5,6 +5,8 @@ from django.template import Context, Template
 
 from authentication.models import User
 from apps.organization.models import Organization
+from apps.organization.models import OrganizationCategoryTranslation
+from apps.organization.models import TargetAudience
 from resources.models import Resource
 
 from .base import Interpreter
@@ -19,7 +21,7 @@ class OrganizationInterpreter(Interpreter):
     # TODO: change this name
     worksheet_name = 'organization'
     
-    def a_better_row_dict(self, row_dict):
+    def row_dict_to_object(self, row_dict):
         '''Reorganize a row_dict to something better.'''
         rd = row_dict
         d = {}
@@ -39,10 +41,8 @@ class OrganizationInterpreter(Interpreter):
         if rd['Nome']['Sigla'] and rd['Nome']['Nome da organização']:
             d['name'] = '{} - {}'.format(rd['Nome']['Sigla'],
                                     rd['Nome']['Nome da organização'])
-        elif rd['Nome']['Sigla'] or rd['Nome']['Nome da organização']:
-            d['name'] = rd['Nome']['Sigla'] or rd['Nome']['Nome da organização']
         else:
-            d['name'] = None
+            d['name'] = rd['Nome']['Nome da organização']
 
         # == Contato ==
         contact = rd['Contato']
@@ -59,7 +59,7 @@ class OrganizationInterpreter(Interpreter):
             'email': contact['E-mail'],
             'website': contact['Website'],
         })
-        t = Template("""
+        t = Template('''
 {% if address %}**Endereço:** {{address}}, {{number}}{% if complement %}, {{complement}}{% endif %} - {{district}}
 {% if zipcode %}CEP: {{zipcode}}, {% endif %}{{city}}/{{state}}{% endif %}
 
@@ -68,7 +68,7 @@ class OrganizationInterpreter(Interpreter):
 {% if email %}**E-mail:** {{email}}{% endif %}
 
 {% if website %}**Website:** {{website}}{% endif %}
-""")
+''')
         d['contact'] = t.render(c)
 
         # == Description ==
@@ -85,7 +85,7 @@ class OrganizationInterpreter(Interpreter):
             'sections': rd['Descrição'],
             'references': refs,
         })
-        t = Template("""
+        t = Template('''
 {% for title, text in sections.items %}
 {% if text %}#### {{ title }}
 {{ text }}{% endif %}
@@ -95,14 +95,28 @@ class OrganizationInterpreter(Interpreter):
 {% for r in references %}
  - {% if r.author %}{{r.author}}: {% endif %}{% if r.link %}[{{r.source}}]({{r.link}} "{{r.link_title}}"){% endif %}{% if r.date %}, consultado em {{r.date}}{% endif %}
 {% endfor%}
-""")
+''')
         d['description'] = t.render(c)
 
-        return d
+        # == Coordenadas ==
+        d['geometry'] = "POINT (30 10)"
+        
+        # == Categorias ==
+        # FIXME: cannot use m2m relationships before save
+        categories = filter(bool, rd['Categorias'].values())
+        categories = OrganizationCategoryTranslation.objects.filter(name__in=categories)
+        d['categories'] = [c.category.name for c in categories]
 
-    def validate_row_dict(self, better_row_dict):
-        d = better_row_dict
+        # == Palavras-chave ==
+        # FIXME: cannot use m2m relationships before save
+        d['tags'] = filter(bool, rd['Palavras-chave'].values())
 
+        # == Públicos-alvo ==
+        # FIXME: cannot use m2m relationships before save
+        d['target_audiences'] = filter(bool, rd['Públicos-alvo'].values())
+        # target_audiences = [TargetAudience.objects.get_or_create(name=ta)[0] \
+        #                         for ta in target_audiences]
+        
         o = d['type'].from_dict(d)
         if o.is_valid():
             e = {}

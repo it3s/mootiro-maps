@@ -20,9 +20,14 @@ This is script is an interactive way of exploring google spreadsheet API XMLs.
 # sh = gc.open_by_key(skey)
 # worksheet = sh.worksheet('organization')
 
+from django.db import transaction
 from projects.models import Project
 from authentication.models import User
 from importsheet.models import Importsheet
+from organization.models import Organization
+
+for org in Organization.objects.all():
+    org.delete()
 
 p = Project.objects.all()[0]
 u = User.objects.all()[0]
