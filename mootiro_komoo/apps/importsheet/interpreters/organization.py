@@ -45,7 +45,31 @@ class OrganizationInterpreter(Interpreter):
             d['name'] = None
 
         # == Contato ==
-        pass
+        contact = rd['Contato']
+        c = Context({
+            'address': contact['Endereço'],
+            'number': contact['Número'],
+            'complement': contact['Complemento'],
+            'district': contact['Bairro'],
+            'zipcode': contact['CEP'],
+            'city': contact['Município'],
+            'state': contact['UF'],
+            'area_code': contact['DDD'],
+            'phone_number': contact['Telefone'],
+            'email': contact['E-mail'],
+            'website': contact['Website'],
+        })
+        t = Template("""
+{% if address %}**Endereço:** {{address}}, {{number}}{% if complement %}, {{complement}}{% endif %} - {{district}}
+{% if zipcode %}CEP: {{zipcode}}, {% endif %}{{city}}/{{state}}{% endif %}
+
+{% if phone_number %}**Telefone:** {% if area_code %}({{area_code}}){% endif %} {{phone_number}}{% endif %}
+
+{% if email %}**E-mail:** {{email}}{% endif %}
+
+{% if website %}**Website:** {{website}}{% endif %}
+""")
+        d['contact'] = t.render(c)
 
         # == Description ==
         sections = rd['Descrição']
