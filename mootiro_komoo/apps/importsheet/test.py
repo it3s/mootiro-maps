@@ -32,5 +32,5 @@ ish = l[0] if l else \
                 Importsheet(name='Mapeamento de Mapas', project=p, creator=u)
 ish.save()
 ret = ish.simulate('organization')
-# o = ret[0]['object']
+o = ret[0]['object']
 # o.save()

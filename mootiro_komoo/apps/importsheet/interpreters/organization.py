@@ -1,6 +1,8 @@
 # -*- coding: utf8 -*-
 from __future__ import unicode_literals
 
+from django.template import Context, Template
+
 from authentication.models import User
 from apps.organization.models import Organization
 from resources.models import Resource
@@ -22,7 +24,7 @@ class OrganizationInterpreter(Interpreter):
         rd = row_dict
         d = {}
 
-        # Controle
+        # == Controle ==
         d['id'] = rd['Controle']['ID']
         d['type'] = {
             'organização': Organization,
@@ -33,7 +35,7 @@ class OrganizationInterpreter(Interpreter):
         except:
             d['creator'] = None
 
-        # Nome
+        # == Nome ==
         if rd['Nome']['Sigla'] and rd['Nome']['Nome da organização']:
             d['name'] = '{} - {}'.format(rd['Nome']['Sigla'],
                                     rd['Nome']['Nome da organização'])
@@ -42,21 +44,35 @@ class OrganizationInterpreter(Interpreter):
         else:
             d['name'] = None
 
-        # Contato
+        # == Contato ==
         pass
 
-        # Description
-        d['description'] = ''
-        for title, text in rd['Descrição'].items():
-            if not text:
-                continue
-            d['description'] += \
-'''
-####{title}
+        # == Description ==
+        sections = rd['Descrição']
+        for title in sections:  # do not use dict comprehension
+            if not sections[title]:
+                sections.pop(title)
+        # clean and map references dicts
+        refs = [rd['Referência 1'], rd['Referência 2'], rd['Referência 3']]
+        refs = filter(lambda r: bool([v for v in r.values() if v]), refs)
+        refs = map(lambda ref: dict(author=ref['Autor'], source=ref['Fonte'], 
+                link=ref['Link'], link_title=ref['Título do link'], date=ref['Data']), refs)
+        c = Context({
+            'sections': rd['Descrição'],
+            'references': refs,
+        })
+        t = Template("""
+{% for title, text in sections.items %}
+{% if text %}#### {{ title }}
+{{ text }}{% endif %}
+{% endfor %}
 
-{text}
-
-'''.format(title=title, text=text)
+{% if references %}#### Referências{% endif %}
+{% for r in references %}
+ - {% if r.author %}{{r.author}}: {% endif %}{% if r.link %}[{{r.source}}]({{r.link}} "{{r.link_title}}"){% endif %}{% if r.date %}, consultado em {{r.date}}{% endif %}
+{% endfor%}
+""")
+        d['description'] = t.render(c)
 
         return d
 
