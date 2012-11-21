@@ -22,9 +22,12 @@ class OrganizationInterpreter(Interpreter):
     worksheet_name = 'organization'
     
     def row_dict_to_object(self, row_dict):
-        '''Reorganize a row_dict to something better.'''
+
         rd = row_dict
+
         d = {}
+        e = {}
+        w = {}
 
         # == Controle ==
         d['id'] = rd['Controle']['ID']
@@ -99,29 +102,34 @@ class OrganizationInterpreter(Interpreter):
         d['description'] = t.render(c)
 
         # == Coordenadas ==
-        d['geometry'] = "POINT (30 10)"
+        print rd.keys()
+        lat = rd['Coordenadas do ponto']['Latitude']
+        lng = rd['Coordenadas do ponto']['Longitude']
+        if lat and lng:
+            d['geometry'] = 'POINT(%s, %s)' % (lat, lng)
         
         # == Categorias ==
-        # FIXME: cannot use m2m relationships before save
-        categories = filter(bool, rd['Categorias'].values())
-        categories = OrganizationCategoryTranslation.objects.filter(name__in=categories)
-        d['categories'] = [c.category.name for c in categories]
+        provided = set(filter(bool, rd['Categorias'].values()))
+        valid = OrganizationCategoryTranslation.objects.filter(name__in=provided)
+        valid = set([c.category.name for c in valid])
+        invalid = provided - valid
+        if invalid:
+            e['invalid_categories'] = invalid
+        d['categories'] = valid
 
         # == Palavras-chave ==
-        # FIXME: cannot use m2m relationships before save
         d['tags'] = filter(bool, rd['Palavras-chave'].values())
+        # TODO: put similar tags in the warnings dict
 
         # == Públicos-alvo ==
-        # FIXME: cannot use m2m relationships before save
         d['target_audiences'] = filter(bool, rd['Públicos-alvo'].values())
-        # target_audiences = [TargetAudience.objects.get_or_create(name=ta)[0] \
-        #                         for ta in target_audiences]
-        
+        # TODO: put similar target audiences in the warnings dict        
+
         o = d['type'].from_dict(d)
         if o.is_valid():
-            e = {}
+            pass
         else:
-            e = o.errors
+            e.update(o.errors)
         w = {}
 
         # Duplicates
