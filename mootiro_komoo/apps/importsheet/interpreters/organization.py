@@ -21,10 +21,9 @@ class OrganizationInterpreter(Interpreter):
     # TODO: change this name
     worksheet_name = 'organization'
     
-    def row_dict_to_object(self, row_dict):
-
+    def row_dict_to_parse_dict(self, row_dict):
         rd = row_dict
-
+        # parse_dict information
         d = {}
         e = {}
         w = {}
@@ -38,7 +37,7 @@ class OrganizationInterpreter(Interpreter):
         try:
             d['creator'] = User.objects.get(name=rd['Controle']['Nome do mapeador'])
         except:
-            d['creator'] = None
+            e['invalid_creator'] = ['Controle']['Nome do mapeador']
 
         # == Nome ==
         if rd['Nome']['Sigla'] and rd['Nome']['Nome da organização']:
@@ -141,4 +140,7 @@ class OrganizationInterpreter(Interpreter):
             for obj in q:
                 w['duplicates'].append(obj)
 
-        return {'object': o, 'warnings': w, 'errors': e}
+        return {'object_dict': o, 'warnings': w, 'errors': e}
+
+    def object_dict_to_object(self):
+        pass
