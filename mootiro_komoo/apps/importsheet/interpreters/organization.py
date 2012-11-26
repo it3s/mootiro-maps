@@ -39,8 +39,8 @@ class OrganizationInterpreter(Interpreter):
 
         # == Nome ==
         if rd['Nome']['Sigla'] and rd['Nome']['Nome da organização']:
-            d['name'] = '{} - {}'.format(rd['Nome']['Sigla'],
-                                    rd['Nome']['Nome da organização'])
+            d['name'] = '{} - {}'.format(rd['Nome']['Nome da organização'],
+                                    rd['Nome']['Sigla'])
         else:
             d['name'] = rd['Nome']['Nome da organização']
 
