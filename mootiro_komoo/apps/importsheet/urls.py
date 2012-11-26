@@ -10,7 +10,7 @@ urlpatterns = patterns('importsheet.views',
     url(pr(r'^ID/insert/?$'), 'insert', name='importsheet_insert'),
 )
 
-urlpatterns += patterns('importsheet.token',
+urlpatterns += patterns('importsheet.google',
     url(pr(r'^refresh_token/?$'), 'refresh_token',
             name='importsheet_refresh_token'),
     url(pr(r'^refresh_token_authorized/?$'), 'refresh_token_authorized',
