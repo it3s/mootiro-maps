@@ -60,38 +60,6 @@ form#form_login {
   #login_box .errors {
     color: #c00;
     text-align: center; }
-  #login_box ul#external_providers, #login_box div#separator, #login_box form {
-    float: left; }
-  #login_box ul#external_providers, #login_box form {
-    padding: 10px; }
-  #login_box ul#external_providers {
-    width: 224px; }
-    #login_box ul#external_providers li {
-      margin: 15px 0; }
-      #login_box ul#external_providers li button {
-        width: 100%;
-        padding: 3px 6px;
-        border: 0;
-        border-radius: 5px;
-        color: #fff;
-        font-size: 13px; }
-        #login_box ul#external_providers li button img {
-          width: 22px;
-          height: 22px;
-          float: left;
-          display: block; }
-      #login_box ul#external_providers li button.google {
-        background: #d84a38; }
-      #login_box ul#external_providers li button.google:hover {
-        background: #e9988d; }
-      #login_box ul#external_providers li button.facebook {
-        background: #3c5a98; }
-      #login_box ul#external_providers li button.facebook:hover {
-        background: #728ec8; }
-      #login_box ul#external_providers li button.twitter {
-        background: #46c8f5; }
-      #login_box ul#external_providers li button.twitter:hover {
-        background: #a7e5fa; }
   #login_box div#separator {
     width: 56px;
     height: 130px;
@@ -111,6 +79,41 @@ form#form_login {
       top: 0; }
     #login_box div#separator .vertical_line.bottom {
       bottom: 0; }
+
+ul#external_providers, div#separator, form {
+  float: left; }
+
+ul#external_providers, form {
+  padding: 10px; }
+
+ul#external_providers {
+  width: 224px; }
+  ul#external_providers li {
+    margin: 15px 0; }
+    ul#external_providers li button {
+      width: 100%;
+      padding: 3px 6px;
+      border: 0;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 13px; }
+      ul#external_providers li button img {
+        width: 22px;
+        height: 22px;
+        float: left;
+        display: block; }
+    ul#external_providers li button.google {
+      background: #d84a38; }
+    ul#external_providers li button.google:hover {
+      background: #e9988d; }
+    ul#external_providers li button.facebook {
+      background: #3c5a98; }
+    ul#external_providers li button.facebook:hover {
+      background: #728ec8; }
+    ul#external_providers li button.twitter {
+      background: #46c8f5; }
+    ul#external_providers li button.twitter:hover {
+      background: #a7e5fa; }
 
 #user_verification {
   width: 700px;
@@ -134,3 +137,37 @@ form#form_login {
   padding: 5px 50px 5px 50px;
   background-color: #ffe5af;
   color: #353535; }
+
+div.importsheet_controls a {
+  color: #fff; }
+div.importsheet_controls a.insert {
+  float: right; }
+
+div.importsheet_missing_column {
+  background: #daa;
+  border: 1px solid #b33;
+  padding: 2px 5px; }
+
+#importsheet_simulation_results div.result {
+  border: 1px solid #ccc;
+  padding: 5px 15px;
+  margin: 15px 0;
+  width: 940px;
+  display: inline-block; }
+  #importsheet_simulation_results div.result div.metadata h3 {
+    font-size: 16px; }
+  #importsheet_simulation_results div.result div.metadata div.errors, #importsheet_simulation_results div.result div.metadata div.warnings {
+    margin: 5px; }
+  #importsheet_simulation_results div.result div.metadata div.errors {
+    background: #daa;
+    border: 1px solid #b33;
+    padding: 2px 5px; }
+  #importsheet_simulation_results div.result div.metadata div.warnings {
+    background: #ee8;
+    border: 1px solid #ed0;
+    padding: 2px 5px; }
+  #importsheet_simulation_results div.result div.importsheet_main_column {
+    width: 700px;
+    margin-right: 20px; }
+  #importsheet_simulation_results div.result div.importsheet_right_bar {
+    width: 200px; }

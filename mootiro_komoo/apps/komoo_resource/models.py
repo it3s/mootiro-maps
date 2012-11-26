@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 import reversion
 from lib.taggit.managers import TaggableManager
 
+from main.models import DictMixin
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
@@ -36,7 +37,7 @@ class ResourceKind(models.Model):
             ).order_by('-count', 'slug')[:number]
 
 
-class Resource(GeoRefModel):
+class Resource(GeoRefModel, DictMixin):
     """Resources model"""
     name = models.CharField(max_length=256, default=_('Resource without name'))
     # slug = models.CharField(max_length=256, blank=False, db_index=True)

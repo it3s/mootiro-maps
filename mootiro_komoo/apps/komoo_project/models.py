@@ -102,8 +102,9 @@ class Project(models.Model):
         return ProjectRelatedObject.objects.filter(project=self)
 
     def save_related_object(self, related_object):
+        ct = ContentType.objects.get_for_model(related_object)
         obj, created = ProjectRelatedObject.objects.get_or_create(
-                project=self, content_object=related_object)
+                content_type_id=ct.id, object_id=related_object.id, project_id=self.id)
         return created
 
     @property

@@ -84,6 +84,17 @@ class User(GeoRefModel):
     def has_perm(self, perm):
         return self.is_admin
 
+    def _social_auth_by_name(self, name):
+        credentials = self.socialauth_set.all()
+        l = filter(lambda s: s.provider == PROVIDERS[name], credentials)
+        return l[0] if l else None
+
+    def google(self):
+        return self._social_auth_by_name('google')
+
+    def facebook(self):
+        return self._social_auth_by_name('facebook')
+
 
 class AnonymousUser(object):
     '''Dummy Class to integrate with other django apps.'''

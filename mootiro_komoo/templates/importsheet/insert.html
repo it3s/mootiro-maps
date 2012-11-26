@@ -1,0 +1,27 @@
+{% extends 'global.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  <div id="main-content">
+    <div class="main-column">
+      {% if not success %}
+        <p>
+          Some error ocurred! :( <br/>
+          You should <a href="{% url importsheet_show importsheet.id %}">{% trans "go back to simulation page" %}</a>.
+        </p>
+      {% else %}
+        <p>
+          {{ data|length }} objects were added succesfully!<br/>
+          <ul>
+            {% for obj in data %}
+              <li>
+                <a href="{{ obj.view_url }}">{{ obj.name }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </p>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
