@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 08:39-0200\n"
-"PO-Revision-Date: 2012-10-18 17:41-0300\n"
+"POT-Creation-Date: 2012-11-28 12:38-0200\n"
+"PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
 "Language: \n"
@@ -129,7 +129,9 @@ msgstr "População"
 #: apps/komoo_project/forms.py:52 apps/komoo_resource/forms.py:44
 #: apps/main/templatetags/komoo_tags.py:323 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
-#: lib/taggit/models.py:57 templates/importsheet/show.html:92
+#: lib/taggit/models.py:57
+#: templates/importsheet/row_templates/organizacoes.html:64
+#: templates/importsheet/row_templates/recursos.html:48
 #: templates/main/templatetags/taglist.html:5
 msgid "Tags"
 msgstr "Palavras-Chave"
@@ -151,17 +153,31 @@ msgstr "Comunidade"
 msgid "Text"
 msgstr "Texto"
 
-#: apps/importsheet/interpreters/organization.py:37
+#: apps/importsheet/interpreters/base.py:145
+msgid "Mising column: {}"
+msgstr "Coluna faltando: {}"
+
+#: apps/importsheet/interpreters/helpers.py:16
 msgid "Invalid creator ID: {} does not belong to any user."
 msgstr "ID do mapeador inválido: {} não pertence a nenhum usuário."
 
-#: apps/importsheet/interpreters/organization.py:111
+#: apps/importsheet/interpreters/organizacoes.py:55
 msgid "Invalid categories: "
 msgstr "Categorias inválidas: "
 
-#: apps/importsheet/interpreters/organization.py:139
+#: apps/importsheet/interpreters/organizacoes.py:69
 msgid "There is already an organization with this name."
 msgstr "Já existe uma organização com esse nome."
+
+#: apps/importsheet/interpreters/organizacoes.py:74
+#: apps/importsheet/interpreters/recursos.py:59
+#, python-format
+msgid "%s cannot be empty"
+msgstr "%s não pode estar vazio"
+
+#: apps/importsheet/interpreters/recursos.py:54
+msgid "There is already an resource with this name."
+msgstr "Já existe um recurso com esse nome."
 
 #: apps/investment/forms.py:31 apps/need/forms.py:25 apps/proposal/forms.py:27
 msgid "Title"
@@ -278,7 +294,9 @@ msgid "Logo"
 msgstr "Logotipo"
 
 #: apps/komoo_project/forms.py:54 apps/komoo_resource/forms.py:43
-#: apps/organization/forms.py:66 templates/importsheet/show.html:67
+#: apps/organization/forms.py:66
+#: templates/importsheet/row_templates/organizacoes.html:39
+#: templates/importsheet/row_templates/recursos.html:42
 #: templates/organization/show.html:207 templates/project/view.html:258
 #: templates/resource/show.html:93
 msgid "Contact"
@@ -305,6 +323,7 @@ msgid "Unnamed"
 msgstr "Sem nome"
 
 #: apps/komoo_resource/forms.py:42
+#: templates/importsheet/row_templates/recursos.html:34
 msgid "Kind"
 msgstr "Tipo"
 
@@ -1208,32 +1227,50 @@ msgstr "Comunidades próximas"
 msgid "Discussion about"
 msgstr "Discussões sobre"
 
+#: templates/importsheet/insert.html:10
+msgid "Some error ocurred! :("
+msgstr "Um erro ocorreu! :("
+
 #: templates/importsheet/insert.html:11
 msgid "go back to simulation page"
 msgstr "voltar para a página de simulação"
+
+#: templates/importsheet/insert.html:15
+msgid "objects were added succesfully!"
+msgstr "objetos foram adicionados com sucesso!"
 
 #: templates/importsheet/show.html:19
 msgid "Simulate"
 msgstr "Simular"
 
-#: templates/importsheet/show.html:21
-msgid "Insert"
-msgstr "Inserir"
+#: templates/importsheet/show.html:22
+msgid "Insert all"
+msgstr "Inserir tudo"
 
-#: templates/importsheet/show.html:39
+#: templates/importsheet/show.html:30
+#: templates/importsheet/row_templates/organizacoes.html:10
+#: templates/importsheet/row_templates/recursos.html:10
 msgid "Errors"
 msgstr "Erros"
 
-#: templates/importsheet/show.html:50
+#: templates/importsheet/row_templates/organizacoes.html:21
+#: templates/importsheet/row_templates/recursos.html:21
 msgid "Warnings"
 msgstr "Avisos"
 
-#: templates/importsheet/show.html:70 templates/komoo_map/info_window.html:43
-#: templates/organization/list.html:52 templates/organization/show.html:214
+#: templates/importsheet/row_templates/organizacoes.html:33
+#: templates/importsheet/row_templates/recursos.html:35
+msgid "Creator"
+msgstr "Criador"
+
+#: templates/importsheet/row_templates/organizacoes.html:42
+#: templates/komoo_map/info_window.html:43 templates/organization/list.html:52
+#: templates/organization/show.html:214
 msgid "Operation Field"
 msgstr "Área de atuação"
 
-#: templates/importsheet/show.html:77 templates/organization/show.html:225
+#: templates/importsheet/row_templates/organizacoes.html:49
+#: templates/organization/show.html:225
 msgid "Audience"
 msgstr "Público"
 

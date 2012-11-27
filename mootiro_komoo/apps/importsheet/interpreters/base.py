@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.utils.translation import ugettext as _
+
 import gspread
 from copy import deepcopy
 from collections import OrderedDict
@@ -10,18 +12,9 @@ class Interpreter(object):
     '''
     Interface class for each **worksheet** type interpreter.
 
-
     IMPORTANT CONCEPTS:
-
       row_dict: a dictionary with information from the worksheet indexed with
         its header lines. (see get_rows_dicts method)
-
-      object_dict: a dictionary constructed based on a row_dict. It has just
-        one level and its keys are the objects attributes.
-        
-      parse_dict: a dictionary with information obtained on row_dict validation
-        process. Like: {'object_dict': o, 'errors': e, 'warnings': w}
-
 
     SUBCLASS TEMPLATE:
         You can use the template below to implement a new worksheet
@@ -34,12 +27,16 @@ class Interpreter(object):
         """
         header_rows = 2  # see get_row_dicts method
         worksheet_name = 'my_worksheet_template_name'
+        row_interpreter = MyAwesomeRowInterpreter
+        row_template = 'importsheet/row_templates/myawesome.html'
 
-        def row_dict_to_parse_dict(self, row_dict):
-            raise NotImplementedError('Subclass responsability')
 
-        def object_dict_to_object(self, row_dict):
-            raise NotImplementedError('Subclass responsability')
+    class MyAwesomeRowInterpreter(RowInterpreter):
+        def parse_row_dict(self, row_dict):
+            ...
+
+        def to_object(self, row_dict):
+            ...
     '''
 
     def __init__(self, gspread_worksheet):
@@ -106,6 +103,8 @@ class Interpreter(object):
             node = root
             for r in xrange(len(headers)):
                 key = headers[r][c]
+                if key == '':
+                    continue
                 if not key in node:
                     node[key] = OrderedDict()
                 node = node[key]
@@ -125,50 +124,88 @@ class Interpreter(object):
                         node = node[key]  # not a leaf node, continue
                     else:
                         node[key] = attr_value  # copy attribute
+                        break  # shorter branches may stop earlier
             # give each interpreter the chance to organize the row_dict better
             rows_dicts.append(row_dict)
 
         return rows_dicts
     
-    def row_dict_to_parse_dict(self, row_dict):
-        '''
-        Receives a row_dict and parses it to a parse_dict. See class docstring
-        for more information on row_dict and parse_dict definitions.
-        '''
-        raise NotImplementedError('Subclass responsability')
-
-    def object_dict_to_object(self, row_dict):
-        '''
-        Receives an object_dict and returns an object already saved to the
-        database. See class docstring for more information on object_dict
-        definition.
-        '''
-        raise NotImplementedError('Subclass responsability')
-
     def parse(self):
         '''
         Parses each row_dict into a dict containing the object, its warnings
         and its errors. Return a list with all of these dictionaries.
         '''
-        parse_dicts = []
+        self.rows = []
+        self.errors = []
         for row_dict in self.get_row_dicts():
-            parse_dicts.append(self.row_dict_to_parse_dict(row_dict))
-        return parse_dicts
+            ri = self.row_interpreter(row_dict)
+            try:
+                ri.parse()
+            except KeyError as e:
+                msg = _('Mising column: {}'.format(e.message))
+                self.errors.append(msg)
+                self.rows = []
+                break
+            self.rows.append(ri)
 
     def insert(self):
         '''
         Tries to insert all objects into the system atomically. If any error
-        occurs no object is inserted.
+        occurs no object is inserted. Returns a boolean indicating if the
+        process succeded.
         '''
-        parse_dicts = self.parse()
+        self.parse()
         any_error = reduce(lambda a, b: a or b,
-                        [bool(od['errors']) for od in parse_dicts])
+                            [bool(ri.errors) for ri in self.rows] or [False])
         if any_error:
-            return False, parse_dicts
+            return False
 
-        objs = []
-        for od in [pd['object_dict'] for pd in parse_dicts]:
-            o = self.object_dict_to_object(od)
-            objs.append(o)
+        # TODO: should use database transaction rollback control in lines below
+        #       for recover of partial objects insert
+        self.objects = []
+        for row in self.rows:
+            o = row.to_object()
+            self.objects.append(o)
 
-        return True, objs
+        return True
+
+
+class RowInterpreter(object):
+    '''
+    IMPORTANT CONCEPTS:
+
+      row_dict: (see Interpreter.get_rows_dicts method)
+
+      object_dict: a dictionary constructed based on a row_dict. It has just
+        one level and its keys are the objects attributes.
+
+      errors: a list of error messages (strings)
+
+      warnings: a list of warning messages (strings)
+    '''
+
+    def __init__(self, row_dict):
+        self.row_dict = row_dict
+        self.parse_row_dict()
+
+    def parse(self):
+        '''
+        Expects self.row_dict to be set, parses its information, and defines
+        the following attributes to self:
+
+            self.object_dict = {...}
+            self.errors = [...]
+            self.warnings = [...]
+
+        Returns None. See class docstring for more information on the dicts
+        defined above.
+        '''
+        raise NotImplementedError('Subclass responsability')
+
+    def to_object(self):
+        '''
+        Expects self.object_dict to be set (what is done by calling
+        parse_row_dict method), and returns an Model object filled with its
+        information and already saved to database.
+        '''
+        raise NotImplementedError('Subclass responsability')

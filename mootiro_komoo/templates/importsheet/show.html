@@ -2,7 +2,6 @@
 
 {% load markitup_tags %}
 {% load i18n %}
-{% load komoo_tags %}
 
 {% block content %}
   <div id="main-content">
@@ -16,88 +15,33 @@
       <br/>
       
       <div class="importsheet_controls">
-        <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}">{% trans "Simulate" %}</a>
+        {% for wks in importsheet.worksheets %}
+        <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}?worksheet_name={{ wks.title }}">{% trans "Simulate" %} {{wks.title}}</a>
+        {% endfor %}
         {% if not any_error %}
-        <a class="insert btn btn-large btn-danger" href="{% url importsheet_insert importsheet.id %}">{% trans "Insert" %}</a>
+        <a class="insert btn btn-large btn-danger" href="{% url importsheet_insert importsheet.id %}">{% trans "Insert all" %}</a>
         {% endif %}
       </div>
       <br/><br/>
-      {% if missing_column %}
-      <div class="importsheet_missing_column">
-        Missing column: {{ missing_column }}
+      
+      {% if interpreter.errors %}
+      <div class="metadata">
+        <div class="errors">
+          <h3>{% trans "Errors" %}</h3>
+          <ul>
+            {% for msg in interpreter.errors %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+          </ul>
+        </div>
       </div>
       {% endif %}
       
       <div id="importsheet_simulation_results">
-        {% for pd in parse_dicts %}
+        {% for row in interpreter.rows %}
         <div class="result">
-          <h3>{{ forloop.counter|add:2 }}</h3>
-          
-          <div class="metadata">
-            {% if pd.errors %}
-            <div class="errors">
-              <h3>{% trans "Errors" %}</h3>
-              <ul>
-                {% for msg in pd.errors.values %}
-                <li>{{ msg }}</li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-                                    
-            {% if pd.warnings %}
-            <div class="warnings">
-              <h3>{% trans "Warnings" %}</h3>
-              <ul>
-                {% for msg in pd.warnings.values %}
-                <li>{{ msg }}</li>
-                {% endfor %}
-              </ul>
-            </div>
-            {% endif %}
-          </div>
-            
-          <div class="main-column">
-            <h2>{{ pd.object_dict.name }}</h2>
-            <div class="mark-down">{{ pd.object_dict.description|render_markup|safe }}</div>
-          </div>
-          
-          <div class="right-bar right-bar-modif">
-            <div class="block">
-              <h4>{% trans 'Contact' %}</h4>
-              {{ pd.object_dict.contact|render_markup|safe }}
-            
-              <h4>{% trans 'Operation Field' %}</h4>
-              <ul>
-                {% for c in pd.object_dict.categories %}
-                <li>{{ c }}</li>
-                {% endfor %}
-              </ul>
-              
-              <h4>{% trans 'Audience' %}</h4>
-              <ul>
-                {% for t in pd.object_dict.target_audiences %}
-                <li>{{ t }}</li>
-                {% endfor %}
-              </ul>
-              
-              {% if pd.object_dict.link %}
-              <h4>Link</h4>
-              <a href="{{ pd.object_dict.link|with_http }}">{{ pd.object_dict.link }}</a>
-              {% endif %}
-            </div>
-            
-            <div class="view-tag-list">
-              {% if pd.object_dict.tags %}
-              <span class="inline-block meta-info">{% trans 'Tags' %}</span>
-              <div class="view-tag-list-tags">
-                {% for tag in pd.object_dict.tags %}
-                <span class="inline-block tag">{{ tag }}</span>
-                {% endfor %}
-              </div>
-              {% endif %}
-            </div>
-          </div>
+          <span class="meta-info">{% trans "Row number" %}:</span>{{ forloop.counter|add:interpreter.header_rows }}<br/>
+          {% include interpreter.row_template with row=row %}
         </div>
         {% endfor %}
       </div>

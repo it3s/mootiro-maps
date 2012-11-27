@@ -37,23 +37,28 @@ def new(request):
 @render_to('importsheet/show.html')
 def show(request, id=''):
     ish = Importsheet.objects.get(id=id)
-    try:
-        # TODO: name cannot be hardcoded
-        parse_dicts = ish.simulate('Organizações')
-    except KeyError as e:
-        return dict(importsheet=ish, missing_column=e.message)
 
-    if parse_dicts:
+    if ish.inserted:
+        url = reverse('importsheet_insert', args=(ish.id,))
+        return redirect(url)
+
+    wks = request.GET['worksheet_name'] if 'worksheet_name' in request.GET \
+            else ish.spreadsheet.sheet1.title
+
+    worksheet_interpreter = ish.simulate(wks)
+
+    if worksheet_interpreter.rows:
         any_error = reduce(lambda a, b: a or b,
-                        [bool(od['errors']) for od in parse_dicts])
+                        [bool(r.errors) for r in worksheet_interpreter.rows])
     else:
         any_error = True  # empty importsheet
 
-    return dict(importsheet=ish, parse_dicts=parse_dicts, any_error=any_error)
+    return dict(importsheet=ish, interpreter=worksheet_interpreter,
+                    any_error=any_error)
 
 
 @render_to('importsheet/insert.html')
 def insert(request, id=''):
     ish = Importsheet.objects.get(id=id)
-    success, data = ish.insert('Organizações')
-    return dict(success=success, importsheet=ish, data=data)
+    success = ish.insert_all()
+    return dict(success=success, importsheet=ish)

@@ -2,8 +2,10 @@
 from __future__ import unicode_literals
 
 # TODO: search for WorksheetInterpreter subclasses inside the module
-from .organization import OrganizationInterpreter
-INTERPRETERS = [OrganizationInterpreter]
+from .organizacoes import OrganizacoesInterpreter
+from .recursos import RecursosInterpreter
+
+INTERPRETERS = [OrganizacoesInterpreter, RecursosInterpreter]
 
 
 class InterpreterFactory():

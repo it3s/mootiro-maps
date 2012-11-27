@@ -5,22 +5,24 @@
 {% block content %}
   <div id="main-content">
     <div class="main-column">
+      <h1>{{ importsheet.name }}</h1>
       {% if not success %}
-        <p>
-          Some error ocurred! :( <br/>
-          You should <a href="{% url importsheet_show importsheet.id %}">{% trans "go back to simulation page" %}</a>.
-        </p>
-      {% else %}
-        <p>
-          {{ data|length }} objects were added succesfully!<br/>
-          <ul>
-            {% for obj in data %}
-              <li>
-                <a href="{{ obj.view_url }}">{{ obj.name }}</a>
-              </li>
-            {% endfor %}
-          </ul>
-        </p>
+        <h2>
+          {% trans "Some error ocurred!" %} :(<br/>
+          <a href="{% url importsheet_show importsheet.id %}">Go back to simulation page</a>.
+        </h2>
+      {% endif %}
+      {% if importsheet.inserted_objects %}
+        <h2>
+          {{ importsheet.inserted_objects|length }} {% trans "objects were added." %}<br/>
+        </h2>
+        <ul>
+          {% for obj in importsheet.inserted_objects %}
+            <li>
+              <a href="{{ obj.view_url }}">{{ obj.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
       {% endif %}
     </div>
   </div>

@@ -48,6 +48,18 @@ class Importsheet(models.Model):
             self._spreadsheet = client.open_by_key(self.spreadsheet_key)
         return self._spreadsheet
 
+    @property
+    def worksheets(self):
+        '''The gspread Worksheets recognized by any of the interpreters.'''
+        l = []
+        for worksheet in self.spreadsheet.worksheets():
+            try:
+                InterpreterFactory.make_interpreter(worksheet)
+                l.append(worksheet)
+            except InterpreterNotFound:
+                pass  # worksheet not recognized
+        return l
+
     @classmethod
     def __new__(cls, *a, **kw):
         '''Creates new database object for the importsheet.'''
@@ -73,10 +85,10 @@ class Importsheet(models.Model):
 
         "Projects Root" (settings.IMPORTSHEET_PROJECTS_FOLDER_KEY)
           |- "project1.id - project1.name"
-          |    |- "importsheet1.name"
-          |    |- "importsheet2.name"
+          |    |- "importsheet1.id - importsheet1.name"
+          |    |- "importsheet2.id - importsheet2.name"
           |- "project2.id - project2.name"
-          |    |- "importsheet3.name"
+          |    |- "importsheet3.id - importsheet3.name"
           ...
         '''
         # Google API objects handling
@@ -100,7 +112,7 @@ class Importsheet(models.Model):
 
         # create new spreadsheet 
         body = {
-            'title': self.name,
+            'title': '{0} - {1}'.format(self.id, self.name),
             'parents': [{'id': self.project_folder_key}],
         }
         data = gd.files().copy(fileId=settings.IMPORTSHEET_TEMPLATE_KEY,
@@ -119,8 +131,20 @@ class Importsheet(models.Model):
             ish.simulate('organization')
         '''
         worksheet = self.spreadsheet.worksheet(worksheet_name)
-        interpreter = InterpreterFactory.make_interpreter(worksheet)
-        return interpreter.parse()
+        worksheet_interpreter = InterpreterFactory.make_interpreter(worksheet)
+        worksheet_interpreter.parse()
+        return worksheet_interpreter
+
+    def insert_all(self):
+        if self.inserted:
+            success = True
+            return success
+
+        success = True
+        for wks in self.worksheets:
+            success = success and self.insert(wks.title)
+        return success
+
 
     def insert(self, worksheet_name):
         '''
@@ -131,34 +155,33 @@ class Importsheet(models.Model):
             ish = Importsheet(name='Schools Mapping', project=p, ...)
             ish.insert()
         '''
-        if self.inserted:
-            raise Exception('This importsheet was already inserted to database.')
 
         worksheet = self.spreadsheet.worksheet(worksheet_name)
         interpreter = InterpreterFactory.make_interpreter(worksheet)
-        success, l = interpreter.insert()
+        success = interpreter.insert()
         if success:
-            self.inserted = True
-            # l is a list of objects
-            for obj in l:
+            # link objects to importsheet and to project
+            for obj in interpreter.objects:
                 self.project.save_related_object(obj)
                 self.save_related_object(obj)
                 obj.save()
-        else:
-            # l is a list of parse_dicts
-            pass
+            self.inserted = True
+            self.save()
 
-        return success, l
+        return success
 
     @property
-    def related_objects(self):
-        """Returns a queryset for the objects for a given project"""
-        return ImportsheetRelatedObject.objects.filter(importsheet=self)
+    def inserted_objects(self):
+        '''Returns a list of all related objects.'''
+        related_objects = ImportsheetRelatedObject.objects.filter(importsheet=self)
+        return [iro.content_object for iro in related_objects]
 
     def save_related_object(self, related_object):
         ct = ContentType.objects.get_for_model(related_object)
-        obj, created = ImportsheetRelatedObject.objects.get_or_create(
-                content_type_id=ct.id, object_id=related_object.id, importsheet_id=self.id)
+        iro, created = ImportsheetRelatedObject.objects.get_or_create(
+                            object_id=related_object.id,
+                            content_type_id=ct.id,
+                            importsheet_id=self.id)
         return created
 
 
