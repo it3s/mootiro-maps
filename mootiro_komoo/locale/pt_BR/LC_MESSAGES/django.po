@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-28 12:38-0200\n"
+"POT-Creation-Date: 2012-12-04 13:28-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -130,8 +130,8 @@ msgstr "População"
 #: apps/main/templatetags/komoo_tags.py:323 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
-#: templates/importsheet/row_templates/organizacoes.html:64
-#: templates/importsheet/row_templates/recursos.html:48
+#: templates/importsheet/row_templates/organizacoes.html:72
+#: templates/importsheet/row_templates/recursos.html:57
 #: templates/main/templatetags/taglist.html:5
 msgid "Tags"
 msgstr "Palavras-Chave"
@@ -157,27 +157,9 @@ msgstr "Texto"
 msgid "Mising column: {}"
 msgstr "Coluna faltando: {}"
 
-#: apps/importsheet/interpreters/helpers.py:16
-msgid "Invalid creator ID: {} does not belong to any user."
-msgstr "ID do mapeador inválido: {} não pertence a nenhum usuário."
-
-#: apps/importsheet/interpreters/organizacoes.py:55
+#: apps/importsheet/interpreters/organizacoes.py:65
 msgid "Invalid categories: "
 msgstr "Categorias inválidas: "
-
-#: apps/importsheet/interpreters/organizacoes.py:69
-msgid "There is already an organization with this name."
-msgstr "Já existe uma organização com esse nome."
-
-#: apps/importsheet/interpreters/organizacoes.py:74
-#: apps/importsheet/interpreters/recursos.py:59
-#, python-format
-msgid "%s cannot be empty"
-msgstr "%s não pode estar vazio"
-
-#: apps/importsheet/interpreters/recursos.py:54
-msgid "There is already an resource with this name."
-msgstr "Já existe um recurso com esse nome."
 
 #: apps/investment/forms.py:31 apps/need/forms.py:25 apps/proposal/forms.py:27
 msgid "Title"
@@ -295,8 +277,8 @@ msgstr "Logotipo"
 
 #: apps/komoo_project/forms.py:54 apps/komoo_resource/forms.py:43
 #: apps/organization/forms.py:66
-#: templates/importsheet/row_templates/organizacoes.html:39
-#: templates/importsheet/row_templates/recursos.html:42
+#: templates/importsheet/row_templates/organizacoes.html:47
+#: templates/importsheet/row_templates/recursos.html:51
 #: templates/organization/show.html:207 templates/project/view.html:258
 #: templates/resource/show.html:93
 msgid "Contact"
@@ -323,7 +305,7 @@ msgid "Unnamed"
 msgstr "Sem nome"
 
 #: apps/komoo_resource/forms.py:42
-#: templates/importsheet/row_templates/recursos.html:34
+#: templates/importsheet/row_templates/recursos.html:33
 msgid "Kind"
 msgstr "Tipo"
 
@@ -622,7 +604,7 @@ msgid "Add Organization"
 msgstr "Adicionar organização"
 
 #: apps/proposal/forms.py:29 templates/investment/list.html:29
-#: templates/proposal/view.html:36
+#: templates/proposal/view.html:33
 msgid "Cost"
 msgstr "Custo"
 
@@ -1227,17 +1209,13 @@ msgstr "Comunidades próximas"
 msgid "Discussion about"
 msgstr "Discussões sobre"
 
-#: templates/importsheet/insert.html:10
-msgid "Some error ocurred! :("
-msgstr "Um erro ocorreu! :("
-
 #: templates/importsheet/insert.html:11
-msgid "go back to simulation page"
-msgstr "voltar para a página de simulação"
+msgid "Some error ocurred!"
+msgstr "Um erro ocorreu!"
 
-#: templates/importsheet/insert.html:15
-msgid "objects were added succesfully!"
-msgstr "objetos foram adicionados com sucesso!"
+#: templates/importsheet/insert.html:17
+msgid "objects were added."
+msgstr "objetos foram adicionados."
 
 #: templates/importsheet/show.html:19
 msgid "Simulate"
@@ -1248,28 +1226,32 @@ msgid "Insert all"
 msgstr "Inserir tudo"
 
 #: templates/importsheet/show.html:30
-#: templates/importsheet/row_templates/organizacoes.html:10
-#: templates/importsheet/row_templates/recursos.html:10
+#: templates/importsheet/row_templates/organizacoes.html:9
+#: templates/importsheet/row_templates/recursos.html:9
 msgid "Errors"
 msgstr "Erros"
 
-#: templates/importsheet/row_templates/organizacoes.html:21
-#: templates/importsheet/row_templates/recursos.html:21
+#: templates/importsheet/show.html:43
+msgid "Row number"
+msgstr "Número da linha"
+
+#: templates/importsheet/row_templates/organizacoes.html:20
+#: templates/importsheet/row_templates/recursos.html:20
 msgid "Warnings"
 msgstr "Avisos"
 
-#: templates/importsheet/row_templates/organizacoes.html:33
+#: templates/importsheet/row_templates/organizacoes.html:32
 #: templates/importsheet/row_templates/recursos.html:35
 msgid "Creator"
 msgstr "Criador"
 
-#: templates/importsheet/row_templates/organizacoes.html:42
+#: templates/importsheet/row_templates/organizacoes.html:50
 #: templates/komoo_map/info_window.html:43 templates/organization/list.html:52
 #: templates/organization/show.html:214
 msgid "Operation Field"
 msgstr "Área de atuação"
 
-#: templates/importsheet/row_templates/organizacoes.html:49
+#: templates/importsheet/row_templates/organizacoes.html:57
 #: templates/organization/show.html:225
 msgid "Audience"
 msgstr "Público"
@@ -1605,11 +1587,10 @@ msgstr "em"
 
 #: templates/need/view.html:40
 #: templates/proposal/proposal_summary_templatetag.html:5
-#: templates/proposal/view.html:31
 msgid "created by"
 msgstr "criado por"
 
-#: templates/need/view.html:40 templates/proposal/view.html:31
+#: templates/need/view.html:40
 msgid "on"
 msgstr "em"
 
@@ -1617,7 +1598,7 @@ msgstr "em"
 msgid "Proposals"
 msgstr "Propostas"
 
-#: templates/need/view.html:68 templates/proposal/view.html:58
+#: templates/need/view.html:68 templates/proposal/view.html:56
 msgid "New proposal"
 msgstr "Nova proposta"
 
@@ -1840,15 +1821,19 @@ msgstr "Este projeto não tem nenhum Recurso relacionada"
 msgid "This project has no related Investments yet"
 msgstr "Este Projeto não tem nenhum Investimento relacionado"
 
+#: templates/project/view.html:265
+msgid "Related projects"
+msgstr "Projetos relacionados"
+
 #: templates/proposal/edit.html:15
 msgid "Form Proposal"
 msgstr "Formulário de Propostas"
 
-#: templates/proposal/view.html:50
+#: templates/proposal/view.html:48
 msgid "Proposals for"
 msgstr "Propostas para"
 
-#: templates/proposal/view.html:66
+#: templates/proposal/view.html:64
 msgid "Add investment"
 msgstr "Adicionar Investimento"
 
@@ -1945,6 +1930,21 @@ msgstr "por"
 #: templates/update/frontpage.html:155
 msgid "News"
 msgstr "Notícias"
+
+#~ msgid "Invalid creator ID: {} does not belong to any user."
+#~ msgstr "ID do mapeador inválido: {} não pertence a nenhum usuário."
+
+#~ msgid "There is already an organization with this name."
+#~ msgstr "Já existe uma organização com esse nome."
+
+#~ msgid "%s cannot be empty"
+#~ msgstr "%s não pode estar vazio"
+
+#~ msgid "There is already an resource with this name."
+#~ msgstr "Já existe um recurso com esse nome."
+
+#~ msgid "go back to simulation page"
+#~ msgstr "voltar para a página de simulação"
 
 #~ msgid "Geometric data not available"
 #~ msgstr "Informação geométrica não disponível"
