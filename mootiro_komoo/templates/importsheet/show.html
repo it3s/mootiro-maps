@@ -3,15 +3,24 @@
 {% load markitup_tags %}
 {% load i18n %}
 
+
 {% block content %}
   <div id="main-content">
     <div class="main-column">
       <h1>{{ importsheet.name }}</h1>
-      <br/>
       <p>
-        Google spreadsheet link:<br/>
+        {{ importsheet.description }}
+        <br/>
+        <br/>
+        <span class="meta-info">Google Spreadsheet link:</span><br/>
         <a href="https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}">https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}</a>
+        {% if importsheet.fusion_table_key %}
+        <br/>
+        <br/>
+        <span class="meta-info">Google Fusion Table link:</span><br/>
+        <a href="https://www.google.com/fusiontables/data?docid={{ importsheet.fusion_table_key }}">https://www.google.com/fusiontables/data?docid={{ importsheet.fusion_table_key }}</a>
       </p>
+      {% endif %}
       <br/>
       
       <div class="importsheet_controls">
@@ -19,7 +28,7 @@
         <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}?worksheet_name={{ wks.title }}">{% trans "Simulate" %} {{wks.title}}</a>
         {% endfor %}
         {% if not any_error %}
-        <a class="insert btn btn-large btn-success" href="{% url importsheet_insert importsheet.id %}">{% trans "Insert all" %}</a>
+        <a class="insert btn btn-large btn-success" href="{% url importsheet_insert importsheet.id %}">{% trans "I'm finished. Insert all." %}</a>
         {% endif %}
       </div>
       <br/><br/>

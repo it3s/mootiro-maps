@@ -100,19 +100,18 @@ def set_comunidades(obj):
     obj.object_dict['community'] = communities
 
 
-def set_coordenadas_ponto(obj):
+def set_geometria(obj):
     gd = obj.row_dict['Geometria']
     point = gd['Ponto']
     point_as_area = gd['Ponto como área']
-    # polygons = [gd[k] for k in gd.keys() if k.startswith('Polígono') and gd[k]]
-    polygons = None
+    polygon = gd['Identificador do polígono (KML)'] if obj.kml_dicts else None
 
-    num_geometries = len([v for v in [point, point_as_area, polygons] if v])
+    num_geometries = len([v for v in [point, point_as_area, polygon] if v])
     if num_geometries == 0:
         return  # nothing to do!
     if num_geometries > 1:
         msg = 'Mais de uma geometria definida. Defina somente a coluna "Ponto",'\
-              'ou "Ponto como Área", ou "Polígono 1 Polígono 2, ..."'
+              'ou "Ponto como Área", ou "Identificador do polígono (KML)"'
         obj.errors.append(msg)
 
     geodict = {
@@ -147,33 +146,57 @@ def set_coordenadas_ponto(obj):
                 'type': 'Polygon',
                 'coordinates': coords
             }]
-        elif polygons:
-            # list of polygons, each polygon is a list of points
-            coords = []
-            for poly_str in polygons:
-                points = poly_str.split(' ')
-                points = [p.split(',') for p in points]
-                # FIXME: correct order is lat, lng. Before fixing must adjust the
-                #        both in DB and map
-                points = [[float(lat), float(lng)] for lng, lat in points]
-                coords.append(points)
+        elif polygon:
+            found = False
+            for kd in obj.kml_dicts:
+                if polygon == kd['Identificador do polígono']:
+                    found = True
+                    if 'type' in kd['Geometria'] and \
+                    kd['Geometria']['type'] == 'GeometryCollection':
+                        coords = [geom['coordinates'][0] \
+                                    for geom in kd['Geometria']['geometries']]
+                        geodict['geometries'] = [{
+                            'type': 'Polygon',
+                            'coordinates': coords  # put many polygons together
+                        }]
+                    else:  # only 1 polygon
+                        geodict['geometries'] = [kd['Geometria']['geometry']]
 
-            geodict['geometries'] = [{
-                'type': 'Polygon',
-                'coordinates': coords
-            }]
-            
+                    # FIXME: correct order is lat, lng. Before fixing must adjust
+                    #        both in DB and in the map.
+                    for geom in geodict['geometries']:
+                        for poly in geom['coordinates']:
+                            for i in xrange(len(poly)):
+                                # iterate by index to edit object in place
+                                poly[i] = [poly[i][1], poly[i][0]]
+                    break
+            if not found:
+                msg = 'Identificador do polígono não encontrado: {}'.format(polygon)
+                obj.errors.append(msg)
+                return
+        
         g = GeoRefModel()
-        obj.object_dict['geometry'] = json.dumps(geodict)
-        g.geometry = obj.object_dict['geometry']
+        geojson = json.dumps(geodict)
+        g.geometry = geojson
+        obj.object_dict['geometry'] = geojson
+        obj.object_dict['geometry_preview'] = point or point_as_area or polygon or ''
+        
+        # obj.object_dict['tooltip_map_preview'] = {
+        #     'type': 'FeatureCollection',
+        #     'features': [{
+        #         'type': 'Feature',
+        #         'geometry': geodict['geometries'][0],
+        #     }],
+        # }
 
     except ValueError:
         msg = 'Dado de geometria não é um número válido.'
         obj.errors.append(msg)
 
-    except OGRException:
+    except OGRException as e:
         msg = 'Má formação da(s) coluna(s) de geometria.'
         obj.errors.append(msg)
+
 
 
 def set_tags(obj):

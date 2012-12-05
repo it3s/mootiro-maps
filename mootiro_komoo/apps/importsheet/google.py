@@ -30,7 +30,9 @@ def refresh_token(request):
         # below a space separated list of permissions
         'scope': 'https://www.googleapis.com/auth/drive '
                  'https://www.googleapis.com/auth/drive.file '
-                 'https://spreadsheets.google.com/feeds',
+                 'https://spreadsheets.google.com/feeds '
+                 'https://www.googleapis.com/auth/fusiontables '
+                 'https://www.googleapis.com/auth/fusiontables.readonly',
         'access_type': 'offline',
         'response_type': 'code',
         'approval_prompt': 'force',
@@ -85,11 +87,24 @@ def get_access_token():
     return access_token
 
 
-def google_drive_service():
-    '''Build and return a google drive service via OAuth2 to interact with.'''
+def authorized_http():
     user_agent = 'Python-urllib/2.7'  # it could be anything
     credentials = AccessTokenCredentials(get_access_token(), user_agent)
     http = httplib2.Http()
     http = credentials.authorize(http)
+    return http
+
+
+def google_drive_service():
+    '''Build and return a google drive service via OAuth2 to interact with.'''
+    http = authorized_http()
     service = build('drive', 'v2', http)
     return service
+
+
+def google_fusion_tables_service():
+    '''Build and return a google fusion tables service via OAuth2 to interact
+    with.'''
+    http = authorized_http()
+    service = build('fusiontables', 'v1', http)
+    return service    

@@ -14,6 +14,7 @@ class FormImportsheet(forms.Form):
     name = forms.CharField(required=True)
     description = forms.CharField(widget=MarkItUpWidget())
     project_id = forms.CharField(required=True)
+    kml_import = forms.BooleanField(required=False)
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="importsheet_form")

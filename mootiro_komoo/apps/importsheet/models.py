@@ -9,10 +9,12 @@ from django.contrib.contenttypes import generic
 from authentication.models import User
 from komoo_project.models import Project
 
+import simplejson as json
+from urllib import urlencode
 import gspread
 from interpreters import InterpreterFactory, InterpreterNotFound
 
-from .google import google_drive_service
+from .google import google_drive_service, google_fusion_tables_service
 
 
 class Importsheet(models.Model):
@@ -24,6 +26,7 @@ class Importsheet(models.Model):
     description = models.TextField(null=True)
     project = models.ForeignKey(Project, editable=False, null=False,
                                     related_name='importsheets')
+    kml_import = models.BooleanField(default=False)
     creator = models.ForeignKey(User, editable=False, null=False,
                                     related_name='created_importsheets')
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -32,6 +35,7 @@ class Importsheet(models.Model):
     # Google Spreadsheets API data
     spreadsheet_key = models.CharField(max_length=128, null=True)
     project_folder_key = models.CharField(max_length=128, null=True)
+    fusion_table_key = models.CharField(max_length=128, null=True)
 
     def __unicode__(self):
         return self.name
@@ -54,7 +58,7 @@ class Importsheet(models.Model):
         l = []
         for worksheet in self.spreadsheet.worksheets():
             try:
-                InterpreterFactory.make_interpreter(worksheet)
+                InterpreterFactory.make_interpreter(self, worksheet.title)
                 l.append(worksheet)
             except InterpreterNotFound:
                 pass  # worksheet not recognized
@@ -72,32 +76,33 @@ class Importsheet(models.Model):
     def save(self, *a, **kw):
         ret = super(Importsheet, self).save(*a, **kw)
         if not self.spreadsheet_key:
-            self._set_google_spreadsheet()
+            self._set_google_documents()
         return ret
 
-    def _set_google_spreadsheet(self):
+    def _set_project_folder(self):
         '''
-        Using Google Drive API and Google Spreadsheet API, creates new google
-        spreadsheet inside its project folder. If it is the projects first
-        importsheet, also creates the projects folder. 
+        Set project folder for this importsheet. This folder will contain
+        google spreadsheets and google fusion tables for the project.
 
-        The structure in Google Drive is the following:
+        The structure in Google Drive should be something like the following:
 
         "Projects Root" (settings.IMPORTSHEET_PROJECTS_FOLDER_KEY)
           |- "project1.id - project1.name"
           |    |- "importsheet1.id - importsheet1.name"
           |    |- "importsheet2.id - importsheet2.name"
           |- "project2.id - project2.name"
-          |    |- "importsheet3.id - importsheet3.name"
+          |    |- "importsheet3.id - importsheet3.name" (Spreadsheet)
+          |    |- "importsheet3.id - importsheet3.name" (Fusion Table)
           ...
         '''
-        # Google API objects handling
+        if self.project_folder_key:
+            return
+
         gd = google_drive_service()
-        
-        # set project folder
+
         for ish in self.project.importsheets.all():
             if ish != self and ish.project_folder_key:
-                # put importsheets in same folder for same project
+                # put importsheet docs in same folder for same project
                 self.project_folder_key = ish.project_folder_key
                 break
         if not self.project_folder_key:
@@ -110,14 +115,39 @@ class Importsheet(models.Model):
             data = gd.files().insert(body=body).execute()
             self.project_folder_key = data['id']
 
+    def _set_google_documents(self):
+        '''
+        Using Google Drive API and Google Spreadsheet API, creates new google
+        spreadsheet inside its project folder. If it is the projects first
+        importsheet, also creates the projects folder. 
+        '''
+        # get or create project folder
+        if not self.project_folder_key:
+            self._set_project_folder()
+        
+        gd = google_drive_service()
+
         # create new spreadsheet 
         body = {
             'title': '{0} - {1}'.format(self.id, self.name),
             'parents': [{'id': self.project_folder_key}],
         }
-        data = gd.files().copy(fileId=settings.IMPORTSHEET_TEMPLATE_KEY,
+        data = gd.files().copy(fileId=settings.IMPORTSHEET_SPREADSHEET_TEMPLATE_KEY,
                             body=body).execute()
         self.spreadsheet_key = data['id']
+
+        # create new fusion table if needed
+        if self.kml_import:
+            gft = google_fusion_tables_service()
+            tkey = settings.IMPORTSHEET_FUSION_TABLE_TEMPLATE_KEY
+            table_data = gft.table().copy(tableId=tkey).execute()
+            body = {
+                'title': '{0} - {1} (KML)'.format(self.id, self.name),
+                'parents': [{'id': self.project_folder_key}]
+            }
+            data = gd.files().patch(fileId=table_data['tableId'], body=body).execute()
+            self.fusion_table_key = data['id']
+
         self.save()
 
     def simulate(self, worksheet_name):
@@ -131,7 +161,7 @@ class Importsheet(models.Model):
             ish.simulate('organization')
         '''
         worksheet = self.spreadsheet.worksheet(worksheet_name)
-        worksheet_interpreter = InterpreterFactory.make_interpreter(worksheet)
+        worksheet_interpreter = InterpreterFactory.make_interpreter(self, worksheet.title)
         worksheet_interpreter.parse()
         return worksheet_interpreter
 
@@ -157,7 +187,7 @@ class Importsheet(models.Model):
         '''
 
         worksheet = self.spreadsheet.worksheet(worksheet_name)
-        interpreter = InterpreterFactory.make_interpreter(worksheet)
+        interpreter = InterpreterFactory.make_interpreter(self, worksheet.title)
         success = interpreter.insert()
         if success:
             # link objects to importsheet and to project

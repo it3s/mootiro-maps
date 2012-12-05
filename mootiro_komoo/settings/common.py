@@ -150,7 +150,8 @@ KOMOO_DISABLE_MAP = False
 DELETE_HOURS = 24
 
 # ========== Importhseet ======================================================
-IMPORTSHEET_TEMPLATE_KEY = '0Ahdnyvg2LXX-dHYtcGJMLWx4aXN0cFl3eUVnS19Ob2c'
+IMPORTSHEET_SPREADSHEET_TEMPLATE_KEY = '0Ahdnyvg2LXX-dGotaTVzZFRicWJHbFFmSWJZSWF6OXc'
+IMPORTSHEET_FUSION_TABLE_TEMPLATE_KEY = '1Ntfc5YPo5v62ytK2LE_vn2ZzqlUj_k1S4xWoBeI'
 
 # ========== Ajax-select ======================================================
 AJAX_LOOKUP_CHANNELS = {

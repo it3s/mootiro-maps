@@ -11,14 +11,15 @@ from apps.organization.models import OrganizationCategoryTranslation
 from apps.organization.models import TargetAudience
 from komoo_resource.models import Resource
 
-from .base import Interpreter
+from .base import Interpreter, RowInterpreter
 import helpers
 
 
-class OrganizacoesRowInterpreter(object):
+class OrganizacoesRowInterpreter(RowInterpreter):
 
-    def __init__(self, rd):
-        self.row_dict = rd
+    def __init__(self, row_dict, kml_dicts):
+        self.row_dict = row_dict
+        self.kml_dicts = kml_dicts
 
     def parse(self):
         
@@ -50,8 +51,8 @@ class OrganizacoesRowInterpreter(object):
         # == Comunidades ==
         helpers.set_comunidades(self)
 
-        # == Coordenadas ==
-        helpers.set_coordenadas_ponto(self)
+        # == Geometria ==
+        helpers.set_geometria(self)
         
         # == Palavras-chave ==
         helpers.set_tags(self)

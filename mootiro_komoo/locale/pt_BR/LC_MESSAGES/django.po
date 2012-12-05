@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-05 11:44-0200\n"
+"POT-Creation-Date: 2012-12-10 15:28-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -130,7 +130,7 @@ msgstr "População"
 #: apps/main/templatetags/komoo_tags.py:323 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
-#: templates/importsheet/row_templates/organizacoes.html:72
+#: templates/importsheet/row_templates/organizacoes.html:76
 #: templates/importsheet/row_templates/recursos.html:57
 #: templates/main/templatetags/taglist.html:5
 msgid "Tags"
@@ -153,15 +153,15 @@ msgstr "Comunidade"
 msgid "Text"
 msgstr "Texto"
 
-#: apps/importsheet/interpreters/base.py:133
+#: apps/importsheet/interpreters/base.py:137
 msgid "Column {cletter} ignored due to an empty header."
 msgstr "Coluna {cletter} ignorada porque tem um cabeçalho vazio."
 
-#: apps/importsheet/interpreters/base.py:153
+#: apps/importsheet/interpreters/base.py:181
 msgid "Missing column: {0}"
 msgstr "Coluna faltando: {0}"
 
-#: apps/importsheet/interpreters/organizacoes.py:65
+#: apps/importsheet/interpreters/organizacoes.py:66
 msgid "Invalid categories: "
 msgstr "Categorias inválidas: "
 
@@ -281,7 +281,7 @@ msgstr "Logotipo"
 
 #: apps/komoo_project/forms.py:54 apps/komoo_resource/forms.py:43
 #: apps/organization/forms.py:66
-#: templates/importsheet/row_templates/organizacoes.html:47
+#: templates/importsheet/row_templates/organizacoes.html:51
 #: templates/importsheet/row_templates/recursos.html:51
 #: templates/organization/show.html:207 templates/project/view.html:258
 #: templates/resource/show.html:93
@@ -1221,27 +1221,27 @@ msgstr "Um erro ocorreu!"
 msgid "objects were added."
 msgstr "objetos foram adicionados."
 
-#: templates/importsheet/show.html:19
+#: templates/importsheet/show.html:26
 msgid "Simulate"
 msgstr "Simular"
 
-#: templates/importsheet/show.html:22
-msgid "Insert all"
-msgstr "Inserir tudo"
+#: templates/importsheet/show.html:29
+msgid "I'm finished. Insert all."
+msgstr "Terminei. Inserir tudo."
 
-#: templates/importsheet/show.html:31
+#: templates/importsheet/show.html:38
 #: templates/importsheet/row_templates/organizacoes.html:9
 #: templates/importsheet/row_templates/recursos.html:9
 msgid "Errors"
 msgstr "Erros"
 
-#: templates/importsheet/show.html:44
+#: templates/importsheet/show.html:51
 #: templates/importsheet/row_templates/organizacoes.html:20
 #: templates/importsheet/row_templates/recursos.html:20
 msgid "Warnings"
 msgstr "Avisos"
 
-#: templates/importsheet/show.html:58
+#: templates/importsheet/show.html:65
 msgid "Row number"
 msgstr "Número da linha"
 
@@ -1250,13 +1250,17 @@ msgstr "Número da linha"
 msgid "Creator"
 msgstr "Criador"
 
-#: templates/importsheet/row_templates/organizacoes.html:50
+#: templates/importsheet/row_templates/organizacoes.html:34
+msgid "Geometry"
+msgstr "Geometria"
+
+#: templates/importsheet/row_templates/organizacoes.html:54
 #: templates/komoo_map/info_window.html:43 templates/organization/list.html:52
 #: templates/organization/show.html:214
 msgid "Operation Field"
 msgstr "Área de atuação"
 
-#: templates/importsheet/row_templates/organizacoes.html:57
+#: templates/importsheet/row_templates/organizacoes.html:61
 #: templates/organization/show.html:225
 msgid "Audience"
 msgstr "Público"
@@ -1935,6 +1939,9 @@ msgstr "por"
 #: templates/update/frontpage.html:155
 msgid "News"
 msgstr "Notícias"
+
+#~ msgid "Insert all"
+#~ msgstr "Inserir tudo"
 
 #~ msgid "Invalid creator ID: {} does not belong to any user."
 #~ msgstr "ID do mapeador inválido: {} não pertence a nenhum usuário."

@@ -7,6 +7,8 @@ import gspread
 from copy import deepcopy
 from collections import OrderedDict
 
+from ..google import google_fusion_tables_service
+
 
 class Interpreter(object):
     '''
@@ -39,9 +41,11 @@ class Interpreter(object):
             ...
     '''
 
-    def __init__(self, gspread_worksheet):
+    def __init__(self, importsheet, gspread_worksheet):
+        self.importsheet = importsheet
         self.worksheet = gspread_worksheet
         self.rows = []
+        self.kml_dicts = []
         self.errors = []
         self.warnings = []
 
@@ -139,14 +143,50 @@ class Interpreter(object):
             rows_dicts.append(row_dict)
 
         return rows_dicts
-    
-    def parse(self):
+
+    def get_kml_dicts(self):
+        '''
+        Get data from Google Fusion Tables and builds a dict representing 
+        the kml data.
+        '''
+        if not self.importsheet.kml_import:
+            self.kml_dicts = {}
+            return
+
+        if self.kml_dicts:
+            return
+
+        gft = google_fusion_tables_service()
+        query = 'SELECT * FROM {}'.format(self.importsheet.fusion_table_key)
+        data = gft.query().sql(sql=query).execute()
+        
+        cols = data['columns']
+        self.kml_dicts = [{cols[i]:row[i] for i in range(len(cols))} \
+                            for row in data['rows']]
+
+        counting = {}
+        for pid in [kd['Identificador do polígono'] for kd in self.kml_dicts]:
+            if not pid in counting:
+                counting[pid] = 0
+            counting[pid] += 1
+        for pid, count in counting.items():
+            if count > 1:
+                msg = _('Duplicate polygon identifier in Fusion Table: {}') \
+                        .format(pid)
+                self.errors.append(msg)
+
+        return self.kml_dicts
+
+    # TODO: change default to parse_kml=False
+    def parse(self, parse_kml=True):
         '''
         Parses each row_dict into a dict containing the object, its warnings
         and its errors. Return a list with all of these dictionaries.
         '''
+        if parse_kml:
+            self.get_kml_dicts()  # this sets self.kml_dicts
         for row_dict in self.get_row_dicts():
-            ri = self.row_interpreter(row_dict)
+            ri = self.row_interpreter(row_dict, self.kml_dicts)
             try:
                 ri.parse()
             except KeyError as e:
@@ -192,9 +232,9 @@ class RowInterpreter(object):
       warnings: a list of warning messages (strings)
     '''
 
-    def __init__(self, row_dict):
+    def __init__(self, row_dict, kml_dicts):
         self.row_dict = row_dict
-        self.parse_row_dict()
+        self.kml_dicts = kml_dicts
 
     def parse(self):
         '''

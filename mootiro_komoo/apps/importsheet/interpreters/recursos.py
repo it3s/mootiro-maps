@@ -7,14 +7,11 @@ from django.utils.translation import ugettext as _
 from authentication.models import User
 from komoo_resource.models import Resource, ResourceKind
 
-from .base import Interpreter
+from .base import Interpreter, RowInterpreter
 import helpers
 
 
-class RecursosRowInterpreter(object):
-
-    def __init__(self, rd):
-        self.row_dict = rd
+class RecursosRowInterpreter(RowInterpreter):
 
     def parse(self):
         # references to same objects
@@ -47,8 +44,8 @@ class RecursosRowInterpreter(object):
         # == Tipo ==
         od['kind'] = rd['Tipo']
 
-        # == Coordenadas ==
-        helpers.set_coordenadas_ponto(self)
+        # == Geometria ==
+        helpers.set_geometria(self)
 
         # == Palavras-chave ==
         helpers.set_tags(self)
