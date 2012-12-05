@@ -41,6 +41,9 @@ class Interpreter(object):
 
     def __init__(self, gspread_worksheet):
         self.worksheet = gspread_worksheet
+        self.rows = []
+        self.errors = []
+        self.warnings = []
 
     def get_row_dicts(self):
         '''
@@ -90,8 +93,6 @@ class Interpreter(object):
         # Merged cells comes as empty strings. The loop below fills those cells
         # following an tree hierarchy to the left
         headers = row_values[:self.header_rows]
-        if not headers[0][0]:
-            return dict(errors=["Bad worksheet structure, cell A1 can't be empty"])
         for r in xrange(0, len(headers) - 1):  # the bottom row are leafs, disconsider it.
             for c in xrange(1, len(headers[r])):  # left most column can't be empty!
                 if not headers[r][c]:
@@ -120,11 +121,20 @@ class Interpreter(object):
                 node = row_dict
                 for hr in xrange(len(headers)):  # iterate over header rows
                     key = headers[hr][c]
+                    if key == '':
+                        continue
                     if node[key] != {}:
                         node = node[key]  # not a leaf node, continue
                     else:
                         node[key] = attr_value  # copy attribute
                         break  # shorter branches may stop earlier
+                if node == row_dict:  # no header string found
+                    cletter = self.worksheet.get_addr_int(r + 1, c + 1)[0]
+                    msg = _('Column {cletter} ignored due to an empty header.')\
+                            .format(cletter=cletter)
+                    if not msg in self.warnings:
+                        self.warnings.append(msg)
+
             # give each interpreter the chance to organize the row_dict better
             rows_dicts.append(row_dict)
 
@@ -135,14 +145,12 @@ class Interpreter(object):
         Parses each row_dict into a dict containing the object, its warnings
         and its errors. Return a list with all of these dictionaries.
         '''
-        self.rows = []
-        self.errors = []
         for row_dict in self.get_row_dicts():
             ri = self.row_interpreter(row_dict)
             try:
                 ri.parse()
             except KeyError as e:
-                msg = _('Mising column: {}'.format(e.message))
+                msg = _('Missing column: {0}').format(e.message)
                 self.errors.append(msg)
                 self.rows = []
                 break

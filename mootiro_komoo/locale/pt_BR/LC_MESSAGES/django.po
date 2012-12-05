@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-04 13:28-0200\n"
+"POT-Creation-Date: 2012-12-05 11:44-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -153,9 +153,13 @@ msgstr "Comunidade"
 msgid "Text"
 msgstr "Texto"
 
-#: apps/importsheet/interpreters/base.py:145
-msgid "Mising column: {}"
-msgstr "Coluna faltando: {}"
+#: apps/importsheet/interpreters/base.py:133
+msgid "Column {cletter} ignored due to an empty header."
+msgstr "Coluna {cletter} ignorada porque tem um cabeçalho vazio."
+
+#: apps/importsheet/interpreters/base.py:153
+msgid "Missing column: {0}"
+msgstr "Coluna faltando: {0}"
 
 #: apps/importsheet/interpreters/organizacoes.py:65
 msgid "Invalid categories: "
@@ -944,7 +948,7 @@ msgid "Organizations"
 msgstr "Organizações"
 
 #: templates/404.html:34 templates/main/upper_bar.html:9
-#: templates/main/upper_bar.html.py:13
+#: templates/main/upper_bar.html.py:12
 msgid "Help"
 msgstr "Ajuda"
 
@@ -1225,20 +1229,21 @@ msgstr "Simular"
 msgid "Insert all"
 msgstr "Inserir tudo"
 
-#: templates/importsheet/show.html:30
+#: templates/importsheet/show.html:31
 #: templates/importsheet/row_templates/organizacoes.html:9
 #: templates/importsheet/row_templates/recursos.html:9
 msgid "Errors"
 msgstr "Erros"
 
-#: templates/importsheet/show.html:43
-msgid "Row number"
-msgstr "Número da linha"
-
+#: templates/importsheet/show.html:44
 #: templates/importsheet/row_templates/organizacoes.html:20
 #: templates/importsheet/row_templates/recursos.html:20
 msgid "Warnings"
 msgstr "Avisos"
+
+#: templates/importsheet/show.html:58
+msgid "Row number"
+msgstr "Número da linha"
 
 #: templates/importsheet/row_templates/organizacoes.html:32
 #: templates/importsheet/row_templates/recursos.html:35

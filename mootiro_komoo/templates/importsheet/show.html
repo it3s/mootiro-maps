@@ -19,23 +19,38 @@
         <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}?worksheet_name={{ wks.title }}">{% trans "Simulate" %} {{wks.title}}</a>
         {% endfor %}
         {% if not any_error %}
-        <a class="insert btn btn-large btn-danger" href="{% url importsheet_insert importsheet.id %}">{% trans "Insert all" %}</a>
+        <a class="insert btn btn-large btn-success" href="{% url importsheet_insert importsheet.id %}">{% trans "Insert all" %}</a>
         {% endif %}
       </div>
       <br/><br/>
       
-      {% if interpreter.errors %}
-      <div class="metadata">
-        <div class="errors">
-          <h3>{% trans "Errors" %}</h3>
-          <ul>
-            {% for msg in interpreter.errors %}
-            <li>{{ msg }}</li>
-            {% endfor %}
-          </ul>
+      <div id="importsheet_messages">
+        {% if interpreter.errors %}
+        <div class="metadata">
+          <div class="errors">
+            <h3>{% trans "Errors" %}</h3>
+            <ul>
+              {% for msg in interpreter.errors %}
+              <li>{{ msg }}</li>
+              {% endfor %}
+            </ul>
+          </div>
         </div>
+        {% endif %}
+        
+        {% if interpreter.warnings %}
+        <div class="metadata">
+          <div class="warnings">
+            <h3>{% trans "Warnings" %}</h3>
+            <ul>
+              {% for msg in interpreter.warnings %}
+              <li>{{ msg }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% endif %}
       </div>
-      {% endif %}
       
       <div id="importsheet_simulation_results">
         {% for row in interpreter.rows %}

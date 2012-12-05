@@ -63,7 +63,7 @@ class OrganizacoesRowInterpreter(object):
         invalid = provided - valid
         if invalid:
             msg = _('Invalid categories: ') + ', '.join(invalid)
-            e.append(msg)
+            self.errors.append(msg)
         od['categories'] = valid
 
         # == Públicos-alvo ==

@@ -22,28 +22,6 @@ div.importsheet_missing_column {
         width: 940px;
         display: inline-block;
 
-        div.metadata {
-            h3 {
-                font-size: 16px;
-            }
-
-            div.errors, div.warnings {
-                margin: 5px;
-            }
-
-            div.errors {
-                background: #daa;
-                border: 1px solid #b33;
-                padding: 2px 5px;
-            }
-
-            div.warnings {
-                background: #ee8;
-                border: 1px solid #ed0;
-                padding: 2px 5px;
-            }
-        }
-
         div.importsheet_main_column {
             width: 700px;
             margin-right: 20px;
@@ -54,4 +32,27 @@ div.importsheet_missing_column {
         }        
     }
 
+}
+#importsheet_simulation_results, #importsheet_messages {
+    div.metadata {
+        h3 {
+            font-size: 16px;
+        }
+
+        div.errors, div.warnings {
+            margin: 5px;
+        }
+
+        div.errors {
+            background: #daa;
+            border: 1px solid #b33;
+            padding: 2px 5px;
+        }
+
+        div.warnings {
+            background: #ee8;
+            border: 1px solid #ed0;
+            padding: 2px 5px;
+        }
+    }
 }
