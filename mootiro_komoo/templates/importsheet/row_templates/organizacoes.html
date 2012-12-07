@@ -1,0 +1,80 @@
+{% load markitup_tags %}
+{% load i18n %}
+{% load komoo_tags %}
+
+
+<div class="metadata">
+  {% if row.errors %}
+  <div class="errors">
+    <h3>{% trans "Errors" %}</h3>
+    <ul>
+      {% for msg in row.errors %}
+      <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+                          
+  {% if row.warnings %}
+  <div class="warnings">
+    <h3>{% trans "Warnings" %}</h3>
+    <ul>
+      {% for msg in row.warnings %}
+      <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+</div>
+  
+<div class="main-column">
+  <h2>{{ row.object_dict.name }}</h2>
+  <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
+  {% if row.object_dict.community %}
+    <div class="a-update">
+    {% for c in row.object_dict.community %}
+        <a href="{{ c.view_url }}" class="update-community">
+          <i class="icon-community-white"></i> {{ c.name }}
+        </a>
+    {% endfor %}
+    </div>
+  {% endif %}
+  <div class="mark-down">{{ row.object_dict.description|render_markup|safe }}</div>
+</div>
+
+<div class="right-bar right-bar-modif">
+  <div class="block">
+    <h4>{% trans 'Contact' %}</h4>
+    {{ row.object_dict.contact|render_markup|safe }}
+  
+    <h4>{% trans 'Operation Field' %}</h4>
+    <ul>
+      {% for c in row.object_dict.categories %}
+      <li>{{ c }}</li>
+      {% endfor %}
+    </ul>
+    
+    <h4>{% trans 'Audience' %}</h4>
+    <ul>
+      {% for t in row.object_dict.target_audiences %}
+      <li>{{ t }}</li>
+      {% endfor %}
+    </ul>
+    
+    {% if row.object_dict.link %}
+    <h4>Link</h4>
+    <a href="{{ row.object_dict.link|with_http }}">{{ row.object_dict.link }}</a>
+    {% endif %}
+  </div>
+  
+  <div class="view-tag-list">
+    {% if row.object_dict.tags %}
+    <span class="inline-block meta-info">{% trans 'Tags' %}</span>
+    <div class="view-tag-list-tags">
+      {% for tag in row.object_dict.tags %}
+      <span class="inline-block tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>

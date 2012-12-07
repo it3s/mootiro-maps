@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-06 17:33-0200\n"
-"PO-Revision-Date: 2012-10-18 17:41-0300\n"
+"POT-Creation-Date: 2012-12-04 13:28-0200\n"
+"PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
 "Language: \n"
@@ -129,7 +129,10 @@ msgstr "População"
 #: apps/komoo_project/forms.py:52 apps/komoo_resource/forms.py:44
 #: apps/main/templatetags/komoo_tags.py:323 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
-#: lib/taggit/models.py:57 templates/main/templatetags/taglist.html:5
+#: lib/taggit/models.py:57
+#: templates/importsheet/row_templates/organizacoes.html:72
+#: templates/importsheet/row_templates/recursos.html:57
+#: templates/main/templatetags/taglist.html:5
 msgid "Tags"
 msgstr "Palavras-Chave"
 
@@ -149,6 +152,14 @@ msgstr "Comunidade"
 #: apps/discussion/forms.py:24
 msgid "Text"
 msgstr "Texto"
+
+#: apps/importsheet/interpreters/base.py:145
+msgid "Mising column: {}"
+msgstr "Coluna faltando: {}"
+
+#: apps/importsheet/interpreters/organizacoes.py:65
+msgid "Invalid categories: "
+msgstr "Categorias inválidas: "
 
 #: apps/investment/forms.py:31 apps/need/forms.py:25 apps/proposal/forms.py:27
 msgid "Title"
@@ -196,7 +207,7 @@ msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
 #: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:223
-#: apps/organization/models.py:185
+#: apps/organization/models.py:186
 msgid "Organization"
 msgstr "Organização"
 
@@ -265,8 +276,11 @@ msgid "Logo"
 msgstr "Logotipo"
 
 #: apps/komoo_project/forms.py:54 apps/komoo_resource/forms.py:43
-#: apps/organization/forms.py:66 templates/organization/show.html:207
-#: templates/project/view.html:258 templates/resource/show.html:93
+#: apps/organization/forms.py:66
+#: templates/importsheet/row_templates/organizacoes.html:47
+#: templates/importsheet/row_templates/recursos.html:51
+#: templates/organization/show.html:207 templates/project/view.html:258
+#: templates/resource/show.html:93
 msgid "Contact"
 msgstr "Contato"
 
@@ -291,6 +305,7 @@ msgid "Unnamed"
 msgstr "Sem nome"
 
 #: apps/komoo_resource/forms.py:42
+#: templates/importsheet/row_templates/recursos.html:33
 msgid "Kind"
 msgstr "Tipo"
 
@@ -303,11 +318,11 @@ msgstr "Imagens"
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
-#: apps/komoo_resource/models.py:41
+#: apps/komoo_resource/models.py:42
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:63 apps/main/templatetags/komoo_tags.py:224
+#: apps/komoo_resource/models.py:64 apps/main/templatetags/komoo_tags.py:224
 msgid "Resource"
 msgstr "Recurso"
 
@@ -584,12 +599,12 @@ msgstr "Nome da Unidade"
 msgid "Info"
 msgstr "Informações"
 
-#: apps/organization/models.py:186
+#: apps/organization/models.py:187
 msgid "Add Organization"
 msgstr "Adicionar organização"
 
 #: apps/proposal/forms.py:29 templates/investment/list.html:29
-#: templates/proposal/view.html:36
+#: templates/proposal/view.html:33
 msgid "Cost"
 msgstr "Custo"
 
@@ -716,7 +731,7 @@ msgstr "Entre a legenda para essa imagem"
 msgid "Delete"
 msgstr "Apagar"
 
-#: lib/fileupload/forms.py:131 templates/main/login_box.html:41
+#: lib/fileupload/forms.py:131 templates/authentication/login_box.html:41
 msgid "or"
 msgstr "ou"
 
@@ -950,9 +965,29 @@ msgid "Don't have an account?"
 msgstr "Não possui uma conta? Registre-se!"
 
 #: templates/authentication/komoo_login_form.html:12
-#: templates/main/login_box.html:4
+#: templates/authentication/login_box.html:4
 msgid "Log in"
 msgstr "Entre"
+
+#: templates/authentication/login_box.html:9
+msgid "An error ocurred."
+msgstr "Um erro ocorreu."
+
+#: templates/authentication/login_box.html:11
+msgid "You provided wrong credentials."
+msgstr "Usuário e senha inválidos."
+
+#: templates/authentication/login_box.html:14
+msgid "You have not verified your email yet."
+msgstr "Você ainda não verificou seu email."
+
+#: templates/authentication/login_box.html:25
+msgid "Log in with Google"
+msgstr "Entre com Google"
+
+#: templates/authentication/login_box.html:33
+msgid "Log in with Facebook"
+msgstr "Entre com Facebook"
 
 #: templates/authentication/new.html:8
 msgid "New User"
@@ -986,11 +1021,15 @@ msgstr "Dados Públicas"
 msgid "Signature Settings"
 msgstr "Assinaturas"
 
-#: templates/authentication/profile_update.html:43
+#: templates/authentication/profile_update.html:32
+msgid "External Accounts"
+msgstr "Contas Externas"
+
+#: templates/authentication/profile_update.html:48
 msgid "E-mail"
 msgstr "Email"
 
-#: templates/authentication/profile_update.html:49
+#: templates/authentication/profile_update.html:54
 msgid ""
 "emails cannot be changed, if you have a problem with you email address "
 "please contact us"
@@ -998,11 +1037,11 @@ msgstr ""
 "não é possível alterar emails, entre em contato se tiver algum problema com "
 "seu endereço de email"
 
-#: templates/authentication/profile_update.html:54
+#: templates/authentication/profile_update.html:59
 msgid "Current Password"
 msgstr "Senha atual"
 
-#: templates/authentication/profile_update.html:59
+#: templates/authentication/profile_update.html:64
 msgid ""
 "Enter your current password if you want change to a new one. If you did not "
 "set a password yet, then leave it blank"
@@ -1010,39 +1049,55 @@ msgstr ""
 "Digite sua senha atual caso queira alterá-la para uma nova. Deixe em branco "
 "se você ainda não definiu uma senha"
 
-#: templates/authentication/profile_update.html:64
+#: templates/authentication/profile_update.html:69
 msgid "New Password"
 msgstr "Nova senha"
 
-#: templates/authentication/profile_update.html:69
+#: templates/authentication/profile_update.html:74
 msgid "Enter a new password"
 msgstr "Digite uma nova senha"
 
-#: templates/authentication/profile_update.html:74
+#: templates/authentication/profile_update.html:79
 msgid "Confirm New Password"
 msgstr "Confirme sua nova senha"
 
-#: templates/authentication/profile_update.html:79
+#: templates/authentication/profile_update.html:84
 msgid "Confirm your new password"
 msgstr "Confirme a sua senha"
 
-#: templates/authentication/profile_update.html:139
+#: templates/authentication/profile_update.html:118
+msgid "Your Google account is:"
+msgstr "Sua conta do Google é:"
+
+#: templates/authentication/profile_update.html:124
+msgid "Connect with Google"
+msgstr "Conecte sua conta do Google"
+
+#: templates/authentication/profile_update.html:131
+msgid "Your facebook account is:"
+msgstr "Sua conta do facebook é:"
+
+#: templates/authentication/profile_update.html:137
+msgid "Connect with facebook"
+msgstr "Conecte sua conta do facebook"
+
+#: templates/authentication/profile_update.html:176
 msgid "Cancel Subscription"
 msgstr "Cancelar Assinatura"
 
-#: templates/authentication/profile_update.html:148
+#: templates/authentication/profile_update.html:185
 msgid "Signatures"
 msgstr "Assinaturas"
 
-#: templates/authentication/profile_update.html:152
+#: templates/authentication/profile_update.html:189
 msgid "Receivings Options"
 msgstr "Opções de Recebimentos"
 
-#: templates/authentication/profile_update.html:161
+#: templates/authentication/profile_update.html:198
 msgid "Update your mailing settings"
 msgstr "Atualize suas opções de emails"
 
-#: templates/authentication/profile_update.html:170
+#: templates/authentication/profile_update.html:207
 msgid ""
 "I want to receive only a <strong>weekly</strong> digest mail with the "
 "updates for the objects I'm subescribed to"
@@ -1050,7 +1105,7 @@ msgstr ""
 "Eu quero receber somente notificações com o resumo <strong>semanal</strong> "
 "contendo as atualizações dos objetos que estou observando"
 
-#: templates/authentication/profile_update.html:175
+#: templates/authentication/profile_update.html:212
 msgid ""
 "I want to receive only a <strong>daily</strong> digest mail with the updates "
 "for the objects I'm subescribed to"
@@ -1058,16 +1113,16 @@ msgstr ""
 "Eu quero receber somente notificações com o resumo <strong>diário</strong> "
 "contendo as atualizações dos objetos que estou observando"
 
-#: templates/authentication/profile_update.html:180
+#: templates/authentication/profile_update.html:217
 msgid "I <strong>don't</strong> want to receive mails for updates"
 msgstr "E <strong>não</strong> desejo receber emails de atualizações"
 
-#: templates/authentication/profile_update.html:187
+#: templates/authentication/profile_update.html:224
 #: templates/project/projects_tag.html:46
 msgid "Save changes"
 msgstr "Salvar mudanças"
 
-#: templates/authentication/profile_update.html:190
+#: templates/authentication/profile_update.html:227
 msgid "Close"
 msgstr "Fechar"
 
@@ -1154,6 +1209,53 @@ msgstr "Comunidades próximas"
 msgid "Discussion about"
 msgstr "Discussões sobre"
 
+#: templates/importsheet/insert.html:11
+msgid "Some error ocurred!"
+msgstr "Um erro ocorreu!"
+
+#: templates/importsheet/insert.html:17
+msgid "objects were added."
+msgstr "objetos foram adicionados."
+
+#: templates/importsheet/show.html:19
+msgid "Simulate"
+msgstr "Simular"
+
+#: templates/importsheet/show.html:22
+msgid "Insert all"
+msgstr "Inserir tudo"
+
+#: templates/importsheet/show.html:30
+#: templates/importsheet/row_templates/organizacoes.html:9
+#: templates/importsheet/row_templates/recursos.html:9
+msgid "Errors"
+msgstr "Erros"
+
+#: templates/importsheet/show.html:43
+msgid "Row number"
+msgstr "Número da linha"
+
+#: templates/importsheet/row_templates/organizacoes.html:20
+#: templates/importsheet/row_templates/recursos.html:20
+msgid "Warnings"
+msgstr "Avisos"
+
+#: templates/importsheet/row_templates/organizacoes.html:32
+#: templates/importsheet/row_templates/recursos.html:35
+msgid "Creator"
+msgstr "Criador"
+
+#: templates/importsheet/row_templates/organizacoes.html:50
+#: templates/komoo_map/info_window.html:43 templates/organization/list.html:52
+#: templates/organization/show.html:214
+msgid "Operation Field"
+msgstr "Área de atuação"
+
+#: templates/importsheet/row_templates/organizacoes.html:57
+#: templates/organization/show.html:225
+msgid "Audience"
+msgstr "Público"
+
 #: templates/investment/edit.html:15
 msgid "Form Investment"
 msgstr "Formulário de Investimentos"
@@ -1218,11 +1320,6 @@ msgid "%(counter)s Resource"
 msgid_plural "%(counter)s Resources"
 msgstr[0] "%(counter)s Recurso"
 msgstr[1] "%(counter)s Recursos"
-
-#: templates/komoo_map/info_window.html:43 templates/organization/list.html:52
-#: templates/organization/show.html:214
-msgid "Operation Field"
-msgstr "Área de atuação"
 
 #: templates/komoo_map/panel.html:9
 msgid "Filter"
@@ -1292,26 +1389,6 @@ msgid ""
 "Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, "
 "consulte as Condições de Uso."
 msgstr ""
-
-#: templates/main/login_box.html:9
-msgid "An error ocurred."
-msgstr "Um erro ocorreu."
-
-#: templates/main/login_box.html:11
-msgid "You provided wrong credentials."
-msgstr "Usuário e senha inválidos."
-
-#: templates/main/login_box.html:14
-msgid "You have not verified your email yet."
-msgstr "Você ainda não verificou seu email."
-
-#: templates/main/login_box.html:25
-msgid "Log in with Google"
-msgstr "Entre com Google"
-
-#: templates/main/login_box.html:33
-msgid "Log in with Facebook"
-msgstr "Entre com Facebook"
 
 #: templates/main/supporters.html:3
 msgid "Support"
@@ -1510,11 +1587,10 @@ msgstr "em"
 
 #: templates/need/view.html:40
 #: templates/proposal/proposal_summary_templatetag.html:5
-#: templates/proposal/view.html:31
 msgid "created by"
 msgstr "criado por"
 
-#: templates/need/view.html:40 templates/proposal/view.html:31
+#: templates/need/view.html:40
 msgid "on"
 msgstr "em"
 
@@ -1522,7 +1598,7 @@ msgstr "em"
 msgid "Proposals"
 msgstr "Propostas"
 
-#: templates/need/view.html:68 templates/proposal/view.html:58
+#: templates/need/view.html:68 templates/proposal/view.html:56
 msgid "New proposal"
 msgstr "Nova proposta"
 
@@ -1670,10 +1746,6 @@ msgstr "Informações de contato não fornecidas"
 msgid "No categories provided"
 msgstr "Categorias não fornecidas"
 
-#: templates/organization/show.html:225
-msgid "Audience"
-msgstr "Público"
-
 #: templates/organization/show.html:230
 msgid "No target audience provided"
 msgstr "Público alvo não fornecido"
@@ -1749,15 +1821,19 @@ msgstr "Este projeto não tem nenhum Recurso relacionada"
 msgid "This project has no related Investments yet"
 msgstr "Este Projeto não tem nenhum Investimento relacionado"
 
+#: templates/project/view.html:265
+msgid "Related projects"
+msgstr "Projetos relacionados"
+
 #: templates/proposal/edit.html:15
 msgid "Form Proposal"
 msgstr "Formulário de Propostas"
 
-#: templates/proposal/view.html:50
+#: templates/proposal/view.html:48
 msgid "Proposals for"
 msgstr "Propostas para"
 
-#: templates/proposal/view.html:66
+#: templates/proposal/view.html:64
 msgid "Add investment"
 msgstr "Adicionar Investimento"
 
@@ -1855,20 +1931,20 @@ msgstr "por"
 msgid "News"
 msgstr "Notícias"
 
-#~ msgid "External Accounts"
-#~ msgstr "Contas Externas"
+#~ msgid "Invalid creator ID: {} does not belong to any user."
+#~ msgstr "ID do mapeador inválido: {} não pertence a nenhum usuário."
 
-#~ msgid "Your Google account is:"
-#~ msgstr "Sua conta do Google é:"
+#~ msgid "There is already an organization with this name."
+#~ msgstr "Já existe uma organização com esse nome."
 
-#~ msgid "Connect with Google"
-#~ msgstr "Conecte sua conta do Google"
+#~ msgid "%s cannot be empty"
+#~ msgstr "%s não pode estar vazio"
 
-#~ msgid "Your facebook account is:"
-#~ msgstr "Sua conta do facebook é:"
+#~ msgid "There is already an resource with this name."
+#~ msgstr "Já existe um recurso com esse nome."
 
-#~ msgid "Connect with facebook"
-#~ msgstr "Conecte sua conta do facebook"
+#~ msgid "go back to simulation page"
+#~ msgstr "voltar para a página de simulação"
 
 #~ msgid "Geometric data not available"
 #~ msgstr "Informação geométrica não disponível"

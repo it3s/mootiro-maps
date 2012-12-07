@@ -1,0 +1,51 @@
+{% extends 'global.html' %}
+
+{% load markitup_tags %}
+{% load i18n %}
+
+{% block content %}
+  <div id="main-content">
+    <div class="main-column">
+      <h1>{{ importsheet.name }}</h1>
+      <br/>
+      <p>
+        Google spreadsheet link:<br/>
+        <a href="https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}">https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}</a>
+      </p>
+      <br/>
+      
+      <div class="importsheet_controls">
+        {% for wks in importsheet.worksheets %}
+        <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}?worksheet_name={{ wks.title }}">{% trans "Simulate" %} {{wks.title}}</a>
+        {% endfor %}
+        {% if not any_error %}
+        <a class="insert btn btn-large btn-danger" href="{% url importsheet_insert importsheet.id %}">{% trans "Insert all" %}</a>
+        {% endif %}
+      </div>
+      <br/><br/>
+      
+      {% if interpreter.errors %}
+      <div class="metadata">
+        <div class="errors">
+          <h3>{% trans "Errors" %}</h3>
+          <ul>
+            {% for msg in interpreter.errors %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+      
+      <div id="importsheet_simulation_results">
+        {% for row in interpreter.rows %}
+        <div class="result">
+          <span class="meta-info">{% trans "Row number" %}:</span>{{ forloop.counter|add:interpreter.header_rows }}<br/>
+          {% include interpreter.row_template with row=row %}
+        </div>
+        {% endfor %}
+      </div>
+        
+    </div>
+  </div>
+{% endblock %}

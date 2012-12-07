@@ -1,0 +1,29 @@
+{% extends 'global.html' %}
+
+{% load i18n %}
+
+{% block content %}
+  <div id="main-content">
+    <div class="main-column">
+      <h1>{{ importsheet.name }}</h1>
+      {% if not success %}
+        <h2>
+          {% trans "Some error ocurred!" %} :(<br/>
+          <a href="{% url importsheet_show importsheet.id %}">Go back to simulation page</a>.
+        </h2>
+      {% endif %}
+      {% if importsheet.inserted_objects %}
+        <h2>
+          {{ importsheet.inserted_objects|length }} {% trans "objects were added." %}<br/>
+        </h2>
+        <ul>
+          {% for obj in importsheet.inserted_objects %}
+            <li>
+              <a href="{{ obj.view_url }}">{{ obj.name }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

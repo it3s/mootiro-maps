@@ -26,14 +26,12 @@
       <a href="{% url view_discussion proposal.perm_id %}" class="btn login-required"><i class="icon-comment"></i></a>
       <a href="{{ proposal.edit_url }}" class="btn login-required"><i class="icon-pencil"></i></a>
     </div>
-    
-    <p>
-    <span class="apart">{% trans 'created by' %} {{ proposal.creator }} {%trans 'on' %} {{ proposal.creation_date }}</span>
-    </p>
 
     <div class="mark-down">{{ proposal.description|render_markup|safe }}</div>
 
-    <p>{% trans 'Cost' %}: {{ proposal.cost }}</p>
+    {% if proposal.cost %}
+    <p><span class="meta-info">{% trans 'Cost' %}:</span> {{ proposal.cost }}</p>
+    {% endif %}
 
     {% investments_list proposal.investments.all %}
 

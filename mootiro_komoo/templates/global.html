@@ -101,7 +101,7 @@
         {% endblock %}
       </div>
       {% if not user.is_authenticated %}
-        {% include "main/login_box.html" %}
+        {% include "authentication/login_box.html" %}
       {% endif %}
       {% include "main/error_box.html" %}
     </div>

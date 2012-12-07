@@ -150,7 +150,7 @@
             <div class="org-info-panel communities-list hidden">
                 {% for com in organization.community.all %}
                     <div class="org-info-div {% cycle 'odd' '' %}">
-                        <a href="/{{ com.slug }}/about/">{{ com.name }}</a>
+                        <a href="{{ com.view_url }}">{{ com.name }}</a>
                     </div>
                 {% empty %}
                     {% trans 'No communities bound to this organization' %}

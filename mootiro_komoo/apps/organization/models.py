@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext as _
 
+from main.models import DictMixin
 from authentication.models import User
 from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
