@@ -50,7 +50,9 @@
 
 <script type="text/javascript" charset="utf-8">
     $('#add-to-project').click(function(evt){
-        $('#add-project-modal').modal('show');
+        if (isAuthenticated){
+          $('#add-project-modal').modal('show');
+        }
         return false;
     });
     $( "#id_project_autocomplete" ).bind( "autocompleteselect", function(event, ui) {

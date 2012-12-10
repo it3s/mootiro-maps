@@ -304,7 +304,7 @@ def login(request):
         next = request.GET.get('next', '')
         return dict(next=next)
 
-    email = request.POST['email']
+    email = request.POST.get('email', '').lower()
     password = request.POST['password']
     if not email or not password:
         return dict(login_error='wrong_credentials')

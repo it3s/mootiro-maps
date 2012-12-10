@@ -42,9 +42,9 @@
       <div id="content">
         {% block content %}{% endblock %}
       </div>
-      {% if not user.is_authenticated %}
-        {% include "authentication/login_box.html" %}
-      {% endif %}
+      {#% if not user.is_authenticated %#}
+        {#% include "authentication/login_box.html" %#}
+      {#% endif %#}
       {% include "main/error_box.html" %}
     </div>
     {% block page_scripts %}{% endblock %}

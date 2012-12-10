@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import logging
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
@@ -11,6 +11,8 @@ from fileupload.models import UploadedFile
 from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
 from .models import User, SocialAuth
+
+logger = logging.getLogger(__name__)
 
 
 class FormProfile(AjaxModelForm):
@@ -34,7 +36,7 @@ class FormProfile(AjaxModelForm):
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id='form-profile')
         self.helper.form_action = reverse('profile_update_public_settings')
-        r = super(FormProfile, self).__init__(*a, **kw)
+        super(FormProfile, self).__init__(*a, **kw)
         inst = kw.get('instance', None)
         if inst and not inst.name:
             self.fields['public_name'].initial = inst.user.name
@@ -78,6 +80,9 @@ class FormUser(AjaxModelForm):
             email = self.cleaned_data['email']
 
             if email:
+                email = email.lower()
+                self.cleaned_data['email'] = email
+
                 self.validation('email', _('This email is already in use.'),
                         User.objects.filter(email=email).exists())
                 self.validation('email',
@@ -88,7 +93,7 @@ class FormUser(AjaxModelForm):
 
             self.validation('password_confirmation',
                     _('Passwords did not match.'),
-                    self.cleaned_data['password'] != \
+                    self.cleaned_data['password'] !=
                     self.cleaned_data['password_confirmation'])
         except Exception as err:
             logger.error('Validation Error: {}'.format(err))
