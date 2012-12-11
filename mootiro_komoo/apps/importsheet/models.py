@@ -64,14 +64,14 @@ class Importsheet(models.Model):
                 pass  # worksheet not recognized
         return l
 
-    @classmethod
-    def __new__(cls, *a, **kw):
-        '''Creates new database object for the importsheet.'''
-        if 'spreadsheet_key' in kw:
-            raise KeyError('spreadsheet_key should not be provided it is '
-                           'automatically retrieved from google api.')
-        obj = super(Importsheet, cls).__new__(cls, *a, **kw)
-        return obj
+    # @classmethod
+    # def __new__(cls, *a, **kw):
+    #     '''Creates new database object for the importsheet.'''
+    #     # if 'spreadsheet_key' in kw:
+    #     #     raise Warning('spreadsheet_key should not be provided it is '
+    #     #                    'automatically retrieved from google api.')
+    #     obj = super(Importsheet, cls).__new__(cls, *a, **kw)
+    #     return obj
 
     def save(self, *a, **kw):
         ret = super(Importsheet, self).save(*a, **kw)
