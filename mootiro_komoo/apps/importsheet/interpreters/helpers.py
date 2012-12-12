@@ -77,12 +77,12 @@ def set_descricao(obj):
     })
     t = Template('''\
 {% for title, text in sections.items %}
-{% if text %}#### {{ title }}
+{% if text %}### {{ title }}
 {{ text|safe }}{% endif %}
 {% endfor %}
-{% if references %}#### Referências{% endif %}
+{% if references %}### Referências{% endif %}
 {% for r in references %}\
- - {% if r.author %}{{r.author}}: {% endif %}{% if r.link %}[{{r.source}}]({{r.link}} "{{r.link_title}}"){% endif %}{% if r.date %}, consultado em {{r.date}}{% endif %}
+ - {% if r.author %}{{r.author}}: {% endif %}{% if r.link %}[{{r.source}}]({{r.link|safe}} "{{r.link_title}}"){% endif %}{% if r.date %}, consultado em {{r.date}}{% endif %}
 {% endfor%}\
 ''')
     obj.object_dict['description'] = t.render(c)
