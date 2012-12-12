@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django.template import Context, Template
 from django.utils.translation import ugettext as _
 
-from authentication.models import User
 from komoo_resource.models import Resource, ResourceKind
 
 from .base import Interpreter, RowInterpreter
@@ -95,7 +94,7 @@ class RecursosRowInterpreter(RowInterpreter):
 class RecursosInterpreter(Interpreter):
     '''
     A model of this worksheet is public available in:
-    https://docs.google.com/spreadsheet/ccc?key=0Ahdnyvg2LXX-dExXeXNpWlFCZlZKcU5pS2NOTC1uanc#gid=2
+    https://docs.google.com/spreadsheet/ccc?key=0Ahdnyvg2LXX-dHNVTHB6ZGgtVGw3dzVOMVMtV01KWWc#gid=4
     '''
     header_rows = 2
     worksheet_name = 'Recursos'

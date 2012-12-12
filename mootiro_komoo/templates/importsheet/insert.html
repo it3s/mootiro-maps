@@ -5,7 +5,23 @@
 {% block content %}
   <div id="main-content">
     <div class="main-column">
+      
       <h1>{{ importsheet.name }}</h1>
+      <p>
+        {{ importsheet.description }}
+        <br/>
+        <br/>
+        <span class="meta-info">Google Spreadsheet link:</span><br/>
+        <a href="https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}">https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}</a>
+        {% if importsheet.fusion_table_key %}
+        <br/>
+        <br/>
+        <span class="meta-info">Google Fusion Table link:</span><br/>
+        <a href="https://www.google.com/fusiontables/data?docid={{ importsheet.fusion_table_key }}">https://www.google.com/fusiontables/data?docid={{ importsheet.fusion_table_key }}</a>
+      </p>
+      {% endif %}
+      <br/>
+      
       {% if not success %}
         <h2>
           {% trans "Some error ocurred!" %} :(<br/>

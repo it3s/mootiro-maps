@@ -102,9 +102,9 @@ def set_comunidades(obj):
 
 def set_geometria(obj):
     gd = obj.row_dict['Geometria']
-    point = gd['Ponto']
-    point_as_area = gd['Ponto como área']
-    polygon = gd['Identificador do polígono (KML)'] if obj.kml_dicts else None
+    point = gd.get('Ponto')
+    point_as_area = gd.get('Ponto como área')
+    polygon = gd.get('Identificador do polígono (KML)') if obj.kml_dicts else None
 
     num_geometries = len([v for v in [point, point_as_area, polygon] if v])
     if num_geometries == 0:
@@ -204,11 +204,12 @@ def set_tags(obj):
     # TODO: put similar tags in the warnings dict
 
     # Data qualification tags
-    if not obj.row_dict['Contato']['CEP']:
-        obj.object_dict['tags'].append('sem CEP')
-    if not obj.row_dict['Contato']['Telefone']:
-        obj.object_dict['tags'].append('sem telefone')
-    if not obj.row_dict['Contato']['E-mail']:
-        obj.object_dict['tags'].append('sem e-mail')
+    if 'Contato' in obj.row_dict:
+        if not obj.row_dict['Contato']['CEP']:
+            obj.object_dict['tags'].append('sem CEP')
+        if not obj.row_dict['Contato']['Telefone']:
+            obj.object_dict['tags'].append('sem telefone')
+        if not obj.row_dict['Contato']['E-mail']:
+            obj.object_dict['tags'].append('sem e-mail')
     if not bool([s for s in obj.row_dict['Geometria'].values() if s != '']):
         obj.object_dict['tags'].append('sem ponto')
