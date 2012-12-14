@@ -2496,7 +2496,6 @@ ul.two-cols li {
 }
 .internal-error .content .message {
     width: 450px;
-    display: inline-block;
 }
 .internal-error .content form.error-report {
     display: inline-block;
