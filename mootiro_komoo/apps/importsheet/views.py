@@ -61,9 +61,13 @@ def show(request, id=''):
 def insert(request, id=''):
     ish = Importsheet.objects.get(id=id)
 
-    if not request.user.is_admin:
-        url = reverse('importsheet_show', args=(ish.id,))
-        return redirect(url)
+    if not ish.inserted:
+        if request.user.is_admin:
+            success = ish.insert_all()
+        else:
+            url = reverse('importsheet_show', args=(ish.id,))
+            return redirect(url)
+    else:
+        success = True
 
-    success = ish.insert_all()
     return dict(success=success, importsheet=ish)
