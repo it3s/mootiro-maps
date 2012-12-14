@@ -54,11 +54,16 @@ def show(request, id=''):
         any_error = True  # empty importsheet
 
     return dict(importsheet=ish, interpreter=worksheet_interpreter,
-                    any_error=any_error)
+                    any_error=any_error, user=request.user)
 
 
 @render_to('importsheet/insert.html')
 def insert(request, id=''):
     ish = Importsheet.objects.get(id=id)
+
+    if not request.user.is_admin:
+        url = reverse('importsheet_show', args=(ish.id,))
+        return redirect(url)
+
     success = ish.insert_all()
     return dict(success=success, importsheet=ish)

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-10 15:28-0200\n"
+"POT-Creation-Date: 2012-12-14 09:52-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -18,23 +18,23 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Poedit-Basepath: ../../../\n"
 
-#: apps/authentication/forms.py:28
+#: apps/authentication/forms.py:30
 msgid "Full Name"
 msgstr "Nome Completo"
 
-#: apps/authentication/forms.py:29 templates/authentication/profile.html:33
+#: apps/authentication/forms.py:31 templates/authentication/profile.html:33
 msgid "Public Contact"
 msgstr "Contato Público"
 
-#: apps/authentication/forms.py:30
+#: apps/authentication/forms.py:32
 msgid "Photo"
 msgstr "Foto"
 
-#: apps/authentication/forms.py:31
+#: apps/authentication/forms.py:33
 msgid "Location"
 msgstr "Localização"
 
-#: apps/authentication/forms.py:57 apps/community/forms.py:25
+#: apps/authentication/forms.py:59 apps/community/forms.py:25
 #: apps/komoo_project/forms.py:50 apps/komoo_resource/forms.py:40
 #: apps/main/templatetags/komoo_tags.py:324
 #: apps/main/templatetags/komoo_tags.py:325 apps/organization/forms.py:63
@@ -43,23 +43,23 @@ msgstr "Localização"
 msgid "Name"
 msgstr "Nome"
 
-#: apps/authentication/forms.py:58
+#: apps/authentication/forms.py:60
 msgid "Email"
 msgstr "Email"
 
-#: apps/authentication/forms.py:59
+#: apps/authentication/forms.py:61
 msgid "Password"
 msgstr "Senha"
 
-#: apps/authentication/forms.py:60
+#: apps/authentication/forms.py:62
 msgid "Confirm your Password"
 msgstr "Confirme a sua senha"
 
-#: apps/authentication/forms.py:81
+#: apps/authentication/forms.py:86
 msgid "This email is already in use."
 msgstr "Este email já está em uso."
 
-#: apps/authentication/forms.py:84
+#: apps/authentication/forms.py:89
 msgid ""
 "This email is registered on our system. Probably you've logged before with a "
 "social account (facebook or google). You can skip this step and just login."
@@ -68,7 +68,7 @@ msgstr ""
 "anteriormente usando uma conta externa (facebook ou google). Você pode pular "
 "esta etapa e simplesmente entrar."
 
-#: apps/authentication/forms.py:90
+#: apps/authentication/forms.py:95
 msgid "Passwords did not match."
 msgstr "As senha não coincidem."
 
@@ -121,6 +121,7 @@ msgid "Description"
 msgstr "Descrição"
 
 #: apps/community/forms.py:27 templates/community/view.html:31
+#: templates/importsheet/row_templates/comunidades.html:40
 #: templates/komoo_map/info_window.html:39
 msgid "Population"
 msgstr "População"
@@ -130,8 +131,9 @@ msgstr "População"
 #: apps/main/templatetags/komoo_tags.py:323 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
+#: templates/importsheet/row_templates/comunidades.html:47
 #: templates/importsheet/row_templates/organizacoes.html:76
-#: templates/importsheet/row_templates/recursos.html:57
+#: templates/importsheet/row_templates/recursos.html:61
 #: templates/main/templatetags/taglist.html:5
 msgid "Tags"
 msgstr "Palavras-Chave"
@@ -157,11 +159,15 @@ msgstr "Texto"
 msgid "Column {cletter} ignored due to an empty header."
 msgstr "Coluna {cletter} ignorada porque tem um cabeçalho vazio."
 
-#: apps/importsheet/interpreters/base.py:181
+#: apps/importsheet/interpreters/base.py:174
+msgid "Duplicate polygon identifier in Fusion Table: {}"
+msgstr "Identificador de polígono duplicado no Fusion Table: {}"
+
+#: apps/importsheet/interpreters/base.py:193
 msgid "Missing column: {0}"
 msgstr "Coluna faltando: {0}"
 
-#: apps/importsheet/interpreters/organizacoes.py:66
+#: apps/importsheet/interpreters/organizacoes.py:64
 msgid "Invalid categories: "
 msgstr "Categorias inválidas: "
 
@@ -282,7 +288,7 @@ msgstr "Logotipo"
 #: apps/komoo_project/forms.py:54 apps/komoo_resource/forms.py:43
 #: apps/organization/forms.py:66
 #: templates/importsheet/row_templates/organizacoes.html:51
-#: templates/importsheet/row_templates/recursos.html:51
+#: templates/importsheet/row_templates/recursos.html:55
 #: templates/organization/show.html:207 templates/project/view.html:258
 #: templates/resource/show.html:93
 msgid "Contact"
@@ -1213,44 +1219,53 @@ msgstr "Comunidades próximas"
 msgid "Discussion about"
 msgstr "Discussões sobre"
 
-#: templates/importsheet/insert.html:11
+#: templates/importsheet/insert.html:27
 msgid "Some error ocurred!"
 msgstr "Um erro ocorreu!"
 
-#: templates/importsheet/insert.html:17
+#: templates/importsheet/insert.html:33
 msgid "objects were added."
 msgstr "objetos foram adicionados."
 
-#: templates/importsheet/show.html:26
+#: templates/importsheet/show.html:28
 msgid "Simulate"
 msgstr "Simular"
 
-#: templates/importsheet/show.html:29
+#: templates/importsheet/show.html:31 templates/importsheet/show.html.py:34
 msgid "I'm finished. Insert all."
 msgstr "Terminei. Inserir tudo."
 
-#: templates/importsheet/show.html:38
+#: templates/importsheet/show.html:35
+msgid "(only administrators)"
+msgstr "(somente administradores)"
+
+#: templates/importsheet/show.html:45
+#: templates/importsheet/row_templates/comunidades.html:9
 #: templates/importsheet/row_templates/organizacoes.html:9
 #: templates/importsheet/row_templates/recursos.html:9
 msgid "Errors"
 msgstr "Erros"
 
-#: templates/importsheet/show.html:51
+#: templates/importsheet/show.html:58
+#: templates/importsheet/row_templates/comunidades.html:20
 #: templates/importsheet/row_templates/organizacoes.html:20
 #: templates/importsheet/row_templates/recursos.html:20
 msgid "Warnings"
 msgstr "Avisos"
 
-#: templates/importsheet/show.html:65
+#: templates/importsheet/show.html:72
 msgid "Row number"
 msgstr "Número da linha"
 
+#: templates/importsheet/row_templates/comunidades.html:32
 #: templates/importsheet/row_templates/organizacoes.html:32
 #: templates/importsheet/row_templates/recursos.html:35
 msgid "Creator"
 msgstr "Criador"
 
+#: templates/importsheet/row_templates/comunidades.html:34
 #: templates/importsheet/row_templates/organizacoes.html:34
+#: templates/importsheet/row_templates/recursos.html:37
 msgid "Geometry"
 msgstr "Geometria"
 

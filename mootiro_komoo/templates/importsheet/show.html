@@ -27,8 +27,13 @@
         {% for wks in importsheet.worksheets %}
         <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}?worksheet_name={{ wks.title }}">{% trans "Simulate" %} {{wks.title}}</a>
         {% endfor %}
-        {% if not any_error %}
+        {% if user.is_admin %}
         <a class="insert btn btn-large btn-success" href="{% url importsheet_insert importsheet.id %}">{% trans "I'm finished. Insert all." %}</a>
+        {% else %}
+        <a class="insert btn btn-large btn-success disabled">
+          {% trans "I'm finished. Insert all." %}<br/>
+          <span class="small">{% trans "(only administrators)" %}</span>
+        </a>
         {% endif %}
       </div>
       <br/><br/>
