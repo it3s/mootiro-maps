@@ -172,3 +172,35 @@ div.importsheet_missing_column {
   background: #ee8;
   border: 1px solid #ed0;
   padding: 2px 5px; }
+
+#main-content.frontpage {
+  width: 900px; }
+  #main-content.frontpage > div {
+    padding: 20px; }
+  #main-content.frontpage > div:nth-child(even) {
+    background: #EDEDED; }
+  #main-content.frontpage .video {
+    margin: 30px;
+    text-align: center; }
+  #main-content.frontpage > div.news > div {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+    width: 45%;
+    margin: 1%; }
+    #main-content.frontpage > div.news > div h3 {
+      text-indent: 5px; }
+  #main-content.frontpage > div.news li :hover {
+    background: #dceff4; }
+  #main-content.frontpage > div.news li a {
+    display: block;
+    padding: 5px;
+    text-decoration: none; }
+  #main-content.frontpage > div.news li img.apart {
+    margin-right: 0.2em; }
+  #main-content.frontpage > div.news .last_updates li a {
+    color: inherit; }
+  #main-content.frontpage > div.account {
+    text-align: center; }

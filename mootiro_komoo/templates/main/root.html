@@ -1,6 +1,6 @@
 {% extends "global.html" %}
 {% load i18n %}
-{# % load komoo_filters % #}
+{% load komoo_filters %}
 {# % load komoo_tags % #}
 {# % load komoo_map_tags % #}
 {# % load comment_tags % #}
@@ -8,8 +8,67 @@
 
 
 {% block content %}
-<div id="main-content">
-  FRONTPAGE!
+<div id="main-content" class="frontpage">
+  <div>
+    <h1>
+      MootiroMaps é uma ferramenta de mapeamento colaborativo para o terceiro
+      setor.
+    </h1>
+    <div class="video">
+      <iframe src="http://player.vimeo.com/video/56699177?title=0&amp;byline=0&amp;portrait=0&amp;color=28b8ce" width="600" height="337" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+    </div>
+    <h2>{% trans "How it works?" %}</h2>
+  </div>
+  
+  <div>
+    <h2>{% trans "Projects that uses MootiroMaps" %}</h2>
+    
+  </div>
+  
+  <div class="news">
+    <h2>{% trans "News" %}</h2>
+    
+    <div class="blog">
+      <h3>{% trans "IT3S blog" %}</h3>
+      <ul>
+        {% for n in news %}
+        <li>
+          <a href="{{ n.title_link }}">
+          <h4>{{ n.title }}</h4>
+          <span class="attenuate">{{ n.date|date:"d/m/Y" }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="apart">
+        <a href="http://blog.mootiro.org">{% trans "visit the blog" %}</a>
+      </div>
+    </div>
+    
+    <div class="last_updates">
+      <h3>{% trans "Last updates" %}</h3>
+      <ul>
+        {% for u in updates %}
+        <li>
+          <a href="{{ u.instance.link }}">
+            <img class="apart" src="{{STATIC_URL}}{{ u.object_icon }}">
+            {{ u.instance.name }}<br/>
+            <span class="attenuate">{{ u.readable_type|capfirst }} {{ u.date|naturaltime }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="apart">
+        <a href="{% url list_updates %}">{% trans "see all" %}</a>
+      </div>
+    </div>
+  </div>
+  
+  {% if user.is_anonymous %}
+  <div class="account">
+    <h2>{% trans "Everyone can help" %}. <a class="login-required" href="#">{% trans "Create your account" %}.</a></h2>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
 

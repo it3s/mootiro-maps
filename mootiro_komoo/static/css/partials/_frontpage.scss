@@ -1,0 +1,43 @@
+#main-content.frontpage {
+    width: 900px;
+
+    > div { padding: 20px }
+    > div:nth-child(even) { background: #EDEDED }
+
+    .video {
+        margin: 30px;
+        text-align: center;
+    }
+
+    > div.news {
+        > div {
+
+            -webkit-box-sizing: border-box;
+               -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+
+            display: inline-block;
+            vertical-align: top;
+            width: 45%;
+            margin: 1%;
+            // background: aqua;
+
+            h3{ text-indent: 5px }
+        }
+
+        li {
+            :hover { background: #dceff4 }
+            a {
+                display: block;
+                padding: 5px;
+                text-decoration: none;
+            }
+            img.apart { margin-right: 0.2em }
+        }
+        .last_updates li a {
+            color: inherit;
+        }
+    }
+
+    > div.account { text-align: center }
+}
