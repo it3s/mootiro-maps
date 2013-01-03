@@ -89,6 +89,7 @@ def deploy():
 def up():
     '''lift up remote application server.'''
     # TODO: use supervisor
+    # supervisorctl -c supervisor/supervisord.conf start staging
     print
     print "THIS DOESN'T WORK! FIXME!"
     print
