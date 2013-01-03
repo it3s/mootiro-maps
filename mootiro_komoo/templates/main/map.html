@@ -1,0 +1,15 @@
+{% extends "global.html" %}
+{% load komoo_map_tags %}
+{% load komoo_tags %}
+{% block title %}Mootiro Maps{% endblock %}
+
+{% block menu %} {% menu "map" %} {% endblock %}
+
+{% block content %}
+  {% komoo_map geojson 'type=main' 'width=100%' 'height=100%' 'zoom=13' %}
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block page_scripts %}
+{% endblock %}

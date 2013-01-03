@@ -42,10 +42,9 @@ urlpatterns = patterns('',
         name='javascript_catalog'),
 
     # root
-    url(r'^$', 'update.views.frontpage', name='frontpage'),
+    url(r'^$', 'main.views.root', name='root'),
 
     # unprefixed urls
-    url(r'', include('update.urls')),
     url(r'', include('hotsite.urls')),
     url(r'', include('main.urls')),
 
@@ -64,6 +63,7 @@ urlpatterns = patterns('',
     url(r'^about', 'hotsite.views.root'),
     url(r'^signatures/', include('signatures.urls')),
     url(r'^community/', include('community.urls')),
+    url(r'^update/', include('update.urls')),
     url(r'^importsheet/', include('importsheet.urls')),
 )
 

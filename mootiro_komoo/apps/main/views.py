@@ -48,9 +48,15 @@ ENTITY_MODEL = {
 ENTITY_MODEL_REV = {v: k for k, v in ENTITY_MODEL.items()}
 
 
+@render_to('main/map.html')
+def map(request):
+    return dict(geojson={})
+
+
 @render_to('main/root.html')
 def root(request):
-    return dict(geojson={})
+    '''This is the frontpage view, sites's root'''
+    return dict()
 
 
 def _fetch_geo_objects(Q, zoom):
