@@ -102,11 +102,6 @@ def run(port=8001):
               .format(port, django_settings[env_]))
 
 
-def collectstatic():
-    """Runs static files collector"""
-    local("python manage.py collectstatic {}".format(django_settings[env_]))
-
-
 def kill_manage_tasks():
     """kill all manage.py background tasks"""
     local('ps -eo pid,args | grep manage.py | grep -v grep | cut -c1-6 | '
