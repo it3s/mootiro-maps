@@ -16,7 +16,7 @@ def virtualenv():
 
 def remote(func):
     '''Decorator to run commands on a remote virtualenv.'''
-    if get(env, 'komoo_remote_on', False):
+    if getattr(env, 'komoo_remote_on', False):
         # already on a remote virtualenv
         wrapped_func = func
     else:

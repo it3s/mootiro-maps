@@ -7,9 +7,8 @@ from fabric.contrib.files import exists
 from fabric.contrib.console import confirm
 from fabric.utils import indent
 
-from .utils import remote, virtualenv
+from .base import remote, virtualenv
 
-from .old_fabfile import sync_all, run as runapp
 
 
 __all__ = ('deploy', 'tt')
@@ -17,18 +16,20 @@ __all__ = ('deploy', 'tt')
 
 DBFILE = 'backupdb.json'
 
-def simulate_deploy():
-    '''Simulate locally, the application deploy to staging or production.'''
-    print(cyan('Local deploy simulation\n'))
-    print('Getting remote database copy...')
-    db_get_dump()
 
-    pyfile = prompt('Python script to do migration (empty if no migration):')
-    if pyfile:
-        _migrate_database_dump(pyfile, DBFILE)
+# from .old_fabfile import sync_all, run as runapp
+# def simulate_deploy():
+#     '''Simulate locally, the application deploy to staging or production.'''
+#     print(cyan('Local deploy simulation\n'))
+#     print('Getting remote database copy...')
+#     db_get_dump()
 
-    sync_all(DBFILE)
-    runapp()
+#     pyfile = prompt('Python script to do migration (empty if no migration):')
+#     if pyfile:
+#         _migrate_database_dump(pyfile, DBFILE)
+
+#     sync_all(DBFILE)
+#     runapp()
 
 
 def tt():
@@ -86,29 +87,6 @@ def deploy():
     # [ ] git fetch --tags?
     # [x] git checkout tag
     # [x] collectstatic
-
-
-@remote
-def up():
-    '''lift up remote application server.'''
-    # TODO: use supervisor
-    # supervisorctl -c supervisor/supervisord.conf start staging
-    print
-    print "THIS DOESN'T WORK! FIXME!"
-    print
-    run('python manage.py celeryd -B --loglevel=info {} &'\
-            .format(env.komoo_django_settings))
-    run('python manage.py run_gunicorn --workers=2 --bind=127.0.0.1:{} {} &'\
-            .format(env.komoo_port, env.komoo_django_settings))
-
-
-@remote
-def down():
-    '''kill running processes for remote application.'''
-    # TODO: use supervisor
-    with settings(warn_only=True):
-        run('ps -eo pid,args | grep -E manage\.py.*{} | grep -v grep | '
-            'cut -c1-6 | xargs kill'.format(env.komoo_django_settings))
 
 
 @remote
