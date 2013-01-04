@@ -12,7 +12,7 @@ from .utils import remote, virtualenv
 from .old_fabfile import sync_all, run as runapp
 
 
-__all__ = ('deploy')
+__all__ = ('deploy', 'tt')
 
 
 DBFILE = 'backupdb.json'
@@ -23,12 +23,16 @@ def simulate_deploy():
     print('Getting remote database copy...')
     db_get_dump()
 
-    pyfile = prompt("Python script to do migration (empty if no migration):")
+    pyfile = prompt('Python script to do migration (empty if no migration):')
     if pyfile:
         _migrate_database_dump(pyfile, DBFILE)
 
     sync_all(DBFILE)
     runapp()
+
+
+def tt():
+    local('git stash')
 
 
 def deploy():
@@ -84,7 +88,6 @@ def deploy():
     # [x] collectstatic
 
 
-
 @remote
 def up():
     '''lift up remote application server.'''
@@ -113,6 +116,10 @@ def collectstatic():
     '''Runs static files collector'''
     run('python manage.py collectstatic {}'.format(env.komoo_django_settings))
 
+
+@remote
+def install_requirements():
+    run('pip install -r settings/requirements.txt')
 
 # ================= DATABASE FUNCTIONS ========================================
 
