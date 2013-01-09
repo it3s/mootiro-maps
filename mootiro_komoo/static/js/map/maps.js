@@ -426,6 +426,7 @@
         UserEditor.__super__.constructor.call(this, options);
         this.addComponent('map/maptypes::CleanMapType', 'mapType');
         this.addComponent('map/controls::DrawingManager', 'drawing');
+        this.addComponent('map/controls::SearchBox');
       }
 
       return UserEditor;
@@ -445,6 +446,7 @@
         this.addComponent('map/controls::GeometrySelector');
         this.addComponent('map/controls::SupporterBox');
         this.addComponent('map/controls::PerimeterSelector');
+        this.addComponent('map/controls::SearchBox');
       }
 
       return Editor;
@@ -487,6 +489,7 @@
         this.addComponent('map/controls::InfoWindow', 'infoWindow');
         this.addComponent('map/controls::SupporterBox');
         this.addComponent('map/controls::LicenseBox');
+        this.addComponent('map/controls::SearchBox');
       }
 
       StaticMap.prototype.loadGeoJson = function(geojson, panTo, attach) {

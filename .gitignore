@@ -20,3 +20,4 @@ celerybeat-schedule
 mootiro_komoo/.sass-cache/
 mootiro_komoo/.build/
 mootiro_komoo/importation
+node_modules/

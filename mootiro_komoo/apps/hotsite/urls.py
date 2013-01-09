@@ -5,5 +5,5 @@ from django.conf.urls.defaults import patterns, url
 
 
 urlpatterns = patterns('hotsite.views',
-    url(r'^about/?$', 'root', name='hotsite'),
+    url(r'^/?$', 'root', name='hotsite'),
 )
