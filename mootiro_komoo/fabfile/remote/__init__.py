@@ -6,5 +6,5 @@ env.user = 'login'  # ssh key protected
 from .base import staging, production
 from .service import *
 
-# from .deploy import *
+from .deploy import deploy
 # from .db import *

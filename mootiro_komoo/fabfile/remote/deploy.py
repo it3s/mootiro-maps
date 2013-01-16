@@ -8,7 +8,7 @@ from fabric.contrib.console import confirm
 from fabric.utils import indent
 
 from .base import remote, virtualenv
-
+from .service import down, up
 
 
 __all__ = ('deploy', 'tt')
@@ -36,50 +36,59 @@ def tt():
     local('git stash')
 
 
+@remote
 def deploy():
     '''Deploy application to staging or production.'''
 
-    # git tag version to deploy
-    ret = local('git describe --tags --long', capture=True)
-    tag, past_commits, commit = ret.split('-')
-
-    # db migration to be run
-    folder = 'scripts/migrations/{}'.format(tag)
-    if os.path.exists(folder):
-        pyfiles = [f for f in os.listdir() if f.endswith('.py')]
-        if len(pyfiles) > 1:
-            abort('More than 1 migration python script in {}'.format(folder))
-        migr = pyfiles[0]
-    else:
-        migr = None
+    with virtualenv():
+        from_commit = run('git rev-parse HEAD')
+    to_commit = local('git rev-parse HEAD', capture=True)
+    branch = local('git rev-parse --abbrev-ref HEAD', capture=True)
 
     print
-    print cyan('===== Deploy Information =====')
-    print 'target version: {}'.format(tag)
-    print 'commit: {}'.format(commit)
-    print 'migration script: {}'.format(migr or 'no')
-    if past_commits > 0:
-        print yellow('Attention! Last {} commits will not be deployed!' \
-                .format(past_commits))
+    print cyan('======= Deploy Information =======')
+    print 'server: {}'.format(server)
+    print 'from commit: {}'.format(from_commit)
+    s = 'branch: {} '.format(branch)
+    if server == 'production' and branch != 'stable':
+        s += yellow('(should be stable)')
+    if server == 'staging' and branch != 'staging':
+        s += yellow('(should be staging)')
+    print s
+    print 'to commit: {}'.format(to_commit)
+    print 'db migration script: {}'.format(script or 'no')
+    if server == 'production':
+        print 'git tag: {}'.format(git_tag or ('none '+ yellow('(should not be empty!)')))
     print
 
     if not confirm('Proceed deploy?', default=False):
-        return
+        abort()
 
-    local('git push --tags')
+    try:
+        if server == 'staging':
+            deploy_to_staging()
+        if server == 'production':
+            deploy_to_production()
+    except:
+        run('git reset --hard {}'.format(from_commit))
 
-    with virtualenv():
-        current_remote_commit = run('git rev-parse HEAD')
+
+def deploy_to_staging(script):
+    pass
+
+    # local('git push --tags')
+
     
-    down()
-    db_backup()
+    # down()
+    # db_backup()
 
-    with virtualenv():
-        run('git fetch && git checkout {} && '.format(tag))
+    # with virtualenv():
+    #     run('git fetch && git checkout {} && '.format(tag))
 
-    collectstatic()
-    up()
+    # collectstatic()
+    # up()
 
+    # [ ] avisos de quebra de fluxo de branches se houver
     # [x] descobre commit atual no remoto
     # [x] derruba servidor remoto
     # [ ] sobe a foto do spock (opcional)
