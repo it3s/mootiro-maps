@@ -6,7 +6,7 @@ from .remote import *
 
 
 # ===== Fabric configuration ==================================================
-output['debug'] = True  # see full command list
+output['debug'] = False  # see full command list
 
 
 def help():

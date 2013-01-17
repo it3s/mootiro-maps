@@ -4,7 +4,7 @@ from contextlib import contextmanager as _contextmanager
 
 
 @_contextmanager
-def virtualenv():
+def remote_virtualenv():
     if not 'komoo_activate' in env or not 'komoo_project_folder' in env:
         abort('Missing remote destination.\n'
               'Usage: fab (production|staging) <command>.')

@@ -7,95 +7,75 @@ from fabric.contrib.files import exists
 from fabric.contrib.console import confirm
 from fabric.utils import indent
 
-from .base import remote, virtualenv
+from .base import remote, remote_virtualenv
 from .service import down, up
+from .db import backup_db, migrate_database
 
 
-__all__ = ('deploy', 'tt')
+__all__ = ('deploy',)
 
 
-DBFILE = 'backupdb.json'
-
-
-# from .old_fabfile import sync_all, run as runapp
-# def simulate_deploy():
-#     '''Simulate locally, the application deploy to staging or production.'''
-#     print(cyan('Local deploy simulation\n'))
-#     print('Getting remote database copy...')
-#     db_get_dump()
-
-#     pyfile = prompt('Python script to do migration (empty if no migration):')
-#     if pyfile:
-#         _migrate_database_dump(pyfile, DBFILE)
-
-#     sync_all(DBFILE)
-#     runapp()
-
-
-def tt():
-    local('git stash')
-
-
-@remote
-def deploy():
+def deploy(migration_script=''):
     '''Deploy application to staging or production.'''
 
-    with virtualenv():
-        from_commit = run('git rev-parse HEAD')
-    to_commit = local('git rev-parse HEAD', capture=True)
-    branch = local('git rev-parse --abbrev-ref HEAD', capture=True)
+    # gathering deploy information
+    d = {}
+    # with quiet():
+    #     d['server'] = env.komoo_env
+    #     with virtualenv():
+    #         d['from_commit'] = run('git rev-parse HEAD')
+    #     d['branch'] = local('git rev-parse --abbrev-ref HEAD', capture=True)
+    #     d['to_commit'] = local('git rev-parse HEAD', capture=True)
+    #     d['tag'], past, cm = local('git describe --tags --long', capture=True).split('-')
+    
+    d['server'] = 'staging'
+    d['from_commit'] = '1228665'
+    d['branch'] = 'autodeploy'
+    d['to_commit'] = '5f26199'
+    d['migration_script'] = migration_script
 
     print
     print cyan('======= Deploy Information =======')
-    print 'server: {}'.format(server)
-    print 'from commit: {}'.format(from_commit)
-    s = 'branch: {} '.format(branch)
-    if server == 'production' and branch != 'stable':
-        s += yellow('(should be stable)')
-    if server == 'staging' and branch != 'staging':
-        s += yellow('(should be staging)')
+    print 'server: {}'.format(d['server'])
+    print 'from commit: {}'.format(d['from_commit'])
+    s = 'branch: {}'.format(d['branch'])
+    if d['server'] == 'production' and d['branch'] != 'stable':
+        s += yellow(' (should be stable)')
+    elif d['server'] == 'staging' and d['branch'] != 'staging':
+        s += yellow(' (should be staging)')
     print s
-    print 'to commit: {}'.format(to_commit)
-    print 'db migration script: {}'.format(script or 'no')
-    if server == 'production':
-        print 'git tag: {}'.format(git_tag or ('none '+ yellow('(should not be empty!)')))
+    print 'to commit: {}'.format(d['to_commit'])
+    print 'db migration script: {}'.format(d['migration_script'] or 'no')
+    if d['server'] == 'production':
+        if past > 0:  # tag is already old
+            d['tag'] = 'none ' + yellow('(should not be empty!)')
+        print 'git tag: {}'.format(d['tag'])
     print
 
     if not confirm('Proceed deploy?', default=False):
-        abort()
+        return
 
-    try:
-        if server == 'staging':
-            deploy_to_staging()
-        if server == 'production':
-            deploy_to_production()
-    except:
-        run('git reset --hard {}'.format(from_commit))
+    if server == 'staging':
+        deploy_to_staging(d)
+    if server == 'production':
+        deploy_to_production(d)
 
 
-def deploy_to_staging(script):
-    pass
-
-    # local('git push --tags')
-
+def deploy_to_staging(deploy_info):
     
-    # down()
-    # db_backup()
+    down()
+    install_requirements()
+    checkout(deploy_info['to_commit'])
+    if 'migration_script' in  deploy_info:
+        migrate_database(deploy_info['migration_script'])
+    collectstatic()
+    up()
 
-    # with virtualenv():
-    #     run('git fetch && git checkout {} && '.format(tag))
 
-    # collectstatic()
-    # up()
-
-    # [ ] avisos de quebra de fluxo de branches se houver
-    # [x] descobre commit atual no remoto
-    # [x] derruba servidor remoto
-    # [ ] sobe a foto do spock (opcional)
-    # [x] faz backup do banco
-    # [ ] git fetch --tags?
-    # [x] git checkout tag
-    # [x] collectstatic
+@remote
+def checkout(rev):
+    '''Puts remote repository on a specific revision (tag or commit).'''
+    run('git fetch && git checkout {}'.format(rev))
 
 
 @remote
@@ -107,56 +87,3 @@ def collectstatic():
 @remote
 def install_requirements():
     run('pip install -r settings/requirements.txt')
-
-# ================= DATABASE FUNCTIONS ========================================
-
-@remote
-def db_backup():
-    '''Dumps remote database and stores it in backups folder.'''
-    import datetime
-    filename = 'backupdb_{}_{}.json'.format(
-        env.komoo_name,
-        datetime.datetime.now().strftime('%Y_%m_%d')
-    )
-    remote_path = '{}/backups/{}'.format(env.komoo_project_folder, filename)
-    _dump_remote_database(remote_path)
-
-
-@remote
-def db_get_a_copy():
-    '''Dump remote database and transfers a copy of it locally.'''
-    local_path = DBFILE
-    remote_path = os.path.join(env.komoo_project_folder, DBFILE)
-    if os.path.exists(local_path):
-        if not confirm('Backup exists at {}. Do you want to overwrite it?'\
-                .format(local_path)):
-            return
-    _dump_remote_database(remote_path)
-    get(remote_path, local_path)
-
-    # clean up
-    run('rm {}'.format(remote_path))
-
-
-def _dump_remote_database(remote_path=DBFILE):
-    run('python manage.py dumpdata {} > {}'.format(env.komoo_django_settings,
-        remote_path))
-
-
-# TODO: merge with _migrate_remote_database_dump
-def _migrate_database_dump(script, json_file=DBFILE):
-    '''Runs migration script in backupdb.json'''
-    if not os.path.exists(json_file):
-        abort('DB dump file {} does not exists. Aborting.'.format(json_file))
-
-    local('python {script} {inp} {out}'.format(script=script,
-            inp=json_file, out='temp.json'))
-
-# TODO: merge with _migrate_database_dump
-def _migrate_remote_database_dump(script, json_file=DBFILE):
-    '''Runs migration script in backupdb.json'''
-    if not os.path.exists(json_file):
-        abort('DB dump file {} does not exists. Aborting.'.format(json_file))
-
-    run('python {script} {inp} {out}'.format(script=script,
-            inp=json_file, out='temp.json'))
