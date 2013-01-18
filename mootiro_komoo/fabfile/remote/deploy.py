@@ -20,25 +20,20 @@ def deploy(migration_script=''):
 
     # gathering deploy information
     d = {}
-    # with quiet():
-    #     d['server'] = env.komoo_env
-    #     with virtualenv():
-    #         d['from_commit'] = run('git rev-parse HEAD')
-    #     d['branch'] = local('git rev-parse --abbrev-ref HEAD', capture=True)
-    #     d['to_commit'] = local('git rev-parse HEAD', capture=True)
-    #     d['tag'], past, cm = local('git describe --tags --long', capture=True).split('-')
-    
-    d['server'] = 'staging'
-    d['from_commit'] = '1228665'
-    d['branch'] = 'autodeploy'
-    d['to_commit'] = '5f26199'
-    d['migration_script'] = migration_script
+    with quiet():
+        d['server'] = env.komoo_env
+        with remote_virtualenv():
+            d['from_commit'] = run('git rev-parse --short HEAD')
+        d['branch'] = local('git rev-parse --abbrev-ref HEAD', capture=True)
+        d['to_commit'] = local('git rev-parse --short HEAD', capture=True)
+        d['tag'], past, cm = local('git describe --tags --long', capture=True).split('-')
+        d['migration_script'] = migration_script
 
     print
     print cyan('======= Deploy Information =======')
-    print 'server: {}'.format(d['server'])
+    print 'target server: {}'.format(d['server'])
     print 'from commit: {}'.format(d['from_commit'])
-    s = 'branch: {}'.format(d['branch'])
+    s = 'current branch: {}'.format(d['branch'])
     if d['server'] == 'production' and d['branch'] != 'stable':
         s += yellow(' (should be stable)')
     elif d['server'] == 'staging' and d['branch'] != 'staging':
@@ -55,18 +50,30 @@ def deploy(migration_script=''):
     if not confirm('Proceed deploy?', default=False):
         return
 
-    if server == 'staging':
+    if d['server'] == 'staging':
         deploy_to_staging(d)
-    if server == 'production':
+    if d['server'] == 'production':
         deploy_to_production(d)
 
 
 def deploy_to_staging(deploy_info):
-    
+    '''Staging deploy strategy.'''
     down()
-    install_requirements()
     checkout(deploy_info['to_commit'])
-    if 'migration_script' in  deploy_info:
+    install_requirements()
+    if deploy_info['migration_script']:
+        migrate_database(deploy_info['migration_script'])
+    collectstatic()
+    up()
+
+
+def deploy_to_production(deploy_info):
+    '''Production deploy strategy.'''
+    down()
+    backup_db()
+    checkout(deploy_info['to_commit'])
+    install_requirements()
+    if deploy_info['migration_script']:
         migrate_database(deploy_info['migration_script'])
     collectstatic()
     up()

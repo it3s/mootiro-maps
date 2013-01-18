@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
-from fabric.api import env
+from fabric.api import *
+from fabric.contrib.files import exists
 from datetime import datetime
 
 from .base import remote

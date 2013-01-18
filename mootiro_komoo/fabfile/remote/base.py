@@ -20,9 +20,9 @@ def remote(func):
         # already on a remote virtualenv
         wrapped_func = func
     else:
-        def wrapped_func():
-            with virtualenv():
-                return func()
+        def wrapped_func(*a, **kw):
+            with remote_virtualenv():
+                return func(*a, **kw)
     return wrapped_func
 
 

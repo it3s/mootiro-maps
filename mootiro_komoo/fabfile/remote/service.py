@@ -10,7 +10,7 @@ def up():
     with remote_virtualenv():
         run('supervisorctl -c supervisor/supervisord.conf start {}' \
             .format(env.komoo_env))
-    print yellow('Success, but it may take up to 1 minute to go up.')
+    print yellow('Success, but it may take 1 minute to the server to go up.')
 
 
 def down():
