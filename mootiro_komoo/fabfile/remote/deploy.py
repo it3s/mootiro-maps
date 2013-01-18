@@ -42,6 +42,7 @@ def deploy(migration_script=''):
     print 'to commit: {}'.format(d['to_commit'])
     print 'db migration script: {}'.format(d['migration_script'] or 'no')
     if d['server'] == 'production':
+        past = int(past)
         if past > 0:  # tag is already old
             d['tag'] = 'none ' + yellow('(should not be empty!)')
         print 'git tag: {}'.format(d['tag'])
