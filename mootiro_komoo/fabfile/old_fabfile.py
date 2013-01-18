@@ -369,8 +369,3 @@ def build():
     compile_coffee()
     compile_sass()
     build_js()
-
-
-def help():
-    """Fabfile documentation"""
-    local('python -c "import fabfile; help(fabfile)"')

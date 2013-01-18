@@ -1,4 +1,6 @@
 # -*- coding:utf-8 -*-
+import os
+
 from fabric.api import *
 from fabric.contrib.files import exists
 from datetime import datetime

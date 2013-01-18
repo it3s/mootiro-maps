@@ -7,4 +7,4 @@ from .base import staging, production
 from .service import *
 
 from .deploy import *
-# from .db import *
+from .db import *
