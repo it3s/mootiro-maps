@@ -1,4 +1,3 @@
-#! /usr/bin/env python
 # -*- coding:utf-8 -*-
 import logging
 from fabric.api import local
@@ -58,25 +57,6 @@ def build_environment():
         "../docs/postgis-adapter-2.patch")
 
 
-def compile_coffee():
-    """Compiles coffeescript to javascript"""
-    local('coffee -c static/')
-
-
-def compile_sass():
-    """Compiles sass to css"""
-    local('sass --update ./')
-
-
-def work():
-    """Start watchers"""
-    # compilers
-    local('coffee -cw apps/ &')
-    local('sass --watch ./ &')
-
-    # test runners go here!
-
-
 def kill_background_tasks():
     for task in ['coffee', 'sass']:
         local(
@@ -113,27 +93,6 @@ def kill_manage_tasks():
           'xargs kill')
 
 
-def test(
-        apps=" ".join([
-            'community', 'need', 'organization', 'proposal', 'komoo_resource',
-            'investment', 'main', 'authentication', 'moderation']),
-        recreate_db=False):
-    """Run application tests"""
-    if recreate_db:
-        local('dropdb test_mootiro_komoo')
-    else:
-        logging.info("Reusing old last test DB...")
-    local('REUSE_DB=1 python manage.py test {} {} --verbosity=1'
-            .format(apps, django_settings[env_]))
-
-
-def test_js(
-        apps=" ".join(['komoo_map'])):
-    """Run javascript tests"""
-    # TODO fix this properly
-    local('phantomjs scripts/run-qunit.js static/tests/tests.html')
-
-
 def js_urls():
     """Creates a javascript file containing urls"""
     local('python manage.py js_urls {}'.format(django_settings[env_]))
@@ -167,11 +126,6 @@ def recreate_db():
     db_name = settings.DATABASES['default']['NAME']
     logging.info("Recreating database '{}'".format(db_name))
     local('dropdb {} && createdb -T template_postgis {}'.format(db_name, db_name))
-
-
-def shell():
-    """Launches Django interactive shell"""
-    local('python manage.py shell {}'.format(django_settings[env_]))
 
 
 def load_fixtures(type_='system'):
@@ -224,22 +178,6 @@ def initial_revisions():
     should run only once when installed/or when loaded a new app/model
     """
     local('python manage.py createinitialrevisions {}'
-          .format(django_settings[env_]))
-
-
-def makemessages(lang='pt_BR'):
-    """create translations messages file"""
-    local('python manage.py makemessages -l {} {}'.format(
-        lang, django_settings[env_]))
-    local('python manage.py makemessages -d djangojs -l {} {}'.format(
-        lang, django_settings[env_]))
-
-
-def compilemessages():
-    """
-    compile messages file
-    """
-    local('python manage.py compilemessages {}'
           .format(django_settings[env_]))
 
 
@@ -374,8 +312,3 @@ def build():
     compile_coffee()
     compile_sass()
     build_js()
-
-
-def help():
-    """Fabfile documentation"""
-    local('python -c "import fabfile; help(fabfile)"')
