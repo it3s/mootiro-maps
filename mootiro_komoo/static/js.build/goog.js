@@ -5,4 +5,4 @@
  * Released under the MIT license
  */
 
-define(["async","propertyParser"],function(e,t){function r(e){var r=n.exec(e),i={moduleName:r[1],version:r[2]||"1"};return i.settings=t.parseProperties(r[3]),i}var n=/^([^,]+)(?:,([^,]+))?(?:,(.+))?/;return{load:function(e,t,n,i){if(i.isBuild)n(null);else{var s=r(e),o=s.settings;o.callback=n,t(["async!"+(document.location.protocol==="https:"?"https":"http")+"://www.google.com/jsapi"],function(){google.load(s.moduleName,s.version,o)})}}}})
+define(["async","propertyParser"],function(e,t){function r(e){var r=n.exec(e),i={moduleName:r[1],version:r[2]||"1"};return i.settings=t.parseProperties(r[3]),i}var n=/^([^,]+)(?:,([^,]+))?(?:,(.+))?/;return{load:function(e,t,n,i){if(i.isBuild)n(null);else{var s=r(e),o=s.settings;o.callback=n,t(["async!"+(document.location.protocol==="https:"?"https":"http")+"://www.google.com/jsapi"],function(){google.load(s.moduleName,s.version,o)})}}}});
