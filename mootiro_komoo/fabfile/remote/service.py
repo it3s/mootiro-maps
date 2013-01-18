@@ -4,6 +4,9 @@ from .base import remote_virtualenv
 from fabric.colors import yellow
 
 
+__all__ = ('up', 'down', 'restart')
+
+
 def up():
     '''Start remote application server.'''
     # TODO: ensure supervisord is running!
