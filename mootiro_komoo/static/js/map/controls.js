@@ -85,7 +85,7 @@
           var position, type;
           type = location.type;
           position = location.position;
-          return _this.map.publish('goto', position, false);
+          return _this.map.publish('goto', position, true);
         });
       };
 

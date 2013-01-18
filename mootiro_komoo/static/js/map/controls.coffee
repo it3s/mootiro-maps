@@ -66,7 +66,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @view.on 'search', (location) =>
                 type = location.type
                 position = location.position
-                @map.publish 'goto', position, no
+                @map.publish 'goto', position, yes
 
 
     class SupporterBox extends Box

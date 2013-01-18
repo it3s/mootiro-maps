@@ -17,13 +17,11 @@
     <meta property="og:description" content="MootiroMaps é uma ferramenta open source que promove a colaboração entre atores engajados no desenvolvimento de um território ou uma comunidade."/>
     <meta property="og:image" content="{{STATIC_URL}}img/logo.png"/>
 
-    {{ form.media.css }}
     <link rel="shortcut icon" HREF="{{STATIC_URL}}/img/favicon.png" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/fashion.css" />
-    {% block css %}{% endblock %}
     <script type="text/javascript" src="{% url javascript_catalog %}"></script>
     <script type="text/javascript">
       var isAuthenticated = {{ user.is_authenticated|lower }};
@@ -53,7 +51,10 @@
     <script type="text/javascript" src="{{STATIC_URL}}js/ajaxforms.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}js/no-ie.js"></script>
 
+    {{ form.media.css }}
     {{ form.media.js }}
+
+    {% block css %}{% endblock %}
 
     <!-- Facebook stuff -->
     <div id="fb-root"></div>
