@@ -1,21 +1,25 @@
 # -*- coding:utf-8 -*-
 from fabric.api import *
-from .base import remote_virtualenv
+from fabric.contrib.files import exists
 from fabric.colors import yellow
+
+from .base import remote_virtualenv
 
 
 __all__ = ('up', 'down', 'restart')
 
 
-def setup_supervisor():
-    with quiet():
-        # make sure supervisord is running
-        run('supervisord -c supervisor/{}.conf'.format(env.komoo_env))
+def _setup_supervisor():
+    # make sure supervisord is running
+    sock_file = '{}/supervisor/supervisor.sock'.format(env.komoo_project_folder)
+    if not exists(sock_file):
+        with remote_virtualenv():
+            run('supervisord -c supervisor/{}.conf'.format(env.komoo_env))
 
 
 def up():
     '''Start remote application server.'''
-    setup_supervisor()
+    _setup_supervisor()
     with remote_virtualenv():
         run('supervisorctl -c supervisor/{env}.conf start {env}' \
             .format(env=env.komoo_env))
@@ -24,7 +28,7 @@ def up():
 
 def down():
     '''Stop remote application server.'''
-    setup_supervisor()
+    _setup_supervisor()
     with remote_virtualenv():
         run('supervisorctl -c supervisor/{env}.conf stop {env}' \
             .format(env=env.komoo_env))
@@ -32,7 +36,7 @@ def down():
 
 def restart():
     '''Restart remote application server.'''
-    setup_supervisor()
+    _setup_supervisor()
     with remote_virtualenv():
         run('supervisorctl -c supervisor/{env}.conf restart {env}' \
             .format(env=env.komoo_env))
