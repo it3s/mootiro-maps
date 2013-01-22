@@ -24,10 +24,14 @@
   </div>
 </div>
 <script>
-  $("#error-form").ajaxform({
-    onSuccess: function (data) {
-      $("#unexpected-error-box").dialog("close");
-      flash(gettext("Your error report was successfully sent. Thank you!"));
-    }
-  });
+  if (!$.ajaxform) {
+    if (window.console) console.log('Could not start ajaxform')
+  } else {
+    $("#error-form").ajaxform({
+      onSuccess: function (data) {
+        $("#unexpected-error-box").dialog("close");
+        flash(gettext("Your error report was successfully sent. Thank you!"));
+      }
+    });
+  }
 </script>

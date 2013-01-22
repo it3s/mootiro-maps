@@ -1,0 +1,14 @@
+<form class'search-form' action="#">
+  <select name="location-type" class="location-type">
+    <option value="address">Endereço</option>
+    <option value="latLng">Coordenadas</option>
+  </select>
+  <div class="address-container input-container">
+    <input type="text" name="address" value="" placeholder="Endereço" class="address" />
+  </div>
+  <div class="latLng-container input-container" style="display: none;">
+    <input type="text" name="lat" value="" placeholder="Latitude"  class="lat" />
+    <input type="text" name="lng" value="" placeholder="Longitude" class="lng" />
+  </div>
+  <input type="submit" class="btn search" value="Ir" />
+  </form>

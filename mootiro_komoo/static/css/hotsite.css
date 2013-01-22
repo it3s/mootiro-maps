@@ -16,8 +16,9 @@ ul.disc li {
 }
 #hotsite-navigation {
     display: inline-block;
+    font-size: 120%;
     width: 400px;
-    margin: 0 0 7px 60px;
+    margin: 60px 0 7px 60px;
 }
 #hotsite-navigation > li {
     float: left;

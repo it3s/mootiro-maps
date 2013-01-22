@@ -15,6 +15,9 @@ map/geometries.js
 map/features.js
 map/component.js
 map/utils.js
+text.js
+text!templates/map/_searchbox.html
+map/views.js
 map/controls.js
 map/maptypes.js
 map/providers.js

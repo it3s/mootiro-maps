@@ -297,6 +297,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
 
             @addComponent 'map/maptypes::CleanMapType', 'mapType'
             @addComponent 'map/controls::DrawingManager', 'drawing'
+            @addComponent 'map/controls::SearchBox'
 
 
     class Editor extends Map
@@ -311,6 +312,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             @addComponent 'map/controls::GeometrySelector'
             @addComponent 'map/controls::SupporterBox'
             @addComponent 'map/controls::PerimeterSelector'
+            @addComponent 'map/controls::SearchBox'
 
 
     class Preview extends Map
@@ -337,6 +339,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             @addComponent 'map/controls::InfoWindow', 'infoWindow'
             @addComponent 'map/controls::SupporterBox'
             @addComponent 'map/controls::LicenseBox'
+            @addComponent 'map/controls::SearchBox'
 
         loadGeoJson: (geojson, panTo = false, attach = true) ->
             features = super geojson, panTo, attach
