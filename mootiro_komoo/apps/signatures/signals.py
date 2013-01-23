@@ -22,7 +22,8 @@ def notification_callback(sender, instance, *a, **kw):
     for signature in Signature.objects.filter(content_type=content_type,
         object_id=instance.id):
         digest = DigestSignature.objects.filter(user=signature.user)
-        if digest.count() and digest[0].digest_type != 'N':
+        if digest.count() and digest[0].digest_type != 'N' \
+           and signature.user != instance.last_editor:
             # create entry on digest
             Digest.objects.get_or_create(
                 user=signature.user,
