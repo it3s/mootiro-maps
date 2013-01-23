@@ -13,6 +13,20 @@
 
 {% block title %} {{ organization.name }} {% endblock %}
 
+{% block facebook_meta %}
+  <meta property="og:title" content="{{organization.name}} - MootiroMaps" />
+  <meta property="og:url" content="{{SITE_URL}}{{organization.view_url}}"/>
+  {% if organization.logo %}
+    <meta property="og:image" content="{{SITE_URL}}{{organization.logo_url}}"/>
+  {% else %}
+    {% if organization.logo_category %}
+      <meta property="og:image" content="{{SITE_URL}}{{organization.logo_url}}"/>
+    {% else %}
+      <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo.png"/>
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
 {% block menu %} {% menu "organization" %} {% endblock %}
 
 {% block content %}

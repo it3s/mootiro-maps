@@ -6,6 +6,12 @@
 {% load markitup_tags %}
 {% load comment_tags %}
 
+{% block facebook_meta %}
+  <meta property="og:title" content="{{user_profile.name}} - MootiroMaps" />
+  <meta property="og:url" content="{{SITE_URL}}{{user_profile.view_url}}"/>
+  <meta property="og:image" content="{{SITE_URL}}{{ user_profile.files_set.0.file.url }}"/>
+{% endblock %}
+
 {% block content %}
 
 <div class="profile-container">

@@ -13,11 +13,18 @@
     <title>{% block title %}Mootiro Maps{% endblock %}</title>
 
     <!-- Facebook sharing tags -->
-    {#<meta property="og:title" content="title" />#}
+    <meta property="og:site_name" content="MootiroMaps" />
+    <meta property="fb:app_id" content="{{FACEBOOK_APP_ID}}" />
     <meta property="og:description" content="MootiroMaps é uma ferramenta open source que promove a colaboração entre atores engajados no desenvolvimento de um território ou uma comunidade."/>
-    <meta property="og:image" content="{{STATIC_URL}}img/logo.png"/>
+    <meta property="og:type" content="website" />
+    
+    {% block facebook_meta %}
+      <meta property="og:title" content="MootiroMaps" />
+      <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo.png"/>
+      <meta property="og:url" content="{{SITE_URL}}"/>
+    {% endblock %}
 
-    <link rel="shortcut icon" HREF="{{STATIC_URL}}/img/favicon.png" />
+    <link rel="shortcut icon" HREF="{{STATIC_URL}}img/favicon.png" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />

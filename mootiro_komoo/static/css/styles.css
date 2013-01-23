@@ -2509,6 +2509,7 @@ ul.two-cols li {
     display: inline-block;
     float: right;
     vertical-align: middle;
+    width: 90px;
 }
 
 #map-drawing-box {

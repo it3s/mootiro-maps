@@ -11,6 +11,12 @@
 
 {% block title %}Proposal: {{proposal.name}} ― Komoo{% endblock %}
 
+{% block facebook_meta %}
+  <meta property="og:title" content="{{proposal.name}} - MootiroMaps" />
+  <meta property="og:url" content="{{SITE_URL}}{{proposal.view_url}}"/>
+  <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo.png"/>
+{% endblock %}
+
 {% block menu %} {% menu "need" %} {% endblock %}
 
 {% block content %}

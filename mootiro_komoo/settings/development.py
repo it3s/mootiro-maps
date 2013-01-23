@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from common import *
 
+
+SITE_URL = 'http://localhost:8001'
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
-
 LANGUAGE_CODE = 'en-us'
 
 SECRET_KEY = 'superawesomeninjapandasflyingintheskywithdoublerainbows'

@@ -10,6 +10,12 @@
 
 {% block title %}{{ community.name }}{% endblock %}
 
+{% block facebook_meta %}
+  <meta property="og:title" content="{{community.name}} - MootiroMaps" />
+  <meta property="og:url" content="{{SITE_URL}}{{community.view_url}}"/>
+  <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo.png"/>
+{% endblock %}
+
 {% block menu %} {% menu "community" %} {% endblock %}
 
 {% block content %}

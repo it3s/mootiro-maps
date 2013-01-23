@@ -1,20 +1,10 @@
 # -*- coding: utf-8 -*-
 from common import *
 
+
+SITE_URL = 'http://staging.maps.mootiro.org'
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'mootiro_komoo',
-#         'USER': 'komoo_password_goes_here',
-#         'PASSWORD': '',
-#         'HOST': '',
-#         'PORT': '',
-#     }
-# }
-
 LANGUAGE_CODE = 'pt-br'
 
 LOGGING = {
