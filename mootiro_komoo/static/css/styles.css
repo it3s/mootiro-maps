@@ -2591,31 +2591,26 @@ ul.two-cols li {
     clear: both;
     width: 900px;
     margin-left: 60px;
-    padding-top: 1px;
-    font-size: 90%;
+    padding: 1px 0 20px;
 }
 
 #footer > div {
+    text-align: center;
     display: inline-block;
-    width: 260px;
     vertical-align: top;
+    margin: 0 40px;
 }
 
 #footer h3 {
-   font-size: 95%;
-}
-
-#footer .supporters h3 {
-    margin-left: 24px;
-}
-
-#footer .cea-logo {
-    margin: 24px; /* 4*x, x=6 */
+    font-size: 12px;
+    margin-bottom: 1em;
+    font-weight: normal;
+    color: #706f6f;
 }
 
 #footer .license {
-    width: 410px;
-    margin: 10px 0 0 260px;
+    width: 400px;
+    text-align: left;
 }
 
 /* form hint boxes */

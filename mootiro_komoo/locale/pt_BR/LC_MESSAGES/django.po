@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-24 13:21-0200\n"
+"POT-Creation-Date: 2013-01-24 18:38-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -962,7 +962,7 @@ msgstr "Ajuda"
 msgid "Ops!"
 msgstr "Ops!"
 
-#: templates/global.html:84
+#: templates/global.html:86
 msgid "See Results"
 msgstr "Ver Resultados"
 
@@ -1386,32 +1386,23 @@ msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
 #: templates/main/footer.html:5
-msgid "More about"
-msgstr "Saiba mais"
+msgid "An initiative"
+msgstr "Uma iniciativa"
 
-#: templates/main/footer.html:7
-msgid "About MootiroMaps"
-msgstr "Sobre o MootiroMaps"
-
-#: templates/main/footer.html:8
-msgid "About Us"
-msgstr "Quem somos"
-
-#: templates/main/footer.html:9
-msgid "Get Involved"
-msgstr "Se envolva"
-
-#: templates/main/footer.html:13
+#: templates/main/footer.html:10
 msgid "Supporters"
 msgstr "Apoio institucional"
 
-#: templates/main/footer.html:17
+#: templates/main/footer.html:15
+msgid "License"
+msgstr "Licença"
+
+#: templates/main/footer.html:16
 msgid ""
-"<strong>Licença:</strong> Este texto é disponibilizado nos termos da licença "
-"<a href=\"http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR"
-"\">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não "
-"Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, "
-"consulte as Condições de Uso."
+" Este texto é disponibilizado nos termos da licença <a href=\"http://"
+"creativecommons.org/licenses/by-sa/3.0/deed.pt_BR\">Creative Commons - "
+"Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar "
+"sujeito a condições adicionais. "
 msgstr ""
 
 #: templates/main/root.html:14
@@ -1470,27 +1461,31 @@ msgstr ""
 "Mapeie pontos relacionados. Você pode criar um guia para seu bairro ou fazer "
 "o diagnóstico de uma região."
 
-#: templates/main/root.html:53
+#: templates/main/root.html:52
+msgid "More about"
+msgstr "Saiba mais"
+
+#: templates/main/root.html:57
 msgid "Projects that uses MootiroMaps"
 msgstr "Projetos que usam o MootiroMaps"
 
-#: templates/main/root.html:58 templates/update/list.html:155
+#: templates/main/root.html:80 templates/update/list.html:155
 msgid "News"
 msgstr "Novidades"
 
-#: templates/main/root.html:61
+#: templates/main/root.html:83
 msgid "IT3S blog"
 msgstr "Blog do IT3S"
 
-#: templates/main/root.html:73
+#: templates/main/root.html:95
 msgid "visit the blog"
 msgstr "visite o blog"
 
-#: templates/main/root.html:78
+#: templates/main/root.html:100
 msgid "Last updates"
 msgstr "Últimas atualizações"
 
-#: templates/main/root.html:91 templates/need/view.html:96
+#: templates/main/root.html:113 templates/need/view.html:96
 #: templates/organization/show.html:90
 msgid "see all"
 msgstr "ver todos"
@@ -2027,6 +2022,15 @@ msgstr "para a necessidade"
 #: templates/update/list.html:124
 msgid "by"
 msgstr "por"
+
+#~ msgid "About MootiroMaps"
+#~ msgstr "Sobre o MootiroMaps"
+
+#~ msgid "About Us"
+#~ msgstr "Quem somos"
+
+#~ msgid "Get Involved"
+#~ msgstr "Se envolva"
 
 #~ msgid "Everyone can help"
 #~ msgstr "Todos podem ajudar"
