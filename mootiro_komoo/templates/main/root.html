@@ -10,18 +10,69 @@
 {% block content %}
 <div id="main-content" class="frontpage">
   <div>
-    <h1>
-      MootiroMaps é uma ferramenta de mapeamento colaborativo para o terceiro
-      setor.
+    <h1 class="initial-heading center">
+      <img src="{{STATIC_URL}}img/mootiro-maps.png"/> {% trans "colaborative mapping of your region." %}
     </h1>
+    
     <div class="video">
-      <iframe src="http://player.vimeo.com/video/56699177?title=0&amp;byline=0&amp;portrait=0&amp;color=28b8ce" width="600" height="337" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+      <iframe src="http://player.vimeo.com/video/56746348?title=0&amp;byline=0&amp;portrait=0&amp;color=28b8ce" width="600" height="337" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
     </div>
-    <h2>{% trans "How it works?" %}</h2>
   </div>
   
+  {% if user.is_anonymous %}
   <div>
+    <h2 class="center">{% trans "Anyone can help!" %} <a class="login-required" href="#">{% trans "Create your account." %}</a></h2>
+  </div>
+  {% else %}
+  <div>
+    <h2 class="center">{% trans "Want to help" %}, {{ user.name|truncatewords:1 }}? <a class="login-required" href="{% url map %}#map-panel-add">{% trans "Add to the map!" %}</a></h2>
+  </div>
+  {% endif %}
+  
+  <div class="how-it-works">  
+    <h2>{% trans "How it works?" %}</h2>
+    
+    <div class="topic">
+      <h3>{% trans "Explore" %}</h3>
+      <img src="{{STATIC_URL}}img/frontpage/explore.png"/>
+      <p>{% trans "Find resources available to the community of your neighborhood." %}</p>
+    </div>
+    <div class="topic">
+      <h3>{% trans "Add it" %}</h3>
+      <img src="{{STATIC_URL}}img/frontpage/add.png"/>
+      <p>{% trans "Map needs, organizations and resources in your community and help to improve it." %}</p>
+    </div>
+    <div class="topic">
+      <h3>{% trans "Create projects" %}</h3>
+      <img src="{{STATIC_URL}}img/frontpage/projects.png"/>
+      <p>{% trans "Map related points. You can make a guide to your neighborhood or diagnose a region." %}</p>
+    </div>
+    
+    <div class="more">
+      <a href="{% url hotsite %}" class="button">{% trans "More about" %}</a>
+    </div>
+  </div>
+  
+  <div class="projects">
     <h2>{% trans "Projects that uses MootiroMaps" %}</h2>
+    
+    <!-- Place somewhere in the <body> of your page -->
+    <div class="flexslider">
+      <ul class="slides">
+        <li>
+          <div><img src="{{STATIC_URL}}img/frontpage/projeto1.png" /></div>
+        </li>
+        <li>
+          <div><img src="{{STATIC_URL}}img/frontpage/projeto1.png" /></div>
+        </li>
+        <li>
+          <div><img src="{{STATIC_URL}}img/frontpage/projeto1.png" /></div>
+        </li>
+        <li>
+          <div><img src="{{STATIC_URL}}img/frontpage/projeto1.png" /></div>
+        </li>
+      </ul>
+    </div>
     
   </div>
   
@@ -63,12 +114,16 @@
       </div>
     </div>
   </div>
-  
-  {% if user.is_anonymous %}
-  <div class="account">
-    <h2>{% trans "Everyone can help" %}. <a class="login-required" href="#">{% trans "Create your account" %}.</a></h2>
-  </div>
-  {% endif %}
 </div>
 {% endblock %}
 
+{% block page_scripts %}
+<script type="text/javascript">
+  // Can also be used with $(document).ready()
+  $(window).load(function() {
+    $('.flexslider').flexslider({
+      animation: "slide"
+    }).flexslider("pause");
+  });
+</script>
+{% endblock %}

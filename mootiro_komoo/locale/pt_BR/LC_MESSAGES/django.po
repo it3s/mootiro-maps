@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-03 17:22-0200\n"
+"POT-Creation-Date: 2013-01-24 13:21-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -962,7 +962,7 @@ msgstr "Ajuda"
 msgid "Ops!"
 msgstr "Ops!"
 
-#: templates/global.html:83
+#: templates/global.html:84
 msgid "See Results"
 msgstr "Ver Resultados"
 
@@ -1414,42 +1414,86 @@ msgid ""
 "consulte as Condições de Uso."
 msgstr ""
 
-#: templates/main/root.html:20
+#: templates/main/root.html:14
+msgid "colaborative mapping of your region."
+msgstr "mapeamento colaborativo de sua região."
+
+#: templates/main/root.html:24
+msgid "Anyone can help!"
+msgstr "Todos podem ajudar!"
+
+#: templates/main/root.html:24
+msgid "Create your account."
+msgstr "Crie sua conta."
+
+#: templates/main/root.html:28
+msgid "Want to help"
+msgstr "Quer ajudar"
+
+#: templates/main/root.html:28
+msgid "Add to the map!"
+msgstr "Adicione ao mapa!"
+
+#: templates/main/root.html:33
 msgid "How it works?"
 msgstr "Como funciona?"
 
-#: templates/main/root.html:24
+#: templates/main/root.html:36
+msgid "Explore"
+msgstr "Explore"
+
+#: templates/main/root.html:38
+msgid "Find resources available to the community of your neighborhood."
+msgstr "Encontre recursos disponíveis para a comunidade de seu bairro."
+
+#: templates/main/root.html:41
+msgid "Add it"
+msgstr "Adicione"
+
+#: templates/main/root.html:43
+msgid ""
+"Map needs, organizations and resources in your community and help to improve "
+"it."
+msgstr ""
+"Mapeie necessidades, organizações e recursos do seu bairro e ajude a melhorá-"
+"lo."
+
+#: templates/main/root.html:46
+msgid "Create projects"
+msgstr "Crie um projeto"
+
+#: templates/main/root.html:48
+msgid ""
+"Map related points. You can make a guide to your neighborhood or diagnose a "
+"region."
+msgstr ""
+"Mapeie pontos relacionados. Você pode criar um guia para seu bairro ou fazer "
+"o diagnóstico de uma região."
+
+#: templates/main/root.html:53
 msgid "Projects that uses MootiroMaps"
 msgstr "Projetos que usam o MootiroMaps"
 
-#: templates/main/root.html:29 templates/update/list.html:155
+#: templates/main/root.html:58 templates/update/list.html:155
 msgid "News"
 msgstr "Novidades"
 
-#: templates/main/root.html:32
+#: templates/main/root.html:61
 msgid "IT3S blog"
 msgstr "Blog do IT3S"
 
-#: templates/main/root.html:44
+#: templates/main/root.html:73
 msgid "visit the blog"
 msgstr "visite o blog"
 
-#: templates/main/root.html:49
+#: templates/main/root.html:78
 msgid "Last updates"
 msgstr "Últimas atualizações"
 
-#: templates/main/root.html:62 templates/need/view.html:96
+#: templates/main/root.html:91 templates/need/view.html:96
 #: templates/organization/show.html:90
 msgid "see all"
 msgstr "ver todos"
-
-#: templates/main/root.html:68
-msgid "Everyone can help"
-msgstr "Todos podem ajudar"
-
-#: templates/main/root.html:68
-msgid "Create your account"
-msgstr "Crie sua conta"
 
 #: templates/main/supporters.html:3
 msgid "Support"
@@ -1983,6 +2027,12 @@ msgstr "para a necessidade"
 #: templates/update/list.html:124
 msgid "by"
 msgstr "por"
+
+#~ msgid "Everyone can help"
+#~ msgstr "Todos podem ajudar"
+
+#~ msgid "Create your account"
+#~ msgstr "Crie sua conta"
 
 #~ msgid "Insert all"
 #~ msgstr "Inserir tudo"

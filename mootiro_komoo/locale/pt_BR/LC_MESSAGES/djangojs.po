@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-03 17:22-0200\n"
+"POT-Creation-Date: 2013-01-24 13:21-0200\n"
 "PO-Revision-Date: 2012-10-18 17:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -144,6 +144,10 @@ msgstr "Fechar"
 msgid "Add shape"
 msgstr "Adicionar área"
 
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:13
+msgid "Add line"
+msgstr "Adicionar linha"
+
 #: static/js.build/map/controls.js:1 static/js/map/controls.js:14
 msgid "Add point"
 msgstr "Adicionar ponto"
@@ -278,11 +282,7 @@ msgstr "Recurso"
 msgid "at"
 msgstr "em"
 
-#: static/js/map/controls.js:13
-msgid "Add line"
-msgstr "Adicionar linha"
-
-#: static/js/map/controls.js:762
+#: static/js/map/controls.js:797
 #, perl-format
 msgid "%s Community"
 msgid_plural "%s Communities"
