@@ -55,15 +55,23 @@
 
     > div.projects {
         .flexslider {
-            position: relative;
             width: 800px;
             height: 150px;
-            left: 30px;
-            background: none;
-            border: none;
-            box-shadow: none;
-            margin: 10px 0 30px;
+            position: relative;
+            left: 50%;
+            margin-top: 20px;
+            margin-left: -400px;
+
+            .comment {
+                background: aqua;
+                width: 450px;
+                height: 100px;
+                position: relative;
+                top: -100px;
+                left: 250px;
+            }
         }
+
     }
 
     > div.news {
@@ -96,4 +104,26 @@
     }
 
     > div.account { text-align: center }
+}
+
+/* Fix */
+.flexslider {
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 30px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 0 35px;
+
+    > ul.slides li {
+        position: relative;
+    }
+
+    .slides img {
+        width: auto;
+        height: auto;
+    }
 }
