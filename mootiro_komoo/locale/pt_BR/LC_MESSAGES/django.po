@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-14 09:52-0200\n"
+"POT-Creation-Date: 2013-01-31 13:04-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Full Name"
 msgstr "Nome Completo"
 
-#: apps/authentication/forms.py:31 templates/authentication/profile.html:33
+#: apps/authentication/forms.py:31 templates/authentication/profile.html:39
 msgid "Public Contact"
 msgstr "Contato Público"
 
@@ -72,27 +72,27 @@ msgstr ""
 msgid "Passwords did not match."
 msgstr "As senha não coincidem."
 
-#: apps/authentication/views.py:173
+#: apps/authentication/views.py:174
 msgid "You must provide a valid password"
 msgstr "Você deve fornecer uma senha válida"
 
-#: apps/authentication/views.py:178
+#: apps/authentication/views.py:179
 msgid "Passwords did not match"
 msgstr "As senha não coincidem"
 
-#: apps/authentication/views.py:193
+#: apps/authentication/views.py:194
 msgid "Wrong password!"
 msgstr "Senha incorreta!"
 
-#: apps/authentication/views.py:197
+#: apps/authentication/views.py:198
 msgid "Failed to save data"
 msgstr "Houve uma falha ao tentar salvar os dados"
 
-#: apps/authentication/views.py:257
+#: apps/authentication/views.py:258
 msgid "Welcome to MootiroMaps"
 msgstr "Bem-vindo ao MootiroMaps"
 
-#: apps/authentication/views.py:259
+#: apps/authentication/views.py:260
 msgid ""
 "\n"
 "Hello, {name}.\n"
@@ -120,7 +120,7 @@ msgstr ""
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/community/forms.py:27 templates/community/view.html:31
+#: apps/community/forms.py:27 templates/community/view.html:37
 #: templates/importsheet/row_templates/comunidades.html:40
 #: templates/komoo_map/info_window.html:39
 msgid "Population"
@@ -196,7 +196,7 @@ msgid "Over period"
 msgstr "Por um período"
 
 #: apps/investment/forms.py:38 apps/main/templatetags/komoo_tags.py:326
-#: templates/investment/view.html:42
+#: templates/investment/view.html:48
 msgid "Date"
 msgstr "Data"
 
@@ -208,7 +208,7 @@ msgstr "Data final"
 msgid "Currency"
 msgstr "Moeda"
 
-#: apps/investment/forms.py:41 templates/investment/view.html:45
+#: apps/investment/forms.py:41 templates/investment/view.html:51
 msgid "Value"
 msgstr "Valor"
 
@@ -217,7 +217,7 @@ msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
 #: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:223
-#: apps/organization/models.py:186
+#: apps/organization/models.py:192
 msgid "Organization"
 msgstr "Organização"
 
@@ -289,12 +289,12 @@ msgstr "Logotipo"
 #: apps/organization/forms.py:66
 #: templates/importsheet/row_templates/organizacoes.html:51
 #: templates/importsheet/row_templates/recursos.html:55
-#: templates/organization/show.html:207 templates/project/view.html:258
-#: templates/resource/show.html:93
+#: templates/organization/show.html:221 templates/project/view.html:268
+#: templates/resource/show.html:99
 msgid "Contact"
 msgstr "Contato"
 
-#: apps/komoo_project/forms.py:55 templates/project/view.html:247
+#: apps/komoo_project/forms.py:55 templates/project/view.html:257
 msgid "Contributors"
 msgstr "Contribuidores"
 
@@ -433,7 +433,7 @@ msgstr "Necessidade"
 msgid "Proposal"
 msgstr "Proposta"
 
-#: apps/main/templatetags/komoo_tags.py:227
+#: apps/main/templatetags/komoo_tags.py:227 templates/investment/edit.html:7
 msgid "Investment"
 msgstr "Investimento"
 
@@ -442,7 +442,7 @@ msgid "Need categories"
 msgstr "Áreas"
 
 #: apps/main/templatetags/komoo_tags.py:329 apps/need/forms.py:28
-#: templates/need/list.html:58 templates/need/view.html:39
+#: templates/need/list.html:58 templates/need/view.html:45
 msgid "Target audiences"
 msgstr "Públicos alvo"
 
@@ -609,12 +609,12 @@ msgstr "Nome da Unidade"
 msgid "Info"
 msgstr "Informações"
 
-#: apps/organization/models.py:187
+#: apps/organization/models.py:193
 msgid "Add Organization"
 msgstr "Adicionar organização"
 
 #: apps/proposal/forms.py:29 templates/investment/list.html:29
-#: templates/proposal/view.html:33
+#: templates/proposal/view.html:39
 msgid "Cost"
 msgstr "Custo"
 
@@ -923,13 +923,13 @@ msgstr "Veja alguns links importantes"
 #: templates/main/templatetags/geo_objects_listing.html:9
 #: templates/main/templatetags/menu.html:9
 #: templates/organization/branch_communities_list.html:6
-#: templates/organization/branch_form.html:20 templates/project/view.html:75
+#: templates/organization/branch_form.html:20 templates/project/view.html:85
 msgid "Communities"
 msgstr "Comunidades"
 
 #: templates/404.html:30 templates/main/templatetags/geo_objects_add.html:35
 #: templates/main/templatetags/geo_objects_listing.html:29
-#: templates/main/templatetags/menu.html:21 templates/project/view.html:93
+#: templates/main/templatetags/menu.html:21 templates/project/view.html:103
 #: templates/resource/list.html:7
 msgid "Resources"
 msgstr "Recursos"
@@ -937,19 +937,19 @@ msgstr "Recursos"
 #: templates/404.html:31 templates/main/templatetags/geo_objects_add.html:11
 #: templates/main/templatetags/geo_objects_listing.html:15
 #: templates/main/templatetags/menu.html:13 templates/need/list.html:8
-#: templates/project/view.html:84
+#: templates/project/view.html:94
 msgid "Needs"
 msgstr "Necessidades"
 
 #: templates/404.html:32 templates/investment/list.html:8
-#: templates/main/templatetags/menu.html:25 templates/project/view.html:102
+#: templates/main/templatetags/menu.html:25 templates/project/view.html:112
 msgid "Investments"
 msgstr "Investimentos"
 
 #: templates/404.html:33 templates/main/templatetags/geo_objects_add.html:23
 #: templates/main/templatetags/geo_objects_listing.html:35
 #: templates/main/templatetags/menu.html:17 templates/organization/list.html:8
-#: templates/project/view.html:66
+#: templates/project/view.html:76
 msgid "Organizations"
 msgstr "Organizações"
 
@@ -962,7 +962,7 @@ msgstr "Ajuda"
 msgid "Ops!"
 msgstr "Ops!"
 
-#: templates/global.html:83
+#: templates/global.html:92
 msgid "See Results"
 msgstr "Ver Resultados"
 
@@ -1003,19 +1003,19 @@ msgstr "Entre com Facebook"
 msgid "New User"
 msgstr "Novo Usuário"
 
-#: templates/authentication/profile.html:37
+#: templates/authentication/profile.html:43
 msgid "Information Not Provided!"
 msgstr "Informação não fornecida!"
 
-#: templates/authentication/profile.html:44
+#: templates/authentication/profile.html:50
 msgid "Loading..."
 msgstr "Carregando..."
 
-#: templates/authentication/profile.html:46
+#: templates/authentication/profile.html:52
 msgid "Map position not available"
 msgstr "Posição no mapa não disponível"
 
-#: templates/authentication/profile.html:91
+#: templates/authentication/profile.html:97
 msgid "last contributions"
 msgstr "Últimas contribuições"
 
@@ -1205,13 +1205,13 @@ msgstr[1] "%(counter)s Comunidades"
 msgid "population:"
 msgstr "população:"
 
-#: templates/community/view.html:43 templates/investment/view.html:56
-#: templates/need/view.html:59 templates/organization/show.html:200
-#: templates/project/view.html:235 templates/resource/show.html:62
+#: templates/community/view.html:49 templates/investment/view.html:62
+#: templates/need/view.html:65 templates/organization/show.html:214
+#: templates/project/view.html:245 templates/resource/show.html:68
 msgid "see on map"
 msgstr "ver no mapa"
 
-#: templates/community/view.html:48
+#: templates/community/view.html:54
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
@@ -1271,12 +1271,12 @@ msgstr "Geometria"
 
 #: templates/importsheet/row_templates/organizacoes.html:54
 #: templates/komoo_map/info_window.html:43 templates/organization/list.html:52
-#: templates/organization/show.html:214
+#: templates/organization/show.html:228
 msgid "Operation Field"
 msgstr "Área de atuação"
 
 #: templates/importsheet/row_templates/organizacoes.html:61
-#: templates/organization/show.html:225
+#: templates/organization/show.html:239
 msgid "Audience"
 msgstr "Público"
 
@@ -1305,19 +1305,19 @@ msgstr "Nenhum investimento recebido."
 msgid "No investments realized."
 msgstr "Nenhum investimento realizado."
 
-#: templates/investment/list.html:32 templates/investment/view.html:32
+#: templates/investment/list.html:32 templates/investment/view.html:38
 msgid "Investor"
 msgstr "Investidor"
 
-#: templates/investment/list.html:41 templates/investment/view.html:30
+#: templates/investment/list.html:41 templates/investment/view.html:36
 msgid "Grantee"
 msgstr "Destino da doação"
 
-#: templates/investment/view.html:40
+#: templates/investment/view.html:46
 msgid "Period"
 msgstr "Período"
 
-#: templates/investment/view.html:64
+#: templates/investment/view.html:70
 msgid "Similar investments"
 msgstr "Investimentos similares"
 
@@ -1386,32 +1386,23 @@ msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
 #: templates/main/footer.html:5
-msgid "More about"
-msgstr "Saiba mais"
+msgid "An initiative"
+msgstr "Uma iniciativa"
 
-#: templates/main/footer.html:7
-msgid "About MootiroMaps"
-msgstr "Sobre o MootiroMaps"
-
-#: templates/main/footer.html:8
-msgid "About Us"
-msgstr "Quem somos"
-
-#: templates/main/footer.html:9
-msgid "Get Involved"
-msgstr "Se envolva"
-
-#: templates/main/footer.html:13
+#: templates/main/footer.html:10
 msgid "Supporters"
 msgstr "Apoio institucional"
 
+#: templates/main/footer.html:15
+msgid "License"
+msgstr "Licença"
+
 #: templates/main/footer.html:17
 msgid ""
-"<strong>Licença:</strong> Este texto é disponibilizado nos termos da licença "
-"<a href=\"http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR"
-"\">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não "
-"Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, "
-"consulte as Condições de Uso."
+" Este texto é disponibilizado nos termos da licença <a href=\"http://"
+"creativecommons.org/licenses/by-sa/3.0/deed.pt_BR\">Creative Commons - "
+"Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar "
+"sujeito a condições adicionais. "
 msgstr ""
 
 #: templates/main/supporters.html:3
@@ -1505,12 +1496,12 @@ msgid "next"
 msgstr "próxima"
 
 #: templates/main/templatetags/pagination.html:30
-#: templates/organization/show.html:125
+#: templates/organization/show.html:139
 msgid "first"
 msgstr "primeira"
 
 #: templates/main/templatetags/pagination.html:100
-#: templates/organization/show.html:132
+#: templates/organization/show.html:146
 msgid "last"
 msgstr "última"
 
@@ -1605,40 +1596,40 @@ msgid "New need"
 msgstr "Nova necessidade"
 
 #: templates/need/list.html:39 templates/resource/list.html:40
-#: templates/resource/show.html:79
+#: templates/resource/show.html:85
 msgid "at"
 msgstr "em"
 
-#: templates/need/view.html:40
+#: templates/need/view.html:46
 #: templates/proposal/proposal_summary_templatetag.html:5
 msgid "created by"
 msgstr "criado por"
 
-#: templates/need/view.html:40
+#: templates/need/view.html:46
 msgid "on"
 msgstr "em"
 
-#: templates/need/view.html:62
+#: templates/need/view.html:68
 msgid "Proposals"
 msgstr "Propostas"
 
-#: templates/need/view.html:68 templates/proposal/view.html:56
+#: templates/need/view.html:74 templates/proposal/view.html:62
 msgid "New proposal"
 msgstr "Nova proposta"
 
-#: templates/need/view.html:76
+#: templates/need/view.html:82
 msgid "Related needs"
 msgstr "Necessidades relacionadas"
 
-#: templates/need/view.html:93
+#: templates/need/view.html:99
 msgid "No related needs."
 msgstr "Nenhuma necessidade relacionada."
 
-#: templates/need/view.html:96 templates/organization/show.html:90
+#: templates/need/view.html:102 templates/organization/show.html:104
 msgid "see all"
 msgstr "ver todos"
 
-#: templates/need/view.html:97
+#: templates/need/view.html:103
 msgid "see less"
 msgstr "ver menos"
 
@@ -1684,46 +1675,46 @@ msgstr "Concluir"
 msgid "Objects related to"
 msgstr "Objetos relacionados a"
 
-#: templates/organization/show.html:42 templates/project/view.html:52
+#: templates/organization/show.html:56 templates/project/view.html:62
 msgid "See all objects on map"
 msgstr "Ver todos os objetos no mapa"
 
-#: templates/organization/show.html:47
+#: templates/organization/show.html:61
 #, python-format
 msgid "%(num)s point on map"
 msgid_plural "%(num)s points on map"
 msgstr[0] "%(num)s ponto no mapa"
 msgstr[1] "%(num)s pontos no mapa"
 
-#: templates/organization/show.html:53
+#: templates/organization/show.html:67
 #, python-format
 msgid "Supported %(num)s organization"
 msgid_plural "Supported %(num)s organizations"
 msgstr[0] "Apoiou %(num)s organização"
 msgstr[1] "Apoiou %(num)s organizações"
 
-#: templates/organization/show.html:59
+#: templates/organization/show.html:73
 #, python-format
 msgid "On %(num)s community"
 msgid_plural "On %(num)s communities"
 msgstr[0] "Presente em %(num)s comunidade"
 msgstr[1] "Presente em %(num)s comunidades"
 
-#: templates/organization/show.html:65
+#: templates/organization/show.html:79
 #, python-format
 msgid "Supported %(num)s proposal"
 msgid_plural "Supported %(num)s proposals"
 msgstr[0] "Apoiou %(num)s proposta"
 msgstr[1] "Apoiou %(num)s propostas"
 
-#: templates/organization/show.html:71
+#: templates/organization/show.html:85
 #, python-format
 msgid "Supported %(num)s resource"
 msgid_plural "Supported %(num)s resources"
 msgstr[0] "Apoiou %(num)s recurso"
 msgstr[1] "Apoiou %(num)s recursos"
 
-#: templates/organization/show.html:77
+#: templates/organization/show.html:91
 #, python-format
 msgid ""
 "Realized %(num)s investment\n"
@@ -1732,7 +1723,7 @@ msgid_plural "Realized %(num)s investments"
 msgstr[0] "Realizou %(num)s investimento"
 msgstr[1] "Realizou %(num)s investimentos"
 
-#: templates/organization/show.html:80
+#: templates/organization/show.html:94
 #, python-format
 msgid ""
 "Received %(num)s investment\n"
@@ -1741,36 +1732,36 @@ msgid_plural "Received %(num)s investments"
 msgstr[0] "Recebeu %(num)s investimento"
 msgstr[1] "Recebeu %(num)s investimentos"
 
-#: templates/organization/show.html:146
+#: templates/organization/show.html:160
 msgid "No organizations supported."
 msgstr "Nenhuma organização apoiada."
 
-#: templates/organization/show.html:156
+#: templates/organization/show.html:170
 msgid "No communities bound to this organization"
 msgstr "Nenhuma comunidade vínculada a esta organização"
 
-#: templates/organization/show.html:166
+#: templates/organization/show.html:180
 msgid "No proposals supported."
 msgstr "Nenhuma proposta apoiada."
 
-#: templates/organization/show.html:176
+#: templates/organization/show.html:190
 msgid "No resources supported."
 msgstr "Nenhum recurso apoiado."
 
-#: templates/organization/show.html:183 templates/organization/show.html:203
-#: templates/resource/show.html:65
+#: templates/organization/show.html:197 templates/organization/show.html:217
+#: templates/resource/show.html:71
 msgid "New Investment"
 msgstr "Novo Investimento"
 
-#: templates/organization/show.html:211 templates/resource/show.html:98
+#: templates/organization/show.html:225 templates/resource/show.html:104
 msgid "No contact info provided"
 msgstr "Informações de contato não fornecidas"
 
-#: templates/organization/show.html:221
+#: templates/organization/show.html:235
 msgid "No categories provided"
 msgstr "Categorias não fornecidas"
 
-#: templates/organization/show.html:230
+#: templates/organization/show.html:244
 msgid "No target audience provided"
 msgstr "Público alvo não fornecido"
 
@@ -1801,7 +1792,7 @@ msgid_plural "%(counter)s Projects"
 msgstr[0] "%(counter)s Projeto"
 msgstr[1] "%(counter)s Projetos"
 
-#: templates/project/list.html:52 templates/project/view.html:241
+#: templates/project/list.html:52 templates/project/view.html:251
 msgid "Administrator"
 msgstr "Administrador"
 
@@ -1813,39 +1804,39 @@ msgstr "Adicionar a um projeto"
 msgid "Add this object to a project"
 msgstr "Adicionar este objeto a um projeto"
 
-#: templates/project/view.html:60
+#: templates/project/view.html:70
 msgid "Points on Map"
 msgstr "Ponto no Mapa"
 
-#: templates/project/view.html:111
+#: templates/project/view.html:121
 msgid "Collaborators"
 msgstr "Colaboradores"
 
-#: templates/project/view.html:132
+#: templates/project/view.html:142
 msgid "This project has no related Objects yet"
 msgstr "Este projeto não tem nenhum Objeto relacionado"
 
-#: templates/project/view.html:145
+#: templates/project/view.html:155
 msgid "This project has no related Organizations yet"
 msgstr "Este projeto não tem nenhuma Organização relacionada"
 
-#: templates/project/view.html:158
+#: templates/project/view.html:168
 msgid "This project has no related Communities yet"
 msgstr "Este projeto não tem nenhuma Communidade relacionada"
 
-#: templates/project/view.html:171
+#: templates/project/view.html:181
 msgid "This project has no related Needs yet"
 msgstr "Este projeto não tem nenhuma Necessidade relacionada"
 
-#: templates/project/view.html:184
+#: templates/project/view.html:194
 msgid "This project has no related Resources yet"
 msgstr "Este projeto não tem nenhum Recurso relacionada"
 
-#: templates/project/view.html:197 templates/project/view.html.py:210
+#: templates/project/view.html:207 templates/project/view.html.py:220
 msgid "This project has no related Investments yet"
 msgstr "Este Projeto não tem nenhum Investimento relacionado"
 
-#: templates/project/view.html:265
+#: templates/project/view.html:275
 msgid "Related projects"
 msgstr "Projetos relacionados"
 
@@ -1853,11 +1844,11 @@ msgstr "Projetos relacionados"
 msgid "Form Proposal"
 msgstr "Formulário de Propostas"
 
-#: templates/proposal/view.html:48
+#: templates/proposal/view.html:54
 msgid "Proposals for"
 msgstr "Propostas para"
 
-#: templates/proposal/view.html:64
+#: templates/proposal/view.html:70
 msgid "Add investment"
 msgstr "Adicionar Investimento"
 
@@ -1873,11 +1864,11 @@ msgstr "Novo Recurso"
 msgid "Kind:"
 msgstr "Tipo:"
 
-#: templates/resource/show.html:38
+#: templates/resource/show.html:44
 msgid "type:"
 msgstr "tipo:"
 
-#: templates/resource/show.html:72
+#: templates/resource/show.html:78
 msgid "Related resources"
 msgstr "Recursos relacionados"
 
@@ -1954,6 +1945,18 @@ msgstr "por"
 #: templates/update/frontpage.html:155
 msgid "News"
 msgstr "Notícias"
+
+#~ msgid "More about"
+#~ msgstr "Saiba mais"
+
+#~ msgid "About MootiroMaps"
+#~ msgstr "Sobre o MootiroMaps"
+
+#~ msgid "About Us"
+#~ msgstr "Quem somos"
+
+#~ msgid "Get Involved"
+#~ msgstr "Se envolva"
 
 #~ msgid "Insert all"
 #~ msgstr "Inserir tudo"

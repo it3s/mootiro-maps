@@ -1,18 +1,19 @@
 {% load i18n %}
 <hr />
-<div></div>
-<div>
-  <h3>{% trans 'More about' %}</h3>
-  <ul>
-    <li><a href="{% url hotsite %}">{% trans 'About MootiroMaps' %}</a></li>
-    <li>{% trans 'About Us' %}</li>
-    <li>{% trans 'Get Involved' %}</li>
-  </ul>
+
+<div class="it3s">
+  <h3 class="attenuate">{% trans "An initiative" %}</h3>
+  <a href="http://it3s.org"><img src="{{STATIC_URL}}img/it3s.png"></a>
 </div>
+
 <div class="supporters">
-  <h3>{% trans 'Supporters' %}</h3>
+  <h3 class="attenuate">{% trans "Supporters" %}</h3>
   <a href="http://www.institutocea.org.br/" target="_blank"><img class="cea-logo" src="{{ STATIC_URL }}img/supporters/cea-footer.png" alt="Instituto C&amp;A" /></a>
 </div>
+
 <div class="license">
-  {% blocktrans %}<strong>Licença:</strong> Este texto é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.{% endblocktrans %}
+  <h3 class="attenuate">{% trans "License" %}</h3>
+  <p>
+    {% blocktrans %} Este texto é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. {% endblocktrans %}
+  </p>
 </div>
