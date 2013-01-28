@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 import json
 import logging
+from urllib import unquote
 
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
@@ -301,25 +302,27 @@ def login(request):
     POST: Receives email and password and authenticate the user.
     '''
     if request.method == 'GET':
-        next = request.GET.get('next', '')
+        next = request.GET.get('next', request.get_full_path())
         return dict(next=next)
+    else:
+        next = request.POST.get('next', request.get_full_path())
 
     email = request.POST.get('email', '').lower()
     password = request.POST['password']
     if not email or not password:
-        return dict(login_error='wrong_credentials')
+        return dict(login_error='wrong_credentials', next=next)
 
     password = User.calc_hash(password)
     q = User.objects.filter(email=email, password=password)
     if not q.exists():
-        return dict(login_error='wrong_credentials')
+        return dict(login_error='wrong_credentials', next=next)
 
     user = q.get()
     if not user.is_active:
-        return dict(login_error='user_not_active')
+        return dict(login_error='user_not_active', next=next)
 
     auth_login(request, user)
-    next = request.POST.get('next', '') or reverse('root')
+    next = unquote(next)
     return redirect(next)
 
 

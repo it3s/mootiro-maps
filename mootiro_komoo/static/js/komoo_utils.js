@@ -334,11 +334,16 @@ $(function () {
             ev.stopPropagation();
             ev.stopImmediatePropagation();
             ev.preventDefault();
-            var url = $(this).attr("href");
-            if (url.charAt(0) == "#") {
-                url = document.location.pathname + url;
+            var next = $(this).attr("href");
+            if (next.charAt(0) == "#") {
+                next = document.location.pathname + next;
             }
-            $("#login_box #login-button").attr("href", "/user/login?next=" + encodeURIComponent(url));
+            next = encodeURIComponent(next);
+            $("#login_box ul#external_providers li a").attr("href", function (index, href) {
+                href = href + "?next=" + next;
+                return href;
+            });
+            $("#login_box #form_login input[name=next]").val(next);
             $("#login_box").dialog({
                 width: 600,
                 modal: true,

@@ -193,7 +193,7 @@
 
             <div class="org-info-panel investments-list hidden">
                 <div class="apart">
-                    <a class="button" href="{{ organization.new_investment_url }}">
+                    <a class="button login-required" href="{{ organization.new_investment_url }}">
                         {% trans "New Investment" %}
                     </a>
                 </div>
@@ -214,7 +214,7 @@
         <a href="{{ organization.related_items_url }}" class="see-on-map">{% trans 'see on map' %}</a>
 
         <div class="centralizer apart">
-          <a class="button" href="{{ organization.new_investment_url }}">{% trans "New Investment" %}</a>
+          <a class="button login-required" href="{{ organization.new_investment_url }}">{% trans "New Investment" %}</a>
         </div>
 
         <div class="block">

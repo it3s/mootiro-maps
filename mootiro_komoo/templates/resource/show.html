@@ -68,7 +68,7 @@
         <a class="see-on-map" href="#">{% trans 'see on map' %}</a>
 
         <div class="centralizer apart">
-          <a class="button" href="{{ resource.new_investment_url }}">{% trans "New Investment" %}</a>
+          <a class="button login-required" href="{{ resource.new_investment_url }}">{% trans "New Investment" %}</a>
         </div>
 
         {% with similar_resources=resource.tags.similar_objects|slice:"5" %}

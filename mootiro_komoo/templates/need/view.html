@@ -70,7 +70,7 @@
         {% proposal_summary proposal %}
       {% endfor %}
       <div class="centralizer">
-        <a class="button" href="{% url new_proposal %}?need={{ need.id }}">
+        <a class="button login-required" href="{% url new_proposal %}?need={{ need.id }}">
         {% trans "New proposal" %}
         </a>
       </div>
