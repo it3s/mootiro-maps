@@ -20,6 +20,7 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
                 @createMarker()
 
         createMarker: ->
+            return if @geometry.getGeometryType() in ['Point', 'MultiPoint']
             marker = new geometries.Point
                 visible : true
                 clickable : true

@@ -31,7 +31,10 @@
       }
 
       Feature.prototype.createMarker = function() {
-        var marker;
+        var marker, _ref;
+        if ((_ref = this.geometry.getGeometryType()) === 'Point' || _ref === 'MultiPoint') {
+          return;
+        }
         marker = new geometries.Point({
           visible: true,
           clickable: true
