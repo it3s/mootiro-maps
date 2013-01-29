@@ -20,6 +20,7 @@ from komoo_resource.models import Resource
 from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
+from main.utils import create_geojson
 
 
 LOGO_CHOICES = (
@@ -167,6 +168,11 @@ class Organization(models.Model):
 
     def perm_id(self):
         return 'o%d' % self.id
+
+    @property
+    def geojson(self):
+        geojson = create_geojson([b for b in self.organizationbranch_set.all()], convert=True)
+        return geojson
 
 
 class OrganizationBranch(GeoRefModel, models.Model):

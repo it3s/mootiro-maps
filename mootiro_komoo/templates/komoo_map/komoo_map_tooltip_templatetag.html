@@ -22,14 +22,14 @@
         return true;
       };
 
-      $(".preview-on-map[data-geojson='{}'], .preview-on-map-ajax[data-model-name='organization']").addClass("disabled").removeAttr("href");
+      $(".preview-on-map[data-geojson='{}']").addClass("disabled").removeAttr("href");
       $(".preview-on-map[data-geojson!='{}']").click(function (e) {
         var $this = $(this);
         var geojson = $this.attr("data-geojson");
         openMapBox(geojson, e);
         return false;
       });
-      $(".preview-on-map-ajax[data-model-name!='organization']").click(function (e) {
+      $(".preview-on-map-ajax").click(function (e) {
         var isNotEmpty = true;
         var $this = $(this);
         var appName = $this.attr("data-app-name");

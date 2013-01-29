@@ -76,7 +76,7 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
     if geojson:
         geojson_dict = json.loads(geojson);
         for feature in geojson_dict.get('features', []):
-            if 'properties' in feature:
+            if 'properties' in feature and editable:
                 feature['properties']['alwaysVisible'] = True
         geojson = json.dumps(geojson_dict)
 

@@ -301,7 +301,7 @@
       };
 
       Map.prototype.loadGeoJson = function(geojson, panTo, attach) {
-        var features, _ref, _ref2,
+        var features, _ref,
           _this = this;
         if (panTo == null) panTo = false;
         if (attach == null) attach = true;
@@ -321,8 +321,8 @@
             return features.push(feature);
           });
         }
-        if (panTo && ((_ref2 = features.getAt(0)) != null ? _ref2.getBounds() : void 0)) {
-          this.googleMap.fitBounds(features.getAt(0).getBounds());
+        if (panTo && (features.getBounds() != null)) {
+          this.googleMap.fitBounds(features.getBounds());
         }
         this.publish('features_loaded', features);
         return features;

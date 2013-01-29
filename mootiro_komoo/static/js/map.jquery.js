@@ -45,7 +45,7 @@
             }, $.fn.komooMap.defaults, options);
             if (opts.width != null) $this.width(opts.width);
             if (opts.height != null) $this.height(opts.height);
-            if ((opts != null ? opts.type : void 0) === 'preview' && !(opts != null ? (_ref = opts.geojson) != null ? (_ref2 = _ref.features) != null ? (_ref3 = _ref2[0]) != null ? _ref3.geometry : void 0 : void 0 : void 0 : void 0) && !(opts != null ? opts.force : void 0)) {
+            if ((opts != null ? opts.type : void 0) === 'preview' && (((_ref = opts.geojson) != null ? _ref.features.length : void 0) === 0 || (((_ref2 = opts.geojson) != null ? _ref2.features.length : void 0) === 1 && !((_ref3 = opts.geojson.features[0]) != null ? _ref3.geometry : void 0))) && !(opts != null ? opts.force : void 0)) {
               $this.html($('<div>').addClass('placeholder').text('Informação geométrica não disponível'));
               return;
             }

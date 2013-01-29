@@ -32,7 +32,7 @@ define ['jquery', 'map/maps'], ($, maps) ->
                     opts = $.extend {element: $this.get(0)}, $.fn.komooMap.defaults, options
                     if opts.width? then $this.width opts.width
                     if opts.height? then $this.height opts.height
-                    if opts?.type is 'preview' and not opts?.geojson?.features?[0]?.geometry and not opts?.force
+                    if opts?.type is 'preview' and (opts.geojson?.features.length is 0 or (opts.geojson?.features.length is 1 and not opts.geojson.features[0]?.geometry)) and not opts?.force
                         $this.html $('<div>').addClass('placeholder').text('Informação geométrica não disponível')
                         return
                     map = maps.makeMap opts

@@ -54,7 +54,7 @@ define ['googlemaps'], (googleMaps) ->
                 point = geometry.getLatLngFromArray geometry.getCenter()
                 @bounds = new googleMaps.LatLngBounds point, point
                 @forEach (feature) =>
-                    @bounds?.union feature.getBounds()
+                    @bounds?.union feature.getBounds() if feature.getGeometryType() isnt 'Empty'
             @bounds
 
         setMap: (@map, force) ->

@@ -88,7 +88,9 @@
           this.bounds = new googleMaps.LatLngBounds(point, point);
           this.forEach(function(feature) {
             var _ref;
-            return (_ref = _this.bounds) != null ? _ref.union(feature.getBounds()) : void 0;
+            if (feature.getGeometryType() !== 'Empty') {
+              return (_ref = _this.bounds) != null ? _ref.union(feature.getBounds()) : void 0;
+            }
           });
         }
         return this.bounds;

@@ -220,8 +220,8 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
 
                 #if attach then feature.setMap @
 
-            if panTo and features.getAt(0)?.getBounds()
-                @googleMap.fitBounds features.getAt(0).getBounds()
+            if panTo and features.getBounds()?
+                @googleMap.fitBounds features.getBounds()
 
             @publish 'features_loaded', features
             features

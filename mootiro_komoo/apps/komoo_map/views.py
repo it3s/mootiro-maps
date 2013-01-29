@@ -19,7 +19,8 @@ def feature_types(request):
 def geojson(request, app_label, model_name, obj_id):
     model = get_model(app_label, model_name)
     obj = get_object_or_404(model, id=obj_id) if model else None
-    return HttpResponse(create_geojson([obj]),
+    geojson = getattr(obj, 'geojson', create_geojson([obj]))
+    return HttpResponse(geojson,
         mimetype="application/x-javascript")
 
 
