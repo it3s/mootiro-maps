@@ -935,6 +935,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                     @streetViewPanel.show()
                 else
                     @streetViewPanel.hide()
+                @map.refresh()
 
 
     window.komoo.controls =

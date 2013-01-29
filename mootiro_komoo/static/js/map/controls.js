@@ -1359,10 +1359,11 @@
         }
         return googleMaps.event.addListener(this.streetView, "visible_changed", function() {
           if (_this.streetView.getVisible()) {
-            return _this.streetViewPanel.show();
+            _this.streetViewPanel.show();
           } else {
-            return _this.streetViewPanel.hide();
+            _this.streetViewPanel.hide();
           }
+          return _this.map.refresh();
         });
       };
 
