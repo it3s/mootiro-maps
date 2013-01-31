@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-31 13:27-0200\n"
+"POT-Creation-Date: 2013-01-31 13:32-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -1768,6 +1768,10 @@ msgstr "Categorias não fornecidas"
 #: templates/organization/show.html:244
 msgid "No target audience provided"
 msgstr "Público alvo não fornecido"
+
+#: templates/organization/show.html:249
+msgid "Website"
+msgstr "Website"
 
 #: templates/project/edit.html:15
 msgid "Edit Project"
