@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-31 13:04-0200\n"
+"POT-Creation-Date: 2013-01-31 13:27-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -1386,24 +1386,28 @@ msgid "No results found."
 msgstr "Nenhum resultado encontrado."
 
 #: templates/main/footer.html:5
-msgid "An initiative"
-msgstr "Uma iniciativa"
+msgid "Execution"
+msgstr "Realização"
 
 #: templates/main/footer.html:10
-msgid "Supporters"
-msgstr "Apoio institucional"
-
-#: templates/main/footer.html:15
 msgid "License"
 msgstr "Licença"
 
-#: templates/main/footer.html:17
+#: templates/main/footer.html:12
 msgid ""
 " Este texto é disponibilizado nos termos da licença <a href=\"http://"
 "creativecommons.org/licenses/by-sa/3.0/deed.pt_BR\">Creative Commons - "
 "Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar "
 "sujeito a condições adicionais. "
 msgstr ""
+
+#: templates/main/footer.html:17
+msgid "Supporters"
+msgstr "Apoio institucional"
+
+#: templates/main/footer.html:22
+msgid "Partners"
+msgstr "Parceiros"
 
 #: templates/main/supporters.html:3
 msgid "Support"
@@ -1945,6 +1949,9 @@ msgstr "por"
 #: templates/update/frontpage.html:155
 msgid "News"
 msgstr "Notícias"
+
+#~ msgid "An initiative"
+#~ msgstr "Uma iniciativa"
 
 #~ msgid "More about"
 #~ msgstr "Saiba mais"

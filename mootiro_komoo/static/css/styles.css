@@ -2596,7 +2596,6 @@ ul.two-cols li {
 }
 
 #footer > div {
-    text-align: center;
     display: inline-block;
     vertical-align: top;
     margin: 0 40px;
@@ -2609,9 +2608,12 @@ ul.two-cols li {
     color: #706f6f;
 }
 
+#footer .partners { text-align: left }
+#footer .partners img { margin: 5px }
+
 #footer .license {
-    width: 400px;
-    text-align: left;
+    width: 200px;
+    text-align: justify;
 }
 
 /* form hint boxes */
