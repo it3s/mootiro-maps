@@ -25,6 +25,8 @@ class User(GeoRefModel):
     password = models.CharField(max_length=256, null=False)
     contact = models.TextField(null=True)
 
+    creation_date = models.DateField(null=True, blank=True, auto_now_add=True)
+
     is_admin = models.BooleanField(default=False)
 
     # user management info
