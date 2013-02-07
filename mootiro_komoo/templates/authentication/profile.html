@@ -31,29 +31,30 @@
 
         <!-- User photo -->
         <div class="profile-lp-photo">
-            <img src="{{ user_profile.files_set.0.file.url }}" alt="user photo" />
+            {% if user_profile.files_set %}
+                <img src="{{ user_profile.files_set.0.file.url }}" alt="user photo" />
+            {% else %}
+                <img src="{{STATIC_URL}}img/user-placeholder.png" alt="user photo" />
+            {% endif %}
         </div>
 
         <!-- user contact info -->
+        {% if user_profile.contact %}
         <div class="profile-lp-contact">
             <div class="profile-lp-contact-header">{% trans 'Public Contact' %}</div>
-            {% if user_profile.contact %}
-                {{ user_profile.contact|render_markup|safe }}
-            {% else %}
-                {% trans 'Information Not Provided!' %}
-            {% endif %}
+            {{ user_profile.contact|render_markup|safe }}
         </div>
+        {% endif %}
+        
+        {% if geojson %}
         <div class="profile-lp-map-preview">
           <div id="map-canvas-main-preview" class="map-canvas">
             <div class="placeholder">
-              {% if geojson %}
                 {% trans 'Loading...' %}
-              {% else %}
-                {% trans 'Map position not available' %}
-              {% endif %}
             </div>
           </div>
         </div>
+        {% endif %}
 
         <!-- map info section -->
         <div class="profile-lp-map-actions">

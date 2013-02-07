@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-31 13:32-0200\n"
+"POT-Creation-Date: 2013-02-07 12:43-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Full Name"
 msgstr "Nome Completo"
 
-#: apps/authentication/forms.py:31 templates/authentication/profile.html:39
+#: apps/authentication/forms.py:31 templates/authentication/profile.html:44
 msgid "Public Contact"
 msgstr "Contato Público"
 
@@ -1003,19 +1003,11 @@ msgstr "Entre com Facebook"
 msgid "New User"
 msgstr "Novo Usuário"
 
-#: templates/authentication/profile.html:43
-msgid "Information Not Provided!"
-msgstr "Informação não fornecida!"
-
-#: templates/authentication/profile.html:50
+#: templates/authentication/profile.html:53
 msgid "Loading..."
 msgstr "Carregando..."
 
-#: templates/authentication/profile.html:52
-msgid "Map position not available"
-msgstr "Posição no mapa não disponível"
-
-#: templates/authentication/profile.html:97
+#: templates/authentication/profile.html:98
 msgid "last contributions"
 msgstr "Últimas contribuições"
 
@@ -1953,6 +1945,12 @@ msgstr "por"
 #: templates/update/frontpage.html:155
 msgid "News"
 msgstr "Notícias"
+
+#~ msgid "No information provided."
+#~ msgstr "Nenhuma informação fornecida."
+
+#~ msgid "Map position not available"
+#~ msgstr "Posição no mapa não disponível"
 
 #~ msgid "An initiative"
 #~ msgstr "Uma iniciativa"
