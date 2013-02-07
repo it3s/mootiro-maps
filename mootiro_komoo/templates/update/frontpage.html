@@ -102,6 +102,11 @@
                       discussed
                     {% endblocktrans %}
                   {% endif %}
+                  
+                  {% if u.type == "I" %}
+                    50 organizações, 30 recursos e 2 comunidades
+                    {% trans "imported into project" %}
+                  {% endif %}
 
                   {% if u.object_type == 'proposal' %}
                   {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
@@ -120,7 +125,7 @@
                   <strong>{{ u.readable_type|capfirst }}</strong> {{ u.date|naturaltime }}
 
                   {### Users aggregated list ###}
-                  {% if u.type == "A" or u.type == "E" %}
+                  {% if u.type == "A" or u.type == "E" or u.type == "I" %}
                     {% trans "by" %}
                     {% users_list u.users %}
                   {% endif %}

@@ -144,6 +144,8 @@ class Update(models.Model):
             return 'komoo_resource'
         elif self.object_type == 'organizationbranch':
             return 'organization'
+        elif self.object_type == 'importsheet':
+            return 'project'
         else:
             return self.object_type
 

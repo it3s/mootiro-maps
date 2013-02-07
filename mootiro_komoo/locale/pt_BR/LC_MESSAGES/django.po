@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-07 12:43-0200\n"
+"POT-Creation-Date: 2013-02-07 17:22-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -618,89 +618,93 @@ msgstr "Adicionar organização"
 msgid "Cost"
 msgstr "Custo"
 
-#: apps/update/models.py:152
+#: apps/update/models.py:154
 msgid "community added"
 msgstr "comunidade adicionada"
 
-#: apps/update/models.py:153
+#: apps/update/models.py:155
 msgid "community edited"
 msgstr "comunidade editada"
 
-#: apps/update/models.py:154
+#: apps/update/models.py:156
 msgid "community discussed"
 msgstr "comunidade discutida"
 
-#: apps/update/models.py:156
+#: apps/update/models.py:158
 msgid "need added"
 msgstr "necessidade adicionada"
 
-#: apps/update/models.py:157
+#: apps/update/models.py:159
 msgid "need edited"
 msgstr "necessidade editada"
 
-#: apps/update/models.py:158
+#: apps/update/models.py:160
 msgid "need discussed"
 msgstr "necessidade discutida"
 
-#: apps/update/models.py:160
+#: apps/update/models.py:162
 msgid "proposal added"
 msgstr "proposta adicionada"
 
-#: apps/update/models.py:161
+#: apps/update/models.py:163
 msgid "proposal edited"
 msgstr "proposta editada"
 
-#: apps/update/models.py:162
+#: apps/update/models.py:164
 msgid "proposal discussed"
 msgstr "proposta discutida"
 
-#: apps/update/models.py:164
+#: apps/update/models.py:166
 msgid "organization added"
 msgstr "organização adicionada"
 
-#: apps/update/models.py:165
+#: apps/update/models.py:167
 msgid "organization edited"
 msgstr "organização editada"
 
-#: apps/update/models.py:166
+#: apps/update/models.py:168
 msgid "organization discussed"
 msgstr "organização discutida"
 
-#: apps/update/models.py:168
+#: apps/update/models.py:170
 msgid "resource added"
 msgstr "recurso adicionado"
 
-#: apps/update/models.py:169
+#: apps/update/models.py:171
 msgid "resource edited"
 msgstr "recurso editado"
 
-#: apps/update/models.py:170
+#: apps/update/models.py:172
 msgid "resource discussed"
 msgstr "recurso discutido"
 
-#: apps/update/models.py:172
+#: apps/update/models.py:174
 msgid "investment added"
 msgstr "investimento adicionado"
 
-#: apps/update/models.py:173
+#: apps/update/models.py:175
 msgid "investment edited"
 msgstr "investimento editado"
 
-#: apps/update/models.py:174
+#: apps/update/models.py:176
 msgid "investment discussed"
 msgstr "investimento discutido"
 
-#: apps/update/models.py:176
+#: apps/update/models.py:178
 msgid "project added"
 msgstr "projeto adicionado"
 
-#: apps/update/models.py:177
+#: apps/update/models.py:179
 msgid "project edited"
 msgstr "projeto editado"
 
-#: apps/update/models.py:178
+#: apps/update/models.py:180
 msgid "project discussed"
 msgstr "projeto discutido"
+
+#: apps/update/models.py:182
+msgid "importsheet inserted"
+msgstr "importação realizada"
 
 #: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
 #: lib/ajax_select/fields.py:303
@@ -953,8 +957,7 @@ msgstr "Investimentos"
 msgid "Organizations"
 msgstr "Organizações"
 
-#: templates/404.html:34 templates/main/upper_bar.html:9
-#: templates/main/upper_bar.html.py:12
+#: templates/404.html:34 templates/main/upper_bar.html:12
 msgid "Help"
 msgstr "Ajuda"
 
@@ -1417,7 +1420,7 @@ msgstr "Configurações"
 msgid "Notifications"
 msgstr "Notificações"
 
-#: templates/main/upper_bar.html:11
+#: templates/main/upper_bar.html:10
 msgid "Login"
 msgstr "Entrar"
 

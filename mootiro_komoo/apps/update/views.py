@@ -20,7 +20,7 @@ def frontpage(request):
     if filters:
         query_set = Update.objects.filter(object_type__in=filters)
     else:
-        query_set = Update.objects.all()
+        query_set = Update.objects.all()#.filter(type="I")
     sort_order = ['-date', 'comments_count']
     updates_list = sorted_query(query_set, sort_order, request, default_order='-date')
     updates_count = updates_list.count()
