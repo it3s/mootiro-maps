@@ -19,6 +19,7 @@ from organization.models import Organization
 from komoo_resource.models import Resource
 from investment.models import Investment
 from komoo_project.models import Project, ProjectRelatedObject
+from importsheet.models import Importsheet
 from komoo_comments.models import Comment
 
 create_update = Signal(providing_args=["user", "instance", "type"])
@@ -99,6 +100,15 @@ def create_object_related_to_project_update(sender, **kwargs):
     instances = [instance.content_object, instance.project]
     communities = []
     # _create_the_update(instances, communities, **kwargs)
+
+
+# Importsheet
+@receiver(create_update, sender=Importsheet)
+def create_importsheet_update(sender, **kwargs):
+    instance = kwargs["instance"].project
+    instances = [instance]
+    communities = []
+    _create_the_update(instances, communities, **kwargs)
 
 
 # Comment

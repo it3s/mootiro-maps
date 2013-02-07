@@ -173,6 +173,15 @@ class Importsheet(models.Model):
         success = True
         for wks in self.worksheets:
             success = success and self.insert(wks.title)
+
+        if success:
+            # just inserted all objects
+            for u in self.mappers:
+                from update.models import Update
+                from update.signals import create_update
+                create_update.send(sender=Importsheet, user=u, instance=self,
+                                    type=Update.INSERT)
+
         return success
 
 
@@ -199,6 +208,11 @@ class Importsheet(models.Model):
             self.save()
 
         return success
+
+    @property
+    def mappers(self):
+        '''Returns a list of the users mapping objects in this importsheet.'''
+        return list(set([obj.creator for obj in self.inserted_objects]))
 
     @property
     def inserted_objects(self):

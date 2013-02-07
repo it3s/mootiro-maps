@@ -36,11 +36,13 @@ class Update(models.Model):
     # update type
     ADD = "A"
     EDIT = "E"
+    INSERT = "I"
     DISCUSSION = "D"
     TYPES = {
         "A": "added",
         "E": "edited",
         "D": "discussed",
+        "I": "inserted",
     }
     type = models.CharField(max_length=1, null=False, db_index=True,
             choices=tuple(TYPES.items()))
@@ -176,6 +178,8 @@ class Update(models.Model):
             "project added":     _("project added"),
             "project edited":    _("project edited"),
             "project discussed": _("project discussed"),
+
+            "importsheet inserted": _("importsheet inserted"),
 
         }
         return tr_dict[key_str]
