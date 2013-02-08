@@ -116,6 +116,7 @@
           <a href="{{ u.instance.link }}">
             <img class="apart" src="{{STATIC_URL}}{{ u.object_icon }}">
             {{ u.instance.name }}<br/>
+            <img class="apart" src="{{STATIC_URL}}{{ u.type_image }}">
             <span class="attenuate">{{ u.readable_type|capfirst }} {{ u.date|naturaltime }}</span>
           </a>
         </li>

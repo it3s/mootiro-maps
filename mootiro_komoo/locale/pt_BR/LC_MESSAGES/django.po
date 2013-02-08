@@ -704,7 +704,7 @@ msgstr "projeto discutido"
 
 #: apps/update/models.py:197
 msgid "importsheet inserted"
-msgstr ""
+msgstr "importação realizada"
 
 #: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
 #: lib/ajax_select/fields.py:303

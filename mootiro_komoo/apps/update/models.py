@@ -152,6 +152,11 @@ class Update(models.Model):
                     .format(self.object_type, self.TYPES[self.type])
 
     @property
+    def type_image(self):
+        return "img/updates-page/mini/{}.png" \
+                    .format(self.TYPES[self.type])
+
+    @property
     def object_app_name(self):
         if self.object_type == 'resource':
             return 'komoo_resource'
