@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-08 17:48-0200\n"
+"POT-Creation-Date: 2013-02-08 18:45-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -340,7 +340,7 @@ msgstr "Recurso"
 msgid "Submit"
 msgstr "Enviar"
 
-#: apps/main/views.py:240
+#: apps/main/views.py:251
 msgid ""
 "\n"
 "Url: {0}\n"
@@ -356,7 +356,7 @@ msgstr ""
 "Mensagem: {5}\n"
 "    "
 
-#: apps/main/views.py:248
+#: apps/main/views.py:259
 msgid "Error report"
 msgstr "Relatório de erro"
 
@@ -492,7 +492,7 @@ msgstr "motivo"
 
 #: apps/moderation/models.py:67
 #: templates/comments/comments_summary_templatetag.html:5
-#: templates/update/frontpage.html:154
+#: templates/update/list.html:154
 msgid "comment"
 msgstr "comentário"
 
@@ -618,93 +618,93 @@ msgstr "Adicionar organização"
 msgid "Cost"
 msgstr "Custo"
 
-#: apps/update/models.py:165
+#: apps/update/models.py:169
 msgid "community added"
 msgstr "comunidade adicionada"
 
-#: apps/update/models.py:166
+#: apps/update/models.py:170
 msgid "community edited"
 msgstr "comunidade editada"
 
-#: apps/update/models.py:167
+#: apps/update/models.py:171
 msgid "community discussed"
 msgstr "comunidade discutida"
 
-#: apps/update/models.py:169
+#: apps/update/models.py:173
 msgid "need added"
 msgstr "necessidade adicionada"
 
-#: apps/update/models.py:170
+#: apps/update/models.py:174
 msgid "need edited"
 msgstr "necessidade editada"
 
-#: apps/update/models.py:171
+#: apps/update/models.py:175
 msgid "need discussed"
 msgstr "necessidade discutida"
 
-#: apps/update/models.py:173
+#: apps/update/models.py:177
 msgid "proposal added"
 msgstr "proposta adicionada"
 
-#: apps/update/models.py:174
+#: apps/update/models.py:178
 msgid "proposal edited"
 msgstr "proposta editada"
 
-#: apps/update/models.py:175
+#: apps/update/models.py:179
 msgid "proposal discussed"
 msgstr "proposta discutida"
 
-#: apps/update/models.py:177
+#: apps/update/models.py:181
 msgid "organization added"
 msgstr "organização adicionada"
 
-#: apps/update/models.py:178
+#: apps/update/models.py:182
 msgid "organization edited"
 msgstr "organização editada"
 
-#: apps/update/models.py:179
+#: apps/update/models.py:183
 msgid "organization discussed"
 msgstr "organização discutida"
 
-#: apps/update/models.py:181
+#: apps/update/models.py:185
 msgid "resource added"
 msgstr "recurso adicionado"
 
-#: apps/update/models.py:182
+#: apps/update/models.py:186
 msgid "resource edited"
 msgstr "recurso editado"
 
-#: apps/update/models.py:183
+#: apps/update/models.py:187
 msgid "resource discussed"
 msgstr "recurso discutido"
 
-#: apps/update/models.py:185
+#: apps/update/models.py:189
 msgid "investment added"
 msgstr "investimento adicionado"
 
-#: apps/update/models.py:186
+#: apps/update/models.py:190
 msgid "investment edited"
 msgstr "investimento editado"
 
-#: apps/update/models.py:187
+#: apps/update/models.py:191
 msgid "investment discussed"
 msgstr "investimento discutido"
 
-#: apps/update/models.py:189
+#: apps/update/models.py:193
 msgid "project added"
 msgstr "projeto adicionado"
 
-#: apps/update/models.py:190
+#: apps/update/models.py:194
 msgid "project edited"
 msgstr "projeto editado"
 
-#: apps/update/models.py:191
+#: apps/update/models.py:195
 msgid "project discussed"
 msgstr "projeto discutido"
 
-#: apps/update/models.py:193
+#: apps/update/models.py:197
 msgid "importsheet inserted"
-msgstr "importação realizada"
+msgstr ""
 
 #: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
 #: lib/ajax_select/fields.py:303
@@ -965,7 +965,7 @@ msgstr "Ajuda"
 msgid "Ops!"
 msgstr "Ops!"
 
-#: templates/global.html:92
+#: templates/global.html:94
 msgid "See Results"
 msgstr "Ver Resultados"
 
@@ -1165,7 +1165,7 @@ msgid "Reply"
 msgstr "Responder"
 
 #: templates/comments/comments_summary_templatetag.html:7
-#: templates/update/frontpage.html:154
+#: templates/update/list.html:154
 msgid "comments"
 msgstr "comentários"
 
@@ -1404,6 +1404,91 @@ msgstr "Apoio institucional"
 msgid "Partners"
 msgstr "Parceiros"
 
+#: templates/main/root.html:14
+msgid "colaborative mapping of your region."
+msgstr "mapeamento colaborativo de sua região."
+
+#: templates/main/root.html:24
+msgid "Anyone can help!"
+msgstr "Todos podem ajudar!"
+
+#: templates/main/root.html:24
+msgid "Create your account."
+msgstr "Crie sua conta."
+
+#: templates/main/root.html:28
+msgid "Want to help"
+msgstr "Quer ajudar"
+
+#: templates/main/root.html:28
+msgid "Add to the map!"
+msgstr "Adicione ao mapa!"
+
+#: templates/main/root.html:33
+msgid "How it works?"
+msgstr "Como funciona?"
+
+#: templates/main/root.html:36
+msgid "Explore"
+msgstr "Explore"
+
+#: templates/main/root.html:38
+msgid "Find resources available to the community of your neighborhood."
+msgstr "Encontre recursos disponíveis para a comunidade de seu bairro."
+
+#: templates/main/root.html:41
+msgid "Add it"
+msgstr "Adicione"
+
+#: templates/main/root.html:43
+msgid ""
+"Map needs, organizations and resources in your community and help to improve "
+"it."
+msgstr ""
+"Mapeie necessidades, organizações e recursos do seu bairro e ajude a melhorá-"
+"lo."
+
+#: templates/main/root.html:46
+msgid "Create projects"
+msgstr "Crie um projeto"
+
+#: templates/main/root.html:48
+msgid ""
+"Map related points. You can make a guide to your neighborhood or diagnose a "
+"region."
+msgstr ""
+"Mapeie pontos relacionados. Você pode criar um guia para seu bairro ou fazer "
+"o diagnóstico de uma região."
+
+#: templates/main/root.html:52
+msgid "More about"
+msgstr "Saiba mais"
+
+#: templates/main/root.html:57
+msgid "Projects that uses MootiroMaps"
+msgstr "Projetos que usam o MootiroMaps"
+
+#: templates/main/root.html:92 templates/update/list.html:179
+msgid "News"
+msgstr "Novidades"
+
+#: templates/main/root.html:95
+msgid "IT3S blog"
+msgstr "Blog do IT3S"
+
+#: templates/main/root.html:107
+msgid "visit the blog"
+msgstr "visite o blog"
+
+#: templates/main/root.html:112
+msgid "Last updates"
+msgstr "Últimas atualizações"
+
+#: templates/main/root.html:125 templates/need/view.html:102
+#: templates/organization/show.html:104
+msgid "see all"
+msgstr "ver todos"
+
 #: templates/main/supporters.html:3
 msgid "Support"
 msgstr "Apoio"
@@ -1426,7 +1511,7 @@ msgstr "Entrar"
 
 #: templates/main/templatetags/communities_list.html:11
 #: templates/main/templatetags/usernames_list.html:13
-#: templates/update/frontpage.html:109 templates/update/frontpage.html:113
+#: templates/update/list.html:109 templates/update/list.html.py:113
 msgid "and"
 msgstr "e"
 
@@ -1625,10 +1710,6 @@ msgstr "Necessidades relacionadas"
 msgid "No related needs."
 msgstr "Nenhuma necessidade relacionada."
 
-#: templates/need/view.html:102 templates/organization/show.html:104
-msgid "see all"
-msgstr "ver todos"
-
 #: templates/need/view.html:103
 msgid "see less"
 msgstr "ver menos"
@@ -1767,7 +1848,7 @@ msgstr "Público alvo não fornecido"
 
 #: templates/organization/show.html:249
 msgid "Website"
-msgstr "Website"
+msgstr ""
 
 #: templates/project/edit.html:15
 msgid "Edit Project"
@@ -1876,47 +1957,47 @@ msgstr "tipo:"
 msgid "Related resources"
 msgstr "Recursos relacionados"
 
-#: templates/update/frontpage.html:16 templates/update/frontpage.html.py:18
+#: templates/update/list.html:16 templates/update/list.html.py:18
 msgid "About Mootiro"
 msgstr "Sobre o MootiroMaps"
 
-#: templates/update/frontpage.html:22
+#: templates/update/list.html:22
 msgid "what is this?"
 msgstr "O que é o MootiroMaps?"
 
-#: templates/update/frontpage.html:26
+#: templates/update/list.html:26
 msgid "Add a community"
 msgstr "Mapeie uma comunidade"
 
-#: templates/update/frontpage.html:31
+#: templates/update/list.html:31
 msgid "Add a need"
 msgstr "Adicione uma necessidade"
 
-#: templates/update/frontpage.html:36
+#: templates/update/list.html:36
 msgid "Add an organization"
 msgstr "Cadastre uma organização"
 
-#: templates/update/frontpage.html:41
+#: templates/update/list.html:41
 msgid "Add a project"
 msgstr "Comece um projeto"
 
-#: templates/update/frontpage.html:53
+#: templates/update/list.html:53
 msgid "last updates"
 msgstr "últimas atualizações"
 
-#: templates/update/frontpage.html:55
+#: templates/update/list.html:55
 msgid "discussions"
 msgstr "discussões"
 
-#: templates/update/frontpage.html:56
+#: templates/update/list.html:56
 msgid "my content"
 msgstr "meu conteúdo"
 
-#: templates/update/frontpage.html:63
+#: templates/update/list.html:63
 msgid "Type"
 msgstr "Tipo"
 
-#: templates/update/frontpage.html:99
+#: templates/update/list.html:99
 msgid ""
 "\n"
 "                      discussed\n"
@@ -1934,25 +2015,25 @@ msgstr[1] ""
 "                        discutiram\n"
 "                      "
 
-#: templates/update/frontpage.html:109
+#: templates/update/list.html:109
 msgid "community"
 msgid_plural "communities"
 msgstr[0] "comunidade"
 msgstr[1] "comunidades"
 
-#: templates/update/frontpage.html:113
+#: templates/update/list.html:113
 msgid "organization"
 msgid_plural "organizations"
 msgstr[0] "organização"
 msgstr[1] "organizações"
 
-#: templates/update/frontpage.html:117
+#: templates/update/list.html:117
 msgid "resource"
 msgid_plural "resources"
 msgstr[0] "recurso"
 msgstr[1] "recursos"
 
-#: templates/update/frontpage.html:121
+#: templates/update/list.html:121
 msgid ""
 "\n"
 "                          imported into project\n"
@@ -1970,36 +2051,26 @@ msgstr[1] ""
 "                        importados(as) no projeto\n"
 "                      "
 
-#: templates/update/frontpage.html:131
+#: templates/update/list.html:131
 msgid "the proposal"
 msgstr "a proposta"
 
-#: templates/update/frontpage.html:132
+#: templates/update/list.html:132
 msgid "for the need"
 msgstr "para a necessidade"
 
-#: templates/update/frontpage.html:148
+#: templates/update/list.html:148
 msgid "by"
 msgstr "por"
 
-#: templates/update/frontpage.html:179
-msgid "News"
-msgstr "Notícias"
-
-#~ msgid "imported into project"
-#~ msgstr "importado ao projeto"
-
-#~ msgid "No information provided."
-#~ msgstr "Nenhuma informação fornecida."
+#~ msgid "Information Not Provided!"
+#~ msgstr "Informação não fornecida!"
 
 #~ msgid "Map position not available"
 #~ msgstr "Posição no mapa não disponível"
 
 #~ msgid "An initiative"
 #~ msgstr "Uma iniciativa"
-
-#~ msgid "More about"
-#~ msgstr "Saiba mais"
 
 #~ msgid "About MootiroMaps"
 #~ msgstr "Sobre o MootiroMaps"
@@ -2009,6 +2080,12 @@ msgstr "Notícias"
 
 #~ msgid "Get Involved"
 #~ msgstr "Se envolva"
+
+#~ msgid "Everyone can help"
+#~ msgstr "Todos podem ajudar"
+
+#~ msgid "Create your account"
+#~ msgstr "Crie sua conta"
 
 #~ msgid "Insert all"
 #~ msgstr "Inserir tudo"
@@ -2049,9 +2126,6 @@ msgstr "Notícias"
 
 #~ msgid "Don't have an account? Sign up!"
 #~ msgstr "Não possui uma conta? Registre-se!"
-
-#~ msgid "Create an account"
-#~ msgstr "Criar uma conta"
 
 #~ msgid "Votes"
 #~ msgstr "Votos"

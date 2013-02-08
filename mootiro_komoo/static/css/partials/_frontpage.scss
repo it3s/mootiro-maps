@@ -1,0 +1,129 @@
+#main-content.frontpage {
+    width: 900px;
+
+    > div { padding: 20px }
+    > div:nth-child(even) { background: #EDEDED }
+    .center { text-align: center }
+
+    .initial-heading {
+        font-size: 34px;
+        letter-spacing: -1px;
+        font-weight: 400;
+        img {
+            vertical-align: bottom;
+            position: relative;
+            top: 10px;
+            margin-right: 10px;
+        }
+    }
+
+    div.video {
+        margin: 30px;
+        text-align: center;
+    }
+
+    > div.how-it-works {
+        > div.topic {
+            h3 {
+                font-size: 20px;
+                margin: 1em 0;
+                font-weight: 400;
+                border-bottom: 1px solid #000;
+                display: inline-block;
+                padding: 0 1em 0.5em;
+            }
+
+            p {
+                margin-top: 2em;
+            }
+
+            -webkit-box-sizing: border-box;
+               -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+
+            vertical-align: top;
+            text-align: center;
+            width: 33%;
+            padding: 0 3%;
+            display: inline-block;
+        }
+        > div.more {
+            text-align: center;
+            margin: 1.5em;
+        }
+    }
+
+    > div.projects {
+        .flexslider {
+            width: 800px;
+            height: 150px;
+            position: relative;
+            left: 50%;
+            margin-top: 20px;
+            margin-left: -400px;
+
+            .comment {
+                background: aqua;
+                width: 450px;
+                height: 100px;
+                position: relative;
+                top: -100px;
+                left: 250px;
+            }
+        }
+
+    }
+
+    > div.news {
+        > div {
+
+            -webkit-box-sizing: border-box;
+               -moz-box-sizing: border-box;
+                    box-sizing: border-box;
+
+            display: inline-block;
+            vertical-align: top;
+            width: 45%;
+            margin: 1%;
+
+            h3{ text-indent: 5px }
+        }
+
+        li {
+            :hover { background: #dceff4 }
+            a {
+                display: block;
+                padding: 5px;
+                text-decoration: none;
+            }
+            img.apart { margin-right: 0.2em }
+        }
+        .last_updates li a {
+            color: inherit;
+        }
+    }
+
+    > div.account { text-align: center }
+}
+
+/* Fix */
+.flexslider {
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 30px;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 0 35px;
+
+    > ul.slides li {
+        position: relative;
+    }
+
+    .slides img {
+        width: auto;
+        height: auto;
+    }
+}

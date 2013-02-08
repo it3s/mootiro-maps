@@ -1176,7 +1176,7 @@ body.community #main-content {
     margin-top: 10px;
 }
 
-/******* Updates page (frontpage) *******/
+/******* Updates page *******/
 #updates-header {
     position: relative;
     width: 1000px;
@@ -2596,6 +2596,7 @@ ul.two-cols li {
 }
 
 #footer > div {
+    text-align: center;
     display: inline-block;
     vertical-align: top;
     margin: 0 40px;

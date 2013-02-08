@@ -11,8 +11,8 @@ from main.utils import paginated_query, sorted_query, filtered_query
 from .models import Update, News
 
 
-@render_to("update/frontpage.html")
-def frontpage(request):
+@render_to("update/list.html")
+def list(request):
     filters = request.GET.get('filters', [])
     if filters:
         filters = filters.split(',')

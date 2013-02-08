@@ -30,6 +30,7 @@ from komoo_resource.models import Resource
 from investment.models import Investment
 from komoo_project.models import Project
 from main.utils import create_geojson, ResourceHandler
+from update.models import Update, News
 
 logger = logging.getLogger(__name__)
 
@@ -48,9 +49,19 @@ ENTITY_MODEL = {
 ENTITY_MODEL_REV = {v: k for k, v in ENTITY_MODEL.items()}
 
 
+@render_to('main/map.html')
+def map(request):
+    return dict(geojson={})
+
+
 @render_to('main/root.html')
 def root(request):
-    return dict(geojson={})
+    '''This is the frontpage view, sites's root'''
+
+    updates = Update.objects.all().order_by("-date")[:4]
+    news = News.objects.order_by("-date")[:4]
+
+    return dict(updates=updates, news=news)
 
 
 def _fetch_geo_objects(Q, zoom):

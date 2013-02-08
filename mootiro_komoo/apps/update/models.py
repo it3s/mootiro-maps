@@ -143,6 +143,10 @@ class Update(models.Model):
         return unicode(self.instance)
 
     @property
+    def object_icon(self):
+        return "img/menu/{}.png".format(self.object_type)
+
+    @property
     def image(self):
         return "img/updates-page/{}-{}.png" \
                     .format(self.object_type, self.TYPES[self.type])
