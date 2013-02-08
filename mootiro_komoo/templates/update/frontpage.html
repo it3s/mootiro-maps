@@ -104,8 +104,27 @@
                   {% endif %}
                   
                   {% if u.type == "I" %}
-                    50 organizações, 30 recursos e 2 comunidades
-                    {% trans "imported into project" %}
+                    {% with o=u.get_object.inserted_buckets.Organization|length r=u.get_object.inserted_buckets.Resource|length c=u.get_object.inserted_buckets.Community|length %}
+                      {% if c %}
+                        {{c}} {% blocktrans count num=c %}community{% plural %}communities{% endblocktrans %}{% if o and r %},{% else %}{% if o or r %} {% trans "and" %}{% endif %}{% endif %}
+                      {% endif %}
+                      
+                      {% if o %}
+                        {{o}} {% blocktrans count num=o %}organization{% plural %}organizations{% endblocktrans %}{% if c or r %} {% trans "and" %}{% endif %}
+                      {% endif %}
+                      
+                      {% if r %}
+                        {{r}} {% blocktrans count num=r %}resource{% plural %}resources{% endblocktrans %}
+                      {% endif %}
+                      
+                      {% with n=c|add:o|add:r %}
+                        {% blocktrans count num=n %}
+                          imported into project
+                        {% plural %}
+                          imported into project
+                        {% endblocktrans %}
+                      {% endwith %}
+                    {% endwith %}
                   {% endif %}
 
                   {% if u.object_type == 'proposal' %}

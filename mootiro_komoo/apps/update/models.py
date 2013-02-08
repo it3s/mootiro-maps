@@ -47,6 +47,15 @@ class Update(models.Model):
     type = models.CharField(max_length=1, null=False, db_index=True,
             choices=tuple(TYPES.items()))
 
+    # Ugly!!!!!11
+    def get_object(self):
+        if self.object_type == 'importsheet':
+            from importsheet.models import Importsheet
+            return Importsheet.objects.get(id=self.object_id)
+        else:
+            raise NotImplementedError("Not implemented for object_type = '{}'"\
+                        .format(self.object_type))
+
     # TODO: refactor those methods below into a JsonField class
     @property
     def instances(self):

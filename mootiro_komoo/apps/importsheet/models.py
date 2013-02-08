@@ -215,6 +215,17 @@ class Importsheet(models.Model):
         return list(set([obj.creator for obj in self.inserted_objects]))
 
     @property
+    def inserted_buckets(self):
+        '''Returns a count summary of inserted objects.'''
+        buckets = {}
+        for obj in self.inserted_objects:
+            k = type(obj).__name__
+            if not k in buckets:
+                buckets[k] = []
+            buckets[k].append(obj)
+        return buckets
+
+    @property
     def inserted_objects(self):
         '''Returns a list of all related objects.'''
         related_objects = ImportsheetRelatedObject.objects.filter(importsheet=self)

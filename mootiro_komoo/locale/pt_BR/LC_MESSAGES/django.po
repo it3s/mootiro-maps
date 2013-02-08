@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-07 17:22-0200\n"
+"POT-Creation-Date: 2013-02-08 17:48-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -492,7 +492,7 @@ msgstr "motivo"
 
 #: apps/moderation/models.py:67
 #: templates/comments/comments_summary_templatetag.html:5
-#: templates/update/frontpage.html:130
+#: templates/update/frontpage.html:154
 msgid "comment"
 msgstr "comentário"
 
@@ -618,91 +618,91 @@ msgstr "Adicionar organização"
 msgid "Cost"
 msgstr "Custo"
 
-#: apps/update/models.py:154
+#: apps/update/models.py:165
 msgid "community added"
 msgstr "comunidade adicionada"
 
-#: apps/update/models.py:155
+#: apps/update/models.py:166
 msgid "community edited"
 msgstr "comunidade editada"
 
-#: apps/update/models.py:156
+#: apps/update/models.py:167
 msgid "community discussed"
 msgstr "comunidade discutida"
 
-#: apps/update/models.py:158
+#: apps/update/models.py:169
 msgid "need added"
 msgstr "necessidade adicionada"
 
-#: apps/update/models.py:159
+#: apps/update/models.py:170
 msgid "need edited"
 msgstr "necessidade editada"
 
-#: apps/update/models.py:160
+#: apps/update/models.py:171
 msgid "need discussed"
 msgstr "necessidade discutida"
 
-#: apps/update/models.py:162
+#: apps/update/models.py:173
 msgid "proposal added"
 msgstr "proposta adicionada"
 
-#: apps/update/models.py:163
+#: apps/update/models.py:174
 msgid "proposal edited"
 msgstr "proposta editada"
 
-#: apps/update/models.py:164
+#: apps/update/models.py:175
 msgid "proposal discussed"
 msgstr "proposta discutida"
 
-#: apps/update/models.py:166
+#: apps/update/models.py:177
 msgid "organization added"
 msgstr "organização adicionada"
 
-#: apps/update/models.py:167
+#: apps/update/models.py:178
 msgid "organization edited"
 msgstr "organização editada"
 
-#: apps/update/models.py:168
+#: apps/update/models.py:179
 msgid "organization discussed"
 msgstr "organização discutida"
 
-#: apps/update/models.py:170
+#: apps/update/models.py:181
 msgid "resource added"
 msgstr "recurso adicionado"
 
-#: apps/update/models.py:171
+#: apps/update/models.py:182
 msgid "resource edited"
 msgstr "recurso editado"
 
-#: apps/update/models.py:172
+#: apps/update/models.py:183
 msgid "resource discussed"
 msgstr "recurso discutido"
 
-#: apps/update/models.py:174
+#: apps/update/models.py:185
 msgid "investment added"
 msgstr "investimento adicionado"
 
-#: apps/update/models.py:175
+#: apps/update/models.py:186
 msgid "investment edited"
 msgstr "investimento editado"
 
-#: apps/update/models.py:176
+#: apps/update/models.py:187
 msgid "investment discussed"
 msgstr "investimento discutido"
 
-#: apps/update/models.py:178
+#: apps/update/models.py:189
 msgid "project added"
 msgstr "projeto adicionado"
 
-#: apps/update/models.py:179
+#: apps/update/models.py:190
 msgid "project edited"
 msgstr "projeto editado"
 
-#: apps/update/models.py:180
+#: apps/update/models.py:191
 msgid "project discussed"
 msgstr "projeto discutido"
 
-#: apps/update/models.py:182
+#: apps/update/models.py:193
 msgid "importsheet inserted"
 msgstr "importação realizada"
 
@@ -1165,7 +1165,7 @@ msgid "Reply"
 msgstr "Responder"
 
 #: templates/comments/comments_summary_templatetag.html:7
-#: templates/update/frontpage.html:130
+#: templates/update/frontpage.html:154
 msgid "comments"
 msgstr "comentários"
 
@@ -1426,6 +1426,7 @@ msgstr "Entrar"
 
 #: templates/main/templatetags/communities_list.html:11
 #: templates/main/templatetags/usernames_list.html:13
+#: templates/update/frontpage.html:109 templates/update/frontpage.html:113
 msgid "and"
 msgstr "e"
 
@@ -1933,21 +1934,60 @@ msgstr[1] ""
 "                        discutiram\n"
 "                      "
 
-#: templates/update/frontpage.html:107
+#: templates/update/frontpage.html:109
+msgid "community"
+msgid_plural "communities"
+msgstr[0] "comunidade"
+msgstr[1] "comunidades"
+
+#: templates/update/frontpage.html:113
+msgid "organization"
+msgid_plural "organizations"
+msgstr[0] "organização"
+msgstr[1] "organizações"
+
+#: templates/update/frontpage.html:117
+msgid "resource"
+msgid_plural "resources"
+msgstr[0] "recurso"
+msgstr[1] "recursos"
+
+#: templates/update/frontpage.html:121
+msgid ""
+"\n"
+"                          imported into project\n"
+"                        "
+msgid_plural ""
+"\n"
+"                          imported into project\n"
+"                        "
+msgstr[0] ""
+"\n"
+"                        importado(a) no projeto\n"
+"                      "
+msgstr[1] ""
+"\n"
+"                        importados(as) no projeto\n"
+"                      "
+
+#: templates/update/frontpage.html:131
 msgid "the proposal"
 msgstr "a proposta"
 
-#: templates/update/frontpage.html:108
+#: templates/update/frontpage.html:132
 msgid "for the need"
 msgstr "para a necessidade"
 
-#: templates/update/frontpage.html:124
+#: templates/update/frontpage.html:148
 msgid "by"
 msgstr "por"
 
-#: templates/update/frontpage.html:155
+#: templates/update/frontpage.html:179
 msgid "News"
 msgstr "Notícias"
+
+#~ msgid "imported into project"
+#~ msgstr "importado ao projeto"
 
 #~ msgid "No information provided."
 #~ msgstr "Nenhuma informação fornecida."
