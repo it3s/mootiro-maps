@@ -63,19 +63,19 @@
         <span class="attenuate small">{% trans "Type" %}</span>
         <ul class="frontpage-filters-list">
             <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/community.png" alt="community" />
+            <img src="{{ STATIC_URL }}img/community.png" alt="community" title='{%trans "activate/deactivate Community" %}'/>
             </li>
             <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/need.png" alt="need" />
+                <img src="{{ STATIC_URL }}img/need.png" alt="need" title='{%trans "activate/deactivate Need" %}'/>
             </li>
             <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/organization.png" alt="organization" />
+                <img src="{{ STATIC_URL }}img/organization.png" alt="organization" title='{%trans "activate/deactivate Organization" %}'/>
             </li>
             <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/resource.png" alt="resource" />
+                <img src="{{ STATIC_URL }}img/resource.png" alt="resource" title='{%trans "activate/deactivate Resource" %}'/>
             </li>
             <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/investment.png" alt="investment" />
+                <img src="{{ STATIC_URL }}img/investment.png" alt="investment" title='{%trans "activate/deactivate Investment" %}'/>
             </li>
         </ul>
       </div>
@@ -107,11 +107,11 @@
                   {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
                     {% trans "for the need" %} <a href="{{ u.instances.1.link }}">{{ u.instances.1.name }}</a>
                   {% else %}
-                  <a href="{{ u.instance.link }}">{{ u.instance.name }}</a>
+                  <a href="{{ u.instance.link }}" title='{% trans "see this object page" %}'>{{ u.instance.name }}</a>
                   {% endif %}
                 </h3>
                 <div class="right">
-                  <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map"></i></a>
+                  <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map" title='{% trans "see on map"%}'></i></a>
                 </div>
                 <div class="clear-both"></div>
                 {% communities_list u.communities %}

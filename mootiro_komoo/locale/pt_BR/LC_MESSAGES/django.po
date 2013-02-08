@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-07 12:43-0200\n"
+"POT-Creation-Date: 2013-02-08 15:47-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -953,8 +953,7 @@ msgstr "Investimentos"
 msgid "Organizations"
 msgstr "Organizações"
 
-#: templates/404.html:34 templates/main/upper_bar.html:9
-#: templates/main/upper_bar.html.py:12
+#: templates/404.html:34 templates/main/upper_bar.html:12
 msgid "Help"
 msgstr "Ajuda"
 
@@ -1417,7 +1416,7 @@ msgstr "Configurações"
 msgid "Notifications"
 msgstr "Notificações"
 
-#: templates/main/upper_bar.html:11
+#: templates/main/upper_bar.html:10
 msgid "Login"
 msgstr "Entrar"
 
@@ -1911,6 +1910,26 @@ msgstr "meu conteúdo"
 #: templates/update/frontpage.html:63
 msgid "Type"
 msgstr "Tipo"
+
+#: templates/update/frontpage.html:66
+msgid "activate/deactivate Community"
+msgstr "ativar/desativar Comunidade"
+
+#: templates/update/frontpage.html:69
+msgid "activate/deactivate Need"
+msgstr "ativar/desativar Necessidade"
+
+#: templates/update/frontpage.html:72
+msgid "activate/deactivate Organization"
+msgstr "ativar/desativar Organização"
+
+#: templates/update/frontpage.html:75
+msgid "activate/deactivate Resource"
+msgstr "ativar/desativar Recurso"
+
+#: templates/update/frontpage.html:78
+msgid "activate/deactivate Investment"
+msgstr "ativar/desativar Investimento"
 
 #: templates/update/frontpage.html:99
 msgid ""
