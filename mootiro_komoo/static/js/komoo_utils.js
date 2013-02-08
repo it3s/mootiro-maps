@@ -172,7 +172,7 @@ function getUrlVars(){
             );
 
             // remove focus from previous element
-            $('.control-group.focus').each(function(idx, obj){
+            $('.control-group').each(function(idx, obj){
                 var obj = $(obj);
                 if(!obj.is(el)){
                     obj.removeClass('focus');
@@ -182,7 +182,11 @@ function getUrlVars(){
 
             if (node.is('.control-group') && !node.is('.focus')){
                 node.addClass('focus');
-                node.find('.field-hint-box-wrapper').show();
+                setTimeout(function(){
+                  if (node.is('.focus')){
+                    node.find('.field-hint-box-wrapper').fadeIn('slow');
+                  }
+                }, 500);
             }
         };
 
