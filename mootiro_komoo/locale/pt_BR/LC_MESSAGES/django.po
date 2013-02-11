@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-08 18:45-0200\n"
+"POT-Creation-Date: 2013-02-11 13:23-0200\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -618,91 +618,91 @@ msgstr "Adicionar organização"
 msgid "Cost"
 msgstr "Custo"
 
-#: apps/update/models.py:169
+#: apps/update/models.py:174
 msgid "community added"
 msgstr "comunidade adicionada"
 
-#: apps/update/models.py:170
+#: apps/update/models.py:175
 msgid "community edited"
 msgstr "comunidade editada"
 
-#: apps/update/models.py:171
+#: apps/update/models.py:176
 msgid "community discussed"
 msgstr "comunidade discutida"
 
-#: apps/update/models.py:173
+#: apps/update/models.py:178
 msgid "need added"
 msgstr "necessidade adicionada"
 
-#: apps/update/models.py:174
+#: apps/update/models.py:179
 msgid "need edited"
 msgstr "necessidade editada"
 
-#: apps/update/models.py:175
+#: apps/update/models.py:180
 msgid "need discussed"
 msgstr "necessidade discutida"
 
-#: apps/update/models.py:177
+#: apps/update/models.py:182
 msgid "proposal added"
 msgstr "proposta adicionada"
 
-#: apps/update/models.py:178
+#: apps/update/models.py:183
 msgid "proposal edited"
 msgstr "proposta editada"
 
-#: apps/update/models.py:179
+#: apps/update/models.py:184
 msgid "proposal discussed"
 msgstr "proposta discutida"
 
-#: apps/update/models.py:181
+#: apps/update/models.py:186
 msgid "organization added"
 msgstr "organização adicionada"
 
-#: apps/update/models.py:182
+#: apps/update/models.py:187
 msgid "organization edited"
 msgstr "organização editada"
 
-#: apps/update/models.py:183
+#: apps/update/models.py:188
 msgid "organization discussed"
 msgstr "organização discutida"
 
-#: apps/update/models.py:185
+#: apps/update/models.py:190
 msgid "resource added"
 msgstr "recurso adicionado"
 
-#: apps/update/models.py:186
+#: apps/update/models.py:191
 msgid "resource edited"
 msgstr "recurso editado"
 
-#: apps/update/models.py:187
+#: apps/update/models.py:192
 msgid "resource discussed"
 msgstr "recurso discutido"
 
-#: apps/update/models.py:189
+#: apps/update/models.py:194
 msgid "investment added"
 msgstr "investimento adicionado"
 
-#: apps/update/models.py:190
+#: apps/update/models.py:195
 msgid "investment edited"
 msgstr "investimento editado"
 
-#: apps/update/models.py:191
+#: apps/update/models.py:196
 msgid "investment discussed"
 msgstr "investimento discutido"
 
-#: apps/update/models.py:193
+#: apps/update/models.py:198
 msgid "project added"
 msgstr "projeto adicionado"
 
-#: apps/update/models.py:194
+#: apps/update/models.py:199
 msgid "project edited"
 msgstr "projeto editado"
 
-#: apps/update/models.py:195
+#: apps/update/models.py:200
 msgid "project discussed"
 msgstr "projeto discutido"
 
-#: apps/update/models.py:197
+#: apps/update/models.py:202
 msgid "importsheet inserted"
 msgstr "importação realizada"
 
@@ -1203,6 +1203,7 @@ msgstr "população:"
 #: templates/community/view.html:49 templates/investment/view.html:62
 #: templates/need/view.html:65 templates/organization/show.html:214
 #: templates/project/view.html:245 templates/resource/show.html:68
+#: templates/update/list.html:138
 msgid "see on map"
 msgstr "ver no mapa"
 
@@ -1341,16 +1342,16 @@ msgstr[0] "%(counter)s Recurso"
 msgstr[1] "%(counter)s Recursos"
 
 #: templates/komoo_map/panel.html:9
-msgid "Filter"
-msgstr "Filtro"
+msgid "Search"
+msgstr "Busca"
 
 #: templates/komoo_map/panel.html:10
 msgid "Add"
 msgstr "Adicionar"
 
 #: templates/komoo_map/panel.html:11
-msgid "Layers"
-msgstr "Camadas"
+msgid "Filter"
+msgstr "Filtro"
 
 #: templates/komoo_map/panel.html:23
 msgid "Perform search"
@@ -1406,7 +1407,7 @@ msgstr "Parceiros"
 
 #: templates/main/root.html:14
 msgid "colaborative mapping of your region."
-msgstr "mapeamento colaborativo de sua região."
+msgstr "mapeamento colaborativo da sua região."
 
 #: templates/main/root.html:24
 msgid "Anyone can help!"
@@ -1414,7 +1415,7 @@ msgstr "Todos podem ajudar!"
 
 #: templates/main/root.html:24
 msgid "Create your account."
-msgstr "Crie sua conta."
+msgstr "Criar sua conta."
 
 #: templates/main/root.html:28
 msgid "Want to help"
@@ -1422,7 +1423,7 @@ msgstr "Quer ajudar"
 
 #: templates/main/root.html:28
 msgid "Add to the map!"
-msgstr "Adicione ao mapa!"
+msgstr "Adicione ao mapa"
 
 #: templates/main/root.html:33
 msgid "How it works?"
@@ -1434,7 +1435,7 @@ msgstr "Explore"
 
 #: templates/main/root.html:38
 msgid "Find resources available to the community of your neighborhood."
-msgstr "Encontre recursos disponíveis para a comunidade de seu bairro."
+msgstr "Encontre recursos disponíveis à comunidade de seu bairro."
 
 #: templates/main/root.html:41
 msgid "Add it"
@@ -1444,21 +1445,17 @@ msgstr "Adicione"
 msgid ""
 "Map needs, organizations and resources in your community and help to improve "
 "it."
-msgstr ""
-"Mapeie necessidades, organizações e recursos do seu bairro e ajude a melhorá-"
-"lo."
+msgstr "Mapeie necessidades, organizações e recursos em sua comunidade e ajude melhorá-la."
 
 #: templates/main/root.html:46
 msgid "Create projects"
-msgstr "Crie um projeto"
+msgstr "Crie projetos"
 
 #: templates/main/root.html:48
 msgid ""
 "Map related points. You can make a guide to your neighborhood or diagnose a "
 "region."
-msgstr ""
-"Mapeie pontos relacionados. Você pode criar um guia para seu bairro ou fazer "
-"o diagnóstico de uma região."
+msgstr "Mapeie pontos relacionados. Você pode fazer um guia para o seu bairro ou diagnosticar uma região"
 
 #: templates/main/root.html:52
 msgid "More about"
@@ -1468,23 +1465,23 @@ msgstr "Saiba mais"
 msgid "Projects that uses MootiroMaps"
 msgstr "Projetos que usam o MootiroMaps"
 
-#: templates/main/root.html:92 templates/update/list.html:179
+#: templates/main/root.html:98 templates/update/list.html:179
 msgid "News"
-msgstr "Novidades"
+msgstr "Notícias"
 
-#: templates/main/root.html:95
+#: templates/main/root.html:101
 msgid "IT3S blog"
 msgstr "Blog do IT3S"
 
-#: templates/main/root.html:107
+#: templates/main/root.html:113
 msgid "visit the blog"
 msgstr "visite o blog"
 
-#: templates/main/root.html:112
+#: templates/main/root.html:118
 msgid "Last updates"
-msgstr "Últimas atualizações"
+msgstr "últimas atualizações"
 
-#: templates/main/root.html:125 templates/need/view.html:102
+#: templates/main/root.html:132 templates/need/view.html:102
 #: templates/organization/show.html:104
 msgid "see all"
 msgstr "ver todos"
@@ -1848,7 +1845,7 @@ msgstr "Público alvo não fornecido"
 
 #: templates/organization/show.html:249
 msgid "Website"
-msgstr ""
+msgstr "Website"
 
 #: templates/project/edit.html:15
 msgid "Edit Project"
@@ -1997,6 +1994,26 @@ msgstr "meu conteúdo"
 msgid "Type"
 msgstr "Tipo"
 
+#: templates/update/list.html:66
+msgid "activate/deactivate Community"
+msgstr "ativar/desativar Comunidade"
+
+#: templates/update/list.html:69
+msgid "activate/deactivate Need"
+msgstr "ativar/desativar Necessidade"
+
+#: templates/update/list.html:72
+msgid "activate/deactivate Organization"
+msgstr "ativar/desativar Organização"
+
+#: templates/update/list.html:75
+msgid "activate/deactivate Resource"
+msgstr "ativar/desativar Recurso"
+
+#: templates/update/list.html:78
+msgid "activate/deactivate Investment"
+msgstr "ativar/desativar Investimento"
+
 #: templates/update/list.html:99
 msgid ""
 "\n"
@@ -2044,11 +2061,11 @@ msgid_plural ""
 "                        "
 msgstr[0] ""
 "\n"
-"                        importado(a) no projeto\n"
+"                        importado(a) ao projeto\n"
 "                      "
 msgstr[1] ""
 "\n"
-"                        importados(as) no projeto\n"
+"                        importados(as) ao projeto\n"
 "                      "
 
 #: templates/update/list.html:131
@@ -2059,12 +2076,19 @@ msgstr "a proposta"
 msgid "for the need"
 msgstr "para a necessidade"
 
+#: templates/update/list.html:134
+msgid "see this object page"
+msgstr "veja a página"
+
 #: templates/update/list.html:148
 msgid "by"
 msgstr "por"
 
-#~ msgid "Information Not Provided!"
-#~ msgstr "Informação não fornecida!"
+#~ msgid "Layers"
+#~ msgstr "Camadas"
+
+#~ msgid "No information provided."
+#~ msgstr "Nenhuma informação fornecida."
 
 #~ msgid "Map position not available"
 #~ msgstr "Posição no mapa não disponível"
@@ -2080,12 +2104,6 @@ msgstr "por"
 
 #~ msgid "Get Involved"
 #~ msgstr "Se envolva"
-
-#~ msgid "Everyone can help"
-#~ msgstr "Todos podem ajudar"
-
-#~ msgid "Create your account"
-#~ msgstr "Crie sua conta"
 
 #~ msgid "Insert all"
 #~ msgstr "Inserir tudo"

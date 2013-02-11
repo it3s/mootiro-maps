@@ -2636,6 +2636,7 @@ ul.two-cols li {
     word-wrap: break-word;
     padding: 5px;
     background: #ffffff;
+    box-shadow: 1px 1px 2px #333333;
 }
 .hint-text{
     width: 280px;
