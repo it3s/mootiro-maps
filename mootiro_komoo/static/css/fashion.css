@@ -193,27 +193,32 @@ div.importsheet_missing_column {
   #main-content.frontpage div.video {
     margin: 30px;
     text-align: center; }
-  #main-content.frontpage > div.how-it-works > div.topic {
+  #main-content.frontpage > div.what-is-it-for * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    box-sizing: border-box; }
+  #main-content.frontpage > div.what-is-it-for a {
+    color: inherit; }
+  #main-content.frontpage > div.what-is-it-for div.topic {
     vertical-align: top;
-    text-align: center;
-    width: 33%;
-    padding: 0 3%;
-    display: inline-block; }
-    #main-content.frontpage > div.how-it-works > div.topic h3 {
-      font-size: 20px;
-      margin: 1em 0;
-      font-weight: 400;
-      border-bottom: 1px solid #000;
+    display: inline-block;
+    width: 19%;
+    margin: 0 0.35%; }
+    #main-content.frontpage > div.what-is-it-for div.topic h3 {
       display: inline-block;
-      padding: 0 1em 0.5em; }
-    #main-content.frontpage > div.how-it-works > div.topic p {
-      margin-top: 2em; }
-  #main-content.frontpage > div.how-it-works > div.more {
-    text-align: center;
-    margin: 1.5em; }
+      padding: 0.5em 1em;
+      margin-bottom: 1em;
+      border-bottom: 1px solid #057D90;
+      width: 100%;
+      font-size: 20px;
+      text-align: center;
+      color: #057D90; }
+    #main-content.frontpage > div.what-is-it-for div.topic p {
+      padding: 0.5em 0.2em 0; }
+  #main-content.frontpage > div.what-is-it-for div.topic:hover {
+    background: #f0f0f0; }
+    #main-content.frontpage > div.what-is-it-for div.topic:hover h3 {
+      background: #B1DDE8; }
   #main-content.frontpage > div.projects .flexslider {
     width: 800px;
     height: 150px;
@@ -225,7 +230,6 @@ div.importsheet_missing_column {
       width: 450px;
       height: 100px;
       position: relative;
-      top: -130px;
       left: 250px;
       font-size: 16px;
       font-style: italic;

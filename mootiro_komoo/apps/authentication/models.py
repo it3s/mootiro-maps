@@ -97,6 +97,9 @@ class User(GeoRefModel):
     def facebook(self):
         return self._social_auth_by_name('facebook')
 
+    def get_first_name(self):
+        return self.name.split(' ')[0]
+
 
 class AnonymousUser(object):
     '''Dummy Class to integrate with other django apps.'''

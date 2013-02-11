@@ -58,9 +58,13 @@ table { border-collapse: collapse }
 }
 .button span { color: white; }
 .button:active { background: #2E6167 !important; }
-a.button { color: #fff;}
-a.button:hover {
-    text-decoration: none;
+a.button { color: #fff }
+a.button:hover { text-decoration: none }
+a.big.button {
+    border-radius        : 12px;
+    -moz-border-radius   : 12px;
+    -webkit-border-radius: 12px;
+    padding: 0.5em 1em;
 }
 .small { font-size: 80%; }
 ul.horizontal li {

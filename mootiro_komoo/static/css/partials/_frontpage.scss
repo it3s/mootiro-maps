@@ -22,34 +22,43 @@
         text-align: center;
     }
 
-    > div.how-it-works {
-        > div.topic {
-            h3 {
-                font-size: 20px;
-                margin: 1em 0;
-                font-weight: 400;
-                border-bottom: 1px solid #000;
-                display: inline-block;
-                padding: 0 1em 0.5em;
-            }
+    > div.what-is-it-for {
 
-            p {
-                margin-top: 2em;
-            }
-
+        * {
             -webkit-box-sizing: border-box;
                -moz-box-sizing: border-box;
                     box-sizing: border-box;
+        }
+
+        a { color: inherit }
+
+        div.topic {
+            h3 {
+                display: inline-block;
+                padding: 0.5em 1em;
+                margin-bottom: 1em;
+                border-bottom: 1px solid #057D90;
+                width: 100%;
+                
+                font-size: 20px;
+                text-align: center;
+                color: #057D90;
+            }
+
+            p {
+                padding: 0.5em 0.2em 0;
+            }
 
             vertical-align: top;
-            text-align: center;
-            width: 33%;
-            padding: 0 3%;
             display: inline-block;
+
+            width: 19%;
+            margin: 0 0.35%;
         }
-        > div.more {
-            text-align: center;
-            margin: 1.5em;
+
+        div.topic:hover {
+            background: #f0f0f0;
+            h3 { background: #B1DDE8 }
         }
     }
 
@@ -66,7 +75,6 @@
                 width: 450px;
                 height: 100px;
                 position: relative;
-                top: -130px;
                 left: 250px;
 
                 font-size: 16px;
