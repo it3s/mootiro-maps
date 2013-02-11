@@ -62,14 +62,30 @@
             margin-top: 20px;
             margin-left: -400px;
 
-            .comment {
-                background: aqua;
+            .testimony {
                 width: 450px;
                 height: 100px;
                 position: relative;
-                top: -100px;
+                top: -130px;
                 left: 250px;
+
+                font-size: 16px;
+                font-style: italic;
+                text-align: justify;
+
+                .author-info {
+                    float: right;
+                    text-align: right;
+                    margin-top: 0.5em;
+                    font-size: 80%;
+                    max-width: 80%;
+                    display: inline-block;
+                }
             }
+
+            .aldeias { margin-top: 15px }
+            .baccarelli { margin-top: 0 }
+            .unas { margin-top: 20px }
         }
 
     }

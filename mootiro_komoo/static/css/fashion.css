@@ -221,13 +221,28 @@ div.importsheet_missing_column {
     left: 50%;
     margin-top: 20px;
     margin-left: -400px; }
-    #main-content.frontpage > div.projects .flexslider .comment {
-      background: aqua;
+    #main-content.frontpage > div.projects .flexslider .testimony {
       width: 450px;
       height: 100px;
       position: relative;
-      top: -100px;
-      left: 250px; }
+      top: -130px;
+      left: 250px;
+      font-size: 16px;
+      font-style: italic;
+      text-align: justify; }
+      #main-content.frontpage > div.projects .flexslider .testimony .author-info {
+        float: right;
+        text-align: right;
+        margin-top: 0.5em;
+        font-size: 80%;
+        max-width: 80%;
+        display: inline-block; }
+    #main-content.frontpage > div.projects .flexslider .aldeias {
+      margin-top: 15px; }
+    #main-content.frontpage > div.projects .flexslider .baccarelli {
+      margin-top: 0; }
+    #main-content.frontpage > div.projects .flexslider .unas {
+      margin-top: 20px; }
   #main-content.frontpage > div.news > div {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
