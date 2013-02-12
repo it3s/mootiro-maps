@@ -26,7 +26,7 @@
   </span> -->
   {% if collection.previous_page_number > 1 and collection.paginator.num_pages > 3 %}
     <span>
-      <a href="?page=1">
+      <a href="#" page="1">
         &lt;&lt; {% trans 'first' %}
       </a>
     </span>
@@ -34,7 +34,7 @@
 
   {% if collection.has_previous %}
     <span>
-      <a href="?page={{ collection.previous_page_number }}">
+      <a href="#" page="{{ collection.previous_page_number }}">
         &lt; {% trans 'previous' %}
       </a>
     </span>
@@ -48,7 +48,7 @@
 
   {% if not collection.has_next and collection.paginator.num_pages > 2 %}
     <span>
-      <a href="?page={{ collection.previous_page_number|add:"-1" }}">
+      <a href='#' page='{{ collection.previous_page_number|add:"-1" }}'>
         {{ collection.previous_page_number|add:"-1" }}
       </a>
     </span>
@@ -56,7 +56,7 @@
 
   {% if collection.has_previous %}
   <span>
-    <a href="?page={{ collection.previous_page_number }}">
+    <a href="#" page="{{ collection.previous_page_number }}">
       {{ collection.previous_page_number }}
     </a>
   </span>
@@ -68,13 +68,13 @@
 
   {% if collection.has_next %}
   <span>
-    <a href="?page={{ collection.next_page_number }}">{{ collection.next_page_number }}</a>
+    <a href="#" page="{{ collection.next_page_number }}">{{ collection.next_page_number }}</a>
   </span>
   {% endif %}
 
   {% if not collection.has_previous and collection.paginator.num_pages > 2 %}
     <span>
-      <a href="?page={{ collection.next_page_number|add:"1" }}">
+      <a href='#' page='{{ collection.next_page_number|add:"1" }}'>
         {{ collection.next_page_number|add:"1" }}
       </a>
     </span>
@@ -88,7 +88,7 @@
 
   {% if collection.has_next %}
     <span>
-      <a href="?page={{ collection.next_page_number }}">
+      <a href="#" page="{{ collection.next_page_number }}">
         {% trans 'next' %} &gt;
       </a>
     </span>
@@ -96,11 +96,21 @@
 
   {% if collection.next_page_number < collection.paginator.num_pages and collection.paginator.num_pages > 3 %}
   <span>
-    <a href="?page={{ collection.paginator.num_pages }}">
+    <a href="#" page="{{ collection.paginator.num_pages }}">
       {% trans 'last' %} &gt;&gt;
     </a>
   </span>
   {% endif %}
 
 </div>
+<script type="text/javascript" charset="utf-8">
+  $('.komoo-pagination a').click(function(evt){
+      evt.preventDefault();
+      urlVars = getUrlVars();
+      $el = $(evt.target);
+      urlVars['page'] = $el.attr('page');
+      setUrlVars(urlVars)
+      return false;
+  });
+</script>
 {% endif %}
