@@ -18,7 +18,9 @@ from reversion.models import Revision
 
 from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
-from main.utils import create_geojson, randstr, send_mail
+from main.utils import create_geojson, randstr, send_mail, paginated_query
+
+from update.models import Update
 
 from .models import User
 from .forms import FormProfile, FormUser
@@ -106,8 +108,12 @@ def profile(request, id=''):
         geojson['features'][0]['properties']['image'] = '/static/img/user.png'
         geojson = json.dumps(geojson)
 
+    reg = r'[^0-9]%d[^0-9]' % user.id
+    updates = Update.objects.filter(_user_ids__regex=reg).order_by('-date')
+    updates = paginated_query(updates, request, size=20)
+
     return dict(user_profile=user, contributions=contributions,
-                geojson=geojson)
+                geojson=geojson, updates=updates)
 
 
 @render_to('authentication/profile_update.html')
