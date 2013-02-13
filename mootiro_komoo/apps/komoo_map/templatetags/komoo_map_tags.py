@@ -37,17 +37,30 @@ def komoo_map_objects_list(context, arg1='', arg2=''):
     parsed_args = _parse_args(arg1, arg2)
     prefix = parsed_args.get('prefix', 'item')
     show_geometries = parsed_args.get('show_geometries', False)
+    help_strs = {
+        'Community': 'Adicionar uma Communidade. Comunidades podem ser: uma '
+            'favela, um centro urbano, uma aldeia, um bairro, etc.',
+        'Need': 'Adicionar uma Necessidade. Necessidades são os problemas '
+            'diversos da sua região, pode ser um lixão, uma rua cheia de '
+            'buracos, etc',
+        'Resource': 'Adicione um Recurso. Por exemplo: uma escola, posto de '
+            'saúde, parque, centro cultural, etc',
+        'OrganizationBranch': 'Adicione uma Organização. Organizações '
+            'incluem ONGs, empresas, coletivos, etc',
+    }
     objects = [{
         'type': obj.__name__,
         'title': _(obj.get_map_attr('title') or obj.__name__),
+        'help': help_strs.get(obj.__name__, ''),
         'geometries': [{
             'type': geometry,
             'title': _(geometries_titles.get(geometry, geometry))
         } for geometry in obj.get_map_attr('geometries')]
     } for obj in get_models() if obj.get_map_attr('editable')]
+
     return {'prefix': prefix,
             'objects': objects,
-            'show_geometries': show_geometries
+            'show_geometries': show_geometries,
             }
 
 

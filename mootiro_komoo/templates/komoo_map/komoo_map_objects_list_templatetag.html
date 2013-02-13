@@ -1,6 +1,6 @@
 <ul class="geo-objects-listing" id="map-add-menu">
 {% for object in objects %}
-  <li class="{{ object.type|lower }}">
+  <li class="{{ object.type|lower }}" title="{{object.help}}">
     <div id="{{ prefix }}-{{ object.type|lower }}" class="item"
       data-feature-type="{{ object.type }}"
       data-geometry-type="{% if object.geometries|length == 1 %}{{ object.geometries.0.type }}{% endif %}">
