@@ -8,6 +8,7 @@ from django.contrib.contenttypes import generic
 
 from authentication.models import User
 from komoo_project.models import Project
+from moderation.utils import delete_object
 
 import simplejson as json
 from urllib import urlencode
@@ -208,6 +209,18 @@ class Importsheet(models.Model):
             self.save()
 
         return success
+
+    def undo(self):
+        '''Remove inserted objects undoing previous insertion.'''
+        if not self.inserted:
+            return
+
+        for iro in ImportsheetRelatedObject.objects.filter(importsheet=self):
+            iro.content_object.delete()
+            iro.delete()
+
+        self.inserted = False
+        self.save()
 
     @property
     def mappers(self):
