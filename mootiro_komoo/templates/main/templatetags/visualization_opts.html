@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="view-list-visualization">
-  <div class="view-list-visualization-header">
-    {% trans 'Visualization options' %}<i class="icon-chevron-right"></i>
+  <div class="view-list-visualization-header" title="Abrir/fechar menu de opções de filtros e ordenadores para esta listagem.">
+    {% trans 'Visualization and Filtering options' %}<i class="icon-chevron-right"></i>
   </div>
   <div class="view-list-visualization-options" style="display: none;">
       {% if sorters %}
@@ -13,8 +13,8 @@
         </div>
           {% if 'date' in field.1 %}
           <div class="date-sorter-order">
-            <div order='asc'><i class="icon-chevron-up icon-blue"></i></div>
-            <div order='desc'><i class="icon-chevron-down icon-blue" ></i></div>
+            <div order='asc' title="ordem ascendente (mais antigos primeiro)"><i class="icon-chevron-up icon-blue"></i></div>
+            <div order='desc' title="ordem descendente (mais recentes primeiro)"><i class="icon-chevron-down icon-blue" ></i></div>
           </div>
           {% endif %}
         {% endfor %}
