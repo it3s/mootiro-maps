@@ -10,6 +10,10 @@ from django.core.mail import mail_admins
 from django.core.urlresolvers import reverse
 from django.core.exceptions import MultipleObjectsReturned
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
+
+from komoo_comments.models import Comment
+
 from moderation.models import Moderation, Report
 
 
@@ -31,11 +35,27 @@ def can_delete(obj, user):
     return False
 
 
+# TODO: when we have a unified model, move this to a delete method in base class.
 def delete_object(obj):
     """Delete the object and the related moderation object"""
     moderation = Moderation.objects.get_for_object(obj)
     if moderation:
         moderation.delete()
+
+    # remove possible tag relationship
+    if hasattr(obj, 'tags'):
+        obj.tags.clear()
+
+    # remove possible comment relationship
+    for c in Comment.get_comments_for(obj):
+        c.delete()
+
+    ct = ContentType.objects.get_for_model(obj)
+    # remove possible project relationship
+    for pro in ProjectRelatedObject.objects \
+                .filter(content_type=ct, object_id=obj.id):
+        pro.delete()
+
     obj.delete()
 
 

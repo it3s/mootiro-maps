@@ -8,6 +8,7 @@ urlpatterns = patterns('importsheet.views',
     url(pr(r'^new/?$'), 'new', name='importsheet_new'),
     url(pr(r'^ID/?$'), 'show', name='importsheet_show'),
     url(pr(r'^ID/insert/?$'), 'insert', name='importsheet_insert'),
+    url(pr(r'^ID/undo/?$'), 'undo', name='importsheet_undo'),
 )
 
 urlpatterns += patterns('importsheet.google',

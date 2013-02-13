@@ -32,6 +32,20 @@
         <h2>
           {{ importsheet.inserted_objects|length }} {% trans "objects were added." %}<br/>
         </h2>
+        
+        <div class="importsheet_controls">
+          {% if user.is_admin %}
+            <a class="insert btn btn-large btn-danger" href="{% url importsheet_undo importsheet.id %}">{% trans "Undo import. (remove all)" %}</a>
+          {% else %}
+            <a class="insert btn btn-large btn-danger disabled">
+              {% trans "Undo import. (remove all)" %}<br/>
+            <span class="small">{% trans "(only administrators)" %}</span>
+          </a>
+          {% endif %}
+        </div>
+      
+        <div class="clear-both"></div>
+        
         <ul>
           {% for obj in importsheet.inserted_objects %}
             <li>

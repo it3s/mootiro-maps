@@ -71,3 +71,15 @@ def insert(request, id=''):
         success = True
 
     return dict(success=success, importsheet=ish)
+
+
+def undo(request, id=''):
+    ish = Importsheet.objects.get(id=id)
+
+    if ish.inserted:
+        if request.user.is_admin:
+            ish.undo()
+        else:
+            return redirect(reverse('importsheet_insert', args=(ish.id,)))
+    
+    return redirect(reverse('importsheet_show', args=(ish.id,)))
