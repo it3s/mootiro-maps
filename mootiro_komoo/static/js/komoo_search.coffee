@@ -103,7 +103,7 @@ $ ->
                         <li class="search-result">
                             <a class="search-result-title" href='#{obj.link}'> #{obj.name} </a>
                             <div class="right">
-                                <a href="/map/##{hashlink}" hashlink="#{hashlink}" class="search-map-link #{disabled}"><i class="icon-see-on-map"></i></a>
+                                <a href="/map/##{hashlink}" hashlink="#{hashlink}" class="search-map-link #{disabled}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
                             </div>
                         </li>"""
 
@@ -113,7 +113,7 @@ $ ->
                                 <li class="branch-search-result">
                                     <span class="search-result-title org-branch">&#8226; #{b.name}</span>
                                     <div class="right">
-                                        <a href="/map/#b#{b.id}" hashlink="b#{b.id}" class="search-map-link"><i class="icon-see-on-map"></i></a>
+                                        <a href="/map/#b#{b.id}" hashlink="b#{b.id}" class="search-map-link" title="ver no mapa"><i class="icon-see-on-map"></i></a>
                                     </div>
                                 </li>"""
 
@@ -151,7 +151,7 @@ $ ->
                     <li>
                         <a href="#" class="search-result-title"> #{obj.description}</a>
                         <div class="right">
-                            <a href="##{hashlink}" hashlink="#{hashlink}" class="search-map-link"><i class="icon-see-on-map"></i></a>
+                            <a href="##{hashlink}" hashlink="#{hashlink}" class="search-map-link" title="ver no mapa" ><i class="icon-see-on-map"></i></a>
                         </div>
                     </li>
                 """

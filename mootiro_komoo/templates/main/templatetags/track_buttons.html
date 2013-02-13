@@ -7,7 +7,9 @@
             {% url follow_content %}
         {% else %}
             #
-        {% endif %}">
+            {% endif %}" 
+    title="{% if is_signed %}Parar de seguir esse conteúdo{% else %}Seguir atualizações nesse conteúdo{% endif %}"
+    >
         <img src="/static/img/glyphicons_327_rss.png"/>
         {% if is_signed %}
             <span>{% trans 'Subscribed' %}</span>

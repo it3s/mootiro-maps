@@ -23,7 +23,7 @@
         <div class="profile-lp-header">
             <span class="profile-lp-header-username">{{ user_profile.name }}</span>
             {% if user.id == user_profile.id %}
-            <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn">
+            <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn" title="Editar Perfil">
                 <i class="icon-pencil"></i>
             </a>
             {% endif %}
@@ -83,7 +83,7 @@
             <div class="contribution-header">
                 <a href="<%= permalink %>" class="contribution-title"><%= name %></a>
                 <div class="right">
-                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= id %>">
+                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= id %>" title="ver no mapa">
                         <i class="icon-see-on-map"></i>
                     </a>
                 </div>

@@ -74,12 +74,12 @@
             obj = val[idx];
             disabled = !(obj != null ? obj.has_geojson : void 0) ? 'disabled' : '';
             hashlink = key[0] + obj.id;
-            results_list += "<li class=\"search-result\">\n    <a class=\"search-result-title\" href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + hashlink + "\" hashlink=\"" + hashlink + "\" class=\"search-map-link " + disabled + "\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+            results_list += "<li class=\"search-result\">\n    <a class=\"search-result-title\" href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + hashlink + "\" hashlink=\"" + hashlink + "\" class=\"search-map-link " + disabled + "\" title=\"ver no mapa\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
             if (key === 'organization' && ((_ref = obj.branches) != null ? _ref.length : void 0)) {
               _ref2 = obj.branches;
               for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
                 b = _ref2[_j];
-                results_list += "<li class=\"branch-search-result\">\n    <span class=\"search-result-title org-branch\">&#8226; " + b.name + "</span>\n    <div class=\"right\">\n        <a href=\"/map/#b" + b.id + "\" hashlink=\"b" + b.id + "\" class=\"search-map-link\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+                results_list += "<li class=\"branch-search-result\">\n    <span class=\"search-result-title org-branch\">&#8226; " + b.name + "</span>\n    <div class=\"right\">\n        <a href=\"/map/#b" + b.id + "\" hashlink=\"b" + b.id + "\" class=\"search-map-link\" title=\"ver no mapa\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
               }
             }
             results_count++;
@@ -97,7 +97,7 @@
         for (idx in google_results) {
           obj = google_results[idx];
           hashlink = "g" + idx;
-          results_list += "<li>\n    <a href=\"#\" class=\"search-result-title\"> " + obj.description + "</a>\n    <div class=\"right\">\n        <a href=\"#" + hashlink + "\" hashlink=\"" + hashlink + "\" class=\"search-map-link\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+          results_list += "<li>\n    <a href=\"#\" class=\"search-result-title\"> " + obj.description + "</a>\n    <div class=\"right\">\n        <a href=\"#" + hashlink + "\" hashlink=\"" + hashlink + "\" class=\"search-map-link\" title=\"ver no mapa\" ><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
           results_count++;
         }
         results_list += '</ul></li>';
