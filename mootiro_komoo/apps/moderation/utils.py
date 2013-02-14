@@ -13,6 +13,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 
 from komoo_comments.models import Comment
+from komoo_project.models import ProjectRelatedObject
 
 from moderation.models import Moderation, Report
 
