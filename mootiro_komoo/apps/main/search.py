@@ -7,12 +7,72 @@ ES_INDEX = settings.ELASTICSEARCH_INDEX_NAME
 ES_TYPE = 'komoo_objects'
 
 MAPPING = {
-    'object_id': {'type': 'integer'},
-    'table_ref': {'type': 'string'},
-    'data': {  # object
+    "properties": {
+        "object_id": {"type": "string"},
+        "table_ref": {"type": "string"},
+        "name": {
+            "fields": {
+                "name": {
+                    "type": "string",
+                    "analyzer": "full_name"
+                },
+                "partial": {
+                    "search_analyzer": "full_name",
+                    "index_analyzer": "partial_name",
+                    "type": "string"
+                }
+            },
+            "type": "multi_field"
+        },
+        "description": {
+            "fields": {
+                "name": {
+                    "type": "string",
+                    "analyzer": "full_name"
+                },
+                "partial": {
+                    "search_analyzer": "full_name",
+                    "index_analyzer": "partial_name",
+                    "type": "string"
+                 }
+            },
+            "type": "multi_field"
+        }
     },
+    "settings": {
+        "analysis": {
+            "filter": {
+                "name_ngrams": {
+                    "side": "front",
+                    "max_gram": 10,
+                    "min_gram": 2,
+                    "type": "edgeNGram"
+                 }
+            },
+            "analyzer": {
+                "full_name": {
+                    "filter": [
+                        "standard",
+                        "lowercase",
+                        "asciifolding"
+                    ],
+                    "type": "custom",
+                    "tokenizer": "standard"
+                },
+                "partial_name": {
+                    "filter": [
+                        "standard",
+                        "lowercase",
+                        "asciifolding",
+                        "name_ngrams"
+                     ],
+                "type": "custom",
+                "tokenizer": "standard"
+              }
+           }
+        }
+    }
 }
-
 conn = ES(settings.ELASTICSEARCH_URL)  # Use HTTP
 
 
@@ -25,7 +85,7 @@ def delete_index():
 
 
 def create_mapping():
-    conn.indices.put_mapping(ES_TYPE, {'properties': MAPPING}, [ES_INDEX])
+    conn.indices.put_mapping(ES_TYPE, MAPPING, [ES_INDEX])
 
 
 def get_model():
@@ -34,6 +94,7 @@ def get_model():
 
 def index_object(obj):
     conn.index(obj, ES_INDEX, ES_TYPE)  # , 1)
+
 
 def refreseh_index(obj):
     conn.indices.refresh(ES_INDEX)
