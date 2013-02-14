@@ -1,15 +1,15 @@
 # -*- coding=utf-8 -*-
 from django.conf import settings
 from pyes import ES
-from pyes.queryset import generate_model
+# from pyes.queryset import generate_model
 
 ES_INDEX = settings.ELASTICSEARCH_INDEX_NAME
 ES_TYPE = 'komoo_objects'
 
 MAPPING = {
     "properties": {
-        "object_id": {"type": "string"},
-        "table_ref": {"type": "string"},
+        "object_id": {"type": "string", "analyzer": "simple"},
+        "table_ref": {"type": "string", "analyzer": "simple"},
         "name": {
             "fields": {
                 "name": {
@@ -17,27 +17,27 @@ MAPPING = {
                     "analyzer": "full_name"
                 },
                 "partial": {
+                    "type": "string",
                     "search_analyzer": "full_name",
-                    "index_analyzer": "partial_name",
-                    "type": "string"
+                    "index_analyzer": "partial_name"
                 }
             },
             "type": "multi_field"
         },
-        "description": {
-            "fields": {
-                "name": {
-                    "type": "string",
-                    "analyzer": "full_name"
-                },
-                "partial": {
-                    "search_analyzer": "full_name",
-                    "index_analyzer": "partial_name",
-                    "type": "string"
-                 }
-            },
-            "type": "multi_field"
-        }
+        # "description": {
+        #     "fields": {
+        #         "name": {
+        #             "type": "string",
+        #             "analyzer": "full_name"
+        #         },
+        #         "partial": {
+        #             "search_analyzer": "full_name",
+        #             "index_analyzer": "partial_name",
+        #             "type": "string"
+        #          }
+        #     },
+        #     "type": "multi_field"
+        # }
     },
     "settings": {
         "analysis": {
@@ -88,13 +88,14 @@ def create_mapping():
     conn.indices.put_mapping(ES_TYPE, MAPPING, [ES_INDEX])
 
 
-def get_model():
-    return generate_model(ES_INDEX, ES_TYPE)
-
-
-def index_object(obj):
-    conn.index(obj, ES_INDEX, ES_TYPE)  # , 1)
+# def get_model():
+#     return generate_model(ES_INDEX, ES_TYPE)
 
 
 def refreseh_index(obj):
     conn.indices.refresh(ES_INDEX)
+
+
+def index_object(obj):
+    conn.index(obj, ES_INDEX, ES_TYPE)
+    refreseh_index()
