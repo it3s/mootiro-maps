@@ -29,7 +29,7 @@ def can_delete(obj, user):
     now = datetime.datetime.now()
     delta = now - obj.creation_date
     hours = delta.days * 24. + delta.seconds / 3600.
-    if user.is_superuser or \
+    if user.is_admin or \
             (hours <= settings.DELETE_HOURS and obj.creator == user):
         return True
 
