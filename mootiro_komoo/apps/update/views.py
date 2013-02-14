@@ -24,8 +24,8 @@ def list(request):
     sort_order = ['-date', 'comments_count']
     updates_list = sorted_query(query_set, sort_order, request, default_order='-date')
     updates_count = updates_list.count()
-    updates = paginated_query(updates_list, request, size=30)
+    updates_page = paginated_query(updates_list, request, size=30)
 
     news = News.objects.order_by("-date")
 
-    return dict(updates=updates, news=news)
+    return dict(updates_page=updates_page, news=news)

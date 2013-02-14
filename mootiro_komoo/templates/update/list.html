@@ -3,199 +3,44 @@
 {% load komoo_filters %}
 {% load komoo_tags %}
 {% load komoo_map_tags %}
+{% load update_tags %}
 {% load comment_tags %}
 {% load humanize %}
 
 
 {% block content %}
 {% komoo_map_tooltip %}
-<div id="updates-header">
-  <img alt="" src="{{STATIC_URL}}img/updates-page/novidades.png"/>
-
-  <div id="about-mootiro" class="shadow-container right closed">
-    <img alt="{% trans "About Mootiro" %}" src="{{STATIC_URL}}img/updates-page/sobre-off.png"
-        class="about-image right"/>
-    <img alt="{% trans "About Mootiro" %}" src="{{STATIC_URL}}img/updates-page/sobre.png"
-        class="about-image right hidden"/>
-    <div class="clear-both"></div>
-    <div class="about-content hidden">
-      <a href="{% url hotsite %}">{% trans "what is this?" %}</a>
-      <ul>
-        <li>
-          <a href="{% url map %}#map-panel-add"  class="button community selected">
-            <i class="icon-community left"></i> {% trans "Add a community" %}
-          </a>
-        </li>
-        <li>
-          <a href="{% url map %}#map-panel-add" class="button need selected">
-            <i class="icon-need left"></i> {% trans "Add a need" %}
-          </a>
-        </li>
-        <li>
-          <a href="{% url new_organization %}" class="button organization selected">
-            <i class="icon-organization left"></i> {% trans "Add an organization" %}
-          </a>
-        </li>
-        <li>
-          <a href="{% url project_new %}" class="button project selected">
-            <i class="icon-project left"></i> {% trans "Add a project" %}
-          </a>
-        </li>
-      </ul>
-    </div>
+  <div id="updates-header">
+    <img alt="" src="{{STATIC_URL}}img/updates-page/novidades.png"/>
   </div>
-</div>
 
-<div id="main-content">
-  <div class="main-column content-updates">
-
-    <ul class="tabs horizontal">
-      <li class="tab first last"><a href="#last-updates-panel">{% trans "last updates" %}</a></li>
-      <!--
-      <li class="tab"><a href="#discussions-panel">{% trans "discussions" %}</a></li>
-      <li class="tab last"><a href="#my-content-panel">{% trans "my content" %}</a></li>
-      -->
-    </ul>
-    <div class="clear-both"></div>
-
-    <div class="shadow-container user-updates">
-      <div id="content-updates-filters" >
-        <span class="attenuate small">{% trans "Type" %}</span>
-        <ul class="frontpage-filters-list">
-            <li class="frontpage-filter-item active-filter">
-            <img src="{{ STATIC_URL }}img/community.png" alt="community" title='{%trans "activate/deactivate Community" %}'/>
-            </li>
-            <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/need.png" alt="need" title='{%trans "activate/deactivate Need" %}'/>
-            </li>
-            <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/organization.png" alt="organization" title='{%trans "activate/deactivate Organization" %}'/>
-            </li>
-            <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/resource.png" alt="resource" title='{%trans "activate/deactivate Resource" %}'/>
-            </li>
-            <li class="frontpage-filter-item active-filter">
-                <img src="{{ STATIC_URL }}img/investment.png" alt="investment" title='{%trans "activate/deactivate Investment" %}'/>
-            </li>
-        </ul>
-      </div>
-      <div class="clear-both"></div>
-
-      <div id="last-updates-panel" class="panel">
-          <div class="view-list-pagination">
-            {% pagination updates %}
-          </div>
-          <ul class="updates">
-            {% for u in updates.object_list %}
-            <li class="a-update">
-              <div class="update-image">
-                {# How to change images to be inside update app??? #}
-                <img src="{{STATIC_URL}}{{ u.image }}">
-              </div>
-              <div class="update-info">
-                <h3>
-                  {% if u.type == "D" %}
-                    {% users_list u.users %}
-                    {% blocktrans count num=shown|length %}
-                      discussed
-                    {% plural %}
-                      discussed
-                    {% endblocktrans %}
-                  {% endif %}
-                  
-                  {% if u.type == "I" %}
-                    {% with o=u.get_object.inserted_buckets.Organization|length r=u.get_object.inserted_buckets.Resource|length c=u.get_object.inserted_buckets.Community|length %}
-                      {% if c %}
-                        {{c}} {% blocktrans count num=c %}community{% plural %}communities{% endblocktrans %}{% if o and r %},{% else %}{% if o or r %} {% trans "and" %}{% endif %}{% endif %}
-                      {% endif %}
-                      
-                      {% if o %}
-                        {{o}} {% blocktrans count num=o %}organization{% plural %}organizations{% endblocktrans %}{% if c or r %} {% trans "and" %}{% endif %}
-                      {% endif %}
-                      
-                      {% if r %}
-                        {{r}} {% blocktrans count num=r %}resource{% plural %}resources{% endblocktrans %}
-                      {% endif %}
-                      
-                      {% with n=c|add:o|add:r %}
-                        {% blocktrans count num=n %}
-                          imported into project
-                        {% plural %}
-                          imported into project
-                        {% endblocktrans %}
-                      {% endwith %}
-                    {% endwith %}
-                  {% endif %}
-
-                  {% if u.object_type == 'proposal' %}
-                  {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
-                    {% trans "for the need" %} <a href="{{ u.instances.1.link }}">{{ u.instances.1.name }}</a>
-                  {% else %}
-                  <a href="{{ u.instance.link }}" title='{% trans "see this object page" %}'>{{ u.instance.name }}</a>
-                  {% endif %}
-                </h3>
-                <div class="right">
-                  <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map" title='{% trans "see on map"%}'></i></a>
-                </div>
-                <div class="clear-both"></div>
-                {% communities_list u.communities %}
-                <div class="clear-both"></div>
-                <div class="update-message left">
-                  <strong>{{ u.readable_type|capfirst }}</strong> {{ u.date|naturaltime }}
-
-                  {### Users aggregated list ###}
-                  {% if u.type == "A" or u.type == "E" or u.type == "I" %}
-                    {% trans "by" %}
-                    {% users_list u.users %}
-                  {% endif %}
-                </div>
-                <div class="update-social right">
-                  <a href="{{ u.instance.link }}#Comments">
-                    ({{ u.comments_count }} {% if u.comments_count == 1 %}{% trans 'comment' %}{% else %}{% trans 'comments' %}{% endif %})
-                  </a>
-                </div>
-              </div>
-            </li>
-            {% endfor %}
-          </ul>
-          <div class="view-list-pagination">
-            {% pagination updates %}
-          </div>
-      </div>
+  <div id="main-content">
+    <div class="main-column content-updates">
+      {% updates_list updates_page %}
     </div>
 
-    <!--
-    <div id="discussions-panel" class="panel hidden">
-        DISCUSSIONS
-    </div>
-
-    <div id="my-content-panel" class="panel hiden">
-        MY CONTENT
-    </div>
-    -->
-
-  </div>
-  <div class="right-bar news-updates shadow-container">
-    <h2><img src="{{STATIC_URL}}img/updates-page/news.png"/>{% trans "News" %}</h2>
-    <div>
-      {% for n in news %}
-        <p>
-          {% if n.title %}
-          <h4>
-            {% if n.title_link %}
-              <a href="{{ n.title_link }}">{{ n.title }}</a>
-            {% else %}
-              {{ n.title }}
+    <div class="right-bar news-updates shadow-container">
+      <h2><img src="{{STATIC_URL}}img/updates-page/news.png"/>{% trans "News" %}</h2>
+      <div>
+        {% for n in news %}
+          <p>
+            {% if n.title %}
+            <h4>
+              {% if n.title_link %}
+                <a href="{{ n.title_link }}">{{ n.title }}</a>
+              {% else %}
+                {{ n.title }}
+              {% endif %}
+            </h4>
             {% endif %}
-          </h4>
-          {% endif %}
-          {{ n.description }}<br/>
-          <span class="attenuate">{{ n.date|date:"d/m/Y" }}</span>
-        </p>
-      {% endfor %}
+            {{ n.description }}<br/>
+            <span class="attenuate">{{ n.date|date:"d/m/Y" }}</span>
+          </p>
+        {% endfor %}
+      </div>
     </div>
   </div>
-</div>
+
 {% endblock %}
 
 {% block page_scripts %}
