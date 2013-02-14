@@ -199,6 +199,8 @@ div.importsheet_missing_column {
     box-sizing: border-box; }
   #main-content.frontpage > div.what-is-it-for a {
     color: inherit; }
+  #main-content.frontpage > div.what-is-it-for a:hover {
+    text-decoration: none; }
   #main-content.frontpage > div.what-is-it-for div.topic {
     vertical-align: top;
     display: inline-block;
@@ -226,6 +228,9 @@ div.importsheet_missing_column {
     left: 50%;
     margin-top: 20px;
     margin-left: -400px; }
+    #main-content.frontpage > div.projects .flexslider img {
+      max-width: 220px;
+      max-height: 140px; }
     #main-content.frontpage > div.projects .flexslider .testimony {
       width: 450px;
       height: 100px;
@@ -241,11 +246,17 @@ div.importsheet_missing_column {
         font-size: 80%;
         max-width: 80%;
         display: inline-block; }
-    #main-content.frontpage > div.projects .flexslider .aldeias {
+    #main-content.frontpage > div.projects .flexslider .aldeias-infantis img {
+      margin-left: 30px; }
+    #main-content.frontpage > div.projects .flexslider .aldeias-infantis p {
       margin-top: 15px; }
-    #main-content.frontpage > div.projects .flexslider .baccarelli {
+    #main-content.frontpage > div.projects .flexslider .heliopolis-verde img {
+      margin-left: 35px; }
+    #main-content.frontpage > div.projects .flexslider .heliopolis-verde p {
       margin-top: 0; }
-    #main-content.frontpage > div.projects .flexslider .unas {
+    #main-content.frontpage > div.projects .flexslider .bairro-educador img {
+      margin-left: 40px; }
+    #main-content.frontpage > div.projects .flexslider .bairro-educador p {
       margin-top: 20px; }
   #main-content.frontpage > div.news > div {
     -webkit-box-sizing: border-box;
@@ -284,4 +295,5 @@ div.importsheet_missing_column {
     position: relative; }
   .flexslider .slides img {
     width: auto;
-    height: auto; }
+    height: auto;
+    position: absolute; }
