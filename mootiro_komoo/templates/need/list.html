@@ -13,7 +13,7 @@
 <div id="main-content">
   <div class="highlight">
     <div class="button-new">
-      <a class="button login-required" href="{% url new_need %}">{% trans 'New need' %}</a>
+      <a class="button login-required" href="{% url new_need %}" title="Adicionar problemas ou necessidades da sua região. Por exemplo: lixão, falta de policiamento, rua com buracos, etc">{% trans 'New need' %}</a>
     </div>
     <div class="view-list">
       <div class="view-list-top">
@@ -43,7 +43,7 @@
             {% endfor %}
             {% endif %}
           </span>
-          <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson need %}">
+          <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson need %}" title="ver no mapa">
             <i class="icon-see-on-map"></i>
           </a>
           <ul class="horizontal">

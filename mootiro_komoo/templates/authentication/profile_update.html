@@ -50,7 +50,7 @@
                                 <input id="id_email" type="text"
                                        class="textinput textInput"
                                        value="{{ user.email }}"
-                                       name="email" disabled='true' 
+                                       name="email" disabled='true'
                                        title="{% trans 'emails cannot be changed, if you have a problem with you email address please contact us' %}"/>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                                        title="{% trans 'Enter your current password if you want change to a new one. If you did not set a password yet, then leave it blank' %}"/>
                             </div>
                         </div>
-                          
+
                         <div class="clearfix control-group">
                           <label for="id_password">{% trans 'New Password' %}</label>
                             <div class="controls">
@@ -116,7 +116,7 @@
                 <li class="google">
                   {% if user.google %}
                   <p>{% trans "Your Google account is:" %}</p>
-                  <input type="text" value="{{ user.google.email }}" disabled="true" /> 
+                  <input type="text" value="{{ user.google.email }}" disabled="true" />
                   {% else %}
                   <a href="{% url login_google %}?next=/user/edit">
                     <button class="google">
@@ -129,7 +129,7 @@
                 <li class="facebook">
                   {% if user.facebook %}
                   <p>{% trans "Your facebook account is:" %}</p>
-                  <input type="text" value="{{ user.facebook.email }}" disabled="true" /> 
+                  <input type="text" value="{{ user.facebook.email }}" disabled="true" />
                   {% else %}
                   <a href="{% url login_facebook %}?next=/user/edit">
                     <button class="facebook">
@@ -165,13 +165,13 @@
             <div class="signature-header">
                 <a href="<%= permalink %>" class="signature-title"><%= obj_name %></a>
                 <div class="right">
-                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= obj_id %>">
+                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= obj_id %>" title="ver no mapa">
                         <i class="icon-see-on-map"></i>
                     </a>
                 </div>
             </div>
             <div class="signature-body">
-                <div class="cancel-subscription-btn btn">
+              <div class="cancel-subscription-btn btn" title="Parar de seguir as atualizações desse item">
                     <i class="icon-remove-sign"></i>
                     <span>{% trans 'Cancel Subscription' %}</span>
                 </div>
@@ -185,7 +185,7 @@
         <span>{% trans 'Signatures' %}</span>
     </div>
     <div class="div-signatures-manage-btn">
-        <button id="signatures-manage-btn" class="button" >
+        <button id="signatures-manage-btn" class="button" title="Opções de notificação e recebimento de e-mails com atualizações dos itens que você segue">
             {% trans 'Receivings Options' %}
         </button>
     </div>

@@ -24,7 +24,7 @@
         <div class="profile-lp-header">
             <span class="profile-lp-header-username">{{ user_profile.name }}</span>
             {% if user.id == user_profile.id %}
-            <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn">
+            <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn" title="Editar Perfil">
                 <i class="icon-pencil"></i>
             </a>
             {% endif %}
@@ -36,25 +36,22 @@
         </div>
 
         <!-- user contact info -->
+        {% if user_profile.contact %}
         <div class="profile-lp-contact">
             <div class="profile-lp-contact-header">{% trans 'Public Contact' %}</div>
-            {% if user_profile.contact %}
                 {{ user_profile.contact|render_markup|safe }}
-            {% else %}
-                {% trans 'Information Not Provided!' %}
-            {% endif %}
         </div>
+        {% endif %}
+        
+        {% if geojson %}
         <div class="profile-lp-map-preview">
           <div id="map-canvas-main-preview" class="map-canvas">
             <div class="placeholder">
-              {% if geojson %}
                 {% trans 'Loading...' %}
-              {% else %}
-                {% trans 'Map position not available' %}
-              {% endif %}
             </div>
           </div>
         </div>
+        {% endif %}
 
         <!-- map info section -->
         <div class="profile-lp-map-actions">
@@ -63,7 +60,7 @@
 
     </div> <!-- End of profile left pane -->
 
-    <div id="last-updates-panel" class="panel">
+    <div id="last-updates-panel" class="main-content">
       <div class="view-list-pagination">
         {% pagination updates %}
       </div>
