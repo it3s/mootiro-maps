@@ -96,24 +96,26 @@ def profile(request, id=''):
             return redirect(reverse('user_login'))
     else:
         user = get_object_or_404(User, id=id)
-    contributions = []
-    for rev in Revision.objects.filter(user=user
-               ).order_by('-date_created')[:20]:
-        version = rev.version_set.all()[0]
-        contrib = _prepare_contrib_data(version, rev.date_created)
-        if contrib:
-            contributions.append(contrib)
+
     geojson = create_geojson([user], convert=False, discard_empty=True)
     if geojson:
         geojson['features'][0]['properties']['image'] = '/static/img/user.png'
         geojson = json.dumps(geojson)
 
-    reg = r'[^0-9]%d[^0-9]' % user.id
-    updates = Update.objects.filter(_user_ids__regex=reg).order_by('-date')
-    updates = paginated_query(updates, request, size=20)
 
-    return dict(user_profile=user, contributions=contributions,
-                geojson=geojson, updates=updates)
+    filters = request.GET.get('filters', [])
+    if filters:
+        filters = filters.split(',')
+    if filters:
+        query_set = Update.objects.filter(object_type__in=filters)
+    else:
+        query_set = Update.objects.all()
+    
+    reg = r'[^0-9]%d[^0-9]' % user.id
+    query_set = query_set.filter(_user_ids__regex=reg).order_by('-date')
+    updates_page = paginated_query(query_set, request, size=10)
+
+    return dict(user_profile=user, geojson=geojson, updates_page=updates_page)
 
 
 @render_to('authentication/profile_update.html')

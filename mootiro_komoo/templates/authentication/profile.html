@@ -4,6 +4,7 @@
 {% load komoo_tags %}
 {% load komoo_filters %}
 {% load komoo_map_tags %}
+{% load update_tags %}
 {% load markitup_tags %}
 {% load comment_tags %}
 
@@ -60,86 +61,8 @@
 
     </div> <!-- End of profile left pane -->
 
-    <div id="last-updates-panel" class="main-content">
-      <div class="view-list-pagination">
-        {% pagination updates %}
-      </div>
-      <ul class="updates">
-        {% for u in updates.object_list %}
-        <li class="a-update">
-          <div class="update-image">
-            {# How to change images to be inside update app??? #}
-            <img src="{{STATIC_URL}}{{ u.image }}">
-          </div>
-          <div class="update-info">
-            <h3>
-              {% if u.type == "D" %}
-                {% users_list u.users %}
-                {% blocktrans count num=shown|length %}
-                  discussed
-                {% plural %}
-                  discussed
-                {% endblocktrans %}
-              {% endif %}
-              
-              {% if u.type == "I" %}
-                {% with o=u.get_object.inserted_buckets.Organization|length r=u.get_object.inserted_buckets.Resource|length c=u.get_object.inserted_buckets.Community|length %}
-                  {% if c %}
-                    {{c}} {% blocktrans count num=c %}community{% plural %}communities{% endblocktrans %}{% if o and r %},{% else %}{% if o or r %} {% trans "and" %}{% endif %}{% endif %}
-                  {% endif %}
-                  
-                  {% if o %}
-                    {{o}} {% blocktrans count num=o %}organization{% plural %}organizations{% endblocktrans %}{% if c or r %} {% trans "and" %}{% endif %}
-                  {% endif %}
-                  
-                  {% if r %}
-                    {{r}} {% blocktrans count num=r %}resource{% plural %}resources{% endblocktrans %}
-                  {% endif %}
-                  
-                  {% with n=c|add:o|add:r %}
-                    {% blocktrans count num=n %}
-                      imported into project
-                    {% plural %}
-                      imported into project
-                    {% endblocktrans %}
-                  {% endwith %}
-                {% endwith %}
-              {% endif %}
-
-              {% if u.object_type == 'proposal' %}
-              {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
-                {% trans "for the need" %} <a href="{{ u.instances.1.link }}">{{ u.instances.1.name }}</a>
-              {% else %}
-              <a href="{{ u.instance.link }}" title='{% trans "see this object page" %}'>{{ u.instance.name }}</a>
-              {% endif %}
-            </h3>
-            <div class="right">
-              <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map" title='{% trans "see on map"%}'></i></a>
-            </div>
-            <div class="clear-both"></div>
-            {% communities_list u.communities %}
-            <div class="clear-both"></div>
-            <div class="update-message left">
-              <strong>{{ u.readable_type|capfirst }}</strong> {{ u.date|naturaltime }}
-
-              {### Users aggregated list ###}
-              {% if u.type == "A" or u.type == "E" or u.type == "I" %}
-                {% trans "by" %}
-                {% users_list u.users %}
-              {% endif %}
-            </div>
-            <div class="update-social right">
-              <a href="{{ u.instance.link }}#Comments">
-                ({{ u.comments_count }} {% if u.comments_count == 1 %}{% trans 'comment' %}{% else %}{% trans 'comments' %}{% endif %})
-              </a>
-            </div>
-          </div>
-        </li>
-        {% endfor %}
-      </ul>
-      <div class="view-list-pagination">
-        {% pagination updates %}
-      </div>
+    <div id="last-updates-panel" class="profile-central-pane">
+      {% updates_list updates_page "compact" %}
     </div>
 
     <div class="profile-footer">
