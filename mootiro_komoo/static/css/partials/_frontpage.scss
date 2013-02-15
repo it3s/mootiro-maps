@@ -1,3 +1,32 @@
+#donate {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    padding: 0 1.5em 45px 0.5em;
+
+    h2 {
+        color: #333;
+        font-size: 20px;
+        font-weight: 400;
+    }
+
+    -webkit-border-radius: 0 40% 40% 0;
+       -moz-border-radius: 0 40% 40% 0;
+            border-radius: 0 40% 40% 0;
+
+    -webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+       -moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+            box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
+
+    background: #ededed url("../img/frontpage/pig.png") no-repeat 0.8em 2.5em;
+}
+#donate:hover {
+    // +0.5em left padding to the hover effect
+    padding-left: 1em;
+    background-position: 1.3em 2.5em;
+    background-image: url("../img/frontpage/pig-hover.png");
+}
+
 #main-content.frontpage {
     width: 900px;
 
