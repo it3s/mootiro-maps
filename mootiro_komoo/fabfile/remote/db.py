@@ -9,7 +9,7 @@ from .base import remote
 
 
 def DBFILE():
-    return 'backupdb_{}_{}.json'.format(env.komoo_env,
+    return 'backupdb_{}_{}.sql'.format(env.komoo_env,
                         datetime.now().strftime('%Y_%m_%d'))
 
 
@@ -20,16 +20,34 @@ def backup_db(forced=False):
     if exists(remote_path):
         if not forced:
             return remote_path
-    run('python manage.py dumpdata {} > {}'.format(env.komoo_django_settings,
+    run('pg_dump --no-privileges --no-owner {} > {}'.format(env.komoo_dbname,
         remote_path))
     return remote_path
 
 
 @remote
-def load_data(json_file):
+def load_data(file_):
     '''Loads data from json file.'''
-    run('python manage.py loaddata {} {}'.format(env.komoo_django_settings,
-            json_file))
+    run('psql {} < {}'.format(env.komoo_dbname, file_))
+
+
+# @remote
+# def backup_db(forced=False):
+#     '''Dumps remote database and stores it in backups folder.'''
+#     remote_path = '{}/backups/{}'.format(env.komoo_project_folder, DBFILE())
+#     if exists(remote_path):
+#         if not forced:
+#             return remote_path
+#     run('python manage.py dumpdata {} > {}'.format(env.komoo_django_settings,
+#         remote_path))
+#     return remote_path
+
+
+# @remote
+# def load_data(json_file):
+#     '''Loads data from json file.'''
+#     run('python manage.py loaddata {} {}'.format(env.komoo_django_settings,
+#             json_file))
 
 
 @remote
