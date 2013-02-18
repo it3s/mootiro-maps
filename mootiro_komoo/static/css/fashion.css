@@ -239,10 +239,6 @@ div.importsheet_missing_column {
       color: #057D90; }
     #main-content.frontpage > div.what-is-it-for div.topic p {
       padding: 0.5em 0.2em 0; }
-  #main-content.frontpage > div.what-is-it-for div.topic:hover {
-    background: #f0f0f0; }
-    #main-content.frontpage > div.what-is-it-for div.topic:hover h3 {
-      background: #B1DDE8; }
   #main-content.frontpage > div.projects .flexslider {
     width: 800px;
     height: 150px;
