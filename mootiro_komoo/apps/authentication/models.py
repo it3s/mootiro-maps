@@ -110,6 +110,9 @@ class AnonymousUser(object):
         return True
 
     def is_superuser(self):
+        return self.is_admin
+
+    def is_admin(self):
         return False
 
     id = None
