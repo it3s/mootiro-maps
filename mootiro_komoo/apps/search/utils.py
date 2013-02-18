@@ -83,51 +83,66 @@ SETTINGS_DICT = {
     }
 }
 
+
 def search_dict(term):
     return {
-   "sort":[
-      "_score"
-   ],
-   "query":{
-      "filtered":{
-         "query":{
-            "bool":{
-               "should":[
-                  {
-                     "text":{
-                        "name":{
-                           "boost":5,
-                           "query":term,
-                           "type":"phrase"
-                        }
-                     }
-                  },
-                  {
-                     "text":{
-                        "name.partial":{
-                           "boost":2,
-                           "query":term
-                        }
-                     }
-                  },
-                  {
-                     "text":{
-                        "description.partial":{
-                           "boost":1,
-                           "query":term
-                        }
-                     }
-                  }
-               ]
+        "sort": [
+            "_score"
+        ],
+        "query": {
+            "filtered": {
+                "query": {
+                    "bool": {
+                        "should": [
+                            {
+                                "text":{
+                                    "name":{
+                                        "boost":5,
+                                        "query":term,
+                                        "type":"phrase"
+                                    }
+                                }
+                            },
+                            {
+                                "text":{
+                                    "name.partial":{
+                                        "boost":2,
+                                        "query":term
+                                    }
+                                }
+                            },
+                            {
+                                "text":{
+                                    "description.partial":{
+                                        "boost":1,
+                                        "query":term
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
             }
-         }
-      }
-   }
+        }
+    }
+
+
+table_id_map = {
+    'Organization': 'o',
+    'Resource': 'r',
+    'Need': 'n',
+    'User': 'u',
+    'Community': 'c',
+    'Project': 'p',
 }
 
 
-def es_url(url_spec):
-    return url_spec.format(ES=ES, INDEX=ES_INDEX, TYPE=ES_TYPE)
+def es_url(url_spec, obj=None):
+    if obj:
+        ID = '{}{}'.format(table_id_map[obj.__class__.__name__], obj.id)
+    else:
+        ID = ''
+    return url_spec.format(ES=ES, INDEX=ES_INDEX, TYPE=ES_TYPE, ID=ID)
 
 
 def reset_index():
@@ -143,7 +158,7 @@ def create_mapping():
             data=json.dumps(MAPPINGS_DICT))
 
 
-def refreseh_index():
+def refresh_index():
     requests.post(es_url('{ES}/{INDEX}]_refresh'))
 
 
@@ -155,15 +170,17 @@ def index_object(obj):
         'name': obj.name,
         'description': getattr(obj, 'description', ''),
     }
-    requests.post(es_url('{ES}/{INDEX}/{TYPE}'),
+    requests.put(es_url('{ES}/{INDEX}/{TYPE}/{ID}', obj),
             headers={'Content-Type': 'application/json'},
             data=json.dumps(object_data))
     # refresh_index()
+
 
 def search_by_term(ter):
     r = requests.post(es_url('{ES}/{INDEX}/{TYPE}/_search'),
             headers={'Content-Type': 'application/json'},
             data=json.dumps(search_dict(ter)))
     data = json.loads(r.content)
+    from pprint import pprint; pprint(data)
     hits = data['hits']['hits']
     return [hit['_source'] for hit in hits]
