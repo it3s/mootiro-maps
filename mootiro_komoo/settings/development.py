@@ -91,6 +91,9 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'it3sdev@gmail.com'
 EMAIL_HOST_PASSWORD = '...'  # password on local settings
 
+ELASTICSEARCH_URL = 'http://localhost:9200'
+ELASTICSEARCH_INDEX_NAME = 'mootiro_maps_dev'
+
 # user specific or secret settings
 from local_settings import *
 

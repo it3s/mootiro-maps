@@ -161,7 +161,8 @@ def recreate_db():
     from django.conf import settings
     db_name = settings.DATABASES['default']['NAME']
     logging.info("Recreating database '{}'".format(db_name))
-    local('dropdb {} && createdb -T template_postgis {}'.format(db_name, db_name))
+    local('dropdb {} && createdb -T template_postgis {}'.format(
+        db_name, db_name))
 
 
 def shell():

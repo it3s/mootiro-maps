@@ -21,6 +21,7 @@ from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 from main.utils import create_geojson
+from search.signals import index_object_for_search
 
 
 LOGO_CHOICES = (
@@ -101,7 +102,9 @@ class Organization(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        return super(Organization, self).save(*args, **kwargs)
+        r_ = super(Organization, self).save(*args, **kwargs)
+        index_object_for_search.send(sender=self, obj=self)
+        return r_
 
     def files_set(self):
         """ pseudo-reverse query for retrieving Organization Files"""

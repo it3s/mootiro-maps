@@ -12,6 +12,7 @@ from lib.taggit.managers import TaggableManager
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
+from search.signals import index_object_for_search
 
 
 class NeedCategory(models.Model):
@@ -111,7 +112,9 @@ class Need(GeoRefModel):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        return super(Need, self).save(*args, **kwargs)
+        r_ = super(Need, self).save(*args, **kwargs)
+        index_object_for_search.send(sender=self, obj=self)
+        return r_
 
     image = "img/need.png"
     image_off = "img/need-off.png"
