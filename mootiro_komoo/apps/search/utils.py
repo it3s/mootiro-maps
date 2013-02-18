@@ -181,6 +181,5 @@ def search_by_term(ter):
             headers={'Content-Type': 'application/json'},
             data=json.dumps(search_dict(ter)))
     data = json.loads(r.content)
-    from pprint import pprint; pprint(data)
     hits = data['hits']['hits']
     return [hit['_source'] for hit in hits]
