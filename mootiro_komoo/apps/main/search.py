@@ -83,6 +83,48 @@ SETTINGS_DICT = {
     }
 }
 
+def search_dict(term):
+    return {
+   "sort":[
+      "_score"
+   ],
+   "query":{
+      "filtered":{
+         "query":{
+            "bool":{
+               "should":[
+                  {
+                     "text":{
+                        "name":{
+                           "boost":5,
+                           "query":term,
+                           "type":"phrase"
+                        }
+                     }
+                  },
+                  {
+                     "text":{
+                        "name.partial":{
+                           "boost":2,
+                           "query":term
+                        }
+                     }
+                  },
+                  {
+                     "text":{
+                        "description.partial":{
+                           "boost":1,
+                           "query":term
+                        }
+                     }
+                  }
+               ]
+            }
+         }
+      }
+   }
+}
+
 
 def es_url(url_spec):
     return url_spec.format(ES=ES, INDEX=ES_INDEX, TYPE=ES_TYPE)
@@ -106,4 +148,22 @@ def refreseh_index():
 
 
 def index_object(obj):
-    pass
+    object_data = {
+        'object_id': obj.id,
+        'table_ref': '{}.{}'.format(
+            obj._meta.app_label, obj.__class__.__name__),
+        'name': obj.name,
+        'description': getattr(obj, 'description', ''),
+    }
+    requests.post(es_url('{ES}/{INDEX}/{TYPE}'),
+            headers={'Content-Type': 'application/json'},
+            data=json.dumps(object_data))
+    # refresh_index()
+
+def search_by_term(ter):
+    r = requests.post(es_url('{ES}/{INDEX}/{TYPE}/_search'),
+            headers={'Content-Type': 'application/json'},
+            data=json.dumps(search_dict(ter)))
+    data = json.loads(r.content)
+    hits = data['hits']['hits']
+    return [hit['_source'] for hit in hits]
