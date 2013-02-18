@@ -16,6 +16,7 @@ import reversion
 from authentication.models import User
 from community.models import Community
 from organization.models import Organization
+from search.signals import index_object_for_search
 
 
 class ProjectRelatedObject(models.Model):
@@ -57,7 +58,9 @@ class Project(models.Model):
 
     def save(self, *a, **kw):
         self.slug = slugify(self.name)
-        return super(Project, self).save(*a, **kw)
+        r = super(Project, self).save(*a, **kw)
+        index_object_for_search.send(sender=self, obj=self)
+        return r
 
     def partners_logo(self):
         """ pseudo-reverse query for retrieving the partners logo"""

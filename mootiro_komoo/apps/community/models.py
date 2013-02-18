@@ -12,6 +12,7 @@ from django.template.defaultfilters import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON
 from authentication.models import User
+from search.signals import index_object_for_search
 
 
 class Community(GeoRefModel):
@@ -55,7 +56,9 @@ class Community(GeoRefModel):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(Community, self).save(*args, **kwargs)
+        r_ = super(Community, self).save(*args, **kwargs)
+        index_object_for_search.send(sender=self, obj=self)
+        return r_
 
     image = "img/community.png"
     image_off = "img/community-off.png"
