@@ -308,3 +308,14 @@ def randstr(l=10):
     for i in range(l):
         s = s + choice(chars)
     return s
+
+
+def get_model_from_table_ref(table_ref):
+    """
+    given a table_ref like 'app_label.class_name', return the refered model
+    """
+    module_name, model_name = table_ref.split('.')
+    module = __import__(module_name)
+    models = getattr(module, 'models')
+    model = getattr(models, model_name)
+    return model

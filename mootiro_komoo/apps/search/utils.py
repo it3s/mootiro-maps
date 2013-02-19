@@ -89,6 +89,7 @@ def search_dict(term):
         "sort": [
             "_score"
         ],
+        # "size": 20,
         "query": {
             "filtered": {
                 "query": {
@@ -187,6 +188,8 @@ def index_object(obj):
         del object_data['es_id']
 
     # send to elasticsearch
+    print url 
+    print object_data
     requests.put(url,
             headers={'Content-Type': 'application/json'},
             data=json.dumps(object_data))

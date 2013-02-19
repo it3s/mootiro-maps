@@ -130,7 +130,6 @@ div.apart {
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075),0 0 8px rgba(0, 0, 0, 0.95);
     width: 580px;
     max-height: 600px;
-    overflow-y: scroll;
 }
 .popover-content{
     background-color: rgb(245,245,245);
@@ -168,7 +167,7 @@ div.apart {
     background-color: #E0C1B5;
 }
 .search-result-title{
-    width: 430px;
+    width: 400px;
     display: inline-block;
 }
 .search-result-title.org-branch{
@@ -2122,6 +2121,11 @@ textarea.markItUpEditor{
     margin-left: 20px;
     padding: 10px;
     border-bottom: 1px solid rgb(233, 233, 233);
+}
+.search-result .model-icon{
+    margin-left: -5px;
+    margin-right: 10px;
+    vertical-align: top;
 }
 .search-title{
     margin-top: 20px;
