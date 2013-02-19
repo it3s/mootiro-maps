@@ -64,7 +64,7 @@
     {{ form.media.js }}
 
     {% block css %}{% endblock %}
-
+    
     <!-- Facebook stuff -->
     <div id="fb-root"></div>
     <script>
@@ -134,6 +134,12 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
+    </script>
+
+    <script type="text/javascript" src="{{STATIC_URL}}js/help_center/help_center.js"></script>
+    
+    <script type="text/javascript">
+      new HelpCenter("#help_center", ['abc', 'def']);
     </script>
   </body>
 </html>
