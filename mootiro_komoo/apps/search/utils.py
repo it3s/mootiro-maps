@@ -138,8 +138,8 @@ table_id_map = {
 
 
 def es_url(url_spec, obj=None):
-    if obj:
-        ID = '{}{}'.format(table_id_map[obj.__class__.__name__], obj.id)
+    if obj and isinstance(obj, dict):
+        ID = obj.get('es_id', '')
     else:
         ID = ''
     return url_spec.format(ES=ES, INDEX=ES_INDEX, TYPE=ES_TYPE, ID=ID)
@@ -162,15 +162,32 @@ def refresh_index():
     requests.post(es_url('{ES}/{INDEX}]_refresh'))
 
 
-def index_object(obj):
-    object_data = {
+def es_index_dict(obj):
+    return {
         'object_id': obj.id,
         'table_ref': '{}.{}'.format(
             obj._meta.app_label, obj.__class__.__name__),
         'name': obj.name,
         'description': getattr(obj, 'description', ''),
+        'es_id': '{}{}'.format(table_id_map[obj.__class__.__name__], obj.id),
     }
-    requests.put(es_url('{ES}/{INDEX}/{TYPE}/{ID}', obj),
+
+
+def index_object(obj):
+    # get object_data dict or build it
+    if not isinstance(obj, dict):
+        object_data = es_index_dict(obj)
+    else:
+        object_data = {k: obj[k] for k in
+                ['object_id', 'table_ref', 'name', 'description', 'es_id']}
+
+    # get url and remove es_id from data to be saved
+    url = es_url('{ES}/{INDEX}/{TYPE}/{ID}', object_data)
+    if object_data.get('es_id', None):
+        del object_data['es_id']
+
+    # send to elasticsearch
+    requests.put(url,
             headers={'Content-Type': 'application/json'},
             data=json.dumps(object_data))
     # refresh_index()
