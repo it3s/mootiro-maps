@@ -60,7 +60,7 @@ def build_environment():
 
 def compile_coffee():
     """Compiles coffeescript to javascript"""
-    local('coffee -c static/')
+    local('./scripts/coffee_compiler.js --all')
 
 
 def compile_sass():
@@ -71,7 +71,7 @@ def compile_sass():
 def work():
     """Start watchers"""
     # compilers
-    local('coffee -cw apps/ &')
+    local('./scripts/coffee_compiler.js &')
     local('sass --watch ./ &')
 
     # test runners go here!
