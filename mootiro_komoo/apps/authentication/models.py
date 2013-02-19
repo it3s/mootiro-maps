@@ -9,6 +9,7 @@ from jsonfield import JSONField
 
 from fileupload.models import UploadedFile
 from komoo_map.models import GeoRefModel, POINT
+from search.signals import index_object_for_search
 
 
 class User(GeoRefModel):
@@ -99,6 +100,11 @@ class User(GeoRefModel):
 
     def get_first_name(self):
         return self.name.split(' ')[0]
+
+    def save(self, *args, **kwargs):
+        r = super(User, self).save(*args, **kwargs)
+        index_object_for_search.send(sender=self, obj=self)
+        return r
 
 
 class AnonymousUser(object):

@@ -47,6 +47,7 @@ urlpatterns = patterns('',
     # unprefixed urls
     url(r'', include('hotsite.urls')),
     url(r'', include('main.urls')),
+    url(r'', include('search.urls')),
 
     # prefixed apps urls
     url(r'^need/', include('need.urls')),

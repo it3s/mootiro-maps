@@ -16,6 +16,7 @@ from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
 from investment.models import Investment
 from fileupload.models import UploadedFile
+from search.signals import index_object_for_search
 
 
 class ResourceKind(models.Model):
@@ -104,6 +105,11 @@ class Resource(GeoRefModel, DictMixin):
     @property
     def perm_id(self):
         return 'r%d' % self.id
+
+    def save(self, *args, **kwargs):
+        r_ = super(Resource, self).save(*args, **kwargs)
+        index_object_for_search.send(sender=self, obj=self)
+        return r_
 
 if not reversion.is_registered(Resource):
     reversion.register(Resource)

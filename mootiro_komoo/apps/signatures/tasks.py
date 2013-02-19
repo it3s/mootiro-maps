@@ -47,7 +47,8 @@ Alguns objetos que você está seguindo no MootiroMaps foram atualizados:
                 for content in user_digest:
                     msg += "\n -  Atualização em {} : {}".format(
                         content.content_object.__class__.__name__,
-                        'http://maps.mootiro.org' + content.content_object.view_url
+                        'http://maps.mootiro.org' + getattr(
+                            content.content_object, 'view_url', '')
                     )
                     content.delete()
 
