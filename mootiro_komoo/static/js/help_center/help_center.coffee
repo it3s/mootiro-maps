@@ -32,7 +32,7 @@ class HelpCenter
             <section class='modal-body'>
                 <ul>
                     <% for (var i = 0; i < contents.length; i++) { %>
-                        <li>
+                        <li class='help_center_<%= contents[i].type %>'>
                             <!--!--------- QUESTION ----------->
                             <% if (contents[i].type == 'question') { %>
                             <article>
@@ -47,13 +47,9 @@ class HelpCenter
                                 <h3><%= contents[i].title %></h3>
                                 <p><%= contents[i].body %></p>
                             </article>
-                            <div id='tutorial' class='tutorial'>
+                            <div class='tutorial'>
                                 <% for (var j = 0; j < contents[i].slides.length; j++) { %>
-                                <div
-                                  data-target='<%= contents[i].slides[j].target %>'
-                                  data-location='<%= contents[i].slides[j].location %>'
-                                  data-arrow='<%= contents[i].slides[j].arrow %>'
-                                >
+                                <div data-target='<%= contents[i].slides[j].target %>' data-location='<%= contents[i].slides[j].location %>' data-arrow='<%= contents[i].slides[j].arrow %>'>
                                     <h3><%= contents[i].slides[j].title %></h3>
                                     <p><%= contents[i].slides[j].body %></p>
                                 </div>
@@ -71,8 +67,15 @@ class HelpCenter
 
     modal_setup: =>
         html = _.template @modal_tpl, {contents: @contents}
-        console.log "@contents", @contents
-        @$modal = $(html).modal {show: true}
+        @$modal = $(html)
+        modal_wrap = @$modal
+        $('li.help_center_tutorial', @$modal).on 'click', () ->
+            console.log 'TOUR START'
+            li = this
+            modal_wrap.modal 'hide'
+            $('.tutorial', li).tutorial()
+
+        @$modal.modal {show: true}
         $('body').append @$modal
 
     show: () =>
@@ -94,14 +97,14 @@ class HelpCenter
                 {
                 "title": "Description"
                 "body": "This is the organization description"
-                "target": "#organization-description"
+                "target": "#logo"
                 "location": "tl"
-                "arrow": "tc"
+                "arrow": "bc"
                 },
                 {
                 "title": "Contact information"
                 "body": "Here you'll find contact"
-                "target": "#organization-contact"
+                "target": ".view-list-visualization-header"
                 "location": "tl"
                 "arrow": "tc"
                 }
