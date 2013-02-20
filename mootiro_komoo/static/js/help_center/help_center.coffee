@@ -74,7 +74,7 @@ class HelpCenter
     modal_setup: =>
         html = _.template @modal_tpl, {contents: @contents}
         @$modal = $(html)
-        @$modal.modal {show: true}
+        @$modal.modal {show: false}
         $('body').append @$modal
 
     tutorials_setup: =>

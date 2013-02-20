@@ -39,7 +39,7 @@
       });
       this.$modal = $(html);
       this.$modal.modal({
-        show: true
+        show: false
       });
       return $('body').append(this.$modal);
     };
