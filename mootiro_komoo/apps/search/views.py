@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals  # unicode by default
+from __future__ import unicode_literals
 import logging
-from annoying.decorators import ajax_request
+from annoying.decorators import ajax_request, render_to
 from main.utils import create_geojson, get_model_from_table_ref
 from .utils import search_by_term
 
@@ -13,18 +13,8 @@ def _has_geojson(obj):
     return bool(geometry)
 
 
-@ajax_request
-def komoo_search(request):
-    """
-    search view for the index page.
-    It uses the parameters from the 'queries' dict to perform specific
-    queries on the database
-    """
-    logger.debug('Komoo_search: {}'.format(request.POST))
-    term = request.POST.get('term', '')
-
+def _format_results(res):
     result = []
-    res = search_by_term(term)
     for obj in res:
         id = obj['object_id']
         model = get_model_from_table_ref(obj['table_ref'])
@@ -40,20 +30,42 @@ def komoo_search(request):
             'link': link,
             'hashlink': hashlink,
             'model': model_name,
-            'has_geojson': _has_geojson(db_object),
+            'disabled': 'disabled' if not _has_geojson(db_object) else '',
             'geojson': create_geojson([db_object]),
         })
 
-    # # Google search
-    # google_results = requests.get(
-    #     'https://maps.googleapis.com/maps/api/place/autocomplete/json',
-    #     params={
-    #         'input': term,
-    #         'sensor': 'false',
-    #         'types': 'geocode',
-    #         'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',
-    #         # TODO: move to settings
-    #     })
-    # result['google'] = google_results.content
+    return result
 
+
+# def _google_search(term):
+#     # Google search
+#     google_results = requests.get(
+#         'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+#         params={
+#             'input': term,
+#             'sensor': 'false',
+#             'types': 'geocode',
+#             'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',
+#             # TODO: move to settings
+#         })
+#     return google_results.content
+
+
+@ajax_request
+def search(request):
+    logger.debug('search: {}'.format(request.POST))
+    term = request.POST.get('term', '')
+
+    raw_results = search_by_term(term)
+    result = _format_results(raw_results)
     return {'result': result}
+
+
+@render_to('search/list.html')
+def search_all(request):
+    logger.debug('search_all: {}'.format(request.POST))
+    term = request.GET.get('term', '')
+
+    raw_results = search_by_term(term, size=50)
+    result = _format_results(raw_results)
+    return {'result': result, 'search_term': term}

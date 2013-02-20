@@ -170,6 +170,9 @@ div.apart {
     width: 400px;
     display: inline-block;
 }
+.view-list-item .search-result-title{
+    padding: 3px 30px;
+}
 .search-result-title.org-branch{
     width: 410px;
 }
@@ -2141,6 +2144,17 @@ textarea.markItUpEditor{
     float: right;
     margin-right:10px;
     font-weight: normal;
+}
+.search-result-entries .search-results-see-all{
+    border: none;
+    /* font-size: 0.8em; */
+    text-align: center;
+    padding: 5px 20px 0;
+}
+.search-all-header{
+    text-align: center;
+    padding: 20px 0;
+    background-color: #ffffff;
 }
 .search-no-results{
     margin-left: 20px;

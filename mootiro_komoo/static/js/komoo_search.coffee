@@ -57,7 +57,7 @@ $ ->
             window.location = dutils.urls.resolve('map') + "##{hashlink}"
 
 
-    showResults = (result) ->
+    showResults = (result, search_term="") ->
         results_list = ''
         results_count = 0
         has_results = false
@@ -69,18 +69,18 @@ $ ->
             """
 
             for idx, obj of result
-                disabled = if not obj?.has_geojson then 'disabled' else ''
+                # disabled = if not obj?.has_geojson then 'disabled' else ''
                 results_list += """
                     <li class="search-result">
-                        <img class="model-icon" alt="icon" title="icon" src="/static/img/#{obj.model}.png">
+                        <img class="model-icon" alt="icon #{obj.model}" title="icon #{obj.model}" src="/static/img/#{obj.model}.png">
                         <a class="search-result-title" href='#{obj.link}'> #{obj.name} </a>
                         <div class="right">
-                            <a href="/map/##{obj.hashlink}" hashlink="#{obj.hashlink}" class="search-map-link #{disabled}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
+                            <a href="/map/##{obj.hashlink}" hashlink="#{obj.hashlink}" class="search-map-link #{obj.disabled}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
                         </div>
                     </li>"""
 
                 results_count++
-            results_list += '</ul></li>'
+            results_list += "<li class='search-results-see-all'><a href='/search/all?term=#{search_term}'> ver todos &raquo;</a> </li></ul></li>"
             has_results |= yes
 
         else
@@ -96,6 +96,7 @@ $ ->
         cl.hide()
 
     doSearch = ->
+        window.komoo_search_timeout_fn = null
         search_term = search_field.val()
 
         if not search_term
@@ -114,27 +115,29 @@ $ ->
                 #     term: search_term
                 #     results: data.result
                 # }
-                showResults data.result
+                showResults data.result, search_term
 
 
     form_search.submit (evt) ->
         evt.preventDefault()
         doSearch()
 
+    window.komoo_search_timeout_fn = null
     search_field.bind 'keyup', ->
         if search_field.val().length > 2
-          doSearch()
+            if window.komoo_search_timeout_fn
+                clearTimeout window.komoo_search_timeout_fn
+            window.komoo_search_timeout_fn = setTimeout doSearch, 500
 
 
     $('#search-results-box').popover
         placement: 'bottom'
         selector: search_field
         trigger: 'manual'
+        animation: true
 
     $('body').live 'click', (evt) ->
       result_box = $('.popover')
-      console.log window.is_search_results_open
-      console.log not result_box.has(evt.target).length == 0
       if window.is_search_results_open and result_box.has(evt.target).length == 0
         hidePopover()
 

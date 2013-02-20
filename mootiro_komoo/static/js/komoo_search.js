@@ -50,8 +50,9 @@
         return window.location = dutils.urls.resolve('map') + ("#" + hashlink);
       }
     };
-    showResults = function(result) {
-      var disabled, has_results, idx, obj, results_count, results_list;
+    showResults = function(result, search_term) {
+      var has_results, idx, obj, results_count, results_list;
+      if (search_term == null) search_term = "";
       results_list = '';
       results_count = 0;
       has_results = false;
@@ -59,11 +60,10 @@
         results_list += "<li>\n<ul class='search-result-entries'>";
         for (idx in result) {
           obj = result[idx];
-          disabled = !(obj != null ? obj.has_geojson : void 0) ? 'disabled' : '';
-          results_list += "<li class=\"search-result\">\n    <img class=\"model-icon\" alt=\"icon\" title=\"icon\" src=\"/static/img/" + obj.model + ".png\">\n    <a class=\"search-result-title\" href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + obj.hashlink + "\" hashlink=\"" + obj.hashlink + "\" class=\"search-map-link " + disabled + "\" title=\"ver no mapa\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+          results_list += "<li class=\"search-result\">\n    <img class=\"model-icon\" alt=\"icon " + obj.model + "\" title=\"icon " + obj.model + "\" src=\"/static/img/" + obj.model + ".png\">\n    <a class=\"search-result-title\" href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + obj.hashlink + "\" hashlink=\"" + obj.hashlink + "\" class=\"search-map-link " + obj.disabled + "\" title=\"ver no mapa\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
           results_count++;
         }
-        results_list += '</ul></li>';
+        results_list += "<li class='search-results-see-all'><a href='/search/all?term=" + search_term + "'> ver todos &raquo;</a> </li></ul></li>";
         has_results |= true;
       } else {
         has_results |= false;
@@ -77,6 +77,7 @@
     };
     doSearch = function() {
       var search_term;
+      window.komoo_search_timeout_fn = null;
       search_term = search_field.val();
       if (!search_term) return;
       cl.show();
@@ -89,7 +90,7 @@
         },
         dataType: 'json',
         success: function(data) {
-          return showResults(data.result);
+          return showResults(data.result, search_term);
         }
       });
     };
@@ -97,19 +98,24 @@
       evt.preventDefault();
       return doSearch();
     });
+    window.komoo_search_timeout_fn = null;
     search_field.bind('keyup', function() {
-      if (search_field.val().length > 2) return doSearch();
+      if (search_field.val().length > 2) {
+        if (window.komoo_search_timeout_fn) {
+          clearTimeout(window.komoo_search_timeout_fn);
+        }
+        return window.komoo_search_timeout_fn = setTimeout(doSearch, 500);
+      }
     });
     $('#search-results-box').popover({
       placement: 'bottom',
       selector: search_field,
-      trigger: 'manual'
+      trigger: 'manual',
+      animation: true
     });
     $('body').live('click', function(evt) {
       var result_box;
       result_box = $('.popover');
-      console.log(window.is_search_results_open);
-      console.log(!result_box.has(evt.target).length === 0);
       if (window.is_search_results_open && result_box.has(evt.target).length === 0) {
         return hidePopover();
       }

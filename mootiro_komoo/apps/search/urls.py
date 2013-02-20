@@ -5,6 +5,7 @@ from django.conf import settings
 
 
 urlpatterns = patterns('search.views',
-    url(r'^komoo_search/$', 'komoo_search', name='komoo_search'),
+    url(r'^search/?$', 'search', name='komoo_search'),
+    url(r'^search/all/?$', 'search_all', name='komoo_search_all'),
 )
 
