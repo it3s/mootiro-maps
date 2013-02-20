@@ -28,7 +28,7 @@
 
     HelpCenter.prototype.tutorial_tpl = "        tourtorial        ";
 
-    HelpCenter.prototype.modal_tpl = "        <div id='help_center' class='modal hide fade'>            <div class='modal-header'>                <button type='button' class='close' data-dismiss='modal'>×</button>                <h2>Modal header</h2>            </div>            <section class='modal-body'>                <ul>                    <% for (var i = 0; i < contents.length; i++) { %>                        <li class='help_center_<%= contents[i].type %>'>                            <!--!--------- QUESTION ----------->                            <% if (contents[i].type == 'question') { %>                            <article>                                <h3><%= contents[i].title %></h3>                                <p><%= contents[i].body %></p>                            </article>                            <% } %>                                                        <!--!--------- TUTORIAL ----------->                            <% if (contents[i].type == 'tutorial') { %>                            <article>                                <h3><%= contents[i].title %></h3>                                <p><%= contents[i].body %></p>                            </article>                            <div class='tutorial'>                                <% for (var j = 0; j < contents[i].slides.length; j++) { %>                                <div data-target='<%= contents[i].slides[j].target %>' data-location='<%= contents[i].slides[j].location %>' data-arrow='<%= contents[i].slides[j].arrow %>'>                                    <h3><%= contents[i].slides[j].title %></h3>                                    <p><%= contents[i].slides[j].body %></p>                                </div>                                <% } %>                            </div>                            <!--!------------------------------>                            <% } %>                        </li>                    <% } %>                </ul>            </section>        </div>        ";
+    HelpCenter.prototype.modal_tpl = "        <div id='help_center' class='modal hide fade'>          <div class='modal-header'>            <button type='button' class='close' data-dismiss='modal'>×</button>            <h2>Modal header</h2>          </div>          <section class='modal-body'>            <ul>              <% for (var i = 0; i < contents.length; i++) { %>              <li class='<%= contents[i].type %>'>                <!--!--------- QUESTION ----------->                <% if (contents[i].type == 'question') { %>                <article>                  <h3><%= contents[i].title %></h3>                  <p><%= contents[i].body %></p>                </article>                <% } %>                <!--!--------- TUTORIAL ----------->                <% if (contents[i].type == 'tutorial') { %>                  <article>                    <h3><%= contents[i].title %></h3>                    <p><%= contents[i].body %></p>                  </article>                  <ol id='joyride'>                    <% for (var j = 0; j < contents[i].slides.length; j++) { %>                    <li data-id='<%= contents[i].slides[j].target_id %>' data-button='Next' data-options='<%= contents[i].slides[j].options %>'>                      <h2><%= contents[i].slides[j].title %></h2>                      <p><%= contents[i].slides[j].body %></p>                    </li>                    <% } %>                  </ol>                <!--!------------------------------>                <% } %>              </li>              <% } %>            </ul>          </section>        </div>        ";
 
     HelpCenter.prototype.modal_setup = function() {
       var html, modal_wrap;
@@ -37,12 +37,12 @@
       });
       this.$modal = $(html);
       modal_wrap = this.$modal;
-      $('li.help_center_tutorial', this.$modal).on('click', function() {
+      $('li.tutorial', this.$modal).on('click', function() {
         var li;
-        console.log('TOUR START');
-        li = this;
-        modal_wrap.modal('hide');
-        return $('.tutorial', li).tutorial();
+        li = $(this);
+        console.log($('#joyride', li));
+        $('#joyride', li).joyride({});
+        return console.log('STARTOUR');
       });
       this.$modal.modal({
         show: true
@@ -68,15 +68,13 @@
           {
             "title": "Description",
             "body": "This is the organization description",
-            "target": "#logo",
-            "location": "tl",
-            "arrow": "bc"
+            "target_id": "#logo",
+            "options": "tipLocation:top;tipAnimation:fade"
           }, {
             "title": "Contact information",
             "body": "Here you'll find contact",
-            "target": ".view-list-visualization-header",
-            "location": "tl",
-            "arrow": "tc"
+            "target_id": ".view-list-visualization-header",
+            "options": ""
           }
         ]
       }

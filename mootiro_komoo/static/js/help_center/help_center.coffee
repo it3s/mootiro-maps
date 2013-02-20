@@ -25,55 +25,57 @@ class HelpCenter
     modal_tpl:
         "
         <div id='help_center' class='modal hide fade'>
-            <div class='modal-header'>
-                <button type='button' class='close' data-dismiss='modal'>×</button>
-                <h2>Modal header</h2>
-            </div>
-            <section class='modal-body'>
-                <ul>
-                    <% for (var i = 0; i < contents.length; i++) { %>
-                        <li class='help_center_<%= contents[i].type %>'>
-                            <!--!--------- QUESTION ----------->
-                            <% if (contents[i].type == 'question') { %>
-                            <article>
-                                <h3><%= contents[i].title %></h3>
-                                <p><%= contents[i].body %></p>
-                            </article>
-                            <% } %>
-                            
-                            <!--!--------- TUTORIAL ----------->
-                            <% if (contents[i].type == 'tutorial') { %>
-                            <article>
-                                <h3><%= contents[i].title %></h3>
-                                <p><%= contents[i].body %></p>
-                            </article>
-                            <div class='tutorial'>
-                                <% for (var j = 0; j < contents[i].slides.length; j++) { %>
-                                <div data-target='<%= contents[i].slides[j].target %>' data-location='<%= contents[i].slides[j].location %>' data-arrow='<%= contents[i].slides[j].arrow %>'>
-                                    <h3><%= contents[i].slides[j].title %></h3>
-                                    <p><%= contents[i].slides[j].body %></p>
-                                </div>
-                                <% } %>
-                            </div>
-                            <!--!------------------------------>
+          <div class='modal-header'>
+            <button type='button' class='close' data-dismiss='modal'>×</button>
+            <h2>Modal header</h2>
+          </div>
+          <section class='modal-body'>
+            <ul>
+              <% for (var i = 0; i < contents.length; i++) { %>
+              <li class='<%= contents[i].type %>'>
 
-                            <% } %>
-                        </li>
+                <!--!--------- QUESTION ----------->
+                <% if (contents[i].type == 'question') { %>
+                <article>
+                  <h3><%= contents[i].title %></h3>
+                  <p><%= contents[i].body %></p>
+                </article>
+                <% } %>
+
+                <!--!--------- TUTORIAL ----------->
+                <% if (contents[i].type == 'tutorial') { %>
+                  <article>
+                    <h3><%= contents[i].title %></h3>
+                    <p><%= contents[i].body %></p>
+                  </article>
+                  <ol id='joyride'>
+                    <% for (var j = 0; j < contents[i].slides.length; j++) { %>
+                    <li data-id='<%= contents[i].slides[j].target_id %>' data-button='Next' data-options='<%= contents[i].slides[j].options %>'>
+                      <h2><%= contents[i].slides[j].title %></h2>
+                      <p><%= contents[i].slides[j].body %></p>
+                    </li>
                     <% } %>
-                </ul>
-            </section>
+                  </ol>
+                <!--!------------------------------>
+                <% } %>
+              </li>
+              <% } %>
+            </ul>
+          </section>
         </div>
+
         "
 
     modal_setup: =>
         html = _.template @modal_tpl, {contents: @contents}
         @$modal = $(html)
         modal_wrap = @$modal
-        $('li.help_center_tutorial', @$modal).on 'click', () ->
-            console.log 'TOUR START'
-            li = this
-            modal_wrap.modal 'hide'
-            $('.tutorial', li).tutorial()
+        $('li.tutorial', @$modal).on 'click', () ->
+            li = $(this)
+            # modal_wrap.modal 'hide'
+            console.log $('#joyride', li)
+            $('#joyride', li).joyride {}
+            console.log 'STARTOUR'
 
         @$modal.modal {show: true}
         $('body').append @$modal
@@ -97,16 +99,14 @@ class HelpCenter
                 {
                 "title": "Description"
                 "body": "This is the organization description"
-                "target": "#logo"
-                "location": "tl"
-                "arrow": "bc"
+                "target_id": "#logo"
+                "options": "tipLocation:top;tipAnimation:fade"
                 },
                 {
                 "title": "Contact information"
                 "body": "Here you'll find contact"
-                "target": ".view-list-visualization-header"
-                "location": "tl"
-                "arrow": "tc"
+                "target_id": ".view-list-visualization-header"
+                "options": ""
                 }
             ]
 
