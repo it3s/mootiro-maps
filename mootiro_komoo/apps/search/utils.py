@@ -84,11 +84,12 @@ SETTINGS_DICT = {
 }
 
 
-def search_dict(term):
+def search_dict(term, size=10):
     return {
         "sort": [
             "_score"
         ],
+        "size": size,
         "query": {
             "filtered": {
                 "query": {
@@ -187,16 +188,18 @@ def index_object(obj):
         del object_data['es_id']
 
     # send to elasticsearch
+    print url 
+    print object_data
     requests.put(url,
             headers={'Content-Type': 'application/json'},
             data=json.dumps(object_data))
     # refresh_index()
 
 
-def search_by_term(ter):
+def search_by_term(ter, size=10):
     r = requests.post(es_url('{ES}/{INDEX}/{TYPE}/_search'),
             headers={'Content-Type': 'application/json'},
-            data=json.dumps(search_dict(ter)))
+            data=json.dumps(search_dict(ter, size=size)))
     data = json.loads(r.content)
     hits = data['hits']['hits']
     return [hit['_source'] for hit in hits]

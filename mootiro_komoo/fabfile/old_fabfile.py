@@ -370,3 +370,13 @@ def build():
     compile_coffee()
     compile_sass()
     build_js()
+
+
+def install_elasticsearch():
+    """ download and place elastic search on the  lib folder """
+    local("""
+        wget -P lib/ http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.5.tar.gz;
+        tar xzvf lib/elasticsearch-0.20.5.tar.gz -C lib/;
+        mv lib/elasticsearch-0.20.5 lib/elasticsearch;
+        rm lib/elasticsearch-0.20.5.tar.gz;
+    """)
