@@ -34,6 +34,8 @@ urlpatterns = patterns('authentication.views',
     url(r'^edit/signature_delete/?$', 'signature_delete',
         name='signature_delete'),
 
+    # removable
+    url(r'^explanations/?$', 'explanations', name='user explanations'),
 )
 
 

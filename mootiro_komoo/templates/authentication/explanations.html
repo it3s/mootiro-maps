@@ -1,0 +1,74 @@
+<style type="text/css">
+/*  Fontes:
+
+ H1 ("Olá, José")
+ 40px Cambria, Georgia, serif; bold
+
+ H2 (dentro dos boxes)
+ 30px Cambria, Georgia, serif; bold
+
+ Texto fora dos boxes
+ 25px Calibri, "Trebuchet MS", Verdana, sans-serif
+
+ Texto dentro dos boxes
+ 16px Calibri, "Trebuchet MS", Verdana, sans-serif
+
+ Dentro de "Mapeie sua região", na lista de coisas que podem ser mapeadas, o texto é
+ 14px Calibri, "Trebuchet MS", Verdana, sans-serif  */
+
+
+  .container {
+    width: 560px;
+    /* background-color: #cccccc; */
+    border: 1px solid #333333;
+    min-height: 100px;
+    margin: 0 auto;
+    padding: 30px 80px;
+    font-size: 23px;
+    font-family: Calibri, "Trebuchet MS", Verdana, sans-serif;
+    line-height: 28px;
+  }
+  header {
+    position: relative;
+  }
+  header span{
+    /* float: right; */
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+    font-size: 0.6em;
+  }
+  .content h1{
+    font-size: 40px;
+    font-family: Cambria, Georgia, serif;
+    font-weight: bold;
+  }
+  .tips-header{
+    font-weight: bold;
+    font-size: 0.95em;
+
+  }
+  .tips {
+    list-style: none;
+  }
+
+</style>
+<section class="container">
+  <header>
+    <img src="/static/img/account_confirmation/maps.png" alt="MootiroMaps"/>
+    <span>Confirmação de cadastro</span>
+
+  </header>
+  <section class="content">
+    <header><h1>Olá, {{ name }}!</h1></header>
+    <article>
+      <p>Seja bem-vindo(a) ao <a href="http://maps.mootiro.org/" >MootiroMaps</a>, uma ferramenta online de <strong>mapeamento colaborativo</strong> para apoio ao desenvolvimento de um território - que pode ser sua rua, bairro, ou até sua cidade, estado ou país. </p>
+    </article>
+    <p class="tips-header">Algumas dicas pra você começar a mapear:</p>
+
+    <ul class="tips">
+      <li></li>
+    </ul>
+
+
+</section>

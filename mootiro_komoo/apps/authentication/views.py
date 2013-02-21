@@ -342,3 +342,7 @@ def logout(request):
     return redirect(next_page)
 
 ################ for testing ##################
+
+@render_to('authentication/explanations.html')
+def explanations(request):
+    return {'name': 'José'}
