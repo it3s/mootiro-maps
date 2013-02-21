@@ -86,10 +86,11 @@
             margin: 0 0.35%;
         }
 
-        div.topic:hover {
-            background: #f0f0f0;
-            h3 { background: #B1DDE8 }
-        }
+        // TODO: Uncomment. Waiting for usecase pages.
+        // div.topic:hover {
+        //     background: #f0f0f0;
+        //     h3 { background: #B1DDE8 }
+        // }
     }
 
     > div.projects {

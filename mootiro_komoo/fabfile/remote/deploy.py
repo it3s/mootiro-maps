@@ -5,7 +5,7 @@ from fabric.api import *
 from fabric.colors import cyan, red, yellow, green
 from fabric.contrib.files import exists
 from fabric.contrib.console import confirm
-from fabric.utils import indent
+from fabric.utils import indent, abort
 
 from .base import remote, remote_virtualenv
 from .service import down, up
@@ -85,6 +85,14 @@ def deploy_to_production(deploy_info):
 @remote
 def checkout(rev):
     '''Puts remote repository on a specific revision (tag or commit).'''
+    uncommitted = bool(run('git diff --shortstat'))
+    if uncommitted:
+        if confirm('You have uncommitted changes on your remote repo.' \
+                   'Trash them away?', default=False):
+            run('git reset --hard')
+        else:
+            diff = run('git diff')
+            abort('git diff output:\n\n{}'.format(diff))
     run('git fetch && git checkout {}'.format(rev))
 
 

@@ -1,0 +1,45 @@
+.about {
+	* {
+	    -webkit-box-sizing: border-box;
+		   -moz-box-sizing: border-box;
+			    box-sizing: border-box;
+	}
+
+	padding: 0px 0px 15px !important;
+
+	&#main-content {
+		width: 100%;
+	}
+
+	.items {
+		.topic {
+			display: inline-block;
+			width: 33%;
+			padding: 5px;
+			vertical-align: top;
+			text-align: left;
+
+			h3 {
+				font-size: 1.2em;
+			}
+
+			img {
+			  width: 290px;
+			}
+		}
+	}
+
+	> div,
+	.section .items {
+		width: 910px;
+		margin: 0 auto;
+	}
+
+	> div.section {
+		width: 100%;
+	}
+
+	> div:nth-child(even) {
+		background: #eff8fb !important;
+	}
+}

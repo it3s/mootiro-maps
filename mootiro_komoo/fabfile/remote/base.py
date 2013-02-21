@@ -31,6 +31,7 @@ def production():
     env.hosts = ['maps.mootiro.org']
     env.komoo_env = 'production'
     env.komoo_django_settings = '--settings=settings.production'
+    env.komoo_dbname = 'mootiro_komoo'
     env.komoo_activate = 'source /home/login/.virtualenvs/mootiro_maps_env/bin/activate'
     env.komoo_project_folder = '/home/login/mootiro_maps/mootiro-maps/mootiro_komoo'
     env.komoo_port = '8001'
@@ -41,6 +42,7 @@ def staging():
     env.hosts = ['maps.mootiro.org']
     env.komoo_env = 'staging'
     env.komoo_django_settings = '--settings=settings.staging'
+    env.komoo_dbname = 'mootiro_komoo_staging'
     env.komoo_activate = 'source /home/login/.virtualenvs/mootiro_maps_staging_env/bin/activate'
     env.komoo_project_folder = '/home/login/mootiro_maps_staging/mootiro-maps/mootiro_komoo'
     env.komoo_port = '5001'
