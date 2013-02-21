@@ -11,7 +11,6 @@ from django.contrib.gis.measure import Distance
 from django.template import loader, Context
 from django.db.models import Q
 from django.http import HttpResponse, HttpResponseNotFound
-from django.core.urlresolvers import reverse
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
@@ -19,7 +18,6 @@ from django.conf import settings
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
-import requests
 
 from authentication.models import User
 from community.models import Community
@@ -52,6 +50,11 @@ ENTITY_MODEL_REV = {v: k for k, v in ENTITY_MODEL.items()}
 @render_to('main/map.html')
 def map(request):
     return dict(geojson={})
+
+
+@render_to('main/about.html')
+def about(request):
+    return dict()
 
 
 @render_to('main/root.html')

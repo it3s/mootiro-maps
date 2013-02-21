@@ -315,3 +315,22 @@ div.importsheet_missing_column {
     width: auto;
     height: auto;
     position: absolute; }
+
+.about {
+  padding: 0px 30px 15px !important; }
+  .about * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+  .about .items .topic {
+    display: inline-block;
+    width: 33%;
+    padding: 5px;
+    vertical-align: top;
+    text-align: left; }
+    .about .items .topic h3 {
+      font-size: 1.2em; }
+    .about .items .topic img {
+      width: 100%; }
+  .about > div:nth-child(even) {
+    background: #eff8fb !important; }

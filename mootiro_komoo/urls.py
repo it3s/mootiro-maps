@@ -45,7 +45,7 @@ urlpatterns = patterns('',
     url(r'^$', 'main.views.root', name='root'),
 
     # unprefixed urls
-    url(r'', include('hotsite.urls')),
+    #url(r'', include('hotsite.urls')),
     url(r'', include('main.urls')),
     url(r'', include('search.urls')),
 
