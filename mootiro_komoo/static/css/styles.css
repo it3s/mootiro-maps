@@ -225,18 +225,6 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     display: inline-block;
     clear: both;
 }
-#logo {
-    display: inline-block;
-    font-family: monospace;
-    font-size: 30px;
-    padding: 0 10px;
-    position: relative;
-    /* top: -25px; */
-    vertical-align: top;
-    margin-top: -15px;
-    left: 20px;
-    min-width: 110px;
-}
 #tabs {
     font-size: 16px;
     font-weight: bold;
@@ -249,8 +237,14 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     vertical-align: middle;
 }
 #content {
-    display: block;
+    display: inline-block;
     min-height: 100px;
+}
+#content {
+    min-width: 1140px;
+    position: relative;
+    left: 50%;
+    margin-left: -570px;
 }
 #dinamic-form,
 #main-content {
@@ -278,37 +272,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     -moz-border-radius   : 0 0 6px 6px;
     -webkit-border-radius: 0 0 6px 6px;
 }
-#top, #tabs .tab {
-    -moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
-    -webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
-    box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
-}
 #tabs .tab.placeholder { background: none }
 #tabs .tab:first-child { margin-left: 10px }
-#top {
-    z-index: 1039;  /* Should stay behind of .modal-backdrop */
-    position: relative;
-    padding: 20px 0 0;
-    background: #dceff4;
-}
-#top #logo, #top #navigation {
-    display: inline-block;
-}
-#top #menu {
-    display: inline-block;
-    margin-bottom: 10px;
-    margin-left: -75px;
-}
-#top #menu li {
-    margin: 0;
-    float: left;
-}
-#top #menu li a {
-    padding: 4px 15px;
-    display: block;
-    color: #000;
-}
-#top #menu li a, .button-off, .map-tab a, .map-button ,
+.button-off, .map-tab a, .map-button ,
 .organization-buttons .org-btn, .view-info-buttons .view-info-btn, .update-community {
     border: 1px solid #c7c7c7;
 
@@ -324,7 +290,6 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 .button, .map-panel .content .map-button,
 /*.map-menuitem:hover,*/ .map-menuitem.selected,
-#top #menu li a:hover, #top #menu li.selected a,
 .map-tab a:hover, .map-tab.selected a,
 .map-button:hover, .map-button.selected,
 .organization-buttons .org-btn:hover, .organization-buttons .org-btn.selected,
@@ -367,36 +332,27 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CECECE, endColorstr=#EDEDED)" important;
 }
 .polygon #drawing-control-add,
-#top #menu li:first-child a,
 .map-tab:first-child a {
     border-radius        : 6px 0 0 6px;
     -moz-border-radius   : 6px 0 0 6px;
     -webkit-border-radius: 6px 0 0 6px;
 }
 #drawing-control-cutout,
-#top #menu li:last-child a,
 .map-tab:last-child a {
     border-radius        : 0 6px 6px 0;
     -moz-border-radius   : 0 6px 6px 0;
     -webkit-border-radius: 0 6px 6px 0;
 }
-#top #menu li a:active,
 .map-tab a:active { background: #2E6167 !important; }
 #drawing-control-delete {
     margin: 0 5px;
-}
-
-#top #menu [class^="icon-"] {
-    background-position: 0 0;
-    margin-right: 5px;
 }
 
 .button.map:hover, .button.map.selected,
 .organization-buttons .org-btn[panel='branches-list']:hover,
 .organization-buttons .org-btn[panel='branches-list'].selected,
 .view-info-buttons .view-info-btn[panel='map-points-list']:hover,
-.view-info-buttons .view-info-btn[panel='map-points-list'].selected,
-#top #menu #menu-map a:hover, #top #menu #menu-map.selected a {
+.view-info-buttons .view-info-btn[panel='map-points-list'].selected {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
     background-image: -o-linear-gradient(bottom, #E84239 0%, #EA5D4E 100%) !important;
@@ -406,16 +362,12 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #E84239), color-stop(1, #EA5D4E)) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#E84239, endColorstr=#EA5D4E))";
 }
-#top #menu #menu-map a:active {
-    background: #E84239 !important;
-}
 
 .button.community:hover, .button.community.selected,
 .organization-buttons .org-btn[panel='communities-list']:hover,
 .organization-buttons .org-btn[panel='communities-list'].selected,
 .view-info-buttons .view-info-btn[panel='communities-list']:hover,
 .view-info-buttons .view-info-btn[panel='communities-list'].selected,
-#top #menu #menu-community a:hover, #top #menu #menu-community.selected a,
 .update-community:hover {
     color: #fff !important;
     background-image: linear-gradient(bottom, #F08138 0%, #F59C56 100%) !important;
@@ -426,16 +378,12 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #F08138), color-stop(1, #F59C56)) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F08138, endColorstr=#F59C56))";
 }
-#top #menu #menu-community a:active {
-    background: #F08138 !important;
-}
 
 .button.need:hover, .button.need.selected,
 .organization-buttons .org-btn[panel='supported-proposals-list']:hover,
 .organization-buttons .org-btn[panel='supported-proposals-list'].selected,
 .view-info-buttons .view-info-btn[panel='needs-list']:hover,
-.view-info-buttons .view-info-btn[panel='needs-list'].selected,
-#top #menu #menu-need a:hover, #top #menu #menu-need.selected a {
+.view-info-buttons .view-info-btn[panel='needs-list'].selected {
     color: #fff !important;
     background-image: linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
     background-image: -o-linear-gradient(bottom, #E83361 0%, #EA5172 100%) !important;
@@ -445,16 +393,12 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #E83361), color-stop(1, #EA5172)) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=, endColorstr= #EA5172))";
 }
-#top #menu #menu-need a:active {
-    background: #E83361 !important;
-}
 
 .button.organization:hover, .button.organization.selected,
 .organization-buttons .org-btn[panel='supported-organizations-list']:hover,
 .organization-buttons .org-btn[panel='supported-organizations-list'].selected,
 .view-info-buttons .view-info-btn[panel='organizations-list']:hover,
-.view-info-buttons .view-info-btn[panel='organizations-list'].selected,
-#top #menu #menu-organization a:hover, #top #menu #menu-organization.selected a {
+.view-info-buttons .view-info-btn[panel='organizations-list'].selected {
     color: #fff !important;
     background-image: linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
     background-image: -o-linear-gradient(bottom, #3E5FA9 0%, #5573B7 100%) !important;
@@ -464,16 +408,12 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #3E5FA9), color-stop(1, #5573B7)) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#3E5FA9, endColorstr=#5573B7))";
 }
-#top #menu #menu-organization a:active {
-    background: #3E5FA9 important;
-}
 
 .button.resource:hover, .button.resource.selected,
 .organization-buttons .org-btn[panel='supported-resources-list']:hover,
 .organization-buttons .org-btn[panel='supported-resources-list'].selected,
 .view-info-buttons .view-info-btn[panel='resources-list']:hover,
-.view-info-buttons .view-info-btn[panel='resources-list'].selected,
-#top #menu #menu-resource a:hover, #top #menu #menu-resource.selected a {
+.view-info-buttons .view-info-btn[panel='resources-list'].selected {
     color: #fff !important;
     background-image: linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
     background-image: -o-linear-gradient(bottom, #28CB05 0%, #2AD405 100%) !important;
@@ -483,16 +423,11 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #28CB05), color-stop(1, #22AD405AD405)) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#28CB05, endColorstr=#2AD405))";
 }
-#top #menu #menu-resource a:active {
-    background: #28CB05 !important;
-}
-
 .button.investment:hover, .button.investment.selected,
 .organization-buttons .org-btn[panel='investments-list']:hover,
 .organization-buttons .org-btn[panel='investments-list'].selected,
 .view-info-buttons .view-info-btn[panel='investments-list']:hover,
-.view-info-buttons .view-info-btn[panel='investments-list'].selected,
-#top #menu #menu-investment a:hover, #top #menu #menu-investment.selected a {
+.view-info-buttons .view-info-btn[panel='investments-list'].selected {
     color: #fff !important;
     background-image: linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
     background-image: -o-linear-gradient(bottom, #AB9E15 0%, #CABE2C 100%) !important;
@@ -502,15 +437,11 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #AB9E15), color-stop(1, #CABE2C)) !important;
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#AB9E15, endColorstr=#CABE2C))";
 }
-#top #menu #menu-investment a:active {
-    background: #AB9E15 !important;
-}
 
 
 .button.project:hover, .button.project.selected,
 .organization-buttons .org-btn[panel='projects-list']:hover,
-.organization-buttons .org-btn[panel='projects-list'].selected,
-#top #menu #menu-project a:hover, #top #menu #menu-project.selected a {
+.organization-buttons .org-btn[panel='projects-list'].selected {
     color: #fff !important;
     background-image: linear-gradient(bottom, rgb(117,79,17) 47%, rgb(117,86,40) 74%, rgb(133,94,56) 90%) !important;
     background-image: -o-linear-gradient(bottom, rgb(117,79,17) 47%, rgb(117,86,40) 74%, rgb(133,94,56) 90%) !important;
@@ -539,10 +470,6 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 #map-panel-content .panel-info img {
     float: left;
-}
-
-#top #menu #menu-project a:active {
-    background: rgb(133,94, 56) !important;
 }
 
 .middle { vertical-align: middle }
@@ -1108,16 +1035,8 @@ body.community #main-content {
 .map-menuitem.disabled, .map-menuitem.disabled:hover {
     color: #aaa;
 }
-/* #top #menu, #top #search { margin-left: 40px; } */
-#top #search { margin-bottom: 0px; margin-left: 40px; }
 
-#search-bar {
-    width: 585px; /* FIXME: this is dependent of the language */
-    font-size: 16px;
-    background-color: #ffffff;
-    box-shadow: 1px 1px 1px #999999 inset;
-}
-#search-button { margin-left: 4px; margin-top: -10px; }
+
 .komoo-map-googlemap img { /* Revert bootstrap changes */
     max-width: none !important;
 }

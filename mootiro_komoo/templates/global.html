@@ -7,7 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <!--<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>-->
 
 
     <title>{% block title %}Mootiro Maps{% endblock %}</title>
@@ -78,31 +78,37 @@
     </script>
 
 
-    {% include 'main/upper_bar.html' %}
-
-    <div id="flash-message"><span class="message"></span></div>
-
     <div id="root">
-      <div id="top">
+      
+      <div id="newtop">
         <div id="logo">
           <a href="{% url root %}"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></a>
         </div>
-        <div id="navigation">
-
+        
+        <nav id="menu">
+          {% block menu %}
+            {% menu "" %}
+          {% endblock %}
+        </nav>
+        
+        <nav id="side_menu">
+          <ul>
+            <li>Sobre</li>
+            <li>Ajuda</li>
+            <li>Entrar/Fulano</li>
+          </ul>
+        </nav>
+        
+        <div id="search">
           <form id="search" action=".">
             <input type="text" id="search-bar" autocomplete="off"/>
             <input type="submit" id="search-button" class="button" value="{% trans 'See Results' %}"/>
             <div id="search-canvasloader-container" class="inline-block"></div>
           </form>
           <div id="search-results-box"></div>
-
-          {% block menu %}
-              {% menu "" %}
-          {% endblock %}
-
         </div>
-
       </div>
+      
       <div id="content">
         {% block content %}{% endblock %}
       </div>
@@ -116,11 +122,12 @@
       {% endif %}
       {% include "main/error_box.html" %}
     </div>
-    {% block page_scripts %}{% endblock %}
+    {#% block page_scripts %}{% endblock %#}
 
     </script>
 
     <!-- Google Analytics -->
+    <!--
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -135,5 +142,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
+    -->
+
   </body>
 </html>

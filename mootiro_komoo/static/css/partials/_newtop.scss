@@ -1,0 +1,148 @@
+#newtop {
+
+    width: 100%;
+    height: 45px;
+    background: #dceff4;
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+    * {
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+    }
+
+    #logo, #menu { float: left }
+    #search, #side_menu { float: right }
+
+    > * {
+        height: 100%;
+        display: block;
+    }
+
+    #logo {
+        margin: 0 35px;
+        padding-top: 10px;
+    }
+
+    #menu, #side_menu {
+        cursor: pointer;
+        color: #505050;
+
+        > ul {
+            height: 100%;
+
+            > li {
+                margin: 0;
+                width: 120px;
+                height: 100%;
+                text-align: center;
+                padding-top: 12px;
+
+                a {
+                    text-decoration: inherit;
+                    color: inherit;
+                }
+            }
+
+            > li:hover { background: #b1dde8 }
+
+            // Menu itens configuration
+            li .ico { background: no-repeat center center }
+            li:hover, li.active { font-weight: bold }
+            li:hover ul { font-weight: normal }
+            li.active { color: #fff }
+            li.active ul { color: #505050 }
+
+            .map .ico { background-image: url('../img/menu/newmenu/map.png') }
+            .map:hover .ico { background-image: url('../img/menu/newmenu/map-hover.png') }
+            .map.active { background-color: #ff3d2e }
+            .map.active .ico { background-image: url('../img/menu/newmenu/map-active.png') }
+
+            .objects > .ico { background-image: url('../img/menu/newmenu/objects.png') }
+            .objects:hover > .ico { background-image: url('../img/menu/newmenu/objects-hover.png') }
+            .objects.active { background-color: #951b81 }
+            .objects.active > .ico { background-image: url('../img/menu/newmenu/objects-active.png') }
+
+            .objects .community .ico { background-image: url('../img/menu/newmenu/community.png') }
+            .objects .community:hover .ico { background-image: url('../img/menu/newmenu/community-hover.png') }
+            .objects .community.active { background-color: #f7A941 }
+            .objects .community.active .ico { background-image: url('../img/menu/newmenu/community-active.png') }
+
+            .objects .organization .ico { background-image: url('../img/menu/newmenu/organization.png') }
+            .objects .organization:hover .ico { background-image: url('../img/menu/newmenu/organization-hover.png') }
+            .objects .organization.active { background-color: #3a61d6 }
+            .objects .organization.active .ico { background-image: url('../img/menu/newmenu/organization-active.png') }
+
+            .objects .need .ico { background-image: url('../img/menu/newmenu/need.png') }
+            .objects .need:hover .ico { background-image: url('../img/menu/newmenu/need-hover.png') }
+            .objects .need.active, li.need.active:hover { background-color: #f42c5e }
+            .objects .need.active .ico { background-image: url('../img/menu/newmenu/need-active.png') }
+
+            .objects .resource .ico { background-image: url('../img/menu/newmenu/resource.png') }
+            .objects .resource:hover .ico { background-image: url('../img/menu/newmenu/resource-hover.png') }
+            .objects .resource.active { background-color: #52ae32 }
+            .objects .resource.active .ico { background-image: url('../img/menu/newmenu/resource-active.png') }
+
+            .objects .investment .ico { background-image: url('../img/menu/newmenu/investment.png') }
+            .objects .investment:hover .ico { background-image: url('../img/menu/newmenu/investment-hover.png') }
+            .objects .investment.active { background-color: #aa9f18 }
+            .objects .investment.active .ico { background-image: url('../img/menu/newmenu/investment-active.png') }
+
+            .projects .ico { background-image: url('../img/menu/newmenu/projects.png') }
+            .projects:hover .ico { background-image: url('../img/menu/newmenu/projects-hover.png') }
+            .projects.active { background-color: #f26700 }
+            .projects.active .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
+        }
+
+        .ico {
+            display: inline-block;
+            vertical-align: -33%;
+            margin-right: 0.2em;
+            background: red;
+            width: 25px;
+            height: 25px;
+        }
+
+        li.objects.active {
+            ul { display: block }
+            li { display: none }
+            li.active { display: block }
+        }
+        li.objects.active:hover ul li { display: block }
+
+        li.objects ul {
+            background: #dceff4;
+            text-align: left;
+            font-size: 90%;
+
+            li:hover { background: #b1dde8 }
+            .ico {
+                width: 20px;
+                height: 20px;
+                margin: 3px;
+            }
+        }
+
+    }
+
+    nav > ul > li { display: inline-block }
+
+}
+
+.dropdown_menu {
+    position: relative;
+
+    > ul {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 100%;
+        width: 100%;
+
+        > li { width: 100% }
+    }
+}
+.dropdown_menu:hover > ul { display: block }

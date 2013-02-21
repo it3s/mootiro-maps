@@ -1,3 +1,156 @@
+#newtop {
+  width: 100%;
+  height: 45px;
+  background: #dceff4;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  #newtop * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box; }
+  #newtop #logo, #newtop #menu {
+    float: left; }
+  #newtop #search, #newtop #side_menu {
+    float: right; }
+  #newtop > * {
+    height: 100%;
+    display: block; }
+  #newtop #logo {
+    margin: 0 35px;
+    padding-top: 10px; }
+  #newtop #menu, #newtop #side_menu {
+    cursor: pointer;
+    color: #505050; }
+    #newtop #menu > ul, #newtop #side_menu > ul {
+      height: 100%; }
+      #newtop #menu > ul > li, #newtop #side_menu > ul > li {
+        margin: 0;
+        width: 120px;
+        height: 100%;
+        text-align: center;
+        padding-top: 12px; }
+        #newtop #menu > ul > li a, #newtop #side_menu > ul > li a {
+          text-decoration: inherit;
+          color: inherit; }
+      #newtop #menu > ul > li:hover, #newtop #side_menu > ul > li:hover {
+        background: #b1dde8; }
+      #newtop #menu > ul li .ico, #newtop #side_menu > ul li .ico {
+        background: no-repeat center center; }
+      #newtop #menu > ul li:hover, #newtop #menu > ul li.active, #newtop #side_menu > ul li:hover, #newtop #side_menu > ul li.active {
+        font-weight: bold; }
+      #newtop #menu > ul li:hover ul, #newtop #side_menu > ul li:hover ul {
+        font-weight: normal; }
+      #newtop #menu > ul li.active, #newtop #side_menu > ul li.active {
+        color: #fff; }
+      #newtop #menu > ul li.active ul, #newtop #side_menu > ul li.active ul {
+        color: #505050; }
+      #newtop #menu > ul .map .ico, #newtop #side_menu > ul .map .ico {
+        background-image: url("../img/menu/newmenu/map.png"); }
+      #newtop #menu > ul .map:hover .ico, #newtop #side_menu > ul .map:hover .ico {
+        background-image: url("../img/menu/newmenu/map-hover.png"); }
+      #newtop #menu > ul .map.active, #newtop #side_menu > ul .map.active {
+        background-color: #ff3d2e; }
+      #newtop #menu > ul .map.active .ico, #newtop #side_menu > ul .map.active .ico {
+        background-image: url("../img/menu/newmenu/map-active.png"); }
+      #newtop #menu > ul .objects > .ico, #newtop #side_menu > ul .objects > .ico {
+        background-image: url("../img/menu/newmenu/objects.png"); }
+      #newtop #menu > ul .objects:hover > .ico, #newtop #side_menu > ul .objects:hover > .ico {
+        background-image: url("../img/menu/newmenu/objects-hover.png"); }
+      #newtop #menu > ul .objects.active, #newtop #side_menu > ul .objects.active {
+        background-color: #951b81; }
+      #newtop #menu > ul .objects.active > .ico, #newtop #side_menu > ul .objects.active > .ico {
+        background-image: url("../img/menu/newmenu/objects-active.png"); }
+      #newtop #menu > ul .objects .community .ico, #newtop #side_menu > ul .objects .community .ico {
+        background-image: url("../img/menu/newmenu/community.png"); }
+      #newtop #menu > ul .objects .community:hover .ico, #newtop #side_menu > ul .objects .community:hover .ico {
+        background-image: url("../img/menu/newmenu/community-hover.png"); }
+      #newtop #menu > ul .objects .community.active, #newtop #side_menu > ul .objects .community.active {
+        background-color: #f7A941; }
+      #newtop #menu > ul .objects .community.active .ico, #newtop #side_menu > ul .objects .community.active .ico {
+        background-image: url("../img/menu/newmenu/community-active.png"); }
+      #newtop #menu > ul .objects .organization .ico, #newtop #side_menu > ul .objects .organization .ico {
+        background-image: url("../img/menu/newmenu/organization.png"); }
+      #newtop #menu > ul .objects .organization:hover .ico, #newtop #side_menu > ul .objects .organization:hover .ico {
+        background-image: url("../img/menu/newmenu/organization-hover.png"); }
+      #newtop #menu > ul .objects .organization.active, #newtop #side_menu > ul .objects .organization.active {
+        background-color: #3a61d6; }
+      #newtop #menu > ul .objects .organization.active .ico, #newtop #side_menu > ul .objects .organization.active .ico {
+        background-image: url("../img/menu/newmenu/organization-active.png"); }
+      #newtop #menu > ul .objects .need .ico, #newtop #side_menu > ul .objects .need .ico {
+        background-image: url("../img/menu/newmenu/need.png"); }
+      #newtop #menu > ul .objects .need:hover .ico, #newtop #side_menu > ul .objects .need:hover .ico {
+        background-image: url("../img/menu/newmenu/need-hover.png"); }
+      #newtop #menu > ul .objects .need.active, #newtop #menu > ul li.need.active:hover, #newtop #side_menu > ul .objects .need.active, #newtop #side_menu > ul li.need.active:hover {
+        background-color: #f42c5e; }
+      #newtop #menu > ul .objects .need.active .ico, #newtop #side_menu > ul .objects .need.active .ico {
+        background-image: url("../img/menu/newmenu/need-active.png"); }
+      #newtop #menu > ul .objects .resource .ico, #newtop #side_menu > ul .objects .resource .ico {
+        background-image: url("../img/menu/newmenu/resource.png"); }
+      #newtop #menu > ul .objects .resource:hover .ico, #newtop #side_menu > ul .objects .resource:hover .ico {
+        background-image: url("../img/menu/newmenu/resource-hover.png"); }
+      #newtop #menu > ul .objects .resource.active, #newtop #side_menu > ul .objects .resource.active {
+        background-color: #52ae32; }
+      #newtop #menu > ul .objects .resource.active .ico, #newtop #side_menu > ul .objects .resource.active .ico {
+        background-image: url("../img/menu/newmenu/resource-active.png"); }
+      #newtop #menu > ul .objects .investment .ico, #newtop #side_menu > ul .objects .investment .ico {
+        background-image: url("../img/menu/newmenu/investment.png"); }
+      #newtop #menu > ul .objects .investment:hover .ico, #newtop #side_menu > ul .objects .investment:hover .ico {
+        background-image: url("../img/menu/newmenu/investment-hover.png"); }
+      #newtop #menu > ul .objects .investment.active, #newtop #side_menu > ul .objects .investment.active {
+        background-color: #aa9f18; }
+      #newtop #menu > ul .objects .investment.active .ico, #newtop #side_menu > ul .objects .investment.active .ico {
+        background-image: url("../img/menu/newmenu/investment-active.png"); }
+      #newtop #menu > ul .projects .ico, #newtop #side_menu > ul .projects .ico {
+        background-image: url("../img/menu/newmenu/projects.png"); }
+      #newtop #menu > ul .projects:hover .ico, #newtop #side_menu > ul .projects:hover .ico {
+        background-image: url("../img/menu/newmenu/projects-hover.png"); }
+      #newtop #menu > ul .projects.active, #newtop #side_menu > ul .projects.active {
+        background-color: #f26700; }
+      #newtop #menu > ul .projects.active .ico, #newtop #side_menu > ul .projects.active .ico {
+        background-image: url("../img/menu/newmenu/projects-active.png"); }
+    #newtop #menu .ico, #newtop #side_menu .ico {
+      display: inline-block;
+      vertical-align: -33%;
+      margin-right: 0.2em;
+      background: red;
+      width: 25px;
+      height: 25px; }
+    #newtop #menu li.objects.active ul, #newtop #side_menu li.objects.active ul {
+      display: block; }
+    #newtop #menu li.objects.active li, #newtop #side_menu li.objects.active li {
+      display: none; }
+    #newtop #menu li.objects.active li.active, #newtop #side_menu li.objects.active li.active {
+      display: block; }
+    #newtop #menu li.objects.active:hover ul li, #newtop #side_menu li.objects.active:hover ul li {
+      display: block; }
+    #newtop #menu li.objects ul, #newtop #side_menu li.objects ul {
+      background: #dceff4;
+      text-align: left;
+      font-size: 90%; }
+      #newtop #menu li.objects ul li:hover, #newtop #side_menu li.objects ul li:hover {
+        background: #b1dde8; }
+      #newtop #menu li.objects ul .ico, #newtop #side_menu li.objects ul .ico {
+        width: 20px;
+        height: 20px;
+        margin: 3px; }
+  #newtop nav > ul > li {
+    display: inline-block; }
+
+.dropdown_menu {
+  position: relative; }
+  .dropdown_menu > ul {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%; }
+    .dropdown_menu > ul > li {
+      width: 100%; }
+
+.dropdown_menu:hover > ul {
+  display: block; }
+
 .upper_bar {
   background-color: #dceff4;
   color: #009cb4;
