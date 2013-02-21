@@ -2,6 +2,7 @@
   width: 100%;
   height: 45px;
   background: #dceff4;
+  box-shadow: 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
@@ -26,7 +27,6 @@
       height: 100%; }
       #newtop #menu > ul > li, #newtop #side_menu > ul > li {
         margin: 0;
-        width: 120px;
         height: 100%;
         text-align: center;
         padding-top: 12px; }
@@ -127,13 +127,20 @@
     #newtop #menu li.objects ul, #newtop #side_menu li.objects ul {
       background: #dceff4;
       text-align: left;
-      font-size: 90%; }
+      font-size: 90%;
+      box-shadow: 0px -5px 0px 0px #b1dde8, 1px 1px 3px 1px rgba(50, 50, 50, 0.5); }
       #newtop #menu li.objects ul li:hover, #newtop #side_menu li.objects ul li:hover {
         background: #b1dde8; }
       #newtop #menu li.objects ul .ico, #newtop #side_menu li.objects ul .ico {
         width: 20px;
         height: 20px;
         margin: 3px; }
+    #newtop #menu li.objects.active ul, #newtop #side_menu li.objects.active ul {
+      box-shadow: 0px -5px 0px 0px #951b81, 1px 1px 3px 1px rgba(50, 50, 50, 0.5); }
+  #newtop #menu > ul > li {
+    width: 120px; }
+  #newtop #side_menu > ul > li {
+    width: 80px; }
   #newtop nav > ul > li {
     display: inline-block; }
 

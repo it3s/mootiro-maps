@@ -1,28 +1,30 @@
+{% load i18n %}
+
 <ul>
   <li class="map {% if selected_area == 'map' %}active{% endif %}">
-    <a href="{% url map %}"><div class="ico"></div>Mapa</a>
+    <a href="{% url map %}"><div class="ico"></div>{% trans "Map" %}</a>
   </li>
   <li class="objects dropdown_menu {% if selected_area == 'community' or selected_area == 'organization' or selected_area == 'need' or selected_area == 'resource' or selected_area == 'investment' %}active{% endif %}">
-    <div class="ico"></div>Objetos
+    <div class="ico"></div>{% trans "Objects" %}
     <ul>
       <li class="{% if selected_area == 'community' %}active{% endif %} community">
-        <a href="{% url list_communities %}"><div class="ico"></div>Comunidades</a>
+        <a href="{% url list_communities %}"><div class="ico"></div>{% trans "Communities" %}</a>
       </li>
       <li class="{% if selected_area == 'organization' %}active{% endif %} organization">
-        <a href="{% url organization_list %}"><div class="ico"></div>Organizações</a>
+        <a href="{% url organization_list %}"><div class="ico"></div>{% trans "Organizations" %}</a>
       </li>
       <li class="{% if selected_area == 'need' %}active{% endif %} need">
-        <a href="{% url need_list %}"><div class="ico"></div>Necessidades</a>
+        <a href="{% url need_list %}"><div class="ico"></div>{% trans "Needs" %}</a>
       </li>
       <li class="{% if selected_area == 'resource' %}active{% endif %} resource">
-        <a href="{% url resource_list %}"><div class="ico"></div>Recursos</a>
+        <a href="{% url resource_list %}"><div class="ico"></div>{% trans "Resources" %}</a>
       </li>
       <li class="{% if selected_area == 'investment' %}active{% endif %} investment">
-        <a href="{% url investment_list %}"><div class="ico"></div>Investimentos</a>
+        <a href="{% url investment_list %}"><div class="ico"></div>{% trans "Investments" %}</a>
       </li>
     </ul>
   </li>
   <li class="projects {% if selected_area == 'project' %}active{% endif %}">
-    <a href="{% url project_list %}"><div class="ico"></div>Projetos</a>
+    <a href="{% url project_list %}"><div class="ico"></div>{% trans "Projects" %}</a>
   </li>
 </ul>

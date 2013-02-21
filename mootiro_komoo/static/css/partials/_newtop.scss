@@ -4,6 +4,8 @@
     height: 45px;
     background: #dceff4;
 
+    box-shadow: 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
+
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -36,7 +38,6 @@
 
             > li {
                 margin: 0;
-                width: 120px;
                 height: 100%;
                 text-align: center;
                 padding-top: 12px;
@@ -117,6 +118,7 @@
             background: #dceff4;
             text-align: left;
             font-size: 90%;
+            box-shadow: 0px -5px 0px 0px #b1dde8, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
 
             li:hover { background: #b1dde8 }
             .ico {
@@ -125,8 +127,12 @@
                 margin: 3px;
             }
         }
+        li.objects.active ul { box-shadow: 0px -5px 0px 0px #951b81, 1px 1px 3px 1px rgba(50, 50, 50, 0.5); }
 
     }
+    #menu > ul > li { width: 120px }
+    #side_menu > ul > li { width: 80px }
+
 
     nav > ul > li { display: inline-block }
 

@@ -80,6 +80,7 @@
 
     <div id="root">
       
+      {# TODO: move this to a separate template #}
       <div id="newtop">
         <div id="logo">
           <a href="{% url root %}"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></a>
@@ -93,9 +94,13 @@
         
         <nav id="side_menu">
           <ul>
-            <li>Sobre</li>
-            <li>Ajuda</li>
-            <li>Entrar/Fulano</li>
+            <li class="about"><a href="{#% url about %#}">{% trans "About" %}</a></li>
+            <li id="help_button">{% trans "Help" %}</li>
+            {% if not user.is_anonymous %}
+              <li><a href="{% url user_logout %}" >{% trans 'Logout' %}</a></li>
+            {% else %}
+              <li><a href="#" class="login-required" >{% trans 'Login'%}</a></li>
+            {% endif %}
           </ul>
         </nav>
         
