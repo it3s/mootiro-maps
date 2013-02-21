@@ -14,11 +14,10 @@ from django.forms.models import model_to_dict
 
 from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
-from reversion.models import Revision
 
 from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
-from main.utils import create_geojson, randstr, send_mail, paginated_query
+from main.utils import create_geojson, randstr, send_mail_task, paginated_query
 
 from update.models import Update
 
@@ -62,7 +61,8 @@ def _prepare_contrib_data(version, created_date):
         if data['model'] in regular_types:
             obj = data['fields']
             contrib['id'] = version.object_id
-            contrib['app_name'], contrib['model_name'] = data['model'].split('.')
+            contrib['app_name'], contrib['model_name'] = data[
+                    'model'].split('.')
             contrib['type'] = ['A', 'E', 'D'][version.type]
 
         elif data['model'] in weird_types:
@@ -102,7 +102,6 @@ def profile(request, id=''):
         geojson['features'][0]['properties']['image'] = '/static/img/user.png'
         geojson = json.dumps(geojson)
 
-
     filters = request.GET.get('filters', [])
     if filters:
         filters = filters.split(',')
@@ -110,7 +109,7 @@ def profile(request, id=''):
         query_set = Update.objects.filter(object_type__in=filters)
     else:
         query_set = Update.objects.all()
-    
+
     reg = r'[^0-9]%d[^0-9]' % user.id
     query_set = query_set.filter(_user_ids__regex=reg).order_by('-date')
     updates_page = paginated_query(query_set, request, size=10)
@@ -262,7 +261,7 @@ def user_new(request):
             key = randstr(32)
         user.verification_key = key
 
-        send_mail(
+        send_mail_task.delay(
             title=_('Welcome to MootiroMaps'),
             receivers=[user.email],
             message=_('''
@@ -314,6 +313,9 @@ def login(request):
         return dict(next=next)
     else:
         next = request.POST.get('next', request.get_full_path())
+
+    if not next:
+        next='/'
 
     email = request.POST.get('email', '').lower()
     password = request.POST['password']

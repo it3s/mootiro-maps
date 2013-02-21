@@ -115,9 +115,12 @@ def kill_tasks(*tasks):
     if not tasks:
         tasks = ['coffee', 'sass', 'elasticsearch', 'manage.py']
     for task in tasks:
-        local(
-            "ps -eo pid,args | grep %s | grep -v grep | "
-            "cut -c1-6 | xargs kill" % task)
+        try:
+            local(
+                "ps -eo pid,args | grep %s | grep -v grep | "
+                "cut -c1-6 | xargs kill" % task)
+        except Exception as err:
+            logging.warning('cannot execut kill on taks: {}'.format(task))
 
 
 def test(
