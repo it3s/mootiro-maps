@@ -40,12 +40,15 @@
                 margin: 0;
                 height: 100%;
                 text-align: center;
-                padding-top: 12px;
 
-                a {
-                    text-decoration: inherit;
-                    color: inherit;
-                }
+                > a { padding-top: 12px }
+            }
+            
+            a {
+                text-decoration: inherit;
+                color: inherit;
+                height: 100%;
+                display: block;
             }
 
             > li:hover { background: #b1dde8 }
@@ -62,10 +65,10 @@
             .map.active { background-color: #ff3d2e }
             .map.active .ico { background-image: url('../img/menu/newmenu/map-active.png') }
 
-            .objects > .ico { background-image: url('../img/menu/newmenu/objects.png') }
-            .objects:hover > .ico { background-image: url('../img/menu/newmenu/objects-hover.png') }
+            .objects > a >.ico { background-image: url('../img/menu/newmenu/objects.png') }
+            .objects:hover > a >.ico { background-image: url('../img/menu/newmenu/objects-hover.png') }
             .objects.active { background-color: #951b81 }
-            .objects.active > .ico { background-image: url('../img/menu/newmenu/objects-active.png') }
+            .objects.active > a >.ico { background-image: url('../img/menu/newmenu/objects-active.png') }
 
             .objects .community .ico { background-image: url('../img/menu/newmenu/community.png') }
             .objects .community:hover .ico { background-image: url('../img/menu/newmenu/community-hover.png') }

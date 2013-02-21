@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-15 11:26-0200\n"
+"POT-Creation-Date: 2013-02-21 18:54-0300\n"
 "PO-Revision-Date: 2012-10-18 17:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -43,27 +43,12 @@ msgid "Investments"
 msgstr "Investimentos"
 
 #: static/js/komoo_search.js:21 static/js.build/komoo_search.js:1
-msgid "Google Results"
-msgstr "Resultados do Google"
-
-#: static/js/komoo_search.js:22 static/js.build/komoo_search.js:1
 msgid "User"
 msgstr "Usuário"
 
-#: static/js/komoo_search.js:23 static/js.build/komoo_search.js:1
+#: static/js/komoo_search.js:22 static/js.build/komoo_search.js:1
 msgid "Project"
 msgstr "Projeto"
-
-#: static/js/komoo_search.js:96
-#, perl-format
-msgid "%s result"
-msgid_plural "%s results"
-msgstr[0] "%s resultado"
-msgstr[1] "%s resultados"
-
-#: static/js/komoo_search.js:109
-msgid "No results found!"
-msgstr "Nenhum resultado encontrado!"
 
 #: static/js/komoo_utils.js:408 static/js.build/komoo_utils.js:1
 msgid "Yes"
@@ -112,6 +97,10 @@ msgid "%s contributors"
 msgid_plural "%s contributors"
 msgstr[0] "%s contribuidor"
 msgstr[1] "%s contribuidores"
+
+#: static/js.build/komoo_search.js:1
+msgid "Google Results"
+msgstr "Resultados do Google"
 
 #: static/js.build/authentication/profile_update.js:1
 #: static/js/authentication/profile_update.js:25
@@ -320,6 +309,14 @@ msgid ""
 msgstr ""
 "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
 "adicione os dados da unidade que você marcou no mapa"
+
+#~ msgid "%s result"
+#~ msgid_plural "%s results"
+#~ msgstr[0] "%s resultado"
+#~ msgstr[1] "%s resultados"
+
+#~ msgid "No results found!"
+#~ msgstr "Nenhum resultado encontrado!"
 
 #~ msgid "Edit"
 #~ msgstr "Editar"

@@ -94,8 +94,8 @@
         
         <nav id="side_menu">
           <ul>
-            <li class="about"><a href="{#% url about %#}">{% trans "About" %}</a></li>
-            <li id="help_button">{% trans "Help" %}</li>
+            <li><a href="{% url about %}">{% trans "About" %}</a></li>
+            <li><a id="help_button">{% trans "Help" %}</a></li>
             {% if not user.is_anonymous %}
               <li><a href="{% url user_logout %}" >{% trans 'Logout' %}</a></li>
             {% else %}

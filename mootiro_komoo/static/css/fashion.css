@@ -28,11 +28,14 @@
       #newtop #menu > ul > li, #newtop #side_menu > ul > li {
         margin: 0;
         height: 100%;
-        text-align: center;
-        padding-top: 12px; }
-        #newtop #menu > ul > li a, #newtop #side_menu > ul > li a {
-          text-decoration: inherit;
-          color: inherit; }
+        text-align: center; }
+        #newtop #menu > ul > li > a, #newtop #side_menu > ul > li > a {
+          padding-top: 12px; }
+      #newtop #menu > ul a, #newtop #side_menu > ul a {
+        text-decoration: inherit;
+        color: inherit;
+        height: 100%;
+        display: block; }
       #newtop #menu > ul > li:hover, #newtop #side_menu > ul > li:hover {
         background: #b1dde8; }
       #newtop #menu > ul li .ico, #newtop #side_menu > ul li .ico {
@@ -53,13 +56,13 @@
         background-color: #ff3d2e; }
       #newtop #menu > ul .map.active .ico, #newtop #side_menu > ul .map.active .ico {
         background-image: url("../img/menu/newmenu/map-active.png"); }
-      #newtop #menu > ul .objects > .ico, #newtop #side_menu > ul .objects > .ico {
+      #newtop #menu > ul .objects > a > .ico, #newtop #side_menu > ul .objects > a > .ico {
         background-image: url("../img/menu/newmenu/objects.png"); }
-      #newtop #menu > ul .objects:hover > .ico, #newtop #side_menu > ul .objects:hover > .ico {
+      #newtop #menu > ul .objects:hover > a > .ico, #newtop #side_menu > ul .objects:hover > a > .ico {
         background-image: url("../img/menu/newmenu/objects-hover.png"); }
       #newtop #menu > ul .objects.active, #newtop #side_menu > ul .objects.active {
         background-color: #951b81; }
-      #newtop #menu > ul .objects.active > .ico, #newtop #side_menu > ul .objects.active > .ico {
+      #newtop #menu > ul .objects.active > a > .ico, #newtop #side_menu > ul .objects.active > a > .ico {
         background-image: url("../img/menu/newmenu/objects-active.png"); }
       #newtop #menu > ul .objects .community .ico, #newtop #side_menu > ul .objects .community .ico {
         background-image: url("../img/menu/newmenu/community.png"); }
@@ -234,7 +237,7 @@ form#form_login {
       position: absolute;
       left: 50%;
       height: 45.5px;
-      border-left: 1px solid #333333;
+      border-left: 1px solid #333;
       width: 1px; }
     #login_box div#separator .vertical_line.top {
       top: 0; }
@@ -306,11 +309,11 @@ div.importsheet_controls a.insert {
 
 div.importsheet_missing_column {
   background: #daa;
-  border: 1px solid #bb3333;
+  border: 1px solid #b33;
   padding: 2px 5px; }
 
 #importsheet_simulation_results div.result {
-  border: 1px solid #cccccc;
+  border: 1px solid #ccc;
   padding: 5px 15px;
   margin: 15px 0;
   width: 940px;
@@ -327,11 +330,11 @@ div.importsheet_missing_column {
   margin: 5px; }
 #importsheet_simulation_results div.metadata div.errors, #importsheet_messages div.metadata div.errors {
   background: #daa;
-  border: 1px solid #bb3333;
+  border: 1px solid #b33;
   padding: 2px 5px; }
 #importsheet_simulation_results div.metadata div.warnings, #importsheet_messages div.metadata div.warnings {
   background: #ee8;
-  border: 1px solid #eedd00;
+  border: 1px solid #ed0;
   padding: 2px 5px; }
 
 #donate {
@@ -361,7 +364,7 @@ div.importsheet_missing_column {
   #main-content.frontpage > div {
     padding: 20px; }
   #main-content.frontpage > div:nth-child(even) {
-    background: #ededed; }
+    background: #EDEDED; }
   #main-content.frontpage .center {
     text-align: center; }
   #main-content.frontpage .initial-heading {
@@ -393,7 +396,7 @@ div.importsheet_missing_column {
       display: inline-block;
       padding: 0.5em 1em;
       margin-bottom: 1em;
-      border-bottom: 1px solid #057d90;
+      border-bottom: 1px solid #057D90;
       width: 100%;
       font-size: 20px;
       text-align: center;

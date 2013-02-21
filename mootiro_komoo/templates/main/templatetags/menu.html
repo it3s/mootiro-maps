@@ -5,7 +5,7 @@
     <a href="{% url map %}"><div class="ico"></div>{% trans "Map" %}</a>
   </li>
   <li class="objects dropdown_menu {% if selected_area == 'community' or selected_area == 'organization' or selected_area == 'need' or selected_area == 'resource' or selected_area == 'investment' %}active{% endif %}">
-    <div class="ico"></div>{% trans "Objects" %}
+    <a><div class="ico"></div>{% trans "Objects" %}</a>
     <ul>
       <li class="{% if selected_area == 'community' %}active{% endif %} community">
         <a href="{% url list_communities %}"><div class="ico"></div>{% trans "Communities" %}</a>

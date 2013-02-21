@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-15 11:26-0200\n"
+"POT-Creation-Date: 2013-02-21 18:54-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -72,27 +72,27 @@ msgstr ""
 msgid "Passwords did not match."
 msgstr "As senha não coincidem."
 
-#: apps/authentication/views.py:182
+#: apps/authentication/views.py:181
 msgid "You must provide a valid password"
 msgstr "Você deve fornecer uma senha válida"
 
-#: apps/authentication/views.py:187
+#: apps/authentication/views.py:186
 msgid "Passwords did not match"
 msgstr "As senha não coincidem"
 
-#: apps/authentication/views.py:202
+#: apps/authentication/views.py:201
 msgid "Wrong password!"
 msgstr "Senha incorreta!"
 
-#: apps/authentication/views.py:206
+#: apps/authentication/views.py:205
 msgid "Failed to save data"
 msgstr "Houve uma falha ao tentar salvar os dados"
 
-#: apps/authentication/views.py:266
+#: apps/authentication/views.py:265
 msgid "Welcome to MootiroMaps"
 msgstr "Bem-vindo ao MootiroMaps"
 
-#: apps/authentication/views.py:268
+#: apps/authentication/views.py:267
 msgid ""
 "\n"
 "Hello, {name}.\n"
@@ -142,7 +142,7 @@ msgstr "Palavras-Chave"
 msgid " "
 msgstr " "
 
-#: apps/community/models.py:38 apps/komoo_project/forms.py:56
+#: apps/community/models.py:39 apps/komoo_project/forms.py:56
 #: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:228
 #: apps/main/templatetags/komoo_tags.py:327 apps/need/forms.py:24
 #: apps/organization/forms.py:65 apps/organization/forms.py:125
@@ -217,7 +217,7 @@ msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
 #: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:223
-#: apps/organization/models.py:192
+#: apps/organization/models.py:195
 msgid "Organization"
 msgstr "Organização"
 
@@ -324,23 +324,23 @@ msgstr "Tipo"
 msgid "Images"
 msgstr "Imagens"
 
-#: apps/komoo_resource/forms.py:76 apps/main/utils.py:230
+#: apps/komoo_resource/forms.py:76 apps/main/utils.py:233
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
-#: apps/komoo_resource/models.py:42
+#: apps/komoo_resource/models.py:43
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:64 apps/main/templatetags/komoo_tags.py:224
+#: apps/komoo_resource/models.py:65 apps/main/templatetags/komoo_tags.py:224
 msgid "Resource"
 msgstr "Recurso"
 
-#: apps/main/utils.py:109
+#: apps/main/utils.py:110
 msgid "Submit"
 msgstr "Enviar"
 
-#: apps/main/views.py:251
+#: apps/main/views.py:136
 msgid ""
 "\n"
 "Url: {0}\n"
@@ -356,7 +356,7 @@ msgstr ""
 "Mensagem: {5}\n"
 "    "
 
-#: apps/main/views.py:259
+#: apps/main/views.py:144
 msgid "Error report"
 msgstr "Relatório de erro"
 
@@ -425,7 +425,7 @@ msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
 msgstr[1] "daqui a %(count)s horas"
 
-#: apps/main/templatetags/komoo_tags.py:225 apps/need/models.py:89
+#: apps/main/templatetags/komoo_tags.py:225 apps/need/models.py:90
 msgid "Need"
 msgstr "Necessidade"
 
@@ -553,43 +553,43 @@ msgstr "O conteúdo foi denunciado com sucesso"
 msgid "Need Categories"
 msgstr "Áreas"
 
-#: apps/need/models.py:23
+#: apps/need/models.py:24
 msgid "Culture"
 msgstr "Cultura"
 
-#: apps/need/models.py:24
+#: apps/need/models.py:25
 msgid "Education"
 msgstr "Educação"
 
-#: apps/need/models.py:25
+#: apps/need/models.py:26
 msgid "Environment"
 msgstr "Meio Ambiente"
 
-#: apps/need/models.py:26
+#: apps/need/models.py:27
 msgid "Health"
 msgstr "Saúde"
 
-#: apps/need/models.py:27
+#: apps/need/models.py:28
 msgid "Housing"
 msgstr "Habitação"
 
-#: apps/need/models.py:28
+#: apps/need/models.py:29
 msgid "Local Economy"
 msgstr "Economia Local"
 
-#: apps/need/models.py:29
+#: apps/need/models.py:30
 msgid "Mobility"
 msgstr "Mobilidade"
 
-#: apps/need/models.py:30
+#: apps/need/models.py:31
 msgid "Social Service"
 msgstr "Serviço Social"
 
-#: apps/need/models.py:31
+#: apps/need/models.py:32
 msgid "Sport"
 msgstr "Esporte"
 
-#: apps/need/models.py:32
+#: apps/need/models.py:33
 msgid "Security"
 msgstr "Segurança"
 
@@ -609,7 +609,7 @@ msgstr "Nome da Unidade"
 msgid "Info"
 msgstr "Informações"
 
-#: apps/organization/models.py:193
+#: apps/organization/models.py:196
 msgid "Add Organization"
 msgstr "Adicionar organização"
 
@@ -925,7 +925,7 @@ msgstr "Veja alguns links importantes"
 
 #: templates/404.html:29 templates/main/templatetags/geo_objects_add.html:7
 #: templates/main/templatetags/geo_objects_listing.html:9
-#: templates/main/templatetags/menu.html:9
+#: templates/main/templatetags/menu.html:11
 #: templates/organization/branch_communities_list.html:6
 #: templates/organization/branch_form.html:20 templates/project/view.html:85
 msgid "Communities"
@@ -933,31 +933,31 @@ msgstr "Comunidades"
 
 #: templates/404.html:30 templates/main/templatetags/geo_objects_add.html:35
 #: templates/main/templatetags/geo_objects_listing.html:29
-#: templates/main/templatetags/menu.html:21 templates/project/view.html:103
+#: templates/main/templatetags/menu.html:20 templates/project/view.html:103
 #: templates/resource/list.html:7
 msgid "Resources"
 msgstr "Recursos"
 
 #: templates/404.html:31 templates/main/templatetags/geo_objects_add.html:11
 #: templates/main/templatetags/geo_objects_listing.html:15
-#: templates/main/templatetags/menu.html:13 templates/need/list.html:8
+#: templates/main/templatetags/menu.html:17 templates/need/list.html:8
 #: templates/project/view.html:94
 msgid "Needs"
 msgstr "Necessidades"
 
 #: templates/404.html:32 templates/investment/list.html:8
-#: templates/main/templatetags/menu.html:25 templates/project/view.html:112
+#: templates/main/templatetags/menu.html:23 templates/project/view.html:112
 msgid "Investments"
 msgstr "Investimentos"
 
 #: templates/404.html:33 templates/main/templatetags/geo_objects_add.html:23
 #: templates/main/templatetags/geo_objects_listing.html:35
-#: templates/main/templatetags/menu.html:17 templates/organization/list.html:8
+#: templates/main/templatetags/menu.html:14 templates/organization/list.html:8
 #: templates/project/view.html:76
 msgid "Organizations"
 msgstr "Organizações"
 
-#: templates/404.html:34 templates/main/upper_bar.html:12
+#: templates/404.html:34 templates/global.html:98
 msgid "Help"
 msgstr "Ajuda"
 
@@ -965,7 +965,15 @@ msgstr "Ajuda"
 msgid "Ops!"
 msgstr "Ops!"
 
-#: templates/global.html:94
+#: templates/global.html:100
+msgid "Logout"
+msgstr "Sair"
+
+#: templates/global.html:102
+msgid "Login"
+msgstr "Entrar"
+
+#: templates/global.html:110
 msgid "See Results"
 msgstr "Ver Resultados"
 
@@ -1341,7 +1349,7 @@ msgid_plural "%(counter)s Resources"
 msgstr[0] "%(counter)s Recurso"
 msgstr[1] "%(counter)s Recursos"
 
-#: templates/komoo_map/panel.html:9
+#: templates/komoo_map/panel.html:9 templates/search/list.html:6
 msgid "Search"
 msgstr "Busca"
 
@@ -1372,6 +1380,15 @@ msgstr "Selecione um ponto no mapa"
 #: templates/komoo_map/panel.html:42
 msgid "Change parameters"
 msgstr "Alterar parâmetros"
+
+#: templates/main/about.html:15 templates/main/root.html:15
+#: templates/main/use_cases.html:15
+msgid "Donate!"
+msgstr "Doe!"
+
+#: templates/main/about.html:215 templates/main/root.html:34
+msgid "Create your account."
+msgstr "Crie sua conta."
 
 #: templates/main/filter_results.html:6
 msgid "Search results for this radius"
@@ -1405,39 +1422,31 @@ msgstr "Apoio institucional"
 msgid "Partners"
 msgstr "Parceiros"
 
-#: templates/main/root.html:13
-msgid "Donate!"
-msgstr "Doe!"
-
-#: templates/main/root.html:19
+#: templates/main/root.html:23
 msgid "colaborative mapping of your region."
 msgstr "mapeamento colaborativo da sua região."
 
-#: templates/main/root.html:30
+#: templates/main/root.html:34
 msgid "Anyone can help!"
 msgstr "Todos podem ajudar!"
 
-#: templates/main/root.html:30
-msgid "Create your account."
-msgstr "Crie sua conta."
-
-#: templates/main/root.html:34
+#: templates/main/root.html:38
 msgid "Want to help"
 msgstr "Quer ajudar"
 
-#: templates/main/root.html:34
+#: templates/main/root.html:38
 msgid "Add to the map!"
 msgstr "Adicione ao mapa"
 
-#: templates/main/root.html:39
+#: templates/main/root.html:43
 msgid "What is it for?"
 msgstr "Para que usar?"
 
-#: templates/main/root.html:43
+#: templates/main/root.html:47
 msgid "Community diagnosis"
 msgstr "Diagnóstico comunitário"
 
-#: templates/main/root.html:45
+#: templates/main/root.html:49
 msgid ""
 "Map a region's resources and needs. Create indicators and analyze its "
 "diagnosis to know the true demands of the that community."
@@ -1445,11 +1454,11 @@ msgstr ""
 "Mapeie os recursos e necessidades de um território. Crie indicadores e "
 "analise seu diagnóstico para conhecer as reais demandas de uma comunidade."
 
-#: templates/main/root.html:51
+#: templates/main/root.html:55
 msgid "Network mapping"
 msgstr "Mapeamento de redes"
 
-#: templates/main/root.html:53
+#: templates/main/root.html:57
 msgid ""
 "Map organizations that work for the same cause. Find new partakers to your "
 "network. Share knowledge and help to add visibility to the initiatives"
@@ -1458,11 +1467,11 @@ msgstr ""
 "integrantes para sua rede. Troque conhecimentos e ajude a dar visibilidade "
 "às iniciativas."
 
-#: templates/main/root.html:59
+#: templates/main/root.html:63
 msgid "Project evaluation"
 msgstr "Avaliação de projeto"
 
-#: templates/main/root.html:61
+#: templates/main/root.html:65
 msgid ""
 "Record indicator over the execution of a project. Evaluate and generate "
 "reports. Share methodologies and results."
@@ -1470,11 +1479,11 @@ msgstr ""
 "Registre indicadores sobre a execução de um projeto. Avalie e gere "
 "relatórios. Compartilhe  metodologias e resultados."
 
-#: templates/main/root.html:67
+#: templates/main/root.html:71
 msgid "Data journalism"
 msgstr "Jornalismo de dados"
 
-#: templates/main/root.html:69
+#: templates/main/root.html:73
 msgid ""
 "Build maps using public data. Use them into your news and mobilize for "
 "changes."
@@ -1482,11 +1491,11 @@ msgstr ""
 "Construa mapas usando dados públicos. Utilize-os em suas notícias e mobilize "
 "para mudanças."
 
-#: templates/main/root.html:75
+#: templates/main/root.html:79
 msgid "Neighborhood guide"
 msgstr "Guia do bairro"
 
-#: templates/main/root.html:77
+#: templates/main/root.html:81
 msgid ""
 "Map existing services in your neighborhood. Help other dwellers to know the "
 "territory better and use local resources."
@@ -1494,27 +1503,27 @@ msgstr ""
 "Mapeie os serviços que existem na sua comunidade. Ajude outros moradores a "
 "conhecerem melhor o território e a utilizarem os recursos locais."
 
-#: templates/main/root.html:84
+#: templates/main/root.html:88
 msgid "Projects that uses MootiroMaps"
 msgstr "Projetos que usam o MootiroMaps"
 
-#: templates/main/root.html:125 templates/update/list.html:23
+#: templates/main/root.html:129 templates/update/list.html:23
 msgid "News"
 msgstr "Notícias"
 
-#: templates/main/root.html:128
+#: templates/main/root.html:132
 msgid "IT3S blog"
 msgstr "Blog do IT3S"
 
-#: templates/main/root.html:140
+#: templates/main/root.html:144
 msgid "visit the blog"
 msgstr "visite o blog"
 
-#: templates/main/root.html:145
+#: templates/main/root.html:149
 msgid "Last updates"
 msgstr "últimas atualizações"
 
-#: templates/main/root.html:159 templates/need/view.html:102
+#: templates/main/root.html:163 templates/need/view.html:102
 #: templates/organization/show.html:104
 msgid "see all"
 msgstr "ver todos"
@@ -1522,22 +1531,6 @@ msgstr "ver todos"
 #: templates/main/supporters.html:3
 msgid "Support"
 msgstr "Apoio"
-
-#: templates/main/upper_bar.html:5
-msgid "Logout"
-msgstr "Sair"
-
-#: templates/main/upper_bar.html:6
-msgid "Settings"
-msgstr "Configurações"
-
-#: templates/main/upper_bar.html:7
-msgid "Notifications"
-msgstr "Notificações"
-
-#: templates/main/upper_bar.html:10
-msgid "Login"
-msgstr "Entrar"
 
 #: templates/main/templatetags/communities_list.html:11
 #: templates/main/templatetags/usernames_list.html:13
@@ -1591,7 +1584,11 @@ msgstr ""
 msgid "Map"
 msgstr "Mapa"
 
-#: templates/main/templatetags/menu.html:29 templates/project/list.html:7
+#: templates/main/templatetags/menu.html:8
+msgid "Objects"
+msgstr "Objetos"
+
+#: templates/main/templatetags/menu.html:28 templates/project/list.html:7
 #: templates/project/projects_tag.html:5
 msgid "Projects"
 msgstr "Projetos"
@@ -2096,6 +2093,12 @@ msgstr "veja a página"
 msgid "by"
 msgstr "por"
 
+#~ msgid "Settings"
+#~ msgstr "Configurações"
+
+#~ msgid "Notifications"
+#~ msgstr "Notificações"
+
 #~ msgid "last contributions"
 #~ msgstr "Últimas contribuições"
 
@@ -2161,8 +2164,8 @@ msgstr "por"
 #~ msgid "An initiative"
 #~ msgstr "Uma iniciativa"
 
-#~ msgid "About MootiroMaps"
-#~ msgstr "Sobre o MootiroMaps"
+msgid "About"
+msgstr "Sobre"
 
 #~ msgid "About Us"
 #~ msgstr "Quem somos"
@@ -2230,9 +2233,6 @@ msgstr "por"
 
 #~ msgid "%(organization)s at %(community)s"
 #~ msgstr "%(organization)s em %(community)s"
-
-#~ msgid "Objects"
-#~ msgstr "Id do Objeto"
 
 #~ msgid "Username Required"
 #~ msgstr "Nome de usuário é obrigatório"
