@@ -14,6 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponseNotAllowed
 from django.core.mail import send_mail as django_send_mail
 from django.conf import settings
+from celery.task import task
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
@@ -201,12 +202,14 @@ def templatetag_args_parser(*args):
     """
     Keyword-arguments like function parser. Designed to be used in templatetags
     Usage:
+    ```
     def mytemplatetag(..., arg1='', arg2='', arg3=''):
       parsed_args = templatetag_args_parser(arg1, arg2, arg3)
 
       label = parsed_args.get('label', 'Default')
       use_border = parsed_args.get('use_border', False)
       zoom = parsed_args.get('zoom', 16)
+    ```
 
     And in the template...
       {% mytemplatetag 'zoom=12' 'label=Your name' %}
@@ -234,7 +237,13 @@ def render_markup(text):
     return markdown(text, safe_mode=True) if text else ''
 
 
-def send_mail(title='', message='', sender='', receivers=[]):
+@task
+def send_mail_task(title='', message='', sender='', receivers=[], html=False):
+    send_mail(title=title, message=message, sender=sender,
+            receivers=receivers, html=html)
+
+
+def send_mail(title='', message='', sender='', receivers=[], html=False):
     '''
     function for sending mails. If we are on debug (development) se will be
     sent by django mailer else will use the mailgun api.
@@ -244,14 +253,21 @@ def send_mail(title='', message='', sender='', receivers=[]):
         django_send_mail(title, message, sender, receivers,
                             fail_silently=False)
     else:
+        data = {
+            'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
+            'to': receivers,
+            'subject': title,
+        }
+        if html:
+            data['html'] = message
+        else:
+            data['text'] = message
+
         requests.post(
             settings.MAILGUN_API_URL,
             auth=('api', settings.MAILGUN_API_KEY),
-            data={
-                'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
-                'to': receivers,
-                'subject': title,
-                'text': message})
+            data=data
+        )
 
 
 def get_handler_method(request_handler, http_method):

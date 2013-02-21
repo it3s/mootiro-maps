@@ -35,13 +35,21 @@ def prod():
 def setup_django():
     import os
     import sys
-    PROJ_DIR = os.path.abspath(os.path.dirname(__file__))
+
+    FAB_DIR = os.path.abspath(os.path.dirname(__file__))
+    PROJ_DIR = os.path.abspath(os.path.join(FAB_DIR, '..'))
+    APP_DIR = os.path.abspath(os.path.join(PROJ_DIR, 'apps'))
+    LIB_DIR = os.path.abspath(os.path.join(PROJ_DIR, 'lib'))
     SITE_ROOT = os.path.abspath(os.path.join(PROJ_DIR, '..'))
     sys.path.append(PROJ_DIR)
+    sys.path.append(APP_DIR)
+    sys.path.append(LIB_DIR)
     sys.path.append(SITE_ROOT)
+    print sys.path
     from django.core.management import setup_environ
     env_name = {'dev': 'development', 'stage': 'staging', 'prod': 'production'}
     environ = None
+    print env_name[env_]
     exec 'from settings import {} as environ'.format(env_name[env_])
     setup_environ(environ)
 
@@ -77,13 +85,6 @@ def work():
     # test runners go here!
 
 
-def kill_background_tasks():
-    for task in ['coffee', 'sass']:
-        local(
-            "ps -eo pid,args | grep %s | grep -v grep | "
-            "cut -c1-6 | xargs kill" % task)
-
-
 def run_celery():
     """runs celery task queue"""
     local('python manage.py celeryd -B --loglevel=info {} &'
@@ -93,6 +94,7 @@ def run_celery():
 def run(port=8001):
     """Runs django's development server"""
     run_celery()
+    run_elasticsearch(bg='true')
     if env_ != 'dev':
         local(
             'python manage.py run_gunicorn --workers=2 '
@@ -106,6 +108,19 @@ def kill_manage_tasks():
     """kill all manage.py background tasks"""
     local('ps -eo pid,args | grep manage.py | grep -v grep | cut -c1-6 | '
           'xargs kill')
+
+
+def kill_tasks(*tasks):
+    """ Kill background tasks given a list o task names """
+    if not tasks:
+        tasks = ['coffee', 'sass', 'elasticsearch', 'manage.py']
+    for task in tasks:
+        try:
+            local(
+                "ps -eo pid,args | grep %s | grep -v grep | "
+                "cut -c1-6 | xargs kill" % task)
+        except Exception as err:
+            logging.warning('cannot execut kill on taks: {}'.format(task))
 
 
 def test(
@@ -374,9 +389,33 @@ def build():
 
 def install_elasticsearch():
     """ download and place elastic search on the  lib folder """
-    local("""
-        wget -P lib/ http://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.5.tar.gz;
-        tar xzvf lib/elasticsearch-0.20.5.tar.gz -C lib/;
-        mv lib/elasticsearch-0.20.5 lib/elasticsearch;
-        rm lib/elasticsearch-0.20.5.tar.gz;
-    """)
+    local(''
+        'wget -P lib/ http://download.elasticsearch.org/elasticsearch/'
+            'elasticsearch/elasticsearch-0.20.5.tar.gz;'
+        'tar xzvf lib/elasticsearch-0.20.5.tar.gz -C lib/;'
+        'mv lib/elasticsearch-0.20.5 lib/elasticsearch;'
+        'rm lib/elasticsearch-0.20.5.tar.gz;'
+    )
+
+
+def run_elasticsearch(bg='false'):
+    """
+    run elastic search
+    usage:
+        fab run_elasticsearch  #runs on foreground
+        fab run_elasticsearch:bg=true  #runs on background
+    """
+    background = '&' if bg == 'true' else ''
+    local('./lib/elasticsearch/bin/elasticsearch -f {}'.format(background))
+
+
+def configure_elasticsearch():
+    """ configure elasticsearch from scratch """
+    run_elasticsearch(bg='true')
+    local('sleep 10s')
+    setup_django()
+    from search.utils import reset_index, create_mapping, index_object
+    reset_index()
+    create_mapping()
+    kill_tasks('elasticsearch')
+
