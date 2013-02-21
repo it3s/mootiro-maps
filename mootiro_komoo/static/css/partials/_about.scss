@@ -43,3 +43,59 @@
 		background: #eff8fb !important;
 	}
 }
+
+.use-cases {
+
+	.initial-heading {
+		margin-bottom: 10px;
+	}
+
+	.contents {
+		> ul {
+			margin: 20px 0;
+			padding: 15px !important;
+			display: inline-block;
+			background: #ededed;
+			border-radius: 5px;
+			list-style: none !important;
+		}
+	}
+
+	.section {
+		margin: 0 0 50px;
+	}
+
+	&#main-content > div {
+		padding: 0px;
+
+		ul {
+			list-style: disc outside none;
+			padding: 0 0 0 20px;
+		}
+
+		h3 {
+			margin-top: 10px;
+		}
+
+		> div {
+			margin: 10px 350px 10px 0;
+		}
+
+		> img {
+			float: right;
+			margin: 20px 0 0;
+			width: 300px;
+		}
+	}
+	&#main-content > div.section:nth-child(even) {
+		background: none;
+
+		> div {
+			margin: 10px 0 10px 350px;
+		}
+
+		> img {
+			float: left;
+		}
+	}
+}

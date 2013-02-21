@@ -57,6 +57,11 @@ def about(request):
     return dict()
 
 
+@render_to('main/use_cases.html')
+def use_cases(request):
+    return dict()
+
+
 @render_to('main/root.html')
 def root(request):
     '''This is the frontpage view, sites's root'''
