@@ -317,11 +317,13 @@ div.importsheet_missing_column {
     position: absolute; }
 
 .about {
-  padding: 0px 30px 15px !important; }
+  padding: 0px 0px 15px !important; }
   .about * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
+  .about#main-content {
+    width: 100%; }
   .about .items .topic {
     display: inline-block;
     width: 33%;
@@ -331,6 +333,12 @@ div.importsheet_missing_column {
     .about .items .topic h3 {
       font-size: 1.2em; }
     .about .items .topic img {
-      width: 100%; }
+      width: 290px; }
+  .about > div,
+  .about .section .items {
+    width: 910px;
+    margin: 0 auto; }
+  .about > div.section {
+    width: 100%; }
   .about > div:nth-child(even) {
     background: #eff8fb !important; }

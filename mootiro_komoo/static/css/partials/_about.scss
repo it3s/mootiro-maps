@@ -5,7 +5,11 @@
 			    box-sizing: border-box;
 	}
 
-	padding: 0px 30px 15px !important;
+	padding: 0px 0px 15px !important;
+
+	&#main-content {
+		width: 100%;
+	}
 
 	.items {
 		.topic {
@@ -20,9 +24,19 @@
 			}
 
 			img {
-			  width: 100%;
+			  width: 290px;
 			}
 		}
+	}
+
+	> div,
+	.section .items {
+		width: 910px;
+		margin: 0 auto;
+	}
+
+	> div.section {
+		width: 100%;
 	}
 
 	> div:nth-child(even) {
