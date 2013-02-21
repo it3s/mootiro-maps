@@ -27,7 +27,8 @@
     <link rel="shortcut icon" HREF="{{STATIC_URL}}img/favicon.png" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}/lib/flexslider/flexslider.css" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/flexslider/flexslider.css" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/joyride/joyride-2.0.3.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/fashion.css" />
     <script type="text/javascript" src="{% url javascript_catalog %}"></script>
@@ -47,10 +48,12 @@
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/underscore-min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/heartcode-canvasloader-min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/django-js-utils/dutils.conf.urls.js"></script>
-    <script type="text/javascript" src="{{STATIC_URL}}/lib/flexslider/jquery.flexslider-min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/joyride/jquery.joyride-2.0.3.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/flexslider/jquery.flexslider-min.js"></script>
     <!-- Our utilities lib -->
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/shortcut.js"></script>
@@ -64,7 +67,7 @@
     {{ form.media.js }}
 
     {% block css %}{% endblock %}
-
+    
     <!-- Facebook stuff -->
     <div id="fb-root"></div>
     <script>
@@ -148,6 +151,12 @@
       })();
     </script>
     -->
+
+    <script type="text/javascript" src="{{STATIC_URL}}js/help_center/help_center.js"></script>
+    
+    <script type="text/javascript">
+      var help = new HelpCenter("#help_button", ['organization:what_is', 'organization:page_tour']);
+    </script>
 
   </body>
 </html>
