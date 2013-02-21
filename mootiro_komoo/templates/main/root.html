@@ -22,13 +22,13 @@
     <h1 class="initial-heading center">
       <img src="{{STATIC_URL}}img/mootiro-maps.png"/> {% trans "colaborative mapping of your region." %}
     </h1>
-    
+
     <div class="video">
       <iframe src="http://player.vimeo.com/video/56746348?title=0&amp;byline=0&amp;portrait=0&amp;color=28b8ce" width="600" height="337" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
     </div>
   </div>
-  
-  
+
+
   {% if user.is_anonymous %}
   <div>
     <h2 class="center"><span class="apart">{% trans "Anyone can help!" %}</span> <a class="login-required big button" href="#">{% trans "Create your account." %}</a></h2>
@@ -38,55 +38,55 @@
     <h2 class="center">{% trans "Want to help" %}, {{ user.get_first_name }}? <a class="login-required" href="{% url map %}#map-panel-add">{% trans "Add to the map!" %}</a></h2>
   </div>
   {% endif %}
-  
-  <div class="what-is-it-for">  
+
+  <div class="what-is-it-for">
     <h2>{% trans "What is it for?" %}</h2>
-    
-    <!-- <a href="#"> -->
+
+    <a href="{% url use_cases %}#diagnostico_de_territorio">
       <div class="topic">
         <h3>{% trans "Community diagnosis" %}</h3>
         <img src="{{STATIC_URL}}img/frontpage/community-diagnosis.png"/>
         <p>{% trans "Map a region's resources and needs. Create indicators and analyze its diagnosis to know the true demands of the that community." %}</p>
       </div>
-    <!-- </a> -->
-    
-    <!-- <a href="#"> -->
+    </a>
+
+    <a href="{% url use_cases %}#mapeamento_de_redes">
       <div class="topic">
         <h3>{% trans "Network mapping" %}</h3>
         <img src="{{STATIC_URL}}img/frontpage/network-mapping.png"/>
         <p>{% trans "Map organizations that work for the same cause. Find new partakers to your network. Share knowledge and help to add visibility to the initiatives" %}</p>
       </div>
-    <!-- </a> -->
-    
-    <!-- <a href="#"> -->
+    </a>
+
+    <a href="{% url use_cases %}#avaliacao_de_projetos_e_programas">
       <div class="topic">
         <h3>{% trans "Project evaluation" %}</h3>
         <img src="{{STATIC_URL}}img/frontpage/project-evaluation.png"/>
         <p>{% trans "Record indicator over the execution of a project. Evaluate and generate reports. Share methodologies and results." %}</p>
       </div>
-    <!-- </a> -->
+    </a>
 
-    <!-- <a href="#"> -->
+    <a href="{% url use_cases %}#jornalismo_de_dados">
       <div class="topic">
         <h3>{% trans "Data journalism" %}</h3>
         <img src="{{STATIC_URL}}img/frontpage/data-journalism.png"/>
         <p>{% trans "Build maps using public data. Use them into your news and mobilize for changes." %}</p>
       </div>
-    <!-- </a> -->
+    </a>
 
-    <!-- <a href="#"> -->
+    <a href="{% url use_cases %}#guia_do_bairro">
       <div class="topic">
         <h3>{% trans "Neighborhood guide" %}</h3>
         <img src="{{STATIC_URL}}img/frontpage/neighborhood-guide.png"/>
         <p>{% trans "Map existing services in your neighborhood. Help other dwellers to know the territory better and use local resources." %}</p>
       </div>
-    <!-- </a> -->
-    
+    </a>
+
   </div>
-  
+
   <div class="projects">
     <h2>{% trans "Projects that uses MootiroMaps" %}</h2>
-    
+
     <!-- Place somewhere in the <body> of your page -->
     <div class="flexslider">
       <ul class="slides">
@@ -103,7 +103,7 @@
         <li class="heliopolis-verde">
           <a href="http://maps.mootiro.org/project/2"><img src="{{STATIC_URL}}img/frontpage/heliopolis-verde.png"/></a>
           <p class="testimony">
-            “O primeiro passo de um projeto social de base comunitária é a realização de um mapa de contexto, a fim de identificar demandas e conhecer os atores locais. A visualização das informações e a possibilidade de mapear coletivamente com o MootiroMaps favorecem e facilitam nosso trabalho com o Heliópolis Verde.” 
+            “O primeiro passo de um projeto social de base comunitária é a realização de um mapa de contexto, a fim de identificar demandas e conhecer os atores locais. A visualização das informações e a possibilidade de mapear coletivamente com o MootiroMaps favorecem e facilitam nosso trabalho com o Heliópolis Verde.”
             <br/>
             <span class="author-info">
               — <a href="http://maps.mootiro.org/user/101">Raquel Porangaba</a>, Analista de articulação <br/> do <a href="http://maps.mootiro.org/organization/793">Instituto Baccarelli</a>.
@@ -122,12 +122,12 @@
         </li>
       </ul>
     </div>
-    
+
   </div>
-  
+
   <div class="news">
     <h2>{% trans "News" %}</h2>
-    
+
     <div class="blog">
       <h3>{% trans "IT3S blog" %}</h3>
       <ul>
@@ -144,7 +144,7 @@
         <a href="http://blog.mootiro.org">{% trans "visit the blog" %}</a>
       </div>
     </div>
-    
+
     <div class="last_updates">
       <h3>{% trans "Last updates" %}</h3>
       <ul>

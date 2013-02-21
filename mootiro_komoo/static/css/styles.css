@@ -248,7 +248,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 #dinamic-form,
 #main-content {
-    margin-top: 20px;
+    width: 950px;
+    margin: 20px auto 0;
     padding: 0px 60px 15px;
 }
 #dinamic-form {
@@ -985,10 +986,7 @@ body.community #map-panel-tabs {
     padding-top: 35px !important;
 }
 #main-content {
-    margin: 20px 0 0;
-}
-body.community #main-content {
-    margin: 40px 0 0;
+    margin: 20px auto 0;
 }
 .map-panel .map-panel-buttons {
     margin: 0 5px;
@@ -2545,8 +2543,8 @@ ul.two-cols li {
 #footer {
     clear: both;
     width: 900px;
-    margin-left: 60px;
-    padding: 1px 0 20px;
+    margin: 0 auto;
+    padding: 1px 0 20px 60px;
 }
 
 #footer > div {

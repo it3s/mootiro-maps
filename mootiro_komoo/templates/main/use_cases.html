@@ -1,0 +1,223 @@
+{% extends "global.html" %}
+{% load i18n %}
+{% load komoo_filters %}
+{# % load komoo_tags % #}
+{# % load komoo_map_tags % #}
+{# % load comment_tags % #}
+{# % load humanize % #}
+
+
+{% block content %}
+
+<!-- FIXME: Uncomment. Waiting for it3s site to be ready for the donation link.
+<a class="no-decoration" href="#">
+  <div id="donate">
+    <h2>{% trans "Donate!" %}</h2>
+  </div>
+</a>
+-->
+
+<div id="main-content" class="use-cases frontpage">
+  <h1 class="initial-heading">
+    Para que usar o MootiroMaps?
+  </h1>
+  <strong>Guia de casos de uso</strong>
+
+  <div class="contents">
+    <ul>
+      <li><a href="#guia_do_bairro">Guia do bairro</a></li>
+      <li><a href="#diagnostico_de_territorio">Diagnóstico de território</a></li>
+      <li><a href="#mapeamento_de_redes">Mapeamento de redes</a></li>
+      <li><a href="#avaliacao_de_projetos_e_programas">Avaliação de projetos e programas</a></li>
+      <li><a href="#jornalismo_de_dados">Incidência política/jornalismo de dados</a></li>
+    </ul>
+  </div>
+
+  <div id="guia_do_bairro" class="section">
+    <h2>Guia do bairro</h2>
+    <img src="{{STATIC_URL}}img/frontpage/neighborhood-guide.png"/>
+    <div>
+    <h3>Cenário</h3>
+    Às vezes informações sobre comunidades populares são escassas, assim como não dispõem de mapas oficiais. A causa pode ser a existência de irregularidades ainda não resolvidas em moradias e ocupações nesses territórios. A falta de informações dificulta que moradores conheçam os espaços locais e que apoios externos cheguem até a comunidade.
+    <h3>Objetivos</h3>
+    <ul>
+      <li>Mostrar para grupos externos o que a comunidade oferece;</li>
+      <li>Colaborar para que moradores valorizem sua comunidade;</li>
+      <li>Facilitar a integração de novos moradores.</li>
+    </ul>
+    <h3>Quem realiza</h3>
+    <ul>
+      <li>ONGs;</li>
+      <li>Associações do bairro;</li>
+      <li>Atores sociais e lideranças locais.</li>
+    </ul>
+    <h3>Estratégias de trabalho</h3>
+    <ul>
+      <li>Saídas a campo e mutirões de mapeamento utilizando GPS, máquina fotográfica etc;</li>
+      <li>Oficinas para formação de usuários e mapeadores;</li>
+      <li>Entrevistas com moradores e lideranças locais;</li>
+      <li>Divulgação do guia do bairro junto aos canais de mídia comunitárias (rádio, jornal e TVs locais);</li>
+      <li>Criação de mapas ou guia do bairro impresso da comunidade e distribuição.</li>
+    </ul>
+    <h3>Veja projetos nesta linha</h3>
+    <ul>
+      <li><a href="http://maps.mootiro.org/project/30">Projeto Ilha</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+  <div id="diagnostico_de_territorio" class="section">
+    <h2>Diagnóstico de território</h2>
+    <img src="{{STATIC_URL}}img/frontpage/community-diagnosis.png"/>
+    <div>
+    <h3>Cenário</h3>
+    Para planejar ações de melhoria em uma comunidade - seja em infraestrutura, como moradia, saneamento, urbanização, ou em serviços socioassistenciais e de promoção de direitos básicos, como proteção sociofamiliar, saúde, educação - é necessário dispor de indicadores sociais fidedignos. No entanto, quando existem, esses dados não estão compilados ou centralizados em uma mesma fonte, dificultando seu acesso.
+    <h3>Objetivos</h3>
+    <ul>
+      <li>Gerar, organizar e analisar indicadores sociais;</li>
+      <li>Consolidar todas as informações referentes ao desenvolvimento de uma comunidade ou território;</li>
+      <li>Acompanhar os investimentos e qualidade dos serviços públicos;</li>
+      <li>Planejar o desenvolvimento da comunidade;</li>
+      <li>Decidir onde atuar ou em quais projetos investir.</li>
+    </ul>
+    <h3>Quem usa</h3>
+    <ul>
+      <li>ONGs;</li>
+      <li>Associações de bairro;</li>
+      <li>Fundações e institutos empresariais;</li>
+      <li>Poder público.</li>
+    </ul>
+    <h3>Estratégias de trabalho</h3>
+    <ul>
+      <li>Pedido de informação pública (baseado na Lei de Acesso à Informação);</li>
+      <li>Qualificação de dados e importação;</li>
+      <li>Saídas a campo e mutirões de mapeamento utilizando GPS, máquina fotográfica etc;</li>
+      <li>Oficina para formação de mapeadores nas organizações;</li>
+      <li>Fórum comunitário ou oficina para discussão do diagnóstico e levantamento de ideias para intervenções comunitárias;</li>
+      <li>Acompanhamento das intervenções comunitárias.</li>
+    </ul>
+    <h3>Veja projetos nesta linha</h3>
+    <ul>
+      <li><a href="http://maps.mootiro.org/project/33">Territórios da Juventude</a></li>
+      <li><a href="http://maps.mootiro.org/project/40">Litoral Sustentável</a></li>
+      <li><a href="http://maps.mootiro.org/project/22">Heliópolis - Bairro Educador</a></li>
+      <li><a href="http://maps.mootiro.org/project/17">Mapa de oportunidades - Aldeias Infantis</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+  <div id="mapeamento_de_redes" class="section">
+    <h2>Mapeamento de redes</h2>
+    <img src="{{STATIC_URL}}img/frontpage/network-mapping.png"/>
+    <div>
+    <h3>Cenário</h3>
+    ONGs vêm trabalhando em rede para potencializar seus resultados na luta por uma causa em comum. A estratégia de rede ajuda a gerar maior visibilidade para um tema, pautando meios de comunicação, atraindo novas organizações engajadas e também parceiros dispostos a apoiar a iniciativa. Nesse sentido, a gestão de conhecimento (link para o site institucional, em “Gestão de conhecimento”, dentro de prestação de serviços) e a troca de informações entre os integrantes é fundamental para a manutenção da própria rede, fortalecendo a comunicação e empoderando os atores envolvidos.
+    <h3>Objetivos</h3>
+    <ul>
+      <li>Avaliar a disseminação da rede e poder planejar onde ela deve procurar novos membros;</li>
+      <li>Gerar transparência sobre o trabalho da rede;</li>
+      <li>Facilitar a comunicação e colaboração entre seus participantes;</li>
+      <li>Fomentar o intercâmbio de melhores práticas de trabalho e metodologias.</li>
+    </ul>
+    <h3>Quem usa</h3>
+    <ul>
+      <li>ONGs;</li>
+      <li>Fundações e institutos empresariais que fomentam o trabalho das redes.</li>
+    </ul>
+    <h3>Estratégias de trabalho</h3>
+    <ul>
+      <li>Pesquisa junto às organizações;</li>
+      <li>Qualificação colaborativa e de dados e importação;</li>
+      <li>Criação de um manual de edição dos cadastros e acompanhamento à distância;</li>
+      <li>Integração do mapa no site institucional da rede.</li>
+    </ul>
+    <h3>Veja projetos nesta linha</h3>
+    <ul>
+      <li><a href="http://maps.mootiro.org/project/9">Redes pelos Direitos da Criança e do Adolescente</a></li>
+      <li><a href="http://maps.mootiro.org/project/3">Rede de Conselhos</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+  <div id="avaliacao_de_projetos_e_programas" class="section">
+    <h2>Avaliação de projetos e programas</h2>
+    <img src="{{STATIC_URL}}img/frontpage/project-evaluation.png"/>
+    <div>
+    <h3>Cenário</h3>
+    Comunidades muitas vezes são atendidas por programas desenvolvidos por ONGs e pelo poder público. A análise de informações geradas durante a execução dessas ações é central para mensurar resultados e implementar modificações nas estratégias. A cultura de avaliação e compartilhamento de metodologias ajuda não apenas a aperfeiçoar os programas como permite que outros atores repliquem as iniciativas.
+    <h3>Objetivos</h3>
+    <ul>
+      <li>Gerar transparência sobre a atuação da ONG, Fundação ou ator público;</li>
+      <li>Criar um mapa e publicá-lo em seu site institucional;</li>
+      <li>Encontrar melhores práticas e sistematizar metodologias;</li>
+      <li>Avaliar a eficácia e/ou eficiência dos programas e criar informações gerenciais.</li>
+    </ul>
+    <h3>Quem usa</h3>
+    <ul>
+      <li>ONGs;</li>
+      <li>Fundações;</li>
+      <li>Pode público;</li>
+      <li>Associações de bairro.</li>
+    </ul>
+    <h3>Estratégias de trabalho</h3>
+    <ul>
+      <li>Planejamento do projeto;</li>
+      <li>Formação da equipe;</li>
+      <li>Pedido de informação pública (baseado na Lei de Acesso à Informação);</li>
+      <li>Qualificação de dados e importação;</li>
+      <li>Produção de análises e visualizações.</li>
+    </ul>
+    <h3>Veja projetos nesta linha</h3>
+    <ul>
+      <li><a href="http://maps.mootiro.org/project/21">MOVA-Brasil</a></li>
+      <li><a href="http://maps.mootiro.org/project/54">Jovens Urbanos - Avaliação do Programa</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+  <div id="jornalismo_de_dados" class="section">
+    <h2>Incidência política/jornalismo de dados</h2>
+    <img src="{{STATIC_URL}}img/frontpage/data-journalism.png"/>
+    <div>
+    <h3>Cenário</h3>
+    O enfrentamento à corrupção, a irregularidades na gestão pública e a desigualdades sociais tem no jornalismo de dados um aliado. Essa modalidade de jornalismo está cada vez mais interessada em publicizar dados antes restrito ao governo (com base na Lei de Acesso à Informação) e em analisar e interpretar tais informações junto à sociedade, colaborando assim com a mobilização de outros atores sociais.
+    <h3>Objetivos</h3>
+    <ul>
+      <li>Facilitar a leitura e análise dos dados;</li>
+      <li>Gerar mapas que podem ser utilizados em notícias ou reivindicações junto ao poder público.</li>
+    </ul>
+    <h3>Quem usa</h3>
+    <ul>
+      <li>Jornalistas;</li>
+      <li>Moradores/comunicadores populares;</li>
+      <li>ONGs e movimentos sociais;</li>
+      <li>Cidadãos interessados.</li>
+    </ul>
+    <h3>Estratégias de trabalho</h3>
+    <ul>
+      <li>Pedido de informação pública (baseado na Lei de Acesso à Informação);</li>
+      <li>Qualificação de dados e importação;</li>
+      <li>Produção de análises e visualizações;</li>
+      <li>Criação de um hotsite para o projeto;</li>
+      <li>Divulgação de notícias em blogues e redes sociais.</li>
+    </ul>
+    <h3>Veja projetos nesta linha</h3>
+    <ul>
+      <li><a href="http://maps.mootiro.org/project/5">Acesso à informação</a></li>
+      <li><a href="http://maps.mootiro.org/project/32">Observatório de Educação</a></li>
+      <li><a href="http://maps.mootiro.org/project/41">Observatório de Meio Ambiente</a></li>
+      <li><a href="http://maps.mootiro.org/project/39">Observatório de Assistência Social</a></li>
+    </ul>
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+{% endblock %}
