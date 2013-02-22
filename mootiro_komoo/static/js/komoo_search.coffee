@@ -1,6 +1,6 @@
 $ ->
 
-    form_search = $ '#search'
+    form_search = $ '#search form'
     search_field = $ '#search-bar'
     csrftoken = getCookie('csrftoken') or  window.csrf_token
 

@@ -112,13 +112,12 @@
             {% endif %}
           </ul>
         </nav>
-
+        
         <div id="search">
-          <form id="search" action=".">
-            <input type="search" id="search-bar" placeholder="&#9906; Procurar por qualquer local, usuário ou objeto no sistema" autocomplete="off"/>
-            <input type="submit" id="search-button" class="button" value="{% trans 'See Results' %}"/>
-            <div id="search-canvasloader-container" class="inline-block"></div>
+          <form action=".">
+            <input id="search-bar" type="search" placeholder="{% trans 'Place, user or object...' %}" autocomplete="off"/>
           </form>
+          <div id="search-canvasloader-container" class="inline-block"></div>
           <div id="search-results-box"></div>
         </div>
       </div>

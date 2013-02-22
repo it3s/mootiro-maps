@@ -2,7 +2,7 @@
 
   $(function() {
     var cl, csrftoken, doSearch, form_search, hash, hidePopover, search_field, showPopover, showResults, titles;
-    form_search = $('#search');
+    form_search = $('#search form');
     search_field = $('#search-bar');
     csrftoken = getCookie('csrftoken') || window.csrf_token;
     cl = new CanvasLoader('search-canvasloader-container');
