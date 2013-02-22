@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-21 18:54-0300\n"
+"POT-Creation-Date: 2013-02-22 17:30-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -957,7 +957,7 @@ msgstr "Investimentos"
 msgid "Organizations"
 msgstr "Organizações"
 
-#: templates/404.html:34 templates/global.html:98
+#: templates/404.html:34 templates/global.html:100
 msgid "Help"
 msgstr "Ajuda"
 
@@ -965,17 +965,29 @@ msgstr "Ajuda"
 msgid "Ops!"
 msgstr "Ops!"
 
-#: templates/global.html:100
+#: templates/global.html:99
+msgid "About"
+msgstr "Sobre"
+
+#: templates/global.html:105
+msgid "Profile"
+msgstr "Perfil"
+
+#: templates/global.html:106
+msgid "Configurations"
+msgstr "Configurações"
+
+#: templates/global.html:107
 msgid "Logout"
 msgstr "Sair"
 
-#: templates/global.html:102
+#: templates/global.html:111
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/global.html:110
-msgid "See Results"
-msgstr "Ver Resultados"
+#: templates/global.html:118
+msgid "Place, user or object..."
+msgstr "Lugar, usuário ou objeto..."
 
 #: templates/not_anymore.html:7
 msgid "This content does not exists anymore."
@@ -2022,7 +2034,6 @@ msgid "activate/deactivate Investment"
 msgstr "ativar/desativar Investimento"
 
 #: templates/update/updates_list_templatetag.html:55
-#, fuzzy
 msgid ""
 "\n"
 "                    discussed\n"
@@ -2059,7 +2070,6 @@ msgstr[0] "recurso"
 msgstr[1] "recursos"
 
 #: templates/update/updates_list_templatetag.html:77
-#, fuzzy
 msgid ""
 "\n"
 "                        imported into project\n"
@@ -2093,11 +2103,11 @@ msgstr "veja a página"
 msgid "by"
 msgstr "por"
 
+#~ msgid "See Results"
+#~ msgstr "Ver Resultados"
+
 #~ msgid "Settings"
 #~ msgstr "Configurações"
-
-#~ msgid "Notifications"
-#~ msgstr "Notificações"
 
 #~ msgid "last contributions"
 #~ msgstr "Últimas contribuições"
@@ -2163,9 +2173,6 @@ msgstr "por"
 
 #~ msgid "An initiative"
 #~ msgstr "Uma iniciativa"
-
-msgid "About"
-msgstr "Sobre"
 
 #~ msgid "About Us"
 #~ msgstr "Quem somos"
