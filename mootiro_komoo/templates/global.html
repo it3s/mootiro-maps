@@ -82,31 +82,37 @@
 
 
     <div id="root">
-      
-      {# TODO: move this to a separate template #}
-      <div id="newtop">
+
+      <div id="top">
         <div id="logo">
           <a href="{% url root %}"><img src='{{STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></a>
         </div>
-        
+
         <nav id="menu">
           {% block menu %}
             {% menu "" %}
           {% endblock %}
         </nav>
-        
+
         <nav id="side_menu">
           <ul>
             <li><a href="{% url about %}">{% trans "About" %}</a></li>
             <li><a id="help_button">{% trans "Help" %}</a></li>
             {% if not user.is_anonymous %}
-              <li><a href="{% url user_logout %}" >{% trans 'Logout' %}</a></li>
+            <li id="user_menu" class="dropdown_menu">
+              <a>{{ user.name }} &#x25be;</a>
+              <ul>
+                <li><a href="{{ user.view_url }}" >{% trans 'Profile' %}</a></li>
+                <!-- <li><a href="{% url profile_update %}" >{% trans 'Configurations' %}</a></li> -->
+                <li><a href="{% url user_logout %}" >{% trans 'Logout' %}</a></li>
+              </ul>
+            </li>
             {% else %}
-              <li><a href="#" class="login-required" >{% trans 'Login'%}</a></li>
+            <li id="login_button"><a href="#" class="login-required" >{% trans 'Login'%}</a></li>
             {% endif %}
           </ul>
         </nav>
-        
+
         <div id="search">
           <form id="search" action=".">
             <input type="search" id="search-bar" placeholder="&#9906; Procurar por qualquer local, usuário ou objeto no sistema" autocomplete="off"/>
@@ -116,26 +122,29 @@
           <div id="search-results-box"></div>
         </div>
       </div>
-      
+
       <div id="content">
         {% block content %}{% endblock %}
       </div>
+
       <div id="footer">
         {% block footer %}
           {% include "main/footer.html" %}
         {% endblock %}
       </div>
+
       {% if not user.is_authenticated %}
         {% include "authentication/login_box.html" %}
       {% endif %}
+
       {% include "main/error_box.html" %}
+
     </div>
-    {#% block page_scripts %}{% endblock %#}
+    {% block page_scripts %}{% endblock %}
 
     </script>
 
     <!-- Google Analytics -->
-    <!--
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -150,7 +159,6 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
     </script>
-    -->
 
     <script type="text/javascript" src="{{STATIC_URL}}js/help_center/help_center.js"></script>
     

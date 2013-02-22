@@ -1,4 +1,4 @@
-#newtop {
+#top {
 
     width: 100%;
     height: 45px;
@@ -136,6 +136,26 @@
     #menu > ul > li { width: 120px }
     #side_menu > ul > li { width: 80px }
 
+    #side_menu {
+        li#login_button {
+            background: #cce5ce;
+            color: #009640;
+        }
+        li#login_button:hover {
+            background: #8EC89A;
+            color: #000;
+        }
+        li#user_menu {
+            width: 150px;
+
+            ul {
+                li { padding: 0.3em }
+                li:hover { background: #dceff4 }
+
+                box-shadow: 0px -5px 0px 0px #b1dde8, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
+            }
+        }
+    }
 
     nav > ul > li { display: inline-block }
 
@@ -147,10 +167,12 @@
     > ul {
         display: none;
         position: absolute;
+        background-color: inherit;
         left: 0;
         top: 100%;
         width: 100%;
         z-index: 100;
+        text-align: left;
 
         > li { width: 100% }
     }
