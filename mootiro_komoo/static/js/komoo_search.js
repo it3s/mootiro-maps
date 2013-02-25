@@ -24,8 +24,7 @@
     showPopover = function() {
       window.is_search_results_open = true;
       $('#search-results-box').popover('show');
-      $('.popover').css('top', parseInt($('.popover').css('top'), 10) + 35);
-      return $('.popover').css('left', parseInt($('.popover').css('left'), 10) - 65);
+      return $('.popover')
     };
     hidePopover = function() {
       window.is_search_results_open = false;
