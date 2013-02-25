@@ -523,6 +523,11 @@ div.importsheet_missing_column {
     height: auto;
     position: absolute; }
 
+#help_center {
+  background: #dceff4; }
+  #help_center .modal-header {
+    border-bottom: none; }
+
 .about {
   padding: 0px 0px 15px !important; }
   .about * {
