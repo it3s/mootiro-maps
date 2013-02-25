@@ -2,38 +2,27 @@ $ = jQuery
 
 
 class HelpCenter
-    constructor: (btn_selector, content_ids) ->
+    constructor: (btn_selector, questions_ids, tour_id) ->
         @button = $(btn_selector)
         @button.on 'click', @show
-        @contents = (@contents_config[cid] for cid in content_ids)
+        @questions = (@questions_config[cid] for cid in questions_ids)
+        @tour = @tours_config[tour_id] if tour_id
         @modal_setup()
-        @tutorials_setup()
-
-    question_tpl:
-        "
-        <article>
-            <h3><%= question %></h3>
-            <p><%= answer %></p>
-        </article>
-        "
+        @tour_setup()
 
     # TODO: put these html templates into an html file
-    tutorials_tpl:
+    tour_tpl:
         "
-        <% for (var i = 0; i < contents.length; i++) { %>
-          <!--!--------- TUTORIAL ----------->
-          <% if (contents[i].type == 'tutorial') { %>
-            <ol id='joyride'>
-              <% for (var j = 0; j < contents[i].slides.length; j++) { %>
-              <li data-id='<%= contents[i].slides[j].target_id %>' data-button='Next' data-options='<%= contents[i].slides[j].options %>'>
-                <h2><%= contents[i].slides[j].title %></h2>
-                <p><%= contents[i].slides[j].body %></p>
-              </li>
-              <% } %>
-            </ol>
+        <!------------ PAGE TOUR ----------->
+        <ol id='joyride'>
+          <% for (var j = 0; j < tour.slides.length; j++) { %>
+          <li data-id='<%= tour.slides[j].target_id %>' data-button='Next' data-options='<%= tour.slides[j].options %>'>
+            <h2><%= tour.slides[j].title %></h2>
+            <p><%= tour.slides[j].body %></p>
+          </li>
           <% } %>
-          <!--!------------------------------>
-        <% } %>
+        </ol>
+        <!--------------------------------->
         "
 
     modal_tpl:
@@ -45,16 +34,14 @@ class HelpCenter
           </div>
           <section class='modal-body'>
             <ul id='questions'>
-              <% for (var i = 0; i < contents.length; i++) { %>
-              <li class='<%= contents[i].type %>'>
-
-                <!--!--------- QUESTION ----------->
-                <% if (contents[i].type == 'question') { %>
+              <% for (var i = 0; i < questions.length; i++) { %>
+              <li class='<%= questions[i].type %>'>
+                <!------------ QUESTION ----------->
                 <article>
-                  <h3><%= contents[i].title %></h3>
-                  <p><%= contents[i].body %></p>
+                  <h3><%= questions[i].title %></h3>
+                  <p><%= questions[i].body %></p>
                 </article>
-                <% } %>
+                <!--------------------------------->
               </li>
               <% } %>
             </ul>
@@ -65,15 +52,15 @@ class HelpCenter
         "
 
     modal_setup: =>
-        html = _.template @modal_tpl, {contents: @contents}
+        html = _.template @modal_tpl, {questions: @questions}
         @$modal = $(html)
         @$modal.modal {show: true}
         $('body').append @$modal
 
-    tutorials_setup: =>
-        html = _.template @tutorials_tpl, {contents: @contents}
-        @$tutorials = $(html)
-        $('body').append @$tutorials
+    tour_setup: =>
+        html = _.template @tour_tpl, {tour: @tour}
+        @$tour_content = $(html)
+        $('body').append @$tour_content
 
         modal_wrap = @$modal
 
@@ -85,10 +72,13 @@ class HelpCenter
         @$modal.modal('show')
 
     # TODO:use requires and put this json into other file
-    contents_config:
+    questions_config:
+        "organization:what_is":
+            "title": "What is an organization?"
+            "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eu quam odio, ac sagittis nisi. Nam et scelerisque ligula. Ut id velit eu nulla interdum aliquam luctus sed odio. Suspendisse et nunc at ipsum sodales euismod. Vivamus scelerisque rutrum leo id blandit. Maecenas vel risus magna, at pulvinar turpis."
 
+    tours_config:
         "maps:initial_tour":
-            "type": "tutorial"
             "title": "Initial Tour"
             "body": "Take the tour."
             "slides": [
@@ -106,13 +96,7 @@ class HelpCenter
                 }
             ]
 
-        "organization:what_is":
-            "type": "question"
-            "title": "What is an organization?"
-            "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eu quam odio, ac sagittis nisi. Nam et scelerisque ligula. Ut id velit eu nulla interdum aliquam luctus sed odio. Suspendisse et nunc at ipsum sodales euismod. Vivamus scelerisque rutrum leo id blandit. Maecenas vel risus magna, at pulvinar turpis."
-
         "organization:page_tour":
-            "type": "tutorial"
             "title": "Organization page tour"
             "body": "Take the tour of this page"
             "slides": [
