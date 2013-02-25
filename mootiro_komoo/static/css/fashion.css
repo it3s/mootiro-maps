@@ -527,6 +527,23 @@ div.importsheet_missing_column {
   background: #dceff4; }
   #help_center .modal-header {
     border-bottom: none; }
+  #help_center #questions {
+    height: 300px;
+    overflow: auto; }
+  #help_center #tour_button {
+    width: 100%;
+    height: 2.5em;
+    margin: 1em 0;
+    background: #28b8ce;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: inherit;
+    font-weight: bold;
+    color: #fff; }
+
+#joyride {
+  display: none; }
 
 .about {
   padding: 0px 0px 15px !important; }

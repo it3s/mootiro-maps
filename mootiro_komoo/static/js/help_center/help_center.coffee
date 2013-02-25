@@ -23,7 +23,7 @@ class HelpCenter
         <% for (var i = 0; i < contents.length; i++) { %>
           <!--!--------- TUTORIAL ----------->
           <% if (contents[i].type == 'tutorial') { %>
-            <ol id='joyride<%= i %>' class=''>
+            <ol id='joyride'>
               <% for (var j = 0; j < contents[i].slides.length; j++) { %>
               <li data-id='<%= contents[i].slides[j].target_id %>' data-button='Next' data-options='<%= contents[i].slides[j].options %>'>
                 <h2><%= contents[i].slides[j].title %></h2>
@@ -41,10 +41,10 @@ class HelpCenter
         <div id='help_center' class='modal hide fade'>
           <div class='modal-header'>
             <button type='button' class='close' data-dismiss='modal'>×</button>
-            <h2>Help Center</h2>
+            <h2>Central de Ajuda</h2>
           </div>
           <section class='modal-body'>
-            <ul>
+            <ul id='questions'>
               <% for (var i = 0; i < contents.length; i++) { %>
               <li class='<%= contents[i].type %>'>
 
@@ -55,18 +55,11 @@ class HelpCenter
                   <p><%= contents[i].body %></p>
                 </article>
                 <% } %>
-
-                <!--!--------- TUTORIAL ----------->
-                <% if (contents[i].type == 'tutorial') { %>
-                  <article data-tutorial-id='<%= i %>'>
-                    <h3><%= contents[i].title %></h3>
-                    <p><%= contents[i].body %></p>
-                  </article>
-                <% } %>
-                <!--!------------------------------>
               </li>
               <% } %>
             </ul>
+
+            <button id='tour_button'>Faça o tour desta página</button>
           </section>
         </div>
         "
@@ -74,7 +67,7 @@ class HelpCenter
     modal_setup: =>
         html = _.template @modal_tpl, {contents: @contents}
         @$modal = $(html)
-        @$modal.modal {show: false}
+        @$modal.modal {show: true}
         $('body').append @$modal
 
     tutorials_setup: =>
@@ -83,11 +76,10 @@ class HelpCenter
         $('body').append @$tutorials
 
         modal_wrap = @$modal
-        $('li.tutorial', @$modal).on 'click', () ->
+
+        $('button#tour_button', @$modal).on 'click', () ->
             modal_wrap.modal 'hide'
-            tutorial_id = $('article', this).attr('data-tutorial-id')
-            console.log $('#joyride' + tutorial_id)
-            $('#joyride' + tutorial_id).joyride {}
+            $('#joyride').joyride {}
 
     show: () =>
         @$modal.modal('show')
@@ -117,7 +109,7 @@ class HelpCenter
         "organization:what_is":
             "type": "question"
             "title": "What is an organization?"
-            "body": "An organization is ... (markdown string)"
+            "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eu quam odio, ac sagittis nisi. Nam et scelerisque ligula. Ut id velit eu nulla interdum aliquam luctus sed odio. Suspendisse et nunc at ipsum sodales euismod. Vivamus scelerisque rutrum leo id blandit. Maecenas vel risus magna, at pulvinar turpis."
 
         "organization:page_tour":
             "type": "tutorial"

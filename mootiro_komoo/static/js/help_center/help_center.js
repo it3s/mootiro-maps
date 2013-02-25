@@ -28,9 +28,9 @@
 
     HelpCenter.prototype.question_tpl = "        <article>            <h3><%= question %></h3>            <p><%= answer %></p>        </article>        ";
 
-    HelpCenter.prototype.tutorials_tpl = "        <% for (var i = 0; i < contents.length; i++) { %>          <!--!--------- TUTORIAL ----------->          <% if (contents[i].type == 'tutorial') { %>            <ol id='joyride<%= i %>' class=''>              <% for (var j = 0; j < contents[i].slides.length; j++) { %>              <li data-id='<%= contents[i].slides[j].target_id %>' data-button='Next' data-options='<%= contents[i].slides[j].options %>'>                <h2><%= contents[i].slides[j].title %></h2>                <p><%= contents[i].slides[j].body %></p>              </li>              <% } %>            </ol>          <% } %>          <!--!------------------------------>        <% } %>        ";
+    HelpCenter.prototype.tutorials_tpl = "        <% for (var i = 0; i < contents.length; i++) { %>          <!--!--------- TUTORIAL ----------->          <% if (contents[i].type == 'tutorial') { %>            <ol id='joyride'>              <% for (var j = 0; j < contents[i].slides.length; j++) { %>              <li data-id='<%= contents[i].slides[j].target_id %>' data-button='Next' data-options='<%= contents[i].slides[j].options %>'>                <h2><%= contents[i].slides[j].title %></h2>                <p><%= contents[i].slides[j].body %></p>              </li>              <% } %>            </ol>          <% } %>          <!--!------------------------------>        <% } %>        ";
 
-    HelpCenter.prototype.modal_tpl = "        <div id='help_center' class='modal hide fade'>          <div class='modal-header'>            <button type='button' class='close' data-dismiss='modal'>×</button>            <h2>Help Center</h2>          </div>          <section class='modal-body'>            <ul>              <% for (var i = 0; i < contents.length; i++) { %>              <li class='<%= contents[i].type %>'>                <!--!--------- QUESTION ----------->                <% if (contents[i].type == 'question') { %>                <article>                  <h3><%= contents[i].title %></h3>                  <p><%= contents[i].body %></p>                </article>                <% } %>                <!--!--------- TUTORIAL ----------->                <% if (contents[i].type == 'tutorial') { %>                  <article data-tutorial-id='<%= i %>'>                    <h3><%= contents[i].title %></h3>                    <p><%= contents[i].body %></p>                  </article>                <% } %>                <!--!------------------------------>              </li>              <% } %>            </ul>          </section>        </div>        ";
+    HelpCenter.prototype.modal_tpl = "        <div id='help_center' class='modal hide fade'>          <div class='modal-header'>            <button type='button' class='close' data-dismiss='modal'>×</button>            <h2>Central de Ajuda</h2>          </div>          <section class='modal-body'>            <ul id='questions'>              <% for (var i = 0; i < contents.length; i++) { %>              <li class='<%= contents[i].type %>'>                <!--!--------- QUESTION ----------->                <% if (contents[i].type == 'question') { %>                <article>                  <h3><%= contents[i].title %></h3>                  <p><%= contents[i].body %></p>                </article>                <% } %>              </li>              <% } %>            </ul>            <button id='tour_button'>Faça o tour desta página</button>          </section>        </div>        ";
 
     HelpCenter.prototype.modal_setup = function() {
       var html;
@@ -39,7 +39,7 @@
       });
       this.$modal = $(html);
       this.$modal.modal({
-        show: false
+        show: true
       });
       return $('body').append(this.$modal);
     };
@@ -52,12 +52,9 @@
       this.$tutorials = $(html);
       $('body').append(this.$tutorials);
       modal_wrap = this.$modal;
-      return $('li.tutorial', this.$modal).on('click', function() {
-        var tutorial_id;
+      return $('button#tour_button', this.$modal).on('click', function() {
         modal_wrap.modal('hide');
-        tutorial_id = $('article', this).attr('data-tutorial-id');
-        console.log($('#joyride' + tutorial_id));
-        return $('#joyride' + tutorial_id).joyride({});
+        return $('#joyride').joyride({});
       });
     };
 
@@ -87,7 +84,7 @@
       "organization:what_is": {
         "type": "question",
         "title": "What is an organization?",
-        "body": "An organization is ... (markdown string)"
+        "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eu quam odio, ac sagittis nisi. Nam et scelerisque ligula. Ut id velit eu nulla interdum aliquam luctus sed odio. Suspendisse et nunc at ipsum sodales euismod. Vivamus scelerisque rutrum leo id blandit. Maecenas vel risus magna, at pulvinar turpis."
       },
       "organization:page_tour": {
         "type": "tutorial",
