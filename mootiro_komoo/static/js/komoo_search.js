@@ -23,8 +23,7 @@
     };
     showPopover = function() {
       window.is_search_results_open = true;
-      $('#search-results-box').popover('show');
-      return $('.popover')
+      return $('#search-results-box').popover('show');
     };
     hidePopover = function() {
       window.is_search_results_open = false;
@@ -95,10 +94,13 @@
     };
     form_search.submit(function(evt) {
       evt.preventDefault();
+      if (window.komoo_search_timeout_fn) {
+        clearTimeout(window.komoo_search_timeout_fn);
+      }
       return doSearch();
     });
     window.komoo_search_timeout_fn = null;
-    search_field.bind('keyup', function() {
+    search_field.bind('keydown', function() {
       if (search_field.val().length > 2) {
         if (window.komoo_search_timeout_fn) {
           clearTimeout(window.komoo_search_timeout_fn);

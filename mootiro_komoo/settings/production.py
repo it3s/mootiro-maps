@@ -73,8 +73,8 @@ for mod in ['views', 'models', 'forms', 'utils']:
     LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
         for app in os.listdir('apps/')})
 
-ELASTICSEARCH_URL = '127.0.0.1:9200'
-ELASTICSEARCH_INDEX_NAME = 'mootiro_maps_prod'
+ELASTICSEARCH_URL = 'http://127.0.0.1:9200'
+ELASTICSEARCH_INDEX_NAME = 'mootiro_maps_production'
 
 # user specific or secret settings
 from local_settings import *
