@@ -203,12 +203,12 @@ def templatetag_args_parser(*args):
     Keyword-arguments like function parser. Designed to be used in templatetags
     Usage:
     ```
-    def mytemplatetag(..., arg1='', arg2='', arg3=''):
-      parsed_args = templatetag_args_parser(arg1, arg2, arg3)
+        def mytemplatetag(..., arg1='', arg2='', arg3=''):
+          parsed_args = templatetag_args_parser(arg1, arg2, arg3)
 
-      label = parsed_args.get('label', 'Default')
-      use_border = parsed_args.get('use_border', False)
-      zoom = parsed_args.get('zoom', 16)
+          label = parsed_args.get('label', 'Default')
+          use_border = parsed_args.get('use_border', False)
+          zoom = parsed_args.get('zoom', 16)
     ```
 
     And in the template...
@@ -243,31 +243,34 @@ def send_mail_task(title='', message='', sender='', receivers=[], html=False):
             receivers=receivers, html=html)
 
 
-def send_mail(title='', message='', sender='', receivers=[], html=False):
+def send_mail(title='', message='',
+              sender='MootiroMaps <no-reply@it3s.mailgun.org>', receivers=[],
+              html=False):
     '''
     function for sending mails. If we are on debug (development) se will be
     sent by django mailer else will use the mailgun api.
     mailer.
     '''
-    if settings.DEBUG:
-        django_send_mail(title, message, sender, receivers,
-                            fail_silently=False)
+    # if settings.DEBUG:
+    #     django_send_mail(title, message, sender, receivers,
+    #                         fail_silently=False)
+    # else:
+    data = {
+        'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
+        'to': receivers,
+        'subject': title,
+    }
+    print '>>>>>>>>>>>>>>>>>>>>>>>>>>> HTML', html
+    if html:
+        data['html'] = message
     else:
-        data = {
-            'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
-            'to': receivers,
-            'subject': title,
-        }
-        if html:
-            data['html'] = message
-        else:
-            data['text'] = message
+        data['text'] = message
 
-        requests.post(
-            settings.MAILGUN_API_URL,
-            auth=('api', settings.MAILGUN_API_KEY),
-            data=data
-        )
+    requests.post(
+        settings.MAILGUN_API_URL,
+        auth=('api', settings.MAILGUN_API_KEY),
+        data=data
+    )
 
 
 def get_handler_method(request_handler, http_method):

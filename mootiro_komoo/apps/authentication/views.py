@@ -343,6 +343,6 @@ def logout(request):
 
 ################ for testing ##################
 
-@render_to('authentication/explanations.html')
+@render_to('authentication/explanations.org.html')
 def explanations(request):
     return {'name': 'José'}
