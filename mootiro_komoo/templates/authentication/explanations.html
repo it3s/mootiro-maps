@@ -1,26 +1,7 @@
 <style type="text/css">
-/*  Fontes:
-
- H1 ("Olá, José")
- 40px Cambria, Georgia, serif; bold
-
- H2 (dentro dos boxes)
- 30px Cambria, Georgia, serif; bold
-
- Texto fora dos boxes
- 25px Calibri, "Trebuchet MS", Verdana, sans-serif
-
- Texto dentro dos boxes
- 16px Calibri, "Trebuchet MS", Verdana, sans-serif
-
- Dentro de "Mapeie sua região", na lista de coisas que podem ser mapeadas, o texto é
- 14px Calibri, "Trebuchet MS", Verdana, sans-serif  */
-
-
   .container {
     width: 560px;
-    /* background-color: #cccccc; */
-    border: 1px solid #333333;
+    /* border: 1px solid #333333; */
     min-height: 100px;
     margin: 0 auto;
     padding: 30px 80px;
@@ -105,6 +86,7 @@
   .tips .btn {
     font-weight: bold;
     width: 140px;
+    height: 20px;
     color: #ffffff;
     line-height: 15px;
     position: relative;
@@ -118,10 +100,11 @@
     padding: 3px;
   }
   .tips .btn img {
-    max-width: 14px;
+    max-width: 16px;
     float: left;
     padding: 0;
     margin: 2px 4px;
+    vertical-align: bottom;
   }
   .btn.community {
     background-color: #f18911;
@@ -132,15 +115,64 @@
   .btn.need {
     background-color: #F42C5E;
   }
+  .btn.resource {
+    background-color: #52AE32;
+  }
+  .btn.resource img {
+    margin-top: 4px;
+    max-width: 18px;
+  }
+  .btn.investment {
+    background-color: #AA9F18; 
+  }
   .tips .btn-title {
     position: absolute;
     bottom: 5px;
-    margin-left: 3px;
+    margin-left: 2px;
+    vertical-align: center;
   }
   .tips .description{
     max-width: 380px;
   }
-
+  .project {
+    background-color: #F9D5A5;
+    border-radius: 16px;
+  }
+  .project h2, .project a {
+    color: #F26700; 
+  }
+  .wiki {
+    background-color: #f2d2fa;
+    border-radius: 16px;
+  }
+  .wiki h2, .wiki a {
+    color: #951b81; /* #7c176d; */
+  }
+  .rede {
+    background-color: rgb(220, 239, 244);
+    border-radius: 16px;
+  }
+  .rede h2, .rede a {
+    color: #009CB4;
+  }
+  footer {
+    display: inline-block;
+    width: 100%;
+  }
+  .equipe-it3s {
+    float: right;
+    position: relative;
+    min-height: 200px;
+  }
+  .equipe-it3s div{
+    font-weight: bold;
+    font-size: 20px;
+    margin: 25px 0;
+  }
+  .equipe-it3s img {
+    position: absolute;
+    right: 0;
+  }
 
 </style>
 <section class="container">
@@ -164,6 +196,7 @@
           <article>Insira informações de contato, uma foto e, se quiser, algo sobre você. Seria legal abordar também seus temas de interesse em relação a mapeamento.</article>
         </section>
       </li>
+
       <li class="map-your-region">
         <img src="/static/img/account_confirmation/comunidade.png" />
         <section class="inline-block">
@@ -201,10 +234,76 @@
              São problemáticas e necessidades de uma comunidade que precisam ser resolvidas para melhorar a vida de seus moradores. Aqui você pode mapear desde buracos na rua e obras que receberam investimento mas estão paradas, por exemplo, até indicadores sociais. 
             </div>
           </li>
-
+          <li>
+            <div class="btn resource">
+              <img src="/static/img/menu/resource-active.png" />
+              <span class="btn-title">Recursos</span>
+            </div>
+            <div class="inline-block description">
+             São equipamentos e serviços sociais existentes em uma comunidade e disponíveis para os moradores. Aqui entram postos de saúde, bibliotecas, cursos profissionalizantes para jovens, acompanhamento de gestantes, hortas comunitárias etc. 
+            </div>
+          </li>
+          <li>
+            <div class="btn investment">
+              <img src="/static/img/menu/investment-active.png" />
+              <span class="btn-title">Investimentos</span>
+            </div>
+            <div class="inline-block description">
+              São as verbas investidas por órgãos públicos ou fundações e empresas em uma comunidade ou ONG. 
+            </div>
+          </li>
         </ul>
       </li>
+
+      <li class="project">
+        <img src="/static/img/account_confirmation/projeto.png"/>
+        <section class="inline-block">
+          <header><h2>Crie seu Projeto</h2></header>
+          <article>
+            <p>
+              Você pode criar um projeto para promover uma causa e mobilizar uma rede de colaboradores para a discussão e mapeamento de objetos.
+            </p>
+            <p>
+              <a href="http://maps.mootiro.org/project">Veja aqui nossa lista de projetos.</a>
+            </p>
+
+            <p>
+            Podemos lhe ajudar a planejar seu projeto de mapeamento. Para isso, participe de nossa lista de e-mails: <a href="mailto:maps@mootiro.org">maps@mootiro.org</a> 
+            </p>
+            
+          </article>
+        </section>
+      </li>
+
+      <li class="wiki">
+        <img src="/static/img/account_confirmation/wiki.png"/>
+        <section class="inline-block">
+          <header><h2>Conheça o tutorial do MootiroMaps</h2></header>
+          <article>
+            No manual do MootiroMaps você conhece todas as funcionalidades e aprende a manuseá-las. <a href="http://wiki.mootiro.org/index.php/Manuais:MootiroMaps">Acesse aqui</a>. 
+          </article>
+        </section>
+      </li>
+
+      <li class="rede">
+        <img src="/static/img/account_confirmation/rede.png"/>
+        <section class="inline-block">
+          <header><h2>Faça parte da rede</h2></header>
+          <article>
+          <p>
+            Conheça outros mapeadores e participe das discussões na <a href="mailto:maps@mootiro.org" >lista de e-mail</a> ou no grupo do <a href="http://www.facebook.com/groups/391022837620824/?fref=ts" >Facebook</a>.
+          </p>
+          <p>
+            Qualquer dúvida envie um email para <a href="mailto:contato@it3s.org">contato@it3s.org</a>.
+          </p> 
+        </section>
+      </li>
     </ul>
+
+    <footer>
+      <p>Até mais e bom trabalho com o MootiroMaps!</p>
+      <div class="equipe-it3s"><div>- Equipe IT3S</div><img src="/static/img/account_confirmation/it3s.png" /></div>
+    </footer>
 
 
 </section>
