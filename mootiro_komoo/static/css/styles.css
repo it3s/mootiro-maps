@@ -239,12 +239,8 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 #content {
     display: inline-block;
     min-height: 100px;
-}
-#content {
-    min-width: 1140px;
+    width: 100%;
     position: relative;
-    left: 50%;
-    margin-left: -570px;
 }
 #dinamic-form,
 #main-content {

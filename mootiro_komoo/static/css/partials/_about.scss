@@ -1,109 +1,109 @@
 .about {
-	* {
-	    -webkit-box-sizing: border-box;
-		   -moz-box-sizing: border-box;
-			    box-sizing: border-box;
-	}
+    * {
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+    }
 
-	padding: 0px 0px 15px !important;
+    padding: 0px 0px 15px !important;
 
-	&#main-content {
-		width: 100%;
-	}
+    &#main-content {
+        width: 100%;
+    }
 
-	.items {
-		.topic {
-			display: inline-block;
-			width: 33%;
-			padding: 5px;
-			vertical-align: top;
-			text-align: left;
+    .items {
+        .topic {
+            display: inline-block;
+            width: 33%;
+            padding: 5px;
+            vertical-align: top;
+            text-align: left;
 
-			h3 {
-				font-size: 1.2em;
-			}
+            h3 {
+                font-size: 1.2em;
+            }
 
-			img {
-			  width: 290px;
-			}
-		}
-	}
+            img {
+              width: 290px;
+            }
+        }
+    }
 
-	> div,
-	.section .items {
-		width: 910px;
-		margin: 0 auto;
-	}
+    > div,
+    .section .items {
+        width: 910px;
+        margin: 0 auto;
+    }
 
-	> div.section {
-		> h2 {
-			width: 450px;
-			margin: 20px auto;
-		}
-		>p {
-			width: 500px;
-			margin: 20px auto;
-		}
-		width: 100%;
-	}
+    > div.section {
+        > h2 {
+            width: 450px;
+            margin: 20px auto;
+        }
+        >p {
+            width: 500px;
+            margin: 20px auto;
+        }
+        width: 100%;
+    }
 
-	> div:nth-child(even) {
-		background: #eff8fb !important;
-	}
+    > div:nth-child(even) {
+        background: #eff8fb !important;
+    }
 }
 
 .use-cases {
 
-	.initial-heading {
-		margin-bottom: 10px;
-	}
+    .initial-heading {
+        margin-bottom: 10px;
+    }
 
-	.contents {
-		> ul {
-			margin: 20px 0;
-			padding: 15px !important;
-			display: inline-block;
-			background: #ededed;
-			border-radius: 5px;
-			list-style: none !important;
-		}
-	}
+    .contents {
+        > ul {
+            margin: 20px 0;
+            padding: 15px !important;
+            display: inline-block;
+            background: #ededed;
+            border-radius: 5px;
+            list-style: none !important;
+        }
+    }
 
-	.section {
-		margin: 0 0 50px;
-	}
+    .section {
+        margin: 0 0 50px;
+    }
 
-	&#main-content > div {
-		padding: 0px;
+    &#main-content > div {
+        padding: 0px;
 
-		ul {
-			list-style: disc outside none;
-			padding: 0 0 0 20px;
-		}
+        ul {
+            list-style: disc outside none;
+            padding: 0 0 0 20px;
+        }
 
-		h3 {
-			margin-top: 10px;
-		}
+        h3 {
+            margin-top: 10px;
+        }
 
-		> div {
-			margin: 10px 350px 10px 0;
-		}
+        > div {
+            margin: 10px 350px 10px 0;
+        }
 
-		> img {
-			float: right;
-			margin: 20px 0 0;
-			width: 300px;
-		}
-	}
-	&#main-content > div.section:nth-child(even) {
-		background: none;
+        > img {
+            float: right;
+            margin: 20px 0 0;
+            width: 300px;
+        }
+    }
+    &#main-content > div.section:nth-child(even) {
+        background: none;
 
-		> div {
-			margin: 10px 0 10px 350px;
-		}
+        > div {
+            margin: 10px 0 10px 350px;
+        }
 
-		> img {
-			float: left;
-		}
-	}
+        > img {
+            float: left;
+        }
+    }
 }
