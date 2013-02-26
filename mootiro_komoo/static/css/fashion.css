@@ -45,7 +45,7 @@
       #top #menu > ul li:hover ul, #top #side_menu > ul li:hover ul {
         font-weight: normal; }
       #top #menu > ul li.active, #top #side_menu > ul li.active {
-        color: #fff; }
+        color: white; }
       #top #menu > ul li.active ul, #top #side_menu > ul li.active ul {
         color: #505050; }
       #top #menu > ul .map .ico, #top #side_menu > ul .map .ico {
@@ -69,7 +69,7 @@
       #top #menu > ul .objects .community:hover .ico, #top #side_menu > ul .objects .community:hover .ico {
         background-image: url("../img/menu/newmenu/community-hover.png"); }
       #top #menu > ul .objects .community.active, #top #side_menu > ul .objects .community.active {
-        background-color: #f7A941; }
+        background-color: #f7a941; }
       #top #menu > ul .objects .community.active .ico, #top #side_menu > ul .objects .community.active .ico {
         background-image: url("../img/menu/newmenu/community-active.png"); }
       #top #menu > ul .objects .organization .ico, #top #side_menu > ul .objects .organization .ico {
@@ -176,7 +176,7 @@
         background: white url("../img/menu/newmenu/glass.png") no-repeat 98% center;
         padding-right: 6%;
         box-shadow: inset 0px 1px 3px 0px rgba(150, 150, 150, 0.5);
-        border: 1px solid #aaa; }
+        border: 1px solid #aaaaaa; }
     #top #search div#search-canvasloader-container {
       margin: 3px 7px; }
     #top #search div#search-results-box {
@@ -276,7 +276,7 @@ form#form_login {
       position: absolute;
       left: 50%;
       height: 45.5px;
-      border-left: 1px solid #333;
+      border-left: 1px solid #333333;
       width: 1px; }
     #login_box div#separator .vertical_line.top {
       top: 0; }
@@ -348,11 +348,11 @@ div.importsheet_controls a.insert {
 
 div.importsheet_missing_column {
   background: #daa;
-  border: 1px solid #b33;
+  border: 1px solid #bb3333;
   padding: 2px 5px; }
 
 #importsheet_simulation_results div.result {
-  border: 1px solid #ccc;
+  border: 1px solid #cccccc;
   padding: 5px 15px;
   margin: 15px 0;
   width: 940px;
@@ -369,11 +369,11 @@ div.importsheet_missing_column {
   margin: 5px; }
 #importsheet_simulation_results div.metadata div.errors, #importsheet_messages div.metadata div.errors {
   background: #daa;
-  border: 1px solid #b33;
+  border: 1px solid #bb3333;
   padding: 2px 5px; }
 #importsheet_simulation_results div.metadata div.warnings, #importsheet_messages div.metadata div.warnings {
   background: #ee8;
-  border: 1px solid #ed0;
+  border: 1px solid #eedd00;
   padding: 2px 5px; }
 
 #donate {
@@ -403,7 +403,7 @@ div.importsheet_missing_column {
   #main-content.frontpage > div {
     padding: 20px; }
   #main-content.frontpage > div:nth-child(even) {
-    background: #EDEDED; }
+    background: #ededed; }
   #main-content.frontpage .center {
     text-align: center; }
   #main-content.frontpage .initial-heading {
@@ -435,7 +435,7 @@ div.importsheet_missing_column {
       display: inline-block;
       padding: 0.5em 1em;
       margin-bottom: 1em;
-      border-bottom: 1px solid #057D90;
+      border-bottom: 1px solid #057d90;
       width: 100%;
       font-size: 20px;
       text-align: center;
@@ -445,7 +445,7 @@ div.importsheet_missing_column {
   #main-content.frontpage > div.what-is-it-for div.topic:hover {
     background: #f0f0f0; }
     #main-content.frontpage > div.what-is-it-for div.topic:hover h3 {
-      background: #B1DDE8; }
+      background: #b1dde8; }
   #main-content.frontpage > div.projects .flexslider {
     width: 800px;
     height: 150px;
@@ -547,6 +547,12 @@ div.importsheet_missing_column {
     margin: 0 auto; }
   .about > div.section {
     width: 100%; }
+    .about > div.section > h2 {
+      width: 450px;
+      margin: 20px auto; }
+    .about > div.section > p {
+      width: 500px;
+      margin: 20px auto; }
   .about > div:nth-child(even) {
     background: #eff8fb !important; }
 
