@@ -27,7 +27,7 @@
       this.tour_setup();
     }
 
-    HelpCenter.prototype.tour_tpl = "        <!------------ PAGE TOUR ----------->        <ol id='joyride'>          <% for (var j = 0; j < tour.slides.length; j++) { %>          <li data-id='<%= tour.slides[j].target_id %>' data-button='Next' data-options='<%= tour.slides[j].options %>'>            <h2><%= tour.slides[j].title %></h2>            <p><%= tour.slides[j].body %></p>          </li>          <% } %>        </ol>        <!--------------------------------->        ";
+    HelpCenter.prototype.tour_tpl = "        <!------------ PAGE TOUR ----------->        <ol id='joyride'>          <% for (var j = 0; j < tour.slides.length; j++) { %>          <li data-id='<%= tour.slides[j].target_id %>'            data-button='Próximo'            data-options='<%= tour.slides[j].options %>'            data-offsetX='<%= tour.slides[j].offsetX %>'            data-offsetY='<%= tour.slides[j].offsetY %>'          >            <h2><%= tour.slides[j].title %></h2>            <p><%= tour.slides[j].body %></p>          </li>          <% } %>        </ol>        <!--------------------------------->        ";
 
     HelpCenter.prototype.modal_tpl = "        <div id='help_center' class='modal hide fade'>          <div class='modal-header'>            <button type='button' class='close' data-dismiss='modal'>×</button>            <h2>Central de Ajuda</h2>          </div>          <section class='modal-body'>            <ul id='questions'>              <% for (var i = 0; i < questions.length; i++) { %>              <li class='<%= questions[i].type %>'>                <!------------ QUESTION ----------->                <article>                  <h3><%= questions[i].title %></h3>                  <p><%= questions[i].body %></p>                </article>                <!--------------------------------->              </li>              <% } %>            </ul>            <button id='tour_button'>Faça o tour desta página</button>          </section>        </div>        ";
 
@@ -53,7 +53,24 @@
       modal_wrap = this.$modal;
       return $('button#tour_button', this.$modal).on('click', function() {
         modal_wrap.modal('hide');
-        return $('#joyride').joyride({});
+        return $('#joyride').joyride({
+          'afterShowCallback': function() {
+            var dx, dy, x, y;
+            x = this.$current_tip.offset().left;
+            y = this.$current_tip.offset().top;
+            dx = this.$li.attr('data-offsetX');
+            dy = this.$li.attr('data-offsetY');
+            dx = dx === 'undefined' ? 0 : parseInt(dx);
+            dy = dy === 'undefined' ? 0 : parseInt(dy);
+            return this.$current_tip.offset({
+              left: x + dx,
+              top: y + dy
+            });
+          },
+          'postRideCallback': function() {
+            return console.log('FIM');
+          }
+        });
       });
     };
 
@@ -87,32 +104,41 @@
         ]
       },
       "organization:page_tour": {
-        "title": "Organization page tour",
-        "body": "Take the tour of this page",
         "slides": [
           {
-            "title": "Welcome to the tour!",
-            "body": "It's a pleasure to meet you.",
+            "title": "Login",
+            "body": "Para criar um perfil no MootiroMaps ou logar na plataforma, clique aqui.",
+            "target_id": "login_button",
+            "options": "tipLocation:left;nubPosition:top-right;",
+            "offsetX": -230
+          }, {
+            "title": "Visualize o mapa",
+            "body": "Aqui você encontra no mapa os objetos já mapeados em todo o Brasil. ",
             "target_id": "",
             "options": ""
           }, {
-            "title": "MootiroMaps",
-            "body": "This is the MootiroMaps logo. You can click it anytime to get into website's homepage.",
-            "target_id": "logo",
-            "options": "tipLocation:bottom"
+            "title": "Objetos cadastrados",
+            "body": "Escolha o tipo de objeto cadastrado e veja as listas correspondentes em ordem alfabética.",
+            "target_id": "",
+            "options": ""
           }, {
-            "title": "Map preview",
-            "body": "Here is the organization in the map.",
-            "target_id": "map-container-preview",
-            "options": "tipLocation:bottom"
+            "title": "Projetos cadastrados",
+            "body": "Visualize a lista em ordem alfabética de projetos cadastrados no MootiroMaps.",
+            "target_id": "",
+            "options": ""
           }, {
-            "title": "Footer",
-            "body": "Can I <strong>bold this</strong>? <em>Yes</em>!",
-            "target_id": "footer",
-            "options": "tipLocation:top"
+            "title": "Blog do IT3S",
+            "body": "Em nosso Blog postamos análises e opinões sobre transparência, mobilização social e colaboração. Clique e leia.",
+            "target_id": "",
+            "options": ""
           }, {
-            "title": "End",
-            "body": "Feel free... stay around...",
+            "title": "Edições recentes",
+            "body": "Acompanhe as atualizações feitas pelos usuários do MootiroMaps. Os ícones mostram os tipos de objetos editados. Edite você também.",
+            "target_id": "",
+            "options": ""
+          }, {
+            "title": "Página do usuário",
+            "body": "Clicando aqui você encontra informações sobre o usuário, contatos e últimas edições feitas.",
             "target_id": "",
             "options": ""
           }
