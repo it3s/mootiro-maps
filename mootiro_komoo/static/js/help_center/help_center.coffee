@@ -17,7 +17,8 @@ class HelpCenter
         <ol id='joyride'>
           <% for (var j = 0; j < tour.slides.length; j++) { %>
           <li data-selector='<%= tour.slides[j].selector %>'
-            data-button='Próximo'
+            data-button=
+                <% if (j != tour.slides.length-1) { %>'Próximo'<% } else { %>'Fim'<% } %>
             data-options='<%= tour.slides[j].options %>'
             data-offsetX='<%= tour.slides[j].offsetX %>'
             data-offsetY='<%= tour.slides[j].offsetY %>'
@@ -72,6 +73,7 @@ class HelpCenter
         $('button#tour_button', @$modal).on 'click', () ->
             modal_wrap.modal 'hide'
             $('#joyride').joyride {
+                # fix joyride tip positioning
                 'afterShowCallback': () ->
                     x  = this.$current_tip.offset().left
                     y  = this.$current_tip.offset().top
@@ -80,9 +82,6 @@ class HelpCenter
                     dx = if dx == 'undefined' then 0 else parseInt dx
                     dy = if dy == 'undefined' then 0 else parseInt dy
                     this.$current_tip.offset({left: x+dx, top: y+dy})
-
-                'postRideCallback': () ->
-                    console.log 'FIM'
             }
 
     show: () =>
@@ -119,7 +118,6 @@ class HelpCenter
                 "title": "MootiroMaps"
                 "body": "Clique no logo do MootiroMaps e você será redirecionado para a página central."
                 "selector": "#logo"
-                "options": ""
                 },
                 {
                 "title": "Login"
@@ -129,40 +127,38 @@ class HelpCenter
                 "offsetX": -230
                 },
                 {
+                "title": "Página do usuário"
+                "body": "Clicando aqui você encontra informações sobre o usuário, contatos e últimas edições feitas."
+                "selector": "#user_menu"
+                "options": "tipLocation:left;nubPosition:top-right;"
+                "offsetX": -90
+                },
+                {
                 "title": "Visualize o mapa"
                 "body": "Aqui você encontra no mapa os objetos já mapeados em todo o Brasil. "
-                "selector": ""
-                "options": ""
+                "selector": "#menu .map"
                 },
                 {
                 "title": "Objetos cadastrados"
                 "body": "Escolha o tipo de objeto cadastrado e veja as listas correspondentes em ordem alfabética."
-                "selector": ""
-                "options": ""
+                "selector": "#menu .objects"
                 },
                 {
                 "title": "Projetos cadastrados"
                 "body": "Visualize a lista em ordem alfabética de projetos cadastrados no MootiroMaps."
-                "selector": ""
-                "options": ""
+                "selector": "#menu .projects"
                 },
                 {
                 "title": "Blog do IT3S"
                 "body": "Em nosso Blog postamos análises e opinões sobre transparência, mobilização social e colaboração. Clique e leia."
-                "selector": ""
-                "options": ""
+                "selector": ".news .blog"
+                "options": "tipLocation:left;"
                 },
                 {
                 "title": "Edições recentes"
                 "body": "Acompanhe as atualizações feitas pelos usuários do MootiroMaps. Os ícones mostram os tipos de objetos editados. Edite você também."
-                "selector": ""
-                "options": ""
-                },
-                {
-                "title": "Página do usuário"
-                "body": "Clicando aqui você encontra informações sobre o usuário, contatos e últimas edições feitas."
-                "selector": ""
-                "options": ""
+                "selector": ".news .last_updates"
+                "options": "tipLocation:right;"
                 },
             ]
 
