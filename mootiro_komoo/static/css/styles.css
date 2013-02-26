@@ -1046,6 +1046,11 @@ body.community #map-panel-tabs {
     margin-right: 30px;
     float: left;
 }
+.main-column.right {
+    margin-left: 30px;
+    margin-right: 0px;
+    float: right;
+}
 .title {
     font-size: 20px;
     font-weight: bold;
@@ -1053,16 +1058,24 @@ body.community #map-panel-tabs {
 #categories li {
     margin-bottom: 10px;
 }
+.left-bar,
 .right-bar {
     width: 200px;
-    float: left;
     color: #3ebac2;
     margin-left: 10px;
 }
+.left-bar {
+    float: left;
+}
+.right-bar {
+    float: right;
+}
+.left-bar h2,
 .right-bar h2 {
     color: #3ebac2;
     font-size: 18px;
 }
+.left-bar h3,
 .right-bar h3 {
     color: #3ebac2;
     font-size: 14px;
@@ -1083,14 +1096,17 @@ body.community #map-panel-tabs {
     line-height: 120%;
     padding: 0.3em 0;
 }
+.left-bar > .block ul li,
 .right-bar > .block ul li {
     margin-bottom: 5px;
 }
+.left-bar > .block > .block,
 .right-bar > .block > .block {
     display: block;
     background-color: #dceff4;
     margin: 5px 0;
 }
+.left-bar .block .button,
 .right-bar .block .button {
     margin-top: 10px;
 }
@@ -1503,22 +1519,26 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 }
 /* ========= Entity show ====== */
 .view-header{
-  margin-bottom: 20px;
-  display: inline-block;
-  min-width: 590px;
+    display: inline-block;
+    margin-bottom: 20px;
+    min-width: 590px;
 }
 .view-header-logo{
+    display: inline-block;
     width: 80px;
     height: 60px;
     margin-right: 20px;
-    vertical-align: top;
+    vertical-align: middle;
     /* background-color: #999999; */
     /* border-radius: 4px; */
-    display: inline-block;
 }
 .view-header h2{
     width: 480px;
+    vertical-align: middle;
     word-wrap: break-word;
+}
+.view-body {
+    clear: both;
 }
 .delete-content,
 .report-content,
@@ -1781,9 +1801,11 @@ div.view-list-item.odd {
     margin-right: 20px;
     vertical-align: top;
 }
+.left-bar-modif,
 .right-bar-modif{
     color: #555555;
 }
+.left-bar-modif h4,
 .right-bar-modif h4{
     color: #000000;
     margin-top: 15px;

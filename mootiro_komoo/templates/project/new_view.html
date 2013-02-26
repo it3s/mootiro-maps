@@ -1,0 +1,167 @@
+{% extends 'global.html' %}
+
+{% load komoo_map_tags %}
+{% load moderation_tags %}
+{% load investment_tags %}
+{% load crispy_forms_tags %}
+{% load comment_tags %}
+{% load markitup_tags %}
+{% load komoo_tags %}
+{% load upload_tags %}
+{% load project_tags %}
+{% load i18n %}
+
+{% block title %} {{ project.name }} {% endblock %}
+
+{% block facebook_meta %}
+  <meta property="og:title" content="{{project.name}} - MootiroMaps" />
+  <meta property="og:url" content="{{SITE_URL}}{{project.view_url}}"/>
+  {% if project.logo %}
+    <meta property="og:image" content="{{SITE_URL}}{{project.logo_url}}"/>
+  {% else %}
+    <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo-fb.png"/>
+  {% endif %}
+{% endblock %}
+
+{% block menu %} {% menu "project" %} {% endblock %}
+
+{% block content %}
+<div id="main-content">
+
+        <div class="view-header">
+            <div class="view-header-logo">{% if project.logo %}<img src="{{ project.logo_url }}" class="inline-block organization-logo">{% endif %}</div>
+            <h2 class="inline-block">{{ project.name }}</h2>
+
+            <div class="view-edit-btn">
+                {% if project|user_can_edit_this_project:user %}
+
+                {% history project %}
+
+                {% if user_can_discuss %}
+                <a href="{% url view_discussion project.perm_id %}" class="btn login-required" title="Ver página de discussão">
+                    <i class="icon-comment"></i>
+                </a>
+                {% endif %}
+
+                <a href="{{ project.edit_url }}" class="btn login-required" title="Editar projeto">
+                    <i class="icon-pencil"></i>
+                </a>
+
+                {% endif %}
+            </div>
+
+        </div>
+
+        <ul class="tabs">
+          <li class="tab">Projeto</li>
+          <li class="tab">Dados</li>
+          <li class="tab">Colaboradores</li>
+        </ul>
+        <div class="view-body" id="project-description">
+          <div class="main-column right">
+            <div class="mark-down">{{ project.description|render_markup|safe }}</div>
+            <div class="related-button"><a class="button" href="{% url project_map project.id %}">{% trans 'See all objects on map' %}</a></div>
+          </div>
+          <div class="left-bar left-bar-modif">
+              <div id="map-main-preview">
+                <div id="map-main-preview-canvas"></div>
+              </div>
+              <a class="see-on-map" href="{% url project_map project.id %}" title="ver no mapa">{% trans 'see on map' %}</a>
+
+              {% with similar_projects=project.tags.similar_objects|slice:"5" %}
+
+                  <div class="block">
+
+                      <h4>{% trans 'Administrator' %}</h4>
+                      <p>
+                          {{ project.creator.name }}
+                      </p>
+
+                      {% if project.contributors.count %}
+                      <h4>{% trans 'Contributors' %}</h4>
+                      <p>
+                          <ul>
+                              {% for contributor in project.contributors.all %}
+                              <li>{{ contributor.name }}</li>
+                              {% endfor %}
+                          </ul>
+                      </p>
+                      {% endif %}
+
+                      {% if project.contact %}
+                      <h4>{% trans 'Contact' %}</h4>
+                      <p>
+                          {{ project.contact|render_markup|safe }}
+                      </p>
+                      {% endif %}
+
+                      {% if similar_projects %}
+                      <h4>{% trans "Related projects" %}</h4>
+                      <p>
+                          <ul>
+                              {% for r in similar_projects|slice:'5' %}
+                              <li>
+                                  <a href="{{ r.view_url }}"> {{ r.name }} </a>
+                              </li>
+                              {% endfor %}
+                          </ul>
+                      </p>
+                      {% endif %}
+
+                  </div>
+
+              {% endwith %}
+
+              {% taglist project %}
+
+          </div>
+        </div>
+        <div class="view-body" id="project-data">
+          DADOS
+        </div>
+        <div class="view-body" id="project-collaborators">
+          COLABORADORES
+        </div>
+
+        <div class="view-footer">
+            {% image_gallery project %}
+        </div>
+
+        <div class="view-extras">
+                {% track_buttons project %}
+                {% report_content project %}
+                {% delete_button project %}
+                {% social_buttons %}
+                {% comments project %}
+        </div>
+
+
+{% komoo_map_tooltip %}
+</div>
+
+
+{% endblock %}
+
+{% block page_scripts %}
+    {% comments_staticfiles %}
+    <script type="text/javascript">
+        $(function(){
+            $('.view-info-btn').click(function(evt){
+                $('.view-info-btn.selected').removeClass('selected');
+                $('.view-info-panel').hide();
+                var $this = $(this);
+                $this.addClass('selected');
+                $('.' + $this.attr('panel')).fadeIn();
+            });
+            require(['map.jquery'], function () {
+                $("#map-main-preview-canvas").komooMap({
+                    type: 'preview',
+                    geojson: {{ geojson|safe }},
+                    width: '200px',
+                    height: '200px'
+                });
+            });
+        });
+    </script>
+
+{% endblock %}
