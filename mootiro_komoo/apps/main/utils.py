@@ -260,7 +260,6 @@ def send_mail(title='', message='',
         'to': receivers,
         'subject': title,
     }
-    print '>>>>>>>>>>>>>>>>>>>>>>>>>>> HTML', html
     if html:
         data['html'] = message
     else:

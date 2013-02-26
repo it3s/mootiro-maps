@@ -100,7 +100,7 @@
             <li><a id="help_button">{% trans "Help" %}</a></li>
             {% if not user.is_anonymous %}
             <li id="user_menu" class="dropdown_menu">
-              <a>{{ user.name }} &#x25be;</a>
+              <a>{{ user.name|first_name }} &#x25be;</a>
               <ul>
                 <li><a href="{{ user.view_url }}" >{% trans 'Profile' %}</a></li>
                 <!-- <li><a href="{% url profile_update %}" >{% trans 'Configurations' %}</a></li> -->

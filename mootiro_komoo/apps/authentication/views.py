@@ -18,6 +18,7 @@ from annoying.functions import get_object_or_None
 from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
 from main.utils import create_geojson, randstr, send_mail_task, paginated_query
+from main.tasks import send_explanations_mail
 
 from update.models import Update
 
@@ -275,6 +276,7 @@ the IT3S team.
 ''').format(name=user.name, verification_url=request.build_absolute_uri(
                                 reverse('user_verification', args=(key,))))
         )
+        send_explanations_mail(user)
 
         user.save()
         redirect_url = reverse('user_check_inbox')
@@ -342,6 +344,7 @@ def logout(request):
     return redirect(next_page)
 
 ################ for testing ##################
+
 
 @render_to('authentication/explanations.org.html')
 def explanations(request):

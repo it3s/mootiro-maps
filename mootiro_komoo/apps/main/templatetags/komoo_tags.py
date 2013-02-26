@@ -185,6 +185,9 @@ def jsonify(object):
 def linkencode(val):
     return urllib2.quote(val.encode('latin-1'))
 
+@register.filter
+def first_name(name):
+    return name.split(' ')[0]
 
 @register.inclusion_tag('main/templatetags/pagination.html')
 def pagination(collection):
