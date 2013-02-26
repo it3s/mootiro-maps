@@ -16,7 +16,7 @@ class HelpCenter
         <!------------ PAGE TOUR ----------->
         <ol id='joyride'>
           <% for (var j = 0; j < tour.slides.length; j++) { %>
-          <li data-id='<%= tour.slides[j].target_id %>'
+          <li data-selector='<%= tour.slides[j].selector %>'
             data-button='Próximo'
             data-options='<%= tour.slides[j].options %>'
             data-offsetX='<%= tour.slides[j].offsetX %>'
@@ -102,66 +102,66 @@ class HelpCenter
                 {
                 "title": "MootiroMaps"
                 "body": "This is the logo."
-                "target_id": "logo"
+                "selector": "#logo"
                 "options": "tipLocation:bottom"
                 },
                 {
                 "title": "End"
                 "body": "Feel free... stay around..."
-                "target_id": ""
+                "selector": ""
                 "options": ""
                 }
             ]
 
         "organization:page_tour":
             "slides": [
-                # {
-                # "title": "MootiroMaps"
-                # "body": "Clique no logo do MootiroMaps e você será redirecionado para a página central."
-                # "target_id": "logo"
-                # "options": ""
-                # },
+                {
+                "title": "MootiroMaps"
+                "body": "Clique no logo do MootiroMaps e você será redirecionado para a página central."
+                "selector": "#logo"
+                "options": ""
+                },
                 {
                 "title": "Login"
                 "body": "Para criar um perfil no MootiroMaps ou logar na plataforma, clique aqui."
-                "target_id": "login_button"
+                "selector": "#login_button"
                 "options": "tipLocation:left;nubPosition:top-right;"
                 "offsetX": -230
                 },
                 {
                 "title": "Visualize o mapa"
                 "body": "Aqui você encontra no mapa os objetos já mapeados em todo o Brasil. "
-                "target_id": ""
+                "selector": ""
                 "options": ""
                 },
                 {
                 "title": "Objetos cadastrados"
                 "body": "Escolha o tipo de objeto cadastrado e veja as listas correspondentes em ordem alfabética."
-                "target_id": ""
+                "selector": ""
                 "options": ""
                 },
                 {
                 "title": "Projetos cadastrados"
                 "body": "Visualize a lista em ordem alfabética de projetos cadastrados no MootiroMaps."
-                "target_id": ""
+                "selector": ""
                 "options": ""
                 },
                 {
                 "title": "Blog do IT3S"
                 "body": "Em nosso Blog postamos análises e opinões sobre transparência, mobilização social e colaboração. Clique e leia."
-                "target_id": ""
+                "selector": ""
                 "options": ""
                 },
                 {
                 "title": "Edições recentes"
                 "body": "Acompanhe as atualizações feitas pelos usuários do MootiroMaps. Os ícones mostram os tipos de objetos editados. Edite você também."
-                "target_id": ""
+                "selector": ""
                 "options": ""
                 },
                 {
                 "title": "Página do usuário"
                 "body": "Clicando aqui você encontra informações sobre o usuário, contatos e últimas edições feitas."
-                "target_id": ""
+                "selector": ""
                 "options": ""
                 },
             ]
