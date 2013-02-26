@@ -26,8 +26,6 @@ $ ->
     showPopover = ->
         window.is_search_results_open = yes
         $('#search-results-box').popover 'show'
-        $('.popover').css 'top', parseInt($('.popover').css('top'), 10) + 35
-        $('.popover').css 'left', parseInt($('.popover').css('left'), 10) - 65
 
     hidePopover = ->
         window.is_search_results_open = no
@@ -120,10 +118,12 @@ $ ->
 
     form_search.submit (evt) ->
         evt.preventDefault()
+        if window.komoo_search_timeout_fn
+            clearTimeout window.komoo_search_timeout_fn
         doSearch()
 
     window.komoo_search_timeout_fn = null
-    search_field.bind 'keyup', ->
+    search_field.bind 'keydown', ->
         if search_field.val().length > 2
             if window.komoo_search_timeout_fn
                 clearTimeout window.komoo_search_timeout_fn
