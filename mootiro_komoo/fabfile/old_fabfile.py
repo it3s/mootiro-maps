@@ -45,11 +45,9 @@ def setup_django():
     sys.path.append(APP_DIR)
     sys.path.append(LIB_DIR)
     sys.path.append(SITE_ROOT)
-    print sys.path
     from django.core.management import setup_environ
     env_name = {'dev': 'development', 'stage': 'staging', 'prod': 'production'}
     environ = None
-    print env_name[env_]
     exec 'from settings import {} as environ'.format(env_name[env_])
     setup_environ(environ)
 
