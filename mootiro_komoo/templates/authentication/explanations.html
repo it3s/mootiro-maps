@@ -51,6 +51,96 @@
   .tips {
     list-style: none;
   }
+  .tips h2{
+    font-family: Cambria, Georgia, serif;
+    font-size: 28px;
+    font-weight: bold;
+
+  }
+  .inline-block {
+    display: inline-block;
+  }
+  .tips li{
+    margin: 20px -30px 30px -70px;
+    padding: 10px 20px 10px 30px;
+  }
+  .tips article{
+    font-size: 16px;
+    font-family: Calibri, "Trebuchet MS", Verdana, sans-serif;
+    line-height: 18px;
+  }
+  .improve-profile {
+    background-color: rgb(220, 239, 244);
+    border-radius: 16px;
+  }
+  .improve-profile h2 {
+    color: #009CB4;
+  }
+  .tips li img {
+    width: 24%;
+    vertical-align: top;
+    padding: 30px 0;
+  }
+  .tips li section {
+    width: 70%;
+    margin-left: 20px
+  }
+  .map-your-region{
+    background-color: #fdfaa7;
+    border-radius: 16px;
+  }
+  .map-your-region h2 {
+    color: #F18911;
+  }
+  .sublist {
+    list-style: none;
+    margin-top: -10px;
+  }
+  .sublist li {
+    font-size: 14px;
+    font-family: Calibri, "Trebuchet MS", Verdana, sans-serif;
+    line-height: 16px;
+    margin-bottom: 0;
+  }
+  .tips .btn {
+    font-weight: bold;
+    width: 140px;
+    color: #ffffff;
+    line-height: 15px;
+    position: relative;
+    display: inline-block;
+    margin-bottom: -5px;
+    margin-right: 20px;
+    margin: 0 20px -5px 0;
+    border-radius: 4px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 3px;
+  }
+  .tips .btn img {
+    max-width: 14px;
+    float: left;
+    padding: 0;
+    margin: 2px 4px;
+  }
+  .btn.community {
+    background-color: #f18911;
+  }
+  .btn.organization {
+    background-color: #3A61D6;
+  }
+  .btn.need {
+    background-color: #F42C5E;
+  }
+  .tips .btn-title {
+    position: absolute;
+    bottom: 5px;
+    margin-left: 3px;
+  }
+  .tips .description{
+    max-width: 380px;
+  }
+
 
 </style>
 <section class="container">
@@ -67,7 +157,53 @@
     <p class="tips-header">Algumas dicas pra você começar a mapear:</p>
 
     <ul class="tips">
-      <li></li>
+      <li class="improve-profile">
+        <img src="/static/img/account_confirmation/perfil.png"/>
+        <section class="inline-block">
+          <header><h2>Melhore seu perfil</h2></header>
+          <article>Insira informações de contato, uma foto e, se quiser, algo sobre você. Seria legal abordar também seus temas de interesse em relação a mapeamento.</article>
+        </section>
+      </li>
+      <li class="map-your-region">
+        <img src="/static/img/account_confirmation/comunidade.png" />
+        <section class="inline-block">
+          <header><h2>Mapeie sua região</h2></header>
+          <article>
+          <p>Coloque um determinado território no <a href="http://maps.mootiro.org/map/">mapa</a>! Localize endereços e adicione os pontos.</p>
+          <p>O MootiroMaps oferece cinco tipos de objetos para você criar no mapa da sua comunidade:</p>
+          </article>
+        </section>
+        <ul class="sublist">
+          <li>
+            <div class="btn community">
+              <img src="/static/img/menu/community-active.png" />
+              <span class="btn-title">Comunidades</span>
+            </div>
+            <div class="inline-block description">
+              São bairros, vilas, municípios, territórios.
+            </div>
+          </li>
+          <li>
+            <div class="btn organization">
+              <img src="/static/img/menu/organization-active.png" />
+              <span class="btn-title">Organizações</span>
+            </div>
+            <div class="inline-block description">
+              São ONGs, associações de moradores, coletivos comunitários.
+            </div>
+          </li>
+          <li>
+            <div class="btn need">
+              <img src="/static/img/menu/need-active.png" />
+              <span class="btn-title">Necessidades</span>
+            </div>
+            <div class="inline-block description">
+             São problemáticas e necessidades de uma comunidade que precisam ser resolvidas para melhorar a vida de seus moradores. Aqui você pode mapear desde buracos na rua e obras que receberam investimento mas estão paradas, por exemplo, até indicadores sociais. 
+            </div>
+          </li>
+
+        </ul>
+      </li>
     </ul>
 
 
