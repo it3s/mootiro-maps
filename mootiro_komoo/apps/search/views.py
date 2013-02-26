@@ -18,21 +18,25 @@ def _format_results(res):
     for obj in res:
         id = obj['object_id']
         model = get_model_from_table_ref(obj['table_ref'])
-        db_object = model.objects.get(pk=id)
+        try:
+            db_object = model.objects.get(pk=id)
 
-        model_name = db_object.__class__.__name__.lower()
-        hashlink = '{}{}'.format(model_name[0], id)
-        link = db_object.view_url
+            model_name = db_object.__class__.__name__.lower()
+            hashlink = '{}{}'.format(model_name[0], id)
+            link = db_object.view_url
 
-        result.append({
-            'id': id,
-            'name': obj['name'],
-            'link': link,
-            'hashlink': hashlink,
-            'model': model_name,
-            'disabled': 'disabled' if not _has_geojson(db_object) else '',
-            'geojson': create_geojson([db_object]),
-        })
+            result.append({
+                'id': id,
+                'name': obj['name'],
+                'link': link,
+                'hashlink': hashlink,
+                'model': model_name,
+                'disabled': 'disabled' if not _has_geojson(db_object) else '',
+                'geojson': create_geojson([db_object]),
+            })
+        except:
+            # object not on DB
+            pass
 
     return result
 
