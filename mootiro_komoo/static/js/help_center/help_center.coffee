@@ -51,14 +51,13 @@ class HelpCenter
               </li>
               <% } %>
             </ul>
-
-            <button id='tour_button'>Faça o tour desta página</button>
+            <% if (hasTour) { %><button id='tour_button'>Faça o tour desta página</button><% } %>
           </section>
         </div>
         "
 
     modal_setup: =>
-        html = _.template @modal_tpl, {questions: @questions}
+        html = _.template @modal_tpl, {questions: @questions, hasTour: @tour?}
         @$modal = $(html)
         @$modal.modal {show: true}
         $('body').append @$modal
