@@ -634,3 +634,5 @@ div.importsheet_missing_column {
         #main-content.project .tabs > ul > .tab.selected > a {
           color: black;
           text-decoration: none; }
+  #main-content.project .tab-content {
+    overflow: visible; }
