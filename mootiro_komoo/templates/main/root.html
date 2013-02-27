@@ -33,7 +33,7 @@
   </div>
   {% else %}
   <div>
-    <h2 class="center">{% trans "Want to help" %}, {{ user.get_first_name }}? <a class="login-required" href="{% url map %}#map-panel-add">{% trans "Add to the map!" %}</a></h2>
+    <h2 class="center">{% trans "Want to participate" %}, {{ user.get_first_name }}? <a class="login-required" href="{% url map %}#map-panel-add">{% trans "Edit the map." %}</a></h2>
   </div>
   {% endif %}
 
