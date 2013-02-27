@@ -165,6 +165,28 @@ class HelpCenter
                 "selector": "#map-panel-layers-tab"
                 },
             ]
-
+        "community_list:tour":
+            "slides": [
+                {
+                "title": "Lista de comunidades"
+                "body": "Aqui estão listadas  com uma curta descrição todas as comunidades cadastradas no MootiroMaps. Clique no nome da comunidade para acessar o cadastro completo."
+                "selector": "div.view-list-item > h4 > span > a"
+                },
+                {
+                "title": "Ponto no mapa"
+                "body": "Clique para visualizar previamente o objeto no mapa."
+                "selector": "div.view-list-item > h4 > a.list-map-preview"
+                "options": "tipLocation:right;"
+                "offsetY": -20
+                },
+                {
+                "title": "Visualização e filtragem"
+                "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
+                "selector": "div.view-list-visualization-header i"
+                "options": "tipLocation:right;"
+                "offsetX": 20
+                "offsetY": -28
+                },
+            ]
 
 window.HelpCenter = HelpCenter
