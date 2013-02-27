@@ -169,6 +169,119 @@
             "offsetY": -28
           }
         ]
+      },
+      "organization_list:tour": {
+        "slides": [
+          {
+            "title": "Lista de organizações",
+            "body": "Aqui estão listadas com uma curta descrição todas as organizações cadastradas no MootiroMaps. Clique no nome da organização para acessar o cadastro completo.",
+            "selector": "div.view-list-item a.org-list-name"
+          }, {
+            "title": "Visualização e filtragem",
+            "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave.",
+            "selector": "div.view-list-visualization-header i",
+            "options": "tipLocation:right;",
+            "offsetX": 20,
+            "offsetY": -28
+          }, {
+            "title": "Adicionar uma organização",
+            "body": "Clique aqui e cadastre no MootiroMaps uma nova organização.",
+            "selector": "div.button-new"
+          }
+        ]
+      },
+      "need_list:tour": {
+        "slides": [
+          {
+            "title": "Lista de necessidades",
+            "body": "Aqui estão listadas com uma curta descrição todas as necessidades cadastradas no MootiroMaps. Clique no nome da necessidade para acessar o cadastro completo.",
+            "selector": "div.view-list-item > h4 > span > a"
+          }, {
+            "title": "Ponto no mapa",
+            "body": "Clique para visualizar previamente o objeto no mapa.",
+            "selector": "div.view-list-item > h4 > a.list-map-preview",
+            "options": "tipLocation:right;",
+            "offsetY": -20
+          }, {
+            "title": "Visualização e filtragem",
+            "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave.",
+            "selector": "div.view-list-visualization-header i",
+            "options": "tipLocation:right;",
+            "offsetX": 20,
+            "offsetY": -28
+          }, {
+            "title": "Adicionar uma necessidade",
+            "body": "Clique aqui e cadastre no MootiroMaps uma nova necessidade.",
+            "selector": "div.button-new"
+          }
+        ]
+      },
+      "resource_list:tour": {
+        "slides": [
+          {
+            "title": "Lista de recursos",
+            "body": "Aqui estão listados com uma curta descrição todos os recursos cadastrados no MootiroMaps. Clique no nome do recurso para acessar o cadastro completo.",
+            "selector": "div.view-list-item > h4 > span > a"
+          }, {
+            "title": "Ponto no mapa",
+            "body": "Clique aqui para visualizar previamente o objeto desejado no mapa.",
+            "selector": "div.view-list-item > h4 > a.list-map-preview",
+            "options": "tipLocation:right;",
+            "offsetY": -20
+          }, {
+            "title": "Visualização e filtragem",
+            "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave.",
+            "selector": "div.view-list-visualization-header i",
+            "options": "tipLocation:right;",
+            "offsetX": 20,
+            "offsetY": -28
+          }, {
+            "title": "Adicionar um recurso",
+            "body": "Clique aqui e cadastre no MootiroMaps um novo recurso.",
+            "selector": "div.button-new"
+          }
+        ]
+      },
+      "investment_list:tour": {
+        "slides": [
+          {
+            "title": "Lista de investimentos",
+            "body": "Aqui estão listados  com uma curta descrição todos os investimentos cadastrados no MootiroMaps. Clique no nome do investimentos para acessar o cadastro completo.",
+            "selector": "div.view-list-item > h4 > span > a"
+          }, {
+            "title": "Ponto no mapa",
+            "body": "Clique aqui para visualizar previamente o objeto no mapa.",
+            "selector": "div.view-list-item > h4 > a.list-map-preview",
+            "options": "tipLocation:right;",
+            "offsetY": -20
+          }, {
+            "title": "Visualização e filtragem",
+            "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave.",
+            "selector": "div.view-list-visualization-header",
+            "options": "tipLocation:right;",
+            "offsetX": 20
+          }
+        ]
+      },
+      "project_list:tour": {
+        "slides": [
+          {
+            "title": "Lista de projetos",
+            "body": "Aqui estão listados com uma curta descrição todos os projetos cadastrados no MootiroMaps. Clique no nome do projetos para acessar o cadastro completo.",
+            "selector": "div.view-list-item span > a"
+          }, {
+            "title": "Visualização e filtragem",
+            "body": "Você pode filtrar a busca por palavras-chave.",
+            "selector": "div.view-list-visualization-header i",
+            "options": "tipLocation:right;",
+            "offsetX": 20,
+            "offsetY": -28
+          }, {
+            "title": "Adicionar um projeto",
+            "body": "Clique aqui e comece um novo projeto de mapeamento no MootiroMaps.",
+            "selector": "div.button-new"
+          }
+        ]
       }
     };
 
