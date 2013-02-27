@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import simplejson
 
 from django.db import models
+from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
@@ -107,7 +108,8 @@ class Project(models.Model):
     def save_related_object(self, related_object):
         ct = ContentType.objects.get_for_model(related_object)
         obj, created = ProjectRelatedObject.objects.get_or_create(
-                content_type_id=ct.id, object_id=related_object.id, project_id=self.id)
+                content_type_id=ct.id, object_id=related_object.id,
+                project_id=self.id)
         return created
 
     @property
@@ -131,8 +133,14 @@ class Project(models.Model):
             'slug': self.slug,
             'logo_url': self.logo_url,
             'view_url': self.view_url,
-            'partners_logo': [{'url': logo.file.url} for logo in self.partners_logo()]
+            'partners_logo': [{'url': logo.file.url}
+                                for logo in self.partners_logo()]
         })
+
+    @classmethod
+    def get_projects_for_contributor(cls, user):
+        return Project.objects.filter(
+            Q(contributors__in=[user]) | Q(creator=user)).distinct()
 
 
 if not reversion.is_registered(Project):

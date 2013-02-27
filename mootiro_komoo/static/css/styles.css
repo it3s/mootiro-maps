@@ -1,4 +1,4 @@
-html {
+ml {
     padding: 0;
     margin: 0;
     height: 100%;
@@ -2260,6 +2260,30 @@ div.investments-list .tab-investment.selected a { color: #000 }
 }
 .profile-lp-contact-header{
     font-weight: bold;
+}
+.profile-lp-projects-header{
+    margin-top: 30px;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.profile-lp-projects li{
+    margin: 20px 0;
+}
+.profile-lp-projects-logo {
+    width: 80px;
+    display: inline-block;
+    min-height: 20px;
+    vertical-align: top;
+}
+.profile-lp-projects-logo img{
+    vertical-align: top;
+    max-width: 80px;
+    max-height: 100px;
+}
+.profile-lp-projects-name{
+    max-width: 200px;
+    display: inline-block;
+    margin-left: 20px;
 }
 .profile-cp-header, .signatures-list-header{
     font-size: 1.2em;
