@@ -26,15 +26,10 @@
 {% block menu %} {% menu "project" %} {% endblock %}
 
 {% block content %}
-<div id="main-content">
-    <div class="main-column">
-    {% if project.logo %}
-    <div class="view-header-logo"><img src="{{ project.logo_url }}" class="inline-block organization-logo"></div>
-    {% else %}
-    <div class="view-header-logo"></div>
-    {% endif %}
+<div id="main-content" class="project">
 
         <div class="view-header">
+            <div class="view-header-logo">{% if project.logo %}<img src="{{ project.logo_url }}" class="inline-block organization-logo">{% endif %}</div>
             <h2 class="inline-block">{{ project.name }}</h2>
 
             <div class="view-edit-btn">
@@ -57,240 +52,82 @@
 
         </div>
 
-        <div class="view-body">
+        <div class="tabs">
+          <ul>
+            <li class="tab selected"><a href="#project-description">Projeto</a></li>
+            <li class="tab"><a href="#project-data">Dados</a></li>
+            <li class="tab"><a href="#project-collaborators">Colaboradores</a></li>
+          </ul>
+        </div>
+
+        <div class="view-body tab-content" id="project-description">
+          <div class="main-column right">
             <div class="mark-down">{{ project.description|render_markup|safe }}</div>
             <div class="related-button"><a class="button" href="{% url project_map project.id %}">{% trans 'See all objects on map' %}</a></div>
-        </div>
-
-        <div>
-            <div class="view-info-buttons row">
-                <!-- <div class="view-info-btn span3 selected" panel="map-points-list"> -->
-                <!--     <i class="icon-map"></i> -->
-                <!--     <div class="inline-block"> -->
-                <!--       {% trans 'Points on Map' %} -->
-                <!--     </div> -->
-                <!-- </div> -->
-                <div class="view-info-btn span3 selected" panel="organizations-list">
-                    <i class="icon-organization"></i>
-                    <div class="inline-block">
-                        {% trans 'Organizations' %}
-                        {% if proj_objects.Organization.objects_list %}
-                            &nbsp;({{ proj_objects.Organization.objects_list|length }})
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="view-info-btn span3" panel="communities-list">
-                    <i class="icon-community"></i>
-                    <div class="inline-block">
-                        {% trans 'Communities' %}
-                        {% if proj_objects.Community.objects_list %}
-                            &nbsp;({{ proj_objects.Community.objects_list|length }})
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="view-info-btn span3" panel="needs-list">
-                    <i class="icon-need"></i>
-                    <div class="inline-block">
-                        {% trans 'Needs' %}
-                        {% if proj_objects.Need.objects_list %}
-                            &nbsp;({{ proj_objects.Need.objects_list|length }})
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="view-info-btn span3" panel="resources-list">
-                    <i class="icon-resource"></i>
-                    <div class="inline-block">
-                        {% trans 'Resources' %}
-                        {% if proj_objects.Resource.objects_list %}
-                            &nbsp;({{ proj_objects.Resource.objects_list|length }})
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="view-info-btn span3" panel="investments-list">
-                    <i class="icon-investment"></i>
-                    <div class="inline-block">
-                        {% trans 'Investments' %}
-                        {% if proj_objects.Investment.objects_list %}
-                            &nbsp;({{ proj_objects.Investment.objects_list|length }})
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="view-info-btn span3" panel="contributors-list">
-                    <i class="icon-user"></i>
-                    <div class="inline-block">
-                        {% trans 'Collaborators' %}
-                        {% if proj_objects.User.objects_list %}
-                            &nbsp;({{ proj_objects.User.objects_list|length }})
-                        {% endif %}
-                    </div>
-                </div>
-
+            <div class="view-footer">
+              {% image_gallery project %}
             </div>
 
-            <!-- <div class="view-info-panel map-points-list" > -->
-            <!--     {#% for model_name, model_attrs in proj_objects.iteritems %#} -->
-            <!--         {#% for o in model_attrs.objects_list %#} -->
-            <!--         <div class="view-info-object"> -->
-            <!--             <a href="{{ o.link }}" >{{ o.name }}</a> -->
-            <!--             <div class="right"> -->
-            <!--                 <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{model_attrs.app_name}}" data-model-name="{{ model_name }}" data-object-id="{{ o.id }}"><i class="icon-see-on-map"></i></a> -->
-            <!--             </div> -->
-
-            <!--         </div> -->
-            <!--         {#% endfor %#} -->
-            <!--     {#% empty %#} -->
-            <!--     <div class="view-info-empty">{% trans 'This project has no related Objects yet' %}.</div> -->
-            <!--     {#% endfor %#} -->
-            <!-- </div> -->
-
-            <div class="view-info-panel organizations-list">
-                {% for o in proj_objects.Organization.objects_list %}
-                <div class="view-info-object">
-                    <a href="{{ o.link }}" >{{ o.name }}</a>
-                    <div class="right">
-                        <a href="#" class="preview-on-map-ajax" data-app-name="{{ proj_objects.Organization.app_name}}" data-model-name="Organization" data-object-id="{{ o.id }}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related Organizations yet' %}.</div>
-                {% endfor %}
-            </div>
-
-            <div class="view-info-panel communities-list hidden">
-               {% for o in proj_objects.Community.objects_list %}
-                <div class="view-info-object">
-                    <a href="{{ o.link }}" >{{ o.name }}</a>
-                    <div class="right">
-                        <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{proj_objects.Community.app_name}}" data-model-name="Community" data-object-id="{{ o.id }}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related Communities yet' %}.</div>
-                {% endfor %}
-            </div>
-
-            <div class="view-info-panel needs-list hidden">
-               {% for o in proj_objects.Need.objects_list %}
-                <div class="view-info-object">
-                    <a href="{{ o.link }}" >{{ o.name }}</a>
-                    <div class="right">
-                        <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{proj_objects.Need.app_name}}" data-model-name="Need" data-object-id="{{ o.id }}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related Needs yet' %}.</div>
-                {% endfor %}
-            </div>
-
-            <div class="view-info-panel resources-list hidden">
-               {% for o in proj_objects.Resource.objects_list %}
-                <div class="view-info-object">
-                    <a href="{{ o.link }}" >{{ o.name }}</a>
-                    <div class="right">
-                        <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{proj_objects.Resource.app_name}}" data-model-name="Resource" data-object-id="{{ o.id }}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related Resources yet' %}.</div>
-                {% endfor %}
-            </div>
-
-            <div class="view-info-panel investments-list hidden">
-               {% for o in proj_objects.Investment.objects_list %}
-                <div class="view-info-object">
-                    <a href="{{ o.link }}" >{{ o.name }}</a>
-                    <div class="right">
-                        <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{proj_objects.Investment.app_name}}" data-model-name="Investment" data-object-id="{{ o.id }}" title="ver no mapa" ><i class="icon-see-on-map"></i></a>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related Investments yet' %}.</div>
-                {% endfor %}
-            </div>
-
-            <div class="view-info-panel contributors-list hidden">
-               {% for o in proj_objects.User.objects_list %}
-                <div class="view-info-object">
-                    <a href="{{ o.link }}" >{{ o.name }}</a>
-                    <div class="right">
-                        <a href="#" class="preview-on-map-ajax {%if not o.has_geojson %}disabled{% endif %}" data-app-name="{{proj_objects.User.app_name}}" data-model-name="User" data-object-id="{{ o.id }}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
-                    </div>
-                </div>
-                {% empty %}
-                <div class="view-info-empty">{% trans 'This project has no related Investments yet' %}.</div>
-                {% endfor %}
-            </div>
-
-
-        </div>
-
-
-        <div class="view-footer">
-            {% image_gallery project %}
-        </div>
-
-        <div class="view-extras">
+            <div class="view-extras">
                 {% track_buttons project %}
                 {% report_content project %}
                 {% delete_button project %}
                 {% social_buttons %}
                 {% comments project %}
-        </div>
+            </div>
 
-    </div>
-    <div class="right-bar right-bar-modif">
-        <div id="map-main-preview">
-          <div id="map-main-preview-canvas"></div>
-        </div>
-        <a class="see-on-map" href="{% url project_map project.id %}" title="ver no mapa">{% trans 'see on map' %}</a>
+          </div>
 
-        {% with similar_projects=project.tags.similar_objects|slice:"5" %}
+          <div class="left-bar left-bar-modif">
+              <div id="map-main-preview">
+                <div id="map-main-preview-canvas"></div>
+              </div>
+              <a class="see-on-map" href="{% url project_map project.id %}" title="ver no mapa">{% trans 'see on map' %}</a>
 
-            <div class="block">
-
+              <div>
                 <h4>{% trans 'Administrator' %}</h4>
                 <p>
-                    {{ project.creator.name }}
+                     {{ project.creator.name }}
                 </p>
+              </div>
 
-                {% if project.contributors.count %}
-                <h4>{% trans 'Contributors' %}</h4>
-                <p>
-                    <ul>
-                        {% for contributor in project.contributors.all %}
-                        <li>{{ contributor.name }}</li>
-                        {% endfor %}
-                    </ul>
-                </p>
-                {% endif %}
-
+              <div>
                 {% if project.contact %}
                 <h4>{% trans 'Contact' %}</h4>
                 <p>
-                    {{ project.contact|render_markup|safe }}
-                </p>
-                {% endif %}
+                  {{ project.contact|render_markup|safe }}
+               </p>
+               {% endif %}
+               </div>
 
-                {% if similar_projects %}
-                <h4>{% trans "Related projects" %}</h4>
-                <p>
-                    <ul>
-                        {% for r in similar_projects|slice:'5' %}
-                        <li>
-                            <a href="{{ r.view_url }}"> {{ r.name }} </a>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </p>
-                {% endif %}
+              {% with similar_projects=project.tags.similar_objects|slice:"5" %}
+                    <div>
+                      {% if similar_projects %}
+                      <h4>{% trans "Related projects" %}</h4>
+                      <p>
+                          <ul>
+                              {% for r in similar_projects|slice:'5' %}
+                              <li>
+                                  <a href="{{ r.view_url }}"> {{ r.name }} </a>
+                              </li>
+                              {% endfor %}
+                          </ul>
+                      </p>
+                      {% endif %}
+                  </div>
+              {% endwith %}
 
-            </div>
+              {% taglist project %}
 
-        {% endwith %}
+          </div>
+        </div>
+        <div class="view-body tab-content" id="project-data">
+          DADOS
+        </div>
+        <div class="view-body tab-content" id="project-collaborators">
+          COLABORADORES
+        </div>
 
-        {% taglist project %}
-
-    </div>
 
 {% komoo_map_tooltip %}
 </div>
@@ -313,10 +150,12 @@
                 $("#map-main-preview-canvas").komooMap({
                     type: 'preview',
                     geojson: {{ geojson|safe }},
-                    width: '200px',
+                    width: '300px',
                     height: '200px'
                 });
             });
+
+            var tabs = new Tabs('.tab', '.tab-content')
         });
     </script>
 

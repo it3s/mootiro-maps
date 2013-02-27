@@ -1519,7 +1519,7 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 }
 /* ========= Entity show ====== */
 .view-header{
-    display: inline-block;
+    /* display: inline-block; */
     margin-bottom: 20px;
     min-width: 590px;
 }

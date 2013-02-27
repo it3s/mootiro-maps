@@ -14,3 +14,9 @@
   /* Opera 11.10+ */
   background-image: -o-linear-gradient($from, $to);
 }
+
+@mixin border-radius($options) {
+    -moz-border-radius: $options;
+    -webkit-border-radius: $options;
+    border-radius: $options;
+}
