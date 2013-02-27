@@ -636,3 +636,18 @@ div.importsheet_missing_column {
           text-decoration: none; }
   #main-content.project .tab-content {
     overflow: visible; }
+  #main-content.project .view-info-contributor {
+    display: inline-block;
+    width: 225px;
+    margin: 5px;
+    clear: both;
+    vertical-align: top; }
+    #main-content.project .view-info-contributor .avatar {
+      width: 64px;
+      margin: 5px;
+      float: left;
+      vertical-align: top; }
+    #main-content.project .view-info-contributor .name {
+      display: inline-block;
+      width: 150px;
+      margin-top: 15px; }

@@ -67,4 +67,25 @@
         overflow: visible;
     }
 
+    .view-info-contributor {
+        display: inline-block;
+        width: 225px;
+        margin: 5px;
+        clear: both;
+        vertical-align: top;
+
+        .avatar {
+            width: 64px;
+            margin: 5px;
+            float: left;
+            vertical-align: top;
+        }
+
+        .name {
+            display: inline-block;
+            width: 150px;
+            margin-top: 15px;
+        }
+    }
+
 }

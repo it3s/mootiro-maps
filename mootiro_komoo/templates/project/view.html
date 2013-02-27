@@ -132,11 +132,10 @@
           DADOS
         </div>
         <div class="view-body tab-content" id="project-contributors">
-          COLABORADORES
           {% for o in proj_objects.User.objects_list %}
-          <div class="view-info-contributors">
+          <div class="view-info-contributor">
             <img class="avatar" src="{{ o.avatar }}" />
-            <a href="{{ o.link }}" >{{ o.name }}</a>
+            <a class="name" href="{{ o.link }}" >{{ o.name }}</a>
           </div>
           {% empty %}
           <div class="view-info-empty">{% trans 'This project has no related Investments yet' %}.</div>
