@@ -3,6 +3,8 @@
     width: 100%;
     height: 45px;
     background: #dceff4;
+    position: relative;
+    z-index: 11;
 
     box-shadow: 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
 
@@ -43,7 +45,7 @@
 
                 > a { padding-top: 12px }
             }
-            
+
             a {
                 text-decoration: inherit;
                 color: inherit;
@@ -170,7 +172,7 @@
             width: 85%;
             padding: 0;
             margin: 0;
-            
+
             input[type="search"] {
                 width: 100%;
                 height: 28px;

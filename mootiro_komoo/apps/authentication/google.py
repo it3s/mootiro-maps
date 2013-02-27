@@ -25,6 +25,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 
 from main.utils import randstr
+from main.tasks import send_explanations_mail
 from authentication.utils import login as auth_login
 
 from .models import PROVIDERS, SocialAuth
@@ -106,6 +107,7 @@ def google_authorized(request):
         if created:
             user.name = data['name']
             user.save()
+            send_explanations_mail(user)
         auth_login(request, user)
 
     return redirect(request.session['next'] or reverse('root'))

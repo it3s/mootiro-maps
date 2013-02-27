@@ -187,9 +187,6 @@ def index_object(obj):
     if object_data.get('es_id', None):
         del object_data['es_id']
 
-    # send to elasticsearch
-    print url 
-    print object_data
     requests.put(url,
             headers={'Content-Type': 'application/json'},
             data=json.dumps(object_data))
@@ -201,5 +198,5 @@ def search_by_term(ter, size=10):
             headers={'Content-Type': 'application/json'},
             data=json.dumps(search_dict(ter, size=size)))
     data = json.loads(r.content)
-    hits = data['hits']['hits']
+    hits = data.get('hits', {}).get('hits', [])
     return [hit['_source'] for hit in hits]

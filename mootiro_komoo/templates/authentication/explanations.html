@@ -1,74 +1,125 @@
-<style type="text/css">
-/*  Fontes:
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<div class="container" style="width: 560px; min-height: 100px; margin: 0 auto; padding: 30px 80px; font-size: 23px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; line-height: 28px;">
+  <div class="header" style="position: relative;">
+    <img src="http://localhost:8001/static/img/account_confirmation/maps.png" alt="MootiroMaps"><span style="position: absolute; right: 0; bottom: 20px; font-size: 0.6em;">Confirma&ccedil;&atilde;o de cadastro</span>
 
- H1 ("Olá, José")
- 40px Cambria, Georgia, serif; bold
+  </div>
+  <div class="section content">
+    <div class="header" style="position: relative;"><h1 style="font-size: 40px; font-family: Cambria, Georgia, serif; font-weight: bold; line-height: 42px;">Ol&aacute;, {{ name }}!</h1></div>
+    <div class="article">
+      <p>Seja bem-vindo(a) ao <a href="http://maps.mootiro.org/">MootiroMaps</a>, uma ferramenta online de <strong>mapeamento colaborativo</strong> para apoio ao desenvolvimento de um territ&oacute;rio - que pode ser sua rua, bairro, ou at&eacute; sua cidade, estado ou pa&iacute;s. </p>
+    </div>
+    <p class="tips-header" style="font-weight: bold; font-size: 0.95em;">Algumas dicas pra voc&ecirc; come&ccedil;ar a mapear:</p>
 
- H2 (dentro dos boxes)
- 30px Cambria, Georgia, serif; bold
+    <ul class="tips" style="list-style-type: none;">
+<li class="improve-profile" style="margin: 20px -70px 30px -30px; background-color: rgb(220, 239, 244); padding: 10px 20px 10px 30px; border-radius: 16px;">
+        <img src="http://localhost:8001/static/img/account_confirmation/perfil.png" style="width: 24%; vertical-align: top; padding: 30px 0;"><div class="section inline-block" style="max-width: 380px; display: inline-block; margin-left: 20px; width: 70%;">
+          <div class="header" style="position: relative;"><h2 style="font-weight: bold; font-size: 28px; font-family: Cambria, Georgia, serif; color: #009CB4;">Melhore seu perfil</h2></div>
+          <div class="article" style="font-size: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; line-height: 18px;">Insira informa&ccedil;&otilde;es de contato, uma foto e, se quiser, algo sobre voc&ecirc;. Seria legal abordar tamb&eacute;m seus temas de interesse em rela&ccedil;&atilde;o a mapeamento.</div>
+        </div>
+      </li>
+<br><li class="map-your-region" style="margin: 20px -70px 30px -30px; background-color: #fdfaa7; padding: 10px 20px 10px 30px; border-radius: 16px;">
+        <img src="http://localhost:8001/static/img/account_confirmation/comunidade.png" style="width: 24%; vertical-align: top; padding: 30px 0;"><div class="section inline-block" style="max-width: 380px; display: inline-block; margin-left: 20px; width: 70%;">
+          <div class="header" style="position: relative;"><h2 style="font-weight: bold; font-size: 28px; font-family: Cambria, Georgia, serif; color: #F18911;">Mapeie sua regi&atilde;o</h2></div>
+          <div class="article" style="font-size: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; line-height: 18px;">
+          <p>Coloque um determinado territ&oacute;rio no <a href="http://maps.mootiro.org/map/">mapa</a>! Localize endere&ccedil;os e adicione os pontos.</p>
+          <p>O MootiroMaps oferece cinco tipos de objetos para voc&ecirc; criar no mapa da sua comunidade:</p>
+          </div>
+        </div>
+        <ul class="sublist" style="list-style-type: none; margin-top: -10px;">
+<li style="font-size: 14px; line-height: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; margin: 20px -70px 0 -30px; padding: 10px 20px 10px 30px;">
+            <div class="btn community" style="position: relative; font-weight: bold; margin: 0 20px -5px 0; background-color: #f18911; line-height: 15px; color: #ffffff; padding: 3px; display: inline-block; height: 20px; vertical-align: top; width: 140px; border-radius: 4px;">
+              <img src="http://localhost:8001/static/img/menu/community-active.png" style="max-width: 16px; margin: 2px 4px; padding: 0; vertical-align: bottom; float: left; width: 24%;" align="left"><span class="btn-title" style="position: absolute; bottom: 5px; margin-left: 2px; vertical-align: center;">Comunidades</span>
+            </div>
+            <div class="inline-block description" style="max-width: 350px; display: inline-block;">
+              S&atilde;o bairros, vilas, munic&iacute;pios, territ&oacute;rios.
+            </div>
+          </li>
+          <li style="font-size: 14px; line-height: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; margin: 20px -70px 0 -30px; padding: 10px 20px 10px 30px;">
+            <div class="btn organization" style="position: relative; font-weight: bold; margin: 0 20px -5px 0; background-color: #3A61D6; line-height: 15px; color: #ffffff; padding: 3px; display: inline-block; height: 20px; vertical-align: top; width: 140px; border-radius: 4px;">
+              <img src="http://localhost:8001/static/img/menu/organization-active.png" style="max-width: 16px; margin: 2px 4px; padding: 0; vertical-align: bottom; float: left; width: 24%;" align="left"><span class="btn-title" style="position: absolute; bottom: 5px; margin-left: 2px; vertical-align: center;">Organiza&ccedil;&otilde;es</span>
+            </div>
+            <div class="inline-block description" style="max-width: 350px; display: inline-block;">
+              S&atilde;o ONGs, associa&ccedil;&otilde;es de moradores, coletivos comunit&aacute;rios.
+            </div>
+          </li>
+          <li style="font-size: 14px; line-height: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; margin: 20px -70px 0 -30px; padding: 10px 20px 10px 30px;">
+            <div class="btn need" style="position: relative; font-weight: bold; margin: 0 20px -5px 0; background-color: #F42C5E; line-height: 15px; color: #ffffff; padding: 3px; display: inline-block; height: 20px; vertical-align: top; width: 140px; border-radius: 4px;">
+              <img src="http://localhost:8001/static/img/menu/need-active.png" style="max-width: 16px; margin: 2px 4px; padding: 0; vertical-align: bottom; float: left; width: 24%;" align="left"><span class="btn-title" style="position: absolute; bottom: 5px; margin-left: 2px; vertical-align: center;">Necessidades</span>
+            </div>
+            <div class="inline-block description" style="max-width: 350px; display: inline-block;">
+             S&atilde;o problem&aacute;ticas e necessidades de uma comunidade que precisam ser resolvidas para melhorar a vida de seus moradores. Aqui voc&ecirc; pode mapear desde buracos na rua e obras que receberam investimento mas est&atilde;o paradas, por exemplo, at&eacute; indicadores sociais. 
+            </div>
+          </li>
+          <li style="font-size: 14px; line-height: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; margin: 20px -70px 0 -30px; padding: 10px 20px 10px 30px;">
+            <div class="btn resource" style="position: relative; font-weight: bold; margin: 0 20px -5px 0; background-color: #52AE32; line-height: 15px; color: #ffffff; padding: 3px; display: inline-block; height: 20px; vertical-align: top; width: 140px; border-radius: 4px;">
+              <img src="http://localhost:8001/static/img/menu/resource-active.png" style="max-width: 18px; margin: 4px 4px 2px; padding: 0; vertical-align: bottom; float: left; width: 24%;" align="left"><span class="btn-title" style="position: absolute; bottom: 5px; margin-left: 2px; vertical-align: center;">Recursos</span>
+            </div>
+            <div class="inline-block description" style="max-width: 350px; display: inline-block;">
+             S&atilde;o equipamentos e servi&ccedil;os sociais existentes em uma comunidade e dispon&iacute;veis para os moradores. Aqui entram postos de sa&uacute;de, bibliotecas, cursos profissionalizantes para jovens, acompanhamento de gestantes, hortas comunit&aacute;rias etc. 
+            </div>
+          </li>
+          <li style="font-size: 14px; line-height: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; margin: 20px -70px 0 -30px; padding: 10px 20px 10px 30px;">
+            <div class="btn investment" style="position: relative; font-weight: bold; margin: 0 20px -5px 0; background-color: #AA9F18; line-height: 15px; color: #ffffff; padding: 3px; display: inline-block; height: 20px; vertical-align: top; width: 140px; border-radius: 4px;">
+              <img src="http://localhost:8001/static/img/menu/investment-active.png" style="max-width: 16px; margin: 2px 4px; padding: 0; vertical-align: bottom; float: left; width: 24%;" align="left"><span class="btn-title" style="position: absolute; bottom: 5px; margin-left: 2px; vertical-align: center;">Investimentos</span>
+            </div>
+            <div class="inline-block description" style="max-width: 350px; display: inline-block;">
+              S&atilde;o as verbas investidas por &oacute;rg&atilde;os p&uacute;blicos ou funda&ccedil;&otilde;es e empresas em uma comunidade ou ONG. 
+            </div>
+          </li>
+        </ul>
+</li>
+<br><li class="project" style="margin: 20px -70px 30px -30px; background-color: #F9D5A5; padding: 10px 20px 10px 30px; border-radius: 16px;">
+        <img src="http://localhost:8001/static/img/account_confirmation/projeto.png" style="width: 24%; vertical-align: top; padding: 30px 0;"><div class="section inline-block" style="max-width: 380px; display: inline-block; margin-left: 20px; width: 70%;">
+          <div class="header" style="position: relative;"><h2 style="font-weight: bold; font-size: 28px; font-family: Cambria, Georgia, serif; color: #F26700;">Crie seu Projeto</h2></div>
+          <div class="article" style="font-size: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; line-height: 18px;">
+            <p>
+              Voc&ecirc; pode criar um projeto para promover uma causa e mobilizar uma rede de colaboradores para a discuss&atilde;o e mapeamento de objetos.
+            </p>
+            <p>
+              <a href="http://maps.mootiro.org/project" style="color: #F26700;">Veja aqui nossa lista de projetos.</a>
+            </p>
 
- Texto fora dos boxes
- 25px Calibri, "Trebuchet MS", Verdana, sans-serif
-
- Texto dentro dos boxes
- 16px Calibri, "Trebuchet MS", Verdana, sans-serif
-
- Dentro de "Mapeie sua região", na lista de coisas que podem ser mapeadas, o texto é
- 14px Calibri, "Trebuchet MS", Verdana, sans-serif  */
-
-
-  .container {
-    width: 560px;
-    /* background-color: #cccccc; */
-    border: 1px solid #333333;
-    min-height: 100px;
-    margin: 0 auto;
-    padding: 30px 80px;
-    font-size: 23px;
-    font-family: Calibri, "Trebuchet MS", Verdana, sans-serif;
-    line-height: 28px;
-  }
-  header {
-    position: relative;
-  }
-  header span{
-    /* float: right; */
-    position: absolute;
-    right: 0;
-    bottom: 20px;
-    font-size: 0.6em;
-  }
-  .content h1{
-    font-size: 40px;
-    font-family: Cambria, Georgia, serif;
-    font-weight: bold;
-  }
-  .tips-header{
-    font-weight: bold;
-    font-size: 0.95em;
-
-  }
-  .tips {
-    list-style: none;
-  }
-
-</style>
-<section class="container">
-  <header>
-    <img src="/static/img/account_confirmation/maps.png" alt="MootiroMaps"/>
-    <span>Confirmação de cadastro</span>
-
-  </header>
-  <section class="content">
-    <header><h1>Olá, {{ name }}!</h1></header>
-    <article>
-      <p>Seja bem-vindo(a) ao <a href="http://maps.mootiro.org/" >MootiroMaps</a>, uma ferramenta online de <strong>mapeamento colaborativo</strong> para apoio ao desenvolvimento de um território - que pode ser sua rua, bairro, ou até sua cidade, estado ou país. </p>
-    </article>
-    <p class="tips-header">Algumas dicas pra você começar a mapear:</p>
-
-    <ul class="tips">
-      <li></li>
+            <p>
+            Podemos lhe ajudar a planejar seu projeto de mapeamento. Para isso, participe de nossa lista de e-mails: <a href="mailto:maps@mootiro.org" style="color: #F26700;">maps@mootiro.org</a> 
+            </p>
+            
+          </div>
+        </div>
+      </li>
+<br><li class="wiki" style="margin: 20px -70px 30px -30px; background-color: #f2d2fa; padding: 10px 20px 10px 30px; border-radius: 16px;">
+        <img src="http://localhost:8001/static/img/account_confirmation/wiki.png" style="width: 24%; vertical-align: top; padding: 30px 0;"><div class="section inline-block" style="max-width: 380px; display: inline-block; margin-left: 20px; width: 70%;">
+          <div class="header" style="position: relative;"><h2 style="font-weight: bold; font-size: 28px; font-family: Cambria, Georgia, serif; color: #951b81;">Conhe&ccedil;a o tutorial do MootiroMaps</h2></div>
+          <div class="article" style="font-size: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; line-height: 18px;">
+            No manual do MootiroMaps voc&ecirc; conhece todas as funcionalidades e aprende a manuse&aacute;-las. <a href="http://wiki.mootiro.org/index.php/Manuais:MootiroMaps" style="color: #951b81;">Acesse aqui</a>. 
+          </div>
+        </div>
+      </li>
+<br><li class="rede" style="margin: 20px -70px 30px -30px; background-color: rgb(220, 239, 244); padding: 10px 20px 10px 30px; border-radius: 16px;">
+        <img src="http://localhost:8001/static/img/account_confirmation/rede.png" style="width: 24%; vertical-align: top; padding: 30px 0;"><div class="section inline-block" style="max-width: 380px; display: inline-block; margin-left: 20px; width: 70%;">
+          <div class="header" style="position: relative;"><h2 style="font-weight: bold; font-size: 28px; font-family: Cambria, Georgia, serif; color: #009CB4;">Fa&ccedil;a parte da rede</h2></div>
+          <div class="article" style="font-size: 16px; font-family: Calibri, 'Trebuchet MS', Verdana, sans-serif; line-height: 18px;">
+          <p>
+            Conhe&ccedil;a outros mapeadores e participe das discuss&otilde;es na <a href="mailto:maps@mootiro.org" style="color: #009CB4;">lista de e-mail</a> ou no grupo do <a href="http://www.facebook.com/groups/391022837620824/?fref=ts" style="color: #009CB4;">Facebook</a>.
+          </p>
+          <p>
+            Qualquer d&uacute;vida envie um email para <a href="mailto:contato@it3s.org" style="color: #009CB4;">contato@it3s.org</a>.
+          </p> 
+          </div>
+        </div>
+      </li>
     </ul>
+<footer><p>At&eacute; mais e bom trabalho com o MootiroMaps!</p>
+      <div class="equipe-it3s" style="float: right; position: relative; min-height: 200px;">
+<div style="margin: 25px 0; font-weight: bold; font-size: 20px;">- Equipe IT3S</div>
+<img src="http://localhost:8001/static/img/account_confirmation/it3s.png" style="position: absolute; right: 0;">
+</div>
+    </footer>
+</div>
+</div>
+</body>
+</html>
 
-
-</section>
