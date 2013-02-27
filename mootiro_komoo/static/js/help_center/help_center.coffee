@@ -93,7 +93,7 @@ class HelpCenter
             "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eu quam odio, ac sagittis nisi. Nam et scelerisque ligula. Ut id velit eu nulla interdum aliquam luctus sed odio. Suspendisse et nunc at ipsum sodales euismod. Vivamus scelerisque rutrum leo id blandit. Maecenas vel risus magna, at pulvinar turpis."
 
     tours_config:
-        "home:tour":
+        "home":
             "slides": [
                 {
                 "title": "MootiroMaps"
@@ -142,7 +142,7 @@ class HelpCenter
                 "options": "tipLocation:right;"
                 },
             ]
-        "map:tour":
+        "map":
             "slides": [
                 {
                 "title": "Localização do ponto"
@@ -166,7 +166,7 @@ class HelpCenter
                 },
             ]
 
-        "community_list:tour":
+        "community_list":
             "slides": [
                 {
                 "title": "Lista de comunidades"
@@ -190,7 +190,7 @@ class HelpCenter
                 },
             ]
 
-        "organization_list:tour":
+        "organization_list":
             "slides": [
                 {
                 "title": "Lista de organizações"
@@ -212,7 +212,7 @@ class HelpCenter
                 },
             ]
 
-        "need_list:tour":
+        "need_list":
             "slides": [
                 {
                 "title": "Lista de necessidades"
@@ -241,7 +241,7 @@ class HelpCenter
                 },
             ]
 
-        "resource_list:tour":
+        "resource_list":
             "slides": [
                 {
                 "title": "Lista de recursos"
@@ -270,7 +270,7 @@ class HelpCenter
                 },
             ]
 
-        "investment_list:tour":
+        "investment_list":
             "slides": [
                 {
                 "title": "Lista de investimentos"
@@ -293,7 +293,7 @@ class HelpCenter
                 },
             ]
 
-        "project_list:tour":
+        "project_list":
             "slides": [
                 {
                 "title": "Lista de projetos"

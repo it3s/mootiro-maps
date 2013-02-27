@@ -84,7 +84,7 @@
     };
 
     HelpCenter.prototype.tours_config = {
-      "home:tour": {
+      "home": {
         "slides": [
           {
             "title": "MootiroMaps",
@@ -127,7 +127,7 @@
           }
         ]
       },
-      "map:tour": {
+      "map": {
         "slides": [
           {
             "title": "Localização do ponto",
@@ -148,7 +148,7 @@
           }
         ]
       },
-      "community_list:tour": {
+      "community_list": {
         "slides": [
           {
             "title": "Lista de comunidades",
@@ -170,7 +170,7 @@
           }
         ]
       },
-      "organization_list:tour": {
+      "organization_list": {
         "slides": [
           {
             "title": "Lista de organizações",
@@ -190,7 +190,7 @@
           }
         ]
       },
-      "need_list:tour": {
+      "need_list": {
         "slides": [
           {
             "title": "Lista de necessidades",
@@ -216,7 +216,7 @@
           }
         ]
       },
-      "resource_list:tour": {
+      "resource_list": {
         "slides": [
           {
             "title": "Lista de recursos",
@@ -242,7 +242,7 @@
           }
         ]
       },
-      "investment_list:tour": {
+      "investment_list": {
         "slides": [
           {
             "title": "Lista de investimentos",
@@ -263,7 +263,7 @@
           }
         ]
       },
-      "project_list:tour": {
+      "project_list": {
         "slides": [
           {
             "title": "Lista de projetos",
