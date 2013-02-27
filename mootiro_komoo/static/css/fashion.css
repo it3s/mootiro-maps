@@ -380,7 +380,7 @@ div.importsheet_missing_column {
   padding: 2px 5px; }
 
 #donate {
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 50%;
   padding: 0 1.5em 45px 0.5em;
