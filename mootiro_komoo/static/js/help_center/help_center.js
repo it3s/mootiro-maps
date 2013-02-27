@@ -84,24 +84,7 @@
     };
 
     HelpCenter.prototype.tours_config = {
-      "maps:initial_tour": {
-        "title": "Initial Tour",
-        "body": "Take the tour.",
-        "slides": [
-          {
-            "title": "MootiroMaps",
-            "body": "This is the logo.",
-            "selector": "#logo",
-            "options": "tipLocation:bottom"
-          }, {
-            "title": "End",
-            "body": "Feel free... stay around...",
-            "selector": "",
-            "options": ""
-          }
-        ]
-      },
-      "organization:page_tour": {
+      "home:tour": {
         "slides": [
           {
             "title": "MootiroMaps",
@@ -141,6 +124,27 @@
             "body": "Acompanhe as atualizações feitas pelos usuários do MootiroMaps. Os ícones mostram os tipos de objetos editados. Edite você também.",
             "selector": ".news .last_updates",
             "options": "tipLocation:right;"
+          }
+        ]
+      },
+      "map:tour": {
+        "slides": [
+          {
+            "title": "Localização do ponto",
+            "body": "Escolha entre endereço (insira rua, número e município ou insira o CEP) ou coordenada (latitude e longitude) para encontrar a localização.",
+            "selector": "#map-searchbox"
+          }, {
+            "title": "Filtrar por raio",
+            "body": "Selecione um ponto no mapa e estabeleça a distância (raio) em que deseja que apareçam os objetos mapeados no território.",
+            "selector": "#map-panel-filter-tab"
+          }, {
+            "title": "Adicionar um objeto",
+            "body": 'Escolha o objeto que melhor se aplica ao que será mapeado e adicione ao mapa uma linha, um ponto ou uma área. Conclua o mapeamento pressionando o botão "avançar".',
+            "selector": "#map-panel-add-tab"
+          }, {
+            "title": "Filtrar por camada",
+            "body": "Estabeleça a camada e filtre os objetos a serem apresentados no mapa.",
+            "selector": "#map-panel-layers-tab"
           }
         ]
       }
