@@ -33,7 +33,7 @@
 
         <!-- User photo -->
         <div class="profile-lp-photo">
-            <img src="{{ user_profile.files_set.0.file.url }}" alt="user photo" />
+            <img src="{{ user_profile.avatar_url }}" alt="user photo" />
         </div>
 
         <!-- user contact info -->
@@ -43,7 +43,7 @@
                 {{ user_profile.contact|render_markup|safe }}
         </div>
         {% endif %}
-        
+
         {% if geojson %}
         <div class="profile-lp-map-preview">
           <div id="map-canvas-main-preview" class="map-canvas">
@@ -76,7 +76,7 @@
 {% endblock %}
 
 {% block page_scripts %}
-    
+
     {% komoo_map_tooltip %}
     {% comments_staticfiles %}
 

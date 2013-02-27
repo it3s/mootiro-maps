@@ -42,6 +42,7 @@ def project_view(request, id=''):
     proj_objects['User'] = {'app_name': 'authentication', 'objects_list': [{
         'name': project.creator.name,
         'link': project.creator.view_url,
+        'avatar': project.creator.avatar_url,
         'id': project.creator.id,
         'has_geojson': bool(getattr(project.creator, 'geometry', ''))
 
@@ -52,6 +53,7 @@ def project_view(request, id=''):
             proj_objects['User']['objects_list'].append({
                 'name': c.name,
                 'link': c.view_url,
+                'avatar': c.avatar_url,
                 'id': c.id,
                 'has_geojson': bool(getattr(c, 'geometry', ''))
             })

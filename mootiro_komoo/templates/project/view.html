@@ -59,7 +59,7 @@
             //-->
             <li class="tab"><a href="#project-description">Projeto</a></li>
             <li class="tab"><a href="#project-data">Dados</a></li>
-            <li class="tab"><a href="#project-collaborators">Colaboradores</a></li>
+            <li class="tab"><a href="#project-contributors">Colaboradores</a></li>
           </ul>
         </div>
 
@@ -131,8 +131,16 @@
         <div class="view-body tab-content" id="project-data">
           DADOS
         </div>
-        <div class="view-body tab-content" id="project-collaborators">
+        <div class="view-body tab-content" id="project-contributors">
           COLABORADORES
+          {% for o in proj_objects.User.objects_list %}
+          <div class="view-info-contributors">
+            <img class="avatar" src="{{ o.avatar }}" />
+            <a href="{{ o.link }}" >{{ o.name }}</a>
+          </div>
+          {% empty %}
+          <div class="view-info-empty">{% trans 'This project has no related Investments yet' %}.</div>
+          {% endfor %}
         </div>
 
 

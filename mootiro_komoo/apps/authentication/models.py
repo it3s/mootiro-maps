@@ -73,6 +73,14 @@ class User(GeoRefModel):
     def view_url(self):
         return reverse('user_profile', kwargs={'id': self.id})
 
+    @property
+    def avatar_url(self):
+        print self.files_set()
+        files = self.files_set()
+        if files:
+            return files[0].file.url
+        return '{}img/user-placeholder.png'.format(settings.STATIC_URL)
+
     def files_set(self):
         """ pseudo-reverse query for retrieving Resource Files"""
         return UploadedFile.get_files_for(self)
