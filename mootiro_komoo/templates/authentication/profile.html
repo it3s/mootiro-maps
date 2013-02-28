@@ -59,6 +59,22 @@
 
         </div>
 
+        {% if user_profile.projects_contributed.count %}
+        <div class="profile-lp-projects">
+          <div class="profile-lp-projects-header">
+            {% trans 'Projects' %}
+          </div>
+          <ul>
+            {% for proj in user_profile.projects_contributed %}
+            <li>
+              <div class="profile-lp-projects-logo"><img src="{{ proj.logo_url }}" title="{{ proj.name }}" /></div>
+              <div class="profile-lp-projects-name"><a href="{{ proj.view_url }}">{{ proj.name}}</a></div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endif %}
+
     </div> <!-- End of profile left pane -->
 
     <div id="last-updates-panel" class="profile-central-pane">
