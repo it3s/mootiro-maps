@@ -65,7 +65,21 @@
 
     .tab-content {
         overflow: visible;
+        min-height: 300px;
     }
+    .tab-content:before,
+    .tab-content:after {
+        content: "";
+        display: table;
+    }
+    .tab-content:after {
+        clear: both;
+    }
+
+/* For IE 6/7 (trigger hasLayout) */
+.container {
+    zoom:1;
+}
 
     .view-info-contributor {
         display: inline-block;

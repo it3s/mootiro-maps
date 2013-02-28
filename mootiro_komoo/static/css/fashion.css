@@ -596,7 +596,8 @@ div.importsheet_missing_column {
   width: 100%;
   margin-top: 50px;
   padding-left: 0px;
-  padding-right: 0px; }
+  padding-right: 0px;
+  /* For IE 6/7 (trigger hasLayout) */ }
   #main-content.project > div {
     width: 950px;
     margin-left: auto !important;
@@ -637,7 +638,16 @@ div.importsheet_missing_column {
           color: black;
           text-decoration: none; }
   #main-content.project .tab-content {
-    overflow: visible; }
+    overflow: visible;
+    min-height: 300px; }
+  #main-content.project .tab-content:before,
+  #main-content.project .tab-content:after {
+    content: "";
+    display: table; }
+  #main-content.project .tab-content:after {
+    clear: both; }
+  #main-content.project .container {
+    zoom: 1; }
   #main-content.project .view-info-contributor {
     display: inline-block;
     width: 225px;

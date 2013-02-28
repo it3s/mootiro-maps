@@ -75,7 +75,6 @@ class User(GeoRefModel):
 
     @property
     def avatar_url(self):
-        print self.files_set()
         files = self.files_set()
         if files:
             return files[0].file.url
