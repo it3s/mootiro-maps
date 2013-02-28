@@ -36,15 +36,11 @@ class FormProject(AjaxModelForm):
         required=False)
     logo = FileuploadField(required=False, widget=SingleFileUploadWidget)
     partners_logo = FileuploadField(required=False)
-    public = forms.ChoiceField(choices=PUBLIC_CHOICES,
-            widget=forms.RadioSelect)
-    public_discussion = forms.ChoiceField(choices=PUBLIC_CHOICES,
-            widget=forms.RadioSelect)
 
     class Meta:
         model = Project
         fields = ('name', 'description', 'contributors', 'tags', 'contact',
-                  'community', 'public', 'public_discussion', 'logo', 'id')
+                  'community', 'logo', 'id')
 
     _field_labels = {
         'name': _('Name'),
@@ -55,20 +51,10 @@ class FormProject(AjaxModelForm):
         'contributors': _('Contributors'),
         'community': _('Community'),
         'partners_logo': _('Partners Logo'),
-        'public': _('Access to edit this project'),
-        'public_discussion': _('Access to this project\'s discussion page'),
     }
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id='form_project')
-        inst = kw.get('instance', None)
-        if inst:
-            public = 'publ' if inst.public else 'priv'
-            public_discussion = 'publ' if inst.public_discussion else 'priv'
-        else:
-            public, public_discussion = 'publ', 'publ'
-        kw['initial'] = {
-                'public': public, 'public_discussion': public_discussion}
         return super(FormProject, self).__init__(*a, **kw)
 
     def save(self, *a, **kw):
@@ -80,13 +66,6 @@ class FormProject(AjaxModelForm):
     def clean_logo(self):
         return clean_autocomplete_field(self.cleaned_data['logo'],
                                         UploadedFile)
-
-    def clean_public(self):
-        return True if self.cleaned_data['public'] == 'publ' else False
-
-    def clean_public_discussion(self):
-            return True if self.cleaned_data['public_discussion'] == 'publ' \
-                        else False
 
     def clean(self):
         super(FormProject, self).clean()

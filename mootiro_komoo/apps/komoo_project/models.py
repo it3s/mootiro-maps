@@ -67,15 +67,21 @@ class Project(models.Model):
         """ pseudo-reverse query for retrieving the partners logo"""
         return UploadedFile.get_files_for(self)
 
+    @property
+    def public(self):
+        ''' Temporary property to avoid crashes. '''
+        return True
+
+    @property
+    def public_discussion(self):
+        ''' Temporary property to avoid crashes. '''
+        return True
+
     def user_can_edit(self, user):
-        return self.public or \
-               user == self.creator or \
-               user in self.contributors.all()
+        return True
 
     def user_can_discuss(self, user):
-        return self.public_discussion or \
-               user == self.creator or \
-               user in self.contributors.all()
+        return True
 
     @property
     def home_url_params(self):
