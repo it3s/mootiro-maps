@@ -24,7 +24,7 @@
   {% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'ajax=True' 'lazy=True' %}
   <div id="main-content">
     <div class="need main-column">
-      <h2 class="title">{{ need.title }}</h2>
+      <h2 class="title need-title">{{ need.title }}</h2>
 
       <div class="clear-both"></div>
       <ul class="horizontal" id="categories">
@@ -64,7 +64,7 @@
     <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
     <a class="see-on-map" href="#">{% trans "see on map" %}</a>
 
-    <div class="block">
+    <div class="block need-proposals">
       <h3>{% trans "Proposals" %}</h3>
       {% for proposal in need.proposals.all %}
         {% proposal_summary proposal %}
@@ -136,4 +136,10 @@
         $('#related-needs .show-more').parent().toggle();
       });
     </script>
+{% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter("#help_button", [], 'need_show');
+  </script>
 {% endblock %}

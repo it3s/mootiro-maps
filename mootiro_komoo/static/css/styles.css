@@ -1052,6 +1052,7 @@ body.community #map-panel-tabs {
     float: right;
 }
 .title {
+    margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
 }

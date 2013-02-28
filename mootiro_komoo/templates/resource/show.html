@@ -28,7 +28,7 @@
 
         <div class="view-header">
             <div>
-                <h2 class="inline-block">{{ resource.name }}</h2>
+                <h2 class="inline-block title">{{ resource.name }}</h2>
 
                 <div class="view-edit-btn">
                     {% history resource %}
@@ -75,7 +75,7 @@
 
             <div class="block">
                 {% if similar_resources %}
-                <h4>{% trans "Related resources" %}</h4>
+                <h4 class="related-resource">{% trans "Related resources" %}</h4>
                 <p>
                     <ul>
                         {% for r in similar_resources|slice:'5' %}
@@ -122,4 +122,10 @@
 {% block page_scripts %}
     {% comments_staticfiles %}
 
+{% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter("#help_button", [], 'resource_show');
+  </script>
 {% endblock %}
