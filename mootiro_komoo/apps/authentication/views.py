@@ -317,7 +317,7 @@ def login(request):
         next = request.POST.get('next', request.get_full_path())
 
     if not next:
-        next='/'
+        next = '/'
 
     email = request.POST.get('email', '').lower()
     password = request.POST['password']
@@ -343,9 +343,8 @@ def logout(request):
     auth_logout(request)
     return redirect(next_page)
 
-################ for testing ##################
-
 
 @render_to('authentication/explanations.org.html')
 def explanations(request):
-    return {'name': 'José'}
+    name = request.GET.get('name', request.user.name)
+    return {'name': name}
