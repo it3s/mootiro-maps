@@ -39,7 +39,7 @@
       });
       this.$modal = $(html);
       this.$modal.modal({
-        show: true
+        show: false
       });
       return $('body').append(this.$modal);
     };
@@ -111,7 +111,7 @@
         "title": "Para que servem as propostas?"
       },
       "need:discuss": {
-        "body": "Basta clicar no bot\u00e3o [[[tal]]] e inserir sua opini\u00e3o e reflex\u00e3o sobrea necessidade.",
+        "body": "Basta clicar em \"Novo Comentário\" e inserir sua opini\u00e3o e reflex\u00e3o sobrea necessidade.",
         "title": "Como discutir uma necessidade?"
       },
       "investment:what_is": {
@@ -255,7 +255,7 @@
         "title": "O que devo informar no campo \"descri\u00e7\u00e3o\"?"
       },
       "home:objects_edition": {
-        "body": "O \u00edcone [[[tal]]] indica a edi\u00e7\u00e3o na p\u00e1gina de cada objeto cadastrado. Basta clicar, realizar a edi\u00e7\u00e3o e clicar no bot\u00e3o \"enviar\".",
+        "body": "O \u00edcone <i class='icon-pencil''></i> indica a edi\u00e7\u00e3o na p\u00e1gina de cada objeto cadastrado. Basta clicar, realizar a edi\u00e7\u00e3o e clicar no bot\u00e3o \"enviar\".",
         "title": "Como edito as informa\u00e7\u00f5es nos cadastros dos objetos no MootiroMaps?"
       },
       "map:layers": {
