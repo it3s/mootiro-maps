@@ -106,6 +106,10 @@ class User(GeoRefModel):
         index_object_for_search.send(sender=self, obj=self)
         return r
 
+    def projects_contributed(self):
+        from komoo_project.models import Project
+        return Project.get_projects_for_contributor(self)
+
 
 class AnonymousUser(object):
     '''Dummy Class to integrate with other django apps.'''
@@ -121,6 +125,7 @@ class AnonymousUser(object):
     def is_admin(self):
         return False
 
+    name = ''
     id = None
 
 
