@@ -17,4 +17,6 @@ urlpatterns = patterns('komoo_project.views',
     url(pr(r'^ID/?$'), 'project_view', name='project_view'),
     url(pr(r'^ID/edit/?$'), 'project_edit', name='project_edit'),
     url(pr(r'^ID/map/?$'), 'project_map', name='project_map'),
+
+    url(r'^explanations/?$', 'explanations'),
 )

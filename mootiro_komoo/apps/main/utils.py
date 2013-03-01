@@ -251,25 +251,25 @@ def send_mail(title='', message='',
     sent by django mailer else will use the mailgun api.
     mailer.
     '''
-    # if settings.DEBUG:
-    #     django_send_mail(title, message, sender, receivers,
-    #                         fail_silently=False)
-    # else:
-    data = {
-        'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
-        'to': receivers,
-        'subject': title,
-    }
-    if html:
-        data['html'] = message
+    if settings.DEBUG and not html:
+        django_send_mail(title, message, sender, receivers,
+                            fail_silently=False)
     else:
-        data['text'] = message
+        data = {
+            'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
+            'to': receivers,
+            'subject': title,
+        }
+        if html:
+            data['html'] = message
+        else:
+            data['text'] = message
 
-    requests.post(
-        settings.MAILGUN_API_URL,
-        auth=('api', settings.MAILGUN_API_KEY),
-        data=data
-    )
+        requests.post(
+            settings.MAILGUN_API_URL,
+            auth=('api', settings.MAILGUN_API_KEY),
+            data=data
+        )
 
 
 def get_handler_method(request_handler, http_method):

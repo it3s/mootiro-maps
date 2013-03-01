@@ -14,6 +14,7 @@ from ajaxforms.forms import ajax_form
 from annoying.decorators import render_to, ajax_request
 from main.utils import (paginated_query, sorted_query, filtered_query,
         create_geojson)
+from main.tasks import send_explanations_mail
 
 from authentication.utils import login_required
 from .forms import FormProject
@@ -111,6 +112,7 @@ def project_new(request):
         return form
 
     def on_after_save(request, project):
+        send_explanations_mail(project.creator, 'project')
         return {'redirect': project.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save, 'project': None}
@@ -204,3 +206,8 @@ def search_by_name(request):
     return HttpResponse(simplejson.dumps(d),
             mimetype="application/x-javascript")
 
+
+@render_to('project/explanations.org.html')
+def explanations(request):
+    name = request.GET.get('name', request.user.name)
+    return {'name': name}
