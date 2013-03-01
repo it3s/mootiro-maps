@@ -66,6 +66,10 @@
 
 {% block help_center %}
   <script type="text/javascript">
-    var help = new HelpCenter("#help_button", [], 'community_list');
+    var help = new HelpCenter(
+      "#help_button",
+      ["community:what_is"],
+      'community_list'
+    );
   </script>
 {% endblock %}

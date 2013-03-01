@@ -82,6 +82,15 @@
 
 {% block help_center %}
   <script type="text/javascript">
-    var help = new HelpCenter("#help_button", [], 'need_list');
+    var help = new HelpCenter(
+      "#help_button",
+      [
+        "need:what_is",
+        "need:why",
+        "need:discuss",
+        "need:proposal",
+      ],
+      'need_list'
+    );
   </script>
 {% endblock %}

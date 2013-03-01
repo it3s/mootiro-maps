@@ -96,3 +96,15 @@
     </script>
 {% endblock %}
 
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      [
+        "user:data",
+        "user:policy",
+        "user:delete"
+      ]
+    );
+  </script>
+{% endblock %}

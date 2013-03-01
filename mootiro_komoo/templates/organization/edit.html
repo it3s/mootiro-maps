@@ -85,3 +85,16 @@
     </script>
 
 {% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      [
+        "organization:acronym",
+        "organization:description",
+        "organization:target_audience"
+      ]
+    );
+  </script>
+{% endblock %}

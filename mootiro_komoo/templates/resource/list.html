@@ -92,7 +92,11 @@
 
 {% block help_center %}
   <script type="text/javascript">
-    var help = new HelpCenter("#help_button", [], 'resource_list');
+    var help = new HelpCenter(
+      "#help_button",
+      ["resource:what_is", "resource:difference_organization"],
+      'resource_list'
+    );
   </script>
 {% endblock %}
 

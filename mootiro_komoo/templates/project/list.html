@@ -83,6 +83,10 @@
 
 {% block help_center %}
   <script type="text/javascript">
-    var help = new HelpCenter("#help_button", [], 'project_list');
+    var help = new HelpCenter(
+      "#help_button",
+      ["project:what_is", "project:promote"],
+      'project_list'
+    );
   </script>
 {% endblock %}
