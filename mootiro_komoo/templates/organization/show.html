@@ -382,3 +382,13 @@
 {% block css %}
     <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
 {% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      ["organization:what_is", "organization:transparency"],
+      'organization_show'
+    );
+  </script>
+{% endblock %}

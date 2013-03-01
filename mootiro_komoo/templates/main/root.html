@@ -185,3 +185,23 @@
   });
 </script>
 {% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      [
+        "home:mootiro_maps",
+        "home:collaborative_mapping",
+        "home:who_can_use",
+        "home:cost",
+        "home:search",
+        "home:objects",
+        "home:objects_edition",
+        "home:others_edition",
+        "home:denounce_content"
+      ],
+      'home'
+    );
+  </script>
+{% endblock %}

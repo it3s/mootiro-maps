@@ -172,6 +172,7 @@
             width: 85%;
             padding: 0;
             margin: 0;
+            display: inline-block;
 
             input[type="search"] {
                 width: 100%;
@@ -184,7 +185,13 @@
             }
         }
 
-        div#search-canvasloader-container { margin: 3px 7px }
+        div#search-canvasloader-container {
+            float: right;
+            margin-top: 3px;
+            margin-right: 5%;
+            width: 22px;
+            height: 22px;
+        }
         div#search-results-box {
             position: absolute;
             top: 40px;

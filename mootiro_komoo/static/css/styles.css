@@ -1052,6 +1052,7 @@ body.community #map-panel-tabs {
     float: right;
 }
 .title {
+    margin-top: 20px;
     font-size: 20px;
     font-weight: bold;
 }
@@ -1648,7 +1649,7 @@ div.view-list-item.odd {
     margin-left: 50px; */
     font-size: 20px;
     font-weight: bold;
-    margin: 0 0 30px;
+    margin: 45px 0 30px;
 }
 /* View list Sort|Filter */
 .view-list-filters,

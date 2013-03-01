@@ -50,3 +50,13 @@
 
 </script>
 {% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      ["investment:name", "investment:description"]
+    );
+  </script>
+{% endblock %}
+

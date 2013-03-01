@@ -68,3 +68,12 @@
       });
     </script>
 {% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      ["resource:acronym", "resource:description"]
+    );
+  </script>
+{% endblock %}
