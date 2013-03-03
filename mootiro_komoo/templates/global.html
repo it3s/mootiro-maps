@@ -92,14 +92,6 @@
             {% menu "" %}
           {% endblock %}
         </nav>
-        
-        <div id="search">
-          <form action=".">
-            <input id="search-bar" type="search" placeholder="{% trans 'Place, user or object...' %}" autocomplete="off"/>
-          </form>
-          <div id="search-canvasloader-container" class="inline-block"></div>
-          <div id="search-results-box"></div>
-        </div>
 
         <nav id="side_menu">
           <ul>
@@ -119,6 +111,14 @@
             {% endif %}
           </ul>
         </nav>
+        
+        <div id="search">
+          <form action=".">
+            <input id="search-bar" type="search" placeholder="{% trans 'Place, user or object...' %}" autocomplete="off"/>
+          </form>
+          <div id="search-canvasloader-container" class="inline-block"></div>
+          <div id="search-results-box"></div>
+        </div>
       </div>
 
       <div id="content">
@@ -160,12 +160,9 @@
 
     <script type="text/javascript" src="{{STATIC_URL}}js/help_center/help_center.js"></script>
     
-    
-    {% block help_center %}
-      <script type="text/javascript">
-        $('#help_button').parent().remove();
-      </script>
-    {% endblock %}
-    
+    <script type="text/javascript">
+      var help = new HelpCenter("#help_button", ['organization:what_is', 'organization:page_tour']);
+    </script>
+
   </body>
 </html>

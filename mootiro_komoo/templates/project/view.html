@@ -35,7 +35,7 @@
     {% endif %}
 
         <div class="view-header">
-            <h2 class="inline-block title">{{ project.name }}</h2>
+            <h2 class="inline-block">{{ project.name }}</h2>
 
             <div class="view-edit-btn">
                 {% if project|user_can_edit_this_project:user %}
@@ -320,10 +320,4 @@
         });
     </script>
 
-{% endblock %}
-
-{% block help_center %}
-  <script type="text/javascript">
-    var help = new HelpCenter("#help_button", [], 'project_show');
-  </script>
 {% endblock %}

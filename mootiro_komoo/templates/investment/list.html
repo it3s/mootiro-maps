@@ -14,16 +14,7 @@
   <div class="highlight">
     <div class="view-list">
 
-      <div class="view-list-top">
-        <div class="view-list-count">
-              {% blocktrans count counter=investments_count %}{{ counter }} Investment{% plural %}{{ counter }} Investments{% endblocktrans %}
-        </div>
-        <div class="view-list-pagination">
-          {% pagination investments %}
-        </div>
-
-        {% visualization_opts 'investment' "sorters=['title','creation_date']" "filters=['tags']"%}
-      </div>
+      {% visualization_opts 'investment' "sorters=['title','creation_date']" "filters=['tags']"%}
 
       {% for investment in investments.object_list %}
       <div class="view-list-item {% cycle 'odd' '' %}">
@@ -76,14 +67,4 @@
 
 {% block page_scripts %}
   {% visualization_opts_js %}
-{% endblock %}
-
-{% block help_center %}
-  <script type="text/javascript">
-    var help = new HelpCenter(
-      "#help_button",
-      ["investment:what_is", "investment:transparency"],
-      'investment_list'
-    );
-  </script>
 {% endblock %}

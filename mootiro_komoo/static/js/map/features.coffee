@@ -65,10 +65,7 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
                 komoo.event.trigger this, 'coordinates_changed', args
 
         getUrl: ->
-            if @properties.type is 'OrganizationBranch'
-                viewName = 'view_organization'
-            else
-                viewName = "view_#{@properties.type.toLowerCase()}"
+            viewName = "view_#{@properties.type.toLowerCase()}"
 
             dutils.urls.resolve(viewName, id: @properties.id).replace('//', '/')
 

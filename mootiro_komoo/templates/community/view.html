@@ -50,7 +50,7 @@
 
     {% taglist community %}
 
-    <div class="block nearby-communities">
+    <div class="block">
       <h3>{% trans "Nearby communities" %}</h3>
       <ul>
         {% for c in community.closest_communities %}
@@ -85,14 +85,4 @@
     });
   </script>
   {% comments_staticfiles %}
-{% endblock %}
-
-{% block help_center %}
-  <script type="text/javascript">
-    var help = new HelpCenter(
-      "#help_button",
-      ["community:what_is"],
-      'community_show'
-    );
-  </script>
 {% endblock %}
