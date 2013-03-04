@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-27 15:02-0300\n"
+"POT-Creation-Date: 2013-03-04 18:14-0300\n"
 "PO-Revision-Date: 2012-10-18 17:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -50,6 +50,10 @@ msgstr "Usuário"
 msgid "Project"
 msgstr "Projeto"
 
+#: static/js/komoo_search.js:84
+msgid "No results found on our database!"
+msgstr "Nenhum resultado encontrado na nossa base de dados!"
+
 #: static/js/komoo_utils.js:408 static/js.build/komoo_utils.js:1
 msgid "Yes"
 msgstr "Sim"
@@ -60,11 +64,11 @@ msgstr "Não"
 
 #: static/js/related_items_panel.js:75
 #: static/js.build/related_items_panel.js:1
-#, perl-format
-msgid "%s organization branch"
-msgid_plural "%s organization branchs"
-msgstr[0] "%s unidade de uma organização"
-msgstr[1] "%s unidades de um organização"
+#, fuzzy, perl-format
+msgid "%s organization"
+msgid_plural "%s organizations"
+msgstr[0] "Organização"
+msgstr[1] "Organização"
 
 #: static/js/related_items_panel.js:75
 #: static/js.build/related_items_panel.js:1
@@ -98,22 +102,18 @@ msgid_plural "%s contributors"
 msgstr[0] "%s contribuidor"
 msgstr[1] "%s contribuidores"
 
-#: static/js.build/komoo_search.js:1
-msgid "Google Results"
-msgstr "Resultados do Google"
-
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:25
+#: static/js/authentication/profile_update.js:19
 msgid "Are you sure you want to delete your signature for this object?"
 msgstr "Você tem certeza que deseja deletar sua assinatura para este objeto?"
 
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:120
+#: static/js/authentication/profile_update.js:114
 msgid "Seus dados públicos foram salvos com sucesso!"
 msgstr "Seus dados públicos foram salvos com sucesso!"
 
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:144
+#: static/js/authentication/profile_update.js:138
 msgid "Seus dados pessoais foram salvos com sucesso!"
 msgstr "Seus dados pessoais foram salvos com sucesso!"
 
@@ -213,14 +213,6 @@ msgstr ""
 #: static/js.build/organization/organization_related_items.js:1
 #: static/js/organization/organization_related_items.js:7
 #, perl-format
-msgid "%s point on map"
-msgid_plural "%s points on map"
-msgstr[0] "%s ponto no mapa"
-msgstr[1] "%s pontos no mapa"
-
-#: static/js.build/organization/organization_related_items.js:1
-#: static/js/organization/organization_related_items.js:7
-#, perl-format
 msgid "Supported %s organization"
 msgid_plural "Supported %s organizations"
 msgstr[0] "apoiou %s organização"
@@ -250,24 +242,23 @@ msgid_plural "Supported %s needs"
 msgstr[0] "%s necessidade apoiada"
 msgstr[1] "%s necessidades apoiadas"
 
-#: static/js/authentication/profile.js:34
-#: static/js/authentication/profile.js:35
+#: static/js/authentication/profile.js:28
 msgid "Organization"
 msgstr "Organização"
 
-#: static/js/authentication/profile.js:36
+#: static/js/authentication/profile.js:29
 msgid "Need"
 msgstr "Necessidade"
 
-#: static/js/authentication/profile.js:37
+#: static/js/authentication/profile.js:30
 msgid "Community"
 msgstr "Comunidade"
 
-#: static/js/authentication/profile.js:38
+#: static/js/authentication/profile.js:31
 msgid "Resource"
 msgstr "Recurso"
 
-#: static/js/authentication/profile.js:44
+#: static/js/authentication/profile.js:37
 msgid "at"
 msgstr "em"
 
@@ -310,13 +301,23 @@ msgstr ""
 "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
 "adicione os dados da unidade que você marcou no mapa"
 
+#~ msgid "%s organization branch"
+#~ msgid_plural "%s organization branchs"
+#~ msgstr[0] "%s unidade de uma organização"
+#~ msgstr[1] "%s unidades de um organização"
+
+#~ msgid "Google Results"
+#~ msgstr "Resultados do Google"
+
+#~ msgid "%s point on map"
+#~ msgid_plural "%s points on map"
+#~ msgstr[0] "%s ponto no mapa"
+#~ msgstr[1] "%s pontos no mapa"
+
 #~ msgid "%s result"
 #~ msgid_plural "%s results"
 #~ msgstr[0] "%s resultado"
 #~ msgstr[1] "%s resultados"
-
-#~ msgid "No results found!"
-#~ msgstr "Nenhum resultado encontrado!"
 
 #~ msgid "Edit"
 #~ msgstr "Editar"

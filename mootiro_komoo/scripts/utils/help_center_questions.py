@@ -1,4 +1,4 @@
-# -*- coding:utf8 -*-
+# -*- coding:utf-8 -*-
 
 """
 Use this script to convert questions in csv
@@ -16,7 +16,7 @@ for qin in csv.DictReader(source):
         continue
     elif qin['ID da ajuda'] in questions:
         print "2 questions with same ID: {}".format(qin['ID da ajuda'])
-    
+
     qout = {}
     qout['title'] = qin['Pergunta']
     qout['body'] = qin['Resposta']

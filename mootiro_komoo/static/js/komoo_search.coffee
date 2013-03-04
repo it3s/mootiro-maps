@@ -38,19 +38,28 @@ $ ->
             return
 
         if window.location.pathname == dutils.urls.resolve 'map'
-            $.get(
-                '/map/get_geojson_from_hashlink/'
-                {hashlink: hashlink}
-                (data) ->
-                    geojson = JSON.parse(data.geojson)
-                    itvl = setInterval () ->
+            if hashlink[0] is 'g'
+                itvl = setInterval () ->
                         try
-                            editor.loadGeoJSON(geojson, true)
+                            desc = hashlink.substring(1, hashlink.length)
+                            editor.goTo desc
                             clearInterval itvl
                     ,500
 
-                'json'
-            )
+            else
+                $.get(
+                    '/map/get_geojson_from_hashlink/'
+                    {hashlink: hashlink}
+                    (data) ->
+                        geojson = JSON.parse(data.geojson)
+                        itvl = setInterval () ->
+                            try
+                                editor.loadGeoJSON(geojson, true)
+                                clearInterval itvl
+                        ,500
+
+                    'json'
+                )
 
             hidePopover()
         else
@@ -62,13 +71,13 @@ $ ->
         results_count = 0
         has_results = false
 
-        if result?.length
+        if result?.komoo?.length
             results_list += """
                 <li>
                 <ul class='search-result-entries'>
             """
 
-            for idx, obj of result
+            for idx, obj of result.komoo
                 # disabled = if not obj?.has_geojson then 'disabled' else ''
                 results_list += """
                     <li class="search-result">
@@ -86,10 +95,33 @@ $ ->
         else
             has_results |= no
 
-
-
         if not has_results
-            results_list = """<div class="search-no-results"> #{ gettext('No results found!') }</div>"""
+            results_list = """<div class="search-no-results"> #{ gettext('No results found on our database!') }</div>"""
+
+        google_results = JSON.parse result.google
+        if google_results.predictions?.length
+            results_list += """
+                <li>
+                <ul class='search-result-entries google'>
+                <li class="search-header google">
+                  <img class="model-icon" alt="icon google" title="icon google" src="/static/img/google.png">
+                  <span class="search-type-header">Resultados do Google:</span>
+                </li>
+            """
+
+            for idx, obj of google_results.predictions
+                # disabled = if not obj?.has_geojson then 'disabled' else ''
+                results_list += """
+                    <li class="search-result">
+                        <!--img class="model-icon" alt="icon google" title="icon google" src="/static/img/google.png"-->
+                        <a class="search-result-title" href='#'> #{obj.description} </a>
+                        <div class="right">
+                            <a href="/map/#g#{obj.description}" hashlink="g#{obj.description}" class="search-map-link" title="ver no mapa"><i class="icon-see-on-map"></i></a>
+                        </div>
+                    </li>"""
+
+            results_list += "</ul></li>"
+
 
         $('#search-results-box').data('popover').options.content = results_list
         showPopover()

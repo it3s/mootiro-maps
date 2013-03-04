@@ -30,35 +30,48 @@
       return $('#search-results-box').popover('hide');
     };
     window.seeOnMap = function(hashlink) {
+      var itvl;
       if (hashlink === '#map-panel-add') return;
       if (window.location.pathname === dutils.urls.resolve('map')) {
-        $.get('/map/get_geojson_from_hashlink/', {
-          hashlink: hashlink
-        }, function(data) {
-          var geojson, itvl;
-          geojson = JSON.parse(data.geojson);
-          return itvl = setInterval(function() {
+        if (hashlink[0] === 'g') {
+          itvl = setInterval(function() {
+            var desc;
             try {
-              editor.loadGeoJSON(geojson, true);
+              desc = hashlink.substring(1, hashlink.length);
+              editor.goTo(desc);
               return clearInterval(itvl);
             } catch (_error) {}
           }, 500);
-        }, 'json');
+        } else {
+          $.get('/map/get_geojson_from_hashlink/', {
+            hashlink: hashlink
+          }, function(data) {
+            var geojson;
+            geojson = JSON.parse(data.geojson);
+            return itvl = setInterval(function() {
+              try {
+                editor.loadGeoJSON(geojson, true);
+                return clearInterval(itvl);
+              } catch (_error) {}
+            }, 500);
+          }, 'json');
+        }
         return hidePopover();
       } else {
         return window.location = dutils.urls.resolve('map') + ("#" + hashlink);
       }
     };
     showResults = function(result, search_term) {
-      var has_results, idx, obj, results_count, results_list;
+      var google_results, has_results, idx, obj, results_count, results_list, _ref, _ref2, _ref3, _ref4;
       if (search_term == null) search_term = "";
       results_list = '';
       results_count = 0;
       has_results = false;
-      if (result != null ? result.length : void 0) {
+      if (result != null ? (_ref = result.komoo) != null ? _ref.length : void 0 : void 0) {
         results_list += "<li>\n<ul class='search-result-entries'>";
-        for (idx in result) {
-          obj = result[idx];
+        _ref2 = result.komoo;
+        for (idx in _ref2) {
+          obj = _ref2[idx];
           results_list += "<li class=\"search-result\">\n    <img class=\"model-icon\" alt=\"icon " + obj.model + "\" title=\"icon " + obj.model + "\" src=\"/static/img/" + obj.model + ".png\">\n    <a class=\"search-result-title\" href='" + obj.link + "'> " + obj.name + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#" + obj.hashlink + "\" hashlink=\"" + obj.hashlink + "\" class=\"search-map-link " + obj.disabled + "\" title=\"ver no mapa\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
           results_count++;
         }
@@ -68,7 +81,17 @@
         has_results |= false;
       }
       if (!has_results) {
-        results_list = "<div class=\"search-no-results\"> " + (gettext('No results found!')) + "</div>";
+        results_list = "<div class=\"search-no-results\"> " + (gettext('No results found on our database!')) + "</div>";
+      }
+      google_results = JSON.parse(result.google);
+      if ((_ref3 = google_results.predictions) != null ? _ref3.length : void 0) {
+        results_list += "<li>\n<ul class='search-result-entries google'>\n<li class=\"search-header google\">\n  <img class=\"model-icon\" alt=\"icon google\" title=\"icon google\" src=\"/static/img/google.png\">\n  <span class=\"search-type-header\">Resultados do Google:</span>\n</li>";
+        _ref4 = google_results.predictions;
+        for (idx in _ref4) {
+          obj = _ref4[idx];
+          results_list += "<li class=\"search-result\">\n    <!--img class=\"model-icon\" alt=\"icon google\" title=\"icon google\" src=\"/static/img/google.png\"-->\n    <a class=\"search-result-title\" href='#'> " + obj.description + " </a>\n    <div class=\"right\">\n        <a href=\"/map/#g" + obj.description + "\" hashlink=\"g" + obj.description + "\" class=\"search-map-link\" title=\"ver no mapa\"><i class=\"icon-see-on-map\"></i></a>\n    </div>\n</li>";
+        }
+        results_list += "</ul></li>";
       }
       $('#search-results-box').data('popover').options.content = results_list;
       showPopover();
