@@ -3,11 +3,7 @@ define ['jquery', 'underscore', 'backbone', 'related_items_panel'], ($, _, Backb
     window.OrganizationFeaturesView = FeaturesView.extend
         title: (count) ->
             msg =
-                if @type is 'SelfOrganizationBranch'
-                    ngettext("%s point on map",
-                        "%s points on map",
-                        count)
-                else if @type is 'OrganizationBranch'
+                if @type is 'Organization'
                     ngettext("Supported %s organization",
                         "Supported %s organizations",
                         count)

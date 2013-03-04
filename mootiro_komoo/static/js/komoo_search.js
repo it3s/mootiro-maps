@@ -30,6 +30,7 @@
       return $('#search-results-box').popover('hide');
     };
     window.seeOnMap = function(hashlink) {
+      if (hashlink === '#map-panel-add') return;
       if (window.location.pathname === dutils.urls.resolve('map')) {
         $.get('/map/get_geojson_from_hashlink/', {
           hashlink: hashlink

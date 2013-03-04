@@ -609,12 +609,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             feature = options.feature
             if feature
                 title =
-                    if feature.getProperty "type" is "OrganizationBranch" \
-                            and feature.getProperty "organization_name"
-                        feature.getProperty("organization_name") + " - " + \
-                        feature.getProperty "name"
-                    else
-                        feature.getProperty "name"
+                    feature.getProperty "name"
             title: title, url: "", body: ""
 
 

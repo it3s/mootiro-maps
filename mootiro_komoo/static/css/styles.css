@@ -590,7 +590,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     background-image: url("../img/menu/need.png");
 }
 
-.icon-organizationbranch,
+
 .icon-organization {
     background-image: url("../img/menu/organization.png");
     background-position: 0 0;
@@ -598,11 +598,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 16px;
     height: 15px;
 }
-*:hover > .icon-organizationbranch, .selected .icon-organizationbranch,
 *:hover > .icon-organization, .selected .icon-organization {
     background-image: url("../img/menu/organization-active.png");
 }
-*:hover > .icon-organizationbranch.no-hover, .selected .icon-organizationbranch.no-selected,
 *:hover > .icon-organization.no-hover, .selected .icon-organization.no-selected  {
     background-image: url("../img/menu/organization.png");
 }
@@ -643,7 +641,6 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 21px;
     height: 18px;
 }
-.icon-organizationbranch-big,
 .icon-organization-big {
     background-image: url("../img/organization.png");
     background-position: 0 0;
@@ -1786,13 +1783,6 @@ div.view-list-item.odd {
     margin-top: 30px;
     margin-bottom: 20px;
 }
-.branch-name{
-    font-weight: bold;
-    margin-left: 5px;
-}
-.branch-info .entry{
-    min-height: 2em;
-}
 .organization-header{
     max-width: 500px;
 }
@@ -1811,53 +1801,11 @@ div.view-list-item.odd {
     color: #000000;
     margin-top: 15px;
 }
-.branch-link-btn{
-    float: right;
-    margin-right: 10px;
-}
-.branch-communities {
-    padding-top: 5px;
-}
-.branch-communities span{
-    font-weight: bold;
-    margin-right: 10px;
-}
-.branch-communities div{
-    display: inline-block;
-    color: rgb(64, 146, 169);
-    padding: 0 5px;
-}
-.branch-edit-btn{
-    float: right;
-}
-.form-branch-edit .markItUpEditor{
-    height: 120px;
-    width: 650px;
-    background-color: #ffffff;
-    margin-left: 15px;
-}
-.form-branch-edit .markItUpHeader{
-    margin-left: 15px;
-}
-.form-branch-edit-btn{
-    margin-left: 15px;
-}
-.form-branch-edit input{
-    margin-left: 15px;
-    background-color: #ffffff;
-}
-.form-branch-edit label{
-    font-weight: bold;
-    margin-left: 15px;
-}
 textarea.markItUpEditor{
     height: 250px;
 }
 #div_id_contact .markItUpEditor{
     height: 80px;
-}
-.form-branch-edit .results_on_deck{
-    margin-left: 15px;
 }
 .org-widget-categories .controls{
     height: 250px;
@@ -1940,62 +1888,10 @@ textarea.markItUpEditor{
     background-color: #DCEFF4;
     color: #000000;
 }
-.org-info-div:hover .branch-name, .branch-active .branch-name{
-    color: #000000;
-}
 /*.org-info-div:hover a{
     color: #000000;
     text-decoration: none;
 }*/
-.branch-active{
-    /*background-color: rgb(166, 229, 238);*/
-    background-color: #B1DDE8;
-    color: #000000;
-    text-decoration: none;
-}
-.branch-active:hover{
-    /*background-color: rgb(166, 229, 238);*/
-    background-color: #B1DDE8;
-}
-.branch-map-icon{
-    background-image: url('/static/img/see-on-map.png');
-    background-repeat: no-repeat;
-    min-width:10px;
-    min-height: 10px;
-    padding-left: 20px;
-    margin-left: 20px;
-}
-.branches-see-all{
-    font-size: 16px;
-    font-weight: bold;
-    color: #009CB4;
-    margin-bottom: 10px;
-}
-.branches-see-all .see-on-map-icon{
-    background-image: url('/static/img/see-on-map.png');
-    background-repeat: no-repeat;
-    width:12px;
-    height:18px;
-    margin-right: 10px;
-    display: inline-block;
-}
-.branches-see-all:hover{
-    color: #000000;
-    cursor: pointer;
-}
-.branches-see-all:hover .see-on-map-icon{
-    background-image: url('/static/img/see-on-map-active.png');
-}
-.branch-pagination{
-    margin-right: 10px;
-    font-weight: bold;
-}
-.branch-pagination.current-page{
-    color: #000000;
-}
-.org-info-div:hover .branch-map-icon, .branch-active .branch-map-icon{
-    background-image: url('/static/img/see-on-map-active.png');
-}
 .org-list-header{
     vertical-align: top;
 }

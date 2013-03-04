@@ -23,7 +23,7 @@ from authentication.models import User
 from community.models import Community
 from need.models import Need
 from proposal.models import Proposal
-from organization.models import OrganizationBranch, Organization
+from organization.models import Organization
 from komoo_resource.models import Resource
 from investment.models import Investment
 from komoo_project.models import Project
@@ -38,7 +38,6 @@ ENTITY_MODEL = {
     'n': Need,
     'p': Proposal,
     'o': Organization,
-    'b': OrganizationBranch,
     'r': Resource,
     'i': Investment,
     'j': Project,
@@ -74,7 +73,7 @@ def root(request):
 
 def _fetch_geo_objects(Q, zoom):
     ret = {}
-    for model in [Community, Need, Resource, OrganizationBranch]:
+    for model in [Community, Need, Resource, Organization]:
         ret[model.__name__] = model.objects.filter(Q)
     return ret
 
@@ -119,7 +118,7 @@ def radial_search(request):
             if [c for c in n.categories.all() if str(c.id) in need_categories]:
                 d['Need'].append(n)
     if 'organizations' in request.GET:
-        d['OrganizationBranch'] = objs['OrganizationBranch']
+        d['Organization'] = objs['Organization']
     if 'resources' in request.GET:
         d['Resource'] = objs['Resource']
 
