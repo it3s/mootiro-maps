@@ -1808,12 +1808,14 @@ textarea.markItUpEditor{
     height: 80px;
 }
 .org-widget-categories .controls{
-    height: 360px;
+    height: 250px;
+    width: 800px;
 }
 .org-widget-categories label{
     display: inline-block;
     width: 200px;
     padding-right: 10px;
+    vertical-align: top;
 }
 #div_id_categories.org-widget-categories input{
     display: inline-block;
@@ -1894,6 +1896,7 @@ textarea.markItUpEditor{
 }*/
 .org-list-header{
     vertical-align: top;
+    width: 90%;
 }
 .org-list-name{
     font-weight: bold;

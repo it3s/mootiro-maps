@@ -1,5 +1,6 @@
 {% extends 'global.html' %}
 
+{% load komoo_map_tags %}
 {% load komoo_tags %}
 {% load comment_tags %}
 {% load i18n %}
@@ -40,9 +41,9 @@
                 <a href="{{ org.view_url }}" class="org-list-name">
                   {{ org.name }}
                 </a>
-                {# <a data-geojson="{% geojson org %}" href="#" class="small preview-on-map list-map-preview"> #}
-                {#     <i class="icon-see-on-map"></i> #}
-                {# </a> #}
+                <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson org %}" title="ver no mapa">
+                    <i class="icon-see-on-map"></i>
+                </a>
 
             </div>
             <div>
@@ -105,6 +106,7 @@
     {% pagination organizations %}
   </div>
 
+{% komoo_map_tooltip %}
 {% endblock %}
 
 {% block page_scripts %}
