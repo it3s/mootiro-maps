@@ -45,7 +45,7 @@ def komoo_map_objects_list(context, arg1='', arg2=''):
             'buracos, etc',
         'Resource': 'Adicione um Recurso. Por exemplo: uma escola, posto de '
             'saúde, parque, centro cultural, etc',
-        'Organization': 'Adicione uma Organização. Organizações '
+        'OrganizationBranch': 'Adicione uma Organização. Organizações '
             'incluem ONGs, empresas, coletivos, etc',
     }
     objects = [{

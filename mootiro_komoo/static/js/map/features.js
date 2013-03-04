@@ -105,7 +105,11 @@
 
       Feature.prototype.getUrl = function() {
         var viewName;
-        viewName = "view_" + (this.properties.type.toLowerCase());
+        if (this.properties.type === 'OrganizationBranch') {
+          viewName = 'view_organization';
+        } else {
+          viewName = "view_" + (this.properties.type.toLowerCase());
+        }
         return dutils.urls.resolve(viewName, {
           id: this.properties.id
         }).replace('//', '/');

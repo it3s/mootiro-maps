@@ -13,8 +13,8 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 
 from main.utils import MooHelper, clean_autocomplete_field
 from main.widgets import Tagsinput, TaggitWidget
-from organization.models import (Organization, OrganizationCategory,
-        OrganizationCategoryTranslation)
+from organization.models import (Organization, OrganizationBranch,
+                OrganizationCategory, OrganizationCategoryTranslation)
 from need.models import TargetAudience
 from fileupload.forms import FileuploadField, LogoField
 from fileupload.models import UploadedFile
@@ -106,11 +106,31 @@ class FormOrganization(AjaxModelForm):
                                         OrganizationCategory)
 
 
-class FormOrganizationGeoRef(FormOrganization):
+class FormBranch(AjaxModelForm):
+    name = forms.CharField()
     geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+    info = forms.CharField(required=False, widget=MarkItUpWidget())
+    community = AutoCompleteSelectMultipleField('community', help_text='',
+        required=False)
+    organization = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
-        model = Organization
-        fields = ('name', 'description', 'community', 'link', 'contact',
-                  'target_audiences', 'categories', 'tags', 'id', 'logo',
-                  'logo_category', 'logo_choice', 'geometry')
+        model = OrganizationBranch
+        fields = ['id', 'name', 'geometry', 'info', 'community',
+                  'organization']
+
+    _field_labels = {
+        'name': _('Branch Name'),
+        'info': _('Info'),
+        'community': _('Community'),
+        'organization': _(' ')
+    }
+
+    def __init__(self, *args, **kwargs):
+        self.helper = MooHelper(form_id='form_branch')
+        return super(FormBranch, self).__init__(*args, **kwargs)
+
+    def clean_organization(self):
+        return clean_autocomplete_field(
+            self.cleaned_data['organization'], Organization)
+

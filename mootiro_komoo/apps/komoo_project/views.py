@@ -19,6 +19,7 @@ from main.tasks import send_explanations_mail
 from authentication.utils import login_required
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
+from organization.models import Organization
 
 logger = logging.getLogger(__name__)
 
@@ -70,7 +71,11 @@ def project_view(request, id=''):
                 'has_geojson': bool(getattr(obj, 'geometry', ''))
             })
 
-            if not obj.is_empty():
+            if isinstance(obj, Organization):
+                branchs = [b for b in obj.organizationbranch_set.all()]
+                if branchs:
+                    items += branchs
+            elif not obj.is_empty():
                 items.append(obj)
     geojson = create_geojson(items)
 

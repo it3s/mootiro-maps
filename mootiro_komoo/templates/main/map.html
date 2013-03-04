@@ -13,3 +13,18 @@
 
 {% block page_scripts %}
 {% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      [
+        "map:radius_search", 
+        "map:add", 
+        "map:layers", 
+        "map:addres_coordinate_search", 
+      ],
+      'map'
+    );
+  </script>
+{% endblock %}

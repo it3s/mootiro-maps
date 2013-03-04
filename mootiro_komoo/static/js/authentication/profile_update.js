@@ -5,7 +5,13 @@
 
   window.Signature = Backbone.Model.extend({
     imageName: function() {
-      return "/static/img/updates-page/" + this.model_name + "-feed.png";
+      var modelName;
+      if (this.model_name === 'organizationbranch') {
+        modelName = 'organization';
+      } else {
+        modelName = this.model_name;
+      }
+      return "/static/img/updates-page/" + modelName + "-feed.png";
     },
     toJSON: function(attr) {
       var defaultJSON;

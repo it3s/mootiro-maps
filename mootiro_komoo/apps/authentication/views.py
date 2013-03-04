@@ -50,6 +50,7 @@ def _prepare_contrib_data(version, created_date):
         'komoo_resource.resource',
         'community.community',
         'organization.organization',
+        'organization.organizationbranch',
     ]
     weird_types = [
         'komoo_comments.comment',
@@ -79,7 +80,9 @@ def _prepare_contrib_data(version, created_date):
         contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
         contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
         contrib['permalink'] = "/permalink/{}{}".format(
-                                    contrib['model_name'][0], contrib['id'])
+                                    contrib['model_name'][0]
+                if data['model'] != 'organization.organizationbranch' else 'o',
+                contrib['id'])
 
     return contrib
 

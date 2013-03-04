@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext as _
 
+from main.models import DictMixin
 from authentication.models import User
 from komoo_map.models import GeoRefModel, POLYGON, POINT
 from community.models import Community
@@ -19,6 +20,7 @@ from komoo_resource.models import Resource
 from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
+from main.utils import create_geojson
 from search.signals import index_object_for_search
 
 
@@ -28,7 +30,7 @@ LOGO_CHOICES = (
 )
 
 
-class Organization(GeoRefModel, models.Model):
+class Organization(models.Model):
     name = models.CharField(max_length=320, unique=True)
     slug = models.SlugField(max_length=320, db_index=True)
     description = models.TextField(null=True, blank=True)
@@ -62,21 +64,14 @@ class Organization(GeoRefModel, models.Model):
                         content_type_field='grantee_content_type',
                         object_id_field='grantee_object_id')
 
-    class Map:
-        editable = True
-        title = _('Organization')
-        tooltip = _('Add Organization')
-        background_color = '#3a61d6'
-        border_color = '#1f49b2'
-        geometries = (POLYGON, POINT)
-        form_view_name = 'new_organization_from_map'
-
     @property
     def related_items(self):
         return [c for c in self.community.all()] + \
+            [b for b in self.organizationbranch_set.all()] + \
             [r for r in self.supported_resources] + \
             [p.need for p in self.supported_proposals] + \
-            [o for o in self.supported_organizations]
+            [b for o in self.supported_organizations
+                    for b in o.organizationbranch_set.all()]
 
     @property
     def as_investor(self):
@@ -114,6 +109,11 @@ class Organization(GeoRefModel, models.Model):
     def files_set(self):
         """ pseudo-reverse query for retrieving Organization Files"""
         return UploadedFile.get_files_for(self)
+
+    @property
+    def branch_count(self):
+        count = OrganizationBranch.objects.filter(organization=self).count()
+        return count
 
     @property
     def logo_url(self):
@@ -171,6 +171,60 @@ class Organization(GeoRefModel, models.Model):
 
     def perm_id(self):
         return 'o%d' % self.id
+
+    @property
+    def geojson(self):
+        geojson = create_geojson([b for b in self.organizationbranch_set.all()], convert=True)
+        return geojson
+
+
+class OrganizationBranch(GeoRefModel, models.Model):
+    name = models.CharField(max_length=320)
+    slug = models.SlugField(max_length=320)
+
+    organization = models.ForeignKey(Organization)
+    info = models.TextField(null=True, blank=True)
+
+    creation_date = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(User, null=True, blank=True)
+
+    community = models.ManyToManyField(Community, null=True, blank=True)
+
+    class Map:
+        editable = True
+        title = _('Organization')
+        tooltip = _('Add Organization')
+        background_color = '#3a61d6'
+        border_color = '#1f49b2'
+        geometries = (POLYGON, POINT)
+        form_view_name = 'new_organization_from_map'
+
+    def __unicode__(self):
+        return unicode('{organization} - {branch}'.format(
+                organization=self.organization.name, branch=self.name))
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super(OrganizationBranch, self).save(*args, **kwargs)
+
+    @property
+    def description(self):
+        return self.info
+
+    @property
+    def view_url(self):
+        return self.organization.view_url
+
+    @property
+    def edit_url(self):
+        return self.organization.edit_url
+
+    @property
+    def related_items(self):
+        return self.organization.related
+
+    image = "img/organization.png"
+    image_off = "img/organization-off.png"
 
 
 class OrganizationCategory(models.Model):

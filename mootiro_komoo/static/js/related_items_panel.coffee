@@ -70,9 +70,9 @@ define ['jquery', 'underscore', 'backbone'], ($, _, Backbone) ->
 
         title: (count) ->
             msg =
-                if @type is 'Organization'
-                    ngettext("%s organization",
-                        "%s organizations",
+                if @type is 'OrganizationBranch'
+                    ngettext("%s organization branch",
+                        "%s organization branchs",
                         count)
                 else if @type is 'Community'
                     ngettext("%s community",
@@ -95,7 +95,10 @@ define ['jquery', 'underscore', 'backbone'], ($, _, Backbone) ->
             interpolate msg, [count]
 
         iconClass: ->
-            modelName = @type
+            if @type in ['OrganizationBranch', 'SelfOrganizationBranch']
+                modelName = 'Organization'
+            else
+                modelName = @type
             "icon-#{modelName.toLowerCase()}-big"
 
 
@@ -137,16 +140,22 @@ define ['jquery', 'underscore', 'backbone'], ($, _, Backbone) ->
             collection: new Features().reset KomooNS.features['Resource']
         $('.features-wrapper').append resourcesView.render().$el
 
-        organizationsView = new FeaturesViewClass
-            type: 'Organization'
-            collection: new Features().reset _.filter(KomooNS.features['Organization'], (o) =>
-                o.properties.name isnt KomooNS.obj.name)
-        $('.features-wrapper').append organizationsView.render().$el
+        selfBranchsView = new FeaturesViewClass
+            type: 'SelfOrganizationBranch'
+            collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
+                o.properties.organization_name is KomooNS.obj.name)
+        $('.features-wrapper').append selfBranchsView.render().$el
 
-        usersView = new FeaturesViewClass
+        branchsView = new FeaturesViewClass
+            type: 'OrganizationBranch'
+            collection: new Features().reset _.filter(KomooNS.features['OrganizationBranch'], (o) =>
+                o.properties.organization_name isnt KomooNS.obj.name)
+        $('.features-wrapper').append branchsView.render().$el
+
+        branchsView = new FeaturesViewClass
             type: 'User'
             collection: new Features().reset KomooNS.features['User']
-        $('.features-wrapper').append usersView.render().$el
+        $('.features-wrapper').append branchsView.render().$el
 
         geoObjectsListing $('.features-wrapper')
 

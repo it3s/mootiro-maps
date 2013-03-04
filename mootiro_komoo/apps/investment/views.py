@@ -84,8 +84,9 @@ def list(request):
     investments = sorted_query(query_set, sort_fields, request,
             default_order='title')
 
+    investments_count = investments.count()
     investments = paginated_query(investments, request=request)
-    return dict(investments=investments)
+    return dict(investments=investments, investments_count=investments_count)
 
 
 def tag_search(request):

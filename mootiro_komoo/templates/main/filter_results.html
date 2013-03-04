@@ -7,7 +7,7 @@
       <i class="icon-remove right"></i>
     </h4>
   </li>
-  {% if not Community and not Need and not Organization and not Resource %}
+  {% if not Community and not Need and not OrganizationBranch and not Resource %}
   <li>
     {% trans "No results found." %}
   </li>
@@ -48,17 +48,17 @@
     </ul>
   </li>
   {% endif %}
-  {% if Organization %}
+  {% if OrganizationBranch %}
   <li class="organizations">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/organization.png"/></div>
     <span>
-      {% blocktrans count counter=Organization|length %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
+      {% blocktrans count counter=OrganizationBranch|length %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
     </span>
   </li>
   <li class="organization sublist">
     <ul>
-      {% for o in Organization %}
-          <li id="Organization-{{o.id}}">
+      {% for o in OrganizationBranch %}
+          <li id="OrganizationBranch-{{o.id}}">
           <div class="img-holder"><img src="{{ STATIC_URL }}{{ o.image }}"/></div>
           <span>{{ o.name }}</span>
         </li>

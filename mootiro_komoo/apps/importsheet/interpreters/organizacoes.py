@@ -5,6 +5,7 @@ from django.template import Context, Template
 from django.utils.translation import ugettext as _
 
 from apps.organization.models import Organization
+from apps.organization.models import OrganizationBranch
 from apps.organization.models import OrganizationCategoryTranslation
 from apps.organization.models import TargetAudience
 
@@ -19,7 +20,7 @@ class OrganizacoesRowInterpreter(RowInterpreter):
         self.kml_dicts = kml_dicts
 
     def parse(self):
-
+        
         # references to same objects
         rd = self.row_dict
         od = self.object_dict = {}
@@ -50,7 +51,7 @@ class OrganizacoesRowInterpreter(RowInterpreter):
 
         # == Geometria ==
         helpers.set_geometria(self)
-
+        
         # == Palavras-chave ==
         helpers.set_tags(self)
 
@@ -66,7 +67,7 @@ class OrganizacoesRowInterpreter(RowInterpreter):
 
         # == Públicos-alvo ==
         od['target_audiences'] = filter(bool, rd['Públicos-alvo'].values())
-        # TODO: put similar target audiences in the warnings dict
+        # TODO: put similar target audiences in the warnings dict        
 
         # Duplicates
         # TODO: inexact title search for warnings
@@ -94,7 +95,7 @@ class OrganizacoesRowInterpreter(RowInterpreter):
         for attr in ['name', 'creator', 'contact', 'link', 'description']:
             setattr(o, attr, d[attr])
         o.save()
-
+        
         # m2m relationships
         o.community = d['community']
         octs = OrganizationCategoryTranslation.objects \
@@ -105,7 +106,10 @@ class OrganizacoesRowInterpreter(RowInterpreter):
                                 for ta in d['target_audiences']]
 
         if 'geometry' in d:
-            o.geometry = d['geometry']
+            br = OrganizationBranch(name='Sede', creator=d['creator'],
+                    organization=o)
+            br.geometry = d['geometry']
+            br.save()
         o.save()
 
         self.object = o

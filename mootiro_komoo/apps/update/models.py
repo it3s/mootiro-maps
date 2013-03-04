@@ -160,6 +160,8 @@ class Update(models.Model):
     def object_app_name(self):
         if self.object_type == 'resource':
             return 'komoo_resource'
+        elif self.object_type == 'organizationbranch':
+            return 'organization'
         elif self.object_type == 'importsheet':
             return 'project'
         else:

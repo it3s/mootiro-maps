@@ -90,6 +90,10 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
             if hasattr(obj, 'population'):
                 feature['properties']['population'] = obj.population
 
+            if type_ == 'OrganizationBranch':
+                feature['properties']['organization_name'] = obj.organization.name
+                feature['properties']['last_update'] = obj.organization.last_update.isoformat(b' ')
+
             geojson['features'].append(feature)
 
     if convert:

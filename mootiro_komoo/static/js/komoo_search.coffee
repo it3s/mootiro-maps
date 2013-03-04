@@ -34,8 +34,6 @@ $ ->
 
 
     window.seeOnMap = (hashlink) ->
-        if hashlink == '#map-panel-add'
-            return
 
         if window.location.pathname == dutils.urls.resolve 'map'
             $.get(

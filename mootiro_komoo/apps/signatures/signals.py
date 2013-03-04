@@ -3,6 +3,8 @@ import django.dispatch
 from django.dispatch import receiver
 from django.contrib.contenttypes.models import ContentType
 from signatures.models import Signature, DigestSignature, Digest
+from signatures.tasks import send_notification_mail
+from organization.models import OrganizationBranch
 from komoo_comments.models import Comment
 
 
@@ -11,12 +13,14 @@ send_notifications = django.dispatch.Signal(providing_args=["instance", ])
 
 @receiver(send_notifications)
 def notification_callback(sender, instance, *a, **kw):
-    if isinstance(instance, Comment):
+    if isinstance(instance, OrganizationBranch):
+        instance = instance.organization
+    elif isinstance(instance, Comment):
         instance = instance.content_object
     content_type = ContentType.objects.get_for_model(instance)
 
     for signature in Signature.objects.filter(content_type=content_type,
-            object_id=instance.id):
+        object_id=instance.id):
         digest = DigestSignature.objects.filter(user=signature.user)
         if digest.count() and digest[0].digest_type != 'N' \
            and signature.user != instance.last_editor:

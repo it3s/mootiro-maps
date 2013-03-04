@@ -18,12 +18,12 @@
       <li class="add point" data-geometry-type="marker" title="Adicione um ou mais pontos.">{% trans "Add point" %}</li>
     </ul>
   </li>
-  <li class="organizations" data-object-type="Organization" title="Adicione uma Organização. Por exemplo: ONGs, grupos sociais, coletivos, empresas, e etc">
+  <li class="organizations" data-object-type="OrganizationBranch" title="Adicione uma Organização. Por exemplo: ONGs, grupos sociais, coletivos, empresas, e etc">
     <div class="img-holder"><img src="{{ STATIC_URL }}/{{ img.organizations }}" /></div>
     <span>{% trans "Organizations" %}</span>
     <div class="collapser"><i class="icon-chevron-right"></i></div>
   </li>
-  <li class="organization sublist" data-object-type="Organization">
+  <li class="organizationbranch sublist" data-object-type="OrganizationBranch">
     <ul>
       <li class="add shape" data-geometry-type="polygon" title="Adiconar uma região poligonal, composta por múltiplos pontos ligados ente sí.">{% trans "Add shape" %}</li>
       <li class="add line" data-geometry-type="polyline" title="Adicione uma linha." >{% trans "Add line" %}</li>
