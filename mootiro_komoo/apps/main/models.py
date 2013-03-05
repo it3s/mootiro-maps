@@ -323,6 +323,7 @@ class GeoRefObject(GeoRefModel, BaseModel):
     Fields:
         name: object identifier
         description: longer description of the object
+        otype: object type (need, resource, etc)
         creator: user who created this content
         creation_date: datetime when the content was created
         last_editor: last user who edited this content
@@ -339,6 +340,7 @@ class GeoRefObject(GeoRefModel, BaseModel):
     """
     name = models.CharField(max_length=512)
     description = models.TextField()
+    otype = models.CharField(max_length=512)  # object type
 
     creator = models.ForeignKey(User, editable=False, null=True,
                         related_name='created_%(class)s')
@@ -347,6 +349,7 @@ class GeoRefObject(GeoRefModel, BaseModel):
                         blank=True, related_name='last_edited_%(class)s')
     last_update = models.DateTimeField(auto_now=True)
 
+    contact = JSONField(null=True, blank=True)
     extra_data = JSONField(null=True, blank=True)
 
     tags = TagField()
@@ -360,12 +363,14 @@ class GeoRefObject(GeoRefModel, BaseModel):
         return {
             'name': self.name,
             'description': self.description,
+            'otype': self.otype,
             'creator': self.creator,
             'creation_date': self.creation_date,
             'last_editor': self.last_editor,
             'last_update': self.last_update,
             'tags': self.tags,
             'extra_data': self.extra_data,
+            'contact': self.contact,
         }
 
     def postpone_attr(self, key, val):
@@ -376,7 +381,7 @@ class GeoRefObject(GeoRefModel, BaseModel):
         self._postponed = getattr(self, '_postponed', [])
         attrs = [
             'id', 'name', 'description', 'last_editor', 'creation_date',
-            'last_update', 'extra_data', 'creator']
+            'last_update', 'extra_data', 'creator', 'otype', 'contact']
         update_attrs = [attr for attr in attrs[::] if not attr in
                 ['id', 'creator', 'last_update', 'creation_date']]
         insert_attrs = [attr for attr in attrs[::] if not attr in
