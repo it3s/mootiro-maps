@@ -47,3 +47,230 @@ UPDATE organization_organization
 
 DROP TABLE organization_organizationbranch_community;
 DROP TABLE organization_organizationbranch;
+
+-- ========================================================================
+
+-- Table: main_genericref
+
+-- DROP TABLE main_genericref;
+
+CREATE TABLE main_genericref
+(
+  id serial NOT NULL,
+  obj_table character varying(1024) NOT NULL,
+  obj_id integer NOT NULL,
+  CONSTRAINT main_genericref_pkey PRIMARY KEY (id )
+)
+WITH (
+  OIDS=FALSE
+);
+
+
+-- Table: main_genericrelation
+
+-- DROP TABLE main_genericrelation;
+
+CREATE TABLE main_genericrelation
+(
+  id serial NOT NULL,
+  obj1_id integer NOT NULL,
+  obj2_id integer NOT NULL,
+  relation_type character varying(1024),
+  creation_date timestamp with time zone NOT NULL,
+  CONSTRAINT main_genericrelation_pkey PRIMARY KEY (id ),
+  CONSTRAINT main_genericrelation_obj1_id_fkey FOREIGN KEY (obj1_id)
+      REFERENCES main_genericref (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  CONSTRAINT main_genericrelation_obj2_id_fkey FOREIGN KEY (obj2_id)
+      REFERENCES main_genericref (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Index: main_genericrelation_obj1_id
+
+-- DROP INDEX main_genericrelation_obj1_id;
+
+CREATE INDEX main_genericrelation_obj1_id
+  ON main_genericrelation
+  USING btree
+  (obj1_id );
+
+-- Index: main_genericrelation_obj2_id
+
+-- DROP INDEX main_genericrelation_obj2_id;
+
+CREATE INDEX main_genericrelation_obj2_id
+  ON main_genericrelation
+  USING btree
+  (obj2_id );
+
+-- Table: main_georefobject
+
+-- DROP TABLE main_georefobject;
+
+CREATE TABLE main_georefobject
+(
+  id serial NOT NULL,
+  name character varying(512) NOT NULL,
+  description text NOT NULL,
+  creator_id integer,
+  creation_date timestamp with time zone NOT NULL,
+  last_editor_id integer,
+  last_update timestamp with time zone NOT NULL,
+  extra_data text,
+  points geometry,
+  lines geometry,
+  polys geometry,
+  geometry geometry,
+  CONSTRAINT main_georefobject_pkey PRIMARY KEY (id ),
+  CONSTRAINT creator_id_refs_id_26a1efbc FOREIGN KEY (creator_id)
+      REFERENCES authentication_user (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  CONSTRAINT last_editor_id_refs_id_26a1efbc FOREIGN KEY (last_editor_id)
+      REFERENCES authentication_user (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  CONSTRAINT enforce_dims_geometry CHECK (st_ndims(geometry) = 2),
+  CONSTRAINT enforce_dims_lines CHECK (st_ndims(lines) = 2),
+  CONSTRAINT enforce_dims_points CHECK (st_ndims(points) = 2),
+  CONSTRAINT enforce_dims_polys CHECK (st_ndims(polys) = 2),
+  CONSTRAINT enforce_geotype_geometry CHECK (geometrytype(geometry) = 'GEOMETRYCOLLECTION'::text OR geometry IS NULL),
+  CONSTRAINT enforce_geotype_lines CHECK (geometrytype(lines) = 'MULTILINESTRING'::text OR lines IS NULL),
+  CONSTRAINT enforce_geotype_points CHECK (geometrytype(points) = 'MULTIPOINT'::text OR points IS NULL),
+  CONSTRAINT enforce_geotype_polys CHECK (geometrytype(polys) = 'MULTIPOLYGON'::text OR polys IS NULL),
+  CONSTRAINT enforce_srid_geometry CHECK (st_srid(geometry) = 4326),
+  CONSTRAINT enforce_srid_lines CHECK (st_srid(lines) = 4326),
+  CONSTRAINT enforce_srid_points CHECK (st_srid(points) = 4326),
+  CONSTRAINT enforce_srid_polys CHECK (st_srid(polys) = 4326)
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Index: main_georefobject_creator_id
+
+-- DROP INDEX main_georefobject_creator_id;
+
+CREATE INDEX main_georefobject_creator_id
+  ON main_georefobject
+  USING btree
+  (creator_id );
+
+-- Index: main_georefobject_geometry_id
+
+-- DROP INDEX main_georefobject_geometry_id;
+
+CREATE INDEX main_georefobject_geometry_id
+  ON main_georefobject
+  USING gist
+  (geometry );
+
+-- Index: main_georefobject_last_editor_id
+
+-- DROP INDEX main_georefobject_last_editor_id;
+
+CREATE INDEX main_georefobject_last_editor_id
+  ON main_georefobject
+  USING btree
+  (last_editor_id );
+
+-- Index: main_georefobject_lines_id
+
+-- DROP INDEX main_georefobject_lines_id;
+
+CREATE INDEX main_georefobject_lines_id
+  ON main_georefobject
+  USING gist
+  (lines );
+
+-- Index: main_georefobject_points_id
+
+-- DROP INDEX main_georefobject_points_id;
+
+CREATE INDEX main_georefobject_points_id
+  ON main_georefobject
+  USING gist
+  (points );
+
+-- Index: main_georefobject_polys_id
+
+-- DROP INDEX main_georefobject_polys_id;
+
+CREATE INDEX main_georefobject_polys_id
+  ON main_georefobject
+  USING gist
+  (polys );
+
+-- Table: tags_tag
+
+-- DROP TABLE tags_tag;
+
+CREATE TABLE tags_tag
+(
+  id serial NOT NULL,
+  name character varying(128) NOT NULL,
+  namespace_id integer NOT NULL,
+  CONSTRAINT tags_tag_pkey PRIMARY KEY (id ),
+  CONSTRAINT tags_tag_namespace_id_fkey FOREIGN KEY (namespace_id)
+      REFERENCES tags_tagnamespace (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Index: tags_tag_namespace_id
+
+-- DROP INDEX tags_tag_namespace_id;
+
+CREATE INDEX tags_tag_namespace_id
+  ON tags_tag
+  USING btree
+  (namespace_id );
+
+-- Table: tags_taggedobject
+
+-- DROP TABLE tags_taggedobject;
+
+CREATE TABLE tags_taggedobject
+(
+  id serial NOT NULL,
+  tag_id integer NOT NULL,
+  object_id integer NOT NULL,
+  object_table character varying(512) NOT NULL,
+  CONSTRAINT tags_taggedobject_pkey PRIMARY KEY (id ),
+  CONSTRAINT tags_taggedobject_tag_id_fkey FOREIGN KEY (tag_id)
+      REFERENCES tags_tag (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
+)
+WITH (
+  OIDS=FALSE
+);
+
+-- Index: tags_taggedobject_tag_id
+
+-- DROP INDEX tags_taggedobject_tag_id;
+
+CREATE INDEX tags_taggedobject_tag_id
+  ON tags_taggedobject
+  USING btree
+  (tag_id );
+
+
+-- Table: tags_tagnamespace
+
+-- DROP TABLE tags_tagnamespace;
+
+CREATE TABLE tags_tagnamespace
+(
+  id serial NOT NULL,
+  name character varying(128) NOT NULL,
+  CONSTRAINT tags_tagnamespace_pkey PRIMARY KEY (id ),
+  CONSTRAINT tags_tagnamespace_name_key UNIQUE (name )
+)
+WITH (
+  OIDS=FALSE
+);
+
