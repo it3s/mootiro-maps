@@ -49,6 +49,16 @@ DROP TABLE organization_organizationbranch_community;
 DROP TABLE organization_organizationbranch;
 
 -- ========================================================================
+-- Removing unused tables + Adding generic relations and georefobj
+
+DROP TABLE main_relations;
+DROP TABLE main_relationtypetranslations;
+DROP TABLE main_relationtype;
+-- DROP INDEX main_relations_obj1_id;
+-- DROP INDEX main_relations_obj2_id;
+-- DROP INDEX main_relations_relation_type_from_1_to_2_id;
+-- DROP INDEX main_relations_relation_type_from_2_to_1_id;
+-- DROP INDEX main_relationtypetranslations_relation_type_id;
 
 -- Table: main_genericref
 
@@ -65,10 +75,6 @@ WITH (
   OIDS=FALSE
 );
 
-
--- Table: main_genericrelation
-
--- DROP TABLE main_genericrelation;
 
 CREATE TABLE main_genericrelation
 (
@@ -89,27 +95,15 @@ WITH (
   OIDS=FALSE
 );
 
--- Index: main_genericrelation_obj1_id
-
--- DROP INDEX main_genericrelation_obj1_id;
-
 CREATE INDEX main_genericrelation_obj1_id
   ON main_genericrelation
   USING btree
   (obj1_id );
 
--- Index: main_genericrelation_obj2_id
-
--- DROP INDEX main_genericrelation_obj2_id;
-
 CREATE INDEX main_genericrelation_obj2_id
   ON main_genericrelation
   USING btree
   (obj2_id );
-
--- Table: main_georefobject
-
--- DROP TABLE main_georefobject;
 
 CREATE TABLE main_georefobject
 (
@@ -149,63 +143,50 @@ WITH (
   OIDS=FALSE
 );
 
--- Index: main_georefobject_creator_id
-
--- DROP INDEX main_georefobject_creator_id;
-
 CREATE INDEX main_georefobject_creator_id
   ON main_georefobject
   USING btree
   (creator_id );
-
--- Index: main_georefobject_geometry_id
-
--- DROP INDEX main_georefobject_geometry_id;
 
 CREATE INDEX main_georefobject_geometry_id
   ON main_georefobject
   USING gist
   (geometry );
 
--- Index: main_georefobject_last_editor_id
-
--- DROP INDEX main_georefobject_last_editor_id;
-
 CREATE INDEX main_georefobject_last_editor_id
   ON main_georefobject
   USING btree
   (last_editor_id );
-
--- Index: main_georefobject_lines_id
-
--- DROP INDEX main_georefobject_lines_id;
 
 CREATE INDEX main_georefobject_lines_id
   ON main_georefobject
   USING gist
   (lines );
 
--- Index: main_georefobject_points_id
-
--- DROP INDEX main_georefobject_points_id;
-
 CREATE INDEX main_georefobject_points_id
   ON main_georefobject
   USING gist
   (points );
-
--- Index: main_georefobject_polys_id
-
--- DROP INDEX main_georefobject_polys_id;
 
 CREATE INDEX main_georefobject_polys_id
   ON main_georefobject
   USING gist
   (polys );
 
--- Table: tags_tag
+-- =======================================================
+-- TAGS
+--
 
--- DROP TABLE tags_tag;
+CREATE TABLE tags_tagnamespace
+(
+  id serial NOT NULL,
+  name character varying(128) NOT NULL,
+  CONSTRAINT tags_tagnamespace_pkey PRIMARY KEY (id ),
+  CONSTRAINT tags_tagnamespace_name_key UNIQUE (name )
+)
+WITH (
+  OIDS=FALSE
+);
 
 CREATE TABLE tags_tag
 (
@@ -221,18 +202,10 @@ WITH (
   OIDS=FALSE
 );
 
--- Index: tags_tag_namespace_id
-
--- DROP INDEX tags_tag_namespace_id;
-
 CREATE INDEX tags_tag_namespace_id
   ON tags_tag
   USING btree
   (namespace_id );
-
--- Table: tags_taggedobject
-
--- DROP TABLE tags_taggedobject;
 
 CREATE TABLE tags_taggedobject
 (
@@ -249,28 +222,11 @@ WITH (
   OIDS=FALSE
 );
 
--- Index: tags_taggedobject_tag_id
-
--- DROP INDEX tags_taggedobject_tag_id;
-
 CREATE INDEX tags_taggedobject_tag_id
   ON tags_taggedobject
   USING btree
   (tag_id );
 
 
--- Table: tags_tagnamespace
 
--- DROP TABLE tags_tagnamespace;
-
-CREATE TABLE tags_tagnamespace
-(
-  id serial NOT NULL,
-  name character varying(128) NOT NULL,
-  CONSTRAINT tags_tagnamespace_pkey PRIMARY KEY (id ),
-  CONSTRAINT tags_tagnamespace_name_key UNIQUE (name )
-)
-WITH (
-  OIDS=FALSE
-);
 
