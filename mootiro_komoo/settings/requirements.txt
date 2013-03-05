@@ -18,6 +18,7 @@ django-markitup==1.0.0
 django-nose==1.0
 django-picklefield==0.2.1
 django-taggit==0.9.3
+eventlet==0.12.1
 gdata==2.0.17
 geopy==0.94.1
 google-api-python-client==1.0
@@ -29,11 +30,13 @@ lingua==1.3
 mock==0.8.0
 nose==1.1.2
 oauth2client==1.0
+paramiko==1.10.0
 pika==0.9.5
 polib==0.7.0
 psycopg2==2.4.4
 pycrypto==2.5
 python-dateutil==1.5
+python-gflags==2.0
 python-termstyle==0.1.10
 rednose==0.3.3
 requests==0.11.1
