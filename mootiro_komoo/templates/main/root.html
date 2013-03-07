@@ -140,7 +140,7 @@
       <ul>
         {% for n in news %}
         <li>
-          <a href="{{ n.title_link }}">
+          <a href="{{ n.title_link }}" target="_blank">
           <h4>{{ n.title }}</h4>
           <span class="attenuate">{{ n.date|date:"d/m/Y" }}</span>
           </a>
@@ -148,7 +148,7 @@
         {% endfor %}
       </ul>
       <div class="apart">
-        <a href="http://blog.mootiro.org">{% trans "visit the blog" %}</a>
+        <a href="http://blog.mootiro.org" target="_blank">{% trans "visit the blog" %}</a>
       </div>
     </div>
 

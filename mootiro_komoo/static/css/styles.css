@@ -1061,6 +1061,14 @@ body.community #map-panel-tabs {
 }
 #categories li {
     margin-bottom: 10px;
+    margin-top: 10px;
+    max-height: 60px;
+    max-width: 60px;
+}
+#categories li img {
+    max-height: 40px;
+    max-width: 40px;
+
 }
 .left-bar,
 .right-bar {
