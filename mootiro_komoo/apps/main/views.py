@@ -73,7 +73,7 @@ def root(request):
 
 def _fetch_geo_objects(Q, zoom):
     ret = {}
-    for model in [Community, Need, Resource, Organization]:
+    for model in [Community, Need, Resource, Organization, User]:
         ret[model.__name__] = model.objects.filter(Q)
     return ret
 

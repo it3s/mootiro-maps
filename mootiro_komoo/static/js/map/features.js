@@ -134,17 +134,15 @@
       };
 
       Feature.prototype.getIconUrl = function(zoom) {
-        var categoryOrType, highlighted, nearOrFar;
+        var categoryOrType, highlighted, nearOrFar, url;
         if (this.getProperty('image')) return this.getProperty('image');
         if (zoom == null) zoom = this.map ? this.map.getZoom() : 10;
         nearOrFar = zoom >= this.featureType.minZoomIcon ? "near" : "far";
         highlighted = this.isHighlighted() ? "highlighted/" : "";
-        if (this.properties.categories && this.properties.categories[0] && this.properties.categories[0].name && zoom >= this.featureType.minZoomIcon) {
-          categoryOrType = this.properties.categories[0].name.toLowerCase() + (this.properties.categories.length > 1 ? "-plus" : "");
-        } else {
-          categoryOrType = this.properties.type.toLowerCase();
-        }
-        return ("/static/img/" + nearOrFar + "/" + highlighted + categoryOrType + ".png").replace(' ', '-');
+        categoryOrType = this.properties.type.toLowerCase();
+        url = ("/static/img/" + nearOrFar + "/" + highlighted + categoryOrType + ".png").replace(' ', '-');
+        console.log('---->', url);
+        return url;
       };
 
       Feature.prototype.updateIcon = function(zoom) {
@@ -242,7 +240,7 @@
       };
 
       Feature.prototype.setMap = function(map, force) {
-        var zoom, _ref;
+        var _ref;
         if (force == null) {
           force = {
             geometry: false,
@@ -252,18 +250,8 @@
         }
         this.oldMap = this.map;
         this.map = map;
-        if (this.properties.alwaysVisible === true || this.editable) {
-          force = {
-            geometry: true,
-            point: false,
-            icon: false
-          };
-        }
-        zoom = this.map != null ? this.map.getZoom() : 0;
-        if ((_ref = this.marker) != null) {
-          _ref.setMap(force.point || force.icon || (this.featureType.minZoomPoint <= zoom && zoom <= this.featureType.maxZoomPoint) || (this.featureType.minZoomIcon <= zoom && zoom <= this.featureType.maxZoomIcon) ? this.map : null);
-        }
-        this.geometry.setMap(force.geometry || (zoom <= this.featureType.maxZoomGeometry && zoom >= this.featureType.minZoomGeometry) ? this.map : null);
+        if ((_ref = this.marker) != null) _ref.setMap(this.map);
+        this.geometry.setMap(this.map);
         this.updateIcon();
         if (this.oldMap === void 0) return this.handleMapEvents();
       };

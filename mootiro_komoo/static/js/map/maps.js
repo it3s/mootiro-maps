@@ -57,7 +57,7 @@
         return this.googleMap.controls[pos].push(el);
       };
 
-      Map.prototype.loadGeoJsonFromOptons = function() {
+      Map.prototype.loadGeoJsonFromOptions = function() {
         var bounds, features;
         if (this.options.geojson) {
           features = this.loadGeoJSON(this.options.geojson, !(this.options.zoom != null));
@@ -101,7 +101,7 @@
               return _this.featureTypes[type.type] = type;
             });
           }
-          return this.loadGeoJsonFromOptons();
+          return this.loadGeoJsonFromOptions();
         } else {
           return $.ajax({
             url: this.featureTypesUrl,
@@ -110,7 +110,7 @@
               data.forEach(function(type) {
                 return _this.featureTypes[type.type] = type;
               });
-              return _this.loadGeoJsonFromOptons();
+              return _this.loadGeoJsonFromOptions();
             }
           });
         }
@@ -524,7 +524,6 @@
         AjaxMap.__super__.constructor.call(this, options);
         this.addComponent('map/providers::FeatureProvider', 'provider');
         this.addComponent('map/controls::FeatureClusterer', 'clusterer', {
-          featureType: 'Community',
           map: this
         });
       }

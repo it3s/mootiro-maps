@@ -44,7 +44,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
         addControl: (pos, el) ->
             @googleMap.controls[pos].push el
 
-        loadGeoJsonFromOptons: ->
+        loadGeoJsonFromOptions: ->
             if @options.geojson
                 features = @loadGeoJSON @options.geojson, not @options.zoom?
                 bounds = features.getBounds()
@@ -70,7 +70,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                 # Get Feature types from options
                 @options.featureTypes?.forEach (type) =>
                     @featureTypes[type.type] = type
-                @loadGeoJsonFromOptons()
+                @loadGeoJsonFromOptions()
             else
                 # Load Feature types via ajax
                 $.ajax
@@ -79,7 +79,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                     success: (data) =>
                         data.forEach (type) =>
                             @featureTypes[type.type] = type
-                        @loadGeoJsonFromOptons()
+                        @loadGeoJsonFromOptions()
 
         handleEvents: ->
             @subscribe 'features_loaded', (features) =>
@@ -359,7 +359,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             super options
 
             @addComponent 'map/providers::FeatureProvider', 'provider'
-            @addComponent 'map/controls::FeatureClusterer', 'clusterer', {featureType: 'Community', map: this}
+            @addComponent 'map/controls::FeatureClusterer', 'clusterer', {map: this}
 
 
     class AjaxEditor extends AjaxMap

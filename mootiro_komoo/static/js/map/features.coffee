@@ -85,15 +85,17 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
             zoom ?= if @map then @map.getZoom() else 10
             nearOrFar = if zoom >= @featureType.minZoomIcon then "near" else "far"
             highlighted = if @isHighlighted() then "highlighted/" else ""
-            if (@properties.categories and \
-                    @properties.categories[0] and \
-                    @properties.categories[0].name and \
-                    zoom >= @featureType.minZoomIcon)
-                categoryOrType = (@properties.categories[0].name.toLowerCase() +
-                    if @properties.categories.length > 1 then "-plus" else "")
-            else
-                categoryOrType = @properties.type.toLowerCase()
-            "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png".replace ' ', '-'
+            #if (@properties.categories and \
+            #        @properties.categories[0] and \
+            #        @properties.categories[0].name and \
+            #        zoom >= @featureType.minZoomIcon)
+            #    categoryOrType = @properties.categories[0].name.toLowerCase()
+            #else
+            #    categoryOrType = @properties.type.toLowerCase()
+            categoryOrType = @properties.type.toLowerCase()
+            url = "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png".replace ' ', '-'
+            console.log '---->', url
+            url
 
         updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
 
@@ -136,19 +138,8 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
         setMap: (map, force = geometry: false, point: false, icon: false) ->
             @oldMap = @map
             @map = map
-            if @properties.alwaysVisible is on or @editable
-                force =
-                    geometry: true
-                    point: false
-                    icon: false
-            zoom = if @map? then @map.getZoom() else 0
-            @marker?.setMap(
-                if force.point or force.icon or \
-                    @featureType.minZoomPoint <= zoom <= @featureType.maxZoomPoint or \
-                    @featureType.minZoomIcon <= zoom <= @featureType.maxZoomIcon then \
-                    @map else null)
-            @geometry.setMap(if force.geometry or (zoom <= @featureType.maxZoomGeometry and \
-                    zoom >= @featureType.minZoomGeometry) then @map else null)
+            @marker?.setMap(@map)
+            @geometry.setMap(@map)
             @updateIcon()
 
             if @oldMap is undefined
