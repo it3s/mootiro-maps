@@ -66,7 +66,7 @@ def edit(request, id=None):
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_before_validation': on_before_validation,
-            'on_after_save': on_after_save}
+            'on_after_save': on_after_save, 'investment': investment}
 
 
 @render_to('investment/view.html')

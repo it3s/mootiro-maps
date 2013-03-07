@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-07 13:05-0300\n"
+"POT-Creation-Date: 2013-03-07 16:06-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -182,11 +182,11 @@ msgstr "Anônimo"
 
 #: apps/investment/forms.py:35
 msgid "Investor organization"
-msgstr "Investidor"
+msgstr "Nome do Investidor"
 
 #: apps/investment/forms.py:36
 msgid "Investor person"
-msgstr "Investidor"
+msgstr "Nome do Investidor"
 
 #: apps/investment/forms.py:37
 msgid "Over period"
@@ -1394,9 +1394,14 @@ msgstr "Área de atuação"
 msgid "Audience"
 msgstr "Público"
 
-#: templates/investment/edit.html:15
-msgid "Form Investment"
-msgstr "Formulário de Investimentos"
+#: templates/investment/edit.html:17
+msgid "Edit Investment"
+msgstr "Editar Investimento"
+
+#: templates/investment/edit.html:19 templates/organization/show.html:136
+#: templates/organization/show.html:156 templates/resource/show.html:71
+msgid "New Investment"
+msgstr "Novo Investimento"
 
 #: templates/investment/investment_list_templatetag.html:14
 msgid "Realized"
@@ -1944,11 +1949,6 @@ msgstr "Nenhuma proposta apoiada."
 msgid "No resources supported."
 msgstr "Nenhum recurso apoiado."
 
-#: templates/organization/show.html:136 templates/organization/show.html:156
-#: templates/resource/show.html:71
-msgid "New Investment"
-msgstr "Novo Investimento"
-
 #: templates/organization/show.html:164 templates/resource/show.html:104
 msgid "No contact info provided"
 msgstr "Informações de contato não fornecidas"
@@ -2194,6 +2194,9 @@ msgstr "veja a página"
 #: templates/update/updates_list_templatetag.html:112
 msgid "by"
 msgstr "por"
+
+#~ msgid "Form Investment"
+#~ msgstr "Formulário de Investimentos"
 
 #~ msgid "Filter"
 #~ msgstr "Filtro"
