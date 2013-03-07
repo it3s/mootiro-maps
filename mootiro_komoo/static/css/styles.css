@@ -1780,6 +1780,10 @@ div.view-list-item.odd {
 }
 /* ====== Organization ======== */
 .org-info-panel, .view-info-panel {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.view-info-panel {
     display: inline-block;
     vertical-align: top;
     margin-top: 10px;
@@ -1826,7 +1830,12 @@ textarea.markItUpEditor{
     display: inline-block;
     width: 20px;
 }
-.organization-buttons, .view-info-buttons{
+.organization-buttons{
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+.view-info-buttons{
     display: inline-block;
     margin-top: 10px;
     font-weight: bold;
@@ -1843,6 +1852,9 @@ textarea.markItUpEditor{
     cursor: pointer;
     float: none;
     vertical-align: top;
+}
+.org-btn{
+    display: inline-block;
 }
 .org-btn.multiline, .view-info-btn.multiline{
     padding: 4px 10px;
