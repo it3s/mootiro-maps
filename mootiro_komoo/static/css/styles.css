@@ -254,7 +254,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .highlight {
     margin-top: 30px;
     clear: both;
-    background: #eff8f9;
+    /* background: #eff8f9; */
     max-width:900px;
 }
 .attenuate { color: #706f6f }
@@ -894,6 +894,12 @@ body.community #collapse-panel {
     margin: 10px 2px 0;
 }
 .map-tabs { padding: 10px; }
+.map-tabs li{
+    vertical-align: top;
+}
+.map-tabs li a{
+    height: 40px;
+}
 .map-tab {
     cursor: pointer;
     text-align: center;
@@ -1055,6 +1061,14 @@ body.community #map-panel-tabs {
 }
 #categories li {
     margin-bottom: 10px;
+    margin-top: 10px;
+    max-height: 60px;
+    max-width: 60px;
+}
+#categories li img {
+    max-height: 40px;
+    max-width: 40px;
+
 }
 .left-bar,
 .right-bar {
@@ -1284,6 +1298,9 @@ div.content-updates .tab.active a {
 
 
 /* Forms */
+.required-notice strong {
+    color: #ff3d2e;
+}
 form .requiredField .asteriskField { color: #ff3d2e }
 form .control-group { clear: both }
 form legend {
@@ -1731,8 +1748,9 @@ div.view-list-item.odd {
     width: 100%;
 }
 .view-list-visualization{
-    background-color: #cae9f0;
-    padding: 10px 20px 0 20px;
+    /* background-color: #cae9f0; */
+    /* padding: 10px 20px 0 20px; */
+    margin-bottom: 20px;
 
 }
 .view-list-visualization-header{
@@ -1740,7 +1758,11 @@ div.view-list-item.odd {
     padding: 10px;
     color: #555555;
     font-weight: bold;
-    cursor: pointer;
+    /* cursor: pointer; */
+    /* border: solid 1px #ff8a00; */
+    border: solid 1px #009cb4;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
 }
 .view-list-visualization-header i{
     margin-left: 20px;
@@ -1752,6 +1774,11 @@ div.view-list-item.odd {
     font-size: 12px;
     padding-bottom: 10px;
     background-color: #dceff4;
+    /* border: solid 1px #ff8a00; */
+    border: solid 1px #009cb4;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    margin-top: -5px;
 }
 .doFilter-wrapper{
     min-height: 2em;
