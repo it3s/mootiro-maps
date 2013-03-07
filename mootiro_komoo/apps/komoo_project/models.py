@@ -16,7 +16,6 @@ import reversion
 
 from authentication.models import User
 from community.models import Community
-from organization.models import Organization
 from search.signals import index_object_for_search
 
 
@@ -39,8 +38,6 @@ class Project(models.Model):
             related_name='project_contributors')
     community = models.ManyToManyField(Community, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
-    public = models.BooleanField(default=True)
-    public_discussion = models.BooleanField(default=True)
 
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 
