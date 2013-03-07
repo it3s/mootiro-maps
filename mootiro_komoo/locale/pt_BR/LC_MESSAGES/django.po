@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-04 18:14-0300\n"
+"POT-Creation-Date: 2013-03-07 12:35-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -270,7 +270,7 @@ msgstr "Adicionar linha"
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: apps/komoo_project/forms.py:23 templates/organization/list.html:61
+#: apps/komoo_project/forms.py:23 templates/organization/list.html:62
 msgid "Public"
 msgstr "Público"
 
@@ -326,13 +326,117 @@ msgstr "Imagens"
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
-#: apps/komoo_resource/models.py:43
+#: apps/komoo_resource/models.py:42
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:65 apps/main/templatetags/komoo_tags.py:227
+#: apps/komoo_resource/models.py:64 apps/main/templatetags/komoo_tags.py:227
 msgid "Resource"
 msgstr "Recurso"
+
+#: apps/main/models.py:413
+msgid "Required field"
+msgstr "Campo obrigatório"
+
+#: apps/main/relations.py:8
+msgid "owns"
+msgstr "possui"
+
+#: apps/main/relations.py:8
+msgid "is owned by"
+msgstr "pertence à"
+
+#: apps/main/relations.py:13
+msgid "participates in"
+msgstr "participa de"
+
+#: apps/main/relations.py:13
+msgid "has as participant"
+msgstr "tem como participante"
+
+#: apps/main/relations.py:18
+msgid "partners with"
+msgstr "é parceiro de"
+
+#: apps/main/relations.py:23
+msgid "gives a grant to"
+msgstr "financia"
+
+#: apps/main/relations.py:23
+msgid "receives a grant from"
+msgstr "recebe um financiamento de"
+
+#: apps/main/relations.py:28
+msgid "certifies"
+msgstr "certifica"
+
+#: apps/main/relations.py:28
+msgid "is certified by"
+msgstr "é certificado por"
+
+#: apps/main/relations.py:33
+msgid "attends students from"
+msgstr "atende alunos de"
+
+#: apps/main/relations.py:33
+msgid "attends"
+msgstr "atende a"
+
+#: apps/main/relations.py:38
+msgid "directs people to"
+msgstr "encaminha atendidos para"
+
+#: apps/main/relations.py:38
+msgid "receives people from"
+msgstr "recebe encaminhamentos de atendidos de"
+
+#: apps/main/relations.py:43
+msgid "recruits volunteers for"
+msgstr "recruta voluntários para"
+
+#: apps/main/relations.py:43
+msgid "receives volunteers from"
+msgstr "recebe voluntários de"
+
+#: apps/main/relations.py:48
+msgid "supports"
+msgstr "apoia"
+
+#: apps/main/relations.py:48
+msgid "is supported by"
+msgstr "é apoiado por"
+
+#: apps/main/relations.py:53
+msgid "represents"
+msgstr "representa"
+
+#: apps/main/relations.py:53
+msgid "is represented by"
+msgstr "é representado por"
+
+#: apps/main/relations.py:58
+msgid "is a member of"
+msgstr "é mebro de"
+
+#: apps/main/relations.py:58
+msgid "has as member"
+msgstr "tem como membro"
+
+#: apps/main/relations.py:63
+msgid "supplies to"
+msgstr "fornece para"
+
+#: apps/main/relations.py:63
+msgid "buys from"
+msgstr "compra de"
+
+#: apps/main/relations.py:68
+msgid "is board member of"
+msgstr "é conselheiro de"
+
+#: apps/main/relations.py:68
+msgid "has as board member"
+msgstr "tem como conselheiro"
 
 #: apps/main/utils.py:106
 msgid "Submit"
@@ -940,7 +1044,7 @@ msgstr "Investimentos"
 
 #: templates/404.html:33 templates/main/templatetags/geo_objects_add.html:23
 #: templates/main/templatetags/geo_objects_listing.html:35
-#: templates/main/templatetags/menu.html:14 templates/organization/list.html:8
+#: templates/main/templatetags/menu.html:14 templates/organization/list.html:9
 #: templates/project/view.html:76
 msgid "Organizations"
 msgstr "Organizações"
@@ -954,8 +1058,8 @@ msgid "Ops!"
 msgstr "Ops!"
 
 #: templates/global.html:98
-msgid "Place, user or object..."
-msgstr "Lugar, usuário ou objeto..."
+msgid "Search for place, user or object..."
+msgstr "Buscar por lugar, usuário ou objeto..."
 
 #: templates/global.html:106
 msgid "About"
@@ -1280,7 +1384,7 @@ msgid "Geometry"
 msgstr "Geometria"
 
 #: templates/importsheet/row_templates/organizacoes.html:54
-#: templates/komoo_map/info_window.html:43 templates/organization/list.html:52
+#: templates/komoo_map/info_window.html:43 templates/organization/list.html:53
 #: templates/organization/show.html:167
 msgid "Operation Field"
 msgstr "Área de atuação"
@@ -1316,7 +1420,7 @@ msgid "No investments realized."
 msgstr "Nenhum investimento realizado."
 
 #: templates/investment/list.html:19
-#,  python-format
+#, python-format
 msgid "%(counter)s Investment"
 msgid_plural "%(counter)s Investments"
 msgstr[0] "%(counter)s Investimento"
@@ -1347,7 +1451,7 @@ msgstr[0] "%(counter)s Necessidade"
 msgstr[1] "%(counter)s Necessidades"
 
 #: templates/komoo_map/info_window.html:27 templates/komoo_map/tooltip.html:20
-#: templates/main/filter_results.html:55 templates/organization/list.html:23
+#: templates/main/filter_results.html:55 templates/organization/list.html:24
 #, python-format
 msgid "%(counter)s Organization"
 msgid_plural "%(counter)s Organizations"
@@ -1538,7 +1642,7 @@ msgstr "visite o blog"
 
 #: templates/main/root.html:157
 msgid "Last updates"
-msgstr "últimas atualizações"
+msgstr "Últimas atualizações"
 
 #: templates/main/root.html:171 templates/need/view.html:102
 msgid "see all"
@@ -1755,16 +1859,16 @@ msgstr "ver menos"
 msgid "Edit Organization"
 msgstr "Editar Organização"
 
-#: templates/organization/list.html:18 templates/organization/new.html:12
+#: templates/organization/list.html:19 templates/organization/new.html:12
 #: templates/organization/new_frommap.html:11
 msgid "New Organization"
 msgstr "Nova Organização"
 
-#: templates/organization/list.html:72
+#: templates/organization/list.html:73
 msgid "Attended Communities"
 msgstr "Comunidades Atendidas"
 
-#: templates/organization/list.html:81
+#: templates/organization/list.html:82
 #, python-format
 msgid " and %(diff)s more "
 msgstr " e %(diff)s outras"
@@ -1869,15 +1973,15 @@ msgstr "Editar Projeto"
 msgid "New Project"
 msgstr "Novo Projeto"
 
-#: templates/project/edit.html:32
+#: templates/project/edit.html:31
 msgid "Edit Project Associations"
 msgstr "Editar Associações do Projeto"
 
-#: templates/project/edit.html:42
+#: templates/project/edit.html:41
 msgid "Deleted marked associations"
 msgstr "Apagar associações marcadas"
 
-#: templates/project/edit.html:96
+#: templates/project/edit.html:95
 msgid "creator"
 msgstr "creator"
 
