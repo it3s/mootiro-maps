@@ -30,7 +30,7 @@
 
         <div class="view-header">
             <div class="view-header-logo">{% if project.logo %}<img src="{{ project.logo_url }}" class="inline-block organization-logo">{% endif %}</div>
-            <h2 class="inline-block">{{ project.name }}</h2>
+            <h2 class="inline-block title">{{ project.name }}</h2>
 
             <div class="view-edit-btn">
                 {% if project|user_can_edit_this_project:user %}
@@ -341,4 +341,10 @@
         });
     </script>
 
+{% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter("#help_button", [], 'project_show');
+  </script>
 {% endblock %}

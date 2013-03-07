@@ -6,11 +6,7 @@ $ = jQuery
 #
 window.Signature = Backbone.Model.extend
     imageName: () ->
-        if @model_name is 'organizationbranch'
-            modelName = 'organization'
-        else
-            modelName = @model_name
-        "/static/img/updates-page/#{modelName}-feed.png"
+        "/static/img/updates-page/#{@model_name}-feed.png"
 
     toJSON: (attr) ->
         defaultJSON = Backbone.Model.prototype.toJSON.call this, attr

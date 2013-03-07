@@ -21,7 +21,7 @@ def up():
     '''Start remote application server.'''
     _setup_supervisor()
     with remote_virtualenv():
-        run('supervisorctl -c supervisor/{env}.conf start {env}' \
+        run('supervisorctl -c supervisor/{env}.conf start {env}:' \
             .format(env=env.komoo_env))
     print yellow('Success, but it may take 1 minute for the server to go up.')
 
@@ -30,7 +30,7 @@ def down():
     '''Stop remote application server.'''
     _setup_supervisor()
     with remote_virtualenv():
-        run('supervisorctl -c supervisor/{env}.conf stop {env}' \
+        run('supervisorctl -c supervisor/{env}.conf stop {env}:' \
             .format(env=env.komoo_env))
 
 
@@ -38,5 +38,5 @@ def restart():
     '''Restart remote application server.'''
     _setup_supervisor()
     with remote_virtualenv():
-        run('supervisorctl -c supervisor/{env}.conf restart {env}' \
+        run('supervisorctl -c supervisor/{env}.conf restart {env}:' \
             .format(env=env.komoo_env))

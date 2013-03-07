@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+import requests
 from annoying.decorators import ajax_request, render_to
 from main.utils import create_geojson, get_model_from_table_ref
 from .utils import search_by_term
@@ -41,18 +42,18 @@ def _format_results(res):
     return result
 
 
-# def _google_search(term):
-#     # Google search
-#     google_results = requests.get(
-#         'https://maps.googleapis.com/maps/api/place/autocomplete/json',
-#         params={
-#             'input': term,
-#             'sensor': 'false',
-#             'types': 'geocode',
-#             'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',
-#             # TODO: move to settings
-#         })
-#     return google_results.content
+def _google_search(term):
+    # Google search
+    google_results = requests.get(
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+        params={
+            'input': term,
+            'sensor': 'false',
+            'types': 'geocode',
+            'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',
+            # TODO: move to settings
+        })
+    return google_results.content
 
 
 @ajax_request
@@ -61,7 +62,10 @@ def search(request):
     term = request.POST.get('term', '')
 
     raw_results = search_by_term(term)
-    result = _format_results(raw_results)
+    result = {
+        'komoo': _format_results(raw_results),
+        'google': _google_search(term),
+    }
     return {'result': result}
 
 

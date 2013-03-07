@@ -22,7 +22,7 @@
 {% block content %}
   <div id="main-content">
     <div class="investment main-column">
-      <h2>{{ investment.title }}</h2>
+      <h2 class="title">{{ investment.title }}</h2>
 
       <div class="view-edit-btn right">
         {% history investment %}
@@ -58,8 +58,6 @@
     </div>
 
   <div class="right-bar">
-      <div id="map-preview">{% komoo_map '{}' 'type=preview' %}</div>
-    <a class="see-on-map" href="#">{% trans "see on map" %}</a>
 
     {% projects_for_object investment %}
     {% taglist investment %}
@@ -92,4 +90,13 @@
 
 {% block page_scripts %}
     {% comments_staticfiles %}
+{% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      ["investment:what_is", "investment:transparency"]
+    );
+  </script>
 {% endblock %}

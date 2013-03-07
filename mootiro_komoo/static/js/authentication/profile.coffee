@@ -2,11 +2,7 @@ $ = jQuery
 
 window.Contribution = Backbone.Model.extend
     imageName: () ->
-        if @model_name is 'organizationbranch'
-            modelName =  'organization'
-        else
-            modelName = @model_name
-        "/static/img/updates-page/#{modelName}-#{@typeExt()}.png"
+        "/static/img/updates-page/#{@model_name}-#{@typeExt()}.png"
 
     typeExt: (translated=false)->
         _type = {
@@ -20,7 +16,6 @@ window.Contribution = Backbone.Model.extend
     modelPrettyName: () ->
         namesMapper =
             organization: gettext 'Organization'
-            organizationbranch: gettext 'Organization'
             need: gettext 'Need'
             community: gettext 'Community'
             resource: gettext 'Resource'

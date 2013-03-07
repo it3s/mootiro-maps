@@ -17,16 +17,16 @@
       <a class="button login-required" href="{% url new_resource %}" title="Adicionar novo Recurso. Por exemplo: uma escola, um posto de saúde, um parque, etc">{% trans "New Resource" %}</a>
     </div>
 
-  <div class="view-list-top">
-    <div class="view-list-count">
-          {% blocktrans count counter=resources_count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}
-    </div>
-    <div class="view-list-pagination">
-      {% pagination resources %}
-    </div>
+    <div class="view-list-top">
+      <div class="view-list-count">
+            {% blocktrans count counter=resources_count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}
+      </div>
+      <div class="view-list-pagination">
+        {% pagination resources %}
+      </div>
 
-    {% visualization_opts 'resource' "filters=['tags','community']" "sorters=['name', 'creation_date']" %}
-  </div>
+      {% visualization_opts 'resource' "filters=['tags','community']" "sorters=['name', 'creation_date']" %}
+    </div>
 
 
   {% for resource in resources.object_list %}
@@ -89,3 +89,14 @@
 {% block page_scripts %}
   {% visualization_opts_js %}
 {% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      ["resource:what_is", "resource:difference_organization"],
+      'resource_list'
+    );
+  </script>
+{% endblock %}
+

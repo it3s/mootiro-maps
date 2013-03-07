@@ -6,7 +6,6 @@
 {% load i18n %}
 {% load comment_tags %}
 {% load markitup_tags %}
-{% load organization_tags %}
 {% load investment_tags %}
 {% load upload_tags %}
 {% load project_tags %}
@@ -55,12 +54,6 @@
             <div class="mark-down">{{ organization.description|render_markup|safe }}</div>
             <div class="related-button"><a class="button" href="{{ organization.related_items_url }}">{% trans 'See all objects on map' %}</a></div>
             <div class="organization-buttons row">
-                <div class="org-btn span3 selected" panel="branches-list">
-                    <i class="icon-map"></i>
-                    <div class="inline-block">
-                      {% blocktrans count num=organization.organizationbranch_set.count %}{{ num }} point on map{% plural %}{{ num }} points on map{% endblocktrans %}
-                    </div>
-                </div>
                 <div class="org-btn span3" panel="supported-organizations-list">
                     <i class="icon-organization"></i>
                     <div class="inline-block">
@@ -95,60 +88,6 @@
                     {% plural %}Received {{ num }} investments{% endblocktrans %}
                     </div>
                 </div>
-            </div>
-
-            <div class="org-info-panel branches-list" >
-                {% if organization.organizationbranch_set.count %}
-
-                <!-- <div class="branches-see-all">
-                    <div class="see-on-map-icon"></div>{% trans 'see all' %}
-                </div> -->
-                {% with page_size=5 %}
-                {% for branch in organization.organizationbranch_set.all %}
-                <div class="branch-link org-info-div" page="{{ forloop.counter0|page_num:page_size }}" data-branch-id="{{ branch.id }}" style="display:none;">
-                    <a href="#">
-                        <div class="branch-name">
-                            <span class="entry">{{ branch.name }}</span>
-                            <span class="branch-map-icon"></span>
-
-                            <span class="branch-link-btn">
-                                <i class="icon-chevron-right"></i>
-                            </span>
-                        </div>
-                    </a>
-                    <div class="branch-info" style="display: none;">
-                        <div>
-                            <a href="#" class="branch-edit-btn btn login-required">
-                                <i class="icon-pencil"></i>
-                            </a>
-                        </div>
-                        <div class="entry">
-                            {{ branch.info|render_markup|safe }}
-                        </div>
-                        {% include 'organization/branch_communities_list.html' %}
-
-                    </div>
-                    <div class="branch-form hidden">
-                        {% branch_edit_form branch.id %}
-                    </div>
-                </div>
-                {% endfor %}
-
-                {% if organization.organizationbranch_set.count > page_size %}
-                <a href="#" class="branch-pagination" page="1">
-                    &lt;&lt;{%trans 'first' %}
-                </a>
-                {% for i in organization.organizationbranch_set.count|total_pages:page_size|get_range %}
-                    <a href="#" class="branch-pagination {% if i == 0 %}current-page{% endif %}" page="{{ i|add:1 }}">{{ i|add:1 }}</a>
-
-                {% endfor %}
-                <a href="#" class="branch-pagination" page="{{ organization.organizationbranch_set.count|total_pages:page_size }}">
-                    {% trans 'last' %}&gt;&gt;
-                </a>
-                {% endif %}
-                {% endwith %}
-                {% endif %}
-
             </div>
 
             <div class="org-info-panel supported-organizations-list hidden">
@@ -275,73 +214,6 @@
     {% comments_staticfiles %}
     <script type="text/javascript" src="/static/js/ajax_select.js"></script>
     <script type="text/javascript">
-        $('.branch-link a').click(function(evt){
-            evt.preventDefault();
-
-            // toggle branch button
-            var branch_btn = $(this).find('.branch-link-btn');
-            var branch_btn_icon = branch_btn.find('i');
-            if (branch_btn_icon.is('.icon-chevron-down')){
-                branch_btn_icon.removeClass('icon-chevron-down');
-                branch_btn_icon.addClass('icon-chevron-right');
-                $(this).parent().find('.branch-info').slideUp();
-                $(this).parent().find('.branch-form').slideUp();
-                $(this).parent().removeClass('branch-active');
-            } else {
-                branch_btn_icon.removeClass('icon-chevron-right');
-                branch_btn_icon.addClass('icon-chevron-down');
-                $(this).parent().find('.branch-info').slideDown();
-                $(this).parent().addClass('branch-active');
-            }
-        });
-
-        $('.branch-link').bind('mouseover', function(evt){
-            var branch_id = $(this).attr('data-branch-id');
-            if (window.preview) preview.centerFeature('OrganizationBranch', branch_id);
-        });
-
-        $('.branch-edit-btn').click(function(evt){
-            if (isAuthenticated){
-                var branch = $(this).parent().parent().parent()
-                var form = branch.find('.branch-form');
-                var info = branch.find('.branch-info');
-                var branch_name = branch.find('.branch-name')
-
-                branch_name.fadeOut(400);
-                info.fadeOut(400, function(){
-                    form.fadeIn(400);
-                });
-            }
-        });
-
-        $('.form-branch-edit').submit(function(evt){
-            evt.preventDefault();
-            var that = this;
-            $.post($(this).attr('action'), $(this).serialize(),
-                function(data){
-                    if (data.success){
-                        var branch = $('.branch-link[data-branch-id='+data.id+']');
-                        var form = branch.find('.branch-form');
-                        var info = branch.find('.branch-info');
-                        var branch_name = branch.find('.branch-name');
-                        info.find('.entry').html(data.info);
-                        branch_name.find('.entry').html(data.name);
-                        if (info.find('.branch-communities').length){
-                            info.find('.branch-communities').remove();
-                        }
-                        info.append(data.communities);
-                        form.fadeOut(400, function(){
-                            info.fadeIn(400);
-                            branch_name.fadeIn(400);
-                        });
-
-                    } else {
-                        errorMessage('Error ao tentar salvar dados!');
-                    }
-
-                }, 'json'
-            );
-        });
 
         $('.org-btn').click(function(evt){
             $('.org-btn.selected').removeClass('selected');
@@ -351,19 +223,7 @@
             $('.' + $this.attr('panel')).fadeIn();
         });
 
-        $('.branch-link[page=1]').show();
 
-        $('.branch-pagination').click(function(){
-            var page_num = $(this).attr('page');
-            $('.branch-link').hide();
-            $('.branch-pagination').removeClass('current-page');
-
-            $('.branch-link[page=' + page_num + ']').fadeIn();
-            $(this).addClass('current-page');
-        });
-    </script>
-
-    <script type="text/javascript">
         $('.view-footer img').each(function(idx, obj){
             if(obj.offsetHeight > obj.offsetWidth){
                 $(obj).css('height', '160px').css('width', 'auto')
@@ -381,4 +241,14 @@
 
 {% block css %}
     <link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+{% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      ["organization:what_is", "organization:transparency"],
+      'organization_show'
+    );
+  </script>
 {% endblock %}

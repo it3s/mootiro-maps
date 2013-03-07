@@ -124,12 +124,7 @@ class Project(models.Model):
         for c in self.contributors.all():
             items.append(c)
         for obj in [o.content_object for o in self.related_objects]:
-            if isinstance(obj, Organization):
-                branchs = [b for b in obj.organizationbranch_set.all()]
-                if branchs:
-                    items += branchs
-            else:
-                items.append(obj)
+            items.append(obj)
         return items
 
     @property

@@ -1,99 +1,71 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 
-
-<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/ajax_select.css" />
-<script type="text/javascript" src="{{ STATIC_URL }}js/ajax_select.js"></script>
-{{ form_org.media }}
-{{ form_branch.media }}
-<script type="text/javascript" src="{{ STATIC_URL }}js/organization/organization_new.js"></script>
-
+<link rel="stylesheet" type="text/css" href="/static/css/ajax_select.css" />
+<script type="text/javascript" src="/static/js/ajax_select.js"></script>
+{{ form_organization.media }}
 
 <div id="main-content">
-    <div class="main-column">
+      <div class="main-column">
 
-        <div class="org-div-form-header">
-            <h1>{% trans 'New Organization' %}</h1>
-        </div>
+          <div class='form-legend'>{% trans 'New Organization' %}</div>
 
-        <div id="org-div-progress">
-            <div class="progress">
-                <div class="bar" style="width: 0%;">
-                    <p class="percent"></p>
-                </div>
-            </div>
-            <div class="alert alert-info" data-alert="info">
-                <a class="close" data-dismiss="alert">×</a>
-                <div class="msg"></div>
-            </div>
-        </div>
+          <div class='alert alert-info required-notice' data-alert='info'>
+              <a class='required-notice-close close' data-dismiss='alert'>×</a>
+              <div class='msg'>
+                  Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+              </div>
+          </div>
 
-        <div class="org-div-forms">
-
-            <div id="org-div-name-verify" class="step_1 clearfix control-group " style="display: none;">
-                <label class="requiredField" for="id_name">
-                    {%trans 'Name' %}<span class="asteriskField">*</span>
-                </label>
-                <div class="controls">
-                    <!-- <input id="id_org_name" class="textinput textInput" type="text" maxlength="320" name="org_name"> -->
-                    {{ org_name_widget|safe }}
-                </div>
-            </div>
-
-            <div id="org-div-form-organization" class="step_2" style="display: none;">
-
-                <div class='alert alert-info required-notice' data-alert='info'>
-                    <a class='required-notice-close close' data-dismiss='alert'>×</a>
-                    <div class='msg'>
-                        Os campos com asterisco (<strong>*</strong>) são obrigatórios!
-                    </div>
-                </div>
-
-                {% crispy form_org %}
-            </div>
-
-            <div id="org-div-form-branch" class="step_3" style="display: none;">
-
-                <div class='alert alert-info required-notice' data-alert='info'>
-                    <a class='required-notice-close close' data-dismiss='alert'>×</a>
-                    <div class='msg'>
-                        Os campos com asterisco (<strong>*</strong>) são obrigatórios!
-                    </div>
-                </div>
-
-                <div class="step_3 clearfix control-group ">
-                    <label>{% trans 'Branch of'%}:</label>
-                    <div class="controls">
-                        <input id="id_filial_org_name" class="textinput textInput" type="text" maxlength="320" disabled='true' >
-                    </div>
-                </div>
-                {% crispy form_branch %}
-            </div>
-        </div>
-
-        <div class="org-div-buttons">
-            <div class="step_1">
-                <div class="step_1_row_1">
-                    <span id="name_verify" class="button">{% trans 'Verify' %}</span>
-                    <!-- <span class="btn">Cancelar</span> -->
-                </div>
-                <div class="step_1_row_2" style="display: none;">
-                    <span id="btn_add_filial" class="button">{% trans 'Add Branch' %}</span>
-                    <span class="btn step_1_cancel">{% trans 'Cancel' %}</span>
-                </div>
-                <div class="step_1_row_3" style="display: none;">
-                    <span id="btn_add_org" class="button">{% trans 'Subscribe Organization' %}</span>
-                    <span class="btn step_1_cancel">{% trans 'Cancel' %}</span>
-                </div>
-
-            </div>
-
-            <div class="step_4" style="display: none;">
-                <span id="btn_concluir" class="button" id="">{% trans 'Finish' %}</span>
-            </div>
-
-
-        </div>
-
-    </div>
+          {% crispy form_organization %}
+      </div>
 </div>
+
+
+<script type="text/javascript">
+    $(function(){
+        $('#form_organization').ajaxform();
+
+        $('#form_organization').komooFormHintBoxes({
+            'name': {
+              hint: 'Coloque o nome da organização.'
+            },
+            'description': {
+              top: '45%',
+              hint: 'Coloque detalhes da organização e como ela atua na comunidade.'
+            },
+            'community':{
+              hint: 'Coloque as comunidades que a organização atua ou atende.',
+              top: '-8px'
+            },
+            'link': {
+                hint: 'Coloque o endereço do site da organização. Se ela não tiver, ou você não achar, tudo bem, não é obrigatório.',
+                top: '-15px'
+            },
+            'contact': {
+              hint: 'Coloque aqui os contatos da organização, telefones, endereço, pessoas que podemos conversar...',
+              top: '25%'
+            },
+            'target_audiences': {
+              hint: 'Coloque o tipo de pessoas que essa organização busca atingir na comunidade.',
+              top: '-12px'
+            },
+            'categories':{
+              hint: 'Escolha em que área a organização atua, pode-se escolher mais de uma.',
+              top: '45%'
+            },
+            'tags': {
+              hint: 'Coloque palavras que ajudem a ilustrar a organização, tal como "escola", "educação", "meio-ambiente"',
+              top: '-12px'
+            },
+            'files': {
+              hint: 'Você pode carregar fotos da sua organização',
+              top: '40%'
+            },
+            'logo': {
+              hint: 'neste campo voce pode subir um logo da sua organização ou optar por usar uma imagem correspondente a uma das categorias que você marcou acima. Lembre-se primeiro de escolher as categorias para que as imagens apareçam aqui.',
+              top: '-40px'
+            }
+        });
+    });
+</script>
