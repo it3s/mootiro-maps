@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-07 12:35-0300\n"
+"POT-Creation-Date: 2013-03-07 13:05-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -1466,17 +1466,17 @@ msgid_plural "%(counter)s Resources"
 msgstr[0] "%(counter)s Recurso"
 msgstr[1] "%(counter)s Recursos"
 
-#: templates/komoo_map/panel.html:9 templates/search/list.html:6
-msgid "Search"
-msgstr "Busca"
+#: templates/komoo_map/panel.html:9
+msgid "Filter by radius"
+msgstr "Filtrar por raio"
 
 #: templates/komoo_map/panel.html:10
 msgid "Add"
 msgstr "Adicionar"
 
 #: templates/komoo_map/panel.html:11
-msgid "Filter"
-msgstr "Filtro"
+msgid "Filter by type"
+msgstr "Filtrar por tipo"
 
 #: templates/komoo_map/panel.html:23
 msgid "Perform search"
@@ -1628,23 +1628,19 @@ msgstr ""
 msgid "Projects that uses MootiroMaps"
 msgstr "Projetos que usam o MootiroMaps"
 
-#: templates/main/root.html:137 templates/update/list.html:23
-msgid "News"
-msgstr "Notícias"
-
-#: templates/main/root.html:140
+#: templates/main/root.html:139
 msgid "IT3S blog"
 msgstr "Blog do IT3S"
 
-#: templates/main/root.html:152
+#: templates/main/root.html:151
 msgid "visit the blog"
 msgstr "visite o blog"
 
-#: templates/main/root.html:157
+#: templates/main/root.html:156
 msgid "Last updates"
 msgstr "Últimas atualizações"
 
-#: templates/main/root.html:171 templates/need/view.html:102
+#: templates/main/root.html:170 templates/need/view.html:102
 msgid "see all"
 msgstr "ver todos"
 
@@ -1818,8 +1814,8 @@ msgid "New Need"
 msgstr "Nova Necessidade"
 
 #: templates/need/list.html:16
-msgid "New need"
-msgstr "Nova necessidade"
+msgid "Create New need"
+msgstr "Criar Nova necessidade"
 
 #: templates/need/list.html:39 templates/resource/list.html:40
 #: templates/resource/show.html:85
@@ -1859,10 +1855,9 @@ msgstr "ver menos"
 msgid "Edit Organization"
 msgstr "Editar Organização"
 
-#: templates/organization/list.html:19 templates/organization/new.html:12
-#: templates/organization/new_frommap.html:11
-msgid "New Organization"
-msgstr "Nova Organização"
+#: templates/organization/list.html:19
+msgid "Create New Organization"
+msgstr "Criar Nova Organização"
 
 #: templates/organization/list.html:73
 msgid "Attended Communities"
@@ -1872,6 +1867,11 @@ msgstr "Comunidades Atendidas"
 #, python-format
 msgid " and %(diff)s more "
 msgstr " e %(diff)s outras"
+
+#: templates/organization/new.html:12
+#: templates/organization/new_frommap.html:11
+msgid "New Organization"
+msgstr "Nova Organização"
 
 #: templates/organization/related_items.html:12
 msgid "Objects related to"
@@ -1969,7 +1969,7 @@ msgstr "Website"
 msgid "Edit Project"
 msgstr "Editar Projeto"
 
-#: templates/project/edit.html:17 templates/project/list.html:17
+#: templates/project/edit.html:17
 msgid "New Project"
 msgstr "Novo Projeto"
 
@@ -1984,6 +1984,10 @@ msgstr "Apagar associações marcadas"
 #: templates/project/edit.html:95
 msgid "creator"
 msgstr "creator"
+
+#: templates/project/list.html:17
+msgid "Create New Project"
+msgstr "Criar Nova projetos"
 
 #: templates/project/list.html:22
 #, python-format
@@ -2057,13 +2061,17 @@ msgstr "Adicionar Investimento"
 msgid "Edit Resource"
 msgstr "Editar Recurso"
 
-#: templates/resource/list.html:17 templates/resource/new.html:11
-msgid "New Resource"
-msgstr "Novo Recurso"
+#: templates/resource/list.html:17
+msgid "Create New Resource"
+msgstr "Criar Novo Recurso"
 
 #: templates/resource/list.html:60
 msgid "Kind:"
 msgstr "Tipo:"
+
+#: templates/resource/new.html:11
+msgid "New Resource"
+msgstr "Novo Recurso"
 
 #: templates/resource/show.html:44
 msgid "type:"
@@ -2072,6 +2080,14 @@ msgstr "tipo:"
 #: templates/resource/show.html:78
 msgid "Related resources"
 msgstr "Recursos relacionados"
+
+#: templates/search/list.html:6
+msgid "Search"
+msgstr "Busca"
+
+#: templates/update/list.html:23
+msgid "News"
+msgstr "Notícias"
 
 #: templates/update/updates_list_templatetag.html:9
 msgid "last updates"
@@ -2179,6 +2195,9 @@ msgstr "veja a página"
 msgid "by"
 msgstr "por"
 
+#~ msgid "Filter"
+#~ msgstr "Filtro"
+
 #~ msgid "Branch Name"
 #~ msgstr "Nome da Unidade"
 
@@ -2256,9 +2275,6 @@ msgstr "por"
 #~ msgstr ""
 #~ "Mapeie necessidades, organizações e recursos em sua comunidade e ajude "
 #~ "melhorá-la."
-
-#~ msgid "Create projects"
-#~ msgstr "Crie projetos"
 
 #~ msgid ""
 #~ "Map related points. You can make a guide to your neighborhood or diagnose "

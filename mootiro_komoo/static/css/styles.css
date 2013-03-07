@@ -894,6 +894,12 @@ body.community #collapse-panel {
     margin: 10px 2px 0;
 }
 .map-tabs { padding: 10px; }
+.map-tabs li{
+    vertical-align: top;
+}
+.map-tabs li a{
+    height: 40px;
+}
 .map-tab {
     cursor: pointer;
     text-align: center;
@@ -1743,7 +1749,10 @@ div.view-list-item.odd {
     padding: 10px;
     color: #555555;
     font-weight: bold;
-    cursor: pointer;
+    /* cursor: pointer; */
+    border: solid 1px #ff8a00;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
 }
 .view-list-visualization-header i{
     margin-left: 20px;
@@ -1755,6 +1764,10 @@ div.view-list-item.odd {
     font-size: 12px;
     padding-bottom: 10px;
     background-color: #dceff4;
+    border: solid 1px #ff8a00;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    margin-top: -5px;
 }
 .doFilter-wrapper{
     min-height: 2em;
