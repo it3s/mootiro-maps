@@ -26,11 +26,16 @@
 {% block menu %} {% menu "project" %} {% endblock %}
 
 {% block content %}
-<div id="main-content" class="project">
+<div id="main-content">
+    <div class="main-column">
+    {% if project.logo %}
+    <div class="view-header-logo"><img src="{{ project.logo_url }}" class="inline-block organization-logo"></div>
+    {% else %}
+    <div class="view-header-logo"></div>
+    {% endif %}
 
         <div class="view-header">
-            <div class="view-header-logo">{% if project.logo %}<img src="{{ project.logo_url }}" class="inline-block organization-logo">{% endif %}</div>
-            <h2 class="inline-block title">{{ project.name }}</h2>
+            <h2 class="inline-block">{{ project.name }}</h2>
 
             <div class="view-edit-btn">
                 {% if project|user_can_edit_this_project:user %}
@@ -52,86 +57,13 @@
 
         </div>
 
-        <div class="tabs">
-          <ul>
-            <!--
-            <li class="tab"><a href="#project-campaign">Campanha</a></li>
-            //-->
-            <li class="tab"><a href="#project-description">Projeto</a></li>
-            <li class="tab"><a href="#project-data">Dados</a></li>
-            <li class="tab"><a href="#project-contributors">Colaboradores</a></li>
-          </ul>
-        </div>
-
-        <div class="view-body tab-content" id="project-campaign">
-          CAMPANHA
-        </div>
-
-        <div class="view-body tab-content" id="project-description">
-          <div class="main-column right">
+        <div class="view-body">
             <div class="mark-down">{{ project.description|render_markup|safe }}</div>
             <div class="related-button"><a class="button" href="{% url project_map project.id %}">{% trans 'See all objects on map' %}</a></div>
-            <div class="view-footer">
-              {% image_gallery project %}
-            </div>
-
-            <div class="view-extras">
-                {% track_buttons project %}
-                {% report_content project %}
-                {% delete_button project %}
-                {% social_buttons %}
-                {% comments project %}
-            </div>
-
-          </div>
-
-          <div class="left-bar left-bar-modif">
-              <div id="map-main-preview">
-                <div id="map-main-preview-canvas"></div>
-              </div>
-              <a class="see-on-map" href="{% url project_map project.id %}" title="ver no mapa">{% trans 'see on map' %}</a>
-
-              <div>
-                <h4>{% trans 'Administrator' %}</h4>
-                <p>
-                     {{ project.creator.name }}
-                </p>
-              </div>
-
-              <div>
-                {% if project.contact %}
-                <h4>{% trans 'Contact' %}</h4>
-                <p>
-                  {{ project.contact|render_markup|safe }}
-               </p>
-               {% endif %}
-               </div>
-
-              {% with similar_projects=project.tags.similar_objects|slice:"5" %}
-                    <div>
-                      {% if similar_projects %}
-                      <h4>{% trans "Related projects" %}</h4>
-                      <p>
-                          <ul>
-                              {% for r in similar_projects|slice:'5' %}
-                              <li>
-                                  <a href="{{ r.view_url }}"> {{ r.name }} </a>
-                              </li>
-                              {% endfor %}
-                          </ul>
-                      </p>
-                      {% endif %}
-                  </div>
-              {% endwith %}
-
-              {% taglist project %}
-
-          </div>
         </div>
 
-
-        <div class="view-body tab-content" id="project-data">
-            <div class="view-info-buttons">
+        <div>
+            <div class="view-info-buttons row">
                 <!-- <div class="view-info-btn span3 selected" panel="map-points-list"> -->
                 <!--     <i class="icon-map"></i> -->
                 <!--     <div class="inline-block"> -->
@@ -289,22 +221,76 @@
                 {% endfor %}
             </div>
 
+
         </div>
 
 
-        <div class="view-body tab-content" id="project-contributors">
-          {% for o in proj_objects.User.objects_list %}
-          <div class="view-info-contributor">
-            <a href="{{ o.link }}" >
-              <img class="avatar" src="{{ o.avatar }}" />
-              <span class="name">{{ o.name }}</span>
-            </a>
-          </div>
-          {% empty %}
-          <div class="view-info-empty">{% trans 'This project has no contributors yet' %}.</div>
-          {% endfor %}
+        <div class="view-footer">
+            {% image_gallery project %}
         </div>
 
+        <div class="view-extras">
+                {% track_buttons project %}
+                {% report_content project %}
+                {% delete_button project %}
+                {% social_buttons %}
+                {% comments project %}
+        </div>
+
+    </div>
+    <div class="right-bar right-bar-modif">
+        <div id="map-main-preview">
+          <div id="map-main-preview-canvas"></div>
+        </div>
+        <a class="see-on-map" href="{% url project_map project.id %}" title="ver no mapa">{% trans 'see on map' %}</a>
+
+        {% with similar_projects=project.tags.similar_objects|slice:"5" %}
+
+            <div class="block">
+
+                <h4>{% trans 'Administrator' %}</h4>
+                <p>
+                    {{ project.creator.name }}
+                </p>
+
+                {% if project.contributors.count %}
+                <h4>{% trans 'Contributors' %}</h4>
+                <p>
+                    <ul>
+                        {% for contributor in project.contributors.all %}
+                        <li>{{ contributor.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+                {% endif %}
+
+                {% if project.contact %}
+                <h4>{% trans 'Contact' %}</h4>
+                <p>
+                    {{ project.contact|render_markup|safe }}
+                </p>
+                {% endif %}
+
+                {% if similar_projects %}
+                <h4>{% trans "Related projects" %}</h4>
+                <p>
+                    <ul>
+                        {% for r in similar_projects|slice:'5' %}
+                        <li>
+                            <a href="{{ r.view_url }}"> {{ r.name }} </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </p>
+                {% endif %}
+
+            </div>
+
+        {% endwith %}
+
+        {% taglist project %}
+
+    </div>
 
 {% komoo_map_tooltip %}
 </div>
@@ -316,8 +302,6 @@
     {% comments_staticfiles %}
     <script type="text/javascript">
         $(function(){
-            // Hide all panels.
-            $('.view-info-panel').hide();
             $('.view-info-btn').click(function(evt){
                 $('.view-info-btn.selected').removeClass('selected');
                 $('.view-info-panel').hide();
@@ -325,26 +309,15 @@
                 $this.addClass('selected');
                 $('.' + $this.attr('panel')).fadeIn();
             });
-            // Clicks the default button.
-            $('.view-info-btn.selected').click();
-
             require(['map.jquery'], function () {
                 $("#map-main-preview-canvas").komooMap({
                     type: 'preview',
                     geojson: {{ geojson|safe }},
-                    width: '300px',
+                    width: '200px',
                     height: '200px'
                 });
             });
-
-            var tabs = new Tabs('.tab', '.tab-content')
         });
     </script>
 
-{% endblock %}
-
-{% block help_center %}
-  <script type="text/javascript">
-    var help = new HelpCenter("#help_button", [], 'project_show');
-  </script>
 {% endblock %}

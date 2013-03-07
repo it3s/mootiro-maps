@@ -492,7 +492,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 32px;
     height: 24px;
 }
-*:hover > .icon-see-on-map, .selected .icon-see-on-map {
+*:hover > .icon-see-on-map, .selected > .icon-see-on-map {
     background-image: url("../img/see-on-map-active.png");
 }
 *:hover > .icon-see-on-map.no-hover {
@@ -562,10 +562,10 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 15px;
     height: 17px;
 }
-*:hover > .icon-community, .selected .icon-community {
+*:hover > .icon-community, .selected > .icon-community {
     background-image: url("../img/menu/community-active.png");
 }
-*:hover > .icon-community.no-hover, .selected .icon-community.no-selected {
+*:hover > .icon-community.no-hover, .selected > .icon-community.no-selected {
     background-image: url("../img/menu/community.png");
 }
 .icon-community-white {
@@ -583,10 +583,10 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 18px;
     height: 16px;
 }
-*:hover > .icon-need, .selected .icon-need {
+*:hover > .icon-need, .selected > .icon-need {
     background-image: url("../img/menu/need-active.png");
 }
-*:hover > .icon-need.no-hover, .selected .icon-need.no-selected {
+*:hover > .icon-need.no-hover, .selected > .icon-need.no-selected {
     background-image: url("../img/menu/need.png");
 }
 
@@ -612,10 +612,10 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 24px;
     height: 15px;
 }
-*:hover > .icon-resource, .selected .icon-resource {
+*:hover > .icon-resource, .selected > .icon-resource {
     background-image: url("../img/menu/resource-active.png");
 }
-*:hover > .icon-resource.no-hover, .selected .icon-resource.no-selected  {
+*:hover > .icon-resource.no-hover, .selected > .icon-resource.no-selected  {
     background-image: url("../img/menu/resource.png");
 }
 
@@ -663,10 +663,10 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 20px;
     height: 15px;
 }
-*:hover > .icon-investment, .selected .icon-investment {
+*:hover > .icon-investment, .selected > .icon-investment {
     background-image: url("../img/menu/investment-active.png");
 }
-*:hover > .icon-investment.no-hover, .selected .icon-investment.no-selected {
+*:hover > .icon-investment.no-hover, .selected > .icon-investment.no-selected {
     background-image: url("../img/menu/investment.png");
 }
 
@@ -677,10 +677,10 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 20px;
     height: 13px;
 }
-*:hover > .icon-project, .selected .icon-project {
+*:hover > .icon-project, .selected > .icon-project {
     background-image: url("../img/menu/project-active.png");
 }
-*:hover > .icon-project.no-hover, .selected .icon-project.no-selected  {
+*:hover > .icon-project.no-hover, .selected > .icon-project.no-selected  {
     background-image: url("../img/menu/project.png");
 }
 
@@ -1534,7 +1534,7 @@ ul.ui-autocomplete.ui-menu li.ui-menu-item a.ui-corner-all:hover{
 }
 /* ========= Entity show ====== */
 .view-header{
-    display: inline-block;
+    /* display: inline-block; */
     margin-bottom: 20px;
     min-width: 590px;
 }
@@ -1810,6 +1810,15 @@ div.view-list-item.odd {
     margin-top: 30px;
     margin-bottom: 20px;
 }
+.view-info-panel {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 690px;
+    height: 355px;
+    overflow: auto;
+}
 .organization-header{
     max-width: 500px;
 }
@@ -1848,10 +1857,17 @@ textarea.markItUpEditor{
     display: inline-block;
     width: 20px;
 }
-.organization-buttons, .view-info-buttons{
+.organization-buttons{
     margin-top: 20px;
     font-weight: bold;
     font-size: 0.9em;
+}
+.view-info-buttons{
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 0.9em;
+    width: 250px;
 }
 .org-btn, .view-info-btn{
     padding: 10px;
@@ -1861,9 +1877,11 @@ textarea.markItUpEditor{
     margin-left: 10px;
     min-height: 26px;
     cursor: pointer;
-    display: inline-block;
     float: none;
     vertical-align: top;
+}
+.org-btn{
+    display: inline-block;
 }
 .org-btn.multiline, .view-info-btn.multiline{
     padding: 4px 10px;
@@ -1882,7 +1900,7 @@ textarea.markItUpEditor{
     background-color: #F6F6F6;
     padding: 10px;
     display: block;
-    width:97%;
+    width:96%;
     margin: 10px 0 10px 0;
     border-radius: 7px;
     border: solid 1px #cdcdef;
@@ -1897,7 +1915,7 @@ textarea.markItUpEditor{
     background-color: #F6F6F6;
     padding: 10px;
     display: block;
-    width:97%;
+    width:96%;
     margin: 10px 0 10px 0;
     border-radius: 7px;
     border: solid 1px #efcdcd;
@@ -2635,8 +2653,4 @@ ul.two-cols li {
     text-align: center;
     padding: 20px;
     border: solid 1px #999999;
-}
-#div_id_public .radio, #div_id_public_discussion .radio{
-    width: 45%;
-    display: inline-block;
 }

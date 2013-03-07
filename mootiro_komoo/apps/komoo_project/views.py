@@ -8,6 +8,7 @@ from django.db.models.query_utils import Q
 from django.http import HttpResponse
 from django.utils import simplejson
 from django.utils.translation import gettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 
 from lib.taggit.models import TaggedItem
 from ajaxforms.forms import ajax_form
@@ -39,22 +40,17 @@ def project_view(request, id=''):
 
     proj_objects, items = {}, []
 
-    proj_objects['User'] = {'app_name': 'authentication', 'objects_list': [{
-        'name': project.creator.name,
-        'link': project.creator.view_url,
-        'id': project.creator.id,
-        'has_geojson': bool(getattr(project.creator, 'geometry', ''))
+    proj_objects['User'] = {'app_name': 'authentication', 'objects_list': []}
 
-    }]}
-
+    print project.contributors.all()
     for c in project.contributors.all():
-        if c != project.creator:
-            proj_objects['User']['objects_list'].append({
-                'name': c.name,
-                'link': c.view_url,
-                'id': c.id,
-                'has_geojson': bool(getattr(c, 'geometry', ''))
-            })
+        proj_objects['User']['objects_list'].append({
+            'name': c.name,
+            'link': c.view_url,
+            'avatar': c.avatar_url,
+            'id': c.id,
+            'has_geojson': bool(getattr(c, 'geometry', ''))
+        })
 
     for p in project.related_objects:
         obj = p.content_object
@@ -108,6 +104,8 @@ def project_new(request):
 
     def on_after_save(request, project):
         send_explanations_mail(project.creator, 'project')
+        # Add the project creator as contributor
+        project.contributors.add(project.creator)
         return {'redirect': project.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save, 'project': None}
@@ -142,21 +140,17 @@ def add_related_object(request):
     proj = get_object_or_404(Project, pk=proj_id)
 
     if proj and obj_id and ct:
-        obj, created = ProjectRelatedObject.objects.get_or_create(
-                content_type_id=ct, object_id=obj_id, project_id=proj_id)
-        if created:
-            from update.models import Update
-            from update.signals import create_update
-            create_update.send(sender=obj.__class__, user=request.user,
-                                instance=obj, type=Update.EDIT)
-        return {'success': True,
-                'project': {
-                    'id': proj.id,
-                    'name': proj.name,
-                    'link': proj.view_url
-                }}
-    else:
-        return {'success': False}
+        obj = ContentType.objects.get(id=ct).get_object_for_this_type(id=obj_id)
+        if obj:
+            proj.save_related_object(obj, request.user)
+            return {'success': True,
+                    'project': {
+                        'id': proj.id,
+                        'name': proj.name,
+                        'link': proj.view_url
+                    }}
+
+    return {'success': False}
 
 
 @login_required
