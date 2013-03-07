@@ -1815,7 +1815,7 @@ msgstr "Nova Necessidade"
 
 #: templates/need/list.html:16
 msgid "Create New need"
-msgstr "Criar Nova necessidade"
+msgstr "Criar Nova Necessidade"
 
 #: templates/need/list.html:39 templates/resource/list.html:40
 #: templates/resource/show.html:85
@@ -1987,7 +1987,7 @@ msgstr "creator"
 
 #: templates/project/list.html:17
 msgid "Create New Project"
-msgstr "Criar Nova projetos"
+msgstr "Criar Novo Projeto"
 
 #: templates/project/list.html:22
 #, python-format

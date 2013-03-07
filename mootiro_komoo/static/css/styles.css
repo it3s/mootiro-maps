@@ -254,7 +254,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 .highlight {
     margin-top: 30px;
     clear: both;
-    background: #eff8f9;
+    /* background: #eff8f9; */
     max-width:900px;
 }
 .attenuate { color: #706f6f }
@@ -1740,8 +1740,9 @@ div.view-list-item.odd {
     width: 100%;
 }
 .view-list-visualization{
-    background-color: #cae9f0;
-    padding: 10px 20px 0 20px;
+    /* background-color: #cae9f0; */
+    /* padding: 10px 20px 0 20px; */
+    margin-bottom: 20px;
 
 }
 .view-list-visualization-header{
@@ -1750,7 +1751,8 @@ div.view-list-item.odd {
     color: #555555;
     font-weight: bold;
     /* cursor: pointer; */
-    border: solid 1px #ff8a00;
+    /* border: solid 1px #ff8a00; */
+    border: solid 1px #009cb4;
     border-bottom: none;
     border-radius: 6px 6px 0 0;
 }
@@ -1764,7 +1766,8 @@ div.view-list-item.odd {
     font-size: 12px;
     padding-bottom: 10px;
     background-color: #dceff4;
-    border: solid 1px #ff8a00;
+    /* border: solid 1px #ff8a00; */
+    border: solid 1px #009cb4;
     border-top: none;
     border-radius: 0 0 6px 6px;
     margin-top: -5px;
