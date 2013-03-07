@@ -104,6 +104,8 @@ def project_new(request):
 
     def on_after_save(request, project):
         send_explanations_mail(project.creator, 'project')
+        # Add the project creator as contributor
+        project.contributors.add(project.creator)
         return {'redirect': project.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save, 'project': None}
