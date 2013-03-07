@@ -30,17 +30,12 @@ class FormProject(AjaxModelForm):
     contact = forms.CharField(required=False, widget=MarkItUpWidget())
     tags = forms.Field(required=False, widget=TaggitWidget(
         autocomplete_url="/project/search_tags/"))
-    community = AutoCompleteSelectMultipleField('community', help_text='',
-        required=False)
-    contributors = AutoCompleteSelectMultipleField('user', help_text='',
-        required=False)
     logo = FileuploadField(required=False, widget=SingleFileUploadWidget)
     partners_logo = FileuploadField(required=False)
 
     class Meta:
         model = Project
-        fields = ('name', 'description', 'contributors', 'tags', 'contact',
-                  'community', 'logo', 'id')
+        fields = ('name', 'description', 'tags', 'contact', 'logo', 'id')
 
     _field_labels = {
         'name': _('Name'),
@@ -48,8 +43,6 @@ class FormProject(AjaxModelForm):
         'tags': _('Tags'),
         'logo': _('Logo'),
         'contact': _('Contact'),
-        'contributors': _('Contributors'),
-        'community': _('Community'),
         'partners_logo': _('Partners Logo'),
     }
 
