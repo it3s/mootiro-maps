@@ -6,6 +6,11 @@
   <div id="main-content">
     <div class="main-column">
       <div class='form-legend'>{% trans 'New User' %}</div>
+      <div class='alert alert-info required-notice' data-alert='info'>
+          <div class='msg'>
+              Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+          </div>
+      </div>
       {% crispy form form.helper %}
     </div>
   </div>

@@ -1284,6 +1284,9 @@ div.content-updates .tab.active a {
 
 
 /* Forms */
+.required-notice strong {
+    color: #ff3d2e;
+}
 form .requiredField .asteriskField { color: #ff3d2e }
 form .control-group { clear: both }
 form legend {
