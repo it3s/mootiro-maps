@@ -1102,7 +1102,9 @@
       FeatureClusterer.prototype.handleMapEvents = function() {
         var _this = this;
         return this.map.subscribe('feature_created', function(feature) {
-          if (feature.getType() === _this.featureType) return _this.push(feature);
+          if (!(_this.featureType != null) || feature.getType() === _this.featureType) {
+            return _this.push(feature);
+          }
         });
       };
 
@@ -1123,7 +1125,6 @@
       FeatureClusterer.prototype.push = function(element) {
         if (element.getMarker()) {
           this.features.push(element);
-          element.getMarker().setVisible(false);
           this.clusterer.addMarker(element.getMarker().getOverlay().markers_.getAt(0));
           return this.updateLength();
         }

@@ -772,7 +772,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         handleMapEvents: ->
             @map.subscribe 'feature_created', (feature) =>
-                if feature.getType() is @featureType
+                if not @featureType? or feature.getType() is @featureType
                     @push feature
 
         updateLength: -> @length = @features.length
@@ -787,7 +787,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         push: (element) ->
             if element.getMarker()
                 @features.push element
-                element.getMarker().setVisible off
+                #element.getMarker().setVisible off
                 @clusterer.addMarker element.getMarker().getOverlay().markers_.getAt(0)
                 @updateLength()
 
