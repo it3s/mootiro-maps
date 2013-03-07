@@ -108,11 +108,21 @@ class Project(models.Model):
         """Returns a queryset for the objects for a given project"""
         return ProjectRelatedObject.objects.filter(project=self)
 
-    def save_related_object(self, related_object):
+    def save_related_object(self, related_object, user=None, silent=False):
         ct = ContentType.objects.get_for_model(related_object)
+        # Adds the object to project
         obj, created = ProjectRelatedObject.objects.get_or_create(
                 content_type_id=ct.id, object_id=related_object.id,
                 project_id=self.id)
+        if user:
+            # Adds user as contributor
+            self.contributors.add(user)
+            # Creates update entry
+            if created and not silent:
+                from update.models import Update
+                from update.signals import create_update
+                create_update.send(sender=obj.__class__, user=user,
+                                    instance=obj, type=Update.EDIT)
         return created
 
     @property

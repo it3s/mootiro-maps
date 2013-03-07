@@ -62,13 +62,9 @@
     {% load_files project %}
 
     <script type="text/javascript" charset="utf-8">
-        // "providential workaround" for the contributors widget ;)
         $(function(){
             $form = $('#form_project');
-            $form.ajaxform({
-                onSubmit: function(){
-                }
-            });
+            $form.ajaxform({});
             $form.komooFormHintBoxes({});
 
             {% if project %}
