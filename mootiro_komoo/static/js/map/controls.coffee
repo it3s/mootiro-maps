@@ -775,6 +775,12 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 if not @featureType? or feature.getType() is @featureType
                     @push feature
 
+            @map.subscribe 'idle features_loaded', () =>
+                if @map.getZoom() <= @maxZoom
+                    @map.getFeatures().setVisible false
+                else
+                    # TODO: Pass throw filter component
+                    @map.getFeatures().setVisible true
         updateLength: -> @length = @features.length
 
         clear: ->

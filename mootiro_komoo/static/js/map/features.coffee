@@ -94,7 +94,6 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
             #    categoryOrType = @properties.type.toLowerCase()
             categoryOrType = @properties.type.toLowerCase()
             url = "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png".replace ' ', '-'
-            console.log '---->', url
             url
 
         updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
