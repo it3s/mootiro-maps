@@ -6,6 +6,7 @@ import simplejson as json
 from django.template import Context, Template
 from django.utils.translation import ugettext as _
 from django.contrib.gis.gdal.error import OGRException
+from django.contrib.gis.geos.error import GEOSException
 
 from main.models import GeoRefModel
 from authentication.models import User
@@ -194,6 +195,9 @@ def set_geometria(obj):
         msg = 'Má formação da(s) coluna(s) de geometria.'
         obj.errors.append(msg)
 
+    except GEOSException as e:
+        msg = 'Informação geométrica inconsistente.'
+        obj.errors.append(msg)
 
 
 def set_tags(obj):
