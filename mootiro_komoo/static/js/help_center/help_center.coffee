@@ -51,6 +51,8 @@ class HelpCenter
               <% } %>
             </ul>
             <% if (hasTour) { %><button id='tour_button'>Faça o tour desta página</button><% } %>
+            <a id='help_center_about' href='/about/'>Sobre o Maps</a>
+            <a id='help_center_usecases' href='/use_cases/'>Casos de Uso</a>
           </section>
         </div>
         "
