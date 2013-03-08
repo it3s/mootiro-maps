@@ -4,12 +4,13 @@
 
 
 <div class="main-column">
-  
   {# ##### Name ##### #}
   <h2>{{ row.object_dict.name }}</h2>
   
   {# ##### Creator ##### #}
+  {% if row.object_dict.creator %}
   <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
+  {% endif %}
   
   {# ##### Need Categories ##### #}
   {% if row.object_dict.categories %}
@@ -27,9 +28,9 @@
   <div class="clear-both"></div>
   <div class="a-update">
   {% for c in row.object_dict.community %}
-      <a href="{{ c.view_url }}" class="update-community">
-        <i class="icon-community-white"></i> {{ c.name }}
-      </a>
+    <a href="{{ c.view_url }}" class="update-community">
+      <i class="icon-community-white"></i> {{ c.name }}
+    </a>
   {% endfor %}
   </div>
   {% endif %}

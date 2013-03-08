@@ -4,16 +4,27 @@
 
 
 <div class="main-column">
+  {# ##### Name ##### #}
   <h2>{{ row.object_dict.name }}</h2>
+  
+  {# ##### Creator ##### #}
   <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
 
-  <div class="mark-down">{{ row.object_dict.description|render_markup|safe }}</div>
+  {# ##### Population ##### #}
   {% if row.object_dict.population %}
-    <div class="apart"><span class="meta-info">{% trans "Population" %}:</span> {{ row.object_dict.population }}</div>
+  <div class="clear-both"></div>
+  <div class="apart"><span class="meta-info">{% trans "Population" %}:</span> {{ row.object_dict.population }}</div>
+  {% endif %}
+
+  {# ##### Description ##### #}
+  {% if row.object_dict.description %}
+  <div class="clear-both"></div>
+  <div class="mark-down">{{ row.object_dict.description|render_markup|safe }}</div>
   {% endif %}
 </div>
 
 <div class="right-bar right-bar-modif">
+  {# ##### Geometry ##### #}
   {% if row.object_dict.geometry %}
   <div class="block">
     <i class="icon-map no-hover"></i><span class="meta-info">{% trans "Geometry" %}:</span>
@@ -21,14 +32,15 @@
   </div>
   {% endif %}
 
+  {# ##### Tags ##### #}
+  {% if row.object_dict.tags %}
   <div class="view-tag-list">
-    {% if row.object_dict.tags %}
     <span class="inline-block meta-info">{% trans 'Tags' %}</span>
     <div class="view-tag-list-tags">
       {% for tag in row.object_dict.tags %}
       <span class="inline-block tag">{{ tag }}</span>
       {% endfor %}
     </div>
-    {% endif %}
   </div>
+  {% endif %}
 </div>
