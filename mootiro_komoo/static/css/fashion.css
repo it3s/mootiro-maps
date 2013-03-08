@@ -383,6 +383,9 @@ div.importsheet_missing_column {
   background: #ee8;
   border: 1px solid #ed0;
   padding: 2px 5px; }
+#importsheet_simulation_results div.metadata a, #importsheet_messages div.metadata a {
+  color: inherit;
+  text-decoration: underline; }
 
 #donate {
   position: fixed;

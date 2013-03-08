@@ -27,25 +27,32 @@
         {% for wks in importsheet.worksheets %}
         <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}?worksheet_name={{ wks.title }}">{% trans "Simulate" %} {{wks.title}}</a>
         {% endfor %}
-        {% if user.is_admin %}
-        <a class="insert btn btn-large btn-success" href="{% url importsheet_insert importsheet.id %}">{% trans "I'm finished. Insert all." %}</a>
-        {% else %}
-        <a class="insert btn btn-large btn-success disabled">
-          {% trans "I'm finished. Insert all." %}<br/>
-          <span class="small">{% trans "(only administrators)" %}</span>
-        </a>
+        {% if not any_error %}
+          {% if user.is_admin %}
+            <a class="insert btn btn-large btn-success" href="{% url importsheet_insert importsheet.id %}">{% trans "I'm finished. Insert all." %}</a>
+          {% else %}
+          <a class="insert btn btn-large btn-success disabled">
+            {% trans "I'm finished. Insert all." %}<br/>
+            <span class="small">{% trans "(only administrators)" %}</span>
+          </a>
+          {% endif %}
         {% endif %}
       </div>
       <br/><br/>
       
       <div id="importsheet_messages">
-        {% if interpreter.errors %}
+        {% if any_error %}
         <div class="metadata">
           <div class="errors">
             <h3>{% trans "Errors" %}</h3>
             <ul>
               {% for msg in interpreter.errors %}
               <li>{{ msg }}</li>
+              {% endfor %}
+              {% for row in interpreter.rows %}
+                {% if row.errors %}
+                  <li><a href="#row-{{ forloop.counter|add:interpreter.header_rows }}">{% trans "There are errors with row" %} {{ forloop.counter|add:interpreter.header_rows }}</a></li>
+                {% endif %}
               {% endfor %}
             </ul>
           </div>
@@ -68,9 +75,35 @@
       
       <div id="importsheet_simulation_results">
         {% for row in interpreter.rows %}
-        <div class="result">
+        <div id="row-{{ forloop.counter|add:interpreter.header_rows }}" class="result">
           <span class="meta-info">{% trans "Row number" %}:</span>{{ forloop.counter|add:interpreter.header_rows }}<br/>
+          
+          <div class="metadata">
+            {% if row.errors %}
+            <div class="errors">
+              <h3>{% trans "Errors" %}</h3>
+              <ul>
+                {% for msg in row.errors %}
+                <li>{{ msg }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+                                    
+            {% if row.warnings %}
+            <div class="warnings">
+              <h3>{% trans "Warnings" %}</h3>
+              <ul>
+                {% for msg in row.warnings %}
+                <li>{{ msg }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+            {% endif %}
+          </div>
+          
           {% include interpreter.row_template with row=row %}
+          
         </div>
         {% endfor %}
       </div>

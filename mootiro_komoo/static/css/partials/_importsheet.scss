@@ -54,5 +54,10 @@ div.importsheet_missing_column {
             border: 1px solid #ed0;
             padding: 2px 5px;
         }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+        }
     }
 }

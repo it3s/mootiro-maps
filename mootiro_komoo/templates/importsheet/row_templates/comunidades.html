@@ -3,30 +3,6 @@
 {% load komoo_tags %}
 
 
-<div class="metadata">
-  {% if row.errors %}
-  <div class="errors">
-    <h3>{% trans "Errors" %}</h3>
-    <ul>
-      {% for msg in row.errors %}
-      <li>{{ msg }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-                          
-  {% if row.warnings %}
-  <div class="warnings">
-    <h3>{% trans "Warnings" %}</h3>
-    <ul>
-      {% for msg in row.warnings %}
-      <li>{{ msg }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-</div>
-  
 <div class="main-column">
   <h2>{{ row.object_dict.name }}</h2>
   <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
