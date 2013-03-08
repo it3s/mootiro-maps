@@ -94,7 +94,7 @@ class RecursosRowInterpreter(RowInterpreter):
 class RecursosInterpreter(Interpreter):
     '''
     A model of this worksheet is public available in:
-    https://docs.google.com/spreadsheet/ccc?key=0Ahdnyvg2LXX-dHNVTHB6ZGgtVGw3dzVOMVMtV01KWWc#gid=4
+    https://docs.google.com/spreadsheet/ccc?key=0Ahdnyvg2LXX-dG9PTUpXMzBGN2F5MWJxYWRDQXRScHc#gid=4
     '''
     header_rows = 2
     worksheet_name = 'Recursos'

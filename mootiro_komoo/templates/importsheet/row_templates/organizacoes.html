@@ -6,10 +6,7 @@
 <div class="main-column">
   <h2>{{ row.object_dict.name }}</h2>
   <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
-  {% if row.object_dict.geometry %}
-    <i class="icon-map no-hover"></i><span class="meta-info">{% trans "Geometry" %}:</span>
-    {{ row.object_dict.geometry_preview }}
-  {% endif %}
+  
   {% if row.object_dict.community %}
     <div class="a-update">
     {% for c in row.object_dict.community %}

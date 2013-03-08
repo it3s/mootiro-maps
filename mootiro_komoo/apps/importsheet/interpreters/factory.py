@@ -5,11 +5,13 @@ from __future__ import unicode_literals
 from .organizacoes import OrganizacoesInterpreter
 from .recursos import RecursosInterpreter
 from .comunidades import ComunidadesInterpreter
+from .necessidades import NecessidadesInterpreter
 
 INTERPRETERS = [
     OrganizacoesInterpreter,
     RecursosInterpreter,
-    ComunidadesInterpreter
+    ComunidadesInterpreter,
+    NecessidadesInterpreter
 ]
 
 

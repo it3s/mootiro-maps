@@ -1,0 +1,76 @@
+{% load markitup_tags %}
+{% load i18n %}
+{% load komoo_tags %}
+
+
+<div class="main-column">
+  
+  {# ##### Name ##### #}
+  <h2>{{ row.object_dict.name }}</h2>
+  
+  {# ##### Creator ##### #}
+  <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
+  
+  {# ##### Need Categories ##### #}
+  {% if row.object_dict.categories %}
+  <div class="clear-both"></div>
+  <span class="meta-info">{% trans "Need categories" %}:</span>
+  <ul class="horizontal" id="categories">
+    {% for c in row.object_dict.categories %}
+    <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{%trans c.name %}" /></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  
+  {# ##### Communities ##### #}
+  {% if row.object_dict.community %}
+  <div class="clear-both"></div>
+  <div class="a-update">
+  {% for c in row.object_dict.community %}
+      <a href="{{ c.view_url }}" class="update-community">
+        <i class="icon-community-white"></i> {{ c.name }}
+      </a>
+  {% endfor %}
+  </div>
+  {% endif %}
+  
+  {# ##### Description ##### #}
+  {% if row.object_dict.description %}
+  <div class="clear-both"></div>
+  <div class="mark-down">{{ row.object_dict.description|render_markup|safe }}</div>
+  {% endif %}
+</div>
+
+<div class="right-bar right-bar-modif">
+  {# ##### Geometry ##### #}
+  {% if row.object_dict.geometry %}
+  <div class="block">
+    <i class="icon-map no-hover"></i><span class="meta-info">{% trans "Geometry" %}:</span>
+    {{ row.object_dict.geometry_preview }}
+  </div>
+  {% endif %}
+  
+  {# ##### Target-audiences ##### #}
+  {% if row.object_dict.target_audiences %}
+  <div class="block">
+    <h4>{% trans 'Audience' %}</h4>
+    <ul>
+      {% for t in row.object_dict.target_audiences %}
+      <li>{{ t }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  
+  {# ##### Tags ##### #}
+  {% if row.object_dict.tags %}
+  <div class="view-tag-list">
+    <span class="inline-block meta-info">{% trans 'Tags' %}</span>
+    <div class="view-tag-list-tags">
+      {% for tag in row.object_dict.tags %}
+      <span class="inline-block tag">{{ tag }}</span>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</div>

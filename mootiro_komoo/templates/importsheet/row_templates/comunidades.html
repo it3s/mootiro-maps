@@ -6,10 +6,6 @@
 <div class="main-column">
   <h2>{{ row.object_dict.name }}</h2>
   <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
-  {% if row.object_dict.geometry %}
-    <i class="icon-map no-hover"></i><span class="meta-info">{% trans "Geometry" %}:</span>
-    {{ row.object_dict.geometry_preview }}
-  {% endif %}
 
   <div class="mark-down">{{ row.object_dict.description|render_markup|safe }}</div>
   {% if row.object_dict.population %}
@@ -17,7 +13,14 @@
   {% endif %}
 </div>
 
-<div class="right-bar right-bar-modif">  
+<div class="right-bar right-bar-modif">
+  {% if row.object_dict.geometry %}
+  <div class="block">
+    <i class="icon-map no-hover"></i><span class="meta-info">{% trans "Geometry" %}:</span>
+    {{ row.object_dict.geometry_preview }}
+  </div>
+  {% endif %}
+
   <div class="view-tag-list">
     {% if row.object_dict.tags %}
     <span class="inline-block meta-info">{% trans 'Tags' %}</span>
