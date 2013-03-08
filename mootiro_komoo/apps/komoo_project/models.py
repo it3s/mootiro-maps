@@ -16,7 +16,6 @@ import reversion
 
 from authentication.models import User
 from community.models import Community
-from organization.models import Organization
 from search.signals import index_object_for_search
 
 
@@ -39,8 +38,6 @@ class Project(models.Model):
             related_name='project_contributors')
     community = models.ManyToManyField(Community, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
-    public = models.BooleanField(default=True)
-    public_discussion = models.BooleanField(default=True)
 
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 
@@ -67,15 +64,21 @@ class Project(models.Model):
         """ pseudo-reverse query for retrieving the partners logo"""
         return UploadedFile.get_files_for(self)
 
+    @property
+    def public(self):
+        ''' Temporary property to avoid crashes. '''
+        return True
+
+    @property
+    def public_discussion(self):
+        ''' Temporary property to avoid crashes. '''
+        return True
+
     def user_can_edit(self, user):
-        return self.public or \
-               user == self.creator or \
-               user in self.contributors.all()
+        return True
 
     def user_can_discuss(self, user):
-        return self.public_discussion or \
-               user == self.creator or \
-               user in self.contributors.all()
+        return True
 
     @property
     def home_url_params(self):
@@ -105,11 +108,21 @@ class Project(models.Model):
         """Returns a queryset for the objects for a given project"""
         return ProjectRelatedObject.objects.filter(project=self)
 
-    def save_related_object(self, related_object):
+    def save_related_object(self, related_object, user=None, silent=False):
         ct = ContentType.objects.get_for_model(related_object)
+        # Adds the object to project
         obj, created = ProjectRelatedObject.objects.get_or_create(
                 content_type_id=ct.id, object_id=related_object.id,
                 project_id=self.id)
+        if user:
+            # Adds user as contributor
+            self.contributors.add(user)
+            # Creates update entry
+            if created and not silent:
+                from update.models import Update
+                from update.signals import create_update
+                create_update.send(sender=obj.__class__, user=user,
+                                    instance=obj, type=Update.EDIT)
         return created
 
     @property

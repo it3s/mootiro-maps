@@ -215,7 +215,10 @@ function setUrlVars(vars){
         // this is ugly and very dependant on how django/crispyforms
         // generates our . But its quick and works.
         // Perhaps we should refactor this latter
-        $('#div_id_files, #div_id_logo, .org-widget-categories, #div_id_categories').live(
+        $('#div_id_files, #div_id_logo, .org-widget-categories, ' + 
+          '#div_id_categories, #div_id_investor_type, ' + 
+          '#div_id_anonymous_investor, #div_id_over_period, ' +
+          '#div_id_date, #div_id_end_date, #div_id_currency').live(
             'click',
             function(){
                 hintBoxesFocusCb(this);

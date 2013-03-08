@@ -352,11 +352,11 @@ def visualization_opts_js(context):
 
 
           /* Visualization Option */
-          $('.view-list-visualization-header').click(function(){
+          /*$('.view-list-visualization-header').click(function(){
             $('.view-list-visualization-options').slideToggle();
             $('.view-list-visualization-header i').toggleClass('icon-chevron-right');
             $('.view-list-visualization-header i').toggleClass('icon-chevron-down');
-          });
+          });*/
 
           // if we made a query, open selectors
           if(getUrlVars()['sorters'] || getUrlVars()['filters']){

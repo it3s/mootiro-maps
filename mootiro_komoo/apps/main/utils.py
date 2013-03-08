@@ -3,19 +3,23 @@
 from __future__ import unicode_literals  # unicode by default
 
 import json
-from markdown import markdown
+import simplejson
 import requests
+import datetime
+from markdown import markdown
 from string import letters, digits
 from random import choice
+from dateutil.parser import parse as dateutil_parse
+from copy import deepcopy
 
 from django import forms
+from django.http import HttpResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponseNotAllowed
 from django.core.mail import send_mail as django_send_mail
 from django.conf import settings
 from celery.task import task
-
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -31,12 +35,6 @@ except ImportError:
                 getattr(wrapper, attr).update(getattr(wrapped, attr, {}))
             return wrapper
         return inner
-
-
-# DEPRECATED ???
-# def komoo_permalink(obj):
-#     from main.views import ENTITY_MODEL_REV
-#     return '/permalink/{}{}'.format(ENTITY_MODEL_REV[obj.__class__], obj.id)
 
 
 def create_geojson(objects, type_='FeatureCollection', convert=True,
@@ -86,7 +84,9 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
                 }
             }
             if hasattr(obj, 'categories'):
-                feature['properties']['categories'] = [{'name': c.name, 'image': c.image} for c in obj.categories.all()]
+                feature['properties']['categories'] = [
+                        {'name': c.name, 'image': c.image}
+                        for c in obj.categories.all()]
             if hasattr(obj, 'population'):
                 feature['properties']['population'] = obj.population
 
@@ -284,13 +284,15 @@ class ResourceHandler:
     usage:
 
       on views.py
-      class SomeResource(ResourceHandler):
+          ```
+              class SomeResource(ResourceHandler):
 
-        def get(self, request, document_id):
-          # your view code for GET requests go here
+                def get(self, request, document_id):
+                  # your view code for GET requests go here
 
-        def post(self, request, document_id):
-          # your viewcode for POST request go here
+                def post(self, request, document_id):
+                  # your viewcode for POST request go here
+            ```
 
       on urls.py
         url('^my_resource/$', views.SomeResource.dispatch, name='resource')
@@ -324,6 +326,197 @@ def randstr(l=10):
     return s
 
 
+# ======================================================
+
+
+def datetime_to_iso(datetime_obj):
+    """ parses a python datetime object to a ISO-8601 string """
+    if datetime_obj is None:
+        return None
+    return datetime_obj.isoformat()
+
+
+def iso_to_datetime(iso_string):
+    """ parses a ISO-8601 string into a python datetime object """
+    if iso_string is None:
+        return None
+    return dateutil_parse(iso_string)
+
+
+def parse_accept_header(request):
+    """
+    Parse the Accept header *accept*, returning a list with pairs of
+    (media_type, q_value), ordered by q values.
+    ref: http://djangosnippets.org/snippets/1042/
+    """
+    accept = request.META.get('HTTP_ACCEPT', '')
+    result = []
+    for media_range in accept.split(','):
+        parts = media_range.split(';')
+        media_type = parts.pop(0)
+        media_params = []
+        q = 1.0
+        for part in parts:
+            (key, value) = part.lstrip().split('=', 1)
+            if key == 'q':
+                q = float(value)
+            else:
+                media_params.append((key, value))
+        result.append((media_type, tuple(media_params), q))
+    result.sort(lambda x, y: -cmp(x[2], y[2]))
+    return result
+
+
+class ResourceHandler:
+    """
+    Base class for REST-like resources.
+    usage:
+
+      on views.py
+      ```
+      class SomeResource(ResourceHandler):
+
+        def get(self, request, document_id):
+          # your view code for GET requests go here
+
+        def post(self, request, document_id):
+          # your viewcode for POST request go here
+      ```
+      on urls.py
+        url('^my_resource/$', views.SomeResource.dispatch, name='resource')
+    """
+    http_methods = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE']
+
+    @classmethod
+    def as_view(cls, *args, **kwargs):
+        # Keeps compatibility with Django's class-view interface
+        return cls.dispatch
+
+    def _get_handler_method(self, request_handler, http_method):
+        """ Utility function for the Resource Class dispacther."""
+        try:
+            handler_method = getattr(request_handler, http_method.lower())
+            if callable(handler_method):
+                return handler_method
+        except AttributeError:
+            pass
+
+    @classmethod
+    def dispatch(cls, request, *args, **kwargs):
+        req_handler = cls()
+
+        req_handler.accept = parse_accept_header(request)
+        req_handler.accept_type = req_handler.accept[0][0]
+
+        if request.method in cls.http_methods:
+            handler_method = req_handler._get_handler_method(req_handler,
+                                                             request.method)
+            if handler_method:
+                return handler_method(request, *args, **kwargs)
+
+        methods = [method for method in req_handler.http_methods if
+                req_handler._get_handler_method(req_handler, method)]
+        if len(methods) > 0:
+            # http 405: method not allowed
+            return HttpResponseNotAllowed(methods)
+        else:
+            raise Http404
+
+
+def filter_dict(data, keys):
+    """ remove unnecessary data """
+    data = deepcopy(data)
+    for k in keys:
+        if k in data:
+            del data[k]
+    return data
+
+
+def get_fields_to_show(request, default=['all']):
+    data = request.GET.get('fields', None)
+    return data.split(',') if data else default
+
+
+def get_json_data(request):
+    """
+    get raw json data from request.
+    Usefull for requests from Backbone.sync
+    """
+    return simplejson.loads(request.raw_post_data)
+
+
+def _to_json_default(obj):
+    """
+    Converts non default objects to json
+    usage:
+        simplejson.dumps(data, default=to_json)
+    """
+
+    # Geometries
+    if getattr(obj, 'geojson', None):
+        return simplejson.dumps(obj.geojson)
+
+    # Datetime
+    if isinstance(obj, datetime.datetime):
+        return datetime_to_iso(obj)
+
+    try:
+        return obj.id
+    except Exception:
+        raise TypeError(repr(obj) + ' is not JSON serializable')
+
+
+def to_json(data):
+    return simplejson.dumps(data, default=_to_json_default)
+
+
+class JsonResponse(HttpResponse):
+    """
+    Creates a Json Response. The Http status code can be changed.
+    usage:
+        ```
+            def my_view(request):
+                # some code
+                return JsonResponse(my_data_dict)
+            def my_other_view(request):
+                # some code
+                return JsonResponse(my_errors_dict, status_code=400)
+        ```
+    """
+    def __init__(self, data={}, status_code=None):
+        content = to_json(data)
+        super(JsonResponse, self).__init__(content=content,
+                    mimetype='application/json')
+        if status_code:
+            self.status_code = status_code
+
+
+class JsonResponseError(JsonResponse):
+    """ Json Response for errors """
+    def __init__(self, error={}, status_code=400):
+        super(JsonResponseError, self).__init__(
+                {'errors': error}, status_code=status_code)
+
+
+class JsonResponseNotFound(JsonResponseError):
+    """ Json Response for 404 Not Found error """
+    def __init__(self, msg=''):
+        err = 'Not found'
+        super(JsonResponseNotFound, self).__init__(
+                err if not msg else '{}: {}'.format(err, msg),
+                status_code=404)
+
+
+def build_obj_from_dict(obj, data, keys=[], date_keys=[]):
+    """ utility function for being use with .from_dict() methods """
+    for key, val in data.iteritems():
+        if key in keys:
+            if key in date_keys and isinstance(val, basestring):
+                setattr(obj, key, iso_to_datetime(val))
+            else:
+                setattr(obj, key, val)
+
+
 def get_model_from_table_ref(table_ref):
     """
     given a table_ref like 'app_label.class_name', return the refered model
@@ -333,3 +526,4 @@ def get_model_from_table_ref(table_ref):
     models = getattr(module, 'models')
     model = getattr(models, model_name)
     return model
+

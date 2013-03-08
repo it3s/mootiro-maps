@@ -618,3 +618,75 @@ div.importsheet_missing_column {
     margin: 10px 0 10px 350px; }
   .use-cases#main-content > div.section:nth-child(even) > img {
     float: left; }
+
+#main-content.project {
+  width: 100%;
+  margin-top: 50px;
+  padding-left: 0px;
+  padding-right: 0px;
+  /* For IE 6/7 (trigger hasLayout) */ }
+  #main-content.project > div {
+    width: 950px;
+    margin-left: auto !important;
+    margin-right: auto !important; }
+  #main-content.project .main-column {
+    width: 620px;
+    margin-right: 10px; }
+  #main-content.project .main-column.right {
+    margin-left: 10px;
+    margin-right: 0px; }
+  #main-content.project .left-bar,
+  #main-content.project .right-bar {
+    width: 300px; }
+  #main-content.project .tabs {
+    margin: 10px 0px 40px !important;
+    width: 100% !important;
+    border-bottom: solid 1px silver;
+    font-size: 0.9em; }
+    #main-content.project .tabs > ul {
+      width: 950px;
+      margin: 0 auto;
+      list-style: none; }
+      #main-content.project .tabs > ul .tab {
+        -moz-border-radius: 5px 5px 0px 0px;
+        -webkit-border-radius: 5px 5px 0px 0px;
+        border-radius: 5px 5px 0px 0px;
+        display: inline-block;
+        margin: 0 5px -1px;
+        padding: 3px 0;
+        border: solid 1px transparent; }
+        #main-content.project .tabs > ul .tab > a {
+          padding: 3px 30px;
+          text-decoration: underline; }
+      #main-content.project .tabs > ul > .tab.selected {
+        border: solid 1px silver;
+        border-bottom: solid 1px white; }
+        #main-content.project .tabs > ul > .tab.selected > a {
+          color: black;
+          text-decoration: none; }
+  #main-content.project .tab-content {
+    overflow: visible;
+    min-height: 300px; }
+  #main-content.project .tab-content:before,
+  #main-content.project .tab-content:after {
+    content: "";
+    display: table; }
+  #main-content.project .tab-content:after {
+    clear: both; }
+  #main-content.project .container {
+    zoom: 1; }
+  #main-content.project .view-info-contributor {
+    display: inline-block;
+    width: 225px;
+    margin: 5px;
+    clear: both;
+    vertical-align: top; }
+    #main-content.project .view-info-contributor .avatar {
+      width: 64px;
+      margin: 5px;
+      float: left;
+      vertical-align: top; }
+    #main-content.project .view-info-contributor .name {
+      display: inline-block;
+      width: 150px;
+      margin-top: 15px; }
