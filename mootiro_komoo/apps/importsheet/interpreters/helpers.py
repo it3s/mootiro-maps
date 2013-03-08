@@ -213,3 +213,5 @@ def set_tags(obj):
             obj.object_dict['tags'].append('sem e-mail')
     if not bool([s for s in obj.row_dict['Geometria'].values() if s != '']):
         obj.object_dict['tags'].append('sem ponto')
+    if obj.row_dict['Geometria']['Ponto como área'] != '':
+        obj.object_dict['tags'].append('ponto aproximado')
