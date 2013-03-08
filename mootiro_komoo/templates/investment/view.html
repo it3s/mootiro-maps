@@ -82,6 +82,7 @@
     {% track_buttons investment %}
     {% report_content investment %}
     {% delete_button investment %}
+    {% social_buttons %}
     {% comments investment %}
   </div>
 
@@ -96,7 +97,8 @@
   <script type="text/javascript">
     var help = new HelpCenter(
       "#help_button",
-      ["investment:what_is", "investment:transparency"]
+      ["investment:what_is", "investment:transparency"],
+      'investment_show'
     );
   </script>
 {% endblock %}

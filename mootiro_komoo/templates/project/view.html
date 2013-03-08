@@ -345,6 +345,10 @@
 
 {% block help_center %}
   <script type="text/javascript">
-    var help = new HelpCenter("#help_button", [], 'project_show');
+    var help = new HelpCenter(
+      "#help_button",
+      ["project:what_is", "project:batch_upload", "project:promote"],
+      'project_show'
+    );
   </script>
 {% endblock %}
