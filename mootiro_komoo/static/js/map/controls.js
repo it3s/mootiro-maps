@@ -1102,9 +1102,16 @@
 
       FeatureClusterer.prototype.handleMapEvents = function() {
         var _this = this;
-        return this.map.subscribe('feature_created', function(feature) {
+        this.map.subscribe('feature_created', function(feature) {
           if (!(_this.featureType != null) || feature.getType() === _this.featureType) {
             return _this.push(feature);
+          }
+        });
+        return this.map.subscribe('idle features_loaded', function() {
+          if (_this.map.getZoom() <= _this.maxZoom) {
+            return _this.map.getFeatures().setVisible(false);
+          } else {
+            return _this.map.getFeatures().setVisible(true);
           }
         });
       };

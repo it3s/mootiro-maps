@@ -141,7 +141,6 @@
         highlighted = this.isHighlighted() ? "highlighted/" : "";
         categoryOrType = this.properties.type.toLowerCase();
         url = ("/static/img/" + nearOrFar + "/" + highlighted + categoryOrType + ".png").replace(' ', '-');
-        console.log('---->', url);
         return url;
       };
 
