@@ -165,30 +165,27 @@ def set_geometria(obj):
                     # FIXME: correct order is lat, lng. Before fixing must adjust
                     #        both in DB and in the map.
                     for geom in geodict['geometries']:
-                        for poly in geom['coordinates']:
-                            for i in xrange(len(poly)):
-                                # iterate by index to edit object in place
-                                poly[i] = [poly[i][1], poly[i][0]]
+                        if geom['type'] == 'LineString':
+                            points = geom['coordinates']
+                            for i in xrange(len(points)):
+                                points[i] = [points[i][1], points[i][0]]
+                        else:
+                            for poly in geom['coordinates']:
+                                for i in xrange(len(poly)):
+                                    # iterate by index to edit object in place
+                                    poly[i] = [poly[i][1], poly[i][0]]
                     break
             if not found:
                 msg = 'Identificador do polígono não encontrado: {}'.format(polygon)
                 obj.errors.append(msg)
                 return
-        
+
         g = GeoRefModel()
         geojson = json.dumps(geodict)
         g.geometry = geojson
         obj.object_dict['geometry'] = geojson
         obj.object_dict['geometry_preview'] = point or point_as_area or polygon or ''
         
-        # obj.object_dict['tooltip_map_preview'] = {
-        #     'type': 'FeatureCollection',
-        #     'features': [{
-        #         'type': 'Feature',
-        #         'geometry': geodict['geometries'][0],
-        #     }],
-        # }
-
     except ValueError:
         msg = 'Dado de geometria não é um número válido.'
         obj.errors.append(msg)
