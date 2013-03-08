@@ -196,6 +196,15 @@ class Interpreter(object):
                 break
             self.rows.append(ri)
 
+        # discover two objects with same name in spreadsheet
+        names = [r.object_dict['name'] for r in self.rows]
+        names_count = {n:names.count(n) for n in names}
+        for n, c in names_count.items():
+            if c > 1:
+                msg = _('{} objects to be imported with same name: {}') \
+                        .format(c, n)
+                self.errors.append(msg)
+
     def insert(self):
         '''
         Tries to insert all objects into the system atomically. If any error
