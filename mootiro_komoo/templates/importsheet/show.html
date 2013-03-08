@@ -58,7 +58,7 @@
       </div>
       {% endif %}
       
-      {% if interpreter.warnings %}
+      {% if interpreter.warnings or empty %}
       <div class="metadata">
         <div class="warnings">
           <h3>{% trans "Warnings" %}</h3>
@@ -66,6 +66,9 @@
             {% for msg in interpreter.warnings %}
             <li>{{ msg }}</li>
             {% endfor %}
+            {% if empty %}
+            <li>{% trans "Worksheet is empty" %}: {{interpreter.worksheet_name}}</li>
+            {% endif %}
           </ul>
         </div>
       </div>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-08 18:57-0300\n"
+"POT-Creation-Date: 2013-03-08 20:21-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -130,10 +130,10 @@ msgstr "População"
 #: apps/main/templatetags/komoo_tags.py:326 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
-#: templates/importsheet/row_templates/comunidades.html:23
-#: templates/importsheet/row_templates/necessidades.html:52
-#: templates/importsheet/row_templates/organizacoes.html:52
-#: templates/importsheet/row_templates/recursos.html:37
+#: templates/importsheet/row_templates/comunidades.html:38
+#: templates/importsheet/row_templates/necessidades.html:69
+#: templates/importsheet/row_templates/organizacoes.html:81
+#: templates/importsheet/row_templates/recursos.html:59
 #: templates/main/templatetags/taglist.html:5
 msgid "Tags"
 msgstr "Palavras-Chave"
@@ -293,8 +293,8 @@ msgstr "Logotipo"
 
 #: apps/komoo_project/forms.py:45 apps/komoo_resource/forms.py:43
 #: apps/organization/forms.py:66
-#: templates/importsheet/row_templates/organizacoes.html:27
-#: templates/importsheet/row_templates/recursos.html:31
+#: templates/importsheet/row_templates/organizacoes.html:46
+#: templates/importsheet/row_templates/recursos.html:51
 #: templates/organization/show.html:160 templates/project/old_view.html:268
 #: templates/project/view.html:103 templates/resource/show.html:99
 msgid "Contact"
@@ -309,7 +309,7 @@ msgid "Unnamed"
 msgstr "Sem nome"
 
 #: apps/komoo_resource/forms.py:42
-#: templates/importsheet/row_templates/recursos.html:9
+#: templates/importsheet/row_templates/recursos.html:17
 msgid "Kind"
 msgstr "Tipo"
 
@@ -536,7 +536,7 @@ msgid "Investment"
 msgstr "Investimento"
 
 #: apps/main/templatetags/komoo_tags.py:331
-#: templates/importsheet/row_templates/necessidades.html:11
+#: templates/importsheet/row_templates/necessidades.html:18
 msgid "Need categories"
 msgstr "Áreas"
 
@@ -1353,7 +1353,7 @@ msgstr "Simular"
 msgid "I'm finished. Insert all."
 msgstr "Terminei. Inserir tudo."
 
-#: templates/importsheet/show.html:46 templates/importsheet/show.html.py:83
+#: templates/importsheet/show.html:46 templates/importsheet/show.html.py:86
 msgid "Errors"
 msgstr "Erros"
 
@@ -1361,35 +1361,39 @@ msgstr "Erros"
 msgid "There are errors with row"
 msgstr "Há erros na linha"
 
-#: templates/importsheet/show.html:64 templates/importsheet/show.html.py:94
+#: templates/importsheet/show.html:64 templates/importsheet/show.html.py:97
 msgid "Warnings"
 msgstr "Avisos"
 
-#: templates/importsheet/show.html:78
+#: templates/importsheet/show.html:70
+msgid "Worksheet is empty"
+msgstr "Planilha sem dados"
+
+#: templates/importsheet/show.html:81
 msgid "Row number"
 msgstr "Número da linha"
 
-#: templates/importsheet/row_templates/comunidades.html:8
-#: templates/importsheet/row_templates/necessidades.html:8
-#: templates/importsheet/row_templates/organizacoes.html:8
-#: templates/importsheet/row_templates/recursos.html:11
+#: templates/importsheet/row_templates/comunidades.html:11
+#: templates/importsheet/row_templates/necessidades.html:12
+#: templates/importsheet/row_templates/organizacoes.html:12
+#: templates/importsheet/row_templates/recursos.html:12
 msgid "Creator"
 msgstr "Criador"
 
-#: templates/importsheet/row_templates/comunidades.html:10
-#: templates/importsheet/row_templates/necessidades.html:36
-#: templates/importsheet/row_templates/organizacoes.html:10
-#: templates/importsheet/row_templates/recursos.html:13
+#: templates/importsheet/row_templates/comunidades.html:30
+#: templates/importsheet/row_templates/necessidades.html:49
+#: templates/importsheet/row_templates/organizacoes.html:38
+#: templates/importsheet/row_templates/recursos.html:43
 msgid "Geometry"
 msgstr "Geometria"
 
-#: templates/importsheet/row_templates/necessidades.html:42
-#: templates/importsheet/row_templates/organizacoes.html:37
+#: templates/importsheet/row_templates/necessidades.html:57
+#: templates/importsheet/row_templates/organizacoes.html:59
 #: templates/organization/show.html:178
 msgid "Audience"
 msgstr "Público"
 
-#: templates/importsheet/row_templates/organizacoes.html:30
+#: templates/importsheet/row_templates/organizacoes.html:70
 #: templates/komoo_map/info_window.html:43 templates/organization/list.html:53
 #: templates/organization/show.html:167
 msgid "Operation Field"
