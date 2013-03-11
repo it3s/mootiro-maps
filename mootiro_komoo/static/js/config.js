@@ -8,7 +8,7 @@
     paths: {
       'lib': '../lib',
       'templates': '../templates',
-      'ad-gallery': '../ad_gallery/jquery.ad-gallery.min',
+      'spock-gallery': '../spock_gallery/jquery.spock-gallery.min',
       'jquery': '../lib/jquery-1.7.1.min',
       'underscore': '../lib/underscore-min',
       'backbone': '../lib/backbone-min',

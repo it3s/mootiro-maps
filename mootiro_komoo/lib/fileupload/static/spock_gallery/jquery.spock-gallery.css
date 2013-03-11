@@ -5,30 +5,30 @@
  *
  * Version: 1.2.7
  *
- * Demo and documentation: http://coffeescripter.com/code/ad-gallery/
+ * Demo and documentation: http://coffeescripter.com/code/spock-gallery/
  */
-.ad-gallery {
+.spock-gallery {
   width: 600px;
 }
-.ad-gallery, .ad-gallery * {
+.spock-gallery, .spock-gallery * {
   margin: 0;
   padding: 0;
 }
-  .ad-gallery .ad-image-wrapper {
+  .spock-gallery .spock-image-wrapper {
     width: 100%;
     height: 400px;
     margin-bottom: 10px;
     position: relative;
     overflow: hidden;
   }
-    .ad-gallery .ad-image-wrapper .ad-loader {
+    .spock-gallery .spock-image-wrapper .spock-loader {
       position: absolute;
       z-index: 10;
       top: 48%;
       left: 48%;
       border: 1px solid #CCC;
     }
-    .ad-gallery .ad-image-wrapper .ad-next {
+    .spock-gallery .spock-image-wrapper .spock-next {
       position: absolute;
       right: 0;
       top: 0;
@@ -38,7 +38,7 @@
       display: block;
       z-index: 200;
     }
-    .ad-gallery .ad-image-wrapper .ad-prev {
+    .spock-gallery .spock-image-wrapper .spock-prev {
       position: absolute;
       left: 0;
       top: 0;
@@ -48,12 +48,12 @@
       display: block;
       z-index: 200;
     }
-    .ad-gallery .ad-image-wrapper .ad-prev, .ad-gallery .ad-image-wrapper .ad-next {
+    .spock-gallery .spock-image-wrapper .spock-prev, .spock-gallery .spock-image-wrapper .spock-next {
       /* Or else IE will hide it */
       background: url(trans.gif);
     }
-      .ad-gallery .ad-image-wrapper .ad-prev .ad-prev-image, .ad-gallery .ad-image-wrapper .ad-next .ad-next-image {
-        background: url(ad_prev.png);
+      .spock-gallery .spock-image-wrapper .spock-prev .spock-prev-image, .spock-gallery .spock-image-wrapper .spock-next .spock-next-image {
+        background: url(spock_gallery_prev.png);
         width: 30px;
         height: 30px;
         display: none;
@@ -62,24 +62,24 @@
         left: 0;
         z-index: 101;
       }
-      .ad-gallery .ad-image-wrapper .ad-next .ad-next-image {
-        background: url(ad_next.png);
+      .spock-gallery .spock-image-wrapper .spock-next .spock-next-image {
+        background: url(spock_gallery_next.png);
         width: 30px;
         height: 30px;
         right: 0;
         left: auto;
       }
-    .ad-gallery .ad-image-wrapper .ad-image {
+    .spock-gallery .spock-image-wrapper .spock-image {
       position: absolute;
       overflow: hidden;
       top: 0;
       left: 0;
       z-index: 9;
     }
-      .ad-gallery .ad-image-wrapper .ad-image a img {
+      .spock-gallery .spock-image-wrapper .spock-image a img {
         border: 0;
       }
-      .ad-gallery .ad-image-wrapper .ad-image .ad-image-description {
+      .spock-gallery .spock-image-wrapper .spock-image .spock-image-description {
         position: absolute;
         bottom: 0px;
         left: 0px;
@@ -90,87 +90,87 @@
         background: url(opa75.png);
         color: #000;
       }
-      * html .ad-gallery .ad-image-wrapper .ad-image .ad-image-description {
+      * html .spock-gallery .spock-image-wrapper .spock-image .spock-image-description {
         background: none;
         filter:progid:DXImageTransform.Microsoft.AlphaImageLoader (enabled=true, sizingMethod=scale, src='opa75.png');
       }
-        .ad-gallery .ad-image-wrapper .ad-image .ad-image-description .ad-description-title {
+        .spock-gallery .spock-image-wrapper .spock-image .spock-image-description .spock-description-title {
           display: block;
         }
-  .ad-gallery .ad-controls {
+  .spock-gallery .spock-controls {
     height: 20px;
   }
-    .ad-gallery .ad-info {
+    .spock-gallery .spock-info {
       float: left;
     }
-    .ad-gallery .ad-slideshow-controls {
+    .spock-gallery .spock-slideshow-controls {
       float: right;
     }
-      .ad-gallery .ad-slideshow-controls .ad-slideshow-start, .ad-gallery .ad-slideshow-controls .ad-slideshow-stop {
+      .spock-gallery .spock-slideshow-controls .spock-slideshow-start, .spock-gallery .spock-slideshow-controls .spock-slideshow-stop {
         padding-left: 5px;
         cursor: pointer;
       }
-      .ad-gallery .ad-slideshow-controls .ad-slideshow-countdown {
+      .spock-gallery .spock-slideshow-controls .spock-slideshow-countdown {
         padding-left: 5px;
         font-size: 0.9em;
       }
-    .ad-gallery .ad-slideshow-running .ad-slideshow-start {
+    .spock-gallery .spock-slideshow-running .spock-slideshow-start {
       cursor: default;
       font-style: italic;
     }
-  .ad-gallery .ad-nav {
+  .spock-gallery .spock-nav {
     width: 100%;
     position: relative;
   }
-    .ad-gallery .ad-forward, .ad-gallery .ad-back {
+    .spock-gallery .spock-forward, .spock-gallery .spock-back {
       position: absolute;
       top: 0;
       height: 100%;
       z-index: 10;
     }
     /* IE 6 doesn't like height: 100% */
-    * html .ad-gallery .ad-forward, .ad-gallery .ad-back {
+    * html .spock-gallery .spock-forward, .spock-gallery .spock-back {
       height: 100px;
     }
-    .ad-gallery .ad-back {
+    .spock-gallery .spock-back {
       cursor: pointer;
       left: -20px;
       width: 13px;
       display: block;
-      background: url(ad_scroll_back.png) 0px 22px no-repeat;
+      background: url(spock_gallery_scroll_back.png) 0px 22px no-repeat;
     }
-    .ad-gallery .ad-forward {
+    .spock-gallery .spock-forward {
       cursor: pointer;
       display: block;
       right: -20px;
       width: 13px;
-      background: url(ad_scroll_forward.png) 0px 22px no-repeat;
+      background: url(spock_gallery_scroll_forward.png) 0px 22px no-repeat;
     }
-    .ad-gallery .ad-nav .ad-thumbs {
+    .spock-gallery .spock-nav .spock-thumbs {
       overflow: hidden;
       width: 100%;
     }
-      .ad-gallery .ad-thumbs .ad-thumb-list {
+      .spock-gallery .spock-thumbs .spock-thumb-list {
         float: left;
         width: 9000px;
         list-style: none;
       }
-        .ad-gallery .ad-thumbs li {
+        .spock-gallery .spock-thumbs li {
           float: left;
           padding-right: 5px;
         }
-          .ad-gallery .ad-thumbs li a {
+          .spock-gallery .spock-thumbs li a {
             display: block;
           }
-            .ad-gallery .ad-thumbs li a img {
+            .spock-gallery .spock-thumbs li a img {
               border: 3px solid #CCC;
               display: block;
             }
-            .ad-gallery .ad-thumbs li a.ad-active img {
+            .spock-gallery .spock-thumbs li a.spock-active img {
               border: 3px solid #616161;
             }
-/* Can't do display none, since Opera won't load the images then */
-.ad-preloads {
+/* Can't do display none, since Opera won't lospock the images then */
+.spock-preloads {
   position: absolute;
   left: -9000px;
   top: -9000px;

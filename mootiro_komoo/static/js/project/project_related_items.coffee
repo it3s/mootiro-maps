@@ -1,4 +1,4 @@
-define ['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery'], ($, _, Backbone, drawFeaturesList) ->
+define ['jquery', 'underscore', 'backbone', 'related_items_panel', 'spock-gallery'], ($, _, Backbone, drawFeaturesList) ->
 
     window.PartnersLogo = Backbone.Model.extend
         toJSON: (attr) ->
@@ -12,7 +12,7 @@ define ['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery']
             _.bindAll this, 'render'
             @template = _.template """
                 <a href="<%= url %>">
-                    <img src="<%= url %>" class="ad_image_gallery_thumb" />
+                    <img src="<%= url %>" class="spock_image_gallery_thumb" />
                 </a>
             """
 
@@ -29,12 +29,12 @@ define ['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery']
             _.bindAll this, 'render'
             @template = _.template """
                 <div class="proj-partners-title">Parceiros:</div>
-                <div id="logos-gallery" class="ad-gallery">
-                    <div class="ad-image-wrapper"></div>
-                    <div class="ad-controls"></div>
-                    <div class="ad-nav">
-                        <div class="ad-thumbs">
-                            <ul class="ad-thumb-list"></ul>
+                <div id="logos-gallery" class="spock-gallery">
+                    <div class="spock-image-wrapper"></div>
+                    <div class="spock-controls"></div>
+                    <div class="spock-nav">
+                        <div class="spock-thumbs">
+                            <ul class="spock-thumb-list"></ul>
                         </div>
                     </div>
                 </div>
@@ -46,7 +46,7 @@ define ['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery']
             if collection.length is 0
                 return this
             @$el.html @template()
-            $logos = this.$ '.ad-thumb-list'
+            $logos = this.$ '.spock-thumb-list'
             $gallery = this.$ '#logos-gallery'
 
             collection.each (logo) ->
@@ -54,7 +54,7 @@ define ['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery']
                     model: logo
                 $logos.append view.render().$el
 
-            $gallery.adGallery
+            $gallery.spockGallery
                 loader_image: '/static/img/loader.gif'
                 width: 250
                 height:150

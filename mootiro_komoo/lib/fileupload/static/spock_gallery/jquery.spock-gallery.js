@@ -8,8 +8,8 @@
  * Demo and documentation: http://coffeescripter.com/code/ad-gallery/
  */
 (function($) {
-  $.fn.adGallery = function(options) {
-    var defaults = { loader_image: 'loader.gif',
+  $.fn.spockGallery = function(options) {
+    var defaults = { loader_image: '/static/img/loader.gif',
                      start_at_index: 0,
                      update_window_hash: true,
                      description_wrapper: false,
@@ -54,7 +54,7 @@
     };
     var galleries = [];
     $(this).each(function() {
-      var gallery = new AdGallery(this, settings);
+      var gallery = new spockGallery(this, settings);
       galleries[galleries.length] = gallery;
     });
     // Sorry, breaking the jQuery chain because the gallery instances
@@ -132,10 +132,10 @@
             speed: 0};
   };
 
-  function AdGallery(wrapper, settings) {
+  function spockGallery(wrapper, settings) {
     this.init(wrapper, settings);
   };
-  AdGallery.prototype = {
+  spockGallery.prototype = {
     // Elements
     wrapper: false,
     image_wrapper: false,
@@ -194,7 +194,7 @@
       var nextimage_callback = function(callback) {
         return context.nextImage(callback);
       };
-      this.slideshow = new AdGallerySlideshow(nextimage_callback, this.settings.slideshow);
+      this.slideshow = new spockGallerySlideshow(nextimage_callback, this.settings.slideshow);
       this.controls.append(this.slideshow.create());
       if(this.settings.slideshow.enable) {
         this.slideshow.enable();
@@ -235,15 +235,15 @@
       };
     },
     setupElements: function() {
-      this.controls = this.wrapper.find('.ad-controls');
-      this.gallery_info = $('<p class="ad-info"></p>');
+      this.controls = this.wrapper.find('.spock-controls');
+      this.gallery_info = $('<p class="spock-info"></p>');
       this.controls.append(this.gallery_info);
-      this.image_wrapper = this.wrapper.find('.ad-image-wrapper');
+      this.image_wrapper = this.wrapper.find('.spock-image-wrapper');
       this.image_wrapper.empty();
-      this.nav = this.wrapper.find('.ad-nav');
-      this.thumbs_wrapper = this.nav.find('.ad-thumbs');
-      this.preloads = $('<div class="ad-preloads"></div>');
-      this.loader = $('<img class="ad-loader" src="'+ this.settings.loader_image +'">');
+      this.nav = this.wrapper.find('.spock-nav');
+      this.thumbs_wrapper = this.nav.find('.spock-thumbs');
+      this.preloads = $('<div class="spock-preloads"></div>');
+      this.loader = $('<img class="spock-loader" src="'+ this.settings.loader_image +'">');
       this.image_wrapper.append(this.loader);
       this.loader.hide();
       $(document.body).append(this.preloads);
@@ -272,7 +272,7 @@
       thumbs.each(
         function(i) {
           var link = $(this);
-          link.data("ad-i", i);
+          link.data("spock-i", i);
           var image_src = link.attr('href');
           var thumb = link.find('img');
           context.whenImageLoaded(thumb[0], function() {
@@ -303,7 +303,7 @@
     },
     _setThumbListWidth: function(wrapper_width) {
       wrapper_width -= 100;
-      var list = this.nav.find('.ad-thumb-list');
+      var list = this.nav.find('.spock-thumb-list');
       list.css('width', wrapper_width +'px');
       var i = 1;
       var last_height = list.height();
@@ -323,19 +323,19 @@
       var context = this;
       link.click(
         function() {
-          context.showImage(link.data("ad-i"));
+          context.showImage(link.data("spock-i"));
           context.slideshow.stop();
           return false;
         }
       ).hover(
         function() {
-          if(!$(this).is('.ad-active') && context.settings.thumb_opacity < 1) {
+          if(!$(this).is('.spock-active') && context.settings.thumb_opacity < 1) {
             $(this).find('img').fadeTo(300, 1);
           };
-          context.preloadImage(link.data("ad-i"));
+          context.preloadImage(link.data("spock-i"));
         },
         function() {
-          if(!$(this).is('.ad-active') && context.settings.thumb_opacity < 1) {
+          if(!$(this).is('.spock-active') && context.settings.thumb_opacity < 1) {
             $(this).find('img').fadeTo(300, context.settings.thumb_opacity);
           };
         }
@@ -344,20 +344,20 @@
     _createImageData: function(thumb_link, image_src) {
       var link = false;
       var thumb_img = thumb_link.find("img");
-      if(thumb_img.data('ad-link')) {
-        link = thumb_link.data('ad-link');
+      if(thumb_img.data('spock-link')) {
+        link = thumb_link.data('spock-link');
       } else if(thumb_img.attr('longdesc') && thumb_img.attr('longdesc').length) {
         link = thumb_img.attr('longdesc');
       };
       var desc = false;
-      if(thumb_img.data('ad-desc')) {
-        desc = thumb_img.data('ad-desc');
+      if(thumb_img.data('spock-desc')) {
+        desc = thumb_img.data('spock-desc');
       } else if(thumb_img.attr('alt') && thumb_img.attr('alt').length) {
         desc = thumb_img.attr('alt');
       };
       var title = false;
-      if(thumb_img.data('ad-title')) {
-        title = thumb_img.data('ad-title');
+      if(thumb_img.data('spock-title')) {
+        title = thumb_img.data('spock-title');
       } else if(thumb_img.attr('title') && thumb_img.attr('title').length) {
         title = thumb_img.attr('title');
       };
@@ -382,8 +382,8 @@
       );
     },
     getIndexFromHash: function() {
-      if(window.location.hash && window.location.hash.indexOf('#ad-image-') === 0) {
-        var id = window.location.hash.replace(/^#ad-image-/g, '');
+      if(window.location.hash && window.location.hash.indexOf('#spock-image-') === 0) {
+        var id = window.location.hash.replace(/^#spock-image-/g, '');
         var thumb = this.thumbs_wrapper.find("#"+ id);
         if(thumb.length) {
           return this.thumbs_wrapper.find("a").index(thumb);
@@ -407,7 +407,7 @@
       this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
       this.thumbs_wrapper.find('a').each(
         function(i) {
-          $(this).data("ad-i", i);
+          $(this).data("spock-i", i);
         }
       );
       if(index == this.current_index && this.images.length != 0) {
@@ -446,7 +446,7 @@
         context._setThumbListWidth(context.thumbs_wrapper_width);
       });
       var i = this.images.length;
-      link.data("ad-i", i);
+      link.data("spock-i", i);
       this._initLink(link);
       this.images[i] = context._createImageData(link, image_url);
       this.gallery_info.html((this.current_index + 1) +' / '+ this.images.length);
@@ -474,8 +474,8 @@
       };
     },
     initNextAndPrev: function() {
-      this.next_link = $('<div class="ad-next"><div class="ad-next-image"></div></div>');
-      this.prev_link = $('<div class="ad-prev"><div class="ad-prev-image"></div></div>');
+      this.next_link = $('<div class="spock-next"><div class="spock-next-image"></div></div>');
+      this.prev_link = $('<div class="spock-prev"><div class="spock-prev-image"></div></div>');
       this.image_wrapper.append(this.next_link);
       this.image_wrapper.append(this.prev_link);
       var context = this;
@@ -491,7 +491,7 @@
         }
       ).click(
         function() {
-          if($(this).is('.ad-next')) {
+          if($(this).is('.spock-next')) {
             context.nextImage();
             context.slideshow.stop();
           } else {
@@ -503,8 +503,8 @@
     },
     initBackAndForward: function() {
       var context = this;
-      this.scroll_forward = $('<div class="ad-forward"></div>');
-      this.scroll_back = $('<div class="ad-back"></div>');
+      this.scroll_forward = $('<div class="spock-forward"></div>');
+      this.scroll_back = $('<div class="spock-back"></div>');
       this.nav.append(this.scroll_forward);
       this.nav.prepend(this.scroll_back);
       var has_scrolled = 0;
@@ -517,7 +517,7 @@
           if(context.settings.scroll_jump > 0) {
             var width = context.settings.scroll_jump;
           };
-          if($(this).is('.ad-forward')) {
+          if($(this).is('.spock-forward')) {
             var left = context.thumbs_wrapper.scrollLeft() + width;
           } else {
             var left = context.thumbs_wrapper.scrollLeft() - width;
@@ -531,7 +531,7 @@
       ).css('opacity', 0.6).hover(
         function() {
           var direction = 'left';
-          if($(this).is('.ad-forward')) {
+          if($(this).is('.spock-forward')) {
             direction = 'right';
           };
           thumbs_scroll_interval = setInterval(
@@ -574,9 +574,9 @@
       if(this.settings.update_window_hash) {
         var thumb_link = this.images[this.current_index].thumb_link;
         if (thumb_link.attr("id")) {
-          window.location.hash = "#ad-image-"+ thumb_link.attr("id");
+          window.location.hash = "#spock-image-"+ thumb_link.attr("id");
         } else {
-          window.location.hash = "#ad-image-"+ this.current_index;
+          window.location.hash = "#spock-image-"+ this.current_index;
         };
       };
       this.fireCallback(this.settings.callbacks.afterImageVisible);
@@ -619,13 +619,13 @@
       if(image.desc.length || image.title.length) {
         var title = '';
         if(image.title.length) {
-          title = '<strong class="ad-description-title">'+ image.title +'</strong>';
+          title = '<strong class="spock-description-title">'+ image.title +'</strong>';
         };
         var desc = '';
         if(image.desc.length) {
           desc = '<span>'+ image.desc +'</span>';
         };
-        desc = $('<p class="ad-image-description">'+ title + desc +'</p>');
+        desc = $('<p class="spock-image-description">'+ title + desc +'</p>');
       };
       return desc;
     },
@@ -657,7 +657,7 @@
       if(this.images[index]) {
         var context = this;
         var image = this.images[index];
-        var img_container = $(document.createElement('div')).addClass('ad-image');
+        var img_container = $(document.createElement('div')).addClass('spock-image');
         var img = $(new Image()).attr('src', image.image);
         if(image.link) {
           var link = $('<a href="'+ image.link +'" target="_blank"></a>');
@@ -828,10 +828,10 @@
       return true;
     },
     highLightThumb: function(thumb) {
-      this.thumbs_wrapper.find('.ad-active').removeClass('ad-active');
-      thumb.addClass('ad-active');
+      this.thumbs_wrapper.find('.spock-active').removeClass('spock-active');
+      thumb.addClass('spock-active');
       if(this.settings.thumb_opacity < 1) {
-        this.thumbs_wrapper.find('a:not(.ad-active) img').fadeTo(300, this.settings.thumb_opacity);
+        this.thumbs_wrapper.find('a:not(.spock-active) img').fadeTo(300, this.settings.thumb_opacity);
         thumb.find('img').fadeTo(300, 1);
       };
       var left = thumb[0].parentNode.offsetLeft;
@@ -845,10 +845,10 @@
     }
   };
 
-  function AdGallerySlideshow(nextimage_callback, settings) {
+  function spockGallerySlideshow(nextimage_callback, settings) {
     this.init(nextimage_callback, settings);
   };
-  AdGallerySlideshow.prototype = {
+  spockGallerySlideshow.prototype = {
     start_link: false,
     stop_link: false,
     countdown: false,
@@ -865,10 +865,10 @@
       this.settings = settings;
     },
     create: function() {
-      this.start_link = $('<span class="ad-slideshow-start">'+ this.settings.start_label +'</span>');
-      this.stop_link = $('<span class="ad-slideshow-stop">'+ this.settings.stop_label +'</span>');
-      this.countdown = $('<span class="ad-slideshow-countdown"></span>');
-      this.controls = $('<div class="ad-slideshow-controls"></div>');
+      this.start_link = $('<span class="spock-slideshow-start">'+ this.settings.start_label +'</span>');
+      this.stop_link = $('<span class="spock-slideshow-stop">'+ this.settings.stop_label +'</span>');
+      this.countdown = $('<span class="spock-slideshow-countdown"></span>');
+      this.controls = $('<div class="spock-slideshow-controls"></div>');
       this.controls.append(this.start_link).append(this.stop_link).append(this.countdown);
       this.countdown.hide();
 
@@ -917,7 +917,7 @@
       if(this.running || !this.enabled) return false;
       var context = this;
       this.running = true;
-      this.controls.addClass('ad-slideshow-running');
+      this.controls.addClass('spock-slideshow-running');
       this._next();
       this.fireCallback(this.settings.onStart);
       return true;
@@ -926,7 +926,7 @@
       if(!this.running) return false;
       this.running = false;
       this.countdown.hide();
-      this.controls.removeClass('ad-slideshow-running');
+      this.controls.removeClass('spock-slideshow-running');
       clearInterval(this.countdown_interval);
       this.fireCallback(this.settings.onStop);
       return true;

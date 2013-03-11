@@ -1,6 +1,6 @@
 (function() {
 
-  define(['jquery', 'underscore', 'backbone', 'related_items_panel', 'ad-gallery'], function($, _, Backbone, drawFeaturesList) {
+  define(['jquery', 'underscore', 'backbone', 'related_items_panel', 'spock-gallery'], function($, _, Backbone, drawFeaturesList) {
     window.PartnersLogo = Backbone.Model.extend({
       toJSON: function(attr) {
         return Backbone.Model.prototype.toJSON.call(this, attr);
@@ -11,7 +11,7 @@
       tagName: 'li',
       initialize: function() {
         _.bindAll(this, 'render');
-        return this.template = _.template("<a href=\"<%= url %>\">\n    <img src=\"<%= url %>\" class=\"ad_image_gallery_thumb\" />\n</a>");
+        return this.template = _.template("<a href=\"<%= url %>\">\n    <img src=\"<%= url %>\" class=\"spock_image_gallery_thumb\" />\n</a>");
       },
       render: function() {
         var renderedContent;
@@ -26,7 +26,7 @@
     window.PartnersLogosView = Backbone.View.extend({
       initialize: function() {
         _.bindAll(this, 'render');
-        this.template = _.template("<div class=\"proj-partners-title\">Parceiros:</div>\n<div id=\"logos-gallery\" class=\"ad-gallery\">\n    <div class=\"ad-image-wrapper\"></div>\n    <div class=\"ad-controls\"></div>\n    <div class=\"ad-nav\">\n        <div class=\"ad-thumbs\">\n            <ul class=\"ad-thumb-list\"></ul>\n        </div>\n    </div>\n</div>");
+        this.template = _.template("<div class=\"proj-partners-title\">Parceiros:</div>\n<div id=\"logos-gallery\" class=\"spock-gallery\">\n    <div class=\"spock-image-wrapper\"></div>\n    <div class=\"spock-controls\"></div>\n    <div class=\"spock-nav\">\n        <div class=\"spock-thumbs\">\n            <ul class=\"spock-thumb-list\"></ul>\n        </div>\n    </div>\n</div>");
         return this.collection.bind('reset', this.render);
       },
       render: function() {
@@ -34,7 +34,7 @@
         collection = this.collection;
         if (collection.length === 0) return this;
         this.$el.html(this.template());
-        $logos = this.$('.ad-thumb-list');
+        $logos = this.$('.spock-thumb-list');
         $gallery = this.$('#logos-gallery');
         collection.each(function(logo) {
           var view;
@@ -43,7 +43,7 @@
           });
           return $logos.append(view.render().$el);
         });
-        $gallery.adGallery({
+        $gallery.spockGallery({
           loader_image: '/static/img/loader.gif',
           width: 250,
           height: 150,
