@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 
 from fabric.api import env
-env.user = 'login'  # ssh key protected
+from .secret import *
 
 from .base import staging, production
 from .service import *
