@@ -41,15 +41,17 @@
   {% endif %}
 
   {# ##### Contact ##### #}
-  {% if row.object_dict.contact %}
+  {% if row.object_dict.contact or row.object_dict.link %}
   <div class="block">
+    {% if row.object_dict.contact %}
     <h4>{% trans 'Contact' %}</h4>
     {{ row.object_dict.contact|render_markup|safe }}
-    {% endif %}
+    {% endif %}    
     
     {% if row.object_dict.link %}
     <h4>Link</h4>
     <a href="{{ row.object_dict.link|with_http }}">{{ row.object_dict.link }}</a>
+    {% endif %}
   </div>
   {% endif %}
   
