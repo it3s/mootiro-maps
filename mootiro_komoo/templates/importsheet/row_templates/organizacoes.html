@@ -3,82 +3,89 @@
 {% load komoo_tags %}
 
 
-<div class="metadata">
-  {% if row.errors %}
-  <div class="errors">
-    <h3>{% trans "Errors" %}</h3>
-    <ul>
-      {% for msg in row.errors %}
-      <li>{{ msg }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-                          
-  {% if row.warnings %}
-  <div class="warnings">
-    <h3>{% trans "Warnings" %}</h3>
-    <ul>
-      {% for msg in row.warnings %}
-      <li>{{ msg }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-</div>
-  
 <div class="main-column">
+  {# ##### Name ##### #}
   <h2>{{ row.object_dict.name }}</h2>
+  
+  {# ##### Creator ##### #}
+  {% if row.object_dict.creator %}
   <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
-  {% if row.object_dict.geometry %}
-    <i class="icon-map no-hover"></i><span class="meta-info">{% trans "Geometry" %}:</span>
-    {{ row.object_dict.geometry_preview }}
   {% endif %}
+  
+  {# ##### Communities ##### #}
   {% if row.object_dict.community %}
-    <div class="a-update">
-    {% for c in row.object_dict.community %}
-        <a href="{{ c.view_url }}" class="update-community">
-          <i class="icon-community-white"></i> {{ c.name }}
-        </a>
-    {% endfor %}
-    </div>
+  <div class="clear-both"></div>
+  <div class="a-update">
+  {% for c in row.object_dict.community %}
+    <a href="{{ c.view_url }}" class="update-community">
+      <i class="icon-community-white"></i> {{ c.name }}
+    </a>
+  {% endfor %}
+  </div>
   {% endif %}
+
+  {# ##### Description ##### #}
+  {% if row.object_dict.description %}
+  <div class="clear-both"></div>
   <div class="mark-down">{{ row.object_dict.description|render_markup|safe }}</div>
+  {% endif %}
 </div>
 
 <div class="right-bar right-bar-modif">
+  {# ##### Geometry ##### #}
+  {% if row.object_dict.geometry %}
   <div class="block">
+    <i class="icon-map no-hover"></i><span class="meta-info">{% trans "Geometry" %}:</span>
+    {{ row.object_dict.geometry_preview }}
+  </div>
+  {% endif %}
+
+  {# ##### Contact ##### #}
+  {% if row.object_dict.contact or row.object_dict.link %}
+  <div class="block">
+    {% if row.object_dict.contact %}
     <h4>{% trans 'Contact' %}</h4>
     {{ row.object_dict.contact|render_markup|safe }}
-  
-    <h4>{% trans 'Operation Field' %}</h4>
-    <ul>
-      {% for c in row.object_dict.categories %}
-      <li>{{ c }}</li>
-      {% endfor %}
-    </ul>
-    
-    <h4>{% trans 'Audience' %}</h4>
-    <ul>
-      {% for t in row.object_dict.target_audiences %}
-      <li>{{ t }}</li>
-      {% endfor %}
-    </ul>
+    {% endif %}    
     
     {% if row.object_dict.link %}
     <h4>Link</h4>
     <a href="{{ row.object_dict.link|with_http }}">{{ row.object_dict.link }}</a>
     {% endif %}
   </div>
+  {% endif %}
   
+  {# ##### Target-audiences ##### #}
+  {% if row.object_dict.target_audiences %}
+  <div class="block">
+    <h4>{% trans 'Audience' %}</h4>
+    <ul>
+      {% for t in row.object_dict.target_audiences %}
+      <li>{{ t }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+  
+  {# ##### Operation Field ##### #}
+  <div class="block">
+    <h4>{% trans 'Operation Field' %}</h4>
+    <ul>
+      {% for c in row.object_dict.categories %}
+      <li>{{ c }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  
+  {# ##### Tags ##### #}
+  {% if row.object_dict.tags %}
   <div class="view-tag-list">
-    {% if row.object_dict.tags %}
     <span class="inline-block meta-info">{% trans 'Tags' %}</span>
     <div class="view-tag-list-tags">
       {% for tag in row.object_dict.tags %}
       <span class="inline-block tag">{{ tag }}</span>
       {% endfor %}
     </div>
-    {% endif %}
   </div>
+  {% endif %}
 </div>

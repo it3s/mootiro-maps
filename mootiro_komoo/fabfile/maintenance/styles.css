@@ -1,0 +1,38 @@
+body {
+    font-family: Ubuntu, Helvetica, 'Trebuchet MS', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #dceff4;
+    height: 100%;
+}
+
+#wrapper {
+    position: absolute;
+    width: 740px;
+    height: 500px;
+    left: 50%;
+    top: 50%;
+    margin-left: -370px;
+    margin-top: -300px;
+}
+
+#wrapper > * { position: absolute }
+
+#wrapper #spock {
+    top: 70px;
+}
+#wrapper #logo {
+    top: 0;
+    right: 0;
+}
+#wrapper h1 {
+    width: 350px;
+    top: 180px;
+    right: 0;
+}
+#wrapper h2 {
+    width: 350px;
+    font-weight: 200;
+    top: 350px;
+    right: 0;
+}

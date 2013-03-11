@@ -370,6 +370,10 @@ div.importsheet_missing_column {
     margin-right: 20px; }
   #importsheet_simulation_results div.result div.importsheet_right_bar {
     width: 200px; }
+#importsheet_simulation_results .a-update {
+  background: inherit; }
+#importsheet_simulation_results .block h4 {
+  margin-top: 0; }
 
 #importsheet_simulation_results div.metadata h3, #importsheet_messages div.metadata h3 {
   font-size: 16px; }
@@ -383,6 +387,9 @@ div.importsheet_missing_column {
   background: #ee8;
   border: 1px solid #ed0;
   padding: 2px 5px; }
+#importsheet_simulation_results div.metadata a, #importsheet_messages div.metadata a {
+  color: inherit;
+  text-decoration: underline; }
 
 #donate {
   position: fixed;

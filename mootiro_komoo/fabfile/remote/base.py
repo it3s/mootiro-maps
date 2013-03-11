@@ -35,6 +35,8 @@ def production():
     env.komoo_activate = 'source /home/login/.virtualenvs/mootiro_maps_env/bin/activate'
     env.komoo_project_folder = '/home/login/mootiro_maps/mootiro-maps/mootiro_komoo'
     env.komoo_port = '8001'
+    env.komoo_apache_conf = 'maps'
+    env.komoo_maintenance_apache_conf = 'maps_maintenance'
 
 
 def staging():
@@ -46,3 +48,5 @@ def staging():
     env.komoo_activate = 'source /home/login/.virtualenvs/mootiro_maps_staging_env/bin/activate'
     env.komoo_project_folder = '/home/login/mootiro_maps_staging/mootiro-maps/mootiro_komoo'
     env.komoo_port = '5001'
+    env.komoo_apache_conf = 'maps_staging'
+    env.komoo_maintenance_apache_conf = 'maps_staging_maintenance'

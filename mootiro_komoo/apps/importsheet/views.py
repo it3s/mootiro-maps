@@ -50,11 +50,13 @@ def show(request, id=''):
     if worksheet_interpreter.rows:
         any_error = reduce(lambda a, b: a or b,
                         [bool(r.errors) for r in worksheet_interpreter.rows])
+        empty = False
     else:
-        any_error = True  # empty importsheet
+        any_error = False  # empty importsheet
+        empty = True
 
     return dict(importsheet=ish, interpreter=worksheet_interpreter,
-                    any_error=any_error, user=request.user)
+                empty=empty, any_error=any_error, user=request.user)
 
 
 @render_to('importsheet/insert.html')

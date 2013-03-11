@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-07 16:06-0300\n"
+"POT-Creation-Date: 2013-03-08 20:21-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -35,7 +35,7 @@ msgid "Location"
 msgstr "Localização"
 
 #: apps/authentication/forms.py:59 apps/community/forms.py:25
-#: apps/komoo_project/forms.py:50 apps/komoo_resource/forms.py:40
+#: apps/komoo_project/forms.py:41 apps/komoo_resource/forms.py:40
 #: apps/main/templatetags/komoo_tags.py:327
 #: apps/main/templatetags/komoo_tags.py:328 apps/organization/forms.py:63
 #: lib/taggit/models.py:10 templates/organization/branch_form.html:13
@@ -113,26 +113,27 @@ msgstr ""
 "a equipe IT3S.\n"
 
 #: apps/community/forms.py:26 apps/investment/forms.py:32
-#: apps/komoo_project/forms.py:51 apps/komoo_resource/forms.py:41
+#: apps/komoo_project/forms.py:42 apps/komoo_resource/forms.py:41
 #: apps/need/forms.py:26 apps/organization/forms.py:64
 #: apps/proposal/forms.py:28 templates/organization/branch_form.html:16
 msgid "Description"
 msgstr "Descrição"
 
 #: apps/community/forms.py:27 templates/community/view.html:37
-#: templates/importsheet/row_templates/comunidades.html:40
+#: templates/importsheet/row_templates/comunidades.html:16
 #: templates/komoo_map/info_window.html:39
 msgid "Population"
 msgstr "População"
 
 #: apps/community/forms.py:28 apps/investment/forms.py:42
-#: apps/komoo_project/forms.py:52 apps/komoo_resource/forms.py:44
+#: apps/komoo_project/forms.py:43 apps/komoo_resource/forms.py:44
 #: apps/main/templatetags/komoo_tags.py:326 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
-#: templates/importsheet/row_templates/comunidades.html:47
-#: templates/importsheet/row_templates/organizacoes.html:76
-#: templates/importsheet/row_templates/recursos.html:61
+#: templates/importsheet/row_templates/comunidades.html:38
+#: templates/importsheet/row_templates/necessidades.html:69
+#: templates/importsheet/row_templates/organizacoes.html:81
+#: templates/importsheet/row_templates/recursos.html:59
 #: templates/main/templatetags/taglist.html:5
 msgid "Tags"
 msgstr "Palavras-Chave"
@@ -141,8 +142,8 @@ msgstr "Palavras-Chave"
 msgid " "
 msgstr " "
 
-#: apps/community/models.py:39 apps/komoo_project/forms.py:56
-#: apps/komoo_resource/forms.py:45 apps/main/templatetags/komoo_tags.py:231
+#: apps/community/models.py:39 apps/komoo_resource/forms.py:45
+#: apps/main/templatetags/komoo_tags.py:231
 #: apps/main/templatetags/komoo_tags.py:330 apps/need/forms.py:24
 #: apps/organization/forms.py:65 templates/investment/list.html:44
 msgid "Community"
@@ -163,6 +164,14 @@ msgstr "Identificador de polígono duplicado no Fusion Table: {}"
 #: apps/importsheet/interpreters/base.py:193
 msgid "Missing column: {0}"
 msgstr "Coluna faltando: {0}"
+
+#: apps/importsheet/interpreters/base.py:204
+msgid "{} objects to be imported with same name: {}"
+msgstr "{} objetos a serem importados com o mesmo nome: {}"
+
+#: apps/importsheet/interpreters/necessidades.py:60
+msgid "Invalid need categories: "
+msgstr "Áreas inválidas: "
 
 #: apps/importsheet/interpreters/organizacoes.py:63
 msgid "Invalid categories: "
@@ -278,42 +287,29 @@ msgstr "Público"
 msgid "Private"
 msgstr "Privado"
 
-#: apps/komoo_project/forms.py:53 apps/organization/forms.py:71
+#: apps/komoo_project/forms.py:44 apps/organization/forms.py:71
 msgid "Logo"
 msgstr "Logotipo"
 
-#: apps/komoo_project/forms.py:54 apps/komoo_resource/forms.py:43
+#: apps/komoo_project/forms.py:45 apps/komoo_resource/forms.py:43
 #: apps/organization/forms.py:66
-#: templates/importsheet/row_templates/organizacoes.html:51
-#: templates/importsheet/row_templates/recursos.html:55
-#: templates/organization/show.html:160 templates/project/new_view.html:92
-#: templates/project/view.html:268 templates/resource/show.html:99
+#: templates/importsheet/row_templates/organizacoes.html:46
+#: templates/importsheet/row_templates/recursos.html:51
+#: templates/organization/show.html:160 templates/project/old_view.html:268
+#: templates/project/view.html:103 templates/resource/show.html:99
 msgid "Contact"
 msgstr "Contato"
 
-#: apps/komoo_project/forms.py:55 templates/project/new_view.html:81
-#: templates/project/view.html:257
-msgid "Contributors"
-msgstr "Contribuidores"
-
-#: apps/komoo_project/forms.py:57
+#: apps/komoo_project/forms.py:46
 msgid "Partners Logo"
 msgstr "Logo de Parceiros"
 
-#: apps/komoo_project/forms.py:58
-msgid "Access to edit this project"
-msgstr "Acesso para editar este projeto"
-
-#: apps/komoo_project/forms.py:59
-msgid "Access to this project's discussion page"
-msgstr "Acesso a página de discussão deste projeto"
-
-#: apps/komoo_project/views.py:92
+#: apps/komoo_project/views.py:88
 msgid "Unnamed"
 msgstr "Sem nome"
 
 #: apps/komoo_resource/forms.py:42
-#: templates/importsheet/row_templates/recursos.html:33
+#: templates/importsheet/row_templates/recursos.html:17
 msgid "Kind"
 msgstr "Tipo"
 
@@ -527,7 +523,7 @@ msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
 msgstr[1] "daqui a %(count)s horas"
 
-#: apps/main/templatetags/komoo_tags.py:228 apps/need/models.py:90
+#: apps/main/templatetags/komoo_tags.py:228 apps/need/models.py:97
 msgid "Need"
 msgstr "Necessidade"
 
@@ -540,6 +536,7 @@ msgid "Investment"
 msgstr "Investimento"
 
 #: apps/main/templatetags/komoo_tags.py:331
+#: templates/importsheet/row_templates/necessidades.html:18
 msgid "Need categories"
 msgstr "Áreas"
 
@@ -1019,13 +1016,15 @@ msgstr "Veja alguns links importantes"
 #: templates/main/templatetags/geo_objects_listing.html:9
 #: templates/main/templatetags/menu.html:11
 #: templates/organization/branch_communities_list.html:6
-#: templates/organization/branch_form.html:20 templates/project/view.html:85
+#: templates/organization/branch_form.html:20
+#: templates/project/old_view.html:85 templates/project/view.html:153
 msgid "Communities"
 msgstr "Comunidades"
 
 #: templates/404.html:30 templates/main/templatetags/geo_objects_add.html:35
 #: templates/main/templatetags/geo_objects_listing.html:29
-#: templates/main/templatetags/menu.html:20 templates/project/view.html:103
+#: templates/main/templatetags/menu.html:20
+#: templates/project/old_view.html:103 templates/project/view.html:171
 #: templates/resource/list.html:7
 msgid "Resources"
 msgstr "Recursos"
@@ -1033,19 +1032,20 @@ msgstr "Recursos"
 #: templates/404.html:31 templates/main/templatetags/geo_objects_add.html:11
 #: templates/main/templatetags/geo_objects_listing.html:15
 #: templates/main/templatetags/menu.html:17 templates/need/list.html:8
-#: templates/project/view.html:94
+#: templates/project/old_view.html:94 templates/project/view.html:162
 msgid "Needs"
 msgstr "Necessidades"
 
 #: templates/404.html:32 templates/investment/list.html:8
-#: templates/main/templatetags/menu.html:23 templates/project/view.html:112
+#: templates/main/templatetags/menu.html:23
+#: templates/project/old_view.html:112 templates/project/view.html:180
 msgid "Investments"
 msgstr "Investimentos"
 
 #: templates/404.html:33 templates/main/templatetags/geo_objects_add.html:23
 #: templates/main/templatetags/geo_objects_listing.html:35
 #: templates/main/templatetags/menu.html:14 templates/organization/list.html:9
-#: templates/project/view.html:76
+#: templates/project/old_view.html:76 templates/project/view.html:144
 msgid "Organizations"
 msgstr "Organizações"
 
@@ -1315,8 +1315,8 @@ msgid "population:"
 msgstr "população:"
 
 #: templates/community/view.html:49 templates/need/view.html:65
-#: templates/organization/show.html:153 templates/project/new_view.html:69
-#: templates/project/view.html:245 templates/resource/show.html:68
+#: templates/organization/show.html:153 templates/project/old_view.html:245
+#: templates/project/view.html:92 templates/resource/show.html:68
 #: templates/update/updates_list_templatetag.html:96
 msgid "see on map"
 msgstr "ver no mapa"
@@ -1345,7 +1345,7 @@ msgstr "Desfazer importação. (remover tudo)"
 msgid "(only administrators)"
 msgstr "(somente administradores)"
 
-#: templates/importsheet/show.html:28
+#: templates/importsheet/show.html:27
 msgid "Simulate"
 msgstr "Simular"
 
@@ -1353,46 +1353,51 @@ msgstr "Simular"
 msgid "I'm finished. Insert all."
 msgstr "Terminei. Inserir tudo."
 
-#: templates/importsheet/show.html:45
-#: templates/importsheet/row_templates/comunidades.html:9
-#: templates/importsheet/row_templates/organizacoes.html:9
-#: templates/importsheet/row_templates/recursos.html:9
+#: templates/importsheet/show.html:46 templates/importsheet/show.html.py:86
 msgid "Errors"
 msgstr "Erros"
 
-#: templates/importsheet/show.html:58
-#: templates/importsheet/row_templates/comunidades.html:20
-#: templates/importsheet/row_templates/organizacoes.html:20
-#: templates/importsheet/row_templates/recursos.html:20
+#: templates/importsheet/show.html:53
+msgid "There are errors with row"
+msgstr "Há erros na linha"
+
+#: templates/importsheet/show.html:64 templates/importsheet/show.html.py:97
 msgid "Warnings"
 msgstr "Avisos"
 
-#: templates/importsheet/show.html:72
+#: templates/importsheet/show.html:70
+msgid "Worksheet is empty"
+msgstr "Planilha sem dados"
+
+#: templates/importsheet/show.html:81
 msgid "Row number"
 msgstr "Número da linha"
 
-#: templates/importsheet/row_templates/comunidades.html:32
-#: templates/importsheet/row_templates/organizacoes.html:32
-#: templates/importsheet/row_templates/recursos.html:35
+#: templates/importsheet/row_templates/comunidades.html:11
+#: templates/importsheet/row_templates/necessidades.html:12
+#: templates/importsheet/row_templates/organizacoes.html:12
+#: templates/importsheet/row_templates/recursos.html:12
 msgid "Creator"
 msgstr "Criador"
 
-#: templates/importsheet/row_templates/comunidades.html:34
-#: templates/importsheet/row_templates/organizacoes.html:34
-#: templates/importsheet/row_templates/recursos.html:37
+#: templates/importsheet/row_templates/comunidades.html:30
+#: templates/importsheet/row_templates/necessidades.html:49
+#: templates/importsheet/row_templates/organizacoes.html:38
+#: templates/importsheet/row_templates/recursos.html:43
 msgid "Geometry"
 msgstr "Geometria"
 
-#: templates/importsheet/row_templates/organizacoes.html:54
+#: templates/importsheet/row_templates/necessidades.html:57
+#: templates/importsheet/row_templates/organizacoes.html:59
+#: templates/organization/show.html:178
+msgid "Audience"
+msgstr "Público"
+
+#: templates/importsheet/row_templates/organizacoes.html:70
 #: templates/komoo_map/info_window.html:43 templates/organization/list.html:53
 #: templates/organization/show.html:167
 msgid "Operation Field"
 msgstr "Área de atuação"
-
-#: templates/importsheet/row_templates/organizacoes.html:61
-#: templates/organization/show.html:178
-msgid "Audience"
-msgstr "Público"
 
 #: templates/investment/edit.html:17
 msgid "Edit Investment"
@@ -1882,8 +1887,8 @@ msgstr "Nova Organização"
 msgid "Objects related to"
 msgstr "Objetos relacionados a"
 
-#: templates/organization/show.html:55 templates/project/new_view.html:63
-#: templates/project/view.html:62
+#: templates/organization/show.html:55 templates/project/old_view.html:62
+#: templates/project/view.html:73
 msgid "See all objects on map"
 msgstr "Ver todos os objetos no mapa"
 
@@ -1981,10 +1986,6 @@ msgstr "Editar Associações do Projeto"
 msgid "Deleted marked associations"
 msgstr "Apagar associações marcadas"
 
-#: templates/project/edit.html:95
-msgid "creator"
-msgstr "creator"
-
 #: templates/project/list.html:17
 msgid "Create New Project"
 msgstr "Criar Novo Projeto"
@@ -1996,12 +1997,49 @@ msgid_plural "%(counter)s Projects"
 msgstr[0] "%(counter)s Projeto"
 msgstr[1] "%(counter)s Projetos"
 
-#: templates/project/list.html:52 templates/project/new_view.html:75
-#: templates/project/view.html:251
+#: templates/project/list.html:52 templates/project/old_view.html:251
+#: templates/project/view.html:95
 msgid "Administrator"
 msgstr "Administrador"
 
-#: templates/project/new_view.html:99 templates/project/view.html:275
+#: templates/project/old_view.html:70 templates/project/view.html:138
+msgid "Points on Map"
+msgstr "Ponto no Mapa"
+
+#: templates/project/old_view.html:121 templates/project/view.html:189
+msgid "Collaborators"
+msgstr "Colaboradores"
+
+#: templates/project/old_view.html:142 templates/project/view.html:210
+msgid "This project has no related Objects yet"
+msgstr "Este projeto não tem nenhum Objeto relacionado"
+
+#: templates/project/old_view.html:155 templates/project/view.html:223
+msgid "This project has no related Organizations yet"
+msgstr "Este projeto não tem nenhuma Organização relacionada"
+
+#: templates/project/old_view.html:168 templates/project/view.html:236
+msgid "This project has no related Communities yet"
+msgstr "Este projeto não tem nenhuma Communidade relacionada"
+
+#: templates/project/old_view.html:181 templates/project/view.html:249
+msgid "This project has no related Needs yet"
+msgstr "Este projeto não tem nenhuma Necessidade relacionada"
+
+#: templates/project/old_view.html:194 templates/project/view.html:262
+msgid "This project has no related Resources yet"
+msgstr "Este projeto não tem nenhum Recurso relacionada"
+
+#: templates/project/old_view.html:207 templates/project/old_view.html:220
+#: templates/project/view.html:275 templates/project/view.html.py:288
+msgid "This project has no related Investments yet"
+msgstr "Este Projeto não tem nenhum Investimento relacionado"
+
+#: templates/project/old_view.html:257
+msgid "Contributors"
+msgstr "Contribuidores"
+
+#: templates/project/old_view.html:275 templates/project/view.html:113
 msgid "Related projects"
 msgstr "Projetos relacionados"
 
@@ -2013,37 +2051,9 @@ msgstr "Adicionar a um projeto"
 msgid "Add this object to a project"
 msgstr "Adicionar este objeto a um projeto"
 
-#: templates/project/view.html:70
-msgid "Points on Map"
-msgstr "Ponto no Mapa"
-
-#: templates/project/view.html:121
-msgid "Collaborators"
-msgstr "Colaboradores"
-
-#: templates/project/view.html:142
-msgid "This project has no related Objects yet"
-msgstr "Este projeto não tem nenhum Objeto relacionado"
-
-#: templates/project/view.html:155
-msgid "This project has no related Organizations yet"
-msgstr "Este projeto não tem nenhuma Organização relacionada"
-
-#: templates/project/view.html:168
-msgid "This project has no related Communities yet"
-msgstr "Este projeto não tem nenhuma Communidade relacionada"
-
-#: templates/project/view.html:181
-msgid "This project has no related Needs yet"
-msgstr "Este projeto não tem nenhuma Necessidade relacionada"
-
-#: templates/project/view.html:194
-msgid "This project has no related Resources yet"
-msgstr "Este projeto não tem nenhum Recurso relacionada"
-
-#: templates/project/view.html:207 templates/project/view.html.py:220
-msgid "This project has no related Investments yet"
-msgstr "Este Projeto não tem nenhum Investimento relacionado"
+#: templates/project/view.html:304
+msgid "This project has no contributors yet"
+msgstr "Este projeto não possui contribuidores ainda"
 
 #: templates/proposal/edit.html:15
 msgid "Form Proposal"
@@ -2194,6 +2204,15 @@ msgstr "veja a página"
 #: templates/update/updates_list_templatetag.html:112
 msgid "by"
 msgstr "por"
+
+#~ msgid "Access to edit this project"
+#~ msgstr "Acesso para editar este projeto"
+
+#~ msgid "Access to this project's discussion page"
+#~ msgstr "Acesso a página de discussão deste projeto"
+
+#~ msgid "creator"
+#~ msgstr "creator"
 
 #~ msgid "Form Investment"
 #~ msgstr "Formulário de Investimentos"

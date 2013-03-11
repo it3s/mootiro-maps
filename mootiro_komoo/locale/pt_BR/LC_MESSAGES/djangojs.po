@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-07 16:06-0300\n"
+"POT-Creation-Date: 2013-03-08 20:21-0300\n"
 "PO-Revision-Date: 2012-10-18 17:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -54,11 +54,11 @@ msgstr "Projeto"
 msgid "No results found on our database!"
 msgstr "Nenhum resultado encontrado na nossa base de dados!"
 
-#: static/js/komoo_utils.js:408 static/js.build/komoo_utils.js:1
+#: static/js/komoo_utils.js:411 static/js.build/komoo_utils.js:1
 msgid "Yes"
 msgstr "Sim"
 
-#: static/js/komoo_utils.js:413 static/js.build/komoo_utils.js:1
+#: static/js/komoo_utils.js:416 static/js.build/komoo_utils.js:1
 msgid "No"
 msgstr "Não"
 

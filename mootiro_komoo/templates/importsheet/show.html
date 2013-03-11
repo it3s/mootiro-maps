@@ -6,75 +6,109 @@
 
 {% block content %}
   <div id="main-content">
-    <div class="main-column">
-      <h1>{{ importsheet.name }}</h1>
-      <p>
-        {{ importsheet.description }}
-        <br/>
-        <br/>
-        <span class="meta-info">Google Spreadsheet link:</span><br/>
-        <a href="https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}">https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}</a>
-        {% if importsheet.fusion_table_key %}
-        <br/>
-        <br/>
-        <span class="meta-info">Google Fusion Table link:</span><br/>
-        <a href="https://www.google.com/fusiontables/data?docid={{ importsheet.fusion_table_key }}">https://www.google.com/fusiontables/data?docid={{ importsheet.fusion_table_key }}</a>
-      </p>
-      {% endif %}
+    <h1>{{ importsheet.name }}</h1>
+    <p>
+      {{ importsheet.description }}
       <br/>
-      
-      <div class="importsheet_controls">
-        {% for wks in importsheet.worksheets %}
-        <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}?worksheet_name={{ wks.title }}">{% trans "Simulate" %} {{wks.title}}</a>
-        {% endfor %}
+      <br/>
+      <span class="meta-info">Google Spreadsheet link:</span><br/>
+      <a href="https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}">https://docs.google.com/spreadsheet/ccc?key={{ importsheet.spreadsheet_key }}</a>
+      {% if importsheet.fusion_table_key %}
+      <br/>
+      <br/>
+      <span class="meta-info">Google Fusion Table link:</span><br/>
+      <a href="https://www.google.com/fusiontables/data?docid={{ importsheet.fusion_table_key }}">https://www.google.com/fusiontables/data?docid={{ importsheet.fusion_table_key }}</a>
+    </p>
+    {% endif %}
+    <br/>
+    
+    <div class="importsheet_controls">
+      {% for wks in importsheet.worksheets %}
+      <a class="btn btn-large btn-primary" href="{% url importsheet_show importsheet.id %}?worksheet_name={{ wks.title }}">{% trans "Simulate" %} {{wks.title}}</a>
+      {% endfor %}
+      {% if not any_error %}
         {% if user.is_admin %}
-        <a class="insert btn btn-large btn-success" href="{% url importsheet_insert importsheet.id %}">{% trans "I'm finished. Insert all." %}</a>
+          <a class="insert btn btn-large btn-success" href="{% url importsheet_insert importsheet.id %}">{% trans "I'm finished. Insert all." %}</a>
         {% else %}
         <a class="insert btn btn-large btn-success disabled">
           {% trans "I'm finished. Insert all." %}<br/>
           <span class="small">{% trans "(only administrators)" %}</span>
         </a>
         {% endif %}
+      {% endif %}
+    </div>
+    <br/><br/>
+    
+    <div id="importsheet_messages">
+      {% if any_error %}
+      <div class="metadata">
+        <div class="errors">
+          <h3>{% trans "Errors" %}</h3>
+          <ul>
+            {% for msg in interpreter.errors %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+            {% for row in interpreter.rows %}
+              {% if row.errors %}
+                <li><a href="#row-{{ forloop.counter|add:interpreter.header_rows }}">{% trans "There are errors with row" %} {{ forloop.counter|add:interpreter.header_rows }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
       </div>
-      <br/><br/>
+      {% endif %}
       
-      <div id="importsheet_messages">
-        {% if interpreter.errors %}
+      {% if interpreter.warnings or empty %}
+      <div class="metadata">
+        <div class="warnings">
+          <h3>{% trans "Warnings" %}</h3>
+          <ul>
+            {% for msg in interpreter.warnings %}
+            <li>{{ msg }}</li>
+            {% endfor %}
+            {% if empty %}
+            <li>{% trans "Worksheet is empty" %}: {{interpreter.worksheet_name}}</li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    
+    <div id="importsheet_simulation_results">
+      {% for row in interpreter.rows %}
+      <div id="row-{{ forloop.counter|add:interpreter.header_rows }}" class="result">
+        <span class="meta-info">{% trans "Row number" %}:</span>{{ forloop.counter|add:interpreter.header_rows }}<br/>
+        
         <div class="metadata">
+          {% if row.errors %}
           <div class="errors">
             <h3>{% trans "Errors" %}</h3>
             <ul>
-              {% for msg in interpreter.errors %}
+              {% for msg in row.errors %}
               <li>{{ msg }}</li>
               {% endfor %}
             </ul>
           </div>
-        </div>
-        {% endif %}
-        
-        {% if interpreter.warnings %}
-        <div class="metadata">
+          {% endif %}
+                                  
+          {% if row.warnings %}
           <div class="warnings">
             <h3>{% trans "Warnings" %}</h3>
             <ul>
-              {% for msg in interpreter.warnings %}
+              {% for msg in row.warnings %}
               <li>{{ msg }}</li>
               {% endfor %}
             </ul>
           </div>
+          {% endif %}
         </div>
-        {% endif %}
-      </div>
-      
-      <div id="importsheet_simulation_results">
-        {% for row in interpreter.rows %}
-        <div class="result">
-          <span class="meta-info">{% trans "Row number" %}:</span>{{ forloop.counter|add:interpreter.header_rows }}<br/>
-          {% include interpreter.row_template with row=row %}
-        </div>
-        {% endfor %}
-      </div>
         
+        {% include interpreter.row_template with row=row %}
+        
+      </div>
+      {% endfor %}
     </div>
+      
   </div>
 {% endblock %}

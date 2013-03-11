@@ -3,53 +3,44 @@
 {% load komoo_tags %}
 
 
-<div class="metadata">
-  {% if row.errors %}
-  <div class="errors">
-    <h3>{% trans "Errors" %}</h3>
-    <ul>
-      {% for msg in row.errors %}
-      <li>{{ msg }}</li>
-      {% endfor %}
-    </ul>
-  </div>
+<div class="main-column">
+  {# ##### Name ##### #}
+  <h2>{{ row.object_dict.name }}</h2>
+  
+  {# ##### Creator ##### #}
+  <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
+
+  {# ##### Population ##### #}
+  {% if row.object_dict.population %}
+  <div class="clear-both"></div>
+  <div class="apart"><span class="meta-info">{% trans "Population" %}:</span> {{ row.object_dict.population }}</div>
   {% endif %}
-                          
-  {% if row.warnings %}
-  <div class="warnings">
-    <h3>{% trans "Warnings" %}</h3>
-    <ul>
-      {% for msg in row.warnings %}
-      <li>{{ msg }}</li>
-      {% endfor %}
-    </ul>
-  </div>
+
+  {# ##### Description ##### #}
+  {% if row.object_dict.description %}
+  <div class="clear-both"></div>
+  <div class="mark-down">{{ row.object_dict.description|render_markup|safe }}</div>
   {% endif %}
 </div>
-  
-<div class="main-column">
-  <h2>{{ row.object_dict.name }}</h2>
-  <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
+
+<div class="right-bar right-bar-modif">
+  {# ##### Geometry ##### #}
   {% if row.object_dict.geometry %}
+  <div class="block">
     <i class="icon-map no-hover"></i><span class="meta-info">{% trans "Geometry" %}:</span>
     {{ row.object_dict.geometry_preview }}
+  </div>
   {% endif %}
 
-  <div class="mark-down">{{ row.object_dict.description|render_markup|safe }}</div>
-  {% if row.object_dict.population %}
-    <div class="apart"><span class="meta-info">{% trans "Population" %}:</span> {{ row.object_dict.population }}</div>
-  {% endif %}
-</div>
-
-<div class="right-bar right-bar-modif">  
+  {# ##### Tags ##### #}
+  {% if row.object_dict.tags %}
   <div class="view-tag-list">
-    {% if row.object_dict.tags %}
     <span class="inline-block meta-info">{% trans 'Tags' %}</span>
     <div class="view-tag-list-tags">
       {% for tag in row.object_dict.tags %}
       <span class="inline-block tag">{{ tag }}</span>
       {% endfor %}
     </div>
-    {% endif %}
   </div>
+  {% endif %}
 </div>

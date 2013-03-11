@@ -52,6 +52,13 @@ class NeedCategory(models.Model):
     def image_off(self):
         return self.get_image_off(self.name)
 
+    # FIXME: this is kludge! depends on user language to work!
+    @classmethod
+    def backtrans(klass, trans_name):
+        idnames = [nc.name for nc in klass.objects.all()]
+        btdict = {_(name):name for name in idnames}
+        return btdict[trans_name] if trans_name in btdict else trans_name
+
 
 class TargetAudience(models.Model):
     name = models.CharField(max_length=64, unique=True, blank=False)

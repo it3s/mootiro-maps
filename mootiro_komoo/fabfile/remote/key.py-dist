@@ -1,0 +1,4 @@
+from fabric.api import env
+
+env.user = '...'
+env.password = '...'

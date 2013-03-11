@@ -23,6 +23,12 @@ def up():
     with remote_virtualenv():
         run('supervisorctl -c supervisor/{env}.conf start {env}:' \
             .format(env=env.komoo_env))
+
+    # maintenance page goes down
+    sudo('a2dissite {komoo_maintenance_apache_conf}; ' \
+         'a2ensite {komoo_apache_conf}; '\
+         'service apache2 reload'.format(**env))
+
     print yellow('Success, but it may take 1 minute for the server to go up.')
 
 
@@ -32,6 +38,11 @@ def down():
     with remote_virtualenv():
         run('supervisorctl -c supervisor/{env}.conf stop {env}:' \
             .format(env=env.komoo_env))
+
+    # maintenance page goes up
+    sudo('a2dissite {komoo_apache_conf}; ' \
+         'a2ensite {komoo_maintenance_apache_conf}; '\
+         'service apache2 reload'.format(**env))
 
 
 def restart():

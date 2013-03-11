@@ -1,4 +1,5 @@
 local_settings.py
+mootiro_komoo/fabfile/remote/secret.py
 *.pyc
 *.*~
 *.swp

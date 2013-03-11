@@ -32,6 +32,9 @@ div.importsheet_missing_column {
         }        
     }
 
+    .a-update { background: inherit }
+
+    .block h4 { margin-top: 0 }
 }
 #importsheet_simulation_results, #importsheet_messages {
     div.metadata {
@@ -53,6 +56,11 @@ div.importsheet_missing_column {
             background: #ee8;
             border: 1px solid #ed0;
             padding: 2px 5px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
         }
     }
 }

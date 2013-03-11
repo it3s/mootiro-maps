@@ -12,11 +12,17 @@
   <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
   {% endif %}
   
-  {# ##### Kind ##### #}
-  {% if row.object_dict.kind %}
-  <div class="apart"><span class="meta-info">{% trans "Kind" %}:</span> {{ row.object_dict.kind }}</div>
+  {# ##### Need Categories ##### #}
+  {% if row.object_dict.categories %}
+  <div class="clear-both"></div>
+  <span class="meta-info">{% trans "Need categories" %}:</span>
+  <ul class="horizontal" id="categories">
+    {% for c in row.object_dict.categories %}
+    <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{%trans c.name %}" /></li>
+    {% endfor %}
+  </ul>
   {% endif %}
-
+  
   {# ##### Communities ##### #}
   {% if row.object_dict.community %}
   <div class="clear-both"></div>
@@ -28,7 +34,7 @@
   {% endfor %}
   </div>
   {% endif %}
-
+  
   {# ##### Description ##### #}
   {% if row.object_dict.description %}
   <div class="clear-both"></div>
@@ -45,11 +51,15 @@
   </div>
   {% endif %}
   
-  {# ##### Contact ##### #}
-  {% if row.object_dict.contact %}
+  {# ##### Target-audiences ##### #}
+  {% if row.object_dict.target_audiences %}
   <div class="block">
-    <h4>{% trans 'Contact' %}</h4>
-    {{ row.object_dict.contact|render_markup|safe }}
+    <h4>{% trans 'Audience' %}</h4>
+    <ul>
+      {% for t in row.object_dict.target_audiences %}
+      <li>{{ t }}</li>
+      {% endfor %}
+    </ul>
   </div>
   {% endif %}
   
