@@ -83,6 +83,11 @@ def work():
     # test runners go here!
 
 
+def run_datalog():
+    """ Runs Datalog's Flask/MongoDB web server """
+    local('python lib/datalog/app.py &')
+
+
 def run_celery():
     """runs celery task queue"""
     local('python manage.py celeryd -B --loglevel=info {} &'
@@ -92,6 +97,7 @@ def run_celery():
 def run(port=8001):
     """Runs django's development server"""
     run_celery()
+    run_datalog()
     run_elasticsearch(bg='true')
     if env_ != 'dev':
         local(
@@ -100,12 +106,6 @@ def run(port=8001):
     else:
         local('python manage.py runserver --insecure {} {}'
               .format(port, django_settings[env_]))
-
-
-def kill_manage_tasks():
-    """kill all manage.py background tasks"""
-    local('ps -eo pid,args | grep manage.py | grep -v grep | cut -c1-6 | '
-          'xargs kill')
 
 
 def kill_tasks(*tasks):
