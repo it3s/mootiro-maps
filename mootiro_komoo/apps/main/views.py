@@ -10,7 +10,7 @@ from django.contrib.gis.geos import Polygon, Point
 from django.contrib.gis.measure import Distance
 from django.template import loader, Context
 from django.db.models import Q
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
@@ -166,9 +166,10 @@ def custom_404(request):
     return HttpResponseNotFound(t.render(c))
 
 
-@render_to('500.html')
 def custom_500(request):
-    return {}
+    t = loader.get_template('500.html')
+    c = Context({})
+    return HttpResponseServerError(t.render(c))
 
 
 @render_to('not_anymore.html')
