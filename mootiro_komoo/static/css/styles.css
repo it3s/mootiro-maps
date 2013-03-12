@@ -1151,7 +1151,7 @@ body.community #map-panel-tabs {
     width: 100%;
 }
 .content-updates {
-    width: 600px;
+    width: 585px;
     margin-right: 10px;
 }
 .news-updates {
@@ -1241,7 +1241,7 @@ div.content-updates .tab.active a {
 }
 /* Updates list */
 .a-update {
-    width: 600px;
+    width: 585px;
     display: inline-block;
     padding: 15px 0;
 }
@@ -1251,7 +1251,7 @@ div.content-updates .tab.active a {
     margin: 0 0 0 15px;
 }
 .a-update .update-info {
-    width: 485px;
+    width: 474px;
     margin: 0 15px;
     display: inline-block;
 }
@@ -2171,7 +2171,7 @@ div.investments-list .tab-investment.selected a { color: #000 }
 }
 .profile-central-pane{
     display: inline-block;
-    width: 682px;
+    width: 580px;
     margin-left: 30px;
     vertical-align: top;
 }
