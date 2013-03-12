@@ -40,7 +40,7 @@
     <br/><br/>
     
     <div id="importsheet_messages">
-      {% if any_error %}
+      {% if interpreter.errors or any_row_error %}
       <div class="metadata">
         <div class="errors">
           <h3>{% trans "Errors" %}</h3>
