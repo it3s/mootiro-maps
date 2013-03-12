@@ -48,15 +48,15 @@ def show(request, id=''):
     worksheet_interpreter = ish.simulate(wks)
 
     if worksheet_interpreter.rows:
-        any_error = reduce(lambda a, b: a or b,
+        any_row_error = reduce(lambda a, b: a or b,
                         [bool(r.errors) for r in worksheet_interpreter.rows])
         empty = False
     else:
-        any_error = False  # empty importsheet
+        any_row_error = False  # empty importsheet
         empty = True
 
     return dict(importsheet=ish, interpreter=worksheet_interpreter,
-                empty=empty, any_error=any_error, user=request.user)
+                empty=empty, any_row_error=any_row_error, user=request.user)
 
 
 @render_to('importsheet/insert.html')

@@ -47,7 +47,7 @@
       #top #menu > ul li:hover ul, #top #side_menu > ul li:hover ul {
         font-weight: normal; }
       #top #menu > ul li.active, #top #side_menu > ul li.active {
-        color: #fff; }
+        color: white; }
       #top #menu > ul li.active ul, #top #side_menu > ul li.active ul {
         color: #505050; }
       #top #menu > ul .map .ico, #top #side_menu > ul .map .ico {
@@ -71,7 +71,7 @@
       #top #menu > ul .objects .community:hover .ico, #top #side_menu > ul .objects .community:hover .ico {
         background-image: url("../img/menu/newmenu/community-hover.png"); }
       #top #menu > ul .objects .community.active, #top #side_menu > ul .objects .community.active {
-        background-color: #f7A941; }
+        background-color: #f7a941; }
       #top #menu > ul .objects .community.active .ico, #top #side_menu > ul .objects .community.active .ico {
         background-image: url("../img/menu/newmenu/community-active.png"); }
       #top #menu > ul .objects .organization .ico, #top #side_menu > ul .objects .organization .ico {
@@ -418,7 +418,7 @@ div.importsheet_missing_column {
   #main-content.frontpage > div {
     padding: 20px; }
   #main-content.frontpage > div:nth-child(even) {
-    background: #EDEDED; }
+    background: #ededed; }
   #main-content.frontpage .center {
     text-align: center; }
   #main-content.frontpage .initial-heading {
@@ -433,34 +433,39 @@ div.importsheet_missing_column {
   #main-content.frontpage div.video {
     margin: 30px;
     text-align: center; }
-  #main-content.frontpage > div.what-is-it-for * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box; }
-  #main-content.frontpage > div.what-is-it-for a {
-    color: inherit; }
-  #main-content.frontpage > div.what-is-it-for a:hover {
-    text-decoration: none; }
-  #main-content.frontpage > div.what-is-it-for div.topic {
-    vertical-align: top;
-    display: inline-block;
-    width: 19%;
-    margin: 0 0.35%; }
-    #main-content.frontpage > div.what-is-it-for div.topic h3 {
+  #main-content.frontpage > div.what-is-it-for {
+    white-space: nowrap;
+    /* hack for windows. issue #100 */ }
+    #main-content.frontpage > div.what-is-it-for * {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box; }
+    #main-content.frontpage > div.what-is-it-for a {
+      color: inherit; }
+    #main-content.frontpage > div.what-is-it-for a:hover {
+      text-decoration: none; }
+    #main-content.frontpage > div.what-is-it-for div.topic {
+      white-space: normal;
+      /* hack for windows. issue #100 */
+      vertical-align: top;
       display: inline-block;
-      padding: 0.5em 1em;
-      margin-bottom: 1em;
-      border-bottom: 1px solid #057D90;
-      width: 100%;
-      font-size: 20px;
-      text-align: center;
-      color: #057D90; }
-    #main-content.frontpage > div.what-is-it-for div.topic p {
-      padding: 0.5em 0.2em 0; }
-  #main-content.frontpage > div.what-is-it-for div.topic:hover {
-    background: #f0f0f0; }
-    #main-content.frontpage > div.what-is-it-for div.topic:hover h3 {
-      background: #B1DDE8; }
+      width: 19%;
+      margin: 0 0.35%; }
+      #main-content.frontpage > div.what-is-it-for div.topic h3 {
+        display: inline-block;
+        padding: 0.5em 1em;
+        margin-bottom: 1em;
+        border-bottom: 1px solid #057D90;
+        width: 100%;
+        font-size: 20px;
+        text-align: center;
+        color: #057D90; }
+      #main-content.frontpage > div.what-is-it-for div.topic p {
+        padding: 0.5em 0.2em 0; }
+    #main-content.frontpage > div.what-is-it-for div.topic:hover {
+      background: #f0f0f0; }
+      #main-content.frontpage > div.what-is-it-for div.topic:hover h3 {
+        background: #b1dde8; }
   #main-content.frontpage > div.projects .flexslider {
     width: 800px;
     height: 150px;
@@ -568,7 +573,7 @@ div.importsheet_missing_column {
     line-height: 100%;
     text-decoration: none; }
   #help_center #help_center_about:hover, #help_center #help_center_usecases:hover {
-    background: #777; }
+    background: #777777; }
   #help_center #help_center_about {
     float: left; }
   #help_center #help_center_usecases {
