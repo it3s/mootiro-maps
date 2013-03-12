@@ -598,10 +598,10 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     width: 16px;
     height: 15px;
 }
-*:hover > .icon-organization, .selected .icon-organization {
+*:hover > .icon-organization, .selected > .icon-organization {
     background-image: url("../img/menu/organization-active.png");
 }
-*:hover > .icon-organization.no-hover, .selected .icon-organization.no-selected  {
+*:hover > .icon-organization.no-hover, .selected > .icon-organization.no-selected  {
     background-image: url("../img/menu/organization.png");
 }
 
