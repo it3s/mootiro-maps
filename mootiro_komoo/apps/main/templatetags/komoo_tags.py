@@ -26,6 +26,7 @@ from organization.models import Organization
 from komoo_resource.models import Resource
 from proposal.models import Proposal
 from signatures.models import Signature
+from komoo_project.models import Project
 
 register = template.Library()
 
@@ -165,6 +166,8 @@ def taglist(obj, community=None):
         sorter = 'title'
     elif isinstance(obj, Community):
         link = reverse('list_communities')
+    elif isinstance(obj, Project):
+        link = reverse('project_list')
     else:
         link = '#'
     return dict(object=obj, link=link, sorter=sorter)
