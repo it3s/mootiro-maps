@@ -70,8 +70,8 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
                 return {}
 
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
-            last_update = obj.last_update.isoformat(b' ') if hasattr(obj,
-                    'last_update') else ''
+            last_update = obj.last_update.isoformat(b' ') if getattr(obj,
+                    'last_update', None) else ''
 
             feature = {
                 'type': 'Feature',

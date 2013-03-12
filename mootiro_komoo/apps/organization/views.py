@@ -4,6 +4,7 @@ import logging
 import json
 
 from django.shortcuts import HttpResponse
+from django.shortcuts import get_object_or_404
 from django.db.models.query_utils import Q
 from django.utils import simplejson
 from django.db.models import Count
@@ -39,7 +40,7 @@ def organization_list(request):
 
 @render_to('organization/show.html')
 def show(request, id=''):
-    organization = get_object_or_None(Organization, pk=id) or Organization()
+    organization = get_object_or_404(Organization, pk=id)
 
     geojson = create_geojson([organization])
     files = UploadedFile.get_files_for(organization)

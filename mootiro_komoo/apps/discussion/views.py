@@ -31,6 +31,9 @@ def _discussion_for (identifier):
     ent, id_ = identifier[0], identifier[1:]
     ent_content_type = ContentType.objects.get_for_model(ENTITY_MODEL[ent])
 
+    # ensure object existence
+    get_object_or_404(ENTITY_MODEL[ent], pk=id_)
+
     discussion = get_object_or_None(Discussion, object_id=id_,
                     content_type=ent_content_type)
 
