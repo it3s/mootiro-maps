@@ -165,16 +165,20 @@ def set_geometria(obj):
 
                     # FIXME: correct order is lat, lng. Before fixing must adjust
                     #        both in DB and in the map.
-                    for geom in geodict['geometries']:
-                        if geom['type'] == 'LineString':
-                            points = geom['coordinates']
-                            for i in xrange(len(points)):
-                                points[i] = [points[i][1], points[i][0]]
-                        else:
-                            for poly in geom['coordinates']:
-                                for i in xrange(len(poly)):
-                                    # iterate by index to edit object in place
-                                    poly[i] = [poly[i][1], poly[i][0]]
+                    def fixcoords(data):
+                        if isinstance(data, list) and isinstance(data[0], float):
+                            # swap coords and chomp possible z axis.
+                            return [data[1], data[0]]
+                        if isinstance(data, list):
+                            for i in range(len(data)):
+                                data[i] = fixcoords(data[i])
+                        if isinstance(data, dict):
+                            for k, v in data.items():
+                                data[k] = fixcoords(v)
+                        return data
+
+                    geodict = fixcoords(geodict)
+
                     break
             if not found:
                 msg = 'Identificador do polígono não encontrado: {}'.format(polygon)
