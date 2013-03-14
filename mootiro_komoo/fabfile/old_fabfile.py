@@ -117,7 +117,7 @@ def kill_tasks(*tasks):
             local(
                 "ps -eo pid,args | grep %s | grep -v grep | "
                 "cut -c1-6 | xargs kill" % task)
-        except Exception as err:
+        except Exception:
             logging.warning('cannot execut kill on taks: {}'.format(task))
 
 
@@ -412,8 +412,14 @@ def configure_elasticsearch():
     run_elasticsearch(bg='true')
     local('sleep 10s')
     setup_django()
-    from search.utils import reset_index, create_mapping, index_object
+    from search.utils import reset_index, create_mapping
     reset_index()
     create_mapping()
     kill_tasks('elasticsearch')
+
+
+def update_reform():
+    """ update reForm fro, repo """
+    local('wget -O static/lib/reForm.js '
+          'https://raw.github.com/it3s/reform/master/src/reForm.js')
 
