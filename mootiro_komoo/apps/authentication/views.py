@@ -13,7 +13,6 @@ from django.utils import simplejson
 from django.forms.models import model_to_dict
 
 from annoying.decorators import render_to, ajax_request
-from annoying.functions import get_object_or_None
 
 from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
@@ -21,6 +20,7 @@ from main.utils import create_geojson, randstr, paginated_query
 from main.tasks import send_explanations_mail, send_mail_async
 
 from update.models import Update
+from locker.models import Locker
 
 from .models import User
 from .forms import FormProfile, FormUser
@@ -282,25 +282,6 @@ the IT3S team.
     return {'on_get': on_get, 'on_after_save': on_after_save}
 
 
-@render_to('authentication/verification.html')
-def user_verification(request, key=''):
-    '''
-    Displays verification needed message if no key provided, or try to verify
-    the user by the given key.
-    '''
-    if not key:
-        return dict(message='check_email')
-    user = get_object_or_None(User, verification_key=key)
-    if not user:
-        # invalid key => invalid link
-        raise Http404
-    if user.is_active:
-        return dict(message='already_verified')
-    user.is_active = True
-    user.save()
-    return dict(message='activated')
-
-
 @render_to('authentication/login.html')
 def login(request):
     '''
@@ -347,67 +328,52 @@ def explanations(request):
     return {'name': name}
 
 
-#===============================================================
+# =============================================================================
 
-# # -*- coding: utf-8 -*-
-# from __future__ import unicode_literals
-# import logging
-#
-# from django.shortcuts import redirect
-# from django.core.urlresolvers import reverse
-# from django.http import Http404
-#
-# from annoying.decorators import render_to
-# from locker.models import Locker
-# from .models import User
-#
-#
-# logger = logging.getLogger(__name__)
-#
-#
-# @render_to('authentication/user_root.html')
-# def user_root(request):
-#         """
-#         user_root is intended to only load a backbone router that
-#         renders the diferent login/register pages
-#         """
-#         return {}
-#
-#
-# def user_verification(request, key=''):
-#     '''
-#     Displays verification needed message if no key provided, or try to verify
-#     the user by the given key.
-#     '''
-#     user_root_ur = reverse('user_root')
-#     if not key:
-#         return redirect(reverse('not_verified'))
-#     user_id = Locker.withdraw(key=key)
-#     user = User.get_by_id(user_id)
-#     if not user:
-#         # invalid key => invalid link
-#         raise Http404
-#     if not user.is_active:
-#         user.is_active = True
-#         user.save()
-#     return redirect(reverse('verified'))
-#
-#
-# @render_to('global.html')
-# def user_view(request, id_):
-#     """
-#     User page
-#     """
-#     user = request.user if id_ == 'me' else User.get_by_id(id_)
-#
-#     if not user:
-#         raise Http404
-#
-#     user_data = user.to_cleaned_dict(user=request.user)
-#     # filter data
-#     return {
-#                 'KomooNS_data': {
-#                     'user': user_data
-#                 }
-#             }
-#
+
+@render_to('authentication/user_root.html')
+def user_root(request):
+        """
+        user_root is intended to only load a backbone router that
+        renders the diferent login/register pages
+        """
+        return {}
+
+
+def user_verification(request, key=''):
+    '''
+    Displays verification needed message if no key provided, or try to verify
+    the user by the given key.
+    '''
+    # user_root_url = reverse('user_root')
+    if not key:
+        return redirect(reverse('not_verified'))
+    user_id = Locker.withdraw(key=key)
+    user = User.get_by_id(user_id)
+    if not user:
+        # invalid key => invalid link
+        raise Http404
+    if not user.is_active:
+        user.is_active = True
+        user.save()
+    return redirect(reverse('verified'))
+
+
+@render_to('global.html')
+def user_view(request, id_):
+    """
+    User page
+    """
+    user = request.user if id_ == 'me' else User.get_by_id(id_)
+
+    if not user:
+        raise Http404
+
+    user_data = user.to_cleaned_dict(user=request.user)
+    # filter data
+    return {
+                'KomooNS_data': {
+                    'user': user_data
+                }
+            }
+
