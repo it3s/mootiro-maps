@@ -161,21 +161,39 @@ def js_urls():
         f.write(s)
 
 
-def syncdb(create_superuser=""):
+def sync_db(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
     noinput = "" if create_superuser else "--noinput"
     local('python manage.py syncdb {} {}'
           .format(noinput, django_settings[env_]))
 
 
-def recreate_db():
-    """Drops komoo database and recreates it with postgis template."""
+def syncdb(create_superuser=""):
+    sync_db(create_superuser)
+
+
+def create_db():
+    """Create komoo database with postgis template."""
     setup_django()
     from django.conf import settings
     db_name = settings.DATABASES['default']['NAME']
-    logging.info("Recreating database '{}'".format(db_name))
-    local('dropdb {} && createdb -T template_postgis {}'.format(
-        db_name, db_name))
+    logging.info("Creating database '{}'".format(db_name))
+    local('createdb -T template_postgis {}'.format(db_name))
+
+
+def drop_db():
+    """Drops komoo database """
+    setup_django()
+    from django.conf import settings
+    db_name = settings.DATABASES['default']['NAME']
+    logging.info("Droping database '{}'".format(db_name))
+    local('dropdb {}'.format(db_name))
+
+
+def recreate_db():
+    """Drops komoo database and recreates it with postgis template."""
+    drop_db()
+    create_db()
 
 
 def shell():

@@ -17,8 +17,8 @@ from annoying.functions import get_object_or_None
 
 from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
-from main.utils import create_geojson, randstr, send_mail_task, paginated_query
-from main.tasks import send_explanations_mail
+from main.utils import create_geojson, randstr, paginated_query
+from main.tasks import send_explanations_mail, send_mail_async
 
 from update.models import Update
 
@@ -259,7 +259,7 @@ def user_new(request):
             key = randstr(32)
         user.verification_key = key
 
-        send_mail_task.delay(
+        send_mail_async.delay(
             title=_('Welcome to MootiroMaps'),
             receivers=[user.email],
             message=_('''
@@ -345,3 +345,69 @@ def logout(request):
 def explanations(request):
     name = request.GET.get('name', request.user.name)
     return {'name': name}
+
+
+#===============================================================
+
+# # -*- coding: utf-8 -*-
+# from __future__ import unicode_literals
+# import logging
+#
+# from django.shortcuts import redirect
+# from django.core.urlresolvers import reverse
+# from django.http import Http404
+#
+# from annoying.decorators import render_to
+# from locker.models import Locker
+# from .models import User
+#
+#
+# logger = logging.getLogger(__name__)
+#
+#
+# @render_to('authentication/user_root.html')
+# def user_root(request):
+#         """
+#         user_root is intended to only load a backbone router that
+#         renders the diferent login/register pages
+#         """
+#         return {}
+#
+#
+# def user_verification(request, key=''):
+#     '''
+#     Displays verification needed message if no key provided, or try to verify
+#     the user by the given key.
+#     '''
+#     user_root_ur = reverse('user_root')
+#     if not key:
+#         return redirect(reverse('not_verified'))
+#     user_id = Locker.withdraw(key=key)
+#     user = User.get_by_id(user_id)
+#     if not user:
+#         # invalid key => invalid link
+#         raise Http404
+#     if not user.is_active:
+#         user.is_active = True
+#         user.save()
+#     return redirect(reverse('verified'))
+#
+#
+# @render_to('global.html')
+# def user_view(request, id_):
+#     """
+#     User page
+#     """
+#     user = request.user if id_ == 'me' else User.get_by_id(id_)
+#
+#     if not user:
+#         raise Http404
+#
+#     user_data = user.to_cleaned_dict(user=request.user)
+#     # filter data
+#     return {
+#                 'KomooNS_data': {
+#                     'user': user_data
+#                 }
+#             }
+#
