@@ -1,6 +1,7 @@
 #! /usr/bin/env sh
 
 sudo apt-get install nodejs npm rubygems python-dev -y
+sudo apt-get install libev4 libev-dev libevent-2.0-5 libevent-dev
 
 # install and configure rabbitmq for working with celery
 sudo apt-get install rabbitmq-server -y
