@@ -1680,6 +1680,7 @@ div.view-list-item.odd {
     font-weight: bold;
     width: 100px;
 }
+.view-list-sorter-btn, .view-list-filter-btn, .date-sorter-order i { cursor: pointer }
 .view-list-sorter-btn{
     display: inline-block;
     margin-left: 20px;
@@ -1709,7 +1710,7 @@ div.view-list-item.odd {
     font-weight: bold;
     padding: 2px 10px;
     border-radius: 2px;
-    background-color: #cae9f0 ;
+    background-color: #cae9f0;
 }
 .view-list-filter-btn.selected, .view-list-filter-btn:hover{
     background-color: #ff8a00 ;
