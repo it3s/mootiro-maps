@@ -173,7 +173,7 @@ class Interpreter(object):
             if count > 1:
                 msg = _('Duplicate polygon identifier in Fusion Table: {}') \
                         .format(pid)
-                self.errors.append(msg)
+                self.warnings.append(msg)
 
         return self.kml_dicts
 

@@ -216,3 +216,9 @@ def set_tags(obj):
         obj.object_dict['tags'].append('sem ponto')
     if obj.row_dict['Geometria']['Ponto como área'] != '':
         obj.object_dict['tags'].append('ponto aproximado')
+
+    for t in obj.object_dict['tags']:
+        if len(t) > 100:
+            msg = 'Tag excede 100 caracteres: {}'.format(t)
+            obj.errors.append(msg)
+
