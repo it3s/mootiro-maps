@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     'importsheet',
     'search',
     'tags',
+    'highlight',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024
