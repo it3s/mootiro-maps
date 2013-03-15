@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from hashlib import sha1
+import os
 
 from django.conf import settings
 from django.db import models
@@ -99,20 +100,19 @@ class User(GeoRefModel, BaseModel):
     def view_url(self):
         return self.url
 
-    @property
-    def avatar(self):
-        return None
-
     def files_set(self):
         """ pseudo-reverse query for retrieving Resource Files"""
         return UploadedFile.get_files_for(self)
 
     @property
-    def avatar_url(self):
+    def avatar(self):
+        url = '{}img/user-placeholder.png'.format(settings.STATIC_URL)
         files = self.files_set()
-        if files:
-            return files[0].file.url
-        return '{}img/user-placeholder.png'.format(settings.STATIC_URL)
+        for fl in files:
+            if os.path.exists(fl.file.url[1:]):
+                url = fl.file.url
+                break
+        return url
 
     def _social_auth_by_name(self, name):
         """

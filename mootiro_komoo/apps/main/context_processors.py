@@ -2,13 +2,6 @@ from django.conf import settings  # import the settings file
 from django.middleware.csrf import get_token
 
 
-def social_keys(context):
-    return {
-        'FACEBOOK_APP_ID': settings.FACEBOOK_APP_ID,
-        'SITE_URL': settings.SITE_URL,
-    }
-
-
 def komoo_namespace(request):
     """
     Sets implicit values for the KommoNS variable.
@@ -43,6 +36,7 @@ def komoo_namespace(request):
                                     if settings.DEBUG else 'js.build'),
             'csrf_token': get_token(request),
             'staticUrl': settings.STATIC_URL,
-        }
+        },
+        'SITE_URL': settings.SITE_URL,
     }
 
