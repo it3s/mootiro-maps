@@ -16,7 +16,7 @@ urlpatterns = patterns('authentication.views',
             name='user_verification'),
 
     # per user urls
-    url(r'^(?P<id>\d+)/?$', 'profile', name='user_profile'),
+    url(r'^(?P<id>\d+)/?$', 'profile', name='user_view'),
 
     url(r'^edit/?$', 'profile_update', name='profile_update'),
 

@@ -15,6 +15,7 @@ from locker.models import Locker
 from main.tasks import send_mail_async
 from komoo_map.models import GeoRefModel, POINT
 from search.signals import index_object_for_search
+from fileupload.models import UploadedFile
 
 
 CONFIRMATION_EMAIL_MSG = _('''
@@ -92,11 +93,19 @@ class User(GeoRefModel, BaseModel):
 
     @property
     def url(self):
-        return reverse('user_view', kwargs={'id_': self.id})
+        return reverse('user_view', kwargs={'id': self.id})
+
+    @property
+    def view_url(self):
+        return self.url
 
     @property
     def avatar(self):
         return None
+
+    def files_set(self):
+        """ pseudo-reverse query for retrieving Resource Files"""
+        return UploadedFile.get_files_for(self)
 
     @property
     def avatar_url(self):
@@ -224,6 +233,17 @@ class AnonymousUser(object):
 
     name = ''
     id = None
+
+    def to_dict(self):
+        return {'id': None}
+
+    def to_cleaned_dict(self, *args, **kwargs):
+        return self.to_dict()
+
+    # dummy fix for django weirdness =/
+    def get_and_delete_messages(self):
+        pass
+
 
 
 PROVIDERS = {

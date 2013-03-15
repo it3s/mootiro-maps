@@ -17,7 +17,7 @@
     <meta property="fb:app_id" content="{{FACEBOOK_APP_ID}}" />
     <meta property="og:description" content="MootiroMaps é uma ferramenta open source que promove a colaboração entre atores engajados no desenvolvimento de um território ou uma comunidade."/>
     <meta property="og:type" content="website" />
-    
+
     {% block facebook_meta %}
       <meta property="og:title" content="MootiroMaps" />
       <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo-fb.png"/>
@@ -33,12 +33,12 @@
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/fashion.css" />
     <script type="text/javascript" src="{% url javascript_catalog %}"></script>
     <script type="text/javascript">
+      var KomooNS = {{ KomooNS|to_json|safe }};
+      KomooNS.data = {% if KomooNS_data %} {{ KomooNS_data|to_json|safe }};
+                     {% else %} {}; {% endif %}
+
       var isAuthenticated = {{ user.is_authenticated|lower }};
       var lang = '{{ LANGUAGE_CODE }}';
-      var komooNS = komooNS || {};
-      {% if not debug %}
-      komooNS.require_baseUrl = '{{STATIC_URL}}js.build';
-      {% endif %}
     </script>
   </head>
   <body class="{% if community %}community{% endif %}">
@@ -66,7 +66,7 @@
     {{ form.media.js }}
 
     {% block css %}{% endblock %}
-    
+
     <!-- Facebook stuff -->
     <div id="fb-root"></div>
     <script>
@@ -92,7 +92,7 @@
             {% menu "" %}
           {% endblock %}
         </nav>
-        
+
         <div id="search">
           <form action=".">
             <input id="search-bar" type="search" placeholder="{% trans 'Search for place, user or object...' %}" autocomplete="off"/>
@@ -159,13 +159,13 @@
     </script>
 
     <script type="text/javascript" src="{{STATIC_URL}}js/help_center/help_center.js"></script>
-    
-    
+
+
     {% block help_center %}
       <script type="text/javascript">
         $('#help_button').parent().remove();
       </script>
     {% endblock %}
-    
+
   </body>
 </html>

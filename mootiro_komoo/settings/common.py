@@ -77,6 +77,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
     "main.context_processors.social_keys",
+    "main.context_processors.komoo_namespace",
 
 )
 
