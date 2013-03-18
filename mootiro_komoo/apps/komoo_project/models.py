@@ -65,6 +65,13 @@ class Project(models.Model):
         return UploadedFile.get_files_for(self)
 
     @property
+    def all_contributors(self):
+        c = [user for user in self.contributors.all()]
+        if not self.creator in c:
+            c.append(self.creator)
+        return c
+
+    @property
     def public(self):
         ''' Temporary property to avoid crashes. '''
         return True
@@ -127,9 +134,7 @@ class Project(models.Model):
 
     @property
     def related_items(self):
-        items = [self.creator]
-        for c in self.contributors.all():
-            items.append(c)
+        items = self.all_contributors
         for obj in [o.content_object for o in self.related_objects]:
             items.append(obj)
         return items
