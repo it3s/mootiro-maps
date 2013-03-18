@@ -253,29 +253,11 @@ def user_new(request):
         user.is_active = False
         user.set_password(request.POST['password'])
 
-        # Email verification
-        key = randstr(32)
-        while User.objects.filter(verification_key=key).exists():
-            key = randstr(32)
-        user.verification_key = key
+        user.save()
 
-        send_mail_async.delay(
-            title=_('Welcome to MootiroMaps'),
-            receivers=[user.email],
-            message=_('''
-Hello, {name}.
-
-Before using our tool, please confirm your e-mail visiting the link below.
-{verification_url}
-
-Thanks,
-the IT3S team.
-''').format(name=user.name, verification_url=request.build_absolute_uri(
-                                reverse('user_verification', args=(key,))))
-        )
+        user.send_confirmation_mail(request)
         send_explanations_mail(user)
 
-        user.save()
         redirect_url = reverse('user_check_inbox')
         return {'redirect': redirect_url}
 
@@ -331,15 +313,16 @@ def explanations(request):
 # =============================================================================
 
 
-@render_to('authentication/user_root.html')
-def user_root(request):
-        """
-        user_root is intended to only load a backbone router that
-        renders the diferent login/register pages
-        """
-        return {}
+# @render_to('authentication/user_root.html')
+# def user_root(request):
+#         """
+#         user_root is intended to only load a backbone router that
+#         renders the diferent login/register pages
+#         """
+#         return {}
 
 
+@render_to('authentication/verification.html')
 def user_verification(request, key=''):
     '''
     Displays verification needed message if no key provided, or try to verify
@@ -347,7 +330,7 @@ def user_verification(request, key=''):
     '''
     # user_root_url = reverse('user_root')
     if not key:
-        return redirect(reverse('not_verified'))
+        return {'message': 'check_email'}
     user_id = Locker.withdraw(key=key)
     user = User.get_by_id(user_id)
     if not user:
@@ -356,24 +339,24 @@ def user_verification(request, key=''):
     if not user.is_active:
         user.is_active = True
         user.save()
-    return redirect(reverse('verified'))
+    return {'message': 'activated'}
 
 
-@render_to('global.html')
-def user_view(request, id_):
-    """
-    User page
-    """
-    user = request.user if id_ == 'me' else User.get_by_id(id_)
-
-    if not user:
-        raise Http404
-
-    user_data = user.to_cleaned_dict(user=request.user)
-    # filter data
-    return {
-                'KomooNS_data': {
-                    'user': user_data
-                }
-            }
+# @render_to('global.html')
+# def user_view(request, id_):
+#     """
+#     User page
+#     """
+#     user = request.user if id_ == 'me' else User.get_by_id(id_)
+# 
+#     if not user:
+#         raise Http404
+# 
+#     user_data = user.to_cleaned_dict(user=request.user)
+#     # filter data
+#     return {
+#                 'KomooNS_data': {
+#                     'user': user_data
+#                 }
+#             }
 
