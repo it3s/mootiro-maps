@@ -1,0 +1,41 @@
+{% extends 'global.html' %}
+{% load komoo_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'Projects' %}{% endblock %}
+
+{% block menu %} {% menu "project" %} {% endblock %}
+
+{% block content %}
+
+  <div id="main-content" class='highlights'>
+    <h1>
+      {% trans "Projects" %}
+    </h1>
+    <a class="right login-required big-button new-project" href="{% url project_new %}" title="Criar novo Projeto de Mapeamento"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
+    
+    {% for s in sections %}
+      <div class="section">
+        <div class="section-header">
+          <hr/>
+          <span>{% if s.icon_src %}<img src="{{ s.icon_src }}">{% endif %}{{ s.name }}</span>
+        </div>
+        <ul>
+          {% for h in s.highlights %}
+          <li>
+            <a href="{{h.object.view_url}}">
+              <img src="/media/{{h.object.logo}}" />
+              <h3>{{h.name}}</h3>
+              <p>{{h.description}}</p></a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+
+    <a href="{% url project_list %}">Full list</a>
+  
+  </div>
+
+{% endblock %}
+  

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-08 20:21-0300\n"
+"POT-Creation-Date: 2013-03-18 19:04-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -36,8 +36,8 @@ msgstr "Localização"
 
 #: apps/authentication/forms.py:59 apps/community/forms.py:25
 #: apps/komoo_project/forms.py:41 apps/komoo_resource/forms.py:40
-#: apps/main/templatetags/komoo_tags.py:327
-#: apps/main/templatetags/komoo_tags.py:328 apps/organization/forms.py:63
+#: apps/main/templatetags/komoo_tags.py:330
+#: apps/main/templatetags/komoo_tags.py:331 apps/organization/forms.py:63
 #: lib/taggit/models.py:10 templates/organization/branch_form.html:13
 msgid "Name"
 msgstr "Nome"
@@ -127,12 +127,12 @@ msgstr "População"
 
 #: apps/community/forms.py:28 apps/investment/forms.py:42
 #: apps/komoo_project/forms.py:43 apps/komoo_resource/forms.py:44
-#: apps/main/templatetags/komoo_tags.py:326 apps/need/forms.py:29
+#: apps/main/templatetags/komoo_tags.py:329 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 #: templates/importsheet/row_templates/comunidades.html:38
 #: templates/importsheet/row_templates/necessidades.html:69
-#: templates/importsheet/row_templates/organizacoes.html:81
+#: templates/importsheet/row_templates/organizacoes.html:83
 #: templates/importsheet/row_templates/recursos.html:59
 #: templates/main/templatetags/taglist.html:5
 msgid "Tags"
@@ -143,8 +143,8 @@ msgid " "
 msgstr " "
 
 #: apps/community/models.py:39 apps/komoo_resource/forms.py:45
-#: apps/main/templatetags/komoo_tags.py:231
-#: apps/main/templatetags/komoo_tags.py:330 apps/need/forms.py:24
+#: apps/main/templatetags/komoo_tags.py:234
+#: apps/main/templatetags/komoo_tags.py:333 apps/need/forms.py:24
 #: apps/organization/forms.py:65 templates/investment/list.html:44
 msgid "Community"
 msgstr "Comunidade"
@@ -201,7 +201,7 @@ msgstr "Nome do Investidor"
 msgid "Over period"
 msgstr "Por um período"
 
-#: apps/investment/forms.py:38 apps/main/templatetags/komoo_tags.py:329
+#: apps/investment/forms.py:38 apps/main/templatetags/komoo_tags.py:332
 #: templates/investment/view.html:48
 msgid "Date"
 msgstr "Data"
@@ -222,7 +222,7 @@ msgstr "Valor"
 msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
-#: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:226
+#: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:229
 #: apps/organization/models.py:67
 msgid "Organization"
 msgstr "Organização"
@@ -293,7 +293,7 @@ msgstr "Logotipo"
 
 #: apps/komoo_project/forms.py:45 apps/komoo_resource/forms.py:43
 #: apps/organization/forms.py:66
-#: templates/importsheet/row_templates/organizacoes.html:46
+#: templates/importsheet/row_templates/organizacoes.html:47
 #: templates/importsheet/row_templates/recursos.html:51
 #: templates/organization/show.html:160 templates/project/old_view.html:268
 #: templates/project/view.html:103 templates/resource/show.html:99
@@ -304,7 +304,7 @@ msgstr "Contato"
 msgid "Partners Logo"
 msgstr "Logo de Parceiros"
 
-#: apps/komoo_project/views.py:88
+#: apps/komoo_project/views.py:96
 msgid "Unnamed"
 msgstr "Sem nome"
 
@@ -326,7 +326,7 @@ msgstr "campo com dados inválidos"
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:64 apps/main/templatetags/komoo_tags.py:227
+#: apps/komoo_resource/models.py:64 apps/main/templatetags/komoo_tags.py:230
 msgid "Resource"
 msgstr "Recurso"
 
@@ -523,24 +523,24 @@ msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
 msgstr[1] "daqui a %(count)s horas"
 
-#: apps/main/templatetags/komoo_tags.py:228 apps/need/models.py:97
+#: apps/main/templatetags/komoo_tags.py:231 apps/need/models.py:97
 msgid "Need"
 msgstr "Necessidade"
 
-#: apps/main/templatetags/komoo_tags.py:229
+#: apps/main/templatetags/komoo_tags.py:232
 msgid "Proposal"
 msgstr "Proposta"
 
-#: apps/main/templatetags/komoo_tags.py:230 templates/investment/edit.html:7
+#: apps/main/templatetags/komoo_tags.py:233 templates/investment/edit.html:7
 msgid "Investment"
 msgstr "Investimento"
 
-#: apps/main/templatetags/komoo_tags.py:331
+#: apps/main/templatetags/komoo_tags.py:334
 #: templates/importsheet/row_templates/necessidades.html:18
 msgid "Need categories"
 msgstr "Áreas"
 
-#: apps/main/templatetags/komoo_tags.py:332 apps/need/forms.py:28
+#: apps/main/templatetags/komoo_tags.py:335 apps/need/forms.py:28
 #: templates/need/list.html:58 templates/need/view.html:45
 msgid "Target audiences"
 msgstr "Públicos alvo"
@@ -1123,7 +1123,8 @@ msgid "Loading..."
 msgstr "Carregando..."
 
 #: templates/authentication/profile.html:65
-#: templates/main/templatetags/menu.html:28 templates/project/list.html:7
+#: templates/main/templatetags/menu.html:28 templates/project/home.html:5
+#: templates/project/home.html.py:13 templates/project/list.html:7
 #: templates/project/projects_tag.html:5
 msgid "Projects"
 msgstr "Projetos"
@@ -1388,12 +1389,12 @@ msgid "Geometry"
 msgstr "Geometria"
 
 #: templates/importsheet/row_templates/necessidades.html:57
-#: templates/importsheet/row_templates/organizacoes.html:59
+#: templates/importsheet/row_templates/organizacoes.html:61
 #: templates/organization/show.html:178
 msgid "Audience"
 msgstr "Público"
 
-#: templates/importsheet/row_templates/organizacoes.html:70
+#: templates/importsheet/row_templates/organizacoes.html:72
 #: templates/komoo_map/info_window.html:43 templates/organization/list.html:53
 #: templates/organization/show.html:167
 msgid "Operation Field"
@@ -1986,6 +1987,10 @@ msgstr "Editar Associações do Projeto"
 msgid "Deleted marked associations"
 msgstr "Apagar associações marcadas"
 
+#: templates/project/home.html:15
+msgid "Create a project"
+msgstr "Crie um projeto"
+
 #: templates/project/list.html:17
 msgid "Create New Project"
 msgstr "Criar Novo Projeto"
@@ -2006,32 +2011,32 @@ msgstr "Administrador"
 msgid "Points on Map"
 msgstr "Ponto no Mapa"
 
-#: templates/project/old_view.html:121 templates/project/view.html:189
+#: templates/project/old_view.html:121
 msgid "Collaborators"
 msgstr "Colaboradores"
 
-#: templates/project/old_view.html:142 templates/project/view.html:210
+#: templates/project/old_view.html:142 templates/project/view.html:201
 msgid "This project has no related Objects yet"
 msgstr "Este projeto não tem nenhum Objeto relacionado"
 
-#: templates/project/old_view.html:155 templates/project/view.html:223
+#: templates/project/old_view.html:155 templates/project/view.html:214
 msgid "This project has no related Organizations yet"
 msgstr "Este projeto não tem nenhuma Organização relacionada"
 
-#: templates/project/old_view.html:168 templates/project/view.html:236
+#: templates/project/old_view.html:168 templates/project/view.html:227
 msgid "This project has no related Communities yet"
 msgstr "Este projeto não tem nenhuma Communidade relacionada"
 
-#: templates/project/old_view.html:181 templates/project/view.html:249
+#: templates/project/old_view.html:181 templates/project/view.html:240
 msgid "This project has no related Needs yet"
 msgstr "Este projeto não tem nenhuma Necessidade relacionada"
 
-#: templates/project/old_view.html:194 templates/project/view.html:262
+#: templates/project/old_view.html:194 templates/project/view.html:253
 msgid "This project has no related Resources yet"
 msgstr "Este projeto não tem nenhum Recurso relacionada"
 
 #: templates/project/old_view.html:207 templates/project/old_view.html:220
-#: templates/project/view.html:275 templates/project/view.html.py:288
+#: templates/project/view.html:266 templates/project/view.html.py:279
 msgid "This project has no related Investments yet"
 msgstr "Este Projeto não tem nenhum Investimento relacionado"
 
@@ -2051,7 +2056,7 @@ msgstr "Adicionar a um projeto"
 msgid "Add this object to a project"
 msgstr "Adicionar este objeto a um projeto"
 
-#: templates/project/view.html:304
+#: templates/project/view.html:295
 msgid "This project has no contributors yet"
 msgstr "Este projeto não possui contribuidores ainda"
 

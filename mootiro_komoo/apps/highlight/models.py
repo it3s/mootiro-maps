@@ -11,7 +11,7 @@ class HighlightSection(models.Model):
         ('/project', '/project'),
     )
     name = models.CharField(max_length=64, blank=False)
-    icon_src = models.CharField(max_length=256, null=True)
+    icon_src = models.CharField(max_length=256, null=True, blank=True)
     
     page_name = models.CharField(max_length=32, null=False, blank=False, choices=PAGE_CHOICES)
     page_order = models.IntegerField(null=True, blank=True)
@@ -19,6 +19,9 @@ class HighlightSection(models.Model):
 
     def __unicode__(self):
         return unicode("{} :: {}".format(self.page_name, self.name))
+
+    def highlights(self):
+        return self.highlight_set.filter(is_active=True).order_by('section_order')
 
 
 class Highlight(models.Model):
@@ -37,3 +40,7 @@ class Highlight(models.Model):
     def __unicode__(self):
         return unicode("{} :: {} :: {} {}".format(unicode(self.section),
             self.section_order, self.name, '(inactive)' if not self.is_active else ''))
+
+    # TODO: when the time is come, use unified model
+    def object(self):
+        return ENTITY_MODEL[self.object_type].objects.get(id=self.object_id)

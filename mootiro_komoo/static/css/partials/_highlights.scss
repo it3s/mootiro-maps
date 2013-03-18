@@ -1,0 +1,99 @@
+#main-content.highlights {
+
+    h1 {
+        margin: 1em 0;
+        display: inline-block;
+    }
+    .new-project { margin-top: 30px }
+
+
+    .section {
+        div.section-header {
+            height: 20px;
+            position: relative;
+            margin: 1em 0 0.5em;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            hr {
+                position: absolute;
+                width: 100%;
+                top: 50%;
+                margin: 0;
+                border-top-color: #ededed;
+            }
+
+            span {
+                position: absolute;
+                background: #fff;
+                padding: 0 0.5em;
+                margin-left: 30px;
+
+                img {
+                    vertical-align: bottom;
+                    margin-right: 0.5em;
+                }
+            }
+        }
+
+        ul {
+            * {
+                -webkit-box-sizing: border-box;
+                   -moz-box-sizing: border-box;
+                        box-sizing: border-box;
+            }
+
+            padding: 0 30px;
+
+            li {
+                display: inline-block;
+                vertical-align: top;
+                width: 32%;
+                margin: 5px 0.5%;
+                padding: 0.7em;
+                background: #ededed;
+
+                a {
+                    display: block;
+                    text-decoration: inherit;
+                    color: inherit;
+                }
+
+                text-align: center;
+                img {
+                    max-height: 200px;
+                    margin-bottom: 10px;
+                }
+                h3, p { text-align: left }
+            }
+
+            li:hover { background: #dceff4 }
+        }
+    }
+}
+
+a.big-button {
+    -webkit-border-radius: 15px;
+       -moz-border-radius: 15px;
+            border-radius: 15px;
+    padding: 10px 20px;
+    color: #fff;
+    font-weight: bold;
+    text-decoration: inherit;
+
+    .ico {
+        display: inline-block;
+        vertical-align: -33%;
+        margin-right: 0.2em;
+        width: 25px;
+        height: 25px;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+}
+
+.new-project {
+    background: #f26700;
+    .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
+}

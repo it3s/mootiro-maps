@@ -18,6 +18,8 @@ from main.utils import (paginated_query, sorted_query, filtered_query,
 from main.tasks import send_explanations_mail
 
 from authentication.utils import login_required
+from highlight.models import HighlightSection
+
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
 
@@ -32,6 +34,12 @@ def project_list(request):
     projects_count = projects_list.count()
     projects = paginated_query(projects_list, request)
     return dict(projects=projects, projects_count=projects_count)
+
+
+@render_to('project/home.html')
+def project_home(request):
+    hs = HighlightSection.objects.filter(page_name='/project').order_by('page_order')
+    return dict(sections=hs)
 
 
 @render_to('project/view.html')
