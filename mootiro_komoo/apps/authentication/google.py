@@ -25,12 +25,12 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 
 from main.utils import randstr
-from main.tasks import send_explanations_mail
 from authentication.utils import login as auth_login
 
-from .models import PROVIDERS, SocialAuth
+from .models import PROVIDERS
 from .utils import encode_querystring
 from .utils import get_or_create_user_by_credentials
+from .utils import connect_or_merge_user_by_credentials
 
 
 def login_google(request):
@@ -44,9 +44,9 @@ def login_google(request):
         # below a space separated list of permissions
         'scope': 'https://www.googleapis.com/auth/userinfo.profile '
                  'https://www.googleapis.com/auth/userinfo.email',
-        'state': csrf_token,           # unique string to prevent CSRF
-        'response_type': 'code',       # 'code' or 'token'
-                                       # depends on the application type.
+        'state': csrf_token,        # unique string to prevent CSRF
+        'response_type': 'code',    # 'code' or 'token'
+                                    # depends on the application type.
     }
     request.session['state'] = csrf_token
     request.session['next'] = request.GET.get('next', reverse('root'))
@@ -86,7 +86,7 @@ def google_authorized(request):
     # Step 3: Accessing the API
     params = {
         # 'scope': 'https://www.googleapis.com/auth/userinfo.email',
-        'access_token': access_data['access_token'],
+        'access_token': access_token,
     }
     url = 'https://www.googleapis.com/oauth2/v1/userinfo/'
     url += '?' + encode_querystring(params)
@@ -94,20 +94,15 @@ def google_authorized(request):
 
     if request.user.is_authenticated():
         # if a user is already logged, then just connect social auth account
-        credential, created = SocialAuth.objects.get_or_create(
-            email=data['email'], provider=PROVIDERS['google'])
-        if created:
-            credential.user = request.user
-        else:
-            # merge users information
-            pass
+        connect_or_merge_user_by_credentials(logged_user=request.user,
+                        email=data['email'], provider=PROVIDERS['google'])
     else:
         user, created = get_or_create_user_by_credentials(data['email'],
                             PROVIDERS['google'], access_data=access_data)
         if created:
             user.name = data['name']
             user.save()
-            send_explanations_mail(user)
         auth_login(request, user)
 
     return redirect(request.session['next'] or reverse('root'))
+

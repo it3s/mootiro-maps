@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class FormProfile(AjaxModelForm):
-    contact = forms.CharField(required=False, widget=MarkItUpWidget())
+    about_me = forms.CharField(required=False, widget=MarkItUpWidget())
     name = forms.CharField(required=False)
     geometry = forms.CharField(required=False, widget=MapButtonWidget)
     #geometry = forms.CharField(required=False, widget=forms.HiddenInput())
@@ -24,11 +24,11 @@ class FormProfile(AjaxModelForm):
 
     class Meta:
         model = User
-        fields = ['name', 'contact', 'id', 'geometry']
+        fields = ['name', 'about_me', 'id', 'geometry']
 
     _field_labels = {
         'name': _('Full Name'),
-        'contact': _('Public Contact'),
+        'about_me': _('About Me'),
         'photo': _('Photo'),
         'geometry': _('Location'),
     }

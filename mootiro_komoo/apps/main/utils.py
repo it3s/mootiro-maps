@@ -19,7 +19,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponseNotAllowed
 from django.core.mail import send_mail as django_send_mail
 from django.conf import settings
-from celery.task import task
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -231,12 +230,6 @@ def clean_autocomplete_field(field_data, model):
 
 def render_markup(text):
     return markdown(text, safe_mode=True) if text else ''
-
-
-@task
-def send_mail_task(title='', message='', sender='', receivers=[], html=False):
-    send_mail(title=title, message=message, sender=sender,
-            receivers=receivers, html=html)
 
 
 def send_mail(title='', message='',
