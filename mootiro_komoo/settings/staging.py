@@ -5,7 +5,7 @@ from common import *
 SITE_URL = 'http://staging.maps.mootiro.org'
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'en-us'
 
 LOGGING = {
     'version': 1,
