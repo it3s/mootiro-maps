@@ -183,6 +183,9 @@ def jsonify(object):
     # return simplejson.dumps(object)
 # jsonify.is_safe = True
 
+@register.filter
+def to_json(object):
+    return jsonify(object)
 
 @register.filter
 def linkencode(val):

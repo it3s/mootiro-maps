@@ -42,7 +42,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 
@@ -66,7 +66,7 @@ CONTEXT_PROCESSORS = (
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+    # 'django.template.loaders.eggs.Loader',
 )
 TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, 'templates'), )
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -76,7 +76,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
-    "main.context_processors.social_keys",
+    "main.context_processors.komoo_namespace",
 
 )
 
@@ -134,6 +134,7 @@ INSTALLED_APPS = [
     'importsheet',
     'search',
     'tags',
+    'locker',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024

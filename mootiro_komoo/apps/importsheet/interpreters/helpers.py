@@ -69,7 +69,7 @@ def set_descricao(obj):
     # clean and map references dicts
     refs = [v for k, v in obj.row_dict.items() if k.startswith('Referência')]
     refs = filter(lambda r: bool([v for v in r.values() if v]), refs)
-    refs = map(lambda ref: dict(author=ref['Autor'], source=ref['Fonte'], 
+    refs = map(lambda ref: dict(author=ref['Autor'], source=ref['Fonte'],
             link=ref['Link'], link_title=ref['Título do link'], date=ref['Data']), refs)
 
     c = Context({
@@ -105,9 +105,9 @@ def set_geometria(obj):
     gd = obj.row_dict['Geometria']
     point = gd.get('Ponto')
     point_as_area = gd.get('Ponto como área')
-    polygon = gd.get('Identificador do polígono (KML)') if obj.kml_dicts else None
+    from_kml = gd.get('Identificador do polígono (KML)') if obj.kml_dicts else None
 
-    num_geometries = len([v for v in [point, point_as_area, polygon] if v])
+    num_geometries = len([v for v in [point, point_as_area, from_kml] if v])
     if num_geometries == 0:
         return  # nothing to do!
     if num_geometries > 1:
@@ -147,19 +147,30 @@ def set_geometria(obj):
                 'type': 'Polygon',
                 'coordinates': coords
             }]
-        elif polygon:
+        elif from_kml: # Polygon or MultiLineString
             found = False
             for kd in obj.kml_dicts:
-                if polygon == kd['Identificador do polígono']:
+                if from_kml == kd['Identificador do polígono']:
                     found = True
                     if 'type' in kd['Geometria'] and \
                     kd['Geometria']['type'] == 'GeometryCollection':
-                        coords = [geom['coordinates'][0] \
-                                    for geom in kd['Geometria']['geometries']]
-                        geodict['geometries'] = [{
-                            'type': 'Polygon',
-                            'coordinates': coords  # put many polygons together
-                        }]
+                        if kd['Geometria']['geometries'][0]['type'] == 'LineString':
+                            # we got geometry collection with some linestrings
+                            # lets crate a `MultiLineString` geometry
+                            coords = [geom['coordinates'] \
+                                        for geom in kd['Geometria']['geometries']]
+                            geodict['geometries'] = [{
+                                'type': 'MultiLineString',
+                                'coordinates': coords  # put many linestrings together
+                            }]
+                        else:
+                            # if we dont got linestrings, assume that this is a polygon
+                            coords = [geom['coordinates'][0] \
+                                        for geom in kd['Geometria']['geometries']]
+                            geodict['geometries'] = [{
+                                'type': 'Polygon',
+                                'coordinates': coords  # put many polygons together
+                            }]
                     else:  # only 1 polygon
                         geodict['geometries'] = [kd['Geometria']['geometry']]
 
@@ -181,7 +192,7 @@ def set_geometria(obj):
 
                     break
             if not found:
-                msg = 'Identificador do polígono não encontrado: {}'.format(polygon)
+                msg = 'Identificador do polígono não encontrado: {}'.format(from_kml)
                 obj.errors.append(msg)
                 return
 
@@ -189,8 +200,8 @@ def set_geometria(obj):
         geojson = json.dumps(geodict)
         g.geometry = geojson
         obj.object_dict['geometry'] = geojson
-        obj.object_dict['geometry_preview'] = point or point_as_area or polygon or ''
-        
+        obj.object_dict['geometry_preview'] = point or point_as_area or from_kml or ''
+
     except ValueError:
         msg = 'Dado de geometria não é um número válido.'
         obj.errors.append(msg)

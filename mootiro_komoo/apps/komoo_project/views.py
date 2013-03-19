@@ -42,12 +42,11 @@ def project_view(request, id=''):
 
     proj_objects['User'] = {'app_name': 'authentication', 'objects_list': []}
 
-    print project.contributors.all()
-    for c in project.contributors.all():
+    for c in project.all_contributors:
         proj_objects['User']['objects_list'].append({
             'name': c.name,
             'link': c.view_url,
-            'avatar': c.avatar_url,
+            'avatar': c.avatar,
             'id': c.id,
             'has_geojson': bool(getattr(c, 'geometry', ''))
         })
