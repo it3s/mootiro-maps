@@ -40,7 +40,7 @@ define ['googlemaps', 'map/component'], (googleMaps, Component) ->
             options = @map.googleMap.mapTypeControlOptions
             options.mapTypeIds.push @id
             @map.googleMap.setOptions mapTypeControlOptions: options
-            @map.googleMap.setMapTypeId @id
+            @map.publish 'maptype_loaded', @id
 
 
     window.komoo.maptypes =

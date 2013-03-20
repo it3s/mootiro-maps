@@ -59,7 +59,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             $(@element).trigger 'initialized', @
 
         handleGoogleMapEvents: ->
-            eventNames = ['click', 'idle']
+            eventNames = ['click', 'idle', 'maptypeid_changed']
             eventNames.forEach (eventName) =>
                 komoo.event.addListener @googleMap, eventName, (e) =>
                     @publish eventName, e
@@ -290,11 +290,15 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
         fitBounds: (bounds = @features.getBounds()) ->
             @googleMap.fitBounds bounds
 
+        getMapTypeId: ->
+            @googleMap.getMapTypeId()
+
 
     class UserEditor extends Map
         constructor: (options) ->
             super options
 
+            @addComponent 'map/controls::AutosaveMapType'
             @addComponent 'map/maptypes::CleanMapType', 'mapType'
             @addComponent 'map/controls::DrawingManager', 'drawing'
             @addComponent 'map/controls::SearchBox'
@@ -304,6 +308,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
         constructor: (options) ->
             super options
 
+            @addComponent 'map/controls::AutosaveMapType'
             @addComponent 'map/maptypes::CleanMapType'
             @addComponent 'map/controls::SaveLocation'
             @addComponent 'map/controls::StreetView'
@@ -332,6 +337,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
         constructor: (options) ->
             super options
 
+            @addComponent 'map/controls::AutosaveMapType'
             @addComponent 'map/maptypes::CleanMapType', 'mapType'
             @addComponent 'map/controls::AutosaveLocation'
             @addComponent 'map/controls::StreetView'

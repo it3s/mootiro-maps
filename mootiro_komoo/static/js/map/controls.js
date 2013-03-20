@@ -1,9 +1,10 @@
 (function() {
   var __hasProp = Object.prototype.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
+    __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   define(['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/utils', 'infobox', 'markerclusterer'], function(googleMaps, Component, common, geometries, utils, InfoBox, MarkerClusterer) {
-    var ADD, AjaxBalloon, AutosaveLocation, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SearchBox, StreetView, SupporterBox, Tooltip, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     _NEXT_STEP = gettext('Next Step');
@@ -1316,6 +1317,76 @@
       return AutosaveLocation;
 
     })(SaveLocation);
+    SaveMapType = (function(_super) {
+
+      __extends(SaveMapType, _super);
+
+      function SaveMapType() {
+        SaveMapType.__super__.constructor.apply(this, arguments);
+      }
+
+      SaveMapType.prototype.setMap = function(map) {
+        var mapTypeId;
+        this.map = map;
+        this.handleMapEvents();
+        mapTypeId = this.getSavedMapType();
+        if (__indexOf.call(_.values(googleMaps.MapTypeId), mapTypeId) >= 0) {
+          return this.useSavedMapType();
+        }
+      };
+
+      SaveMapType.prototype.handleMapEvents = function() {
+        var _this = this;
+        this.map.subscribe('maptype_loaded', function(mapTypeId) {
+          if (mapTypeId === _this.getSavedMapType()) {
+            return _this.map.googleMap.setMapTypeId(mapTypeId);
+          }
+        });
+        return this.map.subscribe('initialized', function() {
+          return _this.useSavedMapType();
+        });
+      };
+
+      SaveMapType.prototype.saveMapType = function(mapTypeId) {
+        if (mapTypeId == null) mapTypeId = this.map.getMapTypeId();
+        return utils.createCookie('mapTypeId', mapTypeId, googleMaps.MapTypeId.ROADMAP);
+      };
+
+      SaveMapType.prototype.getSavedMapType = function() {
+        return utils.readCookie('mapTypeId' || googleMaps.MapTypeId.ROADMAP);
+      };
+
+      SaveMapType.prototype.useSavedMapType = function() {
+        var mapTypeId;
+        mapTypeId = this.getSavedMapType();
+        if (typeof console !== "undefined" && console !== null) {
+          console.log('Getting map type from cookie...');
+        }
+        return this.map.googleMap.setMapTypeId(mapTypeId);
+      };
+
+      return SaveMapType;
+
+    })(Component);
+    AutosaveMapType = (function(_super) {
+
+      __extends(AutosaveMapType, _super);
+
+      function AutosaveMapType() {
+        AutosaveMapType.__super__.constructor.apply(this, arguments);
+      }
+
+      AutosaveMapType.prototype.handleMapEvents = function() {
+        var _this = this;
+        AutosaveMapType.__super__.handleMapEvents.call(this);
+        return this.map.subscribe('maptypeid_changed', function() {
+          return _this.saveMapType();
+        });
+      };
+
+      return AutosaveMapType;
+
+    })(SaveMapType);
     StreetView = (function(_super) {
 
       __extends(StreetView, _super);
@@ -1385,6 +1456,8 @@
       Location: Location,
       SaveLocation: SaveLocation,
       AutosaveLocation: AutosaveLocation,
+      SaveMapType: SaveMapType,
+      AutosaveMapType: AutosaveMapType,
       StreetView: StreetView
     };
     return window.komoo.controls;
