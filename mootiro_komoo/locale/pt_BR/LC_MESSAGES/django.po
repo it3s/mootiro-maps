@@ -1147,7 +1147,7 @@ msgstr "Dados Pessoais"
 
 #: templates/authentication/profile_update.html:22
 msgid "Public Settings"
-msgstr "Dados Públicas"
+msgstr "Dados Públicos"
 
 #: templates/authentication/profile_update.html:27
 msgid "Signature Settings"
