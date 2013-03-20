@@ -50,6 +50,7 @@ define ['googlemaps', 'map/component'], (googleMaps, Component) ->
         init: (options) ->
             super options
             @keptFeatures = komoo.collections.makeFeatureCollection()
+            @openConnections = 0
 
         handleMapEvents: ->
             @map.subscribe 'idle', =>
@@ -91,12 +92,17 @@ define ['googlemaps', 'map/component'], (googleMaps, Component) ->
             if @fetchedTiles[addr]
                 @fetchedTiles[addr].features.setMap @map
                 return div
+            if @openConnections is 0
+                @map.publish 'features_request_started'
+            @openConnections++
+            @map.publish 'features_request_queued'
             $.ajax
                 url: @fetchUrl + addr
                 dataType: 'json'
                 type: 'GET'
                 success: (data) =>
-                    features = @map.loadGeoJSON JSON.parse(data), false
+                    console?.log "Getting tile #{addr}..."
+                    features = @map.loadGeoJSON JSON.parse(data), false, true, true
                     @fetchedTiles[addr] =
                         geojson: data
                         features: features
@@ -110,6 +116,11 @@ define ['googlemaps', 'map/component'], (googleMaps, Component) ->
                         $('body').append serverErrorContainer
                     errorContainer = $('<div>').html jqXHR.responseText
                     serverErrorContainer.append errorContainer
+                complete: =>
+                    @map.publish 'features_request_unqueued'
+                    @openConnections--
+                    if @openConnections is 0
+                        @map.publish 'features_request_completed'
             return div
 
 

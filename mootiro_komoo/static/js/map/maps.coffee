@@ -204,7 +204,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
 
             @panTo feature?.getCenter(), false
 
-        loadGeoJson: (geojson, panTo = false, attach = true) ->
+        loadGeoJson: (geojson, panTo = false, attach = true, silent = false) ->
             features = Collections.makeFeatureCollection map: @
 
             if not geojson?.type? or not geojson.type is 'FeatureCollection'
@@ -223,11 +223,11 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             if panTo and features.getBounds()?
                 @googleMap.fitBounds features.getBounds()
 
-            @publish 'features_loaded', features
+            @publish 'features_loaded', features if not silent
             features
 
-        loadGeoJSON: (geojson, panTo, attach) ->
-            @loadGeoJson(geojson, panTo, attach)
+        loadGeoJSON: (geojson, panTo, attach, silent) ->
+            @loadGeoJson(geojson, panTo, attach, silent)
 
         getGeoJson: (options = {}) ->
             options.newOnly ?= false
@@ -358,6 +358,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
         constructor: (options) ->
             super options
 
+            @addComponent 'map/controls::LoadingBox'
             @addComponent 'map/providers::FeatureProvider', 'provider'
             @addComponent 'map/controls::FeatureClusterer', 'clusterer', {map: this}
 

@@ -4,7 +4,7 @@
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   define(['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/utils', 'infobox', 'markerclusterer'], function(googleMaps, Component, common, geometries, utils, InfoBox, MarkerClusterer) {
-    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     _NEXT_STEP = gettext('Next Step');
@@ -55,9 +55,72 @@
         return typeof this.handleMapEvents === "function" ? this.handleMapEvents() : void 0;
       };
 
+      Box.prototype.hide = function() {
+        return this.box.hide();
+      };
+
+      Box.prototype.show = function() {
+        return this.box.show();
+      };
+
       return Box;
 
     })(Component);
+    LoadingBox = (function(_super) {
+
+      __extends(LoadingBox, _super);
+
+      function LoadingBox() {
+        LoadingBox.__super__.constructor.apply(this, arguments);
+      }
+
+      LoadingBox.prototype.position = googleMaps.ControlPosition.TOP_CENTER;
+
+      LoadingBox.prototype.id = 'map-loading';
+
+      LoadingBox.prototype.init = function() {
+        LoadingBox.__super__.init.call(this);
+        this.requestsTotal = 0;
+        this.requestsWaiting = 0;
+        this.repaint();
+        return this.hide();
+      };
+
+      LoadingBox.prototype.getPercent = function() {
+        if (this.requestsTotal === 0) return 0;
+        return Math.round(100 * ((this.requestsTotal - this.requestsWaiting) / this.requestsTotal));
+      };
+
+      LoadingBox.prototype.repaint = function() {
+        return this.box.html("" + _LOADING + " " + (this.getPercent()) + "%");
+      };
+
+      LoadingBox.prototype.handleMapEvents = function() {
+        var _this = this;
+        this.map.subscribe('features_request_started', function() {
+          return _this.show();
+        });
+        this.map.subscribe('features_request_queued', function() {
+          _this.requestsTotal++;
+          _this.requestsWaiting++;
+          return _this.repaint();
+        });
+        this.map.subscribe('features_request_unqueued', function() {
+          _this.requestsWaiting--;
+          return _this.repaint();
+        });
+        return this.map.subscribe('features_request_completed', function() {
+          _this.requestsTotal = 0;
+          _this.requestsWaiting = 0;
+          return setTimeout(function() {
+            return _this.hide();
+          }, 200);
+        });
+      };
+
+      return LoadingBox;
+
+    })(Box);
     SearchBox = (function(_super) {
 
       __extends(SearchBox, _super);
@@ -347,7 +410,7 @@
         CloseBox.__super__.init.call(this);
         title = (_ref = opt.title) != null ? _ref : '';
         this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\">" + title + "</div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + _CLOSE + "</div>\n  </div>\n</div>");
-        this.box.show();
+        this.show();
         return this.handleButtonEvents();
       };
 
@@ -382,7 +445,7 @@
 
       GeometrySelector.prototype.init = function() {
         GeometrySelector.__super__.init.call(this);
-        this.box.hide();
+        this.hide();
         this.box.html("<div id=\"geometry-selector\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <ul class=\"content\" id=\"drawing-control-content\">\n    <li class=\"polygon btn\" data-geometry-type=\"Polygon\">\n      <i class=\"icon-polygon middle\"></i><span class=\"middle\">Adicionar área</span>\n    </li>\n    <li class=\"linestring btn\" data-geometry-type=\"LineString\">\n      <i class=\"icon-linestring middle\"></i><span class=\"middle\">Adicionar linha</span>\n    </li>\n    <li class=\"point btn\" data-geometry-type=\"Point\">\n      <i class=\"icon-point middle\"></i><span class=\"middle\">Adicionar ponto</span>\n    </li>\n  </ul>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + _CANCEL + "</div>\n  </div>\n</div>");
         return this.handleBoxEvents();
       };
@@ -431,11 +494,11 @@
         this.showContent();
         $("#drawing-control-title", this.box).html('Selecione o tipo de objeto');
         this.handleButtonEvents();
-        return this.box.show();
+        return this.show();
       };
 
       GeometrySelector.prototype.close = function() {
-        return this.box.hide();
+        return this.hide();
       };
 
       return GeometrySelector;
@@ -457,7 +520,7 @@
 
       DrawingControl.prototype.init = function() {
         DrawingControl.__super__.init.call(this);
-        this.box.hide();
+        this.hide();
         this.box.html("<div id=\"drawing-control\">\n  <div class=\"map-panel-title\" id=\"drawing-control-title\"></div>\n  <div class=\"content\" id=\"drawing-control-content\"></div>\n  <div class=\"map-panel-buttons\">\n    <div class=\"map-button\" id=\"drawing-control-finish\">" + _NEXT_STEP + "</div>\n    <div class=\"map-button\" id=\"drawing-control-cancel\">" + _CANCEL + "</div>\n  </div>\n</div>");
         return this.handleBoxEvents();
       };
@@ -545,11 +608,11 @@
         $("#drawing-control-title", this.box).html(this.getTitle());
         $("#drawing-control-content", this.box).html(this.getContent());
         this.handleButtonEvents();
-        return this.box.show();
+        return this.show();
       };
 
       DrawingControl.prototype.close = function() {
-        return this.box.hide();
+        return this.hide();
       };
 
       return DrawingControl;
@@ -1056,7 +1119,7 @@
         var map, _ref;
         if (options == null) options = {};
         map = ((_ref = this.map) != null ? _ref.googleMap : void 0) || this.map;
-        return this.clusterer = new MarkerClusterer(map, [], options);
+        return window.clusterer = this.clusterer = new MarkerClusterer(map, [], options);
       };
 
       FeatureClusterer.prototype.initEvents = function(object) {
@@ -1103,15 +1166,25 @@
       FeatureClusterer.prototype.handleMapEvents = function() {
         var _this = this;
         this.map.subscribe('feature_created', function(feature) {
-          if (!(_this.featureType != null) || feature.getType() === _this.featureType) {
+          if (_this.map.getZoom() <= _this.maxZoom && (!(_this.featureType != null) || feature.getType() === _this.featureType)) {
             return _this.push(feature);
           }
         });
-        return this.map.subscribe('idle features_loaded', function() {
+        this.map.subscribe('idle features_loaded', function() {
           if (_this.map.getZoom() <= _this.maxZoom) {
             return _this.map.getFeatures().setVisible(false);
           } else {
             return _this.map.getFeatures().setVisible(true);
+          }
+        });
+        this.map.subscribe('idle', function() {
+          if (_this.length === 0 && _this.map.getZoom() <= _this.maxZoom) {
+            return _this.addFeatures(_this.map.getFeatures());
+          }
+        });
+        return this.map.subscribe('features_request_completed', function() {
+          if (_this.map.getZoom() <= _this.maxZoom) {
+            return _this.addFeatures(_this.map.getFeatures());
           }
         });
       };
@@ -1133,7 +1206,7 @@
       FeatureClusterer.prototype.push = function(element) {
         if (element.getMarker()) {
           this.features.push(element);
-          this.clusterer.addMarker(element.getMarker().getOverlay().markers_.getAt(0));
+          this.clusterer.addMarker(element.getMarker().getOverlay().markers_.getAt(0), true);
           return this.updateLength();
         }
       };
@@ -1160,9 +1233,12 @@
 
       FeatureClusterer.prototype.addFeatures = function(features) {
         var _this = this;
-        return features != null ? features.forEach(function(feature) {
-          return _this.push(feature);
-        }) : void 0;
+        if (features != null) {
+          features.forEach(function(feature) {
+            return _this.push(feature);
+          });
+        }
+        return this.repaint();
       };
 
       return FeatureClusterer;
@@ -1457,6 +1533,7 @@
       Tooltip: Tooltip,
       FeatureClusterer: FeatureClusterer,
       CloseBox: CloseBox,
+      LoadingBox: LoadingBox,
       SupporterBox: SupporterBox,
       LicenseBox: LicenseBox,
       SearchBox: SearchBox,

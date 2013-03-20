@@ -300,11 +300,12 @@
         return this.panTo(feature != null ? feature.getCenter() : void 0, false);
       };
 
-      Map.prototype.loadGeoJson = function(geojson, panTo, attach) {
+      Map.prototype.loadGeoJson = function(geojson, panTo, attach, silent) {
         var features, _ref,
           _this = this;
         if (panTo == null) panTo = false;
         if (attach == null) attach = true;
+        if (silent == null) silent = false;
         features = Collections.makeFeatureCollection({
           map: this
         });
@@ -324,12 +325,12 @@
         if (panTo && (features.getBounds() != null)) {
           this.googleMap.fitBounds(features.getBounds());
         }
-        this.publish('features_loaded', features);
+        if (!silent) this.publish('features_loaded', features);
         return features;
       };
 
-      Map.prototype.loadGeoJSON = function(geojson, panTo, attach) {
-        return this.loadGeoJson(geojson, panTo, attach);
+      Map.prototype.loadGeoJSON = function(geojson, panTo, attach, silent) {
+        return this.loadGeoJson(geojson, panTo, attach, silent);
       };
 
       Map.prototype.getGeoJson = function(options) {
@@ -522,6 +523,7 @@
 
       function AjaxMap(options) {
         AjaxMap.__super__.constructor.call(this, options);
+        this.addComponent('map/controls::LoadingBox');
         this.addComponent('map/providers::FeatureProvider', 'provider');
         this.addComponent('map/controls::FeatureClusterer', 'clusterer', {
           map: this

@@ -77,7 +77,8 @@
 
       FeatureProvider.prototype.init = function(options) {
         FeatureProvider.__super__.init.call(this, options);
-        return this.keptFeatures = komoo.collections.makeFeatureCollection();
+        this.keptFeatures = komoo.collections.makeFeatureCollection();
+        return this.openConnections = 0;
       };
 
       FeatureProvider.prototype.handleMapEvents = function() {
@@ -129,13 +130,21 @@
           this.fetchedTiles[addr].features.setMap(this.map);
           return div;
         }
+        if (this.openConnections === 0) {
+          this.map.publish('features_request_started');
+        }
+        this.openConnections++;
+        this.map.publish('features_request_queued');
         $.ajax({
           url: this.fetchUrl + addr,
           dataType: 'json',
           type: 'GET',
           success: function(data) {
             var features;
-            features = _this.map.loadGeoJSON(JSON.parse(data), false);
+            if (typeof console !== "undefined" && console !== null) {
+              console.log("Getting tile " + addr + "...");
+            }
+            features = _this.map.loadGeoJSON(JSON.parse(data), false, true, true);
             _this.fetchedTiles[addr] = {
               geojson: data,
               features: features
@@ -154,6 +163,13 @@
             }
             errorContainer = $('<div>').html(jqXHR.responseText);
             return serverErrorContainer.append(errorContainer);
+          },
+          complete: function() {
+            _this.map.publish('features_request_unqueued');
+            _this.openConnections--;
+            if (_this.openConnections === 0) {
+              return _this.map.publish('features_request_completed');
+            }
           }
         });
         return div;

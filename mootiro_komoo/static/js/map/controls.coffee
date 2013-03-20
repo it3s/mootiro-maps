@@ -50,6 +50,48 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @map.addControl @position, @box.get 0
             @handleMapEvents?()
 
+        hide: -> @box.hide()
+        show: -> @box.show()
+
+    class LoadingBox extends Box
+        position: googleMaps.ControlPosition.TOP_CENTER
+        id: 'map-loading'
+
+        init: ->
+            super()
+            @requestsTotal = 0
+            @requestsWaiting = 0
+            @repaint()
+            @hide()
+
+        getPercent: ->
+            return 0 if @requestsTotal is 0
+            Math.round(100 * ((@requestsTotal - @requestsWaiting) / @requestsTotal))
+
+        repaint: ->
+            @box.html "#{_LOADING} #{@getPercent()}%"
+
+        handleMapEvents: ->
+            @map.subscribe 'features_request_started', =>
+                @show()
+
+            @map.subscribe 'features_request_queued', =>
+                @requestsTotal++
+                @requestsWaiting++
+                @repaint()
+
+            @map.subscribe 'features_request_unqueued', =>
+                @requestsWaiting--
+                @repaint()
+
+            @map.subscribe 'features_request_completed', =>
+                @requestsTotal = 0
+                @requestsWaiting = 0
+                # Display "100%" before close the loading box
+                setTimeout =>
+                    @hide()
+                , 200
+
 
     class SearchBox extends Box
         position: googleMaps.ControlPosition.TOP_RIGHT
@@ -262,7 +304,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
               </div>
             </div>
             """
-            @box.show()
+            @show()
             @handleButtonEvents()
 
         setTitle: (title = '') ->
@@ -280,7 +322,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         init: ->
             super()
-            @box.hide()
+            @hide()
             @box.html """
             <div id="geometry-selector">
               <div class="map-panel-title" id="drawing-control-title"></div>
@@ -327,9 +369,9 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @showContent()
             $("#drawing-control-title", @box).html 'Selecione o tipo de objeto'
             @handleButtonEvents()
-            @box.show()
+            @show()
 
-        close: -> @box.hide()
+        close: -> @hide()
 
 
     class DrawingControl extends Box
@@ -339,7 +381,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         init: ->
             super()
-            @box.hide()
+            @hide()
             @box.html """
             <div id="drawing-control">
               <div class="map-panel-title" id="drawing-control-title"></div>
@@ -422,9 +464,9 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             $("#drawing-control-title", @box).html @getTitle()
             $("#drawing-control-content", @box).html @getContent()
             @handleButtonEvents()
-            @box.show()
+            @show()
 
-        close: -> @box.hide()
+        close: -> @hide()
 
 
     class PerimeterSelector extends Component
@@ -746,7 +788,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         initMarkerClusterer: (options = {}) ->
             map = @map?.googleMap or @map
-            @clusterer = new MarkerClusterer map, [], options
+            window.clusterer = @clusterer = new MarkerClusterer map, [], options
 
         initEvents: (object = @clusterer) ->
             if not object then return
@@ -772,7 +814,8 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         handleMapEvents: ->
             @map.subscribe 'feature_created', (feature) =>
-                if not @featureType? or feature.getType() is @featureType
+                if @map.getZoom() <= @maxZoom and \
+                   (not @featureType? or feature.getType() is @featureType)
                     @push feature
 
             @map.subscribe 'idle features_loaded', () =>
@@ -781,6 +824,13 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 else
                     # TODO: Pass throw filter component
                     @map.getFeatures().setVisible true
+
+            @map.subscribe 'idle', =>
+                @addFeatures @map.getFeatures() if @length is 0 and @map.getZoom() <= @maxZoom
+
+            @map.subscribe 'features_request_completed', =>
+                @addFeatures @map.getFeatures() if @map.getZoom() <= @maxZoom
+
         updateLength: -> @length = @features.length
 
         clear: ->
@@ -794,7 +844,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             if element.getMarker()
                 @features.push element
                 #element.getMarker().setVisible off
-                @clusterer.addMarker element.getMarker().getOverlay().markers_.getAt(0)
+                @clusterer.addMarker element.getMarker().getOverlay().markers_.getAt(0), true
                 @updateLength()
 
         pop: ->
@@ -812,6 +862,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         addFeatures: (features) ->
             features?.forEach (feature) => @push(feature)
+            @repaint()
 
 
     class Location extends Component
@@ -982,6 +1033,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         Tooltip: Tooltip
         FeatureClusterer: FeatureClusterer
         CloseBox: CloseBox
+        LoadingBox: LoadingBox
         SupporterBox: SupporterBox
         LicenseBox: LicenseBox
         SearchBox: SearchBox

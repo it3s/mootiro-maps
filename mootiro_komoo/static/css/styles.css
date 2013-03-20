@@ -2479,6 +2479,16 @@ ul.two-cols li {
     margin: 10px 10px 10px 30px;
 }
 
+#map-loading {
+    margin-top: 55px;
+    border-radius        : 4px;
+    -moz-border-radius   : 4px;
+    -webkit-border-radius: 4px;
+    padding: 5px;
+    color: white;
+    background: rgba(0, 0, 0, 0.7)
+}
+
 #map-searchbox {
     margin: 5px;
 }
