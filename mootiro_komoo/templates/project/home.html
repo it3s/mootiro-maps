@@ -24,7 +24,8 @@
           {% for h in s.highlights %}
           <li>
             <a href="{{h.object.view_url}}">
-              <img src="/media/{{h.object.logo}}" />
+              <div class="map"></div>
+              <div class="logo"><img src="/media/{{h.object.logo}}" /></div>
               <h3>{{h.name}}</h3>
               <p>{{h.description}}</p></a>
           </li>

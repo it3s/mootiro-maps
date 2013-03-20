@@ -38,7 +38,8 @@ def project_list(request):
 
 @render_to('project/home.html')
 def project_home(request):
-    hs = HighlightSection.objects.filter(page_name='/project').order_by('page_order')
+    hs = HighlightSection.objects.filter(page_name='/project', is_active=True)\
+            .order_by('page_order')
     return dict(sections=hs)
 
 

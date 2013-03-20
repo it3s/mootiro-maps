@@ -755,18 +755,34 @@ div.importsheet_missing_column {
     margin: 5px 0.5%;
     padding: 0.7em;
     background: #ededed;
-    text-align: center; }
+    border: 1px solid #cdcdcd;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px; }
     #main-content.highlights .section ul li a {
       display: block;
       text-decoration: inherit;
       color: inherit; }
-    #main-content.highlights .section ul li img {
-      max-height: 200px;
-      margin-bottom: 10px; }
-    #main-content.highlights .section ul li h3, #main-content.highlights .section ul li p {
-      text-align: left; }
+    #main-content.highlights .section ul li div.logo, #main-content.highlights .section ul li div.map {
+      width: 260px;
+      height: 195px; }
+    #main-content.highlights .section ul li div.logo {
+      text-align: center;
+      margin-bottom: 10px;
+      line-height: 200px; }
+      #main-content.highlights .section ul li div.logo img {
+        vertical-align: middle;
+        max-width: 90%; }
+    #main-content.highlights .section ul li div.map {
+      display: none;
+      background: lightyellow;
+      position: absolute; }
   #main-content.highlights .section ul li:hover {
     background: #dceff4; }
+    #main-content.highlights .section ul li:hover div.logo {
+      visibility: hidden; }
+    #main-content.highlights .section ul li:hover div.map {
+      display: block; }
 
 a.big-button {
   -webkit-border-radius: 15px;

@@ -53,6 +53,10 @@
                 margin: 5px 0.5%;
                 padding: 0.7em;
                 background: #ededed;
+                border: 1px solid #cdcdcd;
+                -webkit-border-radius: 5px;
+                   -moz-border-radius: 5px;
+                        border-radius: 5px;
 
                 a {
                     display: block;
@@ -60,15 +64,34 @@
                     color: inherit;
                 }
 
-                text-align: center;
-                img {
-                    max-height: 200px;
-                    margin-bottom: 10px;
+                div.logo, div.map {
+                    width: 260px;
+                    height: 195px;
                 }
-                h3, p { text-align: left }
+
+                div.logo {
+                    text-align: center;
+                    margin-bottom: 10px;
+                    line-height: 200px;
+                    img {
+                        vertical-align: middle;
+                        max-width: 90%;
+                    }
+                }
+
+                div.map {
+                    display: none;
+                    background: lightyellow;
+                    position: absolute;
+                }
             }
 
-            li:hover { background: #dceff4 }
+            li:hover {
+                background: #dceff4;
+
+                div.logo { visibility: hidden }
+                div.map { display: block }
+            }
         }
     }
 }
