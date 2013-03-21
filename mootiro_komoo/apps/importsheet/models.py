@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 
 from authentication.models import User
-from komoo_project.models import Project
+from komoo_project.models import Project, ProjectRelatedObject
 from moderation.utils import delete_object
 
 import simplejson as json
@@ -215,7 +215,13 @@ class Importsheet(models.Model):
         if not self.inserted:
             return
 
-        for iro in ImportsheetRelatedObject.objects.filter(importsheet=self):
+        iros = ImportsheetRelatedObject.objects.filter(importsheet=self)
+
+        obj_ids = [iro.content_object.id for iro in iros]
+        for pro in ProjectRelatedObject.objects.filter(object_id__in=obj_ids):
+            pro.delete()
+
+        for iro in iros:
             iro.content_object.delete()
             iro.delete()
 
