@@ -2421,6 +2421,7 @@ ul.two-cols li {
 }
 #unexpected-error-box .image,
 .internal-error .image {
+    display: inline-block;
     background: url("../img/spock.png") no-repeat;
     width: 195px;
     height: 295px;
@@ -2428,12 +2429,15 @@ ul.two-cols li {
 #unexpected-error-box .image {
     float: right;
 }
+.internal-error {
+    max-width: none;
+}
 .internal-error .image {
     display: inline-block;
 }
 #unexpected-error-box form.error-report textarea,
 .internal-error form.error-report textarea {
-    width: 390px;
+    width: 470px;
     height: 180px;
     margin-top: 15px;
     display: block;
@@ -2442,7 +2446,8 @@ ul.two-cols li {
     margin-left: 200px;
 }
 .internal-error .content .message {
-    width: 450px;
+    display: inline-block;
+    width: 560px;
 }
 .internal-error .content form.error-report {
     display: inline-block;

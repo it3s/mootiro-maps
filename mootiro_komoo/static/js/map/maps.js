@@ -83,7 +83,7 @@
       Map.prototype.handleGoogleMapEvents = function() {
         var eventNames,
           _this = this;
-        eventNames = ['click', 'idle'];
+        eventNames = ['click', 'idle', 'maptypeid_changed'];
         return eventNames.forEach(function(eventName) {
           return komoo.event.addListener(_this.googleMap, eventName, function(e) {
             return _this.publish(eventName, e);
@@ -415,6 +415,10 @@
         return this.googleMap.fitBounds(bounds);
       };
 
+      Map.prototype.getMapTypeId = function() {
+        return this.googleMap.getMapTypeId();
+      };
+
       return Map;
 
     })(core.Mediator);
@@ -424,6 +428,7 @@
 
       function UserEditor(options) {
         UserEditor.__super__.constructor.call(this, options);
+        this.addComponent('map/controls::AutosaveMapType');
         this.addComponent('map/maptypes::CleanMapType', 'mapType');
         this.addComponent('map/controls::DrawingManager', 'drawing');
         this.addComponent('map/controls::SearchBox');
@@ -438,6 +443,7 @@
 
       function Editor(options) {
         Editor.__super__.constructor.call(this, options);
+        this.addComponent('map/controls::AutosaveMapType');
         this.addComponent('map/maptypes::CleanMapType');
         this.addComponent('map/controls::SaveLocation');
         this.addComponent('map/controls::StreetView');
@@ -482,6 +488,7 @@
 
       function StaticMap(options) {
         StaticMap.__super__.constructor.call(this, options);
+        this.addComponent('map/controls::AutosaveMapType');
         this.addComponent('map/maptypes::CleanMapType', 'mapType');
         this.addComponent('map/controls::AutosaveLocation');
         this.addComponent('map/controls::StreetView');

@@ -70,7 +70,7 @@
         this.map.googleMap.setOptions({
           mapTypeControlOptions: options
         });
-        return this.map.googleMap.setMapTypeId(this.id);
+        return this.map.publish('maptype_loaded', this.id);
       };
 
       return CleanMapType;

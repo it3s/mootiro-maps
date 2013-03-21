@@ -145,7 +145,7 @@
                 <!--     </div> -->
                 <!-- </div> -->
                 {% if proj_objects.Organization.objects_list %}
-                <div class="view-info-btn span3 selected" panel="organizations-list">
+                <div class="view-info-btn span3" panel="organizations-list">
                     <i class="icon-organization"></i>
                     <div class="inline-block">
                         {% trans 'Organizations' %}
@@ -323,7 +323,7 @@
                 $('.' + $this.attr('panel')).fadeIn();
             });
             // Clicks the default button.
-            $('.view-info-btn.selected').click();
+            $('.view-info-btn:first').click();
 
             require(['map.jquery'], function () {
                 $("#map-main-preview-canvas").komooMap({

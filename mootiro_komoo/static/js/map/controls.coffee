@@ -903,6 +903,39 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @saveLocation()
 
 
+    class SaveMapType extends Component
+        setMap: (@map) ->
+            @handleMapEvents()
+            mapTypeId = @getSavedMapType()
+            if mapTypeId in _.values googleMaps.MapTypeId
+                @useSavedMapType()
+
+        handleMapEvents: ->
+            @map.subscribe 'maptype_loaded', (mapTypeId) =>
+                @map.googleMap.setMapTypeId mapTypeId if mapTypeId is @getSavedMapType()
+            @map.subscribe 'initialized', =>
+                @useSavedMapType()
+
+        saveMapType: (mapTypeId = @map.getMapTypeId()) ->
+            #console?.log 'Maptype saved:', mapTypeId
+            utils.createCookie 'mapTypeId', mapTypeId, googleMaps.MapTypeId.ROADMAP
+
+        getSavedMapType: ->
+            utils.readCookie 'mapTypeId' or googleMaps.MapTypeId.ROADMAP
+
+        useSavedMapType: ->
+            mapTypeId = @getSavedMapType()
+            console?.log 'Getting map type from cookie...'
+            @map.googleMap.setMapTypeId mapTypeId
+
+
+    class AutosaveMapType extends SaveMapType
+        handleMapEvents: ->
+            super()
+            @map.subscribe 'maptypeid_changed', =>
+                @saveMapType()
+
+
     class StreetView extends Component
         enabled: on
 
@@ -950,6 +983,8 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         Location: Location
         SaveLocation: SaveLocation
         AutosaveLocation: AutosaveLocation
+        SaveMapType: SaveMapType
+        AutosaveMapType: AutosaveMapType
         StreetView: StreetView
 
     return window.komoo.controls
