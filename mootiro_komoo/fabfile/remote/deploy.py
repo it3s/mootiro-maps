@@ -15,7 +15,7 @@ from .db import backup_db, migrate_database
 __all__ = ('deploy',)
 
 
-def deploy(migration_script=''):
+def deploy(migration=False):
     '''Deploy application to staging or production.'''
 
     # gathering deploy information
@@ -27,7 +27,7 @@ def deploy(migration_script=''):
         d['branch'] = local('git rev-parse --abbrev-ref HEAD', capture=True)
         d['to_commit'] = local('git rev-parse --short HEAD', capture=True)
         d['tag'], past, cm = local('git describe --tags --long', capture=True).split('-')
-        d['migration_script'] = migration_script
+        d['migration'] = bool(migration)
 
     print
     print cyan('======= Deploy Information =======')
@@ -40,7 +40,7 @@ def deploy(migration_script=''):
         s += yellow(' (should be staging)')
     print s
     print 'to commit: {}'.format(d['to_commit'])
-    print 'db migration script: {}'.format(d['migration_script'] or 'no')
+    print 'stop for db migration: {}'.format('yes' if d['migration'] else 'no')
     if d['server'] == 'production':
         past = int(past)
         if past > 0:  # tag is already old
@@ -63,9 +63,11 @@ def deploy_to_staging(deploy_info):
         down()
     checkout(deploy_info['to_commit'])
     install_requirements()
-    if deploy_info['migration_script']:
-        migrate_database(deploy_info['migration_script'])
     collectstatic()
+    if deploy_info['migration']:
+        print yellow("We've stopped to do db migration now. After you're "\
+                     "done run 'fab {} up'\n".format(deploy_info['server']))
+        exit()
     up()
 
 
@@ -76,9 +78,11 @@ def deploy_to_production(deploy_info):
     backup_db()
     checkout(deploy_info['to_commit'])
     install_requirements()
-    if deploy_info['migration_script']:
-        migrate_database(deploy_info['migration_script'])
     collectstatic()
+    if deploy_info['migration']:
+        print yellow("We've stopped to do db migration now. After you're "\
+                     "done run 'fab {} up'\n".format(deploy_info['server']))
+        exit()
     up()
 
 

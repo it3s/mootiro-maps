@@ -3,7 +3,7 @@
 {% with shown=users|slice:":2" aggregated=users|slice:"2:" %}
   {% for user in shown %}
     {% if user.id %}
-      <a href='{% url user_profile user.id %}'>{{ user.name }}</a>{% if not forloop.last %},{% endif %}
+      <a href='{% url user_view user.id %}'>{{ user.name }}</a>{% if not forloop.last %},{% endif %}
     {% else %}
       {{ user.name }}{% if not forloop.last %},{% endif %}
     {% endif %}
@@ -14,7 +14,7 @@
     <a class="more user" title="
       {% for user in aggregated %}
         {% if user.id %}
-          <a href='{% url user_profile user.id %}'>{{ user.name }}</a>{% if not forloop.last %},{% endif %}
+          <a href='{% url user_view user.id %}'>{{ user.name }}</a>{% if not forloop.last %},{% endif %}
         {% else %}
           {{ user.name }}{% if not forloop.last %},{% endif %}
         {% endif %}

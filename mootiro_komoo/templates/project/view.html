@@ -131,6 +131,12 @@
 
 
         <div class="view-body tab-content" id="project-data">
+            {% if not proj_objects.Organization.objects_list and not proj_objects.Community.objects_list and not proj_objects.Need.objects_list and not proj_objects.Resource.objects_list and not proj_objects.Investment.objects_list %}
+            <div class="view-info-empty">
+              <p>Esse projeto ainda não possui conteúdos associados</p>
+              <p>Para associar um conteúdo vá até o objeto e clique no botão "Adicionar a um projeto" ou importe dados para o projeto.</p>
+            </div>
+            {% endif %}
             <div class="view-info-buttons">
                 <!-- <div class="view-info-btn span3 selected" panel="map-points-list"> -->
                 <!--     <i class="icon-map"></i> -->
@@ -138,51 +144,51 @@
                 <!--       {% trans 'Points on Map' %} -->
                 <!--     </div> -->
                 <!-- </div> -->
-                <div class="view-info-btn span3 selected" panel="organizations-list">
+                {% if proj_objects.Organization.objects_list %}
+                <div class="view-info-btn span3" panel="organizations-list">
                     <i class="icon-organization"></i>
                     <div class="inline-block">
                         {% trans 'Organizations' %}
-                        {% if proj_objects.Organization.objects_list %}
                             &nbsp;({{ proj_objects.Organization.objects_list|length }})
-                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
+                {% if proj_objects.Community.objects_list %}
                 <div class="view-info-btn span3" panel="communities-list">
                     <i class="icon-community"></i>
                     <div class="inline-block">
                         {% trans 'Communities' %}
-                        {% if proj_objects.Community.objects_list %}
                             &nbsp;({{ proj_objects.Community.objects_list|length }})
-                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
+                {% if proj_objects.Need.objects_list %}
                 <div class="view-info-btn span3" panel="needs-list">
                     <i class="icon-need"></i>
                     <div class="inline-block">
                         {% trans 'Needs' %}
-                        {% if proj_objects.Need.objects_list %}
                             &nbsp;({{ proj_objects.Need.objects_list|length }})
-                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
+                {% if proj_objects.Resource.objects_list %}
                 <div class="view-info-btn span3" panel="resources-list">
                     <i class="icon-resource"></i>
                     <div class="inline-block">
                         {% trans 'Resources' %}
-                        {% if proj_objects.Resource.objects_list %}
                             &nbsp;({{ proj_objects.Resource.objects_list|length }})
-                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
+                {% if proj_objects.Investment.objects_list %}
                 <div class="view-info-btn span3" panel="investments-list">
                     <i class="icon-investment"></i>
                     <div class="inline-block">
                         {% trans 'Investments' %}
-                        {% if proj_objects.Investment.objects_list %}
                             &nbsp;({{ proj_objects.Investment.objects_list|length }})
-                        {% endif %}
                     </div>
                 </div>
+                {% endif %}
 
             </div>
 
@@ -317,7 +323,7 @@
                 $('.' + $this.attr('panel')).fadeIn();
             });
             // Clicks the default button.
-            $('.view-info-btn.selected').click();
+            $('.view-info-btn:first').click();
 
             require(['map.jquery'], function () {
                 $("#map-main-preview-canvas").komooMap({

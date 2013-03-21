@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-21 15:25-0300\n"
+"POT-Creation-Date: 2013-03-18 15:06-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -18,13 +18,30 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "X-Poedit-Basepath: ../../../\n"
 
+#: apps/authentication/api.py:28 apps/authentication/models.py:172
+#: apps/main/models.py:347
+msgid "Required field"
+msgstr "Campo obrigatório"
+
+#: apps/authentication/api.py:34
+msgid "You must accept the license agrement"
+msgstr "Você deve aceitar os termos de uso"
+
+#: apps/authentication/api.py:39 apps/authentication/views.py:184
+msgid "Passwords did not match"
+msgstr "As senha não coincidem"
+
+#: apps/authentication/api.py:105
+msgid "You don't have permission for this operation"
+msgstr "Você não possui permissão para essa operação"
+
 #: apps/authentication/forms.py:30
 msgid "Full Name"
 msgstr "Nome Completo"
 
 #: apps/authentication/forms.py:31 templates/authentication/profile.html:42
-msgid "Public Contact"
-msgstr "Contato Público"
+msgid "About Me"
+msgstr "Sobre mim"
 
 #: apps/authentication/forms.py:32
 msgid "Photo"
@@ -36,8 +53,8 @@ msgstr "Localização"
 
 #: apps/authentication/forms.py:59 apps/community/forms.py:25
 #: apps/komoo_project/forms.py:41 apps/komoo_resource/forms.py:40
-#: apps/main/templatetags/komoo_tags.py:330
-#: apps/main/templatetags/komoo_tags.py:331 apps/organization/forms.py:63
+#: apps/main/templatetags/komoo_tags.py:333
+#: apps/main/templatetags/komoo_tags.py:334 apps/organization/forms.py:63
 #: lib/taggit/models.py:10 templates/organization/branch_form.html:13
 msgid "Name"
 msgstr "Nome"
@@ -58,7 +75,7 @@ msgstr "Confirme a sua senha"
 msgid "This email is already in use."
 msgstr "Este email já está em uso."
 
-#: apps/authentication/forms.py:89
+#: apps/authentication/forms.py:89 apps/authentication/models.py:178
 msgid ""
 "This email is registered on our system. Probably you've logged before with a "
 "social account (facebook or google). You can skip this step and just login."
@@ -71,27 +88,7 @@ msgstr ""
 msgid "Passwords did not match."
 msgstr "As senha não coincidem."
 
-#: apps/authentication/views.py:179
-msgid "You must provide a valid password"
-msgstr "Você deve fornecer uma senha válida"
-
-#: apps/authentication/views.py:184
-msgid "Passwords did not match"
-msgstr "As senha não coincidem"
-
-#: apps/authentication/views.py:199
-msgid "Wrong password!"
-msgstr "Senha incorreta!"
-
-#: apps/authentication/views.py:203
-msgid "Failed to save data"
-msgstr "Houve uma falha ao tentar salvar os dados"
-
-#: apps/authentication/views.py:263
-msgid "Welcome to MootiroMaps"
-msgstr "Bem-vindo ao MootiroMaps"
-
-#: apps/authentication/views.py:265
+#: apps/authentication/models.py:22 apps/authentication/views.py:265
 msgid ""
 "\n"
 "Hello, {name}.\n"
@@ -112,6 +109,26 @@ msgstr ""
 "Obrigado,\n"
 "a equipe IT3S.\n"
 
+#: apps/authentication/models.py:185
+msgid "Email address already in use"
+msgstr "Este email já está em uso"
+
+#: apps/authentication/models.py:195 apps/authentication/views.py:263
+msgid "Welcome to MootiroMaps"
+msgstr "Bem-vindo ao MootiroMaps"
+
+#: apps/authentication/views.py:179
+msgid "You must provide a valid password"
+msgstr "Você deve fornecer uma senha válida"
+
+#: apps/authentication/views.py:199
+msgid "Wrong password!"
+msgstr "Senha incorreta!"
+
+#: apps/authentication/views.py:203
+msgid "Failed to save data"
+msgstr "Houve uma falha ao tentar salvar os dados"
+
 #: apps/community/forms.py:26 apps/investment/forms.py:32
 #: apps/komoo_project/forms.py:42 apps/komoo_resource/forms.py:41
 #: apps/need/forms.py:26 apps/organization/forms.py:64
@@ -127,7 +144,7 @@ msgstr "População"
 
 #: apps/community/forms.py:28 apps/investment/forms.py:42
 #: apps/komoo_project/forms.py:43 apps/komoo_resource/forms.py:44
-#: apps/main/templatetags/komoo_tags.py:329 apps/need/forms.py:29
+#: apps/main/templatetags/komoo_tags.py:332 apps/need/forms.py:29
 #: apps/organization/forms.py:67 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 #: templates/importsheet/row_templates/comunidades.html:38
@@ -143,8 +160,8 @@ msgid " "
 msgstr " "
 
 #: apps/community/models.py:39 apps/komoo_resource/forms.py:45
-#: apps/main/templatetags/komoo_tags.py:234
-#: apps/main/templatetags/komoo_tags.py:333 apps/need/forms.py:24
+#: apps/main/templatetags/komoo_tags.py:237
+#: apps/main/templatetags/komoo_tags.py:336 apps/need/forms.py:24
 #: apps/organization/forms.py:65 templates/investment/list.html:44
 msgid "Community"
 msgstr "Comunidade"
@@ -201,7 +218,7 @@ msgstr "Nome do Investidor"
 msgid "Over period"
 msgstr "Por um período"
 
-#: apps/investment/forms.py:38 apps/main/templatetags/komoo_tags.py:332
+#: apps/investment/forms.py:38 apps/main/templatetags/komoo_tags.py:335
 #: templates/investment/view.html:48
 msgid "Date"
 msgstr "Data"
@@ -222,7 +239,7 @@ msgstr "Valor"
 msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
-#: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:229
+#: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:232
 #: apps/organization/models.py:67
 msgid "Organization"
 msgstr "Organização"
@@ -304,7 +321,7 @@ msgstr "Contato"
 msgid "Partners Logo"
 msgstr "Logo de Parceiros"
 
-#: apps/komoo_project/views.py:96
+#: apps/komoo_project/views.py:88
 msgid "Unnamed"
 msgstr "Sem nome"
 
@@ -318,7 +335,7 @@ msgstr "Tipo"
 msgid "Images"
 msgstr "Imagens"
 
-#: apps/komoo_resource/forms.py:76 apps/main/utils.py:229
+#: apps/komoo_resource/forms.py:76 apps/main/utils.py:228
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
@@ -326,13 +343,9 @@ msgstr "campo com dados inválidos"
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:64 apps/main/templatetags/komoo_tags.py:230
+#: apps/komoo_resource/models.py:64 apps/main/templatetags/komoo_tags.py:233
 msgid "Resource"
 msgstr "Recurso"
-
-#: apps/main/models.py:413
-msgid "Required field"
-msgstr "Campo obrigatório"
 
 #: apps/main/relations.py:8
 msgid "owns"
@@ -434,7 +447,7 @@ msgstr "é conselheiro de"
 msgid "has as board member"
 msgstr "tem como conselheiro"
 
-#: apps/main/utils.py:106
+#: apps/main/utils.py:105
 msgid "Submit"
 msgstr "Enviar"
 
@@ -523,24 +536,24 @@ msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
 msgstr[1] "daqui a %(count)s horas"
 
-#: apps/main/templatetags/komoo_tags.py:231 apps/need/models.py:97
+#: apps/main/templatetags/komoo_tags.py:234 apps/need/models.py:97
 msgid "Need"
 msgstr "Necessidade"
 
-#: apps/main/templatetags/komoo_tags.py:232
+#: apps/main/templatetags/komoo_tags.py:235
 msgid "Proposal"
 msgstr "Proposta"
 
-#: apps/main/templatetags/komoo_tags.py:233 templates/investment/edit.html:7
+#: apps/main/templatetags/komoo_tags.py:236 templates/investment/edit.html:7
 msgid "Investment"
 msgstr "Investimento"
 
-#: apps/main/templatetags/komoo_tags.py:334
+#: apps/main/templatetags/komoo_tags.py:337
 #: templates/importsheet/row_templates/necessidades.html:18
 msgid "Need categories"
 msgstr "Áreas"
 
-#: apps/main/templatetags/komoo_tags.py:335 apps/need/forms.py:28
+#: apps/main/templatetags/komoo_tags.py:338 apps/need/forms.py:28
 #: templates/need/list.html:58 templates/need/view.html:45
 msgid "Target audiences"
 msgstr "Públicos alvo"
@@ -1049,7 +1062,7 @@ msgstr "Investimentos"
 msgid "Organizations"
 msgstr "Organizações"
 
-#: templates/404.html:34 templates/global.html:107
+#: templates/404.html:34 templates/global.html:108
 msgid "Help"
 msgstr "Ajuda"
 
@@ -1057,27 +1070,27 @@ msgstr "Ajuda"
 msgid "Ops!"
 msgstr "Ops!"
 
-#: templates/global.html:98
+#: templates/global.html:99
 msgid "Search for place, user or object..."
 msgstr "Buscar por lugar, usuário ou objeto..."
 
-#: templates/global.html:106
+#: templates/global.html:107
 msgid "About"
 msgstr "Sobre"
 
-#: templates/global.html:112
+#: templates/global.html:113
 msgid "Profile"
 msgstr "Perfil"
 
-#: templates/global.html:113
+#: templates/global.html:114
 msgid "Configurations"
 msgstr "Configurações"
 
-#: templates/global.html:114
+#: templates/global.html:115
 msgid "Logout"
 msgstr "Sair"
 
-#: templates/global.html:118
+#: templates/global.html:119
 msgid "Login"
 msgstr "Entrar"
 
@@ -1122,9 +1135,8 @@ msgstr "Novo Usuário"
 msgid "Loading..."
 msgstr "Carregando..."
 
-#: templates/authentication/profile.html:65
-#: templates/main/templatetags/menu.html:28 templates/project/home.html:6
-#: templates/project/home.html.py:14 templates/project/list.html:7
+#: templates/authentication/profile.html:72
+#: templates/main/templatetags/menu.html:28 templates/project/list.html:7
 #: templates/project/projects_tag.html:5
 msgid "Projects"
 msgstr "Projetos"
@@ -1135,7 +1147,7 @@ msgstr "Dados Pessoais"
 
 #: templates/authentication/profile_update.html:22
 msgid "Public Settings"
-msgstr "Dados Públicas"
+msgstr "Dados Públicos"
 
 #: templates/authentication/profile_update.html:27
 msgid "Signature Settings"
@@ -1987,14 +1999,6 @@ msgstr "Editar Associações do Projeto"
 msgid "Deleted marked associations"
 msgstr "Apagar associações marcadas"
 
-#: templates/project/home.html:16
-msgid "Create a project"
-msgstr "Crie um projeto"
-
-#: templates/project/home.html:40
-msgid "See all projects"
-msgstr "Ver todos os projetos"
-
 #: templates/project/list.html:17
 msgid "Create New Project"
 msgstr "Criar Novo Projeto"
@@ -2213,6 +2217,9 @@ msgstr "veja a página"
 #: templates/update/updates_list_templatetag.html:112
 msgid "by"
 msgstr "por"
+
+#~ msgid "Public Contact"
+#~ msgstr "Contato Público"
 
 #~ msgid "Access to edit this project"
 #~ msgstr "Acesso para editar este projeto"

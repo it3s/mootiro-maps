@@ -14,6 +14,7 @@ config =
         'text': '../lib/requirejs/text'
         'propertyParser': '../lib/requirejs/propertyParser'
         'infobox': 'vendor/infobox_packed'
+        'reForm': '../lib/reForm'
         'markerclusterer': 'vendor/markerclusterer_packed'
     shim:
         'underscore':
@@ -24,6 +25,9 @@ config =
         'infobox':
             deps: ['googlemaps']
             exports: 'InfoBox'
+        'reForm':
+            deps: ['jquery', 'underscore', 'backbone']
+            exports: 'reForm'
         'markerclusterer':
             deps: ['googlemaps']
             exports: 'MarkerClusterer'

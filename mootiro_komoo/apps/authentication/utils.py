@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+
+from main.utils import JsonResponseError
+
 from .models import AnonymousUser
 from .models import User, SocialAuth
 
@@ -52,10 +55,21 @@ def login_required(func=None):
     def wrapped_func(request, *a, **kw):
         if not request.user.is_authenticated():
             next = request.get_full_path()
-            url = reverse('user_login') + '?next=' + next
+            url = reverse('user') + '?next=' + next
             return redirect(url)
         else:
             return func(request, *a, **kw)
+    return wrapped_func
+
+
+def api_login_required(func=None):
+    '''Decorator that requires a valid user in request.'''
+    def wrapped_func(handler, request, *a, **kw):
+        if not request.user.is_authenticated():
+            # TODO: integrate this with reForm
+            return JsonResponseError({'form': 'Login required.'})
+        else:
+            return func(handler, request, *a, **kw)
     return wrapped_func
 
 
@@ -99,3 +113,26 @@ def get_or_create_user_by_credentials(email, provider, access_data=None):
         provider_credentials.save()
 
     return user, created
+
+
+def connect_or_merge_user_by_credentials(logged_user, email, provider):
+    """
+    Receives information about logged user and a social account to be connected
+    (if not associated to any user) or merged into the logged user account
+    information.
+    """
+    credentials = SocialAuth.objects.filter(email=email, provider=provider)
+
+    if not credentials:
+        credential = SocialAuth(email=email, provider=provider,
+                                user=logged_user)
+        credential.save()
+    else:
+        credential = credentials[0]
+        if credential.user == logged_user:
+            return  # do nothing
+
+        # merge users
+        pass
+
+
