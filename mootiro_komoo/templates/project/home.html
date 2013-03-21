@@ -10,10 +10,8 @@
 {% block content %}
 
   <div id="main-content" class='highlights'>
-    <h1>
-      {% trans "Projects" %}
-    </h1>
-    <a class="right login-required big-button new-project" href="{% url project_new %}" title="Criar novo Projeto de Mapeamento"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
+    <h1>{% trans "Projects" %}</h1>
+    <a class="right login-required big-button new project" href="{% url project_new %}" title="Criar novo Projeto de Mapeamento"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
     
     {% for s in sections %}
       <div class="section">
@@ -37,8 +35,8 @@
       </div>
     {% endfor %}
 
-    <a href="{% url project_list %}">Full list</a>
-  
+    <div class="centralizer apart"><a class="big-button project" href="{% url project_list %}">{% trans "See all projects" %}</a></div>
+    
   </div>
 
 {% endblock %}

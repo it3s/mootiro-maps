@@ -718,7 +718,7 @@ div.importsheet_missing_column {
       margin-top: 15px; }
 
 #main-content.highlights h1 {
-  margin: 1em 0;
+  margin: 0 0 1em;
   display: inline-block; }
 #main-content.highlights .new-project {
   margin-top: 30px; }
@@ -803,7 +803,8 @@ a.big-button {
     background-repeat: no-repeat;
     background-position: center center; }
 
-.new-project {
+.project {
   background: #f26700; }
-  .new-project .ico {
-    background-image: url("../img/menu/newmenu/projects-active.png"); }
+
+.new.project .ico {
+  background-image: url("../img/menu/newmenu/projects-active.png"); }

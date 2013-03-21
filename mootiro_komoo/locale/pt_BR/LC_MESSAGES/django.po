@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-18 19:04-0300\n"
+"POT-Creation-Date: 2013-03-21 15:25-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -1123,8 +1123,8 @@ msgid "Loading..."
 msgstr "Carregando..."
 
 #: templates/authentication/profile.html:65
-#: templates/main/templatetags/menu.html:28 templates/project/home.html:5
-#: templates/project/home.html.py:13 templates/project/list.html:7
+#: templates/main/templatetags/menu.html:28 templates/project/home.html:6
+#: templates/project/home.html.py:14 templates/project/list.html:7
 #: templates/project/projects_tag.html:5
 msgid "Projects"
 msgstr "Projetos"
@@ -1987,9 +1987,13 @@ msgstr "Editar Associações do Projeto"
 msgid "Deleted marked associations"
 msgstr "Apagar associações marcadas"
 
-#: templates/project/home.html:15
+#: templates/project/home.html:16
 msgid "Create a project"
 msgstr "Crie um projeto"
+
+#: templates/project/home.html:40
+msgid "See all projects"
+msgstr "Ver todos os projetos"
 
 #: templates/project/list.html:17
 msgid "Create New Project"

@@ -1,11 +1,10 @@
 #main-content.highlights {
-
     h1 {
-        margin: 1em 0;
+        margin: 0 0 1em;
         display: inline-block;
     }
+    
     .new-project { margin-top: 30px }
-
 
     .section {
         div.section-header {
@@ -118,7 +117,5 @@ a.big-button {
     }
 }
 
-.new-project {
-    background: #f26700;
-    .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
-}
+.project { background: #f26700 }
+.new.project .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
