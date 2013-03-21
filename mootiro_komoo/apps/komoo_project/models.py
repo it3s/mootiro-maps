@@ -17,6 +17,7 @@ import reversion
 from authentication.models import User
 from community.models import Community
 from search.signals import index_object_for_search
+from main.utils import create_geojson
 
 
 class ProjectRelatedObject(models.Model):
@@ -144,6 +145,15 @@ class Project(models.Model):
             'partners_logo': [{'url': logo.file.url}
                                 for logo in self.partners_logo()]
         })
+
+    @property
+    def geojson(self):
+        items = []
+        for ro in self.related_objects:
+            obj = ro.content_object
+            if obj and not obj.is_empty():
+                items.append(obj)
+        return create_geojson(items)
 
     @classmethod
     def get_projects_for_contributor(cls, user):

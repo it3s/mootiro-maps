@@ -47,6 +47,7 @@
             padding: 0 30px;
 
             li {
+                position: relative;
                 display: inline-block;
                 vertical-align: top;
                 width: 32%;
@@ -64,24 +65,25 @@
                     color: inherit;
                 }
 
-                div.logo, div.map {
+                .logo, .map-preview-container {
                     width: 260px;
                     height: 195px;
                 }
 
                 div.logo {
                     text-align: center;
-                    margin-bottom: 10px;
-                    line-height: 200px;
+                    margin-bottom: 15px;
+                    padding: auto;
+                    line-height: 189px; // border adjust
                     img {
                         vertical-align: middle;
                         max-width: 90%;
+                        max-height: 100%;
                     }
                 }
 
-                div.map {
+                div.map-preview-container {
                     display: none;
-                    background: lightyellow;
                     position: absolute;
                 }
             }
@@ -90,7 +92,7 @@
                 background: #dceff4;
 
                 div.logo { visibility: hidden }
-                div.map { display: block }
+                div.map-preview-container { display: inherit }
             }
         }
     }

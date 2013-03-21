@@ -51,7 +51,6 @@ def project_view(request, id=''):
 
     proj_objects['User'] = {'app_name': 'authentication', 'objects_list': []}
 
-    print project.contributors.all()
     for c in project.contributors.all():
         proj_objects['User']['objects_list'].append({
             'name': c.name,

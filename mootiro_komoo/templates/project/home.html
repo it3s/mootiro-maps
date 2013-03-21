@@ -1,4 +1,5 @@
 {% extends 'global.html' %}
+{% load komoo_map_tags %}
 {% load komoo_tags %}
 {% load i18n %}
 
@@ -23,8 +24,10 @@
         <ul>
           {% for h in s.highlights %}
           <li>
+            <div class="map-preview-container">
+              <div class="map-preview" geojson='{{h.object.geojson|safe}}'></div>
+            </div>
             <a href="{{h.object.view_url}}">
-              <div class="map"></div>
               <div class="logo"><img src="/media/{{h.object.logo}}" /></div>
               <h3>{{h.name}}</h3>
               <p>{{h.description}}</p></a>
@@ -40,3 +43,20 @@
 
 {% endblock %}
   
+{% block page_scripts %}
+<script type="text/javascript">
+  $(function(){
+    require(['map.jquery'], function () {
+      $('.map-preview').each(function (i, elem) {
+        var geojson = $.parseJSON($(elem).attr('geojson'));
+        $(elem).komooMap({
+          type: 'preview',
+          geojson: geojson,
+          width: '260px',
+          height: '195px'
+        });
+      });
+    });
+  });
+</script>
+{% endblock %}
