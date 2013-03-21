@@ -29,8 +29,6 @@ class Highlight(models.Model):
 
     section = models.ForeignKey(HighlightSection, null=True, blank=True)
     
-    name = models.CharField(max_length=64, blank=False)
-    description = models.CharField(max_length=256, blank=False)
     object_type = models.CharField(max_length=1, blank=False, choices=OBJECT_TYPE_CHOICES)
     object_id = models.IntegerField(null=False)
     

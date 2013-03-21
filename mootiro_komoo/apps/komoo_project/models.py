@@ -33,6 +33,8 @@ class Project(models.Model):
     name = models.CharField(max_length=1024)
     slug = models.SlugField(max_length=1024)
     description = models.TextField()
+    short_description = models.CharField(max_length=250, null=True, blank=True)
+
     tags = TaggableManager()
 
     contributors = models.ManyToManyField(User, null=True, blank=True,

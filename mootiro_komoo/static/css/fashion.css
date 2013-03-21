@@ -743,6 +743,7 @@ div.importsheet_missing_column {
       vertical-align: bottom;
       margin-right: 0.5em; }
 #main-content.highlights .section ul {
+  height: 400px;
   padding: 0 30px; }
   #main-content.highlights .section ul * {
     -webkit-box-sizing: border-box;
@@ -750,16 +751,21 @@ div.importsheet_missing_column {
     box-sizing: border-box; }
   #main-content.highlights .section ul li {
     position: relative;
-    display: inline-block;
-    vertical-align: top;
     width: 32%;
+    height: 100%;
+    display: inline-block;
     margin: 5px 0.5%;
     padding: 0.7em;
+    vertical-align: top;
     background: #ededed;
     border: 1px solid #cdcdcd;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px; }
+    #main-content.highlights .section ul li h3 {
+      max-height: 60px; }
+    #main-content.highlights .section ul li h3, #main-content.highlights .section ul li p {
+      overflow: hidden; }
     #main-content.highlights .section ul li a {
       display: block;
       text-decoration: inherit;
@@ -803,7 +809,7 @@ a.big-button {
     background-repeat: no-repeat;
     background-position: center center; }
 
-.project {
+.project-btn {
   background: #f26700; }
 
 .new.project .ico {

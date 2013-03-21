@@ -35,10 +35,12 @@ class FormProject(AjaxModelForm):
 
     class Meta:
         model = Project
-        fields = ('name', 'description', 'tags', 'contact', 'logo', 'id')
+        fields = ('name', 'short_description', 'description', 'tags',
+                    'contact', 'logo', 'id')
 
     _field_labels = {
         'name': _('Name'),
+        'short_description': _('Short description'),
         'description': _('Description'),
         'tags': _('Tags'),
         'logo': _('Logo'),

@@ -37,26 +37,32 @@
         }
 
         ul {
+            height: 400px;
+            padding: 0 30px;
+
             * {
                 -webkit-box-sizing: border-box;
                    -moz-box-sizing: border-box;
                         box-sizing: border-box;
             }
 
-            padding: 0 30px;
-
             li {
                 position: relative;
-                display: inline-block;
-                vertical-align: top;
                 width: 32%;
+                height: 100%;
+                display: inline-block;
                 margin: 5px 0.5%;
                 padding: 0.7em;
+                vertical-align: top;
+                
                 background: #ededed;
                 border: 1px solid #cdcdcd;
                 -webkit-border-radius: 5px;
                    -moz-border-radius: 5px;
                         border-radius: 5px;
+
+                h3 { max-height: 60px }
+                h3, p { overflow: hidden }
 
                 a {
                     display: block;
@@ -117,5 +123,5 @@ a.big-button {
     }
 }
 
-.project { background: #f26700 }
+.project-btn { background: #f26700 }
 .new.project .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
