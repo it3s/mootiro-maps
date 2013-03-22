@@ -1,26 +1,46 @@
-define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
+define (require) ->
     'use strict'
+
+    googleMaps = require 'googlemaps'
+    geometries = require './geometries'
 
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
+
+    # FIXME: Are these zoom options deprecated?
+    defaultFeatureType = {
+        minZoomPoint: 0
+        maxZoomPoint: 10
+        minZoomIcon: 10
+        maxZoomIcon: 100
+        minZoomGeometry: 0
+        maxZoomGeometry: 100
+    }
 
     class Feature
         displayTooltip: on
         displayInfoWindow: on
 
         constructor: (@options = {}) ->
+            # Try to get a `geometry` object from options.
             geometry = @options.geometry
             @setFeatureType(@options.featureType)
             if @options.geojson
-                if @options.geojson.properties
-                    @setProperties @options.geojson.properties
+                @setProperties @options.geojson.properties if @options.geojson.properties
+                # If we didnt got geometry from options but got geojson, create
+                # a geometry object.
                 geometry ?= geometries.makeGeometry @options.geojson, @
             if geometry?
                 @setGeometry geometry
                 @createMarker()
 
         createMarker: ->
+            # We dont want another marker to geometries that ar already
+            # rendered as a marker. So dont create markers to points and
+            # multipoints.
             return if @geometry.getGeometryType() in ['Point', 'MultiPoint']
+            # Create the marker for polygons and lines and display it at the
+            # element center.
             marker = new geometries.Point
                 visible : true
                 clickable : true
@@ -28,6 +48,7 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
             @setMarker marker
 
         initEvents: (object = @geometry) ->
+            # Create an event proxy from google maps overlay object.
             that = @
             eventsNames = ['click', 'dblclick', 'mousedown', 'mousemove',
                 'mouseout', 'mouseover', 'mouseup', 'rightclick', 'drag',
@@ -44,54 +65,43 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
         getGeometryType: -> @geometry.getGeometryType()
 
         getFeatureType: -> @featureType
-        setFeatureType: (@featureType = {
-            minZoomPoint: 0
-            maxZoomPoint: 10
-            minZoomIcon: 10
-            maxZoomIcon: 100
-            minZoomGeometry: 0
-            maxZoomGeometry: 100
-        }) ->
+        setFeatureType: (@featureType = defaultFeatureType) ->
 
         getMarker: -> @marker
         setMarker: (@marker) ->
             @marker.getOverlay().feature = @
+            # Proxy the marker events.
             @initEvents @marker
             @marker
 
         handleGeometryEvents: ->
+            # React to geometry changes.
             komoo.event.addListener @geometry, 'coordinates_changed', (args) =>
                 @updateIcon()
                 komoo.event.trigger this, 'coordinates_changed', args
 
         getUrl: ->
             viewName = "view_#{@properties.type.toLowerCase()}"
-
             dutils.urls.resolve(viewName, id: @properties.id).replace('//', '/')
 
         isHighlighted: -> @highlighted
         highlight: -> @setHighlight(on)
         setHighlight: (highlighted, silent = false) ->
-            if @highlighted is highlighted then return
+            return if @highlighted is highlighted
             @highlighted = highlighted
             @updateIcon()
-            if not silent
-                komoo.event.trigger @, 'highlight_changed', @highlighted
+            komoo.event.trigger @, 'highlight_changed', @highlighted if not silent
 
         isNew: -> not @getProperty 'id'
 
         getIconUrl: (zoom) ->
-            if @getProperty 'image' then return @getProperty 'image'
+            # Verify if the feature instance have a custom icon configurated.
+            return @getProperty 'image' if @getProperty 'image'
+            # Get the default icon using the feature type, the zoom level and
+            # if the feature is or not highlighted.
             zoom ?= if @map then @map.getZoom() else 10
             nearOrFar = if zoom >= @featureType.minZoomIcon then "near" else "far"
             highlighted = if @isHighlighted() then "highlighted/" else ""
-            #if (@properties.categories and \
-            #        @properties.categories[0] and \
-            #        @properties.categories[0].name and \
-            #        zoom >= @featureType.minZoomIcon)
-            #    categoryOrType = @properties.categories[0].name.toLowerCase()
-            #else
-            #    categoryOrType = @properties.type.toLowerCase()
             categoryOrType = @properties.type.toLowerCase()
             url = "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png".replace ' ', '-'
             url
@@ -99,7 +109,9 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
         updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
 
         getCategoriesIcons: ->
-            for categorie in @properties.categories
+            # FIXME: Generalize.
+            # Return a list o icons, for each feature category.
+            for categorie in @getCategories()
                 "/static/img/need_categories/#{category.name.toLowerCase()}.png"
 
         getProperties: -> @properties
@@ -131,28 +143,34 @@ define ['googlemaps', 'map/geometries'], (googleMaps, geometries) ->
         hideGeometry: -> @geometry.setMap null
 
         showMarker: -> @marker?.setMap @map
-        hideMarker: -> @marker?.setMap @map
+        hideMarker: ->
+            # WTF: I dont remember why the hide method add the marker to map.
+            @marker?.setMap @map
 
         getMap: -> @map
-        setMap: (map, force = geometry: false, point: false, icon: false) ->
+        setMap: (map, force = { geometry: false, point: false, icon: false }) ->
+            # FIXME: Is the `force` param deprecated?
             @oldMap = @map
             @map = map
             @marker?.setMap(@map)
             @geometry.setMap(@map)
             @updateIcon()
 
-            if @oldMap is undefined
-                @handleMapEvents()
+            # `@oldMap` is undefined only at the first time this method is called.
+            @handleMapEvents() if @oldMap is undefined
 
         handleMapEvents: ->
             @map.subscribe 'feature_highlight_changed', (flag, feature) =>
-                if feature is this then return
-                if @isHighlighted()
-                    @setHighlight off, true
+                # Should be only one feature highlighted, so if another feature
+                # is set as highlighted we should remove the highlight state
+                # from this one.
+                return if feature is this
+                @setHighlight off, true if @isHighlighted()
 
         getBounds: -> @geometry.getBounds()
 
         removeFromMap: ->
+            # TODO: Remove the events listenners
             @marker?.setMap(null)
             @setMap(null)
 

@@ -1,10 +1,20 @@
 (function() {
 
-  define(['googlemaps', 'map/geometries'], function(googleMaps, geometries) {
+  define(function(require) {
     'use strict';
-    var Feature, _base;
+    var Feature, defaultFeatureType, geometries, googleMaps, _base;
+    googleMaps = require('googlemaps');
+    geometries = require('./geometries');
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
+    defaultFeatureType = {
+      minZoomPoint: 0,
+      maxZoomPoint: 10,
+      minZoomIcon: 10,
+      maxZoomIcon: 100,
+      minZoomGeometry: 0,
+      maxZoomGeometry: 100
+    };
     Feature = (function() {
 
       Feature.prototype.displayTooltip = true;
@@ -74,14 +84,7 @@
       };
 
       Feature.prototype.setFeatureType = function(featureType) {
-        this.featureType = featureType != null ? featureType : {
-          minZoomPoint: 0,
-          maxZoomPoint: 10,
-          minZoomIcon: 10,
-          maxZoomIcon: 100,
-          minZoomGeometry: 0,
-          maxZoomGeometry: 100
-        };
+        this.featureType = featureType != null ? featureType : defaultFeatureType;
       };
 
       Feature.prototype.getMarker = function() {
@@ -150,7 +153,7 @@
 
       Feature.prototype.getCategoriesIcons = function() {
         var categorie, _i, _len, _ref, _results;
-        _ref = this.properties.categories;
+        _ref = this.getCategories();
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           categorie = _ref[_i];

@@ -1,6 +1,6 @@
 (function() {
 
-  define([], function() {
+  define(function() {
     'use strict';    return {
       geometries: {
         types: {

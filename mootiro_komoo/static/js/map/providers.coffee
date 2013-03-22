@@ -1,5 +1,8 @@
-define ['googlemaps', 'map/component'], (googleMaps, Component) ->
+define (require) ->
     'use strict'
+
+    googleMaps = require 'googlemaps'
+    Component = require './component'
 
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
@@ -54,7 +57,7 @@ define ['googlemaps', 'map/component'], (googleMaps, Component) ->
 
         handleMapEvents: ->
             @map.subscribe 'idle', =>
-                if @enabled is off then return
+                return if @enabled is off
 
                 bounds = @map.googleMap.getBounds()
                 @keptFeatures.forEach (feature) =>
@@ -64,7 +67,7 @@ define ['googlemaps', 'map/component'], (googleMaps, Component) ->
 
 
         releaseTile: (tile) ->
-            if @enabled is off then return
+            return if @enabled is off
 
             if @fetchedTiles[tile.addr]
                 bounds = @map.getBounds()
@@ -86,7 +89,7 @@ define ['googlemaps', 'map/component'], (googleMaps, Component) ->
             addr = @getAddrLatLng coord, zoom
             div.addr = addr
 
-            if @enabled is off then return div
+            return div if @enabled is off
 
             # Verifies if we already loaded this block
             if @fetchedTiles[addr]

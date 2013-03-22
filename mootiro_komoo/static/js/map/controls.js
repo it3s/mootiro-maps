@@ -3,8 +3,16 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  define(['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/utils', 'infobox', 'markerclusterer'], function(googleMaps, Component, common, geometries, utils, InfoBox, MarkerClusterer) {
-    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
+  define(function(require) {
+    'use strict';
+    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
+    googleMaps = require('googlemaps');
+    Component = require('./component');
+    common = require('./common');
+    geometries = require('./geometries');
+    utils = require('./utils');
+    InfoBox = require('infobox');
+    MarkerClusterer = require('markerclusterer');
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     _NEXT_STEP = gettext('Next Step');

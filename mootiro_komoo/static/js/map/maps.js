@@ -4,9 +4,18 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; },
     __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
-  define(['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries', 'map/controls', 'map/maptypes', 'map/providers'], function(googleMaps, _, core, Collections, Features, geometries) {
+  define(function(require) {
     'use strict';
-    var AjaxEditor, AjaxMap, Editor, Map, Preview, StaticMap, UserEditor, _base;
+    var AjaxEditor, AjaxMap, Collections, Editor, Features, Map, Preview, StaticMap, UserEditor, core, geometries, googleMaps, _, _base;
+    googleMaps = require('googlemaps');
+    _ = require('underscore');
+    core = require('./core');
+    Collections = require('./collections');
+    Features = require('./features');
+    geometries = require('./geometries');
+    require('./controls');
+    require('./maptypes');
+    require('./providers');
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     Map = (function(_super) {
@@ -150,11 +159,7 @@
         var _this = this;
         if (type == null) type = 'generic';
         if (opts == null) opts = {};
-        if (_.isString(component)) {
-          component = this.start(component, '', opts);
-        } else {
-          component = this.start(component);
-        }
+        component = _.isString(component) ? this.start(component, '', opts) : this.start(component);
         return this.data.when(component).done(function() {
           var instance, _base2, _i, _len, _results;
           _results = [];
@@ -322,9 +327,7 @@
             return features.push(feature);
           });
         }
-        if (panTo && (features.getBounds() != null)) {
-          this.googleMap.fitBounds(features.getBounds());
-        }
+        if (panTo && (features.getBounds() != null)) this.fitBounds();
         if (!silent) this.publish('features_loaded', features);
         return features;
       };

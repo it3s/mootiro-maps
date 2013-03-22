@@ -1,6 +1,7 @@
-define ['jquery'], ($) ->
+define (require) ->
     'use strict'
 
+    $ = require 'jquery'
 
     class Component
         name: 'Base Component'
@@ -12,7 +13,6 @@ define ['jquery'], ($) ->
             @$el = $(document).find(@el)
 
         setMap: (@map) ->
-            #console?.warn 'setMap method is deprecated. Please subscribe to "Map:started" message instead.'
 
         enable: -> @enabled = on
 

@@ -1,4 +1,4 @@
-define [], ->
+define ->
     'use strict'
 
     return {

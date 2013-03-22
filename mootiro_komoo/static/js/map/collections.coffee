@@ -1,5 +1,7 @@
-define ['googlemaps'], (googleMaps) ->
+define (require) ->
     'use strict'
+
+    googleMaps = require 'googlemaps'
 
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
@@ -38,12 +40,11 @@ define ['googlemaps'], (googleMaps) ->
     class FeatureCollection extends GenericCollection
         constructor: (options = {}) ->
             super options
-            if options.map then @setMap options.map
+            @setMap options.map if options.map
             options.features?.forEach (feature) => @push(feature)
 
         push: (feature) ->
-            if not feature?
-                return
+            return if not feature?
             super feature
             feature.setMap(@map)
 
@@ -51,13 +52,17 @@ define ['googlemaps'], (googleMaps) ->
             firstFeature = @getAt 0
             if firstFeature and firstFeature.getGeometryType() isnt 'Empty'
                 geometry = firstFeature.getGeometry()
+                # Create the `LatLngBounds` object with a point we know will
+                # be inside the final bound.
                 point = geometry.getLatLngFromArray geometry.getCenter()
                 @bounds = new googleMaps.LatLngBounds point, point
+                # Add all features to the bound.
                 @forEach (feature) =>
                     @bounds?.union feature.getBounds() if feature.getGeometryType() isnt 'Empty'
             @bounds
 
         setMap: (@map, force) ->
+            # FIXME: Is `force` param deprecated?
             tmpForce = null
             @forEach (feature) =>
                 if force?
@@ -101,8 +106,8 @@ define ['googlemaps'], (googleMaps) ->
         setVisible: (flag) ->
             @forEach (feature) -> feature.setVisible flag
 
-        # Is this been used?
         updateFeaturesVisibility: ->
+            # FIXME: Is this method been used?
             @forEach (feature) -> feature.seMap feature.getMap()
 
         handleMapEvents: ->
@@ -110,6 +115,7 @@ define ['googlemaps'], (googleMaps) ->
 
 
     class FeatureCollectionPlus extends FeatureCollection
+        # Extend FeatureCollection addin the ability to get features by type.
         constructor: (options = {}) ->
             super options
             @featuresByType = {}
@@ -146,7 +152,7 @@ define ['googlemaps'], (googleMaps) ->
             else if categories.length is 0
                 @featuresByType[type]['categories']['uncategorized']
             else
-                features = new FeatureCollection map: @map;
+                features = new FeatureCollection map: @map
                 categories.forEach (category) =>
                     if @featuresByType[type]['categories'][category]
                         @featuresByType[type]['categories'][category].forEach (feature) =>
@@ -164,7 +170,7 @@ define ['googlemaps'], (googleMaps) ->
                 else
                     type
 
-            if feature.isHighlighted() then return
+            return if feature.isHighlighted()
 
             @highlighted?.setHighlight off
             feature.highlight()

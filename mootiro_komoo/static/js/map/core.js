@@ -1,8 +1,11 @@
 (function() {
 
-  define(['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
+  define(function(require) {
     'use strict';
-    var Mediator, exports;
+    var $, Backbone, Mediator, exports, _;
+    $ = require('jquery');
+    _ = require('underscore');
+    Backbone = require('backbone');
     Mediator = (function() {
 
       Mediator.prototype.loading = 0;

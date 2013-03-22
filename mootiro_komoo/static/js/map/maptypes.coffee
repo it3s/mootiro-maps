@@ -1,5 +1,8 @@
-define ['googlemaps', 'map/component'], (googleMaps, Component) ->
+define (require) ->
     'use strict'
+
+    googleMaps = require 'googlemaps'
+    Component = require './component'
 
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event

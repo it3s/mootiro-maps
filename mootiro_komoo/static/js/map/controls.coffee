@@ -1,5 +1,13 @@
-define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/utils', 'infobox', 'markerclusterer'],
-(googleMaps, Component, common, geometries, utils, InfoBox, MarkerClusterer)->
+define (require)->
+    'use strict'
+
+    googleMaps = require 'googlemaps'
+    Component = require './component'
+    common = require './common'
+    geometries = require './geometries'
+    utils = require './utils'
+    InfoBox = require 'infobox'
+    MarkerClusterer = require 'markerclusterer'
 
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
@@ -24,6 +32,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
     MULTIPOLYLINE = common.geometries.types.MULTILINESTRING
     MULTILINESTRING = common.geometries.types.MULTILINESTRING
 
+    # Associate our geometry types to google maps types
     OVERLAY = {}
     OVERLAY[POINT] = googleMaps.drawing.OverlayType.MARKER
     OVERLAY[MULTIPOINT] = googleMaps.drawing.OverlayType.MARKER
@@ -31,6 +40,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
     OVERLAY[MULTILINESTRING] = googleMaps.drawing.OverlayType.POLYLINE
     OVERLAY[POLYGON] = googleMaps.drawing.OverlayType.POLYGON
 
+    # Drawing modes
     EDIT = 'edit'
     DELETE = 'delete'
     NEW = 'new'
@@ -39,20 +49,25 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
     PERIMETER_SELECTION = 'perimeter_selection'
 
+    # Generic component to add control boxes to map.
     class Box extends Component
         position: googleMaps.ControlPosition.RIGHT_BOTTOM
         init: ->
             super()
+            # Create the DOM element
             @box = $ "<div>"
             if @id? then @box.attr "id", @id
             if @class? then @box.addClass @class
 
+            # Attach the DOM to google map.
             @map.addControl @position, @box.get 0
             @handleMapEvents?()
 
         hide: -> @box.hide()
         show: -> @box.show()
 
+    # Display a "loading" message while a provider component is requesting
+    # features.
     class LoadingBox extends Box
         position: googleMaps.ControlPosition.TOP_CENTER
         id: 'map-loading'
@@ -72,18 +87,22 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @box.html "#{_LOADING} #{@getPercent()}%"
 
         handleMapEvents: ->
+            # The provider component started the requests.
             @map.subscribe 'features_request_started', =>
                 @show()
 
+            # A new request was initialized.
             @map.subscribe 'features_request_queued', =>
                 @requestsTotal++
                 @requestsWaiting++
                 @repaint()
 
+            # A request was finished.
             @map.subscribe 'features_request_unqueued', =>
                 @requestsWaiting--
                 @repaint()
 
+            # All requests were finished.
             @map.subscribe 'features_request_completed', =>
                 @requestsTotal = 0
                 @requestsWaiting = 0
@@ -93,12 +112,16 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 , 200
 
 
+    # A search box where user can insert coords or an address.
+    # Dependencies:
+    #  * Location
     class SearchBox extends Box
         position: googleMaps.ControlPosition.TOP_RIGHT
         id: 'map-searchbox'
 
         init: ->
             super()
+            # Use backbone to render the form.
             require ['map/views'], (Views) =>
                 @view = new Views.SearchBoxView()
                 @box.append @view.render().el
@@ -111,6 +134,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @map.publish 'goto', position, yes
 
 
+    # Display some supporters logos.
     class SupporterBox extends Box
         id: "map-supporters"
 
@@ -119,15 +143,22 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @box.append $("#map-supporters-content").show()
 
 
+    # Display our license text inside the map.
     class LicenseBox extends Box
         id: "map-license"
         position: googleMaps.ControlPosition.BOTTOM_LEFT
 
         init: ->
             super()
+            # TODO: Add "conditions of use" link
+            # TODO: i18n
             @box.html 'Este conteúdo é disponibilizado nos termos da licença <a href="http://creativecommons.org/licenses/by-sa/3.0/deed.pt_BR">Creative Commons - Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar sujeito a condições adicionais. Para mais detalhes, consulte as Condições de Uso.'
 
 
+    # Control the drawing feature. This is a very important component.
+    # See also:
+    #  * DrawingControl
+    #  * GeometrySelector
     class DrawingManager extends Component
         enabled: on
 
@@ -139,8 +170,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         init: (@options = {}) ->
             @options.drawingManagerOptions ?= @defaultDrawingManagerOptions
-            if @options.map
-                @setMap @options.map
+            @setMap @options.map if @options.map
 
         initManager: (options = @defaultDrawingManagerOptions) ->
             @manager = new googleMaps.drawing.DrawingManager options
@@ -155,6 +185,8 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         disable: -> @enabled = off
 
         setMode: (@mode) ->
+            # Set the correct mode to google drawing manager according to our
+            # internal mode and geometry type.
             @manager.setDrawingMode \
                 if @mode in [ADD, NEW] or
                         (@mode is CUTOUT and
@@ -188,6 +220,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @setMode mode
 
             @map.subscribe 'feature_rightclick', (e, feature) =>
+                # Delete the vertex on right click.
                 if not e.vertex? then return
                 # Rightclick on vertex removes it
                 overlay = feature.getGeometry().getOverlay()
@@ -200,9 +233,16 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         handleManagerEvents: ->
             komoo.event.addListener @manager, 'overlaycomplete', (e) =>
+                #
+                # The user finished the draw.
+                #
                 path = e.overlay?.getPath?()
+
+                # We got a polygon.
                 if path and @mode in [ADD, NEW, CUTOUT] and e.overlay?.getPaths
                     # Gets the overlays path orientation.
+                    # The orientation is used to add another path or add
+                    # holes to polygons
                     paths = @feature.getGeometry().getPaths()
                     if @mode is NEW then paths.clear()
                     if paths?.length > 0
@@ -218,14 +258,17 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                             path = new googleMaps.MVCArray path.getArray().reverse()
 
                     paths.push path
+                    # Update the feature geometry.
                     @feature.getGeometry().setPaths paths
                     # Remove the temporary overlay from map
                     e.overlay.setMap null
 
+                # We got a marker.
                 else if @mode in [ADD, NEW] and e.overlay.getPosition
                     @feature.getGeometry().addMarker e.overlay
                     @feature.updateIcon 100
 
+                # We got a line.
                 else if @mode in [ADD, NEW] and e.overlay.getPath
                     @feature.getGeometry().addPolyline e.overlay, true
 
@@ -233,46 +276,58 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @feature?.setEditable on
 
         setFeature: (@feature) ->
-            if @featureClickListener?
-                komoo.event.removeListener @featureClickListener
+            komoo.event.removeListener @featureClickListener if @featureClickListener?
 
-            if not @feature? then return
+            return if not @feature?
 
             @feature.setMap @map, geometry: on
             @featureClickListener = komoo.event.addListener @feature, 'click', (e, o) =>
+                # The user activated the "delete" mode than clicked on editable
+                # elemente on the map.
                 if @mode is DELETE
                     # Delete clicked stuff
+
+                    # Delete the polygons path the user clicked on.
                     if @feature.getGeometryType() is POLYGON
                         paths = @feature.getGeometry().getPaths()
                         paths.forEach (path, index) =>
                             # Delete the correct path.
                             if utils.isPointInside e.latLng, path
                                 paths.removeAt index
+
+                    # Delete the marker the user clicked on.
                     else if o and @feature.getGeometryType() is MULTIPOINT
                         markers = @feature.getGeometry().getMarkers()
                         index = $.inArray o, markers.getArray()
                         if index > -1
                             marker = markers.removeAt index
                             marker.setMap null
+
+                    # Delete the line the user clicked on.
                     else if o and @feature.getGeometryType() is MULTILINESTRING
                         polylines = @feature.getGeometry().getPolylines()
                         index = $.inArray o, polylines.getArray()
                         if index > -1
                             polyline = polylines.removeAt index
                             polyline.setMap null
+
                     @map.setMode EDIT
 
         editFeature: (feature) ->
-            if @enabled is off then return
+            return if @enabled is off
 
             @setFeature feature
 
+            # Ask user to select the geometry type if trying to edit an empty
+            # feature.
             if @feature.getGeometryType() is 'Empty'
                 @map.publish 'select_new_geometry', @feature
                 return
 
             @feature.setEditable on
 
+            # Set the correct options to google drawing manager to be consistent
+            # with the type of the feature we are editing.
             options = {}
             options["#{OVERLAY[@feature.getGeometryType()]}Options"] = @feature.getGeometry().getOverlayOptions
                 strokeWeight: 2.5
@@ -282,11 +337,12 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @map.publish 'drawing_started', @feature
 
         drawFeature: (@feature) ->
-            if @enabled is off then return
+            return if @enabled is off
 
             @editFeature @feature
             @map.setMode NEW
 
+    # Display a box with "close" button
     class CloseBox extends Box
         id: "map-drawing-box"
         class: "map-panel"
@@ -315,6 +371,9 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @map.publish 'close_clicked'
 
 
+    # Display a box to user select the geometry type he want to draw.
+    # This listen the "select_new_geometry" to open the box.
+    # Designed to be used with `DrawingManager`
     class GeometrySelector extends Box
         id: "map-drawing-box"
         class: "map-panel"
@@ -323,6 +382,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         init: ->
             super()
             @hide()
+            #TODO: i18n
             @box.html """
             <div id="geometry-selector">
               <div class="map-panel-title" id="drawing-control-title"></div>
@@ -374,6 +434,8 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         close: -> @hide()
 
 
+    # Display the drawing controls whe the map enters the edit mode.
+    # Designed to be used with `DrawingManager`
     class DrawingControl extends Box
         id: "map-drawing-box"
         class: "map-panel"
@@ -406,7 +468,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
         handleBoxEvents: ->
             $("#drawing-control-finish", @box).click =>
-                if $("#drawing-control-finish", @box).hasClass 'disabled' then return
+                return if $("#drawing-control-finish", @box).hasClass 'disabled'
 
                 @map.publish 'finish_drawing'
 
@@ -451,12 +513,9 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             remove = $("""<div class="map-button" id="drawing-control-delete"><i class="icon-komoo-trash middle"></i></div>""")
 
             content = $("<div>").addClass @feature.getGeometryType().toLowerCase()
-            if @feature.getGeometryType() isnt POINT
-                content.append add
-            if @feature.getGeometryType() is POLYGON
-                content.append cutout
-            if @feature.getGeometryType() isnt POINT
-                content.append remove
+            content.append add if @feature.getGeometryType() isnt POINT
+            content.append cutout if @feature.getGeometryType() is POLYGON
+            content.append remove if @feature.getGeometryType() isnt POINT
             content
 
 
@@ -469,6 +528,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         close: -> @hide()
 
 
+    # Allows the selection of a center point and then draws a circle around it.
     class PerimeterSelector extends Component
         enabled: on
 
@@ -494,10 +554,8 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @map.setMode PERIMETER_SELECTION
 
         selected: (latLng) ->
-            if typeof @radius is "number"
-                @circle.setRadius @radius
-            if typeof @callback is "function"
-                @callback latLng, @circle
+            @circle.setRadius @radius if typeof @radius is "number"
+            @callback latLng, @circle if typeof @callback is "function"
 
             @circle.setCenter latLng
             @circle.setMap @map.googleMap
@@ -528,6 +586,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @enabled = off
 
 
+    # Display a balloon with informations from a feature.
     class Balloon extends Component
         defaultWidth: "300px"
         enabled: on
@@ -655,13 +714,15 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             title: title, url: "", body: ""
 
 
+    # Extends the `Balloon` component, but get the feature informations from
+    # the server.
     class AjaxBalloon extends Balloon
         createFeatureContent: (options = {}) ->
             feature = options.feature
 
-            if not feature then return
-            if feature[@contentViewName] then return feature[@contentViewName]
-            if not feature.getProperty("id")? then return super options
+            return if not feature
+            return feature[@contentViewName] if feature[@contentViewName]
+            return super options if not feature.getProperty("id")?
 
             url = dutils.urls.resolve @contentViewName,
                 zoom: @map.getZoom()
@@ -676,6 +737,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             _LOADING
 
 
+    # A balloon with clickable areas and more detailed informations.
     class InfoWindow extends AjaxBalloon
         defaultWidth: "350px"
         contentViewName: "info_window"
@@ -688,8 +750,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
         close: (enableTooltip = true) ->
             @feature?.setHighlight off
             @feature?.displayTooltip = on
-            if enableTooltip
-                @map.enableComponents 'tooltip'
+            @map.enableComponents 'tooltip' if enableTooltip
             super()
 
         customize: ->
@@ -703,8 +764,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
 
                 googleMaps.event.addDomListener div, "mouseout", (e) =>
                     closeBox = @infoBox.div_.firstChild
-                    if e.toElement isnt closeBox
-                        @map.enableComponents 'tooltip'
+                    @map.enableComponents 'tooltip' if e.toElement isnt closeBox
 
                 googleMaps.event.addDomListener closeBox, "click", (e) =>
                     @close()
@@ -720,6 +780,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                     @open feature: feature
 
 
+    # A balloon displayed when the mouseover event is trigged.
     class Tooltip extends AjaxBalloon
         contentViewName: "tooltip"
 
@@ -742,11 +803,11 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @map.subscribe 'feature_mousemove', (e, feature) =>
                 clearTimeout @timer
 
-                if feature is @feature or not feature.displayTooltip then return
+                return if feature is @feature or not feature.displayTooltip
 
                 delay = if feature.getType() is 'Community' then 400 else 10
                 @timer = setTimeout =>
-                    if not feature.displayTooltip then return
+                    return if not feature.displayTooltip
                     @open feature: feature, position: e.latLng
                 , delay
 
@@ -757,7 +818,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @close()
 
             @map.subscribe 'cluster_mouseover',  (features, position) =>
-                if not features.getAt(0)?.displayTooltip then return
+                return if not features.getAt(0)?.displayTooltip
                 @open features: features, position: position
 
             @map.subscribe 'cluster_mouseout', (e, feature) =>
@@ -767,6 +828,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @close()
 
 
+    # Create feature clusters.
     class FeatureClusterer extends Component
         enabled: on
         maxZoom: 9
@@ -865,6 +927,8 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @repaint()
 
 
+    # Handle the location requests, including the user location and the
+    # coords of a specific query, using google geocode service.
     class Location extends Component
         enabled: on
 
@@ -931,6 +995,8 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @enabled = off
 
 
+    # Save the location displayed on map into a cookie to be possible display
+    # the same location when the user come back later.
     class SaveLocation extends Location
         handleMapEvents: ->
             super()
@@ -953,6 +1019,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @map.publish 'set_zoom', zoom
 
 
+    # Saves the current location automatically.
     class AutosaveLocation extends SaveLocation
         handleMapEvents: ->
             super()
@@ -960,6 +1027,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @saveLocation()
 
 
+    # Save the map type selected by the user.
     class SaveMapType extends Component
         setMap: (@map) ->
             @handleMapEvents()
@@ -986,6 +1054,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
             @map.googleMap.setMapTypeId mapTypeId
 
 
+    # Save the map type automatically.
     class AutosaveMapType extends SaveMapType
         handleMapEvents: ->
             super()
@@ -993,6 +1062,7 @@ define ['googlemaps', 'map/component', 'map/common', 'map/geometries', 'map/util
                 @saveMapType()
 
 
+    # Split the map canvas to display the street view and the map side by side.
     class StreetView extends Component
         enabled: on
 

@@ -1,7 +1,15 @@
-define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features', 'map/geometries',
-    'map/controls', 'map/maptypes', 'map/providers'],
-(googleMaps, _, core, Collections, Features, geometries) ->
+define (require) ->
     'use strict'
+
+    googleMaps = require 'googlemaps'
+    _ = require 'underscore'
+    core = require './core'
+    Collections = require './collections'
+    Features = require './features'
+    geometries = require './geometries'
+    require './controls'
+    require './maptypes'
+    require './providers'
 
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
@@ -48,8 +56,7 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
             if @options.geojson
                 features = @loadGeoJSON @options.geojson, not @options.zoom?
                 bounds = features.getBounds()
-                if bounds?
-                    @fitBounds bounds
+                @fitBounds bounds if bounds?
                 features?.setMap this, geometry: on, icon: on
                 @publish 'set_zoom', @options.zoom
 
@@ -107,10 +114,11 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
                 @setZoom zoom
 
         addComponent: (component, type = 'generic', opts = {}) ->
+            component =
             if _.isString component
-                component = @start component, '', opts
+                @start component, '', opts
             else
-                component = @start component
+                @start component
             return @data.when(component).done () =>
                 for instance in arguments
                     instance.setMap @
@@ -162,7 +170,8 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
         goTo: (position, displayMarker = true) ->
             @publish 'goto', position, displayMarker
 
-        panTo: (position, displayMarker = false) -> @goTo position, displayMarker
+        panTo: (position, displayMarker = false) ->
+            @goTo position, displayMarker
 
         makeFeature: (geojson, attach = true) ->
             feature = Features.makeFeature geojson, @featureTypes
@@ -220,10 +229,9 @@ define ['googlemaps', 'underscore', 'map/core', 'map/collections', 'map/features
 
                 #if attach then feature.setMap @
 
-            if panTo and features.getBounds()?
-                @googleMap.fitBounds features.getBounds()
-
+            @fitBounds() if panTo and features.getBounds()?
             @publish 'features_loaded', features if not silent
+
             features
 
         loadGeoJSON: (geojson, panTo, attach, silent) ->

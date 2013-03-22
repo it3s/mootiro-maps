@@ -1,8 +1,9 @@
 (function() {
 
-  define(['jquery'], function($) {
+  define(function(require) {
     'use strict';
-    var Component, exports;
+    var $, Component, exports;
+    $ = require('jquery');
     Component = (function() {
 
       Component.prototype.name = 'Base Component';

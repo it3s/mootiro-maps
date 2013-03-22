@@ -1,5 +1,9 @@
-define ['jquery', 'underscore', 'backbone'], ($, _, Backbone) ->
+define (require) ->
     'use strict'
+
+    $ = require 'jquery'
+    _ = require 'underscore'
+    Backbone = require 'backbone'
 
     # We use the mediator pattern
     class Mediator

@@ -1,6 +1,10 @@
-define ['googlemaps', 'map/common', 'map/multimarker', 'map/multipolyline'],
-(googleMaps, common) ->
+define (require) ->
     'use strict'
+
+    googleMaps = require 'googlemaps'
+    common = require './common'
+    require './multimarker'
+    require './multipolyline'
 
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
@@ -88,9 +92,11 @@ define ['googlemaps', 'map/common', 'map/multimarker', 'map/multipolyline'],
         getDefaultZIndex: -> @feature?.getDefaultZIndex() or defaults.ZINDEX
 
         getLatLngFromArray: (pos) ->
+            # FIXME: fix this method when the database coords were fixed.
             if pos? then new googleMaps.LatLng pos[0], pos[1] else null
 
         getArrayFromLatLng: (latLng) ->
+            # FIXME: fix this method when the database coords were fixed.
             if latLng then [latLng.lat(), latLng.lng()] else []
 
         getLatLngArrayFromArray: (positions) ->

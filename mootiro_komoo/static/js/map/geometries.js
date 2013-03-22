@@ -2,9 +2,13 @@
   var __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
 
-  define(['googlemaps', 'map/common', 'map/multimarker', 'map/multipolyline'], function(googleMaps, common) {
+  define(function(require) {
     'use strict';
-    var EMPTY, Empty, Geometry, LINESTRING, LineString, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, SinglePoint, defaults, _base;
+    var EMPTY, Empty, Geometry, LINESTRING, LineString, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MultiLineString, MultiPoint, POINT, POLYGON, POLYLINE, Point, Polygon, SinglePoint, common, defaults, googleMaps, _base;
+    googleMaps = require('googlemaps');
+    common = require('./common');
+    require('./multimarker');
+    require('./multipolyline');
     if (window.komoo == null) window.komoo = {};
     if ((_base = window.komoo).event == null) _base.event = googleMaps.event;
     EMPTY = common.geometries.types.EMPTY;
