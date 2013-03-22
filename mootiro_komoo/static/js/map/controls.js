@@ -106,7 +106,9 @@
       LoadingBox.prototype.handleMapEvents = function() {
         var _this = this;
         this.map.subscribe('features_request_started', function() {
-          return _this.show();
+          return _this.displayTimer = setTimeout(function() {
+            return _this.show();
+          }, 500);
         });
         this.map.subscribe('features_request_queued', function() {
           _this.requestsTotal++;
@@ -120,6 +122,7 @@
         return this.map.subscribe('features_request_completed', function() {
           _this.requestsTotal = 0;
           _this.requestsWaiting = 0;
+          clearTimeout(_this.displayTimer);
           return setTimeout(function() {
             return _this.hide();
           }, 200);

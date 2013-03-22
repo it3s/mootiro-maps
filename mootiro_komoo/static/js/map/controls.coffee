@@ -89,7 +89,9 @@ define (require)->
         handleMapEvents: ->
             # The provider component started the requests.
             @map.subscribe 'features_request_started', =>
-                @show()
+                @displayTimer = setTimeout =>
+                    @show()
+                , 500
 
             # A new request was initialized.
             @map.subscribe 'features_request_queued', =>
@@ -107,6 +109,7 @@ define (require)->
                 @requestsTotal = 0
                 @requestsWaiting = 0
                 # Display "100%" before close the loading box
+                clearTimeout @displayTimer
                 setTimeout =>
                     @hide()
                 , 200
