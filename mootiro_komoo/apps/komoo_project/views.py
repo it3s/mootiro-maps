@@ -18,6 +18,7 @@ from main.utils import (paginated_query, sorted_query, filtered_query,
 from main.tasks import send_explanations_mail
 
 from authentication.utils import login_required
+from authentication.models import User
 from highlight.models import HighlightSection
 
 from .forms import FormProject
@@ -40,7 +41,7 @@ def project_list(request):
 def project_home(request):
     hs = HighlightSection.objects.filter(page_name='/project', is_active=True)\
             .order_by('page_order')
-    return dict(sections=hs)
+    return dict(sections=hs, user=User.objects.get(id=2))
 
 
 @render_to('project/view.html')

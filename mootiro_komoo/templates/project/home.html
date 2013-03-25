@@ -12,7 +12,33 @@
   <div id="main-content" class='highlights'>
     <h1>{% trans "Projects" %}</h1>
     <a class="right login-required big-button new project-btn" href="{% url project_new %}" title="Criar novo Projeto de Mapeamento"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
+
+    {% if user.projects_contributed.count %}
+      <div class="my-projects-section">
+        <div class="section-header">
+          <hr/>
+          <span>{% trans "My projects" %}</span>
+        </div>
+        
+        <div class="flexslider">
+          <ul class="slides">
+            {% for proj in user.projects_contributed %}
+            <li>
+              <a href="{{ proj.view_url }}">
+                <div class="logo">
+                  <img src="{{ proj.logo_url }}" title="{{ proj.name }}" />
+                  {#<img src="/media/upload/1358854138368.jpg" title="{{ proj.name }}" />#}
+                </div>
+                {{ proj.name}}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
     
+    {% if 1 %}
     {% for s in sections %}
       <div class="section">
         <div class="section-header">
@@ -35,8 +61,9 @@
         </ul>
       </div>
     {% endfor %}
-    
+    <br/>
     <div class="centralizer apart"><a class="big-button project-btn" href="{% url project_list %}">{% trans "See all projects" %}</a></div>
+    {% endif %}
     
   </div>
 
@@ -57,6 +84,12 @@
         });
       });
     });
+    $('.flexslider').flexslider({
+      animation: "slide",
+      animationLoop: false,
+      itemWidth: 150
+    }).flexslider("pause");
   });
+
 </script>
 {% endblock %}
