@@ -832,7 +832,10 @@ body.community #collapse-panel {
     padding-left: 2em;
     padding-right: 2em;
 }
-#filter-circle { padding: 8px; }
+#filter-circle {
+    padding: 8px;
+    white-space: nowrap;  /* try to fix #113 */
+}
 #filter-circle .button { margin-left: 0em }
 #filter-circle .button .icon-plus { vertical-align: middle }
 #filter-circle .highlight { background: #ffc1ae }
