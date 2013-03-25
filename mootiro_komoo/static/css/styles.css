@@ -822,7 +822,9 @@ body.community #collapse-panel {
 #map-panel ul.geo-objects-listing .sublist li.selected,
 #map-panel ul.geo-objects-listing li .item:hover { background: #dceff4 }
 #map-panel ul.geo-objects-listing li.sublist { padding: 0 }
+#filter-form ul.geo-objects-listing { margin-top: 10px }
 #filter-form ul.geo-objects-listing li.sublist { display: none }
+#filter-form .button-off { display: none; }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
 #map-panel ul.geo-objects-listing.frozen li .item:hover { background: none; cursor: default; }
