@@ -125,6 +125,8 @@ def project_edit(request, id='', *arg, **kwargs):
         return form
 
     def on_after_save(request, obj):
+        # add user who edited as contributor.
+        obj.contributors.add(request.user)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
