@@ -76,6 +76,11 @@
                 }
 
                 div.logo {
+                    display: inherit;
+                    position: absolute;
+                    background-color: #ededed;
+                    z-index: 1000;
+
                     text-align: center;
                     margin-bottom: 15px;
                     padding: auto;
@@ -87,17 +92,14 @@
                     }
                 }
 
-                div.map-preview-container {
-                    display: none;
-                    position: absolute;
-                }
+                // div.map-preview-container { }
             }
 
             li:hover {
                 background: #dceff4;
 
-                div.logo { visibility: hidden }
-                div.map-preview-container { display: inherit }
+                div.logo { display: none }
+                // div.map-preview-container { display: inherit }
             }
         }
     }
@@ -123,5 +125,5 @@ a.big-button {
     }
 }
 
-.project-btn { background: #f26700 }
-.new.project .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
+a.project-btn { background: #f26700 }
+.new.project-btn .ico { background-image: url('../img/menu/newmenu/projects-active.png') }

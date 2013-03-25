@@ -11,7 +11,7 @@
 
   <div id="main-content" class='highlights'>
     <h1>{% trans "Projects" %}</h1>
-    <a class="right login-required big-button new .project-btn" href="{% url project_new %}" title="Criar novo Projeto de Mapeamento"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
+    <a class="right login-required big-button new project-btn" href="{% url project_new %}" title="Criar novo Projeto de Mapeamento"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
     
     {% for s in sections %}
       <div class="section">
@@ -22,11 +22,11 @@
         <ul>
           {% for h in s.highlights %}
           <li>
+            <div class="logo"><img src="/media/{{h.object.logo}}" /></div>
             <div class="map-preview-container">
               <div class="map-preview" geojson='{{h.object.geojson|safe}}'></div>
             </div>
             <a href="{{h.object.view_url}}">
-              <div class="logo"><img src="/media/{{h.object.logo}}" /></div>
               <h3>{{h.object.name}}</h3>
               <p>{% firstof h.object.short_description '' %}</p>
             </a>
@@ -35,8 +35,8 @@
         </ul>
       </div>
     {% endfor %}
-
-    <div class="centralizer apart"><a class="big-button .project-btn" href="{% url project_list %}">{% trans "See all projects" %}</a></div>
+    
+    <div class="centralizer apart"><a class="big-button project-btn" href="{% url project_list %}">{% trans "See all projects" %}</a></div>
     
   </div>
 
@@ -51,6 +51,7 @@
         $(elem).komooMap({
           type: 'preview',
           geojson: geojson,
+          // googleMapOptions: {'disableDefaultUI': false},
           width: '260px',
           height: '195px'
         });
