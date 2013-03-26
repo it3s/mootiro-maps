@@ -501,6 +501,7 @@
         this.addComponent('map/controls::SupporterBox');
         this.addComponent('map/controls::LicenseBox');
         this.addComponent('map/controls::SearchBox');
+        this.addComponent('map/controls::FeatureFilter');
       }
 
       StaticMap.prototype.loadGeoJson = function(geojson, panTo, attach) {
@@ -528,9 +529,6 @@
         AjaxMap.__super__.constructor.call(this, options);
         this.addComponent('map/controls::LoadingBox');
         this.addComponent('map/providers::FeatureProvider', 'provider');
-        this.addComponent('map/controls::FeatureClusterer', 'clusterer', {
-          map: this
-        });
       }
 
       return AjaxMap;

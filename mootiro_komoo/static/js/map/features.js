@@ -46,7 +46,7 @@
           return;
         }
         marker = new geometries.Point({
-          visible: true,
+          visible: false,
           clickable: true
         });
         marker.setCoordinates(this.getCenter());
@@ -251,10 +251,11 @@
           };
         }
         this.oldMap = this.map;
-        this.map = map;
-        if ((_ref = this.marker) != null) _ref.setMap(this.map);
-        this.geometry.setMap(this.map);
+        if (map != null) this.map = map;
+        if ((_ref = this.marker) != null) _ref.setMap(map);
+        this.geometry.setMap(map);
         this.updateIcon();
+        this.setVisible(true);
         if (this.oldMap === void 0) return this.handleMapEvents();
       };
 
@@ -277,10 +278,11 @@
       };
 
       Feature.prototype.setVisible = function(visible) {
-        var _ref;
+        var _ref, _ref2;
         this.visible = visible;
-        if ((_ref = this.marker) != null) _ref.setVisible(this.visible);
-        return this.geometry.setVisible(this.visible);
+        visible = (_ref = this.map) != null ? _ref.triggerHooks('before_feature_setVisible', this.visible)[0] : void 0;
+        if ((_ref2 = this.marker) != null) _ref2.setVisible(visible);
+        return this.geometry.setVisible(visible);
       };
 
       Feature.prototype.getCenter = function() {

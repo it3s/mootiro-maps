@@ -5,7 +5,7 @@
 
   define(function(require) {
     'use strict';
-    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, FeatureFilter, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
     googleMaps = require('googlemaps');
     Component = require('./component');
     common = require('./common');
@@ -1534,6 +1534,25 @@
       return StreetView;
 
     })(Component);
+    FeatureFilter = (function(_super) {
+
+      __extends(FeatureFilter, _super);
+
+      function FeatureFilter() {
+        FeatureFilter.__super__.constructor.apply(this, arguments);
+      }
+
+      FeatureFilter.prototype.hooks = {
+        'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
+      };
+
+      FeatureFilter.prototype.beforeFeatureSetVisibleHook = function(visible) {
+        return [visible];
+      };
+
+      return FeatureFilter;
+
+    })(Component);
     window.komoo.controls = {
       DrawingManager: DrawingManager,
       DrawingControl: DrawingControl,
@@ -1554,7 +1573,8 @@
       AutosaveLocation: AutosaveLocation,
       SaveMapType: SaveMapType,
       AutosaveMapType: AutosaveMapType,
-      StreetView: StreetView
+      StreetView: StreetView,
+      FeatureFilter: FeatureFilter
     };
     return window.komoo.controls;
   });

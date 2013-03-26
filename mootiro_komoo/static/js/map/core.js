@@ -1,4 +1,6 @@
 (function() {
+  var __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; },
+    __slice = Array.prototype.slice;
 
   define(function(require) {
     'use strict';
@@ -17,6 +19,7 @@
 
       function Mediator() {
         this._components = {};
+        this._hooks = {};
         this._pubQueue = [];
         this._pubsub = {};
         _.extend(this._pubsub, Backbone.Events);
@@ -34,6 +37,29 @@
       Mediator.prototype._removeComponent = function(component, id) {
         var _ref;
         return (_ref = this._components[component]) != null ? delete _ref[id] : void 0;
+      };
+
+      Mediator.prototype.registerHook = function(hook, method, that) {
+        var _base;
+        if (that == null) that = null;
+        if ((_base = this._hooks)[hook] == null) _base[hook] = [];
+        console.log('--->', !(__indexOf.call(this._hooks[hook], method) >= 0));
+        if (!(__indexOf.call(this._hooks[hook], method) >= 0)) {
+          return this._hooks[hook].push(_.bind(method, that));
+        }
+      };
+
+      Mediator.prototype.unregisterHook = function(hook, method) {};
+
+      Mediator.prototype.triggerHooks = function() {
+        var hook, method, params, _i, _len, _ref, _ref2;
+        hook = arguments[0], params = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+        _ref2 = (_ref = this._hooks[hook]) != null ? _ref : [];
+        for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+          method = _ref2[_i];
+          params = method.apply(null, params);
+        }
+        return params;
       };
 
       Mediator.prototype.load = function(component, el, opts) {
@@ -60,7 +86,15 @@
             return;
           }
           return _this.data.when(instance.init(opts)).done(function() {
+            var hook, method, _ref;
             _this._components[component][id].instance = instance;
+            _ref = instance.hooks;
+            for (hook in _ref) {
+              method = _ref[hook];
+              if (instance[method] != null) {
+                _this.registerHook(hook, instance[method], instance);
+              }
+            }
             if (typeof console !== "undefined" && console !== null) {
               console.log("Component '" + component + "' initialized");
             }

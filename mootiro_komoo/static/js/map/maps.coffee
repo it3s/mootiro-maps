@@ -354,6 +354,7 @@ define (require) ->
             @addComponent 'map/controls::SupporterBox'
             @addComponent 'map/controls::LicenseBox'
             @addComponent 'map/controls::SearchBox'
+            @addComponent 'map/controls::FeatureFilter'
 
         loadGeoJson: (geojson, panTo = false, attach = true) ->
             features = super geojson, panTo, attach
@@ -368,7 +369,7 @@ define (require) ->
 
             @addComponent 'map/controls::LoadingBox'
             @addComponent 'map/providers::FeatureProvider', 'provider'
-            @addComponent 'map/controls::FeatureClusterer', 'clusterer', {map: this}
+            #@addComponent 'map/controls::FeatureClusterer', 'clusterer', {map: this}
 
 
     class AjaxEditor extends AjaxMap

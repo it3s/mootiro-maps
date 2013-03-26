@@ -42,7 +42,7 @@ define (require) ->
             # Create the marker for polygons and lines and display it at the
             # element center.
             marker = new geometries.Point
-                visible : true
+                visible : false
                 clickable : true
             marker.setCoordinates @getCenter()
             @setMarker marker
@@ -151,10 +151,11 @@ define (require) ->
         setMap: (map, force = { geometry: false, point: false, icon: false }) ->
             # FIXME: Is the `force` param deprecated?
             @oldMap = @map
-            @map = map
-            @marker?.setMap(@map)
-            @geometry.setMap(@map)
+            @map = map if map?
+            @marker?.setMap(map)
+            @geometry.setMap(map)
             @updateIcon()
+            @setVisible on
 
             # `@oldMap` is undefined only at the first time this method is called.
             @handleMapEvents() if @oldMap is undefined
@@ -175,8 +176,9 @@ define (require) ->
             @setMap(null)
 
         setVisible: (@visible) ->
-            @marker?.setVisible @visible
-            @geometry.setVisible @visible
+            [visible] = @map?.triggerHooks 'before_feature_setVisible', @visible
+            @marker?.setVisible visible
+            @geometry.setVisible visible
 
         getCenter: -> @geometry.getCenter()
 

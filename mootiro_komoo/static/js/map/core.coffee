@@ -15,6 +15,7 @@ define (require) ->
 
         constructor: ->
             @_components = {}
+            @_hooks = {}
             @_pubQueue = []
             @_pubsub = {}
             _.extend(@_pubsub, Backbone.Events)
@@ -27,6 +28,19 @@ define (require) ->
 
         _removeComponent: (component, id) ->
             delete @_components[component]?[id]
+
+        registerHook: (hook, method, that=null) ->
+            @_hooks[hook] ?= []
+            console.log '--->', not (method in @_hooks[hook])
+            @_hooks[hook].push _.bind(method, that) if not (method in @_hooks[hook])
+
+        unregisterHook: (hook, method) ->
+            # TODO
+
+        triggerHooks: (hook, params...) ->
+            for method in @_hooks[hook] ? []
+                params = method(params...)
+            params
 
         # Load the component module using AMD and instantiate the component
         load: (component, el, opts) ->
@@ -52,6 +66,9 @@ define (require) ->
                 @data.when(instance.init(opts)).done(=>
                     # This component instance was initialized successfully
                     @_components[component][id].instance = instance
+                    # Register the component hooks
+                    for hook, method of instance.hooks
+                        @registerHook hook, instance[method], instance if instance[method]?
                     # lets send the news to everybody
                     console?.log "Component '#{component}' initialized"
                     @publish "#{componentName}:started", id
@@ -162,7 +179,6 @@ define (require) ->
             # Wait until all components were loaded to publish any message
             @_addToPublishQueue.apply this, arguments
             @_processPublishQueue()
-
 
         subscribe: (message, callback, context) ->
             @_pubsub.on message, callback, context

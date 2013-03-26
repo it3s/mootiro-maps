@@ -10,6 +10,8 @@
 
       Component.prototype.description = '';
 
+      Component.prototype.hooks = {};
+
       Component.prototype.enabled = false;
 
       function Component(mediator, el) {

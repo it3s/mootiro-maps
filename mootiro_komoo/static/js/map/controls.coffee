@@ -1096,6 +1096,14 @@ define (require)->
                 @map.refresh()
 
 
+    class FeatureFilter extends Component
+        hooks:
+            'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
+
+        beforeFeatureSetVisibleHook: (visible) ->
+            [visible]
+
+
     window.komoo.controls =
         DrawingManager: DrawingManager
         DrawingControl: DrawingControl
@@ -1117,5 +1125,6 @@ define (require)->
         SaveMapType: SaveMapType
         AutosaveMapType: AutosaveMapType
         StreetView: StreetView
+        FeatureFilter: FeatureFilter
 
     return window.komoo.controls

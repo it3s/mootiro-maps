@@ -6,6 +6,7 @@ define (require) ->
     class Component
         name: 'Base Component'
         description: ''
+        hooks: {}
         enabled: off
 
         constructor: (@mediator, @el) ->
