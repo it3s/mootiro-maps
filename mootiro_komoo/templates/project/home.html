@@ -1,6 +1,7 @@
 {% extends 'global.html' %}
 {% load komoo_map_tags %}
 {% load komoo_tags %}
+{% load highlight_tags %}
 {% load i18n %}
 
 {% block title %}{% trans 'Projects' %}{% endblock %}
@@ -38,30 +39,11 @@
     {% endif %}
     
     {% for s in sections %}
-      <div class="section">
-        <div class="section-header">
-          <hr/>
-          <span>{% if s.icon_src %}<img src="{{ s.icon_src }}">{% endif %}{{ s.name }}</span>
-        </div>
-        <ul>
-          {% for h in s.highlights %}
-          <li>
-            <a href="{{h.object.view_url}}">
-              <div class="logo"><img src="/media/{{h.object.logo}}" /></div>
-              <div class="map-preview-container">
-                <div class="map-preview" geojson='{{h.object.geojson|safe}}'></div>
-              </div>
-              <h3>{{h.object.name}}</h3>
-              <p>{% firstof h.object.short_description '' %}</p>
-            </a>
-          </li>
-          {% endfor %}
-        </ul>
-      </div>
+      {% highlight_section s %}
     {% endfor %}
+    
     <br/>
     <div class="centralizer apart"><a class="big-button project-btn" href="{% url project_list %}">{% trans "See all projects" %}</a></div>
-    
   </div>
 
 {% endblock %}

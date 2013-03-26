@@ -1,0 +1,20 @@
+<div class="section">
+  <div class="section-header">
+    <hr/>
+    <span>{% if hs.icon_src %}<img src="{{ hs.icon_src }}">{% endif %}{{ hs.name }}</span>
+  </div>
+  <ul>
+    {% for h in hs.highlights %}
+    <li>
+      <a href="{{h.object.view_url}}">
+        <div class="logo"><img src="/media/{{h.object.logo}}" /></div>
+        <div class="map-preview-container">
+          <div class="map-preview" geojson='{{h.object.geojson|safe}}'></div>
+        </div>
+        <h3>{{h.object.name}}</h3>
+        <p>{% firstof h.object.short_description '' %}</p>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
