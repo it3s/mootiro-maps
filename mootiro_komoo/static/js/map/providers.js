@@ -80,7 +80,8 @@
       FeatureProvider.prototype.init = function(options) {
         FeatureProvider.__super__.init.call(this, options);
         this.keptFeatures = komoo.collections.makeFeatureCollection();
-        return this.openConnections = 0;
+        this.openConnections = 0;
+        return this._addrs = [];
       };
 
       FeatureProvider.prototype.handleMapEvents = function() {
@@ -99,24 +100,27 @@
       };
 
       FeatureProvider.prototype.releaseTile = function(tile) {
-        var bounds,
-          _this = this;
+        var bounds;
         if (this.enabled === false) return;
         if (this.fetchedTiles[tile.addr]) {
           bounds = this.map.getBounds();
-          return this.fetchedTiles[tile.addr].features.forEach(function(feature) {
-            if (feature.getBounds) {
-              if (!bounds.intersects(feature.getBounds())) {
-                return feature.setMap(null);
-              } else if (!bounds.contains(feature.getBounds().getNorthEast() || !bounds.contains(feature.getBounds().getSouthWest()))) {
-                _this.keptFeatures.push(feature);
-                return feature.setMap(_this.map);
+          return this.map.data.when(this.fetchedTiles[tile.addr].features, function(features) {
+            var _this = this;
+            return features.forEach(function(feature) {
+              if (feature.getBounds) {
+                if (!bounds.intersects(feature.getBounds())) {
+                  return feature.setMap(null);
+                } else if (!bounds.contains(feature.getBounds().getNorthEast() || !bounds.contains(feature.getBounds().getSouthWest()))) {
+                  _this.keptFeatures.push(feature);
+                  return feature.setMap(_this.map);
+                }
+              } else if (feature.getPosition) {
+                if (!bounds.contains(feature.getPosition())) {
+                  feature.setVisible(false);
+                  return feature.setMap(null);
+                }
               }
-            } else if (feature.getPosition) {
-              if (!bounds.contains(feature.getPosition())) {
-                return feature.setMap(null);
-              }
-            }
+            });
           });
         }
       };
@@ -142,16 +146,16 @@
           dataType: 'json',
           type: 'GET',
           success: function(data) {
-            var features;
+            var dfd;
+            dfd = _this.map.data.deferred();
             if (typeof console !== "undefined" && console !== null) {
               console.log("Getting tile " + addr + "...");
             }
-            features = _this.map.loadGeoJSON(JSON.parse(data), false, true, true);
-            _this.fetchedTiles[addr] = {
+            _this._addrs.push(addr);
+            return _this.fetchedTiles[addr] = {
               geojson: data,
-              features: features
+              features: dfd.promise()
             };
-            return features.setMap(_this.map);
           },
           error: function(jqXHR, textStatus) {
             var errorContainer, serverErrorContainer;
@@ -167,10 +171,23 @@
             return serverErrorContainer.append(errorContainer);
           },
           complete: function() {
+            var data, features, _base2;
             _this.map.publish('features_request_unqueued');
             _this.openConnections--;
             if (_this.openConnections === 0) {
-              return _this.map.publish('features_request_completed');
+              _this.map.publish('features_request_completed');
+              console.log('a');
+              while (_this._addrs.length > 0) {
+                addr = _this._addrs.pop();
+                data = _this.fetchedTiles[addr].geojson;
+                features = _this.map.loadGeoJSON(JSON.parse(data), false, true, true);
+                if (typeof (_base2 = _this.fetchedTiles[addr].features).resolve === "function") {
+                  _base2.resolve(features);
+                }
+                _this.fetchedTiles[addr].features = features;
+              }
+              console.log('b');
+              return _this.map.publish('features_loaded', _this.map.getFeatures());
             }
           }
         });

@@ -142,20 +142,20 @@ define (require) ->
         showGeometry: -> @geometry.setMap @map
         hideGeometry: -> @geometry.setMap null
 
-        showMarker: -> @marker?.setMap @map
+        showMarker: -> #@marker?.setMap @map
         hideMarker: ->
             # WTF: I dont remember why the hide method add the marker to map.
-            @marker?.setMap @map
+            #@marker?.setMap @map
 
         getMap: -> @map
         setMap: (map, force = { geometry: false, point: false, icon: false }) ->
             # FIXME: Is the `force` param deprecated?
+            return if map is @geometry.getMap()
             @oldMap = @map
             @map = map if map?
-            @marker?.setMap(map)
+            #@marker?.setMap(map)
             @geometry.setMap(map)
             @updateIcon()
-            @setVisible on
 
             # `@oldMap` is undefined only at the first time this method is called.
             @handleMapEvents() if @oldMap is undefined

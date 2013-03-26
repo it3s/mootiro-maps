@@ -54,6 +54,7 @@ define (require) ->
             super options
             @keptFeatures = komoo.collections.makeFeatureCollection()
             @openConnections = 0
+            @_addrs = []
 
         handleMapEvents: ->
             @map.subscribe 'idle', =>
@@ -71,17 +72,19 @@ define (require) ->
 
             if @fetchedTiles[tile.addr]
                 bounds = @map.getBounds()
-                @fetchedTiles[tile.addr].features.forEach (feature) =>
-                    if feature.getBounds
-                        if not bounds.intersects feature.getBounds()
-                            feature.setMap null
-                        else if not bounds.contains feature.getBounds().getNorthEast() or \
-                                not bounds.contains feature.getBounds().getSouthWest()
-                            @keptFeatures.push feature
-                            feature.setMap @map
-                    else if feature.getPosition
-                        if not bounds.contains feature.getPosition()
-                            feature.setMap null
+                @map.data.when @fetchedTiles[tile.addr].features, (features) ->
+                    features.forEach (feature) =>
+                        if feature.getBounds
+                            if not bounds.intersects feature.getBounds()
+                                feature.setMap null
+                            else if not bounds.contains feature.getBounds().getNorthEast() or \
+                                    not bounds.contains feature.getBounds().getSouthWest()
+                                @keptFeatures.push feature
+                                feature.setMap @map
+                        else if feature.getPosition
+                            if not bounds.contains feature.getPosition()
+                                feature.setVisible false
+                                feature.setMap null
 
         getTile: (coord, zoom, ownerDocument) ->
 
@@ -104,12 +107,12 @@ define (require) ->
                 dataType: 'json'
                 type: 'GET'
                 success: (data) =>
+                    dfd = @map.data.deferred()
                     console?.log "Getting tile #{addr}..."
-                    features = @map.loadGeoJSON JSON.parse(data), false, true, true
+                    @_addrs.push addr
                     @fetchedTiles[addr] =
                         geojson: data
-                        features: features
-                    features.setMap @map
+                        features: dfd.promise()
                 error: (jqXHR, textStatus) =>
                     # TODO: Use Spock
                     console?.error textStatus
@@ -124,6 +127,15 @@ define (require) ->
                     @openConnections--
                     if @openConnections is 0
                         @map.publish 'features_request_completed'
+                        console.log 'a'
+                        while @_addrs.length > 0
+                            addr = @_addrs.pop()
+                            data = @fetchedTiles[addr].geojson
+                            features = @map.loadGeoJSON JSON.parse(data), false, true, true
+                            @fetchedTiles[addr].features.resolve?(features)
+                            @fetchedTiles[addr].features = features
+                        console.log 'b'
+                        @map.publish 'features_loaded', @map.getFeatures()
             return div
 
 
