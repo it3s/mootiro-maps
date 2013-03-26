@@ -12,6 +12,9 @@ class HighlightSection(models.Model):
     )
     name = models.CharField(max_length=64, blank=False)
     icon_src = models.CharField(max_length=256, null=True, blank=True)
+
+    link_text = models.CharField(max_length=64, null=True, blank=True)
+    link_url = models.CharField(max_length=1024, null=True, blank=True)
     
     page_name = models.CharField(max_length=32, null=False, blank=False, choices=PAGE_CHOICES)
     page_order = models.IntegerField(null=True, blank=True)

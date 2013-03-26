@@ -14,7 +14,7 @@ class HighlightAdmin(admin.ModelAdmin):
 
 
 class HighlightSectionAdmin(admin.ModelAdmin):
-    list_display =  ['page_name', 'name', 'page_order', 'is_active']
+    list_display =  ['page_name', 'name', 'page_order', 'is_active', 'link_url']
     list_editable = ['page_name', 'page_order', 'is_active']
     list_display_links = ['name']
     ordering = ['page_name']
