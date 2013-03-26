@@ -18,13 +18,14 @@ from signatures.signals import notify_on_update
 class CommunityForm(AjaxModelForm):
     class Meta:
         model = Community
-        fields = ('name', 'population', 'description', 'tags', 'geometry',
-                  'files')
+        fields = ('name', 'short_description', 'population', 'description',
+                  'tags', 'geometry', 'files')
 
     _field_labels = {
         'name': _('Name'),
-        'description': _('Description'),
+        'short_description': _('Short description'),
         'population': _('Population'),
+        'description': _('Description'),
         'tags': _('Tags'),
         'files': _(' '),
     }

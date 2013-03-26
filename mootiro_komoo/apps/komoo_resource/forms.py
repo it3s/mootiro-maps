@@ -33,11 +33,12 @@ class FormResource(AjaxModelForm):
 
     class Meta:
         model = Resource
-        fields = ('name', 'description', 'kind', 'contact', 'tags', 'community',
-            'id', 'files')
+        fields = ('name', 'short_description', 'description', 'kind',
+                  'contact', 'tags', 'community', 'id', 'files')
 
     _field_labels = {
         'name': _('Name'),
+        'short_description': _('Short description'),
         'description': _('Description'),
         'kind': _('Kind'),
         'contact': _('Contact'),
@@ -81,5 +82,5 @@ class FormResourceGeoRef(FormResource):
 
     class Meta:
         model = Resource
-        fields = ('name', 'description', 'kind', 'contact', 'tags', 'community',
-            'id', 'geometry', 'files')
+        fields = ('name', 'short_description', 'description', 'kind',
+                  'contact', 'tags', 'community', 'id', 'geometry', 'files')

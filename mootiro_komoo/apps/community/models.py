@@ -21,6 +21,7 @@ class Community(GeoRefModel):
     slug = models.SlugField(max_length=256, blank=False, db_index=True)
     population = models.IntegerField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    short_description = models.CharField(max_length=250, null=True, blank=True)
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True,
