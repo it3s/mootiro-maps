@@ -771,11 +771,11 @@ div.importsheet_missing_column {
     #main-content.highlights .section ul li .logo {
       position: relative;
       width: 100%;
-      height: 50%;
-      background: lightgreen;
+      height: 195px;
       text-align: center;
-      line-height: 150px; }
+      line-height: 195px; }
       #main-content.highlights .section ul li .logo img {
+        display: inline;
         margin: auto;
         vertical-align: middle;
         max-width: 90%;
@@ -785,13 +785,14 @@ div.importsheet_missing_column {
     #main-content.highlights .section ul li h3, #main-content.highlights .section ul li p {
       overflow: hidden; }
     #main-content.highlights .section ul li .logo, #main-content.highlights .section ul li .map-preview-container {
-      width: 260px;
+      width: 266px;
       height: 195px; }
     #main-content.highlights .section ul li .logo {
       display: inherit;
       position: absolute;
       margin-bottom: 15px;
-      z-index: 1000; }
+      z-index: 1000;
+      background-color: #ededed; }
   #main-content.highlights .section ul li:hover {
     background: #dceff4; }
     #main-content.highlights .section ul li:hover div.logo {
@@ -821,7 +822,7 @@ div.importsheet_missing_column {
       border-radius: 5px;
       width: 150px;
       height: 150px;
-      margin: 3px; }
+      margin: 4px; }
       #main-content.highlights .my-projects-section .flexslider ul.slides li a {
         display: block;
         text-decoration: inherit;
@@ -830,15 +831,19 @@ div.importsheet_missing_column {
       #main-content.highlights .my-projects-section .flexslider ul.slides li .logo {
         position: relative;
         width: 100%;
-        height: 50%;
-        background: lightgreen;
+        height: 70px;
         text-align: center;
-        line-height: 75px; }
+        line-height: 70px; }
         #main-content.highlights .my-projects-section .flexslider ul.slides li .logo img {
+          display: inline;
           margin: auto;
           vertical-align: middle;
           max-width: 90%;
           max-height: 100%; }
+      #main-content.highlights .my-projects-section .flexslider ul.slides li p {
+        height: 4em;
+        margin-top: 0.5em;
+        overflow: hidden; }
     #main-content.highlights .my-projects-section .flexslider ul.slides li:hover {
       background: #dceff4; }
 

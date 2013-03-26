@@ -1,4 +1,4 @@
-@mixin highlight-item($h) {
+@mixin highlight-item($logo_height) {
     $pad: 8px;
 
     position: relative;
@@ -23,12 +23,11 @@
     .logo {
         position: relative;
         width: 100%;
-        height: 50%;
-        // background-color: #ededed;
-        background: lightgreen;
+        height: $logo_height;
         text-align: center;
-        line-height: $h;
+        line-height: $logo_height;
         img {
+            display: inline;
             margin: auto;
             vertical-align: middle;
             max-width: 90%;
@@ -90,7 +89,8 @@
             padding: 0 30px;
 
             li {
-                @include highlight-item (150px);
+                $logo_height: 195px;
+                @include highlight-item ($logo_height);
 
                 position: relative;
                 width: 32%;
@@ -100,8 +100,8 @@
                 h3, p { overflow: hidden }
 
                 .logo, .map-preview-container {
-                    width: 260px;
-                    height: 195px;
+                    width: 266px;
+                    height: $logo_height;
                 }
 
                 .logo {
@@ -109,6 +109,7 @@
                     position: absolute;
                     margin-bottom: 15px;
                     z-index: 1000;
+                    background-color: #ededed;
                 }
             }
 
@@ -136,11 +137,17 @@
                 height: auto;
 
                 li {
-                    @include highlight-item($sz / 2);
+                    @include highlight-item(70px);
 
                     width: $sz;
                     height: $sz;
-                    margin: 3px;
+                    margin: 4px;
+
+                    p {
+                        height: 4em;
+                        margin-top: 0.5em;
+                        overflow: hidden;
+                    }
                 }
 
                 li:hover { @include highlight-item-hover }

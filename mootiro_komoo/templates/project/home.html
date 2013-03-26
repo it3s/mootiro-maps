@@ -27,9 +27,8 @@
               <a href="{{ proj.view_url }}">
                 <div class="logo">
                   <img src="{{ proj.logo_url }}" title="{{ proj.name }}" />
-                  {#<img src="/media/upload/1358854138368.jpg" title="{{ proj.name }}" />#}
                 </div>
-                {{ proj.name}}
+                <p>{{ proj.name}}</p>
               </a>
             </li>
             {% endfor %}
@@ -79,7 +78,7 @@
           type: 'preview',
           geojson: geojson,
           // googleMapOptions: {'disableDefaultUI': false},
-          width: '260px',
+          width: '266px',
           height: '195px'
         });
       });
