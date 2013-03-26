@@ -41,7 +41,7 @@ def project_list(request):
 def project_home(request):
     hs = HighlightSection.objects.filter(page_name='/project', is_active=True)\
             .order_by('page_order')
-    return dict(sections=hs, user=User.objects.get(id=2))
+    return dict(sections=hs)
 
 
 @render_to('project/view.html')
