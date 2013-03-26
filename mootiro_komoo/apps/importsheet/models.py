@@ -120,15 +120,15 @@ class Importsheet(models.Model):
         '''
         Using Google Drive API and Google Spreadsheet API, creates new google
         spreadsheet inside its project folder. If it is the projects first
-        importsheet, also creates the projects folder. 
+        importsheet, also creates the projects folder.
         '''
         # get or create project folder
         if not self.project_folder_key:
             self._set_project_folder()
-        
+
         gd = google_drive_service()
 
-        # create new spreadsheet 
+        # create new spreadsheet
         body = {
             'title': '{0} - {1}'.format(self.id, self.name),
             'parents': [{'id': self.project_folder_key}],
@@ -202,7 +202,7 @@ class Importsheet(models.Model):
         if success:
             # link objects to importsheet and to project
             for obj in interpreter.objects:
-                self.project.save_related_object(obj)
+                self.project.save_related_object(obj, obj.creator)
                 self.save_related_object(obj)
                 obj.save()
             self.inserted = True

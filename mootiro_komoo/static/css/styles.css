@@ -822,7 +822,9 @@ body.community #collapse-panel {
 #map-panel ul.geo-objects-listing .sublist li.selected,
 #map-panel ul.geo-objects-listing li .item:hover { background: #dceff4 }
 #map-panel ul.geo-objects-listing li.sublist { padding: 0 }
+#filter-form ul.geo-objects-listing { margin-top: 10px }
 #filter-form ul.geo-objects-listing li.sublist { display: none }
+#filter-form .button-off { display: none; }
 #map-panel ul.geo-objects-listing li.sublist:hover { background: transparent }
 #map-panel ul.geo-objects-listing li.sublist ul li:last-child { border-bottom: none }
 #map-panel ul.geo-objects-listing.frozen li .item:hover { background: none; cursor: default; }
@@ -832,7 +834,10 @@ body.community #collapse-panel {
     padding-left: 2em;
     padding-right: 2em;
 }
-#filter-circle { padding: 8px; }
+#filter-circle {
+    padding: 8px;
+    white-space: nowrap;  /* try to fix #113 */
+}
 #filter-circle .button { margin-left: 0em }
 #filter-circle .button .icon-plus { vertical-align: middle }
 #filter-circle .highlight { background: #ffc1ae }
