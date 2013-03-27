@@ -17,4 +17,9 @@
     </li>
     {% endfor %}
   </ul>
+  {% if hs.link_url and hs.link_text %}
+  <div class="apart">
+    <a class="right" href="{{ hs.link_url }}">{{ hs.link_text }}</a>
+  </div>
+  {% endif %}
 </div>
