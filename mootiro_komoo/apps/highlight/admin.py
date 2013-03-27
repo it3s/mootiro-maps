@@ -6,9 +6,11 @@ from .models import Highlight, HighlightSection
 
 
 class HighlightAdmin(admin.ModelAdmin):
-    list_display =  ['section', 'object_type', 'object_id', 'section_order', 'is_active']
-    list_editable = ['section', 'section_order', 'is_active']
-    list_display_links = ['object_type', 'object_id']
+    list_display =  ['section', 'section_order', 'is_active',
+                     'object_type', 'object_id', 'name']
+    list_editable = ['section', 'section_order', 'is_active',
+                     'object_type', 'object_id']
+    list_display_links = ['name']
     ordering = ['section']
     save_as = True
 

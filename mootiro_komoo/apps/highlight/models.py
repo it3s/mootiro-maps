@@ -38,10 +38,20 @@ class Highlight(models.Model):
     section_order = models.IntegerField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
 
+    @property
+    def name(self):
+        return self.object.name if self.object \
+                else '--- OBJECT DOES NOT EXISTS ---'
+
     def __unicode__(self):
+        return unicode(self.name)
         return unicode("{} :: {} :: {} {}".format(unicode(self.section),
             self.section_order, self.name, '(inactive)' if not self.is_active else ''))
 
     # TODO: when the time is come, use unified model
+    @property
     def object(self):
-        return ENTITY_MODEL[self.object_type].objects.get(id=self.object_id)
+        try:
+            return ENTITY_MODEL[self.object_type].objects.get(id=self.object_id)
+        except:
+            return None
