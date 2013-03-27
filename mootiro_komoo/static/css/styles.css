@@ -1826,6 +1826,7 @@ div.view-list-item.odd {
     height: 355px;
     overflow: auto;
 }
+.organization-view-header{ margin-top: 20px }
 .organization-header{
     max-width: 500px;
 }
