@@ -12,6 +12,7 @@ class HighlightSection(models.Model):
     )
     name = models.CharField(max_length=64, blank=False)
     icon_src = models.CharField(max_length=256, null=True, blank=True)
+    hide_short_description = models.BooleanField(default=False)
 
     link_text = models.CharField(max_length=64, null=True, blank=True)
     link_url = models.CharField(max_length=1024, null=True, blank=True)

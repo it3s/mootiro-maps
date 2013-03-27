@@ -126,6 +126,7 @@ class Need(GeoRefModel):
 
     image = "img/need.png"
     image_off = "img/need-off.png"
+    default_logo_url = "img/logo-need.png"
 
     # Url aliases
     @property

@@ -75,6 +75,7 @@ class Resource(GeoRefModel):
 
     image = "img/resource.png"
     image_off = "img/resource-off.png"
+    default_logo_url = "img/logo-resource.png"
 
     def files_set(self):
         """ pseudo-reverse query for retrieving Resource Files"""
