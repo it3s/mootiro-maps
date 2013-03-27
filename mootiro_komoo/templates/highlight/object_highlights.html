@@ -1,0 +1,44 @@
+{% extends 'global.html' %}
+{% load komoo_map_tags %}
+{% load komoo_tags %}
+{% load highlight_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'Objects' %}{% endblock %}
+
+{% block menu %} {% menu "object" %} {% endblock %}
+
+{% block content %}
+<div id="main-content" class='highlights'>
+  <h1>{% trans "Objects" %}</h1>
+
+  {% for s in sections %}
+    {% highlight_section s %}
+  {% endfor %}
+</div>
+{% endblock %}
+  
+{% block page_scripts %}
+<script type="text/javascript">
+  $(function(){
+    require(['map/maps', 'map.jquery'], function (maps) {
+      var gmopt = {};
+      $.extend(
+        gmopt,
+        maps.Preview.prototype.googleMapDefaultOptions,
+        {'scrollwheel': false, 'draggable': false, 'disableDoubleClickZoom': true, 'scaleControl': false}
+      );
+      $('.map-preview').each(function (i, elem) {
+        var geojson = $.parseJSON($(elem).attr('geojson'));
+        $(elem).komooMap({
+          type: 'preview',
+          geojson: geojson,
+          googleMapOptions: gmopt,
+          width: '266px',
+          height: '195px'
+        });
+      });
+    });
+  });
+</script>
+{% endblock %}

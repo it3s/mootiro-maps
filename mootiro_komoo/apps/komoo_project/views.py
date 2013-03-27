@@ -37,13 +37,6 @@ def project_list(request):
     return dict(projects=projects, projects_count=projects_count)
 
 
-@render_to('project/home.html')
-def project_home(request):
-    hs = HighlightSection.objects.filter(page_name='/project', is_active=True)\
-            .order_by('page_order')
-    return dict(sections=hs)
-
-
 @render_to('project/view.html')
 def project_view(request, id=''):
     project = get_object_or_404(Project, pk=id)
