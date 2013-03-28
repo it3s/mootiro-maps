@@ -55,12 +55,13 @@ class FormOrganization(AjaxModelForm):
 
     class Meta:
         model = Organization
-        fields = ['name', 'description', 'community', 'link', 'contact',
-                  'target_audiences', 'categories', 'tags', 'id', 'logo',
-                  'logo_category', 'logo_choice']
+        fields = ('name', 'short_description', 'description', 'community',
+                  'link', 'contact', 'target_audiences', 'categories', 'tags',
+                  'id', 'logo', 'logo_category', 'logo_choice')
 
     _field_labels = {
         'name': _('Name'),
+        'short_description': _('Short description'),
         'description': _('Description'),
         'community': _('Community'),
         'contact': _('Contact'),
@@ -111,6 +112,6 @@ class FormOrganizationGeoRef(FormOrganization):
 
     class Meta:
         model = Organization
-        fields = ('name', 'description', 'community', 'link', 'contact',
-                  'target_audiences', 'categories', 'tags', 'id', 'logo',
-                  'logo_category', 'logo_choice', 'geometry')
+        fields = ('name', 'short_description', 'description', 'community',
+                  'link', 'contact', 'target_audiences', 'categories', 'tags',
+                  'id', 'logo', 'logo_category', 'logo_choice', 'geometry')

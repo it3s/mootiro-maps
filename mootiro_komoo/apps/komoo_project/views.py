@@ -18,6 +18,9 @@ from main.utils import (paginated_query, sorted_query, filtered_query,
 from main.tasks import send_explanations_mail
 
 from authentication.utils import login_required
+from authentication.models import User
+from highlight.models import HighlightSection
+
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
 

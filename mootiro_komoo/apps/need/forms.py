@@ -17,13 +17,15 @@ from need.models import Need, NeedCategory, TargetAudience
 from signatures.signals import notify_on_update
 
 
-need_form_fields = ('id', 'title', 'description', 'community', 'categories',
-                    'target_audiences', 'tags', 'files')
+need_form_fields = ('id', 'title', 'short_description', 'description',
+                    'community', 'categories', 'target_audiences', 'tags',
+                    'files')
 
 need_form_field_labels = {
-    'community': _('Community'),
     'title': _('Title'),
+    'short_description': _('Short description'),
     'description': _('Description'),
+    'community': _('Community'),
     'categories': _('Need Categories'),
     'target_audiences': _('Target audiences'),
     'tags': _('Tags'),

@@ -78,6 +78,7 @@ class Need(GeoRefModel):
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.CharField(max_length=256, blank=False, db_index=True)
     description = models.TextField()
+    short_description = models.CharField(max_length=250, null=True, blank=True)
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True, related_name='created_needs')
@@ -125,6 +126,7 @@ class Need(GeoRefModel):
 
     image = "img/need.png"
     image_off = "img/need-off.png"
+    default_logo_url = "img/logo-need.png"
 
     # Url aliases
     @property

@@ -23,12 +23,14 @@ class InvestmentForm(AjaxModelForm):
 
     class Meta:
         model = Investment
-        fields = ('title', 'description', 'investor_type', 'anonymous_investor',
-            'investor_organization', 'investor_person', 'over_period', 'date',
-            'end_date', 'currency', 'value', 'tags')
+        fields = ('title', 'short_description', 'description', 'investor_type',
+                  'anonymous_investor', 'investor_organization',
+                  'investor_person', 'over_period', 'date', 'end_date',
+                  'currency', 'value', 'tags')
 
     _field_labels = {
         'title': _('Title'),
+        'short_description': _('Short description'),
         'description': _('Description'),
         'investor_type': _('Investor type'),
         'anonymous_investor': _('Anonymous investor'),

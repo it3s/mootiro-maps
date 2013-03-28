@@ -32,6 +32,7 @@ class Organization(GeoRefModel, models.Model):
     name = models.CharField(max_length=320, unique=True)
     slug = models.SlugField(max_length=320, db_index=True)
     description = models.TextField(null=True, blank=True)
+    short_description = models.CharField(max_length=250, null=True, blank=True)
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
     logo_category = models.ForeignKey('OrganizationCategory', null=True,
                        blank=True, related_name='organization_category_logo')

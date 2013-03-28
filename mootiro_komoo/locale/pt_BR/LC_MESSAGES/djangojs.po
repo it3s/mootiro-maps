@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-18 15:06-0300\n"
+"POT-Creation-Date: 2013-03-26 09:25-0300\n"
 "PO-Revision-Date: 2012-10-18 17:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -117,39 +117,39 @@ msgstr "Seus dados públicos foram salvos com sucesso!"
 msgid "Seus dados pessoais foram salvos com sucesso!"
 msgstr "Seus dados pessoais foram salvos com sucesso!"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:9
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:10
 msgid "Next Step"
 msgstr "Avançar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:10
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:11
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:11
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:12
 msgid "Close"
 msgstr "Fechar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:12
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:13
 msgid "Add shape"
 msgstr "Adicionar área"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:13
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:14
 msgid "Add line"
 msgstr "Adicionar linha"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:14
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:15
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:15
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:16
 msgid "Sum"
 msgstr "Somar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:16
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:17
 msgid "Cut out"
 msgstr "Cortar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:17
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:18
 msgid "Loading..."
 msgstr "Carregando..."
 
@@ -262,7 +262,7 @@ msgstr "Recurso"
 msgid "at"
 msgstr "em"
 
-#: static/js/map/controls.js:797
+#: static/js/map/controls.js:798
 #, perl-format
 msgid "%s Community"
 msgid_plural "%s Communities"
