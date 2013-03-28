@@ -12,7 +12,7 @@
           <div class="map-preview" geojson='{{h.object.geojson|safe}}'></div>
         </div>
         <h3>{{h.object.name}}</h3>
-        {% if hs.hide_short_description %}
+        {% if not hs.hide_short_description %}
         <p>{% firstof h.object.short_description '' %}</p>
         {% endif %}
       </a>
