@@ -2,6 +2,16 @@
 {% load i18n %}
 {% load komoo_tags %}
 
+{% block facebook_meta %}
+  <meta property="og:title" content="{{project.name}} - MootiroMaps" />
+  <meta property="og:url" content="{{SITE_URL}}{% url project_map project.id %}"/>
+  {% if project.logo %}
+    <meta property="og:image" content="{{SITE_URL}}{{project.logo_url}}"/>
+  {% else %}
+    <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo-fb.png"/>
+  {% endif %}
+{% endblock %}
+
 {% block menu %} {% menu "project" %} {% endblock %}
 
 {% block page_scripts %}

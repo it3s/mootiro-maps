@@ -1,8 +1,10 @@
 {% extends "komoo_map/generic_panel.html" %}
+{% load komoo_tags %}
 
 {% block panel_content %}
   <div class="panel-info-wrapper"></div>
   <ul class="panel features-wrapper geo-objects-listing"></ul>
+  {% social_buttons %}
 
   <script type="text/template" id="feature-template">
     <span class="middle"><%= name %></span>
