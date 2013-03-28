@@ -783,7 +783,7 @@ div.importsheet_missing_column {
         max-width: 100%;
         max-height: 100%; }
     #main-content.highlights .section ul li h3 {
-      margin-top: 5px;
+      margin: 5px 0;
       text-align: center; }
     #main-content.highlights .section ul li h3 {
       max-height: 60px; }
@@ -846,7 +846,7 @@ div.importsheet_missing_column {
           max-width: 100%;
           max-height: 100%; }
       #main-content.highlights .my-projects-section .flexslider ul.slides li h3 {
-        margin-top: 5px;
+        margin: 5px 0;
         text-align: center; }
       #main-content.highlights .my-projects-section .flexslider ul.slides li p {
         height: 4em;
