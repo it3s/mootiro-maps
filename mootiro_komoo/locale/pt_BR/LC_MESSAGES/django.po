@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-28 15:57-0300\n"
+"POT-Creation-Date: 2013-03-28 17:43-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -610,7 +610,7 @@ msgstr "motivo"
 
 #: apps/moderation/models.py:67
 #: templates/comments/comments_summary_templatetag.html:5
-#: templates/update/updates_list_templatetag.html:120
+#: templates/update/updates_list_templatetag.html:124
 msgid "comment"
 msgstr "comentário"
 
@@ -1149,7 +1149,6 @@ msgstr "Carregando..."
 msgid "Projects"
 msgstr "Projetos"
 
-
 #: templates/authentication/profile_update.html:17
 msgid "Public Settings"
 msgstr "Dados Públicos"
@@ -1301,7 +1300,7 @@ msgid "Reply"
 msgstr "Responder"
 
 #: templates/comments/comments_summary_templatetag.html:7
-#: templates/update/updates_list_templatetag.html:120
+#: templates/update/updates_list_templatetag.html:124
 msgid "comments"
 msgstr "comentários"
 
@@ -1339,7 +1338,7 @@ msgstr "população:"
 #: templates/community/view.html:49 templates/need/view.html:65
 #: templates/organization/show.html:153 templates/project/old_view.html:245
 #: templates/project/view.html:92 templates/resource/show.html:68
-#: templates/update/updates_list_templatetag.html:96
+#: templates/update/updates_list_templatetag.html:100
 msgid "see on map"
 msgstr "ver no mapa"
 
@@ -2208,6 +2207,12 @@ msgstr[0] "recurso"
 msgstr[1] "recursos"
 
 #: templates/update/updates_list_templatetag.html:77
+msgid "need"
+msgid_plural "needs"
+msgstr[0] "necessidade"
+msgstr[1] "necessidades"
+
+#: templates/update/updates_list_templatetag.html:81
 msgid ""
 "\n"
 "                        imported into project\n"
@@ -2225,19 +2230,19 @@ msgstr[1] ""
 "                        importados(as) ao projeto\n"
 "                      "
 
-#: templates/update/updates_list_templatetag.html:87
+#: templates/update/updates_list_templatetag.html:91
 msgid "the proposal"
 msgstr "a proposta"
 
-#: templates/update/updates_list_templatetag.html:88
+#: templates/update/updates_list_templatetag.html:92
 msgid "for the need"
 msgstr "para a necessidade"
 
-#: templates/update/updates_list_templatetag.html:90
+#: templates/update/updates_list_templatetag.html:94
 msgid "see this object page"
 msgstr "veja a página"
 
-#: templates/update/updates_list_templatetag.html:112
+#: templates/update/updates_list_templatetag.html:116
 msgid "by"
 msgstr "por"
 
