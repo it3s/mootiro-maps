@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-26 09:25-0300\n"
+"POT-Creation-Date: 2013-03-28 15:57-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -129,12 +129,11 @@ msgstr "Senha incorreta!"
 msgid "Failed to save data"
 msgstr "Houve uma falha ao tentar salvar os dados"
 
-#: apps/community/forms.py:26 apps/investment/forms.py:32
-#: apps/komoo_project/forms.py:44 apps/komoo_resource/forms.py:41
+#: apps/community/forms.py:26 apps/investment/forms.py:33
+#: apps/komoo_project/forms.py:43 apps/komoo_resource/forms.py:41
 #: apps/need/forms.py:26 apps/organization/forms.py:64
-#: apps/proposal/forms.py:28 templates/organization/branch_form.html:16
-msgid "Description"
-msgstr "Descrição"
+msgid "Short description"
+msgstr "Descrição curta"
 
 #: apps/community/forms.py:27 templates/community/view.html:37
 #: templates/importsheet/row_templates/comunidades.html:16
@@ -142,10 +141,17 @@ msgstr "Descrição"
 msgid "Population"
 msgstr "População"
 
-#: apps/community/forms.py:28 apps/investment/forms.py:42
-#: apps/komoo_project/forms.py:45 apps/komoo_resource/forms.py:44
-#: apps/main/templatetags/komoo_tags.py:332 apps/need/forms.py:29
-#: apps/organization/forms.py:67 lib/taggit/managers.py:39
+#: apps/community/forms.py:28 apps/investment/forms.py:34
+#: apps/komoo_project/forms.py:44 apps/komoo_resource/forms.py:42
+#: apps/need/forms.py:27 apps/organization/forms.py:65
+#: apps/proposal/forms.py:28 templates/organization/branch_form.html:16
+msgid "Description"
+msgstr "Descrição"
+
+#: apps/community/forms.py:29 apps/investment/forms.py:44
+#: apps/komoo_project/forms.py:45 apps/komoo_resource/forms.py:45
+#: apps/main/templatetags/komoo_tags.py:332 apps/need/forms.py:31
+#: apps/organization/forms.py:68 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 #: templates/importsheet/row_templates/comunidades.html:38
 #: templates/importsheet/row_templates/necessidades.html:69
@@ -155,14 +161,14 @@ msgstr "População"
 msgid "Tags"
 msgstr "Palavras-Chave"
 
-#: apps/community/forms.py:29
+#: apps/community/forms.py:30
 msgid " "
 msgstr " "
 
-#: apps/community/models.py:39 apps/komoo_resource/forms.py:45
+#: apps/community/models.py:40 apps/komoo_resource/forms.py:46
 #: apps/main/templatetags/komoo_tags.py:237
-#: apps/main/templatetags/komoo_tags.py:336 apps/need/forms.py:24
-#: apps/organization/forms.py:65 templates/investment/list.html:44
+#: apps/main/templatetags/komoo_tags.py:336 apps/need/forms.py:28
+#: apps/organization/forms.py:66 templates/investment/list.html:44
 msgid "Community"
 msgstr "Comunidade"
 
@@ -194,53 +200,53 @@ msgstr "Áreas inválidas: "
 msgid "Invalid categories: "
 msgstr "Categorias inválidas: "
 
-#: apps/investment/forms.py:31 apps/need/forms.py:25 apps/proposal/forms.py:27
+#: apps/investment/forms.py:32 apps/need/forms.py:25 apps/proposal/forms.py:27
 msgid "Title"
 msgstr "Título"
 
-#: apps/investment/forms.py:33
+#: apps/investment/forms.py:35
 msgid "Investor type"
 msgstr "Tipo de investidor"
 
-#: apps/investment/forms.py:34
+#: apps/investment/forms.py:36
 msgid "Anonymous investor"
 msgstr "Anônimo"
 
-#: apps/investment/forms.py:35
+#: apps/investment/forms.py:37
 msgid "Investor organization"
 msgstr "Nome do Investidor"
 
-#: apps/investment/forms.py:36
+#: apps/investment/forms.py:38
 msgid "Investor person"
 msgstr "Nome do Investidor"
 
-#: apps/investment/forms.py:37
+#: apps/investment/forms.py:39
 msgid "Over period"
 msgstr "Por um período"
 
-#: apps/investment/forms.py:38 apps/main/templatetags/komoo_tags.py:335
+#: apps/investment/forms.py:40 apps/main/templatetags/komoo_tags.py:335
 #: templates/investment/view.html:48
 msgid "Date"
 msgstr "Data"
 
-#: apps/investment/forms.py:39
+#: apps/investment/forms.py:41
 msgid "End date"
 msgstr "Data final"
 
-#: apps/investment/forms.py:40
+#: apps/investment/forms.py:42
 msgid "Currency"
 msgstr "Moeda"
 
-#: apps/investment/forms.py:41 templates/investment/view.html:51
+#: apps/investment/forms.py:43 templates/investment/view.html:51
 msgid "Value"
 msgstr "Valor"
 
-#: apps/investment/forms.py:135 apps/investment/forms.py:137
+#: apps/investment/forms.py:137 apps/investment/forms.py:139
 msgid "Invalid investor."
 msgstr "Investidor Inválido."
 
 #: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:232
-#: apps/organization/models.py:67
+#: apps/organization/models.py:68
 msgid "Organization"
 msgstr "Organização"
 
@@ -304,16 +310,12 @@ msgstr "Público"
 msgid "Private"
 msgstr "Privado"
 
-#: apps/komoo_project/forms.py:43
-msgid "Short description"
-msgstr "Descrição curta"
-
-#: apps/komoo_project/forms.py:46 apps/organization/forms.py:71
+#: apps/komoo_project/forms.py:46 apps/organization/forms.py:72
 msgid "Logo"
 msgstr "Logotipo"
 
-#: apps/komoo_project/forms.py:47 apps/komoo_resource/forms.py:43
-#: apps/organization/forms.py:66
+#: apps/komoo_project/forms.py:47 apps/komoo_resource/forms.py:44
+#: apps/organization/forms.py:67
 #: templates/importsheet/row_templates/organizacoes.html:47
 #: templates/importsheet/row_templates/recursos.html:51
 #: templates/organization/show.html:160 templates/project/old_view.html:268
@@ -325,21 +327,21 @@ msgstr "Contato"
 msgid "Partners Logo"
 msgstr "Logo de Parceiros"
 
-#: apps/komoo_project/views.py:97
+#: apps/komoo_project/views.py:90
 msgid "Unnamed"
 msgstr "Sem nome"
 
-#: apps/komoo_resource/forms.py:42
+#: apps/komoo_resource/forms.py:43
 #: templates/importsheet/row_templates/recursos.html:17
 msgid "Kind"
 msgstr "Tipo"
 
-#: apps/komoo_resource/forms.py:46 apps/need/forms.py:30
-#: apps/organization/forms.py:70
+#: apps/komoo_resource/forms.py:47 apps/need/forms.py:32
+#: apps/organization/forms.py:71
 msgid "Images"
 msgstr "Imagens"
 
-#: apps/komoo_resource/forms.py:76 apps/main/utils.py:228
+#: apps/komoo_resource/forms.py:77 apps/main/utils.py:228
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
@@ -347,7 +349,7 @@ msgstr "campo com dados inválidos"
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:64 apps/main/templatetags/komoo_tags.py:233
+#: apps/komoo_resource/models.py:65 apps/main/templatetags/komoo_tags.py:233
 msgid "Resource"
 msgstr "Recurso"
 
@@ -540,7 +542,7 @@ msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
 msgstr[1] "daqui a %(count)s horas"
 
-#: apps/main/templatetags/komoo_tags.py:234 apps/need/models.py:97
+#: apps/main/templatetags/komoo_tags.py:234 apps/need/models.py:98
 msgid "Need"
 msgstr "Necessidade"
 
@@ -557,7 +559,7 @@ msgstr "Investimento"
 msgid "Need categories"
 msgstr "Áreas"
 
-#: apps/main/templatetags/komoo_tags.py:338 apps/need/forms.py:28
+#: apps/main/templatetags/komoo_tags.py:338 apps/need/forms.py:30
 #: templates/need/list.html:58 templates/need/view.html:45
 msgid "Target audiences"
 msgstr "Públicos alvo"
@@ -665,7 +667,7 @@ msgstr "Você já denunciou este conteúdo"
 msgid "The content was successfully reported"
 msgstr "O conteúdo foi denunciado com sucesso"
 
-#: apps/need/forms.py:27
+#: apps/need/forms.py:29
 msgid "Need Categories"
 msgstr "Áreas"
 
@@ -709,15 +711,15 @@ msgstr "Esporte"
 msgid "Security"
 msgstr "Segurança"
 
-#: apps/organization/forms.py:68
+#: apps/organization/forms.py:69
 msgid "Target Audiences"
 msgstr "Públicos alvo"
 
-#: apps/organization/forms.py:69
+#: apps/organization/forms.py:70
 msgid "Categories"
 msgstr "Categorias"
 
-#: apps/organization/models.py:68
+#: apps/organization/models.py:69
 msgid "Add Organization"
 msgstr "Adicionar organização"
 
@@ -1140,23 +1142,25 @@ msgid "Loading..."
 msgstr "Carregando..."
 
 #: templates/authentication/profile.html:72
-#: templates/main/templatetags/menu.html:28 templates/project/home.html:6
-#: templates/project/home.html.py:13 templates/project/list.html:7
+#: templates/highlight/project_highlights.html:7
+#: templates/highlight/project_highlights.html:14
+#: templates/main/templatetags/menu.html:28 templates/project/list.html:7
 #: templates/project/projects_tag.html:5
 msgid "Projects"
 msgstr "Projetos"
 
-#: templates/authentication/profile_update.html:17
-msgid "Personal Settings"
-msgstr "Dados Pessoais"
 
-#: templates/authentication/profile_update.html:22
+#: templates/authentication/profile_update.html:17
 msgid "Public Settings"
 msgstr "Dados Públicos"
 
-#: templates/authentication/profile_update.html:27
+#: templates/authentication/profile_update.html:22
 msgid "Signature Settings"
 msgstr "Assinaturas"
+
+#: templates/authentication/profile_update.html:27
+msgid "Manage password"
+msgstr "Gerenciar senha"
 
 #: templates/authentication/profile_update.html:32
 msgid "External Accounts"
@@ -1347,6 +1351,24 @@ msgstr "Comunidades próximas"
 msgid "Discussion about"
 msgstr "Discussões sobre"
 
+#: templates/highlight/object_highlights.html:7
+#: templates/highlight/object_highlights.html:13
+#: templates/main/templatetags/menu.html:8
+msgid "Objects"
+msgstr "Objetos"
+
+#: templates/highlight/project_highlights.html:15
+msgid "Create a project"
+msgstr "Crie um projeto"
+
+#: templates/highlight/project_highlights.html:21
+msgid "My projects"
+msgstr "Meus projetos"
+
+#: templates/highlight/project_highlights.html:46
+msgid "See all projects"
+msgstr "Ver todos os projetos"
+
 #: templates/importsheet/insert.html:27
 msgid "Some error ocurred!"
 msgstr "Um erro ocorreu!"
@@ -1506,21 +1528,21 @@ msgstr "Adicionar"
 msgid "Filter by type"
 msgstr "Filtrar por tipo"
 
-#: templates/komoo_map/panel.html:23
-msgid "Perform search"
-msgstr "Realizar busca"
-
-#: templates/komoo_map/panel.html:27
+#: templates/komoo_map/panel.html:24
 msgid "Center"
 msgstr "Centro"
 
-#: templates/komoo_map/panel.html:28
+#: templates/komoo_map/panel.html:25
 msgid "Radius"
 msgstr "Raio"
 
-#: templates/komoo_map/panel.html:34
+#: templates/komoo_map/panel.html:31
 msgid "Pick a point on the map"
 msgstr "Selecione um ponto no mapa"
+
+#: templates/komoo_map/panel.html:35
+msgid "Perform search"
+msgstr "Realizar busca"
 
 #: templates/komoo_map/panel.html:42
 msgid "Change parameters"
@@ -1727,10 +1749,6 @@ msgstr ""
 #: templates/main/templatetags/menu.html:5
 msgid "Map"
 msgstr "Mapa"
-
-#: templates/main/templatetags/menu.html:8
-msgid "Objects"
-msgstr "Objetos"
 
 #: templates/main/templatetags/pagination.html:13
 #: templates/main/templatetags/pagination.html:38
@@ -2004,18 +2022,6 @@ msgstr "Editar Associações do Projeto"
 msgid "Deleted marked associations"
 msgstr "Apagar associações marcadas"
 
-#: templates/project/home.html:14
-msgid "Create a project"
-msgstr "Crie um projeto"
-
-#: templates/project/home.html:20
-msgid "My projects"
-msgstr "Meus projetos"
-
-#: templates/project/home.html:64
-msgid "See all projects"
-msgstr "Ver todos os projetos"
-
 #: templates/project/list.html:17
 msgid "Create New Project"
 msgstr "Criar Novo Projeto"
@@ -2234,6 +2240,9 @@ msgstr "veja a página"
 #: templates/update/updates_list_templatetag.html:112
 msgid "by"
 msgstr "por"
+
+#~ msgid "Personal Settings"
+#~ msgstr "Dados Pessoais"
 
 #~ msgid "Public Contact"
 #~ msgstr "Contato Público"
