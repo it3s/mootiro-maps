@@ -800,8 +800,6 @@ div.importsheet_missing_column {
       background-color: #ededed; }
   #main-content.highlights .section ul li:hover {
     background: #dceff4; }
-    #main-content.highlights .section ul li:hover div.logo {
-      display: none; }
 #main-content.highlights .my-projects-section .flexslider {
   width: 950px;
   left: 50%;

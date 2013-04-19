@@ -7,7 +7,6 @@
     {% for h in hs.highlights %}
     <li>
       <a href="{{h.object.view_url}}">
-        <div class="logo"><img src="{{ h.object.logo_url }}" /></div>
         <div class="map-preview-container">
           <div class="map-preview" geojson='{{h.object.geojson|safe}}'></div>
         </div>
