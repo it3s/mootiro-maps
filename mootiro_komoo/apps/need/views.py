@@ -72,7 +72,7 @@ def edit_need(request, id=""):
 
     def on_get(request, form):
         form = NeedFormGeoRef(instance=need)
-        form.helper.form_action = reverse('new_need')
+        form.helper.form_action = reverse('edit_need', kwargs={'id': id})
         return form
 
     def on_after_save(request, need):
