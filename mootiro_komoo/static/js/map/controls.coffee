@@ -1100,9 +1100,23 @@ define (require)->
         hooks:
             'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
 
-        beforeFeatureSetVisibleHook: (visible) ->
-            [visible]
+        beforeFeatureSetVisibleHook: (feature, visible) ->
+            [feature, visible]
 
+
+    class FeatureZoomFilter extends FeatureFilter
+        hooks:
+            'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
+
+        beforeFeatureSetVisibleHook: (feature, visible) ->
+            zoom = @map.getZoom()
+            visible = visible and (
+                (feature.featureType.minZoomPoint <= zoom and
+                 feature.featureType.maxZoomPoint >= zoom) or
+                (feature.featureType.minZoomGeometry <= zoom and
+                 feature.featureType.maxZoomGeometry >= zoom)
+            )
+            [feature, visible]
 
     window.komoo.controls =
         DrawingManager: DrawingManager
@@ -1126,5 +1140,6 @@ define (require)->
         AutosaveMapType: AutosaveMapType
         StreetView: StreetView
         FeatureFilter: FeatureFilter
+        FeatureZoomFilter: FeatureZoomFilter
 
     return window.komoo.controls

@@ -369,7 +369,8 @@ define (require) ->
 
             @addComponent 'map/controls::LoadingBox'
             @addComponent 'map/providers::FeatureProvider', 'provider'
-            #@addComponent 'map/controls::FeatureClusterer', 'clusterer', {map: this}
+            @addComponent 'map/controls::FeatureClusterer', 'clusterer', {map: this}
+            @addComponent 'map/controls::FeatureZoomFilter'
 
 
     class AjaxEditor extends AjaxMap

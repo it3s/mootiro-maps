@@ -176,7 +176,7 @@ define (require) ->
             @setMap(null)
 
         setVisible: (@visible) ->
-            [visible] = @map?.triggerHooks 'before_feature_setVisible', @visible
+            [feature, visible] = @map?.triggerHooks 'before_feature_setVisible', this, @visible
             @marker?.setVisible visible
             @geometry.setVisible visible
 

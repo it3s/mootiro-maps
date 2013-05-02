@@ -278,10 +278,10 @@
       };
 
       Feature.prototype.setVisible = function(visible) {
-        var _ref, _ref2;
+        var feature, _ref, _ref2, _ref3;
         this.visible = visible;
-        visible = (_ref = this.map) != null ? _ref.triggerHooks('before_feature_setVisible', this.visible)[0] : void 0;
-        if ((_ref2 = this.marker) != null) _ref2.setVisible(visible);
+        _ref2 = (_ref = this.map) != null ? _ref.triggerHooks('before_feature_setVisible', this, this.visible) : void 0, feature = _ref2[0], visible = _ref2[1];
+        if ((_ref3 = this.marker) != null) _ref3.setVisible(visible);
         return this.geometry.setVisible(visible);
       };
 

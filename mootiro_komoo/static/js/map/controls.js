@@ -5,7 +5,7 @@
 
   define(function(require) {
     'use strict';
-    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, FeatureFilter, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, FeatureFilter, FeatureZoomFilter, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
     googleMaps = require('googlemaps');
     Component = require('./component');
     common = require('./common');
@@ -1546,13 +1546,35 @@
         'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
       };
 
-      FeatureFilter.prototype.beforeFeatureSetVisibleHook = function(visible) {
-        return [visible];
+      FeatureFilter.prototype.beforeFeatureSetVisibleHook = function(feature, visible) {
+        return [feature, visible];
       };
 
       return FeatureFilter;
 
     })(Component);
+    FeatureZoomFilter = (function(_super) {
+
+      __extends(FeatureZoomFilter, _super);
+
+      function FeatureZoomFilter() {
+        FeatureZoomFilter.__super__.constructor.apply(this, arguments);
+      }
+
+      FeatureZoomFilter.prototype.hooks = {
+        'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
+      };
+
+      FeatureZoomFilter.prototype.beforeFeatureSetVisibleHook = function(feature, visible) {
+        var zoom;
+        zoom = this.map.getZoom();
+        visible = visible && ((feature.featureType.minZoomPoint <= zoom && feature.featureType.maxZoomPoint >= zoom) || (feature.featureType.minZoomGeometry <= zoom && feature.featureType.maxZoomGeometry >= zoom));
+        return [feature, visible];
+      };
+
+      return FeatureZoomFilter;
+
+    })(FeatureFilter);
     window.komoo.controls = {
       DrawingManager: DrawingManager,
       DrawingControl: DrawingControl,
@@ -1574,7 +1596,8 @@
       SaveMapType: SaveMapType,
       AutosaveMapType: AutosaveMapType,
       StreetView: StreetView,
-      FeatureFilter: FeatureFilter
+      FeatureFilter: FeatureFilter,
+      FeatureZoomFilter: FeatureZoomFilter
     };
     return window.komoo.controls;
   });

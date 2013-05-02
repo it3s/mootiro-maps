@@ -74,11 +74,19 @@ def root(request):
 def _fetch_geo_objects(Q, zoom):
     ret = {}
     for model in [Community, Need, Resource, Organization, User]:
-        ret[model.__name__] = model.objects.filter(Q)
+        # gets from db only the visible objects to the given zoom
+        min_zoom_point = model.get_map_attr('min_zoom_point')
+        max_zoom_point = model.get_map_attr('max_zoom_point')
+        min_zoom_geometry = model.get_map_attr('min_zoom_geometry')
+        max_zoom_geometry = model.get_map_attr('max_zoom_geometry')
+        if ((min_zoom_point <= zoom and max_zoom_point >= zoom ) or
+            (min_zoom_geometry <= zoom and max_zoom_geometry >= zoom)):
+            ret[model.__name__] = model.objects.filter(Q)
     return ret
 
 
-#@cache_page(54000)
+from django.views.decorators.cache import cache_page
+@cache_page(54000)
 def get_geojson(request):
     bounds = request.GET.get('bounds', None)
     zoom = int(request.GET.get('zoom', 13))
