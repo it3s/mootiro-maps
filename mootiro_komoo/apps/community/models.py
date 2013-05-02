@@ -21,6 +21,7 @@ class Community(GeoRefModel):
     slug = models.SlugField(max_length=256, blank=False, db_index=True)
     population = models.IntegerField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
+    short_description = models.CharField(max_length=250, null=True, blank=True)
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True,
@@ -62,6 +63,7 @@ class Community(GeoRefModel):
 
     image = "img/community.png"
     image_off = "img/community-off.png"
+    default_logo_url = "img/logo-community.png"
 
     # TODO: order communities from the database
     def closest_communities(self, max=3, radius=Distance(km=25)):

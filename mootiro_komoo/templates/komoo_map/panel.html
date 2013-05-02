@@ -19,9 +19,6 @@
 
     <div class="panel" id="map-panel-filter">
       <form id="filter-form" method="GET" action="{% url radial_search %}">
-        <div class="centralizer">
-          <input type="submit" id="filter-submit" class="button-off" value="{% trans "Perform search" %}"/>
-        </div>
         <div id="filter-circle">
           <div class="img-holder"><img src="{{STATIC_URL}}img/radius.png"/></div>
           <a id="set-center" class="button" title="Ponto central a partir do qual será realizada a busca"><i class="icon-plus icon-white"></i> {% trans "Center" %}</a>
@@ -33,6 +30,9 @@
           <div id="filter-helper" class="help-step highlight">
             {% trans "Pick a point on the map" %}
           </div>
+        </div>
+        <div class="centralizer">
+          <input type="submit" id="filter-submit" class="button-off" value="{% trans "Perform search" %}"/>
         </div>
         {% geo_objects_listing 'show_categories=True' 'switchable=True' %}
       </form>

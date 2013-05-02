@@ -1,9 +1,14 @@
+# -*- coding: utf-8 -*-
 import json
+import os
+
+from django.conf import settings
 from django.contrib.gis.db import models as geomodels
 from django.core.urlresolvers import reverse
 from collection_from import CollectionFrom
 
 from main.utils import create_geojson
+from fileupload.models import UploadedFile
 
 
 POLYGON = 'Polygon'
@@ -74,6 +79,25 @@ class GeoRefModel(geomodels.Model):
     @classmethod
     def get_map_attr(cls, attr_name):
         return getattr(cls.Map, attr_name, getattr(GeoRefModel.Map, attr_name))
+
+    # FIXME: files_set and logo_url should live in other class. They must be
+    # moved when we get unified model.
+    def files_set(self):
+        """ pseudo-reverse query for retrieving Resource Files"""
+        return UploadedFile.get_files_for(self)
+
+    # FIXME: files_set and logo_url should live in other class. They must be
+    # moved when we get unified model.
+    @property
+    def logo_url(self):
+        url = getattr(self, 'default_logo_url', 'img/logo-fb.png')
+        url = '{}{}'.format(settings.STATIC_URL, url)
+        files = self.files_set()
+        for fl in files:
+            if os.path.exists(fl.file.url[1:]):
+                url = fl.file.url
+                break
+        return url
 
 
 def get_models():

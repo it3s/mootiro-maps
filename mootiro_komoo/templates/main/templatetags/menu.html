@@ -4,8 +4,8 @@
   <li class="map {% if selected_area == 'map' %}active{% endif %}">
     <a href="{% url map %}"><div class="ico"></div>{% trans "Map" %}</a>
   </li>
-  <li class="objects dropdown_menu {% if selected_area == 'community' or selected_area == 'organization' or selected_area == 'need' or selected_area == 'resource' or selected_area == 'investment' %}active{% endif %}">
-    <a><div class="ico"></div>{% trans "Objects" %}</a>
+  <li class="objects dropdown_menu {% if selected_area == 'community' or selected_area == 'organization' or selected_area == 'need' or selected_area == 'resource' or selected_area == 'investment' or selected_area == 'object' %}active{% endif %}">
+    <a href="{% url object_highlights %}"><div class="ico"></div>{% trans "Objects" %}</a>
     <ul>
       <li class="{% if selected_area == 'community' %}active{% endif %} community">
         <a href="{% url list_communities %}"><div class="ico"></div>{% trans "Communities" %}</a>
@@ -25,6 +25,6 @@
     </ul>
   </li>
   <li class="projects {% if selected_area == 'project' %}active{% endif %}">
-    <a href="{% url project_list %}"><div class="ico"></div>{% trans "Projects" %}</a>
+    <a href="{% url project_highlights %}"><div class="ico"></div>{% trans "Projects" %}</a>
   </li>
 </ul>

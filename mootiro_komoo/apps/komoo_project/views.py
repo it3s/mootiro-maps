@@ -18,6 +18,9 @@ from main.utils import (paginated_query, sorted_query, filtered_query,
 from main.tasks import send_explanations_mail
 
 from authentication.utils import login_required
+from authentication.models import User
+from highlight.models import HighlightSection
+
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
 
@@ -125,6 +128,8 @@ def project_edit(request, id='', *arg, **kwargs):
         return form
 
     def on_after_save(request, obj):
+        # add user who edited as contributor.
+        obj.contributors.add(request.user)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,

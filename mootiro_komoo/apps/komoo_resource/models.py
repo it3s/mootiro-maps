@@ -43,6 +43,7 @@ class Resource(GeoRefModel):
     # slug = models.CharField(max_length=256, blank=False, db_index=True)
     kind = models.ForeignKey(ResourceKind, null=True, blank=True)
     description = models.TextField()
+    short_description = models.CharField(max_length=250, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
     community = models.ManyToManyField(Community, related_name='resources',
             null=True, blank=True)
@@ -74,6 +75,7 @@ class Resource(GeoRefModel):
 
     image = "img/resource.png"
     image_off = "img/resource-off.png"
+    default_logo_url = "img/logo-resource.png"
 
     def files_set(self):
         """ pseudo-reverse query for retrieving Resource Files"""

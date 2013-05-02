@@ -60,7 +60,7 @@
                 {% endif %}
                 
                 {% if u.type == "I" %}
-                  {% with o=u.get_object.inserted_buckets.Organization|length r=u.get_object.inserted_buckets.Resource|length c=u.get_object.inserted_buckets.Community|length %}
+                  {% with o=u.get_object.inserted_buckets.Organization|length r=u.get_object.inserted_buckets.Resource|length c=u.get_object.inserted_buckets.Community n=u.get_object.inserted_buckets.Need|length %}
                     {% if c %}
                       {{c}} {% blocktrans count num=c %}community{% plural %}communities{% endblocktrans %}{% if o and r %},{% else %}{% if o or r %} {% trans "and" %}{% endif %}{% endif %}
                     {% endif %}
@@ -71,6 +71,10 @@
                     
                     {% if r %}
                       {{r}} {% blocktrans count num=r %}resource{% plural %}resources{% endblocktrans %}
+                    {% endif %}
+                    
+                    {% if n %}
+                      {{n}} {% blocktrans count num=n %}need{% plural %}needs{% endblocktrans %}
                     {% endif %}
                     
                     {% with n=c|add:o|add:r %}
