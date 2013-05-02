@@ -85,8 +85,8 @@ def _fetch_geo_objects(Q, zoom):
     return ret
 
 
-from django.views.decorators.cache import cache_page
-@cache_page(54000)
+#from django.views.decorators.cache import cache_page
+#@cache_page(54000)
 def get_geojson(request):
     bounds = request.GET.get('bounds', None)
     zoom = int(request.GET.get('zoom', 13))
