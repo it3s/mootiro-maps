@@ -79,7 +79,8 @@ def _fetch_geo_objects(Q, zoom):
         max_zoom_point = model.get_map_attr('max_zoom_point')
         min_zoom_geometry = model.get_map_attr('min_zoom_geometry')
         max_zoom_geometry = model.get_map_attr('max_zoom_geometry')
-        if ((min_zoom_point <= zoom and max_zoom_point >= zoom ) or
+        if (model is Community or # communities should always be visible
+            (min_zoom_point <= zoom and max_zoom_point >= zoom ) or
             (min_zoom_geometry <= zoom and max_zoom_geometry >= zoom)):
             ret[model.__name__] = model.objects.filter(Q)
     return ret
