@@ -92,7 +92,7 @@
       Map.prototype.handleGoogleMapEvents = function() {
         var eventNames,
           _this = this;
-        eventNames = ['click', 'idle', 'maptypeid_changed'];
+        eventNames = ['click', 'idle', 'maptypeid_changed', 'zoom_changed'];
         return eventNames.forEach(function(eventName) {
           return komoo.event.addListener(_this.googleMap, eventName, function(e) {
             return _this.publish(eventName, e);
@@ -150,8 +150,11 @@
           center = new googleMaps.LatLng(location[0], location[1]);
           return _this.googleMap.setCenter(center);
         });
-        return this.subscribe('set_zoom', function(zoom) {
+        this.subscribe('set_zoom', function(zoom) {
           return _this.setZoom(zoom);
+        });
+        return this.subscribe('idle', function(zoom) {
+          return _this.getFeatures().setVisible(true);
         });
       };
 
@@ -324,7 +327,8 @@
             if (feature == null) {
               feature = _this.makeFeature(geojsonFeature, attach);
             }
-            return features.push(feature);
+            features.push(feature);
+            return feature.setVisible(true);
           });
         }
         if (panTo && (features.getBounds() != null)) this.fitBounds();
@@ -503,20 +507,6 @@
         this.addComponent('map/controls::SearchBox');
         this.addComponent('map/controls::FeatureFilter');
       }
-
-      StaticMap.prototype.loadGeoJson = function(geojson, panTo, attach) {
-        var features,
-          _this = this;
-        if (panTo == null) panTo = false;
-        if (attach == null) attach = true;
-        features = StaticMap.__super__.loadGeoJson.call(this, geojson, panTo, attach);
-        features.forEach(function(feature) {
-          return feature.setMap(_this, {
-            geometry: true
-          });
-        });
-        return features;
-      };
 
       return StaticMap;
 

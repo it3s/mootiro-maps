@@ -66,7 +66,7 @@ define (require) ->
             $(@element).trigger 'initialized', @
 
         handleGoogleMapEvents: ->
-            eventNames = ['click', 'idle', 'maptypeid_changed']
+            eventNames = ['click', 'idle', 'maptypeid_changed', 'zoom_changed']
             eventNames.forEach (eventName) =>
                 komoo.event.addListener @googleMap, eventName, (e) =>
                     @publish eventName, e
@@ -112,6 +112,9 @@ define (require) ->
 
             @subscribe 'set_zoom', (zoom) =>
                 @setZoom zoom
+
+            @subscribe 'idle', (zoom) =>
+              @getFeatures().setVisible true
 
         addComponent: (component, type = 'generic', opts = {}) ->
             component =
@@ -226,6 +229,7 @@ define (require) ->
                 # Otherwise create it
                 feature ?= @makeFeature geojsonFeature, attach
                 features.push feature
+                feature.setVisible true
 
                 #if attach then feature.setMap @
 
@@ -355,12 +359,6 @@ define (require) ->
             @addComponent 'map/controls::LicenseBox'
             @addComponent 'map/controls::SearchBox'
             @addComponent 'map/controls::FeatureFilter'
-
-        loadGeoJson: (geojson, panTo = false, attach = true) ->
-            features = super geojson, panTo, attach
-            features.forEach (feature) =>
-                feature.setMap this, geometry: true
-            features
 
 
     class AjaxMap extends StaticMap

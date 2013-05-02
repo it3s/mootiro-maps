@@ -77,7 +77,6 @@ define (require)->
             @requestsTotal = 0
             @requestsWaiting = 0
             @repaint()
-            @hide()
 
         getPercent: ->
             return 0 if @requestsTotal is 0
@@ -839,6 +838,11 @@ define (require)->
         minSize: 1
         imagePath: '/static/img/cluster/communities'
         imageSizes: [24, 29, 35, 41, 47]
+        hooks:
+            'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
+
+        beforeFeatureSetVisibleHook: (feature, visible) ->
+            [feature, @map.getZoom() > @maxZoom]
 
         init: (@options = {}) ->
             @options.gridSize ?= @gridSize
@@ -848,8 +852,7 @@ define (require)->
             @options.imageSizes ?= @imageSizes
             @featureType = @options.featureType
             @features = []
-            if @options.map
-                @setMap @options.map
+            window.c = this
 
         initMarkerClusterer: (options = {}) ->
             map = @map?.googleMap or @map
@@ -874,7 +877,6 @@ define (require)->
         setMap: (@map) ->
             @initMarkerClusterer @options
             @initEvents()
-            @addFeatures @map.getFeatures()
             @handleMapEvents()
 
         handleMapEvents: ->
@@ -883,18 +885,20 @@ define (require)->
                    (not @featureType? or feature.getType() is @featureType)
                     @push feature
 
-            @map.subscribe 'idle features_loaded', () =>
+            @map.subscribe 'idle features_loaded', =>
                 if @map.getZoom() <= @maxZoom
-                    @map.getFeatures().setVisible false
-                else
-                    # TODO: Pass throw filter component
-                    @map.getFeatures().setVisible true
-
-            @map.subscribe 'idle', =>
-                @addFeatures @map.getFeatures() if @length is 0 and @map.getZoom() <= @maxZoom
+                    @addFeatures @map.getFeatures() if @length is 0
+                    @repaint()
 
             @map.subscribe 'features_request_completed', =>
-                @addFeatures @map.getFeatures() if @map.getZoom() <= @maxZoom
+                if @map.getZoom() <= @maxZoom
+                    features = @map.getFeatures()
+                    @addFeatures features
+
+            komoo.event.addListener this, 'clusteringend', (mc) =>
+                if @map.getZoom() > @maxZoom
+                    @map.features.forEach (feature) ->
+                        feature.marker?.setMap null
 
         updateLength: -> @length = @features.length
 
@@ -905,21 +909,22 @@ define (require)->
 
         getAt: (index) -> @features[index]
 
-        push: (element) ->
-            if element.getMarker()
-                @features.push element
-                #element.getMarker().setVisible off
-                @clusterer.addMarker element.getMarker().getOverlay().markers_.getAt(0), true
+        push: (feature) ->
+            if feature.getMarker()
+                @features.push feature
+                feature.getMarker().setVisible true
+                @clusterer.addMarker feature.getMarker().getOverlay().markers_.getAt(0), true
                 @updateLength()
 
         pop: ->
-            element = @features.pop()
-            @clusterer.removeMarker element.getMarker()
+            feature = @features.pop()
+            @clusterer.removeMarker feature.getMarker().getOverlay().markers_.getAt(0)
             @updateLength()
-            element
+            feature
 
         forEach: (callback, thisArg) ->
-            @features.forEach callback, thisArg
+            for feature in @features
+                callback.apply(thisArg, feature)
 
         repaint: -> @clusterer.repaint()
 

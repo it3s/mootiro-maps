@@ -90,8 +90,7 @@
         LoadingBox.__super__.init.call(this);
         this.requestsTotal = 0;
         this.requestsWaiting = 0;
-        this.repaint();
-        return this.hide();
+        return this.repaint();
       };
 
       LoadingBox.prototype.getPercent = function() {
@@ -1105,6 +1104,14 @@
 
       FeatureClusterer.prototype.imageSizes = [24, 29, 35, 41, 47];
 
+      FeatureClusterer.prototype.hooks = {
+        'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
+      };
+
+      FeatureClusterer.prototype.beforeFeatureSetVisibleHook = function(feature, visible) {
+        return [feature, this.map.getZoom() > this.maxZoom];
+      };
+
       FeatureClusterer.prototype.init = function(options) {
         var _base2, _base3, _base4, _base5, _base6;
         this.options = options != null ? options : {};
@@ -1123,7 +1130,7 @@
         }
         this.featureType = this.options.featureType;
         this.features = [];
-        if (this.options.map) return this.setMap(this.options.map);
+        return window.c = this;
       };
 
       FeatureClusterer.prototype.initMarkerClusterer = function(options) {
@@ -1170,7 +1177,6 @@
         this.map = map;
         this.initMarkerClusterer(this.options);
         this.initEvents();
-        this.addFeatures(this.map.getFeatures());
         return this.handleMapEvents();
       };
 
@@ -1183,19 +1189,23 @@
         });
         this.map.subscribe('idle features_loaded', function() {
           if (_this.map.getZoom() <= _this.maxZoom) {
-            return _this.map.getFeatures().setVisible(false);
-          } else {
-            return _this.map.getFeatures().setVisible(true);
+            if (_this.length === 0) _this.addFeatures(_this.map.getFeatures());
+            return _this.repaint();
           }
         });
-        this.map.subscribe('idle', function() {
-          if (_this.length === 0 && _this.map.getZoom() <= _this.maxZoom) {
-            return _this.addFeatures(_this.map.getFeatures());
-          }
-        });
-        return this.map.subscribe('features_request_completed', function() {
+        this.map.subscribe('features_request_completed', function() {
+          var features;
           if (_this.map.getZoom() <= _this.maxZoom) {
-            return _this.addFeatures(_this.map.getFeatures());
+            features = _this.map.getFeatures();
+            return _this.addFeatures(features);
+          }
+        });
+        return komoo.event.addListener(this, 'clusteringend', function(mc) {
+          if (_this.map.getZoom() > _this.maxZoom) {
+            return _this.map.features.forEach(function(feature) {
+              var _ref;
+              return (_ref = feature.marker) != null ? _ref.setMap(null) : void 0;
+            });
           }
         });
       };
@@ -1214,24 +1224,32 @@
         return this.features[index];
       };
 
-      FeatureClusterer.prototype.push = function(element) {
-        if (element.getMarker()) {
-          this.features.push(element);
-          this.clusterer.addMarker(element.getMarker().getOverlay().markers_.getAt(0), true);
+      FeatureClusterer.prototype.push = function(feature) {
+        if (feature.getMarker()) {
+          this.features.push(feature);
+          feature.getMarker().setVisible(true);
+          this.clusterer.addMarker(feature.getMarker().getOverlay().markers_.getAt(0), true);
           return this.updateLength();
         }
       };
 
       FeatureClusterer.prototype.pop = function() {
-        var element;
-        element = this.features.pop();
-        this.clusterer.removeMarker(element.getMarker());
+        var feature;
+        feature = this.features.pop();
+        this.clusterer.removeMarker(feature.getMarker().getOverlay().markers_.getAt(0));
         this.updateLength();
-        return element;
+        return feature;
       };
 
       FeatureClusterer.prototype.forEach = function(callback, thisArg) {
-        return this.features.forEach(callback, thisArg);
+        var feature, _i, _len, _ref, _results;
+        _ref = this.features;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          feature = _ref[_i];
+          _results.push(callback.apply(thisArg, feature));
+        }
+        return _results;
       };
 
       FeatureClusterer.prototype.repaint = function() {
