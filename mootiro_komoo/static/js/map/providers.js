@@ -4,7 +4,7 @@
 
   define(function(require) {
     'use strict';
-    var Component, FeatureProvider, GenericProvider, googleMaps, _base;
+    var Component, FeatureProvider, GenericProvider, ZoomFilteredFeatureProvider, googleMaps, _base;
     googleMaps = require('googlemaps');
     Component = require('./component');
     if (window.komoo == null) window.komoo = {};
@@ -45,6 +45,12 @@
 
       GenericProvider.prototype.disable = function() {
         return this.enabled = false;
+      };
+
+      GenericProvider.prototype.getUrl = function(coord, zoom) {
+        var addr;
+        addr = this.getAddrLatLng(coord, zoom);
+        return this.fetchUrl + addr;
       };
 
       GenericProvider.prototype.getAddrLatLng = function(coord, zoom) {
@@ -142,7 +148,7 @@
         this.openConnections++;
         this.map.publish('features_request_queued');
         $.ajax({
-          url: this.fetchUrl + addr,
+          url: this.getUrl(coord, zoom),
           dataType: 'json',
           type: 'GET',
           success: function(data) {
@@ -197,9 +203,35 @@
       return FeatureProvider;
 
     })(GenericProvider);
+    ZoomFilteredFeatureProvider = (function(_super) {
+
+      __extends(ZoomFilteredFeatureProvider, _super);
+
+      function ZoomFilteredFeatureProvider() {
+        ZoomFilteredFeatureProvider.__super__.constructor.apply(this, arguments);
+      }
+
+      ZoomFilteredFeatureProvider.prototype.getUrl = function(coord, zoom) {
+        var baseUrl, featureType, featureTypeName, models, _ref;
+        baseUrl = ZoomFilteredFeatureProvider.__super__.getUrl.call(this, coord, zoom);
+        models = [];
+        _ref = this.map.featureTypes;
+        for (featureTypeName in _ref) {
+          featureType = _ref[featureTypeName];
+          if ((featureType.minZoomPoint <= zoom && featureType.maxZoomPoint >= zoom) || (featureType.minZoomGeometry <= zoom && featureType.maxZoomGeometry >= zoom)) {
+            models.push("" + featureType.appLabel + "." + featureType.modelName);
+          }
+        }
+        return baseUrl += '&models=' + models.join(',');
+      };
+
+      return ZoomFilteredFeatureProvider;
+
+    })(FeatureProvider);
     window.komoo.providers = {
       GenericProvider: GenericProvider,
       FeatureProvider: FeatureProvider,
+      ZoomFilteredFeatureProvider: ZoomFilteredFeatureProvider,
       makeFeatureProvider: function(options) {
         return new FeatureProvider(options);
       }

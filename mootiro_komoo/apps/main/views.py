@@ -10,6 +10,7 @@ from django.contrib.gis.geos import Polygon, Point
 from django.contrib.gis.measure import Distance
 from django.template import loader, Context
 from django.db.models import Q
+from django.db.models.loading import cache
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
@@ -71,18 +72,11 @@ def root(request):
     return dict(updates=updates, news=news)
 
 
-def _fetch_geo_objects(Q, zoom):
+def _fetch_geo_objects(Q, zoom,
+        models=[User, Community, Need, Resource, Organization]):
     ret = {}
-    for model in [Community, Need, Resource, Organization, User]:
-        # gets from db only the visible objects to the given zoom
-        min_zoom_point = model.get_map_attr('min_zoom_point')
-        max_zoom_point = model.get_map_attr('max_zoom_point')
-        min_zoom_geometry = model.get_map_attr('min_zoom_geometry')
-        max_zoom_geometry = model.get_map_attr('max_zoom_geometry')
-        if (model is Community or # communities should always be visible
-            (min_zoom_point <= zoom and max_zoom_point >= zoom ) or
-            (min_zoom_geometry <= zoom and max_zoom_geometry >= zoom)):
-            ret[model.__name__] = model.objects.filter(Q)
+    for model in models:
+        ret[model.__name__] = model.objects.filter(Q)
     return ret
 
 
@@ -98,7 +92,9 @@ def get_geojson(request):
                           Q(lines__intersects=polygon) |
                           Q(polys__intersects=polygon))
 
-    d = _fetch_geo_objects(intersects_polygon, zoom)
+    models = request.GET.get('models', '')
+    models = [cache.get_model(*m.split('.')) for m in models.split(',') if m]
+    d = _fetch_geo_objects(intersects_polygon, zoom, models)
     l = []
     for objs in d.values():
         l.extend(objs)

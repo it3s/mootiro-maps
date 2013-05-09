@@ -26,6 +26,11 @@ define (require) ->
         enable: -> @enabled = on
         disable: -> @enabled = off
 
+        getUrl: (coord, zoom) ->
+            addr = @getAddrLatLng coord, zoom
+            @fetchUrl + addr
+
+
         getAddrLatLng: (coord, zoom) ->
             key = "x=#{coord.x},y=#{coord.y},z=#{zoom}"
             if @addrLatLngCache[key]
@@ -103,7 +108,7 @@ define (require) ->
             @openConnections++
             @map.publish 'features_request_queued'
             $.ajax
-                url: @fetchUrl + addr
+                url: @getUrl coord, zoom
                 dataType: 'json'
                 type: 'GET'
                 success: (data) =>
@@ -139,9 +144,22 @@ define (require) ->
             return div
 
 
+    class ZoomFilteredFeatureProvider extends FeatureProvider
+        getUrl: (coord, zoom) ->
+            baseUrl = super coord, zoom
+            models = []
+            for featureTypeName, featureType of @map.featureTypes
+                if (featureType.minZoomPoint <= zoom and featureType.maxZoomPoint >= zoom) or
+                   (featureType.minZoomGeometry <= zoom and featureType.maxZoomGeometry >= zoom)
+                    models.push "#{featureType.appLabel}.#{featureType.modelName}"
+            baseUrl += '&models=' + models.join(',')
+
+
+
     window.komoo.providers =
         GenericProvider: GenericProvider
         FeatureProvider: FeatureProvider
+        ZoomFilteredFeatureProvider: ZoomFilteredFeatureProvider
         makeFeatureProvider: (options) -> new FeatureProvider options
 
     return window.komoo.providers

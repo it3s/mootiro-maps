@@ -366,7 +366,7 @@ define (require) ->
             super options
 
             @addComponent 'map/controls::LoadingBox'
-            @addComponent 'map/providers::FeatureProvider', 'provider'
+            @addComponent 'map/providers::ZoomFilteredFeatureProvider', 'provider'
             @addComponent 'map/controls::FeatureClusterer', 'clusterer', {map: this}
             @addComponent 'map/controls::FeatureZoomFilter'
 
