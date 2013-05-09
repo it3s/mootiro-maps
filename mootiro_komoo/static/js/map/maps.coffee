@@ -367,7 +367,7 @@ define (require) ->
 
             @addComponent 'map/controls::LoadingBox'
             @addComponent 'map/providers::ZoomFilteredFeatureProvider', 'provider'
-            @addComponent 'map/controls::FeatureClusterer', 'clusterer', {map: this}
+            @addComponent 'map/controls::CommunityClusterer', 'clusterer', {map: this}
             @addComponent 'map/controls::FeatureZoomFilter'
 
 

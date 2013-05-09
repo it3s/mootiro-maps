@@ -149,8 +149,9 @@ define (require) ->
             baseUrl = super coord, zoom
             models = []
             for featureTypeName, featureType of @map.featureTypes
-                if (featureType.minZoomPoint <= zoom and featureType.maxZoomPoint >= zoom) or
-                   (featureType.minZoomGeometry <= zoom and featureType.maxZoomGeometry >= zoom)
+                if featureTypeName is 'Community' or  # should always display communities
+                  (featureType.minZoomPoint <= zoom and featureType.maxZoomPoint >= zoom) or
+                  (featureType.minZoomGeometry <= zoom and featureType.maxZoomGeometry >= zoom)
                     models.push "#{featureType.appLabel}.#{featureType.modelName}"
             baseUrl += '&models=' + models.join(',')
 

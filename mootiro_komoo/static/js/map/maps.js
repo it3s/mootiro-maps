@@ -519,7 +519,7 @@
         AjaxMap.__super__.constructor.call(this, options);
         this.addComponent('map/controls::LoadingBox');
         this.addComponent('map/providers::ZoomFilteredFeatureProvider', 'provider');
-        this.addComponent('map/controls::FeatureClusterer', 'clusterer', {
+        this.addComponent('map/controls::CommunityClusterer', 'clusterer', {
           map: this
         });
         this.addComponent('map/controls::FeatureZoomFilter');

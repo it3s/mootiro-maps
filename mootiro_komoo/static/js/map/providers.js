@@ -218,7 +218,7 @@
         _ref = this.map.featureTypes;
         for (featureTypeName in _ref) {
           featureType = _ref[featureTypeName];
-          if ((featureType.minZoomPoint <= zoom && featureType.maxZoomPoint >= zoom) || (featureType.minZoomGeometry <= zoom && featureType.maxZoomGeometry >= zoom)) {
+          if (featureTypeName === 'Community' || (featureType.minZoomPoint <= zoom && featureType.maxZoomPoint >= zoom) || (featureType.minZoomGeometry <= zoom && featureType.maxZoomGeometry >= zoom)) {
             models.push("" + featureType.appLabel + "." + featureType.modelName);
           }
         }

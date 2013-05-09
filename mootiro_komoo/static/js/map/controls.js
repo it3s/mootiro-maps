@@ -5,7 +5,7 @@
 
   define(function(require) {
     'use strict';
-    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, FeatureFilter, FeatureZoomFilter, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
+    var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, CommunityClusterer, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, FeatureFilter, FeatureZoomFilter, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
     googleMaps = require('googlemaps');
     Component = require('./component');
     common = require('./common');
@@ -1273,6 +1273,23 @@
       return FeatureClusterer;
 
     })(Component);
+    CommunityClusterer = (function(_super) {
+
+      __extends(CommunityClusterer, _super);
+
+      function CommunityClusterer() {
+        CommunityClusterer.__super__.constructor.apply(this, arguments);
+      }
+
+      CommunityClusterer.prototype.push = function(feature) {
+        if (feature.featureType === this.map.featureTypes['Community']) {
+          return CommunityClusterer.__super__.push.call(this, feature);
+        }
+      };
+
+      return CommunityClusterer;
+
+    })(FeatureClusterer);
     Location = (function(_super) {
 
       __extends(Location, _super);
@@ -1602,6 +1619,7 @@
       InfoWindow: InfoWindow,
       Tooltip: Tooltip,
       FeatureClusterer: FeatureClusterer,
+      CommunityClusterer: CommunityClusterer,
       CloseBox: CloseBox,
       LoadingBox: LoadingBox,
       SupporterBox: SupporterBox,

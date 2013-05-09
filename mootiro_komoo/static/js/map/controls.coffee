@@ -934,6 +934,11 @@ define (require)->
             features?.forEach (feature) => @push(feature)
             @repaint()
 
+    class CommunityClusterer extends FeatureClusterer
+        push: (feature) ->
+            if feature.featureType is @map.featureTypes['Community']
+                super feature
+
 
     # Handle the location requests, including the user location and the
     # coords of a specific query, using google geocode service.
@@ -1132,6 +1137,7 @@ define (require)->
         InfoWindow: InfoWindow
         Tooltip: Tooltip
         FeatureClusterer: FeatureClusterer
+        CommunityClusterer: CommunityClusterer
         CloseBox: CloseBox
         LoadingBox: LoadingBox
         SupporterBox: SupporterBox
