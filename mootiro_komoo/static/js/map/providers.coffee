@@ -12,6 +12,7 @@ define (require) ->
         alt: 'Generic Data Provider'
         tileSize: new googleMaps.Size 256, 256
         maxZoom: 32
+        expiration: 600000  # 10 minutes
 
         enabled: on
 
@@ -100,7 +101,9 @@ define (require) ->
             return div if @enabled is off
 
             # Verifies if we already loaded this block
-            if @fetchedTiles[addr]
+            d = new Date()
+            if @fetchedTiles[addr] and
+                    (d - @fetchedTiles[addr].date <= @expiration)
                 @fetchedTiles[addr].features.setMap @map
                 return div
             if @openConnections is 0
@@ -118,6 +121,7 @@ define (require) ->
                     @fetchedTiles[addr] =
                         geojson: data
                         features: dfd.promise()
+                        date: new Date()
                 error: (jqXHR, textStatus) =>
                     # TODO: Use Spock
                     console?.error textStatus

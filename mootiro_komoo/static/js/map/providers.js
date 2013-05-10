@@ -25,6 +25,8 @@
 
       GenericProvider.prototype.maxZoom = 32;
 
+      GenericProvider.prototype.expiration = 600000;
+
       GenericProvider.prototype.enabled = true;
 
       GenericProvider.prototype.init = function(options) {
@@ -132,13 +134,14 @@
       };
 
       FeatureProvider.prototype.getTile = function(coord, zoom, ownerDocument) {
-        var addr, div,
+        var addr, d, div,
           _this = this;
         div = ownerDocument.createElement('DIV');
         addr = this.getAddrLatLng(coord, zoom);
         div.addr = addr;
         if (this.enabled === false) return div;
-        if (this.fetchedTiles[addr]) {
+        d = new Date();
+        if (this.fetchedTiles[addr] && (d - this.fetchedTiles[addr].date <= this.expiration)) {
           this.fetchedTiles[addr].features.setMap(this.map);
           return div;
         }
@@ -160,7 +163,8 @@
             _this._addrs.push(addr);
             return _this.fetchedTiles[addr] = {
               geojson: data,
-              features: dfd.promise()
+              features: dfd.promise(),
+              date: new Date()
             };
           },
           error: function(jqXHR, textStatus) {
