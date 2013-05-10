@@ -12,7 +12,7 @@ define (require) ->
         alt: 'Generic Data Provider'
         tileSize: new googleMaps.Size 256, 256
         maxZoom: 32
-        expiration: 600000  # 10 minutes
+        expiration: 600000  # 10 minutes in ms
 
         enabled: on
 
@@ -61,6 +61,7 @@ define (require) ->
             @keptFeatures = komoo.collections.makeFeatureCollection()
             @openConnections = 0
             @_addrs = []
+            @_requestQueue = {}
 
         handleMapEvents: ->
             @map.subscribe 'idle', =>
@@ -71,6 +72,11 @@ define (require) ->
                     if not bounds.intersects feature.getBounds()
                         feature.setMap null
                 @keptFeatures.clear()
+
+            @map.subscribe 'zoom_changed', =>
+                # Aborting ajax requests when zoom changes
+                for addr, xhr of @_requestQueue
+                    xhr.abort()
 
 
         releaseTile: (tile) ->
@@ -110,7 +116,7 @@ define (require) ->
                 @map.publish 'features_request_started'
             @openConnections++
             @map.publish 'features_request_queued'
-            $.ajax
+            @_requestQueue[addr] = $.ajax
                 url: @getUrl coord, zoom
                 dataType: 'json'
                 type: 'GET'
@@ -123,8 +129,9 @@ define (require) ->
                         features: dfd.promise()
                         date: new Date()
                 error: (jqXHR, textStatus) =>
+                    return if textStatus is 'abort'
                     # TODO: Use Spock
-                    console?.error textStatus
+                    console?.error "[provider - ajax error] #{textStatus}"
                     serverErrorContainer = $('#server-error')
                     if serverErrorContainer.parent().length is 0
                         serverErrorContainer = $('<div>').attr('id', 'server-error')
@@ -136,14 +143,13 @@ define (require) ->
                     @openConnections--
                     if @openConnections is 0
                         @map.publish 'features_request_completed'
-                        console.log 'a'
                         while @_addrs.length > 0
                             addr = @_addrs.pop()
                             data = @fetchedTiles[addr].geojson
                             features = @map.loadGeoJSON JSON.parse(data), false, true, true
                             @fetchedTiles[addr].features.resolve?(features)
                             @fetchedTiles[addr].features = features
-                        console.log 'b'
+                        delete @_requestQueue[addr]
                         @map.publish 'features_loaded', @map.getFeatures()
             return div
 

@@ -89,12 +89,13 @@
         FeatureProvider.__super__.init.call(this, options);
         this.keptFeatures = komoo.collections.makeFeatureCollection();
         this.openConnections = 0;
-        return this._addrs = [];
+        this._addrs = [];
+        return this._requestQueue = {};
       };
 
       FeatureProvider.prototype.handleMapEvents = function() {
         var _this = this;
-        return this.map.subscribe('idle', function() {
+        this.map.subscribe('idle', function() {
           var bounds;
           if (_this.enabled === false) return;
           bounds = _this.map.googleMap.getBounds();
@@ -104,6 +105,16 @@
             }
           });
           return _this.keptFeatures.clear();
+        });
+        return this.map.subscribe('zoom_changed', function() {
+          var addr, xhr, _ref, _results;
+          _ref = _this._requestQueue;
+          _results = [];
+          for (addr in _ref) {
+            xhr = _ref[addr];
+            _results.push(xhr.abort());
+          }
+          return _results;
         });
       };
 
@@ -150,7 +161,7 @@
         }
         this.openConnections++;
         this.map.publish('features_request_queued');
-        $.ajax({
+        this._requestQueue[addr] = $.ajax({
           url: this.getUrl(coord, zoom),
           dataType: 'json',
           type: 'GET',
@@ -169,8 +180,9 @@
           },
           error: function(jqXHR, textStatus) {
             var errorContainer, serverErrorContainer;
+            if (textStatus === 'abort') return;
             if (typeof console !== "undefined" && console !== null) {
-              console.error(textStatus);
+              console.error("[provider - ajax error] " + textStatus);
             }
             serverErrorContainer = $('#server-error');
             if (serverErrorContainer.parent().length === 0) {
@@ -186,7 +198,6 @@
             _this.openConnections--;
             if (_this.openConnections === 0) {
               _this.map.publish('features_request_completed');
-              console.log('a');
               while (_this._addrs.length > 0) {
                 addr = _this._addrs.pop();
                 data = _this.fetchedTiles[addr].geojson;
@@ -196,7 +207,7 @@
                 }
                 _this.fetchedTiles[addr].features = features;
               }
-              console.log('b');
+              delete _this._requestQueue[addr];
               return _this.map.publish('features_loaded', _this.map.getFeatures());
             }
           }
