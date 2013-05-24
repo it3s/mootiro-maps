@@ -1098,6 +1098,10 @@ body.community #map-panel-tabs {
     font-size: 14px;
     margin-bottom: 10px;
 }
+.left-bar p{
+    color: #505050;
+    font-size: 12px;
+}
 .block {
     padding: 5px;
     background: #dceff4;
