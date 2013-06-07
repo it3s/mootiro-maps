@@ -7,8 +7,9 @@
     {% for h in hs.highlights %}
     <li>
       <a href="{{h.object.view_url}}">
-        <div class="map-preview-container">
-          <div class="map-preview" geojson='{{h.object.geojson|safe}}'></div>
+        <div class="logo">
+          <img src="{{h.image1_urlpath}}" class="img1">
+          <img src="{{h.image2_urlpath}}" class="img2">
         </div>
         <h3>{{h.object.name}}</h3>
         {% if not hs.hide_short_description %}

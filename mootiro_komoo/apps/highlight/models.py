@@ -39,6 +39,9 @@ class Highlight(models.Model):
     section_order = models.IntegerField(null=True, blank=True)
     is_active = models.BooleanField(default=False)
 
+    image1_urlpath = models.CharField(max_length=256, null=False, blank=False)
+    image2_urlpath = models.CharField(max_length=256, null=True, blank=True)
+
     @property
     def name(self):
         return self.object.name if self.object \

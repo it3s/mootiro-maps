@@ -51,30 +51,11 @@
 {% block page_scripts %}
 <script type="text/javascript">
   $(function(){
-    require(['map/maps', 'map.jquery'], function (maps) {
-      var gmopt = {};
-      $.extend(
-        gmopt,
-        maps.Preview.prototype.googleMapDefaultOptions,
-        {'scrollwheel': false, 'draggable': false, 'disableDoubleClickZoom': true, 'scaleControl': false}
-      );
-      $('.map-preview').each(function (i, elem) {
-        var geojson = $.parseJSON($(elem).attr('geojson'));
-        $(elem).komooMap({
-          type: 'preview',
-          geojson: geojson,
-          googleMapOptions: gmopt,
-          width: '266px',
-          height: '195px'
-        });
-      });
-    });
     $('.flexslider').flexslider({
       animation: "slide",
       animationLoop: false,
       itemWidth: 150
     }).flexslider("pause");
   });
-
 </script>
 {% endblock %}
