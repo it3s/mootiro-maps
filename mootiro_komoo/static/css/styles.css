@@ -236,6 +236,12 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 #tabs a {
     vertical-align: middle;
 }
+
+#container_tabs {
+    background: #000;
+    width: 100%;
+}
+
 #content {
     display: inline-block;
     min-height: 100px;
