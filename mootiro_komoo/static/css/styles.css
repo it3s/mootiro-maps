@@ -281,7 +281,11 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     -moz-box-shadow:0 -1px 3px #ccc;
 }
 
-#info div{display:none;}
+#info div{
+    text-align: center;
+
+
+}
 
 .active{
     background:#ccc; 
@@ -301,9 +305,11 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 
 #content_tabs {
-    
+    color:#fff;
 
 }
+
+
 
 
 

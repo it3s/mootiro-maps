@@ -591,9 +591,9 @@ div.importsheet_missing_column {
     width: 100%; }
   .about .items .topic {
     display: inline-block;
-    width: 33%;
+    width: 30%;
     padding: 5px;
-    vertical-align: top;
+    position: relative;
     text-align: left; }
     .about .items .topic h3 {
       font-size: 1.2em; }
