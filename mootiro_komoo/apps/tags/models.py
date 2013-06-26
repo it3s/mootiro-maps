@@ -30,6 +30,7 @@ class Tag(models.Model):
     @classmethod
     def add(cls, tag_name, namespace=COMMON_NAMESPACE):
         """ add a tag given its 'name'. Tags are unique by namespace """
+	tag_name ##lower()
         tag_namespace, created = TagNamespace.objects.get_or_create(
                         name=namespace)
         tag, created = cls.objects.get_or_create(
@@ -62,7 +63,7 @@ class Tag(models.Model):
         return super(Tag, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return self.name
+        return self.name.lower()
 
 
 class TaggedObject(models.Model):
