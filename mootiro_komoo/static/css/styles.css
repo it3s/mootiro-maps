@@ -249,6 +249,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 
 .tabs li {
+    vertical-align: center;
     float:left; 
     border:1px solid #ccc; 
     border-bottom:0; 
@@ -271,8 +272,10 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 }
 
 #info {
+
     position:relative; 
-    width:100%; 
+    float:right;
+    width:70%; 
     height:auto; 
     padding:10px; 
     clear:both; 
@@ -283,7 +286,6 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 #info div{
     text-align: center;
-
 
 }
 
@@ -299,8 +301,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 
 
-#container_tabs {
-    width: 100%;
+#container_tabs .tabs{
+    float:left;
+    width: 30%;
     padding-left: 20px;
 }
 
