@@ -604,6 +604,7 @@ div.importsheet_missing_column {
     width: 910px;
     margin: 0 auto; }
   .about > div.section {
+    float:left;
     width: 100%; }
     .about > div.section > h2 {
       width: 450px;

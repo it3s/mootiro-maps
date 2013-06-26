@@ -61,6 +61,7 @@ table { border-collapse: collapse }
 a.button { color: #fff }
 a.button:hover { text-decoration: none }
 a.big.button {
+    vertical-align: bottom;
     border-radius        : 12px;
     -moz-border-radius   : 12px;
     -webkit-border-radius: 12px;
@@ -273,9 +274,9 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 #info {
 
+    display: inline-block;
     position:relative; 
-    float:right;
-    width:70%; 
+    width:60%; 
     height:auto; 
     padding:10px; 
     clear:both; 
@@ -309,7 +310,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 #content_tabs {
     color:#fff;
-
+    width: 100%;
 }
 
 
