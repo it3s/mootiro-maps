@@ -248,30 +248,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     padding-bottom: 10px; 
     
 }
-/*
-.tabs li {
-    
-    float:left; 
-    border:1px solid #ccc; 
-    border-bottom:0; 
-    margin-right:10px; 
-    padding:10px; 
-    border-top-left-radius:5px; 
-    border-top-right-radius:5px; 
-    -moz-border-radius-topleft:5px; 
-    -moz-border-radius-topright:5px; 
-    -webkit-border-radius-topleft:5px; 
-    -webkit-border-radius-topright:5px;
-}
 
-.tabs li:hover{
-    box-shadow:0 -2px 3px #DFDFDF; 
-    -moz-box-shadow:0 -2px 3px #DFDFDF; 
-    -webkit-box-shadow:0 -2px 3px #DFDFDF; 
-    font-weight:bold; 
-    border-color:#c0c0c0;
-}
-*/
 #info {
 
     display: inline-block;
