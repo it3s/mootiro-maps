@@ -613,7 +613,7 @@ div.importsheet_missing_column {
       width: 500px;
       margin: 20px auto; }
   .about > div:nth-child(even) {
-    background: #eff8fb !important; }
+    background: #fff !important; }
 
 .use-cases .initial-heading {
   margin-bottom: 10px; }
