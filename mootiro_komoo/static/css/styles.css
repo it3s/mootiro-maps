@@ -243,14 +243,14 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 
 /* Tabs */
-
+/*
 .tabs ul {
     list-style:none; 
-   padding-left:40px;
+    text-align: center;
 }
 
 .tabs li {
-    vertical-align: center;
+    
     float:left; 
     border:1px solid #ccc; 
     border-bottom:0; 
@@ -271,17 +271,16 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     font-weight:bold; 
     border-color:#c0c0c0;
 }
-
+*/
 #info {
 
     display: inline-block;
     position:relative; 
-    width:60%; 
+    width:70%; 
     height:auto; 
     padding:10px; 
     clear:both; 
-    border:1px 
-    solid #ccc; 
+    border:1px solid #ccc; 
     -moz-box-shadow:0 -1px 3px #ccc;
 }
 
@@ -305,7 +304,7 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 #container_tabs .tabs{
     float:left;
     width: 30%;
-    padding-left: 20px;
+        
 }
 
 #content_tabs {
