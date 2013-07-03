@@ -61,6 +61,7 @@ table { border-collapse: collapse }
 a.button { color: #fff }
 a.button:hover { text-decoration: none }
 a.big.button {
+    vertical-align: bottom;
     border-radius        : 12px;
     -moz-border-radius   : 12px;
     -webkit-border-radius: 12px;
@@ -225,17 +226,76 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
     display: inline-block;
     clear: both;
 }
+/* essa tabs está errada, não é div e sim class */
+
 #tabs {
     font-size: 16px;
     font-weight: bold;
     position: relative;
     width: 100%;
-    background: #fff;
+   
     display: block;
 }
 #tabs a {
     vertical-align: middle;
 }
+
+
+
+/* Tabs */
+
+.tabs li {
+    padding-bottom: 10px; 
+    
+}
+
+#info {
+
+    display: inline-block;
+    position:relative; 
+    width:70%; 
+    height:auto;
+    background-color: #eff8fb; 
+    padding:10px; 
+    clear:both; 
+   
+}
+
+#info div{
+    text-align: center;
+
+}
+
+.active{
+    background:#eff8fb; 
+    
+}
+.active a{
+    color:#000; 
+    font-weight:bold; 
+    
+}
+
+
+
+#container_tabs .tabs{
+    float:left;
+    width: 30%;
+        
+}
+
+#content_tabs {
+    color:#fff;
+    width: 100%;
+}
+
+
+
+
+
+/* fim das tabs */
+
+
 #content {
     display: inline-block;
     min-height: 100px;
