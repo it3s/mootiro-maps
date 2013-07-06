@@ -14,7 +14,7 @@ def collect_js(apps=None):
     from shutil import copytree, rmtree, ignore_patterns
 
     ## Get the project base path
-    proj_path = os.path.join(os.path.dirname(__file__), '..')
+    proj_path = os.path.join(os.path.dirname(__file__), '../../mootiro_maps')
     build_path = os.path.join(proj_path, '.build')
 
     try:
@@ -61,13 +61,13 @@ def js_urls():
     s = ''
     with open(
             os.path.abspath(
-                './static/lib/django-js-utils/dutils.conf.urls.js'),
+                './mootiro_maps/static/lib/django-js-utils/dutils.conf.urls.js'),
             'r') as f:
         s = f.read()
         s = s.replace('?', '')
     with open(
             os.path.abspath(
-                './static/lib/django-js-utils/dutils.conf.urls.js'),
+                './mootiro_maps/static/lib/django-js-utils/dutils.conf.urls.js'),
             'w') as f:
         f.write(s)
 
