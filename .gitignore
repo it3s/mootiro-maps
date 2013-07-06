@@ -1,5 +1,5 @@
 local_settings.py
-mootiro_komoo/fabfile/remote/secret.py
+fabfile/remote/secret.py
 *.pyc
 *.*~
 *.swp
@@ -7,8 +7,8 @@ mootiro_komoo/fabfile/remote/secret.py
 .idea/
 .codeintel/
 .DS_Store
-mootiro_komoo/.ropeproject/
-build/
+.ropeproject/
+.build/
 logs/*
 !logs/README.txt
 media/
@@ -19,8 +19,7 @@ backups/
 *.xls
 .ropeproject/
 celerybeat-schedule
-mootiro_komoo/.sass-cache/
-mootiro_komoo/.build/
-mootiro_komoo/importation
+.sass-cache/
+importation
 node_modules/
-mootiro_komoo/lib/elasticsearch/
+mootiro_maps/lib/elasticsearch/

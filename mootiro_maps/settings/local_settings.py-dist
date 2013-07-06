@@ -5,7 +5,7 @@
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'mootiro_komoo',  # Or path to database file if using sqlite3.
+        'NAME': 'mootiro_maps',  # Or path to database file if using sqlite3.
         'USER': 'user',         # Not used with sqlite3.
         'PASSWORD': 'pass',   # Not used with sqlite3.
         'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.

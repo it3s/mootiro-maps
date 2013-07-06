@@ -128,7 +128,7 @@ def test(
         recreate_db=False):
     """Run application tests"""
     if recreate_db:
-        local('dropdb test_mootiro_komoo')
+        local('dropdb test_mootiro_maps')
     else:
         logging.info("Reusing old last test DB...")
     local('REUSE_DB=1 python manage.py test {} {} --verbosity=1'

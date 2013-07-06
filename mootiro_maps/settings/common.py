@@ -87,7 +87,7 @@ AUTHENTICATION_BACKENDS = (
 
 # ========== Application ======================================================
 
-ROOT_URLCONF = 'mootiro_komoo.urls'
+ROOT_URLCONF = 'mootiro_maps.urls'
 
 INSTALLED_APPS = [
     # django apps

@@ -1,7 +1,7 @@
 ({
     findNestedDependencies: true,
 
-    appDir: '',
+    appDir: 'src',
     baseUrl: '.build',
     dir: '.build/min',
 

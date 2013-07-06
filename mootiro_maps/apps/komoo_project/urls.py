@@ -3,7 +3,7 @@
 from __future__ import unicode_literals
 from django.conf.urls.defaults import patterns, url
 
-from mootiro_komoo.urls import prepare_regex as pr
+from mootiro_maps.urls import prepare_regex as pr
 
 
 urlpatterns = patterns('komoo_project.views',
