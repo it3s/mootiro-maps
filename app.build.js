@@ -1,7 +1,7 @@
 ({
     findNestedDependencies: true,
 
-    appDir: 'mootiro_maps',
+    appDir: '',
     baseUrl: '.build',
     dir: '.build/min',
 
@@ -9,11 +9,11 @@
         'jquery': 'empty:',
         'underscore': 'empty:',
         'backbone': 'empty:',
-        'templates': '../static/templates',
-        'async': '../static/lib/requirejs/async',
-        'goog': '../static/lib/requirejs/goog',
-        'text': '../static/lib/requirejs/text',
-        'propertyParser': '../static/lib/requirejs/propertyParser',
+        'templates': '../mootiro_maps/static/templates',
+        'async': '../mootiro_maps/static/lib/requirejs/async',
+        'goog': '../mootiro_maps/static/lib/requirejs/goog',
+        'text': '../mootiro_maps/static/lib/requirejs/text',
+        'propertyParser': '../mootiro_maps/static/lib/requirejs/propertyParser',
         'infobox': 'empty:',
         'markerclusterer': 'empty:'
     },
