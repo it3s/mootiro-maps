@@ -6,7 +6,7 @@ var fs         = require('fs'),
     exec       = require('child_process').exec,
     fs_watcher = require('./fs_watcher');
 
-var baseDir = ['static/js', 'static/tests'];
+var baseDir = ['mootiro_maps/static/js', 'mootiro_maps/static/tests'];
 
 
 var formatedDate = function(date){
