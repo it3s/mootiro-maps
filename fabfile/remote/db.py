@@ -38,7 +38,7 @@ def load_data(file_):
 #     if exists(remote_path):
 #         if not forced:
 #             return remote_path
-#     run('python manage.py dumpdata {} > {}'.format(env.komoo_django_settings,
+#     run('python mootiro_maps/manage.py dumpdata {} > {}'.format(env.komoo_django_settings,
 #         remote_path))
 #     return remote_path
 
@@ -46,7 +46,7 @@ def load_data(file_):
 # @remote
 # def load_data(json_file):
 #     '''Loads data from json file.'''
-#     run('python manage.py loaddata {} {}'.format(env.komoo_django_settings,
+#     run('python mootiro_maps/manage.py loaddata {} {}'.format(env.komoo_django_settings,
 #             json_file))
 
 

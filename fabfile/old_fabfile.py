@@ -90,7 +90,7 @@ def run_datalog():
 
 def run_celery():
     """runs celery task queue"""
-    local('python manage.py celeryd -B --loglevel=info {} &'
+    local('python mootiro_maps/manage.py celeryd -B --loglevel=info {} &'
           .format(django_settings[env_]))
 
 
@@ -101,10 +101,10 @@ def run(port=8001):
     run_elasticsearch(bg='true')
     if env_ != 'dev':
         local(
-            'python manage.py run_gunicorn --workers=2 '
+            'python mootiro_maps/manage.py run_gunicorn --workers=2 '
             '--bind=127.0.0.1:{} {}'.format(port, django_settings[env_]))
     else:
-        local('python manage.py runserver --insecure {} {}'
+        local('python mootiro_maps/manage.py runserver --insecure {} {}'
               .format(port, django_settings[env_]))
 
 
@@ -131,7 +131,7 @@ def test(
         local('dropdb test_mootiro_maps')
     else:
         logging.info("Reusing old last test DB...")
-    local('REUSE_DB=1 python manage.py test {} {} --verbosity=1'
+    local('REUSE_DB=1 python mootiro_maps/manage.py test {} {} --verbosity=1'
             .format(apps, django_settings[env_]))
 
 
@@ -144,7 +144,7 @@ def test_js(
 
 def js_urls():
     """Creates a javascript file containing urls"""
-    local('python manage.py js_urls {}'.format(django_settings[env_]))
+    local('python mootiro_maps/manage.py js_urls {}'.format(django_settings[env_]))
 
     # remove trailing interrogations
     logging.info('removing trailing "?" from urls')
@@ -164,7 +164,7 @@ def js_urls():
 def sync_db(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
     noinput = "" if create_superuser else "--noinput"
-    local('python manage.py syncdb {} {}'
+    local('python mootiro_maps/manage.py syncdb {} {}'
           .format(noinput, django_settings[env_]))
 
 
@@ -198,7 +198,7 @@ def recreate_db():
 
 def shell():
     """Launches Django interactive shell"""
-    local('python manage.py shell {}'.format(django_settings[env_]))
+    local('python mootiro_maps/manage.py shell {}'.format(django_settings[env_]))
 
 
 def load_fixtures(type_='system'):
@@ -219,12 +219,12 @@ def load_fixtures(type_='system'):
                fixture != 'contenttypes_fixtures.json':
 
                 fixtures += "{}/{} ".format(folder, fixture)
-        local('python manage.py loaddata {} {}'.format(fixtures,
+        local('python mootiro_maps/manage.py loaddata {} {}'.format(fixtures,
                 django_settings[env_]))
     else:
         for fixture in os.listdir('fixtures'):
             if fixture.endswith('_fixtures.json'):
-                local('python manage.py loaddata fixtures/{} {}'.format(
+                local('python mootiro_maps/manage.py loaddata fixtures/{} {}'.format(
                     fixture, django_settings[env_]))
 
 
@@ -235,7 +235,7 @@ def loaddata(fixture_file=None):
         fab loaddata:fixture_file_path -> loads the given fixture file to db
     """
     if fixture_file:
-        local('python manage.py loaddata {} {}'.format(
+        local('python mootiro_maps/manage.py loaddata {} {}'.format(
                     fixture_file, django_settings[env_]))
     else:
         logging.info("""
@@ -250,15 +250,15 @@ def initial_revisions():
     load initial revisions for django-revisions module
     should run only once when installed/or when loaded a new app/model
     """
-    local('python manage.py createinitialrevisions {}'
+    local('python mootiro_maps/manage.py createinitialrevisions {}'
           .format(django_settings[env_]))
 
 
 def makemessages(lang='pt_BR'):
     """create translations messages file"""
-    local('python manage.py makemessages -l {} {}'.format(
+    local('python mootiro_maps/manage.py makemessages -l {} {}'.format(
         lang, django_settings[env_]))
-    local('python manage.py makemessages -d djangojs -l {} {}'.format(
+    local('python mootiro_maps/manage.py makemessages -d djangojs -l {} {}'.format(
         lang, django_settings[env_]))
 
 
@@ -266,7 +266,7 @@ def compilemessages():
     """
     compile messages file
     """
-    local('python manage.py compilemessages {}'
+    local('python mootiro_maps/manage.py compilemessages {}'
           .format(django_settings[env_]))
 
 
@@ -299,7 +299,7 @@ def sync_all(data_fixtures='fixtures/backupdb.json'):
 def dumpdata():
     """Dump DB data, for backup purposes """
     import datetime
-    local('python manage.py dumpdata {} > backupdb_{}.json'
+    local('python mootiro_maps/manage.py dumpdata {} > backupdb_{}.json'
           .format(django_settings[env_],
                   datetime.datetime.now().strftime('%Y_%m_%d')))
 

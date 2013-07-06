@@ -103,7 +103,7 @@ def checkout(rev):
 @remote
 def collectstatic():
     '''Runs static files collector'''
-    run('python manage.py collectstatic {}'.format(env.komoo_django_settings))
+    run('python mootiro_maps/manage.py collectstatic {}'.format(env.komoo_django_settings))
 
 
 @remote
