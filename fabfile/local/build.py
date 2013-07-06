@@ -15,7 +15,7 @@ def collect_js(apps=None):
 
     ## Get the project base path
     proj_path = os.path.join(os.path.dirname(__file__), '../../mootiro_maps')
-    build_path = os.path.join(proj_path, '.build')
+    build_path = os.path.join(proj_path, '../.build')
 
     try:
         logging.info('cleaning build path ... ')
@@ -36,7 +36,7 @@ def build_js():
     collect_js()
 
     proj_path = os.path.join(os.path.dirname(__file__), '../../mootiro_maps')
-    build_path = os.path.join(proj_path, '.build')
+    build_path = os.path.join(proj_path, '../.build')
     local('r.js -o app.build.js')
     from_ = os.path.join(build_path, 'min')
     to = os.path.join(proj_path, 'static', 'js.build')
