@@ -1,15 +1,12 @@
 # -*- coding:utf-8 -*-
-import os
-
 from fabric.api import *
-from fabric.colors import cyan, red, yellow, green
-from fabric.contrib.files import exists
+from fabric.colors import cyan, yellow
 from fabric.contrib.console import confirm
-from fabric.utils import indent, abort
+from fabric.utils import abort
 
 from .base import remote, remote_virtualenv
 from .service import down, up
-from .db import backup_db, migrate_database
+from .db import backup_db
 
 
 __all__ = ('deploy',)

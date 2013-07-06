@@ -31,25 +31,6 @@ def load_data(file_):
     run('psql {} < {}'.format(env.komoo_dbname, file_))
 
 
-# @remote
-# def backup_db(forced=False):
-#     '''Dumps remote database and stores it in backups folder.'''
-#     remote_path = '{}/backups/{}'.format(env.komoo_project_folder, DBFILE())
-#     if exists(remote_path):
-#         if not forced:
-#             return remote_path
-#     run('python mootiro_maps/manage.py dumpdata {} > {}'.format(env.komoo_django_settings,
-#         remote_path))
-#     return remote_path
-
-
-# @remote
-# def load_data(json_file):
-#     '''Loads data from json file.'''
-#     run('python mootiro_maps/manage.py loaddata {} {}'.format(env.komoo_django_settings,
-#             json_file))
-
-
 @remote
 def get_a_db_copy():
     '''Backs up remote database and transfers a copy of it locally.'''

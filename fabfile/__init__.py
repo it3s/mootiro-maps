@@ -1,7 +1,7 @@
 from fabric.state import output
 
 from .remote import *
-from .old_fabfile import *
+from .local import *
 
 
 # ===== Fabric configuration ==================================================
