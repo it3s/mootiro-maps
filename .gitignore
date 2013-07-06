@@ -22,4 +22,4 @@ celerybeat-schedule
 .sass-cache/
 importation
 node_modules/
-mootiro_maps/lib/elasticsearch/
+lib/elasticsearch/
