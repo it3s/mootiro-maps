@@ -40,7 +40,10 @@ def build_js():
     local('r.js -o app.build.js')
     from_ = os.path.join(build_path, 'min')
     to = os.path.join(proj_path, 'static', 'js.build')
-    rmtree(to)
+    try:
+        rmtree(to)
+    except OSError:
+        pass
     logging.info('copying compiled javascripts to {}'.format(to))
     copytree(from_, to, ignore=ignore_patterns('*.coffee', '*~'))
 
