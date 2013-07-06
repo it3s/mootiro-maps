@@ -35,7 +35,7 @@ def build_js():
     from shutil import copytree, rmtree, ignore_patterns
     collect_js()
 
-    proj_path = os.path.join(os.path.dirname(__file__), '..')
+    proj_path = os.path.join(os.path.dirname(__file__), '../../mootiro_maps')
     build_path = os.path.join(proj_path, '.build')
     local('r.js -o app.build.js')
     from_ = os.path.join(build_path, 'min')
