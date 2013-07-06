@@ -1,7 +1,7 @@
 ({
     findNestedDependencies: true,
 
-    appDir: 'src',
+    appDir: 'mootiro_maps',
     baseUrl: '.build',
     dir: '.build/min',
 
