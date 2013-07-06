@@ -9,7 +9,8 @@ mootiro_komoo/fabfile/remote/secret.py
 .DS_Store
 mootiro_komoo/.ropeproject/
 build/
-logs/
+logs/*
+!logs/README.txt
 media/
 komoo_index/
 backups/
