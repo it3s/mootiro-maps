@@ -2,6 +2,7 @@ import os
 
 from fabric.state import env, output
 from fabric.api import task
+from fabric.api import local as local_
 
 import remote
 from remote import use, production, staging
@@ -17,4 +18,4 @@ output['debug'] = False  # see full command list
 @task
 def help():
     '''Fabfile documentation'''
-    local('python -c "import fabfile; help(fabfile)"')
+    local_('python -c "import fabfile; help(fabfile)"')
