@@ -1,9 +1,10 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from fabric.api import local
+from fabric.api import local, task
 
 
+@task
 def work():
     """Start watchers"""
     # compilers
@@ -13,6 +14,7 @@ def work():
     # test runners go here!
 
 
+@task
 def update_reform():
     """ update reForm fro, repo """
     local('wget -O static/lib/reForm.js '

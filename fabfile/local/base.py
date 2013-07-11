@@ -4,7 +4,7 @@
 import logging
 logging.basicConfig(format='>> %(message)s', level=logging.DEBUG)
 
-from fabric.api import local
+from fabric.api import local, task
 
 #env.hosts = ['me@example.com:22']
 
@@ -21,19 +21,24 @@ def _set_env(type_):
     env_ = type_
 
 
+@task
 def dev():
     _set_env('dev')
 
 
+@task
 def stage():
     _set_env('stage')
 
 
+@task
 def prod():
     _set_env('prod')
 
 
 def setup_django():
+    # TODO: Verify if fabric's Django integration works.
+
     import os
     import sys
 
@@ -53,6 +58,7 @@ def setup_django():
     setup_environ(environ)
 
 
+@task
 def kill_tasks(*tasks):
     """ Kill background tasks given a list o task names """
     if not tasks:

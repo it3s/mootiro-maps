@@ -1,0 +1,49 @@
+#
+# Environments configuration.
+# Specify in this file the remote environments you want to admin using fabric.
+#
+# File format:
+#
+# [env_name]
+# hosts = list os hosts, separated by comma. (Required)
+# password = password used to connect to remote host. (Optional)
+# dir = the directory where the code is located. (Required)
+# virtualenv = the virtualenv name used to run python code.
+# server_port = which port the server should listen. (Optional. Default: 8001)
+# dbname = the database name used by this env. (Optional. Default: mootiro_maps)
+# django_settings = the settings this env's django should use. (Required)
+# apache_conf = the name of configuration used by apache to proxy the server. (Optional. Default: maps)
+# maintenance_apache_conf = the apache configuration used while the server is down. (Optional. Default: maintenance_maps)
+#
+
+[production]
+hosts = USER@HOST:PORT
+password = PASSWORD
+dir = /PATH/TO/YOUR/PODUCTION_CODE
+server_port = 8001
+dbname = mootiro_maps
+django_settings = settings.production
+virtualenv = mootiro_maps_env
+apache_conf = maps
+maintenance_apache_conf = maps_maintenance
+
+[staging]
+hosts = USER@HOST:PORT
+password = PASSWORD
+dir = /PATH/TO/YOUR/STAGING_CODE
+server_port = 5001
+dbname = mootiro_maps_staging
+django_settings = settings.staging
+virtualenv = mootiro_maps_staging_env
+apache_conf = maps_staging
+maintenance_apache_conf = maps_staging_maintenance
+
+[vagrant]
+hosts = vagrant@vm.local
+dir = /var/projects/maps/source
+server_port = 8001
+dbname = mootiro_maps
+django_settings = settings.staging
+virtualenv = maps
+apache_conf = maps
+maintenance_apache_conf = maps_maintenance

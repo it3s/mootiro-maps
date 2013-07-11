@@ -1,5 +1,6 @@
 local_settings.py
 fabfile/remote/secret.py
+fabfile/envs.conf
 *.pyc
 *.*~
 *.swp

@@ -12,6 +12,7 @@ from .db import backup_db
 __all__ = ('deploy',)
 
 
+@task(default=True)
 def deploy(migration=False):
     '''Deploy application to staging or production.'''
 
@@ -83,6 +84,7 @@ def deploy_to_production(deploy_info):
     up()
 
 
+@task
 @remote
 def checkout(rev):
     '''Puts remote repository on a specific revision (tag or commit).'''
@@ -97,12 +99,14 @@ def checkout(rev):
     run('git fetch && git checkout {}'.format(rev))
 
 
+@task
 @remote
 def collectstatic():
     '''Runs static files collector'''
     run('python mootiro_maps/manage.py collectstatic {}'.format(env.komoo_django_settings))
 
 
+@task
 @remote
 def install_requirements():
     run('pip install -r settings/requirements.txt')

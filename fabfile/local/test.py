@@ -1,11 +1,12 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from fabric.api import local
+from fabric.api import local, task
 
 from .base import logging, django_settings, env_
 
 
+@task(default=True)
 def test(
         apps=" ".join([
             'community', 'need', 'organization', 'proposal', 'komoo_resource',
@@ -20,6 +21,7 @@ def test(
           .format(apps, django_settings[env_]))
 
 
+@task
 def test_js(
         apps=" ".join(['komoo_map'])):
     """Run javascript tests"""

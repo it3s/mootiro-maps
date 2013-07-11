@@ -1,9 +1,10 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from fabric.api import local
+from fabric.api import local, task
 
 
+@task
 def install_elasticsearch():
     """ download and place elastic search on the lib folder """
     local(''
@@ -15,6 +16,7 @@ def install_elasticsearch():
           )
 
 
+@task
 def build_environment():
     """
     build env_ironment: pip install everything + patch django for postgis

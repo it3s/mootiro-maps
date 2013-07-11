@@ -1,13 +1,14 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from fabric.api import local
+from fabric.api import local, task
 
 from .base import logging, django_settings, env_
 from .i18n import compilemessages
 from .test import test_js
 
 
+@task
 def collect_js(apps=None):
     """Collect javascript files from apps"""
     import os
@@ -29,6 +30,7 @@ def collect_js(apps=None):
     copytree(from_, to, ignore=ignore_patterns('*.coffee', '*~'))
 
 
+@task
 def build_js():
     """Combine and minify RequireJS modules"""
     import os
@@ -53,6 +55,7 @@ def build_js():
     test_js()
 
 
+@task
 def js_urls():
     """Creates a javascript file containing urls"""
     local('python mootiro_maps/manage.py js_urls {}'.format(
@@ -64,27 +67,30 @@ def js_urls():
     s = ''
     with open(
             os.path.abspath(
-                './mootiro_maps/static/lib/django-js-utils/dutils.conf.urls.js'),
+            './mootiro_maps/static/lib/django-js-utils/dutils.conf.urls.js'),
             'r') as f:
         s = f.read()
         s = s.replace('?', '')
     with open(
             os.path.abspath(
-                './mootiro_maps/static/lib/django-js-utils/dutils.conf.urls.js'),
+            './mootiro_maps/static/lib/django-js-utils/dutils.conf.urls.js'),
             'w') as f:
         f.write(s)
 
 
+@task
 def compile_coffee():
     """Compiles coffeescript to javascript"""
     local('./scripts/coffee_compiler.js --all')
 
 
+@task
 def compile_sass():
     """Compiles sass to css"""
     local('sass --update ./')
 
 
+@task(default=True)
 def build():
     """Build step"""
     compilemessages()

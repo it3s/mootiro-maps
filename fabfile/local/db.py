@@ -1,11 +1,11 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from fabric.api import local
+from fabric.api import local, task
 
 from .base import logging, django_settings, env_, setup_django
 
-
+@task(alias='syncdb')
 def sync_db(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
     noinput = "" if create_superuser else "--noinput"
@@ -13,10 +13,7 @@ def sync_db(create_superuser=""):
           .format(noinput, django_settings[env_]))
 
 
-def syncdb(create_superuser=""):
-    sync_db(create_superuser)
-
-
+@task
 def create_db():
     """Create komoo database with postgis template."""
     setup_django()
@@ -26,6 +23,7 @@ def create_db():
     local('createdb -T template_postgis {}'.format(db_name))
 
 
+@task
 def drop_db():
     """Drops komoo database """
     setup_django()
@@ -35,12 +33,14 @@ def drop_db():
     local('dropdb {}'.format(db_name))
 
 
+@task
 def recreate_db():
     """Drops komoo database and recreates it with postgis template."""
     drop_db()
     create_db()
 
 
+@task
 def sync_all(data_fixtures='fixtures/backupdb.json'):
     """
     restart app and database from scratch.
@@ -57,6 +57,7 @@ def sync_all(data_fixtures='fixtures/backupdb.json'):
     loaddata('fixtures/contenttypes_fixtures.json')
 
 
+@task
 def dumpdata():
     """Dump DB data, for backup purposes """
     import datetime
@@ -65,6 +66,7 @@ def dumpdata():
                   datetime.datetime.now().strftime('%Y_%m_%d')))
 
 
+@task
 def load_fixtures(type_='system'):
     """
     load fixtures (system and test).
@@ -92,6 +94,7 @@ def load_fixtures(type_='system'):
                       .format(fixture, django_settings[env_]))
 
 
+@task
 def loaddata(fixture_file=None):
     """
     load a single fixture file
@@ -109,6 +112,7 @@ def loaddata(fixture_file=None):
         """)
 
 
+@task
 def fix_contenttypes():
     """ remove auto added contenttypes from django for loading data """
     setup_django()

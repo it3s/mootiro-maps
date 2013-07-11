@@ -13,6 +13,7 @@ def DBFILE():
                         datetime.now().strftime('%Y_%m_%d'))
 
 
+@task
 @remote
 def backup_db(forced=False):
     '''Dumps remote database and stores it in backups folder.'''
@@ -25,12 +26,14 @@ def backup_db(forced=False):
     return remote_path
 
 
+@task
 @remote
 def load_data(file_):
     '''Loads data from json file.'''
     run('psql {} < {}'.format(env.komoo_dbname, file_))
 
 
+@task
 @remote
 def get_a_db_copy():
     '''Backs up remote database and transfers a copy of it locally.'''
@@ -44,6 +47,7 @@ def get_a_db_copy():
     return local_path
 
 
+@task
 @remote
 def migrate_database(script):
     '''Dumps database to a file, runs migration script and loads it back.'''

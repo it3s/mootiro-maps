@@ -1,11 +1,12 @@
 #! /usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from fabric.api import local
+from fabric.api import local, task
 
 from .base import django_settings, env_, setup_django, kill_tasks
 
 
+@task
 def configure_elasticsearch():
     """ configure elasticsearch from scratch """
     run_elasticsearch(bg='true')
@@ -17,6 +18,7 @@ def configure_elasticsearch():
     kill_tasks('elasticsearch')
 
 
+@task
 def run_elasticsearch(bg='false'):
     """
     run elastic search
@@ -28,11 +30,13 @@ def run_elasticsearch(bg='false'):
     local('./lib/elasticsearch/bin/elasticsearch -f {}'.format(background))
 
 
+@task
 def run_datalog():
     """ Runs Datalog's Flask/MongoDB web server """
     local('python lib/datalog/app.py &')
 
 
+@task
 def run_celery():
     """runs celery task queue"""
     local('python mootiro_maps/manage.py celeryd -B --loglevel=info {} &'

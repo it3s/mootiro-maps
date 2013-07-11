@@ -17,6 +17,7 @@ def _setup_supervisor():
             run('supervisord -c supervisor/{}.conf'.format(env.komoo_env))
 
 
+@task
 def up():
     '''Start remote application server.'''
     _setup_supervisor()
@@ -32,6 +33,7 @@ def up():
     print yellow('Success, but it may take 1 minute for the server to go up.')
 
 
+@task
 def down():
     '''Stop remote application server.'''
     _setup_supervisor()
@@ -45,6 +47,7 @@ def down():
          'service apache2 reload'.format(**env))
 
 
+@task
 def restart():
     '''Restart remote application server.'''
     _setup_supervisor()

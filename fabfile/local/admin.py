@@ -2,12 +2,13 @@
 # -*- coding:utf-8 -*-
 
 import logging
-from fabric.api import local
+from fabric.api import local, task
 
 from .base import django_settings, env_, setup_django
 from .service import run_celery, run_datalog, run_elasticsearch
 
 
+@task
 def run(port=8001):
     """Runs django's development server"""
     run_celery()
@@ -22,12 +23,14 @@ def run(port=8001):
               .format(port, django_settings[env_]))
 
 
+@task
 def shell():
     """Launches Django interactive shell"""
     local('python mootiro_maps/manage.py shell {}'.format(
         django_settings[env_]))
 
 
+@task
 def supercow(email=None):
     """Grants admin supercow rights to a user."""
     setup_django()
@@ -38,6 +41,7 @@ def supercow(email=None):
     logging.info('success')
 
 
+@task
 def initial_revisions():
     """
     load initial revisions for django-revisions module
@@ -47,6 +51,7 @@ def initial_revisions():
           .format(django_settings[env_]))
 
 
+@task
 def clean_media_files():
     """removes all media uploaded files"""
     media_apps_list = ['upload', ]
@@ -57,6 +62,7 @@ def clean_media_files():
             logging.error(err)
 
 
+@task
 def populate_history():
     setup_django()
     import reversion
