@@ -16,6 +16,16 @@
 # maintenance_apache_conf = the apache configuration used while the server is down. (Optional. Default: maintenance_maps)
 #
 
+[local]
+hosts = localhost
+dir = /PATH/TO/YOUR/DEVELOPMENT_CODE
+server_port = 8001
+dbname = mootiro_maps
+django_settings = settings.development
+virtualenv = maps
+apache_conf = maps
+maintenance_apache_conf = maps_maintenance
+
 [production]
 hosts = USER@HOST:PORT
 password = PASSWORD

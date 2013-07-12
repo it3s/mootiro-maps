@@ -1,6 +1,6 @@
 local_settings.py
 fabfile/remote/secret.py
-fabfile/envs.conf
+fabfile/*.conf
 *.pyc
 *.*~
 *.swp
@@ -12,6 +12,8 @@ fabfile/envs.conf
 .build/
 logs/*
 !logs/README.txt
+backups/*
+!backups/README.txt
 media/
 komoo_index/
 backups/

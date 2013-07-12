@@ -1,21 +1,30 @@
 import os
 
 from fabric.state import env, output
-from fabric.api import task
-from fabric.api import local as local_
+from fabric.api import task, execute
+from fabric.api import local as lrun
 
-import remote
-from remote import use, production, staging
-import local
+from base import *
+import db
+import develop
 
+# ===== Utils attributes ======================================================
 # Gets the dir where the fabfile is. We will use it to open the config file
 # if needed.
 env.fabfile_dir = os.path.dirname(os.path.realpath(__file__))
+
+# Tasks are local by default.
 
 # ===== Fabric configuration ==================================================
 output['debug'] = False  # see full command list
 
 @task
+def local():
+    '''Setup env dict for running local commands.'''
+    execute(local_)
+
+@task
 def help():
     '''Fabfile documentation'''
-    local_('python -c "import fabfile; help(fabfile)"')
+    lrun('python -c "import fabfile; help(fabfile)"')
+
