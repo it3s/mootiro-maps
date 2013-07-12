@@ -28,7 +28,7 @@ def django(port=False):
                     )
     else:
         with virtualenv(), env.cd('mootiro_maps'):
-            env.run('python manage.py runserver --insecure {} {}'
+            env.run('python manage.py runserver {} {}'
                     .format(port, env.komoo_django_settings))
 
 
