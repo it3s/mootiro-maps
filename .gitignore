@@ -26,3 +26,7 @@ celerybeat-schedule
 importation
 node_modules/
 lib/elasticsearch/
+supervisor/*.pid
+supervisor/*.log
+supervisor/*.conf
+
