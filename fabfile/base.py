@@ -18,13 +18,9 @@ def virtualenv():
         abort('Missing remote destination.\n\n'
               'Usage: fab remote:<env> <command>')
     env.komoo_virtualenv = True
-    if env.run == local:
-        with env.cd(env.komoo_project_folder):
-            yield
-    else:
-        activate = env.komoo_activate
-        with env.cd(env.komoo_project_folder), prefix(activate):
-            yield
+    activate = env.komoo_activate
+    with env.cd(env.komoo_project_folder), prefix(activate):
+        yield
 
 
 def virtualenv_(func):
@@ -97,8 +93,7 @@ def remote(env_=False):
         conf.get(env_, 'django_settings'))
     env.komoo_dbname = conf.get(env_, 'dbname')
     env.komoo_dbuser = conf.get(env_, 'dbuser')
-    env.komoo_activate = 'source $WORKON_HOME/{}/bin/activate'.format(conf.get(env_, 'virtualenv'))
-    print env.komoo_activate
+    env.komoo_activate = '. ~/.virtualenvs/{}/bin/activate'.format(conf.get(env_, 'virtualenv'))
     env.komoo_project_folder = conf.get(env_, 'dir')
     env.komoo_port = conf.get(env_, 'server_port')
     env.komoo_apache_conf = conf.get(env_, 'apache_conf')
