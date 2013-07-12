@@ -74,7 +74,7 @@ my_app_logger = {
 }
 for mod in ['views', 'models', 'forms', 'utils']:
     LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
-                    for app in os.listdir('mootiro_maps/apps/') + os.listdir('mootiro_maps/lib/')})
+                    for app in os.listdir('apps/') + os.listdir('lib/')})
 
 # Celery task queue config
 BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
