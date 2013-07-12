@@ -49,11 +49,63 @@
 
       {% if sorters or filters %}
       <div class="doFilter-wrapper">
+          
           <div class="btn" id="doFilter">
               {% trans 'Apply' %}
           </div>
       </div>
+
+      <div class="block">
+    <header class="projects-tag-header">
+        <img src="/static/img/menu/project.png">
+        <span class="projects-tag-title">Projetos</span>
+    </header>
+    <section>
+        <ul id="project-related-list">
+
+            
+        </ul>
+        <div class="centralizer apart">
+            <a href="#" id="add-to-project" class="button login-required">Adicionar a um projeto</a>
+
+        </div>
+   </section>
+</div>
+
+
+<!-- Modal form for adding this project to a project -->
+
+<div class="modal hide" id="add-project-modal" style="display:none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <div class="add-project-modal-header">
+            {% trans 'Add this object to a project' %}
+        </div>
+    </div>
+    <div class="modal-body">
+        <p>
+        <div class="project-selector">
+            {{ project_widget|safe }}
+
+            <input type="hidden" id="project_related_object_id" value="{{ object_id }}">
+            <input type="hidden" id="project_related_contenttype" value="{{ contenttype }}">
+        </div>
+        </p>
+        <div class="add-project-msg">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" id="add-project-cancel" >
+            {% trans 'Cancel' %}
+        </a>
+        <a href="#" class="button" id="add-project-save">
+            {% trans "Save changes" %}
+        </a>
+    </div>
+</div>
+
       {% endif %}
+
   </div>
 </div>
 
