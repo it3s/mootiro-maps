@@ -11,6 +11,8 @@ import config
 import db
 import develop
 import i18n
+import build
+import test
 
 # ===== Utils attributes ======================================================
 # Gets the dir where the fabfile is. We will use it to open the config file

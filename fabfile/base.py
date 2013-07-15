@@ -106,6 +106,8 @@ def remote(env_=False):
     env.run = run
     env.cd = cd
 
+    env.is_remote = True
+
 @task
 def local_():
     '''Setup env dict for running local commands.'''
@@ -116,6 +118,8 @@ def local_():
     env.exists = os.path.exists
     env.run = local
     env.cd = lcd
+
+    env.is_remote = False
 
 @task
 def production():
