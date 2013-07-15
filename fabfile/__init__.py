@@ -5,7 +5,7 @@ from fabric.api import task, execute
 from fabric.api import local as lrun
 
 from .base import *
-from .service import *
+from .server import *
 import run
 import config
 import db
