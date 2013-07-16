@@ -64,7 +64,7 @@ def js():
 def urls():
     """Creates a javascript file containing urls"""
     with virtualenv(), env.cd('mootiro_maps'):
-        env.run('python manage.py js_urls {}'.format(
+        env.run('python manage.py js_urls --settings={}'.format(
             env.komoo_django_settings))
 
     # remove trailing interrogations

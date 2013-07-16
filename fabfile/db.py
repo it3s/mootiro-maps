@@ -43,7 +43,7 @@ def sync(create_superuser=""):
     """Runs syncdb (with no input flag by default)"""
     noinput = "" if create_superuser else "--noinput"
     with virtualenv(), env.cd('mootiro_maps'):
-        env.run('python manage.py syncdb {} {}'.format(
+        env.run('python manage.py syncdb {} --settings={}'.format(
             noinput, env.komoo_django_settings))
 
 
@@ -68,7 +68,7 @@ def syncall(data_fixtures='fixtures/backupdb.json'):
 def dumpjson():
     """Dump DB data, for backup purposes """
     with virtualenv(), env.cd('mootiro_maps'):
-        env.run('python manage.py dumpdata {} > backupdb_{}.json'.format(
+        env.run('python manage.py dumpdata --settings={} > backupdb_{}.json'.format(
             env.komoo_django_settings,
             datetime.now().strftime('%Y_%m_%d_%H_%M')))
 
@@ -92,13 +92,13 @@ def loadfixtures(type_='system'):
 
                 fixtures += "{}/{} ".format(folder, fixture)
         with virtualenv(), env.cd('mootiro_maps'):
-            env.run('python manage.py loaddata {} {}'.format(
+            env.run('python manage.py loaddata {} --settings={}'.format(
                 fixtures, env.komoo_django_settings))
     else:
         for fixture in os.listdir('fixtures'):
             if fixture.endswith('_fixtures.json'):
                 with virtualenv(), env.cd('mootiro_maps'):
-                    env.run('python manage.py loaddata fixtures/{} {}'.format(
+                    env.run('python manage.py loaddata fixtures/{} --settings={}'.format(
                         fixture, env.komoo_django_settings))
 
 
@@ -111,7 +111,7 @@ def loadjson(fixture_file=None):
     """
     if fixture_file:
         with virtualenv(), env.cd('mootiro_maps'):
-            env.run('python manage.py loaddata {} {}'.format(
+            env.run('python manage.py loaddata {} --settings={}'.format(
                 fixture_file, env.komoo_django_settings))
     else:
         logging.info("""

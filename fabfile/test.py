@@ -28,7 +28,7 @@ def app(
     else:
         logging.info("Reusing old last test DB...")
     with virtualenv(), env.cd('mootiro_maps'):
-        env.run('REUSE_DB=1 python manage.py test {} {} --verbosity=1'
+        env.run('REUSE_DB=1 python manage.py test {} --settings={} --verbosity=1'
                 .format(apps, env.komoo_django_settings))
 
 

@@ -23,12 +23,12 @@ def django(port=False):
     if 'dev' not in env.komoo_django_settings:
         with virtualenv(), env.cd('mootiro_maps'):
                 env.run('python manage.py run_gunicorn --workers=2 '
-                    '--bind=127.0.0.1:{} {}'.format(
+                    '--bind=127.0.0.1:{} --settings={}'.format(
                         port, env.komoo_django_settings)
                     )
     else:
         with virtualenv(), env.cd('mootiro_maps'):
-            env.run('python manage.py runserver {} {}'
+            env.run('python manage.py runserver {} --settings={}'
                     .format(port, env.komoo_django_settings))
 
 
@@ -57,5 +57,5 @@ def datalog():
 def celery():
     """runs celery task queue"""
     with virtualenv(), env.cd('mootiro_maps'):
-        env.run('python manage.py celeryd -B --loglevel=info {} &'
+        env.run('python manage.py celeryd -B --loglevel=info --settings={} &'
                 .format(env.komoo_django_settings))

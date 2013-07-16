@@ -108,7 +108,7 @@ def checkout(rev):
 def collectstatic():
     '''Runs static files collector'''
     with virtualenv(), env.cd('mootiro_maps'):
-        env.run('python manage.py collectstatic {}'
+        env.run('python manage.py collectstatic --settings={}'
                 .format(env.komoo_django_settings))
 
 

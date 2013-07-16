@@ -14,7 +14,7 @@ from .base import setup_django, virtualenv
 def shell():
     """Launches Django interactive shell"""
     with virtualenv(), env.cd('mootiro_maps'):
-        env.run('python manage.py shell {}'.format(
+        env.run('python manage.py shell --settings={}'.format(
                 env.komoo_django_settings))
 
 
@@ -39,7 +39,7 @@ def initial_revisions():
     should run only once when installed/or when loaded a new app/model
     """
     with virtualenv(), env.cd('mootiro_maps'):
-        env.run('python manage.py createinitialrevisions {}'
+        env.run('python manage.py createinitialrevisions --settings={}'
                 .format(env.komoo_django_settings))
 
 
