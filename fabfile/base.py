@@ -44,7 +44,7 @@ def servers_conf(env_):
         'apache_conf': 'maps',
         'maintenance_apache_conf': 'maps_maintenance'
     }
-    required = ['hosts', 'dir', 'django_settings']
+    required = ['type', 'hosts', 'dir', 'django_settings']
     # Lets parse the config file to get the env attributes.
     conf = ConfigParser(defaults)
     conf.read(os.path.join(env.fabfile_dir, 'servers.conf'))
@@ -88,7 +88,7 @@ def remote(env_=False):
 
     # Using extend to allow "-H" option
     env.hosts.extend(conf.get(env_, 'hosts').split(','))
-    env.komoo_env = env_
+    env.komoo_env = conf.get(env_, 'type')
     env.komoo_django_settings = conf.get(env_, 'django_settings')
     env.komoo_dbname = conf.get(env_, 'dbname')
     env.komoo_dbuser = conf.get(env_, 'dbuser')
