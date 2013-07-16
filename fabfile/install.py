@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 from fabric.state import env
-from fabric.api import task
+from fabric.api import task, execute
 
 from .base import virtualenv
 
@@ -21,15 +21,31 @@ def elasticsearch():
                 )
 
 
-@task(alias='env')
-def environment():
+@task(default=True)
+def all():
+    execute('install.requirements')
+    execute('install.patch')
+    execute('install.elasticsearch')
+
+
+@task(aliases=['develop', 'development'])
+def dev():
+    execute('install.all')
+
+
+@task(alias='django_patch')
+def patch():
     """
     build env_ironment: pip install everything + patch django for postgis
     encoding problem on postgres 9.1
     """
     with virtualenv():
-        env.run("pip install -r mootiro_maps/settings/requirements.txt")
         env.run("patch -p0 `which python | "
                 "sed -e 's/bin\/python$/lib\/python2.7\/site-packages\/django\/"
                 "contrib\/gis\/db\/backends\/postgis\/adapter.py/'` "
                 "../docs/postgis-adapter-2.patch")
+
+@task
+def requirements():
+    with virtualenv(), env.cd('mootiro_maps'):
+        env.run('pip install -r settings/requirements.txt')

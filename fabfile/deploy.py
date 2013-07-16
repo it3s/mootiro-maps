@@ -63,7 +63,7 @@ def deploy_to_staging(deploy_info):
     with quiet():
         server_stop()
     checkout(deploy_info['to_commit'])
-    install_requirements()
+    execute('install.requirements')
     collectstatic()
     if deploy_info['migration']:
         print yellow("We've stopped to do db migration now. After you're "
@@ -79,7 +79,7 @@ def deploy_to_production(deploy_info):
         server_stop()
     db_backup()
     checkout(deploy_info['to_commit'])
-    install_requirements()
+    execute('install.requirements')
     collectstatic()
     if deploy_info['migration']:
         print yellow("We've stopped to do db migration now. After you're "
@@ -112,7 +112,3 @@ def collectstatic():
                 .format(env.komoo_django_settings))
 
 
-@task
-def install_requirements():
-    with virtualenv(), env.cd('mootiro_maps'):
-        env.run('pip install -r settings/requirements.txt')
