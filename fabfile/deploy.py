@@ -7,7 +7,7 @@ from fabric.contrib.console import confirm
 from fabric.utils import abort
 
 from .base import virtualenv
-from .service import start as server_start, stop as server_stop
+from .server import start as server_start, stop as server_stop
 from .db import backup as db_backup
 
 

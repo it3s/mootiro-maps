@@ -8,7 +8,7 @@ from fabric.colors import yellow
 from .base import virtualenv
 
 
-__all__ = ('up', 'down', 'restart')
+__all__ = ('start', 'stop', 'restart')
 
 
 def _setup_supervisor():
@@ -21,8 +21,8 @@ def _setup_supervisor():
                 env.komoo_project_folder, env.komoo_env))
 
 
-@task(alias='start')
-def up():
+@task(alias='up')
+def start():
     '''Start remote application server.'''
     _setup_supervisor()
     with virtualenv(), env.cd('mootiro_maps'):
@@ -37,8 +37,8 @@ def up():
     print yellow('Success, but it may take 1 minute for the server to go up.')
 
 
-@task(alias='stop')
-def down():
+@task(alias='down')
+def stop():
     '''Stop remote application server.'''
     _setup_supervisor()
     with virtualenv(), env.cd('mootiro_maps'):
