@@ -35,7 +35,7 @@ def virtualenv_(func):
     return wrapped_func
 
 
-def remote_conf(env_):
+def servers_conf(env_):
     defaults = {
         'dbname': 'mootiro_maps',
         'dbuser': 'maps',
@@ -47,7 +47,7 @@ def remote_conf(env_):
     required = ['hosts', 'dir', 'django_settings']
     # Lets parse the config file to get the env attributes.
     conf = ConfigParser(defaults)
-    conf.read(os.path.join(env.fabfile_dir, 'remote.conf'))
+    conf.read(os.path.join(env.fabfile_dir, 'servers.conf'))
 
     available = conf.sections()
 
@@ -55,7 +55,7 @@ def remote_conf(env_):
     usage_msg = 'Usage: fab use:<env> <command>'
     available_msg = (
         'The available envs are: "{envs}". '
-        'To modify your environments edit the configuration file "remote.conf".'
+        'To modify your environments edit the configuration file "servers.conf".'
     ).format(envs=', '.join(available))
 
     # The user should specify an env to use.
@@ -72,7 +72,7 @@ def remote_conf(env_):
     not_defined = [i for i in required if i not in conf.options(env_)]
     if not_defined:
         abort('There are some required options not defined for "{}": {}.\n'
-              'Please, edit "remote.conf" file and fill all required options.\n'
+              'Please, edit "servers.conf" file and fill all required options.\n'
               .format(env_, ', '.join(not_defined)))
     return conf
 
@@ -81,7 +81,7 @@ def remote_conf(env_):
 def remote(env_=False):
     '''Setup env dict for running remote commands in a specific environment.'''
     # Loads the configuration file
-    conf = remote_conf(env_)
+    conf = servers_conf(env_)
 
     # Sets the configuration options to global variable `env` to be used by
     # remote tasks.
@@ -108,7 +108,7 @@ def remote(env_=False):
 
     env.is_remote = True
 
-@task
+@task(alias='local')
 def local_():
     '''Setup env dict for running local commands.'''
     execute('remote', 'local')
@@ -120,6 +120,7 @@ def local_():
     env.cd = lcd
 
     env.is_remote = False
+
 
 @task
 def production():
@@ -149,9 +150,7 @@ def setup_django():
     sys.path.append(LIB_DIR)
     sys.path.append(SITE_ROOT)
     from django.core.management import setup_environ
-    env_name = {'dev': 'development', 'stage': 'staging', 'prod': 'production'}
-    environ = None
-    exec 'from settings import {} as environ'.format(env_name[env_])
+    exec 'import {} as environ'.format(env.komoo_django_settings)
     setup_environ(environ)
 
 

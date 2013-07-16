@@ -35,7 +35,7 @@ def js():
     """Combine and minify RequireJS modules"""
 
     if (env.is_remote):
-        abort('You cannot build js files remotely!.\n'
+        abort('You cannot build js files remotely!\n'
               'This should be done in your local development env.')
 
     import os
