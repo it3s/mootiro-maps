@@ -47,7 +47,7 @@ pyes==0.19.1
 pymongo==2.4.1
 python-dateutil==1.5
 python-gflags==2.0
-python-termstyle==0.1.10
+python-termstyle==0.1.9
 pytz==2012j
 rednose==0.3.3
 requests==0.11.1

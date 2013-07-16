@@ -114,5 +114,5 @@ def collectstatic():
 
 @task
 def install_requirements():
-    with virtualenv():
+    with virtualenv(), env.cd('mootiro_maps'):
         env.run('pip install -r settings/requirements.txt')
