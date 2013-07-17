@@ -21,15 +21,11 @@
     <p>
     <ul>
       {% object.needs %}
-      <!--<li><a href="{% url need_list %}?filters=community&community={{ object.id }}"><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}</a></li>-->
+      <li><a href="{% url need_list %}?filters=community&community={{ object.id }}"><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}</a></li>
       {% endif %}
-      {% if object.organization_set  %}
-<<<<<<< HEAD
-      <!--<li><a href="{% url organization_list %}?filters=community&community={{ object.id }}"><i class="icon-organization no-hover"></i>{% blocktrans count counter= object.organization_set.count %}{{ counter }} Organization {% plural %}{{ counter }} Organizations{% endblocktrans %}</a></li>-->
-=======
+      <!--{% if object.organization_set  %}
       <li><a href="{% url organization_list %}?filters=community&community={{ object.id }}"><i class="icon-organization no-hover"></i>{% blocktrans count counter= object.organization_set.count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}</a></li>
->>>>>>> 609e6394dc30f58ff71ff9fca102521e9965c283
-      {% endif %}
+      {% endif %}-->
       {% if object.resources %}
       <li><a href="{% url resource_list %}?filters=community&community={{ object.id }}"><i class="icon-resource no-hover"></i>{% blocktrans count counter=object.resources.count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}</a></li>
       {% endif %}
