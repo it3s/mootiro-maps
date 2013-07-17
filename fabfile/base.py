@@ -12,12 +12,17 @@ from fabric.api import *
 from fabric.contrib.files import exists
 
 
+# FIXME: Use the upstream repo
+env.komoo_repo_url = 'https://github.com/LuizArmesto/mootiro-maps.git'
+env.komoo_repo_branch = 'develop'
+
+
 @_contextmanager
 def virtualenv():
     if not 'komoo_activate' in env or not 'komoo_project_folder' in env:
         abort('Missing remote destination.\n\n'
               'Usage: fab remote:<env> <command>')
-    env.komoo_virtualenv = True
+    env.komoo_using_virtualenv = True
     activate = env.komoo_activate
     with env.cd(env.komoo_project_folder), prefix(activate):
         yield
@@ -25,7 +30,7 @@ def virtualenv():
 
 def virtualenv_(func):
     '''Decorator to run commands on a remote virtualenv.'''
-    if getattr(env, 'komoo_virtualenv', False):
+    if getattr(env, 'komoo_using_virtualenv', False):
         # already on a remote virtualenv
         wrapped_func = func
     else:
@@ -92,6 +97,7 @@ def remote(env_=False):
     env.komoo_django_settings = conf.get(env_, 'django_settings')
     env.komoo_dbname = conf.get(env_, 'dbname')
     env.komoo_dbuser = conf.get(env_, 'dbuser')
+    env.komoo_virtualenv = conf.get(env_, 'virtualenv')
     env.komoo_activate = '. ~/.virtualenvs/{}/bin/activate'.format(conf.get(env_, 'virtualenv'))
     env.komoo_project_folder = conf.get(env_, 'dir')
     env.komoo_port = conf.get(env_, 'server_port')
