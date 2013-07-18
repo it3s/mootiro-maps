@@ -36,9 +36,9 @@
     </p>
     <p>
 	
-    <!--{% if object.population %}
+    {% if object.population %}
       <span class="meta-info">{% trans "Population" %}</span> {% firstof object.population '-' %}
-    {% endif %}-->
+    {% endif %}
     {% if object.organization %}
       {% if object.organization.categories.all %}
         <strong>{% trans 'Operation Field' %}</strong>

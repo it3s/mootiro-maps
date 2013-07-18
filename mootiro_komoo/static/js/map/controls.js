@@ -665,7 +665,7 @@
         if (this.options.map) this.setMap(this.options.map);
         return this.customize();
       };
-
+	/*INFO BOX*/
       Balloon.prototype.createInfoBox = function(options) {
         return this.setInfoBox(new InfoBox({
           pixelOffset: new googleMaps.Size(0, -20),
