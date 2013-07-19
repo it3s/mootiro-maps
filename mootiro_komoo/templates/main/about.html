@@ -16,6 +16,9 @@
   </div>
 </a>
 -->
+<!-- Java Script for Tabs about-->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+     <script type="text/javascript" src="{{STATIC_URL}}js/tabs_about.js"></script>
 
 <div id="main-content" class="about frontpage">
   <div>
@@ -24,14 +27,33 @@
     </h1>
   </div>
 
+<div id="container_tabs">
 
-  <div class="section understand center">
-    <h2>Entender um território pelo seu mapa</h2>
-    <p>
-    O MootiroMaps permite que você crie um mapa da sua comunidade, mostrando onde estão localizados recursos, necessidades e organizações.
-    </p>
+  <div class="tabs">
+          <ul>
+            <!--
+            <li class="tab"><a href="#project-campaign">Campanha</a></li>
+            //-->
+            <li><a href="#info1">Entender um território pelo seu mapa</a></li>
+            <li><a href="#info2">Informações ricas sobre cada ponto</a></li>
+            <li><a href="#info3">Crie o seu projeto</a></li>
+            <li><a href="#info4">Faça análises e acompanhe o desenvolvimento do seu bairro</a></li>
+            <li><a href="#info5">Faça colaborativamente</a></li>
+            <li><a href="#info6">Participe da rede</a></li>
+          </ul>
+  </div>
 
-    <div class="items">
+  <div id="info"> </div>
+
+  <div id="content-tabs">
+
+    <div id="info1">
+      <h2>Entender um território pelo seu mapa</h2>
+      <p>
+        O MootiroMaps permite que você crie um mapa da sua comunidade, mostrando onde estão localizados recursos, necessidades e organizações.
+      </p>
+
+      <div class="items">
 
         <div class="topic">
           <img src="{{STATIC_URL}}img/about/1-1.png"/>
@@ -50,17 +72,16 @@
           <h3>Busca no mapa</h3>
           <p>Você pode definir uma distância e buscar por todos os pontos localizados nesse raio.</p>
         </div>
-
+      </div>
     </div>
-  </div>
 
-  <div class="section center rich-info">
-    <h2>Informações ricas sobre cada ponto</h2>
-    <p>
-    Cada ponto no mapapossui uma página com informações de contato, descrição, palavreas chave e muito mais.
-    </p>
+    <div id="info2">
+      <h2>Informações ricas sobre cada ponto</h2>
+      <p>
+        Cada ponto no mapapossui uma página com informações de contato, descrição, palavreas chave e muito mais.
+      </p>
 
-    <div class="items">
+      <div class="items">
 
         <div class="topic">
           <img src="{{STATIC_URL}}img/about/2-1.png"/>
@@ -79,17 +100,16 @@
           <h3>Facilite a busca</h3>
           <p>Ao editar você pode aplicar palavras-chave relacionadas ao objeto mapeado, facilitando a busca de outros usuários.</p>
         </div>
-
+      </div>
     </div>
-  </div>
 
-  <div class="section center project">
-    <h2>Crie o seu projeto</h2>
-    <p>
-    O MootiroMaps permite que você crie projetos de mapeamento de acordo com suas necessidades.
-    </p>
+    <div id="info3">
+      <h2>Crie o seu projeto</h2>
+      <p>
+        O MootiroMaps permite que você crie projetos de mapeamento de acordo com suas necessidades.
+      </p>
 
-    <div class="items">
+      <div class="items">
 
         <div class="topic">
           <img src="{{STATIC_URL}}img/about/3-1.png"/>
@@ -126,17 +146,16 @@
           <h3>Importe dados para o seu mapa</h3>
           <p>Uma integração com o Google Spreadsheets e com o Google Fusion Table permite que você importe dados, para o seu projeto, que você mesmo coletou ou obteve por meio de pedidos de informação.</p>
         </div>
-
+      </div>
     </div>
-  </div>
 
-  <div class="section center analyze">
-    <h2>Faça análises e acompanhe o desenvolvimento do seu bairro</h2>
-    <p>
-    Olhando para o território e para a localização dos serviços você pode encontrar subsídios para o planejamento comunitário e prioridades para o desenvolvimento do seu bairro.
-    </p>
+    <div id="info4">
+      <h2>Faça análises e acompanhe o desenvolvimento do seu bairro</h2>
+      <p>
+        Olhando para o território e para a localização dos serviços você pode encontrar subsídios para o planejamento comunitário e prioridades para o desenvolvimento do seu bairro.
+      </p>
 
-    <div class="items">
+      <div class="items">
 
         <div class="topic">
           <img src="{{STATIC_URL}}img/about/4-1.png"/>
@@ -155,17 +174,16 @@
           <h3>Analise o mapa</h3>
           <p>Visualizando o mapa você pode entender quais regiões da comunidade são atendidas por serviços públicos e trabalhos sociais ou necessitam atendimento.</p>
         </div>
-
+      </div>
     </div>
-  </div>
 
-  <div class="section center analyze">
-    <h2>Faça colaborativamente</h2>
-    <p>
-    Todos podem editar o MootiroMaps, adicionando e corrigindo informações e colocando novos pontos no mapa. Assim, o mapa se torna cada vez mais rico.
-    </p>
+    <div id="info5">
+      <h2>Faça colaborativamente</h2>
+      <p>
+      Todos podem editar o MootiroMaps, adicionando e corrigindo informações e colocando novos pontos no mapa. Assim, o mapa se torna cada vez mais rico.
+      </p>
 
-    <div class="items">
+      <div class="items">
 
         <div class="topic">
           <img src="{{STATIC_URL}}img/about/5-1.png"/>
@@ -190,17 +208,16 @@
           <h3>Dissemine nas redes sociais</h3>
           <p>Utilizando os botões das redes sociais você dá visibilidade para conteúdos mapeados e pode mobilizar amigos para colaborarem.</p>
         </div>
-
+      </div>
     </div>
-  </div>
 
-  <div class="section center analyze">
-    <h2>Participe da rede</h2>
-    <p>
-    Faça parte da rede de usuários para trocar experiências e participar de formações.
-    </p>
+    <div id="info6">
+      <h2>Participe da rede</h2>
+      <p>
+        Faça parte da rede de usuários para trocar experiências e participar de formações.
+      </p>
 
-    <div class="items">
+      <div class="items">
 
         <div class="topic">
           <img src="{{STATIC_URL}}img/about/placeholder.png"/>
@@ -220,12 +237,16 @@
           <p>O MootiroMaps foi desenvolvido pelo IT3S com apoio do Instituto C&A e é gratuito para você usar Basta criar sua conta.</p>
         </div>
 
+	  <div class="section">
+  		<h2 class="center"><a class="login-required big button" href="#">{% trans "Create your account." %}</a></h2>
+  	  </div>
+      </div>
     </div>
-  </div>
 
-  <div class="section">
-  <h2 class="center"><a class="login-required big button" href="#">{% trans "Create your account." %}</a></h2>
   </div>
+</div> 
+
+
 
 </div>
 {% endblock %}
