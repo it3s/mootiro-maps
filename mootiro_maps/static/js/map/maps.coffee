@@ -198,9 +198,11 @@ define (require) ->
             @features.getByType type, categories, strict
 
         showFeaturesByType: (type, categories, strict) ->
+            @publish 'show_features_by_type', type, categories, strict
             @getFeaturesByType(type, categories, strict)?.show()
 
         hideFeaturesByType: (type, categories, strict) ->
+            @publish 'hide_features_by_type', type, categories, strict
             @getFeaturesByType(type, categories, strict)?.hide()
 
         showFeatures: (features = @features) -> features.show()
@@ -369,6 +371,7 @@ define (require) ->
             @addComponent 'map/providers::ZoomFilteredFeatureProvider', 'provider'
             @addComponent 'map/controls::CommunityClusterer', 'clusterer', {map: this}
             @addComponent 'map/controls::FeatureZoomFilter'
+            @addComponent 'map/controls::FeatureTypeFilter'
 
 
     class AjaxEditor extends AjaxMap

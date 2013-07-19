@@ -175,10 +175,16 @@ define (require) ->
             @marker?.setMap(null)
             @setMap(null)
 
-        setVisible: (@visible) ->
-            [feature, visible] = @map?.triggerHooks 'before_feature_setVisible', this, @visible
-            @marker?.setVisible visible
-            @geometry.setVisible visible
+        setVisible: (visible) ->
+            if @editable
+                # Editable features should always be visible
+                visible_ = true
+                feature = this
+            else
+                [feature, visible_] = @map?.triggerHooks 'before_feature_setVisible', this, visible
+            @visible = visible_
+            @marker?.setVisible visible_
+            @geometry.setVisible visible_
 
         getCenter: -> @geometry.getCenter()
 

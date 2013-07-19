@@ -842,7 +842,7 @@ define (require)->
             'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
 
         beforeFeatureSetVisibleHook: (feature, visible) ->
-            [feature, @map.getZoom() > @maxZoom]
+            [feature, visible and @map.getZoom() > @maxZoom]
 
         init: (@options = {}) ->
             @options.gridSize ?= @gridSize
@@ -1110,6 +1110,9 @@ define (require)->
         hooks:
             'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
 
+        init: ->
+            @handleMapEvents?()
+
         beforeFeatureSetVisibleHook: (feature, visible) ->
             [feature, visible]
 
@@ -1120,13 +1123,35 @@ define (require)->
 
         beforeFeatureSetVisibleHook: (feature, visible) ->
             zoom = @map.getZoom()
-            visible = visible and (
+            visible_ = visible and (
                 (feature.featureType.minZoomPoint <= zoom and
                  feature.featureType.maxZoomPoint >= zoom) or
                 (feature.featureType.minZoomGeometry <= zoom and
                  feature.featureType.maxZoomGeometry >= zoom)
             )
-            [feature, visible]
+            [feature, visible_]
+
+    class FeatureTypeFilter extends FeatureFilter
+        hooks:
+            'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
+
+        init: ->
+            super()
+            @disabled = []
+
+        beforeFeatureSetVisibleHook: (feature, visible) ->
+            visible_ = visible
+            if visible and feature.featureType.type in @disabled
+                visible_ = false
+            [feature, visible_]
+
+        handleMapEvents: ->
+            @map.subscribe 'hide_features_by_type', (type, categories, strict) =>
+                @disabled.push(type) if type not in @disabled
+
+            @map.subscribe 'show_features_by_type', (type, categories, strict) =>
+                index = _.indexOf(@disabled, type)
+                @disabled.splice(index, 1)
 
     window.komoo.controls =
         DrawingManager: DrawingManager
@@ -1152,5 +1177,6 @@ define (require)->
         StreetView: StreetView
         FeatureFilter: FeatureFilter
         FeatureZoomFilter: FeatureZoomFilter
+        FeatureTypeFilter: FeatureTypeFilter
 
     return window.komoo.controls

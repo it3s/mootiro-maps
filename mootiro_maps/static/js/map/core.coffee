@@ -39,7 +39,8 @@ define (require) ->
 
         triggerHooks: (hook, params...) ->
             for method in @_hooks[hook] ? []
-                params = method(params...)
+                params_ = method(params...)
+                params = params_
             params
 
         # Load the component module using AMD and instantiate the component
