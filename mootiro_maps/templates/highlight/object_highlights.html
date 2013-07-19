@@ -1,0 +1,19 @@
+{% extends 'global.html' %}
+{% load komoo_map_tags %}
+{% load komoo_tags %}
+{% load highlight_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'Objects' %}{% endblock %}
+
+{% block menu %} {% menu "object" %} {% endblock %}
+
+{% block content %}
+<div id="main-content" class='highlights'>
+  <h1>{% trans "Objects" %}</h1>
+
+  {% for s in sections %}
+    {% highlight_section s %}
+  {% endfor %}
+</div>
+{% endblock %}

@@ -10,7 +10,7 @@ with the database properly set:
 
 - create a virtualenv
 - activate it
-- on the mootiro_komoo folder run: ./scripts/boostrap.sh
+- run ./scripts/boostrap.sh
 
 OBS: our boostrap.sh and most of our instructions assumes a Ubuntu gnu/linux
 machine (or any other Debian based distro), if you use a different setup
