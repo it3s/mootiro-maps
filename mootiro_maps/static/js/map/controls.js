@@ -1623,7 +1623,7 @@ define(function(require) {
 
     FeatureTypeFilter.prototype.init = function() {
       FeatureTypeFilter.__super__.init.call(this);
-      return this.disabled = [];
+      return this.disabled = ['User'];
     };
 
     FeatureTypeFilter.prototype.beforeFeatureSetVisibleHook = function(feature, visible) {
@@ -1644,8 +1644,10 @@ define(function(require) {
       });
       return this.map.subscribe('show_features_by_type', function(type, categories, strict) {
         var index;
-        index = _.indexOf(_this.disabled, type);
-        return _this.disabled.splice(index, 1);
+        if (__indexOf.call(_this.disabled, type) >= 0) {
+          index = _.indexOf(_this.disabled, type);
+          return _this.disabled.splice(index, 1);
+        }
       });
     };
 

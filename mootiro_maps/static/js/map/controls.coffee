@@ -1137,7 +1137,7 @@ define (require)->
 
         init: ->
             super()
-            @disabled = []
+            @disabled = ['User']
 
         beforeFeatureSetVisibleHook: (feature, visible) ->
             visible_ = visible
@@ -1150,8 +1150,9 @@ define (require)->
                 @disabled.push(type) if type not in @disabled
 
             @map.subscribe 'show_features_by_type', (type, categories, strict) =>
-                index = _.indexOf(@disabled, type)
-                @disabled.splice(index, 1)
+                if type in @disabled
+                    index = _.indexOf(@disabled, type)
+                    @disabled.splice(index, 1)
 
     window.komoo.controls =
         DrawingManager: DrawingManager

@@ -110,7 +110,7 @@ define (require) ->
             d = new Date()
             if @fetchedTiles[addr] and
                     (d - @fetchedTiles[addr].date <= @expiration)
-                @fetchedTiles[addr].features.setMap @map
+                @fetchedTiles[addr].features.setMap? @map
                 return div
             if @openConnections is 0
                 @map.publish 'features_request_started'
