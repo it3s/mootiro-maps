@@ -227,7 +227,10 @@
         return this.geometry.setMap(null);
       };
 
-      Feature.prototype.showMarker = function() {};
+      Feature.prototype.showMarker = function() {
+        var _ref;
+        return (_ref = this.marker) != null ? _ref.setMap(this.map) : void 0;
+      };
 
       Feature.prototype.hideMarker = function() {};
 
@@ -236,6 +239,7 @@
       };
 
       Feature.prototype.setMap = function(map, force) {
+        var _ref;
         if (force == null) {
           force = {
             geometry: false,
@@ -246,6 +250,7 @@
         if (map === this.geometry.getMap()) return;
         this.oldMap = this.map;
         if (map != null) this.map = map;
+        if ((_ref = this.marker) != null) _ref.setMap(map);
         this.geometry.setMap(map);
         this.updateIcon();
         if (this.oldMap === void 0) return this.handleMapEvents();

@@ -142,7 +142,7 @@ define (require) ->
         showGeometry: -> @geometry.setMap @map
         hideGeometry: -> @geometry.setMap null
 
-        showMarker: -> #@marker?.setMap @map
+        showMarker: -> @marker?.setMap @map
         hideMarker: ->
             # WTF: I dont remember why the hide method add the marker to map.
             #@marker?.setMap @map
@@ -153,7 +153,7 @@ define (require) ->
             return if map is @geometry.getMap()
             @oldMap = @map
             @map = map if map?
-            #@marker?.setMap(map)
+            @marker?.setMap(map)
             @geometry.setMap(map)
             @updateIcon()
 
