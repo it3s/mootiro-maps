@@ -953,7 +953,7 @@
         clearTimeout(this.timer);
         return Tooltip.__super__.close.call(this);
       };
-
+	//box tootip
       Tooltip.prototype.customize = function() {
         var _this = this;
         Tooltip.__super__.customize.call(this);
