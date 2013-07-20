@@ -600,6 +600,18 @@ div.importsheet_missing_column {
       font-size: 1.2em; }
     .about .items .topic img {
       width: 290px; }
+
+  .about .items .topicFacaColaborativamente {
+    display: inline-block;
+    width: 49%;
+    padding: 5px;
+    position: relative;
+    text-align: left; }
+
+    .about .items .topicFacaColaborativamente h3 {
+      font-size: 1.2em; }
+    .about .items .topicFacaColaborativamente img {
+      width: 290px; }
   
     .about .items .topicDown {
     display: inline-block;
