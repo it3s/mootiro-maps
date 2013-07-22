@@ -94,6 +94,7 @@ define(function(require) {
       this.marker = marker;
       this.marker.getOverlay().feature = this;
       this.initEvents(this.marker);
+      this.marker.setVisible(this.markerShouldBeVisible());
       return this.marker;
     };
 
@@ -228,10 +229,13 @@ define(function(require) {
 
     Feature.prototype.showMarker = function() {
       var _ref;
-      return (_ref = this.marker) != null ? _ref.setMap(this.map) : void 0;
+      if ((_ref = this.marker) != null) _ref.setMap(this.map);
+      return this.marker.setVisible(this.markerShouldBeVisible());
     };
 
-    Feature.prototype.hideMarker = function() {};
+    Feature.prototype.hideMarker = function() {
+      return this.marker.setVisible(false);
+    };
 
     Feature.prototype.getMap = function() {
       return this.map;
@@ -273,6 +277,11 @@ define(function(require) {
       return this.setMap(null);
     };
 
+    Feature.prototype.markerShouldBeVisible = function() {
+      var _ref, _ref2, _ref3, _ref4, _ref5;
+      return ((_ref = this.map) != null ? _ref.type : void 0) === 'preview' || (this.featureType.minZoomPoint <= (_ref2 = (_ref3 = this.map) != null ? _ref3.getZoom() : void 0) && _ref2 <= this.featureType.maxZoomPoint) || (this.featureType.minZoomIcon <= (_ref4 = (_ref5 = this.map) != null ? _ref5.getZoom() : void 0) && _ref4 <= this.featureType.maxZoomIcon);
+    };
+
     Feature.prototype.setVisible = function(visible) {
       var feature, visible_, _ref, _ref2, _ref3;
       if (this.editable) {
@@ -282,7 +291,9 @@ define(function(require) {
         _ref2 = (_ref = this.map) != null ? _ref.triggerHooks('before_feature_setVisible', this, visible) : void 0, feature = _ref2[0], visible_ = _ref2[1];
       }
       this.visible = visible_;
-      if ((_ref3 = this.marker) != null) _ref3.setVisible(visible_);
+      if ((_ref3 = this.marker) != null) {
+        _ref3.setVisible(visible_ && this.markerShouldBeVisible());
+      }
       return this.geometry.setVisible(visible_);
     };
 

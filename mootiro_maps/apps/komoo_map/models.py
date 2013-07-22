@@ -37,6 +37,11 @@ class GeoRefModel(geomodels.Model):
         return self.geometry.empty
 
     @property
+    def area(self):
+        self.geometry.transform(32118)
+        return self.geometry.area
+
+    @property
     def geojson(self):
         geojson = create_geojson([self], convert=False)
         if geojson and geojson.get('features'):

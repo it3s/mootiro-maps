@@ -71,6 +71,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
             last_update = obj.last_update.isoformat(b' ') if getattr(obj,
                     'last_update', None) else ''
+            area = getattr(obj, 'area', 0)
 
             feature = {
                 'type': 'Feature',
@@ -79,7 +80,8 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
                     'type': type_,
                     'name': name,
                     'id': obj.id,
-                    'lastUpdate': last_update
+                    'lastUpdate': last_update,
+                    'area': area
                 }
             }
             if hasattr(obj, 'categories'):

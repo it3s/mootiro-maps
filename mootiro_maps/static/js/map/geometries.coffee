@@ -18,6 +18,8 @@ define (require) ->
     MULTIPOLYLINE = common.geometries.types.MULTILINESTRING
     MULTILINESTRING = common.geometries.types.MULTILINESTRING
 
+    MAX_ZINDEX = 510072000000001
+
     defaults =
         BACKGROUND_COLOR: '#000'
         BACKGROUND_OPACITY: 0.6
@@ -31,6 +33,7 @@ define (require) ->
     class Geometry
         constructor: (@options = {}) ->
             @setFeature @options.feature
+            @area = @options.area ? 0
             @initOverlay @options
 
         initOverlay: (options) -> throw "Not Implemented"
@@ -142,7 +145,7 @@ define (require) ->
 
         getOverlayOptions: (options = {}) ->
             clickable: options.clickable ? on
-            zIndex: options.zIndex ? @getDefaultZIndex()
+            zIndex: options.zIndex ? MAX_ZINDEX
             icon: options.icon ? @getIconUrl options.zoom
 
         initOverlay: (options) ->
@@ -173,12 +176,13 @@ define (require) ->
 
         addMarker: (marker) -> @setOverlay(marker)
 
+
     class MultiPoint extends Geometry
         geometryType: MULTIPOINT
 
         getOverlayOptions: (options = {}) ->
             clickable: options.clickable ? on
-            zIndex: options.zIndex ? @getDefaultZIndex()
+            zIndex: options.zIndex ? MAX_ZINDEX
             icon: options.icon ? @getIconUrl options.zoom
 
         initOverlay: (options) ->
@@ -230,7 +234,7 @@ define (require) ->
 
         getOverlayOptions: (options = {}) ->
             clickable: options.clickable ? on
-            zIndex: options.zIndex ? @getDefaultZIndex()
+            zIndex: options.zIndex ? MAX_ZINDEX
             strokeColor: options.strokeColor ?  @getBorderColor()
             strokOpacity: options.strokeOpacity ? @getBorderOpacity()
             strokeWeight: options.strokeWeight ? @getBorderSize()
@@ -302,12 +306,18 @@ define (require) ->
 
         getOverlayOptions: (options = {}) ->
             clickable: options.clickable ? on
-            zIndex: options.zIndex ? @getDefaultZIndex()
+            zIndex: options.zIndex ? @calculateZIndex()
             fillColor: options.fillColor ? @getBackgroundColor()
             fillOpacity: options.fillOpacity ?  @getBackgroundOpacity()
             strokeColor: options.strokeColor ?  @getBorderColor()
             strokeOpacity: options.strokeOpacity ? @getBorderOpacity()
             strokeWeight: options.strokeWeight ? @getBorderSize()
+
+        calculateZIndex: () ->
+            if not @area
+                @getDefaultZIndex()
+            else
+                510072000000000 / @area
 
         initOverlay: (options) ->
             @setOverlay new googleMaps.Polygon @getOverlayOptions options
@@ -364,7 +374,9 @@ define (require) ->
         defaults: defaults
 
         makeGeometry: (geojsonFeature, feature) ->
-            options = feature: feature
+            options =
+                feature: feature
+                area: geojsonFeature.properties?.area
             if not geojsonFeature.geometry?
                 return new Empty(options)
             type = geojsonFeature.geometry.type

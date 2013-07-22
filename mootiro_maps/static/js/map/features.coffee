@@ -35,7 +35,7 @@ define (require) ->
                 @createMarker()
 
         createMarker: ->
-            # We dont want another marker to geometries that ar already
+            # We dont want another marker to geometries that are already
             # rendered as a marker. So dont create markers to points and
             # multipoints.
             return if @geometry.getGeometryType() in ['Point', 'MultiPoint']
@@ -69,9 +69,10 @@ define (require) ->
 
         getMarker: -> @marker
         setMarker: (@marker) ->
-            @marker.getOverlay().feature = @
+            @marker.getOverlay().feature = this
             # Proxy the marker events.
             @initEvents @marker
+            @marker.setVisible @markerShouldBeVisible()
             @marker
 
         handleGeometryEvents: ->
@@ -142,10 +143,11 @@ define (require) ->
         showGeometry: -> @geometry.setMap @map
         hideGeometry: -> @geometry.setMap null
 
-        showMarker: -> @marker?.setMap @map
+        showMarker: ->
+            @marker?.setMap @map
+            @marker.setVisible @markerShouldBeVisible()
         hideMarker: ->
-            # WTF: I dont remember why the hide method add the marker to map.
-            #@marker?.setMap @map
+            @marker.setVisible false
 
         getMap: -> @map
         setMap: (map, force = { geometry: false, point: false, icon: false }) ->
@@ -175,6 +177,12 @@ define (require) ->
             @marker?.setMap(null)
             @setMap(null)
 
+        markerShouldBeVisible: ->
+            (@map?.type is 'preview' or
+            @featureType.minZoomPoint <= @map?.getZoom() <= @featureType.maxZoomPoint or
+            @featureType.minZoomIcon <= @map?.getZoom() <= @featureType.maxZoomIcon)
+
+
         setVisible: (visible) ->
             if @editable
                 # Editable features should always be visible
@@ -183,7 +191,7 @@ define (require) ->
             else
                 [feature, visible_] = @map?.triggerHooks 'before_feature_setVisible', this, visible
             @visible = visible_
-            @marker?.setVisible visible_
+            @marker?.setVisible visible_ and @markerShouldBeVisible()
             @geometry.setVisible visible_
 
         getCenter: -> @geometry.getCenter()

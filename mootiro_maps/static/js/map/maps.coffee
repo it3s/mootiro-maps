@@ -309,6 +309,8 @@ define (require) ->
 
 
     class UserEditor extends Map
+        type: 'editor'
+
         constructor: (options) ->
             super options
 
@@ -319,6 +321,8 @@ define (require) ->
 
 
     class Editor extends Map
+        type: 'view'
+
         constructor: (options) ->
             super options
 
@@ -335,6 +339,8 @@ define (require) ->
 
 
     class Preview extends Map
+        type: 'preview'
+
         googleMapDefaultOptions:
             zoom: 12
             center: new googleMaps.LatLng(-23.55, -46.65)
@@ -348,6 +354,8 @@ define (require) ->
 
 
     class StaticMap extends Map
+        type: 'view'
+
         constructor: (options) ->
             super options
 
@@ -364,6 +372,8 @@ define (require) ->
 
 
     class AjaxMap extends StaticMap
+        type: 'view'
+
         constructor: (options) ->
             super options
 
@@ -375,6 +385,8 @@ define (require) ->
 
 
     class AjaxEditor extends AjaxMap
+        type: 'editor'
+
         constructor: (options) ->
             super options
 

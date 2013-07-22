@@ -433,6 +433,8 @@ define(function(require) {
 
     __extends(UserEditor, _super);
 
+    UserEditor.prototype.type = 'editor';
+
     function UserEditor(options) {
       UserEditor.__super__.constructor.call(this, options);
       this.addComponent('map/controls::AutosaveMapType');
@@ -447,6 +449,8 @@ define(function(require) {
   Editor = (function(_super) {
 
     __extends(Editor, _super);
+
+    Editor.prototype.type = 'view';
 
     function Editor(options) {
       Editor.__super__.constructor.call(this, options);
@@ -473,6 +477,8 @@ define(function(require) {
       Preview.__super__.constructor.apply(this, arguments);
     }
 
+    Preview.prototype.type = 'preview';
+
     Preview.prototype.googleMapDefaultOptions = {
       zoom: 12,
       center: new googleMaps.LatLng(-23.55, -46.65),
@@ -492,6 +498,8 @@ define(function(require) {
   StaticMap = (function(_super) {
 
     __extends(StaticMap, _super);
+
+    StaticMap.prototype.type = 'view';
 
     function StaticMap(options) {
       StaticMap.__super__.constructor.call(this, options);
@@ -514,6 +522,8 @@ define(function(require) {
 
     __extends(AjaxMap, _super);
 
+    AjaxMap.prototype.type = 'view';
+
     function AjaxMap(options) {
       AjaxMap.__super__.constructor.call(this, options);
       this.addComponent('map/controls::LoadingBox');
@@ -531,6 +541,8 @@ define(function(require) {
   AjaxEditor = (function(_super) {
 
     __extends(AjaxEditor, _super);
+
+    AjaxEditor.prototype.type = 'editor';
 
     function AjaxEditor(options) {
       AjaxEditor.__super__.constructor.call(this, options);
