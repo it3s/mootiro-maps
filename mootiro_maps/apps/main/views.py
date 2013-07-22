@@ -11,7 +11,7 @@ from django.contrib.gis.measure import Distance
 from django.template import loader, Context
 from django.db.models import Q
 from django.db.models.loading import cache
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseServerError, HttpResponseBadRequest
 from django.core.mail import mail_admins
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
@@ -72,11 +72,17 @@ def root(request):
     return dict(updates=updates, news=news)
 
 
-def _fetch_geo_objects(Q, zoom,
-        models=[User, Community, Need, Resource, Organization]):
+def _fetch_geo_objects(query, zoom,
+        models=[User, Community, Need, Resource, Organization],
+        project=None):
     ret = {}
-    for model in models:
-        ret[model.__name__] = model.objects.filter(Q)
+    if not project:
+        for model in models:
+            ret[model.__name__] = model.objects.filter(query)
+    else:
+        proj = get_object_or_None(Project, pk=project)
+        if proj:
+            ret['all'] = proj.filter_related_items(query, models)
     return ret
 
 
@@ -85,16 +91,25 @@ def _fetch_geo_objects(Q, zoom,
 def get_geojson(request):
     bounds = request.GET.get('bounds', None)
     zoom = int(request.GET.get('zoom', 13))
-    x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
-    polygon = Polygon(((x1, y1), (x1, y2), (x2, y2), (x2, y1), (x1, y1)))
-
-    intersects_polygon = (Q(points__intersects=polygon) |
-                          Q(lines__intersects=polygon) |
-                          Q(polys__intersects=polygon))
-
     models = request.GET.get('models', '')
+    project = request.GET.get('project', None)
+
+    if not bounds and not project:
+        return HttpResponseBadRequest(json.dumps({'error': 'Invalid query'}),
+            mimetype="application/x-javascript")
+
+    if bounds:
+        x1, y2, x2, y1 = [float(i) for i in bounds.split(',')]
+        polygon = Polygon(((x1, y1), (x1, y2), (x2, y2), (x2, y1), (x1, y1)))
+
+        intersects_polygon = (Q(points__intersects=polygon) |
+                              Q(lines__intersects=polygon) |
+                              Q(polys__intersects=polygon))
+    else:
+        intersects_polygon = Q()
+
     models = [cache.get_model(*m.split('.')) for m in models.split(',') if m]
-    d = _fetch_geo_objects(intersects_polygon, zoom, models)
+    d = _fetch_geo_objects(intersects_polygon, zoom, models, project)
     l = []
     for objs in d.values():
         l.extend(objs)

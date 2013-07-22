@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 import simplejson
+import itertools
 
 from django.db import models
 from django.db.models import Q
@@ -18,6 +19,7 @@ from authentication.models import User
 from community.models import Community
 from search.signals import index_object_for_search
 from main.utils import create_geojson
+from komoo_map.models import get_models
 
 
 class ProjectRelatedObject(models.Model):
@@ -69,10 +71,12 @@ class Project(models.Model):
 
     @property
     def all_contributors(self):
-        c = [user for user in self.contributors.all()]
-        if not self.creator in c:
-            c.append(self.creator)
-        return c
+        seen = set()
+        seen_add = seen.add
+        iterable = itertools.chain(self.contributors.all(), [self.creator])
+        for element in itertools.ifilterfalse(seen.__contains__, iterable):
+            seen_add(element)
+            yield element
 
     @property
     def public(self):
@@ -104,7 +108,7 @@ class Project(models.Model):
 
     @property
     def perm_id(self):
-        return 'j%d' % self.id  # proJect, and not Proposal
+        return 'j%d' % self.id  # project, and not Proposal
 
     @property
     def logo_url(self):
@@ -117,6 +121,17 @@ class Project(models.Model):
     def related_objects(self):
         """Returns a queryset for the objects for a given project"""
         return ProjectRelatedObject.objects.filter(project=self)
+
+    def filter_related_items(self, query, models):
+        items = []
+        for model in models:
+            ct = ContentType.objects.get_for_model(model)
+            obj_ids = (self.related_objects.values_list("object_id", flat=True)
+                       .filter(content_type=ct))
+            obj = model.objects.filter(Q(pk__in=obj_ids) & query)
+            for o in obj:
+                items.append(o)
+        return items
 
     def save_related_object(self, related_object, user=None, silent=False):
         ct = ContentType.objects.get_for_model(related_object)
@@ -137,10 +152,8 @@ class Project(models.Model):
 
     @property
     def related_items(self):
-        items = self.all_contributors
-        for obj in [o.content_object for o in self.related_objects]:
-            items.append(obj)
-        return items
+        return itertools.chain(self.all_contributors,
+                               self.filter_related_items(Q(), get_models()))
 
     @property
     def json(self):
@@ -156,8 +169,7 @@ class Project(models.Model):
     @property
     def geojson(self):
         items = []
-        for ro in self.related_objects:
-            obj = ro.content_object
+        for obj in self.related_items:
             if obj and not obj.is_empty():
                 items.append(obj)
         return create_geojson(items)
