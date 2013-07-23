@@ -15,16 +15,16 @@
         {% for c in object.categories.all %}
         <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
         {% endfor %}
-      </ul>
+      </ul> 
       <div style="clear: both;">
     {% endif %}
     <p>
     <ul>
-      {% if object.needs %}
+      {% object.needs %}
       <li><a href="{% url need_list %}?filters=community&community={{ object.id }}"><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}</a></li>
       {% endif %}
       {% if object.organization_set  %}
-      <li><a href="{% url organization_list %}?filters=community&community={{ object.id }}"><i class="icon-organization no-hover"></i>{% blocktrans count counter=object.organization_set.count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}</a></li>
+      <li><a href="{% url organization_list %}?filters=community&community={{ object.id }}"><i class="icon-organization no-hover"></i>{% blocktrans count counter= object.organization_set.count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}</a></li>
       {% endif %}
       {% if object.resources %}
       <li><a href="{% url resource_list %}?filters=community&community={{ object.id }}"><i class="icon-resource no-hover"></i>{% blocktrans count counter=object.resources.count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}</a></li>
@@ -35,6 +35,7 @@
     <div class="mark-down">{{ object.description|default:""|description_markdown_preview|safe }}</div>
     </p>
     <p>
+	
     {% if object.population %}
       <span class="meta-info">{% trans "Population" %}</span> {% firstof object.population '-' %}
     {% endif %}

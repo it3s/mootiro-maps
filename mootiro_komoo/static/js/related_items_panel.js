@@ -72,7 +72,7 @@
       },
       title: function(count) {
         var msg;
-        msg = this.type === 'Organization' ? ngettext("%s organization", "%s organizations", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%s needs", count) : this.type === 'User' ? ngettext("%s contributors", "%s contributors", count) : "";
+        msg = this.type === 'Organization' ? ngettext("%s organization", "%s organizations", count) : this.type === 'Community' ? ngettext("%s community", "%s communities", count) : this.type === 'Resource' ? ngettext("%s resource", "%s resources", count) : this.type === 'Need' ? ngettext("%s need", "%s needs", count) : this.type === 'Users' ? ngettext("%s contributors", "%s contributors", count) : "";
         return interpolate(msg, [count]);
       },
       iconClass: function() {
@@ -128,12 +128,14 @@
           return o.properties.name !== KomooNS.obj.name;
         }))
       });
-      $('.features-wrapper').append(organizationsView.render().$el);
+     
+     $('.features-wrapper').append(organizationsView.render().$el);
       usersView = new FeaturesViewClass({
         type: 'User',
         collection: new Features().reset(KomooNS.features['User'])
       });
-      $('.features-wrapper').append(usersView.render().$el);
+    
+	$('.features-wrapper').append(usersView.render().$el);
       return geoObjectsListing($('.features-wrapper'));
     };
     return KomooNS.drawFeaturesList;
