@@ -56,6 +56,7 @@ define(function(require) {
       });
       this.components = {};
       this.addComponent('map/controls::Location');
+      this.setProjectId(this.options.projectId);
       this.initGoogleMap(this.options.googleMapOptions);
       this.initFeatureTypes();
       this.handleEvents();
@@ -424,6 +425,14 @@ define(function(require) {
 
     Map.prototype.getMapTypeId = function() {
       return this.googleMap.getMapTypeId();
+    };
+
+    Map.prototype.getProjectId = function() {
+      return this.projectId;
+    };
+
+    Map.prototype.setProjectId = function(id) {
+      return this.projectId = id;
     };
 
     return Map;

@@ -29,7 +29,10 @@ define (require) ->
 
         getUrl: (coord, zoom) ->
             addr = @getAddrLatLng coord, zoom
-            @fetchUrl + addr
+            baseUrl = @fetchUrl + addr
+            if @map.getProjectId()
+                baseUrl += '&project=' + @map.getProjectId()
+            baseUrl
 
 
         getAddrLatLng: (coord, zoom) ->
@@ -154,6 +157,9 @@ define (require) ->
             return div
 
 
+    # TODO: Use hooks to create the url to be possible the use of any
+    # filter combination.
+
     class ZoomFilteredFeatureProvider extends FeatureProvider
         getUrl: (coord, zoom) ->
             baseUrl = super coord, zoom
@@ -164,7 +170,6 @@ define (require) ->
                   (featureType.minZoomGeometry <= zoom and featureType.maxZoomGeometry >= zoom)
                     models.push "#{featureType.appLabel}.#{featureType.modelName}"
             baseUrl += '&models=' + models.join(',')
-
 
 
     window.komoo.providers =

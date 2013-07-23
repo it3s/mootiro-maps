@@ -45,6 +45,7 @@ define (require) ->
             @components = {}
             @addComponent 'map/controls::Location'
 
+            @setProjectId(@options.projectId)
             @initGoogleMap @options.googleMapOptions
             @initFeatureTypes()
             @handleEvents()
@@ -306,6 +307,12 @@ define (require) ->
 
         getMapTypeId: ->
             @googleMap.getMapTypeId()
+
+        getProjectId: ->
+            @projectId
+
+        setProjectId: (id) ->
+            @projectId = id
 
 
     class UserEditor extends Map

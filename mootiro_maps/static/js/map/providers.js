@@ -49,9 +49,13 @@ define(function(require) {
     };
 
     GenericProvider.prototype.getUrl = function(coord, zoom) {
-      var addr;
+      var addr, baseUrl;
       addr = this.getAddrLatLng(coord, zoom);
-      return this.fetchUrl + addr;
+      baseUrl = this.fetchUrl + addr;
+      if (this.map.getProjectId()) {
+        baseUrl += '&project=' + this.map.getProjectId();
+      }
+      return baseUrl;
     };
 
     GenericProvider.prototype.getAddrLatLng = function(coord, zoom) {
