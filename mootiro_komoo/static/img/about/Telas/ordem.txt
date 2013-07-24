@@ -1,0 +1,33 @@
+(imagem) (seção)
+
+1-1 Cores e ícones de visualização (linha 1)
+1-2 Informações rápidas (linha 1)
+1-3 Busca no mapa (linha 2, centralizado e grande)
+
+Informações ricas sobre cada ponto
+
+2-1 Conte uma história
+2-2 Facilite a busca
+2-3 Mostre as relações
+
+Crie o seu projeto
+
+Header: MootiroMaps permite que voce crie projetos de mapeamento de acordo com suas necessidades.
+3-1 abaixo do header, centralizado e grande, acima das secoes "Um espaco no seu MootiroMaps", "Adicione colaboradores" e "Conheca iniciativas similares"
+3-2 abaixo dos itens citados acima e em cima das secoes "De visibilidade para...", "Aproveite o que ja esta no..." e "Importe dados para seu mapa..."
+Faça análises e acompanhe o desenvolvimento de seu bairro
+
+Header: Olhando para o territorio e a localizacao dos servicos voce pode encontrar subsidios para o planejamento comunitario e prioridades para o desenvolvimento do seu bairro
+4-1  abaixo do header, acima das secoes "Mapeie necessidades e discuta com outros", "Acompanhe projetos de sua comunidade" e "Analise o mapa"
+
+Faça colaborativamente 
+
+5-1 Edite o mapa
+5-2 Acompanhe as atualizações de outros usuários
+5-3 Receba notificações
+5-4 Dissemine nas redes sociais
+
+Participe da rede
+
+Header: Faca parte da rede de usuarios para trocar experiencias e participar de formacoes
+6-1 Abaixo do header e acima das secoes "Lista de e-mails", "Grupo no Facebook" e "E gratuito"
