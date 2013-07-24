@@ -470,7 +470,6 @@ define(function(require) {
       this.addComponent('map/controls::DrawingManager');
       this.addComponent('map/controls::DrawingControl');
       this.addComponent('map/controls::GeometrySelector');
-      this.addComponent('map/controls::SupporterBox');
       this.addComponent('map/controls::PerimeterSelector');
       this.addComponent('map/controls::SearchBox');
     }
@@ -518,7 +517,6 @@ define(function(require) {
       this.addComponent('map/controls::StreetView');
       this.addComponent('map/controls::Tooltip', 'tooltip');
       this.addComponent('map/controls::InfoWindow', 'infoWindow');
-      this.addComponent('map/controls::SupporterBox');
       this.addComponent('map/controls::LicenseBox');
       this.addComponent('map/controls::SearchBox');
       this.addComponent('map/controls::FeatureFilter');

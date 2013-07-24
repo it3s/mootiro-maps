@@ -340,7 +340,7 @@ define (require) ->
             @addComponent 'map/controls::DrawingManager'
             @addComponent 'map/controls::DrawingControl'
             @addComponent 'map/controls::GeometrySelector'
-            @addComponent 'map/controls::SupporterBox'
+            #@addComponent 'map/controls::SupporterBox'
             @addComponent 'map/controls::PerimeterSelector'
             @addComponent 'map/controls::SearchBox'
 
@@ -372,7 +372,7 @@ define (require) ->
             @addComponent 'map/controls::StreetView'
             @addComponent 'map/controls::Tooltip', 'tooltip'
             @addComponent 'map/controls::InfoWindow', 'infoWindow'
-            @addComponent 'map/controls::SupporterBox'
+            #@addComponent 'map/controls::SupporterBox'
             @addComponent 'map/controls::LicenseBox'
             @addComponent 'map/controls::SearchBox'
             @addComponent 'map/controls::FeatureFilter'
