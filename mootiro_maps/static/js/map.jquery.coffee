@@ -42,6 +42,8 @@ define ['jquery', 'map/maps'], ($, maps) ->
                         $(window).resize map: map, fixMapSize
                         $(window).resize()
 
+                    map.setProjectId(opts.project) if opts.project?
+
             edit: (feature) ->
                 $(this).data('map')?.editFeature feature
                 $(this)

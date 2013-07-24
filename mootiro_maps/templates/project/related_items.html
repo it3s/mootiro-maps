@@ -1,6 +1,7 @@
-{% extends "komoo_map/related_items.html" %}
-{% load i18n %}
+{% extends "global.html" %}
+{% load komoo_map_tags %}
 {% load komoo_tags %}
+{% load i18n %}
 
 {% block facebook_meta %}
   <meta property="og:title" content="{{project.name}} - MootiroMaps" />
@@ -14,6 +15,10 @@
 
 {% block menu %} {% menu "project" %} {% endblock %}
 
+{% block content %}
+{% komoo_map geojson project.id 'ajax=false' 'type=main' 'width=100%' 'height=100%' 'zoom=13' %}
+{% endblock %}
+
 {% block page_scripts %}
   {{ block.super }}
 
@@ -23,13 +28,13 @@
       <div style="clear: both;"></div>
   </script>
 
-    <link rel="stylesheet" type="text/css" href="/static/spock_gallery/jquery.spock-gallery.css">
-    <script type="text/javascript" src="/static/spock_gallery/jquery.spock-gallery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/spock_gallery/jquery.spock-gallery.css">
+  <script type="text/javascript" src="/static/spock_gallery/jquery.spock-gallery.min.js"></script>
 
   <script type="text/javascript">
     if (typeof window.KomooNS === 'undefined') window.KomooNS = {};
     KomooNS.obj = {{ project|jsonify|safe }};
-    require(['project/project_related_items']);
+    //require(['project/project_related_items']);
   </script>
 
 <style type="text/css">
@@ -73,3 +78,6 @@
 </style>
 
 {% endblock %}
+
+{% block footer %}{% endblock %}
+

@@ -1106,6 +1106,7 @@ define(function(require) {
     };
 
     FeatureClusterer.prototype.beforeFeatureSetVisibleHook = function(feature, visible) {
+      if (this.map.getProjectId() != null) return [feature, visible];
       return [feature, visible && this.map.getZoom() > this.maxZoom];
     };
 
@@ -1222,6 +1223,7 @@ define(function(require) {
     };
 
     FeatureClusterer.prototype.push = function(feature) {
+      if (this.map.getProjectId() != null) return;
       if (feature.getMarker()) {
         this.features.push(feature);
         feature.getMarker().setVisible(true);
@@ -1601,6 +1603,7 @@ define(function(require) {
 
     FeatureZoomFilter.prototype.beforeFeatureSetVisibleHook = function(feature, visible) {
       var visible_, zoom;
+      if (this.map.getProjectId() != null) return [feature, visible];
       zoom = this.map.getZoom();
       visible_ = visible && ((feature.featureType.minZoomPoint <= zoom && feature.featureType.maxZoomPoint >= zoom) || (feature.featureType.minZoomGeometry <= zoom && feature.featureType.maxZoomGeometry >= zoom));
       return [feature, visible_];

@@ -152,8 +152,9 @@ class Project(models.Model):
 
     @property
     def related_items(self):
-        return itertools.chain(self.all_contributors,
-                               self.filter_related_items(Q(), get_models()))
+        #return itertools.chain(self.all_contributors,
+        #                       self.filter_related_items(Q(), get_models()))
+        return self.filter_related_items(Q(), get_models())
 
     @property
     def json(self):

@@ -33,7 +33,9 @@
         featureTypes: featureTypes,
         geojson: geojson_{{ type }},
         height: '{{ height|default:'200px' }}',
-        width: '{{ width|default:'200px' }}'
+        width: '{{ width|default:'200px' }}',
+        ajax: '{{ ajax }}'.toLowerCase() === 'true',
+        project: {{ project|default:'undefined' }}
       });
       var map = $map.data('map');
       {{ type }} = map;

@@ -68,8 +68,6 @@ define (require) ->
 
         handleMapEvents: ->
             @map.subscribe 'idle', =>
-                return if @enabled is off
-
                 bounds = @map.googleMap.getBounds()
                 @keptFeatures.forEach (feature) =>
                     if not bounds.intersects feature.getBounds()
@@ -107,7 +105,9 @@ define (require) ->
             addr = @getAddrLatLng coord, zoom
             div.addr = addr
 
-            return div if @enabled is off
+            if @enabled is off or @map.options.ajax is false
+                @map.publish 'features_request_completed'
+                return div
 
             # Verifies if we already loaded this block
             d = new Date()
@@ -165,7 +165,7 @@ define (require) ->
             baseUrl = super coord, zoom
             models = []
             for featureTypeName, featureType of @map.featureTypes
-                if featureTypeName is 'Community' or  # should always display communities
+                if @map.getProjectId()? or featureTypeName is 'Community' or  # should always display communities
                   (featureType.minZoomPoint <= zoom and featureType.maxZoomPoint >= zoom) or
                   (featureType.minZoomGeometry <= zoom and featureType.maxZoomGeometry >= zoom)
                     models.push "#{featureType.appLabel}.#{featureType.modelName}"

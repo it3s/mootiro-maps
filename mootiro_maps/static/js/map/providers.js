@@ -100,7 +100,6 @@ define(function(require) {
       var _this = this;
       this.map.subscribe('idle', function() {
         var bounds;
-        if (_this.enabled === false) return;
         bounds = _this.map.googleMap.getBounds();
         _this.keptFeatures.forEach(function(feature) {
           if (!bounds.intersects(feature.getBounds())) return feature.setMap(null);
@@ -151,7 +150,10 @@ define(function(require) {
       div = ownerDocument.createElement('DIV');
       addr = this.getAddrLatLng(coord, zoom);
       div.addr = addr;
-      if (this.enabled === false) return div;
+      if (this.enabled === false || this.map.options.ajax === false) {
+        this.map.publish('features_request_completed');
+        return div;
+      }
       d = new Date();
       if (this.fetchedTiles[addr] && (d - this.fetchedTiles[addr].date <= this.expiration)) {
         if (typeof (_base2 = this.fetchedTiles[addr].features).setMap === "function") {
@@ -234,7 +236,7 @@ define(function(require) {
       _ref = this.map.featureTypes;
       for (featureTypeName in _ref) {
         featureType = _ref[featureTypeName];
-        if (featureTypeName === 'Community' || (featureType.minZoomPoint <= zoom && featureType.maxZoomPoint >= zoom) || (featureType.minZoomGeometry <= zoom && featureType.maxZoomGeometry >= zoom)) {
+        if ((this.map.getProjectId() != null) || featureTypeName === 'Community' || (featureType.minZoomPoint <= zoom && featureType.maxZoomPoint >= zoom) || (featureType.minZoomGeometry <= zoom && featureType.maxZoomGeometry >= zoom)) {
           models.push("" + featureType.appLabel + "." + featureType.modelName);
         }
       }

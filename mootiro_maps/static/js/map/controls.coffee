@@ -842,6 +842,7 @@ define (require)->
             'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
 
         beforeFeatureSetVisibleHook: (feature, visible) ->
+            return [feature, visible] if @map.getProjectId()?
             [feature, visible and @map.getZoom() > @maxZoom]
 
         init: (@options = {}) ->
@@ -910,6 +911,7 @@ define (require)->
         getAt: (index) -> @features[index]
 
         push: (feature) ->
+            return if @map.getProjectId()?
             if feature.getMarker()
                 @features.push feature
                 feature.getMarker().setVisible true
@@ -1122,6 +1124,7 @@ define (require)->
             'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
 
         beforeFeatureSetVisibleHook: (feature, visible) ->
+            return [feature, visible] if @map.getProjectId()?
             zoom = @map.getZoom()
             visible_ = visible and (
                 (feature.featureType.minZoomPoint <= zoom and
