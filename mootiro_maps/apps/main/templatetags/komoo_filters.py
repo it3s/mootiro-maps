@@ -1,13 +1,9 @@
 # -*- coding:utf-8 -*-
 from __future__ import unicode_literals
-import re
-from datetime import date, datetime, timedelta
+from datetime import date, datetime
 
 from django import template
-from django.conf import settings
 from django.template import defaultfilters
-from django.utils.encoding import force_unicode
-from django.utils.formats import number_format
 from django.utils.translation import pgettext, ungettext, ugettext as _
 
 register = template.Library()
@@ -16,11 +12,11 @@ register = template.Library()
 # Code from django.contrib.humanize.templatetags
 @register.filter
 def naturaltime(value):
-    """
-    For date and time values shows how many seconds, minutes or hours ago
+    """For date and time values shows how many seconds, minutes or hours ago
     compared to current timestamp returns representing string.
+
     """
-    if not isinstance(value, date): # datetime is a subclass of date
+    if not isinstance(value, date):  # datetime is a subclass of date
         return value
 
     # These two lines below are only available in django 1.4
@@ -66,7 +62,8 @@ def naturaltime(value):
             return _('now')
         elif delta.seconds < 60:
             return ungettext(
-                'a second from now', '%(count)s seconds from now', delta.seconds
+                'a second from now', '%(count)s seconds from now',
+                delta.seconds
             ) % {'count': delta.seconds}
         elif delta.seconds // 60 < 60:
             count = delta.seconds // 60

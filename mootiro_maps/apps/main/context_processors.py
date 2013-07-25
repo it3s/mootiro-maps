@@ -3,8 +3,8 @@ from django.middleware.csrf import get_token
 
 
 def komoo_namespace(request):
-    """
-    Sets implicit values for the KommoNS variable.
+    """Sets implicit values for the KommoNS variable.
+
     This variable is used to set the application's javascript namespace.
 
     Returns:
@@ -17,6 +17,7 @@ def komoo_namespace(request):
             development.
         csrf_token: token for cross-site request forgery protection.
         staticUrl: our configured statics url root.
+
     """
     user_dict = request.user.to_dict()
     user = {
@@ -29,14 +30,13 @@ def komoo_namespace(request):
         'KomooNS': {
             'isAuthenticated': request.user.is_authenticated(),
             'user_data': user,
-            'lang': getattr(request, 'LANGUAGE_CODE', None) or
-                    settings.LANGUAGE_CODE,
+            'lang': (getattr(request, 'LANGUAGE_CODE', None) or
+                     settings.LANGUAGE_CODE),
             'facebookAppId': settings.FACEBOOK_APP_ID,
-            'require_baseUrl': settings.STATIC_URL + ('js'
-                                    if settings.DEBUG else 'js.build'),
+            'require_baseUrl': (settings.STATIC_URL +
+                                'js' if settings.DEBUG else 'js.build'),
             'csrf_token': get_token(request),
             'staticUrl': settings.STATIC_URL,
         },
         'SITE_URL': settings.SITE_URL,
     }
-

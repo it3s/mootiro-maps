@@ -38,6 +38,17 @@ except ImportError:
 
 def create_geojson(objects, type_='FeatureCollection', convert=True,
                    discard_empty=False):
+    """Create a geojson representation from a list of objects.
+
+    Params:
+        objects: a iterable of objects to be included in the geojson.
+        type: the geojson type to be created.
+        convert: if True the return value is a geojson string, otherwise is a
+            dictionary. (Default: True)
+        discart_empty: if true removes from geojson the objects without a
+            geometric value. (Default: False)
+
+    """
     if type_ == 'FeatureCollection':
         geojson = {
             'type': 'FeatureCollection',
@@ -69,8 +80,8 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
                 return {}
 
             name = getattr(obj, 'name', getattr(obj, 'title', ''))
-            last_update = obj.last_update.isoformat(b' ') if getattr(obj,
-                    'last_update', None) else ''
+            last_update = (obj.last_update.isoformat(b' ')
+                           if getattr(obj, 'last_update', None) else '')
             area = getattr(obj, 'area', 0)
 
             feature = {
@@ -86,8 +97,9 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
             }
             if hasattr(obj, 'categories'):
                 feature['properties']['categories'] = [
-                        {'name': c.name, 'image': c.image}
-                        for c in obj.categories.all()]
+                    {'name': c.name, 'image': c.image}
+                    for c in obj.categories.all()
+                ]
             if hasattr(obj, 'population'):
                 feature['properties']['population'] = obj.population
 
@@ -109,16 +121,18 @@ class MooHelper(FormHelper):
 
 
 def paginated_query(query, request=None, page=None, size=None):
-    """
-    Do the boring/repetitive pagination routine.
+    """Do the boring/repetitive pagination routine.
+
     Expects a request with page and size attributes
-    params:
+
+    Params:
         query: any queryset objects
         request:  a django HttpRequest (GET)
            page: page attr on request.GET (default: 1)
            size: size attr on request.GET (default: 10)
         size: size of each page
         page: number of the current page
+
     """
     page = page or request.GET.get('page', '')
     size = size or request.GET.get('size', 10)
@@ -140,11 +154,12 @@ date_order_map = {
 
 
 def sorted_query(query_set, sort_fields, request, default_order='name'):
-    """
-    Used for handle listing sorters
-    params:
+    """Used for handle listing sorters.
+
+    Params:
         query_set: any query set object or manager
         request: the HttpRequest obejct
+
     """
     query_set = query_set.all()
     sort_order = {k: i for i, k in enumerate(sort_fields)}
@@ -196,8 +211,9 @@ def filtered_query(query_set, request):
 
 
 def templatetag_args_parser(*args):
-    """
-    Keyword-arguments like function parser. Designed to be used in templatetags
+    """ Keyword-arguments like function parser. Designed to be used in
+    templatetags.
+
     Usage:
     ```
         def mytemplatetag(..., arg1='', arg2='', arg3=''):
@@ -237,14 +253,15 @@ def render_markup(text):
 def send_mail(title='', message='',
               sender='MootiroMaps <no-reply@it3s.mailgun.org>', receivers=[],
               html=False):
-    '''
-    function for sending mails. If we are on debug (development) se will be
-    sent by django mailer else will use the mailgun api.
-    mailer.
-    '''
+    """Function for sending mails.
+
+    If we are on debug (development) the email message will be sent by django
+    mailer, otherwise we will use the mailgun api.
+
+    """
     if settings.DEBUG and not html:
         django_send_mail(title, message, sender, receivers,
-                            fail_silently=False)
+                         fail_silently=False)
     else:
         data = {
             'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
@@ -274,9 +291,9 @@ def get_handler_method(request_handler, http_method):
 
 
 class ResourceHandler:
-    """
-    Base class for REST-like resources.
-    usage:
+    """Base class for REST-like resources.
+
+    Usage:
 
       on views.py
           ```
@@ -291,6 +308,7 @@ class ResourceHandler:
 
       on urls.py
         url('^my_resource/$', views.SomeResource.dispatch, name='resource')
+
     """
     http_methods = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE']
 
@@ -304,8 +322,8 @@ class ResourceHandler:
             if handler_method:
                 return handler_method(request, *args, **kwargs)
 
-        methods = [method for method in cls.http_methods if get_handler_method(
-                                            request_handler, method)]
+        methods = [method for method in cls.http_methods
+                   if get_handler_method(request_handler, method)]
         if len(methods) > 0:
             # http 405: method not allowed
             return HttpResponseNotAllowed(methods)
@@ -314,6 +332,7 @@ class ResourceHandler:
 
 
 def randstr(l=10):
+    """Generate a random string."""
     chars = letters + digits
     s = ''
     for i in range(l):
@@ -325,24 +344,25 @@ def randstr(l=10):
 
 
 def datetime_to_iso(datetime_obj):
-    """ parses a python datetime object to a ISO-8601 string """
+    """Parses a python datetime object to a ISO-8601 string."""
     if datetime_obj is None:
         return None
     return datetime_obj.isoformat()
 
 
 def iso_to_datetime(iso_string):
-    """ parses a ISO-8601 string into a python datetime object """
+    """Parses a ISO-8601 string into a python datetime object."""
     if iso_string is None:
         return None
     return dateutil_parse(iso_string)
 
 
 def parse_accept_header(request):
-    """
-    Parse the Accept header *accept*, returning a list with pairs of
-    (media_type, q_value), ordered by q values.
+    """Parse the Accept header *accept*.
+
+    returns a list with pairs of (media_type, q_value), ordered by q values.
     ref: http://djangosnippets.org/snippets/1042/
+
     """
     accept = request.META.get('HTTP_ACCEPT', '')
     result = []
@@ -363,9 +383,9 @@ def parse_accept_header(request):
 
 
 class ResourceHandler:
-    """
-    Base class for REST-like resources.
-    usage:
+    """Base class for REST-like resources.
+
+    Usage:
 
       on views.py
       ```
@@ -377,8 +397,10 @@ class ResourceHandler:
         def post(self, request, document_id):
           # your viewcode for POST request go here
       ```
+
       on urls.py
         url('^my_resource/$', views.SomeResource.dispatch, name='resource')
+
     """
     http_methods = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'OPTIONS', 'TRACE']
 
@@ -388,7 +410,7 @@ class ResourceHandler:
         return cls.dispatch
 
     def _get_handler_method(self, request_handler, http_method):
-        """ Utility function for the Resource Class dispacther."""
+        """Utility function for the Resource Class dispacther."""
         try:
             handler_method = getattr(request_handler, http_method.lower())
             if callable(handler_method):
@@ -410,7 +432,7 @@ class ResourceHandler:
                 return handler_method(request, *args, **kwargs)
 
         methods = [method for method in req_handler.http_methods if
-                req_handler._get_handler_method(req_handler, method)]
+                   req_handler._get_handler_method(req_handler, method)]
         if len(methods) > 0:
             # http 405: method not allowed
             return HttpResponseNotAllowed(methods)
@@ -419,7 +441,7 @@ class ResourceHandler:
 
 
 def filter_dict(data, keys):
-    """ remove unnecessary data """
+    ""R"emove unnecessary data from dict."""
     data = deepcopy(data)
     for k in keys:
         if k in data:
@@ -433,20 +455,18 @@ def get_fields_to_show(request, default=['all']):
 
 
 def get_json_data(request):
-    """
-    get raw json data from request.
-    Usefull for requests from Backbone.sync
-    """
+    """Get raw json data from request. Usefull for requests from
+    Backbone.sync."""
     return simplejson.loads(request.raw_post_data)
 
 
 def _to_json_default(obj):
-    """
-    Converts non default objects to json
-    usage:
-        simplejson.dumps(data, default=to_json)
-    """
+    """Helper to convert non default objects to json.
 
+    Usage:
+        simplejson.dumps(data, default=_to_json_default)
+
+    """
     # Geometries
     if getattr(obj, 'geojson', None):
         return simplejson.dumps(obj.geojson)
@@ -462,13 +482,14 @@ def _to_json_default(obj):
 
 
 def to_json(data):
+    """Convert non default objects to json."""
     return simplejson.dumps(data, default=_to_json_default)
 
 
 class JsonResponse(HttpResponse):
-    """
-    Creates a Json Response. The Http status code can be changed.
-    usage:
+    """Creates a Json Response. The Http status code can be changed.
+
+    Usage:
         ```
             def my_view(request):
                 # some code
@@ -481,29 +502,30 @@ class JsonResponse(HttpResponse):
     def __init__(self, data={}, status_code=None):
         content = to_json(data)
         super(JsonResponse, self).__init__(content=content,
-                    mimetype='application/json')
+                                           mimetype='application/json')
         if status_code:
             self.status_code = status_code
 
 
 class JsonResponseError(JsonResponse):
-    """ Json Response for errors """
+    """Json Response for errors."""
     def __init__(self, error={}, status_code=400):
         super(JsonResponseError, self).__init__(
-                {'errors': error}, status_code=status_code)
+            {'errors': error}, status_code=status_code
+        )
 
 
 class JsonResponseNotFound(JsonResponseError):
-    """ Json Response for 404 Not Found error """
+    """Json Response for 404 Not Found error."""
     def __init__(self, msg=''):
         err = 'Not found'
         super(JsonResponseNotFound, self).__init__(
-                err if not msg else '{}: {}'.format(err, msg),
-                status_code=404)
+            err if not msg else '{}: {}'.format(err, msg), status_code=404
+        )
 
 
 def build_obj_from_dict(obj, data, keys=[], date_keys=[]):
-    """ utility function for being use with .from_dict() methods """
+    """Utility function for being use with .from_dict() methods."""
     for key, val in data.iteritems():
         if key in keys:
             if key in date_keys and isinstance(val, basestring):
@@ -513,12 +535,10 @@ def build_obj_from_dict(obj, data, keys=[], date_keys=[]):
 
 
 def get_model_from_table_ref(table_ref):
-    """
-    given a table_ref like 'app_label.class_name', return the refered model
-    """
+    """Given a table_ref like 'app_label.class_name', return the refered
+    model."""
     module_name, model_name = table_ref.split('.')
     module = __import__(module_name)
     models = getattr(module, 'models')
     model = getattr(models, model_name)
     return model
-

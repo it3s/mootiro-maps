@@ -58,41 +58,53 @@ def menu(context, selected_area=''):
 
 @register.inclusion_tag('main/templatetags/geo_objects_listing.html')
 def geo_objects_listing(arg1='', arg2='', arg3='', arg4=''):
-    """Usage: {% geo_objects_listing [show_categories] [switchable] [prefix] [hide_names] %}"""
+    """Create a html with the list of object types that contains geometric
+    info.
+
+    Usage:
+        {% geo_objects_listing [show_categories] [switchable] [prefix]
+        [hide_names] %}
+
+     """
     parsed_args = templatetag_args_parser(arg1, arg2, arg3, arg4)
-    show_categories = parsed_args.get('show_categories', 'False').lower() == 'true'
+    show_categories = (
+        parsed_args.get('show_categories', 'False').lower() == 'true'
+    )
     switchable = parsed_args.get('switchable', 'False').lower() == 'true'
     hide_names = parsed_args.get('hide_names', 'False').lower() == 'true'
     prefix = parsed_args.get('prefix', '')
 
     img = {
         'communities': Community.image,
-        'communities_off': Community.image_off if switchable else Community.image,
+        'communities_off': (Community.image_off
+                            if switchable else Community.image),
         'needs': Need.image,
         'needs_off': Need.image_off if switchable else Need.image,
         'organizations': Organization.image,
-        'organizations_off': Organization.image_off if switchable else Organization.image,
+        'organizations_off': (Organization.image_off
+                              if switchable else Organization.image),
         'resources': Resource.image,
         'resources_off': Resource.image_off if switchable else Resource.image,
     }
 
-    image_field = lambda image, image_off: \
-        forms.BooleanField(
-            widget=ImageSwitch(image_tick=image, image_no_tick=image_off, prefix=prefix)
-        )
+    image_field = lambda image, image_off: forms.BooleanField(
+        widget=ImageSwitch(image_tick=image, image_no_tick=image_off,
+                           prefix=prefix)
+    )
 
     class GeoObjectsForm(forms.Form):
         communities = image_field(img['communities'], img['communities_off'])
         needs = image_field(img['needs'], img['needs_off'])
-        organizations = image_field(img['organizations'], img['organizations_off'])
+        organizations = image_field(img['organizations'],
+                                    img['organizations_off'])
         resources = image_field(img['resources'], img['resources_off'])
 
         need_categories = forms.ModelMultipleChoiceField(
             queryset=NeedCategory.objects.all().order_by('name'),
             widget=ImageSwitchMultiple(
                 get_image_tick=NeedCategory.get_image,
-                get_image_no_tick=NeedCategory.get_image_off if switchable \
-                                    else NeedCategory.get_image,
+                get_image_no_tick=(NeedCategory.get_image_off if switchable
+                                   else NeedCategory.get_image),
                 show_names=True,
                 prefix=prefix
             )
@@ -101,15 +113,12 @@ def geo_objects_listing(arg1='', arg2='', arg3='', arg4=''):
     form = GeoObjectsForm()
 
     return dict(form=form, show_categories=show_categories,
-            hide_names=hide_names)
+                hide_names=hide_names)
 
 
 @register.inclusion_tag('main/templatetags/geo_objects_add.html')
 def geo_objects_add(arg1='', arg2='', arg3=''):
     """Usage: {% geo_objects_add [prefix] %}"""
-    parsed_args = templatetag_args_parser(arg1, arg2, arg3)
-    prefix = parsed_args.get('prefix', '')
-
     img = {
         'communities': Community.image,
         'needs': Need.image,
@@ -122,40 +131,52 @@ def geo_objects_add(arg1='', arg2='', arg3=''):
 
 @register.inclusion_tag('main/templatetags/history.html')
 def history(obj):
+    """Create a html code with the history info about the object."""
     if hasattr(obj, 'creator') and obj.creator:
         creator_link = '<a href="{}">{}</a>'.format(
-                obj.creator.view_url, obj.creator.name)
+            obj.creator.view_url, obj.creator.name
+        )
     else:
         creator_link = ''
     if hasattr(obj, 'last_editor') and obj.last_editor:
         lasteditor_link = '<a href="{}">{}</a>'.format(
-                obj.last_editor.view_url, obj.last_editor.name)
+            obj.last_editor.view_url, obj.last_editor.name
+        )
     else:
         lasteditor_link = ''
-    return dict(obj=obj, creator_link=creator_link, last_editor=lasteditor_link)
+    return dict(
+        obj=obj, creator_link=creator_link, last_editor=lasteditor_link
+    )
 
 
-@register.inclusion_tag('main/templatetags/track_buttons.html', takes_context=True)
+@register.inclusion_tag('main/templatetags/track_buttons.html',
+                        takes_context=True)
 def track_buttons(context, obj=None):
+    """Create a html code with the buttons used to track the object
+    modifications."""
     is_signed = ''
     if obj:
         content_type = ContentType.objects.get_for_model(obj)
-        if Signature.objects.filter(content_type=content_type, object_id=obj.id,
-            user=context.get('user', None).id).count():
+        if Signature.objects.filter(
+            content_type=content_type, object_id=obj.id,
+            user=context.get('user', None).id
+        ).count():
             is_signed = 'signed-content'
     else:
         content_type = ''
     return dict(context=context, obj=obj, content_type=content_type,
-        is_signed=is_signed)
+                is_signed=is_signed)
 
 
 @register.inclusion_tag('main/templatetags/social_buttons.html')
 def social_buttons():
+    """Create a html code with buttons to interact with social services."""
     return dict()
 
 
 @register.inclusion_tag('main/templatetags/taglist.html')
 def taglist(obj, community=None):
+    """Create a html code with a list of tags related with the object."""
     sorter = 'name'
     if isinstance(obj, Resource):
         link = reverse('resource_list')
@@ -173,8 +194,11 @@ def taglist(obj, community=None):
     return dict(object=obj, link=link, sorter=sorter)
 
 
+# TODO: move filter to komoo_filters.py
+
 @register.filter
 def jsonify(object):
+    """Convert the given object to its json representation."""
     if isinstance(object, QuerySet):
         return serialize('json', object)
     if hasattr(object, 'json'):
@@ -183,51 +207,63 @@ def jsonify(object):
     # return simplejson.dumps(object)
 # jsonify.is_safe = True
 
+
 @register.filter
 def to_json(object):
+    """Alias to `jsonify` filter."""
     return jsonify(object)
+
 
 @register.filter
 def linkencode(val):
     return urllib2.quote(val.encode('latin-1'))
 
+
 @register.filter
 def first_name(name):
+    """Return just the first name."""
     return name.split(' ')[0]
+
 
 @register.inclusion_tag('main/templatetags/pagination.html')
 def pagination(collection):
+    """Creat a html code with pagination links."""
     return dict(collection=collection)
 
 
 @register.filter
 def with_http(link):
-    """prepends http:// to a given link if it does not already have"""
+    """Prepend http:// to a given link if it does not already have."""
     return 'http://{link}'.format(link=link) if not 'http://' in link else link
 
 
 @register.filter
 def split(entry, splitter):
+    """Split the entry given."""
     return entry.split(splitter)
 
 
 @register.filter
 def page_num(num, div):
+    """Return the page number."""
     return str(int((num // div) + 1))
 
 
 @register.filter
 def total_pages(num, div):
+    """Return the total number of pages."""
     return int(math.ceil(num / div))
 
 
 @register.filter
 def class_name(value):
+    """Return the class name from the object given."""
     return value.__class__.__name__
 
 
 @register.filter
 def ctype_trans_name(value):
+    """Return the readable name from the content type name."""
     name_mapper = {
         'organization': _('Organization'),
         'resource': _('Resource'),
@@ -241,11 +277,14 @@ def ctype_trans_name(value):
 
 @register.filter
 def get_range(value):
+    """Return a range."""
     return xrange(int(value))
 
 
 @register.filter
 def description_markdown_preview(desc):
+    """Return a markup preview truncated."""
+    # FIXME: remove unclosed markup tags.
     text = desc[:250]
     text += ' ...' if len(desc) > 250 else ''
     return render_markup(text)
@@ -253,17 +292,20 @@ def description_markdown_preview(desc):
 
 @register.inclusion_tag('main/templatetags/usernames_list.html')
 def users_list(users):
+    """Create a html code with a list of users."""
     return dict(users=users)
 
 
 @register.inclusion_tag('main/templatetags/communities_list.html')
 def communities_list(communities):
+    """Create a html code with a list o communities."""
     return dict(communities=communities)
 
 
 def _get_widgets_dict(obj):
     tag_widget = TaggitWidget(autocomplete_url="/%s/search_tags/" % obj)
-    tag_widget = "%s \n %s" % (str(tag_widget.media), tag_widget.render('tags'))
+    tag_widget = "%s \n %s" % (str(tag_widget.media),
+                               tag_widget.render('tags'))
     # tag_widget = "<input id='id_tags' type='text'/>"
 
     community_widget = Autocomplete(Community, '/community/search_by_name')
@@ -275,8 +317,8 @@ def _get_widgets_dict(obj):
     need_categories_widget = "<input id='need_categories' type='hidden'/>\n"
     for nc in NeedCategory.objects.all().order_by('name'):
         need_categories_widget += """
-            <img src='/static/{0}' title='{3}' class='nc_filter' ncid='{2}'/>
-            <img src='/static/{1}' title='{3}' class='nc_filter hidden' ncid='{2}'/>
+    <img src='/static/{0}' title='{3}' class='nc_filter' ncid='{2}'/>
+    <img src='/static/{1}' title='{3}' class='nc_filter hidden' ncid='{2}'/>
         """.format(nc.image_off, nc.image, nc.id, nc.name)
     need_categories_widget += """
         <script type="text/javascript">
@@ -297,11 +339,13 @@ def _get_widgets_dict(obj):
     """
     ##################################
 
-    target_audience_widget = TaggitWidget(autocomplete_url="/need/target_audience_search/")
-    target_audience_widget = "%s \n %s" % (str(target_audience_widget.media),
-                                target_audience_widget.render('target_audiences'))
-    # target_audience_widget = target_audience_widget.render('target_audiences')
-    # target_audience_widget = "<input id='id_target_audiences' type='text'/>"
+    target_audience_widget = TaggitWidget(
+        autocomplete_url="/need/target_audience_search/"
+    )
+    target_audience_widget = "%s \n %s" % (
+        str(target_audience_widget.media),
+        target_audience_widget.render('target_audiences')
+    )
 
     # filters
     return {
@@ -312,13 +356,17 @@ def _get_widgets_dict(obj):
     }
 
 
-@register.inclusion_tag('main/templatetags/visualization_opts.html', takes_context=True)
+@register.inclusion_tag('main/templatetags/visualization_opts.html',
+                        takes_context=True)
 def visualization_opts(context, obj, arg1='', arg2=''):
-    """
-    Templatetag for visualization options (sorters and filters)
-    usage:
-        {% visualization_opts 'resource' "filters=['tags']" "sorters=['name', 'creation_date']" %}
-        {% visualization_opts 'organization' "sorters=['name', 'creation_date']"}
+    """Templatetag for visualization options (sorters and filters).
+
+    Usage:
+        {% visualization_opts 'resource' "filters=['tags']"
+        "sorters=['name', 'creation_date']" %}
+        {% visualization_opts 'organization'
+        "sorters=['name', 'creation_date']" %}
+
     """
     # parse options
     opts = {}
@@ -339,193 +387,196 @@ def visualization_opts(context, obj, arg1='', arg2=''):
     }
 
     # sorters
-    sort_fields = [(field_labels[field], field) for field in opts.get('sorters', [])]
+    sort_fields = [
+        (field_labels[field], field) for field in opts.get('sorters', [])
+    ]
 
     # filters
     field_widgets = _get_widgets_dict(obj)
-    filter_fields = [(field, field_labels[field], field_widgets[field]) \
-                        for field in opts.get('filters', [])]
+    filter_fields = [
+        (field, field_labels[field], field_widgets[field])
+        for field in opts.get('filters', [])
+    ]
 
     return  dict(filters=filter_fields, sorters=sort_fields)
 
 
 @register.simple_tag(takes_context=True)
 def visualization_opts_js(context):
+    # FIXME: this javascript code should not be inside a python file.
     return """
-    <script type="text/javascript">
+<script type="text/javascript">
+  $(function(){
 
-        $(function(){
+    /* Visualization Option */
+    /*$('.view-list-visualization-header').click(function(){
+      $('.view-list-visualization-options').slideToggle();
+      $('.view-list-visualization-header i').toggleClass('icon-chevron-right');
+      $('.view-list-visualization-header i').toggleClass('icon-chevron-down');
+    });*/
 
-
-          /* Visualization Option */
-          /*$('.view-list-visualization-header').click(function(){
-            $('.view-list-visualization-options').slideToggle();
-            $('.view-list-visualization-header i').toggleClass('icon-chevron-right');
-            $('.view-list-visualization-header i').toggleClass('icon-chevron-down');
-          });*/
-
-          // if we made a query, open selectors
-          if(getUrlVars()['sorters'] || getUrlVars()['filters']){
-            $('.view-list-visualization-options').show();
-            $('.view-list-visualization-header i').removeClass('icon-chevron-right');
-            $('.view-list-visualization-header i').addClass('icon-chevron-down');
-            $.each( getUrlVars()['filters'].split(',') ,function(idx, field){
-              $('.view-list-filter-widget-wrapper[widget-for='+ field + ']').show();
-            });
-          }
-
-          // get sorters state
-          var _sorters = getUrlVars()['sorters'];
-          if (_sorters){
-            _sorters = _sorters.split(',');
-          }
-          if (_sorters && _sorters.length > 0 && _sorters[0]){
-            $.each(_sorters, function(idx, val){
-              $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
-              if (val.indexOf('date') !== -1){
-                date_order = getUrlVars()[val];
-                $('.date-sorter-order div[order=' + date_order + '] i').addClass('icon-active');
-              }
-            });
-          } else {
-            var main_field = $('.view-list-sorter-btn[sorter-name=name]');
-            if (!main_field.length) {
-              main_field = $('.view-list-sorter-btn[sorter-name=title]');
-            }
-            main_field.addClass('selected');
-          }
-
-          // get filters state
-          var _filters = getUrlVars()['filters'];
-          if (_filters){
-            _filters = _filters.split(',');
-          }
-          if (_filters && _filters.length > 0 && _filters[0]){
-            $.each(_filters, function(idx, val){
-              $('.view-list-filter-btn[filter-name=' + val + ']').addClass('selected');
-              if (val == 'tags') {
-                var tags = unescape(getUrlVars()['tags']);
-                tags = tags.split(',');
-                $.each(tags, function(idx, tag){
-                  if($.inArray(tag, $('#id_tags').val().split(',') ) == -1){
-                    $('#id_tags').addTag(tag);
-                  }
-                });
-              } else if (val == 'target_audiences') {
-                var target_audiences = unescape(getUrlVars()['target_audiences']);
-                target_audiences = target_audiences.split(',');
-                $.each(target_audiences, function(idx, tag){
-                  if($.inArray(tag, $('#id_target_audiences').val().split(',') ) == -1){
-                    $('#id_target_audiences').addTag(tag);
-                  }
-                });
-              } else if(val == 'community') {
-                var id = unescape(getUrlVars()[val]);
-                $.get('/community/get_name_for/'+ id +'/', {}, function(data){
-                  $('#id_community_autocomplete').val(data.name);
-                  $('#id_community').val(id);
-                });
-              }else {
-                var filter_val = unescape(getUrlVars()[val]);
-                $('.view-list-filter-widget[widget-for=' + val + '] input').val(filter_val);
-              }
-            });
-          }
-
-          // auto-fill community
-          var comm = {id: "%(comm_id)s", name: "%(comm_name)s"};
-          if (comm.id){
-            $('#id_community').val(comm.id);
-            $('#id_community_autocomplete').val(comm.name);
-
-            $('.view-list-visualization-options').show();
-            $('.view-list-visualization-header i').removeClass('icon-chevron-right');
-            $('.view-list-visualization-header i').addClass('icon-chevron-down');
-
-            $('.view-list-filter-btn[filter-name=community]').addClass('selected');
-            $('.view-list-filter-widget-wrapper[widget-for=community]').show();
-          }
-
-          // reset tagsinput styles
-          $('.view-list-filter-widget .tagsinput').attr('style', '');
-
-          // auto-fill need_categories
-          if ($("#need_categories").val()) {
-              nc_filter_arr = $("#need_categories").val().split(',');
-              $.each(nc_filter_arr, function(index, value){
-                  $(".nc_filter[ncid='"+value+"']").toggle();
-              })
-          }
-
-          // click on btn change classes.
-          $('.view-list-sorter-btn').click(function(){
-            var that = $(this);
-            that.toggleClass('selected');
-            if ( that.attr('sorter-name').indexOf('date') !== -1) {
-              if (that.hasClass('selected')) {
-                date_order = 'desc';
-                $('.date-sorter-order div[order=desc] i').addClass('icon-active');
-              } else {
-                date_order = '';
-                $('.date-sorter-order i').removeClass('icon-active');
-              }
-            }
-          });
-          $('.view-list-filter-btn').click(function(){
-            var that = $(this);
-            that.toggleClass('selected');
-            var filter_name = that.attr('filter-name');
-            $('.view-list-filter-widget-wrapper[widget-for=' + filter_name + ']').slideToggle();
-          });
-
-          // get filters
-          window.getFilters = function(){
-
-            var sorters = [],
-                filters = [],
-                filter_fields = '';
-
-            $('.view-list-sorter-btn.selected').each(function(idx, val){
-              var sorter_name = $(val).attr('sorter-name');
-              sorters.push(sorter_name);
-              if ( sorter_name.indexOf('date') != -1) {
-                filter_fields += '&' + sorter_name + '=' + date_order;
-              }
-            });
-
-            $('.view-list-filter-btn.selected').each(function(idx, val){
-              var filter_name = $(val).attr('filter-name');
-              filters.push(filter_name);
-              filter_fields += '&' + filter_name + '=' +
-                escape($('.view-list-filter-widget[widget-for=' + filter_name + '] input').val());
-            });
-
-            return 'sorters=' + sorters.join() + '&filters=' + filters.join() + filter_fields;
-          };
-
-          $('#doFilter').click(function(){
-            window.location = location.pathname + '?' + getFilters();
-          });
-
-          $('.komoo-pagination a').click(function(evt){
-            var that = $(evt.target);
-            // if selectors are open
-            if ($('.view-list-visualization-header i').hasClass('icon-chevron-down')){
-              evt.preventDefault();
-              window.location = that.attr('href') + '&' + getFilters();
-            }
-          });
-
-          $('.date-sorter-order div').bind('click', function(){
-            $('.date-sorter-order div .icon-active').removeClass('icon-active');
-            $(this).find('i').toggleClass('icon-active');
-            date_order = $(this).attr('order');
-          });
-
+    // if we made a query, open selectors
+    if(getUrlVars()['sorters'] || getUrlVars()['filters']){
+      $('.view-list-visualization-options').show();
+      $('.view-list-visualization-header i').removeClass('icon-chevron-right');
+      $('.view-list-visualization-header i').addClass('icon-chevron-down');
+      $.each( getUrlVars()['filters'].split(',') ,function(idx, field){
+        $('.view-list-filter-widget-wrapper[widget-for='+ field + ']').show();
       });
-      </script>
-    """ % {
-      'comm_id': context['community'].id if context.get('community', None) else '',
-      'comm_name': context['community'].name if context.get('community', None) else ''}
+    }
 
+    // get sorters state
+    var _sorters = getUrlVars()['sorters'];
+    if (_sorters){
+      _sorters = _sorters.split(',');
+    }
+    if (_sorters && _sorters.length > 0 && _sorters[0]){
+      $.each(_sorters, function(idx, val){
+        $('.view-list-sorter-btn[sorter-name=' + val + ']').addClass('selected');
+        if (val.indexOf('date') !== -1){
+          date_order = getUrlVars()[val];
+          $('.date-sorter-order div[order=' + date_order + '] i').addClass('icon-active');
+        }
+      });
+    } else {
+      var main_field = $('.view-list-sorter-btn[sorter-name=name]');
+      if (!main_field.length) {
+        main_field = $('.view-list-sorter-btn[sorter-name=title]');
+      }
+      main_field.addClass('selected');
+    }
 
+    // get filters state
+    var _filters = getUrlVars()['filters'];
+    if (_filters){
+      _filters = _filters.split(',');
+    }
+    if (_filters && _filters.length > 0 && _filters[0]){
+      $.each(_filters, function(idx, val){
+        $('.view-list-filter-btn[filter-name=' + val + ']').addClass('selected');
+        if (val == 'tags') {
+          var tags = unescape(getUrlVars()['tags']);
+          tags = tags.split(',');
+          $.each(tags, function(idx, tag){
+            if($.inArray(tag, $('#id_tags').val().split(',') ) == -1){
+              $('#id_tags').addTag(tag);
+            }
+          });
+        } else if (val == 'target_audiences') {
+          var target_audiences = unescape(getUrlVars()['target_audiences']);
+          target_audiences = target_audiences.split(',');
+          $.each(target_audiences, function(idx, tag){
+            if($.inArray(tag, $('#id_target_audiences').val().split(',') ) == -1){
+              $('#id_target_audiences').addTag(tag);
+            }
+          });
+        } else if(val == 'community') {
+          var id = unescape(getUrlVars()[val]);
+          $.get('/community/get_name_for/'+ id +'/', {}, function(data){
+            $('#id_community_autocomplete').val(data.name);
+            $('#id_community').val(id);
+          });
+        }else {
+          var filter_val = unescape(getUrlVars()[val]);
+          $('.view-list-filter-widget[widget-for=' + val + '] input').val(filter_val);
+        }
+      });
+    }
+
+    // auto-fill community
+    var comm = {id: "%(comm_id)s", name: "%(comm_name)s"};
+    if (comm.id){
+      $('#id_community').val(comm.id);
+      $('#id_community_autocomplete').val(comm.name);
+
+      $('.view-list-visualization-options').show();
+      $('.view-list-visualization-header i').removeClass('icon-chevron-right');
+      $('.view-list-visualization-header i').addClass('icon-chevron-down');
+
+      $('.view-list-filter-btn[filter-name=community]').addClass('selected');
+      $('.view-list-filter-widget-wrapper[widget-for=community]').show();
+    }
+
+    // reset tagsinput styles
+    $('.view-list-filter-widget .tagsinput').attr('style', '');
+
+    // auto-fill need_categories
+    if ($("#need_categories").val()) {
+        nc_filter_arr = $("#need_categories").val().split(',');
+        $.each(nc_filter_arr, function(index, value){
+            $(".nc_filter[ncid='"+value+"']").toggle();
+        })
+    }
+
+    // click on btn change classes.
+    $('.view-list-sorter-btn').click(function(){
+      var that = $(this);
+      that.toggleClass('selected');
+      if ( that.attr('sorter-name').indexOf('date') !== -1) {
+        if (that.hasClass('selected')) {
+          date_order = 'desc';
+          $('.date-sorter-order div[order=desc] i').addClass('icon-active');
+        } else {
+          date_order = '';
+          $('.date-sorter-order i').removeClass('icon-active');
+        }
+      }
+    });
+    $('.view-list-filter-btn').click(function(){
+      var that = $(this);
+      that.toggleClass('selected');
+      var filter_name = that.attr('filter-name');
+      $('.view-list-filter-widget-wrapper[widget-for=' + filter_name + ']').slideToggle();
+    });
+
+    // get filters
+    window.getFilters = function(){
+
+      var sorters = [],
+          filters = [],
+          filter_fields = '';
+
+      $('.view-list-sorter-btn.selected').each(function(idx, val){
+        var sorter_name = $(val).attr('sorter-name');
+        sorters.push(sorter_name);
+        if ( sorter_name.indexOf('date') != -1) {
+          filter_fields += '&' + sorter_name + '=' + date_order;
+        }
+      });
+
+      $('.view-list-filter-btn.selected').each(function(idx, val){
+        var filter_name = $(val).attr('filter-name');
+        filters.push(filter_name);
+        filter_fields += '&' + filter_name + '=' +
+          escape($('.view-list-filter-widget[widget-for=' + filter_name + '] input').val());
+      });
+
+      return 'sorters=' + sorters.join() + '&filters=' + filters.join() + filter_fields;
+    };
+
+    $('#doFilter').click(function(){
+      window.location = location.pathname + '?' + getFilters();
+    });
+
+    $('.komoo-pagination a').click(function(evt){
+      var that = $(evt.target);
+      // if selectors are open
+      if ($('.view-list-visualization-header i').hasClass('icon-chevron-down')){
+        evt.preventDefault();
+        window.location = that.attr('href') + '&' + getFilters();
+      }
+    });
+
+    $('.date-sorter-order div').bind('click', function(){
+      $('.date-sorter-order div .icon-active').removeClass('icon-active');
+      $(this).find('i').toggleClass('icon-active');
+      date_order = $(this).attr('order');
+    });
+  });
+</script>
+    """ % dict(
+        comm_id=(context['community'].id
+                 if context.get('community', None) else ''),
+        comm_name=(context['community'].name
+                   if context.get('community', None) else '')
+    )

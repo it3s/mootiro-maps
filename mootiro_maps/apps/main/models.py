@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext as _
@@ -19,25 +20,25 @@ from .mixins import BaseModel
 #
 
 class GenericRef(BaseModel):
-    """ Generic Ref used for the GenericRelation Table """
+    """Generic Ref used for the GenericRelation Table."""
     obj_table = models.CharField(max_length=1024)
     obj_id = models.IntegerField()
 
     def get_object(self):
-        """ get the 'true' object from the reference """
+        """Get the 'true' object from the reference."""
         model = get_model_from_table_ref(self.obj_table)
         return model.objects.get(id=self.obj_id)
 
     @classmethod
     def get_reference_for_object(cls, obj):
-        """ given a object, get the reference for it"""
-        ref, created = cls.get_or_create(
-                obj_table=obj.table_ref, obj_id=obj.id)
+        """Given a object, get the reference for it."""
+        ref, created = cls.get_or_create(obj_table=obj.table_ref,
+                                         obj_id=obj.id)
         return ref
 
 
 class GenericRelation(BaseModel):
-    """ Generic Relations Betwen any two objects"""
+    """Generic Relations Betwen any two objects."""
     obj1 = models.ForeignKey(GenericRef, related_name='relations_for_obj1')
     obj2 = models.ForeignKey(GenericRef, related_name='relations_for_obj2')
 
@@ -50,7 +51,7 @@ class GenericRelation(BaseModel):
 
     @classmethod
     def has_relation(cls, obj1, obj2):
-        """ check if any two object has a relation """
+        """Check if any two object has a relation."""
         # TODO: CHANGE-ME to **not** build the references
         ref_obj1 = GenericRef.get_reference_for_object(obj1)
         ref_obj2 = GenericRef.get_reference_for_object(obj2)
@@ -63,13 +64,14 @@ class GenericRelation(BaseModel):
 
     @classmethod
     def add_relation(cls, obj1, obj2, relation_type=None):
-        """ add (if dont exist) a relation betwen two objects """
+        """Add (if dont exist) a relation betwen two objects."""
         if not cls.has_relation(obj1, obj2):
             ref_obj1 = GenericRef.get_reference_for_object(obj1)
             ref_obj2 = GenericRef.get_reference_for_object(obj2)
 
             relation, created = GenericRelation.get_or_create(
-                    obj1=ref_obj1, obj2=ref_obj2, relation_type=relation_type)
+                obj1=ref_obj1, obj2=ref_obj2, relation_type=relation_type
+            )
 
             return relation
         else:
@@ -77,7 +79,7 @@ class GenericRelation(BaseModel):
 
     @classmethod
     def remove_relation(cls, obj1, obj2):
-        """ add (if dont exist) a relation betwen two objects """
+        """Add (if dont exist) a relation betwen two objects."""
         rel = GenericRelation.objects.filter(
             Q(
                 obj1__obj_id=obj1.id, obj1__obj_table=obj1.table_ref,
@@ -95,48 +97,52 @@ class GenericRelation(BaseModel):
 
 
 class _RelationsList(list):
-    """ utility extended list for relations in RelationsField descriptor"""
+    """Utility extended list for relations in RelationsField descriptor."""
     def __init__(self, descriptor, instance, queryset=None):
         self.descriptor = descriptor
         self.instance = instance
         self.qs = queryset
 
     def add(self, obj, relation_type=None):
-        """ add relation with an object """
+        """Add relation with an object."""
         return self.descriptor.add_relation(
-                self.instance, obj, relation_type=relation_type)
+            self.instance, obj, relation_type=relation_type
+        )
 
     def remove(self, obj):
-        """ remove relations with an object """
+        """Remove relations with an object."""
         self.descriptor.remove_relation(self.instance, obj)
 
     def paginated(self, page=1, per_page=10):
-        """
-        return a paginated relations.
-        usage:
+        """Return a paginated relations.
+
+        Usage:
           obj.relations.paginated(per_page=20) # page 1, 20 items
           obj.relations.paginated(page=3, per_page=20) # from item 41 to 60
+
         """
         if self.qs:
             paginator = Paginator(self.qs, per_page)
             return self._build_list_from_queryset(
-                    paginator.page(page).object_list)
+                paginator.page(page).object_list
+            )
 
         else:
             return self
 
     def filter_by_model(self, model):
-        """
-        filter relations by table_ref
-        example:
+        """Filter relations by table_ref.
+
+        Example:
           obj.relations
           # returns [(org1, ''), (resource,''), (org2, '')]
           obj.relations.filter_by_model(Organization)
           # returns [(org1, ''), (org2, '')]
 
-        it is chainable. Ex:
+        It is chainable. Ex:
             obj.relations.filter_by_model(Organization
                             ).paginated(page=2, per_page=5)
+
         """
         table_ref = model._table_ref()
         rel_obj = GenericRef.get_reference_for_object(self.instance)
@@ -147,32 +153,34 @@ class _RelationsList(list):
         return self._build_list_from_queryset(qs)
 
     def _build_list_from_queryset(self, qs):
-        """
-        Given a GenericRelation queryset, build a list like:
+        """Given a GenericRelation queryset, build a list like.
+
+        Example:
           [
             (object_1, 'relation_type_with_1'),
             (object_2, 'relation_type_with_2')
           ]
+
         """
         relation_list = _RelationsList(self.descriptor, self.instance,
-                queryset=qs)
+                                       queryset=qs)
         for rel in qs:
-            if rel.obj1.obj_table == self.instance.table_ref and \
-               rel.obj1.obj_id == self.instance.id:
+            if (rel.obj1.obj_table == self.instance.table_ref and
+                    rel.obj1.obj_id == self.instance.id):
 
                 relation_list.append(
                     (rel.obj2.get_object(),
-                     RELATIONS[rel.relation_type][0]
-                            if rel.relation_type else '')
+                     RELATIONS[rel.relation_type][0] if rel.relation_type
+                     else '')
                 )
 
-            elif rel.obj2.obj_table == self.instance.table_ref and \
-               rel.obj2.obj_id == self.instance.id:
+            elif (rel.obj2.obj_table == self.instance.table_ref and
+                    rel.obj2.obj_id == self.instance.id):
 
                 relation_list.append(
                     (rel.obj1.get_object(),
-                     RELATIONS[rel.relation_type][1]
-                            if rel.relation_type else '')
+                     RELATIONS[rel.relation_type][1] if rel.relation_type
+                     else '')
                 )
 
             else:
@@ -183,9 +191,9 @@ class _RelationsList(list):
 
 
 class RelationsField(object):
-    """
-    Relations descriptor.
-    usage:
+    """Relations descriptor.
+
+    Usage:
         ```
             class MyClass(models.Model):
                 relations = RelationsField()
@@ -211,11 +219,11 @@ class RelationsField(object):
             obj.relations.paginate(page=1, num=10)
             obj.relations.filter_by_type('relation_type1')
         ```
+
     """
     def __get__(self, instance, owner):
         ref_obj = GenericRef.get_reference_for_object(instance)
-        qs = GenericRelation.objects.filter(
-                Q(obj1=ref_obj) | Q(obj2=ref_obj))
+        qs = GenericRelation.objects.filter(Q(obj1=ref_obj) | Q(obj2=ref_obj))
 
         relation_list = _RelationsList(self, instance, queryset=qs)
         return relation_list._build_list_from_queryset(qs)
@@ -251,8 +259,7 @@ class RelationsField(object):
 
 
 class GeoRefObject(GeoRefModel, BaseModel):
-    """
-    Common objects base model.
+    """Common objects base model.
 
     Fields:
         name: object identifier
@@ -277,10 +284,11 @@ class GeoRefObject(GeoRefModel, BaseModel):
     otype = models.CharField(max_length=512)  # object type
 
     creator = models.ForeignKey(User, editable=False, null=True,
-                        related_name='created_%(class)s')
+                                related_name='created_%(class)s')
     creation_date = models.DateTimeField(auto_now_add=True)
-    last_editor = models.ForeignKey(User, editable=False, null=True,
-                        blank=True, related_name='last_edited_%(class)s')
+    last_editor = models.ForeignKey(
+        User, editable=False, null=True, blank=True,
+        related_name='last_edited_%(class)s')
     last_update = models.DateTimeField(auto_now=True)
 
     contact = JSONField(null=True, blank=True)
@@ -294,6 +302,7 @@ class GeoRefObject(GeoRefModel, BaseModel):
         return unicode(self.name)
 
     def to_dict(self):
+        """Return a dict representation for the common attributes."""
         return {
             'name': self.name,
             'description': self.description,
@@ -316,10 +325,14 @@ class GeoRefObject(GeoRefModel, BaseModel):
         attrs = [
             'id', 'name', 'description', 'last_editor', 'creation_date',
             'last_update', 'extra_data', 'creator', 'otype', 'contact']
-        update_attrs = [attr for attr in attrs[::] if not attr in
-                ['id', 'creator', 'last_update', 'creation_date']]
-        insert_attrs = [attr for attr in attrs[::] if not attr in
-                ['id', 'last_editor', 'last_update', 'creation_date']]
+        update_attrs = [
+            attr for attr in attrs[::] if not attr in
+            ['id', 'creator', 'last_update', 'creation_date']
+        ]
+        insert_attrs = [
+            attr for attr in attrs[::] if not attr in
+            ['id', 'last_editor', 'last_update', 'creation_date']
+        ]
 
         if complete_object:
             keys = attrs
@@ -330,15 +343,17 @@ class GeoRefObject(GeoRefModel, BaseModel):
             if data.get('creation_date', None):
                 self.postpone_attr('creation_date', data['creation_date'])
 
+        # FIXME: Why using a list comprehension here?
         [
             self.postpone_attr(attr, val) for attr, val in
-                [('tags', data.get('tags', EMPTY_TAG)), ]
+            [('tags', data.get('tags', EMPTY_TAG)), ]
         ]
 
         date_keys = ['creation_date', 'last_update']
         build_obj_from_dict(self, data, keys, date_keys)
 
     def is_valid(self):
+        """Validate the required attributes."""
         self.errors = {}
         validates = True
         require = ['otype', 'name', 'creator']
