@@ -8,18 +8,19 @@ from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
-from crispy_forms.layout import Layout, Fieldset
+from annoying.functions import get_object_or_None
 
 from main.utils import MooHelper
 from main.widgets import Tagsinput, TaggitWidget, ImageSwitchMultiple
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from need.models import Need, NeedCategory, TargetAudience
+from komoo_project.models import Project
 from signatures.signals import notify_on_update
 
 
 need_form_fields = ('id', 'title', 'short_description', 'description',
                     'community', 'categories', 'target_audiences', 'tags',
-                    'files')
+                    'files', 'project_id')
 
 need_form_field_labels = {
     'title': _('Title'),
@@ -69,6 +70,8 @@ class NeedForm(AjaxModelForm):
 
     files = FileuploadField(required=False)
 
+    project_id = forms.CharField(widget=forms.HiddenInput(), required=False)
+
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id="need_form")
         return super(NeedForm, self).__init__(*a, **kw)
@@ -78,6 +81,14 @@ class NeedForm(AjaxModelForm):
         need = super(NeedForm, self).save(*args, **kwargs)
         UploadedFile.bind_files(
             self.cleaned_data.get('files', '').split('|'), need)
+
+        # Add the community to project if a project id was given.
+        project_id = self.cleaned_data.get('project_id', None)
+        if project_id:
+            project = get_object_or_None(Project, pk=int(project_id))
+            if project:
+                project.save_related_object(need)
+
         return need
 
 

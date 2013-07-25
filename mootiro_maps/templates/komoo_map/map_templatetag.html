@@ -60,6 +60,9 @@
               success: function (data, textStatus, jqXHR) {
                 $(this).html(data);
                 $('#id_geometry').val(JSON.stringify(geojson));
+                if (KomooNS.projectId) {
+                  $('#id_project_id').val(KomooNS.projectId);
+                }
                 $(this).show();
                 $(window).resize()
                 $('#map-container-{{ type }}, #map-panel').slideUp(600);

@@ -34,6 +34,7 @@
   <script type="text/javascript">
     if (typeof window.KomooNS === 'undefined') window.KomooNS = {};
     KomooNS.obj = {{ project|jsonify|safe }};
+    KomooNS.projectId = {{ project.id|default:'undefined' }};
     //require(['project/project_related_items']);
   </script>
 
