@@ -113,7 +113,7 @@
               <a>{{ user.name|first_name }} &#x25be;</a>
               <ul>
                 <li><a href="{{ user.view_url }}" >{% trans 'Profile' %}</a></li>
-                <!-- <li><a href="{% url profile_update %}" >{% trans 'Configurations' %}</a></li> -->
+                <li><a href="{% url profile_update %}" >{% trans 'Settings' %}</a></li>
                 <li><a href="{% url user_logout %}" >{% trans 'Logout' %}</a></li>
               </ul>
             </li>
