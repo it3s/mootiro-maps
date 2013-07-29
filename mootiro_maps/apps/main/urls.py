@@ -17,6 +17,7 @@ urlpatterns = patterns(
     url(r'^permalink/(?P<identifier>\w+)/?$', 'permalink', name='permalink'),
     url(r'^map/get_geojson_from_hashlink/?$', 'get_geojson_from_hashlink',
         name='get_geojson_from_hashlink'),
+    url(r'^set_language/$', 'set_language', name='set_language'),
 )
 
 

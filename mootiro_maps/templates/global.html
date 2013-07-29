@@ -121,6 +121,11 @@
             <li id="login_button"><a href="#" class="login-required" >{% trans 'Login'%}</a></li>
             {% endif %}
           </ul>
+          <ul>
+          {% for lang in LANGUAGES %}
+          <li class="language{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}"><a href="{% url set_language %}?language={{ lang.0 }}">{{ lang.1 }}</a></li>
+          {% endfor %}
+          </ul>
         </nav>
       </div>
 

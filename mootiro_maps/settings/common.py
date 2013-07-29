@@ -29,6 +29,13 @@ LOCALE_PATHS = (
 )
 TIME_ZONE = 'America/Sao_Paulo'
 
+LANGUAGES = (
+    ('pt-br', 'Português'),
+    ('en-us', 'English'),
+)
+
+LANGUAGE_COOKIE_NAME = 'i18n'
+
 # ========== Static and Media =================================================
 MEDIA_ROOT = os.path.join(PROJECT_ROOT, 'media')
 MEDIA_URL = '/media/'

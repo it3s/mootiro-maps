@@ -1,5 +1,6 @@
 from django.conf import settings  # import the settings file
 from django.middleware.csrf import get_token
+from django.utils.translation import get_language
 
 
 def komoo_namespace(request):
@@ -31,6 +32,7 @@ def komoo_namespace(request):
             'isAuthenticated': request.user.is_authenticated(),
             'user_data': user,
             'lang': (getattr(request, 'LANGUAGE_CODE', None) or
+                     get_language() or
                      settings.LANGUAGE_CODE),
             'facebookAppId': settings.FACEBOOK_APP_ID,
             'require_baseUrl': (settings.STATIC_URL +

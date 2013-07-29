@@ -12,8 +12,10 @@ from django.template import loader, Context
 from django.db.models import Q
 from django.db.models.loading import cache
 from django.http import (HttpResponse, HttpResponseNotFound,
-                         HttpResponseServerError, HttpResponseBadRequest)
+                         HttpResponseServerError, HttpResponseBadRequest,
+                         HttpResponseRedirect)
 from django.core.mail import mail_admins
+from django.utils import translation
 from django.utils.translation import ugettext as _
 from django.shortcuts import redirect
 from django.conf import settings
@@ -284,6 +286,25 @@ def get_geojson_from_hashlink(request):
         geojson = {}
 
     return {'geojson': geojson}
+
+
+def set_language(request):
+    next = request.REQUEST.get('next', None)
+    if not next:
+        next = request.META.get('HTTP_REFERER', None)
+    if not next:
+        next = '/'
+    print '---->', settings.LANGUAGE_COOKIE_NAME
+    response = HttpResponseRedirect(next)
+    lang_code = (request.GET.get('language', None) or
+                 request.POST.get('language', None))
+    if lang_code and translation.check_for_language(lang_code):
+        if hasattr(request, 'session'):
+            request.session['django_language'] = lang_code
+        else:
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+        translation.activate(lang_code)
+    return response
 
 
 if settings.TESTING:
