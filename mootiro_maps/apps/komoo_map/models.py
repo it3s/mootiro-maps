@@ -7,7 +7,7 @@ from django.contrib.gis.db import models as geomodels
 from django.core.urlresolvers import reverse
 from collection_from import CollectionFrom
 
-from main.utils import create_geojson
+from main.utils import create_geojson, to_json
 from fileupload.models import UploadedFile
 
 
@@ -83,7 +83,9 @@ class GeoRefModel(geomodels.Model):
 
     @classmethod
     def get_map_attr(cls, attr_name):
-        return getattr(cls.Map, attr_name, getattr(GeoRefModel.Map, attr_name))
+        value = getattr(cls.Map, attr_name,
+                        getattr(GeoRefModel.Map, attr_name))
+        return value
 
     # FIXME: files_set and logo_url should live in other class. They must be
     # moved when we get unified model.
@@ -115,7 +117,7 @@ def get_editable_models():
 
 
 def get_models_json(all=True):
-    return json.dumps([{'type': model.__name__,
+    return to_json([{'type': model.__name__,
                     'appLabel': model._meta.app_label,
                     'modelName': model.__name__,
                     'disabled': not model.get_map_attr('editable'),

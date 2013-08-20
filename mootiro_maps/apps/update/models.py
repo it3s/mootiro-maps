@@ -5,10 +5,8 @@ from __future__ import unicode_literals  # unicode by default
 import simplejson
 from datetime import datetime, timedelta
 
-from django.db import models
 from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.utils.translation import pgettext
 
 from komoo_resource.models import Resource
 from proposal.models import Proposal

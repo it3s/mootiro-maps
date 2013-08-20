@@ -5,7 +5,7 @@ from django.contrib.gis.db import models
 from django.contrib.gis.measure import Distance
 from django.core.urlresolvers import reverse
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 import reversion
 from django.template.defaultfilters import slugify

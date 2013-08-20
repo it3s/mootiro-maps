@@ -8,7 +8,7 @@ from django.template.defaultfilters import slugify
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 
 from authentication.models import User
 from komoo_map.models import GeoRefModel, POLYGON, POINT

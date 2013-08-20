@@ -3,7 +3,7 @@
 from __future__ import unicode_literals  # unicode by default
 
 from django.contrib.gis.db import models
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 import reversion
@@ -100,18 +100,7 @@ class Need(GeoRefModel):
         background_color =  '#f42c5e'
         border_color = '#d31e52'
         geometries = (POLYGON, LINESTRING, POINT)
-        categories = [
-            ('Culture'),
-            ('Education'),
-            ('Environment'),
-            ('Health'),
-            ('Housing'),
-            ('Local Economy'),
-            ('Mobility'),
-            ('Social Service'),
-            ('Sport'),
-            ('Security'),
-        ]
+        categories = NeedCategory.categories
         form_view_name = 'new_need_from_map'
         form_view_kwargs = {}
 

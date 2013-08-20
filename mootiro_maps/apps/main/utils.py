@@ -19,6 +19,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponseNotAllowed
 from django.core.mail import send_mail as django_send_mail
 from django.conf import settings
+from django.utils.functional import Promise
+from django.utils.encoding import force_unicode as force_text
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -474,6 +476,10 @@ def _to_json_default(obj):
     # Datetime
     if isinstance(obj, datetime.datetime):
         return datetime_to_iso(obj)
+
+    # Django Promises
+    if isinstance(obj, Promise):
+        return force_text(obj)
 
     try:
         return obj.id
