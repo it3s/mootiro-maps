@@ -11,7 +11,10 @@ define (require) ->
             @elements = []
             @length = 0
 
-        updateLength: -> @length = @elements.length
+        updateLength: ->
+            @length = @elements.length
+            @first = @elements[0]
+            @last = @elements[@length - 1]
 
         clear: ->
             @elements = []
@@ -42,8 +45,9 @@ define (require) ->
             results = []
             if @elements.filter?
                 results = @elements.filter match, thisArg if @elements.filter?
-            @forEach (element) ->
-                results.push element if match.apply thisArg, [element]
+            else
+                @forEach (element) ->
+                    results.push element if match.apply thisArg, [element]
             collection = new @constructor
             collection.elements = results
             collection.updateLength()

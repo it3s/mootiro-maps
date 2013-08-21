@@ -60,7 +60,7 @@ define (require)->
             if @class? then @box.addClass @class
 
             # Attach the DOM to google map.
-            @map.addControl @position, @box.get 0
+            @map.addControl @position, @box.get 0 if @position
             @handleMapEvents?()
 
         hide: -> @box.hide()
@@ -135,6 +135,28 @@ define (require)->
                 position = location.position
                 @map.publish 'goto', position, yes
 
+
+    # A layers box where user can manipulate the map layers.
+    class LayersBox extends Box
+        position: googleMaps.ControlPosition.TOP_RIGHT
+        id: 'map-searchbox'
+
+        init: ->
+            super()
+            # Use backbone to render the form.
+            require ['map/views'], (Views) =>
+                @view = new Views.LayersBoxView()
+                @box.append @view.render(@map.getLayers()).el
+                @handleViewEvents()
+
+        handleViewEvents: ->
+            @view.on 'show', (layer) => @map.getLayer(layer).show()
+            @view.on 'hide', (layer) => @map.getLayer(layer).hide()
+
+        handleMapEvents: ->
+            @map.subscribe 'layer_added', (layer) =>
+                alert 'hhaa'
+                @view?.render @map.getLayers()
 
     # Display some supporters logos.
     class SupporterBox extends Box
@@ -1172,6 +1194,7 @@ define (require)->
         SupporterBox: SupporterBox
         LicenseBox: LicenseBox
         SearchBox: SearchBox
+        LayersBox: LayersBox
         PerimeterSelector: PerimeterSelector
         Location: Location
         SaveLocation: SaveLocation

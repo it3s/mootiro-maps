@@ -5,7 +5,7 @@ define (require) ->
     # TODO: Integrate the layer system with providers
     #
 
-    Collections = require './collections'
+    collections = require './collections'
 
     eval_expr = (expr, obj) ->
         return false if not expr? or not obj?
@@ -24,7 +24,7 @@ define (require) ->
         else if operator in ['contains', 'has']
             expr.value in obj.getProperty(expr.property)
         else if operator in ['!', 'not']
-            not obj.getProperty(expr.child, obj)
+            not eval_expr(expr.child, obj)
         else if operator is 'or'
             eval_expr(expr.left, obj) or eval_expr(expr.right, obj)
         else if operator is 'and'
@@ -32,13 +32,39 @@ define (require) ->
 
     window.ee = eval_expr
 
+
+    class Layers extends collections.GenericCollection
+        addLayer: (layer) ->
+            @push layer if not @getLayer layer.getName()
+            layer.map?.publish 'layer_added', layer
+
+        getLayer: (name) ->
+            layers = @filter (layer) -> layer.getName() is name
+            layers.first
+
+        showLayer: (name) -> @getLayer(name).show()
+        hideLayer: (name) -> @getLayer(name).hide()
+
+        showAll: -> @forEach (layer) -> layer.show()
+        hideAll: -> @forEach (layer) -> layer.hide()
+
+        getVisibleLayers: -> @filter (layer) -> layer.visible
+        getHiddenLayers: -> @filter (layer) -> not layer.visible
+
+
     class Layer
         constructor: (@options = {}) ->
-            @cache = new Collections.FeatureCollection()
+            @cache = new collections.FeatureCollection()
+            @visible = @options.visible ? on
+            @id = @options.id ? @options.name
+            @setPosition @options.position
             @setName @options.name
             @setRule @options.rule
             @setMap @options.map
             @setCollection @options.collection
+
+        getPosition: -> @position
+        setPosition: (@position) -> this
 
         getName: -> @name
         setName: (@name) -> this
@@ -50,12 +76,23 @@ define (require) ->
             this
 
         getRule: -> @rule
-        setRule: (@rule) -> this
+        setRule: (@rule) ->
+            @cache.clear()
+            this
 
         setMap: (@map) -> @cache.setMap? @map
 
-        show: -> @getFeatures().show()
-        hide: -> @getFeatures().hide()
+        show: ->
+            @visible = on
+            @getFeatures().show()
+
+        hide: ->
+            @visible = off
+            @getFeatures().hide()
+
+        toggle: ->
+            if not @visible then @show() else @hide()
+            @visible
 
         match: (feature) ->
             eval_expr @rule, feature
@@ -69,9 +106,11 @@ define (require) ->
             @cache.clear()
             filtered = @collection.filter @match, this
             filtered.forEach (feature) => @cache.push feature
+            this
 
 
     layers =
+        Layers: Layers
         Layer: Layer
 
 

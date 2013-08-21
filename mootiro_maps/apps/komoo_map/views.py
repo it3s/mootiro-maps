@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.db.models.loading import get_model
 
-from komoo_map.models import get_models, get_models_json
+from komoo_map.models import get_editable_models, get_models_json
 from main.utils import create_geojson, to_json
 
 
@@ -19,9 +19,9 @@ def layers(request):
     # TODO: Get custom layers from DB
     return HttpResponse(
         to_json([{
-            'name': m.__name__,
+            'name': m.get_map_attr('title') or m.__name__,
             'rule': {'operator': 'is', 'property': 'type', 'value': m.__name__}
-        } for m in get_models()]),
+        } for m in get_editable_models()]),
         mimetype="application/x-javascript")
 
 

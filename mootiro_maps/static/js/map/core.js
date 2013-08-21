@@ -42,7 +42,6 @@ define(function(require) {
       var _base;
       if (that == null) that = null;
       if ((_base = this._hooks)[hook] == null) _base[hook] = [];
-      console.log('--->', !(__indexOf.call(this._hooks[hook], method) >= 0));
       if (!(__indexOf.call(this._hooks[hook], method) >= 0)) {
         return this._hooks[hook].push(_.bind(method, that));
       }
@@ -85,6 +84,7 @@ define(function(require) {
           dfd.resolve();
           return;
         }
+        instance.type = opts.type;
         return _this.data.when(instance.init(opts)).done(function() {
           var hook, method, _ref;
           _this._components[component][id].instance = instance;
@@ -155,6 +155,9 @@ define(function(require) {
         component = item.component;
         el = item.el;
         opts = item.opts;
+        if (typeof console !== "undefined" && console !== null) {
+          console.log("Starting component '" + component + "'");
+        }
         this.loading++;
         id = el;
         if ((_base = this._components)[component] == null) _base[component] = {};
@@ -165,7 +168,6 @@ define(function(require) {
           }
         }
         this._components[component][id] = {
-          type: component,
           el: el,
           opts: opts
         };
@@ -210,6 +212,9 @@ define(function(require) {
     };
 
     Mediator.prototype._addToPublishQueue = function(message) {
+      if (typeof console !== "undefined" && console !== null) {
+        console.log("Adding message '" + message + "' to publish queue");
+      }
       return this._pubQueue.push(arguments);
     };
 
@@ -218,6 +223,9 @@ define(function(require) {
       if (this.loading > 0) return false;
       message = this._pubQueue.shift();
       if (message != null) {
+        if (typeof console !== "undefined" && console !== null) {
+          console.log("Publishing message '" + message[0] + "'");
+        }
         this._pubsub.trigger.apply(this._pubsub, message);
         return this._processPublishQueue();
       }

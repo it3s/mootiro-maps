@@ -44,4 +44,24 @@ define (require) ->
                 position: position
             this
 
+
+    class LayersBoxView extends Backbone.View
+        events:
+            'click .layer': 'toggleLayer'
+
+        initialize: () ->
+            @template = _.template require 'text!templates/map/_layersbox.html'
+
+        render: (@layers) ->
+            renderedContent = @template(layers: @layers)
+            @$el.html renderedContent
+            this
+
+        toggleLayer: (evt) ->
+            $el = @$ evt.target
+            layer = $el.attr 'data-layer'
+            visible = @layers.getLayer(layer).toggle()
+            $el.attr 'data-visible', visible
+
     SearchBoxView: SearchBoxView
+    LayersBoxView: LayersBoxView

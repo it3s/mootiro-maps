@@ -31,7 +31,6 @@ define (require) ->
 
         registerHook: (hook, method, that=null) ->
             @_hooks[hook] ?= []
-            console.log '--->', not (method in @_hooks[hook])
             @_hooks[hook].push _.bind(method, that) if not (method in @_hooks[hook])
 
         unregisterHook: (hook, method) ->
@@ -62,6 +61,8 @@ define (require) ->
                     console?.warn "Could not initialize component '#{component}'"
                     dfd.resolve()
                     return
+
+                instance.type = opts.type
 
                 # Its time to initialize the component
                 @data.when(instance.init(opts)).done(=>
@@ -116,7 +117,7 @@ define (require) ->
                 el = item.el
                 opts = item.opts
 
-                #console?.log "Starting component '#{component}'"
+                console?.log "Starting component '#{component}'"
                 @loading++
 
                 # Two or more components can't be responsable for the same DOM
@@ -132,7 +133,6 @@ define (require) ->
                     console?.error "Conflict: already exists one component '#{component}' with id '#{id}' "
 
                 @_components[component][id] =
-                    type: component
                     el: el
                     opts: opts
 
@@ -185,7 +185,7 @@ define (require) ->
             @_pubsub.on message, callback, context
 
         _addToPublishQueue: (message) ->
-            #console?.log "Adding message '#{message}' to publish queue"
+            console?.log "Adding message '#{message}' to publish queue"
             @_pubQueue.push arguments
 
         _processPublishQueue: () ->
@@ -193,7 +193,7 @@ define (require) ->
                 return false
             message = @_pubQueue.shift()
             if message?
-                #console?.log "Publishing message '#{message[0]}'"
+                console?.log "Publishing message '#{message[0]}'"
                 @_pubsub.trigger.apply @_pubsub, message
                 @_processPublishQueue()
 

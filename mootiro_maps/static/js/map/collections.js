@@ -16,7 +16,9 @@ define(function(require) {
     }
 
     GenericCollection.prototype.updateLength = function() {
-      return this.length = this.elements.length;
+      this.length = this.elements.length;
+      this.first = this.elements[0];
+      return this.last = this.elements[this.length - 1];
     };
 
     GenericCollection.prototype.clear = function() {
@@ -63,10 +65,11 @@ define(function(require) {
         if (this.elements.filter != null) {
           results = this.elements.filter(match, thisArg);
         }
+      } else {
+        this.forEach(function(element) {
+          if (match.apply(thisArg, [element])) return results.push(element);
+        });
       }
-      this.forEach(function(element) {
-        if (match.apply(thisArg, [element])) return results.push(element);
-      });
       collection = new this.constructor;
       collection.elements = results;
       collection.updateLength();

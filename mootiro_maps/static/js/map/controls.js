@@ -4,7 +4,7 @@ var __hasProp = Object.prototype.hasOwnProperty,
 
 define(function(require) {
   'use strict';
-  var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, CommunityClusterer, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, FeatureFilter, FeatureTypeFilter, FeatureZoomFilter, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
+  var ADD, AjaxBalloon, AutosaveLocation, AutosaveMapType, Balloon, Box, CUTOUT, CloseBox, CommunityClusterer, Component, DELETE, DrawingControl, DrawingManager, EDIT, EMPTY, FeatureClusterer, FeatureFilter, FeatureTypeFilter, FeatureZoomFilter, GeometrySelector, InfoBox, InfoWindow, LINESTRING, LayersBox, LicenseBox, LoadingBox, Location, MULTILINESTRING, MULTIPOINT, MULTIPOLYLINE, MarkerClusterer, NEW, OVERLAY, PERIMETER_SELECTION, POINT, POLYGON, POLYLINE, PerimeterSelector, SaveLocation, SaveMapType, SearchBox, StreetView, SupporterBox, Tooltip, common, geometries, googleMaps, utils, _ADD_LINE, _ADD_POINT, _ADD_SHAPE, _CANCEL, _CLOSE, _CUT_OUT, _LOADING, _NEXT_STEP, _SUM, _base;
   googleMaps = require('googlemaps');
   Component = require('./component');
   common = require('./common');
@@ -58,7 +58,7 @@ define(function(require) {
       this.box = $("<div>");
       if (this.id != null) this.box.attr("id", this.id);
       if (this["class"] != null) this.box.addClass(this["class"]);
-      this.map.addControl(this.position, this.box.get(0));
+      if (this.position) this.map.addControl(this.position, this.box.get(0));
       return typeof this.handleMapEvents === "function" ? this.handleMapEvents() : void 0;
     };
 
@@ -163,6 +163,50 @@ define(function(require) {
     };
 
     return SearchBox;
+
+  })(Box);
+  LayersBox = (function(_super) {
+
+    __extends(LayersBox, _super);
+
+    function LayersBox() {
+      LayersBox.__super__.constructor.apply(this, arguments);
+    }
+
+    LayersBox.prototype.position = googleMaps.ControlPosition.TOP_RIGHT;
+
+    LayersBox.prototype.id = 'map-searchbox';
+
+    LayersBox.prototype.init = function() {
+      var _this = this;
+      LayersBox.__super__.init.call(this);
+      return require(['map/views'], function(Views) {
+        _this.view = new Views.LayersBoxView();
+        _this.box.append(_this.view.render(_this.map.getLayers()).el);
+        return _this.handleViewEvents();
+      });
+    };
+
+    LayersBox.prototype.handleViewEvents = function() {
+      var _this = this;
+      this.view.on('show', function(layer) {
+        return _this.map.getLayer(layer).show();
+      });
+      return this.view.on('hide', function(layer) {
+        return _this.map.getLayer(layer).hide();
+      });
+    };
+
+    LayersBox.prototype.handleMapEvents = function() {
+      var _this = this;
+      return this.map.subscribe('layer_added', function(layer) {
+        var _ref;
+        alert('hhaa');
+        return (_ref = _this.view) != null ? _ref.render(_this.map.getLayers()) : void 0;
+      });
+    };
+
+    return LayersBox;
 
   })(Box);
   SupporterBox = (function(_super) {
@@ -1672,6 +1716,7 @@ define(function(require) {
     SupporterBox: SupporterBox,
     LicenseBox: LicenseBox,
     SearchBox: SearchBox,
+    LayersBox: LayersBox,
     PerimeterSelector: PerimeterSelector,
     Location: Location,
     SaveLocation: SaveLocation,

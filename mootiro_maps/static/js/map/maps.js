@@ -5,13 +5,13 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
 define(function(require) {
   'use strict';
-  var AjaxEditor, AjaxMap, Collections, Editor, Features, Layers, Map, Preview, StaticMap, UserEditor, core, geometries, googleMaps, _, _base;
+  var AjaxEditor, AjaxMap, Editor, Map, Preview, StaticMap, UserEditor, collections, core, features, geometries, googleMaps, layers, _, _base;
   googleMaps = require('googlemaps');
   _ = require('underscore');
   core = require('./core');
-  Collections = require('./collections');
-  Features = require('./features');
-  Layers = require('./layers');
+  collections = require('./collections');
+  features = require('./features');
+  layers = require('./layers');
   geometries = require('./geometries');
   require('./controls');
   require('./maptypes');
@@ -54,16 +54,16 @@ define(function(require) {
       this.addFeature = __bind(this.addFeature, this);
       Map.__super__.constructor.call(this);
       this.element = (_ref = this.options.element) != null ? _ref : document.getElementById(this.options.elementId);
-      this.features = Collections.makeFeatureCollectionPlus({
+      this.features = collections.makeFeatureCollectionPlus({
         map: this
       });
       this.components = {};
-      this.addComponent('map/controls::Location');
       this.setProjectId(this.options.projectId);
       this.initGoogleMap(this.options.googleMapOptions);
       this.initFeatureTypes();
       this.initLayers();
       this.handleEvents();
+      this.addComponents(['map/controls::Location', 'map/controls::LayersBox']);
     }
 
     Map.prototype.addControl = function(pos, el) {
@@ -71,13 +71,13 @@ define(function(require) {
     };
 
     Map.prototype.loadGeoJsonFromOptions = function() {
-      var bounds, features;
+      var bounds, features_;
       if (this.options.geojson) {
-        features = this.loadGeoJSON(this.options.geojson, !(this.options.zoom != null));
-        bounds = features.getBounds();
+        features_ = this.loadGeoJSON(this.options.geojson, !(this.options.zoom != null));
+        bounds = features_.getBounds();
         if (bounds != null) this.fitBounds(bounds);
-        if (features != null) {
-          features.setMap(this, {
+        if (features_ != null) {
+          features_.setMap(this, {
             geometry: true,
             icon: true
           });
@@ -130,33 +130,42 @@ define(function(require) {
     };
 
     Map.prototype.initLayers = function() {
-      var _this = this;
-      if (this.layers == null) this.layers = {};
+      if (this.layers == null) this.layers = new layers.Layers;
       if (this.options.layers != null) {
-        return this.options.layers.forEach(function(l) {
-          return _this.layers[l.name] = new Layers.Layer({
-            name: l.name,
-            collection: _this.getFeatures(),
-            map: _this,
-            rule: l.rule
-          });
-        });
+        return this.loadLayersFromOptions(this.options);
       } else {
-        return $.ajax({
-          url: this.layersUrl,
-          dataType: 'json',
-          success: function(data) {
-            return data.forEach(function(l) {
-              return _this.layers[l.name] = new Layers.Layer({
-                name: l.name,
-                collection: _this.getFeatures(),
-                map: _this,
-                rule: l.rule
-              });
-            });
-          }
-        });
+        return this.loadRemoteLayers(this.layersUrl);
       }
+    };
+
+    Map.prototype.loadLayer = function(data) {
+      this.layers.addLayer(new layers.Layer({
+        name: data.name,
+        rule: data.rule,
+        collection: this.getFeatures(),
+        map: this
+      }));
+      return this.publish('layer_loaded', this.layers[data.name]);
+    };
+
+    Map.prototype.loadLayersFromOptions = function(options) {
+      var _this = this;
+      return options.layers.forEach(function(l) {
+        return _this.loadLayer(l);
+      });
+    };
+
+    Map.prototype.loadRemoteLayers = function(url) {
+      var _this = this;
+      return $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function(data) {
+          return data.forEach(function(l) {
+            return _this.loadLayer(l);
+          });
+        }
+      });
     };
 
     Map.prototype.getLayers = function() {
@@ -164,23 +173,25 @@ define(function(require) {
     };
 
     Map.prototype.getLayer = function(name) {
-      return this.layers[name];
+      return this.layers.getLayer(name);
     };
 
     Map.prototype.showLayer = function(layer) {
       if (_.isString(layer)) layer = this.getLayer(layer);
-      return layer.show();
+      layer.show();
+      return this.publish('show_layer', layer);
     };
 
     Map.prototype.hideLayer = function(layer) {
       if (_.isString(layer)) layer = this.getLayer(layer);
-      return layer.hide();
+      layer.hide();
+      return this.publish('hide_layer', layer);
     };
 
     Map.prototype.handleEvents = function() {
       var _this = this;
-      this.subscribe('features_loaded', function(features) {
-        return komoo.event.trigger(_this, 'features_loaded', features);
+      this.subscribe('features_loaded', function(features_) {
+        return komoo.event.trigger(_this, 'features_loaded', features_);
       });
       this.subscribe('close_clicked', function() {
         return komoo.event.trigger(_this, 'close_click');
@@ -211,11 +222,12 @@ define(function(require) {
     };
 
     Map.prototype.addComponent = function(component, type, opts) {
-      var _this = this;
+      var component_,
+        _this = this;
       if (type == null) type = 'generic';
       if (opts == null) opts = {};
-      component = _.isString(component) ? this.start(component, '', opts) : this.start(component);
-      return this.data.when(component).done(function() {
+      component_ = _.isString(component) ? this.start(component, '', opts) : this.start(component);
+      return this.data.when(component_).done(function() {
         var instance, _base2, _i, _len, _results;
         _results = [];
         for (_i = 0, _len = arguments.length; _i < _len; _i++) {
@@ -223,6 +235,40 @@ define(function(require) {
           instance.setMap(_this);
           if ((_base2 = _this.components)[type] == null) _base2[type] = [];
           _this.components[type].push(instance);
+          _results.push(typeof instance.enable === "function" ? instance.enable() : void 0);
+        }
+        return _results;
+      });
+    };
+
+    Map.prototype.addComponents = function(components) {
+      var component, components_, opts, _i, _len, _ref, _ref2,
+        _this = this;
+      components_ = [];
+      for (_i = 0, _len = components.length; _i < _len; _i++) {
+        component = components[_i];
+        if (_.isString(component)) component = [component];
+        opts = (_ref = component[2]) != null ? _ref : {};
+        if (opts.type == null) {
+          opts.type = (_ref2 = component[1]) != null ? _ref2 : 'generic';
+        }
+        components_.push({
+          component: component[0],
+          el: '',
+          opts: opts
+        });
+      }
+      return this.data.when(this.start(components_)).done(function() {
+        var instance, _base2, _j, _len2, _name, _results;
+        _results = [];
+        for (_j = 0, _len2 = arguments.length; _j < _len2; _j++) {
+          instance = arguments[_j];
+          console.log(instance);
+          if (typeof instance.setMap === "function") instance.setMap(_this);
+          if ((_base2 = _this.components)[_name = instance.type] == null) {
+            _base2[_name] = [];
+          }
+          _this.components[instance.type].push(instance);
           _results.push(typeof instance.enable === "function" ? instance.enable() : void 0);
         }
         return _results;
@@ -309,7 +355,7 @@ define(function(require) {
     Map.prototype.makeFeature = function(geojson, attach) {
       var feature;
       if (attach == null) attach = true;
-      feature = Features.makeFeature(geojson, this.featureTypes);
+      feature = features.makeFeature(geojson, this.featureTypes);
       if (attach) this.addFeature(feature);
       this.publish('feature_created', feature);
       return feature;
@@ -330,62 +376,46 @@ define(function(require) {
       return this.features;
     };
 
-    Map.prototype.getFeaturesByType = function(type, categories, strict) {
-      return this.features.getByType(type, categories, strict);
+    Map.prototype.showFeatures = function(features_) {
+      if (features_ == null) features_ = this.features;
+      return features_.show();
     };
 
-    Map.prototype.showFeaturesByType = function(type, categories, strict) {
-      var _ref;
-      this.publish('show_features_by_type', type, categories, strict);
-      return (_ref = this.getFeaturesByType(type, categories, strict)) != null ? _ref.show() : void 0;
-    };
-
-    Map.prototype.hideFeaturesByType = function(type, categories, strict) {
-      var _ref;
-      this.publish('hide_features_by_type', type, categories, strict);
-      return (_ref = this.getFeaturesByType(type, categories, strict)) != null ? _ref.hide() : void 0;
-    };
-
-    Map.prototype.showFeatures = function(features) {
-      if (features == null) features = this.features;
-      return features.show();
-    };
-
-    Map.prototype.hideFeatures = function(features) {
-      if (features == null) features = this.features;
-      return features.hide();
+    Map.prototype.hideFeatures = function(features_) {
+      if (features_ == null) features_ = this.features;
+      return features_.hide();
     };
 
     Map.prototype.centerFeature = function(type, id) {
       var feature;
-      feature = type instanceof Features.Feature ? type : this.features.getById(type, id);
+      feature = type instanceof features.Feature ? type : this.features.getById(type, id);
       return this.panTo(feature != null ? feature.getCenter() : void 0, false);
     };
 
     Map.prototype.loadGeoJson = function(geojson, panTo, attach, silent) {
-      var features, _ref,
+      var features_, _ref,
         _this = this;
       if (panTo == null) panTo = false;
       if (attach == null) attach = true;
       if (silent == null) silent = false;
-      features = Collections.makeFeatureCollection({
+      features_ = collections.makeFeatureCollection({
         map: this
       });
       if (!((geojson != null ? geojson.type : void 0) != null) || !geojson.type === 'FeatureCollection') {
-        return features;
+        return features_;
       }
       if ((_ref = geojson.features) != null) {
         _ref.forEach(function(geojsonFeature) {
           var feature;
           feature = _this.features.getById(geojsonFeature.properties.type, geojsonFeature.properties.id);
           if (feature == null) feature = _this.makeFeature(geojsonFeature, attach);
-          features.push(feature);
+          features_.push(feature);
           return feature.setVisible(true);
         });
       }
-      if (panTo && (features.getBounds() != null)) this.fitBounds();
-      if (!silent) this.publish('features_loaded', features);
-      return features;
+      if (panTo && (features_.getBounds() != null)) this.fitBounds();
+      if (!silent) this.publish('features_loaded', features_);
+      return features_;
     };
 
     Map.prototype.loadGeoJSON = function(geojson, panTo, attach, silent) {
@@ -398,7 +428,7 @@ define(function(require) {
       if (options.newOnly == null) options.newOnly = false;
       if (options.currentOnly == null) options.currentOnly = false;
       if (options.geometryCollection == null) options.geometryCollection = false;
-      list = options.newOnly ? this.newFeatures : options.currentOnly ? Collections.makeFeatureCollection({
+      list = options.newOnly ? this.newFeatures : options.currentOnly ? collections.makeFeatureCollection({
         map: this.map,
         features: [this.currentFeature]
       }) : this.features;
@@ -462,12 +492,12 @@ define(function(require) {
       return this.googleMap.getBounds();
     };
 
-    Map.prototype.setZoom = function(zoom) {
-      if (zoom != null) return this.googleMap.setZoom(zoom);
-    };
-
     Map.prototype.getZoom = function() {
       return this.googleMap.getZoom();
+    };
+
+    Map.prototype.setZoom = function(zoom) {
+      if (zoom != null) return this.googleMap.setZoom(zoom);
     };
 
     Map.prototype.fitBounds = function(bounds) {
@@ -483,8 +513,8 @@ define(function(require) {
       return this.projectId;
     };
 
-    Map.prototype.setProjectId = function(id) {
-      return this.projectId = id;
+    Map.prototype.setProjectId = function(projectId) {
+      this.projectId = projectId;
     };
 
     return Map;
@@ -498,10 +528,7 @@ define(function(require) {
 
     function UserEditor(options) {
       UserEditor.__super__.constructor.call(this, options);
-      this.addComponent('map/controls::AutosaveMapType');
-      this.addComponent('map/maptypes::CleanMapType', 'mapType');
-      this.addComponent('map/controls::DrawingManager', 'drawing');
-      this.addComponent('map/controls::SearchBox');
+      this.addComponents(['map/controls::AutosaveMapType', ['map/maptypes::CleanMapType', 'mapType'], ['map/controls::DrawingManager', 'drawing'], 'map/controls::SearchBox']);
     }
 
     return UserEditor;
@@ -515,15 +542,7 @@ define(function(require) {
 
     function Editor(options) {
       Editor.__super__.constructor.call(this, options);
-      this.addComponent('map/controls::AutosaveMapType');
-      this.addComponent('map/maptypes::CleanMapType');
-      this.addComponent('map/controls::SaveLocation');
-      this.addComponent('map/controls::StreetView');
-      this.addComponent('map/controls::DrawingManager');
-      this.addComponent('map/controls::DrawingControl');
-      this.addComponent('map/controls::GeometrySelector');
-      this.addComponent('map/controls::PerimeterSelector');
-      this.addComponent('map/controls::SearchBox');
+      this.addComponents(['map/controls::AutosaveMapType', 'map/maptypes::CleanMapType', 'map/controls::SaveLocation', 'map/controls::StreetView', 'map/controls::DrawingManager', 'map/controls::DrawingControl', 'map/controls::GeometrySelector', 'map/controls::PerimeterSelector', 'map/controls::SearchBox']);
     }
 
     return Editor;
@@ -563,15 +582,7 @@ define(function(require) {
 
     function StaticMap(options) {
       StaticMap.__super__.constructor.call(this, options);
-      this.addComponent('map/controls::AutosaveMapType');
-      this.addComponent('map/maptypes::CleanMapType', 'mapType');
-      this.addComponent('map/controls::AutosaveLocation');
-      this.addComponent('map/controls::StreetView');
-      this.addComponent('map/controls::Tooltip', 'tooltip');
-      this.addComponent('map/controls::InfoWindow', 'infoWindow');
-      this.addComponent('map/controls::LicenseBox');
-      this.addComponent('map/controls::SearchBox');
-      this.addComponent('map/controls::FeatureFilter');
+      this.addComponents(['map/controls::AutosaveMapType', ['map/maptypes::CleanMapType', 'mapType'], 'map/controls::AutosaveLocation', 'map/controls::StreetView', ['map/controls::Tooltip', 'tooltip'], ['map/controls::InfoWindow', 'infoWindow'], 'map/controls::LicenseBox', 'map/controls::SearchBox', 'map/controls::FeatureFilter']);
     }
 
     return StaticMap;
@@ -585,13 +596,13 @@ define(function(require) {
 
     function AjaxMap(options) {
       AjaxMap.__super__.constructor.call(this, options);
-      this.addComponent('map/controls::LoadingBox');
-      this.addComponent('map/providers::ZoomFilteredFeatureProvider', 'provider');
-      this.addComponent('map/controls::CommunityClusterer', 'clusterer', {
-        map: this
-      });
-      this.addComponent('map/controls::FeatureZoomFilter');
-      this.addComponent('map/controls::FeatureTypeFilter');
+      this.addComponents([
+        'map/controls::LoadingBox', ['map/providers::ZoomFilteredFeatureProvider', 'provider'], [
+          'map/controls::CommunityClusterer', 'clusterer', {
+            map: this
+          }
+        ], 'map/controls::FeatureZoomFilter', 'map/controls::FeatureTypeFilter'
+      ]);
     }
 
     return AjaxMap;
@@ -605,10 +616,7 @@ define(function(require) {
 
     function AjaxEditor(options) {
       AjaxEditor.__super__.constructor.call(this, options);
-      this.addComponent('map/controls::DrawingManager');
-      this.addComponent('map/controls::DrawingControl');
-      this.addComponent('map/controls::GeometrySelector');
-      this.addComponent('map/controls::PerimeterSelector');
+      this.addComponents(['map/controls::DrawingManager', 'map/controls::DrawingControl', 'map/controls::GeometrySelector', 'map/controls::PerimeterSelector']);
       if (!this.goToSavedLocation()) this.goToUserLocation();
     }
 

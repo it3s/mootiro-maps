@@ -23,6 +23,7 @@ from django.utils.functional import Promise
 from django.utils.encoding import force_unicode as force_text
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from lib.taggit.managers import TaggableManager
 
 try:
     from functools import wraps
@@ -85,6 +86,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
             last_update = (obj.last_update.isoformat(b' ')
                            if getattr(obj, 'last_update', None) else '')
             area = getattr(obj, 'area', 0)
+            tags = getattr(obj, 'tags', [])
 
             feature = {
                 'type': 'Feature',
@@ -94,7 +96,8 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
                     'name': name,
                     'id': obj.id,
                     'lastUpdate': last_update,
-                    'area': area
+                    'area': area,
+                    'tags': tags
                 }
             }
             if hasattr(obj, 'categories'):
@@ -108,7 +111,7 @@ def create_geojson(objects, type_='FeatureCollection', convert=True,
             geojson['features'].append(feature)
 
     if convert:
-        return json.dumps(geojson)
+        return to_json(geojson)
 
     return geojson
 
@@ -480,6 +483,10 @@ def _to_json_default(obj):
     # Django Promises
     if isinstance(obj, Promise):
         return force_text(obj)
+
+    # Django tags
+    if hasattr(obj, 'get_query_set'):
+        return [tag.name for tag in obj.get_query_set()]
 
     try:
         return obj.id

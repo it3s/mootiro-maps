@@ -4,9 +4,9 @@ define (require) ->
     googleMaps = require 'googlemaps'
     _ = require 'underscore'
     core = require './core'
-    Collections = require './collections'
-    Features = require './features'
-    Layers = require './layers'
+    collections = require './collections'
+    features = require './features'
+    layers = require './layers'
     geometries = require './geometries'
     require './controls'
     require './maptypes'
@@ -42,26 +42,29 @@ define (require) ->
             @element = @options.element ? \
                        document.getElementById @options.elementId
 
-            @features = Collections.makeFeatureCollectionPlus map: @
+            @features = collections.makeFeatureCollectionPlus map: @
 
             @components = {}
-            @addComponent 'map/controls::Location'
-
             @setProjectId(@options.projectId)
             @initGoogleMap @options.googleMapOptions
             @initFeatureTypes()
             @initLayers()
             @handleEvents()
 
+            @addComponents [
+                'map/controls::Location'
+                'map/controls::LayersBox'
+            ]
+
         addControl: (pos, el) ->
             @googleMap.controls[pos].push el
 
         loadGeoJsonFromOptions: ->
             if @options.geojson
-                features = @loadGeoJSON @options.geojson, not @options.zoom?
-                bounds = features.getBounds()
+                features_ = @loadGeoJSON @options.geojson, not @options.zoom?
+                bounds = features_.getBounds()
                 @fitBounds bounds if bounds?
-                features?.setMap this, geometry: on, icon: on
+                features_?.setMap this, geometry: on, icon: on
                 @publish 'set_zoom', @options.zoom
 
         initGoogleMap: (options = @googleMapDefaultOptions) ->
@@ -93,43 +96,51 @@ define (require) ->
                         @loadGeoJsonFromOptions()
 
         initLayers: ->
-            @layers ?= {}
+            @layers ?= new layers.Layers
             if @options.layers?
-                # Get Layers from options
-                @options.layers.forEach (l) =>
-                    @layers[l.name] = new Layers.Layer
-                        name: l.name
-                        collection: @getFeatures()
-                        map: this
-                        rule: l.rule
+                @loadLayersFromOptions @options
             else
-                # Load Layers via ajax
-                $.ajax
-                    url: @layersUrl
-                    dataType: 'json'
-                    success: (data) =>
-                        data.forEach (l) =>
-                            @layers[l.name] = new Layers.Layer
-                                name: l.name
-                                collection: @getFeatures()
-                                map: this
-                                rule: l.rule
+                @loadRemoteLayers @layersUrl
+
+        loadLayer: (data) ->
+            layer = new layers.Layer
+                name: data.name
+                rule: data.rule
+                collection: @getFeatures()
+                map: this
+            @layers.addLayer layer
+
+            @publish 'layer_loaded', layer
+
+        loadLayersFromOptions: (options) ->
+            # Get Layers from options
+            options.layers.forEach (l) => @loadLayer l
+
+        loadRemoteLayers: (url) ->
+            # Load Layers via ajax
+            $.ajax
+                url: url
+                dataType: 'json'
+                success: (data) =>
+                    data.forEach (l) => @loadLayer l
 
         getLayers: -> @layers
 
-        getLayer: (name) -> @layers[name]
+        getLayer: (name) -> @layers.getLayer name
 
         showLayer: (layer) ->
             layer = @getLayer layer if _.isString layer
             layer.show()
+            @publish 'show_layer', layer
 
         hideLayer: (layer) ->
             layer = @getLayer layer if _.isString layer
             layer.hide()
+            @publish 'hide_layer', layer
 
         handleEvents: ->
-            @subscribe 'features_loaded', (features) =>
-                komoo.event.trigger this, 'features_loaded', features
+            @subscribe 'features_loaded', (features_) =>
+                komoo.event.trigger this, 'features_loaded', features_
 
             @subscribe 'close_clicked', =>
                 komoo.event.trigger this, 'close_click'
@@ -156,16 +167,34 @@ define (require) ->
               @getFeatures().setVisible true
 
         addComponent: (component, type = 'generic', opts = {}) ->
-            component =
+            component_ =
             if _.isString component
                 @start component, '', opts
             else
                 @start component
-            return @data.when(component).done () =>
+            return @data.when(component_).done () =>
                 for instance in arguments
                     instance.setMap @
                     @components[type] ?= []
                     @components[type].push instance
+                    instance.enable?()
+
+        addComponents: (components) ->
+            components_ = []
+            for component in components
+                component = [component] if _.isString component
+                opts = component[2] ? {}
+                opts.type ?= component[1] ? 'generic'
+                components_.push
+                    component: component[0]
+                    el: '',
+                    opts: opts
+            return @data.when(@start components_).done () =>
+                for instance in arguments
+                    console.log instance
+                    instance.setMap? @
+                    @components[instance.type] ?= []
+                    @components[instance.type].push instance
                     instance.enable?()
 
         enableComponents: (type) ->
@@ -199,8 +228,7 @@ define (require) ->
             @publish 'goto_saved_location'
             true
 
-        goToUserLocation: ->
-            @publish 'goto_user_location'
+        goToUserLocation: -> @publish 'goto_user_location'
 
         handleFeatureEvents: (feature) ->
             eventsNames = ['mouseover', 'mouseout', 'mousemove', 'click',
@@ -216,7 +244,7 @@ define (require) ->
             @goTo position, displayMarker
 
         makeFeature: (geojson, attach = true) ->
-            feature = Features.makeFeature geojson, @featureTypes
+            feature = features.makeFeature geojson, @featureTypes
             if attach then @addFeature feature
             @publish 'feature_created', feature
             feature
@@ -233,24 +261,23 @@ define (require) ->
 
         getFeatures: -> @features
 
-        getFeaturesByType: (type, categories, strict) ->
-            @features.getByType type, categories, strict
+        #getFeaturesByType: (type, categories, strict) ->
+        #    @features.getByType type, categories, strict
 
-        showFeaturesByType: (type, categories, strict) ->
-            @publish 'show_features_by_type', type, categories, strict
-            @getFeaturesByType(type, categories, strict)?.show()
+        #showFeaturesByType: (type, categories, strict) ->
+        #    @publish 'show_features_by_type', type, categories, strict
+        #    @getFeaturesByType(type, categories, strict)?.show()
 
-        hideFeaturesByType: (type, categories, strict) ->
-            @publish 'hide_features_by_type', type, categories, strict
-            @getFeaturesByType(type, categories, strict)?.hide()
+        #hideFeaturesByType: (type, categories, strict) ->
+        #    @publish 'hide_features_by_type', type, categories, strict
+        #    @getFeaturesByType(type, categories, strict)?.hide()
 
-        showFeatures: (features = @features) -> features.show()
-
-        hideFeatures: (features = @features) -> features.hide()
+        showFeatures: (features_ = @features) -> features_.show()
+        hideFeatures: (features_ = @features) -> features_.hide()
 
         centerFeature: (type, id) ->
             feature =
-                if type instanceof Features.Feature
+                if type instanceof features.Feature
                     type
                 else
                     @features.getById type, id
@@ -258,10 +285,10 @@ define (require) ->
             @panTo feature?.getCenter(), false
 
         loadGeoJson: (geojson, panTo = false, attach = true, silent = false) ->
-            features = Collections.makeFeatureCollection map: @
+            features_ = collections.makeFeatureCollection map: @
 
             if not geojson?.type? or not geojson.type is 'FeatureCollection'
-                return features
+                return features_
 
             geojson.features?.forEach (geojsonFeature) =>
                 # Try to get the instance already created
@@ -269,15 +296,15 @@ define (require) ->
                     geojsonFeature.properties.id
                 # Otherwise create it
                 feature ?= @makeFeature geojsonFeature, attach
-                features.push feature
+                features_.push feature
                 feature.setVisible true
 
                 #if attach then feature.setMap @
 
-            @fitBounds() if panTo and features.getBounds()?
-            @publish 'features_loaded', features if not silent
+            @fitBounds() if panTo and features_.getBounds()?
+            @publish 'features_loaded', features_ if not silent
 
-            features
+            features_
 
         loadGeoJSON: (geojson, panTo, attach, silent) ->
             @loadGeoJson(geojson, panTo, attach, silent)
@@ -291,7 +318,7 @@ define (require) ->
                 if options.newOnly
                     @newFeatures
                 else if options.currentOnly
-                    Collections.makeFeatureCollection
+                    collections.makeFeatureCollection
                         map: @map
                         features: [@currentFeature]
                 else
@@ -320,8 +347,7 @@ define (require) ->
             else
                 @publish 'edit_feature', feature
 
-        setMode: (@mode) ->
-            @publish 'mode_changed', @mode
+        setMode: (@mode) -> @publish 'mode_changed', @mode
 
         selectCenter: (radius, callback) ->
             @selectPerimeter radius, callback
@@ -337,20 +363,16 @@ define (require) ->
 
         getBounds: -> @googleMap.getBounds()
 
-        setZoom: (zoom) -> if zoom? then @googleMap.setZoom zoom
         getZoom: -> @googleMap.getZoom()
+        setZoom: (zoom) -> if zoom? then @googleMap.setZoom zoom
 
         fitBounds: (bounds = @features.getBounds()) ->
             @googleMap.fitBounds bounds
 
-        getMapTypeId: ->
-            @googleMap.getMapTypeId()
+        getMapTypeId: -> @googleMap.getMapTypeId()
 
-        getProjectId: ->
-            @projectId
-
-        setProjectId: (id) ->
-            @projectId = id
+        getProjectId: -> @projectId
+        setProjectId: (@projectId) ->
 
 
     class UserEditor extends Map
@@ -359,10 +381,12 @@ define (require) ->
         constructor: (options) ->
             super options
 
-            @addComponent 'map/controls::AutosaveMapType'
-            @addComponent 'map/maptypes::CleanMapType', 'mapType'
-            @addComponent 'map/controls::DrawingManager', 'drawing'
-            @addComponent 'map/controls::SearchBox'
+            @addComponents [
+                'map/controls::AutosaveMapType'
+                ['map/maptypes::CleanMapType', 'mapType']
+                ['map/controls::DrawingManager', 'drawing']
+                'map/controls::SearchBox'
+            ]
 
 
     class Editor extends Map
@@ -371,16 +395,18 @@ define (require) ->
         constructor: (options) ->
             super options
 
-            @addComponent 'map/controls::AutosaveMapType'
-            @addComponent 'map/maptypes::CleanMapType'
-            @addComponent 'map/controls::SaveLocation'
-            @addComponent 'map/controls::StreetView'
-            @addComponent 'map/controls::DrawingManager'
-            @addComponent 'map/controls::DrawingControl'
-            @addComponent 'map/controls::GeometrySelector'
-            #@addComponent 'map/controls::SupporterBox'
-            @addComponent 'map/controls::PerimeterSelector'
-            @addComponent 'map/controls::SearchBox'
+            @addComponents [
+                'map/controls::AutosaveMapType'
+                'map/maptypes::CleanMapType'
+                'map/controls::SaveLocation'
+                'map/controls::StreetView'
+                'map/controls::DrawingManager'
+                'map/controls::DrawingControl'
+                'map/controls::GeometrySelector'
+                #'map/controls::SupporterBox'
+                'map/controls::PerimeterSelector'
+                'map/controls::SearchBox'
+            ]
 
 
     class Preview extends Map
@@ -404,16 +430,18 @@ define (require) ->
         constructor: (options) ->
             super options
 
-            @addComponent 'map/controls::AutosaveMapType'
-            @addComponent 'map/maptypes::CleanMapType', 'mapType'
-            @addComponent 'map/controls::AutosaveLocation'
-            @addComponent 'map/controls::StreetView'
-            @addComponent 'map/controls::Tooltip', 'tooltip'
-            @addComponent 'map/controls::InfoWindow', 'infoWindow'
-            #@addComponent 'map/controls::SupporterBox'
-            @addComponent 'map/controls::LicenseBox'
-            @addComponent 'map/controls::SearchBox'
-            @addComponent 'map/controls::FeatureFilter'
+            @addComponents [
+                'map/controls::AutosaveMapType'
+                ['map/maptypes::CleanMapType', 'mapType']
+                'map/controls::AutosaveLocation'
+                'map/controls::StreetView'
+                ['map/controls::Tooltip', 'tooltip']
+                ['map/controls::InfoWindow', 'infoWindow']
+                #'map/controls::SupporterBox'
+                'map/controls::LicenseBox'
+                'map/controls::SearchBox'
+                'map/controls::FeatureFilter'
+            ]
 
 
     class AjaxMap extends StaticMap
@@ -422,11 +450,13 @@ define (require) ->
         constructor: (options) ->
             super options
 
-            @addComponent 'map/controls::LoadingBox'
-            @addComponent 'map/providers::ZoomFilteredFeatureProvider', 'provider'
-            @addComponent 'map/controls::CommunityClusterer', 'clusterer', {map: this}
-            @addComponent 'map/controls::FeatureZoomFilter'
-            @addComponent 'map/controls::FeatureTypeFilter'
+            @addComponents [
+                'map/controls::LoadingBox'
+                ['map/providers::ZoomFilteredFeatureProvider', 'provider']
+                ['map/controls::CommunityClusterer', 'clusterer', {map: this}]
+                'map/controls::FeatureZoomFilter'
+                'map/controls::FeatureTypeFilter'
+            ]
 
 
     class AjaxEditor extends AjaxMap
@@ -435,10 +465,12 @@ define (require) ->
         constructor: (options) ->
             super options
 
-            @addComponent 'map/controls::DrawingManager'
-            @addComponent 'map/controls::DrawingControl'
-            @addComponent 'map/controls::GeometrySelector'
-            @addComponent 'map/controls::PerimeterSelector'
+            @addComponents [
+                'map/controls::DrawingManager'
+                'map/controls::DrawingControl'
+                'map/controls::GeometrySelector'
+                'map/controls::PerimeterSelector'
+            ]
 
             if not @goToSavedLocation()
                 @goToUserLocation()
