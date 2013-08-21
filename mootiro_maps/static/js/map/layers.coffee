@@ -1,12 +1,42 @@
 define (require) ->
     'use strict'
 
+    #
+    # TODO: Integrate the layer system with providers
+    #
+
     Collections = require './collections'
+
+    eval_expr = (expr, obj) ->
+        return false if not expr? or not obj?
+        operator = expr.operator
+        if operator in ['==', 'is', 'equal', 'equals']
+            obj.getProperty(expr.property) is expr.value
+        else if operator in ['!=', 'isnt', 'not equal', 'not equals', 'different']
+            not obj.getProperty(expr.property) is expr.value
+        else if operator is 'in'
+            obj.getProperty(expr.property) in expr.value
+        else if operator in ['contains', 'has'] and Object.prototype.toString.call(expr.value) is '[object Array]'
+            res = true
+            for v in expr.value
+                res = res and v in obj.getProperty(expr.property)
+            res
+        else if operator in ['contains', 'has']
+            expr.value in obj.getProperty(expr.property)
+        else if operator in ['!', 'not']
+            not obj.getProperty(expr.child, obj)
+        else if operator is 'or'
+            eval_expr(expr.left, obj) or eval_expr(expr.right, obj)
+        else if operator is 'and'
+            eval_expr(expr.left, obj) and eval_expr(expr.right, obj)
+
+    window.ee = eval_expr
 
     class Layer
         constructor: (@options = {}) ->
             @cache = new Collections.FeatureCollection()
             @setName @options.name
+            @setRule @options.rule
             @setMap @options.map
             @setCollection @options.collection
 
@@ -28,11 +58,10 @@ define (require) ->
         hide: -> @getFeatures().hide()
 
         match: (feature) ->
-            # TODO: Create a real rule
-            feature.getType() is @getName()
+            eval_expr @rule, feature
 
         getFeatures: () ->
-            if @cache.isEmpty
+            if @cache.isEmpty()
                 @updateCache()
             @cache
 

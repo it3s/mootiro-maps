@@ -24,7 +24,7 @@ define(function(require) {
 
     Map.prototype.featureTypesUrl = '/map_info/feature_types/';
 
-    Map.prototype.layersUrl = '/map_info/feature_types/';
+    Map.prototype.layersUrl = '/map_info/layers/';
 
     Map.prototype.googleMapDefaultOptions = {
       zoom: 12,
@@ -134,10 +134,11 @@ define(function(require) {
       if (this.layers == null) this.layers = {};
       if (this.options.layers != null) {
         return this.options.layers.forEach(function(l) {
-          return _this.layers[l.type] = new Layers.Layer({
-            name: l.type,
+          return _this.layers[l.name] = new Layers.Layer({
+            name: l.name,
             collection: _this.getFeatures(),
-            map: _this
+            map: _this,
+            rule: l.rule
           });
         });
       } else {
@@ -146,10 +147,11 @@ define(function(require) {
           dataType: 'json',
           success: function(data) {
             return data.forEach(function(l) {
-              return _this.layers[l.type] = new Layers.Layer({
-                name: l.type,
+              return _this.layers[l.name] = new Layers.Layer({
+                name: l.name,
                 collection: _this.getFeatures(),
-                map: _this
+                map: _this,
+                rule: l.rule
               });
             });
           }

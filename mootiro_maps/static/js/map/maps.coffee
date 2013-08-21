@@ -17,7 +17,7 @@ define (require) ->
 
     class Map extends core.Mediator
         featureTypesUrl: '/map_info/feature_types/'
-        layersUrl: '/map_info/feature_types/'
+        layersUrl: '/map_info/layers/'
 
         googleMapDefaultOptions:
             zoom: 12
@@ -97,10 +97,11 @@ define (require) ->
             if @options.layers?
                 # Get Layers from options
                 @options.layers.forEach (l) =>
-                    @layers[l.type] = new Layers.Layer
-                        name: l.type
+                    @layers[l.name] = new Layers.Layer
+                        name: l.name
                         collection: @getFeatures()
                         map: this
+                        rule: l.rule
             else
                 # Load Layers via ajax
                 $.ajax
@@ -108,10 +109,11 @@ define (require) ->
                     dataType: 'json'
                     success: (data) =>
                         data.forEach (l) =>
-                            @layers[l.type] = new Layers.Layer
-                                name: l.type
+                            @layers[l.name] = new Layers.Layer
+                                name: l.name
                                 collection: @getFeatures()
                                 map: this
+                                rule: l.rule
 
         getLayers: -> @layers
 

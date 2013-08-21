@@ -1,14 +1,45 @@
+var __indexOf = Array.prototype.indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 define(function(require) {
   'use strict';
-  var Collections, Layer, layers;
+  var Collections, Layer, eval_expr, layers;
   Collections = require('./collections');
+  eval_expr = function(expr, obj) {
+    var operator, res, v, _i, _len, _ref, _ref2, _ref3;
+    if (!(expr != null) || !(obj != null)) return false;
+    operator = expr.operator;
+    if (operator === '==' || operator === 'is' || operator === 'equal' || operator === 'equals') {
+      return obj.getProperty(expr.property) === expr.value;
+    } else if (operator === '!=' || operator === 'isnt' || operator === 'not equal' || operator === 'not equals' || operator === 'different') {
+      return !obj.getProperty(expr.property) === expr.value;
+    } else if (operator === 'in') {
+      return _ref = obj.getProperty(expr.property), __indexOf.call(expr.value, _ref) >= 0;
+    } else if ((operator === 'contains' || operator === 'has') && Object.prototype.toString.call(expr.value) === '[object Array]') {
+      res = true;
+      _ref2 = expr.value;
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        v = _ref2[_i];
+        res = res && __indexOf.call(obj.getProperty(expr.property), v) >= 0;
+      }
+      return res;
+    } else if (operator === 'contains' || operator === 'has') {
+      return _ref3 = expr.value, __indexOf.call(obj.getProperty(expr.property), _ref3) >= 0;
+    } else if (operator === '!' || operator === 'not') {
+      return !obj.getProperty(expr.child, obj);
+    } else if (operator === 'or') {
+      return eval_expr(expr.left, obj) || eval_expr(expr.right, obj);
+    } else if (operator === 'and') {
+      return eval_expr(expr.left, obj) && eval_expr(expr.right, obj);
+    }
+  };
+  window.ee = eval_expr;
   Layer = (function() {
 
     function Layer(options) {
       this.options = options != null ? options : {};
       this.cache = new Collections.FeatureCollection();
       this.setName(this.options.name);
+      this.setRule(this.options.rule);
       this.setMap(this.options.map);
       this.setCollection(this.options.collection);
     }
@@ -56,11 +87,11 @@ define(function(require) {
     };
 
     Layer.prototype.match = function(feature) {
-      return feature.getType() === this.getName();
+      return eval_expr(this.rule, feature);
     };
 
     Layer.prototype.getFeatures = function() {
-      if (this.cache.isEmpty) this.updateCache();
+      if (this.cache.isEmpty()) this.updateCache();
       return this.cache;
     };
 
