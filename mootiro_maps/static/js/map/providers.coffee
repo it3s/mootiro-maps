@@ -125,7 +125,7 @@ define (require) ->
                 type: 'GET'
                 success: (data) =>
                     dfd = @map.data.deferred()
-                    console?.log "Getting tile #{addr}..."
+                    #console?.log "Getting tile #{addr}..."
                     @_addrs.push addr
                     @fetchedTiles[addr] =
                         geojson: data

@@ -201,7 +201,6 @@ define(function(require) {
       var _this = this;
       return this.map.subscribe('layer_added', function(layer) {
         var _ref;
-        alert('hhaa');
         return (_ref = _this.view) != null ? _ref.render(_this.map.getLayers()) : void 0;
       });
     };

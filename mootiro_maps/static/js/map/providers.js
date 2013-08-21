@@ -171,9 +171,6 @@ define(function(require) {
         success: function(data) {
           var dfd;
           dfd = _this.map.data.deferred();
-          if (typeof console !== "undefined" && console !== null) {
-            console.log("Getting tile " + addr + "...");
-          }
           _this._addrs.push(addr);
           return _this.fetchedTiles[addr] = {
             geojson: data,

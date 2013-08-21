@@ -117,7 +117,7 @@ define (require) ->
                 el = item.el
                 opts = item.opts
 
-                console?.log "Starting component '#{component}'"
+                #console?.log "Starting component '#{component}'"
                 @loading++
 
                 # Two or more components can't be responsable for the same DOM
@@ -185,7 +185,7 @@ define (require) ->
             @_pubsub.on message, callback, context
 
         _addToPublishQueue: (message) ->
-            console?.log "Adding message '#{message}' to publish queue"
+            #console?.log "Adding message '#{message}' to publish queue"
             @_pubQueue.push arguments
 
         _processPublishQueue: () ->
@@ -193,7 +193,7 @@ define (require) ->
                 return false
             message = @_pubQueue.shift()
             if message?
-                console?.log "Publishing message '#{message[0]}'"
+                #console?.log "Publishing message '#{message[0]}'"
                 @_pubsub.trigger.apply @_pubsub, message
                 @_processPublishQueue()
 

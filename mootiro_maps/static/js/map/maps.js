@@ -139,13 +139,15 @@ define(function(require) {
     };
 
     Map.prototype.loadLayer = function(data) {
-      this.layers.addLayer(new layers.Layer({
+      var layer;
+      layer = new layers.Layer({
         name: data.name,
         rule: data.rule,
         collection: this.getFeatures(),
         map: this
-      }));
-      return this.publish('layer_loaded', this.layers[data.name]);
+      });
+      this.layers.addLayer(layer);
+      return this.publish('layer_loaded', layer);
     };
 
     Map.prototype.loadLayersFromOptions = function(options) {
@@ -263,7 +265,6 @@ define(function(require) {
         _results = [];
         for (_j = 0, _len2 = arguments.length; _j < _len2; _j++) {
           instance = arguments[_j];
-          console.log(instance);
           if (typeof instance.setMap === "function") instance.setMap(_this);
           if ((_base2 = _this.components)[_name = instance.type] == null) {
             _base2[_name] = [];

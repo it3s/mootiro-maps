@@ -191,7 +191,6 @@ define (require) ->
                     opts: opts
             return @data.when(@start components_).done () =>
                 for instance in arguments
-                    console.log instance
                     instance.setMap? @
                     @components[instance.type] ?= []
                     @components[instance.type].push instance

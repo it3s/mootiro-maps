@@ -155,7 +155,6 @@ define (require)->
 
         handleMapEvents: ->
             @map.subscribe 'layer_added', (layer) =>
-                alert 'hhaa'
                 @view?.render @map.getLayers()
 
     # Display some supporters logos.
