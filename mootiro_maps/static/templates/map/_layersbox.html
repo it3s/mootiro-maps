@@ -5,6 +5,14 @@
       <div class="img-holder"><img class="layer-icon" src="<%= layer.getIconUrl() %>" /></div>
       <span><%= layer.name %></span>
     </div>
+    <div class="collapser"><i class="icon-chevron-right"></i></div>
+  </li>
+  <li class="sublist">
+    <ul>
+      <% layer.getFeatures().forEach(function (feature) { %>
+      <li><%= feature.getProperty('name') %></li>
+      <%  }); %>
+    </ul>
   </li>
   <% }); %>
 </ul>
