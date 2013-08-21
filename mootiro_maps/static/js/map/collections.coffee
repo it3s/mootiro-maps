@@ -28,6 +28,8 @@ define (require) ->
             @updateLength()
             element
 
+        isEmpty: -> @elements.length is 0
+
         forEach: (callback, thisArg) ->
             @elements.forEach callback, thisArg
 
@@ -35,6 +37,17 @@ define (require) ->
 
         slice: (begin, end) ->
             @elements.slice begin, end
+
+        filter: (match, thisArg) ->
+            results = []
+            if @elements.filter?
+                results = @elements.filter match, thisArg if @elements.filter?
+            @forEach (element) ->
+                results.push element if match.apply thisArg, [element]
+            collection = new @constructor
+            collection.elements = results
+            collection.updateLength()
+            collection
 
 
     class FeatureCollection extends GenericCollection
@@ -113,6 +126,10 @@ define (require) ->
         handleMapEvents: ->
             komoo.event.addListener @map, "zoom_changed", =>
 
+        filter: (match, thisArg) ->
+            collection = super match, thisArg
+            collection.map = @map
+            collection
 
     class FeatureCollectionPlus extends FeatureCollection
         # Extend FeatureCollection addin the ability to get features by type.
@@ -175,9 +192,6 @@ define (require) ->
             @highlighted?.setHighlight off
             feature.highlight()
             @highlighted = feature
-
-
-    class Layer extends FeatureCollection
 
 
 

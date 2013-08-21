@@ -6,6 +6,7 @@ define (require) ->
     core = require './core'
     Collections = require './collections'
     Features = require './features'
+    Layers = require './layers'
     geometries = require './geometries'
     require './controls'
     require './maptypes'
@@ -16,6 +17,7 @@ define (require) ->
 
     class Map extends core.Mediator
         featureTypesUrl: '/map_info/feature_types/'
+        layersUrl: '/map_info/feature_types/'
 
         googleMapDefaultOptions:
             zoom: 12
@@ -48,6 +50,7 @@ define (require) ->
             @setProjectId(@options.projectId)
             @initGoogleMap @options.googleMapOptions
             @initFeatureTypes()
+            @initLayers()
             @handleEvents()
 
         addControl: (pos, el) ->
@@ -88,6 +91,39 @@ define (require) ->
                         data.forEach (type) =>
                             @featureTypes[type.type] = type
                         @loadGeoJsonFromOptions()
+
+        initLayers: ->
+            @layers ?= {}
+            if @options.layers?
+                # Get Layers from options
+                @options.layers.forEach (l) =>
+                    @layers[l.type] = new Layers.Layer
+                        name: l.type
+                        collection: @getFeatures()
+                        map: this
+            else
+                # Load Layers via ajax
+                $.ajax
+                    url: @layersUrl
+                    dataType: 'json'
+                    success: (data) =>
+                        data.forEach (l) =>
+                            @layers[l.type] = new Layers.Layer
+                                name: l.type
+                                collection: @getFeatures()
+                                map: this
+
+        getLayers: -> @layers
+
+        getLayer: (name) -> @layers[name]
+
+        showLayer: (layer) ->
+            layer = @getLayer layer if _.isString layer
+            layer.show()
+
+        hideLayer: (layer) ->
+            layer = @getLayer layer if _.isString layer
+            layer.hide()
 
         handleEvents: ->
             @subscribe 'features_loaded', (features) =>

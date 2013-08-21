@@ -5,12 +5,13 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 
 define(function(require) {
   'use strict';
-  var AjaxEditor, AjaxMap, Collections, Editor, Features, Map, Preview, StaticMap, UserEditor, core, geometries, googleMaps, _, _base;
+  var AjaxEditor, AjaxMap, Collections, Editor, Features, Layers, Map, Preview, StaticMap, UserEditor, core, geometries, googleMaps, _, _base;
   googleMaps = require('googlemaps');
   _ = require('underscore');
   core = require('./core');
   Collections = require('./collections');
   Features = require('./features');
+  Layers = require('./layers');
   geometries = require('./geometries');
   require('./controls');
   require('./maptypes');
@@ -22,6 +23,8 @@ define(function(require) {
     __extends(Map, _super);
 
     Map.prototype.featureTypesUrl = '/map_info/feature_types/';
+
+    Map.prototype.layersUrl = '/map_info/feature_types/';
 
     Map.prototype.googleMapDefaultOptions = {
       zoom: 12,
@@ -59,6 +62,7 @@ define(function(require) {
       this.setProjectId(this.options.projectId);
       this.initGoogleMap(this.options.googleMapOptions);
       this.initFeatureTypes();
+      this.initLayers();
       this.handleEvents();
     }
 
@@ -123,6 +127,52 @@ define(function(require) {
           }
         });
       }
+    };
+
+    Map.prototype.initLayers = function() {
+      var _this = this;
+      if (this.layers == null) this.layers = {};
+      if (this.options.layers != null) {
+        return this.options.layers.forEach(function(l) {
+          return _this.layers[l.type] = new Layers.Layer({
+            name: l.type,
+            collection: _this.getFeatures(),
+            map: _this
+          });
+        });
+      } else {
+        return $.ajax({
+          url: this.layersUrl,
+          dataType: 'json',
+          success: function(data) {
+            return data.forEach(function(l) {
+              return _this.layers[l.type] = new Layers.Layer({
+                name: l.type,
+                collection: _this.getFeatures(),
+                map: _this
+              });
+            });
+          }
+        });
+      }
+    };
+
+    Map.prototype.getLayers = function() {
+      return this.layers;
+    };
+
+    Map.prototype.getLayer = function(name) {
+      return this.layers[name];
+    };
+
+    Map.prototype.showLayer = function(layer) {
+      if (_.isString(layer)) layer = this.getLayer(layer);
+      return layer.show();
+    };
+
+    Map.prototype.hideLayer = function(layer) {
+      if (_.isString(layer)) layer = this.getLayer(layer);
+      return layer.hide();
     };
 
     Map.prototype.handleEvents = function() {
