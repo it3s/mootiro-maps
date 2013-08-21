@@ -1,48 +1,51 @@
+(function() {
 
-define(function(require) {
-  'use strict';
-  var $, Component, exports;
-  $ = require('jquery');
-  Component = (function() {
+  define(function(require) {
+    'use strict';
+    var $, Component, exports;
+    $ = require('jquery');
+    Component = (function() {
 
-    Component.prototype.name = 'Base Component';
+      Component.prototype.name = 'Base Component';
 
-    Component.prototype.description = '';
+      Component.prototype.description = '';
 
-    Component.prototype.hooks = {};
+      Component.prototype.hooks = {};
 
-    Component.prototype.enabled = false;
+      Component.prototype.enabled = false;
 
-    function Component(mediator, el) {
-      this.mediator = mediator;
-      this.el = el;
-      this.map = this.mediator;
-      if (this.el) this.$el = $(document).find(this.el);
-    }
+      function Component(mediator, el) {
+        this.mediator = mediator;
+        this.el = el;
+        this.map = this.mediator;
+        if (this.el) this.$el = $(document).find(this.el);
+      }
 
-    Component.prototype.setMap = function(map) {
-      this.map = map;
-    };
+      Component.prototype.setMap = function(map) {
+        this.map = map;
+      };
 
-    Component.prototype.enable = function() {
-      return this.enabled = true;
-    };
+      Component.prototype.enable = function() {
+        return this.enabled = true;
+      };
 
-    Component.prototype.disable = function() {
-      return this.enabled = false;
-    };
+      Component.prototype.disable = function() {
+        return this.enabled = false;
+      };
 
-    Component.prototype.init = function(opts) {
-      return $.when(opts);
-    };
+      Component.prototype.init = function(opts) {
+        return $.when(opts);
+      };
 
-    Component.prototype.destroy = function() {
-      return true;
-    };
+      Component.prototype.destroy = function() {
+        return true;
+      };
 
-    return Component;
+      return Component;
 
-  })();
-  exports = Component;
-  return exports;
-});
+    })();
+    exports = Component;
+    return exports;
+  });
+
+}).call(this);

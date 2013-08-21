@@ -1372,6 +1372,9 @@ form #uploader_container { padding: 0 }
     float: right;
     margin-right: 20px;
 }
+#map-container-main {
+    margin-bottom: -40px; /* removes bottom space from map */
+}
 .map-tooltip {
     display: none;
     position: absolute;

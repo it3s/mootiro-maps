@@ -1,10 +1,6 @@
 
 app.js
 ----------------
-async.js
-propertyParser.js
-goog.js
-goog!maps,3,other_params:[sensor=false&libraries=drawing&language=pt-br]
 googlemaps.js
 map/core.js
 map/collections.js
@@ -13,10 +9,12 @@ map/multimarker.js
 map/multipolyline.js
 map/geometries.js
 map/features.js
+map/layers.js
 map/component.js
 map/utils.js
 text.js
 text!templates/map/_searchbox.html
+text!templates/map/_layersbox.html
 map/views.js
 map/controls.js
 map/maptypes.js
