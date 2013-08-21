@@ -58,10 +58,12 @@ define (require) ->
             this
 
         toggleLayer: (evt) ->
-            $el = @$ evt.target
-            layer = $el.attr 'data-layer'
-            visible = @layers.getLayer(layer).toggle()
+            $el = @$ evt.currentTarget
+            layerId = $el.attr 'data-layer'
+            layer = @layers.getLayer layerId
+            visible = layer.toggle()
             $el.attr 'data-visible', visible
+            $el.find('.layer-icon').attr 'src', layer.getIconUrl()
 
     SearchBoxView: SearchBoxView
     LayersBoxView: LayersBoxView

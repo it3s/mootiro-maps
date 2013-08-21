@@ -53,7 +53,7 @@ define (require) ->
 
             @addComponents [
                 'map/controls::Location'
-                'map/controls::LayersBox'
+                ['map/controls::LayersBox', 'panel', el: '#map-panel-layers']
             ]
 
         addControl: (pos, el) ->
@@ -103,11 +103,10 @@ define (require) ->
                 @loadRemoteLayers @layersUrl
 
         loadLayer: (data) ->
-            layer = new layers.Layer
-                name: data.name
-                rule: data.rule
+            layer = new layers.Layer _.extend {
                 collection: @getFeatures()
                 map: this
+            }, data
             @layers.addLayer layer
 
             @publish 'layer_loaded', layer
@@ -169,7 +168,7 @@ define (require) ->
         addComponent: (component, type = 'generic', opts = {}) ->
             component_ =
             if _.isString component
-                @start component, '', opts
+                @start component, opts.el , opts
             else
                 @start component
             return @data.when(component_).done () =>
@@ -187,7 +186,7 @@ define (require) ->
                 opts.type ?= component[1] ? 'generic'
                 components_.push
                     component: component[0]
-                    el: '',
+                    el: opts.el,
                     opts: opts
             return @data.when(@start components_).done () =>
                 for instance in arguments

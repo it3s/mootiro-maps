@@ -1,5 +1,10 @@
-<ul class="layers">
+<ul class="layers geo-objects-listing">
   <% layers.forEach(function (layer) {  %>
-  <li class="layer" data-layer="<%= layer.id %>" data-visible="<%= layer.visible %>"><%= layer.name %></li>
+  <li class="layer" data-layer="<%= layer.id %>" data-visible="<%= layer.visible %>">
+    <div class="item">
+      <div class="img-holder"><img class="layer-icon" src="<%= layer.getIconUrl() %>" /></div>
+      <span><%= layer.name %></span>
+    </div>
+  </li>
   <% }); %>
 </ul>

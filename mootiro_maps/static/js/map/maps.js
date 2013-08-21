@@ -63,7 +63,13 @@ define(function(require) {
       this.initFeatureTypes();
       this.initLayers();
       this.handleEvents();
-      this.addComponents(['map/controls::Location', 'map/controls::LayersBox']);
+      this.addComponents([
+        'map/controls::Location', [
+          'map/controls::LayersBox', 'panel', {
+            el: '#map-panel-layers'
+          }
+        ]
+      ]);
     }
 
     Map.prototype.addControl = function(pos, el) {
@@ -140,12 +146,10 @@ define(function(require) {
 
     Map.prototype.loadLayer = function(data) {
       var layer;
-      layer = new layers.Layer({
-        name: data.name,
-        rule: data.rule,
+      layer = new layers.Layer(_.extend({
         collection: this.getFeatures(),
         map: this
-      });
+      }, data));
       this.layers.addLayer(layer);
       return this.publish('layer_loaded', layer);
     };
@@ -228,7 +232,7 @@ define(function(require) {
         _this = this;
       if (type == null) type = 'generic';
       if (opts == null) opts = {};
-      component_ = _.isString(component) ? this.start(component, '', opts) : this.start(component);
+      component_ = _.isString(component) ? this.start(component, opts.el, opts) : this.start(component);
       return this.data.when(component_).done(function() {
         var instance, _base2, _i, _len, _results;
         _results = [];
@@ -256,7 +260,7 @@ define(function(require) {
         }
         components_.push({
           component: component[0],
-          el: '',
+          el: opts.el,
           opts: opts
         });
       }

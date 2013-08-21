@@ -49,10 +49,10 @@ define(function(require) {
       return (_ref = layer.map) != null ? _ref.publish('layer_added', layer) : void 0;
     };
 
-    Layers.prototype.getLayer = function(name) {
+    Layers.prototype.getLayer = function(id) {
       var layers;
       layers = this.filter(function(layer) {
-        return layer.getName() === name;
+        return layer.getId() === id || layer.getName() === id;
       });
       return layers.first;
     };
@@ -95,11 +95,13 @@ define(function(require) {
   Layer = (function() {
 
     function Layer(options) {
-      var _ref, _ref2;
+      var _ref, _ref2, _ref3, _ref4, _ref5, _ref6;
       this.options = options != null ? options : {};
       this.cache = new collections.FeatureCollection();
       this.visible = (_ref = this.options.visible) != null ? _ref : true;
-      this.id = (_ref2 = this.options.id) != null ? _ref2 : this.options.name;
+      this.icon = (_ref2 = (_ref3 = this.options.icon) != null ? _ref3[0] : void 0) != null ? _ref2 : '';
+      this.iconOff = (_ref4 = (_ref5 = this.options.icon) != null ? _ref5[1] : void 0) != null ? _ref4 : '';
+      this.id = (_ref6 = this.options.id) != null ? _ref6 : this.options.name;
       this.setPosition(this.options.position);
       this.setName(this.options.name);
       this.setRule(this.options.rule);
@@ -114,6 +116,10 @@ define(function(require) {
     Layer.prototype.setPosition = function(position) {
       this.position = position;
       return this;
+    };
+
+    Layer.prototype.getId = function() {
+      return this.id;
     };
 
     Layer.prototype.getName = function() {
@@ -143,6 +149,10 @@ define(function(require) {
       this.rule = rule;
       this.cache.clear();
       return this;
+    };
+
+    Layer.prototype.getIconUrl = function() {
+      return "/static/" + (this.visible ? this.icon : this.iconOff);
     };
 
     Layer.prototype.setMap = function(map) {

@@ -11,7 +11,7 @@ define (require) ->
 
         constructor: (@mediator, @el) ->
             @map = @mediator
-            @$el = $(document).find(@el)
+            @$el = $(document).find(@el) if @el
 
         setMap: (@map) ->
 

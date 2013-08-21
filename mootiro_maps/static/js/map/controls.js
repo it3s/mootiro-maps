@@ -54,8 +54,9 @@ define(function(require) {
     Box.prototype.position = googleMaps.ControlPosition.RIGHT_BOTTOM;
 
     Box.prototype.init = function() {
+      var _ref;
       Box.__super__.init.call(this);
-      this.box = $("<div>");
+      this.box = (_ref = this.$el) != null ? _ref : $("<div>");
       if (this.id != null) this.box.attr("id", this.id);
       if (this["class"] != null) this.box.addClass(this["class"]);
       if (this.position) this.map.addControl(this.position, this.box.get(0));
@@ -173,16 +174,16 @@ define(function(require) {
       LayersBox.__super__.constructor.apply(this, arguments);
     }
 
-    LayersBox.prototype.position = googleMaps.ControlPosition.TOP_RIGHT;
-
-    LayersBox.prototype.id = 'map-searchbox';
+    LayersBox.prototype.position = null;
 
     LayersBox.prototype.init = function() {
       var _this = this;
       LayersBox.__super__.init.call(this);
       return require(['map/views'], function(Views) {
+        _this.layers = _this.map.getLayers();
+        _this.layers.layersBox = _this.box;
         _this.view = new Views.LayersBoxView();
-        _this.box.append(_this.view.render(_this.map.getLayers()).el);
+        _this.box.append(_this.view.render(_this.layers).el);
         return _this.handleViewEvents();
       });
     };
@@ -190,10 +191,10 @@ define(function(require) {
     LayersBox.prototype.handleViewEvents = function() {
       var _this = this;
       this.view.on('show', function(layer) {
-        return _this.map.getLayer(layer).show();
+        return _this.layers.getLayer(layer).show();
       });
       return this.view.on('hide', function(layer) {
-        return _this.map.getLayer(layer).hide();
+        return _this.layers.getLayer(layer).hide();
       });
     };
 
@@ -201,7 +202,7 @@ define(function(require) {
       var _this = this;
       return this.map.subscribe('layer_added', function(layer) {
         var _ref;
-        return (_ref = _this.view) != null ? _ref.render(_this.map.getLayers()) : void 0;
+        return (_ref = _this.view) != null ? _ref.render(_this.layers) : void 0;
       });
     };
 

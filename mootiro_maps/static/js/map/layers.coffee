@@ -38,8 +38,9 @@ define (require) ->
             @push layer if not @getLayer layer.getName()
             layer.map?.publish 'layer_added', layer
 
-        getLayer: (name) ->
-            layers = @filter (layer) -> layer.getName() is name
+        getLayer: (id) ->
+            layers = @filter (layer) ->
+                layer.getId() is id or layer.getName() is id
             layers.first
 
         showLayer: (name) -> @getLayer(name).show()
@@ -56,6 +57,8 @@ define (require) ->
         constructor: (@options = {}) ->
             @cache = new collections.FeatureCollection()
             @visible = @options.visible ? on
+            @icon = @options.icon?[0] ? ''
+            @iconOff = @options.icon?[1] ? ''
             @id = @options.id ? @options.name
             @setPosition @options.position
             @setName @options.name
@@ -65,6 +68,8 @@ define (require) ->
 
         getPosition: -> @position
         setPosition: (@position) -> this
+
+        getId: -> @id
 
         getName: -> @name
         setName: (@name) -> this
@@ -79,6 +84,8 @@ define (require) ->
         setRule: (@rule) ->
             @cache.clear()
             this
+
+        getIconUrl: -> "/static/" + (if @visible then @icon else @iconOff)
 
         setMap: (@map) -> @cache.setMap? @map
 

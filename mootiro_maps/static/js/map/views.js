@@ -88,11 +88,13 @@ define(function(require) {
     };
 
     LayersBoxView.prototype.toggleLayer = function(evt) {
-      var $el, layer, visible;
-      $el = this.$(evt.target);
-      layer = $el.attr('data-layer');
-      visible = this.layers.getLayer(layer).toggle();
-      return $el.attr('data-visible', visible);
+      var $el, layer, layerId, visible;
+      $el = this.$(evt.currentTarget);
+      layerId = $el.attr('data-layer');
+      layer = this.layers.getLayer(layerId);
+      visible = layer.toggle();
+      $el.attr('data-visible', visible);
+      return $el.find('.layer-icon').attr('src', layer.getIconUrl());
     };
 
     return LayersBoxView;
