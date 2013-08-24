@@ -151,6 +151,7 @@ define (require)->
                 @handleViewEvents()
 
         handleViewEvents: ->
+            @view.on 'highlight_feature', (featureId) => @map.highlightFeature featureId
             @view.on 'show', (layer) => @layers.getLayer(layer).show()
             @view.on 'hide', (layer) => @layers.getLayer(layer).hide()
 
@@ -1179,6 +1180,30 @@ define (require)->
                     index = _.indexOf(@disabled, type)
                     @disabled.splice(index, 1)
 
+    class LayersFilter extends FeatureFilter
+        hooks:
+            'before_feature_setVisible': 'beforeFeatureSetVisibleHook'
+
+        init: ->
+            super()
+            @disabled = []
+            window.dd = @disabled
+
+        beforeFeatureSetVisibleHook: (feature, visible) ->
+            visible_ = visible
+            if visible and not @map.getLayers().shouldFeatureBeVisible feature
+                visible_ = false
+            [feature, visible_]
+
+        handleMapEvents: ->
+            @map.subscribe 'show_layer', (layer) =>
+                @disabled.push(layer) if layer not in @disabled
+
+            @map.subscribe 'hide_layer', (layer) =>
+                if layer in @disabled
+                    index = _.indexOf(@disabled, layer)
+                    @disabled.splice(index, 1)
+
     window.komoo.controls =
         DrawingManager: DrawingManager
         DrawingControl: DrawingControl
@@ -1205,5 +1230,6 @@ define (require)->
         FeatureFilter: FeatureFilter
         FeatureZoomFilter: FeatureZoomFilter
         FeatureTypeFilter: FeatureTypeFilter
+        LayersFilter: LayersFilter
 
     return window.komoo.controls

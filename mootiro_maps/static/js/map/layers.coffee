@@ -52,6 +52,13 @@ define (require) ->
         getVisibleLayers: -> @filter (layer) -> layer.visible
         getHiddenLayers: -> @filter (layer) -> not layer.visible
 
+        shouldFeatureBeVisible: (feature) ->
+            visible = false
+            @getVisibleLayers().forEach (layer) ->
+                visible or= layer.match feature
+            visible
+
+
 
     class Layer
         constructor: (@options = {}) ->
@@ -87,7 +94,13 @@ define (require) ->
 
         getIconUrl: -> "/static/" + (if @visible then @icon else @iconOff)
 
-        setMap: (@map) -> @cache.setMap? @map
+        setMap: (@map) ->
+            @handleMapEvents()
+            @cache.setMap? @map
+
+        handleMapEvents: ->
+            @map.subscribe 'feature_added', (feature) =>
+                @cache.push feature if not @cache.isEmpty() and @match feature
 
         show: ->
             @visible = on
@@ -105,8 +118,7 @@ define (require) ->
             eval_expr @rule, feature
 
         getFeatures: () ->
-            if @cache.isEmpty()
-                @updateCache()
+            @updateCache() if @cache.isEmpty()
             @cache
 
         updateCache: ->

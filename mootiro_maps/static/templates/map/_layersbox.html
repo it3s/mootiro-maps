@@ -1,18 +1,22 @@
 <ul class="layers geo-objects-listing">
   <% layers.forEach(function (layer) {  %>
-  <li class="layer" data-layer="<%= layer.id %>" data-visible="<%= layer.visible %>">
-    <div class="item">
+  <li class="layer">
+    <div class="item on" data-layer="<%= layer.id %>" data-visible="<%= layer.visible %>">
       <div class="img-holder"><img class="layer-icon" src="<%= layer.getIconUrl() %>" /></div>
-      <span><%= layer.name %></span>
+      <span class="name"><%= layer.name %></span><span class="length"><% if (layer.getFeatures().length) { %> <%= layer.getFeatures().length %> <% } %></span>
     </div>
+    <% if (layer.getFeatures().length) { %>
     <div class="collapser"><i class="icon-chevron-right"></i></div>
+    <%  } %>
   </li>
-  <li class="sublist">
-    <ul>
-      <% layer.getFeatures().forEach(function (feature) { %>
-      <li><%= feature.getProperty('name') %></li>
-      <%  }); %>
-    </ul>
-  </li>
+    <% if (layer.getFeatures().length) { %>
+    <li class="sublist">
+      <ul>
+        <% layer.getFeatures().forEach(function (feature) { %>
+        <li class="feature" data-id="<%= feature.getProperty('id') %>"><%= feature.getProperty('name') %></li>
+        <%  }); %>
+      </ul>
+    </li>
+    <% } %>
   <% }); %>
 </ul>

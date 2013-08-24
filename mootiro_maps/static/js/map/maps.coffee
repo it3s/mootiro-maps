@@ -250,6 +250,7 @@ define (require) ->
         addFeature: (feature) =>
             @handleFeatureEvents feature
             @features.push feature
+            @publish 'feature_added', feature
 
         revertFeature: (feature) ->
             if feature.getProperty("id")?
@@ -438,7 +439,6 @@ define (require) ->
                 #'map/controls::SupporterBox'
                 'map/controls::LicenseBox'
                 'map/controls::SearchBox'
-                'map/controls::FeatureFilter'
             ]
 
 
@@ -453,7 +453,7 @@ define (require) ->
                 ['map/providers::ZoomFilteredFeatureProvider', 'provider']
                 ['map/controls::CommunityClusterer', 'clusterer', {map: this}]
                 'map/controls::FeatureZoomFilter'
-                'map/controls::FeatureTypeFilter'
+                'map/controls::LayersFilter'
             ]
 
 

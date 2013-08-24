@@ -156,6 +156,9 @@ define (require) ->
             @featuresByType[type]['categories']['all'].push(feature)
             @featuresByType[type]['ids'] ?= {}
             @featuresByType[type]['ids'][feature.getProperty('id')] = feature
+            @featuresByType['all'] ?= {}
+            @featuresByType['all']['ids'] ?= {}
+            @featuresByType['all']['ids'][feature.getProperty('id')] = feature
 
         pop: ->
             # TODO: remove the feature from featuresByType
@@ -182,11 +185,14 @@ define (require) ->
                 features
 
         getById: (type, id) ->
+            if typeof type isnt 'string'
+                id = type
+                type = 'all'
             @featuresByType[type]?['ids'][id]
 
         highlightFeature: (type, id) ->
             feature =
-                if typeof type is 'string'
+                if typeof type in ['string', 'number']
                     @getById type, id
                 else
                     type
