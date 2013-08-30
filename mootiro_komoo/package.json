@@ -4,6 +4,8 @@
   "private": true,
   "dependencies": {
     "walk": "~2.2.1",
-    "optimist": "~0.3.5"
+    "optimist": "~0.3.5",
+    "coffee-script": "1.2",
+    "requirejs": "2.1"
   }
 }
