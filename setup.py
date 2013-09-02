@@ -9,7 +9,7 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 README = open(os.path.join(HERE, 'docs/README.rst')).read()
 
 setup(
-    name='mootiro_komoo',
+    name='mootiro_maps',
     version='0.1a1',
     url='http://mootiro.org',  # 'https://github.com/it3s/komoo',
     # download_url='https://github.com/it3s/mootiro_gepeto/downloads',
@@ -34,7 +34,7 @@ setup(
     packages=find_packages(),  # (exclude=['test_project', 'test_project.*']),
     include_package_data=True,
     zip_safe=False,
-    test_suite='mootiro_komoo.tests',
+    test_suite='mootiro_maps.tests',
     install_requires=[
         'Django>=1.3',
         'geopy',
