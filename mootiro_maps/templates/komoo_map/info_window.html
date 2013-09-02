@@ -15,7 +15,7 @@
         {% for c in object.categories.all %}
         <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
         {% endfor %}
-      </ul>
+      </ul> 
       <div style="clear: both;">
     {% endif %}
     <p>
@@ -35,6 +35,7 @@
     <div class="mark-down">{{ object.description|default:""|description_markdown_preview|safe }}</div>
     </p>
     <p>
+	
     {% if object.population %}
       <span class="meta-info">{% trans "Population" %}</span> {% firstof object.population '-' %}
     {% endif %}

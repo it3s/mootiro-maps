@@ -18,10 +18,9 @@
       <div class="button-new">
         <a class="button login-required" href="{% url new_organization %}" title="Adicionar uma nova Organização. Por exemplo: uma ONG, uma empresa, um coletivo, etc.">{% trans "Create New Organization" %}</a>
       </div>
-
     <div class="view-list-top">
-      <div class="view-list-count">
-        {% blocktrans count counter=organizations_count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
+      <div class="view-list-count"><!--organizations_count-->
+        {% blocktrans  count counter=organizations_count %}{{ counter }} Organization{% plural %}	{{ counter }} Organizations{% endblocktrans %}
       </div>
       <div class="view-list-pagination">
         {% pagination organizations %}
