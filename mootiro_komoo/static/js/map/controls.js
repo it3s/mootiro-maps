@@ -585,7 +585,7 @@
           }
         });
       };
-
+	
       PerimeterSelector.prototype.select = function(radius, callback) {
         this.radius = radius;
         this.callback = callback;
@@ -665,7 +665,7 @@
         if (this.options.map) this.setMap(this.options.map);
         return this.customize();
       };
-
+	/*INFO BOX*/
       Balloon.prototype.createInfoBox = function(options) {
         return this.setInfoBox(new InfoBox({
           pixelOffset: new googleMaps.Size(0, -20),
@@ -770,7 +770,7 @@
         });
         return this.initDomElements();
       };
-
+      //Box contents
       Balloon.prototype.initDomElements = function() {
         var _this = this;
         this.title = $("<div>");
@@ -783,6 +783,7 @@
           padding: "10px",
           margin: "0 0 0 15px"
         });
+	//hover
         this.content.hover(function(e) {
           return _this.isMouseover = true;
         }, function(e) {
@@ -790,7 +791,7 @@
         });
         return this.infoBox.setContent(this.content.get(0));
       };
-
+      
       Balloon.prototype.createClusterContent = function(options) {
         var body, feature, features, msg, title;
         if (options == null) options = {};
@@ -952,7 +953,7 @@
         clearTimeout(this.timer);
         return Tooltip.__super__.close.call(this);
       };
-
+	//box tootip
       Tooltip.prototype.customize = function() {
         var _this = this;
         Tooltip.__super__.customize.call(this);
