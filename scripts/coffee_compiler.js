@@ -8,6 +8,8 @@ var fs         = require('fs'),
 
 var baseDir = ['mootiro_maps/static/js', 'mootiro_maps/static/tests'];
 
+var env = './scripts/node_env.sh ';
+
 
 var formatedDate = function(date){
   return '' + date.getHours() + ':' + date.getMinutes() +
@@ -25,7 +27,7 @@ var compileCoffee = function(filepath) {
 
       flag = (lines[0].indexOf('no-wrap') > -1) ? '-b' : '';
 
-      cmd = 'coffee ' + flag + ' -c ' + filepath;
+      cmd = env + 'coffee ' + flag + ' -c ' + filepath;
       now = new Date();
 
       console.log('[coffee] ' + formatedDate(now) + ' : ' + filepath);

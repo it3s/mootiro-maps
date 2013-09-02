@@ -16,3 +16,13 @@ OBS: our boostrap.sh and most of our instructions assumes a Ubuntu gnu/linux
 machine (or any other Debian based distro), if you use a different setup
 you can easily follow the script manualy making the necessary changes.
 If you are on a windows machine, please jump from a bridge!
+=======
+Installing:
+    - Activate you virtualenv
+    - cd into the mootiro_komoo folder
+    - sh scripts/bootstrap.sh
+    - sh script/create_template_postgis.sh
+    - fab create_db sync_db
+
+Running:
+    - fab run
