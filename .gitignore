@@ -9,7 +9,8 @@ mootiro_komoo/fabfile/remote/secret.py
 .DS_Store
 mootiro_komoo/.ropeproject/
 build/
-logs/
+logs/*
+log/*
 media/
 komoo_index/
 backups/
@@ -23,3 +24,4 @@ mootiro_komoo/.build/
 mootiro_komoo/importation
 node_modules/
 mootiro_komoo/lib/elasticsearch/
+mootiro_komoo/*.log
