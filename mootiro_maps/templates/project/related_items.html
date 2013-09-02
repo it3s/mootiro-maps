@@ -1,0 +1,84 @@
+{% extends "global.html" %}
+{% load komoo_map_tags %}
+{% load komoo_tags %}
+{% load i18n %}
+
+{% block facebook_meta %}
+  <meta property="og:title" content="{{project.name}} - MootiroMaps" />
+  <meta property="og:url" content="{{SITE_URL}}{% url project_map project.id %}"/>
+  {% if project.logo %}
+    <meta property="og:image" content="{{SITE_URL}}{{project.logo_url}}"/>
+  {% else %}
+    <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo-fb.png"/>
+  {% endif %}
+{% endblock %}
+
+{% block menu %} {% menu "project" %} {% endblock %}
+
+{% block content %}
+{% komoo_map geojson project.id 'ajax=false' 'type=main' 'width=100%' 'height=100%' 'zoom=13' %}
+{% endblock %}
+
+{% block page_scripts %}
+  {{ block.super }}
+
+  <script type="text/template" id="panel-info-template">
+      <div class="proj-name" ><a href="<%= view_url %>"><%= name %></a></div>
+      <img class="proj-logo-img" src="<%= logo_url %>" alt="Image" />
+      <div style="clear: both;"></div>
+  </script>
+
+  <link rel="stylesheet" type="text/css" href="/static/spock_gallery/jquery.spock-gallery.css">
+  <script type="text/javascript" src="/static/spock_gallery/jquery.spock-gallery.min.js"></script>
+
+  <script type="text/javascript">
+    if (typeof window.KomooNS === 'undefined') window.KomooNS = {};
+    KomooNS.obj = {{ project|jsonify|safe }};
+    KomooNS.projectId = {{ project.id|default:'undefined' }};
+    //require(['project/project_related_items']);
+  </script>
+
+<style type="text/css">
+    .spock_image_gallery_thumb{
+        max-width: 100px;
+        max-height: 100px;
+    }
+    #logos-gallery {
+        padding: 15px;
+        background: #e1eef5;
+        border-radius: 5px;
+        margin: 20px auto 0;
+    }
+    .spock-thumb-list{
+        height: 105px;
+        padding: 0;
+    }
+    #logos-gallery .spock-image{
+        overflow: visible;
+    }
+    #logos-gallery .spock-nav{
+        display: none;
+    }
+    #logos-gallery .spock-controls{
+        display: none;
+    }
+    #map-panel-content .panel-info .proj-logo-img{
+        max-width: 150px;
+        max-height: 150px;
+        margin: 10px 75px 0;
+    }
+    #map-panel-content .panel-info .proj-name{
+        font-weight: bold;
+        font-size: 1.2em;
+        margin-bottom: 20px;
+    }
+    .proj-partners-title{
+        font-weight: bold;
+        margin-left: 30px;
+    }
+</style>
+
+{% endblock %}
+
+{% block footer %}{% endblock %}
+

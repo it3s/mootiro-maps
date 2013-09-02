@@ -1,0 +1,14 @@
+<form class'search-form' action="#">
+  <select name="location-type" class="location-type">
+    <option value="address"><% print(gettext('Address')); %></option>
+    <option value="latLng"><% print(gettext('Coordinates')); %></option>
+  </select>
+  <div class="address-container input-container">
+    <input type="text" name="address" value="" placeholder="<% print(gettext('Address')); %>" class="address" />
+  </div>
+  <div class="latLng-container input-container" style="display: none;">
+    <input type="text" name="lat" value="" placeholder="<% print(gettext('Latitude')); %>"  class="lat" />
+    <input type="text" name="lng" value="" placeholder="<% print(gettext('Longitude')); %>" class="lng" />
+  </div>
+  <input type="submit" class="btn search" value="<% print(gettext('Go')); %>" />
+  </form>

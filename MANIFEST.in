@@ -1,4 +1,4 @@
 recursive-include docs
 recursive-include scripts
-recursive-include mootiro_komoo/komoo/static *
-recursive-include mootiro_komoo/komoo/templates *
+recursive-include mootiro_maps/static *
+recursive-include mootiro_maps/templates *

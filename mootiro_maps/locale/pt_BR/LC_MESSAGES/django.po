@@ -1,0 +1,2435 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Mootiro Maps\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-07-12 19:38-0300\n"
+"PO-Revision-Date: 2012-11-28 12:38-0200\n"
+"Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
+"Language-Team: it3s <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+"X-Poedit-Basepath: ../../../\n"
+
+#: apps/authentication/api.py:28 apps/authentication/models.py:172
+#: apps/main/models.py:347
+msgid "Required field"
+msgstr "Campo obrigatório"
+
+#: apps/authentication/api.py:34
+msgid "You must accept the license agrement"
+msgstr "Você deve aceitar os termos de uso"
+
+#: apps/authentication/api.py:39 apps/authentication/views.py:184
+msgid "Passwords did not match"
+msgstr "As senha não coincidem"
+
+#: apps/authentication/api.py:105
+msgid "You don't have permission for this operation"
+msgstr "Você não possui permissão para essa operação"
+
+#: apps/authentication/forms.py:30
+msgid "Full Name"
+msgstr "Nome Completo"
+
+#: apps/authentication/forms.py:31 templates/authentication/profile.html:42
+msgid "About Me"
+msgstr "Sobre mim"
+
+#: apps/authentication/forms.py:32
+msgid "Photo"
+msgstr "Foto"
+
+#: apps/authentication/forms.py:33
+msgid "Location"
+msgstr "Localização"
+
+#: apps/authentication/forms.py:59 apps/community/forms.py:25
+#: apps/komoo_project/forms.py:42 apps/komoo_resource/forms.py:40
+#: apps/main/templatetags/komoo_tags.py:333
+#: apps/main/templatetags/komoo_tags.py:334 apps/organization/forms.py:63
+#: lib/taggit/models.py:10 templates/organization/branch_form.html:13
+msgid "Name"
+msgstr "Nome"
+
+#: apps/authentication/forms.py:60
+msgid "Email"
+msgstr "Email"
+
+#: apps/authentication/forms.py:61
+msgid "Password"
+msgstr "Senha"
+
+#: apps/authentication/forms.py:62
+msgid "Confirm your Password"
+msgstr "Confirme a sua senha"
+
+#: apps/authentication/forms.py:86
+msgid "This email is already in use."
+msgstr "Este email já está em uso."
+
+#: apps/authentication/forms.py:89 apps/authentication/models.py:178
+msgid ""
+"This email is registered on our system. Probably you've logged before with a "
+"social account (facebook or google). You can skip this step and just login."
+msgstr ""
+"Este email já está registrado no nosso sistema. Provavelmente você já entrou "
+"anteriormente usando uma conta externa (facebook ou google). Você pode pular "
+"esta etapa e simplesmente entrar."
+
+#: apps/authentication/forms.py:95
+msgid "Passwords did not match."
+msgstr "As senha não coincidem."
+
+#: apps/authentication/models.py:22
+msgid ""
+"\n"
+"Hello, {name}.\n"
+"\n"
+"Before using our tool, please confirm your e-mail visiting the link below.\n"
+"{verification_url}\n"
+"\n"
+"Thanks,\n"
+"the IT3S team.\n"
+msgstr ""
+"\n"
+"Olá, {name}.\n"
+"\n"
+"Antes de usar nossa ferramenta, por favor confirme seu e-mail visitando o "
+"link abaixo.\n"
+"{verification_url}\n"
+"\n"
+"Obrigado,\n"
+"a equipe IT3S.\n"
+
+#: apps/authentication/models.py:185
+msgid "Email address already in use"
+msgstr "Este email já está em uso"
+
+#: apps/authentication/models.py:195
+msgid "Welcome to MootiroMaps"
+msgstr "Bem-vindo ao MootiroMaps"
+
+#: apps/authentication/views.py:179
+msgid "You must provide a valid password"
+msgstr "Você deve fornecer uma senha válida"
+
+#: apps/authentication/views.py:199
+msgid "Wrong password!"
+msgstr "Senha incorreta!"
+
+#: apps/authentication/views.py:203
+msgid "Failed to save data"
+msgstr "Houve uma falha ao tentar salvar os dados"
+
+#: apps/community/forms.py:26 apps/investment/forms.py:33
+#: apps/komoo_project/forms.py:43 apps/komoo_resource/forms.py:41
+#: apps/need/forms.py:26 apps/organization/forms.py:64
+msgid "Short description"
+msgstr "Descrição curta"
+
+#: apps/community/forms.py:27 templates/community/view.html:37
+#: templates/importsheet/row_templates/comunidades.html:16
+#: templates/komoo_map/info_window.html:39
+msgid "Population"
+msgstr "População"
+
+#: apps/community/forms.py:28 apps/investment/forms.py:34
+#: apps/komoo_project/forms.py:44 apps/komoo_resource/forms.py:42
+#: apps/need/forms.py:27 apps/organization/forms.py:65
+#: apps/proposal/forms.py:28 templates/organization/branch_form.html:16
+msgid "Description"
+msgstr "Descrição"
+
+#: apps/community/forms.py:29 apps/investment/forms.py:44
+#: apps/komoo_project/forms.py:45 apps/komoo_resource/forms.py:45
+#: apps/main/templatetags/komoo_tags.py:332 apps/need/forms.py:31
+#: apps/organization/forms.py:68 lib/taggit/managers.py:39
+#: lib/taggit/models.py:57
+#: templates/importsheet/row_templates/comunidades.html:38
+#: templates/importsheet/row_templates/necessidades.html:69
+#: templates/importsheet/row_templates/organizacoes.html:83
+#: templates/importsheet/row_templates/recursos.html:59
+#: templates/main/templatetags/taglist.html:5
+msgid "Tags"
+msgstr "Palavras-Chave"
+
+#: apps/community/forms.py:30
+msgid " "
+msgstr " "
+
+#: apps/community/models.py:40 apps/komoo_resource/forms.py:46
+#: apps/main/templatetags/komoo_tags.py:237
+#: apps/main/templatetags/komoo_tags.py:336 apps/need/forms.py:28
+#: apps/organization/forms.py:66 templates/investment/list.html:44
+msgid "Community"
+msgstr "Comunidade"
+
+#: apps/discussion/forms.py:24
+msgid "Text"
+msgstr "Texto"
+
+#: apps/importsheet/interpreters/base.py:137
+msgid "Column {cletter} ignored due to an empty header."
+msgstr "Coluna {cletter} ignorada porque tem um cabeçalho vazio."
+
+#: apps/importsheet/interpreters/base.py:174
+msgid "Duplicate polygon identifier in Fusion Table: {}"
+msgstr "Identificador de polígono duplicado no Fusion Table: {}"
+
+#: apps/importsheet/interpreters/base.py:193
+msgid "Missing column: {0}"
+msgstr "Coluna faltando: {0}"
+
+#: apps/importsheet/interpreters/base.py:204
+msgid "{} objects to be imported with same name: {}"
+msgstr "{} objetos a serem importados com o mesmo nome: {}"
+
+#: apps/importsheet/interpreters/necessidades.py:60
+msgid "Invalid need categories: "
+msgstr "Áreas inválidas: "
+
+#: apps/importsheet/interpreters/organizacoes.py:63
+msgid "Invalid categories: "
+msgstr "Categorias inválidas: "
+
+#: apps/investment/forms.py:32 apps/need/forms.py:25 apps/proposal/forms.py:27
+msgid "Title"
+msgstr "Título"
+
+#: apps/investment/forms.py:35
+msgid "Investor type"
+msgstr "Tipo de investidor"
+
+#: apps/investment/forms.py:36
+msgid "Anonymous investor"
+msgstr "Anônimo"
+
+#: apps/investment/forms.py:37
+msgid "Investor organization"
+msgstr "Nome do Investidor"
+
+#: apps/investment/forms.py:38
+msgid "Investor person"
+msgstr "Nome do Investidor"
+
+#: apps/investment/forms.py:39
+msgid "Over period"
+msgstr "Por um período"
+
+#: apps/investment/forms.py:40 apps/main/templatetags/komoo_tags.py:335
+#: templates/investment/view.html:48
+msgid "Date"
+msgstr "Data"
+
+#: apps/investment/forms.py:41
+msgid "End date"
+msgstr "Data final"
+
+#: apps/investment/forms.py:42
+msgid "Currency"
+msgstr "Moeda"
+
+#: apps/investment/forms.py:43 templates/investment/view.html:51
+msgid "Value"
+msgstr "Valor"
+
+#: apps/investment/forms.py:137 apps/investment/forms.py:139
+msgid "Invalid investor."
+msgstr "Investidor Inválido."
+
+#: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:232
+#: apps/organization/models.py:68
+msgid "Organization"
+msgstr "Organização"
+
+#: apps/investment/models.py:23
+msgid "Person"
+msgstr "Pessoa"
+
+#: apps/investment/models.py:35
+msgid "Anonymous"
+msgstr "Anônimo"
+
+#: apps/investment/models.py:120
+msgid "Real"
+msgstr "Real"
+
+#: apps/investment/models.py:121
+msgid "Dollar"
+msgstr "Dólar"
+
+#: apps/investment/models.py:122
+msgid "Euro"
+msgstr "Euro"
+
+#: apps/komoo_comments/views.py:46
+msgid "invalid form: {}"
+msgstr "Formulário Inválido: {}"
+
+#: apps/komoo_map/forms.py:65 templates/komoo_map/map_templatetag.html:14
+#: templates/organization/branch_form.html:10
+msgid "Open the map editor"
+msgstr "Abrir o editor de mapas"
+
+#: apps/komoo_map/templatetags/komoo_map_tags.py:31
+#: templates/main/templatetags/geo_objects_add.html:16
+#: templates/main/templatetags/geo_objects_add.html:28
+#: templates/main/templatetags/geo_objects_add.html:40
+msgid "Add shape"
+msgstr "Adicionar área"
+
+#: apps/komoo_map/templatetags/komoo_map_tags.py:32
+#: apps/komoo_map/templatetags/komoo_map_tags.py:33
+#: templates/main/templatetags/geo_objects_add.html:17
+#: templates/main/templatetags/geo_objects_add.html:29
+#: templates/main/templatetags/geo_objects_add.html:41
+msgid "Add line"
+msgstr "Adicionar linha"
+
+#: apps/komoo_map/templatetags/komoo_map_tags.py:34
+#: apps/komoo_map/templatetags/komoo_map_tags.py:35
+#: templates/main/templatetags/geo_objects_add.html:18
+#: templates/main/templatetags/geo_objects_add.html:30
+#: templates/main/templatetags/geo_objects_add.html:42
+msgid "Add point"
+msgstr "Adicionar ponto"
+
+#: apps/komoo_project/forms.py:23 templates/organization/list.html:62
+msgid "Public"
+msgstr "Público"
+
+#: apps/komoo_project/forms.py:24
+msgid "Private"
+msgstr "Privado"
+
+#: apps/komoo_project/forms.py:46 apps/organization/forms.py:72
+msgid "Logo"
+msgstr "Logotipo"
+
+#: apps/komoo_project/forms.py:47 apps/komoo_resource/forms.py:44
+#: apps/organization/forms.py:67
+#: templates/importsheet/row_templates/organizacoes.html:47
+#: templates/importsheet/row_templates/recursos.html:51
+#: templates/organization/show.html:160 templates/project/old_view.html:268
+#: templates/project/view.html:103 templates/resource/show.html:99
+msgid "Contact"
+msgstr "Contato"
+
+#: apps/komoo_project/forms.py:48
+msgid "Partners Logo"
+msgstr "Logo de Parceiros"
+
+#: apps/komoo_project/views.py:90
+msgid "Unnamed"
+msgstr "Sem nome"
+
+#: apps/komoo_resource/forms.py:43
+#: templates/importsheet/row_templates/recursos.html:17
+msgid "Kind"
+msgstr "Tipo"
+
+#: apps/komoo_resource/forms.py:47 apps/need/forms.py:32
+#: apps/organization/forms.py:71
+msgid "Images"
+msgstr "Imagens"
+
+#: apps/komoo_resource/forms.py:77 apps/main/utils.py:228
+msgid "invalid field data"
+msgstr "campo com dados inválidos"
+
+#: apps/komoo_resource/models.py:42
+msgid "Resource without name"
+msgstr "Recurso sem nome"
+
+#: apps/komoo_resource/models.py:65 apps/main/templatetags/komoo_tags.py:233
+msgid "Resource"
+msgstr "Recurso"
+
+#: apps/main/relations.py:8
+msgid "owns"
+msgstr "possui"
+
+#: apps/main/relations.py:8
+msgid "is owned by"
+msgstr "pertence à"
+
+#: apps/main/relations.py:13
+msgid "participates in"
+msgstr "participa de"
+
+#: apps/main/relations.py:13
+msgid "has as participant"
+msgstr "tem como participante"
+
+#: apps/main/relations.py:18
+msgid "partners with"
+msgstr "é parceiro de"
+
+#: apps/main/relations.py:23
+msgid "gives a grant to"
+msgstr "financia"
+
+#: apps/main/relations.py:23
+msgid "receives a grant from"
+msgstr "recebe um financiamento de"
+
+#: apps/main/relations.py:28
+msgid "certifies"
+msgstr "certifica"
+
+#: apps/main/relations.py:28
+msgid "is certified by"
+msgstr "é certificado por"
+
+#: apps/main/relations.py:33
+msgid "attends students from"
+msgstr "atende alunos de"
+
+#: apps/main/relations.py:33
+msgid "attends"
+msgstr "atende a"
+
+#: apps/main/relations.py:38
+msgid "directs people to"
+msgstr "encaminha atendidos para"
+
+#: apps/main/relations.py:38
+msgid "receives people from"
+msgstr "recebe encaminhamentos de atendidos de"
+
+#: apps/main/relations.py:43
+msgid "recruits volunteers for"
+msgstr "recruta voluntários para"
+
+#: apps/main/relations.py:43
+msgid "receives volunteers from"
+msgstr "recebe voluntários de"
+
+#: apps/main/relations.py:48
+msgid "supports"
+msgstr "apoia"
+
+#: apps/main/relations.py:48
+msgid "is supported by"
+msgstr "é apoiado por"
+
+#: apps/main/relations.py:53
+msgid "represents"
+msgstr "representa"
+
+#: apps/main/relations.py:53
+msgid "is represented by"
+msgstr "é representado por"
+
+#: apps/main/relations.py:58
+msgid "is a member of"
+msgstr "é mebro de"
+
+#: apps/main/relations.py:58
+msgid "has as member"
+msgstr "tem como membro"
+
+#: apps/main/relations.py:63
+msgid "supplies to"
+msgstr "fornece para"
+
+#: apps/main/relations.py:63
+msgid "buys from"
+msgstr "compra de"
+
+#: apps/main/relations.py:68
+msgid "is board member of"
+msgstr "é conselheiro de"
+
+#: apps/main/relations.py:68
+msgid "has as board member"
+msgstr "tem como conselheiro"
+
+#: apps/main/utils.py:105
+msgid "Submit"
+msgstr "Enviar"
+
+#: apps/main/views.py:135
+msgid ""
+"\n"
+"Url: {0}\n"
+"Reporter: {1} (id: {2}, email: {3})\n"
+"Info: {4}\n"
+"Message: {5}\n"
+"    "
+msgstr ""
+"\n"
+"Endereço: {0}\n"
+"Usuário: {1} (id: {2}, email: {3})\n"
+"Informações: {4}\n"
+"Mensagem: {5}\n"
+"    "
+
+#: apps/main/views.py:143
+msgid "Error report"
+msgstr "Relatório de erro"
+
+#: apps/main/templatetags/komoo_filters.py:34
+#, python-format
+msgctxt "more than 1 month ago"
+msgid "on %(date)s at %(time)s"
+msgstr "em %(date)s às %(time)s"
+
+#: apps/main/templatetags/komoo_filters.py:41
+#, python-format
+msgctxt "naturaltime"
+msgid "%(delta)s ago"
+msgstr "%(delta)s atrás"
+
+#: apps/main/templatetags/komoo_filters.py:44
+#: apps/main/templatetags/komoo_filters.py:66
+msgid "now"
+msgstr "agora"
+
+#: apps/main/templatetags/komoo_filters.py:47
+#, python-format
+msgid "a second ago"
+msgid_plural "%(count)s seconds ago"
+msgstr[0] "um segundo atrás"
+msgstr[1] "%(count)s segundos atrás"
+
+#: apps/main/templatetags/komoo_filters.py:52
+#, python-format
+msgid "a minute ago"
+msgid_plural "%(count)s minutes ago"
+msgstr[0] "um minuto atrás"
+msgstr[1] "%(count)s minutos atrás"
+
+#: apps/main/templatetags/komoo_filters.py:57
+#, python-format
+msgid "an hour ago"
+msgid_plural "%(count)s hours ago"
+msgstr[0] "um hora atrás"
+msgstr[1] "%(count)s horas atrás"
+
+#: apps/main/templatetags/komoo_filters.py:63
+#, python-format
+msgctxt "naturaltime"
+msgid "%(delta)s from now"
+msgstr "daqui a %(delta)s"
+
+#: apps/main/templatetags/komoo_filters.py:69
+#, python-format
+msgid "a second from now"
+msgid_plural "%(count)s seconds from now"
+msgstr[0] "daqui a um segundo"
+msgstr[1] "daqui a %(count)s segundos"
+
+#: apps/main/templatetags/komoo_filters.py:74
+#, python-format
+msgid "a minute from now"
+msgid_plural "%(count)s minutes from now"
+msgstr[0] "daqui a um minuto"
+msgstr[1] "daqui a %(count)s minutos"
+
+#: apps/main/templatetags/komoo_filters.py:79
+#, python-format
+msgid "an hour from now"
+msgid_plural "%(count)s hours from now"
+msgstr[0] "daqui a uma hora"
+msgstr[1] "daqui a %(count)s horas"
+
+#: apps/main/templatetags/komoo_tags.py:234 apps/need/models.py:98
+msgid "Need"
+msgstr "Necessidade"
+
+#: apps/main/templatetags/komoo_tags.py:235
+msgid "Proposal"
+msgstr "Proposta"
+
+#: apps/main/templatetags/komoo_tags.py:236 templates/investment/edit.html:7
+msgid "Investment"
+msgstr "Investimento"
+
+#: apps/main/templatetags/komoo_tags.py:337
+#: templates/importsheet/row_templates/necessidades.html:18
+msgid "Need categories"
+msgstr "Áreas"
+
+#: apps/main/templatetags/komoo_tags.py:338 apps/need/forms.py:30
+#: templates/need/list.html:58 templates/need/view.html:45
+msgid "Target audiences"
+msgstr "Públicos alvo"
+
+#: apps/main/widgets/autocomplete.py:94
+msgid "invalid data"
+msgstr "dados inválidos"
+
+#: apps/main/widgets/autocomplete.py:114
+msgid "You can type above or select here"
+msgstr "Você pode digitar acima ou selecionar algum aqui"
+
+#: apps/main/widgets/multiple_autocomplete.py:56
+msgid "add a tag"
+msgstr "adicione"
+
+#: apps/moderation/models.py:51
+msgid "Deletion request"
+msgstr "Requisição de remoção"
+
+#: apps/moderation/models.py:52
+msgid "Spam"
+msgstr "Spam"
+
+#: apps/moderation/models.py:53
+msgid "Inappropriate"
+msgstr "Inapropriado"
+
+#: apps/moderation/models.py:54
+msgid "Terms Of Use Violation"
+msgstr "Violação dos termos de uso"
+
+#: apps/moderation/models.py:55
+msgid "Copyright Violation"
+msgstr "Violação de copyright"
+
+#: apps/moderation/models.py:56
+msgid "Wrong Content"
+msgstr "Conteúdo errado"
+
+#: apps/moderation/models.py:57
+msgid "Another Reason"
+msgstr "Outro motivo"
+
+#: apps/moderation/models.py:65
+msgid "reason"
+msgstr "motivo"
+
+#: apps/moderation/models.py:67
+#: templates/comments/comments_summary_templatetag.html:5
+#: templates/update/updates_list_templatetag.html:124
+msgid "comment"
+msgstr "comentário"
+
+#: apps/moderation/models.py:70
+msgid "report"
+msgstr "denúncia"
+
+#: apps/moderation/models.py:71
+msgid "reports"
+msgstr "denúncias"
+
+#: apps/moderation/utils.py:104
+msgid ""
+"\n"
+"Content: {0}\n"
+"Content type: {1}\n"
+"Content id: {2}\n"
+"Content url: {3}\n"
+"Admin url: {4}\n"
+"Reporter: {5} (id: {6}, email: {7})\n"
+"Reason: {8}\n"
+"Comment: {9}\n"
+"    "
+msgstr ""
+"\n"
+"Conteúdo: {0}\n"
+"Tipo de conteúdo: {1}\n"
+"Id do conteúdo: {2}\n"
+"Url do conteúdo: {3}\n"
+"Url da administração: {4}\n"
+"Denunciante: {5} (id: {6}, email: {7})\n"
+"Motivo: {8}\n"
+"Comentário: {9}\n"
+"    "
+
+#: apps/moderation/utils.py:117
+msgid "Content report"
+msgstr "Denúncia do conteúdo"
+
+#: apps/moderation/views.py:24 apps/moderation/views.py:84
+msgid "No data"
+msgstr "Nenhum dado"
+
+#: apps/moderation/views.py:83
+msgid "Please log in first to report a content"
+msgstr "Por favor, faça login primeiro para reportar um conteúdo"
+
+#: apps/moderation/views.py:92
+#: templates/moderation/report_content_button_templatetag.html:4
+msgid "You've already reported this content"
+msgstr "Você já denunciou este conteúdo"
+
+#: apps/moderation/views.py:100
+msgid "The content was successfully reported"
+msgstr "O conteúdo foi denunciado com sucesso"
+
+#: apps/need/forms.py:29
+msgid "Need Categories"
+msgstr "Áreas"
+
+#: apps/need/models.py:24
+msgid "Culture"
+msgstr "Cultura"
+
+#: apps/need/models.py:25
+msgid "Education"
+msgstr "Educação"
+
+#: apps/need/models.py:26
+msgid "Environment"
+msgstr "Meio Ambiente"
+
+#: apps/need/models.py:27
+msgid "Health"
+msgstr "Saúde"
+
+#: apps/need/models.py:28
+msgid "Housing"
+msgstr "Habitação"
+
+#: apps/need/models.py:29
+msgid "Local Economy"
+msgstr "Economia Local"
+
+#: apps/need/models.py:30
+msgid "Mobility"
+msgstr "Mobilidade"
+
+#: apps/need/models.py:31
+msgid "Social Service"
+msgstr "Serviço Social"
+
+#: apps/need/models.py:32
+msgid "Sport"
+msgstr "Esporte"
+
+#: apps/need/models.py:33
+msgid "Security"
+msgstr "Segurança"
+
+#: apps/organization/forms.py:69
+msgid "Target Audiences"
+msgstr "Públicos alvo"
+
+#: apps/organization/forms.py:70
+msgid "Categories"
+msgstr "Categorias"
+
+#: apps/organization/models.py:69
+msgid "Add Organization"
+msgstr "Adicionar organização"
+
+#: apps/proposal/forms.py:29 templates/investment/list.html:38
+#: templates/proposal/view.html:39
+msgid "Cost"
+msgstr "Custo"
+
+#: apps/update/models.py:172
+msgid "community added"
+msgstr "comunidade adicionada"
+
+#: apps/update/models.py:173
+msgid "community edited"
+msgstr "comunidade editada"
+
+#: apps/update/models.py:174
+msgid "community discussed"
+msgstr "comunidade discutida"
+
+#: apps/update/models.py:176
+msgid "need added"
+msgstr "necessidade adicionada"
+
+#: apps/update/models.py:177
+msgid "need edited"
+msgstr "necessidade editada"
+
+#: apps/update/models.py:178
+msgid "need discussed"
+msgstr "necessidade discutida"
+
+#: apps/update/models.py:180
+msgid "proposal added"
+msgstr "proposta adicionada"
+
+#: apps/update/models.py:181
+msgid "proposal edited"
+msgstr "proposta editada"
+
+#: apps/update/models.py:182
+msgid "proposal discussed"
+msgstr "proposta discutida"
+
+#: apps/update/models.py:184
+msgid "organization added"
+msgstr "organização adicionada"
+
+#: apps/update/models.py:185
+msgid "organization edited"
+msgstr "organização editada"
+
+#: apps/update/models.py:186
+msgid "organization discussed"
+msgstr "organização discutida"
+
+#: apps/update/models.py:188
+msgid "resource added"
+msgstr "recurso adicionado"
+
+#: apps/update/models.py:189
+msgid "resource edited"
+msgstr "recurso editado"
+
+#: apps/update/models.py:190
+msgid "resource discussed"
+msgstr "recurso discutido"
+
+#: apps/update/models.py:192
+msgid "investment added"
+msgstr "investimento adicionado"
+
+#: apps/update/models.py:193
+msgid "investment edited"
+msgstr "investimento editado"
+
+#: apps/update/models.py:194
+msgid "investment discussed"
+msgstr "investimento discutido"
+
+#: apps/update/models.py:196
+msgid "project added"
+msgstr "projeto adicionado"
+
+#: apps/update/models.py:197
+msgid "project edited"
+msgstr "projeto editado"
+
+#: apps/update/models.py:198
+msgid "project discussed"
+msgstr "projeto discutido"
+
+#: apps/update/models.py:200
+msgid "importsheet inserted"
+msgstr "importação realizada"
+
+#: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
+#: lib/ajax_select/fields.py:303
+msgid "Enter text to search."
+msgstr "Entre um texto para buscar."
+
+#: lib/fileupload/forms.py:123
+msgid "Select Files"
+msgstr "Selecionar Arquivos"
+
+#: lib/fileupload/forms.py:124
+msgid "Add Links"
+msgstr "Adicionar Links"
+
+#: lib/fileupload/forms.py:125
+msgid "Add Image Links"
+msgstr "Adicione Links para as Imagens"
+
+#: lib/fileupload/forms.py:126 lib/fileupload/forms.py:190
+#: templates/moderation/deletion_request_box.html:15
+#: templates/moderation/report_content_box_templatetag.html:21
+#: templates/project/projects_tag.html:43
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: lib/fileupload/forms.py:127 lib/fileupload/forms.py:191
+msgid "Save Changes"
+msgstr "Salvar Mudanças"
+
+#: lib/fileupload/forms.py:128 lib/fileupload/forms.py:193
+msgid "Enter the subtitle for this image"
+msgstr "Entre a legenda para essa imagem"
+
+#: lib/fileupload/forms.py:130 lib/fileupload/forms.py:192
+#: templates/moderation/delete_button_templatetag.html:5
+msgid "Delete"
+msgstr "Apagar"
+
+#: lib/fileupload/forms.py:131 templates/authentication/login_box.html:41
+msgid "or"
+msgstr "ou"
+
+#: lib/fileupload/forms.py:189
+msgid "Select a file"
+msgstr "Selecionar um Arquivo"
+
+#: lib/fileupload/forms.py:242
+msgid "Select a logo"
+msgstr "Selecione um logotipo"
+
+#: lib/reversion/admin.py:110
+msgid "Initial version."
+msgstr "Versão inicial."
+
+#: lib/reversion/admin.py:124
+#, python-format
+msgid "Deleted %(verbose_name)s."
+msgstr "%(verbose_name)s apagado."
+
+#: lib/reversion/admin.py:142
+#: lib/reversion/templates/reversion/change_list.html:7
+#: lib/reversion/templates/reversion/recover_form.html:10
+#: lib/reversion/templates/reversion/recover_list.html:10
+#, python-format
+msgid "Recover deleted %(name)s"
+msgstr "Recuperar %(name)s apagado"
+
+#: lib/reversion/admin.py:251
+#, python-format
+msgid "Reverted to previous version, saved on %(datetime)s"
+msgstr "Revertido para versão anterior, salva em %(datetime)s"
+
+#: lib/reversion/admin.py:251
+#: lib/reversion/templates/reversion/object_history.html:23
+#: lib/reversion/templates/reversion/recover_list.html:30
+msgid "DATETIME_FORMAT"
+msgstr ""
+
+#: lib/reversion/admin.py:253
+#, python-format
+msgid ""
+"The %(model)s \"%(name)s\" was reverted successfully. You may edit it again "
+"below."
+msgstr ""
+"O %(model)s \"%(name)s\" foi revertido com sucesso. Você pode editá-lo "
+"novamente abaixo."
+
+#: lib/reversion/admin.py:336
+#, python-format
+msgid "Recover %(name)s"
+msgstr "Recuperar %(name)s"
+
+#: lib/reversion/admin.py:348
+#, python-format
+msgid "Revert %(name)s"
+msgstr "Reverter %(name)s"
+
+#: lib/reversion/templates/reversion/object_history.html:8
+msgid ""
+"Choose a date from the list below to revert to a previous version of this "
+"object."
+msgstr ""
+"Escolha uma data na lista abaixo para reverter para uma versão anterior "
+"deste objeto."
+
+#: lib/reversion/templates/reversion/object_history.html:15
+#: lib/reversion/templates/reversion/recover_list.html:23
+msgid "Date/time"
+msgstr "Data/hora"
+
+#: lib/reversion/templates/reversion/object_history.html:16
+msgid "User"
+msgstr "Usuário"
+
+#: lib/reversion/templates/reversion/object_history.html:17
+#: templates/moderation/report_content_box_templatetag.html:13
+msgid "Comment"
+msgstr "Comentário:"
+
+#: lib/reversion/templates/reversion/object_history.html:36
+msgid ""
+"This object doesn't have a change history. It probably wasn't added via this "
+"admin site."
+msgstr ""
+"Este objeto não possui um histórico  de alterações. É possível que não tenha "
+"sido adicionado via página de administração."
+
+#: lib/reversion/templates/reversion/recover_form.html:7
+#: lib/reversion/templates/reversion/recover_list.html:7
+#: lib/reversion/templates/reversion/revision_form.html:7
+msgid "Home"
+msgstr "Início"
+
+#: lib/reversion/templates/reversion/recover_form.html:17
+msgid "Press the save button below to recover this version of the object."
+msgstr "Clique no botão salvar abaixo para recuperar esta versão do objeto."
+
+#: lib/reversion/templates/reversion/recover_list.html:17
+msgid ""
+"Choose a date from the list below to recover a deleted version of an object."
+msgstr ""
+"Escolha uma data na lista abaixo para recuperar uma versão apagada de um "
+"objeto."
+
+#: lib/reversion/templates/reversion/recover_list.html:37
+msgid "There are no deleted objects to recover."
+msgstr "Não há objetos apagados para recuperar."
+
+#: lib/reversion/templates/reversion/revision_form.html:11
+#: templates/main/templatetags/history.html:14
+msgid "History"
+msgstr "Histórico"
+
+#: lib/reversion/templates/reversion/revision_form.html:12
+#, python-format
+msgid "Revert %(verbose_name)s"
+msgstr "Reverter %(verbose_name)s"
+
+#: lib/reversion/templates/reversion/revision_form.html:25
+msgid "Press the save button below to revert to this version of the object."
+msgstr ""
+"Clique no botão salvar abaixo para reverter para esta versão do objeto."
+
+#: lib/taggit/forms.py:21
+msgid "Please provide a comma-separated list of tags."
+msgstr "Por favor forneça uma lista de tags separadas por vírgula."
+
+#: lib/taggit/managers.py:40
+msgid "A comma-separated list of tags."
+msgstr "Uma lista de tags separada por vírgula"
+
+#: lib/taggit/models.py:11
+msgid "Slug"
+msgstr "Slug"
+
+#: lib/taggit/models.py:56
+msgid "Tag"
+msgstr "Classificação"
+
+#: lib/taggit/models.py:63
+#, python-format
+msgid "%(object)s tagged with %(tag)s"
+msgstr "%(object)s classificado com %(tag)s"
+
+#: lib/taggit/models.py:113
+msgid "Object id"
+msgstr "Id do Objeto"
+
+#: lib/taggit/models.py:117 lib/taggit/models.py:123
+msgid "Content type"
+msgstr "Tipo do Conteúdo"
+
+#: lib/taggit/models.py:159
+msgid "Tagged Item"
+msgstr "Item Classificado"
+
+#: lib/taggit/models.py:160
+msgid "Tagged Items"
+msgstr "Itens Classificados"
+
+#: templates/404.html:7
+msgid "The page you are looking for does not exist."
+msgstr "A página que você procura não existe."
+
+#: templates/404.html:9
+msgid "Try to search the page here"
+msgstr "Tente procurar pela página aqui"
+
+#: templates/404.html:18 templates/not_anymore.html:9
+msgid "Ask for help"
+msgstr "Reclame com a gente"
+
+#: templates/404.html:25
+msgid "Take a look at some important links"
+msgstr "Veja alguns links importantes"
+
+#: templates/404.html:29 templates/main/templatetags/geo_objects_add.html:7
+#: templates/main/templatetags/geo_objects_listing.html:9
+#: templates/main/templatetags/menu.html:11
+#: templates/organization/branch_communities_list.html:6
+#: templates/organization/branch_form.html:20
+#: templates/project/old_view.html:85 templates/project/view.html:160
+msgid "Communities"
+msgstr "Comunidades"
+
+#: templates/404.html:30 templates/main/templatetags/geo_objects_add.html:35
+#: templates/main/templatetags/geo_objects_listing.html:29
+#: templates/main/templatetags/menu.html:20
+#: templates/project/old_view.html:103 templates/project/view.html:178
+#: templates/resource/list.html:7
+msgid "Resources"
+msgstr "Recursos"
+
+#: templates/404.html:31 templates/main/templatetags/geo_objects_add.html:11
+#: templates/main/templatetags/geo_objects_listing.html:15
+#: templates/main/templatetags/menu.html:17 templates/need/list.html:8
+#: templates/project/old_view.html:94 templates/project/view.html:169
+msgid "Needs"
+msgstr "Necessidades"
+
+#: templates/404.html:32 templates/investment/list.html:8
+#: templates/main/templatetags/menu.html:23
+#: templates/project/old_view.html:112 templates/project/view.html:187
+msgid "Investments"
+msgstr "Investimentos"
+
+#: templates/404.html:33 templates/main/templatetags/geo_objects_add.html:23
+#: templates/main/templatetags/geo_objects_listing.html:35
+#: templates/main/templatetags/menu.html:14 templates/organization/list.html:9
+#: templates/project/old_view.html:76 templates/project/view.html:151
+msgid "Organizations"
+msgstr "Organizações"
+
+#: templates/404.html:34 templates/global.html:110
+msgid "Help"
+msgstr "Ajuda"
+
+#: templates/500.html:7
+msgid "Ops!"
+msgstr "Ops!"
+
+#: templates/global.html:101
+msgid "Search for place, user or object..."
+msgstr "Buscar por lugar, usuário ou objeto..."
+
+#: templates/global.html:109
+msgid "About"
+msgstr "Sobre"
+
+#: templates/global.html:115
+msgid "Profile"
+msgstr "Perfil"
+
+#: templates/global.html:116
+msgid "Configurations"
+msgstr "Configurações"
+
+#: templates/global.html:117
+msgid "Logout"
+msgstr "Sair"
+
+#: templates/global.html:121
+msgid "Login"
+msgstr "Entrar"
+
+#: templates/not_anymore.html:7
+msgid "This content does not exists anymore."
+msgstr "Este conteúdo não existe mais."
+
+#: templates/authentication/komoo_login_form.html:10
+msgid "Don't have an account?"
+msgstr "Não possui uma conta? Registre-se!"
+
+#: templates/authentication/komoo_login_form.html:12
+#: templates/authentication/login_box.html:4
+msgid "Log in"
+msgstr "Entre"
+
+#: templates/authentication/login_box.html:9
+msgid "An error ocurred."
+msgstr "Um erro ocorreu."
+
+#: templates/authentication/login_box.html:11
+msgid "You provided wrong credentials."
+msgstr "Usuário e senha inválidos."
+
+#: templates/authentication/login_box.html:14
+msgid "You have not verified your email yet."
+msgstr "Você ainda não verificou seu email."
+
+#: templates/authentication/login_box.html:25
+msgid "Log in with Google"
+msgstr "Entre com Google"
+
+#: templates/authentication/login_box.html:33
+msgid "Log in with Facebook"
+msgstr "Entre com Facebook"
+
+#: templates/authentication/new.html:8
+msgid "New User"
+msgstr "Novo Usuário"
+
+#: templates/authentication/profile.html:51
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: templates/authentication/profile.html:72
+#: templates/highlight/project_highlights.html:7
+#: templates/highlight/project_highlights.html:14
+#: templates/main/templatetags/menu.html:28 templates/project/list.html:7
+#: templates/project/projects_tag.html:5
+msgid "Projects"
+msgstr "Projetos"
+
+#: templates/authentication/profile_update.html:17
+msgid "Public Settings"
+msgstr "Dados Públicos"
+
+#: templates/authentication/profile_update.html:22
+msgid "Signature Settings"
+msgstr "Assinaturas"
+
+#: templates/authentication/profile_update.html:27
+msgid "Manage password"
+msgstr "Gerenciar senha"
+
+#: templates/authentication/profile_update.html:32
+msgid "External Accounts"
+msgstr "Contas Externas"
+
+#: templates/authentication/profile_update.html:48
+msgid "E-mail"
+msgstr "Email"
+
+#: templates/authentication/profile_update.html:54
+msgid ""
+"emails cannot be changed, if you have a problem with you email address "
+"please contact us"
+msgstr ""
+"não é possível alterar emails, entre em contato se tiver algum problema com "
+"seu endereço de email"
+
+#: templates/authentication/profile_update.html:59
+msgid "Current Password"
+msgstr "Senha atual"
+
+#: templates/authentication/profile_update.html:64
+msgid ""
+"Enter your current password if you want change to a new one. If you did not "
+"set a password yet, then leave it blank"
+msgstr ""
+"Digite sua senha atual caso queira alterá-la para uma nova. Deixe em branco "
+"se você ainda não definiu uma senha"
+
+#: templates/authentication/profile_update.html:69
+msgid "New Password"
+msgstr "Nova senha"
+
+#: templates/authentication/profile_update.html:74
+msgid "Enter a new password"
+msgstr "Digite uma nova senha"
+
+#: templates/authentication/profile_update.html:79
+msgid "Confirm New Password"
+msgstr "Confirme sua nova senha"
+
+#: templates/authentication/profile_update.html:84
+msgid "Confirm your new password"
+msgstr "Confirme a sua senha"
+
+#: templates/authentication/profile_update.html:118
+msgid "Your Google account is:"
+msgstr "Sua conta do Google é:"
+
+#: templates/authentication/profile_update.html:124
+msgid "Connect with Google"
+msgstr "Conecte sua conta do Google"
+
+#: templates/authentication/profile_update.html:131
+msgid "Your facebook account is:"
+msgstr "Sua conta do facebook é:"
+
+#: templates/authentication/profile_update.html:137
+msgid "Connect with facebook"
+msgstr "Conecte sua conta do facebook"
+
+#: templates/authentication/profile_update.html:176
+msgid "Cancel Subscription"
+msgstr "Cancelar Assinatura"
+
+#: templates/authentication/profile_update.html:185
+msgid "Signatures"
+msgstr "Assinaturas"
+
+#: templates/authentication/profile_update.html:189
+msgid "Receivings Options"
+msgstr "Opções de Recebimentos"
+
+#: templates/authentication/profile_update.html:198
+msgid "Update your mailing settings"
+msgstr "Atualize suas opções de emails"
+
+#: templates/authentication/profile_update.html:207
+msgid ""
+"I want to receive only a <strong>weekly</strong> digest mail with the "
+"updates for the objects I'm subescribed to"
+msgstr ""
+"Eu quero receber somente notificações com o resumo <strong>semanal</strong> "
+"contendo as atualizações dos objetos que estou observando"
+
+#: templates/authentication/profile_update.html:212
+msgid ""
+"I want to receive only a <strong>daily</strong> digest mail with the updates "
+"for the objects I'm subescribed to"
+msgstr ""
+"Eu quero receber somente notificações com o resumo <strong>diário</strong> "
+"contendo as atualizações dos objetos que estou observando"
+
+#: templates/authentication/profile_update.html:217
+msgid "I <strong>don't</strong> want to receive mails for updates"
+msgstr "E <strong>não</strong> desejo receber emails de atualizações"
+
+#: templates/authentication/profile_update.html:224
+#: templates/project/projects_tag.html:46
+msgid "Save changes"
+msgstr "Salvar mudanças"
+
+#: templates/authentication/profile_update.html:227
+msgid "Close"
+msgstr "Fechar"
+
+#: templates/authentication/verification.html:15
+msgid "Your account was created!"
+msgstr "Sua conta foi criada!"
+
+#: templates/authentication/verification.html:16
+msgid "But before using you need to confirm your e-mail. Go check your inbox!"
+msgstr ""
+"Mas antes de começar a usar, você precisa confirmar seu email. Vá checar sua "
+"caixa postal!"
+
+#: templates/authentication/verification.html:24
+msgid "Your email was succesfully verified!"
+msgstr "Seu email foi verificado com sucesso!"
+
+#: templates/authentication/verification.html:27
+msgid "Your email had already been verified!"
+msgstr "Seu email já foi verificado!"
+
+#: templates/authentication/verification.html:30
+msgid "Now, do login!"
+msgstr "Agora, faça login!"
+
+#: templates/comments/comment.html:8 templates/comments/comment.html.py:20
+#, python-format
+msgid "%(num)s answer"
+msgid_plural "%(num)s answers"
+msgstr[0] "%(num)s resposta"
+msgstr[1] "%(num)s respostas"
+
+#: templates/comments/comment.html:17
+msgid "Reply"
+msgstr "Responder"
+
+#: templates/comments/comments_summary_templatetag.html:7
+#: templates/update/updates_list_templatetag.html:124
+msgid "comments"
+msgstr "comentários"
+
+#: templates/comments/comments_templatetag.html:4
+msgid "Comments:"
+msgstr "Comentários:"
+
+#: templates/comments/comments_templatetag.html:7
+msgid "New Comment"
+msgstr "Novo Comentário"
+
+#: templates/comments/comments_templatetag.html:27
+msgid "see more ..."
+msgstr "ver mais ..."
+
+#: templates/community/edit.html:15
+msgid "Edit Community"
+msgstr "Editar Comunidade"
+
+#: templates/community/list.html:8 templates/moderation/list.html:7
+msgid "Communities list"
+msgstr "Lista de Comunidades"
+
+#: templates/community/list.html:18 templates/main/filter_results.html:19
+#, python-format
+msgid "%(counter)s Community"
+msgid_plural "%(counter)s Communities"
+msgstr[0] "%(counter)s Comunidade"
+msgstr[1] "%(counter)s Comunidades"
+
+#: templates/community/list.html:40
+msgid "population:"
+msgstr "população:"
+
+#: templates/community/view.html:49 templates/need/view.html:65
+#: templates/organization/show.html:153 templates/project/old_view.html:245
+#: templates/project/view.html:92 templates/resource/show.html:68
+#: templates/update/updates_list_templatetag.html:100
+msgid "see on map"
+msgstr "ver no mapa"
+
+#: templates/community/view.html:54
+msgid "Nearby communities"
+msgstr "Comunidades próximas"
+
+#: templates/discussion/view.html:9 templates/discussion/view.html.py:18
+msgid "Discussion about"
+msgstr "Discussões sobre"
+
+#: templates/highlight/object_highlights.html:7
+#: templates/highlight/object_highlights.html:13
+#: templates/main/templatetags/menu.html:8
+msgid "Objects"
+msgstr "Objetos"
+
+#: templates/highlight/project_highlights.html:15
+msgid "Create a project"
+msgstr "Crie um projeto"
+
+#: templates/highlight/project_highlights.html:21
+msgid "My projects"
+msgstr "Meus projetos"
+
+#: templates/highlight/project_highlights.html:46
+msgid "See all projects"
+msgstr "Ver todos os projetos"
+
+#: templates/importsheet/insert.html:27
+msgid "Some error ocurred!"
+msgstr "Um erro ocorreu!"
+
+#: templates/importsheet/insert.html:33
+msgid "objects were added."
+msgstr "objetos foram adicionados."
+
+#: templates/importsheet/insert.html:38 templates/importsheet/insert.html:41
+msgid "Undo import. (remove all)"
+msgstr "Desfazer importação. (remover tudo)"
+
+#: templates/importsheet/insert.html:42 templates/importsheet/show.html:35
+msgid "(only administrators)"
+msgstr "(somente administradores)"
+
+#: templates/importsheet/show.html:27
+msgid "Simulate"
+msgstr "Simular"
+
+#: templates/importsheet/show.html:31 templates/importsheet/show.html.py:34
+msgid "I'm finished. Insert all."
+msgstr "Terminei. Inserir tudo."
+
+#: templates/importsheet/show.html:46 templates/importsheet/show.html.py:86
+msgid "Errors"
+msgstr "Erros"
+
+#: templates/importsheet/show.html:53
+msgid "There are errors with row"
+msgstr "Há erros na linha"
+
+#: templates/importsheet/show.html:64 templates/importsheet/show.html.py:97
+msgid "Warnings"
+msgstr "Avisos"
+
+#: templates/importsheet/show.html:70
+msgid "Worksheet is empty"
+msgstr "Planilha sem dados"
+
+#: templates/importsheet/show.html:81
+msgid "Row number"
+msgstr "Número da linha"
+
+#: templates/importsheet/row_templates/comunidades.html:11
+#: templates/importsheet/row_templates/necessidades.html:12
+#: templates/importsheet/row_templates/organizacoes.html:12
+#: templates/importsheet/row_templates/recursos.html:12
+msgid "Creator"
+msgstr "Criador"
+
+#: templates/importsheet/row_templates/comunidades.html:30
+#: templates/importsheet/row_templates/necessidades.html:49
+#: templates/importsheet/row_templates/organizacoes.html:38
+#: templates/importsheet/row_templates/recursos.html:43
+msgid "Geometry"
+msgstr "Geometria"
+
+#: templates/importsheet/row_templates/necessidades.html:57
+#: templates/importsheet/row_templates/organizacoes.html:61
+#: templates/organization/show.html:178
+msgid "Audience"
+msgstr "Público"
+
+#: templates/importsheet/row_templates/organizacoes.html:72
+#: templates/komoo_map/info_window.html:43 templates/organization/list.html:53
+#: templates/organization/show.html:167
+msgid "Operation Field"
+msgstr "Área de atuação"
+
+#: templates/investment/edit.html:17
+msgid "Edit Investment"
+msgstr "Editar Investimento"
+
+#: templates/investment/edit.html:19 templates/organization/show.html:136
+#: templates/organization/show.html:156 templates/resource/show.html:71
+msgid "New Investment"
+msgstr "Novo Investimento"
+
+#: templates/investment/investment_list_templatetag.html:14
+msgid "Realized"
+msgstr "Realizados"
+
+#: templates/investment/investment_list_templatetag.html:20
+msgid "Received"
+msgstr "Recebidos"
+
+#: templates/investment/investment_list_templatetag.html:33
+#: templates/investment/investment_list_templatetag.html:52
+msgid "see on the map"
+msgstr "ver no mapa"
+
+#: templates/investment/investment_list_templatetag.html:41
+msgid "No investments received."
+msgstr "Nenhum investimento recebido."
+
+#: templates/investment/investment_list_templatetag.html:60
+msgid "No investments realized."
+msgstr "Nenhum investimento realizado."
+
+#: templates/investment/list.html:19
+#, python-format
+msgid "%(counter)s Investment"
+msgid_plural "%(counter)s Investments"
+msgstr[0] "%(counter)s Investimento"
+msgstr[1] "%(counter)s Investimentos"
+
+#: templates/investment/list.html:41 templates/investment/view.html:38
+msgid "Investor"
+msgstr "Investidor"
+
+#: templates/investment/list.html:50 templates/investment/view.html:36
+msgid "Grantee"
+msgstr "Destino da doação"
+
+#: templates/investment/view.html:46
+msgid "Period"
+msgstr "Período"
+
+#: templates/investment/view.html:68
+msgid "Similar investments"
+msgstr "Investimentos similares"
+
+#: templates/komoo_map/info_window.html:24 templates/komoo_map/tooltip.html:17
+#: templates/main/filter_results.html:37 templates/need/list.html:22
+#, python-format
+msgid "%(counter)s Need"
+msgid_plural "%(counter)s Needs"
+msgstr[0] "%(counter)s Necessidade"
+msgstr[1] "%(counter)s Necessidades"
+
+#: templates/komoo_map/info_window.html:27 templates/komoo_map/tooltip.html:20
+#: templates/main/filter_results.html:55 templates/organization/list.html:24
+#, python-format
+msgid "%(counter)s Organization"
+msgid_plural "%(counter)s Organizations"
+msgstr[0] "%(counter)s Organização"
+msgstr[1] "%(counter)s Organizações"
+
+#: templates/komoo_map/info_window.html:30 templates/komoo_map/tooltip.html:23
+#: templates/main/filter_results.html:73 templates/resource/list.html:22
+#, python-format
+msgid "%(counter)s Resource"
+msgid_plural "%(counter)s Resources"
+msgstr[0] "%(counter)s Recurso"
+msgstr[1] "%(counter)s Recursos"
+
+#: templates/komoo_map/panel.html:9
+msgid "Filter by radius"
+msgstr "Filtrar por raio"
+
+#: templates/komoo_map/panel.html:10
+msgid "Add"
+msgstr "Adicionar"
+
+#: templates/komoo_map/panel.html:11
+msgid "Filter by type"
+msgstr "Filtrar por tipo"
+
+#: templates/komoo_map/panel.html:24
+msgid "Center"
+msgstr "Centro"
+
+#: templates/komoo_map/panel.html:25
+msgid "Radius"
+msgstr "Raio"
+
+#: templates/komoo_map/panel.html:31
+msgid "Pick a point on the map"
+msgstr "Selecione um ponto no mapa"
+
+#: templates/komoo_map/panel.html:35
+msgid "Perform search"
+msgstr "Realizar busca"
+
+#: templates/komoo_map/panel.html:42
+msgid "Change parameters"
+msgstr "Alterar parâmetros"
+
+#: templates/main/about.html:15 templates/main/root.html:14
+#: templates/main/use_cases.html:15
+msgid "Donate!"
+msgstr "Doe!"
+
+#: templates/main/about.html:227
+msgid "Create your account."
+msgstr "Crie sua conta."
+
+#: templates/main/filter_results.html:6
+msgid "Search results for this radius"
+msgstr "Resultados de Busca para este raio"
+
+#: templates/main/filter_results.html:12
+msgid "No results found."
+msgstr "Nenhum resultado encontrado."
+
+#: templates/main/footer.html:5
+msgid "Execution"
+msgstr "Realização"
+
+#: templates/main/footer.html:10
+msgid "License"
+msgstr "Licença"
+
+#: templates/main/footer.html:12
+msgid ""
+" Este texto é disponibilizado nos termos da licença <a href=\"http://"
+"creativecommons.org/licenses/by-sa/3.0/deed.pt_BR\">Creative Commons - "
+"Atribuição - Partilha nos Mesmos Termos 3.0 Não Adaptada</a>; pode estar "
+"sujeito a condições adicionais. "
+msgstr ""
+
+#: templates/main/footer.html:17
+msgid "Supporters"
+msgstr "Apoio institucional"
+
+#: templates/main/footer.html:22
+msgid "Partners"
+msgstr "Parceiros"
+
+#: templates/main/root.html:21
+msgid "colaborative mapping of your region."
+msgstr "mapeamento colaborativo da sua região."
+
+#: templates/main/root.html:32
+msgid "Anyone can help!"
+msgstr "Todos podem ajudar!"
+
+#: templates/main/root.html:32
+msgid "Create your account"
+msgstr "Crie sua conta"
+
+#: templates/main/root.html:36
+msgid "Want to participate"
+msgstr "Quer participar"
+
+#: templates/main/root.html:36
+msgid "Edit the map."
+msgstr "Edite o mapa"
+
+#: templates/main/root.html:41
+msgid "What is it for?"
+msgstr "Para que usar?"
+
+#: templates/main/root.html:45
+msgid "Community diagnosis"
+msgstr "Diagnóstico comunitário"
+
+#: templates/main/root.html:47
+msgid ""
+"Map a region's resources and needs. Create indicators and analyze its "
+"diagnosis to know the true demands of the that community."
+msgstr ""
+"Mapeie os recursos e necessidades de um território. Crie indicadores e "
+"analise seu diagnóstico para conhecer as reais demandas de uma comunidade."
+
+#: templates/main/root.html:53
+msgid "Network mapping"
+msgstr "Mapeamento de redes"
+
+#: templates/main/root.html:55
+msgid ""
+"Map organizations that work for the same cause. Find new partakers to your "
+"network. Share knowledge and help to add visibility to the initiatives"
+msgstr ""
+"Mapeie organizações que atuam em prol de uma mesma causa. Encontre novos "
+"integrantes para sua rede. Troque conhecimentos e ajude a dar visibilidade "
+"às iniciativas."
+
+#: templates/main/root.html:61
+msgid "Project evaluation"
+msgstr "Avaliação de projeto"
+
+#: templates/main/root.html:63
+msgid ""
+"Record indicator over the execution of a project. Evaluate and generate "
+"reports. Share methodologies and results."
+msgstr ""
+"Registre indicadores sobre a execução de um projeto. Avalie e gere "
+"relatórios. Compartilhe  metodologias e resultados."
+
+#: templates/main/root.html:69
+msgid "Data journalism"
+msgstr "Jornalismo de dados"
+
+#: templates/main/root.html:71
+msgid ""
+"Build maps using public data. Use them into your news and mobilize for "
+"changes."
+msgstr ""
+"Construa mapas usando dados públicos. Utilize-os em suas notícias e mobilize "
+"para mudanças."
+
+#: templates/main/root.html:77
+msgid "Neighborhood guide"
+msgstr "Guia do bairro"
+
+#: templates/main/root.html:79
+msgid ""
+"Map existing services in your neighborhood. Help other dwellers to know the "
+"territory better and use local resources."
+msgstr ""
+"Mapeie os serviços que existem na sua comunidade. Ajude outros moradores a "
+"conhecerem melhor o território e a utilizarem os recursos locais."
+
+#: templates/main/root.html:86
+msgid "Projects that uses MootiroMaps"
+msgstr "Projetos que usam o MootiroMaps"
+
+#: templates/main/root.html:139
+msgid "IT3S blog"
+msgstr "Blog do IT3S"
+
+#: templates/main/root.html:151
+msgid "visit the blog"
+msgstr "visite o blog"
+
+#: templates/main/root.html:156
+msgid "Last updates"
+msgstr "Últimas atualizações"
+
+#: templates/main/root.html:170 templates/need/view.html:102
+msgid "see all"
+msgstr "ver todos"
+
+#: templates/main/supporters.html:3
+msgid "Support"
+msgstr "Apoio"
+
+#: templates/main/templatetags/communities_list.html:11
+#: templates/main/templatetags/usernames_list.html:13
+#: templates/update/updates_list_templatetag.html:65
+#: templates/update/updates_list_templatetag.html:69
+msgid "and"
+msgstr "e"
+
+#: templates/main/templatetags/communities_list.html:19
+#, python-format
+msgid ""
+"\n"
+"      %(num)s more\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(num)s more\n"
+"    "
+msgstr[0] ""
+"\n"
+"      mais %(num)s\n"
+"    "
+msgstr[1] ""
+"\n"
+"      mais %(num)s\n"
+"    "
+
+#: templates/main/templatetags/history.html:5
+#, python-format
+msgid ""
+"\n"
+"    created by %(user)s %(date)s<br/>\n"
+"    "
+msgstr ""
+"\n"
+"    criado por %(user)s %(date)s<br/>\n"
+"  "
+
+#: templates/main/templatetags/history.html:10
+#, python-format
+msgid ""
+"\n"
+"      last update by %(user)s %(date)s\n"
+"    "
+msgstr ""
+"\n"
+"      última edição por %(user)s %(date)s\n"
+"    "
+
+#: templates/main/templatetags/menu.html:5
+msgid "Map"
+msgstr "Mapa"
+
+#: templates/main/templatetags/pagination.html:13
+#: templates/main/templatetags/pagination.html:38
+msgid "previous"
+msgstr "anterior"
+
+#: templates/main/templatetags/pagination.html:18
+#, python-format
+msgid "Page %(num)s of %(total)s."
+msgstr "Página %(num)s de %(total)s."
+
+#: templates/main/templatetags/pagination.html:23
+#: templates/main/templatetags/pagination.html:92
+msgid "next"
+msgstr "próxima"
+
+#: templates/main/templatetags/pagination.html:30
+msgid "first"
+msgstr "primeira"
+
+#: templates/main/templatetags/pagination.html:100
+msgid "last"
+msgstr "última"
+
+#: templates/main/templatetags/track_buttons.html:15
+#: templates/main/templatetags/track_buttons.html:40
+msgid "Subscribed"
+msgstr "Seguindo"
+
+#: templates/main/templatetags/track_buttons.html:17
+#: templates/main/templatetags/track_buttons.html:42
+msgid "Subscribe"
+msgstr "Seguir"
+
+#: templates/main/templatetags/track_buttons.html:20
+msgid "Observe"
+msgstr "Observar"
+
+#: templates/main/templatetags/usernames_list.html:23
+#, python-format
+msgid ""
+"\n"
+"      %(num)s more user\n"
+"    "
+msgid_plural ""
+"\n"
+"      %(num)s more users\n"
+"    "
+msgstr[0] ""
+"\n"
+"      mais %(num)s usuário\n"
+"    "
+msgstr[1] ""
+"\n"
+"      mais %(num)s usuários\n"
+"    "
+
+#: templates/main/templatetags/visualization_opts.html:4
+msgid "Visualization and Filtering options"
+msgstr "Opções de Visualização e Filtragem"
+
+#: templates/main/templatetags/visualization_opts.html:9
+msgid "Sort by"
+msgstr "Ordenar por"
+
+#: templates/main/templatetags/visualization_opts.html:27
+msgid "Filter by"
+msgstr "Filtrar por"
+
+#: templates/main/templatetags/visualization_opts.html:53
+msgid "Apply"
+msgstr "Aplicar"
+
+#: templates/moderation/delete_button_templatetag.html:4
+msgid "You've already requested the deletion of this content"
+msgstr "Você já requisitou a remoção deste conteúdo"
+
+#: templates/moderation/deletion_request_box.html:3
+msgid ""
+"Please, tell us about the reason why you are requesting to delete this "
+"content"
+msgstr ""
+"Por favor, conte-nos o motivo pelo qual você está requisitando a remoção "
+"deste conteúdo"
+
+#: templates/moderation/deletion_request_box.html:14
+msgid "Request"
+msgstr "Requisitar"
+
+#: templates/moderation/report_content_box_templatetag.html:7
+msgid "Select a Reason"
+msgstr "Selecione um motivo"
+
+#: templates/moderation/report_content_box_templatetag.html:18
+msgid "Required fields"
+msgstr "Campos obrigatórios"
+
+#: templates/moderation/report_content_box_templatetag.html:20
+#: templates/moderation/report_content_button_templatetag.html:5
+msgid "Report"
+msgstr "Denunciar"
+
+#: templates/need/edit.html:16
+msgid "Edit Need"
+msgstr "Editar Necessidade"
+
+#: templates/need/edit.html:18
+msgid "New Need"
+msgstr "Nova Necessidade"
+
+#: templates/need/list.html:16
+msgid "Create New need"
+msgstr "Criar Nova Necessidade"
+
+#: templates/need/list.html:39 templates/resource/list.html:40
+#: templates/resource/show.html:85
+msgid "at"
+msgstr "em"
+
+#: templates/need/view.html:46
+#: templates/proposal/proposal_summary_templatetag.html:5
+msgid "created by"
+msgstr "criado por"
+
+#: templates/need/view.html:46
+msgid "on"
+msgstr "em"
+
+#: templates/need/view.html:68
+msgid "Proposals"
+msgstr "Propostas"
+
+#: templates/need/view.html:74 templates/proposal/view.html:62
+msgid "New proposal"
+msgstr "Nova proposta"
+
+#: templates/need/view.html:82
+msgid "Related needs"
+msgstr "Necessidades relacionadas"
+
+#: templates/need/view.html:99
+msgid "No related needs."
+msgstr "Nenhuma necessidade relacionada."
+
+#: templates/need/view.html:103
+msgid "see less"
+msgstr "ver menos"
+
+#: templates/organization/edit.html:14
+msgid "Edit Organization"
+msgstr "Editar Organização"
+
+#: templates/organization/list.html:19
+msgid "Create New Organization"
+msgstr "Criar Nova Organização"
+
+#: templates/organization/list.html:73
+msgid "Attended Communities"
+msgstr "Comunidades Atendidas"
+
+#: templates/organization/list.html:82
+#, python-format
+msgid " and %(diff)s more "
+msgstr " e %(diff)s outras"
+
+#: templates/organization/new.html:12
+#: templates/organization/new_frommap.html:11
+msgid "New Organization"
+msgstr "Nova Organização"
+
+#: templates/organization/related_items.html:12
+msgid "Objects related to"
+msgstr "Objetos relacionados a"
+
+#: templates/organization/show.html:55 templates/project/old_view.html:62
+#: templates/project/view.html:73
+msgid "See all objects on map"
+msgstr "Ver todos os objetos no mapa"
+
+#: templates/organization/show.html:60
+#, python-format
+msgid "Supported %(num)s organization"
+msgid_plural "Supported %(num)s organizations"
+msgstr[0] "Apoiou %(num)s organização"
+msgstr[1] "Apoiou %(num)s organizações"
+
+#: templates/organization/show.html:66
+#, python-format
+msgid "On %(num)s community"
+msgid_plural "On %(num)s communities"
+msgstr[0] "Presente em %(num)s comunidade"
+msgstr[1] "Presente em %(num)s comunidades"
+
+#: templates/organization/show.html:72
+#, python-format
+msgid "Supported %(num)s proposal"
+msgid_plural "Supported %(num)s proposals"
+msgstr[0] "Apoiou %(num)s proposta"
+msgstr[1] "Apoiou %(num)s propostas"
+
+#: templates/organization/show.html:78
+#, python-format
+msgid "Supported %(num)s resource"
+msgid_plural "Supported %(num)s resources"
+msgstr[0] "Apoiou %(num)s recurso"
+msgstr[1] "Apoiou %(num)s recursos"
+
+#: templates/organization/show.html:84
+#, python-format
+msgid ""
+"Realized %(num)s investment\n"
+"                      "
+msgid_plural "Realized %(num)s investments"
+msgstr[0] "Realizou %(num)s investimento"
+msgstr[1] "Realizou %(num)s investimentos"
+
+#: templates/organization/show.html:87
+#, python-format
+msgid ""
+"Received %(num)s investment\n"
+"                    "
+msgid_plural "Received %(num)s investments"
+msgstr[0] "Recebeu %(num)s investimento"
+msgstr[1] "Recebeu %(num)s investimentos"
+
+#: templates/organization/show.html:99
+msgid "No organizations supported."
+msgstr "Nenhuma organização apoiada."
+
+#: templates/organization/show.html:109
+msgid "No communities bound to this organization"
+msgstr "Nenhuma comunidade vínculada a esta organização"
+
+#: templates/organization/show.html:119
+msgid "No proposals supported."
+msgstr "Nenhuma proposta apoiada."
+
+#: templates/organization/show.html:129
+msgid "No resources supported."
+msgstr "Nenhum recurso apoiado."
+
+#: templates/organization/show.html:164 templates/resource/show.html:104
+msgid "No contact info provided"
+msgstr "Informações de contato não fornecidas"
+
+#: templates/organization/show.html:174
+msgid "No categories provided"
+msgstr "Categorias não fornecidas"
+
+#: templates/organization/show.html:183
+msgid "No target audience provided"
+msgstr "Público alvo não fornecido"
+
+#: templates/organization/show.html:188
+msgid "Website"
+msgstr "Website"
+
+#: templates/project/edit.html:15
+msgid "Edit Project"
+msgstr "Editar Projeto"
+
+#: templates/project/edit.html:17
+msgid "New Project"
+msgstr "Novo Projeto"
+
+#: templates/project/edit.html:31
+msgid "Edit Project Associations"
+msgstr "Editar Associações do Projeto"
+
+#: templates/project/edit.html:41
+msgid "Deleted marked associations"
+msgstr "Apagar associações marcadas"
+
+#: templates/project/list.html:17
+msgid "Create New Project"
+msgstr "Criar Novo Projeto"
+
+#: templates/project/list.html:22
+#, python-format
+msgid "%(counter)s Project"
+msgid_plural "%(counter)s Projects"
+msgstr[0] "%(counter)s Projeto"
+msgstr[1] "%(counter)s Projetos"
+
+#: templates/project/list.html:52 templates/project/old_view.html:251
+#: templates/project/view.html:95
+msgid "Administrator"
+msgstr "Administrador"
+
+#: templates/project/old_view.html:70 templates/project/view.html:144
+msgid "Points on Map"
+msgstr "Ponto no Mapa"
+
+#: templates/project/old_view.html:121
+msgid "Collaborators"
+msgstr "Colaboradores"
+
+#: templates/project/old_view.html:142 templates/project/view.html:207
+msgid "This project has no related Objects yet"
+msgstr "Este projeto não tem nenhum Objeto relacionado"
+
+#: templates/project/old_view.html:155 templates/project/view.html:220
+msgid "This project has no related Organizations yet"
+msgstr "Este projeto não tem nenhuma Organização relacionada"
+
+#: templates/project/old_view.html:168 templates/project/view.html:233
+msgid "This project has no related Communities yet"
+msgstr "Este projeto não tem nenhuma Communidade relacionada"
+
+#: templates/project/old_view.html:181 templates/project/view.html:246
+msgid "This project has no related Needs yet"
+msgstr "Este projeto não tem nenhuma Necessidade relacionada"
+
+#: templates/project/old_view.html:194 templates/project/view.html:259
+msgid "This project has no related Resources yet"
+msgstr "Este projeto não tem nenhum Recurso relacionada"
+
+#: templates/project/old_view.html:207 templates/project/old_view.html:220
+#: templates/project/view.html:272 templates/project/view.html.py:285
+msgid "This project has no related Investments yet"
+msgstr "Este Projeto não tem nenhum Investimento relacionado"
+
+#: templates/project/old_view.html:257
+msgid "Contributors"
+msgstr "Contribuidores"
+
+#: templates/project/old_view.html:275 templates/project/view.html:113
+msgid "Related projects"
+msgstr "Projetos relacionados"
+
+#: templates/project/projects_tag.html:15
+msgid "Add to a project"
+msgstr "Adicionar a um projeto"
+
+#: templates/project/projects_tag.html:26
+msgid "Add this object to a project"
+msgstr "Adicionar este objeto a um projeto"
+
+#: templates/project/view.html:301
+msgid "This project has no contributors yet"
+msgstr "Este projeto não possui contribuidores ainda"
+
+#: templates/proposal/edit.html:15
+msgid "Form Proposal"
+msgstr "Formulário de Propostas"
+
+#: templates/proposal/view.html:54
+msgid "Proposals for"
+msgstr "Propostas para"
+
+#: templates/proposal/view.html:70
+msgid "Add investment"
+msgstr "Adicionar Investimento"
+
+#: templates/resource/edit.html:14
+msgid "Edit Resource"
+msgstr "Editar Recurso"
+
+#: templates/resource/list.html:17
+msgid "Create New Resource"
+msgstr "Criar Novo Recurso"
+
+#: templates/resource/list.html:60
+msgid "Kind:"
+msgstr "Tipo:"
+
+#: templates/resource/new.html:11
+msgid "New Resource"
+msgstr "Novo Recurso"
+
+#: templates/resource/show.html:44
+msgid "type:"
+msgstr "tipo:"
+
+#: templates/resource/show.html:78
+msgid "Related resources"
+msgstr "Recursos relacionados"
+
+#: templates/search/list.html:6
+msgid "Search"
+msgstr "Busca"
+
+#: templates/update/list.html:23
+msgid "News"
+msgstr "Notícias"
+
+#: templates/update/updates_list_templatetag.html:9
+msgid "last updates"
+msgstr "últimas atualizações"
+
+#: templates/update/updates_list_templatetag.html:11
+msgid "discussions"
+msgstr "discussões"
+
+#: templates/update/updates_list_templatetag.html:12
+msgid "my content"
+msgstr "meu conteúdo"
+
+#: templates/update/updates_list_templatetag.html:19
+msgid "Type"
+msgstr "Tipo"
+
+#: templates/update/updates_list_templatetag.html:22
+msgid "activate/deactivate Community"
+msgstr "ativar/desativar Comunidade"
+
+#: templates/update/updates_list_templatetag.html:25
+msgid "activate/deactivate Need"
+msgstr "ativar/desativar Necessidade"
+
+#: templates/update/updates_list_templatetag.html:28
+msgid "activate/deactivate Organization"
+msgstr "ativar/desativar Organização"
+
+#: templates/update/updates_list_templatetag.html:31
+msgid "activate/deactivate Resource"
+msgstr "ativar/desativar Recurso"
+
+#: templates/update/updates_list_templatetag.html:34
+msgid "activate/deactivate Investment"
+msgstr "ativar/desativar Investimento"
+
+#: templates/update/updates_list_templatetag.html:55
+msgid ""
+"\n"
+"                    discussed\n"
+"                  "
+msgid_plural ""
+"\n"
+"                    discussed\n"
+"                  "
+msgstr[0] ""
+"\n"
+"                        discutiu\n"
+"                      "
+msgstr[1] ""
+"\n"
+"                        discutiram\n"
+"                      "
+
+#: templates/update/updates_list_templatetag.html:65
+msgid "community"
+msgid_plural "communities"
+msgstr[0] "comunidade"
+msgstr[1] "comunidades"
+
+#: templates/update/updates_list_templatetag.html:69
+msgid "organization"
+msgid_plural "organizations"
+msgstr[0] "organização"
+msgstr[1] "organizações"
+
+#: templates/update/updates_list_templatetag.html:73
+msgid "resource"
+msgid_plural "resources"
+msgstr[0] "recurso"
+msgstr[1] "recursos"
+
+#: templates/update/updates_list_templatetag.html:77
+msgid "need"
+msgid_plural "needs"
+msgstr[0] "necessidade"
+msgstr[1] "necessidades"
+
+#: templates/update/updates_list_templatetag.html:81
+msgid ""
+"\n"
+"                        imported into project\n"
+"                      "
+msgid_plural ""
+"\n"
+"                        imported into project\n"
+"                      "
+msgstr[0] ""
+"\n"
+"                        importado(a) ao projeto\n"
+"                      "
+msgstr[1] ""
+"\n"
+"                        importados(as) ao projeto\n"
+"                      "
+
+#: templates/update/updates_list_templatetag.html:91
+msgid "the proposal"
+msgstr "a proposta"
+
+#: templates/update/updates_list_templatetag.html:92
+msgid "for the need"
+msgstr "para a necessidade"
+
+#: templates/update/updates_list_templatetag.html:94
+msgid "see this object page"
+msgstr "veja a página"
+
+#: templates/update/updates_list_templatetag.html:116
+msgid "by"
+msgstr "por"
+
+#~ msgid "Personal Settings"
+#~ msgstr "Dados Pessoais"
+
+#~ msgid "Public Contact"
+#~ msgstr "Contato Público"
+
+#~ msgid "Access to edit this project"
+#~ msgstr "Acesso para editar este projeto"
+
+#~ msgid "Access to this project's discussion page"
+#~ msgstr "Acesso a página de discussão deste projeto"
+
+#~ msgid "creator"
+#~ msgstr "creator"
+
+#~ msgid "Form Investment"
+#~ msgstr "Formulário de Investimentos"
+
+#~ msgid "Filter"
+#~ msgstr "Filtro"
+
+#~ msgid "Branch Name"
+#~ msgstr "Nome da Unidade"
+
+#~ msgid "Info"
+#~ msgstr "Informações"
+
+#~ msgid "Branch of"
+#~ msgstr "Unidade de"
+
+#~ msgid "Verify"
+#~ msgstr "Verificar"
+
+#~ msgid "Add Branch"
+#~ msgstr "Adicionar Unidade"
+
+#~ msgid "Subscribe Organization"
+#~ msgstr "Cadastrar Organização"
+
+#~ msgid "Finish"
+#~ msgstr "Concluir"
+
+#~ msgid "%(num)s point on map"
+#~ msgid_plural "%(num)s points on map"
+#~ msgstr[0] "%(num)s ponto no mapa"
+#~ msgstr[1] "%(num)s pontos no mapa"
+
+#~ msgid "Want to help"
+#~ msgstr "Quer ajudar"
+
+#~ msgid "See Results"
+#~ msgstr "Ver Resultados"
+
+#~ msgid "Settings"
+#~ msgstr "Configurações"
+
+#~ msgid "last contributions"
+#~ msgstr "Últimas contribuições"
+
+#~ msgid "About Mootiro"
+#~ msgstr "Sobre o MootiroMaps"
+
+#~ msgid "what is this?"
+#~ msgstr "O que é o MootiroMaps?"
+
+#~ msgid "Add a community"
+#~ msgstr "Mapeie uma comunidade"
+
+#~ msgid "Add a need"
+#~ msgstr "Adicione uma necessidade"
+
+#~ msgid "Add an organization"
+#~ msgstr "Cadastre uma organização"
+
+#~ msgid "Add a project"
+#~ msgstr "Comece um projeto"
+
+#~ msgid "More about"
+#~ msgstr "Saiba mais"
+
+#~ msgid "How it works?"
+#~ msgstr "Como funciona?"
+
+#~ msgid "Explore"
+#~ msgstr "Explore"
+
+#~ msgid "Find resources available to the community of your neighborhood."
+#~ msgstr "Encontre recursos disponíveis à comunidade de seu bairro."
+
+#~ msgid "Add it"
+#~ msgstr "Adicione"
+
+#~ msgid ""
+#~ "Map needs, organizations and resources in your community and help to "
+#~ "improve it."
+#~ msgstr ""
+#~ "Mapeie necessidades, organizações e recursos em sua comunidade e ajude "
+#~ "melhorá-la."
+
+#~ msgid ""
+#~ "Map related points. You can make a guide to your neighborhood or diagnose "
+#~ "a region."
+#~ msgstr ""
+#~ "Mapeie pontos relacionados. Você pode fazer um guia para o seu bairro ou "
+#~ "diagnosticar uma região"
+
+#~ msgid "Layers"
+#~ msgstr "Camadas"
+
+#~ msgid "No information provided."
+#~ msgstr "Nenhuma informação fornecida."
+
+#~ msgid "Map position not available"
+#~ msgstr "Posição no mapa não disponível"
+
+#~ msgid "An initiative"
+#~ msgstr "Uma iniciativa"
+
+#~ msgid "About Us"
+#~ msgstr "Quem somos"
+
+#~ msgid "Get Involved"
+#~ msgstr "Se envolva"
+
+#~ msgid "Insert all"
+#~ msgstr "Inserir tudo"
+
+#~ msgid "Invalid creator ID: {} does not belong to any user."
+#~ msgstr "ID do mapeador inválido: {} não pertence a nenhum usuário."
+
+#~ msgid "There is already an organization with this name."
+#~ msgstr "Já existe uma organização com esse nome."
+
+#~ msgid "%s cannot be empty"
+#~ msgstr "%s não pode estar vazio"
+
+#~ msgid "There is already an resource with this name."
+#~ msgstr "Já existe um recurso com esse nome."
+
+#~ msgid "go back to simulation page"
+#~ msgstr "voltar para a página de simulação"
+
+#~ msgid "Geometric data not available"
+#~ msgstr "Informação geométrica não disponível"
+
+#~ msgid "Log in with Twitter"
+#~ msgstr "Entre com Twitter"
+
+#~ msgid ""
+#~ "I want to receive mails every time someone update an object I'm "
+#~ "subscribed to"
+#~ msgstr ""
+#~ "Eu quero receber notificações cada vez que alguém atualizar um objeto o "
+#~ "qual estou observando"
+
+#~ msgid "You must be logged in"
+#~ msgstr "Você precisa estar logado"
+
+#~ msgid "Log in with one the accounts bellow!"
+#~ msgstr "Entre com"
+
+#~ msgid "Don't have an account? Sign up!"
+#~ msgstr "Não possui uma conta? Registre-se!"
+
+#~ msgid "Votes"
+#~ msgstr "Votos"
+
+#~ msgid "User not logged or anonymous"
+#~ msgstr "Usuário não logado ou anônimo"
+
+#~ msgid "Investiments for %(community)s"
+#~ msgstr "Investimentos em %(community)s"
+
+#~ msgid "Resources for"
+#~ msgstr "Recursos para"
+
+#~ msgid "About the community"
+#~ msgstr "Sobre a Comunidade"
+
+#~ msgid "Needs for"
+#~ msgstr "Necessidades para"
+
+#~ msgid "%(organization)s at %(community)s"
+#~ msgstr "%(organization)s em %(community)s"
+
+#~ msgid "Username Required"
+#~ msgstr "Nome de usuário é obrigatório"
