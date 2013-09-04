@@ -12,6 +12,7 @@
 
   <div id="main-content" class='highlights'>
     <h1>{% trans "Projects" %}</h1>
+    <a class="see-all-projects" href="{% url project_list %}">{% trans "See all" %}</a>
     <a class="right login-required big-button new project-btn" href="{% url project_new %}" title="Criar novo Projeto de Mapeamento"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
 
     {% if user.projects_contributed.count %}
@@ -20,7 +21,7 @@
           <hr/>
           <span>{% trans "My projects" %}</span>
         </div>
-        
+
         <div class="flexslider">
           <ul class="slides">
             {% for proj in user.projects_contributed %}
@@ -37,17 +38,17 @@
         </div>
       </div>
     {% endif %}
-    
+
     {% for s in sections %}
       {% highlight_section s %}
     {% endfor %}
-    
+
     <br/>
     <div class="centralizer apart"><a class="big-button project-btn" href="{% url project_list %}">{% trans "See all projects" %}</a></div>
   </div>
 
 {% endblock %}
-  
+
 {% block page_scripts %}
 <script type="text/javascript">
   $(function(){
