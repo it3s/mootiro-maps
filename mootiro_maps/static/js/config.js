@@ -1,10 +1,11 @@
 (function() {
   var baseUrl, config, _ref;
 
-  baseUrl = ((_ref = window.komooNS) != null ? _ref.require_baseUrl : void 0) || '/static/js';
+  baseUrl = ((_ref = window.KomooNS) != null ? _ref.require_baseUrl : void 0) || '/static/js';
 
   config = {
     baseUrl: baseUrl,
+    waitSeconds: 0,
     paths: {
       'lib': '../lib',
       'templates': '../templates',

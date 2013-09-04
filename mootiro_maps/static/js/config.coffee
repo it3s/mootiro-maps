@@ -1,7 +1,8 @@
-baseUrl = window.komooNS?.require_baseUrl or '/static/js'
+baseUrl = window.KomooNS?.require_baseUrl or '/static/js'
 
 config =
     baseUrl: baseUrl
+    waitSeconds: 0
     paths:
         'lib': '../lib'
         'templates': '../templates'
