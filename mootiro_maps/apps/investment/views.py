@@ -4,7 +4,6 @@ import logging
 
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from django.utils import simplejson
 
 from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
@@ -19,7 +18,7 @@ from investment.forms import InvestmentForm
 from komoo_resource.models import Resource
 from organization.models import Organization
 
-from main.utils import paginated_query, filtered_query, sorted_query
+from main.utils import paginated_query, filtered_query, sorted_query, to_json
 
 
 logger = logging.getLogger(__name__)
@@ -93,6 +92,6 @@ def tag_search(request):
     term = request.GET['term']
     qset = TaggedItem.tags_for(Investment).filter(name__istartswith=term)
     tags = [t.name for t in qset]
-    return HttpResponse(simplejson.dumps(tags),
+    return HttpResponse(to_json(tags),
             mimetype="application/x-javascript")
 

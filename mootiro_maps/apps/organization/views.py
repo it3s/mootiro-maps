@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
-import json
 
 from django.shortcuts import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.db.models.query_utils import Q
-from django.utils import simplejson
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 
@@ -20,7 +18,7 @@ from authentication.utils import login_required
 from organization.models import Organization
 from organization.forms import FormOrganization, FormOrganizationGeoRef
 from main.utils import (paginated_query, create_geojson, sorted_query,
-                        filtered_query)
+                        filtered_query, to_json)
 
 logger = logging.getLogger(__name__)
 
@@ -95,7 +93,7 @@ def edit_organization(request, id='', *arg, **kwargs):
     geojson = create_geojson([organization], convert=False)
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
-    geojson = json.dumps(geojson)
+    geojson = to_json(geojson)
 
     def on_get(request, form):
         form = FormOrganizationGeoRef(instance=organization)
@@ -116,7 +114,7 @@ def search_by_name(request):
     orgs = Organization.objects.filter(Q(name__icontains=term) |
         Q(slug__icontains=term))
     d = [{'value': o.id, 'label': o.name} for o in orgs]
-    return HttpResponse(simplejson.dumps(d),
+    return HttpResponse(to_json(d),
         mimetype="application/x-javascript")
 
 
@@ -126,6 +124,6 @@ def search_tags(request):
             ).annotate(count=Count('taggit_taggeditem_items__id')
             ).order_by('-count', 'slug')[:10]
     tags = [t.name for t in qset]
-    return HttpResponse(simplejson.dumps(tags),
+    return HttpResponse(to_json(tags),
                 mimetype="application/x-javascript")
 

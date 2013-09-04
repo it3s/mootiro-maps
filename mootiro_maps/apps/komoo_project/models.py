@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import simplejson
 import itertools
 
 from django.db import models
@@ -18,7 +17,7 @@ import reversion
 from authentication.models import User
 from community.models import Community
 from search.signals import index_object_for_search
-from main.utils import create_geojson
+from main.utils import create_geojson, to_json
 from komoo_map.models import get_models
 
 
@@ -158,7 +157,7 @@ class Project(models.Model):
 
     @property
     def json(self):
-        return simplejson.dumps({
+        return to_json({
             'name': self.name,
             'slug': self.slug,
             'logo_url': self.logo_url,

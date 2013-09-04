@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-import json
 import logging
 from smtplib import SMTPException
 
@@ -31,7 +30,7 @@ from organization.models import Organization
 from komoo_resource.models import Resource
 from investment.models import Investment
 from komoo_project.models import Project
-from main.utils import create_geojson, ResourceHandler
+from main.utils import create_geojson, ResourceHandler, to_json
 from update.models import Update, News
 
 logger = logging.getLogger(__name__)
@@ -138,7 +137,7 @@ def get_geojson(request):
     project = request.GET.get('project', None)
 
     if not bounds and not project:
-        return HttpResponseBadRequest(json.dumps({'error': 'Invalid query'}),
+        return HttpResponseBadRequest(to_json({'error': 'Invalid query'}),
                                       mimetype="application/x-javascript")
 
     if bounds:
@@ -157,7 +156,7 @@ def get_geojson(request):
     for objs in d.values():
         l.extend(objs)
     geojson = create_geojson(l)
-    return HttpResponse(json.dumps(geojson),
+    return HttpResponse(to_json(geojson),
                         mimetype="application/x-javascript")
 
 

@@ -2,14 +2,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-import json
 import logging
 
 from django.core.urlresolvers import reverse
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-from django.utils import simplejson
 from django.contrib.gis.geos import Polygon
 
 from annoying.decorators import render_to
@@ -20,7 +18,7 @@ from authentication.utils import login_required
 from need.models import Need, TargetAudience
 from need.forms import NeedForm, NeedFormGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query)
+                        filtered_query, to_json)
 
 logger = logging.getLogger(__name__)
 
@@ -68,7 +66,7 @@ def edit_need(request, id=""):
     geojson = create_geojson([need], convert=False)
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
-    geojson = json.dumps(geojson)
+    geojson = to_json(geojson)
 
     def on_get(request, form):
         form = NeedFormGeoRef(instance=need)
@@ -106,7 +104,7 @@ def tag_search(request):
     term = request.GET['term']
     qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
     tags = [t.name for t in qset]
-    return HttpResponse(simplejson.dumps(tags),
+    return HttpResponse(to_json(tags),
                 mimetype="application/x-javascript")
 
 
@@ -114,7 +112,7 @@ def target_audience_search(request):
     term = request.GET['term']
     qset = TargetAudience.objects.filter(name__istartswith=term)
     target_audiences = [ta.name for ta in qset]
-    return HttpResponse(simplejson.dumps(target_audiences),
+    return HttpResponse(to_json(target_audiences),
                 mimetype="application/x-javascript")
 
 
@@ -128,6 +126,6 @@ def needs_geojson(request):
             Q(polys__intersects=polygon)
     )
     geojson = create_geojson(needs)
-    return HttpResponse(json.dumps(geojson),
+    return HttpResponse(to_json(geojson),
         mimetype="application/x-javascript")
 

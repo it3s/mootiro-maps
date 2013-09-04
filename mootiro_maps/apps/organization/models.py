@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import simplejson
 
 from django.db import models
 from django.contrib.contenttypes import generic
@@ -20,6 +19,7 @@ from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 from search.signals import index_object_for_search
+from main.utils import to_json
 
 
 LOGO_CHOICES = (
@@ -163,7 +163,7 @@ class Organization(GeoRefModel, models.Model):
 
     @property
     def json(self):
-        return simplejson.dumps({
+        return to_json({
             'name': self.name,
             'slug': self.slug,
             'logo_url': self.logo_url,

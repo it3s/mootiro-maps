@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
-import json
 
 from django.db.models.query_utils import Q
 from django.shortcuts import HttpResponse, get_object_or_404, redirect
-from django.utils import simplejson
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 
@@ -18,7 +16,7 @@ from authentication.utils import login_required
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource, FormResourceGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query)
+                        filtered_query, to_json)
 
 
 logger = logging.getLogger(__name__)
@@ -86,7 +84,7 @@ def edit_resource(request, id='', *arg, **kwargs):
 
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
-    geojson = json.dumps(geojson)
+    geojson = to_json(geojson)
 
     def on_get(request, form):
         form = FormResourceGeoRef(instance=resource)
@@ -107,7 +105,7 @@ def search_by_kind(request):
     kinds = ResourceKind.objects.filter(Q(name__icontains=term) |
         Q(slug__icontains=term))
     d = [{'value': k.id, 'label': k.name} for k in kinds]
-    return HttpResponse(simplejson.dumps(d),
+    return HttpResponse(to_json(d),
         mimetype="application/x-javascript")
 
 
@@ -117,7 +115,7 @@ def search_tags(request):
             ).annotate(count=Count('taggit_taggeditem_items__id')
             ).order_by('-count', 'slug')[:10]
     tags = [t.name for t in qset]
-    return HttpResponse(simplejson.dumps(tags),
+    return HttpResponse(to_json(tags),
                 mimetype="application/x-javascript")
 
 

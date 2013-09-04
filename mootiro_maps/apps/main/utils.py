@@ -23,7 +23,6 @@ from django.utils.functional import Promise
 from django.utils.encoding import force_unicode as force_text
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from lib.taggit.managers import TaggableManager
 
 try:
     from functools import wraps

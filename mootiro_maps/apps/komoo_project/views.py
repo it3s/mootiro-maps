@@ -6,7 +6,6 @@ from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.db.models.query_utils import Q
 from django.http import HttpResponse
-from django.utils import simplejson
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 
@@ -14,12 +13,10 @@ from lib.taggit.models import TaggedItem
 from ajaxforms.forms import ajax_form
 from annoying.decorators import render_to, ajax_request
 from main.utils import (paginated_query, sorted_query, filtered_query,
-        create_geojson)
+        create_geojson, to_json)
 from main.tasks import send_explanations_mail
 
 from authentication.utils import login_required
-from authentication.models import User
-from highlight.models import HighlightSection
 
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
@@ -186,7 +183,7 @@ def tag_search(request):
     qset = TaggedItem.tags_for(Project).filter(name__istartswith=term)
     # qset = TaggedItem.tags_for(project)
     tags = [t.name for t in qset]
-    return HttpResponse(simplejson.dumps(tags),
+    return HttpResponse(to_json(tags),
                 mimetype="application/x-javascript")
 
 
@@ -196,7 +193,7 @@ def search_by_name(request):
                                            Q(slug__icontains=term))
     d = [{'value': p.id, 'label': p.name} for p in projects
             if p.user_can_edit(request.user)]
-    return HttpResponse(simplejson.dumps(d),
+    return HttpResponse(to_json(d),
             mimetype="application/x-javascript")
 
 

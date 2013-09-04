@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 
 from komoo_map.models import (get_models, get_models_json, POLYGON, LINESTRING,
                               MULTILINESTRING, POINT, MULTIPOINT)
+from main.utils import to_json
 
 register = template.Library()
 
@@ -96,7 +97,7 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
         for feature in geojson_dict.get('features', []):
             if 'properties' in feature and editable:
                 feature['properties']['alwaysVisible'] = True
-        geojson = json.dumps(geojson_dict)
+        geojson = to_json(geojson_dict)
 
     if not width.endswith('%') and not width.endswith('px'):
         width = width + 'px'

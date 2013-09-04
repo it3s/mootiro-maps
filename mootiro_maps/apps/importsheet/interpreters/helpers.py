@@ -9,6 +9,7 @@ from django.contrib.gis.gdal.error import OGRException
 from django.contrib.gis.geos.error import GEOSException
 
 from main.models import GeoRefModel
+from main.utils import to_json
 from authentication.models import User
 from community.models import Community
 
@@ -197,7 +198,7 @@ def set_geometria(obj):
                 return
 
         g = GeoRefModel()
-        geojson = json.dumps(geodict)
+        geojson = to_json(geodict)
         g.geometry = geojson
         obj.object_dict['geometry'] = geojson
         obj.object_dict['geometry_preview'] = point or point_as_area or from_kml or ''

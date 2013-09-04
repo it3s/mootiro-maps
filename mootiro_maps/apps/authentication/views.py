@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-import json
 import logging
 from urllib import unquote
 
@@ -16,8 +15,8 @@ from annoying.decorators import render_to, ajax_request
 
 from signatures.models import Signature, DigestSignature
 from ajaxforms import ajax_form
-from main.utils import create_geojson, randstr, paginated_query
-from main.tasks import send_explanations_mail, send_mail_async
+from main.utils import create_geojson, paginated_query, to_json
+from main.tasks import send_explanations_mail
 
 from update.models import Update
 from locker.models import Locker
@@ -98,7 +97,7 @@ def profile(request, id=''):
     geojson = create_geojson([user], convert=False, discard_empty=True)
     if geojson:
         geojson['features'][0]['properties']['image'] = '/static/img/user.png'
-        geojson = json.dumps(geojson)
+        geojson = to_json(geojson)
 
     filters = request.GET.get('filters', [])
     if filters:
@@ -145,7 +144,7 @@ def profile_update(request):
     form_profile = FormProfile(instance=request.user)
     geojson = create_geojson([request.user], convert=False)
     geojson['features'][0]['properties']['image'] = '/static/img/me.png'
-    geojson = json.dumps(geojson)
+    geojson = to_json(geojson)
     return dict(signatures=signatures, form_profile=form_profile,
                 digest=digest, geojson=geojson)
 
@@ -348,10 +347,10 @@ def user_verification(request, key=''):
 #     User page
 #     """
 #     user = request.user if id_ == 'me' else User.get_by_id(id_)
-# 
+#
 #     if not user:
 #         raise Http404
-# 
+#
 #     user_data = user.to_cleaned_dict(user=request.user)
 #     # filter data
 #     return {

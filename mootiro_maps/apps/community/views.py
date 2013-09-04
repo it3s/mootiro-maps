@@ -2,17 +2,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-import json
 import logging
 
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
-from django.utils import simplejson
 from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
 from django.db.models import Count
-from django.shortcuts import redirect
 
 from authentication.utils import login_required
 
@@ -24,7 +21,7 @@ from lib.taggit.models import TaggedItem
 from community.models import Community
 from community.forms import CommunityForm
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query)
+                        filtered_query, to_json)
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +47,7 @@ def edit_community(request, id='', *args, **kwargs):
     geojson = create_geojson([community], convert=False)
     if geojson and geojson.get('features'):
         geojson['features'][0]['properties']['userCanEdit'] = True
-    geojson = json.dumps(geojson)
+    geojson = to_json(geojson)
 
     def on_get(request, form_community):
         return CommunityForm(instance=community)
@@ -105,7 +102,7 @@ def communities_geojson(request):
                           Q(polys__intersects=polygon))
     communities = Community.objects.filter(intersects_polygon)
     geojson = create_geojson(communities)
-    return HttpResponse(json.dumps(geojson),
+    return HttpResponse(to_json(geojson),
         mimetype="application/x-javascript")
 
 
@@ -114,7 +111,7 @@ def search_by_name(request):
     communities = Community.objects.filter(Q(name__icontains=term) |
                                            Q(slug__icontains=term))
     d = [{'value': c.id, 'label': c.name} for c in communities]
-    return HttpResponse(simplejson.dumps(d),
+    return HttpResponse(to_json(d),
                         mimetype="application/x-javascript")
 
 
@@ -124,7 +121,7 @@ def search_tags(request):
             ).annotate(count=Count('taggit_taggeditem_items__id')
             ).order_by('-count', 'slug')[:10]
     tags = [t.name for t in qset]
-    return HttpResponse(simplejson.dumps(tags),
+    return HttpResponse(to_json(tags),
                 mimetype="application/x-javascript")
 
 

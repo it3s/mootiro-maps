@@ -47,7 +47,7 @@ class GeoRefModel(geomodels.Model):
         if geojson and geojson.get('features'):
             geojson['features'][0]['properties']['userCanEdit'] = True
             geojson['features'][0]['properties']['alwaysVisible'] = True
-        return json.dumps(geojson)
+        return to_json(geojson)
 
     class Meta:
         abstract = True

@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from komoo_resource.models import Resource
 from proposal.models import Proposal
+from main.utils import to_json
 
 
 class Update(models.Model):
@@ -64,7 +65,7 @@ class Update(models.Model):
 
     @instances.setter
     def instances(self, instances):
-        self._names = simplejson.dumps([i.name for i in instances])
+        self._names = to_json([i.name for i in instances])
         keys = []
         for i in instances:
             if type(i) == Resource:
@@ -74,8 +75,8 @@ class Update(models.Model):
             else:
                 key = i.slug
             keys.append(key)
-        self._keys = simplejson.dumps(keys)
-        self._links = simplejson.dumps([i.view_url for i in instances])
+        self._keys = to_json(keys)
+        self._links = to_json([i.view_url for i in instances])
 
     @property
     def instance(self):
@@ -94,8 +95,8 @@ class Update(models.Model):
     @users.setter
     def users(self, l):
         try:
-            self._users = simplejson.dumps([user.name for user in l])
-            self._user_ids = simplejson.dumps([user.id for user in l])
+            self._users = to_json([user.name for user in l])
+            self._user_ids = to_json([user.id for user in l])
         except:
             # dont know what to do =/
             pass
@@ -110,8 +111,8 @@ class Update(models.Model):
             ids = simplejson.loads(self._user_ids)
             names.insert(0, u.name)
             ids.insert(0, u.id)
-            self._users = simplejson.dumps(names)
-            self._user_ids = simplejson.dumps(ids)
+            self._users = to_json(names)
+            self._user_ids = to_json(ids)
         except:
             pass
 
@@ -125,8 +126,8 @@ class Update(models.Model):
 
     @communities.setter
     def communities(self, l):
-        self._communities_names = simplejson.dumps([c.name for c in l])
-        self._communities_slugs = simplejson.dumps([c.slug for c in l])
+        self._communities_names = to_json([c.name for c in l])
+        self._communities_slugs = to_json([c.slug for c in l])
 
     @classmethod
     def get_recent_for(cls, obj, type_, **timeparams):
