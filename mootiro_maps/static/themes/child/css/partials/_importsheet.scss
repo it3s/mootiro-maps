@@ -1,0 +1,66 @@
+
+div.importsheet_controls {
+    a {
+        color: #fff;
+    }
+    a.insert {
+        float: right;
+    }
+}
+
+div.importsheet_missing_column {
+    background: #daa;
+    border: 1px solid #b33;
+    padding: 2px 5px;
+}
+
+#importsheet_simulation_results {
+    div.result {
+        border: 1px solid #ccc;
+        padding: 5px 15px;
+        margin: 15px 0;
+        width: 940px;
+        display: inline-block;
+
+        div.importsheet_main_column {
+            width: 700px;
+            margin-right: 20px;
+        }
+
+        div.importsheet_right_bar {
+            width: 200px;
+        }        
+    }
+
+    .a-update { background: inherit }
+
+    .block h4 { margin-top: 0 }
+}
+#importsheet_simulation_results, #importsheet_messages {
+    div.metadata {
+        h3 {
+            font-size: 16px;
+        }
+
+        div.errors, div.warnings {
+            margin: 5px;
+        }
+
+        div.errors {
+            background: #daa;
+            border: 1px solid #b33;
+            padding: 2px 5px;
+        }
+
+        div.warnings {
+            background: #ee8;
+            border: 1px solid #ed0;
+            padding: 2px 5px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: underline;
+        }
+    }
+}

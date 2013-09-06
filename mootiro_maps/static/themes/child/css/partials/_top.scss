@@ -1,0 +1,227 @@
+$bg: #ff6666;
+$fg: #fff;
+$active_bg: #4978bc;
+$active_fg: #fff;
+
+#top {
+
+    width: 100%;
+    height: 45px;
+    background: $bg;
+    position: relative;
+    z-index: 11;
+
+    box-shadow: 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
+
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+
+    * {
+        -webkit-box-sizing: border-box;
+           -moz-box-sizing: border-box;
+                box-sizing: border-box;
+    }
+
+    #logo, #menu, #search { float: left }
+    #side_menu { float: right }
+
+    > * {
+        height: 100%;
+        display: block;
+   }
+
+    #logo {
+        margin: 0 35px;
+        padding-top: 10px;
+    }
+
+    #menu, #side_menu {
+        cursor: pointer;
+        color: $fg;
+
+        > ul {
+            height: 100%;
+
+            > li {
+                margin: 0;
+                height: 100%;
+                text-align: center;
+
+                > a { padding-top: 12px }
+            }
+
+            a {
+                text-decoration: inherit;
+                color: inherit;
+                height: 100%;
+                display: block;
+            }
+
+            > li:hover { background: $active_bg; }
+
+            // Menu itens configuration
+            li .ico { background: no-repeat center center }
+            li:hover, li.active { font-weight: bold }
+            li:hover ul { font-weight: normal }
+            li.active {
+                color: $active_fg;
+                background: $active_bg;
+            }
+            li.active ul { color: $fg; }
+
+            .map .ico { background-image: url('../img/menu/newmenu/map.png') }
+            .map:hover .ico { background-image: url('../img/menu/newmenu/map-hover.png') }
+            //.map.active { background-color: #ff3d2e }
+            .map.active .ico { background-image: url('../img/menu/newmenu/map-active.png') }
+
+            .objects > a >.ico { background-image: url('../img/menu/newmenu/objects.png') }
+            .objects:hover > a >.ico { background-image: url('../img/menu/newmenu/objects-hover.png') }
+            //.objects.active { background-color: #951b81 }
+            .objects.active > a >.ico { background-image: url('../img/menu/newmenu/objects-active.png') }
+
+            .objects .community .ico { background-image: url('../img/menu/newmenu/community.png') }
+            .objects .community:hover .ico { background-image: url('../img/menu/newmenu/community-hover.png') }
+            //.objects .community.active { background-color: #f7A941 }
+            .objects .community.active .ico { background-image: url('../img/menu/newmenu/community-active.png') }
+
+            .objects .organization .ico { background-image: url('../img/menu/newmenu/organization.png') }
+            .objects .organization:hover .ico { background-image: url('../img/menu/newmenu/organization-hover.png') }
+            //.objects .organization.active { background-color: #3a61d6 }
+            .objects .organization.active .ico { background-image: url('../img/menu/newmenu/organization-active.png') }
+
+            .objects .need .ico { background-image: url('../img/menu/newmenu/need.png') }
+            .objects .need:hover .ico { background-image: url('../img/menu/newmenu/need-hover.png') }
+            //.objects .need.active, li.need.active:hover { background-color: #f42c5e }
+            .objects .need.active .ico { background-image: url('../img/menu/newmenu/need-active.png') }
+
+            .objects .resource .ico { background-image: url('../img/menu/newmenu/resource.png') }
+            .objects .resource:hover .ico { background-image: url('../img/menu/newmenu/resource-hover.png') }
+            //.objects .resource.active { background-color: #52ae32 }
+            .objects .resource.active .ico { background-image: url('../img/menu/newmenu/resource-active.png') }
+
+            .objects .investment .ico { background-image: url('../img/menu/newmenu/investment.png') }
+            .objects .investment:hover .ico { background-image: url('../img/menu/newmenu/investment-hover.png') }
+            //.objects .investment.active { background-color: #aa9f18 }
+            .objects .investment.active .ico { background-image: url('../img/menu/newmenu/investment-active.png') }
+
+            .projects .ico { background-image: url('../img/menu/newmenu/projects.png') }
+            .projects:hover .ico { background-image: url('../img/menu/newmenu/projects-hover.png') }
+            //.projects.active { background-color: #f26700 }
+            .projects.active .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
+        }
+
+        .ico {
+            display: inline-block;
+            vertical-align: -33%;
+            margin-right: 0.2em;
+            width: 25px;
+            height: 25px;
+        }
+
+        li.objects.active {
+            ul { display: block }
+            li { display: none }
+            li.active { display: block }
+        }
+        li.objects.active:hover ul li { display: block }
+
+        li.objects ul {
+            background: $bg;
+            text-align: left;
+            font-size: 90%;
+            box-shadow: 0px -5px 0px 0px $active_bg, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
+
+            li:hover { background: $active_bg; }
+            .ico {
+                width: 20px;
+                height: 20px;
+                margin: 3px;
+            }
+        }
+        li.objects.active ul { box-shadow: 0px -5px 0px 0px #951b81, 1px 1px 3px 1px rgba(50, 50, 50, 0.5); }
+
+    }
+    #menu > ul > li { width: 120px }
+    #side_menu > ul > li { width: 80px }
+
+    #side_menu {
+        li#login_button {
+            background: #cce5ce;
+            color: #009640;
+        }
+        li#login_button:hover {
+            background: #8EC89A;
+            color: #000;
+        }
+        li#user_menu {
+            width: 150px;
+
+            ul {
+                li { padding: 0.3em }
+                li:hover { background: $bg; }
+
+                box-shadow: 0px -5px 0px 0px $active_bg, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
+            }
+        }
+    }
+
+    nav > ul > li { display: inline-block }
+
+    #search {
+        width: 22%;
+        margin-left: 3%;
+        padding-top: 8px;
+
+        position: relative;
+
+        form {
+            width: 85%;
+            padding: 0;
+            margin: 0;
+            display: inline-block;
+
+            input[type="search"] {
+                width: 100%;
+                height: 28px;
+                border-radius: 0;
+                background: #fff url('../img/menu/newmenu/glass.png') no-repeat 98% center;
+                padding-right: 6%;
+                box-shadow: inset 0px 1px 3px 0px rgba(150, 150, 150, 0.5);
+                border: 1px solid #aaa;
+            }
+        }
+
+        div#search-canvasloader-container {
+            float: right;
+            margin-top: 3px;
+            margin-right: 5%;
+            width: 22px;
+            height: 22px;
+        }
+        div#search-results-box {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+        }
+    }
+
+}
+
+.dropdown_menu {
+    position: relative;
+
+    > ul {
+        display: none;
+        position: absolute;
+        background-color: inherit;
+        left: 0;
+        top: 100%;
+        width: 100%;
+        z-index: 100;
+        text-align: left;
+
+        > li { width: 100% }
+    }
+}
+.dropdown_menu:hover > ul { display: block }
