@@ -1,0 +1,49 @@
+/*
+ * Topbar
+ */
+
+#top {
+    background: #ff6666;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+}
+
+#top #menu > ul > li,
+#top #side_menu > ul > li {
+    color: #fff;
+}
+
+#top #menu > ul .active,
+#top #side_menu > ul .active {
+    background: #4978BC !important;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+}
+
+#top #menu > ul > li:hover,
+#top #side_menu > ul > li:hover {
+    background: #4978BC;
+    color: #fff;
+}
+
+#top #menu > ul li.active ul,
+#top #side_menu > ul li.active ul,
+#top #menu li.objects ul,
+#top #side_menu li.objects ul {
+    background: #4978BC;
+    color: #fff;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -o-box-shadow: none;
+}
+
+#top #menu li.objects ul li:hover,
+#top #side_menu li.objects ul li:hover {
+    background: #4978BC;
+    color: #fff;
+}
