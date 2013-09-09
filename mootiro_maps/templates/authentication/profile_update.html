@@ -14,17 +14,22 @@
         <ul class="nav nav-tabs">
             <li class="active">
                 <a href="#tab-pane-public" data-toggle="tab">
-                    {% trans 'Public Settings' %}
+                    {% trans 'Public Data' %}
                 </a>
             </li>
             <li>
-                <a href="#tab-pane-signatures" data-toggle="tab">
-                    {% trans 'Signature Settings' %}
+                <a href="#tab-pane-language" data-toggle="tab">
+                    {% trans 'Language' %}
                 </a>
             </li>
             <li>
-                <a href="#tab-pane-personal" data-toggle="tab">
-                    {% trans 'Manage password' %}
+                <a href="#tab-pane-subscriptions" data-toggle="tab">
+                    {% trans 'Subscriptions' %}
+                </a>
+            </li>
+            <li>
+                <a href="#tab-pane-password" data-toggle="tab">
+                    {% trans 'Password' %}
                 </a>
             </li>
             <li>
@@ -38,11 +43,11 @@
         <div class="tab-content">
 
             <!-- Tab pane personal settings -->
-            <div class="tab-pane" id="tab-pane-personal">
+            <div class="tab-pane" id="tab-pane-password">
 
                 <!-- Personal settins form -->
                 <div class="form-profile-wrapper">
-                    <form methos=POST action="{% url profile_update_personal_settings %}" id="form-personal">
+                    <form method="POST" action="{% url profile_update_personal_settings %}" id="form-personal">
                         {% csrf_token %}
                        	<div id="div_id_email" class="clearfix control-group ">
                           <label for="id_email">{% trans 'E-mail' %}</label>
@@ -86,7 +91,7 @@
                         </div>
 
                         <div class="form-actions">
-                            <input type="submit" name="submit" value="Enviar"
+                          <input type="submit" name="submit" value="{% trans "Save" %}"
                                    class="btn button" id="submit-id-submit" />
                         </div>
 
@@ -102,9 +107,29 @@
                 </div>
             </div>
 
+            <!-- Tab pane languages settings -->
+            <div class="tab-pane" id="tab-pane-language">
+                <div class="language-list-wrapper">
+                  <form method="POST" action="{% url profile_update_language_settings %}" id="form-language">
+                    {% csrf_token %}
+                    <label>{% trans "Select the language in which you want the site to be shown" %}</label>
+                    <select name="language">
+                      {% for lang in LANGUAGES %}
+                      <option value="{{ lang.0 }}" {% if not user.language and lang.0 == LANGUAGE_CODE or user.language == lang.0 %}selected="selected"{% endif %}>{{ lang.1 }}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="form-actions">
+                      <input type="submit" name="submit" value="{% trans "Save" %}"
+                               class="btn button" id="submit-id-submit" />
+                    </div>
+                  </form>
+                </div>
+            </div>
+
+
 
             <!-- Tab pane signatures -->
-            <div class="tab-pane div-profile-form" id="tab-pane-signatures">
+            <div class="tab-pane div-profile-form" id="tab-pane-subscriptions">
                 <div class="signatures-list-wrapper"></div>
 
             </div> <!-- end of signatures tab pane -->

@@ -28,6 +28,10 @@ urlpatterns = patterns('authentication.views',
             'profile_update_personal_settings',
             name='profile_update_personal_settings'),
 
+    url(r'^edit/language_settings/?$',
+            'profile_update_language_settings',
+            name='profile_update_language_settings'),
+
     url(r'^edit/digest_settings/?$', 'digest_update',
             name='digest_update'),
 

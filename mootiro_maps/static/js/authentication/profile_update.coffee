@@ -28,7 +28,7 @@ window.Signature = Backbone.Model.extend
 
 window.SignatureView = Backbone.View.extend
     className: 'signature'
-    events: 
+    events:
         'click .cancel-subscription-btn': 'cancelSubscription'
 
     initialize: () ->

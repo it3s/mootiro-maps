@@ -5,11 +5,12 @@ from urllib import unquote
 
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
-from django.http import Http404
+from django.http import Http404, HttpResponseRedirect
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
-from django.utils import simplejson
+from django.utils import simplejson, translation
 from django.forms.models import model_to_dict
+from django.conf import settings
 
 from annoying.decorators import render_to, ajax_request
 
@@ -203,6 +204,30 @@ def profile_update_personal_settings(request):
 
 
 @login_required
+def profile_update_language_settings(request):
+    logging.debug('POST: {}'.format(request.POST))
+    lang_code = request.POST.get('language', '')
+    try:
+        next_ = request.META.get('HTTP_REFERER', None)
+        if not next_:
+            next_ = '/'
+        response = HttpResponseRedirect(next_)
+        if lang_code and request.user.set_language(lang_code):
+            # Save the user default language setting.
+            request.user.save()
+            # Update the session language.
+            if hasattr(request, 'session'):
+                request.session['django_language'] = lang_code
+            else:
+                response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+            translation.activate(lang_code)
+    except Exception as err:
+        logger.error('OPS: ', err)
+    finally:
+        return response
+
+
+@login_required
 @ajax_request
 def digest_update(request):
     logger.debug('POST: {}'.format(request.POST))
@@ -294,7 +319,16 @@ def login(request):
 
     auth_login(request, user)
     next = unquote(next)
-    return redirect(next)
+    response = HttpResponseRedirect(next)
+    # Use language from user settings
+    lang_code = user.language
+    if lang_code and translation.check_for_language(lang_code):
+        if hasattr(request, 'session'):
+            request.session['django_language'] = lang_code
+        else:
+            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+        translation.activate(lang_code)
+    return response
 
 
 def logout(request):
