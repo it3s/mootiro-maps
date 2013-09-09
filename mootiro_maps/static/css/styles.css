@@ -289,11 +289,11 @@ ul.geo-objects-listing.frozen li div.collapser:hover { background: none; cursor:
 
 }
 
-.active{
+.about .tabs .active{
     background:#eff8fb;
 
 }
-.active a{
+.about .tabs .active a{
     color:#000;
     font-weight:bold;
 
