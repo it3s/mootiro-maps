@@ -87,7 +87,7 @@ class NeedForm(AjaxModelForm):
         if project_id:
             project = get_object_or_None(Project, pk=int(project_id))
             if project:
-                project.save_related_object(need)
+                project.save_related_object(need, self.user)
 
         return need
 
