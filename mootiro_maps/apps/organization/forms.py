@@ -105,7 +105,7 @@ class FormOrganization(AjaxModelForm):
         if project_id:
             project = get_object_or_None(Project, pk=int(project_id))
             if project:
-                project.save_related_object(org)
+                project.save_related_object(org, self.user)
 
         return org
 
