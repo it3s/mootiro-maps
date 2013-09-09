@@ -31,7 +31,7 @@ TIME_ZONE = 'America/Sao_Paulo'
 
 LANGUAGES = (
     ('pt-br', 'Português'),
-    ('en-us', 'English'),
+    ('en', 'English'),
 )
 
 LANGUAGE_COOKIE_NAME = 'i18n'

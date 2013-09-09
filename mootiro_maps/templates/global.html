@@ -123,14 +123,19 @@
             {% else %}
             <li id="login_button"><a href="#" class="login-required" >{% trans 'Login'%}</a></li>
             {% endif %}
+            <li class="dropdown_menu">
+              {% for lang in LANGUAGES %}
+              {% if lang.0 == LANGUAGE_CODE %}
+              <a>{{ lang.1 }} &#x25be;</a>
+              {% endif %}
+              {% endfor %}
+              <ul>
+              {% for lang in LANGUAGES %}
+              <li class="language{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}"><a href="{% url set_language %}?language={{ lang.0 }}">{{ lang.1 }}</a></li>
+              {% endfor %}
+              </ul>
+            </li>
           </ul>
-          <!--
-          <ul>
-          {% for lang in LANGUAGES %}
-          <li class="language{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}"><a href="{% url set_language %}?language={{ lang.0 }}">{{ lang.1 }}</a></li>
-          {% endfor %}
-          </ul>
-          -->
         </nav>
       </div>
 

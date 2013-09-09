@@ -57,7 +57,8 @@
 
             // Menu itens configuration
             li .ico { background: no-repeat center center }
-            li:hover, li.active { font-weight: bold }
+            /*li:hover,*/
+            li.active { font-weight: bold }
             li:hover ul { font-weight: normal }
             li.active { color: #fff }
             li.active ul { color: #505050 }
@@ -135,7 +136,10 @@
 
     }
     #menu > ul > li { width: 120px }
-    #side_menu > ul > li { width: 80px }
+    #side_menu > ul > li {
+        min-width: 80px;
+        padding: 0 10px;
+    }
 
     #side_menu {
         li#login_button {
@@ -148,7 +152,8 @@
         }
         li#user_menu {
             width: 150px;
-
+        }
+        li.dropdown_menu {
             ul {
                 li { padding: 0.3em }
                 li:hover { background: #dceff4 }
