@@ -32,8 +32,8 @@
 
                 <div class="view-edit-btn">
                     {% history resource %}
-                    <a href="{% url view_discussion resource.perm_id %}" class="btn login-required" title="Ver página de discussão"><i class="icon-comment"></i></a>
-                    <a href="{{ resource.edit_url }}" class="btn login-required" title="Editar conteúdo">
+                    <a href="{% url view_discussion resource.perm_id %}" class="btn login-required" title="{% trans 'Ver página de discussão' %}"><i class="icon-comment"></i></a>
+                    <a href="{{ resource.edit_url }}" class="btn login-required" title="{% trans 'Editar conteúdo' %}">
                         <i class="icon-pencil"></i>
                     </a>
 

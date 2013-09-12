@@ -190,13 +190,13 @@
             <div class="signature-header">
                 <a href="<%= permalink %>" class="signature-title"><%= obj_name %></a>
                 <div class="right">
-                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= obj_id %>" title="ver no mapa">
+                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= obj_id %>" title="{% trans 'ver no mapa' %}">
                         <i class="icon-see-on-map"></i>
                     </a>
                 </div>
             </div>
             <div class="signature-body">
-              <div class="cancel-subscription-btn btn" title="Parar de seguir as atualizações desse item">
+              <div class="cancel-subscription-btn btn" title="{% trans 'Parar de seguir as atualizações desse item' %}">
                     <i class="icon-remove-sign"></i>
                     <span>{% trans 'Cancel Subscription' %}</span>
                 </div>
@@ -210,7 +210,7 @@
         <span>{% trans 'Signatures' %}</span>
     </div>
     <div class="div-signatures-manage-btn">
-        <button id="signatures-manage-btn" class="button" title="Opções de notificação e recebimento de e-mails com atualizações dos itens que você segue">
+        <button id="signatures-manage-btn" class="button" title="{% trans 'Opções de notificação e recebimento de e-mails com atualizações dos itens que você segue' %}">
             {% trans 'Receivings Options' %}
         </button>
     </div>

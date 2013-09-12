@@ -17,7 +17,7 @@ class HelpCenter
         <ol id='joyride'>
           <% for (var j = 0; j < tour.slides.length; j++) { %>
           <li data-selector='<%= tour.slides[j].selector %>'
-            data-button=<% if (j != tour.slides.length-1) { %>'Próximo'<% } else { %>'Fim'<% } %>
+            data-button='<% if (j != tour.slides.length-1) { print(gettext('Next')); } else { print(gettext('Finish')); } %>'
             data-options='<%= tour.slides[j].options %>'
             data-offsetX='<%= tour.slides[j].offsetX %>'
             data-offsetY='<%= tour.slides[j].offsetY %>'
@@ -35,7 +35,7 @@ class HelpCenter
         <div id='help_center' class='modal hide fade'>
           <div class='modal-header'>
             <button type='button' class='close' data-dismiss='modal'>×</button>
-            <h2>Central de Ajuda</h2>
+            <h2><%= gettext('Help Center') %></h2>
           </div>
           <section class='modal-body'>
             <ul id='questions'>
@@ -50,9 +50,9 @@ class HelpCenter
               </li>
               <% } %>
             </ul>
-            <% if (hasTour) { %><button id='tour_button'>Faça o tour desta página</button><% } %>
-            <a id='help_center_about' href='/about/'>Sobre o Maps</a>
-            <a id='help_center_usecases' href='/use_cases/'>Casos de Uso</a>
+            <% if (hasTour) { %><button id='tour_button'><%= gettext('Take the guided tour') %></button><% } %>
+            <a id='help_center_about' href='/about/'><%= gettext('About') %></a>
+            <a id='help_center_usecases' href='/use_cases/'><%= gettext('Use Cases') %></a>
           </section>
         </div>
         "
@@ -97,48 +97,48 @@ class HelpCenter
         "home":
             "slides": [
                 {
-                "title": "MootiroMaps"
-                "body": "Clique no logo do MootiroMaps e você será redirecionado para a página central."
+                "title": gettext "MootiroMaps"
+                "body": gettext "Clique no logo do MootiroMaps e você será redirecionado para a página central."
                 "selector": "#logo"
                 },
                 {
-                "title": "Login"
-                "body": "Para criar um perfil no MootiroMaps ou logar na plataforma, clique aqui."
+                "title": gettext "Login"
+                "body": gettext "Para criar um perfil no MootiroMaps ou logar na plataforma, clique aqui."
                 "selector": "#login_button"
                 "options": "tipLocation:left;nubPosition:top-right;"
                 "offsetX": -230
                 },
                 {
-                "title": "Página do usuário"
-                "body": "Clicando no nome de qualquer usuário você encontra informações sobre o usuário, contatos e últimas edições feitas."
+                "title": gettext "Página do usuário"
+                "body": gettext "Clicando no nome de qualquer usuário você encontra informações sobre o usuário, contatos e últimas edições feitas."
                 "selector": "#user_menu"
                 "options": "tipLocation:left;nubPosition:top-right;"
                 "offsetX": -90
                 },
                 {
-                "title": "Visualize o mapa"
-                "body": "Aqui você encontra no mapa os objetos já mapeados - no Brasil e no mundo!"
+                "title": gettext "Visualize o mapa"
+                "body": gettext "Aqui você encontra no mapa os objetos já mapeados - no Brasil e no mundo!"
                 "selector": "#menu .map"
                 },
                 {
-                "title": "Objetos cadastrados"
-                "body": "Escolha o tipo de objeto cadastrado e veja as listas correspondentes."
+                "title": gettext "Objetos cadastrados"
+                "body": gettext "Escolha o tipo de objeto cadastrado e veja as listas correspondentes."
                 "selector": "#menu .objects"
                 },
                 {
-                "title": "Projetos cadastrados"
-                "body": "Visualize a lista de projetos de mapeamento acontecendo no MootiroMaps."
+                "title": gettext "Projetos cadastrados"
+                "body": gettext "Visualize a lista de projetos de mapeamento acontecendo no MootiroMaps."
                 "selector": "#menu .projects"
                 },
                 {
-                "title": "Blog do IT3S"
-                "body": "Em nosso Blog postamos análises e opinões sobre transparência, mobilização social, georreferenciamento, tecnologias e colaboração. Clique, leia e comente."
+                "title": gettext "Blog do IT3S"
+                "body": gettext "Em nosso Blog postamos análises e opinões sobre transparência, mobilização social, georreferenciamento, tecnologias e colaboração. Clique, leia e comente."
                 "selector": ".news .blog"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Edições recentes"
-                "body": "Acompanhe as atualizações feitas pelos usuários do MootiroMaps. Os ícones mostram os tipos de objetos editados. Edite você também."
+                "title": gettext "Edições recentes"
+                "body": gettext "Acompanhe as atualizações feitas pelos usuários do MootiroMaps. Os ícones mostram os tipos de objetos editados. Edite você também."
                 "selector": ".news .last_updates"
                 "options": "tipLocation:right;"
                 },
@@ -146,23 +146,23 @@ class HelpCenter
         "map":
             "slides": [
                 {
-                "title": "Localização do ponto"
-                "body": "Escolha entre endereço (insira rua, número, município ou insira o CEP) ou coordenada (latitude e longitude) para ser direcionado a um ponto no mapa."
+                "title": gettext "Localização do ponto"
+                "body": gettext "Escolha entre endereço (insira rua, número, município ou insira o CEP) ou coordenada (latitude e longitude) para ser direcionado a um ponto no mapa."
                 "selector": "#map-searchbox"
                 },
                 {
-                "title": "Filtrar por raio"
-                "body": "Selecione um ponto no mapa e estabeleça a distância (raio) em que deseja que apareçam os objetos mapeados no território."
+                "title": gettext "Filtrar por raio"
+                "body": gettext "Selecione um ponto no mapa e estabeleça a distância (raio) em que deseja que apareçam os objetos mapeados no território."
                 "selector": "#map-panel-filter-tab"
                 },
                 {
-                "title": "Adicionar um objeto"
-                "body": 'Escolha o tipo de objeto que melhor se aplica ao que será mapeado e adicione ao mapa uma linha, um ponto ou uma área. Conclua o mapeamento pressionando o botão "avançar".'
+                "title": gettext "Adicionar um objeto"
+                "body": gettext 'Escolha o tipo de objeto que melhor se aplica ao que será mapeado e adicione ao mapa uma linha, um ponto ou uma área. Conclua o mapeamento pressionando o botão "avançar".'
                 "selector": "#map-panel-add-tab"
                 },
                 {
-                "title": "Filtrar por camada"
-                "body": "Ligue ou desligue as camada para filtrar os objetos a serem apresentados no mapa."
+                "title": gettext "Filtrar por camada"
+                "body": gettext "Ligue ou desligue as camada para filtrar os objetos a serem apresentados no mapa."
                 "selector": "#map-panel-layers-tab"
                 },
             ]
@@ -170,20 +170,20 @@ class HelpCenter
         "community_list":
             "slides": [
                 {
-                "title": "Lista de comunidades"
-                "body": "Aqui estão listadas  com uma curta descrição todas as comunidades cadastradas no MootiroMaps. Clique no nome da comunidade para acessar o cadastro completo."
+                "title": gettext "Lista de comunidades"
+                "body": gettext "Aqui estão listadas  com uma curta descrição todas as comunidades cadastradas no MootiroMaps. Clique no nome da comunidade para acessar o cadastro completo."
                 "selector": "div.view-list-item > h4 > span > a"
                 },
                 {
-                "title": "Ponto no mapa"
-                "body": "Clique para visualizar previamente o objeto no mapa."
+                "title": gettext "Ponto no mapa"
+                "body": gettext "Clique para visualizar previamente o objeto no mapa."
                 "selector": "div.view-list-item > h4 > a.list-map-preview"
                 "options": "tipLocation:right;"
                 "offsetY": -20
                 },
                 {
-                "title": "Visualização e filtragem"
-                "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
+                "title": gettext "Visualização e filtragem"
+                "body": gettext "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
                 "selector": "div.view-list-visualization-header i"
                 "options": "tipLocation:right;"
                 "offsetX": 20
@@ -194,21 +194,21 @@ class HelpCenter
         "organization_list":
             "slides": [
                 {
-                "title": "Lista de organizações"
-                "body": "Aqui estão listadas com uma curta descrição todas as organizações cadastradas no MootiroMaps. Clique no nome da organização para acessar o cadastro completo."
+                "title": gettext "Lista de organizações"
+                "body": gettext "Aqui estão listadas com uma curta descrição todas as organizações cadastradas no MootiroMaps. Clique no nome da organização para acessar o cadastro completo."
                 "selector": "div.view-list-item a.org-list-name"
                 },
                 {
-                "title": "Visualização e filtragem"
-                "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
+                "title": gettext "Visualização e filtragem"
+                "body": gettext "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
                 "selector": "div.view-list-visualization-header i"
                 "options": "tipLocation:right;"
                 "offsetX": 20
                 "offsetY": -28
                 },
                 {
-                "title": "Adicionar uma organização"
-                "body": "Clique aqui e cadastre no MootiroMaps uma nova organização."
+                "title": gettext "Adicionar uma organização"
+                "body": gettext "Clique aqui e cadastre no MootiroMaps uma nova organização."
                 "selector": "div.button-new"
                 },
             ]
@@ -216,28 +216,28 @@ class HelpCenter
         "need_list":
             "slides": [
                 {
-                "title": "Lista de necessidades"
-                "body": "Aqui estão listadas com uma curta descrição todas as necessidades cadastradas no MootiroMaps. Clique no nome da necessidade para acessar o cadastro completo."
+                "title": gettext "Lista de necessidades"
+                "body": gettext "Aqui estão listadas com uma curta descrição todas as necessidades cadastradas no MootiroMaps. Clique no nome da necessidade para acessar o cadastro completo."
                 "selector": "div.view-list-item > h4 > span > a"
                 },
                 {
-                "title": "Ponto no mapa"
-                "body": "Clique para visualizar previamente o objeto no mapa."
+                "title": gettext "Ponto no mapa"
+                "body": gettext "Clique para visualizar previamente o objeto no mapa."
                 "selector": "div.view-list-item > h4 > a.list-map-preview"
                 "options": "tipLocation:right;"
                 "offsetY": -20
                 },
                 {
-                "title": "Visualização e filtragem"
-                "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
+                "title": gettext "Visualização e filtragem"
+                "body": gettext "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
                 "selector": "div.view-list-visualization-header i"
                 "options": "tipLocation:right;"
                 "offsetX": 20
                 "offsetY": -28
                 },
                 {
-                "title": "Adicionar uma necessidade"
-                "body": "Clique aqui e cadastre no MootiroMaps uma nova necessidade."
+                "title": gettext "Adicionar uma necessidade"
+                "body": gettext "Clique aqui e cadastre no MootiroMaps uma nova necessidade."
                 "selector": "div.button-new"
                 },
             ]
@@ -245,28 +245,28 @@ class HelpCenter
         "resource_list":
             "slides": [
                 {
-                "title": "Lista de recursos"
-                "body": "Aqui estão listados com uma curta descrição todos os recursos cadastrados no MootiroMaps. Clique no nome do recurso para acessar o cadastro completo."
+                "title": gettext "Lista de recursos"
+                "body": gettext "Aqui estão listados com uma curta descrição todos os recursos cadastrados no MootiroMaps. Clique no nome do recurso para acessar o cadastro completo."
                 "selector": "div.view-list-item > h4 > span > a"
                 },
                 {
-                "title": "Ponto no mapa"
-                "body": "Clique aqui para visualizar previamente o objeto desejado no mapa."
+                "title": gettext "Ponto no mapa"
+                "body": gettext "Clique aqui para visualizar previamente o objeto desejado no mapa."
                 "selector": "div.view-list-item > h4 > a.list-map-preview"
                 "options": "tipLocation:right;"
                 "offsetY": -20
                 },
                 {
-                "title": "Visualização e filtragem"
-                "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
+                "title": gettext "Visualização e filtragem"
+                "body": gettext "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
                 "selector": "div.view-list-visualization-header i"
                 "options": "tipLocation:right;"
                 "offsetX": 20
                 "offsetY": -28
                 },
                 {
-                "title": "Adicionar um recurso"
-                "body": "Clique aqui e cadastre no MootiroMaps um novo recurso."
+                "title": gettext "Adicionar um recurso"
+                "body": gettext "Clique aqui e cadastre no MootiroMaps um novo recurso."
                 "selector": "div.button-new"
                 },
             ]
@@ -274,20 +274,20 @@ class HelpCenter
         "investment_list":
             "slides": [
                 {
-                "title": "Lista de investimentos"
-                "body": "Aqui estão listados  com uma curta descrição todos os investimentos cadastrados no MootiroMaps. Clique no nome do investimentos para acessar o cadastro completo."
+                "title": gettext "Lista de investimentos"
+                "body": gettext "Aqui estão listados  com uma curta descrição todos os investimentos cadastrados no MootiroMaps. Clique no nome do investimentos para acessar o cadastro completo."
                 "selector": "div.view-list-item > h4 > span > a"
                 },
                 {
-                "title": "Ponto no mapa"
-                "body": "Clique aqui para visualizar previamente o objeto no mapa."
+                "title": gettext "Ponto no mapa"
+                "body": gettext "Clique aqui para visualizar previamente o objeto no mapa."
                 "selector": "div.view-list-item > h4 > a.list-map-preview"
                 "options": "tipLocation:right;"
                 "offsetY": -20
                 },
                 {
-                "title": "Visualização e filtragem"
-                "body": "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
+                "title": gettext "Visualização e filtragem"
+                "body": gettext "Você pode escolher como deseja visualizar a listagem: por ordem alfabética ou data de cadastro. Também pode filtrar por palavras-chave."
                 "selector": "div.view-list-visualization-header"
                 "options": "tipLocation:right;"
                 "offsetX": 20
@@ -297,21 +297,21 @@ class HelpCenter
         "project_list":
             "slides": [
                 {
-                "title": "Lista de projetos"
-                "body": "Aqui estão listados com uma curta descrição todos os projetos cadastrados no MootiroMaps. Clique no nome do projetos para acessar o cadastro completo."
+                "title": gettext "Lista de projetos"
+                "body": gettext "Aqui estão listados com uma curta descrição todos os projetos cadastrados no MootiroMaps. Clique no nome do projetos para acessar o cadastro completo."
                 "selector": "div.view-list-item span > a"
                 },
                 {
-                "title": "Visualização e filtragem"
-                "body": "Você pode filtrar a busca por palavras-chave."
+                "title": gettext "Visualização e filtragem"
+                "body": gettext "Você pode filtrar a busca por palavras-chave."
                 "selector": "div.view-list-visualization-header i"
                 "options": "tipLocation:right;"
                 "offsetX": 20
                 "offsetY": -28
                 },
                 {
-                "title": "Adicionar um projeto"
-                "body": "Clique aqui e comece um novo projeto de mapeamento no MootiroMaps."
+                "title": gettext "Adicionar um projeto"
+                "body": gettext "Clique aqui e comece um novo projeto de mapeamento no MootiroMaps."
                 "selector": "div.button-new"
                 },
             ]
@@ -319,50 +319,50 @@ class HelpCenter
         "community_show":
             "slides": [
                 {
-                "title": "Título da comunidade"
-                "body": "Este é o nome com o qual o território foi cadastrado."
+                "title": gettext "Título da comunidade"
+                "body": gettext "Este é o nome com o qual o território foi cadastrado."
                 "selector": ".main-column h2.title"
                 },
                 {
-                "title": "Edição do conteúdo"
-                "body": "Para editar conteúdos clique no lápis."
+                "title": gettext "Edição do conteúdo"
+                "body": gettext "Para editar conteúdos clique no lápis."
                 "selector": "div.view-edit-btn"
                 "options": "tipLocation:bottom;nubPosition:top-right;"
                 "offsetX": -135
                 },
                 {
-                "title": "Perfil da comunidade"
-                "body": "Esse local contém a descrição da comunidade, como a localização, histórico, perfil socioeconômico da população etc."
+                "title": gettext "Perfil da comunidade"
+                "body": gettext "Esse local contém a descrição da comunidade, como a localização, histórico, perfil socioeconômico da população etc."
                 "selector": ".main-column .mark-down"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "No mapa"
-                "body": "Clique aqui se você quiser visualizar a comunidade em um mapa maior."
+                "title": gettext "No mapa"
+                "body": gettext "Clique aqui se você quiser visualizar a comunidade em um mapa maior."
                 "selector": "#map-preview"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Comunidades próximas"
-                "body": "O campo mostra outras comunidades cadastradas no MootiroMaps que estão próximas a esta."
+                "title": gettext "Comunidades próximas"
+                "body": gettext "O campo mostra outras comunidades cadastradas no MootiroMaps que estão próximas a esta."
                 "selector": ".right-bar .nearby-communities"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Seguir"
-                "body": 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
+                "title": gettext "Seguir"
+                "body": gettext 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
                 "selector": ".view-follow-btns"
                 "options": ""
                 },
                 {
-                "title": "Comentar"
-                "body": "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
+                "title": gettext "Comentar"
+                "body": gettext "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
                 "selector": "#divFormComment"
                 "options": "tipLocation:bottom;"
                 },
                 {
-                "title": "Redes sociais"
-                "body": "Gostou do conteúdo dessa página? Divulgue-a nas redes sociais."
+                "title": gettext "Redes sociais"
+                "body": gettext "Gostou do conteúdo dessa página? Divulgue-a nas redes sociais."
                 "selector": ".fb-like"
                 "options": "tipLocation:bottom;"
                 },
@@ -371,50 +371,50 @@ class HelpCenter
         "organization_show":
             "slides": [
                 {
-                "title": "Título da organização"
-                "body": "Este é o nome com o qual a organização foi cadastrada."
+                "title": gettext "Título da organização"
+                "body": gettext "Este é o nome com o qual a organização foi cadastrada."
                 "selector": ".organization-header"
                 },
                 {
-                "title": "Edição do conteúdo"
-                "body": "Para editar conteúdos clique no lápis."
+                "title": gettext "Edição do conteúdo"
+                "body": gettext "Para editar conteúdos clique no lápis."
                 "selector": "div.view-edit-btn"
                 "options": "tipLocation:bottom;nubPosition:top-right;"
                 "offsetX": -135
                 },
                 {
-                "title": "Descrição da organização"
-                "body": "Esse local contém a descrição da organização, como temática de atuação, objetivos, projetos e serviços, parceiros, financiadores etc."
+                "title": gettext "Descrição da organização"
+                "body": gettext "Esse local contém a descrição da organização, como temática de atuação, objetivos, projetos e serviços, parceiros, financiadores etc."
                 "selector": ".main-column .mark-down"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "No mapa"
-                "body": "Clique aqui se você quiser visualizar a organização em um mapa maior."
+                "title": gettext "No mapa"
+                "body": gettext "Clique aqui se você quiser visualizar a organização em um mapa maior."
                 "selector": "#map-preview"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Projetos"
-                "body": "O campo apresenta a quais projetos de mapeamento esta organização está relacionada."
+                "title": gettext "Projetos"
+                "body": gettext "O campo apresenta a quais projetos de mapeamento esta organização está relacionada."
                 "selector": ".projects-tag-header"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Seguir"
-                "body": 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
+                "title": gettext "Seguir"
+                "body": gettext 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
                 "selector": ".view-follow-btns"
                 "options": ""
                 },
                 {
-                "title": "Comentar"
-                "body": "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
+                "title": gettext "Comentar"
+                "body": gettext "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
                 "selector": "#divFormComment"
                 "options": "tipLocation:bottom;"
                 },
                 {
-                "title": "Redes sociais"
-                "body": "Gostou da organização? Divulgue-a nas redes sociais."
+                "title": gettext "Redes sociais"
+                "body": gettext "Gostou da organização? Divulgue-a nas redes sociais."
                 "selector": ".fb-like"
                 "options": "tipLocation:bottom;"
                 },
@@ -423,56 +423,56 @@ class HelpCenter
         "need_show":
             "slides": [
                 {
-                "title": "Título da necessidade"
-                "body": "Este é o nome com o qual a necessidade foi cadastrada."
+                "title": gettext "Título da necessidade"
+                "body": gettext "Este é o nome com o qual a necessidade foi cadastrada."
                 "selector": ".need-title"
                 },
                 {
-                "title": "Edição do conteúdo"
-                "body": "Para editar conteúdos clique no lápis."
+                "title": gettext "Edição do conteúdo"
+                "body": gettext "Para editar conteúdos clique no lápis."
                 "selector": "div.view-edit-btn"
                 "options": "tipLocation:bottom;nubPosition:top-right;"
                 "offsetX": -135
                 },
                 {
-                "title": "Descrição da necessidade"
-                "body": "Esse local contém a descrição da necessidade e permite que os usuários consigam compreender a natureza da problemática."
+                "title": gettext "Descrição da necessidade"
+                "body": gettext "Esse local contém a descrição da necessidade e permite que os usuários consigam compreender a natureza da problemática."
                 "selector": ".main-column .mark-down"
                 "options": "tipLocation:right;"
                 },
                 {
-                "title": "No mapa"
-                "body": "Clique aqui se você quiser visualizar a necessidade em um mapa maior."
+                "title": gettext "No mapa"
+                "body": gettext "Clique aqui se você quiser visualizar a necessidade em um mapa maior."
                 "selector": "#map-preview"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Proposta de resolução"
-                "body": "Neste campo é possível inserir novas propostas de resolução da necessidade."
+                "title": gettext "Proposta de resolução"
+                "body": gettext "Neste campo é possível inserir novas propostas de resolução da necessidade."
                 "selector": ".need-proposals"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Necessidades semelhantes"
-                "body": "O MootiroMaps relaciona necessidades semelhantes ou próximas para facilitar que os usuários troquem experiências e discutam como resolvê-las."
+                "title": gettext "Necessidades semelhantes"
+                "body": gettext "O MootiroMaps relaciona necessidades semelhantes ou próximas para facilitar que os usuários troquem experiências e discutam como resolvê-las."
                 "selector": "#related-needs"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Seguir"
-                "body": 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
+                "title": gettext "Seguir"
+                "body": gettext 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
                 "selector": ".view-follow-btns"
                 "options": ""
                 },
                 {
-                "title": "Comentar"
-                "body": "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
+                "title": gettext "Comentar"
+                "body": gettext "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
                 "selector": "#divFormComment"
                 "options": "tipLocation:bottom;"
                 },
                 {
-                "title": "Redes sociais"
-                "body": "Achou importante a necessidade? Divulgue-a nas redes sociais."
+                "title": gettext "Redes sociais"
+                "body": gettext "Achou importante a necessidade? Divulgue-a nas redes sociais."
                 "selector": ".fb-like"
                 "options": "tipLocation:bottom;"
                 },
@@ -481,52 +481,52 @@ class HelpCenter
         "resource_show":
             "slides": [
                 {
-                "title": "Título do recurso"
-                "body": "Este é o nome com o qual o recurso foi cadastrado."
+                "title": gettext "Título do recurso"
+                "body": gettext "Este é o nome com o qual o recurso foi cadastrado."
                 "selector": "h2.title"
                 },
                 {
-                "title": "Edição do conteúdo"
-                "body": "Para editar conteúdos clique no lápis."
+                "title": gettext "Edição do conteúdo"
+                "body": gettext "Para editar conteúdos clique no lápis."
                 "selector": "div.view-edit-btn"
                 "options": "tipLocation:bottom;nubPosition:top-right;"
                 "offsetX": -135
                 },
                 {
-                "title": "Descrição do recurso"
-                "body": "Esse local contém a descrição do recurso, como localização, horários de atendimento, temática, projetos e serviços etc."
+                "title": gettext "Descrição do recurso"
+                "body": gettext "Esse local contém a descrição do recurso, como localização, horários de atendimento, temática, projetos e serviços etc."
                 "selector": ".main-column .mark-down"
                 "options": "tipLocation:right;"
                 },
                 {
-                "title": "No mapa"
-                "body": "Clique aqui se você quiser visualizar o recurso em um mapa maior."
+                "title": gettext "No mapa"
+                "body": gettext "Clique aqui se você quiser visualizar o recurso em um mapa maior."
                 "selector": "#map-preview"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Recursos semelhantes"
-                "body": "O campo permite que os usuários identifiquem recursos semelhantes ou próximos."
+                "title": gettext "Recursos semelhantes"
+                "body": gettext "O campo permite que os usuários identifiquem recursos semelhantes ou próximos."
                 "selector": ".related-resource"
                 "options": "tipLocation:left;"
                 "offsetX": -10
                 "offsetY": -25
                 },
                 {
-                "title": "Seguir"
-                "body": 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
+                "title": gettext "Seguir"
+                "body": gettext 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
                 "selector": ".view-follow-btns"
                 "options": ""
                 },
                 {
-                "title": "Comentar"
-                "body": "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
+                "title": gettext "Comentar"
+                "body": gettext "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
                 "selector": "#divFormComment"
                 "options": "tipLocation:bottom;"
                 },
                 {
-                "title": "Redes sociais"
-                "body": "Gostou da página? Divulgue-a nas redes sociais."
+                "title": gettext "Redes sociais"
+                "body": gettext "Gostou da página? Divulgue-a nas redes sociais."
                 "selector": ".fb-like"
                 "options": "tipLocation:bottom;"
                 },
@@ -535,38 +535,38 @@ class HelpCenter
         "investment_show":
             "slides": [
                 {
-                "title": "Título do investimento"
-                "body": "Este é o nome com o qual o investimento foi cadastrado."
+                "title": gettext "Título do investimento"
+                "body": gettext "Este é o nome com o qual o investimento foi cadastrado."
                 "selector": "h2.title"
                 },
                 {
-                "title": "Edição do conteúdo"
-                "body": "Para editar conteúdos clique no lápis."
+                "title": gettext "Edição do conteúdo"
+                "body": gettext "Para editar conteúdos clique no lápis."
                 "selector": "div.view-edit-btn"
                 "options": "tipLocation:bottom;nubPosition:top-right;"
                 "offsetX": -135
                 },
                 {
-                "title": "Descrição do investimento"
-                "body": "O preenchimento deste campo mostra a descrição do investimento, como o objetivo, localização, temática, público-alvo etc."
+                "title": gettext "Descrição do investimento"
+                "body": gettext "O preenchimento deste campo mostra a descrição do investimento, como o objetivo, localização, temática, público-alvo etc."
                 "selector": ".main-column .mark-down"
                 "options": "tipLocation:right;"
                 },
                 {
-                "title": "Seguir"
-                "body": 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
+                "title": gettext "Seguir"
+                "body": gettext 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
                 "selector": ".view-follow-btns"
                 "options": ""
                 },
                 {
-                "title": "Comentar"
-                "body": "O que você acha desse investimento? Qual a sua opinião? Deixe um comentário na página."
+                "title": gettext "Comentar"
+                "body": gettext "O que você acha desse investimento? Qual a sua opinião? Deixe um comentário na página."
                 "selector": "#divFormComment"
                 "options": "tipLocation:bottom;"
                 },
                 {
-                "title": "Redes sociais"
-                "body": "Achou importante essa informação? Divulgue-a nas redes sociais."
+                "title": gettext "Redes sociais"
+                "body": gettext "Achou importante essa informação? Divulgue-a nas redes sociais."
                 "selector": ".fb-like"
                 "options": "tipLocation:bottom;"
                 },
@@ -575,56 +575,56 @@ class HelpCenter
         "project_show":
             "slides": [
                 {
-                "title": "Título do projeto"
-                "body": "Este é o nome com o qual o projeto foi cadastrado."
+                "title": gettext "Título do projeto"
+                "body": gettext "Este é o nome com o qual o projeto foi cadastrado."
                 "selector": "h2.title"
                 },
                 {
-                "title": "Edição do conteúdo"
-                "body": "Para editar conteúdos clique no lápis."
+                "title": gettext "Edição do conteúdo"
+                "body": gettext "Para editar conteúdos clique no lápis."
                 "selector": "div.view-edit-btn"
                 "options": "tipLocation:bottom;nubPosition:top-right;"
                 "offsetX": -135
                 },
                 {
-                "title": "Descrição do projeto"
-                "body": "Esse local contém a descrição do projeto, como o objetivo, localização, temática, público-alvo, apoiadores etc."
+                "title": gettext "Descrição do projeto"
+                "body": gettext "Esse local contém a descrição do projeto, como o objetivo, localização, temática, público-alvo, apoiadores etc."
                 "selector": ".main-column .mark-down"
                 "options": "tipLocation:right;"
                 },
                 {
-                "title": "Objetos relacionados"
-                "body": "A listagem mostra objetos (organizações, recursos, necessidades etc) que foram cadastrados e relacionados a esse projeto."
+                "title": gettext "Objetos relacionados"
+                "body": gettext "A listagem mostra objetos (organizações, recursos, necessidades etc) que foram cadastrados e relacionados a esse projeto."
                 "selector": ".view-info-buttons"
                 "options": "tipLocation:top;"
                 "offsetX": 50
                 },
                 {
-                "title": "No mapa"
-                "body": "Clique aqui se você quiser visualizar todos os objetos relacionados ao projeto em um mapa maior."
+                "title": gettext "No mapa"
+                "body": gettext "Clique aqui se você quiser visualizar todos os objetos relacionados ao projeto em um mapa maior."
                 "selector": "#map-preview"
                 "options": "tipLocation:left;"
                 },
                 {
-                "title": "Participantes"
-                "body": "O campo mostra o usuário administrador e os colaboradores."
+                "title": gettext "Participantes"
+                "body": gettext "O campo mostra o usuário administrador e os colaboradores."
                 "selector": ".view-info-btn:last"
                 },
                 {
-                "title": "Seguir"
-                "body": 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
+                "title": gettext "Seguir"
+                "body": gettext 'Clicando no botão "seguir" você assina as atualizações do conteúdo e recebe atualizações sempre que ele for alterado.'
                 "selector": ".view-follow-btns"
                 "options": ""
                 },
                 {
-                "title": "Comentar"
-                "body": "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
+                "title": gettext "Comentar"
+                "body": gettext "O que você acha desse local? Qual a sua opinião? Deixe um comentário na página."
                 "selector": "#divFormComment"
                 "options": "tipLocation:bottom;"
                 },
                 {
-                "title": "Redes sociais"
-                "body": "Gostou do projeto? Divulgue-o nas redes sociais."
+                "title": gettext "Redes sociais"
+                "body": gettext "Gostou do projeto? Divulgue-o nas redes sociais."
                 "selector": ".fb-like"
                 "options": "tipLocation:bottom;"
                 },

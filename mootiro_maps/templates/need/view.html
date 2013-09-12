@@ -35,8 +35,8 @@
 
       <div class="view-edit-btn">
         {% history need %}
-        <a href="{% url view_discussion need.perm_id %}" class="btn login-required" title="Ver página de discussão"><i class="icon-comment"></i></a>
-        <a href="{{ need.edit_url }}" class="btn login-required"><i class="icon-pencil" title="Editar esse conteúdo"></i></a>
+        <a href="{% url view_discussion need.perm_id %}" class="btn login-required" title="{% trans 'Ver página de discussão' %}"><i class="icon-comment"></i></a>
+        <a href="{{ need.edit_url }}" class="btn login-required"><i class="icon-pencil" title="{% trans 'Editar esse conteúdo' %}"></i></a>
       </div>
 
       <div class="clear-both"></div>

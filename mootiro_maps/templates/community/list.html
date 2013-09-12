@@ -30,7 +30,7 @@
           <span class="apart">
             <a href="{% url view_community community.id %}">{{ community.name }}</a>
           </span>
-          <a data-geojson="{% geojson community %}" href="#" class="small preview-on-map list-map-preview" title="ver no mapa" >
+          <a data-geojson="{% geojson community %}" href="#" class="small preview-on-map list-map-preview" title="{% trans 'ver no mapa' %}" >
               <i class="icon-see-on-map"></i>
           </a>
           <div class="clear-both"></div>
