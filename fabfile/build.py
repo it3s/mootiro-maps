@@ -44,7 +44,7 @@ def js():
 
     proj_path = os.path.join(os.path.dirname(__file__), '../mootiro_maps')
     build_path = os.path.join(proj_path, '../.build')
-    local('r.js -o app.build.js')
+    local('r.js -o {}'.format(os.path.join(proj_path, '../app.build.js')))
     from_ = os.path.join(build_path, 'min')
     to = os.path.join(proj_path, 'static', 'js.build')
     try:
@@ -87,13 +87,15 @@ def urls():
 @task(alias='coffee')
 def compile_coffee():
     """Compiles coffeescript to javascript"""
-    env.run('./scripts/coffee_compiler.js --all')
+    with virtualenv(), env.cd('mootiro_maps'):
+        env.run('../scripts/coffee_compiler.js --all')
 
 
 @task(aliases=['sass', 'css'])
 def compile_sass():
     """Compiles sass to css"""
-    env.run('sass --update ./')
+    with virtualenv(), env.cd('mootiro_maps'):
+        env.run('sass --update ./')
 
 
 @task(default=True)
