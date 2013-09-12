@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-12 19:24-0300\n"
+"POT-Creation-Date: 2013-09-12 15:01-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,58 +103,559 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:19
+#: static/js/authentication/profile_update.js:18
 msgid "Are you sure you want to delete your signature for this object?"
 msgstr ""
 
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:114
+#: static/js/authentication/profile_update.js:113
 msgid "Seus dados públicos foram salvos com sucesso!"
 msgstr ""
 
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:138
+#: static/js/authentication/profile_update.js:137
 msgid "Seus dados pessoais foram salvos com sucesso!"
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:10
-msgid "Next Step"
+#: static/js.build/help_center/help_center.js:1
+msgid "MootiroMaps"
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:11
-msgid "Cancel"
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Clique no logo do MootiroMaps e você será redirecionado para a página "
+"central."
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:12
-msgid "Close"
+#: static/js.build/help_center/help_center.js:1
+msgid "Login"
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:13
-msgid "Add shape"
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Para criar um perfil no MootiroMaps ou logar na plataforma, clique aqui."
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:14
-msgid "Add line"
+#: static/js.build/help_center/help_center.js:1
+msgid "Página do usuário"
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:15
-msgid "Add point"
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Clicando no nome de qualquer usuário você encontra informações sobre o "
+"usuário, contatos e últimas edições feitas."
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:16
-msgid "Sum"
+#: static/js.build/help_center/help_center.js:1
+msgid "Visualize o mapa"
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:17
-msgid "Cut out"
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Aqui você encontra no mapa os objetos já mapeados - no Brasil e no mundo!"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Objetos cadastrados"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Escolha o tipo de objeto cadastrado e veja as listas correspondentes."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Projetos cadastrados"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Visualize a lista de projetos de mapeamento acontecendo no MootiroMaps."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Blog do IT3S"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Em nosso Blog postamos análises e opinões sobre transparência, mobilização "
+"social, georreferenciamento, tecnologias e colaboração. Clique, leia e "
+"comente."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Edições recentes"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Acompanhe as atualizações feitas pelos usuários do MootiroMaps. Os ícones "
+"mostram os tipos de objetos editados. Edite você também."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Localização do ponto"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Escolha entre endereço (insira rua, número, município ou insira o CEP) ou "
+"coordenada (latitude e longitude) para ser direcionado a um ponto no mapa."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Filtrar por raio"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Selecione um ponto no mapa e estabeleça a distância (raio) em que deseja que "
+"apareçam os objetos mapeados no território."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Adicionar um objeto"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Escolha o tipo de objeto que melhor se aplica ao que será mapeado e adicione "
+"ao mapa uma linha, um ponto ou uma área. Conclua o mapeamento pressionando o "
+"botão \"avançar\"."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Filtrar por camada"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Ligue ou desligue as camada para filtrar os objetos a serem apresentados no "
+"mapa."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Lista de comunidades"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Aqui estão listadas  com uma curta descrição todas as comunidades "
+"cadastradas no MootiroMaps. Clique no nome da comunidade para acessar o "
+"cadastro completo."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Ponto no mapa"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique para visualizar previamente o objeto no mapa."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Visualização e filtragem"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Você pode escolher como deseja visualizar a listagem: por ordem alfabética "
+"ou data de cadastro. Também pode filtrar por palavras-chave."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Lista de organizações"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Aqui estão listadas com uma curta descrição todas as organizações "
+"cadastradas no MootiroMaps. Clique no nome da organização para acessar o "
+"cadastro completo."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Adicionar uma organização"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui e cadastre no MootiroMaps uma nova organização."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Lista de necessidades"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Aqui estão listadas com uma curta descrição todas as necessidades "
+"cadastradas no MootiroMaps. Clique no nome da necessidade para acessar o "
+"cadastro completo."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Adicionar uma necessidade"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui e cadastre no MootiroMaps uma nova necessidade."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Lista de recursos"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Aqui estão listados com uma curta descrição todos os recursos cadastrados no "
+"MootiroMaps. Clique no nome do recurso para acessar o cadastro completo."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui para visualizar previamente o objeto desejado no mapa."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Adicionar um recurso"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui e cadastre no MootiroMaps um novo recurso."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Lista de investimentos"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Aqui estão listados  com uma curta descrição todos os investimentos "
+"cadastrados no MootiroMaps. Clique no nome do investimentos para acessar o "
+"cadastro completo."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui para visualizar previamente o objeto no mapa."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Lista de projetos"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Aqui estão listados com uma curta descrição todos os projetos cadastrados no "
+"MootiroMaps. Clique no nome do projetos para acessar o cadastro completo."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Você pode filtrar a busca por palavras-chave."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Adicionar um projeto"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui e comece um novo projeto de mapeamento no MootiroMaps."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Título da comunidade"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Este é o nome com o qual o território foi cadastrado."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Edição do conteúdo"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Para editar conteúdos clique no lápis."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Perfil da comunidade"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Esse local contém a descrição da comunidade, como a localização, histórico, "
+"perfil socioeconômico da população etc."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "No mapa"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui se você quiser visualizar a comunidade em um mapa maior."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Comunidades próximas"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"O campo mostra outras comunidades cadastradas no MootiroMaps que estão "
+"próximas a esta."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Seguir"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Clicando no botão \"seguir\" você assina as atualizações do conteúdo e "
+"recebe atualizações sempre que ele for alterado."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Comentar"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"O que você acha desse local? Qual a sua opinião? Deixe um comentário na "
+"página."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Redes sociais"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Gostou do conteúdo dessa página? Divulgue-a nas redes sociais."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Título da organização"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Este é o nome com o qual a organização foi cadastrada."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Descrição da organização"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Esse local contém a descrição da organização, como temática de atuação, "
+"objetivos, projetos e serviços, parceiros, financiadores etc."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui se você quiser visualizar a organização em um mapa maior."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Projetos"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"O campo apresenta a quais projetos de mapeamento esta organização está "
+"relacionada."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Gostou da organização? Divulgue-a nas redes sociais."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Título da necessidade"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Este é o nome com o qual a necessidade foi cadastrada."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Descrição da necessidade"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Esse local contém a descrição da necessidade e permite que os usuários "
+"consigam compreender a natureza da problemática."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui se você quiser visualizar a necessidade em um mapa maior."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Proposta de resolução"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Neste campo é possível inserir novas propostas de resolução da necessidade."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Necessidades semelhantes"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"O MootiroMaps relaciona necessidades semelhantes ou próximas para facilitar "
+"que os usuários troquem experiências e discutam como resolvê-las."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Achou importante a necessidade? Divulgue-a nas redes sociais."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Título do recurso"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Este é o nome com o qual o recurso foi cadastrado."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Descrição do recurso"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Esse local contém a descrição do recurso, como localização, horários de "
+"atendimento, temática, projetos e serviços etc."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Clique aqui se você quiser visualizar o recurso em um mapa maior."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Recursos semelhantes"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"O campo permite que os usuários identifiquem recursos semelhantes ou "
+"próximos."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Gostou da página? Divulgue-a nas redes sociais."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Título do investimento"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Este é o nome com o qual o investimento foi cadastrado."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Descrição do investimento"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"O preenchimento deste campo mostra a descrição do investimento, como o "
+"objetivo, localização, temática, público-alvo etc."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"O que você acha desse investimento? Qual a sua opinião? Deixe um comentário "
+"na página."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Achou importante essa informação? Divulgue-a nas redes sociais."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Título do projeto"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Este é o nome com o qual o projeto foi cadastrado."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Descrição do projeto"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Esse local contém a descrição do projeto, como o objetivo, localização, "
+"temática, público-alvo, apoiadores etc."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Objetos relacionados"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"A listagem mostra objetos (organizações, recursos, necessidades etc) que "
+"foram cadastrados e relacionados a esse projeto."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Clique aqui se você quiser visualizar todos os objetos relacionados ao "
+"projeto em um mapa maior."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Participantes"
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "O campo mostra o usuário administrador e os colaboradores."
+msgstr ""
+
+#: static/js.build/help_center/help_center.js:1
+msgid "Gostou do projeto? Divulgue-o nas redes sociais."
 msgstr ""
 
 #: static/js.build/map/controls.js:1 static/js/map/controls.js:18
-msgid "Loading..."
+msgid "Next Step"
 msgstr ""
 
-#: static/js.build/map/maptypes.js:1 static/js/map/maptypes.js:60
-msgid "Clean"
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:19
+msgid "Cancel"
+msgstr ""
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:20
+msgid "Close"
+msgstr ""
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:21
+msgid "Add shape"
+msgstr ""
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:22
+msgid "Add line"
+msgstr ""
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:23
+msgid "Add point"
+msgstr ""
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:24
+msgid "Sum"
+msgstr ""
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:25
+msgid "Cut out"
+msgstr ""
+
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:26
+msgid "Loading..."
 msgstr ""
 
 #: static/js.build/moderation/moderation.js:1
@@ -259,12 +760,16 @@ msgstr ""
 msgid "at"
 msgstr ""
 
-#: static/js/map/controls.js:798
+#: static/js/map/controls.js:918
 #, perl-format
 msgid "%s Community"
 msgid_plural "%s Communities"
 msgstr[0] ""
 msgstr[1] ""
+
+#: static/js/map/maptypes.js:62
+msgid "Clean"
+msgstr ""
 
 #: static/js/organization/organization_new.js:54
 msgid "This organization already exists. Do you want to add a branch?"
