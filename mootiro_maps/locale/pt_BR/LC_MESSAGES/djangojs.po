@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 14:59-0300\n"
+"POT-Creation-Date: 2013-09-19 17:35-0300\n"
 "PO-Revision-Date: 2012-10-18 17:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -19,7 +19,8 @@ msgstr ""
 
 #: lib/fileupload/static/plupload/komoo_plupload.js:163
 #: lib/fileupload/static/plupload/singlefile_plupload.js:109
-msgid "Are you sure you want to delete this file?"
+#, fuzzy
+msgid "Are you sure that you want to delete this file?"
 msgstr "Você deseja realmente apagar este arquivo?"
 
 #: static/js/komoo_search.js:16 static/js.build/komoo_search.js:1
@@ -103,17 +104,14 @@ msgstr[0] "%s contribuidor"
 msgstr[1] "%s contribuidores"
 
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:18
 msgid "Are you sure you want to delete your signature for this object?"
 msgstr "Você tem certeza que deseja deletar sua assinatura para este objeto?"
 
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:113
 msgid "Seus dados públicos foram salvos com sucesso!"
 msgstr "Seus dados públicos foram salvos com sucesso!"
 
 #: static/js.build/authentication/profile_update.js:1
-#: static/js/authentication/profile_update.js:137
 msgid "Seus dados pessoais foram salvos com sucesso!"
 msgstr "Seus dados pessoais foram salvos com sucesso!"
 
@@ -625,49 +623,47 @@ msgstr ""
 msgid "Gostou do projeto? Divulgue-o nas redes sociais."
 msgstr ""
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:18
+#: static/js.build/map/controls.js:1
 msgid "Next Step"
 msgstr "Avançar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:19
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:18
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:20
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:19
 msgid "Close"
 msgstr "Fechar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:21
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:20
 msgid "Add shape"
 msgstr "Adicionar área"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:22
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:21
 msgid "Add line"
 msgstr "Adicionar linha"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:23
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:22
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:24
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:23
 msgid "Sum"
 msgstr "Somar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:25
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:24
 msgid "Cut out"
 msgstr "Cortar"
 
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:26
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:25
 msgid "Loading..."
 msgstr "Carregando..."
 
 #: static/js.build/moderation/moderation.js:1
-#: static/js/moderation/moderation.js:112
 msgid "Report Abuse"
 msgstr "Denunciar abuso"
 
 #: static/js.build/moderation/moderation.js:1
-#: static/js/moderation/moderation.js:230
 msgid "Deletion Request"
 msgstr "Requisição de remoção"
 
@@ -682,13 +678,10 @@ msgid "Do you really want to delete this content?"
 msgstr "Você deseja realmente apagar este conteúdo?"
 
 #: static/js.build/moderation/moderation.js:1
-#: static/js/moderation/moderation.js:271
 msgid "The content was successfully deleted"
 msgstr "O conteúdo foi apagado com sucesso"
 
 #: static/js.build/moderation/moderation.js:1
-#: static/js/moderation/moderation.js:167
-#: static/js/moderation/moderation.js:278
 msgid "Your request was successfully sent"
 msgstr "A requisição foi enviada com sucesso"
 
@@ -698,15 +691,12 @@ msgid "complete"
 msgstr "completo"
 
 #: static/js.build/organization/organization_new.js:1
-#: static/js/organization/organization_new.js:33
 msgid ""
 "Congratulations, you have concluded the organization/branch addition process"
 msgstr ""
 "Parabéns, você concluiu o processo de adição de uma organização/unidade."
 
 #: static/js.build/organization/organization_new.js:1
-#: static/js/organization/organization_new.js:41
-#: static/js/organization/organization_new.js:90
 msgid ""
 "Provide the organization name so we can verify if it's already registered on "
 "our system"
@@ -766,7 +756,209 @@ msgstr "Recurso"
 msgid "at"
 msgstr "em"
 
-#: static/js/map/controls.js:918
+#: static/js/authentication/profile_update.js:18
+#, fuzzy
+msgid ""
+"Are you sure that you want to delete your subscription for this content?"
+msgstr "Você tem certeza que deseja deletar sua assinatura para este objeto?"
+
+#: static/js/authentication/profile_update.js:113
+msgid "Your public data has been saved successfully."
+msgstr ""
+
+#: static/js/authentication/profile_update.js:137
+msgid "Your personal data has been saved successfully!"
+msgstr ""
+
+#: static/js/help_center/help_center.js:613
+#: static/js/help_center/help_center.js:660
+#: static/js/help_center/help_center.js:695
+#: static/js/help_center/help_center.js:745
+msgid "Get notifications"
+msgstr ""
+
+#: static/js/help_center/help_center.js:614
+#: static/js/help_center/help_center.js:661
+#: static/js/help_center/help_center.js:696
+#: static/js/help_center/help_center.js:746
+msgid ""
+"You want to receive notifications when a content is modified? No problem! "
+"Just subscribe the content and you will receive an email everytime that "
+"someone edits or comments."
+msgstr ""
+
+#: static/js/help_center/help_center.js:618
+#: static/js/help_center/help_center.js:665
+#: static/js/help_center/help_center.js:700
+#: static/js/help_center/help_center.js:750
+msgid "Leave your opinion"
+msgstr ""
+
+#: static/js/help_center/help_center.js:619
+#: static/js/help_center/help_center.js:666
+#: static/js/help_center/help_center.js:701
+#: static/js/help_center/help_center.js:751
+msgid ""
+"What do you think about this content? What is your opinion? Write a comment "
+"and interact with other users."
+msgstr ""
+
+#: static/js/help_center/help_center.js:623
+#: static/js/help_center/help_center.js:670
+#: static/js/help_center/help_center.js:705
+#: static/js/help_center/help_center.js:755
+msgid "Spread the word"
+msgstr ""
+
+#: static/js/help_center/help_center.js:624
+msgid ""
+"Do you consider this problem important? Spread the word about it by sharing "
+"on Facebook, Twitter and Google+."
+msgstr ""
+
+#: static/js/help_center/help_center.js:633
+msgid "Name of the resource"
+msgstr ""
+
+#: static/js/help_center/help_center.js:634
+msgid ""
+"This is the title of the resource. Make sure it is clear. Users might find "
+"this resource by typing its name in the search field above."
+msgstr ""
+
+#: static/js/help_center/help_center.js:637
+#: static/js/help_center/help_center.js:684
+#: static/js/help_center/help_center.js:719
+msgid "Some information missing? - Become an editor!"
+msgstr ""
+
+#: static/js/help_center/help_center.js:638
+#: static/js/help_center/help_center.js:685
+#: static/js/help_center/help_center.js:720
+msgid ""
+"It is very easy to collaborate with MootiroMaps. Just click on the edit icon "
+"and add some information."
+msgstr ""
+
+#: static/js/help_center/help_center.js:643
+msgid "Tell us more about this resource"
+msgstr ""
+
+#: static/js/help_center/help_center.js:644
+msgid ""
+"Resources can be used in the local development of your community. Inform how "
+"people can have access to this resource, when is it open, whom do they have "
+"to talk to?"
+msgstr ""
+
+#: static/js/help_center/help_center.js:648
+#: static/js/help_center/help_center.js:736
+msgid "See it on the map"
+msgstr ""
+
+#: static/js/help_center/help_center.js:649
+msgid ""
+"Click here in order to see this resource on a larger map. You can also find "
+"out about related needs, communities and organizations."
+msgstr ""
+
+#: static/js/help_center/help_center.js:653
+#, fuzzy
+msgid "Similar resources"
+msgstr "%s recurso"
+
+#: static/js/help_center/help_center.js:654
+msgid ""
+"Here you can find similar resources according to the tags that were used in "
+"its descriptions. "
+msgstr ""
+
+#: static/js/help_center/help_center.js:671
+msgid "Did you like this information? Spread it on social networks!"
+msgstr ""
+
+#: static/js/help_center/help_center.js:680
+#, fuzzy
+msgid "Name of the investment"
+msgstr "Adicionar Investimento"
+
+#: static/js/help_center/help_center.js:681
+msgid ""
+"This is the name of your investment. Make sure it is clear. It should "
+"contain data about the name of the investor or grantee."
+msgstr ""
+
+#: static/js/help_center/help_center.js:690
+msgid "Give transparency about the investment"
+msgstr ""
+
+#: static/js/help_center/help_center.js:691
+msgid ""
+"Do you know anything about the money that has been spent? What is it for? "
+"When has it been received? What are expected results? "
+msgstr ""
+
+#: static/js/help_center/help_center.js:706
+msgid "Did you find this information useful? Spread it on social networks!"
+msgstr ""
+
+#: static/js/help_center/help_center.js:715
+#, fuzzy
+msgid "Project title"
+msgstr "Projeto"
+
+#: static/js/help_center/help_center.js:716
+msgid ""
+"This is the name of the project. You can find the project by typing its name "
+"in the search field above."
+msgstr ""
+
+#: static/js/help_center/help_center.js:725
+msgid "Project description"
+msgstr ""
+
+#: static/js/help_center/help_center.js:726
+msgid ""
+"In this section you may find more about the goals of this project, how is it "
+"done and how you can contribute to mapping."
+msgstr ""
+
+#: static/js/help_center/help_center.js:730
+msgid "Associated objects"
+msgstr ""
+
+#: static/js/help_center/help_center.js:731
+msgid ""
+"Here you can find a list of all the objects (organizations, resources, "
+"needs, etc.) that were added to this project."
+msgstr ""
+
+#: static/js/help_center/help_center.js:737
+msgid "Click here to navigate the map of this project and add new content."
+msgstr ""
+
+#: static/js/help_center/help_center.js:741
+msgid "Who is making this map"
+msgstr ""
+
+#: static/js/help_center/help_center.js:742
+msgid ""
+"In this section you can see who created the project and contributed to it so "
+"far. "
+msgstr ""
+
+#: static/js/help_center/help_center.js:756
+msgid ""
+"Did you like this project? Share it on your social networks. Help to engage "
+"people with this data!"
+msgstr ""
+
+#: static/js/map/controls.js:17
+#, fuzzy
+msgid "Next step"
+msgstr "Avançar"
+
+#: static/js/map/controls.js:915
 #, perl-format
 msgid "%s Community"
 msgid_plural "%s Communities"
@@ -776,6 +968,42 @@ msgstr[1] "%s Comunidades"
 #: static/js/map/maptypes.js:62
 msgid "Clean"
 msgstr "Limpo"
+
+#: static/js/moderation/moderation.js:112
+#, fuzzy
+msgid "Report abuse"
+msgstr "Denunciar abuso"
+
+#: static/js/moderation/moderation.js:167
+#: static/js/moderation/moderation.js:278
+#, fuzzy
+msgid "Your request was successfully submitted."
+msgstr "A requisição foi enviada com sucesso"
+
+#: static/js/moderation/moderation.js:230
+msgid "Request for deletion"
+msgstr ""
+
+#: static/js/moderation/moderation.js:271
+#, fuzzy
+msgid "The content was successfully deleted."
+msgstr "O conteúdo foi apagado com sucesso"
+
+#: static/js/organization/organization_new.js:33
+#, fuzzy
+msgid "Congratulations, you added an organization to MootiroMaps."
+msgstr ""
+"Parabéns, você concluiu o processo de adição de uma organização/unidade."
+
+#: static/js/organization/organization_new.js:41
+#: static/js/organization/organization_new.js:90
+#, fuzzy
+msgid ""
+"Please, provide the organization's name so we can verify if it is already "
+"registered on our system."
+msgstr ""
+"Forneça o nome da organização para verificarmos se ela ainda não foi "
+"cadastrada no sistema."
 
 #: static/js/organization/organization_new.js:54
 msgid "This organization already exists. Do you want to add a branch?"
@@ -802,9 +1030,10 @@ msgstr ""
 "marcou no mapa"
 
 #: static/js/organization/organization_new.js:104
+#, fuzzy
 msgid ""
 "Congratulations, your organization was successfully saved. Please, now add "
-"the data from the branch you have marked on the map"
+"the data about the branch that you marked on the map."
 msgstr ""
 "Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
 "adicione os dados da unidade que você marcou no mapa"
