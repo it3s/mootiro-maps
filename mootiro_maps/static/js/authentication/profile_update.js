@@ -119,7 +119,7 @@ $(function() {
   });
   $('#form-profile').komooFormHintBoxes({
     'contact': {
-      hint: 'Este Contanto ficará visível para outros usuários do MootiroMaps!',
+      hint: gettext('Este contanto ficará visível para outros usuários do MootiroMaps!'),
       top: '30%'
     }
   });

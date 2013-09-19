@@ -115,54 +115,54 @@ $(function(){
 
     $('#form_organization').komooFormHintBoxes({
         'name': {
-          hint: 'Coloque o nome da organização.'
+          hint: gettext('Coloque o nome da organização.')
         },
         'description': {
           top: '45%',
-          hint: 'Coloque detalhes da organização e como ela atua na comunidade.'
+          hint: gettext('Coloque detalhes da organização e como ela atua na comunidade.')
         },
         'community':{
-          hint: 'Coloque as comunidades que a organização atua ou atende.',
+          hint: gettext('Coloque as comunidades que a organização atua ou atende.'),
           top: '-8px'
         },
         'link': {
-            hint: 'Coloque o endereço do site da organização. Se ela não tiver, ou você não achar, tudo bem, não é obrigatório.',
+            hint: gettext('Coloque o endereço do site da organização. Se ela não tiver, ou você não achar, tudo bem, não é obrigatório.'),
             top: '-15px'
         },
         'contact': {
-          hint: 'Coloque aqui os contatos da organização, telefones, endereço, pessoas que podemos conversar...',
+          hint: gettext('Coloque aqui os contatos da organização, telefones, endereço, pessoas que podemos conversar...'),
           top: '25%'
         },
         'target_audiences': {
-          hint: 'Coloque o tipo de pessoas que essa organização busca atingir na comunidade.',
+          hint: gettext('Coloque o tipo de pessoas que essa organização busca atingir na comunidade.'),
           top: '-12px'
         },
         'categories':{
-            hint: 'Escolha em que área a organização atua, pode-se escolher mais de uma.',
+            hint: gettext('Escolha em que área a organização atua, pode-se escolher mais de uma.'),
             top: '45%'
         },
         'tags': {
-          hint: 'Coloque palavras que ajudem a ilustrar a organização, tal como "escola", "educação", "meio-ambiente"',
+          hint: gettext('Coloque palavras que ajudem a ilustrar a organização, tal como "escola", "educação", "meio-ambiente"'),
           top: '-12px'
         },
         'files': {
-          hint: 'Você pode carregar fotos da sua organização',
+          hint: gettext('Você pode carregar fotos da sua organização'),
           top: '40%'
         },
         'logo': {
-          hint: 'neste campo voce pode subir um logo da sua organização ou optar por usar uma imagem correspondente a uma das categorias que você marcou acima. Lembre-se primeiro de escolher as categorias para que as imagens apareçam aqui.',
+          hint: gettext('neste campo voce pode subir um logo da sua organização ou optar por usar uma imagem correspondente a uma das categorias que você marcou acima. Lembre-se primeiro de escolher as categorias para que as imagens apareçam aqui.'),
           top: '-40px'
         }
     });
 
     $('#form_branch').komooFormHintBoxes({
         'branch_name': {
-          hint: 'Coloque o nome da unidade que você marcou no mapa.',
+          hint: gettext('Coloque o nome da unidade que você marcou no mapa.'),
           top: '-8px'
         },
         'branch_info': {
           top: '40%',
-          hint: 'Coloque algumas informações sobre essa unidade (por exemplo: se ela é a sede, ou possui um propósito específico, etc).'
+          hint: gettext('Coloque algumas informações sobre essa unidade (por exemplo: se ela é a sede, ou possui um propósito específico, etc).')
         }
     });
 })
