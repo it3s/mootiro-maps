@@ -36,7 +36,7 @@ class InvestmentForm(AjaxModelForm):
         'anonymous_investor': _('Anonymous investor'),
         'investor_organization': _('Investor organization'),
         'investor_person': _('Investor person'),
-        'over_period': _('Over period'),
+        'over_period': _('Investment period'),
         'date': _('Date'),
         'end_date': _('End date'),
         'currency': _('Currency'),

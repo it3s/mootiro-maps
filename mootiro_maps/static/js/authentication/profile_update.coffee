@@ -15,7 +15,7 @@ window.Signature = Backbone.Model.extend
         }
 
     deleteSignature: () ->
-        if confirm(gettext 'Are you sure you want to delete your signature for this object?')
+        if confirm(gettext 'Are you sure that you want to delete your subscription for this content?')
             self = this
             $.post(
                 dutils.urls.resolve('signature_delete'),
@@ -108,7 +108,7 @@ $ () ->
                 $messageBox.remove()
             msgTemplate = _.template $('#form-message-box').html()
             renderedContent = msgTemplate
-                msg: gettext 'Seus dados públicos foram salvos com sucesso!'
+                msg: gettext 'Your public data has been saved successfully.'
 
             $('#form-profile .form-actions').before renderedContent
             $('#form-profile .alert').fadeIn()
@@ -136,7 +136,7 @@ $ () ->
                 $messageBox.remove()
             msgTemplate = _.template $('#form-message-box').html()
             renderedContent = msgTemplate
-                msg: gettext 'Seus dados pessoais foram salvos com sucesso!'
+                msg: gettext 'Your personal data has been saved successfully!'
 
             $('#form-personal .form-actions').before renderedContent
             $('#form-personal .alert').fadeIn()

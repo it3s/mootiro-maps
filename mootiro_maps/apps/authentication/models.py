@@ -23,11 +23,11 @@ from fileupload.models import UploadedFile
 CONFIRMATION_EMAIL_MSG = _('''
 Hello, {name}.
 
-Before using our tool, please confirm your e-mail visiting the link below.
+Before using our tool, please confirm your email visiting the link below.
 {verification_url}
 
 Thanks,
-the IT3S team.
+the IT3S team
 ''')
 
 

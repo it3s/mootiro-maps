@@ -49,7 +49,7 @@ class FormOrganization(AjaxModelForm):
         'community': _('Community'),
         'contact': _('Contact'),
         'tags': _('Tags'),
-        'target_audiences': _('Target Audiences'),
+        'target_audiences': _('Target audiences'),
         'categories': _('Categories'),
         'files': _('Images'),
         'logo': _('Logo')

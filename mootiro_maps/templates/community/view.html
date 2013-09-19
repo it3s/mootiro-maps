@@ -25,7 +25,7 @@
     <h2 class="title">{{ community.name }}</h2>
     <div class="view-edit-btn">
       {% history community %}
-      <a href="{% url view_discussion community.perm_id %}" class="btn login-required" title="{% trans 'Ver página de discussão' %}"><i class="icon-comment"></i></a>
+      <a href="{% url view_discussion community.perm_id %}" class="btn login-required" title="{% trans 'Go to discussion page' %}"><i class="icon-comment"></i></a>
       <a href="{% url edit_community community.id %}" class="btn login-required" title="{% trans 'Editar esse conteúdo' %}"><i class="icon-pencil"></i></a>
     </div>
 
@@ -46,7 +46,7 @@
     <div id="map-preview">
       <div id="map-preview-canvas"></div>
     </div>
-    <a href="{% url community_on_map community.id %}">{% trans 'see on map' %}</a>
+    <a href="{% url community_on_map community.id %}">{% trans 'View on map' %}</a>
 
     {% taglist community %}
 

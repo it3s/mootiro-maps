@@ -16,7 +16,7 @@
     <div class="highlight">
 
       <div class="button-new">
-        <a class="button login-required" href="{% url new_organization %}" title="{% trans 'Adicionar uma nova Organização. Por exemplo: uma ONG, uma empresa, um coletivo, etc.' %}">{% trans "Create New Organization" %}</a>
+        <a class="button login-required" href="{% url new_organization %}" title="{% trans 'Add a new organization, for example, a government institution, a nonprofit organization or a company.' %}">{% trans "Create new organization" %}</a>
       </div>
     <div class="view-list-top">
       <div class="view-list-count"><!--organizations_count-->
@@ -40,7 +40,7 @@
                 <a href="{{ org.view_url }}" class="org-list-name">
                   {{ org.name }}
                 </a>
-                <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson org %}" title="{% trans 'See on map' %}">
+                <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson org %}" title="{% trans 'View on map' %}">
                     <i class="icon-see-on-map"></i>
                 </a>
 
@@ -69,7 +69,7 @@
               <div class="inline-block org-list-extra-info">
                 <div class="org-list-extra-info-entry">
                   <span class="org-extra-info-name">
-                    {% trans 'Attended Communities' %}:
+                    {% trans 'Attended communities' %}:
                   </span>
                   {% for com in org.community.all|slice:'6' %}
                     <a href="/{{ com.slug }}/about/">{{ com.name }}</a>

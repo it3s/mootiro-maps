@@ -14,7 +14,7 @@
   <div class="highlight">
 
     <div class="button-new">
-      <a class="button login-required" href="{% url new_resource %}" title="{% trans 'Adicionar novo Recurso. Por exemplo: uma escola, um posto de saúde, um parque, etc' %}">{% trans "Create New Resource" %}</a>
+      <a class="button login-required" href="{% url new_resource %}" title="{% trans 'Add new resource, for example, a library, a public park or a playground.' %}">{% trans "Create new resource" %}</a>
     </div>
 
     <div class="view-list-top">
@@ -57,7 +57,7 @@
       </h4>
 
       <p class="clear-both">
-        <strong>{% trans 'Kind:' %}</strong> {% firstof resource.kind '---' %}
+        <strong>{% trans 'Content type' %}</strong> {% firstof resource.kind '---' %}
       </p>
       <p>
         {{ resource.description|description_markdown_preview|safe }}

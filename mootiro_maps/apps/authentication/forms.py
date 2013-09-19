@@ -27,8 +27,8 @@ class FormProfile(AjaxModelForm):
         fields = ['name', 'about_me', 'id', 'geometry']
 
     _field_labels = {
-        'name': _('Full Name'),
-        'about_me': _('About Me'),
+        'name': _('Full name'),
+        'about_me': _('About me'),
         'photo': _('Photo'),
         'geometry': _('Location'),
     }
@@ -59,7 +59,7 @@ class FormUser(AjaxModelForm):
         'name': _('Name'),
         'email': _('Email'),
         'password': _('Password'),
-        'password_confirmation': _('Confirm your Password'),
+        'password_confirmation': _('Confirm your password'),
     }
 
     name = forms.CharField(required=True)
@@ -86,9 +86,9 @@ class FormUser(AjaxModelForm):
                 self.validation('email', _('This email is already in use.'),
                         User.objects.filter(email=email).exists())
                 self.validation('email',
-                    _('This email is registered on our system. Probably '
-                      'you\'ve logged before with a social account (facebook '
-                      'or google). You can skip this step and just login.'),
+                    _('This email is registered on our system. You might have '
+                      'logged before with a social account (Facebook or Google). '
+                      'Please, skip this step and just login.'),
                     SocialAuth.objects.filter(email=email).exists())
 
             self.validation('password_confirmation',

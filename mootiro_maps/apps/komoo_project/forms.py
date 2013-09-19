@@ -45,7 +45,7 @@ class FormProject(AjaxModelForm):
         'tags': _('Tags'),
         'logo': _('Logo'),
         'contact': _('Contact'),
-        'partners_logo': _('Partners Logo'),
+        'partners_logo': _('Logo of your partners'),
     }
 
     def __init__(self, *a, **kw):

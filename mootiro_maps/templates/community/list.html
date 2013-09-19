@@ -5,7 +5,7 @@
 {% load markitup_tags %}
 {% load i18n %}
 
-{% block title %}{% trans 'Communities list' %}{% endblock %}
+{% block title %}{% trans 'List of communities' %}{% endblock %}
 
 {% block menu %} {% menu "community" %} {% endblock %}
 
@@ -15,7 +15,7 @@
     <div class="list">
       <div class="view-list-top">
         <div class="view-list-count">
-          {% blocktrans count counter=communities_count %}{{ counter }} Community{% plural %}{{ counter }} Communities{% endblocktrans %}
+          {% blocktrans count counter=communities_count %}{{ counter }} community{% plural %}{{ counter }} communities{% endblocktrans %}
         </div>
         <div class="view-list-pagination">
           {% pagination communities %}
@@ -30,7 +30,7 @@
           <span class="apart">
             <a href="{% url view_community community.id %}">{{ community.name }}</a>
           </span>
-          <a data-geojson="{% geojson community %}" href="#" class="small preview-on-map list-map-preview" title="{% trans 'ver no mapa' %}" >
+          <a data-geojson="{% geojson community %}" href="#" class="small preview-on-map list-map-preview" title="{% trans 'see on map' %}" >
               <i class="icon-see-on-map"></i>
           </a>
           <div class="clear-both"></div>

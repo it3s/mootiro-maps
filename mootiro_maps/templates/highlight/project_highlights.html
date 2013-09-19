@@ -13,7 +13,7 @@
   <div id="main-content" class='highlights'>
     <h1>{% trans "Projects" %}</h1>
     <a class="see-all-projects" href="{% url project_list %}">{% trans "See all" %}</a>
-    <a class="right login-required big-button new project-btn" href="{% url project_new %}" title="{% trans 'Criar novo Projeto de Mapeamento' %}"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
+    <a class="right login-required big-button new project-btn" href="{% url project_new %}" title="{% trans 'Create a new mapping project' %}"><i class="icon-plus icon-white"></i><span class="ico"></span>{% trans "Create a project" %}</a>
 
     {% if user.projects_contributed.count %}
       <div class="my-projects-section">

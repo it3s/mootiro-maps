@@ -120,12 +120,12 @@ class FileuploadWidget(forms.Widget):
 
         </div>
         """ % {
-            'select_files': _('Select Files'),
-            'add_links': _('Add Links'),
-            'add_img_links': _('Add Image Links'),
+            'select_files': _('Select files'),
+            'add_links': _('Add links'),
+            'add_img_links': _('Add image links'),
             'cancel': _('Cancel'),
-            'save_changes': _('Save Changes'),
-            'enter_subtitle': _('Enter the subtitle for this image'),
+            'save_changes': _('Save changes'),
+            'enter_subtitle': _('Insert a subtitle for this image'),
             'name': name,
             'delete': _('Delete'),
             'or': _('or')
@@ -186,11 +186,11 @@ class SingleFileUploadWidget(forms.Widget):
             </div>
 
         """ % {'name': name,
-               'select_file': _('Select a file'), 
+               'select_file': _('Select a file'),
                'cancel': _('Cancel'),
-               'save_changes': _('Save Changes'),
+               'save_changes': _('Save changes'),
                'delete': _('Delete'),
-               'enter_subtitle': _('Enter the subtitle for this image'),
+               'enter_subtitle': _('Insert a subtitle for this image'),
                'logo_id': value,
         }
         return html

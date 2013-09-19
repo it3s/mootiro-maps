@@ -5,7 +5,7 @@
 {% block content %}
   <div id="main-content">
     <div class="main-column">
-      
+
       <h1>{{ importsheet.name }}</h1>
       <p>
         {{ importsheet.description }}
@@ -21,7 +21,7 @@
       </p>
       {% endif %}
       <br/>
-      
+
       {% if not success %}
         <h2>
           {% trans "Some error ocurred!" %} :(<br/>
@@ -30,9 +30,9 @@
       {% endif %}
       {% if importsheet.inserted_objects %}
         <h2>
-          {{ importsheet.inserted_objects|length }} {% trans "objects were added." %}<br/>
+          {{ importsheet.inserted_objects|length }} {% trans "objects have been added." %}<br/>
         </h2>
-        
+
         <div class="importsheet_controls">
           {% if user.is_admin %}
             <a class="insert btn btn-large btn-danger" href="{% url importsheet_undo importsheet.id %}">{% trans "Undo import. (remove all)" %}</a>
@@ -43,9 +43,9 @@
           </a>
           {% endif %}
         </div>
-      
+
         <div class="clear-both"></div>
-        
+
         <ul>
           {% for obj in importsheet.inserted_objects %}
             <li>

@@ -31,7 +31,7 @@ class FormResource(AjaxModelForm):
         'name': _('Name'),
         'short_description': _('Short description'),
         'description': _('Description'),
-        'kind': _('Kind'),
+        'kind': _('Content type'),
         'contact': _('Contact'),
         'tags': _('Tags'),
         'community': _('Community'),

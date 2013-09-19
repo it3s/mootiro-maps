@@ -32,8 +32,8 @@
 
                 <div class="view-edit-btn">
                     {% history resource %}
-                    <a href="{% url view_discussion resource.perm_id %}" class="btn login-required" title="{% trans 'Ver página de discussão' %}"><i class="icon-comment"></i></a>
-                    <a href="{{ resource.edit_url }}" class="btn login-required" title="{% trans 'Editar conteúdo' %}">
+                    <a href="{% url view_discussion resource.perm_id %}" class="btn login-required" title="{% trans 'Go to discussion page' %}"><i class="icon-comment"></i></a>
+                    <a href="{{ resource.edit_url }}" class="btn login-required" title="{% trans 'Edit content' %}">
                         <i class="icon-pencil"></i>
                     </a>
 
@@ -65,7 +65,7 @@
     </div>
     <div class="right-bar right-bar-modif">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
-        <a class="see-on-map" href="#">{% trans 'see on map' %}</a>
+        <a class="see-on-map" href="#">{% trans 'View on map' %}</a>
 
         <div class="centralizer apart">
           <a class="button login-required" href="{{ resource.new_investment_url }}">{% trans "New Investment" %}</a>
@@ -101,7 +101,7 @@
                     {% if resource.contact %}
                         {{ resource.contact|render_markup|safe }}
                     {% else %}
-                        {% trans 'No contact info provided' %}
+                        {% trans 'No contact information provided' %}
                     {% endif %}
                 </p>
             </div>

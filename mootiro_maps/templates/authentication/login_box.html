@@ -8,7 +8,7 @@
   <p class="errors">
     {% trans "An error ocurred." %}
     {% if login_error == 'wrong_credentials' %}
-      {% trans "You provided wrong credentials." %}
+      {% trans "Wrong password or username" %}
     {% endif %}
     {% if login_error == 'user_not_active' %}
       {% trans "You have not verified your email yet." %}

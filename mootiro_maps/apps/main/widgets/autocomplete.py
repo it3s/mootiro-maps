@@ -111,7 +111,7 @@ class AutocompleteWithFavorites(forms.TextInput):
         self.source_url = source_url
         self.query = favorites_query
         if not help_text:
-            help_text = _('You can type above or select here')
+            help_text = _('Please select from the list below or insert a new type')
         self.help_text = help_text
         self.can_add = can_add
         super(AutocompleteWithFavorites, self).__init__(*args, **kwargs)

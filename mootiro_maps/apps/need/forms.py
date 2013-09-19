@@ -27,7 +27,7 @@ need_form_field_labels = {
     'short_description': _('Short description'),
     'description': _('Description'),
     'community': _('Community'),
-    'categories': _('Need Categories'),
+    'categories': _('Need categories'),
     'target_audiences': _('Target audiences'),
     'tags': _('Tags'),
     'files': _('Images'),

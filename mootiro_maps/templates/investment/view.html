@@ -26,8 +26,8 @@
 
       <div class="view-edit-btn right">
         {% history investment %}
-        <a href="{% url view_discussion investment.perm_id %}" class="btn login-required" title="{% trans 'Ver página de discussão' %}"><i class="icon-comment"></i></a>
-        <a class="btn login-required" href="{{ investment.edit_url }}" title="{% trans 'Editar conteúdo' %}"><i class="icon-pencil"></i></a>
+        <a href="{% url view_discussion investment.perm_id %}" class="btn login-required" title="{% trans 'Go to discussion page' %}"><i class="icon-comment"></i></a>
+        <a class="btn login-required" href="{{ investment.edit_url }}" title="{% trans 'Edit content' %}"><i class="icon-pencil"></i></a>
       </div>
 
       <div class="clear-both"></div>

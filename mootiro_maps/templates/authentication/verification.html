@@ -12,8 +12,8 @@
           <img src="{{STATIC_URL}}img/spock-email.png" />
         </div>
         <div class="right">
-          <h1>{% trans "Your account was created!" %}</h1>
-          <p>{% trans "But before using you need to confirm your e-mail. Go check your inbox!" %}</p>
+          <h1>{% trans "Your account has been created!" %}</h1>
+          <p>{% trans "In order to log in, please confirm your email address. Please check your inbox!" %}</p>
         </div>
       </div>
     {% else %}
@@ -21,13 +21,13 @@
         <div class="left">
           <h1>
             {% if message == 'activated' %}
-              {% trans "Your email was succesfully verified!" %}
+              {% trans "Your email address has been succesfully verified!" %}
             {% endif %}
             {% if message == 'already_verified' %}
-              {% trans "Your email had already been verified!" %}
+              {% trans "Your email address had already been verified!" %}
             {% endif %}
           </h1>
-            <p>{% trans "Now, do login!" %}</p>
+            <p>{% trans "Now, you might log in, please." %}</p>
         </div>
         <div class="right">
           {% include "authentication/komoo_login_form.html" %}

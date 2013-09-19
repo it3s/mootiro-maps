@@ -30,7 +30,7 @@ var change_step = function(step){
         $('.step_1_row_3').hide();
     } else if (step === 4) {
         // change_msg('Parabéns você concluiu o processo de adição de uma organização/filial');
-        change_msg(gettext('Congratulations, you have concluded the organization/branch addition process'));
+        change_msg(gettext('Congratulations, you added an organization to MootiroMaps.'));
     }
     change_percent(percent);
     window.scrollTo(0, 0);
@@ -38,7 +38,7 @@ var change_step = function(step){
 $(function(){
     change_step(1);
     // change_msg('Forneça o nome da organização para verificarmos se ela ainda não foi cadastrada no sistema.');
-    change_msg(gettext("Provide the organization name so we can verify if it's already registered on our system"));
+    change_msg(gettext("Please, provide the organization's name so we can verify if it is already registered on our system."));
     $('a.close').click(function(){
         $(this).parent().slideUp();
     });
@@ -87,7 +87,7 @@ $(function(){
     $('.step_1_cancel').click(function(){
         change_step(1);
         // change_msg('Forneça o nome da organização para verificarmos se ela ainda não foi cadastrada no sistema.');
-        change_msg(gettext("Provide the organization name so we can verify if it's already registered on our system"));
+        change_msg(gettext("Please, provide the organization's name so we can verify if it is already registered on our system."));
 
     });
 
@@ -101,7 +101,7 @@ $(function(){
         onSuccess: function(data){
             change_step(3);
             // change_msg('Parabéns, sua organização foi salva corretamente. Por favor, agora preencha os dados para a filial que você marcou no mapa');
-            change_msg(gettext('Congratulations, your organization was successfully saved. Please, now add the data from the branch you have marked on the map'));
+            change_msg(gettext('Congratulations, your organization was successfully saved. Please, now add the data about the branch that you marked on the map.'));
             $('#form_branch #id_branch_organization').val(data.obj.id);
             $('#id_filial_org_name').val(data.obj.name);
             $('#btn_concluir').attr('id', data.obj.id);
