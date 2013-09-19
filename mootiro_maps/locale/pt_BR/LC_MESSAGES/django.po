@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-19 18:38-0300\n"
+"POT-Creation-Date: 2013-09-19 18:52-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -1467,8 +1467,9 @@ msgstr "Acesso a página de discussão deste projeto"
 
 #: templates/community/view.html:29 templates/need/view.html:39
 #: templates/organization/show.html:46
-msgid "Editar esse conteúdo"
-msgstr ""
+#, fuzzy
+msgid "Edit this content"
+msgstr "Editar Investimento"
 
 #: templates/community/view.html:49
 #: templates/investment/investment_list_templatetag.html:33
@@ -1478,7 +1479,8 @@ msgstr ""
 #: templates/project/view.html:94 templates/project/view.html.py:218
 #: templates/project/view.html:231 templates/project/view.html.py:244
 #: templates/project/view.html:257 templates/project/view.html.py:270
-#: templates/project/view.html:283 templates/resource/show.html:68
+#: templates/project/view.html:283 templates/resource/list.html:49
+#: templates/resource/show.html:68
 #: templates/update/updates_list_templatetag.html:100
 #, fuzzy
 msgid "View on map"
@@ -1885,7 +1887,7 @@ msgid "Tell a story"
 msgstr ""
 
 #: templates/main/about.html:87
-msgid "Add fotos, logos and link to other content on the map"
+msgid "Add photos, logos and link to other content on the map"
 msgstr ""
 
 #: templates/main/about.html:92
@@ -2372,7 +2374,7 @@ msgid "Who should participate in the mapping"
 msgstr ""
 
 #: templates/main/use_cases.html:48 templates/main/use_cases.html.py:84
-#: templates/main/use_cases.html:124
+#: templates/main/use_cases.html:124 templates/main/use_cases.html.py:158
 msgid "NGOs;"
 msgstr ""
 
@@ -2598,10 +2600,6 @@ msgstr ""
 msgid ""
 "Evaluate the effectiveness and efficiency of programmes and produce project "
 "management information;"
-msgstr ""
-
-#: templates/main/use_cases.html:158
-msgid "ONGs;"
 msgstr ""
 
 #: templates/main/use_cases.html:159
@@ -3212,6 +3210,7 @@ msgid "Website"
 msgstr "Website"
 
 #: templates/project/edit.html:15 templates/project/old_view.html:51
+#: templates/project/view.html:46
 #, fuzzy
 msgid "Edit project"
 msgstr "Editar Projeto"
@@ -3293,11 +3292,6 @@ msgstr "Adicionar a um projeto"
 msgid "Add this content to a project"
 msgstr "Adicionar este objeto a um projeto"
 
-#: templates/project/view.html:46
-#, fuzzy
-msgid "Editar projeto"
-msgstr "Editar Projeto"
-
 #: templates/project/view.html:274
 msgid "No investments have been added to this project yet"
 msgstr ""
@@ -3360,11 +3354,6 @@ msgstr ""
 #, fuzzy
 msgid "Create new resource"
 msgstr "Criar Novo Recurso"
-
-#: templates/resource/list.html:49
-#, fuzzy
-msgid "ver no mapa"
-msgstr "ver no mapa"
 
 #: templates/resource/new.html:11
 #, fuzzy
@@ -3498,6 +3487,14 @@ msgstr ""
 #: templates/update/updates_list_templatetag.html:116
 msgid "by"
 msgstr "por"
+
+#, fuzzy
+#~ msgid "Editar projeto"
+#~ msgstr "Editar Projeto"
+
+#, fuzzy
+#~ msgid "ver no mapa"
+#~ msgstr "ver no mapa"
 
 #~ msgid "Over period"
 #~ msgstr "Por um período"

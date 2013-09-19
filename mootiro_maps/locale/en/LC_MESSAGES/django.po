@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-19 18:38-0300\n"
+"POT-Creation-Date: 2013-09-19 18:52-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1362,7 +1362,7 @@ msgstr ""
 
 #: templates/community/view.html:29 templates/need/view.html:39
 #: templates/organization/show.html:46
-msgid "Editar esse conteúdo"
+msgid "Edit this content"
 msgstr ""
 
 #: templates/community/view.html:49
@@ -1373,7 +1373,8 @@ msgstr ""
 #: templates/project/view.html:94 templates/project/view.html.py:218
 #: templates/project/view.html:231 templates/project/view.html.py:244
 #: templates/project/view.html:257 templates/project/view.html.py:270
-#: templates/project/view.html:283 templates/resource/show.html:68
+#: templates/project/view.html:283 templates/resource/list.html:49
+#: templates/resource/show.html:68
 #: templates/update/updates_list_templatetag.html:100
 msgid "View on map"
 msgstr ""
@@ -1763,7 +1764,7 @@ msgid "Tell a story"
 msgstr ""
 
 #: templates/main/about.html:87
-msgid "Add fotos, logos and link to other content on the map"
+msgid "Add photos, logos and link to other content on the map"
 msgstr ""
 
 #: templates/main/about.html:92
@@ -2218,7 +2219,7 @@ msgid "Who should participate in the mapping"
 msgstr ""
 
 #: templates/main/use_cases.html:48 templates/main/use_cases.html.py:84
-#: templates/main/use_cases.html:124
+#: templates/main/use_cases.html:124 templates/main/use_cases.html.py:158
 msgid "NGOs;"
 msgstr ""
 
@@ -2442,10 +2443,6 @@ msgstr ""
 msgid ""
 "Evaluate the effectiveness and efficiency of programmes and produce project "
 "management information;"
-msgstr ""
-
-#: templates/main/use_cases.html:158
-msgid "ONGs;"
 msgstr ""
 
 #: templates/main/use_cases.html:159
@@ -3012,6 +3009,7 @@ msgid "Website"
 msgstr ""
 
 #: templates/project/edit.html:15 templates/project/old_view.html:51
+#: templates/project/view.html:46
 msgid "Edit project"
 msgstr ""
 
@@ -3087,10 +3085,6 @@ msgstr ""
 msgid "Add this content to a project"
 msgstr ""
 
-#: templates/project/view.html:46
-msgid "Editar projeto"
-msgstr ""
-
 #: templates/project/view.html:274
 msgid "No investments have been added to this project yet"
 msgstr ""
@@ -3149,10 +3143,6 @@ msgstr ""
 
 #: templates/resource/list.html:17
 msgid "Create new resource"
-msgstr ""
-
-#: templates/resource/list.html:49
-msgid "ver no mapa"
 msgstr ""
 
 #: templates/resource/new.html:11
