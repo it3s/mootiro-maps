@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-19 18:13-0300\n"
+"POT-Creation-Date: 2013-09-19 18:38-0300\n"
 "PO-Revision-Date: 2012-11-28 12:38-0200\n"
 "Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
 "Language-Team: it3s <LL@li.org>\n"
@@ -1434,7 +1434,7 @@ msgstr ""
 #: templates/community/edit.html:50 templates/community/edit_ajax.html:32
 msgid ""
 "Coloque palavras que classifiquem a comunidade, ou que localizem a "
-"comunidade, tal como a \\"
+"comunidade, tal como a \"Zona Sul\", \"Guarapiranga\", \"favela\"."
 msgstr ""
 
 #: templates/community/edit.html:54 templates/community/edit_ajax.html:36
@@ -1657,7 +1657,9 @@ msgstr ""
 
 #: templates/investment/edit.html:100 templates/need/edit.html:66
 #: templates/need/edit_ajax.html:35
-msgid "Coloque palavras que ajudem a ilustrar a necessidade, tal como \\"
+msgid ""
+"Coloque palavras que ajudem a ilustrar a necessidade, tal como \"asfalto\", "
+"\"rua\", \"transporte\"."
 msgstr ""
 
 #: templates/investment/investment_list_templatetag.html:14
@@ -2957,7 +2959,7 @@ msgid "New need"
 msgstr "Nova Necessidade"
 
 #: templates/need/edit.html:52 templates/need/edit_ajax.html:21
-msgid "Coloque um título que resuma a necessidade. Ex: \\"
+msgid "Coloque um título que resuma a necessidade. Ex: \"Asfaltar a rua X\""
 msgstr ""
 
 #: templates/need/edit.html:56 templates/need/edit_ajax.html:25
@@ -2969,7 +2971,7 @@ msgstr ""
 #: templates/need/edit.html:59 templates/need/edit_ajax.html:28
 msgid ""
 "Informe onde sua necessidade se encaixa, qual é o tipo dela. Você pode "
-"escolher mais de um tipo. Ex.: \\"
+"escolher mais de um tipo. Ex.: \"Asfaltar a rua X\" -> Mobilidade"
 msgstr ""
 
 #: templates/need/edit.html:63 templates/need/edit_ajax.html:32
@@ -3075,7 +3077,9 @@ msgstr ""
 
 #: templates/organization/edit.html:74 templates/organization/new.html:65
 #: templates/organization/new_frommap.html:57
-msgid "Coloque palavras que ajudem a ilustrar a organização, tal como \\"
+msgid ""
+"Coloque palavras que ajudem a ilustrar a organização, tal como \"escola\", "
+"\"educação\", \"meio-ambiente\""
 msgstr ""
 
 #: templates/organization/edit.html:78 templates/organization/new.html:69
@@ -3342,7 +3346,9 @@ msgstr ""
 
 #: templates/resource/edit.html:54 templates/resource/new.html:44
 #: templates/resource/new_frommap.html:36
-msgid "Coloque palavras que ajudem a classificar o recurso, tal como \\"
+msgid ""
+"Coloque palavras que ajudem a classificar o recurso, tal como \"música\", "
+"\"esporte\", \"biblioteca\", etc..."
 msgstr ""
 
 #: templates/resource/edit.html:58 templates/resource/new.html:48
