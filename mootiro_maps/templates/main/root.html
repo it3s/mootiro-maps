@@ -29,11 +29,11 @@
 
   {% if user.is_anonymous %}
   <div>
-    <h2 class="center"><span class="apart">{% trans "Anyone can help!" %}</span> <a class="login-required big button" href="#">{% trans "Create your account" %}</a></h2>
+    <h2 class="center"><span class="apart">{% trans "Everybody can help!" %}</span> <a class="login-required big button" href="#">{% trans "Create your account" %}</a></h2>
   </div>
   {% else %}
   <div>
-    <h2 class="center">{% trans "Want to participate" %}, {{ user.get_first_name }}? <a class="login-required" href="{% url map %}#map-panel-add">{% trans "Edit the map." %}</a></h2>
+    <h2 class="center">{% trans "Want to participate" %}, {{ user.get_first_name }}? <a class="login-required" href="{% url map %}#map-panel-add">{% trans "Edit the map" %}</a></h2>
   </div>
   {% endif %}
 
@@ -91,40 +91,40 @@
         <li class="aldeias-infantis">
           <a href="http://maps.mootiro.org/project/17"><img src="{{STATIC_URL}}img/frontpage/aldeias-infantis.png"/></a>
           <p class="testimony">
-          {% trans '“O MootiroMaps permite não apenas vizualizar o local onde está o possível parceiro, mas também obter informações sobre seus serviços e esfera de atuação. Para as Aldeias Infantis SOS, a ferramenta é um potencial para a identificação do nível de articulação desenvolvido.”' %}
+          {% blocktrans %}"MootiroMaps helps us to better understand the community that we work with and find partners for our initiatives. It also helps us to register information about their services and actions. For SOS Children's Villages MootiroMaps is essential to plan and improve advocacy and mobilization of local actors."{% endblocktrans %}
             <br/>
             <span class="author-info">
-              — {% trans '<a href="http://maps.mootiro.org/user/259">Aline Cavalcanti</a>, Analista de Monitoramento e Pesquisa das <a href="http://maps.mootiro.org/organization/2134">Aldeias Infantis SOS</a>.' %}
+              — {% blocktrans %}<a href="http://maps.mootiro.org/user/259">Aline Cavalcanti</a>, Evaluation and Research Analyst, <a href="http://maps.mootiro.org/organization/2134">SOS Children's Villages</a>{% endblocktrans %}
             </span>
           </p>
         </li>
         <li class="heliopolis-verde">
           <a href="http://maps.mootiro.org/project/2"><img src="{{STATIC_URL}}img/frontpage/heliopolis-verde.png"/></a>
           <p class="testimony">
-          {% trans '“O primeiro passo de um projeto social de base comunitária é a realização de um mapa de contexto, a fim de identificar demandas e conhecer os atores locais. A visualização das informações e a possibilidade de mapear coletivamente com o MootiroMaps favorecem e facilitam nosso trabalho com o Heliópolis Verde.”' %}
+          {% blocktrans %}"The first step in a community based project is to unterstand the context. You have to get to know its needs as well as local actors. The data visualization and the possibility to map collaboratively strengthen and promote our work at Heliópolis Verde."{% endblocktrans %}
             <br/>
             <span class="author-info">
-              — {% trans '<a href="http://maps.mootiro.org/user/101">Raquel Porangaba</a>, Analista de articulação do <a href="http://maps.mootiro.org/organization/793">Instituto Baccarelli</a>.' %}
+              — {% blocktrans %}<a href="http://maps.mootiro.org/user/101">Raquel Porangaba</a>, Communications Analyst, <a href="http://maps.mootiro.org/organization/793">Instituto Baccarelli</a>{% endblocktrans %}
             </span>
           </p>
         </li>
         <li class="bairro-educador">
           <a href="http://maps.mootiro.org/project/22"><img src="{{STATIC_URL}}img/frontpage/bairro-educador.png"/></a>
           <p class="testimony">
-          {% trans '“É importante criarmos o mapa de nossa comunidade porque é possível quantificar no MootiroMaps a necessidade da comunidade em relação às políticas públicas bem como acompanhar os serviços públicos e as obras que acontecem em Heliópolis.”' %}
+          {% blocktrans %}"It is important for us to map our community in order to estimate our demands for public services and policies. We also make use of MootiroMaps to track public investments and the quality of education and health services."{% endblocktrans %}
             <br/>
             <span class="author-info">
-              — {% trans 'Cleide Alves, Presidente da <a href="http://maps.mootiro.org/organization/796">UNAS</a>.' %}
+              — {% blocktrans %}Cleide Alves, President, <a href="http://maps.mootiro.org/organization/796">UNAS (community association of Heliópolis)</a>{% endblocktrans %}
             </span>
           </p>
         </li>
         <li class="educar-na-cidade">
           <a href="http://maps.mootiro.org/project/13"><img src="{{STATIC_URL}}img/frontpage/educar-na-cidade.jpg"/></a>
           <p class="testimony">
-          {% trans '“Mapeamos equipamentos sociais e iniciativas educativas para estimular a interação entre pessoas e organizações possibilitando assim a troca de experiências e conexões que fortaleçam vínculos entre esses agentes para o trabalho em rede e desenvolvimento local.”' %}
+          {% blocktrans %}"We mapped social equipments and educational projects in order to promote interaction between individuals and organizations. We also want to estimulate change of experiences and strenghten relations between local players in order to enhance local development."{% endblocktrans %}
             <br/>
             <span class="author-info">
-              — {% trans '<a href="http://maps.mootiro.org/user/237">Maria Rita Ecosteguy</a>, analista do <a href="http://maps.mootiro.org/organization/25">CENPEC</a>.' %}
+              — {% blocktrans %}<a href="http://maps.mootiro.org/user/237">Maria Rita Ecosteguy</a>, Project Analyst, <a href="http://maps.mootiro.org/organization/25">CENPEC</a>{% endblocktrans %}
             </span>
           </p>
         </li>

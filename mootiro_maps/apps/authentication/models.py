@@ -183,10 +183,7 @@ class User(GeoRefModel, BaseModel):
             # new User
             if SocialAuth.objects.filter(email=self.email).exists():
                 valid = False
-                self.errors['email'] = _('This email is registered on our '
-                    'system. Probably you\'ve logged before with a social '
-                    'account (facebook or google). You can skip this step '
-                    'and just login.')
+                self.errors['email'] = _('This email is registered on our system. You might have logged before with a social account (Facebook or Google). Please, skip this step and just login.')
 
             if User.objects.filter(email=self.email).exists():
                 valid = False

@@ -110,7 +110,7 @@ class TaggedItemBase(ItemBase):
 
 
 class GenericTaggedItemBase(ItemBase):
-    object_id = models.IntegerField(verbose_name=_('Object id'), db_index=True)
+    object_id = models.IntegerField(verbose_name=_('Object ID'), db_index=True)
     if django.VERSION < (1, 2):
         content_type = models.ForeignKey(
             ContentType,
@@ -156,5 +156,5 @@ class GenericTaggedItemBase(ItemBase):
 
 class TaggedItem(GenericTaggedItemBase, TaggedItemBase):
     class Meta:
-        verbose_name = _("Tagged Item")
-        verbose_name_plural = _("Tagged Items")
+        verbose_name = _("Tagged item")
+        verbose_name_plural = _("Tagged items")

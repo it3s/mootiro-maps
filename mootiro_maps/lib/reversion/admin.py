@@ -107,7 +107,7 @@ class VersionAdmin(admin.ModelAdmin):
         """Sets the version meta information."""
         super(VersionAdmin, self).log_addition(request, object)
         revision_context_manager.set_user(request.user)
-        revision_context_manager.set_comment(_(u"Initial version."))
+        revision_context_manager.set_comment(_(u"Initial version"))
         revision_context_manager.set_ignore_duplicates(self.ignore_duplicate_revisions)
 
     def log_change(self, request, object, message):

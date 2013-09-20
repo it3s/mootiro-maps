@@ -83,7 +83,7 @@ class FormUser(AjaxModelForm):
                 email = email.lower()
                 self.cleaned_data['email'] = email
 
-                self.validation('email', _('This email is already in use.'),
+                self.validation('email', _('This email is already in use'),
                         User.objects.filter(email=email).exists())
                 self.validation('email',
                     _('This email is registered on our system. You might have '

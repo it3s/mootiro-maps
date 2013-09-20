@@ -36,7 +36,7 @@ def _user_form_specific_validations(user, json_data, form_validates):
     if not json_data.get('password') == json_data.get('password_confirm'):
         form_validates = False
         user.errors['password_confirm'] = _(
-                'Passwords did not match.')
+                'Passwords did not match')
     return form_validates
 
 
@@ -102,7 +102,7 @@ class UsersHandler(ResourceHandler):
             return JsonResponse({})
         else:
             return JsonResponseError({
-                'all': _('You do not have permission to perform this operation.')
+                'all': _('You do not have permission to perform this operation')
             })
 
 

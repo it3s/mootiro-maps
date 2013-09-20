@@ -196,7 +196,7 @@ def profile_update_personal_settings(request):
             return {
                     'success': 'false',
                     'errors': {
-                        'current_password': _('Wrong password!')}}
+                        'current_password': _('Wrong password')}}
     except Exception as err:
         logger.error('OPS: ', err)
         return dict(success='false',

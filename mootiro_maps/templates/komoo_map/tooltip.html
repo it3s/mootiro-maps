@@ -14,13 +14,13 @@
     <p>
     <ul>
       {% if object.needs %}
-      <li><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}</li>
+      <li><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} need{% plural %}{{ counter }} needs{% endblocktrans %}</li>
       {% endif %}
       {% if object.organization_set %}
-        <!--<li><i class="icon-organization no-hover"></i>{% blocktrans count counter=object.organization_set.count %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}</li>-->
+        <!--<li><i class="icon-organization no-hover"></i>{% blocktrans count counter=object.organization_set.count %}{{ counter }} organization{% plural %}{{ counter }} organizations{% endblocktrans %}</li>-->
       {% endif %}
       {% if object.resources %}
-        <li><i class="icon-resource no-hover"></i>{% blocktrans count counter=object.resources.count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}</li>
+        <li><i class="icon-resource no-hover"></i>{% blocktrans count counter=object.resources.count %}{{ counter }} resource{% plural %}{{ counter }} resources{% endblocktrans %}</li>
       {% endif %}
     </ul>
     </p>

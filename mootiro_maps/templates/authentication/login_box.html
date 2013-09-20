@@ -6,12 +6,12 @@
 
   {% if login_error %}
   <p class="errors">
-    {% trans "An error ocurred." %}
+    {% trans "An error ocurred" %}
     {% if login_error == 'wrong_credentials' %}
       {% trans "Wrong password or username" %}
     {% endif %}
     {% if login_error == 'user_not_active' %}
-      {% trans "You have not verified your email yet." %}
+      {% trans "You did not verify your email yet" %}
     {% endif %}
   </p>
   {% endif %}

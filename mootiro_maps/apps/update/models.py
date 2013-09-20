@@ -196,7 +196,7 @@ class Update(models.Model):
             "project edited":    _("project edited"),
             "project discussed": _("project discussed"),
 
-            "importsheet inserted": _("importsheet created"),
+            "importsheet inserted": _("import sheet created"),
 
         }
         return tr_dict[key_str]

@@ -52,7 +52,7 @@
 
         <div class="view-body">
             <div class="mark-down">{{ organization.description|render_markup|safe }}</div>
-            <div class="related-button"><a class="button" href="{{ organization.related_items_url }}">{% trans 'See all objects on map' %}</a></div>
+            <div class="related-button"><a class="button" href="{{ organization.related_items_url }}">{% trans 'See all objects on the map' %}</a></div>
             <div class="organization-buttons row">
                 <div class="org-btn span3" panel="supported-organizations-list">
                     <i class="icon-organization"></i>
@@ -96,7 +96,7 @@
                         <a href="{{ org.view_url }}">{{ org.name }}</a>
                     </div>
                 {% empty %}
-                    {% trans 'No organizations supported.' %}
+                    {% trans 'No organizations supported' %}
                 {% endfor %}
             </div>
 
@@ -116,7 +116,7 @@
                         <a href="{{ prop.view_url }}">{{ prop.title }}</a>
                     </div>
                 {% empty %}
-                    {% trans 'No proposals supported.' %}
+                    {% trans 'No proposals supported' %}
                 {% endfor %}
             </div>
 
@@ -126,14 +126,14 @@
                         <a href="{{ res.view_url }}">{{ res.name }}</a>
                     </div>
                 {% empty %}
-                    {% trans 'No resources supported.' %}
+                    {% trans 'No resources supported' %}
                 {% endfor %}
             </div>
 
             <div class="org-info-panel investments-list hidden">
                 <div class="apart">
                     <a class="button login-required" href="{{ organization.new_investment_url }}">
-                        {% trans "New Investment" %}
+                        {% trans "New investment" %}
                     </a>
                 </div>
 

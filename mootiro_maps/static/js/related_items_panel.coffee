@@ -87,8 +87,8 @@ define ['jquery', 'underscore', 'backbone'], ($, _, Backbone) ->
                         "%s needs",
                         count)
                 else if @type is 'User'
-                    ngettext("%s contributors",
-                        "%s contributors",
+                    ngettext("%s collaborator",
+                        "%s collaborators",
                         count)
                 else
                     ""

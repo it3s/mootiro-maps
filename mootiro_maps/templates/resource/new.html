@@ -12,7 +12,7 @@
 
       <div class='alert alert-info required-notice' data-alert='info'>
           <div class='msg'>
-              Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+          {% trans '<strong>*</strong> required fields!' %}
           </div>
       </div>
       {% crispy form_resource form_resource.helper %}
@@ -30,26 +30,26 @@
 
         $('#form_resource').komooFormHintBoxes({
           'name': {
-            hint: '{% trans "Coloque o nome do recurso." %}'
+            hint: '{% trans "Please inform the name of this resource. Try to be specific. Instead of \"Community Library\" inform also the name of the city or neighbourhood, for instance: Community Library (Santa Barbara)." %}'
           },
           'description': {
-            hint: '{% trans "Coloque detalhes do recurso, e como ele é usado pela comunidade. Informações como acesso ao recurso, responsáveis por ele, horário de funcionamento/acesso ..." %}',
+            hint: '{% trans "Give some details about this resource. How is it used by the local community? When is it open? Can it be used by others, too?" %}',
             top: '30%'
           },
           'kind': {
-            hint: '{% trans "Escolha em qual tipo o recurso se encaixa (Você pode escolher um já existente ou entrar um novo tipo)." %}',
+            hint: '{% trans "Please define the type of resource. You can select an item from the list or enter a new type." %}',
             top: '30%',
           },
           'tags': {
-            hint: '{% trans 'Coloque palavras que ajudem a classificar o recurso, tal como "música", "esporte", "biblioteca", etc...' %}',
+            hint: '{% trans 'Please, insert tags that describe the resource, for instance "library", "computer lab", "available on Sundays", etc.' %}',
             top: '-22px'
           },
           'contact': {
-            hint: '{% trans "Informações de contato com os responsáveis deste recurso." %}',
+            hint: '{% trans "Contact information of the person or organization responsible for the resource." %}',
             top: '25%'
           },
           'files': {
-            hint: '{% trans "Você pode carregar fotos do recurso." %}',
+            hint: '{% trans "Please, upload fotos of the resource or link to photos on Wiki Commons or Flickr. Make sure that the photos are licensed under creative commons." %}',
              top: '10%'
           }
         });

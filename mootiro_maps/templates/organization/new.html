@@ -13,7 +13,7 @@
 
             <div class='alert alert-info required-notice' data-alert='info'>
                 <div class='msg'>
-                    Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+                {% trans '<strong>*</strong> required fields!' %}
                 </div>
             </div>
 
@@ -35,42 +35,42 @@
 
             $('#form_organization').komooFormHintBoxes({
                 'name': {
-                  hint: '{% trans "Coloque o nome da organização." %}'
+                  hint: '{% trans "Insert the name of the organization. Please be specific: if you are mapping the city hall of your home town, please add this detail in the title, for example: City Hall Santa Barbara." %}'
                 },
                 'description': {
                   top: '45%',
-                  hint: '{% trans "Coloque detalhes da organização e como ela atua na comunidade." %}'
+                  hint: '{% trans "What do you know about this organization? What are its services or products offered to the city or your community? Who is a partner of this organization? What is it known for?" %}'
                 },
                 'community':{
-                  hint: '{% trans "Coloque as comunidades que a organização atua ou atende." %}',
+                  hint: '{% trans "Please, inform the communities that are served by this organization. A community must have been registered previously on MootiroMaps." %}',
                   top: '-8px'
                 },
                 'link': {
-                    hint: '{% trans "Coloque o endereço do site da organização. Se ela não tiver, ou você não achar, tudo bem, não é obrigatório." %}',
+                    hint: '{% trans "Inform the website address of this organization" %}',
                     top: '-15px'
                 },
                 'contact': {
-                  hint: '{% trans "Coloque aqui os contatos da organização, telefones, endereço, pessoas que podemos conversar..." %}',
+                  hint: '{% trans "Insert the contact information of this organization (postal address, contact persons, phone number, email address)." %}',
                   top: '25%'
                 },
                 'target_audiences': {
-                  hint: '{% trans "Coloque o tipo de pessoas que essa organização busca atingir na comunidade." %}',
+                  hint: '{% trans "Which people or groups are attended by this organization?" %}',
                   top: '-12px'
                 },
                 'categories':{
-                  hint: '{% trans "Escolha em que área a organização atua, pode-se escolher mais de uma." %}',
+                  hint: "{% trans "Please, select the categories that most reflect the organization's activities or cause." %}",
                   top: '45%'
                 },
                 'tags': {
-                  hint: '{% trans 'Coloque palavras que ajudem a ilustrar a organização, tal como "escola", "educação", "meio-ambiente"' %}',
+                  hint: '{% trans 'Please, insert tags for your organizations. Tags are used for searching content on MootiroMaps. Precise tags will help others to find your content.' %}',
                   top: '-12px'
                 },
                 'files': {
-                  hint: '{% trans "Você pode carregar fotos da sua organização" %}',
+                  hint: '{% trans "Please, upload fotos of the organization or link to photos on Wiki Commons or Flickr. Make sure that the photos is licensed under creative commons." %}',
                   top: '40%'
                 },
                 'logo': {
-                  hint: '{% trans "neste campo voce pode subir um logo da sua organização ou optar por usar uma imagem correspondente a uma das categorias que você marcou acima. Lembre-se primeiro de escolher as categorias para que as imagens apareçam aqui." %}',
+                  hint: '{% trans "Here you can upload the logo of the organization or use one of the category images." %}',
                   top: '-40px'
                 }
             });

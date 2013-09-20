@@ -66,7 +66,7 @@ class Organization(GeoRefModel, models.Model):
     class Map:
         editable = True
         title = _('Organization')
-        tooltip = _('Add an Organization')
+        tooltip = _('Add an organization')
         background_color = '#3a61d6'
         border_color = '#1f49b2'
         geometries = (POLYGON, POINT)

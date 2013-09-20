@@ -80,7 +80,7 @@ def moderation_report(request, app_label, model_name, obj_id):
     logger.debug('POST={}'.format(
         request.POST))
     if request.user.is_anonymous():
-        return {'message': _('Please log in first in order to send your report.'), 'success': 'false'}
+        return {'message': _('Please log in first in order to send your report'), 'success': 'false'}
     data_dict = {'error': _('No data'), 'success': 'false'}
     if request.method == 'POST':
         model = get_model(app_label, model_name)
@@ -89,7 +89,7 @@ def moderation_report(request, app_label, model_name, obj_id):
             reports = get_reports_by_user(request.user, obj)
             if reports:
                 report = reports[0]
-                message = _('You have already send a report regarding this content.')
+                message = _('You have already send a report regarding this content')
                 success = 'true'
             else:
                 reason = request.POST.get('reason', 0)
@@ -97,7 +97,7 @@ def moderation_report(request, app_label, model_name, obj_id):
                 report = create_report(obj=obj, user=request.user,
                         reason=reason, comment=comment)
 
-                message = _('Your report has been successfully submitted.')
+                message = _('Your report was successfully submitted')
                 success = 'true'
             data_dict = {'id': report.id,
                          'message': message,

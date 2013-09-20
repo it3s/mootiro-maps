@@ -30,7 +30,7 @@
         <h4>
           <span class="big"><a href="{{ investment.view_url }}">{{ investment }}</a></span>
           {% if investment.grantee.geometry %}
-            <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson investment.grantee %}" title="{% trans 'see on map' %}"><i class="icon-see-on-map"></i></a>
+            <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson investment.grantee %}" title="{% trans 'View on map' %}"><i class="icon-see-on-map"></i></a>
           {% endif %}
         </h4>
         <div class="apart">

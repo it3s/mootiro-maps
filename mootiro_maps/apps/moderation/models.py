@@ -52,7 +52,7 @@ class Report(models.Model):
         SPAM: _('Spam'),
         INAPPROPRIATE: _('Inappropriate'),
         TERMS_OF_USE: _('Violation of Terms of Use'),
-        COPYRIGHT: _('Copyright Violation'),
+        COPYRIGHT: _('Copyright violation'),
         WRONG: _('Wrong information'),
         ANOTHER: _('Other')
     }

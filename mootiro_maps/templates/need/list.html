@@ -19,7 +19,7 @@
       <div class="view-list-top">
 
         <div class="view-list-count">
-          {% blocktrans count counter=needs_count %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}
+          {% blocktrans count counter=needs_count %}{{ counter }} need{% plural %}{{ counter }} needs{% endblocktrans %}
         </div>
 
         <div class="view-list-pagination">
@@ -43,7 +43,7 @@
             {% endfor %}
             {% endif %}
           </span>
-          <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson need %}" title="{% trans 'see on map' %}">
+          <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson need %}" title="{% trans 'View on map' %}">
             <i class="icon-see-on-map"></i>
           </a>
           <ul class="horizontal">
