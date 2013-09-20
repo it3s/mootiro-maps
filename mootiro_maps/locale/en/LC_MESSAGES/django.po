@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-20 16:28-0300\n"
+"POT-Creation-Date: 2013-09-20 17:04-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1008,14 +1008,14 @@ msgstr ""
 #: templates/main/templatetags/menu.html:11
 #: templates/organization/branch_communities_list.html:6
 #: templates/organization/branch_form.html:20
-#: templates/project/old_view.html:85 templates/project/view.html:162
+#: templates/project/old_view.html:85 templates/project/view.html:161
 msgid "Communities"
 msgstr ""
 
 #: templates/404.html:30 templates/main/templatetags/geo_objects_add.html:35
 #: templates/main/templatetags/geo_objects_listing.html:29
 #: templates/main/templatetags/menu.html:20
-#: templates/project/old_view.html:103 templates/project/view.html:180
+#: templates/project/old_view.html:103 templates/project/view.html:179
 #: templates/resource/list.html:7
 msgid "Resources"
 msgstr ""
@@ -1023,20 +1023,20 @@ msgstr ""
 #: templates/404.html:31 templates/main/templatetags/geo_objects_add.html:11
 #: templates/main/templatetags/geo_objects_listing.html:15
 #: templates/main/templatetags/menu.html:17 templates/need/list.html:8
-#: templates/project/old_view.html:94 templates/project/view.html:171
+#: templates/project/old_view.html:94 templates/project/view.html:170
 msgid "Needs"
 msgstr ""
 
 #: templates/404.html:32 templates/investment/list.html:8
 #: templates/main/templatetags/menu.html:23
-#: templates/project/old_view.html:112 templates/project/view.html:189
+#: templates/project/old_view.html:112 templates/project/view.html:188
 msgid "Investments"
 msgstr ""
 
 #: templates/404.html:33 templates/main/templatetags/geo_objects_add.html:23
 #: templates/main/templatetags/geo_objects_listing.html:35
 #: templates/main/templatetags/menu.html:14 templates/organization/list.html:9
-#: templates/project/old_view.html:76 templates/project/view.html:153
+#: templates/project/old_view.html:76 templates/project/view.html:152
 msgid "Organizations"
 msgstr ""
 
@@ -1107,6 +1107,16 @@ msgstr ""
 
 #: templates/authentication/new.html:8
 msgid "New User"
+msgstr ""
+
+#: templates/authentication/new.html:11 templates/community/edit.html:19
+#: templates/community/edit_ajax.html:10 templates/investment/edit.html:24
+#: templates/need/edit.html:23 templates/need/edit_ajax.html:9
+#: templates/organization/edit.html:18 templates/organization/new.html:16
+#: templates/organization/new_frommap.html:15 templates/project/edit.html:22
+#: templates/proposal/edit.html:19 templates/resource/edit.html:18
+#: templates/resource/new.html:15 templates/resource/new_frommap.html:12
+msgid "<strong>*</strong> required fields!"
 msgstr ""
 
 #: templates/authentication/profile.html:28
@@ -1209,10 +1219,10 @@ msgstr ""
 #: templates/project/old_view.html:164 templates/project/old_view.html:177
 #: templates/project/old_view.html:190 templates/project/old_view.html:203
 #: templates/project/old_view.html:216 templates/project/old_view.html:245
-#: templates/project/view.html:94 templates/project/view.html.py:218
-#: templates/project/view.html:231 templates/project/view.html.py:244
-#: templates/project/view.html:257 templates/project/view.html.py:270
-#: templates/project/view.html:283 templates/resource/list.html:49
+#: templates/project/view.html:94 templates/project/view.html.py:217
+#: templates/project/view.html:230 templates/project/view.html.py:243
+#: templates/project/view.html:256 templates/project/view.html.py:269
+#: templates/project/view.html:282 templates/resource/list.html:49
 #: templates/resource/show.html:68 templates/search/list.html:21
 #: templates/update/updates_list_templatetag.html:100
 msgid "View on map"
@@ -3000,10 +3010,6 @@ msgstr ""
 msgid "New project"
 msgstr ""
 
-#: templates/project/edit.html:22
-msgid "<strong>*</strong> required fields!"
-msgstr ""
-
 #: templates/project/edit.html:31
 msgid "Edit associated contents of this project"
 msgstr ""
@@ -3028,36 +3034,37 @@ msgstr[1] ""
 msgid "Administrator"
 msgstr ""
 
-#: templates/project/old_view.html:70 templates/project/view.html:146
+#: templates/project/old_view.html:70 templates/project/view.html:145
 msgid "Points on Map"
 msgstr ""
 
 #: templates/project/old_view.html:121 templates/project/old_view.html:257
+#: templates/project/view.html:62
 msgid "Collaborators"
 msgstr ""
 
-#: templates/project/old_view.html:142 templates/project/view.html:209
+#: templates/project/old_view.html:142 templates/project/view.html:208
 msgid "No contents have been added to this project yet"
 msgstr ""
 
-#: templates/project/old_view.html:155 templates/project/view.html:222
+#: templates/project/old_view.html:155 templates/project/view.html:221
 msgid "No organizations have been added to this project yet"
 msgstr ""
 
-#: templates/project/old_view.html:168 templates/project/view.html:235
+#: templates/project/old_view.html:168 templates/project/view.html:234
 msgid "No communities have been added to this project yet"
 msgstr ""
 
-#: templates/project/old_view.html:181 templates/project/view.html:248
+#: templates/project/old_view.html:181 templates/project/view.html:247
 msgid "No needs have been added to this project yet"
 msgstr ""
 
-#: templates/project/old_view.html:194 templates/project/view.html:261
+#: templates/project/old_view.html:194 templates/project/view.html:260
 msgid "No resources have been added to this project yet"
 msgstr ""
 
 #: templates/project/old_view.html:207 templates/project/old_view.html:220
-#: templates/project/view.html:274
+#: templates/project/view.html:273
 msgid "No investments have been added to this project yet"
 msgstr ""
 
@@ -3069,11 +3076,23 @@ msgstr ""
 msgid "Add this content to a project"
 msgstr ""
 
+#: templates/project/view.html:60
+msgid "Project"
+msgstr ""
+
+#: templates/project/view.html:61
+msgid "Content"
+msgstr ""
+
 #: templates/project/view.html:75
 msgid "See all objects on map"
 msgstr ""
 
-#: templates/project/view.html:287 templates/project/view.html.py:303
+#: templates/project/view.html:138
+msgid "No content have been added to this project yet"
+msgstr ""
+
+#: templates/project/view.html:286 templates/project/view.html.py:302
 msgid "This project has no collaborators yet"
 msgstr ""
 
@@ -3096,7 +3115,9 @@ msgstr ""
 #: templates/resource/edit.html:43 templates/resource/new.html:33
 #: templates/resource/new_frommap.html:25
 msgid ""
-"Please inform the name of this resource. Try to be specific. Instead of \\"
+"Please inform the name of this resource. Try to be specific. Instead of "
+"\"Community Library\" inform also the name of the city or neighbourhood, for "
+"instance: Community Library (Santa Barbara)."
 msgstr ""
 
 #: templates/resource/edit.html:46 templates/resource/new.html:36
