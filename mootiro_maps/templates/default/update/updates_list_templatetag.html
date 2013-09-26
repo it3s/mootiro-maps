@@ -6,7 +6,7 @@
 <div class="content-updates">
 
   <ul class="tabs horizontal">
-    <li class="tab first last"><a href="#updates-panel">{% trans "last updates" %}</a></li>
+    <li class="tab first last"><a href="#updates-panel">{% trans "Last updates" %}</a></li>
     <!--
     <li class="tab"><a href="#discussions-panel">{% trans "discussions" %}</a></li>
     <li class="tab last"><a href="#my-content-panel">{% trans "my content" %}</a></li>
@@ -19,19 +19,19 @@
       <span class="attenuate small">{% trans "Type" %}</span>
       <ul class="frontpage-filters-list">
           <li class="frontpage-filter-item active-filter">
-          <img src="{{ STATIC_URL }}img/community.png" alt="community" title='{%trans "activate/deactivate Community" %}'/>
+          <img src="{{ STATIC_URL }}img/community.png" alt="community" title='{%trans "enable/disable Community" %}'/>
           </li>
           <li class="frontpage-filter-item active-filter">
-              <img src="{{ STATIC_URL }}img/need.png" alt="need" title='{%trans "activate/deactivate Need" %}'/>
+              <img src="{{ STATIC_URL }}img/need.png" alt="need" title='{%trans "enable/disable Need" %}'/>
           </li>
           <li class="frontpage-filter-item active-filter">
-              <img src="{{ STATIC_URL }}img/organization.png" alt="organization" title='{%trans "activate/deactivate Organization" %}'/>
+              <img src="{{ STATIC_URL }}img/organization.png" alt="organization" title='{%trans "enable/disable Organization" %}'/>
           </li>
           <li class="frontpage-filter-item active-filter">
-              <img src="{{ STATIC_URL }}img/resource.png" alt="resource" title='{%trans "activate/deactivate Resource" %}'/>
+              <img src="{{ STATIC_URL }}img/resource.png" alt="resource" title='{%trans "enable/disable Resource" %}'/>
           </li>
           <li class="frontpage-filter-item active-filter">
-              <img src="{{ STATIC_URL }}img/investment.png" alt="investment" title='{%trans "activate/deactivate Investment" %}'/>
+              <img src="{{ STATIC_URL }}img/investment.png" alt="investment" title='{%trans "enable/disable Investment" %}'/>
           </li>
       </ul>
     </div>
@@ -58,25 +58,25 @@
                     discussed
                   {% endblocktrans %}
                 {% endif %}
-                
+
                 {% if u.type == "I" %}
                   {% with o=u.get_object.inserted_buckets.Organization|length r=u.get_object.inserted_buckets.Resource|length c=u.get_object.inserted_buckets.Community n=u.get_object.inserted_buckets.Need|length %}
                     {% if c %}
                       {{c}} {% blocktrans count num=c %}community{% plural %}communities{% endblocktrans %}{% if o and r %},{% else %}{% if o or r %} {% trans "and" %}{% endif %}{% endif %}
                     {% endif %}
-                    
+
                     {% if o %}
                       {{o}} {% blocktrans count num=o %}organization{% plural %}organizations{% endblocktrans %}{% if c or r %} {% trans "and" %}{% endif %}
                     {% endif %}
-                    
+
                     {% if r %}
                       {{r}} {% blocktrans count num=r %}resource{% plural %}resources{% endblocktrans %}
                     {% endif %}
-                    
+
                     {% if n %}
                       {{n}} {% blocktrans count num=n %}need{% plural %}needs{% endblocktrans %}
                     {% endif %}
-                    
+
                     {% with n=c|add:o|add:r %}
                       {% blocktrans count num=n %}
                         imported into project
@@ -91,22 +91,22 @@
                 {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
                   {% trans "for the need" %} <a href="{{ u.instances.1.link }}">{{ u.instances.1.name }}</a>
                 {% else %}
-                <a href="{{ u.instance.link }}" title='{% trans "see this object page" %}'>{{ u.instance.name }}</a>
+                <a href="{{ u.instance.link }}" title='{% trans "learn more about this object" %}'>{{ u.instance.name }}</a>
                 {% endif %}
               </h3>
-              
+
               {% if not compact %}
               <div class="right">
-                <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map" title='{% trans "see on map"%}'></i></a>
+                <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map" title='{% trans "View on map"%}'></i></a>
               </div>
               {% endif %}
-              
+
               <div class="clear-both"></div>
-              
+
               {% if not compact %}
                 {% communities_list u.communities %}
               {% endif %}
-                
+
               <div class="clear-both"></div>
               <div class="update-message left">
                 <strong>{{ u.readable_type|capfirst }}</strong> {{ u.date|naturaltime }}
@@ -117,7 +117,7 @@
                   {% users_list u.users %}
                 {% endif %}
               </div>
-              
+
               {% if not compact %}
               <div class="update-social right">
                 <a href="{{ u.instance.link }}#Comments">

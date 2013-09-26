@@ -12,11 +12,11 @@
 <div id="main-content">
   <div class="main-column">
 
-    <div class='form-legend'>{% trans 'Form Proposal' %}</div>
+    <div class='form-legend'>{% trans 'Create a proposal for this need' %}</div>
 
     <div class='alert alert-info required-notice' data-alert='info'>
         <div class='msg'>
-            Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+          {% trans '<strong>*</strong> required fields!' %}
         </div>
     </div>
     {% crispy form form.helper %}

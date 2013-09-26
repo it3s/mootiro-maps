@@ -13,7 +13,7 @@ define (require)->
     window.komoo.event ?= googleMaps.event
 
     # Defining translatable strings here as constantes to prevent an mysterious issue
-    _NEXT_STEP = gettext 'Next Step'
+    _NEXT_STEP = gettext 'Next step'
     _CANCEL = gettext 'Cancel'
     _CLOSE = gettext 'Close'
     _ADD_SHAPE = gettext 'Add shape'

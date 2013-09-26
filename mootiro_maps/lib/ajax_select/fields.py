@@ -94,7 +94,7 @@ class AutoCompleteSelectField(forms.fields.CharField):
         widget = kwargs.get("widget", False)
 
         if not widget or not isinstance(widget, AutoCompleteSelectWidget):
-            help_text = kwargs.get('help_text',_('Enter text to search.'))
+            help_text = kwargs.get('help_text',_('Enter text to search field'))
             show_help_text = kwargs.pop('show_help_text',False)
             kwargs["widget"] = AutoCompleteSelectWidget(channel=channel,help_text=help_text,show_help_text=show_help_text)
         super(AutoCompleteSelectField, self).__init__(max_length=255,*args, **kwargs)
@@ -135,7 +135,7 @@ class AutoCompleteSelectMultipleWidget(forms.widgets.SelectMultiple):
         super(AutoCompleteSelectMultipleWidget, self).__init__(*args, **kwargs)
         self.channel = channel
 
-        self.help_text = help_text or _('Enter text to search.')
+        self.help_text = help_text or _('Enter text to search field')
         self.show_help_text = show_help_text
 
     def render(self, name, value, attrs=None):
@@ -300,7 +300,7 @@ class AutoCompleteField(forms.CharField):
     def __init__(self, channel, *args, **kwargs):
         self.channel = channel
 
-        widget_kwargs = dict(help_text=kwargs.get('help_text', _('Enter text to search.')))
+        widget_kwargs = dict(help_text=kwargs.get('help_text', _('Enter text to search field')))
         widget_kwargs['show_help_text'] = kwargs.pop('show_help_text',False)
         if 'attrs' in kwargs:
             widget_kwargs['attrs'] = kwargs.pop('attrs')

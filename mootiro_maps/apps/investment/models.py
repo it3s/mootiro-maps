@@ -117,8 +117,8 @@ class Investment(models.Model):
     """
 
     CURRENCIES_CHOICES = (
-        ('BRL', _('Real')),
-        ('USD', _('Dollar')),
+        ('BRL', _('Brazilian Real (BRL)')),
+        ('USD', _('US-Dollar (USD)')),
         ('EUR', _('Euro')),
     )
 

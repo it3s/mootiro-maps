@@ -9,208 +9,206 @@
 
 {% block content %}
 
-<!-- FIXME: Uncomment. Waiting for it3s site to be ready for the donation link.
-<a class="no-decoration" href="#">
+<a class="no-decoration" href="http://www.it3s.org/Colabore/Doacoes/">
   <div id="donate">
     <h2>{% trans "Donate!" %}</h2>
   </div>
 </a>
--->
 
 <div id="main-content" class="use-cases frontpage">
   <h1 class="initial-heading">
-    Para que usar o MootiroMaps?
+    {% trans "Projects to be done with MootiroMaps" %}
   </h1>
-  <strong>Guia de casos de uso</strong>
+  <strong>{% trans "Main use cases" %}</strong>
 
   <div class="contents">
     <ul>
-      <li><a href="#guia_do_bairro">Guia do bairro</a></li>
-      <li><a href="#diagnostico_de_territorio">Diagnóstico de território</a></li>
-      <li><a href="#mapeamento_de_redes">Mapeamento de redes</a></li>
-      <li><a href="#avaliacao_de_projetos_e_programas">Avaliação de projetos e programas</a></li>
-      <li><a href="#jornalismo_de_dados">Incidência política/jornalismo de dados</a></li>
+      <li><a href="#guia_do_bairro">{% trans "Neighbourhood Guide" %}</a></li>
+      <li><a href="#diagnostico_de_territorio">{% trans "Diagnosis of a community or territory" %}</a></li>
+      <li><a href="#mapeamento_de_redes">{% trans "Network mapping" %}</a></li>
+      <li><a href="#avaliacao_de_projetos_e_programas">{% trans "Programme and project evaluation" %}</a></li>
+      <li><a href="#jornalismo_de_dados">{% trans "Data journalism and advocacy" %}</a></li>
     </ul>
   </div>
 
   <div id="guia_do_bairro" class="section">
-    <h2>Guia do bairro</h2>
+    <h2>{% trans "Neighbourhood Guide" %}</h2>
     <img src="{{STATIC_URL}}img/frontpage/neighborhood-guide.png"/>
     <div>
-    <h3>Cenário</h3>
-    Às vezes informações sobre comunidades populares são escassas, assim como não dispõem de mapas oficiais. A causa pode ser a existência de irregularidades ainda não resolvidas em moradias e ocupações nesses territórios. A falta de informações dificulta que moradores conheçam os espaços locais e que apoios externos cheguem até a comunidade.
-    <h3>Objetivos</h3>
+    <h3>{% trans "When to use" %}</h3>
+    <p>{% blocktrans %}Sometimes, information about slum communities is extremely scarce and they lack offical maps. A reason for this can be irregular settlements and unresolved housing issues. As there are no maps, it might be difficult for residents to access services and for associations to plan the development of the community and explain its demands to external donors.{% endblocktrans %}</p>
+    <h3>{% trans "Why to use" %}</h3>
     <ul>
-      <li>Mostrar para grupos externos o que a comunidade oferece;</li>
-      <li>Colaborar para que moradores valorizem sua comunidade;</li>
-      <li>Facilitar a integração de novos moradores.</li>
+      <li>{% trans "Show to external groups what the communities offers;" %}</li>
+      <li>{% trans "Promote that local residents value their community and local achievements;" %}</li>
+      <li>{% trans "Facilitate the integration of recently arrived residents." %}</li>
     </ul>
-    <h3>Quem realiza</h3>
+    <h3>{% trans "Who should participate in the mapping" %}</h3>
     <ul>
-      <li>ONGs;</li>
-      <li>Associações do bairro;</li>
-      <li>Atores sociais e lideranças locais.</li>
+      <li>{% trans "NGOs;" %}</li>
+      <li>{% trans "Community associations;" %}</li>
+      <li>{% trans "Community service providers and local leaders." %}</li>
     </ul>
-    <h3>Estratégias de trabalho</h3>
+    <h3>{% trans "Strategies" %}</h3>
     <ul>
-      <li>Saídas a campo e mutirões de mapeamento utilizando GPS, máquina fotográfica etc;</li>
-      <li>Oficinas para formação de usuários e mapeadores;</li>
-      <li>Entrevistas com moradores e lideranças locais;</li>
-      <li>Divulgação do guia do bairro junto aos canais de mídia comunitárias (rádio, jornal e TVs locais);</li>
-      <li>Criação de mapas ou guia do bairro impresso da comunidade e distribuição.</li>
+      <li>{% trans "Outdoor mapping activities using GPS, cameras and questionnaires;" %}</li>
+      <li>{% trans "Workshops about community mapping and collaborative web applications;" %}</li>
+      <li>{% trans "Interviews with residents and community leaders;" %}</li>
+      <li>{% trans "Spreading the word about your neighbourhood guide using local media like community newspapers, local radio stations and community events;" %}</li>
+      <li>{% trans "Printing of maps and neighbourhood guides and distribution in the community." %}</li>
     </ul>
-    <h3>Veja projetos nesta linha</h3>
+    <h3>{% trans "Related projects" %}</h3>
     <ul>
-      <li><a href="http://maps.mootiro.org/project/30">Projeto Ilha</a></li>
+      <li><a href="http://maps.mootiro.org/project/30">{% trans "Projeto Ilha (Portuguese only)" %}</a></li>
     </ul>
     </div>
   </div>
 
 
   <div id="diagnostico_de_territorio" class="section">
-    <h2>Diagnóstico de território</h2>
+    <h2>{% trans "Diagnosis of a community or territory" %}</h2>
     <img src="{{STATIC_URL}}img/frontpage/community-diagnosis.png"/>
     <div>
-    <h3>Cenário</h3>
-    Para planejar ações de melhoria em uma comunidade - seja em infraestrutura, como moradia, saneamento, urbanização, ou em serviços socioassistenciais e de promoção de direitos básicos, como proteção sociofamiliar, saúde, educação - é necessário dispor de indicadores sociais fidedignos. No entanto, quando existem, esses dados não estão compilados ou centralizados em uma mesma fonte, dificultando seu acesso.
-    <h3>Objetivos</h3>
+    <h3>{% trans "When to use" %}</h3>
+    <p>{% blocktrans %}In order to plan for community improvement - for instance, infrastructure, adequate housing, sanitation, slum upgrading or to implement new social services and promote fundamental human rights like access to education and health services it is important to have a broad set of confident social indicators. Often, this data does not exist for low income communities or is not available in terms of open data.{% endblocktrans %}</p>
+    <h3>{% trans "Why to use" %}</h3>
     <ul>
-      <li>Gerar, organizar e analisar indicadores sociais;</li>
-      <li>Consolidar todas as informações referentes ao desenvolvimento de uma comunidade ou território;</li>
-      <li>Acompanhar os investimentos e qualidade dos serviços públicos;</li>
-      <li>Planejar o desenvolvimento da comunidade;</li>
-      <li>Decidir onde atuar ou em quais projetos investir.</li>
+      <li>{% trans "Produce, organize and analyse social indicators;" %}</li>
+      <li>{% trans "Consolidate and cross all information related to the development of a community or territory;" %}</li>
+      <li>{% trans "Monitor community investments and quality of public services;" %}</li>
+      <li>{% trans "Planning for the development of the community;" %}</li>
+      <li>{% trans "Decide where to act and in which projects to invest;" %}</li>
     </ul>
-    <h3>Quem usa</h3>
+    <h3>{% trans "Who makes use of these maps" %}</h3>
     <ul>
-      <li>ONGs;</li>
-      <li>Associações de bairro;</li>
-      <li>Fundações e institutos empresariais;</li>
-      <li>Poder público.</li>
+      <li>{% trans "NGOs;" %}</li>
+      <li>{% trans "Community associations;" %}</li>
+      <li>{% trans "Foundations and corporate responsability departments;" %}</li>
+      <li>{% trans "Government institutions." %}</li>
     </ul>
-    <h3>Estratégias de trabalho</h3>
+    <h3>{% trans "Strategies" %}</h3>
     <ul>
-      <li>Pedido de informação pública (baseado na Lei de Acesso à Informação);</li>
-      <li>Qualificação de dados e importação;</li>
-      <li>Saídas a campo e mutirões de mapeamento utilizando GPS, máquina fotográfica etc;</li>
-      <li>Oficina para formação de mapeadores nas organizações;</li>
-      <li>Fórum comunitário ou oficina para discussão do diagnóstico e levantamento de ideias para intervenções comunitárias;</li>
-      <li>Acompanhamento das intervenções comunitárias.</li>
+      <li>{% trans "Freedom of Information Requests;" %}</li>
+      <li>{% trans "Cleaning data, geocoding and import to MootiroMaps;" %}</li>
+      <li>{% trans "Outdoor mapping activities using GPS, cameras and questionnaires;" %}</li>
+      <li>{% trans "Workshops about access to information, open data and collaborative technologies;" %}</li>
+      <li>{% trans "Community forum or workshops to discuss the diagnosis and brainstorm ideas for community improvements;" %}</li>
+      <li>{% trans "Monitoring of community interventions, such as housing projects, investment in infrastructure and so on;" %}</li>
     </ul>
-    <h3>Veja projetos nesta linha</h3>
+    <h3>{% trans "Related projects" %}</h3>
     <ul>
-      <li><a href="http://maps.mootiro.org/project/33">Territórios da Juventude</a></li>
-      <li><a href="http://maps.mootiro.org/project/40">Litoral Sustentável</a></li>
-      <li><a href="http://maps.mootiro.org/project/22">Heliópolis - Bairro Educador</a></li>
-      <li><a href="http://maps.mootiro.org/project/17">Mapa de oportunidades - Aldeias Infantis</a></li>
+      <li><a href="http://maps.mootiro.org/project/33">{% trans "Territories for Youth (Portuguese only)" %}</a></li>
+      <li><a href="http://maps.mootiro.org/project/40">{% trans "Sustainable Coastline (Portuguese only)" %}</a></li>
+      <li><a href="http://maps.mootiro.org/project/22">{% trans "Heliópolis - a learning community (Portuguese only)" %}</a></li>
+      <li><a href="http://maps.mootiro.org/project/17">{% trans "Map of opportunities - SOS Children's Villages" %}</a></li>
     </ul>
     </div>
   </div>
 
 
   <div id="mapeamento_de_redes" class="section">
-    <h2>Mapeamento de redes</h2>
+    <h2>{% trans "Network mapping" %}</h2>
     <img src="{{STATIC_URL}}img/frontpage/network-mapping.png"/>
     <div>
-    <h3>Cenário</h3>
-    ONGs vêm trabalhando em rede para potencializar seus resultados na luta por uma causa em comum. A estratégia de rede ajuda a gerar maior visibilidade para um tema, pautando meios de comunicação, atraindo novas organizações engajadas e também parceiros dispostos a apoiar a iniciativa. Nesse sentido, a gestão de conhecimento (link para o site institucional, em “Gestão de conhecimento”, dentro de prestação de serviços) e a troca de informações entre os integrantes é fundamental para a manutenção da própria rede, fortalecendo a comunicação e empoderando os atores envolvidos.
-    <h3>Objetivos</h3>
+    <h3>{% trans "When to use" %}</h3>
+    <p>{% blocktrans %}Nonprofit organizations use to join in networks in order to do advocacy and promote a common cause. Networking gives more visibility to a certain topic, helps to access journalists and media channels and engage with new partners. Knowledge management and sharing information and experiences are critical for achieving results, help to strengthen communication and empower the actors involved.{% endblocktrans %}</p>
+    <h3>{% trans "Why to use" %}</h3>
     <ul>
-      <li>Avaliar a disseminação da rede e poder planejar onde ela deve procurar novos membros;</li>
-      <li>Gerar transparência sobre o trabalho da rede;</li>
-      <li>Facilitar a comunicação e colaboração entre seus participantes;</li>
-      <li>Fomentar o intercâmbio de melhores práticas de trabalho e metodologias.</li>
+      <li>{% trans "Evaluate the spread of the network and plan where it should look for new members;" %}</li>
+      <li>{% trans "Improve transparency about the actions of the network;" %}</li>
+      <li>{% trans "Facilitate communication and collaboration between participants;" %}</li>
+      <li>{% trans "Promote exchange of best practices and methodologies between members;" %}</li>
     </ul>
-    <h3>Quem usa</h3>
+    <h3>{% trans "Who makes use of these maps" %}</h3>
     <ul>
-      <li>ONGs;</li>
-      <li>Fundações e institutos empresariais que fomentam o trabalho das redes.</li>
+      <li>{% trans "NGOs;" %}</li>
+      <li>{% trans "Foundations and companies that promote advocacy networks;" %}</li>
     </ul>
-    <h3>Estratégias de trabalho</h3>
+    <h3>{% trans "Strategies" %}</h3>
     <ul>
-      <li>Pesquisa junto às organizações;</li>
-      <li>Qualificação colaborativa e de dados e importação;</li>
-      <li>Criação de um manual de edição dos cadastros e acompanhamento à distância;</li>
-      <li>Integração do mapa no site institucional da rede.</li>
+      <li>{% trans "Research together with member organizations;" %}</li>
+      <li>{% trans "Collaborative work to qualify data and import to the map;" %}</li>
+      <li>{% trans "Elaboration of a user manual and online assistance;" %}</li>
+      <li>{% trans "Embed the map into the institutional website of the network;" %}</li>
     </ul>
-    <h3>Veja projetos nesta linha</h3>
+    <h3>{% trans "Related projects" %}</h3>
     <ul>
-      <li><a href="http://maps.mootiro.org/project/9">Redes pelos Direitos da Criança e do Adolescente</a></li>
-      <li><a href="http://maps.mootiro.org/project/3">Rede de Conselhos</a></li>
+      <li><a href="http://maps.mootiro.org/project/9">{% trans "Networks for the Rights of Children and Adolescents (Portuguese only)" %}</a></li>
+      <li><a href="http://maps.mootiro.org/project/3">{% trans "Network of Councils of Children's and Adolescents' Rights (Portuguese only)" %}</a></li>
     </ul>
     </div>
   </div>
 
 
   <div id="avaliacao_de_projetos_e_programas" class="section">
-    <h2>Avaliação de projetos e programas</h2>
+    <h2>{% trans "Programme and project evaluation" %}</h2>
     <img src="{{STATIC_URL}}img/frontpage/project-evaluation.png"/>
     <div>
-    <h3>Cenário</h3>
-    Comunidades muitas vezes são atendidas por programas desenvolvidos por ONGs e pelo poder público. A análise de informações geradas durante a execução dessas ações é central para mensurar resultados e implementar modificações nas estratégias. A cultura de avaliação e compartilhamento de metodologias ajuda não apenas a aperfeiçoar os programas como permite que outros atores repliquem as iniciativas.
-    <h3>Objetivos</h3>
+    <h3>{% trans "When to use" %}</h3>
+    <p>{% blocktrans %}Communities frequently receive support from nonprofit organizations and are attended by public policies. It is important to track progress and analyze information about the outcomes and impact of these programmes in order to measure results and adapt strategies. By implementing a culture of evaluation and share methologies it is possible to improve programmes as well as help others to learn from your experience and replicate your ideas somewhere else.{% endblocktrans %}</p>
+    <h3>{% trans "Why to use" %}</h3>
     <ul>
-      <li>Gerar transparência sobre a atuação da ONG, Fundação ou ator público;</li>
-      <li>Criar um mapa e publicá-lo em seu site institucional;</li>
-      <li>Encontrar melhores práticas e sistematizar metodologias;</li>
-      <li>Avaliar a eficácia e/ou eficiência dos programas e criar informações gerenciais.</li>
+      <li>{% trans "Increase transparency about the work of nonprofit organizations, foundations and public institutions;" %}</li>
+      <li>{% trans "Embed the map into the institutional website of the network;" %}</li>
+      <li>{% trans "Find best practices and systematize methodologies;" %}</li>
+      <li>{% trans "Evaluate the effectiveness and efficiency of programmes and produce project management information;" %}</li>
     </ul>
-    <h3>Quem usa</h3>
+    <h3>{% trans "Who makes use of these maps" %}</h3>
     <ul>
-      <li>ONGs;</li>
-      <li>Fundações;</li>
-      <li>Pode público;</li>
-      <li>Associações de bairro.</li>
+      <li>{% trans "NGOs;" %}</li>
+      <li>{% trans "Foundations;" %}</li>
+      <li>{% trans "Government institutions;" %}</li>
+      <li>{% trans "Community associations;" %}</li>
     </ul>
-    <h3>Estratégias de trabalho</h3>
+    <h3>{% trans "Strategies" %}</h3>
     <ul>
-      <li>Planejamento do projeto;</li>
-      <li>Formação da equipe;</li>
-      <li>Pedido de informação pública (baseado na Lei de Acesso à Informação);</li>
-      <li>Qualificação de dados e importação;</li>
-      <li>Produção de análises e visualizações.</li>
+      <li>{% trans "Project planning;" %}</li>
+      <li>{% trans "Team building;" %}</li>
+      <li>{% trans "Freedom of Information Requests;" %}</li>
+      <li>{% trans "Cleaning data, geocoding and import to MootiroMaps;" %}</li>
+      <li>{% trans "Data analysis and visualization;" %}</li>
     </ul>
-    <h3>Veja projetos nesta linha</h3>
+    <h3>{% trans "Related projects" %}</h3>
     <ul>
-      <li><a href="http://maps.mootiro.org/project/21">MOVA-Brasil</a></li>
-      <li><a href="http://maps.mootiro.org/project/54">Jovens Urbanos - Avaliação do Programa</a></li>
+      <li><a href="http://maps.mootiro.org/project/21">{% trans "MOVA-Brasil (Portuguese only)" %}</a></li>
+      <li><a href="http://maps.mootiro.org/project/54">{% trans "Jovens Urbanos - Programme Evaluation (Portuguese only)" %}</a></li>
     </ul>
     </div>
   </div>
 
 
   <div id="jornalismo_de_dados" class="section">
-    <h2>Incidência política/jornalismo de dados</h2>
+    <h2>{% trans "Data journalism and advocacy" %}</h2>
     <img src="{{STATIC_URL}}img/frontpage/data-journalism.png"/>
     <div>
-    <h3>Cenário</h3>
-    O enfrentamento à corrupção, a irregularidades na gestão pública e a desigualdades sociais tem no jornalismo de dados um aliado. Essa modalidade de jornalismo está cada vez mais interessada em publicizar dados antes restrito ao governo (com base na Lei de Acesso à Informação) e em analisar e interpretar tais informações junto à sociedade, colaborando assim com a mobilização de outros atores sociais.
-    <h3>Objetivos</h3>
+    <h3>{% trans "When to use" %}</h3>
+    <p>{% blocktrans %}Data journalism is an important ally in fighting corruption, tackling irregularities in public administration and social inequality. This type of journalism is increasingly interested in open up data and base stories on data analysis. Formerly restricted to government institutions, data is being accessed using Freedom of Information Act and analyzed and interpreted with help of other social actors.{% endblocktrans %}</p>
+    <h3>{% trans "Why to use" %}</h3>
     <ul>
-      <li>Facilitar a leitura e análise dos dados;</li>
-      <li>Gerar mapas que podem ser utilizados em notícias ou reivindicações junto ao poder público.</li>
+      <li>{% trans "Facilitate the understanding and analysis of data;" %}</li>
+      <li>{% trans "Produce maps which can be used in journalistic articles or claims towards government institutions." %}</li>
     </ul>
-    <h3>Quem usa</h3>
+    <h3>{% trans "Who makes use of these maps" %}</h3>
     <ul>
-      <li>Jornalistas;</li>
-      <li>Moradores/comunicadores populares;</li>
-      <li>ONGs e movimentos sociais;</li>
-      <li>Cidadãos interessados.</li>
+      <li>{% trans "Journalists;" %}</li>
+      <li>{% trans "Local residents and civic journalists;" %}</li>
+      <li>{% trans "NGOs and social movements;" %}</li>
+      <li>{% trans "Interested citizens." %}</li>
     </ul>
-    <h3>Estratégias de trabalho</h3>
+    <h3>{% trans "Strategies" %}</h3>
     <ul>
-      <li>Pedido de informação pública (baseado na Lei de Acesso à Informação);</li>
-      <li>Qualificação de dados e importação;</li>
-      <li>Produção de análises e visualizações;</li>
-      <li>Criação de um hotsite para o projeto;</li>
-      <li>Divulgação de notícias em blogues e redes sociais.</li>
+      <li>{% trans "Freedom of Information Requests;" %}</li>
+      <li>{% trans "Cleaning data, geocoding and import to MootiroMaps;" %}</li>
+      <li>{% trans "Data cleaning and visualizations;" %}</li>
+      <li>{% trans "Development of a hotsite for the cause/project;" %}</li>
+      <li>{% trans "Spreading news about your findings using blogs and social networks." %}</li>
     </ul>
-    <h3>Veja projetos nesta linha</h3>
+    <h3>{% trans "Related projects" %}</h3>
     <ul>
-      <li><a href="http://maps.mootiro.org/project/5">Acesso à informação</a></li>
-      <li><a href="http://maps.mootiro.org/project/32">Observatório de Educação</a></li>
-      <li><a href="http://maps.mootiro.org/project/41">Observatório de Meio Ambiente</a></li>
-      <li><a href="http://maps.mootiro.org/project/39">Observatório de Assistência Social</a></li>
+      <li><a href="http://maps.mootiro.org/project/5">{% trans "Access to information (Portuguese only)" %}</a></li>
+      <li><a href="http://maps.mootiro.org/project/32">{% trans "Education Observatory (Portuguese only)" %}</a></li>
+      <li><a href="http://maps.mootiro.org/project/41">{% trans "Environment Observatory (Portuguese only)" %}</a></li>
+      <li><a href="http://maps.mootiro.org/project/39">{% trans "Social Assistance Observatory (Portuguese only)" %}</a></li>
     </ul>
     </div>
   </div>

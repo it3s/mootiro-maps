@@ -12,14 +12,14 @@
 
             <div class="form-legend">
                 {% if  project %}
-                    {% trans 'Edit Project' %}
+                    {% trans 'Edit project' %}
                 {% else %}
-                    {% trans 'New Project' %}
+                    {% trans 'New project' %}
                 {% endif %}
             </div>
             <div class='alert alert-info required-notice' data-alert='info'>
                 <div class='msg'>
-                    Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+                  {% trans '<strong>*</strong> required fields!' %}
                 </div>
             </div>
 
@@ -28,7 +28,7 @@
             {% if project and project.related_objects.count %}
                 <hr/>
                 <div class="form-legend">
-                    {% trans 'Edit Project Associations' %}
+                    {% trans 'Edit associated contents of this project' %}
                 </div>
                 <ul>
                     {% for obj in project.related_objects %}
@@ -38,7 +38,7 @@
                     </li>
                     {% endfor %}
                 </ul>
-                <div class="button" id="delete-associations-btn">{% trans "Deleted marked associations" %}</div>
+                <div class="button" id="delete-associations-btn">{% trans "Delete selected associations" %}</div>
             {% endif %}
         </div>
     </div>

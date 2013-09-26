@@ -110,7 +110,7 @@ $(function () {
             var form = $("#report-content-form");
             form.clearForm();
             dialog = box.dialog({
-                title: gettext("Report Abuse"),
+                title: gettext("Report abuse"),
                 width: 450,
                 modal: true,
                 resizable: false,
@@ -166,7 +166,7 @@ $(function () {
                                 unexpectedError(info);
                             } else {
                                 button.addClass("disabled");
-                                flash(gettext("Your request was successfully sent"));
+                                flash(gettext("Your request was successfully submitted."));
                                 dialog.dialog("close");
                             }
                         },
@@ -229,7 +229,7 @@ $(function () {
             form.clearForm();
             $("input[name=action]", form).val("request");
             dialog = box.dialog({
-                title: gettext("Deletion Request"),
+                title: gettext("Request for deletion"),
                 width: 450,
                 modal: true,
                 resizable: false,
@@ -270,14 +270,14 @@ $(function () {
                         openDeletionRequestDialog(button);
                     } else if (data.next == "showDeleteFeedback") {
                         button.addClass("disabled");
-                        flash(gettext("The content was successfully deleted"), -1);
+                        flash(gettext("The content was successfully deleted."), -1);
                         var $mainContent = $("#main-content");
                         $("#content").height($mainContent.height());
                         $mainContent.fadeOut();
                         setTimeout(function () {window.location.href = dutils.urls.resolve('root') }, 3000);
                     } else if (data.next == "showRequestFeedback") {
                         button.addClass("disabled");
-                        flash(gettext("Your request was successfully sent"));
+                        flash(gettext("Your request was successfully submitted."));
                     }
                 } else {
                     var info = JSON.stringify({

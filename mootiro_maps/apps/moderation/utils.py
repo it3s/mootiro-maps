@@ -114,7 +114,7 @@ Comment: {9}
             user, user.id, user.email, report.reason_name, comment)
 
     try:
-        mail_admins(_('Content report'), body, fail_silently=False)
+        mail_admins(_('Report of abuse'), body, fail_silently=False)
     except SMTPException, e:
         logger.debug('An error occurred while sending email ' \
                 'to admin : {}'.format(e))

@@ -9,14 +9,14 @@
   </li>
   {% if not Community and not Need and not Organization and not Resource %}
   <li>
-    {% trans "No results found." %}
+    {% trans "No results found" %}
   </li>
   {% endif %}
   {% if Community %}
   <li class="communities">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/community.png"/></div>
     <span>
-      {% blocktrans count counter=Community|length %}{{ counter }} Community{% plural %}{{ counter }} Communities{% endblocktrans %}
+      {% blocktrans count counter=Community|length %}{{ counter }} community{% plural %}{{ counter }} communities{% endblocktrans %}
     </span>
   </li>
   <li class="community sublist">
@@ -34,7 +34,7 @@
   <li class="needs">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/need.png"/></div>
     <span>
-      {% blocktrans count counter=Need|length %}{{ counter }} Need{% plural %}{{ counter }} Needs{% endblocktrans %}
+      {% blocktrans count counter=Need|length %}{{ counter }} need{% plural %}{{ counter }} needs{% endblocktrans %}
     </span>
   </li>
   <li class="need sublist">
@@ -52,7 +52,7 @@
   <li class="organizations">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/organization.png"/></div>
     <span>
-      {% blocktrans count counter=Organization|length %}{{ counter }} Organization{% plural %}{{ counter }} Organizations{% endblocktrans %}
+      {% blocktrans count counter=Organization|length %}{{ counter }} organization{% plural %}{{ counter }} organizations{% endblocktrans %}
     </span>
   </li>
   <li class="organization sublist">
@@ -70,7 +70,7 @@
   <li class="resources">
     <div class="img-holder"><img src="{{ STATIC_URL }}img/resource.png"/></div>
     <span>
-      {% blocktrans count counter=Resource|length %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}
+      {% blocktrans count counter=Resource|length %}{{ counter }} resource{% plural %}{{ counter }} resources{% endblocktrans %}
     </span>
   </li>
   <li class="resource sublist">

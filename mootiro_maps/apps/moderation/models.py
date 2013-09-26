@@ -48,13 +48,13 @@ class Report(models.Model):
     WRONG, ANOTHER) = range(7)
 
     REASON_NAMES = {
-        DELETION_REQUEST: _('Deletion request'),
+        DELETION_REQUEST: _('Request for deletion'),
         SPAM: _('Spam'),
         INAPPROPRIATE: _('Inappropriate'),
-        TERMS_OF_USE: _('Terms Of Use Violation'),
-        COPYRIGHT: _('Copyright Violation'),
-        WRONG: _('Wrong Content'),
-        ANOTHER: _('Another Reason')
+        TERMS_OF_USE: _('Violation of Terms of Use'),
+        COPYRIGHT: _('Copyright violation'),
+        WRONG: _('Wrong information'),
+        ANOTHER: _('Other')
     }
 
     moderation = models.ForeignKey(Moderation, blank=False, null=False,

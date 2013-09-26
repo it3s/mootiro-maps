@@ -25,7 +25,7 @@
         <div class="profile-lp-header">
             <span class="profile-lp-header-username">{{ user_profile.name }}</span>
             {% if user.id == user_profile.id %}
-            <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn" title="Editar Perfil">
+            <a href="{% url profile_update %}" class="btn profile-lp-header-edit-btn" title="{% trans 'Edit profile' %}">
                 <i class="icon-pencil"></i>
             </a>
             {% endif %}
@@ -39,7 +39,7 @@
         <!-- user about_me info -->
         {% if user_profile.about_me %}
         <div class="profile-lp-contact">
-            <div class="profile-lp-contact-header">{% trans 'About Me' %}</div>
+            <div class="profile-lp-contact-header">{% trans 'About me' %}</div>
                 {{ user_profile.about_me|render_markup|safe }}
         </div>
         {% endif %}

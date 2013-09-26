@@ -14,14 +14,14 @@
   <div class="main-column">
     <div class='form-legend'>
       {% if investment.id %}
-        {% trans 'Edit Investment' %}</div>
+        {% trans 'Edit investment' %}</div>
       {% else %}
-        {% trans 'New Investment' %}</div>
+        {% trans 'New investment' %}</div>
       {% endif %}
 
     <div class='alert alert-info required-notice' data-alert='info'>
         <div class='msg'>
-            Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+            {% trans '<strong>*</strong> required fields!' %}
         </div>
     </div>
     {% crispy form form.helper %}
@@ -37,67 +37,67 @@
     $form.ajaxform();
     $form.komooFormHintBoxes({
       'title': {
-        hint: 'Coloque um nome ou título para este investimentos',
+        hint: '{% trans "Insert a name for this investment. You can make reference to a specific investment programme, inform the objective of the investment or its donor/grantee." %}',
         left: '720px',
         top: '-40%'
       },
       'description': {
-        hint: 'Coloque detalhes do  investimento, como será usado e etc',
+        hint: '{% trans "Please inform details about the investment. What shall be done with the money? What are its direct outcomes for the community? You can also link to spending data." %}',
         left: '720px',
         top: '30%'
       },
       'investor_type': {
-        hint: 'Escolha tipo de investidor se trata. Uma organização cadastrada no Maps ou uma Pessoa',
+        hint: '{% trans "Please inform the investor type. Is it an organization already registered on MootiroMaps or a private donor?" %}',
         left: '720px',
         top: '-35px'
       },
       'anonymous_investor': {
-        hint: 'Determine se o investidor é anônimo ou não.',
+        hint: '{% trans "Select here if the donor wishes to be anonymous or is not known." %}',
         left: '720px',
         top: '-22px'
       },
       'investor_organization': {
-        hint: 'Nome da Organização que esta fazendo o investimento',
+        hint: '{% trans "Inform the name of the organization, company or government institution that is responsible for the investment" %}',
         left: '720px',
         top: '-22px'
       },
       'investor_person': {
-        hint: 'Nome da Pessoa que esta fazendo o investimento',
+        hint: '{% trans "Inform the name of the private donor responsible for the investment" %}',
         left: '720px',
         top: '-22px'
       },
       'over_period': {
-        hint: 'Determine se o investimento será por um período ou data única.',
+        hint: '{% trans "This investment is related to a period or is it a one-time investment?" %}',
         left: '720px',
         top: '-22px'
       },
       'date': {
-        hint: 'Data do investimento.',
+        hint: '{% trans "Date of the investment" %}',
         left: '202px',
         top: '-20px'
       },
       'end_date': {
-        hint: 'Data de término do investimento.',
+        hint: '{% trans "End of the investment" %}',
         left: '202px',
         top: '-20px'
       },
       'value': {
-        hint: 'Valor do investimento.',
+        hint: '{% trans "Amount of money being invested" %}',
         left: '202px',
         top: '-10px'
       },
       'currency': {
-        hint: 'Tipo de moeda a ser usada no investimento (Dolar, Real, etc).',
+        hint: '{% trans "Currency related to the investment (Dollar, Brazilian Real, etc.)" %}',
         left: '135px',
         top: '-20px'
       },
       'files': {
-        hint: 'Você pode carregar fotos do recurso.',
+        hint: '{% trans "Please, upload fotos of the resource or link to photos on Wiki Commons or Flickr. Make sure that the photos are licensed under creative commons." %}',
         top: '10%',
         left: '720px'
       },
       'tags': {
-        hint: 'Coloque palavras que ajudem a ilustrar a necessidade, tal como "asfalto", "rua", "transporte".',
+        hint: '{% trans 'Please, insert tags that describe the need, for instance, "street light", "waste", "public transport", "cycling lane".' %}',
         top: '-18px',
         left: '720px'
       }

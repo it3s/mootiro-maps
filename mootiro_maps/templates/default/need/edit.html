@@ -13,14 +13,14 @@
     <div class="main-column">
 
       {% if need %}
-      <div class='form-legend'>{% trans 'Edit Need' %}</div>
+      <div class='form-legend'>{% trans 'Edit need' %}</div>
       {% else %}
-      <div class='form-legend'>{% trans 'New Need' %}</div>
+      <div class='form-legend'>{% trans 'New need' %}</div>
       {% endif %}
 
       <div class='alert alert-info required-notice' data-alert='info'>
           <div class='msg'>
-              Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+          {% trans '<strong>*</strong> required fields!' %}
           </div>
       </div>
 
@@ -49,25 +49,25 @@
           $('#need_form').komooFormHintBoxes({
             'title': {
               top: '-8px',
-              hint: 'Coloque um título que resuma a necessidade. Ex: "Asfaltar a rua X"'
+              hint: '{% trans 'Insert an explanatory title for your need, for example "Fix street lights on Magnolia Avenue". ' %}'
             },
             'description': {
               top: '45%',
-              hint: 'Coloque detalhes da necessidade. Explique o problema, suas causas, quem é prejudicado pelo problema, etc.'
+              hint: '{% trans "Gives details about this need. What is the problem about, why does it exist, who is affected by this problem and what has been tried to solve the situation so far?" %}'
             },
             'categories': {
-              hint: 'Informe onde sua necessidade se encaixa, qual é o tipo dela. Você pode escolher mais de um tipo. Ex.: "Asfaltar a rua X" -> Mobilidade',
+              hint: '{% trans 'Select the categories that most fit your need. For instance, the construction of a cycling lane is related to mobility and environment issues.' %}',
               top: '-35px'
             },
             'target_audiences': {
-              hint: 'As pessoas que essa necessidade afeta.'
+              hint: '{% trans "Who is being affected by this problem?" %}'
             },
             'tags': {
-              hint: 'Coloque palavras que ajudem a ilustrar a necessidade, tal como "asfalto", "rua", "transporte".',
+              hint: '{% trans 'Please, insert tags that describe the need, for instance, "street light", "waste", "public transport", "cycling lane".' %}',
               top: '-18px'
             },
             'files': {
-              hint: 'Coloque fotos, quando possível, da necessidade, como por exemplo, fotos de um buraco, ou lixo, ou falta de asfalto...',
+              hint: '{% trans "Please, upload some photos about this problem. Photos can help people to think about solutions." %}',
               top: '-32px'
             }
           });

@@ -26,7 +26,8 @@
     cursor: pointer;
     color: #505050; }
     #top #menu > ul, #top #side_menu > ul {
-      height: 100%; }
+      height: 100%;
+      /*li:hover,*/ }
       #top #menu > ul > li, #top #side_menu > ul > li {
         margin: 0;
         height: 100%;
@@ -42,12 +43,12 @@
         background: #b1dde8; }
       #top #menu > ul li .ico, #top #side_menu > ul li .ico {
         background: no-repeat center center; }
-      #top #menu > ul li:hover, #top #menu > ul li.active, #top #side_menu > ul li:hover, #top #side_menu > ul li.active {
+      #top #menu > ul li.active, #top #side_menu > ul li.active {
         font-weight: bold; }
       #top #menu > ul li:hover ul, #top #side_menu > ul li:hover ul {
         font-weight: normal; }
       #top #menu > ul li.active, #top #side_menu > ul li.active {
-        color: #fff; }
+        color: white; }
       #top #menu > ul li.active ul, #top #side_menu > ul li.active ul {
         color: #505050; }
       #top #menu > ul .map .ico, #top #side_menu > ul .map .ico {
@@ -71,7 +72,7 @@
       #top #menu > ul .objects .community:hover .ico, #top #side_menu > ul .objects .community:hover .ico {
         background-image: url("../img/menu/newmenu/community-hover.png"); }
       #top #menu > ul .objects .community.active, #top #side_menu > ul .objects .community.active {
-        background-color: #f7A941; }
+        background-color: #f7a941; }
       #top #menu > ul .objects .community.active .ico, #top #side_menu > ul .objects .community.active .ico {
         background-image: url("../img/menu/newmenu/community-active.png"); }
       #top #menu > ul .objects .organization .ico, #top #side_menu > ul .objects .organization .ico {
@@ -144,7 +145,8 @@
   #top #menu > ul > li {
     width: 120px; }
   #top #side_menu > ul > li {
-    width: 80px; }
+    min-width: 80px;
+    padding: 0 10px; }
   #top #side_menu li#login_button {
     background: #cce5ce;
     color: #009640; }
@@ -153,12 +155,12 @@
     color: #000; }
   #top #side_menu li#user_menu {
     width: 150px; }
-    #top #side_menu li#user_menu ul {
-      box-shadow: 0px -5px 0px 0px #b1dde8, 1px 1px 3px 1px rgba(50, 50, 50, 0.5); }
-      #top #side_menu li#user_menu ul li {
-        padding: 0.3em; }
-      #top #side_menu li#user_menu ul li:hover {
-        background: #dceff4; }
+  #top #side_menu li.dropdown_menu ul {
+    box-shadow: 0px -5px 0px 0px #b1dde8, 1px 1px 3px 1px rgba(50, 50, 50, 0.5); }
+    #top #side_menu li.dropdown_menu ul li {
+      padding: 0.3em; }
+    #top #side_menu li.dropdown_menu ul li:hover {
+      background: #dceff4; }
   #top nav > ul > li {
     display: inline-block; }
   #top #search {
@@ -417,7 +419,7 @@ div.importsheet_missing_column {
   #main-content.frontpage > div {
     padding: 20px; }
   #main-content.frontpage > div:nth-child(even) {
-    background: #EDEDED; }
+    background: #ededed; }
   #main-content.frontpage .center {
     text-align: center; }
   #main-content.frontpage .initial-heading {
@@ -464,7 +466,7 @@ div.importsheet_missing_column {
     #main-content.frontpage > div.what-is-it-for div.topic:hover {
       background: #f0f0f0; }
       #main-content.frontpage > div.what-is-it-for div.topic:hover h3 {
-        background: #B1DDE8; }
+        background: #b1dde8; }
   #main-content.frontpage > div.projects .flexslider {
     width: 800px;
     height: 150px;
@@ -572,7 +574,7 @@ div.importsheet_missing_column {
     line-height: 100%;
     text-decoration: none; }
   #help_center #help_center_about:hover, #help_center #help_center_usecases:hover {
-    background: #777; }
+    background: #777777; }
   #help_center #help_center_about {
     float: left; }
   #help_center #help_center_usecases {
@@ -593,44 +595,38 @@ div.importsheet_missing_column {
     display: inline-block;
     width: 33%;
     padding: 5px;
-    position: relative;
+    vertical-align: top;
     text-align: left; }
-
     .about .items .topic h3 {
       font-size: 1.2em; }
     .about .items .topic img {
       width: 290px; }
-
   .about .items .topicFacaColaborativamente {
     display: inline-block;
     width: 49%;
     padding: 5px;
     position: relative;
     text-align: left; }
-
     .about .items .topicFacaColaborativamente h3 {
       font-size: 1.2em; }
     .about .items .topicFacaColaborativamente img {
       width: 290px; }
-  
-    .about .items .topicDown {
+  .about .items .topicDown {
     display: inline-block;
     width: 100%;
     padding: 5px;
     position: relative;
     text-align: left; }
-
     .about .items .topicDown h3 {
       font-size: 1.2em; }
     .about .items .topicDown img {
-
       width: 490px; }
   .about > div,
   .about .section .items {
     width: 1200px;
     margin: 0 auto; }
   .about > div.section {
-    float:left;
+    float: left;
     width: 100%; }
     .about > div.section > h2 {
       width: 450px;

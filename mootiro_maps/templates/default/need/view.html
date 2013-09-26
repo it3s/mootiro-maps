@@ -35,8 +35,8 @@
 
       <div class="view-edit-btn">
         {% history need %}
-        <a href="{% url view_discussion need.perm_id %}" class="btn login-required" title="Ver página de discussão"><i class="icon-comment"></i></a>
-        <a href="{{ need.edit_url }}" class="btn login-required"><i class="icon-pencil" title="Editar esse conteúdo"></i></a>
+        <a href="{% url view_discussion need.perm_id %}" class="btn login-required" title="{% trans 'Go to discussion page' %}"><i class="icon-comment"></i></a>
+        <a href="{{ need.edit_url }}" class="btn login-required"><i class="icon-pencil" title="{% trans 'Edit this content' %}"></i></a>
       </div>
 
       <div class="clear-both"></div>
@@ -62,7 +62,7 @@
 
   <div class="right-bar">
     <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
-    <a class="see-on-map" href="#">{% trans "see on map" %}</a>
+    <a class="see-on-map" href="#">{% trans "View on map" %}</a>
 
     <div class="block need-proposals">
       <h3>{% trans "Proposals" %}</h3>
@@ -96,7 +96,7 @@
             {% endif %}
           </li>
           {% empty %}
-          <li>{% trans "No related needs." %}</li>
+          <li>{% trans "No related needs" %}</li>
           {% endfor %}
         </ul>
         <div class=""><span class="show-more clickable">{% trans 'see all' %}</span></div>

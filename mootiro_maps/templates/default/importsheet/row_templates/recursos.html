@@ -6,15 +6,15 @@
 <div class="main-column">
   {# ##### Name ##### #}
   <h2>{{ row.object_dict.name }}</h2>
-  
+
   {# ##### Creator ##### #}
   {% if row.object_dict.creator %}
   <div class="apart"><span class="meta-info">{% trans "Creator" %}:</span> {{ row.object_dict.creator.name }}</div>
   {% endif %}
-  
+
   {# ##### Kind ##### #}
   {% if row.object_dict.kind %}
-  <div class="apart"><span class="meta-info">{% trans "Kind" %}:</span> {{ row.object_dict.kind }}</div>
+  <div class="apart"><span class="meta-info">{% trans "Content type" %}:</span> {{ row.object_dict.kind }}</div>
   {% endif %}
 
   {# ##### Communities ##### #}
@@ -44,7 +44,7 @@
     {{ row.object_dict.geometry_preview }}
   </div>
   {% endif %}
-  
+
   {# ##### Contact ##### #}
   {% if row.object_dict.contact %}
   <div class="block">
@@ -52,7 +52,7 @@
     {{ row.object_dict.contact|render_markup|safe }}
   </div>
   {% endif %}
-  
+
   {# ##### Tags ##### #}
   {% if row.object_dict.tags %}
   <div class="view-tag-list">

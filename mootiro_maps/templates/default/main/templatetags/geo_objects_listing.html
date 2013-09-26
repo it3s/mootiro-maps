@@ -3,19 +3,19 @@
 
 {% autoescape off %}
 <ul class="geo-objects-listing">
-  <li class="communities" title="ativar/desativar Comunidades">
+  <li class="communities" title="{% trans 'enable/disable communities' %}">
     <div class="item">
       <div class="img-holder" data-object-type="Community" >{{ form.communities }}</div>
       {% if not hide_names %}<span>{% trans "Communities" %}</span>{% endif %}
     </div>
   </li>
-  <li class="needs" title="ativar/desativar Necessidades">
+  <li class="needs" title="{% trans 'enable/disable needs' %}">
     <div class="item">
       <div class="img-holder" data-object-type="Need">{{ form.needs }}</div>
       {% if not hide_names %}<span>{% trans "Needs" %}</span>{% endif %}
     </div>
     {% if show_categories %}
-    <div class="collapser" title="Expandir lista de categorias das Necessidades"><i class="icon-chevron-right"></i></div>
+    <div class="collapser" title="{% trans 'expand the list of categories for needs' %}"><i class="icon-chevron-right"></i></div>
     {% endif %}
   </li>
   {% if show_categories %}
@@ -23,13 +23,13 @@
     {{ form.need_categories }}
   </li>
   {% endif %}
-  <li class="resources" title="ativar/desativar Recursos">
+  <li class="resources" title="{% trans 'enable/disable resources' %}">
     <div class="item">
       <div class="img-holder" data-object-type="Resource">{{ form.resources }}</div>
       {% if not hide_names %}<span>{% trans "Resources" %}</span>{% endif %}
     </div>
   </li>
-  <li class="organizations" title="ativar/desativar Organizações">
+  <li class="organizations" title="{% trans 'enable/disable organizations' %}">
     <div class="item">
       <div class="img-holder" data-object-type="Organization">{{ form.organizations }}</div>
       {% if not hide_names %}<span>{% trans "Organizations" %}</span>{% endif %}

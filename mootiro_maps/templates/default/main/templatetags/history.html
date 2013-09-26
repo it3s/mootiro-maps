@@ -8,7 +8,7 @@
   {% endif %}
   {% if obj.last_editor %}
     {% blocktrans with user=last_editor date=obj.last_update|naturaltime %}
-      last update by {{ user }} {{ date }}
+      last edited by {{ user }} {{ date }}
     {% endblocktrans %}
   {% endif %}
 ">{% trans "History" %}</a>

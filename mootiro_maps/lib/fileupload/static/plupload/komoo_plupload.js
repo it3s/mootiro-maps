@@ -163,7 +163,7 @@ $('#save-subtitle').live('click', function(){
 });
 
 $('#delete-file').live('click', function(){
-    if (confirm(gettext('Are you sure you want to delete this file?'))){
+    if (confirm(gettext('Are you sure that you want to delete this file?'))){
 
         var file_id = $(this).attr('file-id');
         $.post(

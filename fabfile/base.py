@@ -146,14 +146,15 @@ def setup_django():
     import sys
 
     FAB_DIR = os.path.abspath(os.path.dirname(__file__))
-    PROJ_DIR = os.path.abspath(os.path.join(FAB_DIR, '../../mootiro_maps'))
+    PROJ_DIR = os.path.abspath(os.path.join(FAB_DIR, '../mootiro_maps'))
     APP_DIR = os.path.abspath(os.path.join(PROJ_DIR, 'apps'))
     LIB_DIR = os.path.abspath(os.path.join(PROJ_DIR, 'lib'))
-    SITE_ROOT = os.path.abspath(os.path.join(PROJ_DIR, '../../mootiro_maps'))
+    SITE_ROOT = os.path.abspath(os.path.join(PROJ_DIR, '../mootiro_maps'))
     sys.path.append(PROJ_DIR)
     sys.path.append(APP_DIR)
     sys.path.append(LIB_DIR)
     sys.path.append(SITE_ROOT)
+    print '---->', LIB_DIR
     from django.core.management import setup_environ
     exec 'import {} as environ'.format(env.komoo_django_settings)
     setup_environ(environ)

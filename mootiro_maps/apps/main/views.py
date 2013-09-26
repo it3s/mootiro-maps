@@ -288,13 +288,12 @@ def get_geojson_from_hashlink(request):
 
 
 def set_language(request):
-    next = request.REQUEST.get('next', None)
-    if not next:
-        next = request.META.get('HTTP_REFERER', None)
-    if not next:
-        next = '/'
-    print '---->', settings.LANGUAGE_COOKIE_NAME
-    response = HttpResponseRedirect(next)
+    next_ = request.REQUEST.get('next', None)
+    if not next_:
+        next_ = request.META.get('HTTP_REFERER', None)
+    if not next_:
+        next_ = '/'
+    response = HttpResponseRedirect(next_)
     lang_code = (request.GET.get('language', None) or
                  request.POST.get('language', None))
     if lang_code and translation.check_for_language(lang_code):
@@ -303,6 +302,9 @@ def set_language(request):
         else:
             response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
         translation.activate(lang_code)
+        if not request.user.is_anonymous():
+            request.user.set_language(lang_code)
+            request.user.save()
     return response
 
 

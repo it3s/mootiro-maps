@@ -7,7 +7,7 @@
 
   <div class='alert alert-info required-notice' data-alert='info'>
       <div class='msg'>
-          Os campos com asterisco (<strong>*</strong>) são obrigatórios!
+        {% trans '<strong>*</strong> required fields!' %}
       </div>
   </div>
   {% crispy form form.helper %}
@@ -18,22 +18,22 @@
 
         $('#community_form').komooFormHintBoxes({
             'name': {
-                hint: 'Coloque o nome da comunidade.'
+                hint: '{% trans "Please insert a name for the community" %}'
             },
             'population': {
-                hint: 'Coloque aqui o número de moradores da comunidade.',
+                hint: '{% trans "Approximately, how many people live in the community?" %}',
                 top: '-8px'
             },
             'description': {
-                hint: 'Fale um pouco sobre a comunidade, sobre como ela começou, aonde ela fica, se ela é um bairro, uma favela, uma vila.',
+                hint: '{% trans "Please, describe the community. What do you kno about its history, the people living there, local economy, social services, education, access to public transportation, etc.?" %}',
                 top: '40%'
             },
             'tags': {
-                hint: 'Coloque palavras que classifiquem a comunidade, ou que localizem a comunidade, tal como a "Zona Sul", "Guarapiranga", "favela".',
+                hint: '{% trans 'Please, choose tags for the community, for instance "native community", "Santa Barbara", "slum".' %}',
                 top: '-28px'
             },
             'files': {
-                hint: 'Você pode carregar fotos da comunidade.'
+                hint: '{% trans "Please, upload fotos of the community or link to photos on Wiki Commons or Flickr. Make sure that the photos are licensed under creative commons." %}'
             }
         });
     });

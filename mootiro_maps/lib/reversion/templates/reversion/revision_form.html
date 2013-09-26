@@ -5,7 +5,7 @@
 {% block breadcrumbs %}
 	<div class="breadcrumbs">
 		<a href="{% url admin:index %}">{% trans "Home" %}</a> &rsaquo;
-		<a href="{% url admin:app_list app_label %}">{{app_label|capfirst|escape}}</a> &rsaquo; 
+		<a href="{% url admin:app_list app_label %}">{{app_label|capfirst|escape}}</a> &rsaquo;
 		<a href="{{changelist_url}}">{{opts.verbose_name_plural|capfirst}}</a> &rsaquo;
 		<a href="{{change_url}}">{{original|truncatewords:"18"}}</a> &rsaquo;
 		<a href="../">{% trans "History" %}</a> &rsaquo;
@@ -22,6 +22,6 @@
 
 
 {% block form_top %}
-	<p>{% blocktrans %}Press the save button below to revert to this version of the object.{% endblocktrans %}</p>
+	<p>{% blocktrans %}Press the save button below to revert to this version of the object{% endblocktrans %}</p>
 {% endblock %}
 

@@ -27,15 +27,49 @@
               width: 290px;
             }
         }
+        .topicFacaColaborativamente {
+            display: inline-block;
+            width: 49%;
+            padding: 5px;
+            position: relative;
+            text-align: left;
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            img {
+                width: 290px;
+            }
+        }
+
+        .topicDown {
+            display: inline-block;
+            width: 100%;
+            padding: 5px;
+            position: relative;
+            text-align: left;
+
+            h3 {
+                font-size: 1.2em;
+            }
+
+            img {
+                width: 490px;
+            }
+
+        }
     }
 
     > div,
     .section .items {
-        width: 910px;
+        width: 1200px;
         margin: 0 auto;
     }
 
     > div.section {
+        float:left;
+
         > h2 {
             width: 450px;
             margin: 20px auto;
@@ -48,7 +82,7 @@
     }
 
     > div:nth-child(even) {
-        background: #eff8fb !important;
+        background: #fff !important;
     }
 }
 

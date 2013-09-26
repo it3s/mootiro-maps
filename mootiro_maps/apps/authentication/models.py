@@ -6,6 +6,7 @@ import os
 from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from django.utils import translation
 from django.core.urlresolvers import reverse
 from jsonfield import JSONField
 
@@ -22,11 +23,11 @@ from fileupload.models import UploadedFile
 CONFIRMATION_EMAIL_MSG = _('''
 Hello, {name}.
 
-Before using our tool, please confirm your e-mail visiting the link below.
+Before using our tool, please confirm your email visiting the link below.
 {verification_url}
 
 Thanks,
-the IT3S team.
+the IT3S team
 ''')
 
 
@@ -45,6 +46,7 @@ class User(GeoRefModel, BaseModel):
     password = models.CharField(max_length=256, null=False)
     contact = JSONField(null=True, blank=True)
     creation_date = models.DateField(null=True, blank=True, auto_now_add=True)
+    language = models.CharField(max_length=10, null=True, blank=True)
     # last_access = models.DateTimeField(null=True, blank=True)
 
     is_admin = models.BooleanField(default=False)
@@ -76,6 +78,12 @@ class User(GeoRefModel, BaseModel):
 
     def set_password(self, s, salt=None):
         self.password = self.calc_hash(s, salt=salt)
+
+    def set_language(self, language_code):
+        if translation.check_for_language(language_code):
+            self.language = language_code;
+            return True
+        return False
 
     def verify_password(self, s, salt=None):
         return self.password == self.calc_hash(s, salt)
@@ -175,10 +183,7 @@ class User(GeoRefModel, BaseModel):
             # new User
             if SocialAuth.objects.filter(email=self.email).exists():
                 valid = False
-                self.errors['email'] = _('This email is registered on our '
-                    'system. Probably you\'ve logged before with a social '
-                    'account (facebook or google). You can skip this step '
-                    'and just login.')
+                self.errors['email'] = _('This email is registered on our system. You might have logged before with a social account (Facebook or Google). Please, skip this step and just login.')
 
             if User.objects.filter(email=self.email).exists():
                 valid = False

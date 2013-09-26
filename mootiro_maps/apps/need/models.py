@@ -26,9 +26,9 @@ class NeedCategory(models.Model):
         _('Environment'),
         _('Health'),
         _('Housing'),
-        _('Local Economy'),
+        _('Local economy'),
         _('Mobility'),
-        _('Social Service'),
+        _('Social service'),
         _('Sport'),
         _('Security'),
     ]

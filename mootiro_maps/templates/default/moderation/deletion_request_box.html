@@ -1,6 +1,6 @@
 {% load i18n %}
 <div id="deletion-request-box">
-  {% trans "Please, tell us about the reason why you are requesting to delete this content" %}
+  {% trans "Please, inform why you are requesting to delete this content" %}
   <div class="deletion-request-image"></div>
   <form action="#" method="post" id="deletion-request-form">
     {% csrf_token %}
@@ -11,7 +11,7 @@
       </div>
     </div>
     <div>
-      <button type="submit" class="button">{% trans 'Request' %}</button>
+      <button type="submit" class="button">{% trans 'Submit request' %}</button>
       <button id="deletion-request-cancel-btn" class="btn"><span>{% trans 'Cancel' %}</span></button>
     </div>
   </form>

@@ -36,7 +36,7 @@ class InvestmentForm(AjaxModelForm):
         'anonymous_investor': _('Anonymous investor'),
         'investor_organization': _('Investor organization'),
         'investor_person': _('Investor person'),
-        'over_period': _('Over period'),
+        'over_period': _('Investment period'),
         'date': _('Date'),
         'end_date': _('End date'),
         'currency': _('Currency'),
@@ -134,9 +134,9 @@ class InvestmentForm(AjaxModelForm):
         investor_organization = self.cleaned_data.pop("investor_organization")
         investor_person = self.cleaned_data.pop("investor_person")
         if not anonymous_investor:
-            self.validation('investor_organization', _("Invalid investor."),
+            self.validation('investor_organization', _("Invalid investor"),
                 investor_type == "ORG" and not investor_organization)
-            self.validation('investor_person', _("Invalid investor."),
+            self.validation('investor_person', _("Invalid investor"),
                 investor_type == "PER" and not investor_person)
         # investor coercing
         if anonymous_investor:

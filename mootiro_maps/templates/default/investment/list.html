@@ -16,7 +16,7 @@
 
       <div class="view-list-top">
         <div class="view-list-count">
-              {% blocktrans count counter=investments_count %}{{ counter }} Investment{% plural %}{{ counter }} Investments{% endblocktrans %}
+              {% blocktrans count counter=investments_count %}{{ counter }} investment{% plural %}{{ counter }} investments{% endblocktrans %}
         </div>
         <div class="view-list-pagination">
           {% pagination investments %}
@@ -30,7 +30,7 @@
         <h4>
           <span class="big"><a href="{{ investment.view_url }}">{{ investment }}</a></span>
           {% if investment.grantee.geometry %}
-            <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson investment.grantee %}" title="ver no mapa"><i class="icon-see-on-map"></i></a>
+            <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson investment.grantee %}" title="{% trans 'View on map' %}"><i class="icon-see-on-map"></i></a>
           {% endif %}
         </h4>
         <div class="apart">

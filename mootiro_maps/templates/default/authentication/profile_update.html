@@ -14,22 +14,27 @@
         <ul class="nav nav-tabs">
             <li class="active">
                 <a href="#tab-pane-public" data-toggle="tab">
-                    {% trans 'Public Settings' %}
+                    {% trans 'Public data' %}
                 </a>
             </li>
             <li>
-                <a href="#tab-pane-signatures" data-toggle="tab">
-                    {% trans 'Signature Settings' %}
+                <a href="#tab-pane-language" data-toggle="tab">
+                    {% trans 'Language' %}
                 </a>
             </li>
             <li>
-                <a href="#tab-pane-personal" data-toggle="tab">
-                    {% trans 'Manage password' %}
+                <a href="#tab-pane-subscriptions" data-toggle="tab">
+                    {% trans 'Subscriptions' %}
+                </a>
+            </li>
+            <li>
+                <a href="#tab-pane-password" data-toggle="tab">
+                    {% trans 'Password' %}
                 </a>
             </li>
             <li>
                 <a href="#tab-pane-accounts" data-toggle="tab">
-                    {% trans 'External Accounts' %}
+                    {% trans 'External accounts' %}
                 </a>
             </li>
         </ul>
@@ -38,35 +43,35 @@
         <div class="tab-content">
 
             <!-- Tab pane personal settings -->
-            <div class="tab-pane" id="tab-pane-personal">
+            <div class="tab-pane" id="tab-pane-password">
 
                 <!-- Personal settins form -->
                 <div class="form-profile-wrapper">
-                    <form methos=POST action="{% url profile_update_personal_settings %}" id="form-personal">
+                    <form method="POST" action="{% url profile_update_personal_settings %}" id="form-personal">
                         {% csrf_token %}
                        	<div id="div_id_email" class="clearfix control-group ">
-                          <label for="id_email">{% trans 'E-mail' %}</label>
+                          <label for="id_email">{% trans 'Email' %}</label>
                             <div class="controls">
                                 <input id="id_email" type="text"
                                        class="textinput textInput"
                                        value="{{ user.email }}"
                                        name="email" disabled='true'
-                                       title="{% trans 'emails cannot be changed, if you have a problem with you email address please contact us' %}"/>
+                                       title="{% trans 'The email address cannot be changed, if you have a problem with you email address please contact us.' %}"/>
                             </div>
                         </div>
 
                         <div class="clearfix control-group">
-                          <label for="id_current_password">{% trans 'Current Password' %}</label>
+                          <label for="id_current_password">{% trans 'Current password' %}</label>
                             <div class="controls">
                                 <input class="textinput textInput"
                                        type="password" id="id_current_password"
                                        name="current_password"
-                                       title="{% trans 'Enter your current password if you want change to a new one. If you did not set a password yet, then leave it blank' %}"/>
+                                       title="{% trans 'Enter your current password if you want to set a new one. If you did not set a password yet, then leave it blank' %}"/>
                             </div>
                         </div>
 
                         <div class="clearfix control-group">
-                          <label for="id_password">{% trans 'New Password' %}</label>
+                          <label for="id_password">{% trans 'New password' %}</label>
                             <div class="controls">
                                 <input class="textinput textInput"
                                        type="password" id="id_password"
@@ -76,7 +81,7 @@
                         </div>
 
                         <div class="clearfix control-group">
-                          <label for="id_confirm_password">{% trans 'Confirm New Password' %}</label>
+                          <label for="id_confirm_password">{% trans 'Confirm new password' %}</label>
                             <div class="controls">
                                 <input class="textinput textInput"
                                        type="password" id="id_confirm_password"
@@ -86,7 +91,7 @@
                         </div>
 
                         <div class="form-actions">
-                            <input type="submit" name="submit" value="Enviar"
+                          <input type="submit" name="submit" value="{% trans "Save" %}"
                                    class="btn button" id="submit-id-submit" />
                         </div>
 
@@ -102,9 +107,29 @@
                 </div>
             </div>
 
+            <!-- Tab pane languages settings -->
+            <div class="tab-pane" id="tab-pane-language">
+                <div class="language-list-wrapper">
+                  <form method="POST" action="{% url profile_update_language_settings %}" id="form-language">
+                    {% csrf_token %}
+                    <label>{% trans "Select language" %}</label>
+                    <select name="language">
+                      {% for lang in LANGUAGES %}
+                      <option value="{{ lang.0 }}" {% if not user.language and lang.0 == LANGUAGE_CODE or user.language == lang.0 %}selected="selected"{% endif %}>{{ lang.1 }}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="form-actions">
+                      <input type="submit" name="submit" value="{% trans "Save" %}"
+                               class="btn button" id="submit-id-submit" />
+                    </div>
+                  </form>
+                </div>
+            </div>
+
+
 
             <!-- Tab pane signatures -->
-            <div class="tab-pane div-profile-form" id="tab-pane-signatures">
+            <div class="tab-pane div-profile-form" id="tab-pane-subscriptions">
                 <div class="signatures-list-wrapper"></div>
 
             </div> <!-- end of signatures tab pane -->
@@ -128,13 +153,13 @@
                 </li>
                 <li class="facebook">
                   {% if user.facebook %}
-                  <p>{% trans "Your facebook account is:" %}</p>
+                  <p>{% trans "Your Facebook account is:" %}</p>
                   <input type="text" value="{{ user.facebook.email }}" disabled="true" />
                   {% else %}
                   <a href="{% url login_facebook %}?next=/user/edit">
                     <button class="facebook">
                       <img src="{{STATIC_URL}}img/login-facebook.png" />
-                      {% trans "Connect with facebook" %}
+                      {% trans "Connect with Facebook" %}
                     </button>
                   </a>
                   {% endif %}
@@ -165,15 +190,15 @@
             <div class="signature-header">
                 <a href="<%= permalink %>" class="signature-title"><%= obj_name %></a>
                 <div class="right">
-                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= obj_id %>" title="ver no mapa">
+                    <a href="#" class="preview-on-map-ajax <% if (!has_geojson) { %>disabled<% } %>" data-app-name="<%= app_name %>" data-model-name="<%= model_name %>" data-object-id="<%= obj_id %>" title="{% trans 'View on map' %}">
                         <i class="icon-see-on-map"></i>
                     </a>
                 </div>
             </div>
             <div class="signature-body">
-              <div class="cancel-subscription-btn btn" title="Parar de seguir as atualizações desse item">
+              <div class="cancel-subscription-btn btn" title="{% trans 'Cancel subscription for this item' %}">
                     <i class="icon-remove-sign"></i>
-                    <span>{% trans 'Cancel Subscription' %}</span>
+                    <span>{% trans 'Cancel subscription' %}</span>
                 </div>
             </div>
         </div>
@@ -182,11 +207,11 @@
 
 <script type="text/template" id="signatures-list-collection">
     <div class="signatures-list-header">
-        <span>{% trans 'Signatures' %}</span>
+        <span>{% trans 'Subscriptions' %}</span>
     </div>
     <div class="div-signatures-manage-btn">
-        <button id="signatures-manage-btn" class="button" title="Opções de notificação e recebimento de e-mails com atualizações dos itens que você segue">
-            {% trans 'Receivings Options' %}
+        <button id="signatures-manage-btn" class="button" title="{% trans 'Configure options for delivery of updates about the content you have subscribed to' %}">
+            {% trans 'Delivery options' %}
         </button>
     </div>
     <div class="signatures-list"></div>
@@ -195,7 +220,7 @@
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
             <div class="digest-modal-header">
-                {% trans 'Update your mailing settings' %}
+                {% trans 'Update your subscription settings' %}
             </div>
         </div>
         <div class="modal-body">
@@ -204,17 +229,17 @@
                     <div class="digest-radio-btn">
                         <input type="radio" name="digest_type" value="W"
                         {% if digest == 'W' %}checked="checked"{% endif %}>
-                            <span>{% trans "I want to receive only a <strong>weekly</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
+                            <span>{% trans "I want to receive a <strong>weekly</strong> digest mail with the updates for the contents I have subscribed to" %}</span>
                     </div>
                     <div class="digest-radio-btn">
                         <input type="radio" name="digest_type" value="D"
                             {% if digest == 'D' %}checked="checked"{% endif %}>
-                            <span>{% trans "I want to receive only a <strong>daily</strong> digest mail with the updates for the objects I'm subescribed to" %}</span>
+                            <span>{% trans "I want to receive only a <strong>daily</strong> digest mail with the updates for the contents I have subscribed to" %}</span>
                     </div>
                     <div class="digest-radio-btn">
                         <input type="radio" name="digest_type" value="N"
                             {% if not digest or digest == 'N' %}checked="checked"{% endif %}>
-                            <span>{% trans "I <strong>don't</strong> want to receive mails for updates" %}</span>
+                            <span>{% trans "I <strong>do not</strong> want to receive any emails for updates" %}</span>
                     </div>
                 </form>
             </p>

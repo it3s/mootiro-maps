@@ -14,12 +14,12 @@
   <div class="highlight">
 
     <div class="button-new">
-      <a class="button login-required" href="{% url new_resource %}" title="Adicionar novo Recurso. Por exemplo: uma escola, um posto de saúde, um parque, etc">{% trans "Create New Resource" %}</a>
+      <a class="button login-required" href="{% url new_resource %}" title="{% trans 'Add new resource, for example, a library, a public park or a playground.' %}">{% trans "Create new resource" %}</a>
     </div>
 
     <div class="view-list-top">
       <div class="view-list-count">
-            {% blocktrans count counter=resources_count %}{{ counter }} Resource{% plural %}{{ counter }} Resources{% endblocktrans %}
+            {% blocktrans count counter=resources_count %}{{ counter }} resource{% plural %}{{ counter }} resources{% endblocktrans %}
       </div>
       <div class="view-list-pagination">
         {% pagination resources %}
@@ -46,7 +46,7 @@
             {% endfor %}
           {% endif %}
         </span>
-        <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson resource %}" title="ver no mapa">
+        <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson resource %}" title="{% trans 'View on map' %}">
             <i class="icon-see-on-map"></i>
         </a>
         <div class="view-list-reactions">
@@ -57,7 +57,7 @@
       </h4>
 
       <p class="clear-both">
-        <strong>{% trans 'Kind:' %}</strong> {% firstof resource.kind '---' %}
+        <strong>{% trans 'Content type' %}</strong> {% firstof resource.kind '---' %}
       </p>
       <p>
         {{ resource.description|description_markdown_preview|safe }}
