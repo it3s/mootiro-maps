@@ -6,7 +6,7 @@ $active_fg: #fff;
 #top {
 
     width: 100%;
-    height: 45px;
+    height: 61px;
     background: $bg;
     position: relative;
     z-index: 11;
@@ -33,7 +33,7 @@ $active_fg: #fff;
 
     #logo {
         margin: 0 35px;
-        padding-top: 10px;
+        padding-top: 15px;
     }
 
     #menu, #side_menu {
@@ -48,7 +48,7 @@ $active_fg: #fff;
                 height: 100%;
                 text-align: center;
 
-                > a { padding-top: 12px }
+                > a { padding-top: 17px }
             }
 
             a {
@@ -110,6 +110,10 @@ $active_fg: #fff;
             //.projects.active { background-color: #f26700 }
             .projects.active .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
         }
+            .about .ico { background-image: url('../img/menu/about.png') }
+            .case-studies .ico { background-image: url('../img/menu/cases.png') }
+            .collaborate .ico { background-image: url('../img/menu/collab.png') }
+            .resource-kit .ico { background-image: url('../img/menu/kit.png') }
 
         .ico {
             display: inline-block;
@@ -164,6 +168,14 @@ $active_fg: #fff;
                 box-shadow: 0px -5px 0px 0px $active_bg, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
             }
         }
+        li.dropdown_menu {
+            ul {
+                li { padding: 0.3em }
+                li:hover { background: #dceff4 }
+
+                box-shadow: 0px -5px 0px 0px #b1dde8, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
+            }
+        }
     }
 
     nav > ul > li { display: inline-block }
@@ -171,7 +183,7 @@ $active_fg: #fff;
     #search {
         width: 22%;
         margin-left: 3%;
-        padding-top: 8px;
+        padding-top: 16px;
 
         position: relative;
 

@@ -68,7 +68,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'lib.reversion.middleware.RevisionMiddleware',
-    'themes.middleware.ThemesMiddleware',
+    'lib.themes.middleware.ThemesMiddleware',
 ]
 
 CONTEXT_PROCESSORS = (
@@ -90,7 +90,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
     "main.context_processors.komoo_namespace",
-    'themes.context_processors.themes',
+    'lib.themes.context_processors.themes',
 
 )
 
@@ -127,7 +127,7 @@ INSTALLED_APPS = [
     'django_nose',
     'ajaxforms',
     'djcelery',
-    'themes',
+    'lib.themes',
 
     # our apps
     'main',

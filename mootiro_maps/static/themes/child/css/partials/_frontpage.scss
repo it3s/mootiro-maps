@@ -1,37 +1,7 @@
-#donate {
-    position: fixed;
-    left: 0;
-    top: 50%;
-    padding: 0 1.5em 45px 0.5em;
-
-    h2 {
-        color: #333;
-        font-size: 20px;
-        font-weight: 400;
-    }
-
-    -webkit-border-radius: 0 40% 40% 0;
-       -moz-border-radius: 0 40% 40% 0;
-            border-radius: 0 40% 40% 0;
-
-    -webkit-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
-       -moz-box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
-            box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.25);
-
-    background: #ededed url("../img/frontpage/pig.png") no-repeat 0.8em 2.5em;
-}
-#donate:hover {
-    // +0.5em left padding to the hover effect
-    padding-left: 1em;
-    background-position: 1.3em 2.5em;
-    background-image: url("../img/frontpage/pig-hover.png");
-}
-
 #main-content.frontpage {
     width: 900px;
 
     > div { padding: 20px }
-    > div:nth-child(even) { background: #EDEDED }
     .center { text-align: center }
 
     .initial-heading {
@@ -46,12 +16,14 @@
         }
     }
 
-    div.video {
-        margin: 30px;
-        text-align: center;
+    > .site-description,
+    > .slideshow {
+        display: inline-block;
+        width: 405px;
+        vertical-align: top;
     }
 
-    > div.what-is-it-for {
+    > div.resource-kits {
 
         white-space: nowrap; /* hack for windows. issue #100 */
         * {
@@ -68,11 +40,11 @@
             h3 {
                 display: inline-block;
                 padding: 0.5em 1em;
-                margin-bottom: 1em;
+                margin-bottom: 0;
                 border-bottom: 1px solid #057D90;
                 width: 100%;
 
-                font-size: 20px;
+                font-size: 18px;
                 text-align: center;
                 color: #057D90;
             }
@@ -81,10 +53,14 @@
                 padding: 0.5em 0.2em 0;
             }
 
+            img {
+                margin: 7px;
+            }
+
             vertical-align: top;
             display: inline-block;
 
-            width: 19%;
+            width: 25%;
             margin: 0 0.35%;
         }
 
@@ -94,55 +70,15 @@
         }
     }
 
-    > div.projects {
+    > div.slideshow {
         .flexslider {
-            width: 800px;
-            height: 150px;
-            position: relative;
-            left: 50%;
-            margin-top: 20px;
-            margin-left: -400px;
+            margin: 0px;
 
-            img {
-                max-width: 220px;
-                max-height: 140px;
+            .flex-control-paging {
+                right: -115px;
+                bottom: -5px;
             }
 
-            .testimony {
-                width: 450px;
-                height: 100px;
-                position: relative;
-                left: 250px;
-
-                font-size: 16px;
-                font-style: italic;
-                text-align: justify;
-
-                .author-info {
-                    float: right;
-                    text-align: right;
-                    margin-top: 0.5em;
-                    font-size: 80%;
-                    max-width: 80%;
-                    display: inline-block;
-                }
-            }
-
-            .aldeias-infantis {
-                img { margin-left: 30px }
-                p { margin-top: 15px }
-            }
-            .heliopolis-verde {
-                img { margin-left: 35px }
-                p { margin-top: 0 }
-            }
-            .bairro-educador {
-                img { margin-left: 40px }
-                p { margin-top: 20px }
-            }
-            .educar-na-cidade {
-                img { margin-left: 45px}
-            }
         }
 
     }
@@ -189,15 +125,19 @@
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
-    padding: 0 35px;
+    padding: 0 5px;
+
+    .flex-control-paging li a {
+        background-color: #fff;
+        border: 1px solid #ff6666;
+        box-shadow: none;
+    }
+
+    .flex-control-paging li a.flex-active {
+        background-color: #ff6666;
+    }
 
     > ul.slides li {
         position: relative;
-    }
-
-    .slides img {
-        width: auto;
-        height: auto;
-        position: absolute;
     }
 }

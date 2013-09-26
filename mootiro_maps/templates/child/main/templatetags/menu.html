@@ -1,0 +1,16 @@
+{% load i18n %}
+
+<ul class="main-menu">
+  <li class="about {% if selected_area == 'about' %}active{% endif %}">
+    <a href="{% url about %}"><div class="ico"></div>{% trans "About" %}</a>
+  </li>
+  <li class="resource-kit {% if selected_area == 'resourcekit' %}active{% endif %}">
+    <a href="#"><div class="ico"></div>{% trans "Resource Kit" %}</a>
+  </li>
+  <li class="case-studies {% if selected_area == 'project' %}active{% endif %}">
+  <a href="{% url project_highlights %}"><div class="ico"></div>{% trans "Case Studies" %}</a>
+  </li>
+  <li class="collaborate {% if selected_area == 'collaborate' %}active{% endif %}">
+    <a href="#"><div class="ico"></div>{% trans "Collaborate" %}</a>
+  </li>
+</ul>
