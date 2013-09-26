@@ -1,0 +1,39 @@
+body {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    color: #444;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: serif;
+}
+
+p {
+    line-height: 1.714285714;
+}
+
+a,
+a:link {
+    color: #ff6666;
+}
+
+a:hover,
+a:visited, {
+    color: red;
+}
+
+a.button,
+a.button:hover,
+a.button:visited,
+a.big-button,
+a.big-button:hover,
+a.big-button:visited {
+    color: white;
+}
+
+#main-content.highlights .section ul  {
+    height: 460px;
+
+    li p {
+        max-height: 12em;
+    }
+}

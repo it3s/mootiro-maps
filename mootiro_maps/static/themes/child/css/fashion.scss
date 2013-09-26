@@ -1,7 +1,5 @@
 @import "../../../css/_utils.scss";
 
-@import "partials/_frontpage.scss";
-@import "partials/_top.scss";
 @import "../../../css/partials/_upper_bar.scss";
 @import "../../../css/partials/_komoo_user.scss";
 @import "../../../css/partials/_ie_warning.scss";
@@ -10,3 +8,6 @@
 @import "../../../css/partials/_about.scss";
 @import "../../../css/partials/_project.scss";
 @import "../../../css/partials/_highlights.scss";
+@import "partials/_frontpage.scss";
+@import "partials/_top.scss";
+@import "partials/_custom.scss";

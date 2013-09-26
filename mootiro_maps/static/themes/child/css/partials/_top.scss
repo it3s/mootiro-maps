@@ -62,7 +62,6 @@ $active_fg: #fff;
 
             // Menu itens configuration
             li .ico { background: no-repeat center center }
-            li:hover, li.active { font-weight: bold }
             li:hover ul { font-weight: normal }
             li.active {
                 color: $active_fg;
