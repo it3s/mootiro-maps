@@ -12,7 +12,6 @@ from jsonfield import JSONField
 
 from main.mixins import BaseModel
 from main.utils import build_obj_from_dict
-from main.datalog import get_user_updates
 from locker.models import Locker
 from main.tasks import send_mail_async
 from komoo_map.models import GeoRefModel, POINT
@@ -214,7 +213,6 @@ class User(GeoRefModel, BaseModel):
     def save(self, *args, **kwargs):
         r = super(User, self).save(*args, **kwargs)
         index_object_for_search.send(sender=self, obj=self)
-        # log_data
         return r
 
     def projects_contributed(self):
