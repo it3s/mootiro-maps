@@ -236,6 +236,9 @@ class AnonymousUser(object):
     def is_admin(self):
         return False
 
+    def is_active(self):
+        return False
+
     name = ''
     id = None
 
