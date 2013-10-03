@@ -59,3 +59,10 @@ def celery():
     with virtualenv(), env.cd('mootiro_maps'):
         env.run('python manage.py celeryd -B --loglevel=info --settings={} &'
                 .format(env.komoo_django_settings))
+
+@task
+def shell():
+    """runs shell with the django env loaded"""
+    with virtualenv(), env.cd('mootiro_maps'):
+        env.run('python manage.py shell --settings={}'
+                .format(env.komoo_django_settings))
