@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 
 from authentication.models import User
 
-import reversion
+from lib import reversion
 
 
 class Discussion(models.Model):

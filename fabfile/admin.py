@@ -65,7 +65,7 @@ def populate_history():
     if (env.is_remote):
         abort('You cannot populate gitory table remotely!')
     setup_django()
-    import reversion
+    from lib import reversion
     from community.models import Community
     from need.models import Need
     from proposal.models import Proposal

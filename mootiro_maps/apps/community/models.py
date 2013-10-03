@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext_lazy as _
 
-import reversion
+from lib import reversion
 from django.template.defaultfilters import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON

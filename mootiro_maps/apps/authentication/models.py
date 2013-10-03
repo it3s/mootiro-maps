@@ -239,6 +239,12 @@ class AnonymousUser(object):
     def is_active(self):
         return False
 
+    def is_staff(self):
+        return False
+
+    def has_perm(self, *args):
+        return False
+
     name = ''
     id = None
 

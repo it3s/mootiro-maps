@@ -8,7 +8,7 @@ from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 
 from annoying.functions import get_object_or_None
-import reversion
+from lib import reversion
 
 from authentication.models import User
 from lib.taggit.managers import TaggableManager
