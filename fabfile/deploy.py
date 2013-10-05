@@ -11,7 +11,7 @@ from .server import start as server_start, stop as server_stop
 from .db import backup as db_backup
 
 
-__all__ = ('deploy',)
+__all__ = ('deploy', 'collectstatic')
 
 
 @task(default=True)
