@@ -38,8 +38,9 @@ class GeoRefModel(geomodels.Model):
 
     @property
     def area(self):
-        self.geometry.transform(32118)
+        geo = self.geometry.transform(32118, clone=True)
         return self.geometry.area
+        return geo.area
 
     @property
     def geojson(self):
