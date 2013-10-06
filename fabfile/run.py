@@ -11,7 +11,6 @@ from .base import virtualenv
 def run(port=False):
     """Runs django's development server"""
     celery()
-    datalog()
     elasticsearch(bg='true')
     django(port)
 
@@ -44,13 +43,6 @@ def elasticsearch(bg='false'):
     with virtualenv():
         env.run('./lib/elasticsearch/bin/elasticsearch -f {}'.format(
             background))
-
-
-@task
-def datalog():
-    """ Runs Datalog's Flask/MongoDB web server """
-    with virtualenv():
-        env.run('python lib/datalog/app.py &')
 
 
 @task
