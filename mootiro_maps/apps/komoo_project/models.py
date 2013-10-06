@@ -12,7 +12,6 @@ from django.template.defaultfilters import slugify
 
 from lib.taggit.managers import TaggableManager
 from fileupload.models import UploadedFile
-from lib import reversion
 
 from authentication.models import User
 from community.models import Community
@@ -178,8 +177,4 @@ class Project(models.Model):
     def get_projects_for_contributor(cls, user):
         return Project.objects.filter(
             Q(contributors__in=[user]) | Q(creator=user)).distinct()
-
-
-if not reversion.is_registered(Project):
-    reversion.register(Project)
 

@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 
 from django.utils.translation import ugettext_lazy as _
 
-from lib import reversion
 from django.template.defaultfilters import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON
@@ -90,7 +89,3 @@ class Community(GeoRefModel):
     @property
     def perm_id(self):
         return 'c%d' % self.id
-
-
-if not reversion.is_registered(Community):
-    reversion.register(Community)

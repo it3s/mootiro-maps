@@ -7,7 +7,6 @@ from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
-from lib import reversion
 from lib.taggit.managers import TaggableManager
 
 from authentication.models import User
@@ -111,6 +110,3 @@ class Resource(GeoRefModel):
         r_ = super(Resource, self).save(*args, **kwargs)
         index_object_for_search.send(sender=self, obj=self)
         return r_
-
-if not reversion.is_registered(Resource):
-    reversion.register(Resource)

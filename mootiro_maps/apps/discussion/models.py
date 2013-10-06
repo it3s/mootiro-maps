@@ -4,11 +4,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-from django.core.urlresolvers import reverse
 
 from authentication.models import User
-
-from lib import reversion
 
 
 class Discussion(models.Model):
@@ -25,7 +22,3 @@ class Discussion(models.Model):
     class Meta:
         verbose_name = "discussion"
         verbose_name_plural = "discussions"
-
-
-if not reversion.is_registered(Discussion):
-    reversion.register(Discussion)
