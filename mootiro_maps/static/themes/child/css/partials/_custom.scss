@@ -37,3 +37,13 @@ a.big-button:visited {
         max-height: 12em;
     }
 }
+
+#footer {
+    h3 {
+        text-align: left;
+    }
+
+    > div {
+        margin: 0 30px;
+    }
+}

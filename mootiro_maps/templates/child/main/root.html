@@ -11,12 +11,17 @@
 
 <div id="main-content" class="frontpage">
   <div class="site-description">
-    <h1 class="initial-heading center">
-      Heading
-    </h1>
-    <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur a leo feugiat, cursus nulla eu, cursus enim. Vestibulum dapibus dui ut ante hendrerit ultricies. Aenean sed ligula quam. Etiam scelerisque bibendum risus. Ut quis consequat erat, nec consequat enim. Maecenas nec augue ante. Pellentesque id lectus justo. Cras sed lorem volutpat dolor sagittis luctus. Nunc faucibus orci vel magna molestie cursus. Fusce blandit erat ligula, vel placerat enim pretium vitae.
-    </p>
+    <img class="logo" src="{{THEME_STATIC_URL}}img/logo_big.jpg">
+    <div class="content">
+    {% blocktrans %}
+      <h1>
+        Child Friendly Places
+      </h1>
+      <p>
+      are schools, communities and cities that integrate children's rights into local planning and development processes to ensure the protection, participation and  provision of services for children, youth and families.
+      </p>
+    {% endblocktrans %}
+    </div>
   </div>
 
   <div class="slideshow">
@@ -57,7 +62,7 @@
   <div class="resource-kits">
     <h2>{% trans "Resource Kits" %}</h2>
 
-    <a href="#">
+    <a href="http://childfriendlyplaces.org/resourcekit/#assessment">
       <div class="topic">
         <h3>{% trans "Assessment" %}</h3>
         <img src="{{THEME_STATIC_URL}}img/frontpage/assessment.png"/>
@@ -65,7 +70,7 @@
       </div>
     </a>
 
-    <a href="#">
+    <a href="http://childfriendlyplaces.org/resourcekit/#planning">
       <div class="topic">
         <h3>{% trans "Planning" %}</h3>
         <img src="{{THEME_STATIC_URL}}img/frontpage/plan.png"/>
@@ -73,7 +78,7 @@
       </div>
     </a>
 
-    <a href="#">
+    <a href="http://childfriendlyplaces.org/resourcekit/#advocacy">
       <div class="topic">
         <h3>{% trans "Advocacy & Action" %}</h3>
         <img src="{{THEME_STATIC_URL}}img/frontpage/action.png"/>
@@ -81,7 +86,7 @@
       </div>
     </a>
 
-    <a href="#">
+    <a href="http://childfriendlyplaces.org/resourcekit/#outcomes">
       <div class="topic">
         <h3>{% trans "Outcomes" %}</h3>
         <img src="{{THEME_STATIC_URL}}img/frontpage/outcomes.png"/>

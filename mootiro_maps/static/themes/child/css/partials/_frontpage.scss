@@ -16,6 +16,23 @@
         }
     }
 
+    > .site-description {
+        margin: 25px 0 0 0;
+
+        > .logo {
+            width: 110px;
+            float: left;
+        }
+
+        > .content {
+            margin: 30px 0 0 120px;
+
+            > p {
+                font-size: 115%;
+            }
+        }
+    }
+
     > .site-description,
     > .slideshow {
         display: inline-block;

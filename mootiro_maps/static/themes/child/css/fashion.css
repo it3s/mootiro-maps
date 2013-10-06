@@ -562,6 +562,15 @@ a.project-btn {
       position: relative;
       top: 10px;
       margin-right: 10px; }
+  #main-content.frontpage > .site-description {
+    margin: 25px 0 0 0; }
+    #main-content.frontpage > .site-description > .logo {
+      width: 110px;
+      float: left; }
+    #main-content.frontpage > .site-description > .content {
+      margin: 30px 0 0 120px; }
+      #main-content.frontpage > .site-description > .content > p {
+        font-size: 115%; }
   #main-content.frontpage > .site-description,
   #main-content.frontpage > .slideshow {
     display: inline-block;
@@ -655,7 +664,6 @@ a.project-btn {
   background: #ff6666;
   position: relative;
   z-index: 11;
-  box-shadow: 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
@@ -672,7 +680,7 @@ a.project-btn {
     display: block; }
   #top #logo {
     margin: 0 35px;
-    padding-top: 15px; }
+    padding-top: 7px; }
   #top #menu, #top #side_menu {
     cursor: pointer;
     color: white; }
@@ -885,3 +893,8 @@ a.big-button:visited {
   height: 460px; }
   #main-content.highlights .section ul li p {
     max-height: 12em; }
+
+#footer h3 {
+  text-align: left; }
+#footer > div {
+  margin: 0 30px; }
