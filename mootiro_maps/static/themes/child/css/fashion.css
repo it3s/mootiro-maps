@@ -548,7 +548,7 @@ a.project-btn {
   background-image: url("../img/menu/newmenu/projects-active.png"); }
 
 #main-content.frontpage {
-  width: 900px; }
+  width: 950px; }
   #main-content.frontpage > div {
     padding: 20px; }
   #main-content.frontpage .center {
@@ -592,7 +592,7 @@ a.project-btn {
       /* hack for windows. issue #100 */
       vertical-align: top;
       display: inline-block;
-      width: 25%;
+      width: 23.5%;
       margin: 0 0.35%; }
       #main-content.frontpage > div.resource-kits div.topic h3 {
         display: inline-block;
@@ -894,7 +894,12 @@ a.big-button:visited {
   #main-content.highlights .section ul li p {
     max-height: 12em; }
 
-#footer h3 {
-  text-align: left; }
-#footer > div {
-  margin: 0 30px; }
+#footer {
+  width: 950px;
+  padding: 0; }
+  #footer .license {
+    width: 290px; }
+  #footer h3 {
+    text-align: left; }
+  #footer > div {
+    margin: 0 30px; }

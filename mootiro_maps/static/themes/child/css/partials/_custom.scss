@@ -39,6 +39,13 @@ a.big-button:visited {
 }
 
 #footer {
+    width: 950px;
+    padding: 0;
+
+    .license {
+        width: 290px;
+    }
+
     h3 {
         text-align: left;
     }
