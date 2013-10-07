@@ -141,6 +141,7 @@ INSTALLED_APPS = [
     'tags',
     'highlight',
     'locker',
+    'model_versioning',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024

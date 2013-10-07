@@ -9,6 +9,7 @@ from django.core.urlresolvers import reverse
 
 from lib.taggit.managers import TaggableManager
 
+from main.mixins import BaseModel
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
@@ -36,7 +37,7 @@ class ResourceKind(models.Model):
             ).order_by('-count', 'slug')[:number]
 
 
-class Resource(GeoRefModel):
+class Resource(GeoRefModel, BaseModel):
     """Resources model"""
     name = models.CharField(max_length=256, default=_('Resource without name'))
     # slug = models.CharField(max_length=256, blank=False, db_index=True)
@@ -110,3 +111,46 @@ class Resource(GeoRefModel):
         r_ = super(Resource, self).save(*args, **kwargs)
         index_object_for_search.send(sender=self, obj=self)
         return r_
+
+
+    # ==========================================================================================
+    # Utils
+
+    # def from_dict(self, data):
+    #     keys = [
+    #         'id', 'name', 'email', 'password', 'contact', 'geojson',
+    #         'creation_date', 'is_admin', 'is_active', 'about_me']
+    #     date_keys = ['creation_date']
+    #     build_obj_from_dict(self, data, keys, date_keys)
+
+    def to_dict(self):
+        fields_and_defaults = [
+            ('name', None), ('kind_id', None), ('description', None), ('short_description ', None), ('contact ', None),
+            ('creator _id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
+        ]
+        dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
+        dict_['community'] = [community.id for community in self.community.all()]
+        dict_['tags'] = [tag.name for tag in self.tags.all()]
+        return dict_
+
+    # def is_valid(self, ignore=[]):
+    #     self.errors = {}
+    #     valid = True
+
+    #     # verify required fields
+    #     required = ['name', 'email', 'password']
+    #     for field in required:
+    #         if not field in ignore and not getattr(self, field, None):
+    #             valid, self.errors[field] = False, _('Required field')
+
+    #     if not self.id:
+    #         # new User
+    #         if SocialAuth.objects.filter(email=self.email).exists():
+    #             valid = False
+    #             self.errors['email'] = _('This email is registered on our system. You might have logged before with a social account (Facebook or Google). Please, skip this step and just login.')
+
+    #         if User.objects.filter(email=self.email).exists():
+    #             valid = False
+    #             self.errors['email'] = _('Email address already in use')
+
+    #     return valid

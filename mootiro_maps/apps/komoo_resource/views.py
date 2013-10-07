@@ -17,7 +17,7 @@ from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource, FormResourceGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
                         filtered_query, to_json)
-
+from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +57,7 @@ def new_resource(request, *arg, **kwargs):
         return form_resource
 
     def on_after_save(request, obj):
+        # versionate(request.user, obj)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
@@ -71,6 +72,7 @@ def new_resource_from_map(request, *args, **kwargs):
         return form_resource
 
     def on_after_save(request, obj):
+        # versionate(request.user, obj)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
@@ -94,6 +96,7 @@ def edit_resource(request, id='', *arg, **kwargs):
         return form
 
     def on_after_save(request, obj):
+        versionate(request.user, obj)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
