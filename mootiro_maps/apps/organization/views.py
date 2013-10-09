@@ -19,6 +19,7 @@ from organization.models import Organization
 from organization.forms import FormOrganization, FormOrganizationGeoRef
 from main.utils import (paginated_query, create_geojson, sorted_query,
                         filtered_query, to_json)
+from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +65,7 @@ def new_organization(request, *arg, **kwargs):
         return form
 
     def on_after_save(request, obj):
+        versionate(request.user, obj)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
@@ -79,6 +81,7 @@ def new_organization_from_map(request, *arg, **kwargs):
         return form
 
     def on_after_save(request, obj):
+        versionate(request.user, obj)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
@@ -102,6 +105,7 @@ def edit_organization(request, id='', *arg, **kwargs):
         return form
 
     def on_after_save(request, obj):
+        versionate(request.user, obj)
         return {'redirect': reverse('view_organization',
                                     kwargs={'id': obj.id})}
 
