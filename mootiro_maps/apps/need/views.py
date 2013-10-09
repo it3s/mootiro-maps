@@ -19,6 +19,7 @@ from need.models import Need, TargetAudience
 from need.forms import NeedForm, NeedFormGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
                         filtered_query, to_json)
+from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +35,7 @@ def new_need(request, id=""):
         return form
 
     def on_after_save(request, need):
+        versionate(request.user, need)
         redirect_url = reverse('view_need', kwargs={'id': need.id})
         return {'redirect': redirect_url}
 
@@ -52,6 +54,7 @@ def new_need_from_map(request, id=""):
 
     def on_after_save(request, need):
         redirect_url = reverse('view_need', kwargs={'id': need.id})
+        versionate(request.user, need)
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
@@ -74,6 +77,7 @@ def edit_need(request, id=""):
         return form
 
     def on_after_save(request, need):
+        versionate(request.user, need)
         redirect_url = reverse('view_need', kwargs={'id': need.pk})
         return {'redirect': redirect_url}
 

@@ -9,6 +9,7 @@ from django.template.defaultfilters import slugify
 from lib.taggit.managers import TaggableManager
 
 from authentication.models import User
+from main.mixins import BaseModel
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
 from search.signals import index_object_for_search
@@ -66,7 +67,7 @@ class TargetAudience(models.Model):
         return self.name
 
 
-class Need(GeoRefModel):
+class Need(GeoRefModel, BaseModel):
     """A need of a Community"""
 
     class Meta:
@@ -141,3 +142,29 @@ class Need(GeoRefModel):
     @property
     def perm_id(self):
         return 'n%d' % self.id
+
+    # ==========================================================================================
+    # Utils
+
+    # def from_dict(self, data):
+    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date', 'is_admin', 'is_active', 'about_me']
+    #     date_keys = ['creation_date']
+    #     build_obj_from_dict(self, data, keys, date_keys)
+
+    def to_dict(self):
+        fields_and_defaults = [
+            ('title', None), ('slug', None), ('description', None), ('short_description ', None),
+            ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
+            ('geojson', {})
+        ]
+        dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
+        dict_['tags'] = [tag.name for tag in self.tags.all()]
+        dict_['community'] = [comm.id for comm in self.community.all()]
+        dict_['target_audiences'] = [ta.name for ta in self.target_audiences.all()]
+        dict_['categories'] = [cat.id for cat in self.categories.all()]
+        return dict_
+
+    # def is_valid(self, ignore=[]):
+    #     self.errors = {}
+    #     valid = True
+    #     return valid
