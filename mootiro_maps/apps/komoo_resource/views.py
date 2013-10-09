@@ -57,7 +57,7 @@ def new_resource(request, *arg, **kwargs):
         return form_resource
 
     def on_after_save(request, obj):
-        # versionate(request.user, obj)
+        versionate(request.user, obj)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
@@ -72,7 +72,7 @@ def new_resource_from_map(request, *args, **kwargs):
         return form_resource
 
     def on_after_save(request, obj):
-        # versionate(request.user, obj)
+        versionate(request.user, obj)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save}

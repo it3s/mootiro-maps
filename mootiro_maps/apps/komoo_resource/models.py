@@ -126,7 +126,8 @@ class Resource(GeoRefModel, BaseModel):
     def to_dict(self):
         fields_and_defaults = [
             ('name', None), ('kind_id', None), ('description', None), ('short_description ', None), ('contact ', None),
-            ('creator _id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
+            ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
+            ('geojson', {})
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['community'] = [community.id for community in self.community.all()]
