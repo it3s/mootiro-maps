@@ -11,10 +11,11 @@ from django.template.defaultfilters import slugify
 from lib.taggit.managers import TaggableManager
 from komoo_map.models import GeoRefModel, POLYGON
 from authentication.models import User
+from main.mixins import BaseModel
 from search.signals import index_object_for_search
 
 
-class Community(GeoRefModel):
+class Community(GeoRefModel, BaseModel):
     name = models.CharField(max_length=256, blank=False)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.SlugField(max_length=256, blank=False, db_index=True)
@@ -89,3 +90,26 @@ class Community(GeoRefModel):
     @property
     def perm_id(self):
         return 'c%d' % self.id
+
+    # ==========================================================================================
+    # Utils
+
+    # def from_dict(self, data):
+    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date', 'is_admin', 'is_active', 'about_me']
+    #     date_keys = ['creation_date']
+    #     build_obj_from_dict(self, data, keys, date_keys)
+
+    def to_dict(self):
+        fields_and_defaults = [
+            ('name', None), ('slug', None), ('population', None), ('description', None), ('short_description ', None),
+            ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
+            ('geojson', {})
+        ]
+        dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
+        dict_['tags'] = [tag.name for tag in self.tags.all()]
+        return dict_
+
+    # def is_valid(self, ignore=[]):
+    #     self.errors = {}
+    #     valid = True
+    #     return valid

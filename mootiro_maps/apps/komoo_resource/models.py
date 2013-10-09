@@ -117,9 +117,7 @@ class Resource(GeoRefModel, BaseModel):
     # Utils
 
     # def from_dict(self, data):
-    #     keys = [
-    #         'id', 'name', 'email', 'password', 'contact', 'geojson',
-    #         'creation_date', 'is_admin', 'is_active', 'about_me']
+    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date', 'is_admin', 'is_active', 'about_me']
     #     date_keys = ['creation_date']
     #     build_obj_from_dict(self, data, keys, date_keys)
 
@@ -137,21 +135,4 @@ class Resource(GeoRefModel, BaseModel):
     # def is_valid(self, ignore=[]):
     #     self.errors = {}
     #     valid = True
-
-    #     # verify required fields
-    #     required = ['name', 'email', 'password']
-    #     for field in required:
-    #         if not field in ignore and not getattr(self, field, None):
-    #             valid, self.errors[field] = False, _('Required field')
-
-    #     if not self.id:
-    #         # new User
-    #         if SocialAuth.objects.filter(email=self.email).exists():
-    #             valid = False
-    #             self.errors['email'] = _('This email is registered on our system. You might have logged before with a social account (Facebook or Google). Please, skip this step and just login.')
-
-    #         if User.objects.filter(email=self.email).exists():
-    #             valid = False
-    #             self.errors['email'] = _('Email address already in use')
-
     #     return valid
