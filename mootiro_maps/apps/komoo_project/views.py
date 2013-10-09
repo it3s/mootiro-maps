@@ -17,6 +17,7 @@ from main.utils import (paginated_query, sorted_query, filtered_query,
 from main.tasks import send_explanations_mail
 
 from authentication.utils import login_required
+from model_versioning.tasks import versionate
 
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
@@ -105,6 +106,7 @@ def project_new(request):
         send_explanations_mail(project.creator, 'project')
         # Add the project creator as contributor
         project.contributors.add(project.creator)
+        versionate(request.user, project)
         return {'redirect': project.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save, 'project': None}
@@ -127,6 +129,7 @@ def project_edit(request, id='', *arg, **kwargs):
     def on_after_save(request, obj):
         # add user who edited as contributor.
         obj.contributors.add(request.user)
+        versionate(request.user, obj)
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
