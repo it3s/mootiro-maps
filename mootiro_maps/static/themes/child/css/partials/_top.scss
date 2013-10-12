@@ -1,4 +1,4 @@
-$bg: #ff6666;
+$bg: #1e81c8;
 $fg: #fff;
 $active_bg: #4978bc;
 $active_fg: #fff;
@@ -6,7 +6,7 @@ $active_fg: #fff;
 #top {
 
     width: 100%;
-    height: 61px;
+    height: 60px;
     background: $bg;
     position: relative;
     z-index: 11;
@@ -31,7 +31,21 @@ $active_fg: #fff;
 
     #logo {
         margin: 0 35px;
-        padding-top: 7px;
+
+        > a > img {
+            margin-top: 10px;
+        }
+
+        .logo-text {
+            display: inline-block;
+            width: 60px;
+            margin: 0 0 0 10px;
+            vertical-align: middle;
+            color: white;
+            font-size: 45%;
+            font-family: Calibri, 'Open Sans', Helvetica, Arial, sans-serif;
+            line-height: 108%;
+        }
     }
 
     #menu, #side_menu {

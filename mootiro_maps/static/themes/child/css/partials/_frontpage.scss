@@ -17,7 +17,7 @@
     }
 
     > .site-description {
-        margin: 25px 0 0 0;
+        margin: 5px 0 0 0;
 
         > .logo {
             width: 110px;
@@ -63,7 +63,7 @@
 
                 font-size: 18px;
                 text-align: center;
-                color: #ff6666;
+                color: #006eb7;
             }
 
             p {
@@ -146,12 +146,12 @@
 
     .flex-control-paging li a {
         background-color: #fff;
-        border: 1px solid #ff6666;
+        border: 1px solid #1e81c8;
         box-shadow: none;
     }
 
     .flex-control-paging li a.flex-active {
-        background-color: #ff6666;
+        background-color: #1e81c8;
     }
 
     > ul.slides li {

@@ -1,8 +1,8 @@
 {% load i18n %}
 {% load komoo_tags %}
-<div id="logo">
-  <a href="{% url root %}"><img src='{{THEME_STATIC_URL}}img/logo.png' alt='Mootiro Maps'/></a>
-</div>
+<h1 id="logo">
+  <a href="{% url root %}"><img src='{{THEME_STATIC_URL}}img/logo.png' alt='Logo'/><div class="logo-text"><img src='{{THEME_STATIC_URL}}img/logo-text.png' alt='Child Friendly Places'/></div></a>
+</h1>
 
 <nav id="menu">
   {% block menu %}

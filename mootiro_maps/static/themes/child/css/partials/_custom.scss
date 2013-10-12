@@ -1,24 +1,24 @@
 body {
-    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-family: Calibri, 'Open Sans', Helvetica, Arial, sans-serif;
     color: #444;
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: serif;
+    font-family: Cambria, 'Droid Serif', Georgia, 'Times New Roman', serif;
 }
 
 p {
-    line-height: 1.714285714;
+    line-height: 1.5;
 }
 
 a,
 a:link {
-    color: #ff6666;
+    color: #006eb7;
 }
 
 a:hover,
 a:visited, {
-    color: red;
+    color: #005ca9;
 }
 
 a.button,
@@ -51,6 +51,6 @@ a.big-button:visited {
     }
 
     > div {
-        margin: 0 30px;
+        margin: 0 25px;
     }
 }
