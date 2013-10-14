@@ -1,6 +1,6 @@
 $bg: #1e81c8;
 $fg: #fff;
-$active_bg: #4978bc;
+$active_bg: #006eb7;
 $active_fg: #fff;
 
 #top {
@@ -63,6 +63,18 @@ $active_fg: #fff;
                 > a { padding-top: 17px }
             }
 
+            .resource-kit:hover {
+                background: #08b89d;
+            }
+
+            .case-studies:hover {
+                background: #ff6666;
+            }
+
+            .collaborate:hover {
+                background: #88c86f;
+            }
+
             a {
                 text-decoration: inherit;
                 color: inherit;
@@ -81,50 +93,11 @@ $active_fg: #fff;
             }
             li.active ul { color: $fg; }
 
-            .map .ico { background-image: url('../img/menu/newmenu/map.png') }
-            .map:hover .ico { background-image: url('../img/menu/newmenu/map-hover.png') }
-            //.map.active { background-color: #ff3d2e }
-            .map.active .ico { background-image: url('../img/menu/newmenu/map-active.png') }
-
-            .objects > a >.ico { background-image: url('../img/menu/newmenu/objects.png') }
-            .objects:hover > a >.ico { background-image: url('../img/menu/newmenu/objects-hover.png') }
-            //.objects.active { background-color: #951b81 }
-            .objects.active > a >.ico { background-image: url('../img/menu/newmenu/objects-active.png') }
-
-            .objects .community .ico { background-image: url('../img/menu/newmenu/community.png') }
-            .objects .community:hover .ico { background-image: url('../img/menu/newmenu/community-hover.png') }
-            //.objects .community.active { background-color: #f7A941 }
-            .objects .community.active .ico { background-image: url('../img/menu/newmenu/community-active.png') }
-
-            .objects .organization .ico { background-image: url('../img/menu/newmenu/organization.png') }
-            .objects .organization:hover .ico { background-image: url('../img/menu/newmenu/organization-hover.png') }
-            //.objects .organization.active { background-color: #3a61d6 }
-            .objects .organization.active .ico { background-image: url('../img/menu/newmenu/organization-active.png') }
-
-            .objects .need .ico { background-image: url('../img/menu/newmenu/need.png') }
-            .objects .need:hover .ico { background-image: url('../img/menu/newmenu/need-hover.png') }
-            //.objects .need.active, li.need.active:hover { background-color: #f42c5e }
-            .objects .need.active .ico { background-image: url('../img/menu/newmenu/need-active.png') }
-
-            .objects .resource .ico { background-image: url('../img/menu/newmenu/resource.png') }
-            .objects .resource:hover .ico { background-image: url('../img/menu/newmenu/resource-hover.png') }
-            //.objects .resource.active { background-color: #52ae32 }
-            .objects .resource.active .ico { background-image: url('../img/menu/newmenu/resource-active.png') }
-
-            .objects .investment .ico { background-image: url('../img/menu/newmenu/investment.png') }
-            .objects .investment:hover .ico { background-image: url('../img/menu/newmenu/investment-hover.png') }
-            //.objects .investment.active { background-color: #aa9f18 }
-            .objects .investment.active .ico { background-image: url('../img/menu/newmenu/investment-active.png') }
-
-            .projects .ico { background-image: url('../img/menu/newmenu/projects.png') }
-            .projects:hover .ico { background-image: url('../img/menu/newmenu/projects-hover.png') }
-            //.projects.active { background-color: #f26700 }
-            .projects.active .ico { background-image: url('../img/menu/newmenu/projects-active.png') }
         }
-            .about .ico { background-image: url('../img/menu/about.png') }
-            .case-studies .ico { background-image: url('../img/menu/cases.png') }
-            .collaborate .ico { background-image: url('../img/menu/collab.png') }
-            .resource-kit .ico { background-image: url('../img/menu/kit.png') }
+        .about .ico { background-image: url('../img/menu/about.png') }
+        .case-studies .ico { background-image: url('../img/menu/cases.png') }
+        .collaborate .ico { background-image: url('../img/menu/collab.png') }
+        .resource-kit .ico { background-image: url('../img/menu/kit.png') }
 
         .ico {
             display: inline-block;
@@ -134,31 +107,9 @@ $active_fg: #fff;
             height: 25px;
         }
 
-        li.objects.active {
-            ul { display: block }
-            li { display: none }
-            li.active { display: block }
-        }
-        li.objects.active:hover ul li { display: block }
-
-        li.objects ul {
-            background: $bg;
-            text-align: left;
-            font-size: 90%;
-            box-shadow: 0px -5px 0px 0px $active_bg, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
-
-            li:hover { background: $active_bg; }
-            .ico {
-                width: 20px;
-                height: 20px;
-                margin: 3px;
-            }
-        }
-        li.objects.active ul { box-shadow: 0px -5px 0px 0px #951b81, 1px 1px 3px 1px rgba(50, 50, 50, 0.5); }
-
     }
-    #menu > ul > li { width: 120px }
-    #side_menu > ul > li { width: 80px }
+    #menu > ul > li { width: 125px }
+    #side_menu > ul > li { padding: 0 10px; }
 
     #side_menu {
         li#login_button {
@@ -171,20 +122,16 @@ $active_fg: #fff;
         }
         li#user_menu {
             width: 150px;
-
+        }
+        li.language_selector {
+            width: 80px;
+        }
+        li.dropdown_menu {
             ul {
                 li { padding: 0.3em }
                 li:hover { background: $bg; }
 
                 box-shadow: 0px -5px 0px 0px $active_bg, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
-            }
-        }
-        li.dropdown_menu {
-            ul {
-                li { padding: 0.3em }
-                li:hover { background: #dceff4 }
-
-                box-shadow: 0px -5px 0px 0px #b1dde8, 1px 1px 3px 1px rgba(50, 50, 50, 0.5);
             }
         }
     }

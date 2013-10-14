@@ -20,7 +20,9 @@
 
 <nav id="side_menu">
   <ul>
+    <!--
     <li><a id="help_button">{% trans "Help" %}</a></li>
+    -->
     {% if not user.is_anonymous %}
     <li id="user_menu" class="dropdown_menu">
       <a>{{ user.name|first_name }} &#x25be;</a>
@@ -33,10 +35,10 @@
     {% else %}
     <li id="login_button"><a href="#" class="login-required" >{% trans 'Login'%}</a></li>
     {% endif %}
-    <li class="dropdown_menu">
+    <li class="language_selector dropdown_menu">
       {% for lang in LANGUAGES %}
       {% if lang.0 == LANGUAGE_CODE %}
-      <a>{{ lang.1 }} &#x25be;</a>
+      <a>{{ lang.0 }} &#x25be;</a>
       {% endif %}
       {% endfor %}
       <ul>
