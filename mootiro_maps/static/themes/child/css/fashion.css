@@ -702,6 +702,8 @@ a.project-btn {
         text-align: center; }
         #top #menu > ul > li > a, #top #side_menu > ul > li > a {
           padding-top: 17px; }
+      #top #menu > ul .about:hover, #top #side_menu > ul .about:hover {
+        background: #8e5ba6; }
       #top #menu > ul .resource-kit:hover, #top #side_menu > ul .resource-kit:hover {
         background: #08b89d; }
       #top #menu > ul .case-studies:hover, #top #side_menu > ul .case-studies:hover {
