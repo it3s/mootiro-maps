@@ -146,7 +146,7 @@ $(function(){
           top: '-12px'
         },
         'files': {
-          hint: gettext('Please, upload fotos of the organization or link to photos on Wiki Commons or Flickr. Make sure that the photos is licensed under creative commons.'),
+          hint: gettext('Please, upload photos of the organization or link to photos on Wiki Commons or Flickr. Make sure that the photos is licensed under creative commons.'),
           top: '40%'
         },
         'logo': {

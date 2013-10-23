@@ -12,9 +12,9 @@
 
             <div class="form-legend">
                 {% if  project %}
-                    {% trans 'Edit project' %}
+                    {% trans 'Edit project map' %}
                 {% else %}
-                    {% trans 'New project' %}
+                    {% trans 'New project map' %}
                 {% endif %}
             </div>
             <div class='alert alert-info required-notice' data-alert='info'>
@@ -28,7 +28,7 @@
             {% if project and project.related_objects.count %}
                 <hr/>
                 <div class="form-legend">
-                    {% trans 'Edit associated contents of this project' %}
+                    {% trans 'Edit associated contents of this map' %}
                 </div>
                 <ul>
                     {% for obj in project.related_objects %}

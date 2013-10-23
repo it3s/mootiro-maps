@@ -4,7 +4,7 @@
 {% load comment_tags %}
 {% load i18n %}
 
-{% block title %}{% trans 'Projects' %}{% endblock %}
+{% block title %}{% trans 'Project Maps' %}{% endblock %}
 
 {% block menu %} {% menu "project" %} {% endblock %}
 
@@ -14,12 +14,12 @@
   <div class="highlight">
 
     <div class="button-new">
-      <a class="button login-required" href="{% url project_new %}" title="{% trans 'Create a new mapping project' %}">{% trans "Create new Project" %}</a>
+      <a class="button login-required" href="{% url project_new %}" title="{% trans 'Create a new project map' %}">{% trans "Create new project map" %}</a>
     </div>
 
   <div class="view-list-top">
     <div class="view-list-count">
-          {% blocktrans count counter=projects_count %}{{ counter }} project{% plural %}{{ counter }} projects{% endblocktrans %}
+          {% blocktrans count counter=projects_count %}{{ counter }} project map{% plural %}{{ counter }} project maps{% endblocktrans %}
     </div>
     <div class="view-list-pagination">
       {% pagination projects %}

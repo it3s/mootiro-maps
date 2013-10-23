@@ -43,7 +43,7 @@
                 </a>
                 {% endif %}
 
-                <a href="{{ project.edit_url }}" class="btn login-required" title="{% trans 'Edit project' %}">
+                <a href="{{ project.edit_url }}" class="btn login-required" title="{% trans 'Edit project map' %}">
                     <i class="icon-pencil"></i>
                 </a>
 
@@ -57,7 +57,7 @@
             <!--
             <li class="tab"><a href="#project-campaign">Campanha</a></li>
             //-->
-            <li class="tab"><a href="#project-description">{% trans 'Project' %}</a></li>
+            <li class="tab"><a href="#project-description">{% trans 'Project Map' %}</a></li>
             <li class="tab"><a href="#project-data">{% trans 'Content' %}</a></li>
             <li class="tab"><a href="#project-contributors">{% trans 'Collaborators' %}</a></li>
           </ul>
@@ -72,7 +72,7 @@
         <div class="view-body tab-content" id="project-description">
           <div class="main-column right">
             <div class="mark-down">{{ project.description|render_markup|safe }}</div>
-            <div class="related-button"><a class="button" href="{% url project_map project.id %}">{% trans 'See all objects on map' %}</a></div>
+            <div class="related-button"><a class="button" href="{% url project_map project.id %}">{% trans 'See all objects on the map' %}</a></div>
             <div class="view-footer">
               {% image_gallery project %}
             </div>
@@ -112,7 +112,7 @@
               {% with similar_projects=project.tags.similar_objects|slice:"5" %}
                     <div>
                       {% if similar_projects %}
-                      <h4>{% trans "Related projects" %}</h4>
+                      <h4>{% trans "Related project maps" %}</h4>
                       <p>
                           <ul>
                               {% for r in similar_projects|slice:'5' %}
@@ -135,7 +135,7 @@
         <div class="view-body tab-content" id="project-data">
             {% if not proj_objects.Organization.objects_list and not proj_objects.Community.objects_list and not proj_objects.Need.objects_list and not proj_objects.Resource.objects_list and not proj_objects.Investment.objects_list %}
             <div class="view-info-empty">
-              <p>{% trans 'No content have been added to this project yet' %}.</p>
+              <p>{% trans 'No content have been added to this project map yet' %}.</p>
             </div>
             {% endif %}
             <div class="view-info-buttons">
@@ -205,7 +205,7 @@
             <!--         </div> -->
             <!--         {#% endfor %#} -->
             <!--     {#% empty %#} -->
-            <!--     <div class="view-info-empty">{% trans 'No contents have been added to this project yet' %}.</div> -->
+            <!--     <div class="view-info-empty">{% trans 'No contents have been added to this map yet' %}.</div> -->
             <!--     {#% endfor %#} -->
             <!-- </div> -->
 
@@ -218,7 +218,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'No organizations have been added to this project yet' %}.</div>
+                <div class="view-info-empty">{% trans 'No organizations have been added to this map yet' %}.</div>
                 {% endfor %}
             </div>
 
@@ -231,7 +231,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'No communities have been added to this project yet' %}.</div>
+                <div class="view-info-empty">{% trans 'No communities have been added to this map yet' %}.</div>
                 {% endfor %}
             </div>
 
@@ -244,7 +244,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'No needs have been added to this project yet' %}.</div>
+                <div class="view-info-empty">{% trans 'No needs have been added to this map yet' %}.</div>
                 {% endfor %}
             </div>
 
@@ -257,7 +257,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'No resources have been added to this project yet' %}.</div>
+                <div class="view-info-empty">{% trans 'No resources have been added to this map yet' %}.</div>
                 {% endfor %}
             </div>
 
@@ -270,7 +270,7 @@
                     </div>
                 </div>
                 {% empty %}
-                <div class="view-info-empty">{% trans 'No investments have been added to this project yet' %}.</div>
+                <div class="view-info-empty">{% trans 'No investments have been added to this map yet' %}.</div>
                 {% endfor %}
             </div>
 

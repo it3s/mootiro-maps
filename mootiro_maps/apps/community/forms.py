@@ -29,7 +29,7 @@ class CommunityForm(AjaxModelForm):
         'population': _('Population'),
         'description': _('Description'),
         'tags': _('Tags'),
-        'files': _(' '),
+        'files': ' ',
     }
 
     description = forms.CharField(widget=MarkItUpWidget())
