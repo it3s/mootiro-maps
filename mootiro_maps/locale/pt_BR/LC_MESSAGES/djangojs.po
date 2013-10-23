@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MootiroMap 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-22 23:14-0200\n"
+"POT-Creation-Date: 2013-10-22 23:26-0200\n"
 "PO-Revision-Date: 2012-10-18 17:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@it3s.org>\n"
 "Language-Team: it3s team <LL@li.org>\n"
@@ -1265,8 +1265,10 @@ msgstr ""
 
 #: public/js.build/organization/organization_new.js:149
 #: public/js/organization/organization_new.js:149
+#: static/js.build/organization/organization_new.js:149
+#: static/js/organization/organization_new.js:149
 msgid ""
-"Please, upload fotos of the organization or link to photos on Wiki Commons "
+"Please, upload photos of the organization or link to photos on Wiki Commons "
 "or Flickr. Make sure that the photos is licensed under creative commons."
 msgstr ""
 
@@ -1291,7 +1293,7 @@ msgstr ""
 #: static/js.build/organization/organization_new.js:165
 #: static/js/organization/organization_new.js:165
 msgid ""
-"Please insert information about the affiliated organization, por example: "
+"Please insert information about the affiliated organization, for example: "
 "what is its role? infrastructure? objectives? contact persons?"
 msgstr ""
 
@@ -1370,13 +1372,6 @@ msgstr[1] "%s Comunidades"
 #: public/js/map/maptypes.js:62 static/js/map/maptypes.js:62
 msgid "Clean"
 msgstr "Limpo"
-
-#: static/js.build/organization/organization_new.js:149
-#: static/js/organization/organization_new.js:149
-msgid ""
-"Please, upload photos of the organization or link to photos on Wiki Commons "
-"or Flickr. Make sure that the photos is licensed under creative commons."
-msgstr ""
 
 #~ msgid "Are you sure you want to delete your signature for this object?"
 #~ msgstr ""

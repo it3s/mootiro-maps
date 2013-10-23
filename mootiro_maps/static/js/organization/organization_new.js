@@ -162,7 +162,7 @@ $(function(){
         },
         'branch_info': {
           top: '40%',
-          hint: gettext('Please insert information about the affiliated organization, por example: what is its role? infrastructure? objectives? contact persons?')
+          hint: gettext('Please insert information about the affiliated organization, for example: what is its role? infrastructure? objectives? contact persons?')
         }
     });
 })
