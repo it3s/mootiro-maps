@@ -6,6 +6,7 @@ $active_fg: #fff;
 #top {
 
     width: 100%;
+    min-width: 1350px;
     height: 60px;
     background: $bg;
     position: relative;
@@ -30,7 +31,7 @@ $active_fg: #fff;
    }
 
     #logo {
-        margin: 0 35px;
+        margin: 0 20px;
 
         > a > img {
             margin-top: 10px;
@@ -59,23 +60,44 @@ $active_fg: #fff;
                 margin: 0;
                 height: 100%;
                 text-align: center;
+                float: left;
 
-                > a { padding-top: 17px }
+                > a {
+                    padding: 10px 10px 0;
+                    vertical-align: bottom;
+
+                    &:before {
+                        display: inline-block;
+                        margin-right: 3px;
+                        width: 25px;
+                        height: 25px;
+                        position: relative;
+                        top: 6px;
+                    }
+                }
             }
 
-            .about:hover{
+            .about:hover,
+            .about.active {
                 background: #8e5ba6;
             }
-            .resource-kit:hover {
+            .resource-kit:hover,
+            .resource-kit.active {
                 background: #08b89d;
             }
 
-            .case-studies:hover {
+            .case-studies:hover,
+            .case-studies.active {
                 background: #ff6666;
             }
 
-            .collaborate:hover {
+            .collaborate:hover,
+            .collaborate.active {
                 background: #88c86f;
+            }
+            .maps:hover,
+            .maps.active {
+                background: #fca43a;
             }
 
             a {
@@ -88,7 +110,6 @@ $active_fg: #fff;
             > li:hover { background: $active_bg; }
 
             // Menu itens configuration
-            li .ico { background: no-repeat center center }
             li:hover ul { font-weight: normal }
             li.active {
                 color: $active_fg;
@@ -97,24 +118,22 @@ $active_fg: #fff;
             li.active ul { color: $fg; }
 
         }
-        .about .ico { background-image: url('../img/menu/about.png') }
-        .case-studies .ico { background-image: url('../img/menu/cases.png') }
-        .collaborate .ico { background-image: url('../img/menu/collab.png') }
-        .resource-kit .ico { background-image: url('../img/menu/kit.png') }
 
-        .ico {
-            display: inline-block;
-            vertical-align: -33%;
-            margin-right: 0.2em;
-            width: 25px;
-            height: 25px;
-        }
+        .about a:before { content: url('../img/menu/about.png') }
+        .case-studies a:before { content: url('../img/menu/cases.png') }
+        .collaborate a:before { content: url('../img/menu/collab.png') }
+        .resource-kit a:before { content: url('../img/menu/kit.png') }
+        .maps a:before { content: url('../img/menu/maps.png') }
 
     }
-    #menu > ul > li { width: 125px }
     #side_menu > ul > li { padding: 0 10px; }
 
     #side_menu {
+
+        > ul > li > a {
+            padding-top: 20px;
+        }
+
         li#login_button {
             background: #cce5ce;
             color: #009640;
@@ -127,6 +146,7 @@ $active_fg: #fff;
             width: 150px;
         }
         li.language_selector {
+            white-space: nowrap;
             width: 80px;
         }
         li.dropdown_menu {

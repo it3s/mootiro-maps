@@ -1,13 +1,10 @@
 {% load i18n %}
 
 <ul class="main-menu">
-  <li class="about {% if selected_area == 'about' %}active{% endif %}">
-    <a href="http://childfriendlyplaces.org/resourcekit/about/"><div class="ico"></div>{% trans "About" %}</a>
-  </li><li class="resource-kit {% if selected_area == 'resourcekit' %}active{% endif %}">
-    <a href="http://childfriendlyplaces.org/resourcekit/"><div class="ico"></div>{% trans "Resource Kit" %}</a>
-  </li><li class="case-studies {% if selected_area == 'project' %}active{% endif %}">
-  <a href="{% url project_view 2 %}"><div class="ico"></div>{% trans "Case Studies" %}</a>
-  </li><li class="collaborate {% if selected_area == 'collaborate' %}active{% endif %}">
-    <a href="http://childfriendlyplaces.org/resourcekit/collaborate"><div class="ico"></div>{% trans "Collaborate" %}</a>
+  <li class="about {% if selected_area == 'about' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/about/">{% trans "About" %}</a>
+  </li><li class="resource-kit {% if selected_area == 'resourcekit' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/">{% trans "Resource Kit" %}</a>
+  </li><li class="case-studies {% if selected_area == 'project' %}active{% endif %}"><a href="{% url project_view 2 %}">{% trans "Case Studies" %}</a>
+  </li><li class="maps {% if selected_area == 'maps' %}active{% endif %}"><a href="{% url project_highlights %}">{% trans "Maps" %}</a>
+  </li><li class="collaborate {% if selected_area == 'collaborate' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/collaborate">{% trans "Collaborate" %}</a>
   </li>
 </ul>
