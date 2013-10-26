@@ -40,6 +40,7 @@ class HelpCenter
           <section class='modal-body'>
             <ul id='questions'>
               <% for (var i = 0; i < questions.length; i++) { %>
+              <% if (questions[i]) { %>
               <li class='<%= questions[i].type %>'>
                 <!------------ QUESTION ----------->
                 <article>
@@ -48,6 +49,7 @@ class HelpCenter
                 </article>
                 <!--------------------------------->
               </li>
+              <% } %>
               <% } %>
             </ul>
             <% if (hasTour) { %><button id='tour_button'><%= gettext('Take the guided tour') %></button><% } %>
