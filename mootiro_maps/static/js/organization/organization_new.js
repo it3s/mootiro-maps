@@ -138,7 +138,7 @@ $(function(){
           top: '-12px'
         },
         'categories':{
-            hint: gettext('Please, select the categories that most reflect the organization's activities or cause.'),
+          hint: gettext("Please, select the categories that most reflect the organization's activities or cause."),
             top: '45%'
         },
         'tags': {
