@@ -6,7 +6,7 @@ $active_fg: #fff;
 #top {
 
     width: 100%;
-    min-width: 1350px;
+    min-width: 800px;
     height: 60px;
     background: $bg;
     position: relative;
@@ -134,14 +134,6 @@ $active_fg: #fff;
             padding-top: 20px;
         }
 
-        li#login_button {
-            background: #cce5ce;
-            color: #009640;
-        }
-        li#login_button:hover {
-            background: #8EC89A;
-            color: #000;
-        }
         li#user_menu {
             width: 150px;
         }
@@ -162,14 +154,14 @@ $active_fg: #fff;
     nav > ul > li { display: inline-block }
 
     #search {
-        width: 22%;
-        margin-left: 3%;
+        width: 280px;
+        margin: 0 10px;
         padding-top: 16px;
 
         position: relative;
 
         form {
-            width: 85%;
+            width: 100%;
             padding: 0;
             margin: 0;
             display: inline-block;
@@ -218,3 +210,76 @@ $active_fg: #fff;
     }
 }
 .dropdown_menu:hover > ul { display: block }
+
+@media (max-width: 1320px) {
+    #top {
+        #logo {
+            margin: 0 10px 0 0;
+        }
+
+        #menu > ul > li > a {
+            font-size: 90%;
+        }
+    }
+}
+
+@media (max-width: 1240px) {
+    #top {
+        #menu > ul > li > a {
+            padding-top: 2px;
+
+            &:before {
+                display: block;
+                width: auto;
+                height: 30px;
+                margin: 0;
+            }
+        }
+    }
+}
+
+@media (max-width: 1090px) {
+    #top {
+        #menu > ul > li > a {
+            padding: 10px 15px;
+
+            > span {
+                display: none;
+            }
+        }
+
+        #search {
+            width: 260px;
+        }
+    }
+}
+
+@media (max-width: 960px) {
+    #top {
+        min-width: 945px;
+
+        #logo .logo-text {
+            &, > img {
+                width: 40px;
+            }
+        }
+    }
+}
+
+@media (max-width: 850px) {
+    #top {
+        min-width: 800px;
+
+        #menu > ul > li > a {
+            padding: 10px 10px;
+        }
+
+        #logo .logo-text {
+            display: none;
+        }
+
+        #search {
+            width: 200px;
+        }
+    }
+}

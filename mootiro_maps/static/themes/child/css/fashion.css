@@ -660,7 +660,7 @@ a.project-btn {
 
 #top {
   width: 100%;
-  min-width: 1350px;
+  min-width: 800px;
   height: 60px;
   background: #1e81c8;
   position: relative;
@@ -760,12 +760,6 @@ a.project-btn {
     padding: 0 10px; }
   #top #side_menu > ul > li > a {
     padding-top: 20px; }
-  #top #side_menu li#login_button {
-    background: #cce5ce;
-    color: #009640; }
-  #top #side_menu li#login_button:hover {
-    background: #8EC89A;
-    color: #000; }
   #top #side_menu li#user_menu {
     width: 150px; }
   #top #side_menu li.language_selector {
@@ -780,12 +774,12 @@ a.project-btn {
   #top nav > ul > li {
     display: inline-block; }
   #top #search {
-    width: 22%;
-    margin-left: 3%;
+    width: 280px;
+    margin: 0 10px;
     padding-top: 16px;
     position: relative; }
     #top #search form {
-      width: 85%;
+      width: 100%;
       padding: 0;
       margin: 0;
       display: inline-block; }
@@ -825,6 +819,40 @@ a.project-btn {
 .dropdown_menu:hover > ul {
   display: block; }
 
+@media (max-width: 1320px) {
+  #top #logo {
+    margin: 0 10px 0 0; }
+  #top #menu > ul > li > a {
+    font-size: 90%; } }
+@media (max-width: 1240px) {
+  #top #menu > ul > li > a {
+    padding-top: 2px; }
+    #top #menu > ul > li > a:before {
+      display: block;
+      width: auto;
+      height: 30px;
+      margin: 0; } }
+@media (max-width: 1090px) {
+  #top #menu > ul > li > a {
+    padding: 10px 15px; }
+    #top #menu > ul > li > a > span {
+      display: none; }
+  #top #search {
+    width: 260px; } }
+@media (max-width: 960px) {
+  #top {
+    min-width: 945px; }
+    #top #logo .logo-text, #top #logo .logo-text > img {
+      width: 40px; } }
+@media (max-width: 850px) {
+  #top {
+    min-width: 800px; }
+    #top #menu > ul > li > a {
+      padding: 10px 10px; }
+    #top #logo .logo-text {
+      display: none; }
+    #top #search {
+      width: 200px; } }
 body {
   font-family: Calibri, 'Open Sans', Helvetica, Arial, sans-serif;
   color: #444; }

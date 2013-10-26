@@ -1,10 +1,10 @@
 {% load i18n %}
 
 <ul class="main-menu">
-  <li class="about {% if selected_area == 'about' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/about/">{% trans "About" %}</a>
-  </li><li class="resource-kit {% if selected_area == 'resourcekit' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/">{% trans "Resource Kit" %}</a>
-  </li><li class="case-studies {% if selected_area == 'project' %}active{% endif %}"><a href="{% url project_view 2 %}">{% trans "Case Studies" %}</a>
-  </li><li class="maps {% if selected_area == 'maps' %}active{% endif %}"><a href="{% url project_highlights %}">{% trans "Maps" %}</a>
-  </li><li class="collaborate {% if selected_area == 'collaborate' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/collaborate">{% trans "Collaborate" %}</a>
+  <li class="about {% if selected_area == 'about' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/about/" title="{% trans "About" %}"><span>{% trans "About" %}</span></a>
+    </li><li class="resource-kit {% if selected_area == 'resourcekit' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/" title="{% trans "Resource Kit" %}"><span>{% trans "Resource Kit" %}</span></a>
+    </li><li class="case-studies {% if selected_area == 'project' %}active{% endif %}"><a href="{% url project_view 2 %}" title="{% trans "Case Studies" %}"><span>{% trans "Case Studies" %}</span></a>
+    </li><li class="maps {% if selected_area == 'maps' %}active{% endif %}"><a href="{% url project_highlights %}" title="{% trans "Maps" %}"><span>{% trans "Maps" %}</span></a>
+    </li><li class="collaborate {% if selected_area == 'collaborate' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/collaborate" title="{% trans "Collaborate" %}"><span>{% trans "Collaborate" %}</span></a>
   </li>
 </ul>

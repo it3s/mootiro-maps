@@ -1074,6 +1074,7 @@ body.community #map-panel-tabs {
 }
 #main-content {
     margin: 20px auto 0;
+    padding: 0 0 15px;
 }
 .map-panel .map-panel-buttons {
     margin: 0 5px;
