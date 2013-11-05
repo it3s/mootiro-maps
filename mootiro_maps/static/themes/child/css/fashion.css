@@ -879,6 +879,10 @@ a.big-button:hover,
 a.big-button:visited {
   color: white; }
 
+.social-buttons {
+  float: none;
+  margin: 10px 0; }
+
 #main-content.highlights .section ul {
   height: 460px; }
   #main-content.highlights .section ul li p {
