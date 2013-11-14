@@ -30,6 +30,7 @@ def organization_list(request):
     org_sort_order = ['creation_date', 'name']
 
     filtered = bool(request.GET.get('filters', None))
+    filter_params = request.GET
 
     query_set = filtered_query(Organization.objects, request)
     organizations_list = sorted_query(query_set, org_sort_order,
@@ -37,7 +38,8 @@ def organization_list(request):
     organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
     return dict(organizations=organizations, filtered=filtered,
-                organizations_count=organizations_count)
+                organizations_count=organizations_count,
+                filter_params=filter_params)
 
 
 @render_to('organization/show.html')
@@ -130,10 +132,3 @@ def search_tags(request):
     tags = [t.name for t in qset]
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
-
-
-# NON-FUNCTIONAL YET
-@ajax_request
-def add_to_project(request):
-    organizations = filtered_query(Organization.objects, request)
-    return organizations

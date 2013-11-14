@@ -5,6 +5,7 @@
 {% load comment_tags %}
 {% load i18n %}
 {% load markitup_tags %}
+{% load project_tags %}
 
 {% block title %}{% trans 'Organizations' %}{% endblock %}
 
@@ -18,7 +19,7 @@
       <div class="button-new">
         <a class="button login-required" href="{% url new_organization %}" title="Adicionar uma nova Organização. Por exemplo: uma ONG, uma empresa, um coletivo, etc.">{% trans "Create New Organization" %}</a>
       {% if filtered %}
-        <a class="button login-required" href="" title="Adicionar Organizações filtradas a um projeto">{% trans "Add to Project" %}</a>
+        {% filtered_query_to_project  "Organization" filter_params %}
       {% endif %}
       </div>
 
