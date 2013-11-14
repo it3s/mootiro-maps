@@ -1,22 +1,26 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+# Translators:
+# Daniela Mattern <3laste2000@gmail.com>, 2013
+# aimeesf <aimee.sferreira@gmail.com>, 2013
+# Luiz Armesto <luiz.armesto@gmail.com>, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-10-23 22:41-0200\n"
-"PO-Revision-Date: 2012-11-28 12:38-0200\n"
-"Last-Translator: André Casimiro <andre.casimiro@it3s.org>\n"
-"Language-Team: it3s <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2013-10-22 23:13-0200\n"
+"PO-Revision-Date: 2013-11-14 20:15-0300\n"
+"Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
+"mootiro-maps/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1)\n"
-"X-Poedit-Basepath: ../../../\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: apps/authentication/api.py:28 apps/authentication/models.py:180
 #: apps/main/models.py:362
@@ -24,28 +28,24 @@ msgid "Required field"
 msgstr "Campo obrigatório"
 
 #: apps/authentication/api.py:34
-#, fuzzy
 msgid "You must accept the license agreement"
-msgstr "Você deve aceitar os termos de uso"
+msgstr "Você deve aceitar o contrato de licença"
 
 #: apps/authentication/api.py:39 apps/authentication/forms.py:95
 #: apps/authentication/views.py:184
 msgid "Passwords did not match"
-msgstr "As senha não coincidem"
+msgstr "As senhas não coincidem"
 
 #: apps/authentication/api.py:105
-#, fuzzy
 msgid "You do not have permission to perform this operation"
-msgstr "Você não possui permissão para essa operação"
+msgstr "Você não tem permissão para fazer isso"
 
 #: apps/authentication/forms.py:30
-#, fuzzy
 msgid "Full name"
-msgstr "Nome Completo"
+msgstr "Nome completo"
 
 #: apps/authentication/forms.py:31
 #: templates/default/authentication/profile.html:42
-#, fuzzy
 msgid "About me"
 msgstr "Sobre mim"
 
@@ -76,27 +76,23 @@ msgid "Password"
 msgstr "Senha"
 
 #: apps/authentication/forms.py:62
-#, fuzzy
 msgid "Confirm your password"
-msgstr "Confirme a sua senha"
+msgstr "Confirme sua senha"
 
 #: apps/authentication/forms.py:86
-#, fuzzy
 msgid "This email is already in use"
-msgstr "Este email já está em uso."
+msgstr "Este email já está em uso"
 
 #: apps/authentication/forms.py:89 apps/authentication/models.py:186
-#, fuzzy
 msgid ""
 "This email is registered on our system. You might have logged before with a "
 "social account (Facebook or Google). Please, skip this step and just login."
 msgstr ""
-"Este email já está registrado no nosso sistema. Provavelmente você já entrou "
-"anteriormente usando uma conta externa (facebook ou google). Você pode pular "
-"esta etapa e simplesmente entrar."
+"Este e-mail já está registrado no nosso sistema. Você pode ter entrado "
+"anteriormente usando uma rede social (Facebook ou Google). Por favor, pule "
+"esta etapa e simplesmente entre."
 
 #: apps/authentication/models.py:23
-#, fuzzy
 msgid ""
 "\n"
 "Hello, {name}.\n"
@@ -110,7 +106,7 @@ msgstr ""
 "\n"
 "Olá, {name}.\n"
 "\n"
-"Antes de usar nossa ferramenta, por favor confirme seu e-mail visitando o "
+"Antes de usar nossa ferramenta, por favor, confirme seu e-mail visitando o "
 "link abaixo.\n"
 "{verification_url}\n"
 "\n"
@@ -130,9 +126,8 @@ msgid "You must provide a valid password"
 msgstr "Você deve fornecer uma senha válida"
 
 #: apps/authentication/views.py:199
-#, fuzzy
 msgid "Wrong password"
-msgstr "Senha incorreta!"
+msgstr "Senha incorreta"
 
 #: apps/authentication/views.py:203
 msgid "Failed to save data"
@@ -169,7 +164,7 @@ msgstr "Descrição"
 #: templates/default/importsheet/row_templates/recursos.html:59
 #: templates/default/main/templatetags/taglist.html:5
 msgid "Tags"
-msgstr "Palavras-Chave"
+msgstr "Palavras-chave"
 
 #: apps/community/models.py:40 apps/komoo_resource/forms.py:37
 #: apps/main/templatetags/komoo_tags.py:273
@@ -227,9 +222,8 @@ msgid "Investor person"
 msgstr "Nome do Investidor"
 
 #: apps/investment/forms.py:39
-#, fuzzy
 msgid "Investment period"
-msgstr "investimento editado"
+msgstr "Período do investimento"
 
 #: apps/investment/forms.py:40 apps/main/templatetags/komoo_tags.py:383
 #: templates/default/investment/view.html:48
@@ -249,9 +243,8 @@ msgid "Value"
 msgstr "Valor"
 
 #: apps/investment/forms.py:137 apps/investment/forms.py:139
-#, fuzzy
 msgid "Invalid investor"
-msgstr "Investidor Inválido."
+msgstr "Investidor inválido"
 
 #: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:268
 #: apps/organization/models.py:68
@@ -268,11 +261,11 @@ msgstr "Anônimo"
 
 #: apps/investment/models.py:120
 msgid "Brazilian Real (BRL)"
-msgstr ""
+msgstr "Real (BRL)"
 
 #: apps/investment/models.py:121
 msgid "US-Dollar (USD)"
-msgstr ""
+msgstr "Dólar americano (USD)"
 
 #: apps/investment/models.py:122
 msgid "Euro"
@@ -280,7 +273,7 @@ msgstr "Euro"
 
 #: apps/komoo_comments/views.py:46
 msgid "invalid form: {}"
-msgstr "Formulário Inválido: {}"
+msgstr "formulário Inválido: {}"
 
 #: apps/komoo_map/forms.py:65
 #: templates/default/komoo_map/map_templatetag.html:14
@@ -307,6 +300,8 @@ msgid ""
 "Add a community. Communities can be regions, districts, villages, slums, "
 "towns, etc."
 msgstr ""
+"Adicionar uma comunidade - Comunidades podem ser regiões, cidades, "
+"distritos, bairros, favelas, etc."
 
 #: apps/komoo_map/templatetags/komoo_map_tags.py:43
 msgid ""
@@ -314,17 +309,24 @@ msgid ""
 "instance an area that suffers from waste disposal, lack of public services "
 "or broken streetlights."
 msgstr ""
+"Adicionar uma necessidade - Necessidades podem ser demandas ou problemas da "
+"comunidade. Por exemplo, acúmulo de lixo, ausência de serviços públicos ou "
+"falta de iluminação pública."
 
 #: apps/komoo_map/templatetags/komoo_map_tags.py:44
 msgid ""
 "Add a resource, for example a library, a cultural center or a public park."
 msgstr ""
+"Adicionar um recurso - Um recurso pode ser uma biblioteca, um centro "
+"cultural ou um parque público."
 
 #: apps/komoo_map/templatetags/komoo_map_tags.py:45
 msgid ""
 "Add an organization, for instance a nonprofit organization, a company or "
 "government institution."
 msgstr ""
+"Adicionar uma organização - Por exemplo uma organização sem fins lucrativos, "
+"uma empresa ou instituição governamental."
 
 #: apps/komoo_project/forms.py:23 templates/default/organization/list.html:61
 msgid "Public"
@@ -351,7 +353,7 @@ msgstr "Contato"
 
 #: apps/komoo_project/forms.py:48
 msgid "Logo of your partners"
-msgstr ""
+msgstr "Logos dos seus parceiros"
 
 #: apps/komoo_project/views.py:87
 msgid "Unnamed"
@@ -362,7 +364,7 @@ msgstr "Sem nome"
 #: templates/default/importsheet/row_templates/recursos.html:17
 #: templates/default/resource/list.html:60
 msgid "Content type"
-msgstr "Tipo do Conteúdo"
+msgstr "Tipo de conteúdo"
 
 #: apps/komoo_resource/forms.py:38 apps/need/forms.py:33
 #: apps/organization/forms.py:54
@@ -407,7 +409,7 @@ msgstr "financia"
 
 #: apps/main/relations.py:23
 msgid "receives a grant from"
-msgstr "recebe um financiamento de"
+msgstr "recebe financiamento de"
 
 #: apps/main/relations.py:28
 msgid "certifies"
@@ -431,7 +433,7 @@ msgstr "encaminha atendidos para"
 
 #: apps/main/relations.py:38
 msgid "receives people from"
-msgstr "recebe encaminhamentos de atendidos de"
+msgstr "recebe encaminhamentos de"
 
 #: apps/main/relations.py:43
 msgid "recruits volunteers for"
@@ -459,7 +461,7 @@ msgstr "é representado por"
 
 #: apps/main/relations.py:58
 msgid "is a member of"
-msgstr "é mebro de"
+msgstr "é membro de"
 
 #: apps/main/relations.py:58
 msgid "has as member"
@@ -540,7 +542,7 @@ msgstr[1] "%(count)s minutos atrás"
 #, python-format
 msgid "an hour ago"
 msgid_plural "%(count)s hours ago"
-msgstr[0] "um hora atrás"
+msgstr[0] "uma hora atrás"
 msgstr[1] "%(count)s horas atrás"
 
 #: apps/main/templatetags/komoo_filters.py:59
@@ -592,7 +594,7 @@ msgstr "Áreas"
 #: apps/organization/forms.py:52 templates/default/need/list.html:58
 #: templates/default/need/view.html:45
 msgid "Target audiences"
-msgstr "Públicos alvo"
+msgstr "Públicos-alvo"
 
 #: apps/main/widgets/autocomplete.py:94
 msgid "invalid data"
@@ -600,15 +602,15 @@ msgstr "dados inválidos"
 
 #: apps/main/widgets/autocomplete.py:114
 msgid "Please select from the list below or insert a new type"
-msgstr ""
+msgstr "Selecione um item da lista abaixo ou insira um tipo novo"
 
 #: apps/main/widgets/multiple_autocomplete.py:56
 msgid "add a tag"
-msgstr "adicione"
+msgstr "adicione uma palavra-chave"
 
 #: apps/moderation/models.py:51
 msgid "Request for deletion"
-msgstr ""
+msgstr "Pedido de remoção"
 
 #: apps/moderation/models.py:52
 msgid "Spam"
@@ -620,21 +622,19 @@ msgstr "Inapropriado"
 
 #: apps/moderation/models.py:54
 msgid "Violation of Terms of Use"
-msgstr ""
+msgstr "Violação dos termos de uso"
 
 #: apps/moderation/models.py:55
-#, fuzzy
 msgid "Copyright violation"
 msgstr "Violação de copyright"
 
 #: apps/moderation/models.py:56
-#, fuzzy
 msgid "Wrong information"
-msgstr "Nenhuma informação fornecida."
+msgstr "Informação incorreta"
 
 #: apps/moderation/models.py:57
 msgid "Other"
-msgstr ""
+msgstr "Outro"
 
 #: apps/moderation/models.py:65
 msgid "reason"
@@ -680,27 +680,24 @@ msgstr ""
 
 #: apps/moderation/utils.py:117
 msgid "Report of abuse"
-msgstr ""
+msgstr "Denunciar abuso"
 
 #: apps/moderation/views.py:24 apps/moderation/views.py:84
 msgid "No data"
 msgstr "Nenhum dado"
 
 #: apps/moderation/views.py:83
-#, fuzzy
 msgid "Please log in first in order to send your report"
-msgstr "Por favor, faça login primeiro para reportar um conteúdo"
+msgstr "Por favor, entre para poder denunciar um conteúdo"
 
 #: apps/moderation/views.py:92
 #: templates/default/moderation/report_content_button_templatetag.html:4
-#, fuzzy
 msgid "You have already send a report regarding this content"
 msgstr "Você já denunciou este conteúdo"
 
 #: apps/moderation/views.py:100
-#, fuzzy
 msgid "Your report was successfully submitted"
-msgstr "Seu email foi verificado com sucesso!"
+msgstr "Sua denúncia foi enviada com sucesso"
 
 #: apps/need/models.py:24
 msgid "Culture"
@@ -712,7 +709,7 @@ msgstr "Educação"
 
 #: apps/need/models.py:26
 msgid "Environment"
-msgstr "Meio Ambiente"
+msgstr "Meio ambiente"
 
 #: apps/need/models.py:27
 msgid "Health"
@@ -723,18 +720,16 @@ msgid "Housing"
 msgstr "Habitação"
 
 #: apps/need/models.py:29
-#, fuzzy
 msgid "Local economy"
-msgstr "Economia Local"
+msgstr "Economia local"
 
 #: apps/need/models.py:30
 msgid "Mobility"
 msgstr "Mobilidade"
 
 #: apps/need/models.py:31
-#, fuzzy
 msgid "Social service"
-msgstr "Serviço Social"
+msgstr "Serviço social"
 
 #: apps/need/models.py:32
 msgid "Sport"
@@ -749,9 +744,8 @@ msgid "Categories"
 msgstr "Categorias"
 
 #: apps/organization/models.py:69
-#, fuzzy
 msgid "Add an organization"
-msgstr "Cadastre uma organização"
+msgstr "Adicionar uma organização"
 
 #: apps/proposal/forms.py:29 templates/default/investment/list.html:38
 #: templates/default/proposal/view.html:39
@@ -831,45 +825,37 @@ msgid "investment discussed"
 msgstr "investimento discutido"
 
 #: apps/update/models.py:195
-#, fuzzy
 msgid "project map added"
-msgstr "projeto adicionado"
+msgstr "mapa de projeto adicionado"
 
 #: apps/update/models.py:196
-#, fuzzy
 msgid "project map edited"
-msgstr "projeto editado"
+msgstr "mapa de projeto editado"
 
 #: apps/update/models.py:197
-#, fuzzy
 msgid "project map discussed"
-msgstr "projeto discutido"
+msgstr "mapa de projeto discutido"
 
 #: apps/update/models.py:199
-#, fuzzy
 msgid "import sheet created"
-msgstr "importação realizada"
+msgstr "tabela de importação criada"
 
 #: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
 #: lib/ajax_select/fields.py:303
-#, fuzzy
 msgid "Enter text to search field"
-msgstr "Entre um texto para buscar."
+msgstr "Digite um texto no campo de busca"
 
 #: lib/fileupload/forms.py:123
-#, fuzzy
 msgid "Select files"
-msgstr "Selecionar Arquivos"
+msgstr "Selecionar arquivos"
 
 #: lib/fileupload/forms.py:124
-#, fuzzy
 msgid "Add links"
-msgstr "Adicionar Links"
+msgstr "Adicionar links"
 
 #: lib/fileupload/forms.py:125
-#, fuzzy
 msgid "Add image links"
-msgstr "Adicione Links para as Imagens"
+msgstr "Adicionar links para imagens"
 
 #: lib/fileupload/forms.py:126 lib/fileupload/forms.py:190
 #: templates/default/moderation/deletion_request_box.html:15
@@ -885,9 +871,8 @@ msgid "Save changes"
 msgstr "Salvar mudanças"
 
 #: lib/fileupload/forms.py:128 lib/fileupload/forms.py:193
-#, fuzzy
 msgid "Insert a subtitle for this image"
-msgstr "Entre a legenda para essa imagem"
+msgstr "Inserir uma legenda nesta imagem"
 
 #: lib/fileupload/forms.py:130 lib/fileupload/forms.py:192
 #: templates/default/moderation/delete_button_templatetag.html:5
@@ -901,16 +886,15 @@ msgstr "ou"
 
 #: lib/fileupload/forms.py:189
 msgid "Select a file"
-msgstr "Selecionar um Arquivo"
+msgstr "Selecionar um arquivo"
 
 #: lib/fileupload/forms.py:242
 msgid "Select a logo"
 msgstr "Selecione um logotipo"
 
 #: lib/reversion/admin.py:110
-#, fuzzy
 msgid "Initial version"
-msgstr "Versão inicial."
+msgstr "Versão inicial"
 
 #: lib/reversion/admin.py:124
 #, python-format
@@ -934,7 +918,7 @@ msgstr "Revertido para versão anterior, salva em %(datetime)s"
 #: lib/reversion/templates/reversion/object_history.html:23
 #: lib/reversion/templates/reversion/recover_list.html:30
 msgid "DATETIME_FORMAT"
-msgstr ""
+msgstr "DATETIME_FORMAT"
 
 #: lib/reversion/admin.py:253
 #, python-format
@@ -975,15 +959,14 @@ msgstr "Usuário"
 #: lib/reversion/templates/reversion/object_history.html:17
 #: templates/default/moderation/report_content_box_templatetag.html:13
 msgid "Comment"
-msgstr "Comentário:"
+msgstr "Comentário"
 
 #: lib/reversion/templates/reversion/object_history.html:36
-#, fuzzy
 msgid ""
 "This object does not have any change history. It probably has not been added "
 "via this admin site."
 msgstr ""
-"Este objeto não possui um histórico  de alterações. É possível que não tenha "
+"Este objeto não possui um histórico de alterações. É possível que não tenha "
 "sido adicionado via página de administração."
 
 #: lib/reversion/templates/reversion/recover_form.html:7
@@ -993,22 +976,20 @@ msgid "Home"
 msgstr "Início"
 
 #: lib/reversion/templates/reversion/recover_form.html:17
-#, fuzzy
 msgid "Press the save button below to recover this version of the object"
-msgstr "Clique no botão salvar abaixo para recuperar esta versão do objeto."
+msgstr ""
+"Clique no botão \"salvar\" abaixo para recuperar esta versão do objeto."
 
 #: lib/reversion/templates/reversion/recover_list.html:17
-#, fuzzy
 msgid ""
 "Choose a date from the list below to recover a deleted version of this object"
 msgstr ""
 "Escolha uma data na lista abaixo para recuperar uma versão apagada de um "
-"objeto."
+"objeto"
 
 #: lib/reversion/templates/reversion/recover_list.html:37
-#, fuzzy
 msgid "There are no deleted objects to recover"
-msgstr "Não há objetos apagados para recuperar."
+msgstr "Não há objetos apagados para recuperar"
 
 #: lib/reversion/templates/reversion/revision_form.html:11
 #: templates/default/main/templatetags/history.html:14
@@ -1021,18 +1002,14 @@ msgid "Revert %(verbose_name)s"
 msgstr "Reverter %(verbose_name)s"
 
 #: lib/reversion/templates/reversion/revision_form.html:25
-#, fuzzy
 msgid "Press the save button below to revert to this version of the object"
-msgstr ""
-"Clique no botão salvar abaixo para reverter para esta versão do objeto."
+msgstr "Clique no botão \"salvar\" abaixo para reverter esta versão do objeto."
 
 #: lib/taggit/forms.py:21
-#, fuzzy
 msgid "Please provide a comma-separated list of tags"
-msgstr "Por favor forneça uma lista de tags separadas por vírgula."
+msgstr "Por favor, forneça uma lista de tags separadas por vírgula."
 
 #: lib/taggit/managers.py:40
-#, fuzzy
 msgid "A comma-separated list of tags"
 msgstr "Uma lista de tags separada por vírgula"
 
@@ -1042,7 +1019,7 @@ msgstr "Slug"
 
 #: lib/taggit/models.py:56
 msgid "Tag"
-msgstr "Classificação"
+msgstr "Palavra-chave"
 
 #: lib/taggit/models.py:63
 #, python-format
@@ -1050,43 +1027,40 @@ msgid "%(object)s tagged with %(tag)s"
 msgstr "%(object)s classificado com %(tag)s"
 
 #: lib/taggit/models.py:113
-#, fuzzy
 msgid "Object ID"
-msgstr "Id do Objeto"
+msgstr "Id do objeto"
 
 #: lib/taggit/models.py:159
-#, fuzzy
 msgid "Tagged item"
-msgstr "Item Classificado"
+msgstr "Item com palavra-chave"
 
 #: lib/taggit/models.py:160
-#, fuzzy
 msgid "Tagged items"
-msgstr "Itens Classificados"
+msgstr "Itens com palavra-chave"
 
 #: settings/themes_settings.py:7
 msgid "Mootiro"
-msgstr ""
+msgstr "Mootiro"
 
 #: settings/themes_settings.py:8
 msgid "Mootiro Maps default theme"
-msgstr ""
+msgstr "Tema default MootiroMaps"
 
 #: settings/themes_settings.py:17
 msgid "Child Friendly Places"
-msgstr ""
+msgstr "Ambientes Acolhedores para Crianças e Adolescentes"
 
 #: settings/themes_settings.py:18
 msgid "Child Friendly Places Theme"
-msgstr ""
+msgstr "Tema Ambientes Acolhedores para Crianças e Adolescentes"
 
 #: templates/child/global.html:18
 msgid "Creating Better Environments with Children, Youth and Families"
-msgstr ""
+msgstr "Criando Melhores Ambientes com Crianças, Adolescentes e Famílias"
 
 #: templates/child/main/footer.html:5
 msgid "Initiative, Research & Coordination"
-msgstr ""
+msgstr "Iniciativa, Pesquisa e Coordenação"
 
 #: templates/child/main/footer.html:11 templates/default/main/footer.html:17
 #: templates/default/main/supporters.html:3
@@ -1095,7 +1069,7 @@ msgstr "Apoio"
 
 #: templates/child/main/footer.html:16
 msgid "Webdesign & Development"
-msgstr ""
+msgstr "Webdesign & Desenvolvimento"
 
 #: templates/child/main/footer.html:21 templates/default/main/footer.html:10
 msgid "License"
@@ -1107,6 +1081,10 @@ msgid ""
 "href=\"http://creativecommons.org/licenses/by-sa/3.0/deed.en_US\">Creative "
 "Commons Attribution-ShareAlike 3.0 Unported License</a>. "
 msgstr ""
+"O conteúdo deste site está publicado sob a <a href=\"http://creativecommons."
+"org/licenses/by-sa/3.0/deed.pt_BR\">Licença \n"
+"Creative Commons Atribuição-Compartilha Igual 3.0 Não Adaptada</a>, exceto "
+"quando especificado em contrário."
 
 #: templates/child/main/root.html:17
 msgid ""
@@ -1116,66 +1094,77 @@ msgid ""
 "children’s rights and ensure their healthy development.\n"
 "    "
 msgstr ""
+"\n"
+"<strong>Ambientes Acolhedores para Crianças e Adolescentes</strong> são "
+"escolas, comunidades e cidades envolvidas em um processo de longo prazo para "
+"melhorar as condições de cumprimento aos direitos das crianças e "
+"adolescentes e de garantia ao seu desenvolvimento integral."
 
 #: templates/child/main/root.html:28 templates/child/main/root.html.py:40
 #: templates/child/main/root.html:48
 msgid "Haiti"
-msgstr ""
+msgstr "Haiti"
 
 #: templates/child/main/root.html:32 templates/child/main/root.html.py:44
 #: templates/child/main/root.html:52
 msgid "India"
-msgstr ""
+msgstr "Índia"
 
 #: templates/child/main/root.html:36
 msgid "Philippines"
-msgstr ""
+msgstr "Filipinas"
 
 #: templates/child/main/root.html:60
 msgid "Modules"
-msgstr ""
+msgstr "Módulos"
 
 #: templates/child/main/root.html:64
-#, fuzzy
 msgid "Assessment"
-msgstr "Investimento"
+msgstr "Monitoramento"
 
 #: templates/child/main/root.html:66
 msgid ""
 "Groups will identify the strengths and weaknesses of the current living and "
 "learning conditions in their community and/or school"
 msgstr ""
+"Grupos identificarão as fortalezas e fraquezas das atuais condições de "
+"aprendizagem e de vida em sua escolar e/ou comunidade"
 
 #: templates/child/main/root.html:72
-#, fuzzy
 msgid "Planning"
-msgstr "Avaliação de projeto"
+msgstr "Planejamento"
 
 #: templates/child/main/root.html:74
 msgid ""
 "Groups will identify specific goals for their initiative and create "
 "improvement plans with community and/or school input"
 msgstr ""
+"Grupos identificarão objetivos específicos para sua iniciativa e criarão "
+"planos de melhoria a partir da contribuição da comunidade e/ou escola"
 
 #: templates/child/main/root.html:80
 msgid "Advocacy & Action"
-msgstr ""
+msgstr "Ação & Advocacy"
 
 #: templates/child/main/root.html:82
 msgid ""
 "Groups will implement aspects of their improvement plans to better their "
 "living and learning conditions"
 msgstr ""
+"Grupos implantarão seus planos de melhoria para aprimorar suas condições de "
+"vida e aprendizagem"
 
 #: templates/child/main/root.html:88
 msgid "Outcomes"
-msgstr ""
+msgstr "Resultados"
 
 #: templates/child/main/root.html:90
 msgid ""
 "Groups will document and reflect upon the lessons learned to help sustain "
 "and replicate the process"
 msgstr ""
+"Grupos documentarão e refletirão sobre as lições aprendidas para ajudar a "
+"sustentar e replicar o processo"
 
 #: templates/child/main/root.html:99 templates/default/main/root.html:156
 #: templates/default/update/updates_list_templatetag.html:9
@@ -1188,9 +1177,8 @@ msgid "see all"
 msgstr "ver todos"
 
 #: templates/child/main/topbar.html:15 templates/default/main/topbar.html:15
-#, fuzzy
 msgid "Search for places, users or contents..."
-msgstr "Buscar por lugar, usuário ou objeto..."
+msgstr "Buscar por lugares, usuários ou conteúdos..."
 
 #: templates/child/main/topbar.html:24 templates/default/404.html:34
 #: templates/default/main/topbar.html:24
@@ -1213,46 +1201,36 @@ msgstr "Sair"
 msgid "Login"
 msgstr "Entrar"
 
-#: templates/child/main/templatetags/menu.html:4
+#: templates/child/main/templatetags/menu.html:5
 #: templates/default/main/topbar.html:23
 msgid "About"
 msgstr "Sobre"
 
-#: templates/child/main/templatetags/menu.html:5
-#, fuzzy
-msgid "Resource Kit"
-msgstr "Recurso"
-
-#: templates/child/main/templatetags/menu.html:6
-msgid "Case Studies"
-msgstr ""
-
 #: templates/child/main/templatetags/menu.html:7
-msgid "Maps"
-msgstr ""
+msgid "Resource Kit"
+msgstr "Kit de Recursos"
 
-#: templates/child/main/templatetags/menu.html:8
-#, fuzzy
+#: templates/child/main/templatetags/menu.html:9
+msgid "Case Studies"
+msgstr "Casos de Estudo"
+
+#: templates/child/main/templatetags/menu.html:11
 msgid "Collaborate"
-msgstr "Colaboradores"
+msgstr "Colabore"
 
 #: templates/default/404.html:7
-#, fuzzy
 msgid "The page you are looking for does not exist"
-msgstr "A página que você procura não existe."
+msgstr "A página que você procura não existe"
 
 #: templates/default/404.html:9
-#, fuzzy
 msgid "Try to search for the page here"
 msgstr "Tente procurar pela página aqui"
 
 #: templates/default/404.html:18 templates/default/not_anymore.html:9
-#, fuzzy
 msgid "Ask for help"
-msgstr "Reclame com a gente"
+msgstr "Peça ajuda"
 
 #: templates/default/404.html:25
-#, fuzzy
 msgid "Have a look at some important links"
 msgstr "Veja alguns links importantes"
 
@@ -1309,14 +1287,12 @@ msgid "Ops!"
 msgstr "Ops!"
 
 #: templates/default/not_anymore.html:7
-#, fuzzy
 msgid "This content does not exist anymore"
-msgstr "Este conteúdo não existe mais."
+msgstr "Este conteúdo não existe mais"
 
 #: templates/default/authentication/komoo_login_form.html:10
-#, fuzzy
 msgid "Do not have an account yet?"
-msgstr "Não possui uma conta? Registre-se!"
+msgstr "Ainda não possui uma conta?"
 
 #: templates/default/authentication/komoo_login_form.html:12
 #: templates/default/authentication/login_box.html:4
@@ -1324,19 +1300,16 @@ msgid "Log in"
 msgstr "Entre"
 
 #: templates/default/authentication/login_box.html:9
-#, fuzzy
 msgid "An error ocurred"
-msgstr "Um erro ocorreu."
+msgstr "Ocorreu um erro"
 
 #: templates/default/authentication/login_box.html:11
-#, fuzzy
 msgid "Wrong password or username"
-msgstr "Senha incorreta!"
+msgstr "Nome de usuário ou senha incorretos"
 
 #: templates/default/authentication/login_box.html:14
-#, fuzzy
 msgid "You did not verify your email yet"
-msgstr "Você ainda não verificou seu email."
+msgstr "Você ainda não verificou seu email"
 
 #: templates/default/authentication/login_box.html:25
 msgid "Log in with Google"
@@ -1348,7 +1321,7 @@ msgstr "Entre com Facebook"
 
 #: templates/default/authentication/new.html:8
 msgid "New User"
-msgstr "Novo Usuário"
+msgstr "Novo usuário"
 
 #: templates/default/authentication/new.html:11
 #: templates/default/community/edit.html:19
@@ -1364,12 +1337,11 @@ msgstr "Novo Usuário"
 #: templates/default/resource/new.html:15
 #: templates/default/resource/new_frommap.html:13
 msgid "<strong>*</strong> required fields!"
-msgstr ""
+msgstr "Campos marcados com <strong>*</strong> são obrigatórios!"
 
 #: templates/default/authentication/profile.html:28
-#, fuzzy
 msgid "Edit profile"
-msgstr "Editar Projeto"
+msgstr "Editar perfil"
 
 #: templates/default/authentication/profile.html:51
 msgid "Loading..."
@@ -1381,55 +1353,47 @@ msgstr "Carregando..."
 #: templates/default/main/templatetags/menu.html:28
 #: templates/default/project/list.html:7
 #: templates/default/project/projects_tag.html:5
-#, fuzzy
 msgid "Project Maps"
-msgstr "Projetos"
+msgstr "Mapas de Projeto"
 
 #: templates/default/authentication/profile_update.html:17
-#, fuzzy
 msgid "Public data"
-msgstr "Contato Público"
+msgstr "Dados públicos"
 
 #: templates/default/authentication/profile_update.html:22
 msgid "Language"
-msgstr ""
+msgstr "Idioma"
 
 #: templates/default/authentication/profile_update.html:27
 #: templates/default/authentication/profile_update.html:210
-#, fuzzy
 msgid "Subscriptions"
-msgstr "Cancelar Assinatura"
+msgstr "Inscrições"
 
 #: templates/default/authentication/profile_update.html:37
-#, fuzzy
 msgid "External accounts"
-msgstr "Contas Externas"
+msgstr "Contas externas"
 
 #: templates/default/authentication/profile_update.html:59
-#, fuzzy
 msgid ""
 "The email address cannot be changed, if you have a problem with you email "
 "address please contact us."
 msgstr ""
-"não é possível alterar emails, entre em contato se tiver algum problema com "
-"seu endereço de email"
+"O endereço de e-mail não pode ser alterado. Entre em contato conosco caso "
+"tenha algum problema com seu e-mail."
 
 #: templates/default/authentication/profile_update.html:64
-#, fuzzy
 msgid "Current password"
 msgstr "Senha atual"
 
 #: templates/default/authentication/profile_update.html:69
-#, fuzzy
 msgid ""
 "Enter your current password if you want to set a new one. If you did not set "
 "a password yet, then leave it blank"
 msgstr ""
-"Digite sua senha atual caso queira alterá-la para uma nova. Deixe em branco "
-"se você ainda não definiu uma senha"
+"Digite sua senha atual para substituí-la por uma nova. Deixe em branco caso "
+"você ainda não tenha definido uma senha"
 
 #: templates/default/authentication/profile_update.html:74
-#, fuzzy
 msgid "New password"
 msgstr "Nova senha"
 
@@ -1438,23 +1402,21 @@ msgid "Enter a new password"
 msgstr "Digite uma nova senha"
 
 #: templates/default/authentication/profile_update.html:84
-#, fuzzy
 msgid "Confirm new password"
 msgstr "Confirme sua nova senha"
 
 #: templates/default/authentication/profile_update.html:89
 msgid "Confirm your new password"
-msgstr "Confirme a sua senha"
+msgstr "Confirme sua senha"
 
 #: templates/default/authentication/profile_update.html:94
 #: templates/default/authentication/profile_update.html:122
 msgid "Save"
-msgstr ""
+msgstr "Salvar"
 
 #: templates/default/authentication/profile_update.html:115
-#, fuzzy
 msgid "Select language"
-msgstr "Selecionar Arquivos"
+msgstr "Selecionar idioma"
 
 #: templates/default/authentication/profile_update.html:143
 msgid "Your Google account is:"
@@ -1465,14 +1427,12 @@ msgid "Connect with Google"
 msgstr "Conecte sua conta do Google"
 
 #: templates/default/authentication/profile_update.html:156
-#, fuzzy
 msgid "Your Facebook account is:"
-msgstr "Sua conta do facebook é:"
+msgstr "Sua conta do Facebook é:"
 
 #: templates/default/authentication/profile_update.html:162
-#, fuzzy
 msgid "Connect with Facebook"
-msgstr "Conecte sua conta do facebook"
+msgstr "Conecte sua conta do Facebook"
 
 #: templates/default/authentication/profile_update.html:193
 #: templates/default/community/list.html:33
@@ -1501,89 +1461,80 @@ msgstr "Conecte sua conta do facebook"
 #: templates/default/resource/show.html:68
 #: templates/default/search/list.html:21
 #: templates/default/update/updates_list_templatetag.html:100
-#, fuzzy
 msgid "View on map"
-msgstr "ver no mapa"
+msgstr "Ver no mapa"
 
 #: templates/default/authentication/profile_update.html:199
-#, fuzzy
 msgid "Cancel subscription for this item"
-msgstr "Cancelar Assinatura"
+msgstr "Cancelar inscrição neste item"
 
 #: templates/default/authentication/profile_update.html:201
-#, fuzzy
 msgid "Cancel subscription"
-msgstr "Cancelar Assinatura"
+msgstr "Cancelar inscrição"
 
 #: templates/default/authentication/profile_update.html:213
 msgid ""
 "Configure options for delivery of updates about the content you have "
 "subscribed to"
 msgstr ""
+"Configurar opções de envio de atualizações sobre os conteúdos nos quais você "
+"se inscreveu"
 
 #: templates/default/authentication/profile_update.html:214
 msgid "Delivery options"
-msgstr ""
+msgstr "Opções de envio"
 
 #: templates/default/authentication/profile_update.html:223
-#, fuzzy
 msgid "Update your subscription settings"
-msgstr "Atualize suas opções de emails"
+msgstr "Atualizar suas configurações de inscrições"
 
 #: templates/default/authentication/profile_update.html:232
-#, fuzzy
 msgid ""
 "I want to receive a <strong>weekly</strong> digest mail with the updates for "
 "the contents I have subscribed to"
 msgstr ""
-"Eu quero receber somente notificações com o resumo <strong>semanal</strong> "
-"contendo as atualizações dos objetos que estou observando"
+"Eu quero receber somente e-mails com o resumo <strong>semanal</strong> das "
+"atualizações dos conteúdos nos quais me inscrevi"
 
 #: templates/default/authentication/profile_update.html:237
-#, fuzzy
 msgid ""
 "I want to receive only a <strong>daily</strong> digest mail with the updates "
 "for the contents I have subscribed to"
 msgstr ""
-"Eu quero receber somente notificações com o resumo <strong>semanal</strong> "
-"contendo as atualizações dos objetos que estou observando"
+"Eu quero receber somente e-mails com o resumo <strong>semanal</strong> das "
+"atualizações dos conteúdos nos quais me inscrevi"
 
 #: templates/default/authentication/profile_update.html:242
-#, fuzzy
 msgid "I <strong>do not</strong> want to receive any emails for updates"
-msgstr "E <strong>não</strong> desejo receber emails de atualizações"
+msgstr "Eu <strong>não</strong> desejo receber e-mails de atualizações"
 
 #: templates/default/authentication/profile_update.html:252
 msgid "Close"
 msgstr "Fechar"
 
 #: templates/default/authentication/verification.html:15
-#, fuzzy
 msgid "Your account has been created!"
 msgstr "Sua conta foi criada!"
 
 #: templates/default/authentication/verification.html:16
-#, fuzzy
 msgid ""
 "In order to log in, please confirm your email address. Please check your "
 "inbox!"
 msgstr ""
-"Mas antes de começar a usar, você precisa confirmar seu email. Vá checar sua "
-"caixa postal!"
+"Para entrar, confirme o seu endereço de e-mail. Por favor, verifique a sua "
+"caixa de entrada!"
 
 #: templates/default/authentication/verification.html:24
-#, fuzzy
 msgid "Your email address has been succesfully verified!"
-msgstr "Seu email foi verificado com sucesso!"
+msgstr "Seu endereço de e-mail foi verificado com sucesso!"
 
 #: templates/default/authentication/verification.html:27
-#, fuzzy
 msgid "Your email address had already been verified!"
-msgstr "Seu email já foi verificado!"
+msgstr "Seu endereço de e-mail já foi verificado!"
 
 #: templates/default/authentication/verification.html:30
 msgid "Now, you might log in, please"
-msgstr ""
+msgstr "Agora você pode entrar"
 
 #: templates/default/comments/comment.html:8
 #: templates/default/comments/comment.html:20
@@ -1607,29 +1558,26 @@ msgid "Comments:"
 msgstr "Comentários:"
 
 #: templates/default/comments/comments_templatetag.html:7
-#, fuzzy
 msgid "New comment"
-msgstr "Novo Comentário"
+msgstr "Novo comentário"
 
 #: templates/default/comments/comments_templatetag.html:27
 msgid "see more ..."
 msgstr "ver mais ..."
 
 #: templates/default/community/edit.html:15
-#, fuzzy
 msgid "Edit community"
-msgstr "Editar Comunidade"
+msgstr "Editar comunidade"
 
 #: templates/default/community/edit.html:39
 #: templates/default/community/edit_ajax.html:22
-#, fuzzy
 msgid "Please insert a name for the community"
-msgstr "Sobre a Comunidade"
+msgstr "Por favor, insira o nome da comunidade"
 
 #: templates/default/community/edit.html:42
 #: templates/default/community/edit_ajax.html:25
 msgid "Approximately, how many people live in the community?"
-msgstr ""
+msgstr "Aproximadamente, quantas pessoas moram na comunidade?"
 
 #: templates/default/community/edit.html:46
 #: templates/default/community/edit_ajax.html:29
@@ -1638,6 +1586,8 @@ msgid ""
 "people living there, local economy, social services, education, access to "
 "public transportation, etc.?"
 msgstr ""
+"Por favor, descreva a comunidade. Sua história, as pessoas que vivem lá, a "
+"economia local, serviços sociais, educação, transporte público, etc."
 
 #: templates/default/community/edit.html:50
 #: templates/default/community/edit_ajax.html:33
@@ -1645,6 +1595,8 @@ msgid ""
 "Please, choose tags for the community, for instance \"native community\", "
 "\"Santa Barbara\", \"slum\"."
 msgstr ""
+"Por favor, escolha palavras-chave para a comunidade, como \"comunidade "
+"indígena\", \"Santa Bárbara\", \"favela\"."
 
 #: templates/default/community/edit.html:54
 #: templates/default/community/edit_ajax.html:37
@@ -1652,20 +1604,21 @@ msgid ""
 "Please, upload photos of the community or link to photos on Wiki Commons or "
 "Flickr. Make sure that the photos are licensed under creative commons."
 msgstr ""
+"Suba fotos da comunidade ou link para fotos no Wiki Commons ou Flickr. "
+"Confira se elas estão sob uma licença Creative Commons"
 
 #: templates/default/community/list.html:8
 #: templates/default/moderation/list.html:7
-#, fuzzy
 msgid "List of communities"
-msgstr "Comunidades"
+msgstr "Lista de comunidades"
 
 #: templates/default/community/list.html:18
 #: templates/default/main/filter_results.html:19
-#, fuzzy, python-format
+#, python-format
 msgid "%(counter)s community"
 msgid_plural "%(counter)s communities"
-msgstr[0] "%(counter)s Comunidade"
-msgstr[1] "%(counter)s Comunidades"
+msgstr[0] "%(counter)s comunidade"
+msgstr[1] "%(counter)s comunidades"
 
 #: templates/default/community/list.html:40
 msgid "population:"
@@ -1678,16 +1631,14 @@ msgstr "população:"
 #: templates/default/project/old_view.html:46
 #: templates/default/project/view.html:41
 #: templates/default/resource/show.html:35
-#, fuzzy
 msgid "Go to discussion page"
-msgstr "Acesso a página de discussão deste projeto"
+msgstr "Ir para página de discussões"
 
 #: templates/default/community/view.html:29
 #: templates/default/need/view.html:39
 #: templates/default/organization/show.html:46
-#, fuzzy
 msgid "Edit this content"
-msgstr "Editar Investimento"
+msgstr "Editar conteúdo"
 
 #: templates/default/community/view.html:54
 msgid "Nearby communities"
@@ -1706,39 +1657,34 @@ msgstr "Objetos"
 
 #: templates/default/highlight/project_highlights.html:15
 #: templates/default/highlight/project_highlights.html:47
-#, fuzzy
 msgid "See all"
-msgstr "ver todos"
+msgstr "Ver todos"
 
 #: templates/default/highlight/project_highlights.html:16
 #: templates/default/project/list.html:17
-#, fuzzy
 msgid "Create a new project map"
-msgstr "Criar Novo Projeto"
+msgstr "Crie um novo mapa de projeto"
 
 #: templates/default/highlight/project_highlights.html:16
-#, fuzzy
 msgid "Create a project map"
-msgstr "Crie um projeto"
+msgstr "Crie um mapa de projeto"
 
 #: templates/default/highlight/project_highlights.html:22
-#, fuzzy
 msgid "My project maps"
-msgstr "Meus projetos"
+msgstr "Meus mapas de projeto"
 
 #: templates/default/importsheet/insert.html:27
 msgid "Some error ocurred!"
 msgstr "Um erro ocorreu!"
 
 #: templates/default/importsheet/insert.html:33
-#, fuzzy
 msgid "objects have been added"
-msgstr "objetos foram adicionados."
+msgstr "objetos foram adicionados"
 
 #: templates/default/importsheet/insert.html:38
 #: templates/default/importsheet/insert.html:41
 msgid "Undo import. (remove all)"
-msgstr "Desfazer importação. (remover tudo)"
+msgstr "Desfazer importação (remover tudo)"
 
 #: templates/default/importsheet/insert.html:42
 #: templates/default/importsheet/show.html:35
@@ -1804,17 +1750,15 @@ msgid "Operation Field"
 msgstr "Área de atuação"
 
 #: templates/default/investment/edit.html:17
-#, fuzzy
 msgid "Edit investment"
-msgstr "Editar Investimento"
+msgstr "Editar investimento"
 
 #: templates/default/investment/edit.html:19
 #: templates/default/organization/show.html:136
 #: templates/default/organization/show.html:156
 #: templates/default/resource/show.html:71
-#, fuzzy
 msgid "New investment"
-msgstr "Novo Investimento"
+msgstr "Novo investimento"
 
 #: templates/default/investment/edit.html:40
 msgid ""
@@ -1822,6 +1766,9 @@ msgid ""
 "investment programme, inform the objective of the investment or its donor/"
 "grantee."
 msgstr ""
+"Insira um nome para o investimento. Você pode referenciar um programa de "
+"investimento específico. Informe o objetivo do investimento ou seu doador/"
+"recipiente."
 
 #: templates/default/investment/edit.html:45
 msgid ""
@@ -1829,48 +1776,50 @@ msgid ""
 "money? What are its direct outcomes for the community? You can also link to "
 "spending data."
 msgstr ""
+"Dê detalhes sobre o investimento. O que será feito com o dinheiro? Quais são "
+"os resultados para a comunidade? Você pode fornecer links dos orçamentos."
 
 #: templates/default/investment/edit.html:50
 msgid ""
 "Please inform the investor type. Is it an organization already registered on "
 "MootiroMaps or a private donor?"
-msgstr ""
+msgstr "Informe o tipo de investidor. É uma organização ou um doador privado?"
 
 #: templates/default/investment/edit.html:55
 msgid "Select here if the donor wishes to be anonymous or is not known."
-msgstr ""
+msgstr "Selecione esta opção se o doador é anônimo ou desconhecido"
 
 #: templates/default/investment/edit.html:60
 msgid ""
 "Inform the name of the organization, company or government institution that "
 "is responsible for the investment"
 msgstr ""
+"Informe o nome da organização, empresa ou instituição governamental "
+"responsável pelo investimento"
 
 #: templates/default/investment/edit.html:65
 msgid "Inform the name of the private donor responsible for the investment"
-msgstr ""
+msgstr "Informe o nome do doador privado responsável pelo investimento"
 
 #: templates/default/investment/edit.html:70
 msgid "This investment is related to a period or is it a one-time investment?"
-msgstr ""
+msgstr "Esse investimento aconteceu em um período ou aconteceu só uma vez?"
 
 #: templates/default/investment/edit.html:75
-#, fuzzy
 msgid "Date of the investment"
-msgstr "Adicionar Investimento"
+msgstr "Data do investimento"
 
 #: templates/default/investment/edit.html:80
-#, fuzzy
 msgid "End of the investment"
-msgstr "Editar Investimento"
+msgstr "Fim do investimento"
 
 #: templates/default/investment/edit.html:85
 msgid "Amount of money being invested"
-msgstr ""
+msgstr "Quantidade de dinheiro sendo investido"
 
 #: templates/default/investment/edit.html:90
 msgid "Currency related to the investment (Dollar, Brazilian Real, etc.)"
-msgstr ""
+msgstr "Moeda do investimento (Dólar, Real, etc.)"
 
 #: templates/default/investment/edit.html:95
 #: templates/default/resource/edit.html:62
@@ -1880,6 +1829,8 @@ msgid ""
 "Please, upload photos of the resource or link to photos on Wiki Commons or "
 "Flickr. Make sure that the photos are licensed under creative commons."
 msgstr ""
+"Suba fotos do recurso ou link para fotos no Wiki Commons ou Flickr. Confira "
+"se elas estão sob uma licença Creative Commons"
 
 #: templates/default/investment/edit.html:100
 #: templates/default/need/edit.html:66
@@ -1888,6 +1839,8 @@ msgid ""
 "Please, insert tags that describe the need, for instance, \"street light\", "
 "\"waste\", \"public transport\", \"cycling lane\"."
 msgstr ""
+"Por favor, insira palavras-chave que descrevam a necessidade, como \"poste "
+"de luz\", \"transporte público\", \"ciclovia\"."
 
 #: templates/default/investment/investment_list_templatetag.html:14
 msgid "Realized"
@@ -1898,21 +1851,19 @@ msgid "Received"
 msgstr "Recebidos"
 
 #: templates/default/investment/investment_list_templatetag.html:41
-#, fuzzy
 msgid "No investments received"
-msgstr "Nenhum investimento recebido."
+msgstr "Nenhum investimento recebido"
 
 #: templates/default/investment/investment_list_templatetag.html:60
-#, fuzzy
 msgid "No investments realized"
-msgstr "Nenhum investimento realizado."
+msgstr "Nenhum investimento realizado"
 
 #: templates/default/investment/list.html:19
-#, fuzzy, python-format
+#, python-format
 msgid "%(counter)s investment"
 msgid_plural "%(counter)s investments"
-msgstr[0] "%(counter)s Investimento"
-msgstr[1] "%(counter)s Investimentos"
+msgstr[0] "%(counter)s investimento"
+msgstr[1] "%(counter)s investimentos"
 
 #: templates/default/investment/list.html:41
 #: templates/default/investment/view.html:38
@@ -1926,9 +1877,8 @@ msgstr "Destino da doação"
 
 #: templates/default/investment/view.html:30
 #: templates/default/resource/show.html:36
-#, fuzzy
 msgid "Edit content"
-msgstr "Editar Investimento"
+msgstr "Editar conteúdo"
 
 #: templates/default/investment/view.html:46
 msgid "Period"
@@ -1942,44 +1892,43 @@ msgstr "Investimentos similares"
 #: templates/default/komoo_map/tooltip.html:17
 #: templates/default/main/filter_results.html:37
 #: templates/default/need/list.html:22
-#, fuzzy, python-format
+#, python-format
 msgid "%(counter)s need"
 msgid_plural "%(counter)s needs"
-msgstr[0] "%(counter)s Necessidade"
-msgstr[1] "%(counter)s Necessidades"
+msgstr[0] "%(counter)s necessidade"
+msgstr[1] "%(counter)s necessidades"
 
 #: templates/default/komoo_map/info_window.html:27
 #: templates/default/komoo_map/tooltip.html:20
 #: templates/default/main/filter_results.html:55
 #: templates/default/organization/list.html:23
-#, fuzzy, python-format
+#, python-format
 msgid "%(counter)s organization"
 msgid_plural "%(counter)s organizations"
-msgstr[0] "%(counter)s Organização"
-msgstr[1] "%(counter)s Organizações"
+msgstr[0] "%(counter)s organização"
+msgstr[1] "%(counter)s organizações"
 
 #: templates/default/komoo_map/info_window.html:30
 #: templates/default/komoo_map/tooltip.html:23
 #: templates/default/main/filter_results.html:73
 #: templates/default/resource/list.html:22
-#, fuzzy, python-format
+#, python-format
 msgid "%(counter)s resource"
 msgid_plural "%(counter)s resources"
-msgstr[0] "%(counter)s Recurso"
-msgstr[1] "%(counter)s Recursos"
+msgstr[0] "%(counter)s recurso"
+msgstr[1] "%(counter)s recursos"
 
 #: templates/default/komoo_map/panel.html:10
 msgid "Filter the contents to be shown on the map"
-msgstr ""
+msgstr "Filtrar conteúdos que serão exibidos no mapa"
 
 #: templates/default/komoo_map/panel.html:10
 msgid "Layers"
 msgstr "Camadas"
 
 #: templates/default/komoo_map/panel.html:14
-#, fuzzy
 msgid "Add points to the map"
-msgstr "Selecione um ponto no mapa"
+msgstr "Adicionar pontos no mapa"
 
 #: templates/default/komoo_map/panel.html:14
 msgid "Add"
@@ -1987,7 +1936,7 @@ msgstr "Adicionar"
 
 #: templates/default/komoo_map/panel.html:18
 msgid "Search for contents close to a selected point on the map"
-msgstr ""
+msgstr "Buscar por conteúdos próximos ao ponto selecionado no mapa"
 
 #: templates/default/komoo_map/panel.html:18
 #: templates/default/komoo_map/panel.html:50
@@ -1995,9 +1944,8 @@ msgid "Filter by radius"
 msgstr "Filtrar por raio"
 
 #: templates/default/komoo_map/panel.html:39
-#, fuzzy
 msgid "Center of your search"
-msgstr "Realizar busca"
+msgstr "Centro da sua busca"
 
 #: templates/default/komoo_map/panel.html:39
 msgid "Center"
@@ -2009,10 +1957,9 @@ msgstr "Raio"
 
 #: templates/default/komoo_map/panel.html:40
 msgid "Distance from the center you defined to be used in the search"
-msgstr ""
+msgstr "Distância, a partir do centro marcado, que será usada na busca"
 
 #: templates/default/komoo_map/panel.html:46
-#, fuzzy
 msgid "Select a point on the map"
 msgstr "Selecione um ponto no mapa"
 
@@ -2026,98 +1973,103 @@ msgid "Donate!"
 msgstr "Doe!"
 
 #: templates/default/main/about.html:26
-#, fuzzy
 msgid "About MootiroMaps"
 msgstr "Sobre o MootiroMaps"
 
 #: templates/default/main/about.html:37 templates/default/main/about.html:51
 msgid "Understand a territory by its map"
-msgstr ""
+msgstr "Entenda um território pelo seu mapa"
 
 #: templates/default/main/about.html:38 templates/default/main/about.html:78
 msgid "Rich information about each object on the map"
-msgstr ""
+msgstr "Informações ricas sobre cada ponto no mapa"
 
 #: templates/default/main/about.html:39
-#, fuzzy
 msgid "Create your own project map"
-msgstr "Crie um projeto"
+msgstr "Crie seu próprio mapa de projeto"
 
 #: templates/default/main/about.html:40
 msgid ""
 "Analyse resources and demands of your community and monitor local development"
 msgstr ""
+"Analise recursos e demandas da sua comunidade e monitore o desenvolvimento "
+"local"
 
 #: templates/default/main/about.html:41
 msgid "Create and edit your maps collaboratively"
-msgstr ""
+msgstr "Crie e edite seus mapas colaborativamente"
 
 #: templates/default/main/about.html:42
-#, fuzzy
 msgid "Take part in the user community"
-msgstr "Sobre a Comunidade"
+msgstr "Participe da comunidade de usuários"
 
 #: templates/default/main/about.html:52
 msgid ""
 "MootiroMaps helps to make an online map of your community that shows where "
 "resources, demands and organizations are located."
 msgstr ""
+"O MootiroMaps ajuda a criar um mapa online da sua comunidade, mostrando onde "
+"estão localizados recursos, necessidades e organizações"
 
 #: templates/default/main/about.html:59
 msgid "Beautiful and informative maps"
-msgstr ""
+msgstr "Mapas bonitos e informativos"
 
 #: templates/default/main/about.html:60
 msgid "Colours and icons make your map easy to understand and navigate"
-msgstr ""
+msgstr "Cores e ícones facilitam a navegação e compreensão do mapa"
 
 #: templates/default/main/about.html:65
-#, fuzzy
 msgid "Instant information"
-msgstr "Nome do Investidor"
+msgstr "Informação imediata"
 
 #: templates/default/main/about.html:66
 msgid ""
 "Passing your mouse over the mapped objects you might access brief "
 "information about each content"
 msgstr ""
+"Passando o mouse sobre os objetos mapeados você tem acesso a informações "
+"sobre cada conteúdo"
 
 #: templates/default/main/about.html:71
-#, fuzzy
 msgid "Search the map"
-msgstr "ver no mapa"
+msgstr "Busca no mapa"
 
 #: templates/default/main/about.html:72
 msgid ""
 "You can define a radius and search for all the objects contained in this area"
 msgstr ""
+"Você pode definir um raio de busca para encontrar todos os objetos contidos "
+"na área"
 
 #: templates/default/main/about.html:79
 msgid ""
 "Each object on the map has its own page with contact information, detailed "
 "description, tags and a lot more."
 msgstr ""
+"Cada objeto do mapa possui sua própria página com informações de contato, "
+"descrição detalhada, palavras-chave e muito mais."
 
 #: templates/default/main/about.html:86
 msgid "Tell a story"
-msgstr ""
+msgstr "Conte uma história"
 
 #: templates/default/main/about.html:87
 msgid "Add photos, logos and link to other content on the map"
-msgstr ""
+msgstr "Adicione fotos, logotipos e link para outros conteúdos no mapa"
 
 #: templates/default/main/about.html:92
 msgid "Help others to find your data"
-msgstr ""
+msgstr "Ajude a encontrarem seus dados"
 
 #: templates/default/main/about.html:93
 msgid ""
 "Define tags for your data and make it easy for others to search your content"
-msgstr ""
+msgstr "Defina palavras-chave para facilitar a busca pelo seu conteúdo"
 
 #: templates/default/main/about.html:99
 msgid "Show relations"
-msgstr ""
+msgstr "Mostre as relações"
 
 #: templates/default/main/about.html:100
 msgid ""
@@ -2125,6 +2077,9 @@ msgid ""
 "that a foundation is working in more than one community or which "
 "organizations received resources from the same donor."
 msgstr ""
+"Crie relações entre os conteúdos para gerar transparência! Mostre, por "
+"exemplo, que uma fundação trabalha em mais de uma comunidade ou quais "
+"organizações receberam o recurso de um apoiador."
 
 #: templates/default/main/about.html:107
 msgid ""
@@ -2132,11 +2087,13 @@ msgid ""
 "other users, import data from spreadsheets and engage others to map "
 "collaboratively."
 msgstr ""
+"O MootiroMaps apoia os seus projetos de mapeamento - você pode reutilizar "
+"dados mapeados por outros usuários, importar de planilhas e convidar outros "
+"usuários para mapear colaborativamente."
 
 #: templates/default/main/about.html:115
-#, fuzzy
 msgid "Your space on MootiroMaps"
-msgstr "Bem-vindo ao MootiroMaps"
+msgstr "Um espaço seu no MootiroMaps"
 
 #: templates/default/main/about.html:116
 msgid ""
@@ -2144,48 +2101,55 @@ msgid ""
 "initiative, explain workflow and planned actions and show how other users "
 "can collaborate."
 msgstr ""
+"Seu projeto de mapeamento terá uma página própria no MootiroMaps. Nela você "
+"pode apresentar a sua iniciativa, explicar o fluxo de trabalho, as ações e "
+"mostrar como outros usuários podem colaborar."
 
 #: templates/default/main/about.html:120
-#, fuzzy
 msgid "Add collaborators"
-msgstr "Colaboradores"
+msgstr "Adicione colaboradores"
 
 #: templates/default/main/about.html:121
 msgid ""
 "Add users to you project map that can edit your map and add new content."
 msgstr ""
+"Adicione usuários que poderão editar o mapa e adicionar novos conteúdos ao "
+"projeto."
 
 #: templates/default/main/about.html:125
 msgid "Get to know similar maps"
-msgstr ""
+msgstr "Conheça mapas semelhantes"
 
 #: templates/default/main/about.html:126
 msgid ""
 "Based on the tags related contents will be shown on the page of your mapping "
 "project."
 msgstr ""
+"Conteúdos relacionados, baseados em palavras-chave, serão exibidos na página "
+"do seu projeto."
 
 #: templates/default/main/about.html:132
 msgid "Give visibility to your partners"
-msgstr ""
+msgstr "Dê visibilidade ao seus parceiros"
 
 #: templates/default/main/about.html:133
 msgid "Upload logos of the partners of your project"
-msgstr ""
+msgstr "Exiba os logos de quem apoia o seu projeto"
 
 #: templates/default/main/about.html:137
-#, fuzzy
 msgid "Reuse data from the map"
-msgstr "ver no mapa"
+msgstr "Aproveite o que já está mapeado"
 
 #: templates/default/main/about.html:138
 msgid ""
 "Add contents that have been created by other users to your mapping project"
 msgstr ""
+"Adicione conteúdos já criados por outros usuários ao seu projeto de "
+"mapeamento"
 
 #: templates/default/main/about.html:142
 msgid "Import data to your map"
-msgstr ""
+msgstr "Importe dados para o seu mapa"
 
 #: templates/default/main/about.html:143
 msgid ""
@@ -2194,6 +2158,10 @@ msgid ""
 "internet or received through freedom of information requests, simulate the "
 "import and finally upload to your project."
 msgstr ""
+"Integração com o Google Spreadsheets e com o Google Fusion Table permite que "
+"você importe dados para o seu projeto. Você pode tratar dados coletados na "
+"internet ou recebidos por meio de pedidos de acesso à informação, simular a "
+"importação e adicionar ao seu projeto."
 
 #: templates/default/main/about.html:149
 msgid ""
@@ -2201,29 +2169,33 @@ msgid ""
 "insights for community planning and and better understand priorities and "
 "demands for local development."
 msgstr ""
+"Olhando para o território e para localização dos serviços você pode "
+"encontrar subsídios para o planejamento comunitário e entender melhor as "
+"prioridades e necessidades para o desenvolvimento local."
 
 #: templates/default/main/about.html:156
 msgid "Map local needs and discuss with the community"
-msgstr ""
+msgstr "Mapeie necessidades locais e discuta com a comunidade"
 
 #: templates/default/main/about.html:157
 msgid ""
 "With MootiroMaps you can map the demands of a community and invite its "
 "residents and local organizations to discuss and find solutions. "
 msgstr ""
+"om o MootiroMaps você pode mapear necessidades da comunidade e convidar "
+"moradores e organizações locais para discuti-las e encontrar soluções."
 
 #: templates/default/main/about.html:161
 msgid "Monitor progress of community projects"
-msgstr ""
+msgstr "Acompanhe o progresso de projetos da sua comunidade"
 
 #: templates/default/main/about.html:162
 msgid "Document ongoing projects uploading reports and photos"
-msgstr ""
+msgstr "Documente o andamento dos projetos disponibilizando relatórios e fotos"
 
 #: templates/default/main/about.html:166
-#, fuzzy
 msgid "Analyze the mapped data"
-msgstr "ver no mapa"
+msgstr "Analise os dados mapeados"
 
 #: templates/default/main/about.html:167
 msgid ""
@@ -2231,6 +2203,9 @@ msgid ""
 "understand which parts of the community are well served and where new social "
 "services should be created."
 msgstr ""
+"Mapeando serviços públicos e organizações locais você entenderá facilmente "
+"quais partes da comunidade estão bem atendidas e onde novos serviços sociais "
+"devem ser criados."
 
 #: templates/default/main/about.html:173
 msgid ""
@@ -2238,9 +2213,11 @@ msgid ""
 "information and putting new objects on the map. This way, the map becomes "
 "more complete and informative for all."
 msgstr ""
+"Todos podem participar e editar no MootiroMaps - adicionando e corrigindo "
+"informações e mapeando novos objetos. Deste modo, o mapa fica mais completo "
+"e informativo para todos."
 
 #: templates/default/main/about.html:179
-#, fuzzy
 msgid "Edit map"
 msgstr "Edite o mapa"
 
@@ -2248,100 +2225,107 @@ msgstr "Edite o mapa"
 msgid ""
 "You may insert new content to the map, for instance points, lines or areas."
 msgstr ""
+"Você pode inserir novos conteúdos no mapa, como pontos, linhas e áreas."
 
 #: templates/default/main/about.html:185
 msgid "Receive information about editions by other users"
-msgstr ""
+msgstr "Receba informações sobre edições de outros usuários"
 
 #: templates/default/main/about.html:186
 msgid ""
 "In the list of last updates you can see which contents have been recently "
 "created or edited."
 msgstr ""
+"Na lista de atualizações você pode ver quais conteúdos foram criados e "
+"atualizados recentemente."
 
 #: templates/default/main/about.html:191
-#, fuzzy
 msgid "Receive notifications"
-msgstr "Opções de Recebimentos"
+msgstr "Receba notificações"
 
 #: templates/default/main/about.html:192
 msgid ""
 "You can subscribe to contents on MootiroMaps. When someone edits the object "
 "you receive updates by email."
 msgstr ""
+"Você pode seguir conteúdos no MootiroMaps. Quando alguém edita-los você "
+"receberá atualizações por e-mail."
 
 #: templates/default/main/about.html:197
 msgid "Spread on social networks"
-msgstr ""
+msgstr "Divulgue nas redes sociais"
 
 #: templates/default/main/about.html:198
 msgid ""
 "Make use of social networks to give visibility to the demands of the "
 "community and invite other to collaborate with your mapping project."
 msgstr ""
+"Use as redes sociais para dar visibilidade às necessidades da comunidade e "
+"para convidar outras pessoas a colaborarem com o seu projeto."
 
 #: templates/default/main/about.html:205
 msgid "Share your experiences with other users and take part in our workshops."
 msgstr ""
+"Compartilhe experiências com outros usuários e participe de nossas oficinas."
 
 #: templates/default/main/about.html:212
 msgid "Mailing list"
-msgstr ""
+msgstr "Lista de e-mails"
 
 #: templates/default/main/about.html:213
 msgid "Subscribe to our mailing list to discuss and learn with other users."
 msgstr ""
+"Assine nossa lista de emails para discutir e aprender com outros usuários."
 
 #: templates/default/main/about.html:217
 msgid "Facebook group"
-msgstr ""
+msgstr "Grupo no Facebook"
 
 #: templates/default/main/about.html:218
 msgid ""
 "Join the Facebook group to receive and share news about issues such as "
 "mapping, open data and collaborative technologies."
 msgstr ""
+"Participe do grupo do Facebook para receber e compartilhar notícias sobre "
+"mapeamentos, dados abertos e tecnologias colaborativas."
 
 #: templates/default/main/about.html:222
 msgid "It is free"
-msgstr ""
+msgstr "É de graça"
 
 #: templates/default/main/about.html:223
 msgid ""
 "MootiroMaps has been developed by IT3S with support of the C&A Institute. It "
 "is free to use. Simply create your account."
 msgstr ""
+"O MootiroMaps foi desenvolvido pelo IT3S com apoio do Instituto C&A. Ele é "
+"gratuito para você usar, basta criar sua conta."
 
 #: templates/default/main/about.html:227
-#, fuzzy
 msgid "Create an account."
-msgstr "Crie sua conta."
+msgstr "Crie uma conta."
 
 #: templates/default/main/filter_results.html:6
 msgid "Search results for this radius"
-msgstr "Resultados de Busca para este raio"
+msgstr "Resultados para este raio"
 
 #: templates/default/main/filter_results.html:12
-#, fuzzy
 msgid "No results found"
-msgstr "Nenhum resultado encontrado."
+msgstr "Nenhum resultado encontrado"
 
 #: templates/default/main/footer.html:5
-#, fuzzy
 msgid "Realization"
-msgstr "Organização"
+msgstr "Realização"
 
 #: templates/default/main/footer.html:22
 msgid "Partners"
 msgstr "Parceiros"
 
 #: templates/default/main/root.html:21
-#, fuzzy
 msgid "colaborative mapping of your region."
-msgstr "mapeamento colaborativo da sua região."
+msgstr "mapeamento colaborativo da sua região"
 
 #: templates/default/main/root.html:32
-#, fuzzy
 msgid "Anyone can help!"
 msgstr "Todos podem ajudar!"
 
@@ -2354,7 +2338,6 @@ msgid "Want to participate"
 msgstr "Quer participar"
 
 #: templates/default/main/root.html:36
-#, fuzzy
 msgid "Edit the map."
 msgstr "Edite o mapa"
 
@@ -2367,7 +2350,6 @@ msgid "Community diagnosis"
 msgstr "Diagnóstico comunitário"
 
 #: templates/default/main/root.html:47
-#, fuzzy
 msgid ""
 "Map a region's resources and needs. Create indicators and analyze its "
 "diagnosis to know the true demands of the that community."
@@ -2382,7 +2364,6 @@ msgid "Network mapping"
 msgstr "Mapeamento de redes"
 
 #: templates/default/main/root.html:55
-#, fuzzy
 msgid ""
 "Map organizations that work for the same cause. Find new partakers to your "
 "network. Share knowledge and help to add visibility to the initiatives"
@@ -2396,20 +2377,18 @@ msgid "Project evaluation"
 msgstr "Avaliação de projeto"
 
 #: templates/default/main/root.html:63
-#, fuzzy
 msgid ""
 "Record indicator over the execution of a project. Evaluate and generate "
 "reports. Share methodologies and results."
 msgstr ""
 "Registre indicadores sobre a execução de um projeto. Avalie e gere "
-"relatórios. Compartilhe  metodologias e resultados."
+"relatórios. Compartilhe metodologias e resultados."
 
 #: templates/default/main/root.html:69
 msgid "Data journalism"
 msgstr "Jornalismo de dados"
 
 #: templates/default/main/root.html:71
-#, fuzzy
 msgid ""
 "Build maps using public data. Use them into your news and mobilize for "
 "changes."
@@ -2422,7 +2401,6 @@ msgid "Neighborhood guide"
 msgstr "Guia do bairro"
 
 #: templates/default/main/root.html:79
-#, fuzzy
 msgid ""
 "Map existing services in your neighborhood. Help other dwellers to know the "
 "territory better and use local resources."
@@ -2431,7 +2409,6 @@ msgstr ""
 "conhecerem melhor o território e a utilizarem os recursos locais."
 
 #: templates/default/main/root.html:86
-#, fuzzy
 msgid "Projects that uses MootiroMaps"
 msgstr "Projetos que usam o MootiroMaps"
 
@@ -2440,50 +2417,44 @@ msgid "IT3S blog"
 msgstr "Blog do IT3S"
 
 #: templates/default/main/root.html:151
-#, fuzzy
 msgid "visit the blog"
 msgstr "visite o blog"
 
 #: templates/default/main/use_cases.html:20
-#, fuzzy
 msgid "Projects to be done with MootiroMaps"
-msgstr "Projetos que usam o MootiroMaps"
+msgstr "Para que usar o MootiroMaps?"
 
 #: templates/default/main/use_cases.html:22
 msgid "Main use cases"
-msgstr ""
+msgstr "Guia de casos de uso"
 
 #: templates/default/main/use_cases.html:26
 #: templates/default/main/use_cases.html:35
-#, fuzzy
 msgid "Neighbourhood Guide"
 msgstr "Guia do bairro"
 
 #: templates/default/main/use_cases.html:27
 #: templates/default/main/use_cases.html:69
 msgid "Diagnosis of a community or territory"
-msgstr ""
+msgstr "Diagnóstico de comunidade ou território"
 
 #: templates/default/main/use_cases.html:29
 #: templates/default/main/use_cases.html:144
-#, fuzzy
 msgid "Programme and project evaluation"
-msgstr "Avaliação de projeto"
+msgstr "Avaliação de projetos e programas"
 
 #: templates/default/main/use_cases.html:30
 #: templates/default/main/use_cases.html:181
-#, fuzzy
 msgid "Data journalism and advocacy"
-msgstr "Jornalismo de dados"
+msgstr "Incidência política e jornalismo de dados"
 
 #: templates/default/main/use_cases.html:38
 #: templates/default/main/use_cases.html:72
 #: templates/default/main/use_cases.html:113
 #: templates/default/main/use_cases.html:147
 #: templates/default/main/use_cases.html:184
-#, fuzzy
 msgid "When to use"
-msgstr "Quer ajudar"
+msgstr "Quando usar"
 
 #: templates/default/main/use_cases.html:39
 msgid ""
@@ -2493,6 +2464,11 @@ msgid ""
 "residents to access services and for associations to plan the development of "
 "the community and explain its demands to external donors."
 msgstr ""
+"Às vezes informações sobre comunidades são escassas, e faltam mapas "
+"oficiais. Isso pode ocorrer por irregularidades em moradias e ocupações "
+"nesses territórios. A falta de informações dificulta que moradores conheçam "
+"os espaços locais, que associações planejem o desenvolvimento da comunidade "
+"e expliquem as demandas a apoiadores externos."
 
 #: templates/default/main/use_cases.html:40
 #: templates/default/main/use_cases.html:74
@@ -2500,75 +2476,77 @@ msgstr ""
 #: templates/default/main/use_cases.html:149
 #: templates/default/main/use_cases.html:186
 msgid "Why to use"
-msgstr ""
+msgstr "Para que usar"
 
 #: templates/default/main/use_cases.html:42
 msgid "Show to external groups what the communities offers;"
-msgstr ""
+msgstr "Mostrar para grupos externos o que a comunidade oferece;"
 
 #: templates/default/main/use_cases.html:43
 msgid ""
 "Promote that local residents value their community and local achievements;"
-msgstr ""
+msgstr "Promover que moradores valorizem sua comunidade;"
 
 #: templates/default/main/use_cases.html:44
 msgid "Facilitate the integration of recently arrived residents."
-msgstr ""
+msgstr "Facilitar a integração de novos moradores."
 
 #: templates/default/main/use_cases.html:46
 msgid "Who should participate in the mapping"
-msgstr ""
+msgstr "Quem deve participar do mapeamento"
 
 #: templates/default/main/use_cases.html:48
 #: templates/default/main/use_cases.html:84
 #: templates/default/main/use_cases.html:124
 #: templates/default/main/use_cases.html:158
 msgid "NGOs;"
-msgstr ""
+msgstr "ONGs;"
 
 #: templates/default/main/use_cases.html:49
 #: templates/default/main/use_cases.html:85
 #: templates/default/main/use_cases.html:161
-#, fuzzy
 msgid "Community associations;"
-msgstr "Diagnóstico comunitário"
+msgstr "Associações de bairro;"
 
 #: templates/default/main/use_cases.html:50
 msgid "Community service providers and local leaders."
-msgstr ""
+msgstr "Atores e lideranças locais."
 
 #: templates/default/main/use_cases.html:52
 #: templates/default/main/use_cases.html:89
 #: templates/default/main/use_cases.html:127
 #: templates/default/main/use_cases.html:163
 #: templates/default/main/use_cases.html:198
-#, fuzzy
 msgid "Strategies"
-msgstr "Categorias"
+msgstr "Estratégias"
 
 #: templates/default/main/use_cases.html:54
 #: templates/default/main/use_cases.html:93
 msgid "Outdoor mapping activities using GPS, cameras and questionnaires;"
 msgstr ""
+"Saídas a campo e mutirões de mapeamento usando GPS, máquinas fotográficas e "
+"questionários;"
 
 #: templates/default/main/use_cases.html:55
 msgid "Workshops about community mapping and collaborative web applications;"
-msgstr ""
+msgstr "Oficinas sobre mapeamento comunitário e ferramentas web colaboratívas;"
 
 #: templates/default/main/use_cases.html:56
 msgid "Interviews with residents and community leaders;"
-msgstr ""
+msgstr "Entrevistas com moradores e líderes comunitários;"
 
 #: templates/default/main/use_cases.html:57
 msgid ""
 "Spreading the word about your neighbourhood guide using local media like "
 "community newspapers, local radio stations and community events;"
 msgstr ""
+"Divulgação do guia do bairro junto a mídia local, como jornais comunitários, "
+"estações locais de rádio e eventos comunitários;"
 
 #: templates/default/main/use_cases.html:58
 msgid ""
 "Printing of maps and neighbourhood guides and distribution in the community."
-msgstr ""
+msgstr "Impressão e distribuição de mapas ou guias do bairro na comunidade."
 
 #: templates/default/main/use_cases.html:60
 #: templates/default/main/use_cases.html:98
@@ -2577,13 +2555,12 @@ msgstr ""
 #: templates/default/main/use_cases.html:206
 #: templates/default/project/old_view.html:275
 #: templates/default/project/view.html:115
-#, fuzzy
 msgid "Related project maps"
 msgstr "Projetos relacionados"
 
 #: templates/default/main/use_cases.html:62
 msgid "Projeto Ilha (Portuguese only)"
-msgstr ""
+msgstr "Projeto Ilha"
 
 #: templates/default/main/use_cases.html:73
 msgid ""
@@ -2594,89 +2571,102 @@ msgid ""
 "indicators. Often, this data does not exist for low income communities or is "
 "not available in terms of open data."
 msgstr ""
+"Para planejar ações de melhoria em uma comunidade - seja em infraestrutura, "
+"(como moradia, saneamento, urbanização), ou em serviços sócio-assistenciais "
+"(como proteção sócio-familiar, saúde, educação) - é necessário dispor de "
+"indicadores sociais corretos. Mas muitas vezes esses dados não existem para "
+"comunidades de baixa renda ou não estão disponível como dados abertos."
 
 #: templates/default/main/use_cases.html:76
 msgid "Produce, organize and analyse social indicators;"
-msgstr ""
+msgstr "Gerar, organizar e analisar indicadores sociais;"
 
 #: templates/default/main/use_cases.html:77
 msgid ""
 "Consolidate and cross all information related to the development of a "
 "community or territory;"
 msgstr ""
+"Consolidar todas as informações relacioanadas ao desenvolvimento de uma "
+"comunidade ou território;"
 
 #: templates/default/main/use_cases.html:78
 msgid "Monitor community investments and quality of public services;"
-msgstr ""
+msgstr "Acompanhar os investimentos e qualidade dos serviços públicos;"
 
 #: templates/default/main/use_cases.html:79
 msgid "Planning for the development of the community;"
-msgstr ""
+msgstr "Planejar o desenvolvimento da comunidade;"
 
 #: templates/default/main/use_cases.html:80
 msgid "Decide where to act and in which projects to invest;"
-msgstr ""
+msgstr "Decidir onde atuar ou em quais projetos investir;"
 
 #: templates/default/main/use_cases.html:82
 #: templates/default/main/use_cases.html:122
 #: templates/default/main/use_cases.html:156
 #: templates/default/main/use_cases.html:191
 msgid "Who makes use of these maps"
-msgstr ""
+msgstr "Quem utiliza os mapas"
 
 #: templates/default/main/use_cases.html:86
 msgid "Foundations and corporate responsability departments;"
-msgstr ""
+msgstr "Fundações e institutos empresariais;"
 
 #: templates/default/main/use_cases.html:87
 msgid "Government institutions."
-msgstr ""
+msgstr "Poder público"
 
 #: templates/default/main/use_cases.html:91
 #: templates/default/main/use_cases.html:167
 #: templates/default/main/use_cases.html:200
 msgid "Freedom of Information Requests;"
-msgstr ""
+msgstr "Pedido de informação pública (baseado na Lei de Acesso à Informação);"
 
 #: templates/default/main/use_cases.html:92
 #: templates/default/main/use_cases.html:168
 #: templates/default/main/use_cases.html:201
 msgid "Cleaning data, geocoding and import to MootiroMaps;"
-msgstr ""
+msgstr "Qualificação, geocodificação e importação de dados para o MootiroMaps;"
 
 #: templates/default/main/use_cases.html:94
 msgid ""
 "Workshops about access to information, open data and collaborative "
 "technologies;"
 msgstr ""
+"Oficinas sobre acesso à informação, dados abertos e tecnologias "
+"colaborativas;"
 
 #: templates/default/main/use_cases.html:95
 msgid ""
 "Community forum or workshops to discuss the diagnosis and brainstorm ideas "
 "for community improvements;"
 msgstr ""
+"Fóruns comunitários ou oficinas para discussão do diagnóstico e levantamento "
+"de ideias para intervenções comunitárias;"
 
 #: templates/default/main/use_cases.html:96
 msgid ""
 "Monitoring of community interventions, such as housing projects, investment "
 "in infrastructure and so on;"
 msgstr ""
+"Acompanhamento de intervenções comunitárias, como projetos habitacionais, "
+"investimentos em infraestrutura, etc;"
 
 #: templates/default/main/use_cases.html:100
 msgid "Territories for Youth (Portuguese only)"
-msgstr ""
+msgstr "Territórios da Juventude"
 
 #: templates/default/main/use_cases.html:101
 msgid "Sustainable Coastline (Portuguese only)"
-msgstr ""
+msgstr "Litoral Sustentável"
 
 #: templates/default/main/use_cases.html:102
 msgid "Heliópolis - a learning community (Portuguese only)"
-msgstr ""
+msgstr "Heliópolis - Bairro Educador"
 
 #: templates/default/main/use_cases.html:103
 msgid "Map of opportunities - SOS Children's Villages"
-msgstr ""
+msgstr "Mapa de oportunidades - Aldeias Infantis"
 
 #: templates/default/main/use_cases.html:114
 msgid ""
@@ -2687,54 +2677,62 @@ msgid ""
 "for achieving results, help to strengthen communication and empower the "
 "actors involved."
 msgstr ""
+"ONGs vêm trabalhando em rede para potencializar seus resultados na luta por "
+"uma causa em comum. Essa estratégia ajuda a gerar maior visibilidade para um "
+"tema, atingir meios de comunicação e atrair novos parceiros. A gestão de "
+"conhecimento e a troca de informações é fundamental para a obtenção de "
+"resultados, o fortalecimento da comunicação e o empoderamento dos envolvidos."
 
 #: templates/default/main/use_cases.html:117
 msgid ""
 "Evaluate the spread of the network and plan where it should be for new "
 "members;"
 msgstr ""
+"Avaliar a disseminação da rede e ajudar a planejar onde ela deve estar para "
+"novos membros;"
 
 #: templates/default/main/use_cases.html:118
 msgid "Improve transparency about the actions of the network;"
-msgstr ""
+msgstr "Aperfeiçoar a transparência sobre o trabalho da rede;"
 
 #: templates/default/main/use_cases.html:119
 msgid "Facilitate communication and collaboration between participants;"
-msgstr ""
+msgstr "Facilitar a comunicação e colaboração entre os participantes;"
 
 #: templates/default/main/use_cases.html:120
 msgid "Promote exchange of best practices and methodologies between members;"
 msgstr ""
+"Estimular o intercâmbio de metodologias e melhores práticas de trabalho;"
 
 #: templates/default/main/use_cases.html:125
 msgid "Foundations and companies that promote advocacy networks;"
-msgstr ""
+msgstr "Fundações e institutos empresariais que promovem o trabalho das redes;"
 
 #: templates/default/main/use_cases.html:129
 msgid "Research together with member organizations;"
-msgstr ""
+msgstr "Pesquisa junto às organizações;"
 
 #: templates/default/main/use_cases.html:130
 msgid "Collaborative work to qualify data and import to the map;"
-msgstr ""
+msgstr "Qualificação colaborativa de dados e importação para o mapa;"
 
 #: templates/default/main/use_cases.html:131
 msgid "Elaboration of a user manual and online assistance;"
-msgstr ""
+msgstr "Elaboração de manuais de uso e acompanhamentos à distância;"
 
 #: templates/default/main/use_cases.html:132
 #: templates/default/main/use_cases.html:152
 msgid "Embed the map into the institutional website of the network;"
-msgstr ""
+msgstr "Integração do mapa no site institucional da rede;"
 
 #: templates/default/main/use_cases.html:136
 msgid "Networks for the Rights of Children and Adolescents (Portuguese only)"
-msgstr ""
+msgstr "Redes pelos Direitos da Criança e do Adolescente"
 
 #: templates/default/main/use_cases.html:137
 msgid ""
 "Network of Councils of Children's and Adolescents' Rights (Portuguese only)"
-msgstr ""
+msgstr "Rede de Conselhos da Criança e do Adolescente"
 
 #: templates/default/main/use_cases.html:148
 msgid ""
@@ -2746,52 +2744,59 @@ msgid ""
 "well as help others to learn from your experience and replicate your ideas "
 "somewhere else."
 msgstr ""
+"Comunidades muitas vezes recebem apoio de ONGs e do poder público. A análise "
+"de informações geradas durante a execução dessas ações é central para medir "
+"resultados e adaptar as estratégias. A cultura de avaliação e "
+"compartilhamento de metodologias ajuda não apenas a aperfeiçoar os programas "
+"como permite que outros atores repliquem as iniciativas."
 
 #: templates/default/main/use_cases.html:151
 msgid ""
 "Increase transparency about the work of nonprofit organizations, foundations "
 "and public institutions;"
 msgstr ""
+"Gerar transparência sobre a atuação de ONGs, fundações e instituições "
+"públicas;"
 
 #: templates/default/main/use_cases.html:153
 msgid "Find best practices and systematize methodologies;"
-msgstr ""
+msgstr "Descobrir melhores práticas e sistematizar metodologias;"
 
 #: templates/default/main/use_cases.html:154
 msgid ""
 "Evaluate the effectiveness and efficiency of programmes and produce project "
 "management information;"
 msgstr ""
+"Avaliar a eficácia e eficiência dos programas e criar informações para "
+"gerenciar o projeto;"
 
 #: templates/default/main/use_cases.html:159
-#, fuzzy
 msgid "Foundations;"
-msgstr "População"
+msgstr "Fundações;"
 
 #: templates/default/main/use_cases.html:160
 msgid "Government institutions;"
-msgstr ""
+msgstr "Poder público;"
 
 #: templates/default/main/use_cases.html:165
-#, fuzzy
 msgid "Project planning;"
-msgstr "Avaliação de projeto"
+msgstr "Planejamento do projeto;"
 
 #: templates/default/main/use_cases.html:166
 msgid "Team building;"
-msgstr ""
+msgstr "Formação da equipe;"
 
 #: templates/default/main/use_cases.html:169
 msgid "Data analysis and visualization;"
-msgstr ""
+msgstr "Análise e visualização de dados;"
 
 #: templates/default/main/use_cases.html:173
 msgid "MOVA-Brasil (Portuguese only)"
-msgstr ""
+msgstr "MOVA-Brasil"
 
 #: templates/default/main/use_cases.html:174
 msgid "Jovens Urbanos - Programme Evaluation (Portuguese only)"
-msgstr ""
+msgstr "Jovens Urbanos - Avaliação do Programa"
 
 #: templates/default/main/use_cases.html:185
 msgid ""
@@ -2802,60 +2807,68 @@ msgid ""
 "accessed using Freedom of Information Act and analyzed and interpreted with "
 "help of other social actors."
 msgstr ""
+"O jornalismo de dados é um importante aliado à luta contra a corrupção,  "
+"irregularidades na gestão pública e desigualdades sociais. Esse tipo de "
+"jornalismo está cada vez mais interessado em divulgar dados e basear suas "
+"notícias neles. Esses dados, antes restritos ao governo, estão sendo "
+"acessados através da Lei de Acesso à Informação, e analisados e "
+"interpretados com ajuda de outros atores sociais."
 
 #: templates/default/main/use_cases.html:188
 msgid "Facilitate the understanding and analysis of data;"
-msgstr ""
+msgstr "Facilitar a análise e compreensão dos dados;"
 
 #: templates/default/main/use_cases.html:189
 msgid ""
 "Produce maps which can be used in journalistic articles or claims towards "
 "government institutions."
 msgstr ""
+"Gerar mapas que podem ser utilizados em notícias ou reivindicações junto ao "
+"poder público."
 
 #: templates/default/main/use_cases.html:193
 msgid "Journalists;"
-msgstr ""
+msgstr "Jornalistas;"
 
 #: templates/default/main/use_cases.html:194
 msgid "Local residents and civic journalists;"
-msgstr ""
+msgstr "Moradores e jornalistas da comunidade;"
 
 #: templates/default/main/use_cases.html:195
 msgid "NGOs and social movements;"
-msgstr ""
+msgstr "ONGs e movimentos sociais;"
 
 #: templates/default/main/use_cases.html:196
 msgid "Interested citizens."
-msgstr ""
+msgstr "Cidadãos interessados."
 
 #: templates/default/main/use_cases.html:202
 msgid "Data cleaning and visualizations;"
-msgstr ""
+msgstr "Análise de dados e visualizações;"
 
 #: templates/default/main/use_cases.html:203
 msgid "Development of a hotsite for the cause/project;"
-msgstr ""
+msgstr "Criação de um hotsite para a causa ou projeto;"
 
 #: templates/default/main/use_cases.html:204
 msgid "Spreading news about your findings using blogs and social networks."
-msgstr ""
+msgstr "Divulgação de notícias em blogues e redes sociais."
 
 #: templates/default/main/use_cases.html:208
 msgid "Access to information (Portuguese only)"
-msgstr ""
+msgstr "Acesso à informação"
 
 #: templates/default/main/use_cases.html:209
 msgid "Education Observatory (Portuguese only)"
-msgstr ""
+msgstr "Observatório de Educação"
 
 #: templates/default/main/use_cases.html:210
 msgid "Environment Observatory (Portuguese only)"
-msgstr ""
+msgstr "Observatório de Meio Ambiente"
 
 #: templates/default/main/use_cases.html:211
 msgid "Social Assistance Observatory (Portuguese only)"
-msgstr ""
+msgstr "Observatório de Assistência Social"
 
 #: templates/default/main/templatetags/communities_list.html:11
 #: templates/default/main/templatetags/usernames_list.html:13
@@ -2888,11 +2901,15 @@ msgid ""
 "Add a community. Communities can be regions, territory, slums, villages, "
 "towns, etc."
 msgstr ""
+"Adicionar uma comunidade - Comunidades podem ser regiões, cidades, "
+"distritos, bairros, favelas, etc."
 
 #: templates/default/main/templatetags/geo_objects_add.html:9
 msgid ""
 "Add a need. Need are demands or problems of the community to be resolved."
 msgstr ""
+"Adicionar uma necessidade - Necessidades são os problemas diversos da sua "
+"região. Pode ser um lixão, uma rua cheia de buracos, etc."
 
 #: templates/default/main/templatetags/geo_objects_add.html:16
 #: templates/default/main/templatetags/geo_objects_add.html:28
@@ -2900,11 +2917,11 @@ msgstr ""
 msgid ""
 "Add a shape, composed by multiple points that are connected to each other."
 msgstr ""
+"Adicione uma área, composta por diversos pontos conectados uns aos outros."
 
 #: templates/default/main/templatetags/geo_objects_add.html:17
 #: templates/default/main/templatetags/geo_objects_add.html:29
 #: templates/default/main/templatetags/geo_objects_add.html:41
-#, fuzzy
 msgid "Add a line"
 msgstr "Adicionar linha"
 
@@ -2912,7 +2929,7 @@ msgstr "Adicionar linha"
 #: templates/default/main/templatetags/geo_objects_add.html:30
 #: templates/default/main/templatetags/geo_objects_add.html:42
 msgid "Add one or multiple points"
-msgstr ""
+msgstr "Adicionar um ou vários pontos"
 
 #: templates/default/main/templatetags/geo_objects_add.html:21
 #: templates/default/organization/list.html:19
@@ -2920,36 +2937,36 @@ msgid ""
 "Add a new organization, for example, a government institution, a nonprofit "
 "organization or a company."
 msgstr ""
+"Adicionar uma organização - Por exemplo, uma organização sem fins "
+"lucrativos, uma empresa ou instituição governamental."
 
 #: templates/default/main/templatetags/geo_objects_add.html:33
 #: templates/default/resource/list.html:17
 msgid ""
 "Add new resource, for example, a library, a public park or a playground."
 msgstr ""
+"Adicionar um recurso - Um recurso pode ser uma biblioteca, um centro "
+"cultural ou um parque público."
 
 #: templates/default/main/templatetags/geo_objects_listing.html:6
-#, fuzzy
 msgid "enable/disable communities"
-msgstr "Comunidades próximas"
+msgstr "mostrar/esconder comunidades"
 
 #: templates/default/main/templatetags/geo_objects_listing.html:12
-#, fuzzy
 msgid "enable/disable needs"
-msgstr "Necessidades relacionadas"
+msgstr "mostrar/esconder necessidades"
 
 #: templates/default/main/templatetags/geo_objects_listing.html:18
 msgid "expand the list of categories for needs"
-msgstr ""
+msgstr "expandir a lista de categorias de necessidades"
 
 #: templates/default/main/templatetags/geo_objects_listing.html:26
-#, fuzzy
 msgid "enable/disable resources"
-msgstr "Recursos relacionados"
+msgstr "mostrar/esconder recursos"
 
 #: templates/default/main/templatetags/geo_objects_listing.html:32
-#, fuzzy
 msgid "enable/disable organizations"
-msgstr "Nome do Investidor"
+msgstr "mostrar/esconder organizações"
 
 #: templates/default/main/templatetags/history.html:5
 #, python-format
@@ -2963,14 +2980,14 @@ msgstr ""
 "  "
 
 #: templates/default/main/templatetags/history.html:10
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "\n"
 "      last edited by %(user)s %(date)s\n"
 "    "
 msgstr ""
 "\n"
-"      última edição por %(user)s %(date)s\n"
+"última edição por %(user)s %(date)s\n"
 "    "
 
 #: templates/default/main/templatetags/menu.html:5
@@ -2983,9 +3000,9 @@ msgid "previous"
 msgstr "anterior"
 
 #: templates/default/main/templatetags/pagination.html:18
-#, fuzzy, python-format
+#, python-format
 msgid "Page %(num)s of %(total)s"
-msgstr "Página %(num)s de %(total)s."
+msgstr "Página %(num)s de %(total)s"
 
 #: templates/default/main/templatetags/pagination.html:23
 #: templates/default/main/templatetags/pagination.html:92
@@ -3012,7 +3029,7 @@ msgstr "Seguir"
 
 #: templates/default/main/templatetags/track_buttons.html:20
 msgid "Follow"
-msgstr ""
+msgstr "Seguir"
 
 #: templates/default/main/templatetags/usernames_list.html:23
 #, python-format
@@ -3035,12 +3052,11 @@ msgstr[1] ""
 
 #: templates/default/main/templatetags/visualization_opts.html:3
 msgid "Menu of filters and ordering options for this listing"
-msgstr ""
+msgstr "Filtros e opções de ordenação"
 
 #: templates/default/main/templatetags/visualization_opts.html:4
-#, fuzzy
 msgid "Visualization and filter options"
-msgstr "Opções de Visualização e Filtragem"
+msgstr "Opções de visualização e filtros"
 
 #: templates/default/main/templatetags/visualization_opts.html:9
 msgid "Sort by"
@@ -3048,11 +3064,11 @@ msgstr "Ordenar por"
 
 #: templates/default/main/templatetags/visualization_opts.html:16
 msgid "ascending order (oldest first)"
-msgstr ""
+msgstr "ordem crescente (mais antigo primeiro)"
 
 #: templates/default/main/templatetags/visualization_opts.html:17
 msgid "descending order (newest first)"
-msgstr ""
+msgstr "ordem decrescente (mais novo primeiro)"
 
 #: templates/default/main/templatetags/visualization_opts.html:27
 msgid "Filter by"
@@ -3063,30 +3079,24 @@ msgid "Apply"
 msgstr "Aplicar"
 
 #: templates/default/moderation/delete_button_templatetag.html:3
-#, fuzzy
 msgid "Delete this content"
-msgstr "Você já denunciou este conteúdo"
+msgstr "Apagar esse conteúdo"
 
 #: templates/default/moderation/delete_button_templatetag.html:4
-#, fuzzy
 msgid "You have already requested the deletion of this content"
-msgstr "Você já requisitou a remoção deste conteúdo"
+msgstr "Você já pediu a exclusão desse conteúdo"
 
 #: templates/default/moderation/deletion_request_box.html:3
-#, fuzzy
 msgid "Please, inform why you are requesting to delete this content"
-msgstr ""
-"Por favor, conte-nos o motivo pelo qual você está requisitando a remoção "
-"deste conteúdo"
+msgstr "Por favor, informe por que você quer excluir esse conteúdo"
 
 #: templates/default/moderation/deletion_request_box.html:14
-#, fuzzy
 msgid "Submit request"
-msgstr "Requisição de remoção"
+msgstr "Enviar pedido"
 
 #: templates/default/moderation/report_content_box_templatetag.html:7
 msgid "Select one of the reasons below"
-msgstr ""
+msgstr "Escolha um dos motivos abaixo"
 
 #: templates/default/moderation/report_content_box_templatetag.html:18
 msgid "Required fields"
@@ -3094,24 +3104,22 @@ msgstr "Campos obrigatórios"
 
 #: templates/default/moderation/report_content_box_templatetag.html:20
 #: templates/default/moderation/report_content_button_templatetag.html:5
-#, fuzzy
 msgid "Submit report"
-msgstr "Enviar"
+msgstr "Enviar relatório"
 
 #: templates/default/moderation/report_content_button_templatetag.html:3
 msgid ""
 "Notify inappropriate content, spam or other violations of the terms of use."
 msgstr ""
+"Notifique conteúdo impróprio, spam ou outras violações dos termos de uso."
 
 #: templates/default/need/edit.html:16
-#, fuzzy
 msgid "Edit need"
-msgstr "Editar Necessidade"
+msgstr "Editar necessidade"
 
 #: templates/default/need/edit.html:18
-#, fuzzy
 msgid "New need"
-msgstr "Nova Necessidade"
+msgstr "Nova necessidade"
 
 #: templates/default/need/edit.html:52
 #: templates/default/need/edit_ajax.html:21
@@ -3119,6 +3127,8 @@ msgid ""
 "Insert an explanatory title for your need, for example \"Fix street lights "
 "on Magnolia Avenue\". "
 msgstr ""
+"Insira um título explanatório para a necessidade, por exemplo, \"Consertar "
+"postes de luz na Rua Magnólia\""
 
 #: templates/default/need/edit.html:56
 #: templates/default/need/edit_ajax.html:25
@@ -3127,6 +3137,8 @@ msgid ""
 "who is affected by this problem and what has been tried to solve the "
 "situation so far?"
 msgstr ""
+"Dê detalhes sobre essa necessidade. Qual é o problema, porque existe, quem é "
+"afetado e o que têm sido feito até hoje sobre isso?"
 
 #: templates/default/need/edit.html:59
 #: templates/default/need/edit_ajax.html:28
@@ -3134,11 +3146,13 @@ msgid ""
 "Select the categories that most fit your need. For instance, the "
 "construction of a cycling lane is related to mobility and environment issues."
 msgstr ""
+"Selecione as categorias que combinam mais com sua necessidade. Por exemplo, "
+"a construção de uma ciclovia é relacionada a mobilidade e meio-ambiente."
 
 #: templates/default/need/edit.html:63
 #: templates/default/need/edit_ajax.html:32
 msgid "Who is being affected by this problem?"
-msgstr ""
+msgstr "Quem é afetado por esse problema?"
 
 #: templates/default/need/edit.html:70
 #: templates/default/need/edit_ajax.html:39
@@ -3146,17 +3160,19 @@ msgid ""
 "Please, upload some photos about this problem. Photos can help people to "
 "think about solutions."
 msgstr ""
+"Coloque fotos do problema. Elas ajudam as pessoas a pensarem em soluções."
 
 #: templates/default/need/list.html:16
 msgid ""
 "Add new needs or community demands, for example, streets to be fixed, waste "
 "disposal, broken street lights."
 msgstr ""
+"Adicione novas necessidades ou demandas da comunidade. Por exemplo, ruas sem "
+"asfalto, lixo espalhado, postes de luz quebrados."
 
 #: templates/default/need/list.html:16
-#, fuzzy
 msgid "Create new need"
-msgstr "Criar Nova Necessidade"
+msgstr "Crie nova necessidade"
 
 #: templates/default/need/list.html:39 templates/default/resource/list.html:40
 #: templates/default/resource/show.html:85
@@ -3185,18 +3201,16 @@ msgid "Related needs"
 msgstr "Necessidades relacionadas"
 
 #: templates/default/need/view.html:99
-#, fuzzy
 msgid "No related needs"
-msgstr "Nenhuma necessidade relacionada."
+msgstr "Sem necessidades relacionadas"
 
 #: templates/default/need/view.html:103
 msgid "see less"
 msgstr "ver menos"
 
 #: templates/default/organization/edit.html:14
-#, fuzzy
 msgid "Edit organization"
-msgstr "Editar Organização"
+msgstr "Editar organização"
 
 #: templates/default/organization/edit.html:47
 #: templates/default/organization/new.html:38
@@ -3206,6 +3220,9 @@ msgid ""
 "the city hall of your home town, please add this detail in the title, for "
 "example: City Hall Santa Barbara."
 msgstr ""
+"Insira o nome da organização. Seja específico; se você está mapeando a "
+"prefeitura da sua cidade, coloque esse detalhe no título, como \"Prefeitura "
+"de Santa Bárbara\"."
 
 #: templates/default/organization/edit.html:51
 #: templates/default/organization/new.html:42
@@ -3215,6 +3232,8 @@ msgid ""
 "offered to the city or your community? Who is a partner of this "
 "organization? What is it known for?"
 msgstr ""
+"O que você sabe sobre essa organização? Quais serviços ou produtos ela "
+"oferece? Pelo que ela é conhecida? Quem são seus parceiros?"
 
 #: templates/default/organization/edit.html:54
 #: templates/default/organization/new.html:45
@@ -3223,13 +3242,14 @@ msgid ""
 "Please, inform the communities that are served by this organization. A "
 "community must have been registered previously on MootiroMaps."
 msgstr ""
+"Informe quais comunidades são atendidas por essa organização. A comunidade "
+"já deve ter sido inserida no MootiroMaps."
 
 #: templates/default/organization/edit.html:58
 #: templates/default/organization/new.html:49
 #: templates/default/organization/new_frommap.html:41
-#, fuzzy
 msgid "Inform the website address of this organization"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Informe o site dessa organização"
 
 #: templates/default/organization/edit.html:62
 #: templates/default/organization/new.html:53
@@ -3238,13 +3258,14 @@ msgid ""
 "Insert the contact information of this organization (postal address, contact "
 "persons, phone number, email address)."
 msgstr ""
+"Insira as informações de contato dessa organização (endereço com CEP, "
+"pessoas com quem falar, telefone, email)"
 
 #: templates/default/organization/edit.html:66
 #: templates/default/organization/new.html:57
 #: templates/default/organization/new_frommap.html:49
-#, fuzzy
 msgid "Which people or groups are attended by this organization?"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Que pessoas ou grupos são atendidas por essa organização?"
 
 #: templates/default/organization/edit.html:70
 #: templates/default/organization/new.html:61
@@ -3253,6 +3274,8 @@ msgid ""
 "Please, select the categories that most reflect the organization's "
 "activities or cause."
 msgstr ""
+"Selecione as categorias que melhor reflitam as atividades ou causas da "
+"organização."
 
 #: templates/default/organization/edit.html:74
 #: templates/default/organization/new.html:65
@@ -3261,6 +3284,9 @@ msgid ""
 "Please, insert tags for your organizations. Tags are used for searching "
 "content on MootiroMaps. Precise tags will help others to find your content."
 msgstr ""
+"Insira palavras-chave para suas organizações. Elas são usadas para buscar "
+"conteúdo no MootiroMaps. Palavras-chave precisas ajudam as pessoas a "
+"encontrarem seu conteúdo."
 
 #: templates/default/organization/edit.html:78
 #: templates/default/organization/new.html:69
@@ -3269,6 +3295,8 @@ msgid ""
 "Please, upload fotos of the organization or link to photos on Wiki Commons "
 "or Flickr. Make sure that the photos is licensed under creative commons."
 msgstr ""
+"Suba fotos da organização ou link para fotos no Wiki Commons ou Flickr. "
+"Confira se elas estão sob uma licença Creative Commons"
 
 #: templates/default/organization/edit.html:82
 #: templates/default/organization/new.html:73
@@ -3276,17 +3304,15 @@ msgstr ""
 msgid ""
 "Here you can upload the logo of the organization or use one of the category "
 "images."
-msgstr ""
+msgstr "Coloque o logo da organização, ou use uma das imagens das categorias."
 
 #: templates/default/organization/list.html:19
-#, fuzzy
 msgid "Create new organization"
-msgstr "Criar Nova Organização"
+msgstr "Criar nova organização"
 
 #: templates/default/organization/list.html:72
-#, fuzzy
 msgid "Attended communities"
-msgstr "Comunidades Atendidas"
+msgstr "Comunidades atendidas"
 
 #: templates/default/organization/list.html:81
 #, python-format
@@ -3295,19 +3321,16 @@ msgstr " e %(diff)s outras"
 
 #: templates/default/organization/new.html:12
 #: templates/default/organization/new_frommap.html:11
-#, fuzzy
 msgid "New organization"
-msgstr "Nova Organização"
+msgstr "Nova organização"
 
 #: templates/default/organization/related_items.html:12
-#, fuzzy
 msgid "Content related to"
-msgstr "Objetos relacionados a"
+msgstr "Conteúdo relacionado a"
 
 #: templates/default/organization/show.html:55
 #: templates/default/project/old_view.html:62
 #: templates/default/project/view.html:75
-#, fuzzy
 msgid "See all objects on the map"
 msgstr "Ver todos os objetos no mapa"
 
@@ -3358,30 +3381,25 @@ msgstr[0] "Recebeu %(num)s investimento"
 msgstr[1] "Recebeu %(num)s investimentos"
 
 #: templates/default/organization/show.html:99
-#, fuzzy
 msgid "No organizations supported"
-msgstr "Nenhuma organização apoiada."
+msgstr "Nenhuma organização apoiada"
 
 #: templates/default/organization/show.html:109
-#, fuzzy
 msgid "No communities related to this organization"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Nenhuma comunidade relacionada a essa organização"
 
 #: templates/default/organization/show.html:119
-#, fuzzy
 msgid "No proposals supported"
-msgstr "Nenhuma proposta apoiada."
+msgstr "Nenhuma proposta apoiada"
 
 #: templates/default/organization/show.html:129
-#, fuzzy
 msgid "No resources supported"
-msgstr "Nenhum recurso apoiado."
+msgstr "Nenhum recurso apoiado"
 
 #: templates/default/organization/show.html:164
 #: templates/default/resource/show.html:104
-#, fuzzy
 msgid "No contact information provided"
-msgstr "Informações de contato não fornecidas"
+msgstr "Sem informação de contato"
 
 #: templates/default/organization/show.html:174
 msgid "No categories provided"
@@ -3389,7 +3407,7 @@ msgstr "Categorias não fornecidas"
 
 #: templates/default/organization/show.html:183
 msgid "No target audience provided"
-msgstr "Público alvo não fornecido"
+msgstr "Público-alvo não fornecido"
 
 #: templates/default/organization/show.html:188
 msgid "Website"
@@ -3398,35 +3416,31 @@ msgstr "Website"
 #: templates/default/project/edit.html:15
 #: templates/default/project/old_view.html:51
 #: templates/default/project/view.html:46
-#, fuzzy
 msgid "Edit project map"
-msgstr "Editar Projeto"
+msgstr "Editar mapa de projeto"
 
 #: templates/default/project/edit.html:17
-#, fuzzy
 msgid "New project map"
-msgstr "Novo Projeto"
+msgstr "Novo mapa de projeto"
 
 #: templates/default/project/edit.html:31
 msgid "Edit associated contents of this map"
-msgstr ""
+msgstr "Editar conteúdos associados a esse projeto"
 
 #: templates/default/project/edit.html:41
-#, fuzzy
 msgid "Delete selected associations"
 msgstr "Apagar associações marcadas"
 
 #: templates/default/project/list.html:17
-#, fuzzy
 msgid "Create new project map"
-msgstr "Criar Novo Projeto"
+msgstr "Crie um novo mapa de projeto"
 
 #: templates/default/project/list.html:22
-#, fuzzy, python-format
+#, python-format
 msgid "%(counter)s project map"
 msgid_plural "%(counter)s project maps"
-msgstr[0] "%(counter)s Projeto"
-msgstr[1] "%(counter)s Projetos"
+msgstr[0] "%(counter)s mapa de projeto"
+msgstr[1] "%(counter)s mapas de projeto"
 
 #: templates/default/project/list.html:52
 #: templates/default/project/old_view.html:251
@@ -3437,7 +3451,7 @@ msgstr "Administrador"
 #: templates/default/project/old_view.html:70
 #: templates/default/project/view.html:145
 msgid "Points on Map"
-msgstr "Ponto no Mapa"
+msgstr "Pontos no mapa"
 
 #: templates/default/project/old_view.html:121
 #: templates/default/project/old_view.html:257
@@ -3447,75 +3461,63 @@ msgstr "Colaboradores"
 
 #: templates/default/project/old_view.html:142
 #: templates/default/project/view.html:208
-#, fuzzy
 msgid "No contents have been added to this map yet"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Nenhum conteúdo foi adicionado a esse projeto ainda"
 
 #: templates/default/project/old_view.html:155
 #: templates/default/project/view.html:221
-#, fuzzy
 msgid "No organizations have been added to this map yet"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Nenhuma organização foi adicionada a esse projeto ainda"
 
 #: templates/default/project/old_view.html:168
 #: templates/default/project/view.html:234
-#, fuzzy
 msgid "No communities have been added to this map yet"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Nenhuma comunidade foi adicionada a esse projeto ainda"
 
 #: templates/default/project/old_view.html:181
 #: templates/default/project/view.html:247
-#, fuzzy
 msgid "No needs have been added to this map yet"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Nenhuma necessidade foi adicionada a esse projeto ainda"
 
 #: templates/default/project/old_view.html:194
 #: templates/default/project/view.html:260
-#, fuzzy
 msgid "No resources have been added to this map yet"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Nenhum recurso foi adicionado a esse projeto ainda"
 
 #: templates/default/project/old_view.html:207
 #: templates/default/project/old_view.html:220
 #: templates/default/project/view.html:273
-#, fuzzy
 msgid "No investments have been added to this map yet"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Nenhum investimento foi adicionado a esse projeto ainda"
 
 #: templates/default/project/projects_tag.html:15
-#, fuzzy
 msgid "Add to a project map"
 msgstr "Adicionar a um projeto"
 
 #: templates/default/project/projects_tag.html:26
-#, fuzzy
 msgid "Add this content to a project map"
 msgstr "Adicionar este objeto a um projeto"
 
 #: templates/default/project/view.html:60
-#, fuzzy
 msgid "Project Map"
-msgstr "Projetos"
+msgstr "Mapa de Projeto"
 
 #: templates/default/project/view.html:61
-#, fuzzy
 msgid "Content"
-msgstr "Tipo do Conteúdo"
+msgstr "Conteúdo"
 
 #: templates/default/project/view.html:138
-#, fuzzy
 msgid "No content have been added to this project map yet"
-msgstr "Nenhuma comunidade vínculada a esta organização"
+msgstr "Nenhum conteúdo foi adicionado a esse projeto ainda"
 
 #: templates/default/project/view.html:286
 #: templates/default/project/view.html:302
-#, fuzzy
 msgid "This project has no collaborators yet"
 msgstr "Este projeto não possui contribuidores ainda"
 
 #: templates/default/proposal/edit.html:15
 msgid "Create a proposal for this need"
-msgstr ""
+msgstr "Crie uma proposta para essa necessidade"
 
 #: templates/default/proposal/view.html:54
 msgid "Proposals for"
@@ -3523,12 +3525,11 @@ msgstr "Propostas para"
 
 #: templates/default/proposal/view.html:70
 msgid "Add investment"
-msgstr "Adicionar Investimento"
+msgstr "Adicionar investimento"
 
 #: templates/default/resource/edit.html:14
-#, fuzzy
 msgid "Edit resource"
-msgstr "Editar Recurso"
+msgstr "Editar recurso"
 
 #: templates/default/resource/edit.html:43
 #: templates/default/resource/new.html:33
@@ -3538,6 +3539,9 @@ msgid ""
 "\"Community Library\" inform also the name of the city or neighbourhood, for "
 "instance: Community Library (Santa Barbara)."
 msgstr ""
+"Informe o nome desse recurso. Tente ser específico. Ao invés de só "
+"\"Biblioteca Comunitária\", escreva \"Biblioteca Comunitária (Santa "
+"Bárbara)\""
 
 #: templates/default/resource/edit.html:46
 #: templates/default/resource/new.html:36
@@ -3546,6 +3550,8 @@ msgid ""
 "Give some details about this resource. How is it used by the local "
 "community? When is it open? Can it be used by others, too?"
 msgstr ""
+"Dê detalhes sobre esse recurso. Como ele é usado pela comunidade local? "
+"Quando abre? Pode ser usado por todo mundo?"
 
 #: templates/default/resource/edit.html:50
 #: templates/default/resource/new.html:40
@@ -3554,6 +3560,8 @@ msgid ""
 "Please define the type of resource. You can select an item from the list or "
 "enter a new type."
 msgstr ""
+"Defina o tipo do recurso. Você pode selecionar um da lista ou digitar um "
+"novo."
 
 #: templates/default/resource/edit.html:54
 #: templates/default/resource/new.html:44
@@ -3562,6 +3570,8 @@ msgid ""
 "Please, insert tags that describe the resource, for instance \"library\", "
 "\"computer lab\", \"available on Sundays\", etc."
 msgstr ""
+"Insira palavras-chave que descrevam o recurso, como \"biblioteca\", \"parque"
+"\", \"disponível aos domingos\", etc."
 
 #: templates/default/resource/edit.html:58
 #: templates/default/resource/new.html:48
@@ -3570,16 +3580,15 @@ msgid ""
 "Contact information of the person or organization responsible for the "
 "resource."
 msgstr ""
+"Informação de contato das pessoas ou organizações responsáveis pelo recurso."
 
 #: templates/default/resource/list.html:17
-#, fuzzy
 msgid "Create new resource"
-msgstr "Criar Novo Recurso"
+msgstr "Criar novo recurso"
 
 #: templates/default/resource/new.html:11
-#, fuzzy
 msgid "New resource"
-msgstr "Novo Recurso"
+msgstr "Novo recurso"
 
 #: templates/default/resource/show.html:44
 msgid "type:"
@@ -3610,28 +3619,24 @@ msgid "Type"
 msgstr "Tipo"
 
 #: templates/default/update/updates_list_templatetag.html:22
-#, fuzzy
 msgid "enable/disable Community"
-msgstr "ativar/desativar Comunidade"
+msgstr "mostrar/esconder comunidade"
 
 #: templates/default/update/updates_list_templatetag.html:25
 msgid "enable/disable Need"
-msgstr ""
+msgstr "mostrar/esconder necessidade"
 
 #: templates/default/update/updates_list_templatetag.html:28
-#, fuzzy
 msgid "enable/disable Organization"
-msgstr "Cadastrar Organização"
+msgstr "mostrar/esconder organização"
 
 #: templates/default/update/updates_list_templatetag.html:31
-#, fuzzy
 msgid "enable/disable Resource"
-msgstr "ativar/desativar Recurso"
+msgstr "mostrar/esconder recurso"
 
 #: templates/default/update/updates_list_templatetag.html:34
-#, fuzzy
 msgid "enable/disable Investment"
-msgstr "ativar/desativar Investimento"
+msgstr "mostrar/esconder investimento"
 
 #: templates/default/update/updates_list_templatetag.html:55
 msgid ""
@@ -3703,422 +3708,8 @@ msgstr "para a necessidade"
 
 #: templates/default/update/updates_list_templatetag.html:94
 msgid "learn more about this object"
-msgstr ""
+msgstr "saiba mais sobre esse objeto"
 
 #: templates/default/update/updates_list_templatetag.html:116
 msgid "by"
 msgstr "por"
-
-#~ msgid "Passwords did not match."
-#~ msgstr "As senha não coincidem."
-
-#~ msgid " "
-#~ msgstr " "
-
-#, fuzzy
-#~ msgid ""
-#~ "I want to receive only a <strong>daily</strong> digest mail with the "
-#~ "updates for the objects I'm subscribed to"
-#~ msgstr ""
-#~ "Eu quero receber somente notificações com o resumo <strong>diário</"
-#~ "strong> contendo as atualizações dos objetos que estou observando"
-
-#, fuzzy
-#~ msgid "Create a new mapping project"
-#~ msgstr "Crie um projeto"
-
-#~ msgid "See all projects"
-#~ msgstr "Ver todos os projetos"
-
-#~ msgid "New Investment"
-#~ msgstr "Novo Investimento"
-
-#~ msgid "See all objects on map"
-#~ msgstr "Ver todos os objetos no mapa"
-
-#~ msgid ""
-#~ "This email is registered on our system. Probably you've logged before "
-#~ "with a social account (facebook or google). You can skip this step and "
-#~ "just login."
-#~ msgstr ""
-#~ "Este email já está registrado no nosso sistema. Provavelmente você já "
-#~ "entrou anteriormente usando uma conta externa (facebook ou google). Você "
-#~ "pode pular esta etapa e simplesmente entrar."
-
-#~ msgid "Content report"
-#~ msgstr "Denúncia do conteúdo"
-
-#~ msgid "About Me"
-#~ msgstr "Sobre mim"
-
-#~ msgid "see on map"
-#~ msgstr "ver no mapa"
-
-#, fuzzy
-#~ msgid "Valor do investimento."
-#~ msgstr "Adicionar Investimento"
-
-#~ msgid "%(counter)s Need"
-#~ msgid_plural "%(counter)s Needs"
-#~ msgstr[0] "%(counter)s Necessidade"
-#~ msgstr[1] "%(counter)s Necessidades"
-
-#~ msgid "%(counter)s Organization"
-#~ msgid_plural "%(counter)s Organizations"
-#~ msgstr[0] "%(counter)s Organização"
-#~ msgstr[1] "%(counter)s Organizações"
-
-#~ msgid "%(counter)s Resource"
-#~ msgid_plural "%(counter)s Resources"
-#~ msgstr[0] "%(counter)s Recurso"
-#~ msgstr[1] "%(counter)s Recursos"
-
-#~ msgid "Communities list"
-#~ msgstr "Lista de Comunidades"
-
-#~ msgid "This project has no related Investments yet"
-#~ msgstr "Este Projeto não tem nenhum Investimento relacionado"
-
-#, fuzzy
-#~ msgid "Editar projeto"
-#~ msgstr "Editar Projeto"
-
-#, fuzzy
-#~ msgid "ver no mapa"
-#~ msgstr "ver no mapa"
-
-#~ msgid "Over period"
-#~ msgstr "Por um período"
-
-#~ msgid "Real"
-#~ msgstr "Real"
-
-#~ msgid "Dollar"
-#~ msgstr "Dólar"
-
-#~ msgid "Partners Logo"
-#~ msgstr "Logo de Parceiros"
-
-#~ msgid "Kind"
-#~ msgstr "Tipo"
-
-#~ msgid "You can type above or select here"
-#~ msgstr "Você pode digitar acima ou selecionar algum aqui"
-
-#~ msgid "Terms Of Use Violation"
-#~ msgstr "Violação dos termos de uso"
-
-#~ msgid "Wrong Content"
-#~ msgstr "Conteúdo errado"
-
-#~ msgid "Another Reason"
-#~ msgstr "Outro motivo"
-
-#~ msgid "The content was successfully reported"
-#~ msgstr "O conteúdo foi denunciado com sucesso"
-
-#~ msgid "Need Categories"
-#~ msgstr "Áreas"
-
-#~ msgid "Target Audiences"
-#~ msgstr "Públicos alvo"
-
-#~ msgid "Add Organization"
-#~ msgstr "Adicionar organização"
-
-#~ msgid "Save Changes"
-#~ msgstr "Salvar Mudanças"
-
-#~ msgid "You provided wrong credentials."
-#~ msgstr "Usuário e senha inválidos."
-
-#~ msgid "E-mail"
-#~ msgstr "Email"
-
-#~ msgid "Signatures"
-#~ msgstr "Assinaturas"
-
-#~ msgid "Now, do login!"
-#~ msgstr "Agora, faça login!"
-
-#, fuzzy
-#~ msgid "Crie o seu projeto"
-#~ msgstr "Crie um projeto"
-
-#, fuzzy
-#~ msgid "Busca no mapa"
-#~ msgstr "ver no mapa"
-
-#, fuzzy
-#~ msgid "Um espaço seu no MootiroMaps"
-#~ msgstr "Bem-vindo ao MootiroMaps"
-
-#, fuzzy
-#~ msgid "Grupo no Facebook"
-#~ msgstr "Entre com Facebook"
-
-#~ msgid "Execution"
-#~ msgstr "Realização"
-
-#~ msgid "Supporters"
-#~ msgstr "Apoio institucional"
-
-#, fuzzy
-#~ msgid "Para que usar o MootiroMaps?"
-#~ msgstr "Projetos que usam o MootiroMaps"
-
-#, fuzzy
-#~ msgid "Objetivos"
-#~ msgstr "Objetos"
-
-#, fuzzy
-#~ msgid "Projeto Ilha"
-#~ msgstr "Projetos"
-
-#, fuzzy
-#~ msgid "ativar/desativar Comunidades"
-#~ msgstr "ativar/desativar Comunidade"
-
-#, fuzzy
-#~ msgid "ativar/desativar Necessidades"
-#~ msgstr "ativar/desativar Necessidade"
-
-#, fuzzy
-#~ msgid "ativar/desativar Recursos"
-#~ msgstr "ativar/desativar Recurso"
-
-#, fuzzy
-#~ msgid "ativar/desativar Organizações"
-#~ msgstr "ativar/desativar Organização"
-
-#~ msgid "Observe"
-#~ msgstr "Observar"
-
-#~ msgid "Request"
-#~ msgstr "Requisitar"
-
-#~ msgid "Select a Reason"
-#~ msgstr "Selecione um motivo"
-
-#~ msgid "Report"
-#~ msgstr "Denunciar"
-
-#, fuzzy
-#~ msgid "See on map"
-#~ msgstr "ver no mapa"
-
-#~ msgid "Edit Project Associations"
-#~ msgstr "Editar Associações do Projeto"
-
-#~ msgid "This project has no related Objects yet"
-#~ msgstr "Este projeto não tem nenhum Objeto relacionado"
-
-#~ msgid "This project has no related Organizations yet"
-#~ msgstr "Este projeto não tem nenhuma Organização relacionada"
-
-#~ msgid "This project has no related Communities yet"
-#~ msgstr "Este projeto não tem nenhuma Communidade relacionada"
-
-#~ msgid "This project has no related Needs yet"
-#~ msgstr "Este projeto não tem nenhuma Necessidade relacionada"
-
-#~ msgid "This project has no related Resources yet"
-#~ msgstr "Este projeto não tem nenhum Recurso relacionada"
-
-#~ msgid "Contributors"
-#~ msgstr "Contribuidores"
-
-#~ msgid "Form Proposal"
-#~ msgstr "Formulário de Propostas"
-
-#~ msgid "Kind:"
-#~ msgstr "Tipo:"
-
-#, fuzzy
-#~ msgid "Last Updates"
-#~ msgstr "Últimas atualizações"
-
-#~ msgid "activate/deactivate Need"
-#~ msgstr "ativar/desativar Necessidade"
-
-#~ msgid "activate/deactivate Organization"
-#~ msgstr "ativar/desativar Organização"
-
-#~ msgid "see this object page"
-#~ msgstr "veja a página"
-
-#~ msgid "Configurations"
-#~ msgstr "Configurações"
-
-#~ msgid "Public Settings"
-#~ msgstr "Dados Públicos"
-
-#~ msgid "Signature Settings"
-#~ msgstr "Assinaturas"
-
-#~ msgid "Manage password"
-#~ msgstr "Gerenciar senha"
-
-#~ msgid "Filter by type"
-#~ msgstr "Filtrar por tipo"
-
-#~ msgid "last updates"
-#~ msgstr "últimas atualizações"
-
-#~ msgid "Personal Settings"
-#~ msgstr "Dados Pessoais"
-
-#~ msgid "Access to edit this project"
-#~ msgstr "Acesso para editar este projeto"
-
-#~ msgid "creator"
-#~ msgstr "creator"
-
-#~ msgid "Form Investment"
-#~ msgstr "Formulário de Investimentos"
-
-#~ msgid "Filter"
-#~ msgstr "Filtro"
-
-#~ msgid "Branch Name"
-#~ msgstr "Nome da Unidade"
-
-#~ msgid "Info"
-#~ msgstr "Informações"
-
-#~ msgid "Branch of"
-#~ msgstr "Unidade de"
-
-#~ msgid "Verify"
-#~ msgstr "Verificar"
-
-#~ msgid "Add Branch"
-#~ msgstr "Adicionar Unidade"
-
-#~ msgid "Finish"
-#~ msgstr "Concluir"
-
-#~ msgid "%(num)s point on map"
-#~ msgid_plural "%(num)s points on map"
-#~ msgstr[0] "%(num)s ponto no mapa"
-#~ msgstr[1] "%(num)s pontos no mapa"
-
-#~ msgid "See Results"
-#~ msgstr "Ver Resultados"
-
-#~ msgid "last contributions"
-#~ msgstr "Últimas contribuições"
-
-#~ msgid "what is this?"
-#~ msgstr "O que é o MootiroMaps?"
-
-#~ msgid "Add a community"
-#~ msgstr "Mapeie uma comunidade"
-
-#~ msgid "Add a need"
-#~ msgstr "Adicione uma necessidade"
-
-#~ msgid "Add a project"
-#~ msgstr "Comece um projeto"
-
-#~ msgid "More about"
-#~ msgstr "Saiba mais"
-
-#~ msgid "How it works?"
-#~ msgstr "Como funciona?"
-
-#~ msgid "Explore"
-#~ msgstr "Explore"
-
-#~ msgid "Find resources available to the community of your neighborhood."
-#~ msgstr "Encontre recursos disponíveis à comunidade de seu bairro."
-
-#~ msgid "Add it"
-#~ msgstr "Adicione"
-
-#~ msgid ""
-#~ "Map needs, organizations and resources in your community and help to "
-#~ "improve it."
-#~ msgstr ""
-#~ "Mapeie necessidades, organizações e recursos em sua comunidade e ajude "
-#~ "melhorá-la."
-
-#~ msgid ""
-#~ "Map related points. You can make a guide to your neighborhood or diagnose "
-#~ "a region."
-#~ msgstr ""
-#~ "Mapeie pontos relacionados. Você pode fazer um guia para o seu bairro ou "
-#~ "diagnosticar uma região"
-
-#~ msgid "Map position not available"
-#~ msgstr "Posição no mapa não disponível"
-
-#~ msgid "An initiative"
-#~ msgstr "Uma iniciativa"
-
-#~ msgid "About Us"
-#~ msgstr "Quem somos"
-
-#~ msgid "Get Involved"
-#~ msgstr "Se envolva"
-
-#~ msgid "Insert all"
-#~ msgstr "Inserir tudo"
-
-#~ msgid "Invalid creator ID: {} does not belong to any user."
-#~ msgstr "ID do mapeador inválido: {} não pertence a nenhum usuário."
-
-#~ msgid "There is already an organization with this name."
-#~ msgstr "Já existe uma organização com esse nome."
-
-#~ msgid "%s cannot be empty"
-#~ msgstr "%s não pode estar vazio"
-
-#~ msgid "There is already an resource with this name."
-#~ msgstr "Já existe um recurso com esse nome."
-
-#~ msgid "go back to simulation page"
-#~ msgstr "voltar para a página de simulação"
-
-#~ msgid "Geometric data not available"
-#~ msgstr "Informação geométrica não disponível"
-
-#~ msgid "Log in with Twitter"
-#~ msgstr "Entre com Twitter"
-
-#~ msgid ""
-#~ "I want to receive mails every time someone update an object I'm "
-#~ "subscribed to"
-#~ msgstr ""
-#~ "Eu quero receber notificações cada vez que alguém atualizar um objeto o "
-#~ "qual estou observando"
-
-#~ msgid "You must be logged in"
-#~ msgstr "Você precisa estar logado"
-
-#~ msgid "Log in with one the accounts bellow!"
-#~ msgstr "Entre com"
-
-#~ msgid "Don't have an account? Sign up!"
-#~ msgstr "Não possui uma conta? Registre-se!"
-
-#~ msgid "Votes"
-#~ msgstr "Votos"
-
-#~ msgid "User not logged or anonymous"
-#~ msgstr "Usuário não logado ou anônimo"
-
-#~ msgid "Investiments for %(community)s"
-#~ msgstr "Investimentos em %(community)s"
-
-#~ msgid "Resources for"
-#~ msgstr "Recursos para"
-
-#~ msgid "Needs for"
-#~ msgstr "Necessidades para"
-
-#~ msgid "%(organization)s at %(community)s"
-#~ msgstr "%(organization)s em %(community)s"
-
-#~ msgid "Username Required"
-#~ msgstr "Nome de usuário é obrigatório"
