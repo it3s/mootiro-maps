@@ -24,8 +24,13 @@ from highlight.models import HighlightSection
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
 
+from organization.models import Organization
+
 logger = logging.getLogger(__name__)
 
+CLASSNAME_MAP = {
+    "Organization": Organization,
+}
 
 @render_to('project/list.html')
 def project_list(request):
@@ -155,6 +160,23 @@ def add_related_object(request):
                     }}
 
     return {'success': False}
+
+class _FakeFilterRequest:
+    def __init__(self, params):
+        self.GET = params
+
+@ajax_request
+def add_list_of_objects(request):
+    project = Project.objects.get(pk=request.POST['project_id'])
+
+    klass = CLASSNAME_MAP[request.POST['object_type']]
+    filter_params = simplejson.loads(request.POST['filter_params'])
+    object_list = filtered_query(klass.objects, _FakeFilterRequest(filter_params))
+
+    for obj in object_list:
+        project.save_related_object(obj, request.user)
+
+    return {'success': True, 'redirect_url': project.view_url}
 
 
 @login_required

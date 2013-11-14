@@ -7,7 +7,7 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
         <div class="add-project-modal-header">
-            {% trans 'Add this object to a project' %}
+            {% trans 'Add this list to a project' %}
         </div>
     </div>
     <div class="modal-body">
@@ -39,51 +39,48 @@
         }
         return false;
     });
-    // $( "#id_project_autocomplete" ).bind( "autocompleteselect", function(event, ui) {
-    //     $('.add-project-msg').html(
-    //         '<p>' +
-    //             'Este objeto será adicionado ao projeto <strong>' +
-    //             ui.item.label + '</strong>' +
-    //         '</p>'
-    //     );
-    // });
-    // $('#add-project-save').click(function(){
-    //     //save proj related object
-    //     $.post(
-    //         '/project/add_related/',
-    //         {
-    //             object_id: $('#project_related_object_id').val(),
-    //             content_type: $('#project_related_contenttype').val(),
-    //             project_id: $('#id_project').val(),
-    //         },
-    //         function(data){
-    //             if (data.success) {
-    //                 if (! $('#project-related-list li[project-id=' + data.project.id + ']').length){
-    //                     $('#project-related-list').append('' +
-    //                         '<li project-id="' + data.project.id + '">' +
-    //                             '<a href="' + data.project.link + '">' +
-    //                                     data.project.name +
-    //                             '</a>' +
-    //                         '</li>'
-    //                     );
-    //                 }
-    //             } else {
-    //                 alert('Falha ao relacionar este objeto ao projeto selecionado');
-    //             }
-    //         },
-    //         'json'
-    //     );
-    //     $('#id_project_autocomplete').val('');
-    //     $('#id_project').val('');
-    //     $('.add-project-msg').html('');
-    //     $('#add-project-modal').modal('hide');
-    // });
-    $('#add-project-cancel').click(function(evt){
-        evt.preventDefault();
+    $( "#id_project_autocomplete" ).bind( "autocompleteselect", function(event, ui) {
+        $('.add-project-msg').html(
+            '<p>' +
+                'Esta lista será adicionada ao projeto <strong>' +
+                ui.item.label + '</strong>' +
+            '</p>'
+        );
+    });
+    var cleanAddToProjectFields = function() {
         $('#id_project_autocomplete').val('');
         $('#id_project').val('');
         $('.add-project-msg').html('');
         $('#add-project-modal').modal('hide');
+    };
+    $('#add-project-save').click(function(){
+        //save proj related object
+        var project_id = $('#id_project').val();
+        $.post(
+            '/project/add_list/',
+            {
+                filter_params: $('#add_to_project__filter_params').val(),
+                object_type: $('#add_to_project__object_type').val(),
+                project_id: project_id
+            },
+            function(data){
+                if (data.success) {
+                    // redirect to project page
+                    window.location.href = data.redirect_url;
+                } else {
+                    alert('Falha ao relacionar este objeto ao projeto selecionado');
+                }
+            },
+            'json'
+        );
+        $('#id_project_autocomplete').val('');
+        $('#id_project').val('');
+        $('.add-project-msg').html('');
+        $('#add-project-modal').modal('hide');
+    });
+    $('#add-project-cancel').click(function(evt){
+        evt.preventDefault();
+        cleanAddToProjectFields();
         return false;
     });
 </script>
