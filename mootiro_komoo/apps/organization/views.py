@@ -10,7 +10,7 @@ from django.utils import simplejson
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 
-from annoying.decorators import render_to
+from annoying.decorators import render_to, ajax_request
 from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
 from lib.taggit.models import TaggedItem
@@ -29,12 +29,14 @@ logger = logging.getLogger(__name__)
 def organization_list(request):
     org_sort_order = ['creation_date', 'name']
 
+    filtered = bool(request.GET.get('filters', None))
+
     query_set = filtered_query(Organization.objects, request)
     organizations_list = sorted_query(query_set, org_sort_order,
                                          request)
     organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
-    return dict(organizations=organizations,
+    return dict(organizations=organizations, filtered=filtered,
                 organizations_count=organizations_count)
 
 
@@ -129,3 +131,9 @@ def search_tags(request):
     return HttpResponse(simplejson.dumps(tags),
                 mimetype="application/x-javascript")
 
+
+# NON-FUNCTIONAL YET
+@ajax_request
+def add_to_project(request):
+    organizations = filtered_query(Organization.objects, request)
+    return organizations
