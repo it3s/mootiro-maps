@@ -103,9 +103,7 @@
               <div>
                 {% if project.contact %}
                 <h4>{% trans 'Contact' %}</h4>
-                <p>
                   {{ project.contact|render_markup|safe }}
-               </p>
                {% endif %}
                </div>
 
@@ -113,7 +111,6 @@
                     <div>
                       {% if similar_projects %}
                       <h4>{% trans "Related project maps" %}</h4>
-                      <p>
                           <ul>
                               {% for r in similar_projects|slice:'5' %}
                               <li>
@@ -121,7 +118,6 @@
                               </li>
                               {% endfor %}
                           </ul>
-                      </p>
                       {% endif %}
                   </div>
               {% endwith %}

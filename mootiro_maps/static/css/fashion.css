@@ -143,7 +143,8 @@
     #top #menu li.objects.active ul, #top #side_menu li.objects.active ul {
       box-shadow: 0px -5px 0px 0px #951b81, 1px 1px 3px 1px rgba(50, 50, 50, 0.5); }
   #top #menu > ul > li {
-    width: 120px; }
+    min-width: 120px;
+    padding: 0 5px; }
   #top #side_menu > ul > li {
     min-width: 80px;
     padding: 0 10px; }

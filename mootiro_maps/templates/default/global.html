@@ -43,7 +43,7 @@
   <body class="{% if community %}community{% endif %}">
 
     <script type="text/javascript" src="{{STATIC_URL}}js/config.js"></script>
-    <script type="text/javascript" data-main="app" src="{{STATIC_URL}}lib/require.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}lib/require.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.min.js"></script>
     <script type="text/javascript" src="{{STATIC_URL}}lib/bootstrap.min.js"></script>
@@ -112,8 +112,6 @@
 
     </div>
     {% block page_scripts %}{% endblock %}
-
-    </script>
 
     <!-- Google Analytics -->
     <script type="text/javascript">
