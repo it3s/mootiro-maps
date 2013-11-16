@@ -51,7 +51,7 @@ def show(request, id=''):
 @render_to('organization/related_items.html')
 def related_items(request, id=''):
     organization = get_object_or_None(Organization, pk=id) or Organization()
-    geojson = create_geojson(organization.related_items)
+    geojson = create_geojson(organization.related_items + [organization])
     return {'organization': organization, 'geojson': geojson}
 
 
