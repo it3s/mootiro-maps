@@ -8,7 +8,6 @@ from django.utils.translation import ugettext as _
 
 from main.utils import (ResourceHandler, JsonResponse, JsonResponseNotFound,
         JsonResponseError, get_json_data, get_fields_to_show)
-from main.datalog import log_data
 
 from .models import User, Login
 from .utils import login as auth_login
@@ -97,8 +96,6 @@ class UsersHandler(ResourceHandler):
                 return JsonResponseError(user.errors)
 
             user.save()
-            log_data.send(
-                    sender=user, object_=user, user=request.user, action='E')
             return JsonResponse({})
         else:
             return JsonResponseError({
