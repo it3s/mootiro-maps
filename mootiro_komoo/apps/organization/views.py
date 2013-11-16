@@ -10,7 +10,7 @@ from django.utils import simplejson
 from django.db.models import Count
 from django.core.urlresolvers import reverse
 
-from annoying.decorators import render_to, ajax_request
+from annoying.decorators import render_to
 from annoying.functions import get_object_or_None
 from fileupload.models import UploadedFile
 from lib.taggit.models import TaggedItem
@@ -20,7 +20,7 @@ from authentication.utils import login_required
 from organization.models import Organization
 from organization.forms import FormOrganization, FormOrganizationGeoRef
 from main.utils import (paginated_query, create_geojson, sorted_query,
-                        filtered_query)
+                        filtered_query, get_filter_params)
 
 logger = logging.getLogger(__name__)
 
@@ -29,8 +29,7 @@ logger = logging.getLogger(__name__)
 def organization_list(request):
     org_sort_order = ['creation_date', 'name']
 
-    filtered = bool(request.GET.get('filters', None))
-    filter_params = request.GET
+    filtered, filter_params = get_filter_params(request)
 
     query_set = filtered_query(Organization.objects, request)
     organizations_list = sorted_query(query_set, org_sort_order,

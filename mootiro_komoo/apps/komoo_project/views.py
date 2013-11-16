@@ -18,18 +18,24 @@ from main.utils import (paginated_query, sorted_query, filtered_query,
 from main.tasks import send_explanations_mail
 
 from authentication.utils import login_required
-from authentication.models import User
-from highlight.models import HighlightSection
 
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
 
 from organization.models import Organization
+from need.models import Need
+from komoo_resource.models import Resource
+from community.models import Community
+from investment.models import Investment
 
 logger = logging.getLogger(__name__)
 
 CLASSNAME_MAP = {
     "Organization": Organization,
+    "Need":         Need,
+    "Resource":     Resource,
+    "Community":    Community,
+    "Investment":   Investment,
 }
 
 @render_to('project/list.html')

@@ -319,6 +319,12 @@ def randstr(l=10):
     return s
 
 
+def get_filter_params(request):
+    filtered = bool(request.GET.get('filters', None))
+    request.encoding = 'latin-1'
+    filter_params = request.GET
+    return (filtered, filter_params)
+
 # ======================================================
 
 
