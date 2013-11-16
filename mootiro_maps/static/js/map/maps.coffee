@@ -487,7 +487,7 @@ define (require) ->
             else if type is 'editor'
                 new Editor options
             else if type is 'view'
-                new AjaxMap options
+                new StaticMap options
             else if type is 'static'
                 new StaticMap options
             else if type in ['preview', 'tooltip']
