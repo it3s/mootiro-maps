@@ -11,7 +11,6 @@ from .base import virtualenv
 def run(port=False):
     """Runs django's development server"""
     celery()
-    datalog()
     elasticsearch(bg='true')
     django(port)
 
@@ -47,15 +46,15 @@ def elasticsearch(bg='false'):
 
 
 @task
-def datalog():
-    """ Runs Datalog's Flask/MongoDB web server """
-    with virtualenv():
-        env.run('python lib/datalog/app.py &')
-
-
-@task
 def celery():
     """runs celery task queue"""
     with virtualenv(), env.cd('mootiro_maps'):
         env.run('python manage.py celeryd -B --loglevel=info --settings={} &'
+                .format(env.komoo_django_settings))
+
+@task
+def shell():
+    """runs shell with the django env loaded"""
+    with virtualenv(), env.cd('mootiro_maps'):
+        env.run('python manage.py shell --settings={}'
                 .format(env.komoo_django_settings))

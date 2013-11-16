@@ -7,7 +7,7 @@ from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
-import reversion
+from lib import reversion
 from lib.taggit.managers import TaggableManager
 
 from authentication.models import User

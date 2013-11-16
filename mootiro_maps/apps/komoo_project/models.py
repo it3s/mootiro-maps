@@ -13,7 +13,7 @@ from django.template.defaultfilters import slugify
 
 from lib.taggit.managers import TaggableManager
 from fileupload.models import UploadedFile
-import reversion
+from lib import reversion
 
 from authentication.models import User
 from community.models import Community

@@ -6,7 +6,7 @@ from django.contrib.gis.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
-import reversion
+from lib import reversion
 from lib.taggit.managers import TaggableManager
 
 from authentication.models import User

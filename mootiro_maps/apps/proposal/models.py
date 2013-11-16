@@ -5,7 +5,7 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes import generic
 
-import reversion
+from lib import reversion
 
 from authentication.models import User
 from need.models import Need
