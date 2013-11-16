@@ -185,6 +185,9 @@ class Investment(models.Model):
     def perm_id(self):
         return 'i%d' % self.id
 
+    def is_empty(self):  # for Project related objects map
+        return True
+
 
 if not reversion.is_registered(Investment):
     reversion.register(Investment)

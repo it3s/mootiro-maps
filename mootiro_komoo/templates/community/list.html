@@ -3,6 +3,7 @@
 {% load komoo_map_tags %}
 {% load comment_tags %}
 {% load markitup_tags %}
+{% load project_tags %}
 {% load i18n %}
 
 {% block title %}{% trans 'Communities list' %}{% endblock %}
@@ -12,6 +13,11 @@
 {% block content %}
 <div id="main-content">
   <div class="highlight">
+    <div class="button-new">
+      {% if filtered %}
+        {% filtered_query_to_project  "Community" filter_params %}
+      {% endif %}
+    </div>
     <div class="list">
       <div class="view-list-top">
         <div class="view-list-count">

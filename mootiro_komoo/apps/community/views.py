@@ -12,7 +12,6 @@ from django.core.urlresolvers import reverse
 from django.contrib.gis.geos import Polygon
 from django.db.models.query_utils import Q
 from django.db.models import Count
-from django.shortcuts import redirect
 
 from authentication.utils import login_required
 
@@ -24,7 +23,7 @@ from lib.taggit.models import TaggedItem
 from community.models import Community
 from community.forms import CommunityForm
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query)
+                        filtered_query, get_filter_params)
 
 logger = logging.getLogger(__name__)
 
@@ -87,12 +86,14 @@ def map(request):
 @render_to('community/list.html')
 def list(request):
     sort_order = ['creation_date', 'name']
+    filtered, filter_params = get_filter_params(request)
 
     query_set = filtered_query(Community.objects, request)
     communities = sorted_query(query_set, sort_order, request)
     communities_count = communities.count()
     communities = paginated_query(communities, request)
-    return dict(communities=communities, communities_count=communities_count)
+    return dict(communities=communities, communities_count=communities_count,
+                filtered=filtered, filter_params=filter_params)
 
 
 def communities_geojson(request):

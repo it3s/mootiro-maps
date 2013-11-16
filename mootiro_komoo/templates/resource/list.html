@@ -2,6 +2,7 @@
 {% load komoo_tags %}
 {% load komoo_map_tags %}
 {% load comment_tags %}
+{% load project_tags %}
 {% load i18n %}
 
 {% block title %}{% trans 'Resources' %}{% endblock %}
@@ -15,6 +16,9 @@
 
     <div class="button-new">
       <a class="button login-required" href="{% url new_resource %}" title="Adicionar novo Recurso. Por exemplo: uma escola, um posto de saúde, um parque, etc">{% trans "Create New Resource" %}</a>
+      {% if filtered %}
+        {% filtered_query_to_project  "Resource" filter_params %}
+      {% endif %}
     </div>
 
     <div class="view-list-top">
