@@ -1,0 +1,51 @@
+{% load i18n %}
+{% load komoo_tags %}
+<h1 id="logo">
+  <a href="{% url root %}"><img src='{{THEME_STATIC_URL}}img/logo.png' alt='Logo'/><div class="logo-text"><img src='{{THEME_STATIC_URL}}img/logo-text.png' alt='Child Friendly Places'/></div></a>
+</h1>
+
+<nav id="menu">
+  {% block menu %}
+    {% menu "" %}
+  {% endblock %}
+</nav>
+
+<div id="search">
+  <form action=".">
+    <input id="search-bar" type="search" placeholder="{% trans 'Search for places, users or contents...' %}" autocomplete="off"/>
+  </form>
+  <div id="search-canvasloader-container" class="inline-block"></div>
+  <div id="search-results-box"></div>
+</div>
+
+<nav id="side_menu">
+  <ul>
+    <!--
+    <li><a id="help_button">{% trans "Help" %}</a></li>
+    -->
+    {% if not user.is_anonymous %}
+    <li id="user_menu" class="dropdown_menu">
+      <a>{{ user.name|first_name }} &#x25be;</a>
+      <ul>
+        <li><a href="{{ user.view_url }}" >{% trans 'Profile' %}</a></li>
+        <li><a href="{% url profile_update %}" >{% trans 'Settings' %}</a></li>
+        <li><a href="{% url user_logout %}" >{% trans 'Logout' %}</a></li>
+      </ul>
+    </li>
+    {% else %}
+    <li id="login_button"><a href="#" class="login-required" >{% trans 'Login'%}</a></li>
+    {% endif %}
+    <li class="language_selector dropdown_menu">
+      {% for lang in LANGUAGES %}
+      {% if lang.0 == LANGUAGE_CODE %}
+      <a>{{ lang.0 }} &#x25be;</a>
+      {% endif %}
+      {% endfor %}
+      <ul>
+      {% for lang in LANGUAGES %}
+      <li class="language{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}"><a href="{% url set_language %}?language={{ lang.0 }}">{{ lang.1 }}</a></li>
+      {% endfor %}
+      </ul>
+    </li>
+  </ul>
+</nav>

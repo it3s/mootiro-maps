@@ -1,4 +1,4 @@
-.about {
+#main-content.about {
     * {
         -webkit-box-sizing: border-box;
            -moz-box-sizing: border-box;
@@ -6,10 +6,6 @@
     }
 
     padding: 0px 0px 15px !important;
-
-    &#main-content {
-        width: 100%;
-    }
 
     .items {
         .topic {
@@ -63,7 +59,6 @@
 
     > div,
     .section .items {
-        width: 1200px;
         margin: 0 auto;
     }
 

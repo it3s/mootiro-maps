@@ -1,0 +1,105 @@
+{% load i18n %}
+<div class="block">
+    <header class="projects-tag-header">
+        <img src="/static/img/menu/project.png">
+        <span class="projects-tag-title">{% trans 'Project Maps' %}</span>
+    </header>
+    <section>
+        <ul id="project-related-list">
+
+            {% for project in projects %}
+            <li project-id="{{ project.id }}"><a href="{{ project.view_url }}">{{ project }}</a></li>
+            {% endfor %}
+        </ul>
+        <div class="centralizer apart">
+            <a href="#" id="add-to-project" class="button login-required">{% trans 'Add to a project map' %}</a>
+
+        </div>
+   </section>
+</div>
+
+<!-- Modal form for adding this project to a project -->
+<div class="modal hide" id="add-project-modal" style="display:none;">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <div class="add-project-modal-header">
+            {% trans 'Add this content to a project map' %}
+        </div>
+    </div>
+    <div class="modal-body">
+        <p>
+        <div class="project-selector">
+            {{ project_widget|safe }}
+
+            <input type="hidden" id="project_related_object_id" value="{{ object_id }}">
+            <input type="hidden" id="project_related_contenttype" value="{{ contenttype }}">
+        </div>
+        </p>
+        <div class="add-project-msg">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" id="add-project-cancel" >
+            {% trans 'Cancel' %}
+        </a>
+        <a href="#" class="button" id="add-project-save">
+            {% trans "Save changes" %}
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    $('#add-to-project').click(function(evt){
+        if (isAuthenticated){
+          $('#add-project-modal').modal('show');
+        }
+        return false;
+    });
+    $( "#id_project_autocomplete" ).bind( "autocompleteselect", function(event, ui) {
+        $('.add-project-msg').html(
+            '<p>' +
+                'Este objeto será adicionado ao projeto <strong>' +
+                ui.item.label + '</strong>' +
+            '</p>'
+        );
+    });
+    $('#add-project-save').click(function(){
+        //save proj related object
+        $.post(
+            '/project/add_related/',
+            {
+                object_id: $('#project_related_object_id').val(),
+                content_type: $('#project_related_contenttype').val(),
+                project_id: $('#id_project').val(),
+            },
+            function(data){
+                if (data.success) {
+                    if (! $('#project-related-list li[project-id=' + data.project.id + ']').length){
+                        $('#project-related-list').append('' +
+                            '<li project-id="' + data.project.id + '">' +
+                                '<a href="' + data.project.link + '">' +
+                                        data.project.name +
+                                '</a>' +
+                            '</li>'
+                        );
+                    }
+                } else {
+                    alert('Falha ao relacionar este objeto ao projeto selecionado');
+                }
+            },
+            'json'
+        );
+        $('#id_project_autocomplete').val('');
+        $('#id_project').val('');
+        $('.add-project-msg').html('');
+        $('#add-project-modal').modal('hide');
+    });
+    $('#add-project-cancel').click(function(evt){
+        evt.preventDefault();
+        $('#id_project_autocomplete').val('');
+        $('#id_project').val('');
+        $('.add-project-msg').html('');
+        $('#add-project-modal').modal('hide');
+        return false;
+    });
+</script>

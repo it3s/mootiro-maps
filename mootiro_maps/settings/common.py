@@ -3,6 +3,11 @@ import os
 import sys
 import djcelery
 
+try:
+    from themes_settings import *
+except ImportError:
+    pass
+
 djcelery.setup_loader()
 
 # ========== Path config ======================================================
@@ -63,6 +68,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'lib.reversion.middleware.RevisionMiddleware',
+    'lib.themes.middleware.ThemesMiddleware',
 ]
 
 CONTEXT_PROCESSORS = (
@@ -84,6 +90,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.contrib.messages.context_processors.messages",
     "main.context_processors.komoo_namespace",
+    'lib.themes.context_processors.themes',
 
 )
 
@@ -120,6 +127,7 @@ INSTALLED_APPS = [
     'django_nose',
     'ajaxforms',
     'djcelery',
+    'lib.themes',
 
     # our apps
     'main',

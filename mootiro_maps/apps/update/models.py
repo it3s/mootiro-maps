@@ -192,9 +192,9 @@ class Update(models.Model):
             "investment edited":    _("investment edited"),
             "investment discussed": _("investment discussed"),
 
-            "project added":     _("project added"),
-            "project edited":    _("project edited"),
-            "project discussed": _("project discussed"),
+            "project added":     _("project map added"),
+            "project edited":    _("project map edited"),
+            "project discussed": _("project map discussed"),
 
             "importsheet inserted": _("import sheet created"),
 
