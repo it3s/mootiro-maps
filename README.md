@@ -84,5 +84,5 @@ enter in contact with us.
 # Licensing:
 
 
-This project is licensed under the MIT license, read more in LICENSE.txt
+This project is dual licensed under the MIT license and under the AGPLv1 license, read more in LICENSE.txt
 
