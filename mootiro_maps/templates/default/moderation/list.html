@@ -1,0 +1,42 @@
+{% extends "global.html" %}
+{% load komoo_tags %}
+{% load comment_tags %}
+{% load markitup_tags %}
+{% load i18n %}
+
+{% block title %}{% trans 'List of communities' %}{% endblock %}
+
+{% block menu %} {% menu "" %} {% endblock %}
+
+{% block content %}
+<div id="main-content">
+  <div class="highlight">
+    <div class="list">
+      <div class="view-list-top">
+        <div class="view-list-count">
+          {{ moderations_count }} Reported Contents
+        </div>
+        <div class="view-list-pagination">
+          {% pagination moderations %}
+        </div>
+
+      </div>
+      {% for moderation in moderations.object_list %}
+      <div class="view-list-item {% cycle 'odd' '' %}">
+        <h4>
+          <span class="apart">
+            <a href="{{ moderation.content_object.view_url }}">{{ moderation }}</a>
+          </span>
+          <span class="apart">
+            {{ moderation.reports.count }} reports
+          </span>
+          <div class="clear-both"></div>
+        </h4>
+
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% pagination moderations %}
+</div>
+{% endblock %}

@@ -1,0 +1,226 @@
+{% load i18n %}
+{% load komoo_filters %}
+{% load komoo_tags %}
+{% load update_tags %}
+
+<div class="content-updates">
+
+  <ul class="tabs horizontal">
+    <li class="tab first last"><a href="#updates-panel">{% trans "Last updates" %}</a></li>
+    <!--
+    <li class="tab"><a href="#discussions-panel">{% trans "discussions" %}</a></li>
+    <li class="tab last"><a href="#my-content-panel">{% trans "my content" %}</a></li>
+    -->
+  </ul>
+  <div class="clear-both"></div>
+
+  <div class="shadow-container user-updates">
+    <div id="content-updates-filters" >
+      <span class="attenuate small">{% trans "Type" %}</span>
+      <ul class="frontpage-filters-list">
+          <li class="frontpage-filter-item active-filter">
+          <img src="{{ STATIC_URL }}img/community.png" alt="community" title='{%trans "enable/disable Community" %}'/>
+          </li>
+          <li class="frontpage-filter-item active-filter">
+              <img src="{{ STATIC_URL }}img/need.png" alt="need" title='{%trans "enable/disable Need" %}'/>
+          </li>
+          <li class="frontpage-filter-item active-filter">
+              <img src="{{ STATIC_URL }}img/organization.png" alt="organization" title='{%trans "enable/disable Organization" %}'/>
+          </li>
+          <li class="frontpage-filter-item active-filter">
+              <img src="{{ STATIC_URL }}img/resource.png" alt="resource" title='{%trans "enable/disable Resource" %}'/>
+          </li>
+          <li class="frontpage-filter-item active-filter">
+              <img src="{{ STATIC_URL }}img/investment.png" alt="investment" title='{%trans "enable/disable Investment" %}'/>
+          </li>
+      </ul>
+    </div>
+    <div class="clear-both"></div>
+
+    <div id="updates-panel" class="panel">
+        <div class="view-list-pagination">
+          {% pagination updates_page %}
+        </div>
+        <ul class="updates">
+          {% for u in updates_page.object_list %}
+          <li class="a-update {% if compact %}compact{% endif %}">
+            <div class="update-image">
+              {# How to change images to be inside update app??? #}
+              <img src="{{STATIC_URL}}{{ u.image }}">
+            </div>
+            <div class="update-info">
+              <h3>
+                {% if u.type == "D" %}
+                  {% users_list u.users %}
+                  {% blocktrans count num=shown|length %}
+                    discussed
+                  {% plural %}
+                    discussed
+                  {% endblocktrans %}
+                {% endif %}
+
+                {% if u.type == "I" %}
+                  {% with o=u.get_object.inserted_buckets.Organization|length r=u.get_object.inserted_buckets.Resource|length c=u.get_object.inserted_buckets.Community n=u.get_object.inserted_buckets.Need|length %}
+                    {% if c %}
+                      {{c}} {% blocktrans count num=c %}community{% plural %}communities{% endblocktrans %}{% if o and r %},{% else %}{% if o or r %} {% trans "and" %}{% endif %}{% endif %}
+                    {% endif %}
+
+                    {% if o %}
+                      {{o}} {% blocktrans count num=o %}organization{% plural %}organizations{% endblocktrans %}{% if c or r %} {% trans "and" %}{% endif %}
+                    {% endif %}
+
+                    {% if r %}
+                      {{r}} {% blocktrans count num=r %}resource{% plural %}resources{% endblocktrans %}
+                    {% endif %}
+
+                    {% if n %}
+                      {{n}} {% blocktrans count num=n %}need{% plural %}needs{% endblocktrans %}
+                    {% endif %}
+
+                    {% with n=c|add:o|add:r %}
+                      {% blocktrans count num=n %}
+                        imported into project
+                      {% plural %}
+                        imported into project
+                      {% endblocktrans %}
+                    {% endwith %}
+                  {% endwith %}
+                {% endif %}
+
+                {% if u.object_type == 'proposal' %}
+                {% trans "the proposal" %} <a href="{{ u.instances.0.link }}">{{ u.instances.0.name }}</a>
+                  {% trans "for the need" %} <a href="{{ u.instances.1.link }}">{{ u.instances.1.name }}</a>
+                {% else %}
+                <a href="{{ u.instance.link }}" title='{% trans "learn more about this object" %}'>{{ u.instance.name }}</a>
+                {% endif %}
+              </h3>
+
+              {% if not compact %}
+              <div class="right">
+                <a href="#" class="preview-on-map-ajax" data-app-name="{{ u.object_app_name }}" data-model-name="{{ u.object_type }}" data-object-id="{{ u.object_id }}"><i class="icon-see-on-map" title='{% trans "View on map"%}'></i></a>
+              </div>
+              {% endif %}
+
+              <div class="clear-both"></div>
+
+              {% if not compact %}
+                {% communities_list u.communities %}
+              {% endif %}
+
+              <div class="clear-both"></div>
+              <div class="update-message left">
+                <strong>{{ u.readable_type|capfirst }}</strong> {{ u.date|naturaltime }}
+
+                {### Users aggregated list ###}
+                {% if u.type == "A" or u.type == "E" or u.type == "I" %}
+                  {% trans "by" %}
+                  {% users_list u.users %}
+                {% endif %}
+              </div>
+
+              {% if not compact %}
+              <div class="update-social right">
+                <a href="{{ u.instance.link }}#Comments">
+                  ({{ u.comments_count }} {% if u.comments_count == 1 %}{% trans 'comment' %}{% else %}{% trans 'comments' %}{% endif %})
+                </a>
+              </div>
+              {% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="view-list-pagination">
+          {% pagination updates_page %}
+        </div>
+    </div>
+  </div>
+
+  <!--
+  <div id="discussions-panel" class="panel hidden">
+      DISCUSSIONS
+  </div>
+
+  <div id="my-content-panel" class="panel hidden">
+      MY CONTENT
+  </div>
+  -->
+
+</div>
+
+
+{% block page_scripts %}
+    <script type="text/javascript">
+
+        $(function(){
+
+            var entity_image= {
+                'community': {
+                    on: '{{STATIC_URL}}img/community.png',
+                    off: '{{STATIC_URL}}img/community-off.png'
+                },
+                'need': {
+                    on: '{{STATIC_URL}}img/need.png',
+                    off: '{{STATIC_URL}}img/need-off.png'
+                },
+                'organization': {
+                    on: '{{STATIC_URL}}img/organization.png',
+                    off: '{{STATIC_URL}}img/organization-off.png'
+                },
+                'resource': {
+                    on: '{{STATIC_URL}}img/resource.png',
+                    off: '{{STATIC_URL}}img/resource-off.png'
+                },
+                'investment': {
+                    on: '{{STATIC_URL}}img/investment.png',
+                    off: '{{STATIC_URL}}img/investment-off.png'
+                }
+            };
+
+            $('.frontpage-filter-item').click(function(){
+                var that = $(this);
+                var img = that.find('img').first();
+                if (that.is('.active-filter')) {
+                    img.attr('src', entity_image[img.attr('alt')].off);
+                    that.removeClass('active-filter');
+                } else {
+                    img.attr('src', entity_image[img.attr('alt')].on);
+                    that.addClass('active-filter');
+                }
+                var apps = [];
+                $('.frontpage-filter-item.active-filter').each(function(idx, obj){
+                    apps.push($(obj).find('img').first().attr('alt'));
+                });
+                window.location = window.location.pathname + '?filters=' + apps.join();
+            });
+
+            // Fix active filters list
+            var url_vars = getUrlVars();
+            if (url_vars && url_vars['filters']) {
+                var filters = url_vars['filters'].split(',');
+                $('.frontpage-filter-item').each(function(idx, obj){
+                    var that = $(this);
+                    var img = that.find('img').first();
+                    if (filters.indexOf(img.attr('alt')) === -1) {
+                        img.attr('src', entity_image[img.attr('alt')].off);
+                        that.removeClass('active-filter');
+                    }
+                });
+            }
+
+            var uri_query = window.location.search;
+            uri_query = uri_query.substring(1, uri_query.length);
+            if (uri_query.length) {
+                $('.komoo-pagination a').each(function(idx, obj){
+                    var el = $(obj);
+                    var href = el.attr('href');
+                    el.attr('href', href + '&' +  uri_query);
+                });
+            }
+
+            var tabs = new Tabs('.content-updates .tab', '.content-updates .panel',
+                          undefined, 'active');
+
+        });
+
+    </script>
+{% endblock %}

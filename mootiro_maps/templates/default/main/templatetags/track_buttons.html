@@ -1,0 +1,50 @@
+{% load i18n %}
+<div class="view-follow-btns">
+
+    <a class="btn login-required {{ is_signed }}"
+    href="
+        {% if obj and content_type %}
+            {% url follow_content %}
+        {% else %}
+            #
+            {% endif %}"
+    title="{% if is_signed %}Parar de seguir esse conteúdo{% else %}Seguir atualizações nesse conteúdo{% endif %}"
+    >
+        <img src="/static/img/glyphicons_327_rss.png"/>
+        {% if is_signed %}
+            <span>{% trans 'Subscribed' %}</span>
+        {% else %}
+            <span>{% trans 'Subscribe' %}</span>
+        {% endif %}
+    </a>
+  <!-- <a class="btn" href="#"><i class="icon-eye-open"></i><span>{% trans 'Follow' %}</span></a> -->
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('.view-follow-btns a').click(function(evt){
+            evt.preventDefault();
+            var that = $(this);
+            var is_signed = that.is('.signed-content');
+            $.post(
+                that.attr('href'),
+                {
+                    'content_type': '{{ content_type.id }}',
+                    'obj': '{{ obj.id }}',
+                    'sign': ((is_signed) ? false : true)
+                },
+                function(data){
+                    if (data.success){
+                        that.toggleClass('signed-content');
+                        if (that.is('.signed-content')){
+                            that.find('span').text("{% trans 'Subscribed' %}");
+                        } else {
+                            that.find('span').text("{% trans 'Subscribe' %}");
+                        }
+                    }
+                },
+                'json'
+            );
+        });
+    });
+</script>

@@ -1,0 +1,14 @@
+{% load i18n %}
+{% load komoo_tags %}
+{% with LANGUAGE_CODE|split:"-" as lang %}
+
+<ul class="main-menu">
+  <li class="about {% if selected_area == 'about' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/about/?lang={{ lang.0 }}" title="{% trans "About" %}"><span>{% trans "About" %}</span></a>
+    </li><li class="resource-kit {% if selected_area == 'resourcekit' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/?lang={{ lang.0 }}" title="{% trans "Resource Kit" %}"><span>{% trans "Resource Kit" %}</span></a>
+    </li><li class="case-studies {% if selected_area == 'project' %}active{% endif %}"><a href="{% url project_view 2 %}" title="{% trans "Case Studies" %}"><span>{% trans "Case Studies" %}</span></a>
+    </li><li class="maps {% if selected_area == 'maps' %}active{% endif %}"><a href="{% url project_highlights %}" title="{% trans "Maps" %}"><span>{% trans "Maps" %}</span></a>
+    </li><li class="collaborate {% if selected_area == 'collaborate' %}active{% endif %}"><a href="http://childfriendlyplaces.org/resourcekit/collaborate/?lang={{ lang.0 }}" title="{% trans "Collaborate" %}"><span>{% trans "Collaborate" %}</span></a>
+  </li>
+</ul>
+
+{% endwith %}

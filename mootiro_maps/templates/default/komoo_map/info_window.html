@@ -1,0 +1,59 @@
+{% load i18n %}
+{% load komoo_tags %}
+{% load markitup_tags %}
+
+{% if object.organization %}
+  <img src="{{ object.organization.logo.file.url }}" class="inline-block organization-logo">
+{% endif %}
+{% block title %}
+  <div class="inline-block"><strong><a href="{{ object.view_url }}">{{ object }}</a></strong></div>
+{% endblock %}
+{% block content %}
+  <div>
+    {% if object.categories %}
+      <ul class="horizontal" id="categories">
+        {% for c in object.categories.all %}
+        <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{{ c.name }}" /></li>
+        {% endfor %}
+      </ul>
+      <div style="clear: both;">
+    {% endif %}
+    <p>
+    <ul>
+      {% if object.needs %}
+      <li><a href="{% url need_list %}?filters=community&community={{ object.id }}"><i class="icon-need no-hover"></i>{% blocktrans count counter=object.needs.count %}{{ counter }} need{% plural %}{{ counter }} needs{% endblocktrans %}</a></li>
+      {% endif %}
+      {% if object.organization_set  %}
+      <li><a href="{% url organization_list %}?filters=community&community={{ object.id }}"><i class="icon-organization no-hover"></i>{% blocktrans count counter=object.organization_set.count %}{{ counter }} organization{% plural %}{{ counter }} organizations{% endblocktrans %}</a></li>
+      {% endif %}
+      {% if object.resources %}
+      <li><a href="{% url resource_list %}?filters=community&community={{ object.id }}"><i class="icon-resource no-hover"></i>{% blocktrans count counter=object.resources.count %}{{ counter }} resource{% plural %}{{ counter }} resources{% endblocktrans %}</a></li>
+      {% endif %}
+    </ul>
+    </p>
+    <p>
+    <div class="mark-down">{{ object.description|default:""|description_markdown_preview|safe }}</div>
+    </p>
+    <p>
+
+    {% if object.population %}
+      <span class="meta-info">{% trans "Population" %}</span> {% firstof object.population '-' %}
+    {% endif %}
+    {% if object.organization %}
+      {% if object.organization.categories.all %}
+        <strong>{% trans 'Operation Field' %}</strong>
+        <ul>
+          {% for c in object.organization.categories.all %}
+            <li>
+              {{ c.get_translated_name }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+      {% taglist object.organization %}
+    {% else %}
+      {% taglist object %}
+    {% endif %}
+    </p>
+  </div>
+{% endblock %}

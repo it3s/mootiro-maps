@@ -1,0 +1,42 @@
+#
+# Use this to override your local DB connection info
+# copy this file as local_settings.py and change username/password as you wish
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'mootiro_maps',  # Or path to database file if using sqlite3.
+        'USER': 'user',         # Not used with sqlite3.
+        'PASSWORD': 'pass',   # Not used with sqlite3.
+        'HOST': '',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',    # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+# ========== Celery Task Queue ================================================
+BROKER_URL = "amqp://user:pass@localhost:5672/mootiro_maps_mq"
+
+# ========== Authentication ===================================================
+USER_PASSWORD_SALT = '...'
+FACEBOOK_APP_ID = '...'
+FACEBOOK_APP_SECRET = '...'
+GOOGLE_APP_ID = '...'
+GOOGLE_APP_SECRET = '...'
+
+# ========== Importhseet ======================================================
+IMPORTSHEET_GOOGLE_USER = '...'
+IMPORTSHEET_GOOGLE_PASSWORD = '...'
+IMPORTSHEET_REFRESH_TOKEN = '...'
+IMPORTSHEET_PROJECTS_FOLDER_KEY = '...'
+
+# ========== Email sending ====================================================
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'it3sdev@gmail.com'
+EMAIL_HOST_PASSWORD = '...'
+
+# the admin setting is necessary for sending mails when we have errors
+ADMINS =((,),)
+
+MAILGUN_API_KEY = "..."

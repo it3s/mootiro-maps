@@ -1,0 +1,24 @@
+{% load i18n %}
+<div id="report-content-box">
+  <div class="report-content-image"></div>
+  <form action="#" method="post" id="report-content-form">
+    {% csrf_token %}
+    <div class="control-group" id="report-content-radio-container">
+      <label>{% trans "Select one of the reasons below" %}*</label>
+      {% for type in types %}
+        <label class="radio"><input type="radio" name="reason" value="{{ type.0 }}" />{{ type.1 }}</label>
+      {% endfor %}
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="comment">{% trans "Comment" %}</label>
+      <div class="controls">
+        <textarea name="comment" id="report-content-comment"></textarea>
+      </div>
+    </div>
+    <div class="control-group"><label>* {% trans "Required fields" %}.</label></div>
+    <div>
+      <button type="submit" class="button">{% trans 'Submit report' %}</button>
+      <button id="report-content-cancel-btn" class="btn"><span>{% trans 'Cancel' %}</span></button>
+    </div>
+  </form>
+</div>

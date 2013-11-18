@@ -1,0 +1,41 @@
+{% load i18n %}
+
+<div class="comments-block">
+    <h2 id="Comments" class="comment-title">{% trans 'Comments:' %}</h2>
+
+    <div id='divFormComment'>
+        <a href="#" class="btnShowForm">{% trans 'New comment' %}</a>
+        <div class='comment-form'>
+            <form method="post" id="formComment" class="stacked-form" action="{% url comments_add %}" >
+                <fieldset>
+                    {% csrf_token %}
+                    {% for field in form_comment %}
+                        {{ field }}
+                    {% endfor %}
+                    <div class="clearfix">
+                        <input type="submit" class="btnFormCommentSubmit button" value="save"/>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+
+    {% autoescape off %}
+        {{ comments_list }}
+        {% if has_comments %}
+        <a class="btnShowMore" href='#'>{% trans 'see more ...' %}</a>
+        {% endif %}
+        <script type="text/javascript">
+            load_info = {
+                width: "{{ width }}",
+                height: "{{ height }}",
+                content_type: "{{ content_type }}",
+                object_id: "{{ object_id }}"
+            };
+        </script>
+
+    {% endautoescape %}
+
+    {{ form_comment.media }}
+</div>

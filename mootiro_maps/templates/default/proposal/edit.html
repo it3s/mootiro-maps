@@ -1,0 +1,36 @@
+{% extends "global.html" %}
+{% load crispy_forms_tags %}
+{% load komoo_tags %}
+{% load i18n %}
+
+{% block title %}Proposal{% endblock %}
+
+{% block menu %} {% menu "need" %} {% endblock %}
+
+{% block content %}
+
+<div id="main-content">
+  <div class="main-column">
+
+    <div class='form-legend'>{% trans 'Create a proposal for this need' %}</div>
+
+    <div class='alert alert-info required-notice' data-alert='info'>
+        <div class='msg'>
+          {% trans '<strong>*</strong> required fields!' %}
+        </div>
+    </div>
+    {% crispy form form.helper %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block page_scripts %}
+    <script type="text/javascript">
+        $(function(){
+            $('#proposal_form').ajaxform();
+
+            $('#proposal_form').komooFormHintBoxes();
+        });
+    </script>
+{% endblock %}

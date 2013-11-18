@@ -1,0 +1,7 @@
+{% load i18n %}
+
+<div class="delete-content" title="{% trans 'Delete this content' %}">
+  <a class="delete-content-btn btn login-required {% if disabled %}disabled{% endif %}" href="#" data-app-label="{{ app_label }}" data-model-name="{{ model_name }}" data-id="{{ id }}" {% if disabled %}title="{% trans "You have already requested the deletion of this content" %}"{% endif %}>
+    <i class="icon-trash"></i><span>{% trans 'Delete' %}</span>
+  </a>
+</div>

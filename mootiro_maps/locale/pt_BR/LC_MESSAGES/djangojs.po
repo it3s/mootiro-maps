@@ -1,0 +1,1476 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# aimeesf <aimee.sferreira@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Mootiro Maps\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-10-22 23:26-0200\n"
+"PO-Revision-Date: 2013-11-14 20:15-0300\n"
+"Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
+"mootiro-maps/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: lib/fileupload/static/plupload/komoo_plupload.js:163
+#: lib/fileupload/static/plupload/singlefile_plupload.js:109
+#: public/plupload/komoo_plupload.js:163
+#: public/plupload/singlefile_plupload.js:109
+msgid "Are you sure that you want to delete this file?"
+msgstr "Você deseja realmente apagar este arquivo?"
+
+#: public/admin/js/SelectFilter2.js:77
+msgid "Clear all"
+msgstr "Limpar tudo"
+
+#: public/admin/js/actions.js:18
+msgid "%(sel)s of %(cnt)s selected"
+msgid_plural "%(sel)s of %(cnt)s selected"
+msgstr[0] "%(sel)s de %(cnt)s selecionado"
+msgstr[1] "%(sel)s de %(cnt)s selecionados"
+
+#: public/admin/js/actions.js:109
+msgid ""
+"You have unsaved changes on individual editable fields. If you run an "
+"action, your unsaved changes will be lost."
+msgstr ""
+"Você tem mudanças não salvas. Se você fizer outra coisa, essas mudanças "
+"serão perdidas."
+
+#: public/admin/js/actions.js:121 public/admin/js/actions.min.js:6
+msgid ""
+"You have selected an action, but you haven't saved your changes to "
+"individual fields yet. Please click OK to save. You'll need to re-run the "
+"action."
+msgstr ""
+"Você selecionou uma ação, mas ainda não salvou suas edições. Clique em OK "
+"para salvar, e depois refaça a ação."
+
+#: public/admin/js/actions.js:123 public/admin/js/actions.min.js:6
+msgid ""
+"You have selected an action, and you haven't made any changes on individual "
+"fields. You're probably looking for the Go button rather than the Save "
+"button."
+msgstr ""
+"Você selecionou uma ação, mas ainda não salvou suas edições. Provavelmente "
+"você procura pelo botão Prosseguir, e não o Salvar."
+
+#: public/admin/js/calendar.js:24 public/admin/js/dateparse.js:32
+msgid ""
+"January February March April May June July August September October November "
+"December"
+msgstr ""
+"Janeiro Fevereiro Março Abril Maio Junho Julho Agosto Setembro Outubro "
+"Novembro Dezembro"
+
+#: public/admin/js/calendar.js:25
+msgid "S M T W T F S"
+msgstr "D S T Q Q S S"
+
+#: public/admin/js/collapse.js:9 public/admin/js/collapse.js.py:21
+#: public/admin/js/collapse.min.js:1
+msgid "Show"
+msgstr "Mostrar"
+
+#: public/admin/js/collapse.js:16 public/admin/js/collapse.min.js:1
+msgid "Hide"
+msgstr "Esconder"
+
+#: public/admin/js/dateparse.js:33
+msgid "Sunday Monday Tuesday Wednesday Thursday Friday Saturday"
+msgstr "Domingo Segunda Terça Quarta Quita Sexta Sábado"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:49
+#: public/admin/js/admin/DateTimeShortcuts.js:84
+msgid "Now"
+msgstr "Agora"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:53
+msgid "Clock"
+msgstr "Relógio"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:80
+msgid "Choose a time"
+msgstr "Escolha uma hora"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:85
+msgid "Midnight"
+msgstr "Meia-noite"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:86
+msgid "6 a.m."
+msgstr "6 a.m."
+
+#: public/admin/js/admin/DateTimeShortcuts.js:87
+msgid "Noon"
+msgstr "Meio-dia"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:91
+#: public/admin/js/admin/DateTimeShortcuts.js:188
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:18
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:18
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:133
+#: public/admin/js/admin/DateTimeShortcuts.js:182
+msgid "Today"
+msgstr "Hoje"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:137
+msgid "Calendar"
+msgstr "Calendário"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:180
+msgid "Yesterday"
+msgstr "Ontem"
+
+#: public/admin/js/admin/DateTimeShortcuts.js:184
+msgid "Tomorrow"
+msgstr "Amanhã"
+
+#: public/js/komoo_search.js:16 public/js.build/komoo_search.js:1
+#: static/js/komoo_search.js:16 static/js.build/komoo_search.js:1
+msgid "Communities"
+msgstr "Comunidades"
+
+#: public/js/komoo_search.js:17 public/js.build/komoo_search.js:1
+#: static/js/komoo_search.js:17 static/js.build/komoo_search.js:1
+msgid "Needs"
+msgstr "Necessidades"
+
+#: public/js/komoo_search.js:18 public/js.build/komoo_search.js:1
+#: static/js/komoo_search.js:18 static/js.build/komoo_search.js:1
+msgid "Organizations"
+msgstr "Organizações"
+
+#: public/js/komoo_search.js:19 public/js.build/komoo_search.js:1
+#: static/js/komoo_search.js:19 static/js.build/komoo_search.js:1
+msgid "Resources"
+msgstr "Recursos"
+
+#: public/js/komoo_search.js:20 public/js.build/komoo_search.js:1
+#: static/js/komoo_search.js:20 static/js.build/komoo_search.js:1
+msgid "Investments"
+msgstr "Investimentos"
+
+#: public/js/komoo_search.js:21 public/js.build/komoo_search.js:1
+#: static/js/komoo_search.js:21 static/js.build/komoo_search.js:1
+msgid "User"
+msgstr "Usuário"
+
+#: public/js/komoo_search.js:22 public/js.build/komoo_search.js:1
+#: static/js/komoo_search.js:22 static/js.build/komoo_search.js:1
+msgid "Project"
+msgstr "Projeto"
+
+#: public/js/komoo_search.js:84 static/js/komoo_search.js:84
+msgid "No results found on our database!"
+msgstr "Nenhum resultado encontrado na nossa base de dados!"
+
+#: public/js/komoo_utils.js:411 public/js.build/komoo_utils.js:1
+#: static/js/komoo_utils.js:411 static/js.build/komoo_utils.js:1
+msgid "Yes"
+msgstr "Sim"
+
+#: public/js/komoo_utils.js:416 public/js.build/komoo_utils.js:1
+#: static/js/komoo_utils.js:416 static/js.build/komoo_utils.js:1
+msgid "No"
+msgstr "Não"
+
+#: public/js/related_items_panel.js:74
+#: public/js.build/related_items_panel.js:1
+#: static/js/related_items_panel.js:74
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s organization"
+msgid_plural "%s organizations"
+msgstr[0] "%s organização"
+msgstr[1] "%s organizações"
+
+#: public/js/related_items_panel.js:74
+#: public/js.build/related_items_panel.js:1
+#: static/js/related_items_panel.js:74
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s community"
+msgid_plural "%s communities"
+msgstr[0] "%s comunidade"
+msgstr[1] "%s comunidades"
+
+#: public/js/related_items_panel.js:74
+#: public/js.build/related_items_panel.js:1
+#: static/js/related_items_panel.js:74
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s resource"
+msgid_plural "%s resources"
+msgstr[0] "%s recurso"
+msgstr[1] "%s recursos"
+
+#: public/js/related_items_panel.js:74
+#: public/js.build/related_items_panel.js:1
+#: static/js/related_items_panel.js:74
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s need"
+msgid_plural "%s needs"
+msgstr[0] "%s necessidade"
+msgstr[1] "%s necessidades"
+
+#: public/js/related_items_panel.js:74
+#: public/js.build/related_items_panel.js:1
+#: static/js/related_items_panel.js:74
+#: static/js.build/related_items_panel.js:1
+#, perl-format
+msgid "%s collaborator"
+msgid_plural "%s collaborators"
+msgstr[0] "%s colaborador"
+msgstr[1] "%s colaboradores"
+
+#: public/js.build/authentication/profile_update.js:1
+#: public/js/authentication/profile_update.js:18
+#: static/js.build/authentication/profile_update.js:1
+#: static/js/authentication/profile_update.js:18
+msgid ""
+"Are you sure that you want to delete your subscription for this content?"
+msgstr "Você tem certeza que deseja deletar sua assinatura para este objeto?"
+
+#: public/js.build/authentication/profile_update.js:1
+#: public/js/authentication/profile_update.js:113
+#: static/js.build/authentication/profile_update.js:1
+#: static/js/authentication/profile_update.js:113
+msgid "Your public data has been saved successfully."
+msgstr "Seus dados públicos foram salvos com sucesso."
+
+#: public/js.build/authentication/profile_update.js:1
+#: public/js/authentication/profile_update.js:122
+#: static/js.build/authentication/profile_update.js:1
+#: static/js/authentication/profile_update.js:122
+msgid "Este contanto ficará visível para outros usuários do MootiroMaps!"
+msgstr "Este contanto ficará visível para outros usuários do MootiroMaps!"
+
+#: public/js.build/authentication/profile_update.js:1
+#: public/js/authentication/profile_update.js:137
+#: static/js.build/authentication/profile_update.js:1
+#: static/js/authentication/profile_update.js:137
+msgid "Your personal data has been saved successfully!"
+msgstr "Seus dados pessoais foram salvos com sucesso."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "MootiroMaps"
+msgstr "MootiroMaps"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Click on MootiroMaps logo and you will be redirected to the front page."
+msgstr "Clique no logo do MootiroMaps para ir à página inicial."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Login"
+msgstr "Entrar"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"In order to create a profile on MootiroMaps or log to the application, click "
+"here."
+msgstr "Clique aqui para entrar ou criar uma conta no MootiroMaps."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "User page"
+msgstr "Página do usuário"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Clicking on a user's name you will be redirected to the respective user "
+"page, where you can find contact data and contributions to MootiroMap made "
+"by this user."
+msgstr ""
+"Ao clicar no nome de um usuário, você irá para o perfil dele. Lá você pode "
+"achar informações de contato e as contribuições dele no MootiroMaps."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Search the map"
+msgstr "Busca no mapa"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Here you can find data about contents that have been already mapped - in "
+"Brazil and in the world!"
+msgstr ""
+"Aqui você pode achar dados sobre os conteúdos que já foram mapeados no mundo "
+"inteiro!"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Mapped items"
+msgstr "Itens mapeados"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Select one of the content types in order to get a list of corresponding "
+"items that have been mapped."
+msgstr ""
+"Selecione um dos tipos de conteúdo para ver uma lista de itens relacionados "
+"que forma mapeados."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Mapping projects"
+msgstr "Projetos de mapeamento"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Content can be associated to mapping projects. Click here to get to know our "
+"projects and start your own one."
+msgstr ""
+"Conteúdos podem ser associados a projetos de mapeamento. Clique aqui para "
+"conhecer nossos projetos e começar o seu."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Read more"
+msgstr "Leia mais"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"On our blog we post analyses and opinions about transparency, participation "
+"on the map, geocoding, collaborative technologies and new feature releases. "
+"Click, read and comment."
+msgstr ""
+"No nosso blog postamos análises e opiniões sobre transparência, "
+"participações no mapa, geocodificação, tecnologias colaborativas e novos "
+"lançamentos de funcionalidades. Leia e comente!"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Stay tuned"
+msgstr "Fique atento"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Learn more about recent editions and new data that was created. Icons show "
+"the type of content and edition. Take part as well and contribute to "
+"MootiroMaps."
+msgstr ""
+"Saiba mais sobre edições recentes e novos conteúdos criados. Os ícones "
+"mostram o tipo de conteúdo e edição. Participe também e contribua no "
+"MootiroMaps."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Find a location on the map"
+msgstr "Encontre um local no mapa"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Insert an address (street address, city, zip-code) or GPS coordinates "
+"(latitude and longitude)! We will get you to this place on the map."
+msgstr ""
+"Insira um endereço (rua, cidade, CEP) ou coordenadas de latitude e longitude."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "See what is close"
+msgstr "Veja o que está próximo"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Please select a point on the map in order to filter mapped content in a "
+"specific distance from this location."
+msgstr ""
+"Selecione um ponto no mapa para filtrar conteúdos mapeados a uma certa "
+"distância dele."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Become a mapper"
+msgstr "Vire um mapeador"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Select the content type that is most appropriate for your object and add a "
+"line, a point or a shape to the map. Finish the mapping by clicking \"Next "
+"step\"."
+msgstr ""
+"Selecione o tipo de conteúdo mais apropriado para seu objeto e desenhe uma "
+"área, linha ou ponto. Conclua o mapeamento clicando em \"Próximo passo\""
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Filter by layer"
+msgstr "Filtrar por camada"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Enable or disable the layers in order to filter the objects to be shown on "
+"the map."
+msgstr ""
+"Ative ou desative as camadas para filtrar os objetos mostrados no mapa."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "All our communities"
+msgstr "Todas as comunidades"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Here you find a list and a short description of all the communities that "
+"have been registered on MootiroMaps. Click on the name of each community in "
+"order to access its page."
+msgstr ""
+"Aqui você vê todas as comunidades mapeadas no MootiroMaps e suas descrições "
+"curtas. Clique no nome da comunidade para ir à sua página."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:648
+#: public/js/help_center/help_center.js:736
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:648
+#: static/js/help_center/help_center.js:736
+msgid "See it on the map"
+msgstr "Veja no mapa"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Click on this icon in order to get an idea on where this content is located "
+"on the map."
+msgstr "Clique nesse ícone para ver onde esse conteúdo está localizado."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Custom the results list"
+msgstr "Personalize a lista de resultados"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Configure the visualization of results and filter content: you can sort "
+"contents by alphabetical order or creation date. Setting the right keywords "
+"you will easily find content that fits your interest."
+msgstr ""
+"Configure a visualização dos resultados e filtre o conteúdo: você pode "
+"organizar por ordem alfabética ou data de criação. Procurando por palavras-"
+"chave você vai encontrar conteúdos que te interessam mais."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "So many actors"
+msgstr "Tantos atores"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Here you find a list and short description of all the organizations, "
+"institutions and actors that have been registered on MootiroMaps. Click on "
+"the name of each content in order to access its page."
+msgstr ""
+"Aqui você vê todas as organizações mapeadas no MootiroMaps e suas descrições "
+"curtas. Clique no nome da organização para ir à sua página."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Add an organization yourself"
+msgstr "Adicione uma organização"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Some organization is missing? No problem! You can add it. Just click here "
+"and fill out the form."
+msgstr ""
+"Está faltando alguma organização? Você pode adicioná-la. Clique aqui e "
+"preencha o cadastro."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Browse needs and challenges"
+msgstr "Procure necessidades e desafios"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"On this page you find a list and short description of all the needs, "
+"challenges and community problems that have been registered on MootiroMaps. "
+"You can learn more by clicking on the name of each content."
+msgstr ""
+"Aqui você vê todas as necessidades mapeadas no MootiroMaps e suas descrições "
+"curtas. Clique no nome da necessidade para ir à sua página."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Report a need of your community"
+msgstr "Relate uma necessidade da sua comunidade"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Click here to add a new need or community problem to MootiroMaps."
+msgstr "Clique aqui para adicionar uma nova necessidade ao MootiroMaps."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Resources for local development"
+msgstr "Recursos para o desenvolvimento local"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Here you find a list and short description of all the resources that have "
+"been registered on MootiroMaps so far! They are available in the communities "
+"and can be used for local development. Click on the title of each resource "
+"to find out more information."
+msgstr ""
+"Aqui você vê todas os recursos mapeadas no MootiroMaps e suas descrições "
+"curtas. Clique no nome do recurso para ir à sua página."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Add a resource to the map"
+msgstr "Adicione um recurso ao mapa"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"You know about a resource (equipment, rooms, vehicles, outdoor facilities, "
+"etc.) available to your community that is missing on the map? Go ahead and "
+"add this information! "
+msgstr ""
+"Conhece algum recurso (equipamentos, veículos, espaços) disponível para sua "
+"comunidade que ainda não foi mapeado? Adicione essa informação!"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Where the money comes from ... and where it goes"
+msgstr "Da onde vem o dinheiro ... e para onde vai"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"You can map public and private investments on MootiroMaps. Give transparency "
+"about who is financing your organization. Below, you find a list of all "
+"investments. Click on each title to learn more."
+msgstr ""
+"Você pode mapear investimentos públicos e privados no MootiroMaps. Seja "
+"transparente sobre quem financia sua organização. Clique no título de um "
+"investimento para saber mais."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "It's all about projects"
+msgstr "Projeto é o que interessa"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Objects on MootiroMaps can be added to one or more mapping projects. Mapping "
+"projects can be related to a specific community, organization or topic. "
+"Below you find a list of all projects that have been created so far. Click "
+"on its titles to access the project pages."
+msgstr ""
+"Objetos no MootiroMaps podem ser adicionados a um ou vários projetos. "
+"Projetos de mapeamento podem se relacionar com uma comunidade específica ou "
+"organização. Clique no título de um projeto para saber mais sobre ele."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"You can filter and search by using keywords. Sometimes contents do not "
+"appear as they have not been tagged properly. Help improving mapped data and "
+"set keywords!"
+msgstr ""
+"Você pode filtrar e procurar usando palavras-chave. Às vezes conteúdos não "
+"são achados quando não possuem boas palavras-chave. Ajude a melhorar o "
+"conteúdo mapeado!"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Make your own project!"
+msgstr "Faça seu próprio projeto!"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Click here in order to start your own mapping project! Have a look at the "
+"examples to get an idea about what you can do with MootiroMaps."
+msgstr ""
+"Clique aqui para começar seu próprio projeto! Dê uma olhada nos exemplos "
+"para ter uma ideia do que você pode fazer no MootiroMaps."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Name of the community"
+msgstr "Nome da comunidade"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"This is the name of the community. You can find the community by typing its "
+"name in the search field above."
+msgstr ""
+"Esse é o nome da comunidade - outras pessoas vão encontrá-lo digitando esse "
+"nome ou parte dele na busca."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:637
+#: public/js/help_center/help_center.js:684
+#: public/js/help_center/help_center.js:719
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:637
+#: static/js/help_center/help_center.js:684
+#: static/js/help_center/help_center.js:719
+msgid "Some information missing? - Become an editor!"
+msgstr "Há alguma informação faltando? Ajude virando um editor!"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:638
+#: public/js/help_center/help_center.js:685
+#: public/js/help_center/help_center.js:720
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:638
+#: static/js/help_center/help_center.js:685
+#: static/js/help_center/help_center.js:720
+msgid ""
+"It is very easy to collaborate with MootiroMaps. Just click on the edit icon "
+"and add some information."
+msgstr ""
+"É muito fácil colaborar com o MootiroMaps. É só clicar no botão de editar e "
+"adicionar informações."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Each community has its own story to tell"
+msgstr "Cada comunidade tem sua história"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Every community has its description field. There you should inform its "
+"location, history, statistical data, cultures and traditions and so on. Be "
+"creative and contribute with your knowledge."
+msgstr ""
+"No campo de descrição você pode informar a localização da comunidade, sua "
+"história, dados estatísticos sobre ela, cultura e tradições locais, etc. "
+"Seja criativo e contribua com seu conhecimento."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Click here in order to see this community on a larger map. You can also find "
+"out about related resources, needs and organizations."
+msgstr ""
+"Clique aqui para ver esse recurso num mapa maior. Você também pode achar "
+"necessidades, organizações e outras comunidades próximas."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Nearby communities"
+msgstr "Comunidades próximas"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"In this section you can find communities that are close. Have a look at them "
+"and resources and organizations located there."
+msgstr ""
+"Aqui você vê comunidades que são próximas. Veja também os recursos e "
+"necessidades nesses locais."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:613
+#: public/js/help_center/help_center.js:660
+#: public/js/help_center/help_center.js:695
+#: public/js/help_center/help_center.js:745
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:613
+#: static/js/help_center/help_center.js:660
+#: static/js/help_center/help_center.js:695
+#: static/js/help_center/help_center.js:745
+msgid "Get notifications"
+msgstr "Receba notificações"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:614
+#: public/js/help_center/help_center.js:661
+#: public/js/help_center/help_center.js:696
+#: public/js/help_center/help_center.js:746
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:614
+#: static/js/help_center/help_center.js:661
+#: static/js/help_center/help_center.js:696
+#: static/js/help_center/help_center.js:746
+msgid ""
+"You want to receive notifications when a content is modified? No problem! "
+"Just subscribe the content and you will receive an email everytime that "
+"someone edits or comments."
+msgstr ""
+"Você quer receber notificações quando um conteúdo é modificado? Assine-o e "
+"receba um email quando alguém o editar ou comentar."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:618
+#: public/js/help_center/help_center.js:665
+#: public/js/help_center/help_center.js:700
+#: public/js/help_center/help_center.js:750
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:618
+#: static/js/help_center/help_center.js:665
+#: static/js/help_center/help_center.js:700
+#: static/js/help_center/help_center.js:750
+msgid "Leave your opinion"
+msgstr "Deixe sua opinião"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:619
+#: public/js/help_center/help_center.js:666
+#: public/js/help_center/help_center.js:701
+#: public/js/help_center/help_center.js:751
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:619
+#: static/js/help_center/help_center.js:666
+#: static/js/help_center/help_center.js:701
+#: static/js/help_center/help_center.js:751
+msgid ""
+"What do you think about this content? What is your opinion? Write a comment "
+"and interact with other users."
+msgstr ""
+"O que você acha desse conteúdo? Escreva um comentário e interaja com outros "
+"usuários."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:623
+#: public/js/help_center/help_center.js:670
+#: public/js/help_center/help_center.js:705
+#: public/js/help_center/help_center.js:755
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:623
+#: static/js/help_center/help_center.js:670
+#: static/js/help_center/help_center.js:705
+#: static/js/help_center/help_center.js:755
+msgid "Spread the word"
+msgstr "Divulgue"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Did you like the information on this page? Share it with your friends on "
+"Facebook, Twitter and Google+."
+msgstr ""
+"Gostou das informações nessa página? Divulgue no Facebook, Twitter e Google+."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Name of the organization"
+msgstr "Nome da organização"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"This is the name of the organization. Sometimes users added a detail, for "
+"instance name of the municipality or the state to avoid ambiguity. You can "
+"find this content by typing its name in the search field above."
+msgstr ""
+"Detalhes como o nome da filial da organização ou evitam ambigüidades na "
+"busca. "
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Tell us more about this organization"
+msgstr "Conte-nos mais sobre essa organização"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Do you know something about this organization or institution? Share your "
+"information here and write about its activities, objectives, history or "
+"partners."
+msgstr ""
+"Você sabe algo sobre essa organização? Escreva aqui sobre suas atividades, "
+"objetivos ou parceiros."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Click here in order to see this organization on a larger map. You can also "
+"find out about related communities, needs and resources."
+msgstr ""
+"Clique aqui para ver essa organização num mapa maior. Você também pode achar "
+"necessidades, organizações e comunidades próximas."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Use this information in you project"
+msgstr "Use essa informação no seu projeto"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Here you can see in which projects this organization appears. You can also "
+"use it in you mapping project. Just click on the add button."
+msgstr ""
+"Aqui você pode ver em quais projetos essa organização aparece. Você também "
+"pode usá-la ao seu projeto clicando no botão de adicionar."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Did you like this page? Share it with your friends on Facebook, Twitter and "
+"Google+."
+msgstr "Gostou dessa página? Divulgue no Facebook, Twitter e Google+."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Name of the community need"
+msgstr "Nome da necessidade"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"This is the title of the community need. Make sure that it is easy to "
+"understand. Users can search for this need by typing its name in the search "
+"field above."
+msgstr ""
+"Esse é o título da necessidade. Seja claro: usuários vão achar essa "
+"necessidade digitando o nome na caixa de busca."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Tell us more about this need"
+msgstr "Conte-nos mais sobre essa necessidade"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"In order to solve a problem, it is important to have information about its "
+"causes and origin. Also it could be interesting to know what has been tried "
+"so far to find a solution. You can use this section to give some details."
+msgstr ""
+"Para resolver um problema, é importante saber sobre suas causas e origens. "
+"Também é bom saber o que já foi feito até hoje para tentar solucioná-lo. Use "
+"essa seção para dar esses detalhes."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Click here in order to see this community on a larger map. You can also find "
+"out about related resources, communities and organizations."
+msgstr ""
+"Clique aqui para ver essa necessidade num mapa maior. Você também pode achar "
+"necessidades, organizações e comunidades próximas."
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Ideas for problem solving"
+msgstr "Ideias para resolução de problemas"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Have an idea about how to solve this problem? Click here and add a new "
+"proposal!"
+msgstr ""
+"Tem uma ideia de como resolver esse problema? Cliquei aqui e adicione uma "
+"proposta!"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid "Similar needs"
+msgstr "Necessidades semelhantes"
+
+#: public/js.build/help_center/help_center.js:1
+#: static/js.build/help_center/help_center.js:1
+msgid ""
+"Here you find related needs. Sometimes, in order to solve a problem it is "
+"important to know about how other communities got along with it and which "
+"strategies they used. Have a look and learn from similar needs."
+msgstr ""
+"Às vezes é importante saber mais sobre como outras comunidades lidaram com "
+"problemas assim e que estratégias usaram. Dê uma olhada em necessidades "
+"semelhantes."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:624
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:624
+msgid ""
+"Do you consider this problem important? Spread the word about it by sharing "
+"on Facebook, Twitter and Google+."
+msgstr ""
+"Você acha que esse problema é relevante? Espalhe a notícia pelo Facebook, "
+"Twitter e Google+."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:633
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:633
+msgid "Name of the resource"
+msgstr "Nome do recurso"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:634
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:634
+msgid ""
+"This is the title of the resource. Make sure it is clear. Users might find "
+"this resource by typing its name in the search field above."
+msgstr ""
+"Esse é o título do recurso. Seja claro: usuários vão achar esse recurso "
+"digitando o nome na caixa de busca."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:643
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:643
+msgid "Tell us more about this resource"
+msgstr "Conte-nos mais sobre esse recurso"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:644
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:644
+msgid ""
+"Resources can be used in the local development of your community. Inform how "
+"people can have access to this resource, when is it open, whom do they have "
+"to talk to?"
+msgstr ""
+"Recursos podem ser usados no desenvolvimento local da sua comunidade. "
+"Informe como as pessoas podem ter acesso a ele, quando ele abre, com quem "
+"elas devem falar."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:649
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:649
+msgid ""
+"Click here in order to see this resource on a larger map. You can also find "
+"out about related needs, communities and organizations."
+msgstr ""
+"Clique aqui para ver esse recurso num mapa maior. Você também pode achar "
+"necessidades, organizações e comunidades próximas."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:653
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:653
+msgid "Similar resources"
+msgstr "Recursos semelhantes"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:654
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:654
+msgid ""
+"Here you can find similar resources according to the tags that were used in "
+"its descriptions. "
+msgstr ""
+"Aqui você acha recursos semelhantes de acordo com as palavras-chave usadas."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:671
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:671
+msgid "Did you like this information? Spread it on social networks!"
+msgstr "Você gostou dessa informação? Divulgue nas redes sociais!"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:680
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:680
+msgid "Name of the investment"
+msgstr "Nome do investimento"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:681
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:681
+msgid ""
+"This is the name of your investment. Make sure it is clear. It should "
+"contain data about the name of the investor or grantee."
+msgstr ""
+"O nome do investimento deve ser claro. Deve conter o nome do investidor ou "
+"do recipiente."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:690
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:690
+msgid "Give transparency about the investment"
+msgstr "Forneça informações transparentes sobre o investimento."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:691
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:691
+msgid ""
+"Do you know anything about the money that has been spent? What is it for? "
+"When has it been received? What are expected results? "
+msgstr ""
+"Você sabe pra que será usado o dinheiro do investimento? Quando foi "
+"recebido? Quais os resultados esperados?"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:706
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:706
+msgid "Did you find this information useful? Spread it on social networks!"
+msgstr "Achou essa informação útil? Divulgue nas redes sociais!"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:715
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:715
+msgid "Project title"
+msgstr "Título do projeto"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:716
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:716
+msgid ""
+"This is the name of the project. You can find the project by typing its name "
+"in the search field above."
+msgstr ""
+"Esse é o nome do projeto - outras pessoas vão encontrá-lo digitando esse "
+"nome ou parte dele na busca."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:725
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:725
+msgid "Project description"
+msgstr "Descrição do projeto"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:726
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:726
+msgid ""
+"In this section you may find more about the goals of this project, how is it "
+"done and how you can contribute to mapping."
+msgstr ""
+"Nessa seção você descobre mais sobre o projeto, como ele é feito e como você "
+"pode contribuir."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:730
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:730
+msgid "Associated objects"
+msgstr "Objetos associados"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:731
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:731
+msgid ""
+"Here you can find a list of all the objects (organizations, resources, "
+"needs, etc.) that were added to this project."
+msgstr ""
+"Aqui você vê uma lista com todas as organizações, recursos, necessidades, "
+"etc. que foram adicionados a esse projeto."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:737
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:737
+msgid "Click here to navigate the map of this project and add new content."
+msgstr "Clique aqui para ir ao mapa do projeto e adicionar novos conteúdos."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:741
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:741
+msgid "Who is making this map"
+msgstr "Quem está fazendo esses mapas"
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:742
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:742
+msgid ""
+"In this section you can see who created the project and contributed to it so "
+"far. "
+msgstr "Nessa seção você vê quem criou e contribuiu com o projeto até agora."
+
+#: public/js.build/help_center/help_center.js:1
+#: public/js/help_center/help_center.js:756
+#: static/js.build/help_center/help_center.js:1
+#: static/js/help_center/help_center.js:756
+msgid ""
+"Did you like this project? Share it on your social networks. Help to engage "
+"people with this data!"
+msgstr "Gostou desse projeto? Divulgue nas redes sociais!"
+
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:17
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:17
+msgid "Next step"
+msgstr "Próximo passo"
+
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:19
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:19
+msgid "Close"
+msgstr "Fechar"
+
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:20
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:20
+msgid "Add shape"
+msgstr "Adicionar área"
+
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:21
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:21
+msgid "Add line"
+msgstr "Adicionar linha"
+
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:22
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:22
+msgid "Add point"
+msgstr "Adicionar ponto"
+
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:23
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:23
+msgid "Sum"
+msgstr "Somar"
+
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:24
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:24
+msgid "Cut out"
+msgstr "Cortar"
+
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:25
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:25
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: public/js.build/moderation/moderation.js:1
+#: public/js/moderation/moderation.js:112
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:112
+msgid "Report abuse"
+msgstr "Denunciar abuso"
+
+#: public/js.build/moderation/moderation.js:1
+#: public/js/moderation/moderation.js:230
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:230
+msgid "Request for deletion"
+msgstr "Pedido de remoção"
+
+#: public/js.build/moderation/moderation.js:1
+#: public/js/moderation/moderation.js:259
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:259
+msgid "Delete"
+msgstr "Apagar"
+
+#: public/js.build/moderation/moderation.js:1
+#: public/js/moderation/moderation.js:260
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:260
+msgid "Do you really want to delete this content?"
+msgstr "Você deseja realmente apagar este conteúdo?"
+
+#: public/js.build/moderation/moderation.js:1
+#: public/js/moderation/moderation.js:271
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:271
+msgid "The content was successfully deleted."
+msgstr "O conteúdo foi apagado com sucesso"
+
+#: public/js.build/moderation/moderation.js:1
+#: public/js/moderation/moderation.js:167
+#: public/js/moderation/moderation.js:278
+#: static/js.build/moderation/moderation.js:1
+#: static/js/moderation/moderation.js:167
+#: static/js/moderation/moderation.js:278
+msgid "Your request was successfully submitted."
+msgstr "Sua requisição foi enviada com sucesso."
+
+#: public/js.build/organization/organization_new.js:14
+#: public/js/organization/organization_new.js:14
+#: static/js.build/organization/organization_new.js:14
+#: static/js/organization/organization_new.js:14
+msgid "complete"
+msgstr "completo"
+
+#: public/js.build/organization/organization_new.js:33
+#: public/js/organization/organization_new.js:33
+#: static/js.build/organization/organization_new.js:33
+#: static/js/organization/organization_new.js:33
+msgid "Congratulations, you added an organization to MootiroMaps."
+msgstr "Parabéns, você adicionou uma organização ao MootiroMaps."
+
+#: public/js.build/organization/organization_new.js:41
+#: public/js.build/organization/organization_new.js:90
+#: public/js/organization/organization_new.js:41
+#: public/js/organization/organization_new.js:90
+#: static/js.build/organization/organization_new.js:41
+#: static/js.build/organization/organization_new.js:90
+#: static/js/organization/organization_new.js:41
+#: static/js/organization/organization_new.js:90
+msgid ""
+"Please, provide the organization's name so we can verify if it is already "
+"registered on our system."
+msgstr ""
+"Forneça o nome da organização para verificarmos se ela ainda não foi "
+"cadastrada no sistema."
+
+#: public/js.build/organization/organization_new.js:54
+#: public/js/organization/organization_new.js:54
+#: static/js.build/organization/organization_new.js:54
+#: static/js/organization/organization_new.js:54
+msgid "This organization already exists. Do you want to add a branch?"
+msgstr "Essa organização já existe. Deseja adicionar uma unidade (filial) ?"
+
+#: public/js.build/organization/organization_new.js:61
+#: public/js/organization/organization_new.js:61
+#: static/js.build/organization/organization_new.js:61
+#: static/js/organization/organization_new.js:61
+msgid ""
+"This organization is not registered yet. Do you want to add this "
+"organization?"
+msgstr ""
+"Esta organização não foi cadastrada ainda. Você deseja adicionar esta "
+"organização?"
+
+#: public/js.build/organization/organization_new.js:73
+#: public/js/organization/organization_new.js:73
+#: static/js.build/organization/organization_new.js:73
+#: static/js/organization/organization_new.js:73
+msgid "Enter with the data from the branch you have marked on map"
+msgstr "Entre com os dados para a unidade que você marcou no mapa"
+
+#: public/js.build/organization/organization_new.js:81
+#: public/js/organization/organization_new.js:81
+#: static/js.build/organization/organization_new.js:81
+#: static/js/organization/organization_new.js:81
+msgid ""
+"Enter with the data from the Organization which owns the branch you have "
+"marked on map."
+msgstr ""
+"Entre com os dados para a Organização a qual pertence a unidade que você "
+"marcou no mapa"
+
+#: public/js.build/organization/organization_new.js:104
+#: public/js/organization/organization_new.js:104
+#: static/js.build/organization/organization_new.js:104
+#: static/js/organization/organization_new.js:104
+msgid ""
+"Congratulations, your organization was successfully saved. Please, now add "
+"the data about the branch that you marked on the map."
+msgstr ""
+"Parabéns, sua organização foi adicionada com sucesso. Por favor, agora "
+"adicione os dados da unidade que você marcou no mapa"
+
+#: public/js.build/organization/organization_new.js:118
+#: public/js/organization/organization_new.js:118
+#: static/js.build/organization/organization_new.js:118
+#: static/js/organization/organization_new.js:118
+msgid "Please insert a name for the organization"
+msgstr "Por favor, insira o nome da organização"
+
+#: public/js.build/organization/organization_new.js:122
+#: public/js/organization/organization_new.js:122
+#: static/js.build/organization/organization_new.js:122
+#: static/js/organization/organization_new.js:122
+msgid ""
+"What do you know about this organization? What are its services or products "
+"offered to the city or your community? Who is a partner of this "
+"organization? What is it known for?"
+msgstr ""
+"O que você sabe sobre essa organização? Quais serviços ou produtos ela "
+"oferece? Pelo que ela é conhecida? Quem são seus parceiros?"
+
+#: public/js.build/organization/organization_new.js:125
+#: public/js/organization/organization_new.js:125
+#: static/js.build/organization/organization_new.js:125
+#: static/js/organization/organization_new.js:125
+msgid ""
+"Please, inform the communities that are served by this organization. A "
+"community must have been registered previously on MootiroMaps."
+msgstr ""
+"Informe quais comunidades são atendidas por essa organização. A comunidade "
+"já deve ter sido inserida no MootiroMaps."
+
+#: public/js.build/organization/organization_new.js:129
+#: public/js/organization/organization_new.js:129
+#: static/js.build/organization/organization_new.js:129
+#: static/js/organization/organization_new.js:129
+msgid "Inform the website address of this organization "
+msgstr "Informe o site dessa organização"
+
+#: public/js.build/organization/organization_new.js:133
+#: public/js/organization/organization_new.js:133
+#: static/js.build/organization/organization_new.js:133
+#: static/js/organization/organization_new.js:133
+msgid ""
+"Insert the contact information of this organization (postal address, contact "
+"persons, phone number, email address)."
+msgstr ""
+"Insira as informações de contato dessa organização (endereço com CEP, "
+"pessoas com quem falar, telefone, email)"
+
+#: public/js.build/organization/organization_new.js:137
+#: public/js/organization/organization_new.js:137
+#: static/js.build/organization/organization_new.js:137
+#: static/js/organization/organization_new.js:137
+msgid "Which people or groups are attended by this organization?"
+msgstr "Que pessoas ou grupos são atendidas por essa organização?"
+
+#: public/js.build/organization/organization_new.js:141
+#: public/js/organization/organization_new.js:141
+#: static/js.build/organization/organization_new.js:141
+#: static/js/organization/organization_new.js:141
+msgid "Please, select the categories that most reflect the organization"
+msgstr ""
+"Selecione as categorias que melhor reflitam as atividades ou causas da "
+"organização."
+
+#: public/js.build/organization/organization_new.js:145
+#: public/js/organization/organization_new.js:145
+#: static/js.build/organization/organization_new.js:145
+#: static/js/organization/organization_new.js:145
+msgid ""
+"Please, insert tags for your organizations. Tags are used for searching "
+"content on MootiroMaps. Precise tags will help others to find your content."
+msgstr ""
+"Insira palavras-chave para suas organizações. Elas são usadas para buscar "
+"conteúdo no MootiroMaps. Palavras-chave precisas ajudam as pessoas a "
+"encontrarem seu conteúdo."
+
+#: public/js.build/organization/organization_new.js:149
+#: public/js/organization/organization_new.js:149
+#: static/js.build/organization/organization_new.js:149
+#: static/js/organization/organization_new.js:149
+msgid ""
+"Please, upload photos of the organization or link to photos on Wiki Commons "
+"or Flickr. Make sure that the photos is licensed under creative commons."
+msgstr ""
+"Suba fotos da organização ou link para fotos no Wiki Commons ou Flickr. "
+"Confira se elas estão sob uma licença Creative Commons"
+
+#: public/js.build/organization/organization_new.js:153
+#: public/js/organization/organization_new.js:153
+#: static/js.build/organization/organization_new.js:153
+#: static/js/organization/organization_new.js:153
+msgid ""
+"Here you can upload the logo of the organization or use one of the category "
+"images. "
+msgstr "Coloque o logo da organização, ou use uma das imagens das categorias."
+
+#: public/js.build/organization/organization_new.js:160
+#: public/js/organization/organization_new.js:160
+#: static/js.build/organization/organization_new.js:160
+#: static/js/organization/organization_new.js:160
+msgid "Please, insert a name for the affiliated organization."
+msgstr "Por favor, insira o nome para a organização afiliada."
+
+#: public/js.build/organization/organization_new.js:165
+#: public/js/organization/organization_new.js:165
+#: static/js.build/organization/organization_new.js:165
+#: static/js/organization/organization_new.js:165
+msgid ""
+"Please insert information about the affiliated organization, for example: "
+"what is its role? infrastructure? objectives? contact persons?"
+msgstr ""
+"Insira informações sobre a organização filiada. Qual o seu papel? Sua "
+"infraestrutura? Objetivos? Pessoas para entrar em contato?"
+
+#: public/js.build/organization/organization_related_items.js:1
+#: public/js/organization/organization_related_items.js:7
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "Supported %s organization"
+msgid_plural "Supported %s organizations"
+msgstr[0] "apoiou %s organização"
+msgstr[1] "apoiou %s organizações"
+
+#: public/js.build/organization/organization_related_items.js:1
+#: public/js/organization/organization_related_items.js:7
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "On %s community"
+msgid_plural "On %s communities"
+msgstr[0] "Em %s comunidade"
+msgstr[1] "Em %s comunidades"
+
+#: public/js.build/organization/organization_related_items.js:1
+#: public/js/organization/organization_related_items.js:7
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "Supported %s resource"
+msgid_plural "Supported %s resources"
+msgstr[0] "%s recurso apoiado"
+msgstr[1] "%s recursos apoiados"
+
+#: public/js.build/organization/organization_related_items.js:1
+#: public/js/organization/organization_related_items.js:7
+#: static/js.build/organization/organization_related_items.js:1
+#: static/js/organization/organization_related_items.js:7
+#, perl-format
+msgid "Supported %s need"
+msgid_plural "Supported %s needs"
+msgstr[0] "%s necessidade apoiada"
+msgstr[1] "%s necessidades apoiadas"
+
+#: public/js/authentication/profile.js:28
+#: static/js/authentication/profile.js:28
+msgid "Organization"
+msgstr "Organização"
+
+#: public/js/authentication/profile.js:29
+#: static/js/authentication/profile.js:29
+msgid "Need"
+msgstr "Necessidade"
+
+#: public/js/authentication/profile.js:30
+#: static/js/authentication/profile.js:30
+msgid "Community"
+msgstr "Comunidade"
+
+#: public/js/authentication/profile.js:31
+#: static/js/authentication/profile.js:31
+msgid "Resource"
+msgstr "Recurso"
+
+#: public/js/authentication/profile.js:37
+#: static/js/authentication/profile.js:37
+msgid "at"
+msgstr "em"
+
+#: public/js/map/controls.js:915 static/js/map/controls.js:915
+#, perl-format
+msgid "%s Community"
+msgid_plural "%s Communities"
+msgstr[0] "%s Comunidade"
+msgstr[1] "%s Comunidades"
+
+#: public/js/map/maptypes.js:62 static/js/map/maptypes.js:62
+msgid "Clean"
+msgstr "Limpo"
