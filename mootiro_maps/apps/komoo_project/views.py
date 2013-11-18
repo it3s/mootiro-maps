@@ -1,6 +1,7 @@
 #! coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+import simplejson
 
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
