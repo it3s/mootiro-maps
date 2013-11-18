@@ -36,9 +36,9 @@ class RevisionMiddleware(object):
         try:
             raise
             self._close_revision(request)
-            return response
         except:
             pass
+        return response
 
     def process_exception(self, request, exception):
         """Closes the revision."""
