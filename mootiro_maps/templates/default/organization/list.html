@@ -1,0 +1,127 @@
+{% extends 'global.html' %}
+
+{% load komoo_map_tags %}
+{% load komoo_tags %}
+{% load comment_tags %}
+{% load i18n %}
+{% load markitup_tags %}
+{% load project_tags %}
+
+{% block title %}{% trans 'Organizations' %}{% endblock %}
+
+{% block menu %} {% menu "organization" %} {% endblock %}
+
+{% block content %}
+  <div id="main-content">
+
+    <div class="highlight">
+
+      <div class="button-new">
+        <a class="button login-required" href="{% url new_organization %}" title="{% trans 'Add a new organization, for example, a government institution, a nonprofit organization or a company.' %}">{% trans "Create new organization" %}</a>
+      {% if filtered %}
+        {% filtered_query_to_project  "Organization" filter_params %}
+      {% endif %}
+      </div>
+    <div class="view-list-top">
+      <div class="view-list-count"><!--organizations_count-->
+        {% blocktrans  count counter=organizations_count %}{{ counter }} organization{% plural %}{{ counter }} organizations{% endblocktrans %}
+      </div>
+      <div class="view-list-pagination">
+        {% pagination organizations %}
+      </div>
+
+      {% visualization_opts 'organization' "sorters=['name','creation_date']" "filters=['tags','community', 'target_audiences']" %}
+
+    </div>
+    {% for org in organizations.object_list %}
+      <div class="view-list-item {% cycle 'odd' '' %}">
+        <div>
+          <div class="inline-block org-list-logo">
+              <img src="{{ org.logo_url }}" class="org-list-img"/>
+          </div>
+          <div class="inline-block org-list-header">
+            <div>
+                <a href="{{ org.view_url }}" class="org-list-name">
+                  {{ org.name }}
+                </a>
+                <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson org %}" title="{% trans 'View on map' %}">
+                    <i class="icon-see-on-map"></i>
+                </a>
+
+            </div>
+            <div>
+              <div class="inline-block org-list-extra-info">
+                <div class="org-list-extra-info-entry">
+                  <span class="org-extra-info-name">
+                    {% trans 'Operation Field' %}:
+                  </span>
+                  {% for cat in org.categories.all %}
+                    {{ cat.get_translated_name }}
+                    {% if not forloop.last %},&nbsp; {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="org-list-extra-info-entry">
+                  <span class="org-extra-info-name">
+                    {% trans 'Public' %}:
+                  </span>
+                  {% for aud in org.target_audiences.all %}
+                    {{ aud.name }}
+                    {% if not forloop.last %},&nbsp; {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="inline-block org-list-extra-info">
+                <div class="org-list-extra-info-entry">
+                  <span class="org-extra-info-name">
+                    {% trans 'Attended communities' %}:
+                  </span>
+                  {% for com in org.community.all|slice:'6' %}
+                    <a href="/{{ com.slug }}/about/">{{ com.name }}</a>
+                    {% if not forloop.last %},&nbsp; {% endif %}
+                  {% empty %}
+                    nenhuma comunidade cadastrada
+                  {% endfor %}
+                  {% if org.community.count > 6 %}
+                    {% blocktrans with diff=org.community.count|add:'-6' %} and {{ diff }} more {% endblocktrans %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <p class="mark-down">
+          {{ org.description|description_markdown_preview|safe }}
+        </p>
+
+        <div class="view-list-footer">
+          {% if org.tags.count %}
+          <div class="view-list-item-tags">
+            {% taglist org %}
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+    {% endfor %}
+    </div>
+    {% pagination organizations %}
+  </div>
+
+{% komoo_map_tooltip %}
+{% endblock %}
+
+{% block page_scripts %}
+  {% visualization_opts_js %}
+{% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      ["organization:what_is", "organization:transparency"],
+      'organization_list'
+    );
+  </script>
+{% endblock %}

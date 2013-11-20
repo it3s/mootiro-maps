@@ -5,6 +5,7 @@ import itertools
 
 from django.db import models
 from django.db.models import Q
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
@@ -114,7 +115,7 @@ class Project(BaseModel):
         if self.logo:
             return self.logo.file.url
         else:
-            return '/static/img/logo.png'
+            return '{}img/project-placeholder.png'.format(settings.STATIC_URL)
 
     @property
     def related_objects(self):

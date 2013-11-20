@@ -21,7 +21,7 @@ from lib.taggit.models import TaggedItem
 from community.models import Community
 from community.forms import CommunityForm
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query, to_json)
+                        filtered_query, get_filter_params, to_json)
 from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)

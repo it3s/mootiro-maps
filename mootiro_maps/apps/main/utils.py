@@ -255,7 +255,7 @@ def render_markup(text):
 
 
 def send_mail(title='', message='',
-              sender='MootiroMaps <no-reply@it3s.mailgun.org>', receivers=[],
+              sender=None, receivers=[],
               html=False):
     """Function for sending mails.
 
@@ -263,12 +263,16 @@ def send_mail(title='', message='',
     mailer, otherwise we will use the mailgun api.
 
     """
+    if not sender:
+        sender = getattr(settings, 'EMAIL_SENDER',
+                         'MootiroMaps <no-reply@it3s.mailgun.org>')
+
     if settings.DEBUG and not html:
         django_send_mail(title, message, sender, receivers,
                          fail_silently=False)
     else:
         data = {
-            'from': 'MootiroMaps <no-reply@it3s.mailgun.org>',
+            'from': sender,
             'to': receivers,
             'subject': title,
         }
@@ -343,6 +347,12 @@ def randstr(l=10):
         s = s + choice(chars)
     return s
 
+
+def get_filter_params(request):
+    filtered = bool(request.GET.get('filters', None))
+    request.encoding = 'latin-1'
+    filter_params = request.GET
+    return (filtered, filter_params)
 
 # ======================================================
 

@@ -18,7 +18,7 @@ from authentication.utils import login_required
 from organization.models import Organization
 from organization.forms import FormOrganization, FormOrganizationGeoRef
 from main.utils import (paginated_query, create_geojson, sorted_query,
-                        filtered_query, to_json)
+                        filtered_query, get_filter_params, to_json)
 from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)
@@ -28,13 +28,16 @@ logger = logging.getLogger(__name__)
 def organization_list(request):
     org_sort_order = ['creation_date', 'name']
 
+    filtered, filter_params = get_filter_params(request)
+
     query_set = filtered_query(Organization.objects, request)
     organizations_list = sorted_query(query_set, org_sort_order,
                                          request)
     organizations_count = organizations_list.count()
     organizations = paginated_query(organizations_list, request)
-    return dict(organizations=organizations,
-                organizations_count=organizations_count)
+    return dict(organizations=organizations, filtered=filtered,
+                organizations_count=organizations_count,
+                filter_params=filter_params)
 
 
 @render_to('organization/show.html')
@@ -52,7 +55,7 @@ def show(request, id=''):
 @render_to('organization/related_items.html')
 def related_items(request, id=''):
     organization = get_object_or_None(Organization, pk=id) or Organization()
-    geojson = create_geojson(organization.related_items)
+    geojson = create_geojson(organization.related_items + [organization])
     return {'organization': organization, 'geojson': geojson}
 
 

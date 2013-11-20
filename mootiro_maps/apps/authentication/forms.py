@@ -92,7 +92,7 @@ class FormUser(AjaxModelForm):
                     SocialAuth.objects.filter(email=email).exists())
 
             self.validation('password_confirmation',
-                    _('Passwords did not match.'),
+                    _('Passwords did not match'),
                     self.cleaned_data['password'] !=
                     self.cleaned_data['password_confirmation'])
         except Exception as err:

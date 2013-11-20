@@ -299,8 +299,7 @@ def set_language(request):
     if lang_code and translation.check_for_language(lang_code):
         if hasattr(request, 'session'):
             request.session['django_language'] = lang_code
-        else:
-            response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
         translation.activate(lang_code)
         if not request.user.is_anonymous():
             request.user.set_language(lang_code)

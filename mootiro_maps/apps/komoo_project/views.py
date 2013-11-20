@@ -1,6 +1,7 @@
 #! coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+import simplejson
 
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
@@ -22,8 +23,21 @@ from model_versioning.tasks import versionate
 from .forms import FormProject
 from .models import Project, ProjectRelatedObject
 
+from organization.models import Organization
+from need.models import Need
+from komoo_resource.models import Resource
+from community.models import Community
+from investment.models import Investment
+
 logger = logging.getLogger(__name__)
 
+CLASSNAME_MAP = {
+    "Organization": Organization,
+    "Need":         Need,
+    "Resource":     Resource,
+    "Community":    Community,
+    "Investment":   Investment,
+}
 
 @render_to('project/list.html')
 def project_list(request):
@@ -155,6 +169,23 @@ def add_related_object(request):
                     }}
 
     return {'success': False}
+
+class _FakeFilterRequest:
+    def __init__(self, params):
+        self.GET = params
+
+@ajax_request
+def add_list_of_objects(request):
+    project = Project.objects.get(pk=request.POST['project_id'])
+
+    klass = CLASSNAME_MAP[request.POST['object_type']]
+    filter_params = simplejson.loads(request.POST['filter_params'])
+    object_list = filtered_query(klass.objects, _FakeFilterRequest(filter_params))
+
+    for obj in object_list:
+        project.save_related_object(obj, request.user)
+
+    return {'success': True, 'redirect_url': project.view_url}
 
 
 @login_required

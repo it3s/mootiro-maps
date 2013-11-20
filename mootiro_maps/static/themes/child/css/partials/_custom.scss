@@ -1,0 +1,66 @@
+body {
+    font-family: Calibri, 'Open Sans', Helvetica, Arial, sans-serif;
+    color: #444;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Cambria, 'Droid Serif', Georgia, 'Times New Roman', serif;
+}
+
+p {
+    line-height: 1.5;
+}
+
+a,
+a:link {
+    color: #006eb7;
+}
+
+a:hover,
+a:visited, {
+    color: #005ca9;
+}
+
+a.button,
+a.button:hover,
+a.button:visited,
+a.big-button,
+a.big-button:hover,
+a.big-button:visited {
+    color: white;
+}
+
+.social-buttons {
+    float: none;
+    margin: 10px 0;
+}
+
+#main-content.highlights .section ul  {
+    height: 460px;
+
+    li p {
+        max-height: 12em;
+    }
+}
+
+#footer {
+    width: 950px;
+    padding: 0;
+
+    .license {
+        width: 230px;
+    }
+
+    .it3s {
+        width: 150px;
+    }
+
+    h3 {
+        text-align: left;
+        line-height: 135%;
+    }
+
+    > div {
+        margin: 0 20px;
+    }
+}

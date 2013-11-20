@@ -16,7 +16,7 @@ from authentication.utils import login_required
 from komoo_resource.models import Resource, ResourceKind
 from komoo_resource.forms import FormResource, FormResourceGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query, to_json)
+                        filtered_query, get_filter_params, to_json)
 from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)
@@ -30,13 +30,16 @@ def resources_to_resource(self):
 def resource_list(request):
     sort_order = ['creation_date', 'name']
 
+    filtered, filter_params = get_filter_params(request)
+
     query_set = filtered_query(Resource.objects, request)
 
     resources_list = sorted_query(query_set, sort_order, request)
     resources_count = resources_list.count()
     resources = paginated_query(resources_list, request)
 
-    return dict(resources=resources, resources_count=resources_count)
+    return dict(resources=resources, resources_count=resources_count,
+                filtered=filtered, filter_params=filter_params)
 
 
 @render_to('resource/show.html')

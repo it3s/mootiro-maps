@@ -1,0 +1,150 @@
+{% extends "global.html" %}
+{% load i18n %}
+{% load komoo_filters %}
+{# % load komoo_tags % #}
+{# % load komoo_map_tags % #}
+{# % load comment_tags % #}
+{# % load humanize % #}
+
+
+{% block content %}
+
+<div id="main-content" class="frontpage">
+  <div class="site-description">
+    <img class="logo" src="{{THEME_STATIC_URL}}img/logo-big.png">
+    <br><br>
+    <p>
+    {% blocktrans %}
+      <strong>Child Friendly Places</strong> are schools, communities and cities engaged in a long-term process to improve the conditions that fulfill children’s rights and ensure their healthy development.
+    {% endblocktrans %}
+    </p>
+  </div>
+
+  <div class="slideshow">
+    <div class="flexslider">
+      <ul class="slides">
+        <li class="slide">
+          <img src="{{THEME_STATIC_URL}}img/frontpage/slides/haiti8.png"/>
+          {% trans 'Haiti' %}
+        </li>
+        <li class="slide">
+          <img src="{{THEME_STATIC_URL}}img/frontpage/slides/TISSindia9.png"/>
+          {% trans 'India' %}
+        </li>
+        <li class="slide">
+          <img src="{{THEME_STATIC_URL}}img/frontpage/slides/philippines2.png"/>
+          {% trans 'Philippines' %}
+        </li>
+        <li class="slide">
+          <img src="{{THEME_STATIC_URL}}img/frontpage/slides/haiti9.png"/>
+          {% trans 'Haiti' %}
+        </li>
+        <li class="slide">
+          <img src="{{THEME_STATIC_URL}}img/frontpage/slides/shaishavindia5.png"/>
+          {% trans 'India' %}
+        </li>
+        <li class="slide">
+          <img src="{{THEME_STATIC_URL}}img/frontpage/slides/haiti12.png"/>
+          {% trans 'Haiti' %}
+        </li>
+        <li class="slide">
+          <img src="{{THEME_STATIC_URL}}img/frontpage/slides/shaishavindia1.png"/>
+          {% trans 'India' %}
+        </li>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="resource-kits">
+    <h2>{% trans "Modules" %}</h2>
+
+    <a href="http://childfriendlyplaces.org/resourcekit/#assessment">
+      <div class="topic">
+        <h3>{% trans "Assessment" %}</h3>
+        <img src="{{THEME_STATIC_URL}}img/frontpage/assessment.png"/>
+        <p>{% trans "Groups will identify the strengths and weaknesses of the current living and learning conditions in their community and/or school" %}</p>
+      </div>
+    </a>
+
+    <a href="http://childfriendlyplaces.org/resourcekit/#planning">
+      <div class="topic">
+        <h3>{% trans "Planning" %}</h3>
+        <img src="{{THEME_STATIC_URL}}img/frontpage/plan.png"/>
+        <p>{% trans "Groups will identify specific goals for their initiative and create improvement plans with community and/or school input" %}</p>
+      </div>
+    </a>
+
+    <a href="http://childfriendlyplaces.org/resourcekit/#advocacy">
+      <div class="topic">
+        <h3>{% trans "Advocacy & Action" %}</h3>
+        <img src="{{THEME_STATIC_URL}}img/frontpage/action.png"/>
+        <p>{% trans "Groups will implement aspects of their improvement plans to better their living and learning conditions" %}</p>
+      </div>
+    </a>
+
+    <a href="http://childfriendlyplaces.org/resourcekit/#outcomes">
+      <div class="topic">
+        <h3>{% trans "Outcomes" %}</h3>
+        <img src="{{THEME_STATIC_URL}}img/frontpage/outcomes.png"/>
+        <p>{% trans "Groups will document and reflect upon the lessons learned to help sustain and replicate the process" %}</p>
+      </div>
+    </a>
+
+  </div>
+
+ <!--
+  <div class="news">
+    <div class="last_updates">
+      <h3>{% trans "Last updates" %}</h3>
+      <ul>
+        {% for u in updates %}
+        <li>
+          <a href="{{ u.instance.link }}">
+            <img class="apart" src="{{STATIC_URL}}{{ u.object_icon }}">
+            {{ u.instance.name }}<br/>
+            <img class="apart" src="{{STATIC_URL}}{{ u.type_image }}">
+            <span class="attenuate">{{ u.readable_type|capfirst }} {{ u.date|naturaltime }}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="apart">
+        <a href="{% url list_updates %}">{% trans "see all" %}</a>
+      </div>
+    </div>
+  </div>
+  -->
+</div>
+{% endblock %}
+
+{% block page_scripts %}
+<script type="text/javascript">
+  // Can also be used with $(document).ready()
+  $(window).load(function() {
+    $('.flexslider').flexslider({
+      animation: "slide"
+    });
+  });
+</script>
+{% endblock %}
+
+{% block help_center %}
+  <script type="text/javascript">
+    var help = new HelpCenter(
+      "#help_button",
+      [
+        "home:mootiro_maps",
+        "home:collaborative_mapping",
+        "home:who_can_use",
+        "home:cost",
+        "home:search",
+        "home:objects",
+        "home:objects_edition",
+        "home:others_edition",
+        "home:denounce_content"
+      ],
+      'home'
+    );
+  </script>
+{% endblock %}

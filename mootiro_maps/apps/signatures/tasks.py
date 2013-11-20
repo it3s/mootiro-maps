@@ -27,7 +27,7 @@ a equipe IT3S.
         send_mail(
             mail_title,
             mail_message,
-            'no-reply@mootiro.org',
+            None,  # using default sender
             [user.email],
         )
 

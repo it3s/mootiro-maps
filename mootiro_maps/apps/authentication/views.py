@@ -234,6 +234,12 @@ def user_new(request):
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
 
+@ajax_request
+def test_email(request):
+    user = request.user
+    user.send_confirmation_mail(request)
+    send_explanations_mail(user)
+    return {'testing': '...'}
 
 @render_to('authentication/login.html')
 def login(request):

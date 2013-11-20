@@ -138,7 +138,7 @@ $(function(){
           top: '-12px'
         },
         'categories':{
-            hint: gettext('Please, select the categories that most reflect the organization's activities or cause.'),
+          hint: gettext("Please, select the categories that most reflect the organization's activities or cause."),
             top: '45%'
         },
         'tags': {
@@ -146,7 +146,7 @@ $(function(){
           top: '-12px'
         },
         'files': {
-          hint: gettext('Please, upload fotos of the organization or link to photos on Wiki Commons or Flickr. Make sure that the photos is licensed under creative commons.'),
+          hint: gettext('Please, upload photos of the organization or link to photos on Wiki Commons or Flickr. Make sure that the photos is licensed under creative commons.'),
           top: '40%'
         },
         'logo': {
@@ -162,7 +162,7 @@ $(function(){
         },
         'branch_info': {
           top: '40%',
-          hint: gettext('Please insert information about the affiliated organization, por example: what is its role? infrastructure? objectives? contact persons?')
+          hint: gettext('Please insert information about the affiliated organization, for example: what is its role? infrastructure? objectives? contact persons?')
         }
     });
 })

@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
 from django.core.serializers import serialize
 from django.core.serializers.json import DjangoJSONEncoder
-from django.utils import simplejson
+from django.utils import simplejson, translation
 from django.db.models.query import QuerySet
 
 from markitup.templatetags.markitup_tags import render_markup
@@ -53,7 +53,7 @@ def geojson(obj=None):
 
 @register.inclusion_tag('main/templatetags/menu.html', takes_context=True)
 def menu(context, selected_area=''):
-    return dict(selected_area=selected_area)
+    return dict(selected_area=selected_area, LANGUAGE_CODE=translation.get_language())
 
 
 @register.inclusion_tag('main/templatetags/geo_objects_listing.html')

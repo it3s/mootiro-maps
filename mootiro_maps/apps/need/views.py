@@ -18,7 +18,7 @@ from authentication.utils import login_required
 from need.models import Need, TargetAudience
 from need.forms import NeedForm, NeedFormGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query, to_json)
+                        filtered_query, get_filter_params, to_json)
 from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)
