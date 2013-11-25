@@ -1,0 +1,17 @@
+<script type="text/javascript">
+    $(function(){
+        {% for video in videos %}
+            add_video({
+                id: '{{ video.id }}',
+                provider: {{ video.provider }},
+                status: "",
+                title: '{{ video.title }}',
+                description: {{ video.description }},
+                video_id: {{ video.video_id }},
+                thumbnail: {{ video.thumbnail }},
+                video_url: '{{ video.url }}'
+            });
+        {% endfor %}
+    });
+</script>
+

@@ -3,6 +3,7 @@
 {% load komoo_tags %}
 {% load komoo_map_tags %}
 {% load upload_tags %}
+{% load video_tags %}
 {% load i18n %}
 
 {% block menu %} {% menu "need" %} {% endblock %}
@@ -42,6 +43,7 @@
 
 {% block page_scripts %}
     {% load_files need %}
+    {% load_videos need %}
     <script type="text/javascript">
       $(function(){
         $('#need_form').ajaxform();

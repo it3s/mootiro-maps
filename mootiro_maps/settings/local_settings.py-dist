@@ -22,6 +22,7 @@ FACEBOOK_APP_ID = '...'
 FACEBOOK_APP_SECRET = '...'
 GOOGLE_APP_ID = '...'
 GOOGLE_APP_SECRET = '...'
+GOOGLE_API_KEY = '...'
 
 # ========== Importhseet ======================================================
 IMPORTSHEET_GOOGLE_USER = '...'

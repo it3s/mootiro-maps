@@ -1,0 +1,93 @@
+<!-- IMAGES -->
+{% if images.count %}
+<div id="gallery" class="spock-gallery">
+    <div class="spock-image-wrapper"></div>
+    <div class="spock-komoo-desc"></div>
+    <div class="spock-controls"></div>
+    <div class="spock-nav">
+        <div class="spock-thumbs">
+            <ul class="spock-thumb-list">
+                {% for image in images %}
+                    <li>
+                        <a href="{{ image.file.url }}">
+                            <img src="{{ image.file.url }}" class="spock_image_gallery_thumb" alt="{% firstof image.subtitle '' %}">
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" type="text/css" href="/static/spock_gallery/jquery.spock-gallery.css">
+<style type="text/css">
+    .spock_image_gallery_thumb{
+        max-width: 100px;
+        max-height: 100px;
+    }
+    #gallery {
+        padding: 30px;
+        background: #e1eef5;
+        border-radius: 5px;
+        margin-top: 20px;
+    }
+    #descriptions {
+        position: relative;
+        height: 50px;
+        background: #dedede;
+        margin-top: 10px;
+        width: 640px;
+        padding: 10px;
+        overflow: hidden;
+        text-shadow: 1px 1px 1px #ffffff;
+    }
+    #descriptions .spock-image-description {
+      position: absolute;
+
+    }
+    #gallery .spock-image-description {
+        display: block;
+        background: rgba(142, 142, 142, 0.4);
+        text-shadow: 1px 1px 1px #ffffff;
+        border-radius: 4px;
+        /*margin-left: -50%;*/
+        left: 0px;
+        text-align: center;
+        width: 600px;
+        padding: 10px 5px;
+    }
+    .spock-thumb-list{
+        height: 105px;
+        padding: 0;
+    }
+    #gallery .spock-image{
+        overflow: visible;
+    }
+</style>
+
+
+<script type="text/javascript" src="/static/spock_gallery/jquery.spock-gallery.min.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var galleries = $('.spock-gallery').spockGallery({
+            width: 600,
+            height: 300,
+            description_wrapper: $('.spock-komoo-desc'),
+            update_window_hash: false,
+            slideshow: {
+                start_label: gettext('Start'),
+                stop_label: gettext('Stop')
+            },
+            callbacks: {
+                beforeImageVisible: function(){
+                    $('.spock_image_gallery_thumb').each(function(idx, el){
+                        $(el).css('padding', 0);
+                    });
+                }
+            }
+        });
+
+
+    });
+</script>
+{% endif %}

@@ -15,6 +15,7 @@ from main.widgets import TaggitWidget
 from community.models import Community
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
+from video.forms import VideosField
 
 
 class CommunityForm(AjaxModelForm):
@@ -35,6 +36,7 @@ class CommunityForm(AjaxModelForm):
     description = forms.CharField(widget=MarkItUpWidget())
     geometry = forms.CharField(widget=forms.HiddenInput())
     files = FileuploadField(required=False)
+    videos = VideosField(required=False)
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/community/search_tags/"),
         required=False)

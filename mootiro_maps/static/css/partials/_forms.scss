@@ -1,0 +1,32 @@
+#video-selector {
+    .video-entry,
+    .video-thumb {
+        transition: transform 0.5s, box-shadow 0.5s;
+        -moz-transition: -moz-transform 0.5s, -moz-box-shadow 0.5s;
+        -o-transition: -o-transform 0.5s, -o-box-shadow 0.5s;
+        -webkit-transition: -webkit-transform 0.5s, -webkit-box-shadow 0.5s;
+        width: 164px;
+    }
+
+    .video-entry {
+        display: inline-block;
+        margin: 5px;
+    }
+
+    .video-thumb:hover {
+        cursor: pointer;
+        transform: scale(1.15, 1.15);
+        -moz-transform: scale(1.15, 1.15);
+        -o-transform: scale(1.15, 1.15);
+        -webkit-transform: scale(1.15, 1.15);
+    }
+
+    #title-modal {
+        #video-title-modal {
+            width: 300px;
+        }
+        #id_title {
+            font-weight: bold;
+        }
+    }
+}

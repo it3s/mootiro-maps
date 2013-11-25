@@ -151,6 +151,7 @@ INSTALLED_APPS = [
     'tags',
     'highlight',
     'locker',
+    'video',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024

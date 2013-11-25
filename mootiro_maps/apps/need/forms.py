@@ -16,6 +16,7 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 from need.models import Need, NeedCategory, TargetAudience
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
+from video.forms import VideosField
 
 
 need_form_fields = ('id', 'title', 'short_description', 'description',
@@ -69,6 +70,8 @@ class NeedForm(AjaxModelForm):
     )
 
     files = FileuploadField(required=False)
+
+    videos = VideosField(required=False)
 
     project_id = forms.CharField(widget=forms.HiddenInput(), required=False)
 

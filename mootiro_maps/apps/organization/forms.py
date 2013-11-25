@@ -22,6 +22,7 @@ from fileupload.forms import FileuploadField, LogoField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
 from signatures.signals import notify_on_update
+from video.forms import VideosField
 
 if settings.LANGUAGE_CODE == 'en-us':
     CATEGORIES = [(cat.id, cat.name)
@@ -67,6 +68,7 @@ class FormOrganization(AjaxModelForm):
         widget=forms.CheckboxSelectMultiple(
             attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
+    videos = VideosField(required=False)
     logo = LogoField(required=False)
     logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
     logo_category = forms.CharField(required=False, widget=forms.HiddenInput())
