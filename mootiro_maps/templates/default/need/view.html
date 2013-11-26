@@ -8,6 +8,7 @@
 {% load moderation_tags %}
 {% load markitup_tags %}
 {% load upload_tags %}
+{% load video_tags %}
 {% load project_tags %}
 
 {% block title %}{{ need.title }} {% endblock %}
@@ -48,6 +49,7 @@
       <div class="mark-down">{{ need.description|render_markup|safe }}</div>
 
       <div class="view-footer">
+          {% video_gallery need %}
           {% image_gallery need %}
       </div>
 

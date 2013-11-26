@@ -20,6 +20,6 @@ def load_videos(context, obj=None):
 
 
 @register.inclusion_tag('video/video_gallery.html', takes_context=True)
-def videos_gallery(context, obj=None):
+def video_gallery(context, obj=None):
     videos = Video.get_videos_for(obj) if obj else []
     return dict(videos=videos)

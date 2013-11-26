@@ -95,7 +95,7 @@ $('.video-entry').live('click', function(ev){
         var id  = $(this).attr('data-id');
         var video_title  = $(this).attr('data-title');
         var video_description  = $(this).attr('data-description');
-        var video_thumb  = $(this).attr('.video-thumbnail-url');
+        var video_thumb  = $(this).attr('data-thumbnail-url');
 
         $('#title-modal #video-title-modal').attr('src', video_thumb);
         $('#title-modal #id_title').val(video_title || '');
