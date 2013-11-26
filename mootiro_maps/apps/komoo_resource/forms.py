@@ -19,6 +19,7 @@ from komoo_resource.models import Resource, ResourceKind
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
 from video.forms import VideosField
+from video.models import Video
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +68,8 @@ class FormResource(AjaxModelForm):
         UploadedFile.bind_files(
             self.cleaned_data.get('files', '').split('|'), resource)
 
-        print json.loads(self.cleaned_data.get('videos', ''))
+        videos = json.loads(self.cleaned_data.get('videos', ''))
+        Video.save_videos(videos, resource)
 
         # Add the community to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)

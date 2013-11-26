@@ -3,12 +3,12 @@
         {% for video in videos %}
             add_video({
                 id: '{{ video.id }}',
-                provider: {{ video.provider }},
-                status: "",
-                title: '{{ video.title }}',
-                description: {{ video.description }},
-                video_id: {{ video.video_id }},
-                thumbnail: {{ video.thumbnail }},
+                service: '{{ video.service }}',
+                status: '',
+                title: '{{ video.title|escapejs }}',
+                description: '{{ video.description|escapejs }}',
+                video_id: '{{ video.video_id }}',
+                thumbnail_url: '{{ video.thumbnail_url }}',
                 video_url: '{{ video.url }}'
             });
         {% endfor %}

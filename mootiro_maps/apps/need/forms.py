@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+import json
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -17,11 +18,12 @@ from need.models import Need, NeedCategory, TargetAudience
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
 from video.forms import VideosField
+from video.models import Video
 
 
 need_form_fields = ('id', 'title', 'short_description', 'description',
                     'community', 'categories', 'target_audiences', 'tags',
-                    'files', 'project_id')
+                    'files', 'videos', 'project_id')
 
 need_form_field_labels = {
     'title': _('Title'),
@@ -32,6 +34,7 @@ need_form_field_labels = {
     'target_audiences': _('Target audiences'),
     'tags': _('Tags'),
     'files': _('Images'),
+    'videos': _('Videos'),
 }
 
 
@@ -84,6 +87,9 @@ class NeedForm(AjaxModelForm):
         need = super(NeedForm, self).save(*args, **kwargs)
         UploadedFile.bind_files(
             self.cleaned_data.get('files', '').split('|'), need)
+
+        videos = json.loads(self.cleaned_data.get('videos', ''))
+        Video.save_videos(videos, need)
 
         # Add the community to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)

@@ -13,17 +13,18 @@ from django.http import HttpResponse
 from django.conf import settings
 
 from main.utils import to_json
+from .models import Video
 
 logger = logging.getLogger(__name__)
 
 def get_video_info_from_url(url):
     if 'vimeo.com' in url:
         video_id = get_vimeo_video_id_from_url(url)
-        provider = 'vimeo'
+        service = Video.VIMEO
     elif 'youtu' in url:
         video_id = get_youtube_video_id_from_url(url)
-        provider = 'youtube'
-    return get_video_info(provider, video_id)
+        service = Video.YOUTUBE
+    return get_video_info(service, video_id)
 
 
 def get_youtube_video_id_from_url(url):
@@ -64,12 +65,12 @@ def get_vimeo_video_id_from_url(url):
     # fail?
     return None
 
-def get_video_info(provider, video_id):
-    providers = {
-        'youtube': get_youtube_video_info,
-        'vimeo': get_vimeo_video_info,
+def get_video_info(service, video_id):
+    services = {
+        Video.YOUTUBE: get_youtube_video_info,
+        Video.VIMEO: get_vimeo_video_info,
     }
-    return providers.get(provider, lambda x: {})(video_id)
+    return services.get(service, lambda x: {})(video_id)
 
 
 yt_service = gdata.youtube.service.YouTubeService()
@@ -81,15 +82,12 @@ def get_youtube_video_info(video_id):
         video = yt_service.GetYouTubeVideoEntry(video_id=video_id)
         info = {
             'status': 200,
-            'video_id': video_id,
-            'provider': 'youtube',
+            'service': Video.YOUTUBE,
             'title': video.media.title.text,
-            'author': video.author[0].name.text,
-            'duration': video.media.duration.seconds,
-            'published': video.published.text,
             'description': video.media.description.text,
-            'thumbnail': video.media.thumbnail[0].url,
-            'url': video.media.player.url,
+            'video_id': video_id,
+            'video_url': video.media.player.url,
+            'thumbnail_url': video.media.thumbnail[0].url,
         }
     except Exception as e:
         # {'status': ..., 'body':..., 'reason':...}
@@ -102,15 +100,12 @@ def get_vimeo_video_info(video_id):
         video = json.loads(r.text)[0]
         info = {
             'status': 200,
-            'video_id': video_id,
-            'provider': 'vimeo',
+            'service': Video.VIMEO,
             'title': video.get('title', ''),
-            'author': video.get('user_name', ''),
-            'duration': video.get('duration', ''),
-            'published': video.get('upload_date', ''),
             'description': video.get('description', '').replace('<br />', ''),
-            'thumbnail': video.get('thumbnail_medium', ''),
-            'url': video.get('url', ''),
+            'video_id': video_id,
+            'video_url': video.get('url', ''),
+            'thumbnail_url': video.get('thumbnail_medium', ''),
         }
     except Exception as e:
         info = None

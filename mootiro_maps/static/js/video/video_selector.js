@@ -11,10 +11,10 @@ window.get_videos_list = function(){
             list.push({
                 id: id,
                 status: $(this).attr('data-status'),
-                provider: $(this).attr('data-provider'),
+                service: $(this).attr('data-service'),
                 video_id: $(this).attr('data-video-id'),
                 video_url: $(this).attr('data-video-url'),
-                video_thumbnail: $(this).attr('data-thumbnail'),
+                thumbnail_url: $(this).attr('data-thumbnail-url'),
                 title: $(this).attr('data-title'),
                 description: $(this).attr('data-description')
             });
@@ -39,13 +39,13 @@ window.add_video = function(video){
         '" data-id="' + video.id +
         '" data-status="' + video.status +
         '" data-new="' + _new +
-        '" data-provider="' + video.provider +
+        '" data-service="' + video.service +
         '" data-title="' + video.title +
         '" data-description="' + video.description +
-        '" data-video-url="' + video.url +
-        '" data-thumbnail="' + video.thumbnail + '">' +
+        '" data-video-url="' + video.video_url +
+        '" data-thumbnail-url="' + video.thumbnail_url + '">' +
             '<strong class="video-title">' + video.title + '</strong>' +
-            '<img src="' + video.thumbnail + '" alt="img" class="video-thumb">' +
+            '<img src="' + video.thumbnail_url + '" alt="img" class="video-thumb">' +
         '</div>'
     );
 };
@@ -95,7 +95,7 @@ $('.video-entry').live('click', function(ev){
         var id  = $(this).attr('data-id');
         var video_title  = $(this).attr('data-title');
         var video_description  = $(this).attr('data-description');
-        var video_thumb  = $(this).find('.video-thumb').attr('src');
+        var video_thumb  = $(this).attr('.video-thumbnail-url');
 
         $('#title-modal #video-title-modal').attr('src', video_thumb);
         $('#title-modal #id_title').val(video_title || '');
