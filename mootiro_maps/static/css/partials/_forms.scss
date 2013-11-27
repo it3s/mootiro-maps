@@ -30,3 +30,41 @@
         }
     }
 }
+
+#video-gallery {
+    margin: 20px 0;
+
+    .video-player {
+        display: inline-block;
+        width: 400px;
+        height: 266px;
+        margin: 5px;
+        background: black;
+        vertical-align: top;
+    }
+
+    .video-player-list {
+        display: inline-block;
+        width: 250px;
+        height: 266px;
+        overflow-y: scroll;
+
+        .video-entry {
+            clear: both;
+            font-size: 95%;
+
+            .video-title {
+                display: block;
+                font-weight: bold;
+                padding: 5px 0 7px;
+            }
+
+            .video-thumb {
+                display: inline-block;
+                width: 80px;
+                float: left;
+                margin: 5px;
+            }
+        }
+    }
+}

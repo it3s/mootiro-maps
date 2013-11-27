@@ -1,1 +1,50 @@
-[HERE GOES THE VIDEO GALLERY]
+<div id="video-gallery" class="video-gallery">
+  <div id="video-gallery-player" class="video-player">
+  </div>
+  <ul id="video-gallery-player-list" class="video-player-list">
+  </ul>
+</div>
+<script type="text/javascript">
+  $(function(){
+    function VideoGallery() {
+    };
+
+    VideoGallery.prototype.addVideo = function (video) {
+    var $videoList = $("#video-gallery-player-list");
+
+    var title = video.title;
+    var description = video.description;
+
+    if (title.length > 40) {
+        title = title.substr(0, 35) + '...';
+    }
+    if (description.length > 25) {
+        description = description.substr(0, 22) + '...';
+    }
+
+    var $videoEntry = '<li class="video-entry" id="' +
+    'video_' + video.id + '" data-service="' +
+    video.service + '" data-video-id="' +
+    video.video_id + '" title="' +
+    video.title + '\n\n' + video.description + '"><img class="video-thumb" src="' +
+    video.thumbnail_url + '"><span class="video-title">' +
+    title + '</span><span class="video-description">' +
+    description + '</span></li>'
+    $videoList.append($videoEntry);
+    };
+
+    var gallery = new VideoGallery();
+    {% for video in videos %}
+      gallery.addVideo({
+        id: '{{ video.id }}',
+        service: '{{ video.service }}',
+        status: '',
+        title: '{{ video.title|escapejs }}',
+        description: '{{ video.description|escapejs }}',
+        video_id: '{{ video.video_id }}',
+        thumbnail_url: '{{ video.thumbnail_url }}',
+        video_url: '{{ video.video_url }}'
+      });
+    {% endfor %}
+  });
+</script>
