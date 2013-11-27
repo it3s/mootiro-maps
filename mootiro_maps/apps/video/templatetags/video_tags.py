@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import template
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from video.models import Video
 
@@ -22,4 +23,4 @@ def load_videos(context, obj=None):
 @register.inclusion_tag('video/video_gallery.html', takes_context=True)
 def video_gallery(context, obj=None):
     videos = Video.get_videos_for(obj) if obj else []
-    return dict(videos=videos)
+    return dict(videos=videos, STATIC_URL=settings.STATIC_URL)

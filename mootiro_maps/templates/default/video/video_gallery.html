@@ -4,6 +4,7 @@
   <ul id="video-gallery-player-list" class="video-player-list">
   </ul>
 </div>
+<script type="text/javascript" src="{{ STATIC_URL }}lib/swfobject/swfobject.js"></script>
 <script type="text/javascript">
   $(function(){
     function VideoGallery() {
@@ -31,6 +32,14 @@
     title + '</span><span class="video-description">' +
     description + '</span></li>'
     $videoList.append($videoEntry);
+    };
+
+    VideoGallery.prototype.createPlayer = function () {
+      // Create YouTube player.
+
+
+      // Create Vimeo player.
+
     };
 
     var gallery = new VideoGallery();
