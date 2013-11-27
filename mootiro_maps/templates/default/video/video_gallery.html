@@ -1,5 +1,7 @@
 <div id="video-gallery" class="video-gallery">
   <div id="video-gallery-player" class="video-player">
+    <div id="youtubeplayer"></div>
+    <div id="vimeoplayer"></div>
   </div>
   <ul id="video-gallery-player-list" class="video-player-list">
   </ul>
@@ -7,42 +9,152 @@
 <script type="text/javascript" src="{{ STATIC_URL }}lib/swfobject/swfobject.js"></script>
 <script type="text/javascript">
   $(function(){
+    var youtubeQueue;
+    var youtubePlayer;
+    var vimeoQueue;
+    var vimeoPlayer;
+
     function VideoGallery() {
+      var that = this;
+      $(".video-entry").live("click", function (ev) {
+        var $this = $(this);
+        var service = $this.attr('data-service');
+        var video_id = $this.attr('data-video-id');
+
+        that.play(service, video_id);
+      });
     };
 
     VideoGallery.prototype.addVideo = function (video) {
-    var $videoList = $("#video-gallery-player-list");
+      var $videoList = $("#video-gallery-player-list");
 
-    var title = video.title;
-    var description = video.description;
+      var title = video.title;
+      var description = video.description;
 
-    if (title.length > 40) {
-        title = title.substr(0, 35) + '...';
-    }
-    if (description.length > 25) {
-        description = description.substr(0, 22) + '...';
-    }
+      if (title.length > 40) {
+          title = title.substr(0, 35) + '...';
+      }
+      if (description.length > 25) {
+          description = description.substr(0, 22) + '...';
+      }
 
-    var $videoEntry = '<li class="video-entry" id="' +
-    'video_' + video.id + '" data-service="' +
-    video.service + '" data-video-id="' +
-    video.video_id + '" title="' +
-    video.title + '\n\n' + video.description + '"><img class="video-thumb" src="' +
-    video.thumbnail_url + '"><span class="video-title">' +
-    title + '</span><span class="video-description">' +
-    description + '</span></li>'
-    $videoList.append($videoEntry);
+      var $videoEntry = '<li class="video-entry" id="' +
+      'video_' + video.id + '" data-service="' +
+      video.service + '" data-video-id="' +
+      video.video_id + '" title="' +
+      video.title + '\n\n' + video.description + '"><img class="video-thumb" src="' +
+      video.thumbnail_url + '"><span class="video-title">' +
+      title + '</span><span class="video-description">' +
+      description + '</span></li>'
+      $videoList.append($videoEntry);
     };
 
-    VideoGallery.prototype.createPlayer = function () {
-      // Create YouTube player.
+    VideoGallery.prototype.play = function (service, video_id) {
+      if (this.currentVideo && this.currentVideo.service != service) {
+        this.stop();
+      }
+      this.currentVideo = { service: service, video_id: video_id };
+      if (service == 'YT') {
+        this.playYoutube(video_id);
+      } else if (service == 'VI') {
+        this.playVimeo(video_id);
+      }
 
+    };
 
-      // Create Vimeo player.
+    VideoGallery.prototype.stop = function () {
+      if (!this.currentVideo) return;
 
+      if (this.currentVideo.service == 'YT') {
+        this.stopYoutube();
+      } else if (this.currentVideo.service == 'VI') {
+        this.stopVimeo();
+      }
+    };
+
+    VideoGallery.prototype.playYoutube = function (video_id) {
+      if (!youtubePlayer) {
+        if (this.youtubeInitialized) {
+          youtubeQueue = video_id;
+        } else {
+          this.createYoutubePlayer(video_id, true);
+        }
+      } else {
+        $(youtubePlayer).show();
+        youtubePlayer.loadVideoById(video_id, 0, "large");
+      }
+    };
+
+    VideoGallery.prototype.stopYoutube = function (video_id) {
+      if (!youtubePlayer) return;
+
+      youtubePlayer.stopVideo();
+      $(youtubeplayer).hide();
+    };
+
+    VideoGallery.prototype.playVimeo = function (video_id) {
+      if (!vimeoPlayer) {
+        if (this.vimeoInitialized) {
+          vimeoQueue = video_id;
+        } else {
+          this.createVimeoPlayer(video_id, true);
+        }
+      } else {
+        $(vimeoPlayer).show();
+        vimeoPlayer.api_loadVideo(video_id);
+      }
+    };
+
+    VideoGallery.prototype.stopVimeo = function (video_id) {
+      if (!vimeoPlayer) return;
+      vimeoPlayer.api_pause();
+      $(vimeoplayer).hide();
+    };
+
+    VideoGallery.prototype.createYoutubePlayer = function (video_id, autoplay) {
+      if (this.youtubeInitialized || !video_id) return;
+
+      if (autoplay) {
+        youtubeQueue = video_id;
+      }
+      var params = { allowScriptAccess: "always" };
+      var atts = { id: "youtubeplayer" };
+      swfobject.embedSWF("http://www.youtube.com/v/" + video_id + "?version=3&enablejsapi=1",
+                         "youtubeplayer", "400", "266", "8", null, null, params, atts);
+      this.youtubeInitialized = true;
+    };
+
+    VideoGallery.prototype.createVimeoPlayer = function (video_id, autoplay) {
+      if (this.vimeoInitialized || !video_id) return;
+
+      if (autoplay) {
+        autoplay = 1;
+      } else {
+        autoplay = 0;
+      }
+
+      var vars = {'clip_id': video_id,'server': 'vimeo.com','show_title': 0,'show_byline': 0,'show_portrait': 0,'fullscreen': 0,'js_api': 1,'autoplay': autoplay};
+      var params  = {'swliveconnect':true,'fullscreen': 0,'allowscriptaccess': 'always','allowfullscreen':true,'wmode':'opaque'};
+      var atts = { };
+      swfobject.embedSWF("http://vimeo.com/moogaloop.swf",
+          "vimeoplayer", "400", "266", "9.0.0", null, vars, params, atts);
+
+      this.vimeoInitialized = true;
+    };
+
+    window.onYouTubePlayerReady = function (playerid) {
+      youtubePlayer = document.getElementById("youtubeplayer");
+      if (youtubeQueue) {
+        youtubePlayer.loadVideoById(youtubeQueue, 0, "large");
+      }
+    };
+
+    window.vimeo_player_loaded = function (){
+      vimeoPlayer = document.getElementById('vimeoplayer');
     };
 
     var gallery = new VideoGallery();
+    gallery.play();
     {% for video in videos %}
       gallery.addVideo({
         id: '{{ video.id }}',

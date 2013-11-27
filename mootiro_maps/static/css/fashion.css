@@ -950,7 +950,8 @@ a.project-btn {
     overflow-y: scroll; }
     #video-gallery .video-player-list .video-entry {
       clear: both;
-      font-size: 95%; }
+      font-size: 95%;
+      cursor: pointer; }
       #video-gallery .video-player-list .video-entry .video-title {
         display: block;
         font-weight: bold;
