@@ -6,7 +6,7 @@
   var playerWidth = 400;
   var playerHeight = 266;
 
-  function VideoGallery() {
+  var VideoGallery = function () {
     var that = this;
     $(".video-entry").live("click", function (ev) {
       var $this = $(this);
@@ -16,6 +16,8 @@
       that.play(service, video_id);
     });
   };
+
+  window.VideoGallery = VideoGallery;
 
   VideoGallery.prototype.addVideo = function (video) {
     var $videoList = $("#video-gallery-player-list");
