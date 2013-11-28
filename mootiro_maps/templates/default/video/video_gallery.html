@@ -7,12 +7,15 @@
   </ul>
 </div>
 <script type="text/javascript" src="{{ STATIC_URL }}lib/swfobject/swfobject.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/video/gallery.js"></script>
 <script type="text/javascript">
   $(function(){
     var youtubeQueue;
     var youtubePlayer;
     var vimeoQueue;
     var vimeoPlayer;
+    var playerWidth = 400;
+    var playerHeight = 266;
 
     function VideoGallery() {
       var that = this;
@@ -27,6 +30,11 @@
 
     VideoGallery.prototype.addVideo = function (video) {
       var $videoList = $("#video-gallery-player-list");
+
+      // Create the player for first video
+      if ($videoList.children().length == 0) {
+        this.createPlayer(video.service, video.video_id, false);
+      }
 
       var title = video.title;
       var description = video.description;
@@ -50,15 +58,15 @@
     };
 
     VideoGallery.prototype.play = function (service, video_id) {
-      if (this.currentVideo && this.currentVideo.service != service) {
+      if (this.currentVideo.service != service) {
         this.stop();
       }
-      this.currentVideo = { service: service, video_id: video_id };
       if (service == 'YT') {
         this.playYoutube(video_id);
       } else if (service == 'VI') {
         this.playVimeo(video_id);
       }
+      this.currentVideo = { service: service, video_id: video_id };
 
     };
 
@@ -80,7 +88,7 @@
           this.createYoutubePlayer(video_id, true);
         }
       } else {
-        $(youtubePlayer).show();
+        $(youtubePlayer).height(playerHeight);
         youtubePlayer.loadVideoById(video_id, 0, "large");
       }
     };
@@ -89,19 +97,18 @@
       if (!youtubePlayer) return;
 
       youtubePlayer.stopVideo();
-      $(youtubeplayer).hide();
+      $(youtubePlayer).height(0);
     };
 
     VideoGallery.prototype.playVimeo = function (video_id) {
-      if (!vimeoPlayer) {
-        if (this.vimeoInitialized) {
-          vimeoQueue = video_id;
-        } else {
-          this.createVimeoPlayer(video_id, true);
-        }
+      if (this.currentVideo.video_id == video_id) {
+        vimeoPlayer.api_play()
       } else {
-        $(vimeoPlayer).show();
-        vimeoPlayer.api_loadVideo(video_id);
+        // We cant load a new video using the same vimeo player, so lets remove it
+        // and create a new one.
+        $('#vimeoplayer').remove();
+        $('#video-gallery-player').append('<div id="vimeoplayer"></div>');
+        this.createVimeoPlayer(video_id, true);
       }
     };
 
@@ -109,6 +116,16 @@
       if (!vimeoPlayer) return;
       vimeoPlayer.api_pause();
       $(vimeoplayer).hide();
+    };
+
+    VideoGallery.prototype.createPlayer = function (service, video_id, autoplay) {
+      this.currentVideo = { service: service, video_id: video_id };
+      if (service == 'YT') {
+        this.createYoutubePlayer(video_id, autoplay);
+      } else if (service == 'VI') {
+        this.createVimeoPlayer(video_id, autoplay);
+      }
+
     };
 
     VideoGallery.prototype.createYoutubePlayer = function (video_id, autoplay) {
@@ -120,12 +137,12 @@
       var params = { allowScriptAccess: "always" };
       var atts = { id: "youtubeplayer" };
       swfobject.embedSWF("http://www.youtube.com/v/" + video_id + "?version=3&enablejsapi=1",
-                         "youtubeplayer", "400", "266", "8", null, null, params, atts);
+                         "youtubeplayer", playerWidth.toString(), playerHeight.toString(), "8", null, null, params, atts);
       this.youtubeInitialized = true;
     };
 
     VideoGallery.prototype.createVimeoPlayer = function (video_id, autoplay) {
-      if (this.vimeoInitialized || !video_id) return;
+      if (!video_id) return;
 
       if (autoplay) {
         autoplay = 1;
@@ -133,11 +150,11 @@
         autoplay = 0;
       }
 
-      var vars = {'clip_id': video_id,'server': 'vimeo.com','show_title': 0,'show_byline': 0,'show_portrait': 0,'fullscreen': 0,'js_api': 1,'autoplay': autoplay};
+      var vars = {'clip_id': video_id,'server': 'vimeo.com','show_title': 1,'show_byline': 0,'show_portrait': 0,'fullscreen': 1,'js_api': 1,'autoplay': autoplay};
       var params  = {'swliveconnect':true,'fullscreen': 0,'allowscriptaccess': 'always','allowfullscreen':true,'wmode':'opaque'};
       var atts = { };
       swfobject.embedSWF("http://vimeo.com/moogaloop.swf",
-          "vimeoplayer", "400", "266", "9.0.0", null, vars, params, atts);
+          "vimeoplayer", playerWidth.toString(), playerHeight.toString(), "9.0.0", null, vars, params, atts);
 
       this.vimeoInitialized = true;
     };
@@ -154,7 +171,7 @@
     };
 
     var gallery = new VideoGallery();
-    gallery.play();
+    window.gallery = gallery;
     {% for video in videos %}
       gallery.addVideo({
         id: '{{ video.id }}',

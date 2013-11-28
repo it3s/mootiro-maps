@@ -41,6 +41,10 @@
         margin: 5px;
         background: black;
         vertical-align: top;
+
+        object {
+            position: absolute;
+        }
     }
 
     .video-player-list {

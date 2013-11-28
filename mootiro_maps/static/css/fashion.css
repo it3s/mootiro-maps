@@ -943,6 +943,8 @@ a.project-btn {
     margin: 5px;
     background: black;
     vertical-align: top; }
+    #video-gallery .video-player object {
+      position: absolute; }
   #video-gallery .video-player-list {
     display: inline-block;
     width: 250px;
