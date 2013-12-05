@@ -76,10 +76,10 @@
         clear: both;
     }
 
-/* For IE 6/7 (trigger hasLayout) */
-.container {
-    zoom:1;
-}
+    /* For IE 6/7 (trigger hasLayout) */
+    .container {
+        zoom:1;
+    }
 
     .view-info-contributor {
         display: inline-block;
@@ -100,6 +100,11 @@
             width: 150px;
             margin-top: 15px;
         }
+    }
+
+    .social-buttons {
+        margin-top: 5px;
+        margin-right: -30px;
     }
 
 }
