@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<a class="button login-required" id="add-to-project" href="#" title="Adicionar Organizações filtradas a um projeto">{% trans "Add to Project" %}</a>
+<a class="button login-required {% if not filtered %}disabled{% endif %}" id="add-to-project" href="#" title="Adicionar Organizações filtradas a um projeto" {% if not filtered %}disabled{% endif %}>{% trans "Add to Project" %}</a>
 
 <!-- Modal form for adding this object to a project -->
 <div class="modal hide" id="add-project-modal" style="display:none;">
@@ -34,7 +34,8 @@
 
 <script type="text/javascript" charset="utf-8">
     $('#add-to-project').click(function(evt){
-        if (isAuthenticated){
+        var el = $(evt.target);
+        if (isAuthenticated && !el.is('.disabled')){
           $('#add-project-modal').modal('show');
         }
         return false;

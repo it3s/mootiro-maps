@@ -738,6 +738,10 @@ div.importsheet_missing_column {
       width: 150px;
       margin-top: 15px; }
 
+.view-list-top #add-to-project {
+    float: right;
+}
+
 #main-content.highlights * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

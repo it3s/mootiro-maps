@@ -27,8 +27,8 @@ def projects_for_object(context, obj):
 
 # WIP
 @register.inclusion_tag('project/filtered_query_to_project.html', takes_context=True)
-def filtered_query_to_project(context, type, params):
+def filtered_query_to_project(context, type, params, filtered=False):
     project_widget = Autocomplete(Project, '/project/search_by_name')
     project_widget = "%s \n %s" % (str(project_widget.media),
                                      project_widget.render('project'))
-    return dict(project_widget=project_widget, type=type, params=json.dumps(params))
+    return dict(project_widget=project_widget, type=type, params=json.dumps(params), filtered=filtered)
