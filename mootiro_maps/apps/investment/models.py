@@ -183,3 +183,6 @@ class Investment(models.Model):
     @property
     def perm_id(self):
         return 'i%d' % self.id
+
+    def is_empty(self):
+        return True

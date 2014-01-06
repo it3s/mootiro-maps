@@ -18,7 +18,7 @@ from authentication.utils import login_required
 from need.models import Need, TargetAudience
 from need.forms import NeedForm, NeedFormGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
-                        filtered_query, get_filter_params, to_json)
+                        filtered_query, get_filter_params, to_json, get_filter_params)
 from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)
@@ -96,12 +96,15 @@ def view(request, id=None):
 def list(request):
     sort_fields = ['creation_date', 'title']
 
+    filtered, filter_params = get_filter_params(request)
+
     query_set = filtered_query(Need.objects, request)
-    needs = sorted_query(query_set, sort_fields, request,
+    needs_list = sorted_query(query_set, sort_fields, request,
                          default_order='title')
-    needs_count = needs.count()
-    needs = paginated_query(needs, request=request)
-    return dict(needs=needs, needs_count=needs_count)
+    needs_count = needs_list.count()
+    needs = paginated_query(needs_list, request=request)
+    return dict(needs=needs, needs_count=needs_count,
+                     filtered=filtered, filter_params=filter_params)
 
 
 def tag_search(request):

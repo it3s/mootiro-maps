@@ -32,11 +32,11 @@ from investment.models import Investment
 logger = logging.getLogger(__name__)
 
 CLASSNAME_MAP = {
-    "Organization": Organization,
-    "Need":         Need,
-    "Resource":     Resource,
-    "Community":    Community,
-    "Investment":   Investment,
+    "organization": Organization,
+    "need":         Need,
+    "resource":     Resource,
+    "community":    Community,
+    "investment":   Investment,
 }
 
 @render_to('project/list.html')

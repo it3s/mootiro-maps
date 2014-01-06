@@ -88,12 +88,13 @@ def map(request):
 def list(request):
     sort_order = ['creation_date', 'name']
 
+    filtered, filter_params = get_filter_params(request)
     query_set = filtered_query(Community.objects, request)
     communities = sorted_query(query_set, sort_order, request)
     communities_count = communities.count()
     communities = paginated_query(communities, request)
-    return dict(communities=communities, communities_count=communities_count)
-
+    return dict(communities=communities, communities_count=communities_count,
+                filtered=filtered, filter_params=filter_params)
 
 def communities_geojson(request):
     bounds = request.GET.get('bounds', None)
