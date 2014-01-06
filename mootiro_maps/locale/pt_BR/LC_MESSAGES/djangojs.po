@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-06 11:12-0200\n"
+"POT-Creation-Date: 2014-01-06 11:42-0200\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -948,6 +948,11 @@ msgid_plural "Supported %s needs"
 msgstr[0] "%s necessidade apoiada"
 msgstr[1] "%s necessidades apoiadas"
 
+#: static/js.build/project/filtered_query_to_project.js:1
+#: static/js/project/filtered_query_to_project.js:11
+msgid "This list will be added to the project"
+msgstr "Esta lista será adicionada ao projeto"
+
 #: static/js/authentication/profile.js:28
 msgid "Organization"
 msgstr "Organização"
@@ -1090,6 +1095,10 @@ msgid ""
 msgstr ""
 "Insira informações sobre a organização filiada. Qual o seu papel? Sua "
 "infraestrutura? Objetivos? Pessoas para entrar em contato?"
+
+#: static/js/project/filtered_query_to_project.js:37
+msgid "Failed to relate this list to the selected project"
+msgstr ""
 
 #~ msgid "Clear all"
 #~ msgstr "Limpar tudo"
