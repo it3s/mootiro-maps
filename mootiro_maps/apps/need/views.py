@@ -19,6 +19,7 @@ from need.models import Need, TargetAudience
 from need.forms import NeedForm, NeedFormGeoRef
 from main.utils import (create_geojson, paginated_query, sorted_query,
                         filtered_query, get_filter_params, to_json)
+from model_versioning.tasks import versionate
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +35,7 @@ def new_need(request, id=""):
         return form
 
     def on_after_save(request, need):
+        versionate(request.user, need)
         redirect_url = reverse('view_need', kwargs={'id': need.id})
         return {'redirect': redirect_url}
 
@@ -52,6 +54,7 @@ def new_need_from_map(request, id=""):
 
     def on_after_save(request, need):
         redirect_url = reverse('view_need', kwargs={'id': need.id})
+        versionate(request.user, need)
         return {'redirect': redirect_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
@@ -74,6 +77,7 @@ def edit_need(request, id=""):
         return form
 
     def on_after_save(request, need):
+        versionate(request.user, need)
         redirect_url = reverse('view_need', kwargs={'id': need.pk})
         return {'redirect': redirect_url}
 
@@ -92,15 +96,12 @@ def view(request, id=None):
 def list(request):
     sort_fields = ['creation_date', 'title']
 
-    filtered, filter_params = get_filter_params(request)
-
     query_set = filtered_query(Need.objects, request)
     needs = sorted_query(query_set, sort_fields, request,
                          default_order='title')
     needs_count = needs.count()
     needs = paginated_query(needs, request=request)
-    return dict(needs=needs, needs_count=needs_count, filtered=filtered,
-                filter_params=filter_params)
+    return dict(needs=needs, needs_count=needs_count)
 
 
 def tag_search(request):

@@ -7,9 +7,9 @@ from django.db.models import Count
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
-from lib import reversion
 from lib.taggit.managers import TaggableManager
 
+from main.mixins import BaseModel
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
@@ -37,7 +37,7 @@ class ResourceKind(models.Model):
             ).order_by('-count', 'slug')[:number]
 
 
-class Resource(GeoRefModel):
+class Resource(GeoRefModel, BaseModel):
     """Resources model"""
     name = models.CharField(max_length=256, default=_('Resource without name'))
     # slug = models.CharField(max_length=256, blank=False, db_index=True)
@@ -112,5 +112,27 @@ class Resource(GeoRefModel):
         index_object_for_search.send(sender=self, obj=self)
         return r_
 
-if not reversion.is_registered(Resource):
-    reversion.register(Resource)
+
+    # ==========================================================================================
+    # Utils
+
+    # def from_dict(self, data):
+    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date', 'is_admin', 'is_active', 'about_me']
+    #     date_keys = ['creation_date']
+    #     build_obj_from_dict(self, data, keys, date_keys)
+
+    def to_dict(self):
+        fields_and_defaults = [
+            ('name', None), ('kind_id', None), ('description', None), ('short_description ', None), ('contact ', None),
+            ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
+            ('geojson', {})
+        ]
+        dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
+        dict_['community'] = [community.id for community in self.community.all()]
+        dict_['tags'] = [tag.name for tag in self.tags.all()]
+        return dict_
+
+    # def is_valid(self, ignore=[]):
+    #     self.errors = {}
+    #     valid = True
+    #     return valid

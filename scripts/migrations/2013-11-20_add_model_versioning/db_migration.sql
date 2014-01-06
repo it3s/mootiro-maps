@@ -1,0 +1,1 @@
+\i scripts/migrations/20131120_add_model_versioning/model_versioning.sql
