@@ -31,59 +31,6 @@ from .utils import login as auth_login
 
 logger = logging.getLogger(__name__)
 
-
-def _prepare_contrib_data(version, created_date):
-    """
-    given a django-reversion.Version object we want a dict like:
-    contrib = {
-        id: object id (in case of comment, the referenced object id)
-        name: presentation name
-        model_name: name of the model
-        app_name: name of the app (the django apps folder name)
-        has_geojson: is it has or not a geojson
-    }
-    """
-    data = simplejson.loads(version.serialized_data)[0]
-
-    regular_types = [
-        'need.need',
-        'komoo_resource.resource',
-        'community.community',
-        'organization.organization',
-    ]
-    weird_types = [
-        'komoo_comments.comment',
-    ]
-
-    contrib = {}
-
-    if data['model'] in regular_types + weird_types:
-        if data['model'] in regular_types:
-            obj = data['fields']
-            contrib['id'] = version.object_id
-            contrib['app_name'], contrib['model_name'] = data[
-                    'model'].split('.')
-            contrib['type'] = ['A', 'E', 'D'][version.type]
-
-        elif data['model'] in weird_types:
-            ctype = ContentType.objects.get_for_id(
-                            data['fields']['content_type'])
-            obj = model_to_dict(ctype.get_object_for_this_type(
-                    pk=data['fields']['object_id']))
-            contrib['id'] = obj.get('id', '') or obj.get('pk', '')
-            contrib['app_name'] = ctype.app_label
-            contrib['model_name'] = ctype.name
-            contrib['type'] = 'C'
-
-        contrib['name'] = obj.get('name', '') or obj.get('title', '')
-        contrib['date'] = created_date.strftime('%d/%m/%Y %H:%M')
-        contrib['has_geojson'] = not 'EMPTY' in obj.get('geometry', 'EMPTY')
-        contrib['permalink'] = "/permalink/{}{}".format(
-                                    contrib['model_name'][0], contrib['id'])
-
-    return contrib
-
-
 @render_to('authentication/profile.html')
 def profile(request, id=''):
     logger.debug('id : {}'.format(id))

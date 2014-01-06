@@ -2,12 +2,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
 
-import itertools
-
 from annoying.decorators import render_to
-from reversion.models import Version, VERSION_DELETE
 
-from main.utils import paginated_query, sorted_query, filtered_query
+from main.utils import paginated_query, sorted_query
 from .models import Update, News
 
 
@@ -23,7 +20,6 @@ def list(request):
         query_set = Update.objects.all()
     sort_order = ['-date', 'comments_count']
     updates_list = sorted_query(query_set, sort_order, request, default_order='-date')
-    updates_count = updates_list.count()
     updates_page = paginated_query(updates_list, request, size=30)
 
     news = News.objects.order_by("-date")

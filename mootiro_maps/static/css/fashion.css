@@ -737,6 +737,9 @@ div.importsheet_missing_column {
       display: inline-block;
       width: 150px;
       margin-top: 15px; }
+  #main-content.project .social-buttons {
+    margin-top: 5px;
+    margin-right: -30px; }
 
 .view-list-top #add-to-project {
     float: right;

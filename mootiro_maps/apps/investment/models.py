@@ -8,7 +8,6 @@ from django.contrib.contenttypes import generic
 from django.core.urlresolvers import reverse
 
 from annoying.functions import get_object_or_None
-from lib import reversion
 
 from authentication.models import User
 from lib.taggit.managers import TaggableManager
@@ -184,10 +183,3 @@ class Investment(models.Model):
     @property
     def perm_id(self):
         return 'i%d' % self.id
-
-    def is_empty(self):  # for Project related objects map
-        return True
-
-
-if not reversion.is_registered(Investment):
-    reversion.register(Investment)

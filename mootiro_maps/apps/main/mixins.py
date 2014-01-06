@@ -52,6 +52,11 @@ class BaseModel(models.Model):
         return cls.objects.filter(**kwargs)
 
     @classmethod
+    def create(cls, **kwargs):
+        """create an object"""
+        return cls.objects.create(**kwargs)
+
+    @classmethod
     def get_or_create(cls, **kwargs):
         """Get the object if exists or create if don't.
 
