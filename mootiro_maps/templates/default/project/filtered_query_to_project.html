@@ -1,8 +1,8 @@
 {% load i18n %}
 
-<a class="button login-required {% if not filtered %}disabled{% endif %}" id="add-to-project" href="#" title="Adicionar Organizações filtradas a um projeto" {% if not filtered %}disabled{% endif %}>{% trans "Add to Project" %}</a>
+<a class="button login-required {% if not filtered %}disabled{% endif %}" id="add-to-project" href="#" title="{% trans 'Add this list to a project' %}" {% if not filtered %}disabled{% endif %}>{% trans "Add to Project" %}</a>
 
-<!-- Modal form for adding this object to a project -->
+<!-- Modal form for adding this list to a project -->
 <div class="modal hide" id="add-project-modal" style="display:none;">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
@@ -24,7 +24,7 @@
     </div>
     <div class="modal-footer">
         <a href="#" class="btn" id="add-project-cancel" >
-            {% trans 'Cancel' %}
+            {% trans "Cancel" %}
         </a>
         <a href="#" class="button" id="add-project-save">
             {% trans "Save changes" %}
@@ -43,8 +43,8 @@
     $( "#id_project_autocomplete" ).bind( "autocompleteselect", function(event, ui) {
         $('.add-project-msg').html(
             '<p>' +
-                'Esta lista será adicionada ao projeto <strong>' +
-                ui.item.label + '</strong>' +
+                gettext('This list will be added to the project') +
+                ' <strong>' +  ui.item.label + '</strong> ' +
             '</p>'
         );
     });
@@ -69,7 +69,7 @@
                     // redirect to project page
                     window.location.href = data.redirect_url;
                 } else {
-                    alert('Falha ao relacionar este objeto ao projeto selecionado');
+                    alert(gettext('Failed to relate this list to the selected project'));
                 }
             },
             'json'
