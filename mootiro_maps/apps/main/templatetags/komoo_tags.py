@@ -397,8 +397,10 @@ def visualization_opts(context, obj, arg1='', arg2=''):
         (field, field_labels[field], field_widgets[field])
         for field in opts.get('filters', [])
     ]
+    filtered = context.get('filtered', False)
+    filter_params = context.get('filter_params', {})
 
-    return  dict(filters=filter_fields, sorters=sort_fields)
+    return  dict(filters=filter_fields, sorters=sort_fields, filtered=filtered, filter_params=filter_params)
 
 
 @register.simple_tag(takes_context=True)
