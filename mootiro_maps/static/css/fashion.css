@@ -913,6 +913,8 @@ a.project-btn {
 .new.project-btn .ico {
   background-image: url("../img/menu/newmenu/projects-active.png"); }
 
+#video-selector .video-modal {
+  margin-top: -60px; }
 #video-selector .video-entry,
 #video-selector .video-thumb {
   transition: transform 0.5s, box-shadow 0.5s;
@@ -933,6 +935,17 @@ a.project-btn {
   width: 300px; }
 #video-selector #title-modal #id_title {
   font-weight: bold; }
+#video-selector #delete-video {
+  float: left;
+  color: #ffffff; }
+#video-selector .add-new-video-link {
+  margin-left: 90px;
+  display: block;
+  width: 12px; }
+#video-selector .video-link {
+  width: 300px !important;
+  display: block;
+  margin: 10px 90px; }
 
 #video-gallery {
   margin: 20px 0; }
