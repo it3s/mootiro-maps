@@ -18,9 +18,6 @@
 
       <div class="button-new">
         <a class="button login-required" href="{% url new_organization %}" title="{% trans 'Add a new organization, for example, a government institution, a nonprofit organization or a company.' %}">{% trans "Create new organization" %}</a>
-      {% if filtered %}
-        {% filtered_query_to_project  "Organization" filter_params %}
-      {% endif %}
       </div>
     <div class="view-list-top">
       <div class="view-list-count"><!--organizations_count-->

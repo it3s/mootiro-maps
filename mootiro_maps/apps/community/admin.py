@@ -1,10 +1,9 @@
 from django.contrib import admin
-from reversion import VersionAdmin
 from moderation.admin import abuse_reports
 from community.models import Community
 
 
-class CommunityAdmin(VersionAdmin):
+class CommunityAdmin(admin.ModelAdmin):
     #list_display = ('__unicode__', abuse_reports)
     pass
 

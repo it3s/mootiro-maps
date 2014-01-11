@@ -68,7 +68,6 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'lib.reversion.middleware.RevisionMiddleware',
     'lib.themes.middleware.ThemesMiddleware',
 ]
 
@@ -120,7 +119,6 @@ INSTALLED_APPS = [
     'taggit',
     'django_js_utils',
     'crispy_forms',
-    'lib.reversion',
     'markitup',
     'lib.ajax_select',
     'fileupload',
@@ -153,6 +151,7 @@ INSTALLED_APPS = [
     'highlight',
     'locker',
     'video',
+    'model_versioning',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024

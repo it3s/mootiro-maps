@@ -16,9 +16,6 @@
 
     <div class="button-new">
       <a class="button login-required" href="{% url new_resource %}" title="{% trans 'Add new resource, for example, a library, a public park or a playground.' %}">{% trans "Create new resource" %}</a>
-      {% if filtered %}
-        {% filtered_query_to_project  "Resource" filter_params %}
-      {% endif %}
     </div>
 
     <div class="view-list-top">

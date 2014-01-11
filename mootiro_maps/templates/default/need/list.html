@@ -15,9 +15,6 @@
   <div class="highlight">
     <div class="button-new">
       <a class="button login-required" href="{% url new_need %}" title="{% trans 'Add new needs or community demands, for example, streets to be fixed, waste disposal, broken street lights.' %}">{% trans 'Create new need' %}</a>
-      {% if filtered %}
-        {% filtered_query_to_project  "Need" filter_params %}
-      {% endif %}
     </div>
     <div class="view-list">
       <div class="view-list-top">
