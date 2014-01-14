@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from lib.taggit.managers import TaggableManager
 
 from main.mixins import BaseModel
+from main.utils import ContactsField
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
@@ -44,10 +45,13 @@ class Resource(GeoRefModel, BaseModel):
     kind = models.ForeignKey(ResourceKind, null=True, blank=True)
     description = models.TextField()
     short_description = models.CharField(max_length=250, null=True, blank=True)
-    contact = models.TextField(null=True, blank=True)
     community = models.ManyToManyField(Community, related_name='resources',
             null=True, blank=True)
     tags = TaggableManager()
+
+    # TODO after migration remove contact
+    contact = models.TextField(null=True, blank=True)
+    contacts = ContactsField()
 
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
@@ -123,7 +127,8 @@ class Resource(GeoRefModel, BaseModel):
 
     def to_dict(self):
         fields_and_defaults = [
-            ('name', None), ('kind_id', None), ('description', None), ('short_description ', None), ('contact ', None),
+            ('name', None), ('kind_id', None), ('description', None), ('short_description ', None),
+            ('contacts', {}), ('contact ', None),
             ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
             ('geojson', {})
         ]
