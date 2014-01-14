@@ -19,7 +19,7 @@ from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 from search.signals import index_object_for_search
-from main.utils import to_json
+from main.utils import to_json, ContactsField
 from main.mixins import BaseModel
 
 
@@ -50,8 +50,10 @@ class Organization(GeoRefModel, BaseModel):
 
     community = models.ManyToManyField(Community, null=True, blank=True)
 
+    # TODO: Contacts.. after migration, remove contact and link field
     link = models.CharField(max_length=250, null=True, blank=True)
     contact = models.TextField(null=True, blank=True)
+    contacts = ContactsField()
 
     categories = models.ManyToManyField('OrganizationCategory', null=True,
                         blank=True)
@@ -186,7 +188,8 @@ class Organization(GeoRefModel, BaseModel):
         fields_and_defaults = [
             ('name', None), ('slug', None), ('description', None), ('short_description ', None),
             ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
-            ('logo_id', None), ('logo_category_id', None), ('logo_choice', None), ('link', None), ('contact', None),
+            ('logo_id', None), ('logo_category_id', None), ('logo_choice', None),
+            ('contacts', {}), ('link', None), ('contact', None),
             ('geojson', {})
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
