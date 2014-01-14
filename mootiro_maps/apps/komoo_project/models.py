@@ -17,7 +17,7 @@ from fileupload.models import UploadedFile
 from authentication.models import User
 from community.models import Community
 from search.signals import index_object_for_search
-from main.utils import create_geojson, to_json
+from main.utils import create_geojson, to_json, ContactsField
 from main.mixins import BaseModel
 from komoo_map.models import get_models
 
@@ -42,7 +42,10 @@ class Project(BaseModel):
     contributors = models.ManyToManyField(User, null=True, blank=True,
             related_name='project_contributors')
     community = models.ManyToManyField(Community, null=True, blank=True)
+
+    # TODO after migration remove contact
     contact = models.TextField(null=True, blank=True)
+    contacts = ContactsField()
 
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
 
@@ -192,7 +195,8 @@ class Project(BaseModel):
         fields_and_defaults = [
             ('name', None), ('slug', None), ('description', None), ('short_description ', None),
             ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
-            ('logo_id', None), ('contact', None),
+            ('logo_id', None),
+            ('contacts', {}), ('contact', None),
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['tags'] = [tag.name for tag in self.tags.all()]
