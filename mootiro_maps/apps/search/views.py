@@ -44,16 +44,20 @@ def _format_results(res):
 
 def _google_search(term):
     # Google search
-    google_results = requests.get(
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json',
-        params={
-            'input': term,
-            'sensor': 'false',
-            'types': 'geocode',
-            'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',
-            # TODO: move to settings
-        })
-    return google_results.content
+    try:
+        google_results = requests.get(
+            'https://maps.googleapis.com/maps/api/place/autocomplete/json',
+            params={
+                'input': term,
+                'sensor': 'false',
+                'types': 'geocode',
+                'key': 'AIzaSyDgx2Gr0QeIASfirdAUoA0jjOs80fGtBYM',
+                # TODO: move to settings
+            })
+        results = google_results.content
+    except:
+        results = '{"predictions": []}'
+    return results
 
 
 @ajax_request

@@ -183,7 +183,7 @@ AJAX_SELECT_INLINES = False
 
 # ========== Tests config =====================================================
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = ['--rednose', '--nocapture']
+NOSE_ARGS = ['--nocapture']
 if 'test' in sys.argv:
     import logging
     logging.disable(logging.CRITICAL)
