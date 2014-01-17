@@ -2,6 +2,7 @@
 {% load crispy_forms_tags %}
 {% load komoo_map_tags %}
 {% load upload_tags %}
+{% load video_tags %}
 {% load i18n %}
 {% load komoo_tags %}
 
@@ -34,6 +35,7 @@
 {% block page_scripts %}
     {{ form_resource.media }}
     {% load_files resource %}
+    {% load_videos resource %}
     <script type="text/javascript">
       $(function(){
         $('#form_resource').ajaxform();

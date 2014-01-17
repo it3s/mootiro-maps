@@ -919,3 +919,67 @@ a.project-btn {
 
 .new.project-btn .ico {
   background-image: url("../img/menu/newmenu/projects-active.png"); }
+
+#video-selector .video-modal {
+  margin-top: -60px; }
+#video-selector .video-entry,
+#video-selector .video-thumb {
+  transition: transform 0.5s, box-shadow 0.5s;
+  -moz-transition: -moz-transform 0.5s, -moz-box-shadow 0.5s;
+  -o-transition: -o-transform 0.5s, -o-box-shadow 0.5s;
+  -webkit-transition: -webkit-transform 0.5s, -webkit-box-shadow 0.5s;
+  width: 164px; }
+#video-selector .video-entry {
+  display: inline-block;
+  margin: 5px; }
+#video-selector .video-thumb:hover {
+  cursor: pointer;
+  transform: scale(1.15, 1.15);
+  -moz-transform: scale(1.15, 1.15);
+  -o-transform: scale(1.15, 1.15);
+  -webkit-transform: scale(1.15, 1.15); }
+#video-selector #title-modal #video-title-modal {
+  width: 300px; }
+#video-selector #title-modal #id_title {
+  font-weight: bold; }
+#video-selector #delete-video {
+  float: left;
+  color: #ffffff; }
+#video-selector .add-new-video-link {
+  margin-left: 90px;
+  display: block;
+  width: 12px; }
+#video-selector .video-link {
+  width: 300px !important;
+  display: block;
+  margin: 10px 90px; }
+
+#video-gallery {
+  margin: 20px 0; }
+  #video-gallery .video-player {
+    display: inline-block;
+    width: 400px;
+    height: 266px;
+    margin: 5px;
+    background: black;
+    vertical-align: top; }
+    #video-gallery .video-player object {
+      position: absolute; }
+  #video-gallery .video-player-list {
+    display: inline-block;
+    width: 250px;
+    height: 266px;
+    overflow-y: scroll; }
+    #video-gallery .video-player-list .video-entry {
+      clear: both;
+      font-size: 95%;
+      cursor: pointer; }
+      #video-gallery .video-player-list .video-entry .video-title {
+        display: block;
+        font-weight: bold;
+        padding: 5px 0 7px; }
+      #video-gallery .video-player-list .video-entry .video-thumb {
+        display: inline-block;
+        width: 80px;
+        float: left;
+        margin: 5px; }

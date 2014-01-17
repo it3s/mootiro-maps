@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals  # unicode by default
+import json
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -15,13 +16,15 @@ from main.widgets import TaggitWidget
 from community.models import Community
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
+from video.forms import VideosField
+from video.models import Video
 
 
 class CommunityForm(AjaxModelForm):
     class Meta:
         model = Community
         fields = ('name', 'short_description', 'population', 'description',
-                  'tags', 'geometry', 'files', 'project_id')
+                  'tags', 'geometry', 'files', 'videos', 'project_id')
 
     _field_labels = {
         'name': _('Name'),
@@ -30,11 +33,13 @@ class CommunityForm(AjaxModelForm):
         'description': _('Description'),
         'tags': _('Tags'),
         'files': ' ',
+        'videos': _('Videos'),
     }
 
     description = forms.CharField(widget=MarkItUpWidget())
     geometry = forms.CharField(widget=forms.HiddenInput())
     files = FileuploadField(required=False)
+    videos = VideosField(required=False)
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/community/search_tags/"),
         required=False)
@@ -50,6 +55,9 @@ class CommunityForm(AjaxModelForm):
         UploadedFile.bind_files(
             self.cleaned_data.get('files', '').split('|'), comm
         )
+
+        videos = json.loads(self.cleaned_data.get('videos', ''))
+        Video.save_videos(videos, comm)
 
         # Add the community to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)

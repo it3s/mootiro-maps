@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+import json
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -17,6 +18,8 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 from komoo_resource.models import Resource, ResourceKind
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
+from video.forms import VideosField
+from video.models import Video
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +28,8 @@ class FormResource(AjaxModelForm):
     class Meta:
         model = Resource
         fields = ('name', 'short_description', 'description', 'kind',
-                  'contact', 'tags', 'community', 'id', 'files', 'project_id')
+                  'contact', 'tags', 'community', 'id', 'files', 'videos',
+                  'project_id')
 
     _field_labels = {
         'name': _('Name'),
@@ -35,7 +39,9 @@ class FormResource(AjaxModelForm):
         'contact': _('Contact'),
         'tags': _('Tags'),
         'community': _('Community'),
-        'files': _('Images'), }
+        'files': _('Images'),
+        'videos': _('Videos'),
+    }
 
     description = forms.CharField(widget=MarkItUpWidget())
     kind = forms.CharField(required=False, widget=AutocompleteWithFavorites(
@@ -47,6 +53,7 @@ class FormResource(AjaxModelForm):
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     files = FileuploadField(required=False)
+    videos = VideosField(required=False)
     project_id = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, *args, **kwargs):
@@ -60,6 +67,9 @@ class FormResource(AjaxModelForm):
         resource = super(FormResource, self).save(*args, **kwargs)
         UploadedFile.bind_files(
             self.cleaned_data.get('files', '').split('|'), resource)
+
+        videos = json.loads(self.cleaned_data.get('videos', ''))
+        Video.save_videos(videos, resource)
 
         # Add the community to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)
@@ -95,4 +105,4 @@ class FormResourceGeoRef(FormResource):
         model = Resource
         fields = ('name', 'short_description', 'description', 'kind',
                   'contact', 'tags', 'community', 'id', 'geometry', 'files',
-                  'project_id')
+                  'videos', 'project_id')

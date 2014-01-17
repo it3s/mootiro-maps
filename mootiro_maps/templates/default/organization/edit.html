@@ -1,6 +1,7 @@
 {% extends 'global.html' %}
 {% load crispy_forms_tags %}
 {% load upload_tags %}
+{% load video_tags %}
 {% load komoo_map_tags %}
 {% load i18n %}
 {% load komoo_tags %}
@@ -36,6 +37,7 @@
 {% block page_scripts %}
     {{ form_organization.media }}
     {% load_files organization %}
+    {% load_videos organization %}
     {% load_logo organization %}
 
     <script type="text/javascript">

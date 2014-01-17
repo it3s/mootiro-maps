@@ -67,6 +67,7 @@ MIDDLEWARE_CLASSES = [
     'authentication.utils.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'lib.themes.middleware.ThemesMiddleware',
 ]
 
@@ -149,6 +150,7 @@ INSTALLED_APPS = [
     'tags',
     'highlight',
     'locker',
+    'video',
     'model_versioning',
 ]
 
