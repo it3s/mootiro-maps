@@ -13,7 +13,7 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 from annoying.functions import get_object_or_None
 
 from main.utils import MooHelper, clean_autocomplete_field
-from main.widgets import Tagsinput, TaggitWidget
+from main.widgets import Tagsinput, TaggitWidget, ContactsWidget
 from organization.models import (Organization, OrganizationCategory,
         OrganizationCategoryTranslation)
 from komoo_project.models import Project
@@ -39,7 +39,7 @@ class FormOrganization(AjaxModelForm):
     class Meta:
         model = Organization
         fields = ('name', 'short_description', 'description', 'community',
-                  'link', 'contact', 'target_audiences', 'categories', 'tags',
+                  'link', 'contact', 'contacts', 'target_audiences', 'categories', 'tags',
                   'id', 'logo', 'logo_category', 'logo_choice', 'project_id')
 
     _field_labels = {
@@ -48,6 +48,7 @@ class FormOrganization(AjaxModelForm):
         'description': _('Description'),
         'community': _('Community'),
         'contact': _('Contact'),
+        'contacts': _('Contacts'),
         'tags': _('Tags'),
         'target_audiences': _('Target audiences'),
         'categories': _('Categories'),
@@ -58,7 +59,8 @@ class FormOrganization(AjaxModelForm):
     description = forms.CharField(required=False, widget=MarkItUpWidget())
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
-    contact = forms.CharField(required=False, widget=MarkItUpWidget())
+    contact = forms.CharField(required=False, widget=MarkItUpWidget())  # TODO remove later
+    contacts = forms.CharField(required=False, widget=ContactsWidget())
     target_audiences = forms.Field(required=False,
         widget=Tagsinput(
             TargetAudience,
