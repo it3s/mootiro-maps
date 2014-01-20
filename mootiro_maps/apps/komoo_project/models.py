@@ -17,7 +17,8 @@ from fileupload.models import UploadedFile
 from authentication.models import User
 from community.models import Community
 from search.signals import index_object_for_search
-from main.utils import create_geojson, to_json, ContactsField
+from main.utils import create_geojson, to_json
+from main.models import pContactsField
 from main.mixins import BaseModel
 from komoo_map.models import get_models
 

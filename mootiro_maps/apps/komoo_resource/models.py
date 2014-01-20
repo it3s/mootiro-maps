@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 from lib.taggit.managers import TaggableManager
 
 from main.mixins import BaseModel
-from main.utils import ContactsField
+from main.models import ContactsField
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT

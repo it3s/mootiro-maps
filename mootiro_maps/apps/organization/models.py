@@ -19,7 +19,8 @@ from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 from search.signals import index_object_for_search
-from main.utils import to_json, ContactsField
+from main.utils import to_json
+from main.models import ContactsField
 from main.mixins import BaseModel
 
 

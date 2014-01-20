@@ -2,7 +2,7 @@
 from organization.models import Organization
 from komoo_resource.models import Resource
 from komoo_project.models import Project
-from main.utils import ContactsField
+from main.models import ContactsField
 
 def migrate_organizations():
     for org in Organization.objects.all():
