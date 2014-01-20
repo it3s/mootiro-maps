@@ -8,7 +8,7 @@ from django.utils.translation import ugettext as _
 from django.contrib.gis.gdal.error import OGRException
 from django.contrib.gis.geos.error import GEOSException
 
-from main.models import GeoRefModel
+from komoo_map.models import GeoRefModel
 from main.utils import to_json
 from authentication.models import User
 from community.models import Community
