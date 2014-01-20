@@ -17,7 +17,21 @@ def feature_types(request):
 
 
 def layers(request):
-    # TODO: Get custom layers from DB
+    '''Default layers'''
+    return HttpResponse(
+        to_json([{
+            'name': m.get_map_attr('title') or m.__name__,
+            'id': m.__name__,
+            'color': m.get_map_attr('background_color'),
+            'icon': [getattr(m, 'image'), getattr(m, 'image_off')],
+            'rule': {'operator': 'is', 'property': 'type', 'value': m.__name__}
+        } for m in get_editable_models()]),
+        mimetype="application/x-javascript")
+
+
+def project_layers(request):
+    # TODO: Get layers from DB
+    project = request.GET.get('project', None)
     return HttpResponse(
         to_json([{
             'name': m.get_map_attr('title') or m.__name__,

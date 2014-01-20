@@ -112,8 +112,8 @@ def _fetch_geo_objects(query, zoom,
     return ret
 
 
-#from django.views.decorators.cache import cache_page
-#@cache_page(54000)
+from django.views.decorators.cache import cache_page
+@cache_page(54000)
 def get_geojson(request):
     """View used by the map javascript to fetch geojson data for each map tile.
 

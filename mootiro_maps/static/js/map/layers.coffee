@@ -7,27 +7,37 @@ define (require) ->
 
     collections = require './collections'
 
+    static_path = '/static/'
+
+    equal_ops = ['==', 'is', 'equal', 'equals']
+    not_equal_ops = ['!=', 'isnt', 'not equal', 'not equals', 'different']
+    in_ops = ['in']
+    contains_ops = ['contains', 'has']
+    not_ops = ['!', 'not']
+    or_ops = ['or']
+    and_ops = ['and']
+
     eval_expr = (expr, obj) ->
         return false if not expr? or not obj?
         operator = expr.operator
-        if operator in ['==', 'is', 'equal', 'equals']
+        if operator in equal_ops
             obj.getProperty(expr.property) is expr.value
-        else if operator in ['!=', 'isnt', 'not equal', 'not equals', 'different']
+        else if operator in not_equal_ops
             not obj.getProperty(expr.property) is expr.value
-        else if operator is 'in'
+        else if operator in in_ops
             obj.getProperty(expr.property) in expr.value
-        else if operator in ['contains', 'has'] and Object.prototype.toString.call(expr.value) is '[object Array]'
+        else if operator in contains_ops and Object.prototype.toString.call(expr.value) is '[object Array]'
             res = true
             for v in expr.value
                 res = res and v in obj.getProperty(expr.property)
             res
-        else if operator in ['contains', 'has']
+        else if operator in contains_ops
             expr.value in obj.getProperty(expr.property)
-        else if operator in ['!', 'not']
+        else if operator in not_ops
             not eval_expr(expr.child, obj)
-        else if operator is 'or'
+        else if operator in or_ops
             eval_expr(expr.left, obj) or eval_expr(expr.right, obj)
-        else if operator is 'and'
+        else if operator in and_ops
             eval_expr(expr.left, obj) and eval_expr(expr.right, obj)
 
     window.ee = eval_expr
@@ -84,15 +94,17 @@ define (require) ->
         getCollection: -> @collection
         setCollection: (@collection) ->
             @cache.clear()
-            # We are lazy. Just populate the cache when needed.
+            # We are lazy. Populate the cache when needed.
             this
 
         getRule: -> @rule
         setRule: (@rule) ->
+            # Clear the cache because the objects associated with this layer
+            # may been changed
             @cache.clear()
             this
 
-        getIconUrl: -> "/static/" + (if @visible then @icon else @iconOff)
+        getIconUrl: -> static_path + (if @visible then @icon else @iconOff)
 
         setMap: (@map) ->
             @handleMapEvents()
