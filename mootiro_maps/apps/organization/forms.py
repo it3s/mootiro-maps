@@ -126,6 +126,6 @@ class FormOrganizationGeoRef(FormOrganization):
     class Meta:
         model = Organization
         fields = ('name', 'short_description', 'description', 'community',
-                  'link', 'contact', 'target_audiences', 'categories', 'tags',
+                  'link', 'contact', 'contacts', 'target_audiences', 'categories', 'tags',
                   'id', 'logo', 'logo_category', 'logo_choice', 'geometry',
                   'project_id')

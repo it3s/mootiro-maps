@@ -177,7 +177,7 @@ class Organization(GeoRefModel, BaseModel):
     def perm_id(self):
         return 'o%d' % self.id
 
-    # ==========================================================================================
+    # ==========================================================================
     # Utils
 
     # def from_dict(self, data):
@@ -204,7 +204,6 @@ class Organization(GeoRefModel, BaseModel):
     #     self.errors = {}
     #     valid = True
     #     return valid
-
 
 
 class OrganizationCategory(models.Model):
