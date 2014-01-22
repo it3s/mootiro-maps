@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from django.utils.translation import ugettext as _
 from jsonfield import JSONField
 
 
@@ -27,7 +27,8 @@ class ContactsField(JSONField):
         kwargs.update(default=self.json_field_defaults)
         super(ContactsField, self).__init__(*args, **kwargs)
 
-    def key_name(self, key):
+    @classmethod
+    def key_names(self):
         """ Translated key name """
         return {
             'address': _('Address'),
@@ -39,7 +40,12 @@ class ContactsField(JSONField):
             'email': _('E-mail'),
             'twitter': _('Twitter'),
             'site': _('Web Site'),
-            '---': '---',
-        }[key]
+            '---': _('Others'),
+        }
+
+    @classmethod
+    def key_name(self, key):
+        """ Translated key name"""
+        return self.key_names()[key]
 
 

@@ -11,11 +11,15 @@ var ContactsWidget = {
   },
 
   onLoad: function() {
-    var field = $("#id_contacts");
-    var initialValues = JSON.parse(field.val());
+    this.field = $("#id_contacts");
+    var initialValues = JSON.parse(this.field.val());
 
     this.loadInitialValues(initialValues);
     this.listen();
+  },
+
+  getKeyName: function(key) {
+    return this.field.data("key-names")[key];
   },
 
   loadInitialValues: function(initialValues) {
@@ -23,7 +27,7 @@ var ContactsWidget = {
 
     _.each(initialValues, function(value, key) {
       if (typeof value !== "undefined" && value !== null) {
-        module.renderKeyValuePair(key, value);
+        module.renderKeyValuePair(module.getKeyName(key), value);
       }
     });
   },
