@@ -1,13 +1,23 @@
 // ContactsWidget Module
 var ContactsWidget = {
-  onChange: function() {
-    // TODO implement-me
+  updateValues: function(module) {
     // change events callback
+    var contacts = {};
+    module.contactsListField.find(".contact-kv input").each(function(index, el) {
+      el = $(el);
+      contacts[el.data("key")] = el.val() === "" ?  null : el.val();
+    });
+
+    // update values as parsed JSON on module.field
+    module.field.val(JSON.stringify(contacts));
   },
 
   listen: function() {
-    // TODO implement-me
     // listen for change events
+    var module = this;
+    module.contactsListField.find(".contact-kv input").change(function() {
+      module.updateValues(module);
+    });
   },
 
   onLoad: function() {
