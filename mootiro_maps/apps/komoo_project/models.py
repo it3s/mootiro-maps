@@ -44,8 +44,7 @@ class Project(BaseModel):
             related_name='project_contributors')
     community = models.ManyToManyField(Community, null=True, blank=True)
 
-    # TODO after migration remove contact
-    contact = models.TextField(null=True, blank=True)
+    contact = models.TextField(null=True, blank=True)   # TODO remove me
     contacts = ContactsField()
 
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
@@ -184,18 +183,21 @@ class Project(BaseModel):
         return Project.objects.filter(
             Q(contributors__in=[user]) | Q(creator=user)).distinct()
 
-    # ==========================================================================================
+    # ==========================================================================
     # Utils
 
     # def from_dict(self, data):
-    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date', 'is_admin', 'is_active', 'about_me']
+    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date',
+    #             'is_admin', 'is_active', 'about_me']
     #     date_keys = ['creation_date']
     #     build_obj_from_dict(self, data, keys, date_keys)
 
     def to_dict(self):
         fields_and_defaults = [
-            ('name', None), ('slug', None), ('description', None), ('short_description ', None),
-            ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
+            ('name', None), ('slug', None), ('description', None),
+            ('short_description ', None),
+            ('creator_id', None), ('creation_date', None),
+            ('last_editor_id', None), ('last_update', None),
             ('logo_id', None),
             ('contacts', {}), ('contact', None),
         ]

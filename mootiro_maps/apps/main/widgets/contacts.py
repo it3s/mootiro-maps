@@ -12,6 +12,8 @@ class ContactsWidget(forms.Widget):
         js = ('js/widgets/contacts.js', )
 
     def render(self, name, value={}, attrs=None):
+        if not value:
+            value = ContactsField.json_field_defaults
         return """
             <div class="contacts-list">
             </div>
@@ -23,12 +25,3 @@ class ContactsWidget(forms.Widget):
             "value": mark_safe(json.dumps(value)),
             "key_names": mark_safe(json.dumps(ContactsField.key_names())),
         }
-
-    # def clean(self, value, *a, **kw):
-    #     try:
-    #         if not value or value == 'None':
-    #             return self.model()
-    #         else:
-    #             return self.model.objects.get(id=value)
-    #     except:
-    #         raise forms.ValidationError(_('invalid data'))
