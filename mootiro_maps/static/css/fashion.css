@@ -742,8 +742,7 @@ div.importsheet_missing_column {
     margin-right: -30px; }
 
 .view-list-top #add-to-project {
-    float: right;
-}
+  float: right; }
 
 #main-content.highlights * {
   -webkit-box-sizing: border-box;
@@ -919,3 +918,13 @@ a.project-btn {
 
 .new.project-btn .ico {
   background-image: url("../img/menu/newmenu/projects-active.png"); }
+
+.contacts-list .contact-kv {
+  width: 45%;
+  display: inline-block;
+  margin-left: 30px; }
+  .contacts-list .contact-kv label {
+    float: left; }
+  .contacts-list .contact-kv input {
+    float: right;
+    max-width: 200px; }

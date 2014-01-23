@@ -23,6 +23,7 @@ var ContactsWidget = {
   onLoad: function() {
     this.field = $("#id_contacts");
     this.contactsListField = $(".contacts-list");
+
     var initialValues = JSON.parse(this.field.val());
 
     this.loadInitialValues(initialValues);
@@ -49,7 +50,7 @@ var ContactsWidget = {
   },
 
   loadInitialValues: function(initialValues) {
-    var module = this;  // reference for the ContactsWidget module itself
+    var module = this;
 
     _.each(module.keyOrder(), function(key) {
       var value = initialValues[key];

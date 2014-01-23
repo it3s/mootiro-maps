@@ -24,3 +24,11 @@ class ContactsWidget(forms.Widget):
             "key_names": mark_safe(json.dumps(ContactsField.key_names())),
         }
 
+    # def clean(self, value, *a, **kw):
+    #     try:
+    #         if not value or value == 'None':
+    #             return self.model()
+    #         else:
+    #             return self.model.objects.get(id=value)
+    #     except:
+    #         raise forms.ValidationError(_('invalid data'))
