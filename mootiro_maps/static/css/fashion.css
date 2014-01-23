@@ -919,6 +919,9 @@ a.project-btn {
 .new.project-btn .ico {
   background-image: url("../img/menu/newmenu/projects-active.png"); }
 
+label[for=id_contacts] {
+  margin-bottom: 20px; }
+
 .contacts-list .contact-kv {
   width: 45%;
   display: inline-block;

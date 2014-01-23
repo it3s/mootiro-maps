@@ -38,18 +38,17 @@ logger = logging.getLogger(__name__)
 class FormOrganization(AjaxModelForm):
     class Meta:
         model = Organization
-        fields = ('name', 'short_description', 'description', 'community',
-                  'link', 'contact', 'contacts', 'target_audiences', 'categories', 'tags',
-                  'id', 'logo', 'logo_category', 'logo_choice', 'project_id')
+        fields = ('id', 'name', 'short_description', 'description', 'contacts',
+                  'tags', 'community', 'target_audiences', 'categories',
+                  'logo', 'logo_category', 'logo_choice', 'project_id')
 
     _field_labels = {
         'name': _('Name'),
         'short_description': _('Short description'),
         'description': _('Description'),
-        'community': _('Community'),
-        'contact': _('Contact'),
         'contacts': _('Contacts'),
         'tags': _('Tags'),
+        'community': _('Community'),
         'target_audiences': _('Target audiences'),
         'categories': _('Categories'),
         'files': _('Images'),
@@ -57,10 +56,12 @@ class FormOrganization(AjaxModelForm):
     }
 
     description = forms.CharField(required=False, widget=MarkItUpWidget())
+    contacts = forms.CharField(required=False, widget=ContactsWidget())
+    tags = forms.Field(
+        widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
+        required=False)
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
-    contact = forms.CharField(required=False, widget=MarkItUpWidget())  # TODO remove later
-    contacts = forms.CharField(required=False, widget=ContactsWidget())
     target_audiences = forms.Field(required=False,
         widget=Tagsinput(
             TargetAudience,
@@ -72,9 +73,6 @@ class FormOrganization(AjaxModelForm):
     logo = LogoField(required=False)
     logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
     logo_category = forms.CharField(required=False, widget=forms.HiddenInput())
-    tags = forms.Field(
-        widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
-        required=False)
     project_id = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, *args, **kwargs):
@@ -125,7 +123,7 @@ class FormOrganizationGeoRef(FormOrganization):
 
     class Meta:
         model = Organization
-        fields = ('name', 'short_description', 'description', 'community',
-                  'link', 'contact', 'contacts', 'target_audiences', 'categories', 'tags',
-                  'id', 'logo', 'logo_category', 'logo_choice', 'geometry',
+        fields = ('id', 'name', 'short_description', 'description', 'contacts',
+                  'tags', 'community', 'target_audiences', 'categories',
+                  'logo', 'logo_category', 'logo_choice', 'geometry',
                   'project_id')
