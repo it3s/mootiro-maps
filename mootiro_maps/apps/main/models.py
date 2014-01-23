@@ -19,13 +19,28 @@ class ContactsField(JSONField):
         'email': None,
         'twitter': None,
         'site': None,
-        '---': None,
+        'other': None,
     }
 
     def __init__(self, *args, **kwargs):
         # guarantes we have all keys by default
         kwargs.update(default=self.json_field_defaults)
         super(ContactsField, self).__init__(*args, **kwargs)
+
+    @classmethod
+    def key_order(self):
+        return [
+            'address',
+            'compl',
+            'city',
+            'postal_code',
+            'phone',
+            'facebook',
+            'email',
+            'twitter',
+            'site',
+            'other',
+        ]
 
     @classmethod
     def key_names(self):
@@ -40,7 +55,7 @@ class ContactsField(JSONField):
             'email': _('E-mail'),
             'twitter': _('Twitter'),
             'site': _('Web Site'),
-            '---': _('Others'),
+            'other': _('Other'),
         }
 
     @classmethod

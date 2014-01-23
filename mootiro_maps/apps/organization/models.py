@@ -193,8 +193,7 @@ class Organization(GeoRefModel, BaseModel):
             ('last_editor_id', None), ('last_update', None),
             ('logo_id', None), ('logo_category_id', None),
             ('logo_choice', None),
-            ('contacts', {}), ('link', None), ('contact', None),
-            ('geojson', {})
+            ('contacts', {}), ('geojson', {})
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['tags'] = [tag.name for tag in self.tags.all()]

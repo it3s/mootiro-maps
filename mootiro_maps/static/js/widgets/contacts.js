@@ -45,7 +45,7 @@ var ContactsWidget = {
       'email',
       'twitter',
       'site',
-      '---',
+      'other',
     ];
   },
 

@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<div class="contacts-view" >
+{% for contact in contacts %}
+  <label>{{ contact.0 }}:</label>
+  <div class="contacts-view-value"> {{ contact.1 }} </div>
+{% empty %}
+  {% trans 'No contact information provided' %}
+{% endfor %}
+</div>

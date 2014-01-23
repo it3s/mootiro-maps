@@ -17,6 +17,7 @@ from django.db.models.query import QuerySet
 
 from markitup.templatetags.markitup_tags import render_markup
 
+from main.models import ContactsField
 from main.utils import templatetag_args_parser, create_geojson
 from main.widgets import (ImageSwitch, ImageSwitchMultiple, TaggitWidget,
                           Autocomplete)
@@ -300,6 +301,13 @@ def users_list(users):
 def communities_list(communities):
     """Create a html code with a list o communities."""
     return dict(communities=communities)
+
+
+@register.inclusion_tag('main/templatetags/view_contacts.html')
+def view_contacts(contacts):
+    filtered_contacts = [(ContactsField.key_name(key), contacts[key])
+        for key in ContactsField.key_order() if contacts.get(key, None)]
+    return {"contacts": filtered_contacts}
 
 
 def _get_widgets_dict(obj):
