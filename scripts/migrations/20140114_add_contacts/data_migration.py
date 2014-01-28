@@ -5,26 +5,27 @@ from komoo_project.models import Project
 from main.models import ContactsField
 
 
+def _migrate_model(model, custom_data=None):
+    for obj in model.objects.all():
+        obj.contacts = ContactsField.json_field_defaults
+        obj.contacts['other'] = obj.contact or None
+        if custom_data:
+            custom_data(obj)
+        obj.save()
+
+
 def migrate_organizations():
-    for org in Organization.objects.all():
-        org.contacts = ContactsField.json_field_defaults
+    def _custom_data(org):
         org.contacts['site'] = org.link or None
-        org.contacts['other'] = org.contact or None
-        org.save()
+    _migrate_model(Organization, _custom_data)
 
 
 def migrate_resources():
-    for res in Resource.objects.all():
-        res.contacts = ContactsField.json_field_defaults
-        res.contacts['other'] = res.contact or None
-        res.save()
+    _migrate_model(Resource)
 
 
 def migrate_projects():
-    for proj in Project.objects.all():
-        proj.contacts = ContactsField.json_field_defaults
-        proj.contacts['other'] = proj.contact or None
-        proj.save()
+    _migrate_model(Project)
 
 
 def run():
