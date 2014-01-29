@@ -11,25 +11,27 @@ from ajaxforms import AjaxModelForm
 from annoying.functions import get_object_or_None
 
 from main.utils import MooHelper
-from main.widgets import Tagsinput, TaggitWidget, ImageSwitchMultiple
+from main.widgets import (Tagsinput, TaggitWidget, ImageSwitchMultiple,
+    ContactsWidget)
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from need.models import Need, NeedCategory, TargetAudience
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
 
 
-need_form_fields = ('id', 'title', 'short_description', 'description',
-                    'community', 'categories', 'target_audiences', 'tags',
-                    'files', 'project_id')
+need_form_fields = ('id', 'name', 'short_description', 'description',
+                    'contacts', 'tags', 'community', 'categories',
+                    'target_audiences', 'files', 'project_id')
 
 need_form_field_labels = {
-    'title': _('Title'),
+    'name': _('Name'),
     'short_description': _('Short description'),
     'description': _('Description'),
+    'contacts': _('Contacts'),
+    'tags': _('Tags'),
     'community': _('Community'),
     'categories': _('Need categories'),
     'target_audiences': _('Target audiences'),
-    'tags': _('Tags'),
     'files': _('Images'),
 }
 
@@ -49,6 +51,13 @@ class NeedForm(AjaxModelForm):
 
     description = forms.CharField(widget=MarkItUpWidget())
 
+    contacts = forms.CharField(required=False, widget=ContactsWidget())
+
+    tags = forms.Field(
+        widget=TaggitWidget(autocomplete_url="/need/tag_search"),
+        required=False
+    )
+
     categories = forms.ModelMultipleChoiceField(
         queryset=NeedCategory.objects.all().order_by('name'),
         widget=ImageSwitchMultiple(
@@ -61,11 +70,6 @@ class NeedForm(AjaxModelForm):
         widget=Tagsinput(
             TargetAudience,
             autocomplete_url="/need/target_audience_search")
-    )
-
-    tags = forms.Field(
-        widget=TaggitWidget(autocomplete_url="/need/tag_search"),
-        required=False
     )
 
     files = FileuploadField(required=False)

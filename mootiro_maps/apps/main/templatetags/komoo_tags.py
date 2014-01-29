@@ -185,7 +185,6 @@ def taglist(obj, community=None):
         link = reverse('organization_list')
     elif isinstance(obj, Need):
         link = reverse('need_list')
-        sorter = 'title'
     elif isinstance(obj, Community):
         link = reverse('list_communities')
     elif isinstance(obj, Project):

@@ -17,7 +17,7 @@
     $('#need_form').ajaxform();
 
     $('#need_form').komooFormHintBoxes({
-      'title': {
+      'name': {
         top: '-8px',
         hint: '{% trans 'Insert an explanatory title for your need, for example "Fix street lights on Magnolia Avenue". ' %}'
       },
@@ -25,6 +25,11 @@
         top: '45%',
         hint: '{% trans "Gives details about this need. What is the problem about, why does it exist, who is affected by this problem and what has been tried to solve the situation so far?" %}'
       },
+      'contacts': {
+        hint: '{% trans "Insert the contact information (postal address, contact persons, phone number, email address)." %}',
+        top: '25%',
+      },
+
       'categories': {
         hint: '{% trans 'Select the categories that most fit your need. For instance, the construction of a cycling lane is related to mobility and environment issues.' %}',
         top: '-35px'

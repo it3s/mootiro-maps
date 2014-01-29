@@ -94,13 +94,12 @@ def view(request, id=None):
 
 @render_to('need/list.html')
 def list(request):
-    sort_fields = ['creation_date', 'title']
+    sort_fields = ['creation_date', 'name']
 
     filtered, filter_params = get_filter_params(request)
 
     query_set = filtered_query(Need.objects, request)
-    needs_list = sorted_query(query_set, sort_fields, request,
-                         default_order='title')
+    needs_list = sorted_query(query_set, sort_fields, request)
     needs_count = needs_list.count()
     needs = paginated_query(needs_list, request=request)
     return dict(needs=needs, needs_count=needs_count,

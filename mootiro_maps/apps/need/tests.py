@@ -10,13 +10,13 @@ from .models import Need
 
 
 def AN_UNSAVED_NEED():
-    return Need(title="Anywhere", description="Lorem ipsum")
+    return Need(name="Anywhere", description="Lorem ipsum")
 
 
 def A_NEED_DATA():
     return {
         'community': 1,
-        'title': 'Quadra Poliesportiva',
+        'name': 'Quadra Poliesportiva',
         'description': 'Lorem ipsum.',
         'categories': [1, 2, 3],
         'target_audiences': [1, 2, 3],
@@ -41,7 +41,7 @@ class NeedViewsSimpleTestCase(UserTestCase):
         expected = {
             'success': 'false',
             'errors': {
-                'title': ['This field is required.'],
+                'name': ['This field is required.'],
                 'description': ['This field is required.'],
                 'target_audiences': ['This field is required.'],
                 'categories': ['This field is required.'],
@@ -118,7 +118,7 @@ class NeedViewsWithCommunitiesTestCase(KomooTestCase):
         data = {
             'id': n.id,  # must set with ajax_form decorator
             'community': [1, 2],
-            'title': 'Coleta de sujeira',
+            'name': 'Coleta de sujeira',
             'description': n.description,
             'categories': [3, 4, 5],
             'target_audiences': [3, 4, 5],
@@ -144,7 +144,7 @@ class NeedViewsWithCommunitiesTestCase(KomooTestCase):
         data = {
             'id': n0.id,  # must set with ajax_form decorator
             'community': [1, 2],
-            'title': n0.title,
+            'name': n0.name,
             'description': n0.description,
             'categories': [1, 5],  # changed
             'target_audiences': [1, 5],  # changed
@@ -171,7 +171,7 @@ class NeedViewsWithCommunitiesTestCase(KomooTestCase):
         data = {
             'id': n.id,  # must set with ajax_form decorator
             'community': [1, 2],
-            'title': n.title,  # does not change
+            'name': n.name,  # does not change
             'description': n.description,
             'categories': [3, 4, 5],
             'target_audiences': [3, 4, 5],

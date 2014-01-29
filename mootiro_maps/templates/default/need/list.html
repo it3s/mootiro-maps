@@ -27,7 +27,7 @@
           {% pagination needs %}
         </div>
 
-        {% visualization_opts 'need' "sorters=['title','creation_date']" "filters=['tags','community', 'need_categories', 'target_audiences']"%}
+        {% visualization_opts 'need' "sorters=['name','creation_date']" "filters=['tags','community', 'need_categories', 'target_audiences']"%}
 
       </div>
 
@@ -35,7 +35,7 @@
       <div class="view-list-item {% cycle 'odd' '' %}">
         <h4>
           <span class="apart big">
-            <a href="{{ need.view_url }}"> {{ need.title }} </a>
+            <a href="{{ need.view_url }}"> {{ need.name }} </a>
             {% if need.community.all.count %}
             {% trans 'at' %}
             {% for comm in need.community.all %}
