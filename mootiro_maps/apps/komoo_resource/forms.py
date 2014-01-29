@@ -12,7 +12,7 @@ from ajaxforms import AjaxModelForm
 from annoying.functions import get_object_or_None
 
 from main.utils import MooHelper
-from main.widgets import TaggitWidget, AutocompleteWithFavorites
+from main.widgets import TaggitWidget, AutocompleteWithFavorites, ContactsWidget
 from ajax_select.fields import AutoCompleteSelectMultipleField
 from komoo_resource.models import Resource, ResourceKind
 from komoo_project.models import Project
@@ -24,26 +24,26 @@ logger = logging.getLogger(__name__)
 class FormResource(AjaxModelForm):
     class Meta:
         model = Resource
-        fields = ('name', 'short_description', 'description', 'kind',
-                  'contact', 'tags', 'community', 'id', 'files', 'project_id')
+        fields = ('id', 'name', 'short_description', 'description', 'contacts',
+                  'tags', 'kind', 'community', 'files', 'project_id')
 
     _field_labels = {
         'name': _('Name'),
         'short_description': _('Short description'),
         'description': _('Description'),
-        'kind': _('Content type'),
-        'contact': _('Contact'),
+        'contacts': _('Contacts'),
         'tags': _('Tags'),
+        'kind': _('Content type'),
         'community': _('Community'),
         'files': _('Images'), }
 
     description = forms.CharField(widget=MarkItUpWidget())
+    contacts = forms.CharField(required=False, widget=ContactsWidget())
+    tags = forms.Field(required=False, widget=TaggitWidget(
+            autocomplete_url="/resource/search_tags/"))
     kind = forms.CharField(required=False, widget=AutocompleteWithFavorites(
             ResourceKind, '/resource/search_by_kind/',
             ResourceKind.favorites(number=10), can_add=True))
-    contact = forms.CharField(required=False, widget=MarkItUpWidget())
-    tags = forms.Field(required=False, widget=TaggitWidget(
-            autocomplete_url="/resource/search_tags/"))
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     files = FileuploadField(required=False)
@@ -93,6 +93,7 @@ class FormResourceGeoRef(FormResource):
 
     class Meta:
         model = Resource
-        fields = ('name', 'short_description', 'description', 'kind',
-                  'contact', 'tags', 'community', 'id', 'geometry', 'files',
-                  'project_id')
+        fields = ('id', 'name', 'short_description', 'description', 'contacts',
+                  'tags', 'kind', 'community', 'files', 'project_id',
+                  'geometry')
+

@@ -96,14 +96,8 @@
                 </p>
                 {% endif %}
 
-                <h4>{% trans 'Contact' %}</h4>
-                <p>
-                    {% if resource.contact %}
-                        {{ resource.contact|render_markup|safe }}
-                    {% else %}
-                        {% trans 'No contact information provided' %}
-                    {% endif %}
-                </p>
+                <h4>{% trans 'Contacts' %}</h4>
+                {% view_contacts resource.contacts %}
             </div>
 
         {% endwith %}

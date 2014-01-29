@@ -33,9 +33,8 @@ class ResourceKind(models.Model):
 
     @classmethod
     def favorites(cls, number=10):
-        return ResourceKind.objects.all(
-            ).exclude(name='').annotate(count=Count('resource__id')
-            ).order_by('-count', 'slug')[:number]
+        return ResourceKind.objects.all().exclude(name='').annotate(
+            count=Count('resource__id')).order_by('-count', 'slug')[:number]
 
 
 class Resource(GeoRefModel, BaseModel):
@@ -45,13 +44,12 @@ class Resource(GeoRefModel, BaseModel):
     kind = models.ForeignKey(ResourceKind, null=True, blank=True)
     description = models.TextField()
     short_description = models.CharField(max_length=250, null=True, blank=True)
-    community = models.ManyToManyField(Community, related_name='resources',
-            null=True, blank=True)
+    contact = models.TextField(null=True, blank=True)  # TODO remove me
+    contacts = ContactsField()
     tags = TaggableManager()
 
-    # TODO after migration remove contact
-    contact = models.TextField(null=True, blank=True)
-    contacts = ContactsField()
+    community = models.ManyToManyField(Community, related_name='resources',
+            null=True, blank=True)
 
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
@@ -116,24 +114,25 @@ class Resource(GeoRefModel, BaseModel):
         index_object_for_search.send(sender=self, obj=self)
         return r_
 
-
-    # ==========================================================================================
+    # ==========================================================================
     # Utils
 
     # def from_dict(self, data):
-    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date', 'is_admin', 'is_active', 'about_me']
+    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date',
+    #             'is_admin', 'is_active', 'about_me']
     #     date_keys = ['creation_date']
     #     build_obj_from_dict(self, data, keys, date_keys)
 
     def to_dict(self):
         fields_and_defaults = [
-            ('name', None), ('kind_id', None), ('description', None), ('short_description ', None),
-            ('contacts', {}), ('contact ', None),
-            ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
-            ('geojson', {})
+            ('name', None), ('kind_id', None), ('description', None),
+            ('short_description ', None),
+            ('creator_id', None), ('creation_date', None),
+            ('last_editor_id', None), ('last_update', None),
+            ('geojson', {}), ('contacts', {}),
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
-        dict_['community'] = [community.id for community in self.community.all()]
+        dict_['community'] = [comm.id for comm in self.community.all()]
         dict_['tags'] = [tag.name for tag in self.tags.all()]
         return dict_
 
