@@ -3,6 +3,7 @@ from organization.models import Organization
 from komoo_resource.models import Resource
 from komoo_project.models import Project
 from need.models import Need
+from community.models import Community
 from main.models import ContactsField
 
 
@@ -33,8 +34,13 @@ def migrate_needs():
     _migrate_model(Need)
 
 
+def migrate_communities():
+    _migrate_model(Community)
+
+
 def run():
     migrate_organizations()
     migrate_resources()
     migrate_projects()
     migrate_needs()
+    migrate_communities()
