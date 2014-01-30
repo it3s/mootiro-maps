@@ -29,7 +29,7 @@
     {% for i in received %}
     <div class="view-list-item {% cycle '' 'odd' %}">
         <h4>
-            <a href="{{ i.view_url }}"><span class="apart big">{{ i.title }}</span></a>
+            <a href="{{ i.view_url }}"><span class="apart big">{{ i.name }}</span></a>
             <a class="small preview-on-map" href="#" data-geojson="">{% trans 'View on map' %}</a>
             <div class="clear-both"></div>
             {% comments_summary i %}
@@ -48,7 +48,7 @@
     {% for i in realized %}
     <div class="view-list-item {% cycle '' 'odd' %}">
         <h4>
-            <a href="{{ i.view_url }}"><span class="apart big">{{ i.title }}</span></a>
+            <a href="{{ i.view_url }}"><span class="apart big">{{ i.name }}</span></a>
             <a class="small preview-on-map" href="#" data-geojson="">{% trans 'View on map' %}</a>
             <div class="clear-both"></div>
             {% comments_summary i %}

@@ -25,7 +25,7 @@
           {% pagination investments %}
         </div>
 
-        {% visualization_opts 'investment' "sorters=['title','creation_date']" "filters=['tags']"%}
+        {% visualization_opts 'investment' "sorters=['name','creation_date']" "filters=['tags']"%}
       </div>
 
       {% for investment in investments.object_list %}

@@ -10,6 +10,7 @@ from django.core.urlresolvers import reverse
 from annoying.functions import get_object_or_None
 
 from authentication.models import User
+from main.models import ContactsField
 from lib.taggit.managers import TaggableManager
 from django.template.defaultfilters import slugify
 
@@ -33,7 +34,8 @@ class Investor(models.Model):
     # Fields
     anonymous_name = _("Anonymous")
     _name = models.CharField(max_length=256, null=True, blank=True)
-    typ = models.CharField(max_length=3, null=False, blank=False, choices=TYPE_CHOICES)
+    typ = models.CharField(max_length=3, null=False, blank=False,
+        choices=TYPE_CHOICES)
     is_anonymous = models.BooleanField(default=False, null=False)
 
     # Generic Relationship
@@ -121,12 +123,13 @@ class Investment(models.Model):
         ('EUR', _('Euro')),
     )
 
-    title = models.CharField(max_length=256)
+    name = models.CharField(max_length=256)
     # Auto-generated url slug. It's not editable via ModelForm.
     slug = models.CharField(max_length=256, null=False, blank=False,
                 db_index=True, editable=False)
     description = models.TextField()
     short_description = models.CharField(max_length=250, null=True, blank=True)
+    contacts = ContactsField()
     value = models.DecimalField(decimal_places=2, max_digits=14, null=True,
                 blank=True)
     currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES,
@@ -138,7 +141,8 @@ class Investment(models.Model):
     end_date = models.DateField(null=True)
 
     # Meta info
-    creator = models.ForeignKey(User, editable=False, null=True, related_name='created_investments')
+    creator = models.ForeignKey(User, editable=False, null=True,
+        related_name='created_investments')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_editor = models.ForeignKey(User, editable=False, null=True, blank=True)
     last_update = models.DateTimeField(auto_now=True)
@@ -150,25 +154,27 @@ class Investment(models.Model):
     # Grantee generic relationship
     grantee_content_type = models.ForeignKey(ContentType, editable=False)
     grantee_object_id = models.PositiveIntegerField(editable=False)
-    grantee = generic.GenericForeignKey('grantee_content_type', 'grantee_object_id')
+    grantee = generic.GenericForeignKey('grantee_content_type',
+                                        'grantee_object_id')
 
     tags = TaggableManager()
 
     def __unicode__(self):
-        return unicode(self.title)
+        return unicode(self.name)
 
     @property
-    def name(self):
-        return self.title
+    def title(self):
+        return self.name
 
     @property
     def community(self):
         return self.grantee.community
 
     def save(self, *args, **kwargs):
-        # TODO: validate grantee as either a Proposal, a Resource or an Organization
+        # TODO: validate grantee as either a Proposal, a Resource or
+        #       an Organization
         # TODO: validate investor as either a User or an Organization
-        self.slug = slugify(self.title)
+        self.slug = slugify(self.name)
         super(Investment, self).save(*args, **kwargs)
 
     # Url aliases

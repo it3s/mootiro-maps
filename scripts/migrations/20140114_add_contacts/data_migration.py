@@ -4,6 +4,7 @@ from komoo_resource.models import Resource
 from komoo_project.models import Project
 from need.models import Need
 from community.models import Community
+from investment.models import Investment
 from main.models import ContactsField
 
 
@@ -38,9 +39,14 @@ def migrate_communities():
     _migrate_model(Community)
 
 
+def migrate_investments():
+    _migrate_model(Investment)
+
+
 def run():
     migrate_organizations()
     migrate_resources()
     migrate_projects()
     migrate_needs()
     migrate_communities()
+    migrate_investments()

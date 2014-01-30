@@ -18,7 +18,7 @@ def AN_UNSAVED_INVESTMENT():
     grantee = AN_UNSAVED_ORGANIZATION()
     grantee.save()
     investor, created = Investor.get_or_create_for(grantee)
-    return Investment(title="Grana preta", description="lorem ipsum",
+    return Investment(name="Grana preta", description="lorem ipsum",
         date=datetime.date(2012, 12, 31), investor=investor, grantee=grantee)
 
 

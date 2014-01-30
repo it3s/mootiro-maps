@@ -8,3 +8,6 @@ ALTER TABLE need_need ADD COLUMN contacts text;
 ALTER TABLE need_need RENAME COLUMN title TO name;
 
 ALTER TABLE community_community ADD COLUMN contacts text;
+
+ALTER TABLE investment_investment ADD COLUMN contacts text;
+ALTER TABLE investment_investment RENAME COLUMN title TO name;

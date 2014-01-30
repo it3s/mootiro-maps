@@ -36,7 +36,7 @@
 
     $form.ajaxform();
     $form.komooFormHintBoxes({
-      'title': {
+      'name': {
         hint: '{% trans "Insert a name for this investment. You can make reference to a specific investment programme, inform the objective of the investment or its donor/grantee." %}',
         left: '720px',
         top: '-40%'
@@ -45,6 +45,11 @@
         hint: '{% trans "Please inform details about the investment. What shall be done with the money? What are its direct outcomes for the community? You can also link to spending data." %}',
         left: '720px',
         top: '30%'
+      },
+      'contacts': {
+        hint: '{% trans "Insert the contact information of this organization (postal address, contact persons, phone number, email address)." %}',
+        top: '25%',
+        left: '720px'
       },
       'investor_type': {
         hint: '{% trans "Please inform the investor type. Is it an organization already registered on MootiroMaps or a private donor?" %}',

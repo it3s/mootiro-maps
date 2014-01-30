@@ -9,10 +9,10 @@
 {% load markitup_tags %}
 {% load project_tags %}
 
-{% block title %}{{ investment.title }} on {{ investment.grantee }}{% endblock %}
+{% block title %}{{ investment.name }} on {{ investment.grantee }}{% endblock %}
 
 {% block facebook_meta %}
-  <meta property="og:title" content="{{ investment.title }} on {{ investment.grantee }} - MootiroMaps" />
+  <meta property="og:title" content="{{ investment.name }} on {{ investment.grantee }} - MootiroMaps" />
   <meta property="og:url" content="{{SITE_URL}}{{investment.view_url}}"/>
   <meta property="og:image" content="{{SITE_URL}}{{STATIC_URL}}img/logo-fb.png"/>
 {% endblock %}
@@ -22,7 +22,7 @@
 {% block content %}
   <div id="main-content">
     <div class="investment main-column">
-      <h2 class="title">{{ investment.title }}</h2>
+      <h2 class="title">{{ investment.name }}</h2>
 
       <div class="view-edit-btn right">
         {% history investment %}
@@ -59,6 +59,10 @@
 
   <div class="right-bar">
 
+    <div class="block right-bar-modif">
+      <h3>{% trans "Contacts" %}</h3>
+      {% view_contacts investment.contacts %}
+    </div>
     {% projects_for_object investment %}
     {% taglist investment %}
 
@@ -69,7 +73,7 @@
         <ul>
           {% for i in similar_investments %}
           <li>
-              <a href="{{ i.view_url }}"> {{ i.title }} </a>
+              <a href="{{ i.view_url }}"> {{ i.name }} </a>
           </li>
           {% endfor %}
         </ul>

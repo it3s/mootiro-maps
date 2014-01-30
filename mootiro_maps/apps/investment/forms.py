@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from annoying.decorators import autostrip
 from markitup.widgets import MarkItUpWidget
-from crispy_forms.layout import *
+from crispy_forms.layout import Layout, Div, Row
 from ajaxforms import AjaxModelForm
 
 from main.utils import MooHelper
@@ -14,7 +14,7 @@ from investment.models import Investment, Investor
 from organization.models import Organization
 
 from main.widgets import TaggitWidget, Datepicker, ConditionalField, \
-    Autocomplete
+    Autocomplete, ContactsWidget
 from signatures.signals import notify_on_update
 
 
@@ -23,15 +23,16 @@ class InvestmentForm(AjaxModelForm):
 
     class Meta:
         model = Investment
-        fields = ('title', 'short_description', 'description', 'investor_type',
-                  'anonymous_investor', 'investor_organization',
-                  'investor_person', 'over_period', 'date', 'end_date',
-                  'currency', 'value', 'tags')
+        fields = ('name', 'short_description', 'description', 'contacts',
+                  'investor_type', 'anonymous_investor',
+                  'investor_organization', 'investor_person', 'over_period',
+                  'date', 'end_date', 'currency', 'value', 'tags')
 
     _field_labels = {
-        'title': _('Title'),
+        'name': _('Name'),
         'short_description': _('Short description'),
         'description': _('Description'),
+        'contacts': _('Contacts'),
         'investor_type': _('Investor type'),
         'anonymous_investor': _('Anonymous investor'),
         'investor_organization': _('Investor organization'),
@@ -44,8 +45,9 @@ class InvestmentForm(AjaxModelForm):
         'tags': _('Tags'),
     }
 
-    title = forms.CharField()
+    name = forms.CharField()
     description = forms.CharField(widget=MarkItUpWidget())
+    contacts = forms.CharField(required=False, widget=ContactsWidget())
 
     investor_type = forms.ChoiceField(
         choices=Investor.TYPE_CHOICES,
@@ -55,7 +57,8 @@ class InvestmentForm(AjaxModelForm):
     )
 
     anonymous_investor = forms.BooleanField(
-        widget=ConditionalField(hide_on_active="#investment_form .investor_fields"),
+        widget=ConditionalField(
+            hide_on_active="#investment_form .investor_fields"),
         required=False
     )
 
@@ -95,7 +98,8 @@ class InvestmentForm(AjaxModelForm):
         self.helper = MooHelper(form_id="investment_form")
         self.helper.layout = Layout(
             "id",
-            "title",
+            "name",
+            "short_description",
             "description",
             "investor_type",
             "anonymous_investor",
@@ -104,6 +108,7 @@ class InvestmentForm(AjaxModelForm):
                 "investor_person",
                 css_class="investor_fields"
             ),
+            "contacts",
             "over_period",
             Row(
                 "date",
@@ -146,7 +151,7 @@ class InvestmentForm(AjaxModelForm):
         elif investor_type == 'PER':
             investor = investor_person
 
-        if investor != None:
+        if investor is not None:
             investor, created = Investor.get_or_create_for(investor,
                                     current=current_investor)
             self.cleaned_data['investor'] = investor
@@ -155,7 +160,6 @@ class InvestmentForm(AjaxModelForm):
 
         if created:
             investor.save()
-
 
         return cleaned_data
 
