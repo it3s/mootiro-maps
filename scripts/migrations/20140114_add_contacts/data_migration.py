@@ -5,6 +5,7 @@ from komoo_project.models import Project
 from need.models import Need
 from community.models import Community
 from investment.models import Investment
+from proposal.models import Proposal
 from main.models import ContactsField
 
 
@@ -43,6 +44,10 @@ def migrate_investments():
     _migrate_model(Investment)
 
 
+def migrate_proposals():
+    _migrate_model(Proposal)
+
+
 def run():
     migrate_organizations()
     migrate_resources()
@@ -50,3 +55,4 @@ def run():
     migrate_needs()
     migrate_communities()
     migrate_investments()
+    migrate_proposals()

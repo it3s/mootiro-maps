@@ -5,6 +5,8 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes import generic
 
+from lib.taggit.managers import TaggableManager
+from main.models import ContactsField
 from authentication.models import User
 from need.models import Need
 from investment.models import Investment
@@ -19,7 +21,12 @@ class Proposal(models.Model):
 
     title = models.CharField(max_length=256)
     description = models.TextField()
+    short_description = models.CharField(max_length=250, null=True, blank=True)
+
     number = models.IntegerField(null=False, blank=True, editable=False)
+
+    contacts = ContactsField()
+    tags = TaggableManager()
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True,
