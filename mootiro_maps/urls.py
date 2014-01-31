@@ -66,6 +66,7 @@ urlpatterns = patterns('',
     url(r'^community/', include('community.urls')),
     url(r'^update/', include('update.urls')),
     url(r'^importsheet/', include('importsheet.urls')),
+    url(r'^video/', include('video.urls')),
 )
 
 if settings.DEBUG:

@@ -6,6 +6,7 @@
 {% load comment_tags %}
 {% load markitup_tags %}
 {% load upload_tags %}
+{% load video_tags %}
 {% load project_tags %}
 
 {% block title %}{{ community.name }}{% endblock %}
@@ -37,6 +38,7 @@
       <span class="meta-info">{% trans "Population" %}</span> {% firstof community.population '-' %}
     </p>
     <div class="view-footer">
+        {% video_gallery community %}
         {% image_gallery community %}
     </div>
 

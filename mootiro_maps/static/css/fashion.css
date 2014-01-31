@@ -742,7 +742,8 @@ div.importsheet_missing_column {
     margin-right: -30px; }
 
 .view-list-top #add-to-project {
-  float: right; }
+    float: right;
+}
 
 #main-content.highlights * {
   -webkit-box-sizing: border-box;
@@ -919,6 +920,7 @@ a.project-btn {
 .new.project-btn .ico {
   background-image: url("../img/menu/newmenu/projects-active.png"); }
 
+
 label[for=id_contacts] {
   margin-bottom: 20px; }
 
@@ -937,3 +939,37 @@ label[for=id_contacts] {
 .contacts-view .contacts-view-value {
   color: #252525;
   padding-left: 20px; }
+
+#video-selector .video-modal {
+  margin-top: -60px; }
+#video-selector .video-entry,
+#video-selector .video-thumb {
+  transition: transform 0.5s, box-shadow 0.5s;
+  -moz-transition: -moz-transform 0.5s, -moz-box-shadow 0.5s;
+  -o-transition: -o-transform 0.5s, -o-box-shadow 0.5s;
+  -webkit-transition: -webkit-transform 0.5s, -webkit-box-shadow 0.5s;
+  width: 164px; }
+#video-selector .video-entry {
+  display: inline-block;
+  margin: 5px; }
+#video-selector .video-thumb:hover {
+  cursor: pointer;
+  transform: scale(1.15, 1.15);
+  -moz-transform: scale(1.15, 1.15);
+  -o-transform: scale(1.15, 1.15);
+  -webkit-transform: scale(1.15, 1.15); }
+#video-selector #title-modal #video-title-modal {
+  width: 300px; }
+#video-selector #title-modal #id_title {
+  font-weight: bold; }
+#video-selector #delete-video {
+  float: left;
+  color: #ffffff; }
+#video-selector .add-new-video-link {
+  margin-left: 90px;
+  display: block;
+  width: 12px; }
+#video-selector .video-link {
+  width: 300px !important;
+  display: block;
+  margin: 10px 90px; }

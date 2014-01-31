@@ -17,6 +17,8 @@ from ajax_select.fields import AutoCompleteSelectMultipleField
 from komoo_resource.models import Resource, ResourceKind
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
+from video.forms import VideosField
+from video.models import Video
 
 logger = logging.getLogger(__name__)
 
@@ -25,7 +27,7 @@ class FormResource(AjaxModelForm):
     class Meta:
         model = Resource
         fields = ('id', 'name', 'short_description', 'description', 'contacts',
-                  'tags', 'kind', 'community', 'files', 'project_id')
+                  'tags', 'kind', 'community', 'files', 'videos', 'project_id')
 
     _field_labels = {
         'name': _('Name'),
@@ -35,7 +37,9 @@ class FormResource(AjaxModelForm):
         'tags': _('Tags'),
         'kind': _('Content type'),
         'community': _('Community'),
-        'files': _('Images'), }
+        'files': _('Images'),
+        'videos': _('Videos'),
+    }
 
     description = forms.CharField(widget=MarkItUpWidget())
     contacts = forms.CharField(required=False, widget=ContactsWidget())
@@ -47,6 +51,7 @@ class FormResource(AjaxModelForm):
     community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     files = FileuploadField(required=False)
+    videos = VideosField(required=False)
     project_id = forms.CharField(widget=forms.HiddenInput(), required=False)
 
     def __init__(self, *args, **kwargs):
@@ -60,6 +65,9 @@ class FormResource(AjaxModelForm):
         resource = super(FormResource, self).save(*args, **kwargs)
         UploadedFile.bind_files(
             self.cleaned_data.get('files', '').split('|'), resource)
+
+        videos = json.loads(self.cleaned_data.get('videos', ''))
+        Video.save_videos(videos, resource)
 
         # Add the community to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)
@@ -94,6 +102,6 @@ class FormResourceGeoRef(FormResource):
     class Meta:
         model = Resource
         fields = ('id', 'name', 'short_description', 'description', 'contacts',
-                  'tags', 'kind', 'community', 'files', 'project_id',
+                  'tags', 'kind', 'community', 'files', 'videos', 'project_id',
                   'geometry')
 

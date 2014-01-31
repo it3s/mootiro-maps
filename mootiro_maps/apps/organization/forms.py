@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
+import json
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -22,6 +23,8 @@ from fileupload.forms import FileuploadField, LogoField
 from fileupload.models import UploadedFile
 from ajaxforms import AjaxModelForm
 from signatures.signals import notify_on_update
+from video.forms import VideosField
+from video.models import Video
 
 if settings.LANGUAGE_CODE == 'en-us':
     CATEGORIES = [(cat.id, cat.name)
@@ -40,7 +43,7 @@ class FormOrganization(AjaxModelForm):
         model = Organization
         fields = ('id', 'name', 'short_description', 'description', 'contacts',
                   'tags', 'community', 'target_audiences', 'categories',
-                  'logo', 'logo_category', 'logo_choice', 'project_id')
+                  'logo', 'logo_category', 'logo_choice', 'project_id', 'videos')
 
     _field_labels = {
         'name': _('Name'),
@@ -52,7 +55,8 @@ class FormOrganization(AjaxModelForm):
         'target_audiences': _('Target audiences'),
         'categories': _('Categories'),
         'files': _('Images'),
-        'logo': _('Logo')
+        'logo': _('Logo'),
+        'videos': _('Videos'),
     }
 
     description = forms.CharField(required=False, widget=MarkItUpWidget())
@@ -70,6 +74,7 @@ class FormOrganization(AjaxModelForm):
         widget=forms.CheckboxSelectMultiple(
             attrs={'class': 'org-widget-categories'}))
     files = FileuploadField(required=False)
+    videos = VideosField(required=False)
     logo = LogoField(required=False)
     logo_choice = forms.CharField(required=False, widget=forms.HiddenInput())
     logo_category = forms.CharField(required=False, widget=forms.HiddenInput())
@@ -100,6 +105,9 @@ class FormOrganization(AjaxModelForm):
         UploadedFile.bind_files(
             self.cleaned_data.get('files', '').split('|'), org)
 
+        videos = json.loads(self.cleaned_data.get('videos', ''))
+        Video.save_videos(videos, org)
+
         # Add the community to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)
         if project_id:
@@ -126,4 +134,4 @@ class FormOrganizationGeoRef(FormOrganization):
         fields = ('id', 'name', 'short_description', 'description', 'contacts',
                   'tags', 'community', 'target_audiences', 'categories',
                   'logo', 'logo_category', 'logo_choice', 'geometry',
-                  'project_id')
+                  'project_id', 'videos')

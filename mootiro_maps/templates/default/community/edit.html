@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 {% load komoo_map_tags %}
 {% load upload_tags %}
+{% load video_tags %}
 {% load i18n %}
 {% load komoo_tags %}
 
@@ -30,6 +31,7 @@
 
 {% block page_scripts %}
     {% load_files community %}
+    {% load_videos community %}
     <script type="text/javascript">
       $(function(){
         $('#community_form').ajaxform();

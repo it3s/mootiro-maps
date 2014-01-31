@@ -8,6 +8,7 @@
 {% load markitup_tags %}
 {% load investment_tags %}
 {% load upload_tags %}
+{% load video_tags %}
 {% load project_tags %}
 
 {% block title %} {{ organization.name }} {% endblock %}
@@ -142,6 +143,7 @@
         </div>
 
         <div class="view-footer">
+            {% video_gallery organization %}
             <!-- Photos here -->
             {% image_gallery organization %}
         </div>

@@ -1,0 +1,31 @@
+{% if videos %}
+<div id="video-gallery" class="video-gallery">
+  <div id="video-gallery-player" class="video-player">
+    <div id="youtubeplayer"></div>
+    <div id="vimeoplayer"></div>
+  </div>
+  <ul id="video-gallery-player-list" class="video-player-list">
+  </ul>
+</div>
+<script type="text/javascript" src="{{ STATIC_URL }}lib/swfobject/swfobject.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/video/gallery.js"></script>
+<script type="text/javascript">
+  $(function(){
+
+    var gallery = new VideoGallery();
+    window.gallery = gallery;
+    {% for video in videos %}
+      gallery.addVideo({
+        id: '{{ video.id }}',
+        service: '{{ video.service }}',
+        status: '',
+        title: '{{ video.title|escapejs }}',
+        description: '{{ video.description|escapejs }}',
+        video_id: '{{ video.video_id }}',
+        thumbnail_url: '{{ video.thumbnail_url }}',
+        video_url: '{{ video.video_url }}'
+      });
+    {% endfor %}
+  });
+</script>
+{% endif %}
