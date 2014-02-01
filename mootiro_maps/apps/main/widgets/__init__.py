@@ -9,3 +9,5 @@ from image_switch import ImageSwitchMultiple
 
 from datepicker import Datepicker
 from datepicker import ConditionalField
+
+from contacts import ContactsWidget

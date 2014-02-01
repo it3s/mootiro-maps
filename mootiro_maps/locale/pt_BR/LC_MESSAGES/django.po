@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-06 11:42-0200\n"
+"POT-Creation-Date: 2014-01-23 13:35-0200\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -23,7 +23,6 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #: apps/authentication/api.py:27 apps/authentication/models.py:179
-#: apps/main/models.py:362
 msgid "Required field"
 msgstr "Campo obrigatório"
 
@@ -32,7 +31,7 @@ msgid "You must accept the license agreement"
 msgstr "Você deve aceitar o contrato de licença"
 
 #: apps/authentication/api.py:38 apps/authentication/forms.py:95
-#: apps/authentication/views.py:184
+#: apps/authentication/views.py:131
 msgid "Passwords did not match"
 msgstr "As senhas não coincidem"
 
@@ -121,15 +120,15 @@ msgstr "Este email já está em uso"
 msgid "Welcome to MootiroMaps"
 msgstr "Bem-vindo ao MootiroMaps"
 
-#: apps/authentication/views.py:179
+#: apps/authentication/views.py:126
 msgid "You must provide a valid password"
 msgstr "Você deve fornecer uma senha válida"
 
-#: apps/authentication/views.py:199
+#: apps/authentication/views.py:146
 msgid "Wrong password"
 msgstr "Senha incorreta"
 
-#: apps/authentication/views.py:203
+#: apps/authentication/views.py:150
 msgid "Failed to save data"
 msgstr "Houve uma falha ao tentar salvar os dados"
 
@@ -156,7 +155,7 @@ msgstr "Descrição"
 #: apps/community/forms.py:31 apps/investment/forms.py:44
 #: apps/komoo_project/forms.py:45 apps/komoo_resource/forms.py:36
 #: apps/main/templatetags/komoo_tags.py:380 apps/need/forms.py:32
-#: apps/organization/forms.py:51 lib/taggit/managers.py:39
+#: apps/organization/forms.py:50 lib/taggit/managers.py:39
 #: lib/taggit/models.py:57
 #: templates/default/importsheet/row_templates/comunidades.html:38
 #: templates/default/importsheet/row_templates/necessidades.html:69
@@ -169,7 +168,7 @@ msgstr "Palavras-chave"
 #: apps/community/models.py:40 apps/komoo_resource/forms.py:37
 #: apps/main/templatetags/komoo_tags.py:273
 #: apps/main/templatetags/komoo_tags.py:384 apps/need/forms.py:29
-#: apps/organization/forms.py:49 templates/default/investment/list.html:47
+#: apps/organization/forms.py:51 templates/default/investment/list.html:47
 msgid "Community"
 msgstr "Comunidade"
 
@@ -246,28 +245,28 @@ msgstr "Valor"
 msgid "Invalid investor"
 msgstr "Investidor inválido"
 
-#: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:268
-#: apps/organization/models.py:68
+#: apps/investment/models.py:21 apps/main/templatetags/komoo_tags.py:268
+#: apps/organization/models.py:72
 msgid "Organization"
 msgstr "Organização"
 
-#: apps/investment/models.py:23
+#: apps/investment/models.py:22
 msgid "Person"
 msgstr "Pessoa"
 
-#: apps/investment/models.py:35
+#: apps/investment/models.py:34
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: apps/investment/models.py:120
+#: apps/investment/models.py:119
 msgid "Brazilian Real (BRL)"
 msgstr "Real (BRL)"
 
-#: apps/investment/models.py:121
+#: apps/investment/models.py:120
 msgid "US-Dollar (USD)"
 msgstr "Dólar americano (USD)"
 
-#: apps/investment/models.py:122
+#: apps/investment/models.py:121
 msgid "Euro"
 msgstr "Euro"
 
@@ -341,7 +340,6 @@ msgid "Logo"
 msgstr "Logotipo"
 
 #: apps/komoo_project/forms.py:47 apps/komoo_resource/forms.py:35
-#: apps/organization/forms.py:50
 #: templates/default/importsheet/row_templates/organizacoes.html:47
 #: templates/default/importsheet/row_templates/recursos.html:51
 #: templates/default/organization/show.html:160
@@ -355,7 +353,7 @@ msgstr "Contato"
 msgid "Logo of your partners"
 msgstr "Logos dos seus parceiros"
 
-#: apps/komoo_project/views.py:101
+#: apps/komoo_project/views.py:102
 msgid "Unnamed"
 msgstr "Sem nome"
 
@@ -375,13 +373,53 @@ msgstr "Imagens"
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
-#: apps/komoo_resource/models.py:42
+#: apps/komoo_resource/models.py:43
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:65 apps/main/templatetags/komoo_tags.py:269
+#: apps/komoo_resource/models.py:69 apps/main/templatetags/komoo_tags.py:269
 msgid "Resource"
 msgstr "Recurso"
+
+#: apps/main/models.py:34
+msgid "Address"
+msgstr "Endereço"
+
+#: apps/main/models.py:35
+msgid "Complement"
+msgstr "Complemento"
+
+#: apps/main/models.py:36
+msgid "City"
+msgstr "Cidade"
+
+#: apps/main/models.py:37
+msgid "Postal Code"
+msgstr "CEP"
+
+#: apps/main/models.py:38
+msgid "Phone"
+msgstr "Telefone"
+
+#: apps/main/models.py:39
+msgid "Facebook"
+msgstr "Facebook"
+
+#: apps/main/models.py:40
+msgid "E-mail"
+msgstr "E-mail"
+
+#: apps/main/models.py:41
+msgid "Twitter"
+msgstr "Twitter"
+
+#: apps/main/models.py:42
+msgid "Web Site"
+msgstr "Web Site"
+
+#: apps/main/models.py:43
+msgid "Others"
+msgstr "Outros"
 
 #: apps/main/relations.py:8
 msgid "owns"
@@ -739,11 +777,15 @@ msgstr "Esporte"
 msgid "Security"
 msgstr "Segurança"
 
+#: apps/organization/forms.py:49
+msgid "Contacts"
+msgstr "Contatos"
+
 #: apps/organization/forms.py:53
 msgid "Categories"
 msgstr "Categorias"
 
-#: apps/organization/models.py:69
+#: apps/organization/models.py:73
 msgid "Add an organization"
 msgstr "Adicionar uma organização"
 
@@ -893,119 +935,6 @@ msgstr "Selecionar um arquivo"
 #: lib/fileupload/forms.py:242
 msgid "Select a logo"
 msgstr "Selecione um logotipo"
-
-#: lib/reversion/admin.py:110
-msgid "Initial version"
-msgstr "Versão inicial"
-
-#: lib/reversion/admin.py:124
-#, python-format
-msgid "Deleted %(verbose_name)s."
-msgstr "%(verbose_name)s apagado."
-
-#: lib/reversion/admin.py:142
-#: lib/reversion/templates/reversion/change_list.html:7
-#: lib/reversion/templates/reversion/recover_form.html:10
-#: lib/reversion/templates/reversion/recover_list.html:10
-#, python-format
-msgid "Recover deleted %(name)s"
-msgstr "Recuperar %(name)s apagado"
-
-#: lib/reversion/admin.py:251
-#, python-format
-msgid "Reverted to previous version, saved on %(datetime)s"
-msgstr "Revertido para versão anterior, salva em %(datetime)s"
-
-#: lib/reversion/admin.py:251
-#: lib/reversion/templates/reversion/object_history.html:23
-#: lib/reversion/templates/reversion/recover_list.html:30
-msgid "DATETIME_FORMAT"
-msgstr "DATETIME_FORMAT"
-
-#: lib/reversion/admin.py:253
-#, python-format
-msgid ""
-"The %(model)s \"%(name)s\" was reverted successfully. You may edit it again "
-"below."
-msgstr ""
-"O %(model)s \"%(name)s\" foi revertido com sucesso. Você pode editá-lo "
-"novamente abaixo."
-
-#: lib/reversion/admin.py:336
-#, python-format
-msgid "Recover %(name)s"
-msgstr "Recuperar %(name)s"
-
-#: lib/reversion/admin.py:348
-#, python-format
-msgid "Revert %(name)s"
-msgstr "Reverter %(name)s"
-
-#: lib/reversion/templates/reversion/object_history.html:8
-msgid ""
-"Choose a date from the list below to revert to a previous version of this "
-"object."
-msgstr ""
-"Escolha uma data na lista abaixo para reverter para uma versão anterior "
-"deste objeto."
-
-#: lib/reversion/templates/reversion/object_history.html:15
-#: lib/reversion/templates/reversion/recover_list.html:23
-msgid "Date/time"
-msgstr "Data/hora"
-
-#: lib/reversion/templates/reversion/object_history.html:16
-msgid "User"
-msgstr "Usuário"
-
-#: lib/reversion/templates/reversion/object_history.html:17
-#: templates/default/moderation/report_content_box_templatetag.html:13
-msgid "Comment"
-msgstr "Comentário"
-
-#: lib/reversion/templates/reversion/object_history.html:36
-msgid ""
-"This object does not have any change history. It probably has not been added "
-"via this admin site."
-msgstr ""
-"Este objeto não possui um histórico de alterações. É possível que não tenha "
-"sido adicionado via página de administração."
-
-#: lib/reversion/templates/reversion/recover_form.html:7
-#: lib/reversion/templates/reversion/recover_list.html:7
-#: lib/reversion/templates/reversion/revision_form.html:7
-msgid "Home"
-msgstr "Início"
-
-#: lib/reversion/templates/reversion/recover_form.html:17
-msgid "Press the save button below to recover this version of the object"
-msgstr ""
-"Clique no botão \"salvar\" abaixo para recuperar esta versão do objeto."
-
-#: lib/reversion/templates/reversion/recover_list.html:17
-msgid ""
-"Choose a date from the list below to recover a deleted version of this object"
-msgstr ""
-"Escolha uma data na lista abaixo para recuperar uma versão apagada de um "
-"objeto"
-
-#: lib/reversion/templates/reversion/recover_list.html:37
-msgid "There are no deleted objects to recover"
-msgstr "Não há objetos apagados para recuperar"
-
-#: lib/reversion/templates/reversion/revision_form.html:11
-#: templates/default/main/templatetags/history.html:14
-msgid "History"
-msgstr "Histórico"
-
-#: lib/reversion/templates/reversion/revision_form.html:12
-#, python-format
-msgid "Revert %(verbose_name)s"
-msgstr "Reverter %(verbose_name)s"
-
-#: lib/reversion/templates/reversion/revision_form.html:25
-msgid "Press the save button below to revert to this version of the object"
-msgstr "Clique no botão \"salvar\" abaixo para reverter esta versão do objeto."
 
 #: lib/taggit/forms.py:21
 msgid "Please provide a comma-separated list of tags"
@@ -1333,7 +1262,8 @@ msgstr "Novo usuário"
 #: templates/default/community/edit.html:19
 #: templates/default/community/edit_ajax.html:11
 #: templates/default/investment/edit.html:24
-#: templates/default/need/edit.html:23 templates/default/need/edit_ajax.html:9
+#: templates/default/need/edit.html:23
+#: templates/default/need/edit_ajax.html:10
 #: templates/default/organization/edit.html:18
 #: templates/default/organization/new.html:16
 #: templates/default/organization/new_frommap.html:15
@@ -1341,7 +1271,7 @@ msgstr "Novo usuário"
 #: templates/default/proposal/edit.html:19
 #: templates/default/resource/edit.html:18
 #: templates/default/resource/new.html:15
-#: templates/default/resource/new_frommap.html:13
+#: templates/default/resource/new_frommap.html:14
 msgid "<strong>*</strong> required fields!"
 msgstr "Campos marcados com <strong>*</strong> são obrigatórios!"
 
@@ -1830,7 +1760,7 @@ msgstr "Moeda do investimento (Dólar, Real, etc.)"
 #: templates/default/investment/edit.html:95
 #: templates/default/resource/edit.html:62
 #: templates/default/resource/new.html:52
-#: templates/default/resource/new_frommap.html:45
+#: templates/default/resource/new_frommap.html:46
 msgid ""
 "Please, upload photos of the resource or link to photos on Wiki Commons or "
 "Flickr. Make sure that the photos are licensed under creative commons."
@@ -1840,7 +1770,7 @@ msgstr ""
 
 #: templates/default/investment/edit.html:100
 #: templates/default/need/edit.html:66
-#: templates/default/need/edit_ajax.html:35
+#: templates/default/need/edit_ajax.html:36
 msgid ""
 "Please, insert tags that describe the need, for instance, \"street light\", "
 "\"waste\", \"public transport\", \"cycling lane\"."
@@ -2996,6 +2926,10 @@ msgstr ""
 "última edição por %(user)s %(date)s\n"
 "    "
 
+#: templates/default/main/templatetags/history.html:14
+msgid "History"
+msgstr "Histórico"
+
 #: templates/default/main/templatetags/menu.html:5
 msgid "Map"
 msgstr "Mapa"
@@ -3104,6 +3038,10 @@ msgstr "Enviar pedido"
 msgid "Select one of the reasons below"
 msgstr "Escolha um dos motivos abaixo"
 
+#: templates/default/moderation/report_content_box_templatetag.html:13
+msgid "Comment"
+msgstr "Comentário"
+
 #: templates/default/moderation/report_content_box_templatetag.html:18
 msgid "Required fields"
 msgstr "Campos obrigatórios"
@@ -3128,7 +3066,7 @@ msgid "New need"
 msgstr "Nova necessidade"
 
 #: templates/default/need/edit.html:52
-#: templates/default/need/edit_ajax.html:21
+#: templates/default/need/edit_ajax.html:22
 msgid ""
 "Insert an explanatory title for your need, for example \"Fix street lights "
 "on Magnolia Avenue\". "
@@ -3137,7 +3075,7 @@ msgstr ""
 "postes de luz na Rua Magnólia\""
 
 #: templates/default/need/edit.html:56
-#: templates/default/need/edit_ajax.html:25
+#: templates/default/need/edit_ajax.html:26
 msgid ""
 "Gives details about this need. What is the problem about, why does it exist, "
 "who is affected by this problem and what has been tried to solve the "
@@ -3147,7 +3085,7 @@ msgstr ""
 "afetado e o que têm sido feito até hoje sobre isso?"
 
 #: templates/default/need/edit.html:59
-#: templates/default/need/edit_ajax.html:28
+#: templates/default/need/edit_ajax.html:29
 msgid ""
 "Select the categories that most fit your need. For instance, the "
 "construction of a cycling lane is related to mobility and environment issues."
@@ -3156,12 +3094,12 @@ msgstr ""
 "a construção de uma ciclovia é relacionada a mobilidade e meio-ambiente."
 
 #: templates/default/need/edit.html:63
-#: templates/default/need/edit_ajax.html:32
+#: templates/default/need/edit_ajax.html:33
 msgid "Who is being affected by this problem?"
 msgstr "Quem é afetado por esse problema?"
 
 #: templates/default/need/edit.html:70
-#: templates/default/need/edit_ajax.html:39
+#: templates/default/need/edit_ajax.html:40
 msgid ""
 "Please, upload some photos about this problem. Photos can help people to "
 "think about solutions."
@@ -3267,15 +3205,15 @@ msgstr ""
 "Insira as informações de contato dessa organização (endereço com CEP, "
 "pessoas com quem falar, telefone, email)"
 
-#: templates/default/organization/edit.html:66
-#: templates/default/organization/new.html:57
-#: templates/default/organization/new_frommap.html:49
+#: templates/default/organization/edit.html:67
+#: templates/default/organization/new.html:58
+#: templates/default/organization/new_frommap.html:50
 msgid "Which people or groups are attended by this organization?"
 msgstr "Que pessoas ou grupos são atendidas por essa organização?"
 
-#: templates/default/organization/edit.html:70
-#: templates/default/organization/new.html:61
-#: templates/default/organization/new_frommap.html:53
+#: templates/default/organization/edit.html:71
+#: templates/default/organization/new.html:62
+#: templates/default/organization/new_frommap.html:54
 msgid ""
 "Please, select the categories that most reflect the organization's "
 "activities or cause."
@@ -3283,9 +3221,9 @@ msgstr ""
 "Selecione as categorias que melhor reflitam as atividades ou causas da "
 "organização."
 
-#: templates/default/organization/edit.html:74
-#: templates/default/organization/new.html:65
-#: templates/default/organization/new_frommap.html:57
+#: templates/default/organization/edit.html:75
+#: templates/default/organization/new.html:66
+#: templates/default/organization/new_frommap.html:58
 msgid ""
 "Please, insert tags for your organizations. Tags are used for searching "
 "content on MootiroMaps. Precise tags will help others to find your content."
@@ -3294,9 +3232,9 @@ msgstr ""
 "conteúdo no MootiroMaps. Palavras-chave precisas ajudam as pessoas a "
 "encontrarem seu conteúdo."
 
-#: templates/default/organization/edit.html:78
-#: templates/default/organization/new.html:69
-#: templates/default/organization/new_frommap.html:61
+#: templates/default/organization/edit.html:79
+#: templates/default/organization/new.html:70
+#: templates/default/organization/new_frommap.html:62
 msgid ""
 "Please, upload fotos of the organization or link to photos on Wiki Commons "
 "or Flickr. Make sure that the photos is licensed under creative commons."
@@ -3304,9 +3242,9 @@ msgstr ""
 "Suba fotos da organização ou link para fotos no Wiki Commons ou Flickr. "
 "Confira se elas estão sob uma licença Creative Commons"
 
-#: templates/default/organization/edit.html:82
-#: templates/default/organization/new.html:73
-#: templates/default/organization/new_frommap.html:65
+#: templates/default/organization/edit.html:83
+#: templates/default/organization/new.html:74
+#: templates/default/organization/new_frommap.html:66
 msgid ""
 "Here you can upload the logo of the organization or use one of the category "
 "images."
@@ -3548,7 +3486,7 @@ msgstr "Editar recurso"
 
 #: templates/default/resource/edit.html:43
 #: templates/default/resource/new.html:33
-#: templates/default/resource/new_frommap.html:26
+#: templates/default/resource/new_frommap.html:27
 msgid ""
 "Please inform the name of this resource. Try to be specific. Instead of "
 "\"Community Library\" inform also the name of the city or neighbourhood, for "
@@ -3560,7 +3498,7 @@ msgstr ""
 
 #: templates/default/resource/edit.html:46
 #: templates/default/resource/new.html:36
-#: templates/default/resource/new_frommap.html:29
+#: templates/default/resource/new_frommap.html:30
 msgid ""
 "Give some details about this resource. How is it used by the local "
 "community? When is it open? Can it be used by others, too?"
@@ -3570,7 +3508,7 @@ msgstr ""
 
 #: templates/default/resource/edit.html:50
 #: templates/default/resource/new.html:40
-#: templates/default/resource/new_frommap.html:33
+#: templates/default/resource/new_frommap.html:34
 msgid ""
 "Please define the type of resource. You can select an item from the list or "
 "enter a new type."
@@ -3580,7 +3518,7 @@ msgstr ""
 
 #: templates/default/resource/edit.html:54
 #: templates/default/resource/new.html:44
-#: templates/default/resource/new_frommap.html:37
+#: templates/default/resource/new_frommap.html:38
 msgid ""
 "Please, insert tags that describe the resource, for instance \"library\", "
 "\"computer lab\", \"available on Sundays\", etc."
@@ -3590,7 +3528,7 @@ msgstr ""
 
 #: templates/default/resource/edit.html:58
 #: templates/default/resource/new.html:48
-#: templates/default/resource/new_frommap.html:41
+#: templates/default/resource/new_frommap.html:42
 msgid ""
 "Contact information of the person or organization responsible for the "
 "resource."
@@ -3728,3 +3666,75 @@ msgstr "saiba mais sobre esse objeto"
 #: templates/default/update/updates_list_templatetag.html:116
 msgid "by"
 msgstr "por"
+
+#~ msgid "Initial version"
+#~ msgstr "Versão inicial"
+
+#~ msgid "Deleted %(verbose_name)s."
+#~ msgstr "%(verbose_name)s apagado."
+
+#~ msgid "Recover deleted %(name)s"
+#~ msgstr "Recuperar %(name)s apagado"
+
+#~ msgid "Reverted to previous version, saved on %(datetime)s"
+#~ msgstr "Revertido para versão anterior, salva em %(datetime)s"
+
+#~ msgid "DATETIME_FORMAT"
+#~ msgstr "DATETIME_FORMAT"
+
+#~ msgid ""
+#~ "The %(model)s \"%(name)s\" was reverted successfully. You may edit it "
+#~ "again below."
+#~ msgstr ""
+#~ "O %(model)s \"%(name)s\" foi revertido com sucesso. Você pode editá-lo "
+#~ "novamente abaixo."
+
+#~ msgid "Recover %(name)s"
+#~ msgstr "Recuperar %(name)s"
+
+#~ msgid "Revert %(name)s"
+#~ msgstr "Reverter %(name)s"
+
+#~ msgid ""
+#~ "Choose a date from the list below to revert to a previous version of this "
+#~ "object."
+#~ msgstr ""
+#~ "Escolha uma data na lista abaixo para reverter para uma versão anterior "
+#~ "deste objeto."
+
+#~ msgid "Date/time"
+#~ msgstr "Data/hora"
+
+#~ msgid "User"
+#~ msgstr "Usuário"
+
+#~ msgid ""
+#~ "This object does not have any change history. It probably has not been "
+#~ "added via this admin site."
+#~ msgstr ""
+#~ "Este objeto não possui um histórico de alterações. É possível que não "
+#~ "tenha sido adicionado via página de administração."
+
+#~ msgid "Home"
+#~ msgstr "Início"
+
+#~ msgid "Press the save button below to recover this version of the object"
+#~ msgstr ""
+#~ "Clique no botão \"salvar\" abaixo para recuperar esta versão do objeto."
+
+#~ msgid ""
+#~ "Choose a date from the list below to recover a deleted version of this "
+#~ "object"
+#~ msgstr ""
+#~ "Escolha uma data na lista abaixo para recuperar uma versão apagada de um "
+#~ "objeto"
+
+#~ msgid "There are no deleted objects to recover"
+#~ msgstr "Não há objetos apagados para recuperar"
+
+#~ msgid "Revert %(verbose_name)s"
+#~ msgstr "Reverter %(verbose_name)s"
+
+#~ msgid "Press the save button below to revert to this version of the object"
+#~ msgstr ""
+#~ "Clique no botão \"salvar\" abaixo para reverter esta versão do objeto."

@@ -20,6 +20,7 @@ from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 from search.signals import index_object_for_search
 from main.utils import to_json
+from main.models import ContactsField
 from main.mixins import BaseModel
 
 
@@ -31,7 +32,7 @@ LOGO_CHOICES = (
 
 class Organization(GeoRefModel, BaseModel):
     name = models.CharField(max_length=320, unique=True)
-    slug = models.SlugField(max_length=320, db_index=True)
+    slug = models.SlugField(max_length=320, db_index=True)  # used anywhere?
     description = models.TextField(null=True, blank=True)
     short_description = models.CharField(max_length=250, null=True, blank=True)
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)
@@ -50,8 +51,9 @@ class Organization(GeoRefModel, BaseModel):
 
     community = models.ManyToManyField(Community, null=True, blank=True)
 
-    link = models.CharField(max_length=250, null=True, blank=True)
-    contact = models.TextField(null=True, blank=True)
+    link = models.CharField(max_length=250, null=True, blank=True)  # TODO remove me
+    contact = models.TextField(null=True, blank=True)               # TODO remove me
+    contacts = ContactsField()
 
     categories = models.ManyToManyField('OrganizationCategory', null=True,
                         blank=True)
@@ -174,20 +176,24 @@ class Organization(GeoRefModel, BaseModel):
     def perm_id(self):
         return 'o%d' % self.id
 
-    # ==========================================================================================
+    # ==========================================================================
     # Utils
 
     # def from_dict(self, data):
-    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date', 'is_admin', 'is_active', 'about_me']
+    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date',
+    #             'is_admin', 'is_active', 'about_me']
     #     date_keys = ['creation_date']
     #     build_obj_from_dict(self, data, keys, date_keys)
 
     def to_dict(self):
         fields_and_defaults = [
-            ('name', None), ('slug', None), ('description', None), ('short_description ', None),
-            ('creator_id', None), ('creation_date', None), ('last_editor_id', None), ('last_update', None),
-            ('logo_id', None), ('logo_category_id', None), ('logo_choice', None), ('link', None), ('contact', None),
-            ('geojson', {})
+            ('name', None), ('slug', None), ('description', None),
+            ('short_description ', None),
+            ('creator_id', None), ('creation_date', None),
+            ('last_editor_id', None), ('last_update', None),
+            ('logo_id', None), ('logo_category_id', None),
+            ('logo_choice', None),
+            ('contacts', {}), ('geojson', {})
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['tags'] = [tag.name for tag in self.tags.all()]
@@ -200,7 +206,6 @@ class Organization(GeoRefModel, BaseModel):
     #     self.errors = {}
     #     valid = True
     #     return valid
-
 
 
 class OrganizationCategory(models.Model):

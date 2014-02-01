@@ -8,12 +8,11 @@ from django.utils.translation import ugettext_lazy as _
 from markitup.widgets import MarkItUpWidget
 from fileupload.forms import FileuploadField, SingleFileUploadWidget
 from fileupload.models import UploadedFile
-from ajax_select.fields import AutoCompleteSelectMultipleField
 from ajaxforms import AjaxModelForm
 from django.template.defaultfilters import slugify
 from django.db.models.query_utils import Q
 from main.utils import MooHelper, clean_autocomplete_field
-from main.widgets import TaggitWidget
+from main.widgets import TaggitWidget, ContactsWidget
 from .models import Project
 
 logger = logging.getLogger(__name__)
@@ -26,27 +25,27 @@ PUBLIC_CHOICES = (
 
 
 class FormProject(AjaxModelForm):
-    description = forms.CharField(widget=MarkItUpWidget())
-    contact = forms.CharField(required=False, widget=MarkItUpWidget())
-    tags = forms.Field(required=False, widget=TaggitWidget(
-        autocomplete_url="/project/search_tags/"))
-    logo = FileuploadField(required=False, widget=SingleFileUploadWidget)
-    partners_logo = FileuploadField(required=False)
-
     class Meta:
         model = Project
-        fields = ('name', 'short_description', 'description', 'tags',
-                    'contact', 'logo', 'id')
+        fields = ('id', 'name', 'short_description', 'description', 'contacts',
+                  'tags', 'logo')
 
     _field_labels = {
         'name': _('Name'),
         'short_description': _('Short description'),
         'description': _('Description'),
+        'contacts': _('Contacts'),
         'tags': _('Tags'),
         'logo': _('Logo'),
-        'contact': _('Contact'),
         'partners_logo': _('Logo of your partners'),
     }
+
+    description = forms.CharField(widget=MarkItUpWidget())
+    contacts = forms.CharField(required=False, widget=ContactsWidget())
+    tags = forms.Field(required=False, widget=TaggitWidget(
+        autocomplete_url="/project/search_tags/"))
+    logo = FileuploadField(required=False, widget=SingleFileUploadWidget)
+    partners_logo = FileuploadField(required=False)
 
     def __init__(self, *a, **kw):
         self.helper = MooHelper(form_id='form_project')

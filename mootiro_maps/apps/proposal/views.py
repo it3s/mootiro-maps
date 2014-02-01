@@ -5,9 +5,14 @@ import logging
 
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.shortcuts import HttpResponse
+from django.db.models import Count
 
 from annoying.decorators import render_to
 from ajaxforms import ajax_form
+from lib.taggit.models import TaggedItem
+
+from main.utils import to_json
 
 from authentication.utils import login_required
 from need.models import Need
@@ -53,3 +58,13 @@ def edit(request, id=""):
 def view(request, id=""):
     proposal = get_object_or_404(Proposal, pk=id)
     return {'proposal': proposal}
+
+
+def search_tags(request):
+    term = request.GET['term']
+    qset = TaggedItem.tags_for(Proposal).filter(name__istartswith=term
+            ).annotate(count=Count('taggit_taggeditem_items__id')
+            ).order_by('-count', 'slug')[:10]
+    tags = [t.name for t in qset]
+    return HttpResponse(to_json(tags),
+                mimetype="application/x-javascript")

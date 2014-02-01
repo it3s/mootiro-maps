@@ -77,14 +77,13 @@ def view(request, id=None):
 
 @render_to('investment/list.html')
 def list(request):
-    sort_fields = ['creation_date', 'title']
+    sort_fields = ['creation_date', 'name']
 
     filtered, filter_params = get_filter_params(request)
 
     query_set = Investment.objects
     query_set = filtered_query(query_set, request)
-    investments = sorted_query(query_set, sort_fields, request,
-            default_order='title')
+    investments = sorted_query(query_set, sort_fields, request)
 
     investments_count = investments.count()
     investments = paginated_query(investments, request=request)

@@ -68,7 +68,7 @@ class NecessidadesRowInterpreter(RowInterpreter):
         # Duplicates
         # TODO: inexact title search for warnings
         # TODO: use georef to enhance matches
-        q = Need.objects.filter(title=od['name'])
+        q = Need.objects.filter(name=od['name'])
         if q.exists():
             obj = q[0]
             self.errors.append('Já existe uma necessidade com este nome. '\
@@ -93,8 +93,7 @@ class NecessidadesRowInterpreter(RowInterpreter):
         n = Need()
         for attr in ['creator', 'description']:
             setattr(n, attr, d[attr])
-        # TODO: migrate title attribute to name
-        n.title = d['name']
+        n.name = d['name']
         n.save()
 
         # m2m relationships

@@ -101,10 +101,8 @@
               </div>
 
               <div>
-                {% if project.contact %}
-                <h4>{% trans 'Contact' %}</h4>
-                  {{ project.contact|render_markup|safe }}
-               {% endif %}
+                <h4>{% trans 'Contacts' %}</h4>
+                {% view_contacts project.contacts %}
                </div>
 
               {% with similar_projects=project.tags.similar_objects|slice:"5" %}

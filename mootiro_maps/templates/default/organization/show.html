@@ -159,12 +159,8 @@
         </div>
 
         <div class="block">
-          <h4>{% trans 'Contact' %}</h4>
-            {% if organization.contact %}
-                {{ organization.contact|render_markup|safe }}
-            {% else %}
-                {% trans 'No contact information provided' %}
-            {% endif %}
+          <h4>{% trans 'Contacts' %}</h4>
+            {% view_contacts organization.contacts %}
 
           <h4>{% trans 'Operation Field' %}</h4>
             <ul>

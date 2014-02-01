@@ -12,7 +12,7 @@ from ajaxforms import AjaxModelForm
 from annoying.functions import get_object_or_None
 
 from main.utils import MooHelper
-from main.widgets import TaggitWidget
+from main.widgets import TaggitWidget, ContactsWidget
 from community.models import Community
 from komoo_project.models import Project
 from signatures.signals import notify_on_update
@@ -31,6 +31,7 @@ class CommunityForm(AjaxModelForm):
         'short_description': _('Short description'),
         'population': _('Population'),
         'description': _('Description'),
+        'contacts': _('Contacts'),
         'tags': _('Tags'),
         'files': ' ',
         'videos': _('Videos'),
@@ -40,6 +41,7 @@ class CommunityForm(AjaxModelForm):
     geometry = forms.CharField(widget=forms.HiddenInput())
     files = FileuploadField(required=False)
     videos = VideosField(required=False)
+    contacts = forms.CharField(required=False, widget=ContactsWidget())
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/community/search_tags/"),
         required=False)

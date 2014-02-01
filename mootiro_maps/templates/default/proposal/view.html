@@ -24,7 +24,7 @@
   <div class="main-column">
     <h3>
       {{ proposal.title }}
-      <span class="small"> (<a href="{% url view_need proposal.need.id %}"> {{ proposal.need.title }}</a>)</span>
+      <span class="small"> (<a href="{% url view_need proposal.need.id %}"> {{ proposal.need.name }}</a>)</span>
     </h3>
 
     <div class="view-edit-btn">
@@ -51,20 +51,27 @@
 
   <div class="right-bar">
     <div class="block">
-        <h4>{% trans 'Proposals for' %} <a href="{% url view_need proposal.need.id %}"> {{ proposal.need.title }}</a></h4>
+        <h4>{% trans 'Proposals for' %} <a href="{% url view_need proposal.need.id %}"> {{ proposal.need.name }}</a></h4>
       {% for p in proposal.need.proposals.all %}
         {% if p != proposal %}
           {% proposal_summary p %}
         {% endif %}
         {% endfor %}
-      <div class="centralizer">  
+      <div class="centralizer">
         <a class="button login-required" href="{% url new_proposal %}?need={{ proposal.need.id }}">
           {%trans 'New proposal' %}
       </a>
       </div>
     </div>
 
+    <div class="block right-bar-modif">
+      <h4>{% trans 'Contacts' %}</h4>
+      {% view_contacts proposal.contacts %}
+    </div>
+
     {% projects_for_object proposal %}
+    {% taglist proposal %}
+
 
     <div class="centralizer apart">
         <a class="button login-required" href="{{ proposal.new_investment_url }}">{% trans 'Add investment' %}</a>

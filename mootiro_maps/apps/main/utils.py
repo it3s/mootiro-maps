@@ -15,7 +15,7 @@ from copy import deepcopy
 from django import forms
 from django.http import HttpResponse
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as _
 from django.http import Http404, HttpResponseNotAllowed
 from django.core.mail import send_mail as django_send_mail
 from django.conf import settings
@@ -564,3 +564,5 @@ def get_model_from_table_ref(table_ref):
     models = getattr(module, 'models')
     model = getattr(models, model_name)
     return model
+
+
