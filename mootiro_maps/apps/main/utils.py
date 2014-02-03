@@ -192,7 +192,7 @@ def filtered_query(query_set, request):
             if tags:
                 tags = tags.split(',')
                 for tag in tags:
-                    query_set = query_set.filter(tags__name=tag)
+                    query_set = query_set.filter(tags__name=tag.lower())
         if f == 'community':
             community = request.GET.get('community', '')
             if community:
