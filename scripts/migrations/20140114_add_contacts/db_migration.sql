@@ -15,3 +15,6 @@ ALTER TABLE investment_investment RENAME COLUMN title TO name;
 ALTER TABLE proposal_proposal ADD COLUMN short_description VARCHAR(250);
 ALTER TABLE proposal_proposal ADD COLUMN contacts text;
 
+ALTER TABLE authentication_user RENAME COLUMN contact to contacts;
+UPDATE authentication_user
+SET contacts=null;

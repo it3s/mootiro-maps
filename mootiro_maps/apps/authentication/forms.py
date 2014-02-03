@@ -10,6 +10,7 @@ from fileupload.forms import FileuploadField
 from fileupload.models import UploadedFile
 from markitup.widgets import MarkItUpWidget
 from main.utils import MooHelper
+from main.widgets import ContactsWidget
 from .models import User, SocialAuth
 
 logger = logging.getLogger(__name__)
@@ -20,17 +21,19 @@ class FormProfile(AjaxModelForm):
     name = forms.CharField(required=False)
     geometry = forms.CharField(required=False, widget=MapButtonWidget)
     #geometry = forms.CharField(required=False, widget=forms.HiddenInput())
+    contacts = forms.CharField(required=False, widget=ContactsWidget())
     photo = FileuploadField(required=False)
 
     class Meta:
         model = User
-        fields = ['name', 'about_me', 'id', 'geometry']
+        fields = ['name', 'about_me', 'id', 'geometry', 'contacts']
 
     _field_labels = {
         'name': _('Full name'),
         'about_me': _('About me'),
         'photo': _('Photo'),
         'geometry': _('Location'),
+        'contacts': _('Contacts'),
     }
 
     def __init__(self, *a, **kw):

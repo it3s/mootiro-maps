@@ -14,6 +14,7 @@ from main.mixins import BaseModel
 from main.utils import build_obj_from_dict
 from locker.models import Locker
 from main.tasks import send_mail_async
+from main.models import ContactsField
 from komoo_map.models import GeoRefModel, POINT
 from search.signals import index_object_for_search
 from fileupload.models import UploadedFile
@@ -43,7 +44,7 @@ class User(GeoRefModel, BaseModel):
     email = models.CharField(max_length=512, null=False, unique=True)
     about_me = models.TextField(null=True, blank=True, default='')
     password = models.CharField(max_length=256, null=False)
-    contact = JSONField(null=True, blank=True)
+    contacts = ContactsField()
     creation_date = models.DateField(null=True, blank=True, auto_now_add=True)
     language = models.CharField(max_length=10, null=True, blank=True)
     # last_access = models.DateTimeField(null=True, blank=True)
@@ -80,7 +81,7 @@ class User(GeoRefModel, BaseModel):
 
     def set_language(self, language_code):
         if translation.check_for_language(language_code):
-            self.language = language_code;
+            self.language = language_code
             return True
         return False
 
@@ -152,14 +153,14 @@ class User(GeoRefModel, BaseModel):
     # ====================  utils =========================================== #
     def from_dict(self, data):
         keys = [
-            'id', 'name', 'email', 'password', 'contact', 'geojson',
+            'id', 'name', 'email', 'password', 'contacts', 'geojson',
             'creation_date', 'is_admin', 'is_active', 'about_me']
         date_keys = ['creation_date']
         build_obj_from_dict(self, data, keys, date_keys)
 
     def to_dict(self):
         fields_and_defaults = [
-            ('id', None), ('name', None), ('email', None), ('contact', {}),
+            ('id', None), ('name', None), ('email', None), ('contacts', {}),
             ('geojson', {}), ('url', ''), ('password', None),
             ('creation_date', None), ('is_admin', False), ('is_active', False),
             ('avatar', None), ('about_me', '')
@@ -182,7 +183,10 @@ class User(GeoRefModel, BaseModel):
             # new User
             if SocialAuth.objects.filter(email=self.email).exists():
                 valid = False
-                self.errors['email'] = _('This email is registered on our system. You might have logged before with a social account (Facebook or Google). Please, skip this step and just login.')
+                self.errors['email'] = _('This email is registered on our '
+                    'system. You might have logged before with a social '
+                    'account (Facebook or Google). Please, skip this step '
+                    'and just login.')
 
             if User.objects.filter(email=self.email).exists():
                 valid = False
@@ -202,9 +206,10 @@ class User(GeoRefModel, BaseModel):
                 name=self.name,
                 verification_url=verification_url))
 
-    def contributions(self, page=1, num=None):
-        """ return user's update """
-        return get_user_updates(self, page=page, num=num)
+    # DEPRECATED
+    # def contributions(self, page=1, num=None):
+    #     """ return user's update """
+    #     return get_user_updates(self, page=page, num=num)
 
     #### Compatibility (to be deprecated soon)
     def get_first_name(self):
@@ -255,7 +260,6 @@ class AnonymousUser(object):
     # dummy fix for django weirdness =/
     def get_and_delete_messages(self):
         pass
-
 
 
 PROVIDERS = {
