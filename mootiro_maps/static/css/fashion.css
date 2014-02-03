@@ -742,8 +742,7 @@ div.importsheet_missing_column {
     margin-right: -30px; }
 
 .view-list-top #add-to-project {
-    float: right;
-}
+  float: right; }
 
 #main-content.highlights * {
   -webkit-box-sizing: border-box;
@@ -920,7 +919,6 @@ a.project-btn {
 .new.project-btn .ico {
   background-image: url("../img/menu/newmenu/projects-active.png"); }
 
-
 label[for=id_contacts] {
   margin-bottom: 20px; }
 
@@ -973,3 +971,33 @@ label[for=id_contacts] {
   width: 300px !important;
   display: block;
   margin: 10px 90px; }
+
+#video-gallery {
+  margin: 20px 0; }
+  #video-gallery .video-player {
+    display: inline-block;
+    width: 400px;
+    height: 266px;
+    margin: 5px;
+    background: black;
+    vertical-align: top; }
+    #video-gallery .video-player object {
+      position: absolute; }
+  #video-gallery .video-player-list {
+    display: inline-block;
+    width: 250px;
+    height: 266px;
+    overflow-y: scroll; }
+    #video-gallery .video-player-list .video-entry {
+      clear: both;
+      font-size: 95%;
+      cursor: pointer; }
+      #video-gallery .video-player-list .video-entry .video-title {
+        display: block;
+        font-weight: bold;
+        padding: 5px 0 7px; }
+      #video-gallery .video-player-list .video-entry .video-thumb {
+        display: inline-block;
+        width: 80px;
+        float: left;
+        margin: 5px; }
