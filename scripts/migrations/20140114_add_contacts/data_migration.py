@@ -12,42 +12,45 @@ from authentication.models import User
 from main.models import ContactsField
 
 
-addr_regexp = re.compile(
-    ".*Endereço:.*\n", re.IGNORECASE)
+addr_regexp = ".*Endereço: (?P<address>.*)[\r]?\n"
+postal_and_city_regexp = ".*CEP: (?P<postal_code>.*), (?P<city>.*)[\r]?\n"
+phone_regexp = ".*Telefone: (?P<phone>.*)[\r]?\n"
+email_regexp = ".*E[-]?mail: (?P<email>.*)[\r]?[\n]?"
 
-postal_and_city_regexp = re.compile(
-    ".*CEP: (?P<postal_code>.*), (?P<city>.*)\n", re.IGNORECASE)
+
+def _parse(ct, pattern, keys, with_dict=False):
+    matches = re.compile(pattern, re.IGNORECASE).search(ct['other'])
+    if matches:
+        for key in keys:
+            ct[key] = matches.groupdict().get(key, None)
+        ct['other'] = ct['other'].replace(matches.group(), "")
+    return ct
+
+
+def _clean_trailing_whitespaces_and_newlines(ct):
+    ct['other'] = ct['other'].rstrip()
+    if ct['other'] == '':
+        ct['other'] = None
+    return ct
 
 
 def _extract_contact_info(ct):
+    ct = _parse(ct, addr_regexp, ['address'])
+    ct = _parse(ct, postal_and_city_regexp, ['postal_code', 'city'], with_dict=True)
+    ct = _parse(ct, phone_regexp, ['phone'])
+    ct = _parse(ct, email_regexp, ['email'])
 
-    # extract address
-    matches = addr_regexp.search(ct['other'])
-    if matches:
-        ct['address'] = matches.group()\
-                               .replace("**Endereço:**", "")\
-                               .replace("Endereço:", "")\
-                               .replace("\n", "")\
-                               .replace("\t", "")\
-                               .strip()
-        ct['other'] = ct['other'].replace(matches.group(), "")
-
-    # extract postal code and city
-    matches = postal_and_city_regexp.search(ct['other'])
-    if matches:
-        ct['postal_code'] = matches.groupdict().get('postal_code', None)
-        ct['city'] = matches.groupdict().get('city', None)
-        ct['other'] = ct['other'].replace(matches.group(), "")
-
+    ct = _clean_trailing_whitespaces_and_newlines(ct)
     return ct
 
 
 def _migrate_object(obj, custom_data=None):
-    obj.contacts = ContactsField.json_field_defaults
+    obj.contacts = ContactsField.defaults()
     obj.contacts['other'] = getattr(obj, 'contact', None) or None
     if custom_data:
         custom_data(obj)
     if obj.contacts['other']:
+        obj.contacts['other'] = obj.contacts['other'].replace("**", "")
         obj.contacts = _extract_contact_info(obj.contacts)
     obj.save()
 
