@@ -22,11 +22,21 @@ label[for=id_contacts] {
 }
 
 .contacts-view {
-    label {
-        padding-left: 10px;
-    }
-    .contacts-view-value {
-        color: #252525;
-        padding-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    .contacts-item {
+        padding: 5px 0;
+        img {
+            width: 16px;
+            margin-right: 8px;
+            vertical-align: top;
+            padding-top: 3px;
+        }
+
+        span {
+            display: inline-block;
+            max-width: 85%;
+        }
     }
 }

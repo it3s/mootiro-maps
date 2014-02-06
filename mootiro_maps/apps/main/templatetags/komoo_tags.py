@@ -304,7 +304,7 @@ def communities_list(communities):
 
 @register.inclusion_tag('main/templatetags/view_contacts.html')
 def view_contacts(contacts):
-    filtered_contacts = [(ContactsField.key_name(key), contacts[key])
+    filtered_contacts = [(key, ContactsField.key_name(key), contacts[key])
         for key in ContactsField.key_order() if contacts.get(key, None)]
     return {"contacts": filtered_contacts}
 
