@@ -100,10 +100,7 @@
                 </p>
               </div>
 
-              <div>
-                <h4>{% trans 'Contacts' %}</h4>
-                {% view_contacts project.contacts %}
-               </div>
+              {% view_contacts project.contacts %}
 
               {% with similar_projects=project.tags.similar_objects|slice:"5" %}
                     <div>
