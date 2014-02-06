@@ -1,6 +1,6 @@
 {% load i18n %}
 
-<a class="button login-required {% if not filtered %}disabled{% endif %}" id="add-to-project" href="#" title="{% trans 'Add this list to a project' %}" {% if not filtered %}disabled{% endif %}>{% trans "Add to Project" %}</a>
+<a class="button login-required {% if not filtered %}disabled{% endif %}" id="add-to-project" href="#" title="{% trans 'Please, configure one or more tags for filtering content, later you can add them to a project' %}" {% if not filtered %}disabled{% endif %}>{% trans "Add to Project" %}</a>
 
 <!-- Modal form for adding this list to a project -->
 <div class="modal hide" id="add-project-modal" style="display:none;">

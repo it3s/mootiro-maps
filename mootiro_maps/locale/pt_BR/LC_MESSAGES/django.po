@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-23 13:35-0200\n"
+"POT-Creation-Date: 2014-02-06 17:05-0200\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -22,7 +22,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: apps/authentication/api.py:27 apps/authentication/models.py:179
+#: apps/authentication/api.py:27 apps/authentication/models.py:180
 msgid "Required field"
 msgstr "Campo obrigatório"
 
@@ -30,7 +30,7 @@ msgstr "Campo obrigatório"
 msgid "You must accept the license agreement"
 msgstr "Você deve aceitar o contrato de licença"
 
-#: apps/authentication/api.py:38 apps/authentication/forms.py:95
+#: apps/authentication/api.py:38 apps/authentication/forms.py:98
 #: apps/authentication/views.py:131
 msgid "Passwords did not match"
 msgstr "As senhas não coincidem"
@@ -39,50 +39,58 @@ msgstr "As senhas não coincidem"
 msgid "You do not have permission to perform this operation"
 msgstr "Você não tem permissão para fazer isso"
 
-#: apps/authentication/forms.py:30
+#: apps/authentication/forms.py:32
 msgid "Full name"
 msgstr "Nome completo"
 
-#: apps/authentication/forms.py:31
+#: apps/authentication/forms.py:33
 #: templates/default/authentication/profile.html:42
 msgid "About me"
 msgstr "Sobre mim"
 
-#: apps/authentication/forms.py:32
+#: apps/authentication/forms.py:34
 msgid "Photo"
 msgstr "Foto"
 
-#: apps/authentication/forms.py:33
+#: apps/authentication/forms.py:35
 msgid "Location"
 msgstr "Localização"
 
-#: apps/authentication/forms.py:59 apps/community/forms.py:27
-#: apps/komoo_project/forms.py:42 apps/komoo_resource/forms.py:31
-#: apps/main/templatetags/komoo_tags.py:381
-#: apps/main/templatetags/komoo_tags.py:382 apps/organization/forms.py:46
-#: lib/taggit/models.py:10 templates/default/organization/branch_form.html:13
+#: apps/authentication/forms.py:36 apps/community/forms.py:35
+#: apps/investment/forms.py:35 apps/komoo_project/forms.py:37
+#: apps/komoo_resource/forms.py:37 apps/need/forms.py:33
+#: apps/organization/forms.py:52 apps/proposal/forms.py:36
+msgid "Contacts"
+msgstr "Contatos"
+
+#: apps/authentication/forms.py:62 apps/community/forms.py:31
+#: apps/investment/forms.py:32 apps/komoo_project/forms.py:34
+#: apps/komoo_resource/forms.py:34 apps/main/templatetags/komoo_tags.py:388
+#: apps/main/templatetags/komoo_tags.py:389 apps/need/forms.py:30
+#: apps/organization/forms.py:49 lib/taggit/models.py:10
+#: templates/default/organization/branch_form.html:13
 msgid "Name"
 msgstr "Nome"
 
-#: apps/authentication/forms.py:60
+#: apps/authentication/forms.py:63
 #: templates/default/authentication/profile_update.html:53
 msgid "Email"
 msgstr "Email"
 
-#: apps/authentication/forms.py:61
+#: apps/authentication/forms.py:64
 #: templates/default/authentication/profile_update.html:32
 msgid "Password"
 msgstr "Senha"
 
-#: apps/authentication/forms.py:62
+#: apps/authentication/forms.py:65
 msgid "Confirm your password"
 msgstr "Confirme sua senha"
 
-#: apps/authentication/forms.py:86
+#: apps/authentication/forms.py:89
 msgid "This email is already in use"
 msgstr "Este email já está em uso"
 
-#: apps/authentication/forms.py:89 apps/authentication/models.py:185
+#: apps/authentication/forms.py:92 apps/authentication/models.py:186
 msgid ""
 "This email is registered on our system. You might have logged before with a "
 "social account (Facebook or Google). Please, skip this step and just login."
@@ -91,7 +99,7 @@ msgstr ""
 "anteriormente usando uma rede social (Facebook ou Google). Por favor, pule "
 "esta etapa e simplesmente entre."
 
-#: apps/authentication/models.py:22
+#: apps/authentication/models.py:23
 msgid ""
 "\n"
 "Hello, {name}.\n"
@@ -112,11 +120,11 @@ msgstr ""
 "Obrigado,\n"
 "a equipe IT3S.\n"
 
-#: apps/authentication/models.py:189
+#: apps/authentication/models.py:193
 msgid "Email address already in use"
 msgstr "Este email já está em uso"
 
-#: apps/authentication/models.py:199
+#: apps/authentication/models.py:203
 msgid "Welcome to MootiroMaps"
 msgstr "Bem-vindo ao MootiroMaps"
 
@@ -132,31 +140,32 @@ msgstr "Senha incorreta"
 msgid "Failed to save data"
 msgstr "Houve uma falha ao tentar salvar os dados"
 
-#: apps/community/forms.py:28 apps/investment/forms.py:33
-#: apps/komoo_project/forms.py:43 apps/komoo_resource/forms.py:32
-#: apps/need/forms.py:27 apps/organization/forms.py:47
+#: apps/community/forms.py:32 apps/investment/forms.py:33
+#: apps/komoo_project/forms.py:35 apps/komoo_resource/forms.py:35
+#: apps/need/forms.py:31 apps/organization/forms.py:50
+#: apps/proposal/forms.py:35
 msgid "Short description"
 msgstr "Descrição curta"
 
-#: apps/community/forms.py:29 templates/default/community/view.html:37
+#: apps/community/forms.py:33 templates/default/community/view.html:38
 #: templates/default/importsheet/row_templates/comunidades.html:16
 #: templates/default/komoo_map/info_window.html:40
 msgid "Population"
 msgstr "População"
 
-#: apps/community/forms.py:30 apps/investment/forms.py:34
-#: apps/komoo_project/forms.py:44 apps/komoo_resource/forms.py:33
-#: apps/need/forms.py:28 apps/organization/forms.py:48
-#: apps/proposal/forms.py:28
+#: apps/community/forms.py:34 apps/investment/forms.py:34
+#: apps/komoo_project/forms.py:36 apps/komoo_resource/forms.py:36
+#: apps/need/forms.py:32 apps/organization/forms.py:51
+#: apps/proposal/forms.py:34
 #: templates/default/organization/branch_form.html:16
 msgid "Description"
 msgstr "Descrição"
 
-#: apps/community/forms.py:31 apps/investment/forms.py:44
-#: apps/komoo_project/forms.py:45 apps/komoo_resource/forms.py:36
-#: apps/main/templatetags/komoo_tags.py:380 apps/need/forms.py:32
-#: apps/organization/forms.py:50 lib/taggit/managers.py:39
-#: lib/taggit/models.py:57
+#: apps/community/forms.py:36 apps/investment/forms.py:45
+#: apps/komoo_project/forms.py:38 apps/komoo_resource/forms.py:38
+#: apps/main/templatetags/komoo_tags.py:387 apps/need/forms.py:34
+#: apps/organization/forms.py:53 apps/proposal/forms.py:37
+#: lib/taggit/managers.py:39 lib/taggit/models.py:57
 #: templates/default/importsheet/row_templates/comunidades.html:38
 #: templates/default/importsheet/row_templates/necessidades.html:69
 #: templates/default/importsheet/row_templates/organizacoes.html:83
@@ -165,10 +174,15 @@ msgstr "Descrição"
 msgid "Tags"
 msgstr "Palavras-chave"
 
-#: apps/community/models.py:40 apps/komoo_resource/forms.py:37
+#: apps/community/forms.py:38 apps/komoo_resource/forms.py:42
+#: apps/need/forms.py:39 apps/organization/forms.py:59
+msgid "Videos"
+msgstr ""
+
+#: apps/community/models.py:41 apps/komoo_resource/forms.py:40
 #: apps/main/templatetags/komoo_tags.py:273
-#: apps/main/templatetags/komoo_tags.py:384 apps/need/forms.py:29
-#: apps/organization/forms.py:51 templates/default/investment/list.html:47
+#: apps/main/templatetags/komoo_tags.py:391 apps/need/forms.py:35
+#: apps/organization/forms.py:54 templates/default/investment/list.html:47
 msgid "Community"
 msgstr "Comunidade"
 
@@ -200,73 +214,69 @@ msgstr "Áreas inválidas: "
 msgid "Invalid categories: "
 msgstr "Categorias inválidas: "
 
-#: apps/investment/forms.py:32 apps/need/forms.py:26 apps/proposal/forms.py:27
-msgid "Title"
-msgstr "Título"
-
-#: apps/investment/forms.py:35
+#: apps/investment/forms.py:36
 msgid "Investor type"
 msgstr "Tipo de investidor"
 
-#: apps/investment/forms.py:36
+#: apps/investment/forms.py:37
 msgid "Anonymous investor"
 msgstr "Anônimo"
 
-#: apps/investment/forms.py:37
+#: apps/investment/forms.py:38
 msgid "Investor organization"
 msgstr "Nome do Investidor"
 
-#: apps/investment/forms.py:38
+#: apps/investment/forms.py:39
 msgid "Investor person"
 msgstr "Nome do Investidor"
 
-#: apps/investment/forms.py:39
+#: apps/investment/forms.py:40
 msgid "Investment period"
 msgstr "Período do investimento"
 
-#: apps/investment/forms.py:40 apps/main/templatetags/komoo_tags.py:383
+#: apps/investment/forms.py:41 apps/main/templatetags/komoo_tags.py:390
 #: templates/default/investment/view.html:48
 msgid "Date"
 msgstr "Data"
 
-#: apps/investment/forms.py:41
+#: apps/investment/forms.py:42
 msgid "End date"
 msgstr "Data final"
 
-#: apps/investment/forms.py:42
+#: apps/investment/forms.py:43
 msgid "Currency"
 msgstr "Moeda"
 
-#: apps/investment/forms.py:43 templates/default/investment/view.html:51
+#: apps/investment/forms.py:44 templates/default/investment/view.html:51
 msgid "Value"
 msgstr "Valor"
 
-#: apps/investment/forms.py:137 apps/investment/forms.py:139
+#: apps/investment/forms.py:142 apps/investment/forms.py:144
 msgid "Invalid investor"
 msgstr "Investidor inválido"
 
-#: apps/investment/models.py:21 apps/main/templatetags/komoo_tags.py:268
-#: apps/organization/models.py:72
+#: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:268
+#: apps/organization/models.py:71
 msgid "Organization"
 msgstr "Organização"
 
-#: apps/investment/models.py:22
+#: apps/investment/models.py:23
 msgid "Person"
 msgstr "Pessoa"
 
-#: apps/investment/models.py:34
+#: apps/investment/models.py:35
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: apps/investment/models.py:119
+#: apps/investment/models.py:121
 msgid "Brazilian Real (BRL)"
 msgstr "Real (BRL)"
 
-#: apps/investment/models.py:120
+#: apps/investment/models.py:122
 msgid "US-Dollar (USD)"
 msgstr "Dólar americano (USD)"
 
-#: apps/investment/models.py:121
+#: apps/investment/models.py:123
 msgid "Euro"
 msgstr "Euro"
 
@@ -327,29 +337,19 @@ msgstr ""
 "Adicionar uma organização - Por exemplo uma organização sem fins lucrativos, "
 "uma empresa ou instituição governamental."
 
-#: apps/komoo_project/forms.py:23 templates/default/organization/list.html:62
+#: apps/komoo_project/forms.py:22 templates/default/organization/list.html:62
 msgid "Public"
 msgstr "Público"
 
-#: apps/komoo_project/forms.py:24
+#: apps/komoo_project/forms.py:23
 msgid "Private"
 msgstr "Privado"
 
-#: apps/komoo_project/forms.py:46 apps/organization/forms.py:55
+#: apps/komoo_project/forms.py:39 apps/organization/forms.py:58
 msgid "Logo"
 msgstr "Logotipo"
 
-#: apps/komoo_project/forms.py:47 apps/komoo_resource/forms.py:35
-#: templates/default/importsheet/row_templates/organizacoes.html:47
-#: templates/default/importsheet/row_templates/recursos.html:51
-#: templates/default/organization/show.html:160
-#: templates/default/project/old_view.html:268
-#: templates/default/project/view.html:105
-#: templates/default/resource/show.html:99
-msgid "Contact"
-msgstr "Contato"
-
-#: apps/komoo_project/forms.py:48
+#: apps/komoo_project/forms.py:40
 msgid "Logo of your partners"
 msgstr "Logos dos seus parceiros"
 
@@ -357,69 +357,69 @@ msgstr "Logos dos seus parceiros"
 msgid "Unnamed"
 msgstr "Sem nome"
 
-#: apps/komoo_resource/forms.py:34 lib/taggit/models.py:117
+#: apps/komoo_resource/forms.py:39 lib/taggit/models.py:117
 #: lib/taggit/models.py:123
 #: templates/default/importsheet/row_templates/recursos.html:17
 #: templates/default/resource/list.html:61
 msgid "Content type"
 msgstr "Tipo de conteúdo"
 
-#: apps/komoo_resource/forms.py:38 apps/need/forms.py:33
-#: apps/organization/forms.py:54
+#: apps/komoo_resource/forms.py:41 apps/need/forms.py:38
+#: apps/organization/forms.py:57
 msgid "Images"
 msgstr "Imagens"
 
-#: apps/komoo_resource/forms.py:88 apps/main/utils.py:250
+#: apps/komoo_resource/forms.py:97 apps/main/utils.py:250
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
-#: apps/komoo_resource/models.py:43
+#: apps/komoo_resource/models.py:42
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:69 apps/main/templatetags/komoo_tags.py:269
+#: apps/komoo_resource/models.py:67 apps/main/templatetags/komoo_tags.py:269
 msgid "Resource"
 msgstr "Recurso"
 
-#: apps/main/models.py:34
+#: apps/main/models.py:50
 msgid "Address"
 msgstr "Endereço"
 
-#: apps/main/models.py:35
+#: apps/main/models.py:51
 msgid "Complement"
 msgstr "Complemento"
 
-#: apps/main/models.py:36
+#: apps/main/models.py:52
 msgid "City"
 msgstr "Cidade"
 
-#: apps/main/models.py:37
+#: apps/main/models.py:53
 msgid "Postal Code"
 msgstr "CEP"
 
-#: apps/main/models.py:38
+#: apps/main/models.py:54
 msgid "Phone"
 msgstr "Telefone"
 
-#: apps/main/models.py:39
+#: apps/main/models.py:55
 msgid "Facebook"
 msgstr "Facebook"
 
-#: apps/main/models.py:40
+#: apps/main/models.py:56
 msgid "E-mail"
 msgstr "E-mail"
 
-#: apps/main/models.py:41
+#: apps/main/models.py:57
 msgid "Twitter"
 msgstr "Twitter"
 
-#: apps/main/models.py:42
+#: apps/main/models.py:58
 msgid "Web Site"
 msgstr "Web Site"
 
-#: apps/main/models.py:43
-msgid "Others"
-msgstr "Outros"
+#: apps/main/models.py:59 apps/moderation/models.py:57
+msgid "Other"
+msgstr "Outro"
 
 #: apps/main/relations.py:8
 msgid "owns"
@@ -610,7 +610,7 @@ msgid_plural "%(count)s hours from now"
 msgstr[0] "daqui a uma hora"
 msgstr[1] "daqui a %(count)s horas"
 
-#: apps/main/templatetags/komoo_tags.py:270 apps/need/models.py:98
+#: apps/main/templatetags/komoo_tags.py:270 apps/need/models.py:101
 msgid "Need"
 msgstr "Necessidade"
 
@@ -623,14 +623,14 @@ msgstr "Proposta"
 msgid "Investment"
 msgstr "Investimento"
 
-#: apps/main/templatetags/komoo_tags.py:385 apps/need/forms.py:30
+#: apps/main/templatetags/komoo_tags.py:392 apps/need/forms.py:36
 #: templates/default/importsheet/row_templates/necessidades.html:18
 msgid "Need categories"
 msgstr "Áreas"
 
-#: apps/main/templatetags/komoo_tags.py:386 apps/need/forms.py:31
-#: apps/organization/forms.py:52 templates/default/need/list.html:59
-#: templates/default/need/view.html:45
+#: apps/main/templatetags/komoo_tags.py:393 apps/need/forms.py:37
+#: apps/organization/forms.py:55 templates/default/need/list.html:59
+#: templates/default/need/view.html:46
 msgid "Target audiences"
 msgstr "Públicos-alvo"
 
@@ -669,10 +669,6 @@ msgstr "Violação de copyright"
 #: apps/moderation/models.py:56
 msgid "Wrong information"
 msgstr "Informação incorreta"
-
-#: apps/moderation/models.py:57
-msgid "Other"
-msgstr "Outro"
 
 #: apps/moderation/models.py:65
 msgid "reason"
@@ -737,59 +733,59 @@ msgstr "Você já denunciou este conteúdo"
 msgid "Your report was successfully submitted"
 msgstr "Sua denúncia foi enviada com sucesso"
 
-#: apps/need/models.py:24
+#: apps/need/models.py:25
 msgid "Culture"
 msgstr "Cultura"
 
-#: apps/need/models.py:25
+#: apps/need/models.py:26
 msgid "Education"
 msgstr "Educação"
 
-#: apps/need/models.py:26
+#: apps/need/models.py:27
 msgid "Environment"
 msgstr "Meio ambiente"
 
-#: apps/need/models.py:27
+#: apps/need/models.py:28
 msgid "Health"
 msgstr "Saúde"
 
-#: apps/need/models.py:28
+#: apps/need/models.py:29
 msgid "Housing"
 msgstr "Habitação"
 
-#: apps/need/models.py:29
+#: apps/need/models.py:30
 msgid "Local economy"
 msgstr "Economia local"
 
-#: apps/need/models.py:30
+#: apps/need/models.py:31
 msgid "Mobility"
 msgstr "Mobilidade"
 
-#: apps/need/models.py:31
+#: apps/need/models.py:32
 msgid "Social service"
 msgstr "Serviço social"
 
-#: apps/need/models.py:32
+#: apps/need/models.py:33
 msgid "Sport"
 msgstr "Esporte"
 
-#: apps/need/models.py:33
+#: apps/need/models.py:34
 msgid "Security"
 msgstr "Segurança"
 
-#: apps/organization/forms.py:49
-msgid "Contacts"
-msgstr "Contatos"
-
-#: apps/organization/forms.py:53
+#: apps/organization/forms.py:56
 msgid "Categories"
 msgstr "Categorias"
 
-#: apps/organization/models.py:73
+#: apps/organization/models.py:72
 msgid "Add an organization"
 msgstr "Adicionar uma organização"
 
-#: apps/proposal/forms.py:29 templates/default/investment/list.html:41
+#: apps/proposal/forms.py:33
+msgid "Title"
+msgstr "Título"
+
+#: apps/proposal/forms.py:38 templates/default/investment/list.html:41
 #: templates/default/proposal/view.html:39
 msgid "Cost"
 msgstr "Custo"
@@ -882,6 +878,46 @@ msgstr "mapa de projeto discutido"
 msgid "import sheet created"
 msgstr "tabela de importação criada"
 
+#: apps/video/forms.py:88 apps/video/forms.py:89
+msgid "Add videos"
+msgstr "Adicionar vídeos"
+
+#: apps/video/forms.py:90
+msgid "Add video links"
+msgstr "Adicionar links para vídeos"
+
+#: apps/video/forms.py:91 lib/fileupload/forms.py:126
+#: lib/fileupload/forms.py:190
+#: templates/default/moderation/deletion_request_box.html:15
+#: templates/default/moderation/report_content_box_templatetag.html:21
+#: templates/default/project/filtered_query_to_project.html:27
+#: templates/default/project/projects_tag.html:43
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: apps/video/forms.py:92 templates/default/komoo_map/panel.html:14
+msgid "Add"
+msgstr "Adicionar"
+
+#: apps/video/forms.py:93
+msgid "Ok"
+msgstr ""
+
+#: apps/video/forms.py:94
+msgid "Edit video details"
+msgstr "Editar detalhes de vídeo"
+
+#: apps/video/forms.py:96 lib/fileupload/forms.py:130
+#: lib/fileupload/forms.py:192
+#: templates/default/moderation/delete_button_templatetag.html:5
+msgid "Delete"
+msgstr "Apagar"
+
+#: apps/video/forms.py:97 lib/fileupload/forms.py:131
+#: templates/default/authentication/login_box.html:41
+msgid "or"
+msgstr "ou"
+
 #: lib/ajax_select/fields.py:97 lib/ajax_select/fields.py:138
 #: lib/ajax_select/fields.py:303
 msgid "Enter text to search field"
@@ -899,14 +935,6 @@ msgstr "Adicionar links"
 msgid "Add image links"
 msgstr "Adicionar links para imagens"
 
-#: lib/fileupload/forms.py:126 lib/fileupload/forms.py:190
-#: templates/default/moderation/deletion_request_box.html:15
-#: templates/default/moderation/report_content_box_templatetag.html:21
-#: templates/default/project/filtered_query_to_project.html:27
-#: templates/default/project/projects_tag.html:43
-msgid "Cancel"
-msgstr "Cancelar"
-
 #: lib/fileupload/forms.py:127 lib/fileupload/forms.py:191
 #: templates/default/authentication/profile_update.html:249
 #: templates/default/project/filtered_query_to_project.html:30
@@ -917,16 +945,6 @@ msgstr "Salvar mudanças"
 #: lib/fileupload/forms.py:128 lib/fileupload/forms.py:193
 msgid "Insert a subtitle for this image"
 msgstr "Inserir uma legenda nesta imagem"
-
-#: lib/fileupload/forms.py:130 lib/fileupload/forms.py:192
-#: templates/default/moderation/delete_button_templatetag.html:5
-msgid "Delete"
-msgstr "Apagar"
-
-#: lib/fileupload/forms.py:131
-#: templates/default/authentication/login_box.html:41
-msgid "or"
-msgstr "ou"
 
 #: lib/fileupload/forms.py:189
 msgid "Select a file"
@@ -1103,7 +1121,7 @@ msgid "Last updates"
 msgstr "Últimas atualizações"
 
 #: templates/child/main/root.html:113 templates/default/main/root.html:170
-#: templates/default/need/view.html:102
+#: templates/default/need/view.html:106
 msgid "see all"
 msgstr "ver todos"
 
@@ -1176,7 +1194,7 @@ msgstr "Veja alguns links importantes"
 #: templates/default/organization/branch_communities_list.html:6
 #: templates/default/organization/branch_form.html:20
 #: templates/default/project/old_view.html:85
-#: templates/default/project/view.html:157
+#: templates/default/project/view.html:152
 msgid "Communities"
 msgstr "Comunidades"
 
@@ -1185,7 +1203,7 @@ msgstr "Comunidades"
 #: templates/default/main/templatetags/geo_objects_listing.html:29
 #: templates/default/main/templatetags/menu.html:20
 #: templates/default/project/old_view.html:103
-#: templates/default/project/view.html:175
+#: templates/default/project/view.html:170
 #: templates/default/resource/list.html:8
 msgid "Resources"
 msgstr "Recursos"
@@ -1196,14 +1214,14 @@ msgstr "Recursos"
 #: templates/default/main/templatetags/menu.html:17
 #: templates/default/need/list.html:9
 #: templates/default/project/old_view.html:94
-#: templates/default/project/view.html:166
+#: templates/default/project/view.html:161
 msgid "Needs"
 msgstr "Necessidades"
 
 #: templates/default/404.html:32 templates/default/investment/list.html:9
 #: templates/default/main/templatetags/menu.html:23
 #: templates/default/project/old_view.html:112
-#: templates/default/project/view.html:184
+#: templates/default/project/view.html:179
 msgid "Investments"
 msgstr "Investimentos"
 
@@ -1213,7 +1231,7 @@ msgstr "Investimentos"
 #: templates/default/main/templatetags/menu.html:14
 #: templates/default/organization/list.html:10
 #: templates/default/project/old_view.html:76
-#: templates/default/project/view.html:148
+#: templates/default/project/view.html:143
 msgid "Organizations"
 msgstr "Organizações"
 
@@ -1259,17 +1277,17 @@ msgid "New User"
 msgstr "Novo usuário"
 
 #: templates/default/authentication/new.html:11
-#: templates/default/community/edit.html:19
+#: templates/default/community/edit.html:20
 #: templates/default/community/edit_ajax.html:11
 #: templates/default/investment/edit.html:24
-#: templates/default/need/edit.html:23
+#: templates/default/need/edit.html:24
 #: templates/default/need/edit_ajax.html:10
-#: templates/default/organization/edit.html:18
+#: templates/default/organization/edit.html:19
 #: templates/default/organization/new.html:16
 #: templates/default/organization/new_frommap.html:15
 #: templates/default/project/edit.html:22
 #: templates/default/proposal/edit.html:19
-#: templates/default/resource/edit.html:18
+#: templates/default/resource/edit.html:19
 #: templates/default/resource/new.html:15
 #: templates/default/resource/new_frommap.html:14
 msgid "<strong>*</strong> required fields!"
@@ -1283,7 +1301,7 @@ msgstr "Editar perfil"
 msgid "Loading..."
 msgstr "Carregando..."
 
-#: templates/default/authentication/profile.html:72
+#: templates/default/authentication/profile.html:73
 #: templates/default/highlight/project_highlights.html:7
 #: templates/default/highlight/project_highlights.html:14
 #: templates/default/main/templatetags/menu.html:28
@@ -1372,13 +1390,13 @@ msgstr "Conecte sua conta do Facebook"
 
 #: templates/default/authentication/profile_update.html:193
 #: templates/default/community/list.html:36
-#: templates/default/community/view.html:49
+#: templates/default/community/view.html:51
 #: templates/default/investment/investment_list_templatetag.html:33
 #: templates/default/investment/investment_list_templatetag.html:52
 #: templates/default/investment/list.html:36
-#: templates/default/need/list.html:47 templates/default/need/view.html:65
+#: templates/default/need/list.html:47 templates/default/need/view.html:67
 #: templates/default/organization/list.html:44
-#: templates/default/organization/show.html:153
+#: templates/default/organization/show.html:155
 #: templates/default/project/old_view.html:151
 #: templates/default/project/old_view.html:164
 #: templates/default/project/old_view.html:177
@@ -1387,14 +1405,14 @@ msgstr "Conecte sua conta do Facebook"
 #: templates/default/project/old_view.html:216
 #: templates/default/project/old_view.html:245
 #: templates/default/project/view.html:94
-#: templates/default/project/view.html:213
-#: templates/default/project/view.html:226
-#: templates/default/project/view.html:239
-#: templates/default/project/view.html:252
-#: templates/default/project/view.html:265
-#: templates/default/project/view.html:278
+#: templates/default/project/view.html:208
+#: templates/default/project/view.html:221
+#: templates/default/project/view.html:234
+#: templates/default/project/view.html:247
+#: templates/default/project/view.html:260
+#: templates/default/project/view.html:273
 #: templates/default/resource/list.html:50
-#: templates/default/resource/show.html:68
+#: templates/default/resource/show.html:70
 #: templates/default/search/list.html:21
 #: templates/default/update/updates_list_templatetag.html:100
 msgid "View on map"
@@ -1501,21 +1519,21 @@ msgstr "Novo comentário"
 msgid "see more ..."
 msgstr "ver mais ..."
 
-#: templates/default/community/edit.html:15
+#: templates/default/community/edit.html:16
 msgid "Edit community"
 msgstr "Editar comunidade"
 
-#: templates/default/community/edit.html:39
+#: templates/default/community/edit.html:41
 #: templates/default/community/edit_ajax.html:22
 msgid "Please insert a name for the community"
 msgstr "Por favor, insira o nome da comunidade"
 
-#: templates/default/community/edit.html:42
+#: templates/default/community/edit.html:44
 #: templates/default/community/edit_ajax.html:25
 msgid "Approximately, how many people live in the community?"
 msgstr "Aproximadamente, quantas pessoas moram na comunidade?"
 
-#: templates/default/community/edit.html:46
+#: templates/default/community/edit.html:48
 #: templates/default/community/edit_ajax.html:29
 msgid ""
 "Please, describe the community. What do you kno about its history, the "
@@ -1525,8 +1543,19 @@ msgstr ""
 "Por favor, descreva a comunidade. Sua história, as pessoas que vivem lá, a "
 "economia local, serviços sociais, educação, transporte público, etc."
 
-#: templates/default/community/edit.html:50
+#: templates/default/community/edit.html:52
 #: templates/default/community/edit_ajax.html:33
+#: templates/default/need/edit.html:61
+#: templates/default/need/edit_ajax.html:29
+msgid ""
+"Insert the contact information (postal address, contact persons, phone "
+"number, email address)."
+msgstr ""
+"Insira as informações de contato (endereço com CEP, pessoas com quem falar, "
+"telefone, email)"
+
+#: templates/default/community/edit.html:57
+#: templates/default/community/edit_ajax.html:38
 msgid ""
 "Please, choose tags for the community, for instance \"native community\", "
 "\"Santa Barbara\", \"slum\"."
@@ -1534,8 +1563,8 @@ msgstr ""
 "Por favor, escolha palavras-chave para a comunidade, como \"comunidade "
 "indígena\", \"Santa Bárbara\", \"favela\"."
 
-#: templates/default/community/edit.html:54
-#: templates/default/community/edit_ajax.html:37
+#: templates/default/community/edit.html:61
+#: templates/default/community/edit_ajax.html:42
 msgid ""
 "Please, upload photos of the community or link to photos on Wiki Commons or "
 "Flickr. Make sure that the photos are licensed under creative commons."
@@ -1560,23 +1589,23 @@ msgstr[1] "%(counter)s comunidades"
 msgid "population:"
 msgstr "população:"
 
-#: templates/default/community/view.html:28
+#: templates/default/community/view.html:29
 #: templates/default/investment/view.html:29
-#: templates/default/need/view.html:38
-#: templates/default/organization/show.html:45
+#: templates/default/need/view.html:39
+#: templates/default/organization/show.html:46
 #: templates/default/project/old_view.html:46
 #: templates/default/project/view.html:41
-#: templates/default/resource/show.html:35
+#: templates/default/resource/show.html:36
 msgid "Go to discussion page"
 msgstr "Ir para página de discussões"
 
-#: templates/default/community/view.html:29
-#: templates/default/need/view.html:39
-#: templates/default/organization/show.html:46
+#: templates/default/community/view.html:30
+#: templates/default/need/view.html:40
+#: templates/default/organization/show.html:47
 msgid "Edit this content"
 msgstr "Editar conteúdo"
 
-#: templates/default/community/view.html:54
+#: templates/default/community/view.html:58
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
@@ -1674,14 +1703,20 @@ msgstr "Geometria"
 
 #: templates/default/importsheet/row_templates/necessidades.html:57
 #: templates/default/importsheet/row_templates/organizacoes.html:61
-#: templates/default/organization/show.html:178
+#: templates/default/organization/show.html:175
 msgid "Audience"
 msgstr "Público"
+
+#: templates/default/importsheet/row_templates/organizacoes.html:47
+#: templates/default/importsheet/row_templates/recursos.html:51
+#: templates/default/project/old_view.html:268
+msgid "Contact"
+msgstr "Contato"
 
 #: templates/default/importsheet/row_templates/organizacoes.html:72
 #: templates/default/komoo_map/info_window.html:44
 #: templates/default/organization/list.html:53
-#: templates/default/organization/show.html:167
+#: templates/default/organization/show.html:164
 msgid "Operation Field"
 msgstr "Área de atuação"
 
@@ -1690,9 +1725,9 @@ msgid "Edit investment"
 msgstr "Editar investimento"
 
 #: templates/default/investment/edit.html:19
-#: templates/default/organization/show.html:136
-#: templates/default/organization/show.html:156
-#: templates/default/resource/show.html:71
+#: templates/default/organization/show.html:137
+#: templates/default/organization/show.html:158
+#: templates/default/resource/show.html:73
 msgid "New investment"
 msgstr "Novo investimento"
 
@@ -1716,16 +1751,27 @@ msgstr ""
 "os resultados para a comunidade? Você pode fornecer links dos orçamentos."
 
 #: templates/default/investment/edit.html:50
+#: templates/default/organization/edit.html:64
+#: templates/default/organization/new.html:53
+#: templates/default/organization/new_frommap.html:45
+msgid ""
+"Insert the contact information of this organization (postal address, contact "
+"persons, phone number, email address)."
+msgstr ""
+"Insira as informações de contato dessa organização (endereço com CEP, "
+"pessoas com quem falar, telefone, email)"
+
+#: templates/default/investment/edit.html:55
 msgid ""
 "Please inform the investor type. Is it an organization already registered on "
 "MootiroMaps or a private donor?"
 msgstr "Informe o tipo de investidor. É uma organização ou um doador privado?"
 
-#: templates/default/investment/edit.html:55
+#: templates/default/investment/edit.html:60
 msgid "Select here if the donor wishes to be anonymous or is not known."
 msgstr "Selecione esta opção se o doador é anônimo ou desconhecido"
 
-#: templates/default/investment/edit.html:60
+#: templates/default/investment/edit.html:65
 msgid ""
 "Inform the name of the organization, company or government institution that "
 "is responsible for the investment"
@@ -1733,32 +1779,32 @@ msgstr ""
 "Informe o nome da organização, empresa ou instituição governamental "
 "responsável pelo investimento"
 
-#: templates/default/investment/edit.html:65
+#: templates/default/investment/edit.html:70
 msgid "Inform the name of the private donor responsible for the investment"
 msgstr "Informe o nome do doador privado responsável pelo investimento"
 
-#: templates/default/investment/edit.html:70
+#: templates/default/investment/edit.html:75
 msgid "This investment is related to a period or is it a one-time investment?"
 msgstr "Esse investimento aconteceu em um período ou aconteceu só uma vez?"
 
-#: templates/default/investment/edit.html:75
+#: templates/default/investment/edit.html:80
 msgid "Date of the investment"
 msgstr "Data do investimento"
 
-#: templates/default/investment/edit.html:80
+#: templates/default/investment/edit.html:85
 msgid "End of the investment"
 msgstr "Fim do investimento"
 
-#: templates/default/investment/edit.html:85
+#: templates/default/investment/edit.html:90
 msgid "Amount of money being invested"
 msgstr "Quantidade de dinheiro sendo investido"
 
-#: templates/default/investment/edit.html:90
+#: templates/default/investment/edit.html:95
 msgid "Currency related to the investment (Dollar, Brazilian Real, etc.)"
 msgstr "Moeda do investimento (Dólar, Real, etc.)"
 
-#: templates/default/investment/edit.html:95
-#: templates/default/resource/edit.html:62
+#: templates/default/investment/edit.html:100
+#: templates/default/resource/edit.html:64
 #: templates/default/resource/new.html:52
 #: templates/default/resource/new_frommap.html:46
 msgid ""
@@ -1768,9 +1814,9 @@ msgstr ""
 "Suba fotos do recurso ou link para fotos no Wiki Commons ou Flickr. Confira "
 "se elas estão sob uma licença Creative Commons"
 
-#: templates/default/investment/edit.html:100
-#: templates/default/need/edit.html:66
-#: templates/default/need/edit_ajax.html:36
+#: templates/default/investment/edit.html:105
+#: templates/default/need/edit.html:72
+#: templates/default/need/edit_ajax.html:41
 msgid ""
 "Please, insert tags that describe the need, for instance, \"street light\", "
 "\"waste\", \"public transport\", \"cycling lane\"."
@@ -1812,7 +1858,7 @@ msgid "Grantee"
 msgstr "Destino da doação"
 
 #: templates/default/investment/view.html:30
-#: templates/default/resource/show.html:36
+#: templates/default/resource/show.html:37
 msgid "Edit content"
 msgstr "Editar conteúdo"
 
@@ -1820,7 +1866,7 @@ msgstr "Editar conteúdo"
 msgid "Period"
 msgstr "Período"
 
-#: templates/default/investment/view.html:68
+#: templates/default/investment/view.html:69
 msgid "Similar investments"
 msgstr "Investimentos similares"
 
@@ -1865,10 +1911,6 @@ msgstr "Camadas"
 #: templates/default/komoo_map/panel.html:14
 msgid "Add points to the map"
 msgstr "Adicionar pontos no mapa"
-
-#: templates/default/komoo_map/panel.html:14
-msgid "Add"
-msgstr "Adicionar"
 
 #: templates/default/komoo_map/panel.html:18
 msgid "Search for contents close to a selected point on the map"
@@ -2490,7 +2532,7 @@ msgstr "Impressão e distribuição de mapas ou guias do bairro na comunidade."
 #: templates/default/main/use_cases.html:171
 #: templates/default/main/use_cases.html:206
 #: templates/default/project/old_view.html:275
-#: templates/default/project/view.html:113
+#: templates/default/project/view.html:108
 msgid "Related project maps"
 msgstr "Projetos relacionados"
 
@@ -3057,15 +3099,15 @@ msgid ""
 msgstr ""
 "Notifique conteúdo impróprio, spam ou outras violações dos termos de uso."
 
-#: templates/default/need/edit.html:16
+#: templates/default/need/edit.html:17
 msgid "Edit need"
 msgstr "Editar necessidade"
 
-#: templates/default/need/edit.html:18
+#: templates/default/need/edit.html:19
 msgid "New need"
 msgstr "Nova necessidade"
 
-#: templates/default/need/edit.html:52
+#: templates/default/need/edit.html:54
 #: templates/default/need/edit_ajax.html:22
 msgid ""
 "Insert an explanatory title for your need, for example \"Fix street lights "
@@ -3074,7 +3116,7 @@ msgstr ""
 "Insira um título explanatório para a necessidade, por exemplo, \"Consertar "
 "postes de luz na Rua Magnólia\""
 
-#: templates/default/need/edit.html:56
+#: templates/default/need/edit.html:58
 #: templates/default/need/edit_ajax.html:26
 msgid ""
 "Gives details about this need. What is the problem about, why does it exist, "
@@ -3084,8 +3126,8 @@ msgstr ""
 "Dê detalhes sobre essa necessidade. Qual é o problema, porque existe, quem é "
 "afetado e o que têm sido feito até hoje sobre isso?"
 
-#: templates/default/need/edit.html:59
-#: templates/default/need/edit_ajax.html:29
+#: templates/default/need/edit.html:65
+#: templates/default/need/edit_ajax.html:34
 msgid ""
 "Select the categories that most fit your need. For instance, the "
 "construction of a cycling lane is related to mobility and environment issues."
@@ -3093,13 +3135,13 @@ msgstr ""
 "Selecione as categorias que combinam mais com sua necessidade. Por exemplo, "
 "a construção de uma ciclovia é relacionada a mobilidade e meio-ambiente."
 
-#: templates/default/need/edit.html:63
-#: templates/default/need/edit_ajax.html:33
+#: templates/default/need/edit.html:69
+#: templates/default/need/edit_ajax.html:38
 msgid "Who is being affected by this problem?"
 msgstr "Quem é afetado por esse problema?"
 
-#: templates/default/need/edit.html:70
-#: templates/default/need/edit_ajax.html:40
+#: templates/default/need/edit.html:76
+#: templates/default/need/edit_ajax.html:45
 msgid ""
 "Please, upload some photos about this problem. Photos can help people to "
 "think about solutions."
@@ -3119,44 +3161,44 @@ msgid "Create new need"
 msgstr "Crie nova necessidade"
 
 #: templates/default/need/list.html:40 templates/default/resource/list.html:41
-#: templates/default/resource/show.html:85
+#: templates/default/resource/show.html:90
 msgid "at"
 msgstr "em"
 
-#: templates/default/need/view.html:46
+#: templates/default/need/view.html:47
 #: templates/default/proposal/proposal_summary_templatetag.html:5
 msgid "created by"
 msgstr "criado por"
 
-#: templates/default/need/view.html:46
+#: templates/default/need/view.html:47
 msgid "on"
 msgstr "em"
 
-#: templates/default/need/view.html:68
+#: templates/default/need/view.html:72
 msgid "Proposals"
 msgstr "Propostas"
 
-#: templates/default/need/view.html:74 templates/default/proposal/view.html:62
+#: templates/default/need/view.html:78 templates/default/proposal/view.html:62
 msgid "New proposal"
 msgstr "Nova proposta"
 
-#: templates/default/need/view.html:82
+#: templates/default/need/view.html:86
 msgid "Related needs"
 msgstr "Necessidades relacionadas"
 
-#: templates/default/need/view.html:99
+#: templates/default/need/view.html:103
 msgid "No related needs"
 msgstr "Sem necessidades relacionadas"
 
-#: templates/default/need/view.html:103
+#: templates/default/need/view.html:107
 msgid "see less"
 msgstr "ver menos"
 
-#: templates/default/organization/edit.html:14
+#: templates/default/organization/edit.html:15
 msgid "Edit organization"
 msgstr "Editar organização"
 
-#: templates/default/organization/edit.html:47
+#: templates/default/organization/edit.html:49
 #: templates/default/organization/new.html:38
 #: templates/default/organization/new_frommap.html:30
 msgid ""
@@ -3168,7 +3210,7 @@ msgstr ""
 "prefeitura da sua cidade, coloque esse detalhe no título, como \"Prefeitura "
 "de Santa Bárbara\"."
 
-#: templates/default/organization/edit.html:51
+#: templates/default/organization/edit.html:53
 #: templates/default/organization/new.html:42
 #: templates/default/organization/new_frommap.html:34
 msgid ""
@@ -3179,7 +3221,7 @@ msgstr ""
 "O que você sabe sobre essa organização? Quais serviços ou produtos ela "
 "oferece? Pelo que ela é conhecida? Quem são seus parceiros?"
 
-#: templates/default/organization/edit.html:54
+#: templates/default/organization/edit.html:56
 #: templates/default/organization/new.html:45
 #: templates/default/organization/new_frommap.html:37
 msgid ""
@@ -3189,29 +3231,19 @@ msgstr ""
 "Informe quais comunidades são atendidas por essa organização. A comunidade "
 "já deve ter sido inserida no MootiroMaps."
 
-#: templates/default/organization/edit.html:58
+#: templates/default/organization/edit.html:60
 #: templates/default/organization/new.html:49
 #: templates/default/organization/new_frommap.html:41
 msgid "Inform the website address of this organization"
 msgstr "Informe o site dessa organização"
 
-#: templates/default/organization/edit.html:62
-#: templates/default/organization/new.html:53
-#: templates/default/organization/new_frommap.html:45
-msgid ""
-"Insert the contact information of this organization (postal address, contact "
-"persons, phone number, email address)."
-msgstr ""
-"Insira as informações de contato dessa organização (endereço com CEP, "
-"pessoas com quem falar, telefone, email)"
-
-#: templates/default/organization/edit.html:67
+#: templates/default/organization/edit.html:69
 #: templates/default/organization/new.html:58
 #: templates/default/organization/new_frommap.html:50
 msgid "Which people or groups are attended by this organization?"
 msgstr "Que pessoas ou grupos são atendidas por essa organização?"
 
-#: templates/default/organization/edit.html:71
+#: templates/default/organization/edit.html:73
 #: templates/default/organization/new.html:62
 #: templates/default/organization/new_frommap.html:54
 msgid ""
@@ -3221,7 +3253,7 @@ msgstr ""
 "Selecione as categorias que melhor reflitam as atividades ou causas da "
 "organização."
 
-#: templates/default/organization/edit.html:75
+#: templates/default/organization/edit.html:77
 #: templates/default/organization/new.html:66
 #: templates/default/organization/new_frommap.html:58
 msgid ""
@@ -3232,7 +3264,7 @@ msgstr ""
 "conteúdo no MootiroMaps. Palavras-chave precisas ajudam as pessoas a "
 "encontrarem seu conteúdo."
 
-#: templates/default/organization/edit.html:79
+#: templates/default/organization/edit.html:81
 #: templates/default/organization/new.html:70
 #: templates/default/organization/new_frommap.html:62
 msgid ""
@@ -3242,7 +3274,7 @@ msgstr ""
 "Suba fotos da organização ou link para fotos no Wiki Commons ou Flickr. "
 "Confira se elas estão sob uma licença Creative Commons"
 
-#: templates/default/organization/edit.html:83
+#: templates/default/organization/edit.html:85
 #: templates/default/organization/new.html:74
 #: templates/default/organization/new_frommap.html:66
 msgid ""
@@ -3272,41 +3304,41 @@ msgstr "Nova organização"
 msgid "Content related to"
 msgstr "Conteúdo relacionado a"
 
-#: templates/default/organization/show.html:55
+#: templates/default/organization/show.html:56
 #: templates/default/project/old_view.html:62
 #: templates/default/project/view.html:75
 msgid "See all objects on the map"
 msgstr "Ver todos os objetos no mapa"
 
-#: templates/default/organization/show.html:60
+#: templates/default/organization/show.html:61
 #, python-format
 msgid "Supported %(num)s organization"
 msgid_plural "Supported %(num)s organizations"
 msgstr[0] "Apoiou %(num)s organização"
 msgstr[1] "Apoiou %(num)s organizações"
 
-#: templates/default/organization/show.html:66
+#: templates/default/organization/show.html:67
 #, python-format
 msgid "On %(num)s community"
 msgid_plural "On %(num)s communities"
 msgstr[0] "Presente em %(num)s comunidade"
 msgstr[1] "Presente em %(num)s comunidades"
 
-#: templates/default/organization/show.html:72
+#: templates/default/organization/show.html:73
 #, python-format
 msgid "Supported %(num)s proposal"
 msgid_plural "Supported %(num)s proposals"
 msgstr[0] "Apoiou %(num)s proposta"
 msgstr[1] "Apoiou %(num)s propostas"
 
-#: templates/default/organization/show.html:78
+#: templates/default/organization/show.html:79
 #, python-format
 msgid "Supported %(num)s resource"
 msgid_plural "Supported %(num)s resources"
 msgstr[0] "Apoiou %(num)s recurso"
 msgstr[1] "Apoiou %(num)s recursos"
 
-#: templates/default/organization/show.html:84
+#: templates/default/organization/show.html:85
 #, python-format
 msgid ""
 "Realized %(num)s investment\n"
@@ -3315,7 +3347,7 @@ msgid_plural "Realized %(num)s investments"
 msgstr[0] "Realizou %(num)s investimento"
 msgstr[1] "Realizou %(num)s investimentos"
 
-#: templates/default/organization/show.html:87
+#: templates/default/organization/show.html:88
 #, python-format
 msgid ""
 "Received %(num)s investment\n"
@@ -3324,36 +3356,31 @@ msgid_plural "Received %(num)s investments"
 msgstr[0] "Recebeu %(num)s investimento"
 msgstr[1] "Recebeu %(num)s investimentos"
 
-#: templates/default/organization/show.html:99
+#: templates/default/organization/show.html:100
 msgid "No organizations supported"
 msgstr "Nenhuma organização apoiada"
 
-#: templates/default/organization/show.html:109
+#: templates/default/organization/show.html:110
 msgid "No communities related to this organization"
 msgstr "Nenhuma comunidade relacionada a essa organização"
 
-#: templates/default/organization/show.html:119
+#: templates/default/organization/show.html:120
 msgid "No proposals supported"
 msgstr "Nenhuma proposta apoiada"
 
-#: templates/default/organization/show.html:129
+#: templates/default/organization/show.html:130
 msgid "No resources supported"
 msgstr "Nenhum recurso apoiado"
 
-#: templates/default/organization/show.html:164
-#: templates/default/resource/show.html:104
-msgid "No contact information provided"
-msgstr "Sem informação de contato"
-
-#: templates/default/organization/show.html:174
+#: templates/default/organization/show.html:171
 msgid "No categories provided"
 msgstr "Categorias não fornecidas"
 
-#: templates/default/organization/show.html:183
+#: templates/default/organization/show.html:180
 msgid "No target audience provided"
 msgstr "Público-alvo não fornecido"
 
-#: templates/default/organization/show.html:188
+#: templates/default/organization/show.html:185
 msgid "Website"
 msgstr "Website"
 
@@ -3376,13 +3403,19 @@ msgid "Delete selected associations"
 msgstr "Apagar associações marcadas"
 
 #: templates/default/project/filtered_query_to_project.html:3
-#: templates/default/project/filtered_query_to_project.html:10
-msgid "Add this list to a project"
-msgstr "Adicionar esta lista a um projeto"
+msgid ""
+"Please, configure one or more tags for filtering content, later you can add "
+"them to a project"
+msgstr "Por favor, configure uma ou mais palavras-chave para filtrar conteúdo, "
+"depois você pode adicioná-los a um projeto"
 
 #: templates/default/project/filtered_query_to_project.html:3
 msgid "Add to Project"
 msgstr "Adicionar a um projeto"
+
+#: templates/default/project/filtered_query_to_project.html:10
+msgid "Add this list to a project"
+msgstr "Adicionar esta lista a um projeto"
 
 #: templates/default/project/list.html:17
 msgid "Create new project map"
@@ -3402,7 +3435,7 @@ msgid "Administrator"
 msgstr "Administrador"
 
 #: templates/default/project/old_view.html:70
-#: templates/default/project/view.html:141
+#: templates/default/project/view.html:136
 msgid "Points on Map"
 msgstr "Pontos no mapa"
 
@@ -3413,33 +3446,33 @@ msgid "Collaborators"
 msgstr "Colaboradores"
 
 #: templates/default/project/old_view.html:142
-#: templates/default/project/view.html:204
+#: templates/default/project/view.html:199
 msgid "No contents have been added to this map yet"
 msgstr "Nenhum conteúdo foi adicionado a esse projeto ainda"
 
 #: templates/default/project/old_view.html:155
-#: templates/default/project/view.html:217
+#: templates/default/project/view.html:212
 msgid "No organizations have been added to this map yet"
 msgstr "Nenhuma organização foi adicionada a esse projeto ainda"
 
 #: templates/default/project/old_view.html:168
-#: templates/default/project/view.html:230
+#: templates/default/project/view.html:225
 msgid "No communities have been added to this map yet"
 msgstr "Nenhuma comunidade foi adicionada a esse projeto ainda"
 
 #: templates/default/project/old_view.html:181
-#: templates/default/project/view.html:243
+#: templates/default/project/view.html:238
 msgid "No needs have been added to this map yet"
 msgstr "Nenhuma necessidade foi adicionada a esse projeto ainda"
 
 #: templates/default/project/old_view.html:194
-#: templates/default/project/view.html:256
+#: templates/default/project/view.html:251
 msgid "No resources have been added to this map yet"
 msgstr "Nenhum recurso foi adicionado a esse projeto ainda"
 
 #: templates/default/project/old_view.html:207
 #: templates/default/project/old_view.html:220
-#: templates/default/project/view.html:269
+#: templates/default/project/view.html:264
 msgid "No investments have been added to this map yet"
 msgstr "Nenhum investimento foi adicionado a esse projeto ainda"
 
@@ -3459,12 +3492,12 @@ msgstr "Mapa de Projeto"
 msgid "Content"
 msgstr "Conteúdo"
 
-#: templates/default/project/view.html:134
+#: templates/default/project/view.html:129
 msgid "No content have been added to this project map yet"
 msgstr "Nenhum conteúdo foi adicionado a esse projeto ainda"
 
-#: templates/default/project/view.html:282
-#: templates/default/project/view.html:298
+#: templates/default/project/view.html:277
+#: templates/default/project/view.html:293
 msgid "This project has no collaborators yet"
 msgstr "Este projeto não possui contribuidores ainda"
 
@@ -3476,15 +3509,15 @@ msgstr "Crie uma proposta para essa necessidade"
 msgid "Proposals for"
 msgstr "Propostas para"
 
-#: templates/default/proposal/view.html:70
+#: templates/default/proposal/view.html:73
 msgid "Add investment"
 msgstr "Adicionar investimento"
 
-#: templates/default/resource/edit.html:14
+#: templates/default/resource/edit.html:15
 msgid "Edit resource"
 msgstr "Editar recurso"
 
-#: templates/default/resource/edit.html:43
+#: templates/default/resource/edit.html:45
 #: templates/default/resource/new.html:33
 #: templates/default/resource/new_frommap.html:27
 msgid ""
@@ -3496,7 +3529,7 @@ msgstr ""
 "\"Biblioteca Comunitária\", escreva \"Biblioteca Comunitária (Santa "
 "Bárbara)\""
 
-#: templates/default/resource/edit.html:46
+#: templates/default/resource/edit.html:48
 #: templates/default/resource/new.html:36
 #: templates/default/resource/new_frommap.html:30
 msgid ""
@@ -3506,7 +3539,7 @@ msgstr ""
 "Dê detalhes sobre esse recurso. Como ele é usado pela comunidade local? "
 "Quando abre? Pode ser usado por todo mundo?"
 
-#: templates/default/resource/edit.html:50
+#: templates/default/resource/edit.html:52
 #: templates/default/resource/new.html:40
 #: templates/default/resource/new_frommap.html:34
 msgid ""
@@ -3516,7 +3549,7 @@ msgstr ""
 "Defina o tipo do recurso. Você pode selecionar um da lista ou digitar um "
 "novo."
 
-#: templates/default/resource/edit.html:54
+#: templates/default/resource/edit.html:56
 #: templates/default/resource/new.html:44
 #: templates/default/resource/new_frommap.html:38
 msgid ""
@@ -3526,7 +3559,7 @@ msgstr ""
 "Insira palavras-chave que descrevam o recurso, como \"biblioteca\", \"parque"
 "\", \"disponível aos domingos\", etc."
 
-#: templates/default/resource/edit.html:58
+#: templates/default/resource/edit.html:60
 #: templates/default/resource/new.html:48
 #: templates/default/resource/new_frommap.html:42
 msgid ""
@@ -3543,11 +3576,11 @@ msgstr "Criar novo recurso"
 msgid "New resource"
 msgstr "Novo recurso"
 
-#: templates/default/resource/show.html:44
+#: templates/default/resource/show.html:45
 msgid "type:"
 msgstr "tipo:"
 
-#: templates/default/resource/show.html:78
+#: templates/default/resource/show.html:83
 msgid "Related resources"
 msgstr "Recursos relacionados"
 
@@ -3666,6 +3699,12 @@ msgstr "saiba mais sobre esse objeto"
 #: templates/default/update/updates_list_templatetag.html:116
 msgid "by"
 msgstr "por"
+
+#~ msgid "Others"
+#~ msgstr "Outros"
+
+#~ msgid "No contact information provided"
+#~ msgstr "Sem informação de contato"
 
 #~ msgid "Initial version"
 #~ msgstr "Versão inicial"
