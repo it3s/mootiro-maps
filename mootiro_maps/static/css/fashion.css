@@ -944,7 +944,8 @@ label[for=id_contacts] {
       padding-top: 3px; }
     .contacts-view .contacts-item span {
       display: inline-block;
-      max-width: 85%; }
+      max-width: 85%;
+      color: #555; }
 
 #video-selector .video-modal {
   margin-top: -60px; }

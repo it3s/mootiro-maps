@@ -64,11 +64,7 @@
       </div>
     </div>
 
-    <div class="block right-bar-modif">
-      <h4>{% trans 'Contacts' %}</h4>
-      {% view_contacts proposal.contacts %}
-    </div>
-
+    {% view_contacts proposal.contacts %}
     {% projects_for_object proposal %}
     {% taglist proposal %}
 

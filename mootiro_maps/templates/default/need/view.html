@@ -66,10 +66,7 @@
     <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
     <a class="see-on-map" href="#">{% trans "View on map" %}</a>
 
-    <div class="block right-bar-modif">
-      <h4>{% trans 'Contacts' %}</h4>
-      {% view_contacts need.contacts %}
-    </div>
+    {% view_contacts need.contacts %}
 
     <div class="block need-proposals">
       <h3>{% trans "Proposals" %}</h3>
