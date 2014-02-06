@@ -73,6 +73,9 @@
           <a class="button login-required" href="{{ resource.new_investment_url }}">{% trans "New investment" %}</a>
         </div>
 
+        {% view_contacts resource.contacts %}
+
+
         {% with similar_resources=resource.tags.similar_objects|slice:"5" %}
 
             <div class="block">
@@ -97,9 +100,6 @@
                     </ul>
                 </p>
                 {% endif %}
-
-                <h4>{% trans 'Contacts' %}</h4>
-                {% view_contacts resource.contacts %}
             </div>
 
         {% endwith %}
