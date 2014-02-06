@@ -13,7 +13,7 @@ class ContactsWidget(forms.Widget):
 
     def render(self, name, value={}, attrs=None):
         if not value:
-            value = ContactsField.json_field_defaults
+            value = ContactsField.defaults()
         return """
             <div class="contacts-list">
             </div>

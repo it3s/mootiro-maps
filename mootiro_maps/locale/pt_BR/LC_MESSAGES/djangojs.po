@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-23 13:35-0200\n"
+"POT-Creation-Date: 2014-02-06 17:05-0200\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -952,6 +952,12 @@ msgstr[1] "%s necessidades apoiadas"
 #: static/js/project/filtered_query_to_project.js:11
 msgid "This list will be added to the project"
 msgstr "Esta lista será adicionada ao projeto"
+
+#: static/js.build/video/video_selector.js:1
+#: static/js/video/video_selector.js:143
+#, fuzzy
+msgid "Are you sure that you want to remove this video?"
+msgstr "Você deseja realmente apagar este arquivo?"
 
 #: static/js/authentication/profile.js:28
 msgid "Organization"

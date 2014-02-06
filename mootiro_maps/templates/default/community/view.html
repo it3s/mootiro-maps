@@ -50,10 +50,7 @@
     </div>
     <a href="{% url community_on_map community.id %}">{% trans 'View on map' %}</a>
 
-    <div class="block right-bar-modif">
-      <h4>{% trans 'Contacts' %}</h4>
-      {% view_contacts community.contacts %}
-    </div>
+    {% view_contacts community.contacts %}
 
     {% taglist community %}
 

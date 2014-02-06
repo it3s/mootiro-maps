@@ -158,10 +158,9 @@
           <a class="button login-required" href="{{ organization.new_investment_url }}">{% trans "New investment" %}</a>
         </div>
 
-        <div class="block">
-          <h4>{% trans 'Contacts' %}</h4>
-            {% view_contacts organization.contacts %}
+        {% view_contacts organization.contacts %}
 
+        <div class="block">
           <h4>{% trans 'Operation Field' %}</h4>
             <ul>
             {% for c in organization.categories.all %}

@@ -2,9 +2,9 @@
 
 <div class="contacts-view" >
 {% for contact in contacts %}
-  <label>{{ contact.0 }}:</label>
-  <div class="contacts-view-value"> {{ contact.1 }} </div>
-{% empty %}
-  {% trans 'No contact information provided' %}
+  <div class="contacts-item" title="{{contact.1}}">
+    <img src="/static/img/contacts/{{contact.0}}.png" title="{{contact.1}}">
+    <span>{{contact.2}}</span>
+  </div>
 {% endfor %}
 </div>

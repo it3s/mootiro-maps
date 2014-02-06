@@ -8,24 +8,25 @@ class ContactsField(JSONField):
     Splited Contacts model Field.
     Uses a JSON Field with predefined keys.
     """
-
-    json_field_defaults = {
-        'address': None,
-        'compl': None,
-        'city': None,
-        'postal_code': None,
-        'phone': None,
-        'facebook': None,
-        'email': None,
-        'twitter': None,
-        'site': None,
-        'other': None,
-    }
-
     def __init__(self, *args, **kwargs):
         # guarantes we have all keys by default
-        kwargs.update(default=self.json_field_defaults)
+        kwargs.update(default=self.defaults())
         super(ContactsField, self).__init__(*args, **kwargs)
+
+    @classmethod
+    def defaults(cls):
+        return {
+            'address': None,
+            'compl': None,
+            'city': None,
+            'postal_code': None,
+            'phone': None,
+            'facebook': None,
+            'email': None,
+            'twitter': None,
+            'site': None,
+            'other': None,
+        }
 
     @classmethod
     def key_order(self):

@@ -59,10 +59,7 @@
 
   <div class="right-bar">
 
-    <div class="block right-bar-modif">
-      <h3>{% trans "Contacts" %}</h3>
-      {% view_contacts investment.contacts %}
-    </div>
+    {% view_contacts investment.contacts %}
     {% projects_for_object investment %}
     {% taglist investment %}
 

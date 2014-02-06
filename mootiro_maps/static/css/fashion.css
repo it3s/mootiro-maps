@@ -932,11 +932,20 @@ label[for=id_contacts] {
     float: right;
     max-width: 200px; }
 
-.contacts-view label {
-  padding-left: 10px; }
-.contacts-view .contacts-view-value {
-  color: #252525;
-  padding-left: 20px; }
+.contacts-view {
+  margin-top: 20px;
+  margin-bottom: 20px; }
+  .contacts-view .contacts-item {
+    padding: 5px 0; }
+    .contacts-view .contacts-item img {
+      width: 16px;
+      margin-right: 8px;
+      vertical-align: top;
+      padding-top: 3px; }
+    .contacts-view .contacts-item span {
+      display: inline-block;
+      max-width: 85%;
+      color: #555; }
 
 #video-selector .video-modal {
   margin-top: -60px; }
