@@ -24,7 +24,8 @@ class CommunityForm(AjaxModelForm):
     class Meta:
         model = Community
         fields = ('name', 'short_description', 'population', 'description',
-                  'tags', 'geometry', 'files', 'videos', 'project_id')
+                  'tags', 'contacts', 'geometry', 'files', 'videos',
+                  'project_id')
 
     _field_labels = {
         'name': _('Name'),
