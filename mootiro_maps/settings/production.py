@@ -69,9 +69,13 @@ my_app_logger = {
     'level': 'WARN',
     'propagate': True
 }
+if os.path.basename(os.getcwd()) == "mootiro-maps":
+    _base_dir = "mootiro_maps/"
+else:
+    _base_dir = "./"
 for mod in ['views', 'models', 'forms', 'utils']:
     LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
-        for app in os.listdir('apps/')})
+        for app in os.listdir(_base_dir + 'apps/')})
 
 ELASTICSEARCH_URL = 'http://127.0.0.1:9200'
 ELASTICSEARCH_INDEX_NAME = 'mootiro_maps_production'

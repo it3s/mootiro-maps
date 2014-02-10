@@ -154,7 +154,6 @@ def setup_django():
     sys.path.append(APP_DIR)
     sys.path.append(LIB_DIR)
     sys.path.append(SITE_ROOT)
-    print '---->', LIB_DIR
     from django.core.management import setup_environ
     exec 'import {} as environ'.format(env.komoo_django_settings)
     setup_environ(environ)

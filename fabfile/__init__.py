@@ -17,6 +17,7 @@ import admin
 import install
 import deploy
 import check
+import es
 
 # ===== Utils attributes ======================================================
 # Gets the dir where the fabfile is. We will use it to open the config file

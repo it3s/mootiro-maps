@@ -60,11 +60,11 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': False
         },
-       'default': {
-           'handlers': ['console', 'log_file'],
-           'level': 'DEBUG',
-           'propagate': True
-       },
+        'default': {
+            'handlers': ['console', 'log_file'],
+            'level': 'DEBUG',
+            'propagate': True
+        },
     }
 }
 my_app_logger = {
@@ -72,9 +72,16 @@ my_app_logger = {
     'level': 'DEBUG',
     'propagate': True
 }
+
+if os.path.basename(os.getcwd()) == "mootiro-maps":
+    _base_dir = "mootiro_maps/"
+else:
+    _base_dir = "./"
+
 for mod in ['views', 'models', 'forms', 'utils']:
     LOGGING['loggers'].update({'{}.{}'.format(app, mod): my_app_logger
-                    for app in os.listdir('apps/') + os.listdir('lib/')})
+                    for app in os.listdir(_base_dir + 'apps/') +
+                               os.listdir(_base_dir + 'lib/')})
 
 # Celery task queue config
 BROKER_URL = "amqp://komoo:komoo@localhost:5672/mootiro_maps_mq"
