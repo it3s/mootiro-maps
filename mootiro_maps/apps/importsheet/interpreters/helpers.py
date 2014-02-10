@@ -209,7 +209,8 @@ def set_geometria(obj):
 
 
 def set_tags(obj):
-    obj.object_dict['tags'] = filter(bool, obj.row_dict['Palavras-chave'].values())
+    obj.object_dict['tags'] = map(lambda tag: tag.lower(),
+        filter(bool, obj.row_dict['Palavras-chave'].values()))
     # TODO: put similar tags in the warnings dict
 
     # Data qualification tags
