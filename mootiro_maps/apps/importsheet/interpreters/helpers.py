@@ -36,28 +36,19 @@ def set_nome(obj):
 
 
 def set_contato(obj):
-    contact = obj.row_dict['Contato']
-    c = Context({
-        'address': contact['Endereço'],
-        'number': contact['Número'],
-        'complement': contact['Complemento'],
-        'district': contact['Bairro'],
-        'zipcode': contact['CEP'],
-        'city': contact['Município'],
-        'state': contact['UF'],
-        'area_code': contact['DDD'],
-        'phone_number': contact['Telefone'],
-        'email': contact['E-mail'],
-    })
-    t = Template('''
-{% if address %}**Endereço:** {{address}}, {{number}}{% if complement %}, {{complement}}{% endif %} - {{district}}
-{% if zipcode %}CEP: {{zipcode}}, {% endif %}{{city}}/{{state}}{% endif %}
+    row_dict = obj.row_dict['Contato']
 
-{% if phone_number %}**Telefone:** {% if area_code %}({{area_code}}){% endif %} {{phone_number}}{% endif %}
+    contacts = ContactsField.defaults()
+    contacts['address'] = "%s, %s - %s" % (row_dict['Endereço'],
+                                           row_dict['Número'],
+                                           row_dict['Bairro'])
+    contacts['compl'] = row_dict['Complemento']
+    contacts['postal_code'] = row_dict['CEP']
+    contacts['city'] = "%s / %s" % (row_dict['Município'], row_dict['UF'])
+    contacts['phone'] = "(%s) %s" % (row_dict['DDD'], row_dict['Telefone'])
+    contacts['email'] = row_dict['E-mail']
 
-{% if email %}**E-mail:** {{email}}{% endif %}
-''')
-    obj.object_dict['contact'] = t.render(c)
+    obj.object_dict['contacts'] = contacts
 
 
 def set_descricao(obj):
@@ -71,7 +62,8 @@ def set_descricao(obj):
     refs = [v for k, v in obj.row_dict.items() if k.startswith('Referência')]
     refs = filter(lambda r: bool([v for v in r.values() if v]), refs)
     refs = map(lambda ref: dict(author=ref['Autor'], source=ref['Fonte'],
-            link=ref['Link'], link_title=ref['Título do link'], date=ref['Data']), refs)
+            link=ref['Link'], link_title=ref['Título do link'],
+            date=ref['Data']), refs)
 
     c = Context({
         'sections': sections,
