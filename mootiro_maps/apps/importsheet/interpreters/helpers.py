@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import simplejson as json
-
 from django.template import Context, Template
-from django.utils.translation import ugettext as _
 from django.contrib.gis.gdal.error import OGRException
 from django.contrib.gis.geos.error import GEOSException
 
 from komoo_map.models import GeoRefModel
 from main.utils import to_json
+from main.models import ContactsField
 from authentication.models import User
 from community.models import Community
 
@@ -133,24 +131,25 @@ def set_geometria(obj):
             aux = lng
             lng = lat
             lat = aux
-            coords = [[[lat+dt, lng+dt], [lat+dt, lng-dt],
-                       [lat-dt, lng-dt], [lat-dt, lng+dt],
-                       [lat+dt, lng+dt]]]  # closes polygon
+            coords = [[[lat + dt, lng + dt], [lat + dt, lng - dt],
+                       [lat - dt, lng - dt], [lat - dt, lng + dt],
+                       [lat + dt, lng + dt]]]  # closes polygon
             geodict['geometries'] = [{
                 'type': 'Polygon',
                 'coordinates': coords
             }]
-        elif from_kml: # Polygon or MultiLineString
+        elif from_kml:  # Polygon or MultiLineString
             found = False
             for kd in obj.kml_dicts:
                 if from_kml == kd['Identificador do polígono']:
                     found = True
                     if 'type' in kd['Geometria'] and \
-                    kd['Geometria']['type'] == 'GeometryCollection':
+                            kd['Geometria']['type'] == 'GeometryCollection':
+
                         if kd['Geometria']['geometries'][0]['type'] == 'LineString':
                             # we got geometry collection with some linestrings
                             # lets crate a `MultiLineString` geometry
-                            coords = [geom['coordinates'] \
+                            coords = [geom['coordinates']
                                         for geom in kd['Geometria']['geometries']]
                             geodict['geometries'] = [{
                                 'type': 'MultiLineString',
@@ -158,7 +157,7 @@ def set_geometria(obj):
                             }]
                         else:
                             # if we dont got linestrings, assume that this is a polygon
-                            coords = [geom['coordinates'][0] \
+                            coords = [geom['coordinates'][0]
                                         for geom in kd['Geometria']['geometries']]
                             geodict['geometries'] = [{
                                 'type': 'Polygon',
@@ -199,11 +198,11 @@ def set_geometria(obj):
         msg = 'Dado de geometria não é um número válido.'
         obj.errors.append(msg)
 
-    except OGRException as e:
+    except OGRException:
         msg = 'Má formação da(s) coluna(s) de geometria.'
         obj.errors.append(msg)
 
-    except GEOSException as e:
+    except GEOSException:
         msg = 'Informação geométrica inconsistente.'
         obj.errors.append(msg)
 
@@ -216,7 +215,7 @@ def set_tags(obj):
     # Data qualification tags
     if 'Contato' in obj.row_dict:
         if not obj.row_dict['Contato']['CEP']:
-            obj.object_dict['tags'].append('sem CEP')
+            obj.object_dict['tags'].append('sem cep')
         if not obj.row_dict['Contato']['Telefone']:
             obj.object_dict['tags'].append('sem telefone')
         if not obj.row_dict['Contato']['E-mail']:

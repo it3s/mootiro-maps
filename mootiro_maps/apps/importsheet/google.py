@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-These views exists as a easy way to get a refresh code for a given google 
+These views exists as a easy way to get a refresh code for a given google
 account. Once you get the refresh code store it securely!
 '''
 from __future__ import unicode_literals
@@ -107,4 +107,4 @@ def google_fusion_tables_service():
     with.'''
     http = authorized_http()
     service = build('fusiontables', 'v1', http)
-    return service    
+    return service
