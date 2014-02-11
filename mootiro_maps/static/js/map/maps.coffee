@@ -365,6 +365,12 @@ define (require) ->
         getZoom: -> @googleMap.getZoom()
         setZoom: (zoom) -> if zoom? then @googleMap.setZoom zoom
 
+        getCenter: ->
+            center = @googleMap.getCenter()
+            [center.lat(), center.lng()]
+
+        getMapType: -> @googleMap.getMapTypeId()
+
         fitBounds: (bounds = @features.getBounds()) ->
             @googleMap.fitBounds bounds
 

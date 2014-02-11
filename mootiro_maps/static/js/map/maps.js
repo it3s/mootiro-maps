@@ -506,6 +506,16 @@ define(function(require) {
       if (zoom != null) return this.googleMap.setZoom(zoom);
     };
 
+    Map.prototype.getCenter = function() {
+      var center;
+      center = this.googleMap.getCenter();
+      return [center.lat(), center.lng()];
+    };
+
+    Map.prototype.getMapType = function() {
+      return this.googleMap.getMapTypeId();
+    };
+
     Map.prototype.fitBounds = function(bounds) {
       if (bounds == null) bounds = this.features.getBounds();
       return this.googleMap.fitBounds(bounds);

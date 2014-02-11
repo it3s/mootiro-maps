@@ -45,7 +45,7 @@ define (require) ->
 
     class Layers extends collections.GenericCollection
         addLayer: (layer) ->
-            @push layer if not @getLayer layer.getName()
+            @push layer if not @contains layer
             layer.map?.publish 'layer_added', layer
 
         getLayer: (id) ->
@@ -68,6 +68,12 @@ define (require) ->
                 visible or= layer.match feature
             visible
 
+        toJSON: ->
+            layers = []
+            @forEach (layer) ->
+                layers.push layer.toJSON()
+            layers
+
 
 
     class Layer
@@ -76,6 +82,8 @@ define (require) ->
             @visible = @options.visible ? on
             @icon = @options.icon?[0] ? ''
             @iconOff = @options.icon?[1] ? ''
+            @fillColor = @options.color?[0] ? ''
+            @strokeColor = @options.color?[1] ? @fillColor
             @id = @options.id ? @options.name
             @setPosition @options.position
             @setName @options.name
@@ -90,6 +98,12 @@ define (require) ->
 
         getName: -> @name
         setName: (@name) -> this
+
+        getFillColor: -> @fillColor
+        setFillColor: (@fillColor) -> this
+
+        getStrokeColor: -> @strokeColor
+        setStrokeColor: (@strokeColor) -> this
 
         getCollection: -> @collection
         setCollection: (@collection) ->
@@ -107,6 +121,7 @@ define (require) ->
         getIconUrl: -> static_path + (if @visible then @icon else @iconOff)
 
         setMap: (@map) ->
+            return if not @map
             @handleMapEvents()
             @cache.setMap? @map
 
@@ -138,6 +153,14 @@ define (require) ->
             filtered = @collection.filter @match, this
             filtered.forEach (feature) => @cache.push feature
             this
+
+        toJSON: ->
+            "id": @getId()
+            "name": @getName()
+            "rules": @getRule()
+            "position": @getPosition()
+            "fillColor": @getFillColor()
+            "strokeColor": @getStrokeColor()
 
 
     layers =

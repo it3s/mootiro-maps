@@ -53,7 +53,7 @@ define(function(require) {
 
     Layers.prototype.addLayer = function(layer) {
       var _ref;
-      if (!this.getLayer(layer.getName())) this.push(layer);
+      if (!this.contains(layer)) this.push(layer);
       return (_ref = layer.map) != null ? _ref.publish('layer_added', layer) : void 0;
     };
 
@@ -106,19 +106,30 @@ define(function(require) {
       return visible;
     };
 
+    Layers.prototype.toJSON = function() {
+      var layers;
+      layers = [];
+      this.forEach(function(layer) {
+        return layers.push(layer.toJSON());
+      });
+      return layers;
+    };
+
     return Layers;
 
   })(collections.GenericCollection);
   Layer = (function() {
 
     function Layer(options) {
-      var _ref, _ref2, _ref3, _ref4, _ref5, _ref6;
+      var _ref, _ref10, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
       this.options = options != null ? options : {};
       this.cache = new collections.FeatureCollection();
       this.visible = (_ref = this.options.visible) != null ? _ref : true;
       this.icon = (_ref2 = (_ref3 = this.options.icon) != null ? _ref3[0] : void 0) != null ? _ref2 : '';
       this.iconOff = (_ref4 = (_ref5 = this.options.icon) != null ? _ref5[1] : void 0) != null ? _ref4 : '';
-      this.id = (_ref6 = this.options.id) != null ? _ref6 : this.options.name;
+      this.fillColor = (_ref6 = (_ref7 = this.options.color) != null ? _ref7[0] : void 0) != null ? _ref6 : '';
+      this.strokeColor = (_ref8 = (_ref9 = this.options.color) != null ? _ref9[1] : void 0) != null ? _ref8 : this.fillColor;
+      this.id = (_ref10 = this.options.id) != null ? _ref10 : this.options.name;
       this.setPosition(this.options.position);
       this.setName(this.options.name);
       this.setRule(this.options.rule);
@@ -145,6 +156,24 @@ define(function(require) {
 
     Layer.prototype.setName = function(name) {
       this.name = name;
+      return this;
+    };
+
+    Layer.prototype.getFillColor = function() {
+      return this.fillColor;
+    };
+
+    Layer.prototype.setFillColor = function(fillColor) {
+      this.fillColor = fillColor;
+      return this;
+    };
+
+    Layer.prototype.getStrokeColor = function() {
+      return this.strokeColor;
+    };
+
+    Layer.prototype.setStrokeColor = function(strokeColor) {
+      this.strokeColor = strokeColor;
       return this;
     };
 
@@ -175,6 +204,7 @@ define(function(require) {
     Layer.prototype.setMap = function(map) {
       var _base;
       this.map = map;
+      if (!this.map) return;
       this.handleMapEvents();
       return typeof (_base = this.cache).setMap === "function" ? _base.setMap(this.map) : void 0;
     };
@@ -225,6 +255,17 @@ define(function(require) {
         return _this.cache.push(feature);
       });
       return this;
+    };
+
+    Layer.prototype.toJSON = function() {
+      return {
+        "id": this.getId(),
+        "name": this.getName(),
+        "rules": this.getRule(),
+        "position": this.getPosition(),
+        "fillColor": this.getFillColor(),
+        "strokeColor": this.getStrokeColor()
+      };
     };
 
     return Layer;

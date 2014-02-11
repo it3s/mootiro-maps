@@ -1,0 +1,324 @@
+{% extends 'global.html'%}
+{% load komoo_tags %}
+{% load i18n %}
+
+{% block menu %} {% menu "project" %} {% endblock %}
+
+{% block content %}
+    <div id="main-content">
+      <div id="map" class="map preview">
+        <h3>{% trans "Map" %}</h3>
+        <div class="description">Arraste para definir o centro e ajuste o nível de zoom do mapa</div>
+        <div id="map-main-preview-canvas"></div>
+      </div>
+
+      <div id="layers" class="layers editor">
+        <h3>{% trans "Objects" %}</h3>
+        <div class="description">Defina o agrupamento dos objetos por palavras chave e identifique-os com cores ou ícones.</div>
+        <div class="description">Arraste cada agrupamento para cima ou para baixo para definir a prioridade.</div>
+        <div id="layers-widget-canvas"></div>
+      </div>
+
+      <button id="save" class="btn">{% trans "Save" %}</button>
+    </div>
+
+    <div id="layer_content_model" class="content" style="display: none">
+      <label for="name">{% trans "Name" %}</label>
+      <input type="text" name="name" />
+      <label for="tags">{% trans "Tags" %}</label>
+      <input type="text" class="taggitwidget" name="tags" />
+      <label for="fillcolor">{% trans "Colors" %}</label>
+      <div class="color_pick"><div class="fillcolor btn"></div> {% trans "Fill color" %}</div>
+      <div class="color_pick"><div class="strokecolor btn"></div> {% trans "Stroke color" %}</div>
+      <!-- <label><input name="useicon" type="checkbox">{% trans "Use icon" %}</input> -->
+      <div class="actions">
+        <button class="btn btn-danger delete">{% trans "Delete" %}</button>
+        <button class="button collapse_btn">{% trans "Ok" %}</button>
+      </div>
+    </div>
+{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/colpick/css/colpick.css" type="text/css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}lib/tagsinput/jquery.tagsinput.css" type="text/css"/>
+    <style type="text/css">
+      #map-main-preview-canvas {
+        height: 350px;
+        width: 100%;
+        background: #dedede;
+      }
+      .layers_widget > ul {
+        margin: 10px 0;
+      }
+
+      .layers_widget .layer,
+      .layers_widget .add_btn {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        margin: 5px 0;
+        background: #ededed;
+        border: 1px solid #cdcdcd;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+      }
+
+      .layers_widget .layer input {
+        background: white;
+      }
+
+      .layers_widget .layer input[name=name] {
+        width: 50%;
+      }
+
+      .layers_widget .layer .header h3,
+      .layers_widget .layer .header .details {
+        display: inline;
+        margin: 0 10px;
+      }
+
+      .layers_widget .layer > .content {
+        margin: 10px;
+      }
+
+      .layers_widget .layer > .content:before,
+      .layers_widget .layer > .content:after {
+            content:"";
+                display:table;
+      }
+      .layers_widget .layer > .content:after {
+            clear:both;
+      }
+      /* For IE 6/7 (trigger hasLayout) */
+      .layers_widget .layer > .content {
+            zoom:1;
+      }
+
+      .layers_widget .layer > .content .actions > button {
+        float: right;
+        margin: 5px;
+      }
+
+      .color_pick {
+        margin: 10px 0;
+      }
+      .color_pick .btn {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+      }
+
+      div.tagsinput {
+        border: none;
+        background: none;
+      }
+
+      div.tagsinput input {
+        padding: 5px;
+        border: 1px solid rgb(204, 204, 204);
+        background: none repeat scroll 0% 0% rgba(215, 215, 215, 0.2);
+        box-shadow: 1px 1px 1px rgb(190, 189, 204);
+      }
+
+    </style>
+{% endblock %}
+
+
+{% block page_scripts %}
+    <script src="{{ STATIC_URL }}lib/colpick/js/colpick.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}lib/tagsinput/jquery.tagsinput.min.js" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(function(){
+            // TODO: move to an external file
+            require(['map/layers', 'map.jquery'], function (Layers) {
+
+              // Map main configuration
+                var $map = $("#map-main-preview-canvas").komooMap({
+                    type: 'main',
+                    project: {{ project.id }},
+                    width: '100%',
+                    height: '350px'
+                });
+
+                var map = $map.data('map');
+
+                var getMapConfig = function(map) {
+                  return {
+                    "center": map.getCenter(),
+                    "zoom": map.getZoom(),
+                    "mapType": map.getMapType()
+                  };
+                };
+
+              // Layers configuration
+                var LayersWidget = function(el) {
+                if(el === undefined) el = '<div>';
+                  this.$el = $(el);
+                  this.$el.addClass('layers_widget');
+                  this.layers = new Layers.Layers();
+                  window.layers = this.layers;
+                  this.createControls();
+                };
+
+                LayersWidget.prototype.createControls = function() {
+                  var that = this;
+                  this.cur = 0;
+                  this.$ul = $('<ul>');
+                  this.$ul.sortable({
+                    placeholder: "ui-state-highlight",
+                    forcePlaceholderSize: true,
+                    delay: 300,
+                    axis: "y",
+                    stop: function(e, ui) { that.refresh(); }
+                  }).disableSelection();
+                  this.$el.append(this.$ul);
+                  var $addBtn = $('<a>').text(gettext('New layer')).addClass('add_btn');
+                  $addBtn.click(function() { that.createNewLayer(); });
+                  this.$el.append($addBtn);
+                };
+
+                LayersWidget.prototype.refresh = function() {
+                  this.layers.forEach(function(layer) {
+                    layer.setPosition(layer.$el.index());
+                    layer.$el.find('.title').text(interpolate(gettext("Layer %s"), [layer.getPosition() + 1]));
+                  });
+                };
+
+                LayersWidget.prototype.addNewLayer = function(layer) {
+                  var that = this;
+                  this.$ul.find('.content').slideUp().parent().find('.details').show();
+                  layer.$el = $('<li>').addClass('layer');
+                  layer.$el.html('<div class="header"><h3 class="title"></h3><div class="details"><span class="layer_name"></span></div></div>');
+                  layer.$el.find('.details').hide();
+                  layer.$el.append($('#layer_content_model').clone().show().attr('id', ''));
+                  // append to widget
+                  this.$ul.append(layer.$el);
+                  // init name widget
+                  layer.$el.find('input[name=name]').focus().change(function() {
+                    layer.setName(this.value);
+                    layer.$el.find('.layer_name').text(this.value);
+                  });
+                  // init tags widget
+                  // FIXME: DRY
+                  // TODO: Convert the tags list to rule json format
+                  layer.$el.find('input[name=tags]').attr('id', 'tags'+this.cur).tagsInput({
+                    'autocomplete_url':'/organization/search_tags/',
+                    'height':'auto',
+                    'width':'100%'
+                  }).change(function() {
+                     console.log(this.value);
+                  });
+
+                  // init the color pick widgets
+                  layer.$el.find('.fillcolor').colpick({
+                    layout: 'hex',
+                    submit: 0,
+                    colorScheme: 'light',
+                    onChange: function(hsb, hex, rgb, fromSetColor) {
+                      if(!fromSetColor) {
+                        layer.$el.find('.fillcolor').css('background','#'+hex);
+                        layer.setFillColor(hex);
+                      }
+                    }
+                  }).keyup(function(){
+                    $(this).colpickSetColor(this.value);
+                  });
+                  layer.$el.find('.strokecolor').colpick({
+                    layout: 'hex',
+                    submit: 0,
+                    colorScheme: 'light',
+                    onChange: function(hsb, hex, rgb, fromSetColor) {
+                      if(!fromSetColor) {
+                        layer.$el.find('.strokecolor').css('background','#'+hex);
+                        layer.setStrokeColor(hex);
+                      }
+                    }
+                  }).keyup(function(){
+                    $(this).colpickSetColor(this.value);
+                  });
+                  layer.$el.data('layer', layer);
+                  layer.$el.find('.header').click(function() {
+                      that.toggleLayer(layer);
+                  });
+                  // init delete button
+                  layer.$el.find('.delete').click(function() {
+                      // TODO: show the confirmation dialog
+                      that.removeLayer(layer);
+                  });
+                  layer.$el.find('.collapse_btn').click(function() {
+                      that.toggleLayer(layer);
+                  });
+                  // add to layers collection
+                  this.layers.addLayer(layer);
+                  this.refresh();
+                };
+
+                LayersWidget.prototype.toggleLayer = function(layer) {
+                  layer.$el.find('.content').toggle(500);
+                  layer.$el.find('.details').toggle();
+                }
+
+                LayersWidget.prototype.removeLayer = function(layer) {
+                  // marks the layer to be deleted
+                  layer.delete = true;
+                  if(layer.isNew) {
+                    // If were are trying to remove an unsaved layer, just delete
+                    // it from layers collection
+                    this.layers.remove(layer);
+                  }
+                  // removes the layer DOM from widget
+                  layer.$el.remove();
+                  this.refresh();
+                };
+
+                LayersWidget.prototype.createNewLayer = function() {
+                  var layer = new Layers.Layer({ id: 'new'+this.cur++ });
+                  layer.isNew = true;
+                  this.addNewLayer(layer);
+                };
+
+                LayersWidget.prototype.toJSON = function() {
+                  layers = []
+                  this.layers.forEach(function(layer) {
+                    var layerJSON = layer.toJSON();
+                    // removes the temporary id
+                    if(layer.isNew) {
+                      layerJSON.id = undefined;
+                    }
+                    // marks the layer to be deleted
+                    if(layer.delete) {
+                      layerJSON.delete = true;
+                    }
+                    layers.push(layerJSON);
+                  });
+                  return layers;
+                };
+
+                var layersWidget = new LayersWidget('#layers-widget-canvas');
+
+                var getLayersConfig = function(layersWidget) {
+                  return layersWidget.toJSON();
+                };
+
+                var save = function() {
+                  var mapConfig = getMapConfig(map);
+                  var layersConfig = getLayersConfig(layersWidget);
+                  var config = {
+                    "map": mapConfig,
+                    "layers": layersConfig
+                  };
+                  // TODO: Send json to server
+                  console.log(config);
+                };
+
+                $('#save').click(function() {
+                  save();
+                });
+
+            });
+
+        });
+    </script>
+{% endblock %}
