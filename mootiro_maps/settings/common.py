@@ -67,6 +67,7 @@ MIDDLEWARE_CLASSES = [
     'authentication.utils.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.transaction.TransactionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'lib.reversion.middleware.RevisionMiddleware',
     'lib.themes.middleware.ThemesMiddleware',
 ]

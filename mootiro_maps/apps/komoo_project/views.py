@@ -57,13 +57,14 @@ def project_view(request, id=''):
     proj_objects['User'] = {'app_name': 'authentication', 'objects_list': []}
 
     for c in project.all_contributors:
-        proj_objects['User']['objects_list'].append({
-            'name': c.name,
-            'link': c.view_url,
-            'avatar': c.avatar,
-            'id': c.id,
-            'has_geojson': bool(getattr(c, 'geometry', ''))
-        })
+        if c:
+            proj_objects['User']['objects_list'].append({
+                'name': c.name,
+                'link': c.view_url,
+                'avatar': c.avatar,
+                'id': c.id,
+                'has_geojson': bool(getattr(c, 'geometry', ''))
+            })
 
     for p in project.related_objects:
         obj = p.content_object
