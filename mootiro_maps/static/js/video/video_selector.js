@@ -26,6 +26,10 @@ window.get_videos_list = function(){
 
 var new_id_count = 0;
 
+window.has_video = function(video) {
+    return $('#videolist').find('div[id='+video.video_id+'][data-service='+video.service+']').length > 0;
+};
+
 window.add_video = function(video){
     var _new = false;
     if (video.id === undefined) {
@@ -75,7 +79,9 @@ $('#add_videos_from_links').click(function(evt){
                 },
                 function(data){
                     if (data.success) {
-                        add_video(data.video)
+                        if (!has_video(data.video)) {
+                            add_video(data.video);
+                        }
                     } else {
                         errors.push(url);
                     }
