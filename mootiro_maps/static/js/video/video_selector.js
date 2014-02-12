@@ -58,23 +58,42 @@ $('.add-new-video-link').click(function(){
 });
 
 $('#add_videos_from_links').click(function(evt){
+    var requests = [];
+    var errors = [];
     $('.video-modal input[name=video_link]').each(function(idx, el){
         var url = $(el).val();
         if (url.search('iframe') != -1) {
             var iframe = $(url);
             url = iframe.attr('src');
         }
-        $.post(
-            '/video/info_from_url/',
-            {
-                video_url: url,
-                csrfmiddlewaretoken : getCookie('csrftoken')
-            },
-            function(data){
-                add_video(data.video)
-            },
-            'json'
-        );
+        if (url) { // Ignore empty fields
+            var post = $.post(
+                dutils.urls.resolve('video_url_info'),
+                {
+                    video_url: url,
+                    csrfmiddlewaretoken : getCookie('csrftoken')
+                },
+                function(data){
+                    if (data.success) {
+                        add_video(data.video)
+                    } else {
+                        errors.push(url);
+                    }
+                },
+                'json'
+            );
+            requests.push(post);
+        }
+    });
+
+    $.when.apply($, requests).then(function() {
+        if (errors.length) {
+            var urls = errors.join(', ');
+            errorMessage(
+                gettext('Invalid URL'),
+                interpolate(gettext('The following urls could not be resolved as valid videos: %s'), [urls])
+            );
+        }
     });
 
     $('.video-modal').modal('hide');
