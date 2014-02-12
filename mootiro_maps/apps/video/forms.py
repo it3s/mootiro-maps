@@ -52,10 +52,12 @@ class VideosWidget(forms.Widget):
                     <div class="modal-body">
                         <p>
                             <div>
+                                <input type="text" name="video_title" id="id_title" data-video-id="">
+                            </div>
+                            <div>
                                 <img src="" alt="img" id="video-title-modal">
                             </div>
                             <div>
-                                <input type="text" name="video_title" id="id_title" data-video-id="">
                                 <textarea rows=4 name="video_description" id="id_description" data-video-id=""></textarea>
                             </div>
                         </p>
