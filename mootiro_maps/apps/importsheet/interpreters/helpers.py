@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import simplejson as json
-
 from django.template import Context, Template
-from django.utils.translation import ugettext as _
 from django.contrib.gis.gdal.error import OGRException
 from django.contrib.gis.geos.error import GEOSException
 
 from komoo_map.models import GeoRefModel
 from main.utils import to_json
+from main.models import ContactsField
 from authentication.models import User
 from community.models import Community
 
@@ -36,28 +34,19 @@ def set_nome(obj):
 
 
 def set_contato(obj):
-    contact = obj.row_dict['Contato']
-    c = Context({
-        'address': contact['Endereço'],
-        'number': contact['Número'],
-        'complement': contact['Complemento'],
-        'district': contact['Bairro'],
-        'zipcode': contact['CEP'],
-        'city': contact['Município'],
-        'state': contact['UF'],
-        'area_code': contact['DDD'],
-        'phone_number': contact['Telefone'],
-        'email': contact['E-mail'],
-    })
-    t = Template('''
-{% if address %}**Endereço:** {{address}}, {{number}}{% if complement %}, {{complement}}{% endif %} - {{district}}
-{% if zipcode %}CEP: {{zipcode}}, {% endif %}{{city}}/{{state}}{% endif %}
+    row_dict = obj.row_dict['Contato']
 
-{% if phone_number %}**Telefone:** {% if area_code %}({{area_code}}){% endif %} {{phone_number}}{% endif %}
+    contacts = ContactsField.defaults()
+    contacts['address'] = "%s, %s - %s" % (row_dict['Endereço'],
+                                           row_dict['Número'],
+                                           row_dict['Bairro'])
+    contacts['compl'] = row_dict['Complemento']
+    contacts['postal_code'] = row_dict['CEP']
+    contacts['city'] = "%s / %s" % (row_dict['Município'], row_dict['UF'])
+    contacts['phone'] = "(%s) %s" % (row_dict['DDD'], row_dict['Telefone'])
+    contacts['email'] = row_dict['E-mail']
 
-{% if email %}**E-mail:** {{email}}{% endif %}
-''')
-    obj.object_dict['contact'] = t.render(c)
+    obj.object_dict['contacts'] = contacts
 
 
 def set_descricao(obj):
@@ -71,7 +60,8 @@ def set_descricao(obj):
     refs = [v for k, v in obj.row_dict.items() if k.startswith('Referência')]
     refs = filter(lambda r: bool([v for v in r.values() if v]), refs)
     refs = map(lambda ref: dict(author=ref['Autor'], source=ref['Fonte'],
-            link=ref['Link'], link_title=ref['Título do link'], date=ref['Data']), refs)
+            link=ref['Link'], link_title=ref['Título do link'],
+            date=ref['Data']), refs)
 
     c = Context({
         'sections': sections,
@@ -141,24 +131,25 @@ def set_geometria(obj):
             aux = lng
             lng = lat
             lat = aux
-            coords = [[[lat+dt, lng+dt], [lat+dt, lng-dt],
-                       [lat-dt, lng-dt], [lat-dt, lng+dt],
-                       [lat+dt, lng+dt]]]  # closes polygon
+            coords = [[[lat + dt, lng + dt], [lat + dt, lng - dt],
+                       [lat - dt, lng - dt], [lat - dt, lng + dt],
+                       [lat + dt, lng + dt]]]  # closes polygon
             geodict['geometries'] = [{
                 'type': 'Polygon',
                 'coordinates': coords
             }]
-        elif from_kml: # Polygon or MultiLineString
+        elif from_kml:  # Polygon or MultiLineString
             found = False
             for kd in obj.kml_dicts:
                 if from_kml == kd['Identificador do polígono']:
                     found = True
                     if 'type' in kd['Geometria'] and \
-                    kd['Geometria']['type'] == 'GeometryCollection':
+                            kd['Geometria']['type'] == 'GeometryCollection':
+
                         if kd['Geometria']['geometries'][0]['type'] == 'LineString':
                             # we got geometry collection with some linestrings
                             # lets crate a `MultiLineString` geometry
-                            coords = [geom['coordinates'] \
+                            coords = [geom['coordinates']
                                         for geom in kd['Geometria']['geometries']]
                             geodict['geometries'] = [{
                                 'type': 'MultiLineString',
@@ -166,7 +157,7 @@ def set_geometria(obj):
                             }]
                         else:
                             # if we dont got linestrings, assume that this is a polygon
-                            coords = [geom['coordinates'][0] \
+                            coords = [geom['coordinates'][0]
                                         for geom in kd['Geometria']['geometries']]
                             geodict['geometries'] = [{
                                 'type': 'Polygon',
@@ -207,23 +198,24 @@ def set_geometria(obj):
         msg = 'Dado de geometria não é um número válido.'
         obj.errors.append(msg)
 
-    except OGRException as e:
+    except OGRException:
         msg = 'Má formação da(s) coluna(s) de geometria.'
         obj.errors.append(msg)
 
-    except GEOSException as e:
+    except GEOSException:
         msg = 'Informação geométrica inconsistente.'
         obj.errors.append(msg)
 
 
 def set_tags(obj):
-    obj.object_dict['tags'] = filter(bool, obj.row_dict['Palavras-chave'].values())
+    obj.object_dict['tags'] = map(lambda tag: tag.lower(),
+        filter(bool, obj.row_dict['Palavras-chave'].values()))
     # TODO: put similar tags in the warnings dict
 
     # Data qualification tags
     if 'Contato' in obj.row_dict:
         if not obj.row_dict['Contato']['CEP']:
-            obj.object_dict['tags'].append('sem CEP')
+            obj.object_dict['tags'].append('sem cep')
         if not obj.row_dict['Contato']['Telefone']:
             obj.object_dict['tags'].append('sem telefone')
         if not obj.row_dict['Contato']['E-mail']:
