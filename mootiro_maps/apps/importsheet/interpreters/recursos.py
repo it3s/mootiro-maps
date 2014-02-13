@@ -70,7 +70,7 @@ class RecursosRowInterpreter(RowInterpreter):
 
         d = self.object_dict
         r = Resource()
-        for attr in ['name', 'creator', 'contact', 'description']:
+        for attr in ['name', 'creator', 'contacts', 'description']:
             setattr(r, attr, d[attr])
         if 'geometry' in d:
             r.geometry = d['geometry']
@@ -81,7 +81,7 @@ class RecursosRowInterpreter(RowInterpreter):
             r.kind, created = ResourceKind.objects \
                                     .get_or_create(name=d['kind'])
         r.save()
-        
+
         # m2m relationships
         r.community = d['community']
         r.tags.add(*d['tags'])

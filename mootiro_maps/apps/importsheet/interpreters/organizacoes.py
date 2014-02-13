@@ -91,7 +91,7 @@ class OrganizacoesRowInterpreter(RowInterpreter):
 
         d = self.object_dict
         o = Organization()
-        for attr in ['name', 'creator', 'contact', 'link', 'description']:
+        for attr in ['name', 'creator', 'contacts', 'link', 'description']:
             setattr(o, attr, d[attr])
         o.save()
 
