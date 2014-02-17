@@ -30,6 +30,19 @@ Thanks,
 the IT3S team
 ''')
 
+RECOVERY_EMAIL_MSG = _('''
+Hello, {name}.
+
+You seems to have clicked on the password recovery button.
+To reset your password, visit the link below.
+{recovery_url}
+
+If wasn't you, just ignore this e-mail.
+
+Thanks,
+the IT3S team
+''')
+
 
 class User(GeoRefModel, BaseModel):
     """
@@ -205,6 +218,18 @@ class User(GeoRefModel, BaseModel):
             message=CONFIRMATION_EMAIL_MSG.format(
                 name=self.name,
                 verification_url=verification_url))
+
+    def send_recovery_mail(self, request):
+        """ send async recovery mail """
+        key = Locker.deposit(self.id)
+        recovery_url = request.build_absolute_uri(
+                reverse('recover_password', args=(key,)))
+        send_mail_async(
+            title=_('Password recovery'),
+            receivers=[self.email],
+            message=RECOVERY_EMAIL_MSG.format(
+                name=self.name,
+                recovery_url=recovery_url))
 
     # DEPRECATED
     # def contributions(self, page=1, num=None):

@@ -8,8 +8,7 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
-from django.utils import simplejson, translation
-from django.forms.models import model_to_dict
+from django.utils import translation
 from django.conf import settings
 
 from annoying.decorators import render_to, ajax_request
@@ -30,6 +29,7 @@ from .utils import login as auth_login
 
 
 logger = logging.getLogger(__name__)
+
 
 @render_to('authentication/profile.html')
 def profile(request, id=''):
@@ -234,12 +234,14 @@ def user_new(request):
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
 
+
 @ajax_request
 def test_email(request):
     user = request.user
     user.send_confirmation_mail(request)
     send_explanations_mail(user)
     return {'testing': '...'}
+
 
 @render_to('authentication/login.html')
 def login(request):
@@ -326,6 +328,64 @@ def user_verification(request, key=''):
         user.is_active = True
         user.save()
     return {'message': 'activated'}
+
+
+@render_to('authentication/forgot_password.html')
+def forgot_password(request):
+    email_sent, error = False, ""
+    if request.method == "POST":
+        email = request.POST['email']
+        user = User.objects.filter(email=email)
+        user = user[0] if user.count() > 0 else None
+        if user:
+            user.send_recovery_mail(request)
+            email_sent = True
+        else:
+            error = _('An error ocurred: E-mail not found on our database!')
+    return {'email_sent': email_sent, 'error': error}
+
+
+@render_to('authentication/recover_password.html')
+def recover_password(request, key=''):
+    if not key:
+        return {'error': 'Invalid key, check your e-mail'}
+
+    if request.method == "POST":
+        if not request.POST['email']:
+            return {'error': _('You must provide your e-mail')}
+
+        if not request.POST['password']:
+            return {'error': _('You must provide a password')}
+
+        if request.POST["password"] != request.POST["password_confirmation"]:
+            return {'error': _('Passwords do not match')}
+
+        user_id = Locker.withdraw(key=key)
+        user = User.get_by_id(user_id)
+
+        if not user:
+            # invalid key => invalid link
+            return {'error': _('Invalid key')}
+
+        if user.email != request.POST['email']:
+            return {'error': _('User email and verification key do not match')}
+
+        user.set_password(request.POST['password'])
+        user.save()
+
+        auth_login(request, user)
+        response = HttpResponseRedirect('/')
+
+        # Use language from user settings
+        lang_code = user.language
+        if lang_code and translation.check_for_language(lang_code):
+            if hasattr(request, 'session'):
+                request.session['django_language'] = lang_code
+            else:
+                response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+            translation.activate(lang_code)
+        return response
+    return {'key': key}
 
 
 # @render_to('global.html')
