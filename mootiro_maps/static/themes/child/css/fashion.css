@@ -145,6 +145,21 @@ ul#external_providers {
   #forgot-password .error {
     color: #c00; }
 
+#recover-password {
+  width: 700px;
+  margin: 50px auto 0; }
+  #recover-password h1 {
+    text-align: center;
+    margin-bottom: 30px; }
+  #recover-password label {
+    width: 150px;
+    display: inline-block; }
+  #recover-password input[type=submit] {
+    margin-left: 320px; }
+  #recover-password .error {
+    text-align: center;
+    color: #c00; }
+
 #ie-warning {
   padding: 5px 50px 5px 50px;
   background-color: #ffe5af;

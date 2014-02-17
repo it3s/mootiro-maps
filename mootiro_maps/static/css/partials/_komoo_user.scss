@@ -151,7 +151,7 @@ ul#external_providers {
   }
 }
 
-#forgot-password {
+#forgot-password{
   width: 600px;
   margin: 50px auto 0;
 
@@ -162,4 +162,14 @@ ul#external_providers {
   input[type=submit] { margin: -8px 0 0 10px; }
 
   .error { color: #c00; }
+}
+
+#recover-password {
+  width: 700px;
+  margin: 50px auto 0;
+
+  h1 { text-align: center; margin-bottom: 30px; }
+  label { width: 150px; display: inline-block;}
+  input[type=submit] { margin-left: 320px; }
+  .error { text-align: center; color: #c00; }
 }

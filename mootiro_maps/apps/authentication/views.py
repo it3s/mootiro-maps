@@ -347,20 +347,45 @@ def forgot_password(request):
 
 @render_to('authentication/recover_password.html')
 def recover_password(request, key=''):
-    # TODO: implement-me
-    # if not key:
-    #     return {'message': 'check_email'}
-    # user_id = Locker.withdraw(key=key)
-    # user = User.get_by_id(user_id)
-    # if not user:
-    #     # invalid key => invalid link
-    #     raise Http404
-    # if not user.is_active:
-    #     user.is_active = True
-    #     user.save()
-    # return {'message': 'activated'}
+    if not key:
+        return {'error': 'Invalid key, check your e-mail'}
 
-    return {}
+    if request.method == "POST":
+        if not request.POST['email']:
+            return {'error': _('You must provide your e-mail')}
+
+        if not request.POST['password']:
+            return {'error': _('You must provide a password')}
+
+        if request.POST["password"] != request.POST["password_confirmation"]:
+            return {'error': _('Passwords do not match')}
+
+        user_id = Locker.withdraw(key=key)
+        user = User.get_by_id(user_id)
+
+        if not user:
+            # invalid key => invalid link
+            return {'error': _('Invalid key')}
+
+        if user.email != request.POST['email']:
+            return {'error': _('User email and verification key do not match')}
+
+        user.set_password(request.POST['password'])
+        user.save()
+
+        auth_login(request, user)
+        response = HttpResponseRedirect('/')
+
+        # Use language from user settings
+        lang_code = user.language
+        if lang_code and translation.check_for_language(lang_code):
+            if hasattr(request, 'session'):
+                request.session['django_language'] = lang_code
+            else:
+                response.set_cookie(settings.LANGUAGE_COOKIE_NAME, lang_code)
+            translation.activate(lang_code)
+        return response
+    return {'key': key}
 
 
 # @render_to('global.html')
