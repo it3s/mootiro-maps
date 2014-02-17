@@ -8,8 +8,7 @@ from django.core.urlresolvers import reverse
 from django.http import Http404, HttpResponseRedirect
 from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import ugettext as _
-from django.utils import simplejson, translation
-from django.forms.models import model_to_dict
+from django.utils import translation
 from django.conf import settings
 
 from annoying.decorators import render_to, ajax_request
@@ -30,6 +29,7 @@ from .utils import login as auth_login
 
 
 logger = logging.getLogger(__name__)
+
 
 @render_to('authentication/profile.html')
 def profile(request, id=''):
@@ -234,12 +234,14 @@ def user_new(request):
 
     return {'on_get': on_get, 'on_after_save': on_after_save}
 
+
 @ajax_request
 def test_email(request):
     user = request.user
     user.send_confirmation_mail(request)
     send_explanations_mail(user)
     return {'testing': '...'}
+
 
 @render_to('authentication/login.html')
 def login(request):
@@ -326,6 +328,39 @@ def user_verification(request, key=''):
         user.is_active = True
         user.save()
     return {'message': 'activated'}
+
+
+@render_to('authentication/forgot_password.html')
+def forgot_password(request):
+    email_sent, error = False, ""
+    if request.method == "POST":
+        email = request.POST['email']
+        user = User.objects.filter(email=email)
+        user = user[0] if user.count() > 0 else None
+        if user:
+            user.send_recovery_mail(request)
+            email_sent = True
+        else:
+            error = _('An error ocurred: E-mail not found on our database!')
+    return {'email_sent': email_sent, 'error': error}
+
+
+@render_to('authentication/recover_password.html')
+def recover_password(request, key=''):
+    # TODO: implement-me
+    # if not key:
+    #     return {'message': 'check_email'}
+    # user_id = Locker.withdraw(key=key)
+    # user = User.get_by_id(user_id)
+    # if not user:
+    #     # invalid key => invalid link
+    #     raise Http404
+    # if not user.is_active:
+    #     user.is_active = True
+    #     user.save()
+    # return {'message': 'activated'}
+
+    return {}
 
 
 # @render_to('global.html')

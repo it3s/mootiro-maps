@@ -134,6 +134,17 @@ ul#external_providers {
   #user_verification .verified .right {
     margin-top: 60px; }
 
+#forgot-password {
+  width: 600px;
+  margin: 50px auto 0;
+  text-align: center; }
+  #forgot-password p {
+    margin-top: 20px; }
+  #forgot-password input[type=submit] {
+    margin: -8px 0 0 10px; }
+  #forgot-password .error {
+    color: #c00; }
+
 #ie-warning {
   padding: 5px 50px 5px 50px;
   background-color: #ffe5af;

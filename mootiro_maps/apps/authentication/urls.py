@@ -16,6 +16,9 @@ urlpatterns = patterns('authentication.views',
     url(r'^verification/?$', 'user_verification', name='user_check_inbox'),
     url(r'^verification/(?P<key>\S+)/?$', 'user_verification',
             name='user_verification'),
+    url(r'^forgot_password/?$', 'forgot_password', name='forgot_password'),
+    url(r'^recover_password/(?P<key>\S+)/?$', 'recover_password',
+            name='recover_password'),
 
     # per user urls
     url(r'^(?P<id>\d+)/?$', 'profile', name='user_view'),
