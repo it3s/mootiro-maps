@@ -186,6 +186,15 @@
                   });
                 };
 
+                LayersWidget.prototype.setRule = function(layer, tags) {
+                  var rule = {
+                    operator: 'has',
+                    property: 'tags',
+                    value: tags.split(',')
+                  };
+                  layer.setRule(rule);
+                };
+
                 LayersWidget.prototype.addNewLayer = function(layer) {
                   var that = this;
                   this.$ul.find('.content').slideUp().parent().find('.details').show();
@@ -206,9 +215,10 @@
                   layer.$el.find('input[name=tags]').attr('id', 'tags'+this.cur).tagsInput({
                     'autocomplete_url':'/organization/search_tags/',
                     'height':'auto',
-                    'width':'100%'
-                  }).change(function() {
-                     console.log(this.value);
+                    'width':'100%',
+                    'onChange': function () {
+                      var rules = that.setRule(layer, $(this).val());
+                    }
                   });
 
                   // init the color pick widgets
