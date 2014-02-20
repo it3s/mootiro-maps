@@ -210,6 +210,41 @@
 .dropdown_menu:hover > ul {
   display: block; }
 
+@media (max-width: 1220px) {
+  #top #logo {
+    margin: 0 10px 0 0; }
+  #top #menu > ul > li.dropdown_menu ul {
+    min-width: 120px; } }
+@media (max-width: 1140px) {
+  #top #menu > ul > li {
+    min-width: 100px; }
+  #top #side_menu > ul > li {
+    min-width: 70px; }
+  #top #side_menu > ul > li#user_menu {
+    width: auto; } }
+@media (max-width: 1000px) {
+  #top #menu > ul > li > a,
+  #top #side_menu > ul > li > a {
+    font-size: 85%; }
+  #top #search {
+    width: 260px; } }
+@media (max-width: 985px) {
+  #top {
+    min-width: 875px; }
+    #top #menu > ul > li {
+      width: 70px;
+      min-width: 0; }
+      #top #menu > ul > li > a > span {
+        display: none; } }
+@media (max-width: 850px) {
+  #top {
+    min-width: 780px; }
+    #top #menu > ul > li {
+      width: 50px; }
+      #top #menu > ul > li > a {
+        padding: 10px 10px; }
+    #top #search {
+      width: 200px; } }
 .upper_bar {
   background-color: #dceff4;
   color: #009cb4;
