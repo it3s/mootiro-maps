@@ -124,9 +124,9 @@ $('.video-entry').live('click', function(ev){
 
         $('#title-modal #video-title-modal').attr('src', video_thumb);
         $('#title-modal #id_title').val(video_title || '');
-        $('#title-modal #id_description').val(video_description || '');
+        $('#title-modal #id_video_description').val(video_description || '');
         $('#title-modal #id_title').attr('data-id', id);
-        $('#title-modal #id_description').attr('data-id', id);
+        $('#title-modal #id_video_description').attr('data-id', id);
         $('#title-modal #delete-video').attr('data-id', id);
         $('#title-modal').modal('show');
 
@@ -152,7 +152,7 @@ $('.video-entry').live('click', function(ev){
 $('#save-title').live('click', function(){
     var id = $('#title-modal #id_title').attr('data-id');
     var title = $('#title-modal #id_title').val();
-    var description = $('#title-modal #id_description').val();
+    var description = $('#title-modal #id_video_description').val();
 
     var entry = $('#videolist .video-entry[data-id='+id+']');
     entry.attr('data-title', title).attr('data-description', description);

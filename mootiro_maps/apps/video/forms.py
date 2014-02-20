@@ -58,7 +58,7 @@ class VideosWidget(forms.Widget):
                                 <img src="" alt="img" id="video-title-modal">
                             </div>
                             <div>
-                                <textarea rows=4 name="video_description" id="id_description" data-video-id=""></textarea>
+                                <textarea rows=4 name="video_description" id="id_video_description" data-video-id=""></textarea>
                             </div>
                         </p>
                     </div>
