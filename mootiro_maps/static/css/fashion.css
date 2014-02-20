@@ -995,6 +995,9 @@ label[for=id_contacts] {
   width: 300px; }
 #video-selector #title-modal #id_title {
   font-weight: bold; }
+#video-selector #title-modal #id_description {
+  width: 98%;
+  margin: 5px 5px 5px 0; }
 #video-selector #delete-video {
   float: left;
   color: #ffffff; }
