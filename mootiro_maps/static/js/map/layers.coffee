@@ -18,7 +18,8 @@ define (require) ->
     and_ops = ['and']
 
     eval_expr = (expr, obj) ->
-        return false if not expr? or not obj?
+        return true if not expr?
+        return false if not obj?
         operator = expr.operator
         if operator in equal_ops
             obj.getProperty(expr.property) is expr.value
@@ -88,8 +89,8 @@ define (require) ->
             @setPosition @options.position
             @setName @options.name
             @setRule @options.rule
-            @setMap @options.map
             @setCollection @options.collection
+            @setMap @options.map
 
         getPosition: -> @position
         setPosition: (@position) -> this
@@ -124,6 +125,7 @@ define (require) ->
             return if not @map
             @handleMapEvents()
             @cache.setMap? @map
+            @setCollection @map.getFeatures() if not @collection?
 
         handleMapEvents: ->
             @map.subscribe 'feature_added', (feature) =>
@@ -144,9 +146,12 @@ define (require) ->
         match: (feature) ->
             eval_expr @rule, feature
 
-        getFeatures: () ->
+        getFeatures: ->
             @updateCache() if @cache.isEmpty()
             @cache
+
+        countFeatures: ->
+            @getFeatures().length
 
         updateCache: ->
             @cache.clear()

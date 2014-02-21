@@ -79,6 +79,10 @@
         margin: 0 10px;
       }
 
+      .layers_widget .layer .header .layer_count {
+        float: right;
+      }
+
       .layers_widget .layer > .content {
         margin: 10px;
       }
@@ -135,6 +139,7 @@
             require(['map/layers', 'map.jquery'], function (Layers) {
 
               // Map main configuration
+                // FIXME: Load all project objects
                 var $map = $("#map-main-preview-canvas").komooMap({
                     type: 'main',
                     project: {{ project.id }},
@@ -179,27 +184,36 @@
                   this.$el.append($addBtn);
                 };
 
-                LayersWidget.prototype.refresh = function() {
-                  this.layers.forEach(function(layer) {
+                LayersWidget.prototype.refresh = function(layers) {
+                  layers = layers || this.layers;
+                  layers.forEach(function(layer) {
                     layer.setPosition(layer.$el.index());
                     layer.$el.find('.title').text(interpolate(gettext("Layer %s"), [layer.getPosition() + 1]));
-                  });
+                    var count = layer.countFeatures();
+                    layer.$el.find('.layer_count').text(interpolate(
+                        ngettext('%s object', '%s objects', count),
+                        [count]));
+                    });
                 };
 
                 LayersWidget.prototype.setRule = function(layer, tags) {
-                  var rule = {
-                    operator: 'has',
-                    property: 'tags',
-                    value: tags.split(',')
-                  };
+                  var rule = undefined;
+                  if (tags.length) {
+                    rule = {
+                      operator: 'has',
+                      property: 'tags',
+                      value: tags.split(',')
+                    };
+                  }
                   layer.setRule(rule);
+                  this.refresh([layer]);
                 };
 
                 LayersWidget.prototype.addNewLayer = function(layer) {
                   var that = this;
                   this.$ul.find('.content').slideUp().parent().find('.details').show();
                   layer.$el = $('<li>').addClass('layer');
-                  layer.$el.html('<div class="header"><h3 class="title"></h3><div class="details"><span class="layer_name"></span></div></div>');
+                  layer.$el.html('<div class="header"><h3 class="title"></h3><div class="details"><strong class="layer_name"></strong></div><span class="layer_count"></span></div>');
                   layer.$el.find('.details').hide();
                   layer.$el.append($('#layer_content_model').clone().show().attr('id', ''));
                   // append to widget
@@ -262,6 +276,7 @@
                   });
                   // add to layers collection
                   this.layers.addLayer(layer);
+                  layer.setMap(map);
                   this.refresh();
                 };
 
