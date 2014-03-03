@@ -138,11 +138,15 @@
             // TODO: move to an external file
             require(['map/layers', 'map.jquery'], function (Layers) {
 
+              // Project layers
+              var layers_data = {{ layers|safe }};
+
               // Map main configuration
                 // FIXME: Load all project objects
                 var $map = $("#map-main-preview-canvas").komooMap({
                     type: 'main',
                     project: {{ project.id }},
+                    layers: [], // starts with no layers
                     width: '100%',
                     height: '350px'
                 });
@@ -187,8 +191,29 @@
                 LayersWidget.prototype.refresh = function(layers) {
                   layers = layers || this.layers;
                   layers.forEach(function(layer) {
+                    layer.$el.find('input[name=name]').val(layer.getName());
+
+                    // This widget only accept rule of type {operator:'has', property:'tags', value:[...]}
+                    var rule = layer.getRule();
+                    if (rule !== undefined && rule.operator === 'has' && rule.property === 'tags' && rule.value !== undefined) {
+                      for (var i=0, l=rule.value.length; i<l; i++) {
+                        var tag = rule.value[i],
+                            tags_el = layer.$el.find('input[name=tags]');
+                        if (!tags_el.tagExist(tag)) {
+                          tags_el.addTag(tag);
+                        }
+                      }
+                    }
+
+                    layer.$el.find('.fillcolor').colpickSetColor(layer.getFillColor());
+                    layer.$el.find('.fillcolor').css('background', layer.getFillColor());
+
+                    layer.$el.find('.strokecolor').colpickSetColor(layer.getStrokeColor());
+                    layer.$el.find('.strokecolor').css('background', layer.getStrokeColor());
+
                     layer.setPosition(layer.$el.index());
                     layer.$el.find('.title').text(interpolate(gettext("Layer %s"), [layer.getPosition() + 1]));
+                    layer.$el.find('.layer_name').text(layer.getName());
                     var count = layer.countFeatures();
                     layer.$el.find('.layer_count').text(interpolate(
                         ngettext('%s object', '%s objects', count),
@@ -206,7 +231,7 @@
                     };
                   }
                   layer.setRule(rule);
-                  this.refresh([layer]);
+                  //this.refresh([layer]);
                 };
 
                 LayersWidget.prototype.addNewLayer = function(layer) {
@@ -226,7 +251,7 @@
                   // init tags widget
                   // FIXME: DRY
                   // TODO: Convert the tags list to rule json format
-                  layer.$el.find('input[name=tags]').attr('id', 'tags'+this.cur).tagsInput({
+                  layer.$el.find('input[name=tags]').attr('id', 'tags'+layer.getId()).tagsInput({
                     'autocomplete_url':'/organization/search_tags/',
                     'height':'auto',
                     'width':'100%',
@@ -277,7 +302,7 @@
                   // add to layers collection
                   this.layers.addLayer(layer);
                   layer.setMap(map);
-                  this.refresh();
+                  this.refresh([layer]);
                 };
 
                 LayersWidget.prototype.toggleLayer = function(layer) {
@@ -304,6 +329,12 @@
                   this.addNewLayer(layer);
                 };
 
+                LayersWidget.prototype.loadLayers = function(layers) {
+                  for(var i=0, l=layers.length; i < l; i++) {
+                    this.addNewLayer(layers[i]);
+                  }
+                };
+
                 LayersWidget.prototype.toJSON = function() {
                   layers = []
                   this.layers.forEach(function(layer) {
@@ -321,7 +352,13 @@
                   return layers;
                 };
 
+                // Create the layers editor widget
                 var layersWidget = new LayersWidget('#layers-widget-canvas');
+                // Load the project layers into map and get the Layers objects
+                var layers = map.loadLayers(layers_data);
+                // Load the project layers into layers widget
+                layersWidget.loadLayers(layers);
+
 
                 var getLayersConfig = function(layersWidget) {
                   return layersWidget.toJSON();

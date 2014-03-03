@@ -12,6 +12,16 @@ from komoo_map.models import get_editable_models, get_models_json
 from main.utils import create_geojson, to_json
 
 
+def default_layers():
+    return [{
+            'name': m.get_map_attr('title') or m.__name__,
+            'id': m.__name__,
+            'color': [m.get_map_attr('background_color')],
+            'icon': [getattr(m, 'image'), getattr(m, 'image_off')],
+            'rule': {'operator': 'is', 'property': 'type', 'value': m.__name__}
+            } for m in get_editable_models()]
+
+
 def feature_types(request):
     return HttpResponse(get_models_json(), mimetype="application/x-javascript")
 
@@ -19,13 +29,7 @@ def feature_types(request):
 def layers(request):
     '''Default layers'''
     return HttpResponse(
-        to_json([{
-            'name': m.get_map_attr('title') or m.__name__,
-            'id': m.__name__,
-            'color': m.get_map_attr('background_color'),
-            'icon': [getattr(m, 'image'), getattr(m, 'image_off')],
-            'rule': {'operator': 'is', 'property': 'type', 'value': m.__name__}
-        } for m in get_editable_models()]),
+        to_json(default_layers()),
         mimetype="application/x-javascript")
 
 

@@ -97,23 +97,25 @@ define (require) ->
 
         initLayers: ->
             @layers ?= new layers.Layers
+            @layers.setMap this
             if @options.layers?
                 @loadLayersFromOptions @options
             else
                 @loadRemoteLayers @layersUrl
 
         loadLayer: (data) ->
-            layer = new layers.Layer _.extend {
-                collection: @getFeatures()
-                map: this
-            }, data
-            @layers.addLayer layer
-
+            layer = @layers.loadLayer data
             @publish 'layer_loaded', layer
+            layer
+
+        loadLayers: (data) ->
+            layers = []
+            data.forEach (l) => layers.push @loadLayer l
+            layers
 
         loadLayersFromOptions: (options) ->
             # Get Layers from options
-            options.layers.forEach (l) => @loadLayer l
+            @loadLayers options.layers
 
         loadRemoteLayers: (url) ->
             # Load Layers via ajax

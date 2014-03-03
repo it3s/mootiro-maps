@@ -69,6 +69,23 @@ define (require) ->
                 visible or= layer.match feature
             visible
 
+        loadLayer: (data) ->
+            layer = new Layer _.extend {
+                collection: @collection ? @map?.getFeatures() ? []
+                map: @map
+            }, data
+            @addLayer layer
+            layer
+
+        loadLayers: (data) ->
+            layers = []
+            data.forEach (l) => layers.push @loadLayer l
+            layers
+
+        setMap: (@map) ->
+            return if not @map
+            @forEach (layer) -> layer.setMap @map
+
         toJSON: ->
             layers = []
             @forEach (layer) ->

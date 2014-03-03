@@ -115,6 +115,36 @@ define(function(require) {
       return visible;
     };
 
+    Layers.prototype.loadLayer = function(data) {
+      var layer, _ref, _ref1, _ref2;
+      layer = new Layer(_.extend({
+        collection: (_ref = (_ref1 = this.collection) != null ? _ref1 : (_ref2 = this.map) != null ? _ref2.getFeatures() : void 0) != null ? _ref : [],
+        map: this.map
+      }, data));
+      this.addLayer(layer);
+      return layer;
+    };
+
+    Layers.prototype.loadLayers = function(data) {
+      var layers,
+        _this = this;
+      layers = [];
+      data.forEach(function(l) {
+        return layers.push(_this.loadLayer(l));
+      });
+      return layers;
+    };
+
+    Layers.prototype.setMap = function(map) {
+      this.map = map;
+      if (!this.map) {
+        return;
+      }
+      return this.forEach(function(layer) {
+        return layer.setMap(this.map);
+      });
+    };
+
     Layers.prototype.toJSON = function() {
       var layers;
       layers = [];

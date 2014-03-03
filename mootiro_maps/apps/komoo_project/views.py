@@ -28,6 +28,7 @@ from need.models import Need
 from komoo_resource.models import Resource
 from community.models import Community
 from investment.models import Investment
+from komoo_map.views import default_layers
 
 logger = logging.getLogger(__name__)
 
@@ -155,6 +156,7 @@ def project_edit(request, id='', *arg, **kwargs):
 def project_layers(request, id=''):
     project = get_object_or_404(Project, pk=id)
     related_items = []
+    layers = to_json(default_layers())
 
     for obj in project.related_items:
         if obj and not obj.is_empty():
@@ -164,7 +166,7 @@ def project_layers(request, id=''):
     related_items = [o['obj'] for o in related_items]
 
     geojson = create_geojson(related_items)
-    return dict(project=project, geojson=geojson)
+    return dict(project=project, layers=layers, geojson=geojson)
 
 
 @ajax_request

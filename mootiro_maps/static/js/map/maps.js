@@ -153,6 +153,7 @@ define(function(require) {
       if ((_ref2 = this.layers) == null) {
         this.layers = new layers.Layers;
       }
+      this.layers.setMap(this);
       if (this.options.layers != null) {
         return this.loadLayersFromOptions(this.options);
       } else {
@@ -162,19 +163,22 @@ define(function(require) {
 
     Map.prototype.loadLayer = function(data) {
       var layer;
-      layer = new layers.Layer(_.extend({
-        collection: this.getFeatures(),
-        map: this
-      }, data));
-      this.layers.addLayer(layer);
-      return this.publish('layer_loaded', layer);
+      layer = this.layers.loadLayer(data);
+      this.publish('layer_loaded', layer);
+      return layer;
+    };
+
+    Map.prototype.loadLayers = function(data) {
+      var _this = this;
+      layers = [];
+      data.forEach(function(l) {
+        return layers.push(_this.loadLayer(l));
+      });
+      return layers;
     };
 
     Map.prototype.loadLayersFromOptions = function(options) {
-      var _this = this;
-      return options.layers.forEach(function(l) {
-        return _this.loadLayer(l);
-      });
+      return this.loadLayers(options.layers);
     };
 
     Map.prototype.loadRemoteLayers = function(url) {
