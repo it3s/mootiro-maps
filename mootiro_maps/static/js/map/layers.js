@@ -109,7 +109,8 @@ define(function(require) {
     };
 
     Layers.prototype.shouldFeatureBeVisible = function(feature) {
-      var matched, visible;
+      var matched, visible,
+        _this = this;
       if (this.length === 0) {
         return true;
       }
@@ -120,6 +121,9 @@ define(function(require) {
           return;
         }
         matched = layer.match(feature);
+        if (matched) {
+          _this._updateFeatureStyle(feature, layer);
+        }
         return visible || (visible = layer.isVisible() && matched);
       });
       return visible;

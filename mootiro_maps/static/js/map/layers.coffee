@@ -69,9 +69,10 @@ define (require) ->
             return true if @length is 0
             visible = false
             matched = false
-            @forEach (layer) ->
+            @forEach (layer) =>
                 return if matched
                 matched = layer.match feature
+                @_updateFeatureStyle feature, layer if matched
                 visible or= layer.isVisible() and matched
 
             visible
