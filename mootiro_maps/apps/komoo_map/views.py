@@ -9,6 +9,7 @@ from django.db.models.loading import get_model
 from fileupload.models import UploadedFile
 
 from komoo_map.models import get_editable_models, get_models_json
+from komoo_project.models import Project
 from main.utils import create_geojson, to_json
 
 
@@ -33,17 +34,11 @@ def layers(request):
         mimetype="application/x-javascript")
 
 
-def project_layers(request):
+def project_layers(request, proj_id=None):
     # TODO: Get layers from DB
-    project = request.GET.get('project', None)
+    project = get_object_or_404(Project, id=proj_id)
     return HttpResponse(
-        to_json([{
-            'name': m.get_map_attr('title') or m.__name__,
-            'id': m.__name__,
-            'color': m.get_map_attr('background_color'),
-            'icon': [getattr(m, 'image'), getattr(m, 'image_off')],
-            'rule': {'operator': 'is', 'property': 'type', 'value': m.__name__}
-        } for m in get_editable_models()]),
+        to_json(project.layers),
         mimetype="application/x-javascript")
 
 

@@ -35,7 +35,7 @@
         height: '{{ height|default:'200px' }}',
         width: '{{ width|default:'200px' }}',
         ajax: '{{ ajax }}'.toLowerCase() === 'true',
-        project: {{ project|default:'undefined' }}
+        projectId: {{ project|default:'undefined' }}
       });
       var map = $map.data('map');
       {{ type }} = map;

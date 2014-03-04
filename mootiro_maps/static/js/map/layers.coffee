@@ -18,7 +18,7 @@ define (require) ->
     and_ops = ['and']
 
     eval_expr = (expr, obj) ->
-        return true if not expr?
+        return true if not expr? or not expr.operator?
         return false if not obj?
         operator = expr.operator
         if operator in equal_ops
@@ -64,14 +64,28 @@ define (require) ->
         getHiddenLayers: -> @filter (layer) -> not layer.visible
 
         shouldFeatureBeVisible: (feature) ->
+            return true if @length is 0
             visible = false
             @getVisibleLayers().forEach (layer) ->
                 visible or= layer.match feature
-            visible
+            # if the feature should be visible than it's not an orphan
+            orphan = not visible
+            if orphan
+                # the feature don't bellongs to a visible layers, lets examine
+                # the hidden layers
+                notOrphan = false
+                @getHiddenLayers().forEach (layer) ->
+                    notOrphan or= layer.match feature
+                orphan = not notOrphan
+
+            visible or orphan  # Orphan features should be visible
+
+        setCollection: (@collection) ->
+        getCollection: -> @collection ? @map?.getFeatures() ? []
 
         loadLayer: (data) ->
             layer = new Layer _.extend {
-                collection: @collection ? @map?.getFeatures() ? []
+                collection: @getCollection()
                 map: @map
             }, data
             @addLayer layer
@@ -102,7 +116,7 @@ define (require) ->
             @iconOff = @options.icon?[1] ? ''
             @fillColor = @options.color?[0] ? ''
             @strokeColor = @options.color?[1] ? @fillColor
-            @id = @options.id ? @options.name
+            @id = '' + (@options.id ? @options.name)
             @setPosition @options.position
             @setName @options.name
             @setRule @options.rule
@@ -179,7 +193,7 @@ define (require) ->
         toJSON: ->
             "id": @getId()
             "name": @getName()
-            "rules": @getRule()
+            "rule": @getRule()
             "position": @getPosition()
             "fillColor": @getFillColor()
             "strokeColor": @getStrokeColor()

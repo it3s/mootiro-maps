@@ -18,7 +18,7 @@ define(function(require) {
   and_ops = ['and'];
   eval_expr = function(expr, obj) {
     var operator, res, v, _i, _len, _ref, _ref1, _ref2;
-    if (!(expr != null)) {
+    if (!(expr != null) || !(expr.operator != null)) {
       return true;
     }
     if (!(obj != null)) {
@@ -107,18 +107,38 @@ define(function(require) {
     };
 
     Layers.prototype.shouldFeatureBeVisible = function(feature) {
-      var visible;
+      var notOrphan, orphan, visible;
+      if (this.length === 0) {
+        return true;
+      }
       visible = false;
       this.getVisibleLayers().forEach(function(layer) {
         return visible || (visible = layer.match(feature));
       });
-      return visible;
+      orphan = !visible;
+      if (orphan) {
+        notOrphan = false;
+        this.getHiddenLayers().forEach(function(layer) {
+          return notOrphan || (notOrphan = layer.match(feature));
+        });
+        orphan = !notOrphan;
+      }
+      return visible || orphan;
+    };
+
+    Layers.prototype.setCollection = function(collection) {
+      this.collection = collection;
+    };
+
+    Layers.prototype.getCollection = function() {
+      var _ref, _ref1, _ref2;
+      return (_ref = (_ref1 = this.collection) != null ? _ref1 : (_ref2 = this.map) != null ? _ref2.getFeatures() : void 0) != null ? _ref : [];
     };
 
     Layers.prototype.loadLayer = function(data) {
-      var layer, _ref, _ref1, _ref2;
+      var layer;
       layer = new Layer(_.extend({
-        collection: (_ref = (_ref1 = this.collection) != null ? _ref1 : (_ref2 = this.map) != null ? _ref2.getFeatures() : void 0) != null ? _ref : [],
+        collection: this.getCollection(),
         map: this.map
       }, data));
       this.addLayer(layer);
@@ -168,7 +188,7 @@ define(function(require) {
       this.iconOff = (_ref3 = (_ref4 = this.options.icon) != null ? _ref4[1] : void 0) != null ? _ref3 : '';
       this.fillColor = (_ref5 = (_ref6 = this.options.color) != null ? _ref6[0] : void 0) != null ? _ref5 : '';
       this.strokeColor = (_ref7 = (_ref8 = this.options.color) != null ? _ref8[1] : void 0) != null ? _ref7 : this.fillColor;
-      this.id = (_ref9 = this.options.id) != null ? _ref9 : this.options.name;
+      this.id = '' + ((_ref9 = this.options.id) != null ? _ref9 : this.options.name);
       this.setPosition(this.options.position);
       this.setName(this.options.name);
       this.setRule(this.options.rule);
@@ -313,7 +333,7 @@ define(function(require) {
       return {
         "id": this.getId(),
         "name": this.getName(),
-        "rules": this.getRule(),
+        "rule": this.getRule(),
         "position": this.getPosition(),
         "fillColor": this.getFillColor(),
         "strokeColor": this.getStrokeColor()

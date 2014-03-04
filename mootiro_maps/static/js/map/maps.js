@@ -149,15 +149,16 @@ define(function(require) {
     };
 
     Map.prototype.initLayers = function() {
-      var _ref2;
+      var _ref2, _ref3;
       if ((_ref2 = this.layers) == null) {
         this.layers = new layers.Layers;
       }
       this.layers.setMap(this);
+      console.log(this.layersUrl + this.getProjectId());
       if (this.options.layers != null) {
         return this.loadLayersFromOptions(this.options);
       } else {
-        return this.loadRemoteLayers(this.layersUrl);
+        return this.loadRemoteLayers(this.layersUrl + ((_ref3 = this.getProjectId()) != null ? _ref3 : ''));
       }
     };
 

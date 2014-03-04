@@ -98,10 +98,11 @@ define (require) ->
         initLayers: ->
             @layers ?= new layers.Layers
             @layers.setMap this
+            console.log(@layersUrl + @getProjectId() )
             if @options.layers?
                 @loadLayersFromOptions @options
             else
-                @loadRemoteLayers @layersUrl
+                @loadRemoteLayers(@layersUrl + (@getProjectId() ? ''))
 
         loadLayer: (data) ->
             layer = @layers.loadLayer data

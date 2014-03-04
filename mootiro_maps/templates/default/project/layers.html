@@ -145,7 +145,7 @@
                 // FIXME: Load all project objects
                 var $map = $("#map-main-preview-canvas").komooMap({
                     type: 'main',
-                    project: {{ project.id }},
+                    projectId: {{ project.id }},
                     layers: [], // starts with no layers
                     width: '100%',
                     height: '350px'
@@ -256,7 +256,7 @@
                     'height':'auto',
                     'width':'100%',
                     'onChange': function () {
-                      var rules = that.setRule(layer, $(this).val());
+                      var rule = that.setRule(layer, $(this).val());
                     }
                   });
 
@@ -268,7 +268,7 @@
                     onChange: function(hsb, hex, rgb, fromSetColor) {
                       if(!fromSetColor) {
                         layer.$el.find('.fillcolor').css('background','#'+hex);
-                        layer.setFillColor(hex);
+                        layer.setFillColor('#'+hex);
                       }
                     }
                   }).keyup(function(){
@@ -281,7 +281,7 @@
                     onChange: function(hsb, hex, rgb, fromSetColor) {
                       if(!fromSetColor) {
                         layer.$el.find('.strokecolor').css('background','#'+hex);
-                        layer.setStrokeColor(hex);
+                        layer.setStrokeColor('#'+hex);
                       }
                     }
                   }).keyup(function(){
@@ -373,6 +373,12 @@
                   };
                   // TODO: Send json to server
                   console.log(config);
+                  var url = '/project/{{ project.id }}/save_layers/';
+                  $.post(url, {
+                    layers: JSON.stringify(layersConfig)
+                  }, function(data) {
+                    console.log(data);
+                  });
                 };
 
                 $('#save').click(function() {

@@ -28,7 +28,6 @@ from need.models import Need
 from komoo_resource.models import Resource
 from community.models import Community
 from investment.models import Investment
-from komoo_map.views import default_layers
 
 logger = logging.getLogger(__name__)
 
@@ -156,7 +155,7 @@ def project_edit(request, id='', *arg, **kwargs):
 def project_layers(request, id=''):
     project = get_object_or_404(Project, pk=id)
     related_items = []
-    layers = to_json(default_layers())
+    layers = to_json(project.layers)
 
     for obj in project.related_items:
         if obj and not obj.is_empty():
@@ -229,6 +228,21 @@ def delete_relations(request):
         success = False
 
     return{'success': success}
+
+
+@ajax_request
+def save_layers(request, id=None):
+    proj = get_object_or_404(Project, pk=id)
+    print 'proj = ', proj
+
+    layers = request.POST.get('layers', None)
+    print 'layers = ', layers
+
+    if proj and layers:
+        proj.layers = simplejson.loads(layers)
+        return {'success': True}
+
+    return {'success': False}
 
 
 def tag_search(request):

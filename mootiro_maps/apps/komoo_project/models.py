@@ -13,6 +13,7 @@ from django.template.defaultfilters import slugify
 
 from lib.taggit.managers import TaggableManager
 from fileupload.models import UploadedFile
+from jsonfield import JSONField
 
 from authentication.models import User
 from community.models import Community
@@ -30,6 +31,38 @@ class ProjectRelatedObject(models.Model):
     content_type = models.ForeignKey(ContentType, null=True, blank=True)
     object_id = models.PositiveIntegerField(null=True, blank=True)
     content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+
+class Layer(models.Model):
+    project = models.ForeignKey('Project', related_name='project_layers')
+
+    name = models.CharField(max_length=1024)
+    position = models.PositiveSmallIntegerField(null=True)
+    visible = models.NullBooleanField()
+    rule = JSONField();
+    fillColor = models.CharField(max_length=10)
+    strokeColor = models.CharField(max_length=10)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'color': [self.fillColor, self.strokeColor],
+            'rule': self.rule,
+            'position': self.position
+        }
+
+    @property
+    def json(self):
+        return to_json(self.to_dict())
+
+
+    def from_dict(self, data):
+        self.name = data.get('name')
+        self.position = data.get('position')
+        self.rule = data.get('rule', {})
+        self.fillColor = data.get('fillColor');
+        self.strokeColor = data.get('strokeColor');
 
 
 class Project(BaseModel):
@@ -80,6 +113,27 @@ class Project(BaseModel):
         for element in itertools.ifilterfalse(seen.__contains__, iterable):
             seen_add(element)
             yield element
+
+    @property
+    def layers(self):
+        return [layer.to_dict() for layer in self.project_layers.order_by('position')]
+
+    @layers.setter
+    def layers(self, data):
+        for layer_ in data:
+            id = layer_.get('id', None)
+            if not id:  # Create new layer
+                layer = Layer()
+                layer.project = self
+            else:
+                layer = Layer.objects.get(id=int(id))
+
+            if layer_.get('delete', False):
+                # The layers is marked to be removed
+                layer.delete()
+            else:
+                layer.from_dict(layer_)
+                layer.save()
 
     @property
     def public(self):
