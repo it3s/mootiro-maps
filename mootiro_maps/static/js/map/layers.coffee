@@ -22,19 +22,20 @@ define (require) ->
         return true if not expr? or not expr.operator?
         return false if not obj?
         operator = expr.operator
+        objValue = obj.getProperty(expr.property)
         if operator in equal_ops
-            obj.getProperty(expr.property) is expr.value
+            objValue is expr.value
         else if operator in not_equal_ops
-            not obj.getProperty(expr.property) is expr.value
+            not objValue is expr.value
         else if operator in in_ops
-            obj.getProperty(expr.property) in expr.value
+            objValue? and objValue in expr.value
         else if operator in contains_ops and Object.prototype.toString.call(expr.value) is '[object Array]'
             res = true
             for v in expr.value
-                res = res and v in obj.getProperty(expr.property)
+                res = res and objValue? and v in objValue
             res
         else if operator in contains_ops
-            expr.value in obj.getProperty(expr.property)
+            objValue and expr.value in objValue
         else if operator in not_ops
             not eval_expr(expr.child, obj)
         else if operator in or_ops
@@ -70,10 +71,15 @@ define (require) ->
             visible = false
             matched = false
             @forEach (layer) =>
-                return if matched
-                matched = layer.match feature
-                @_updateFeatureStyle feature, layer if matched
-                visible or= layer.isVisible() and matched
+                return if matched and not layer.isVisible()
+                matched_ = layer.match feature
+                visible_ = layer.isVisible()
+                @_updateFeatureStyle feature, layer if matched_ and visible_ and (not matched or not visible or layer.isImportant())
+                visible or= visible_ and matched_
+                matched or= matched_
+
+            # Orphan features should be visible
+            visible = true if not matched
 
             visible
 
@@ -126,9 +132,10 @@ define (require) ->
             @visible = @options.visible ? on
             @icon = @options.icon?[0] ? ''
             @iconOff = @options.icon?[1] ? ''
-            @fillColor = @options.color?[0] ? ''
-            @strokeColor = @options.color?[1] ? @fillColor
+            @fillColor = @options.fillColor ? '#c0c0c0'
+            @strokeColor = @options.strokeColor ? @fillColor
             @id = '' + (@options.id ? @options.name)
+            @important = @options.important ? false
             @setPosition @options.position
             @setName @options.name
             @setRule @options.rule
@@ -176,6 +183,8 @@ define (require) ->
         handleMapEvents: ->
 
         isVisible: -> @visible
+
+        isImportant: -> @important
 
         show: ->
             @visible = on

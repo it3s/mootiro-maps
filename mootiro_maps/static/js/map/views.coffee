@@ -61,6 +61,19 @@ define (require) ->
             @$('.sublist').hide()
             this
 
+        updateCounters: (layers) ->
+            layers.forEach (layer) =>
+                @$('[data-layer='+layer.getId()+'] .length').text layer.countFeatures()
+
+        updateSublists: (layers) ->
+            layers.forEach (layer) =>
+                if layer.countFeatures()
+                    @$('[data-layer='+layer.getId()+']').parent().find('.collapser').show()
+                    $sublist = @$('.sublist[data-layer='+layer.getId()+']')
+                    $sublistUl = $sublist.find('ul').empty()
+                    layer.getFeatures().forEach  (feature) =>
+                        $sublistUl.append '<li class="feature" data-type="'+feature.getProperty('type')+'" data-id="'+feature.getProperty('id')+'">'+feature.getProperty('name')+'</li>'
+
         toggleLayer: (evt) ->
             $el = @$ evt.currentTarget
             layerId = $el.attr 'data-layer'
@@ -79,8 +92,9 @@ define (require) ->
 
         highlightFeature: (evt) ->
             $el = @$ evt.currentTarget
+            type = $el.attr 'data-type'
             id = parseInt($el.attr 'data-id')
-            @trigger 'highlight_feature', id
+            @trigger 'highlight_feature', type, id
 
 
     SearchBoxView: SearchBoxView

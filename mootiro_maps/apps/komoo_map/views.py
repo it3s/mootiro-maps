@@ -17,7 +17,8 @@ def default_layers():
     return [{
             'name': m.get_map_attr('title') or m.__name__,
             'id': m.__name__,
-            'color': [m.get_map_attr('background_color')],
+            'fillColor': m.get_map_attr('background_color'),
+            'strokeColor': m.get_map_attr('border_color'),
             'icon': [getattr(m, 'image'), getattr(m, 'image_off')],
             'rule': {'operator': 'is', 'property': 'type', 'value': m.__name__}
             } for m in get_editable_models()]
@@ -37,8 +38,11 @@ def layers(request):
 def project_layers(request, proj_id=None):
     # TODO: Get layers from DB
     project = get_object_or_404(Project, id=proj_id)
+    layers = project.layers
+    if not layers:
+        layers = default_layers()
     return HttpResponse(
-        to_json(project.layers),
+        to_json(layers),
         mimetype="application/x-javascript")
 
 

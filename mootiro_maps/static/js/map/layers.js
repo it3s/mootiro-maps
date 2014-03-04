@@ -18,7 +18,7 @@ define(function(require) {
   or_ops = ['or'];
   and_ops = ['and'];
   eval_expr = function(expr, obj) {
-    var operator, res, v, _i, _len, _ref, _ref1, _ref2;
+    var objValue, operator, res, v, _i, _len, _ref, _ref1;
     if (!(expr != null) || !(expr.operator != null)) {
       return true;
     }
@@ -26,22 +26,23 @@ define(function(require) {
       return false;
     }
     operator = expr.operator;
+    objValue = obj.getProperty(expr.property);
     if (__indexOf.call(equal_ops, operator) >= 0) {
-      return obj.getProperty(expr.property) === expr.value;
+      return objValue === expr.value;
     } else if (__indexOf.call(not_equal_ops, operator) >= 0) {
-      return !obj.getProperty(expr.property) === expr.value;
+      return !objValue === expr.value;
     } else if (__indexOf.call(in_ops, operator) >= 0) {
-      return _ref = obj.getProperty(expr.property), __indexOf.call(expr.value, _ref) >= 0;
+      return (objValue != null) && __indexOf.call(expr.value, objValue) >= 0;
     } else if (__indexOf.call(contains_ops, operator) >= 0 && Object.prototype.toString.call(expr.value) === '[object Array]') {
       res = true;
-      _ref1 = expr.value;
-      for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-        v = _ref1[_i];
-        res = res && __indexOf.call(obj.getProperty(expr.property), v) >= 0;
+      _ref = expr.value;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        v = _ref[_i];
+        res = res && (objValue != null) && __indexOf.call(objValue, v) >= 0;
       }
       return res;
     } else if (__indexOf.call(contains_ops, operator) >= 0) {
-      return _ref2 = expr.value, __indexOf.call(obj.getProperty(expr.property), _ref2) >= 0;
+      return objValue && (_ref1 = expr.value, __indexOf.call(objValue, _ref1) >= 0);
     } else if (__indexOf.call(not_ops, operator) >= 0) {
       return !eval_expr(expr.child, obj);
     } else if (__indexOf.call(or_ops, operator) >= 0) {
@@ -117,15 +118,21 @@ define(function(require) {
       visible = false;
       matched = false;
       this.forEach(function(layer) {
-        if (matched) {
+        var matched_, visible_;
+        if (matched && !layer.isVisible()) {
           return;
         }
-        matched = layer.match(feature);
-        if (matched) {
+        matched_ = layer.match(feature);
+        visible_ = layer.isVisible();
+        if (matched_ && visible_ && (!matched || !visible || layer.isImportant())) {
           _this._updateFeatureStyle(feature, layer);
         }
-        return visible || (visible = layer.isVisible() && matched);
+        visible || (visible = visible_ && matched_);
+        return matched || (matched = matched_);
       });
+      if (!matched) {
+        visible = true;
+      }
       return visible;
     };
 
@@ -209,15 +216,16 @@ define(function(require) {
   Layer = (function() {
 
     function Layer(options) {
-      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8, _ref9;
+      var _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _ref8;
       this.options = options != null ? options : {};
       this.cache = new collections.FeatureCollection();
       this.visible = (_ref = this.options.visible) != null ? _ref : true;
       this.icon = (_ref1 = (_ref2 = this.options.icon) != null ? _ref2[0] : void 0) != null ? _ref1 : '';
       this.iconOff = (_ref3 = (_ref4 = this.options.icon) != null ? _ref4[1] : void 0) != null ? _ref3 : '';
-      this.fillColor = (_ref5 = (_ref6 = this.options.color) != null ? _ref6[0] : void 0) != null ? _ref5 : '';
-      this.strokeColor = (_ref7 = (_ref8 = this.options.color) != null ? _ref8[1] : void 0) != null ? _ref7 : this.fillColor;
-      this.id = '' + ((_ref9 = this.options.id) != null ? _ref9 : this.options.name);
+      this.fillColor = (_ref5 = this.options.fillColor) != null ? _ref5 : '#c0c0c0';
+      this.strokeColor = (_ref6 = this.options.strokeColor) != null ? _ref6 : this.fillColor;
+      this.id = '' + ((_ref7 = this.options.id) != null ? _ref7 : this.options.name);
+      this.important = (_ref8 = this.options.important) != null ? _ref8 : false;
       this.setPosition(this.options.position);
       this.setName(this.options.name);
       this.setRule(this.options.rule);
@@ -316,6 +324,10 @@ define(function(require) {
 
     Layer.prototype.isVisible = function() {
       return this.visible;
+    };
+
+    Layer.prototype.isImportant = function() {
+      return this.important;
     };
 
     Layer.prototype.show = function() {

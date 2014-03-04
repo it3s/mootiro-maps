@@ -47,7 +47,8 @@ class Layer(models.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'color': [self.fillColor, self.strokeColor],
+            'fillColor': self.fillColor,
+            'strokeColor': self.strokeColor,
             'rule': self.rule,
             'position': self.position
         }

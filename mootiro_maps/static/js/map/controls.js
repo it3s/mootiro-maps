@@ -204,8 +204,8 @@ define(function(require) {
 
     LayersBox.prototype.handleViewEvents = function() {
       var _this = this;
-      this.view.on('highlight_feature', function(featureId) {
-        return _this.map.highlightFeature(featureId);
+      this.view.on('highlight_feature', function(featureType, featureId) {
+        return _this.map.highlightFeature(featureType, featureId);
       });
       this.view.on('show', function(layer) {
         return _this.layers.getLayer(layer).show();
@@ -217,9 +217,18 @@ define(function(require) {
 
     LayersBox.prototype.handleMapEvents = function() {
       var _this = this;
-      return this.map.subscribe('layer_added', function(layer) {
+      this.map.subscribe('layer_added', function(layer) {
         var _ref2;
         return (_ref2 = _this.view) != null ? _ref2.render(_this.layers) : void 0;
+      });
+      return this.map.subscribe('features_loaded', function(features) {
+        var _ref2, _ref3;
+        if (features.length) {
+          if ((_ref2 = _this.view) != null) {
+            _ref2.updateCounters(_this.layers);
+          }
+          return (_ref3 = _this.view) != null ? _ref3.updateSublists(_this.layers) : void 0;
+        }
       });
     };
 
@@ -1822,8 +1831,7 @@ define(function(require) {
 
     LayersFilter.prototype.init = function() {
       LayersFilter.__super__.init.call(this);
-      this.disabled = [];
-      return window.dd = this.disabled;
+      return this.disabled = [];
     };
 
     LayersFilter.prototype.beforeFeatureSetVisibleHook = function(feature, visible) {

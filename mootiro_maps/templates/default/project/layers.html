@@ -244,7 +244,7 @@
                   // append to widget
                   this.$ul.append(layer.$el);
                   // init name widget
-                  layer.$el.find('input[name=name]').focus().change(function() {
+                  layer.$el.find('input[name=name]').change(function() {
                     layer.setName(this.value);
                     layer.$el.find('.layer_name').text(this.value);
                   });
@@ -327,6 +327,7 @@
                   var layer = new Layers.Layer({ id: 'new'+this.cur++ });
                   layer.isNew = true;
                   this.addNewLayer(layer);
+                  layer.$el.find('input[name=name]').focus();
                 };
 
                 LayersWidget.prototype.loadLayers = function(layers) {
