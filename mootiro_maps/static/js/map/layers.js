@@ -6,8 +6,9 @@ var __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; 
 define(function(require) {
   'use strict';
 
-  var Layer, Layers, and_ops, collections, contains_ops, equal_ops, eval_expr, in_ops, layers, not_equal_ops, not_ops, or_ops, static_path;
+  var Layer, Layers, and_ops, collections, contains_ops, equal_ops, eval_expr, in_ops, layers, not_equal_ops, not_ops, or_ops, static_path, _;
   collections = require('./collections');
+  _ = require('underscore');
   static_path = '/static/';
   equal_ops = ['==', 'is', 'equal', 'equals'];
   not_equal_ops = ['!=', 'isnt', 'not equal', 'not equals', 'different'];
@@ -63,6 +64,7 @@ define(function(require) {
       if (!this.contains(layer)) {
         this.push(layer);
       }
+      layer.setLayersCollection(this);
       return (_ref = layer.map) != null ? _ref.publish('layer_added', layer) : void 0;
     };
 
@@ -107,23 +109,20 @@ define(function(require) {
     };
 
     Layers.prototype.shouldFeatureBeVisible = function(feature) {
-      var notOrphan, orphan, visible;
+      var matched, visible;
       if (this.length === 0) {
         return true;
       }
       visible = false;
-      this.getVisibleLayers().forEach(function(layer) {
-        return visible || (visible = layer.match(feature));
+      matched = false;
+      this.forEach(function(layer) {
+        if (matched) {
+          return;
+        }
+        matched = layer.match(feature);
+        return visible || (visible = layer.isVisible() && matched);
       });
-      orphan = !visible;
-      if (orphan) {
-        notOrphan = false;
-        this.getHiddenLayers().forEach(function(layer) {
-          return notOrphan || (notOrphan = layer.match(feature));
-        });
-        orphan = !notOrphan;
-      }
-      return visible || orphan;
+      return visible;
     };
 
     Layers.prototype.setCollection = function(collection) {
@@ -160,8 +159,28 @@ define(function(require) {
       if (!this.map) {
         return;
       }
+      this.handleMapEvents();
       return this.forEach(function(layer) {
         return layer.setMap(this.map);
+      });
+    };
+
+    Layers.prototype.handleMapEvents = function() {
+      var _this = this;
+      return this.map.subscribe('feature_added', function(feature) {
+        var matched;
+        matched = false;
+        return _this.forEach(function(layer) {
+          if (layer.match(feature)) {
+            if (!matched) {
+              _this._updateFeatureStyle(feature, layer);
+            }
+            matched = true;
+            if (!layer.cache.isEmpty()) {
+              return layer.cache.push(feature);
+            }
+          }
+        });
       });
     };
 
@@ -172,6 +191,12 @@ define(function(require) {
         return layers.push(layer.toJSON());
       });
       return layers;
+    };
+
+    Layers.prototype._updateFeatureStyle = function(feature, layer) {
+      feature.setBorderColor(layer.getStrokeColor());
+      feature.setBackgroundColor(layer.getFillColor());
+      return feature.refresh();
     };
 
     return Layers;
@@ -246,6 +271,14 @@ define(function(require) {
       return this;
     };
 
+    Layer.prototype.getLayersCollection = function() {
+      return this.layersCollection;
+    };
+
+    Layer.prototype.setLayersCollection = function(layersCollection) {
+      this.layersCollection = layersCollection;
+    };
+
     Layer.prototype.getRule = function() {
       return this.rule;
     };
@@ -275,13 +308,10 @@ define(function(require) {
       }
     };
 
-    Layer.prototype.handleMapEvents = function() {
-      var _this = this;
-      return this.map.subscribe('feature_added', function(feature) {
-        if (!_this.cache.isEmpty() && _this.match(feature)) {
-          return _this.cache.push(feature);
-        }
-      });
+    Layer.prototype.handleMapEvents = function() {};
+
+    Layer.prototype.isVisible = function() {
+      return this.visible;
     };
 
     Layer.prototype.show = function() {

@@ -1191,8 +1191,8 @@ define (require)->
 
         beforeFeatureSetVisibleHook: (feature, visible) ->
             visible_ = visible
-            if visible and not @map.getLayers().shouldFeatureBeVisible feature
-                visible_ = false
+            if visible isnt @map.getLayers().shouldFeatureBeVisible feature
+                visible_ = not visible
             [feature, visible_]
 
         handleMapEvents: ->

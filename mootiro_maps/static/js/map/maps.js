@@ -67,8 +67,8 @@ define(function(require) {
       this.components = {};
       this.setProjectId(this.options.projectId);
       this.initGoogleMap(this.options.googleMapOptions);
-      this.initFeatureTypes();
       this.initLayers();
+      this.initFeatureTypes();
       this.handleEvents();
       this.addComponents([
         'map/controls::Location', [
@@ -154,7 +154,6 @@ define(function(require) {
         this.layers = new layers.Layers;
       }
       this.layers.setMap(this);
-      console.log(this.layersUrl + this.getProjectId());
       if (this.options.layers != null) {
         return this.loadLayersFromOptions(this.options);
       } else {
@@ -188,9 +187,7 @@ define(function(require) {
         url: url,
         dataType: 'json',
         success: function(data) {
-          return data.forEach(function(l) {
-            return _this.loadLayer(l);
-          });
+          return _this.loadLayers(data);
         }
       });
     };

@@ -47,8 +47,8 @@ define (require) ->
             @components = {}
             @setProjectId(@options.projectId)
             @initGoogleMap @options.googleMapOptions
-            @initFeatureTypes()
             @initLayers()
+            @initFeatureTypes()
             @handleEvents()
 
             @addComponents [
@@ -98,7 +98,6 @@ define (require) ->
         initLayers: ->
             @layers ?= new layers.Layers
             @layers.setMap this
-            console.log(@layersUrl + @getProjectId() )
             if @options.layers?
                 @loadLayersFromOptions @options
             else
@@ -123,8 +122,7 @@ define (require) ->
             $.ajax
                 url: url
                 dataType: 'json'
-                success: (data) =>
-                    data.forEach (l) => @loadLayer l
+                success: (data) => @loadLayers data
 
         getLayers: -> @layers
 

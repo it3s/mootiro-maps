@@ -6,6 +6,7 @@ define (require) ->
     #
 
     collections = require './collections'
+    _ = require 'underscore'
 
     static_path = '/static/'
 
@@ -47,6 +48,7 @@ define (require) ->
     class Layers extends collections.GenericCollection
         addLayer: (layer) ->
             @push layer if not @contains layer
+            layer.setLayersCollection this
             layer.map?.publish 'layer_added', layer
 
         getLayer: (id) ->
@@ -66,19 +68,13 @@ define (require) ->
         shouldFeatureBeVisible: (feature) ->
             return true if @length is 0
             visible = false
-            @getVisibleLayers().forEach (layer) ->
-                visible or= layer.match feature
-            # if the feature should be visible than it's not an orphan
-            orphan = not visible
-            if orphan
-                # the feature don't bellongs to a visible layers, lets examine
-                # the hidden layers
-                notOrphan = false
-                @getHiddenLayers().forEach (layer) ->
-                    notOrphan or= layer.match feature
-                orphan = not notOrphan
+            matched = false
+            @forEach (layer) ->
+                return if matched
+                matched = layer.match feature
+                visible or= layer.isVisible() and matched
 
-            visible or orphan  # Orphan features should be visible
+            visible
 
         setCollection: (@collection) ->
         getCollection: -> @collection ? @map?.getFeatures() ? []
@@ -98,13 +94,28 @@ define (require) ->
 
         setMap: (@map) ->
             return if not @map
+            @handleMapEvents()
             @forEach (layer) -> layer.setMap @map
+
+        handleMapEvents: ->
+            @map.subscribe 'feature_added', (feature) =>
+                matched = false
+                @forEach (layer) =>
+                    if layer.match feature
+                        @_updateFeatureStyle feature, layer if not matched
+                        matched = true
+                        layer.cache.push feature if not layer.cache.isEmpty()
 
         toJSON: ->
             layers = []
             @forEach (layer) ->
                 layers.push layer.toJSON()
             layers
+
+        _updateFeatureStyle: (feature, layer) ->
+            feature.setBorderColor layer.getStrokeColor()
+            feature.setBackgroundColor layer.getFillColor()
+            feature.refresh()
 
 
 
@@ -143,6 +154,9 @@ define (require) ->
             # We are lazy. Populate the cache when needed.
             this
 
+        getLayersCollection: -> @layersCollection
+        setLayersCollection: (@layersCollection) ->
+
         getRule: -> @rule
         setRule: (@rule) ->
             # Clear the cache because the objects associated with this layer
@@ -159,8 +173,8 @@ define (require) ->
             @setCollection @map.getFeatures() if not @collection?
 
         handleMapEvents: ->
-            @map.subscribe 'feature_added', (feature) =>
-                @cache.push feature if not @cache.isEmpty() and @match feature
+
+        isVisible: -> @visible
 
         show: ->
             @visible = on
@@ -187,7 +201,8 @@ define (require) ->
         updateCache: ->
             @cache.clear()
             filtered = @collection.filter @match, this
-            filtered.forEach (feature) => @cache.push feature
+            filtered.forEach (feature) =>
+                @cache.push feature
             this
 
         toJSON: ->

@@ -203,13 +203,22 @@ define (require) ->
             @marker?.setIcon icon
             @geometry.setIcon icon
 
-        getBorderSize: -> @featureType.border_size
-        getBorderSizeHover: -> @featureType.borderSizeHover
-        getBorderColor: -> @featureType.borderColor
-        getBorderOpacity: -> @featureType.borderOpacity
-        getBackgroundColor: -> @featureType.backgroundColor
-        getBackgroundOpacity: -> @featureType.backgroundOpacity
-        getDefaultZIndex: -> @featureType.zIndex
+        setBorderSize: (@borderSize) ->
+        getBorderSize: -> @borderSize ? @featureType.border_size
+        setBorderSizeHover: (@borderSizeHover) ->
+        getBorderSizeHover: -> @borderSizeHover ? @featureType.borderSizeHover
+        setBorderColor: (@borderColor) ->
+        getBorderColor: -> @borderColor ? @featureType.borderColor
+        setBorderOpacity: (@borderOpacity) ->
+        getBorderOpacity: -> @borderOpacity ? @featureType.borderOpacity
+        setBackgroundColor: (@backgroundColor) ->
+        getBackgroundColor: -> @backgroundColor ? @featureType.backgroundColor
+        setBackgroundOpacity: (@backgroundOpacity) ->
+        getBackgroundOpacity: -> @backgroundOpacity ? @featureType.backgroundOpacity
+        setDefaultZIndex: (@defaultZIndex) ->
+        getDefaultZIndex: -> @defaultZIndex ? @featureType.zIndex
+
+        refresh: -> @geometry.refresh()
 
 
     window.komoo.features =

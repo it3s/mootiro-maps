@@ -38,6 +38,8 @@ define (require) ->
 
         initOverlay: (options) -> throw "Not Implemented"
 
+        refresh: -> @setOptions @getOverlayOptions()
+
         getCoordinates: -> throw "Not Implemented"
         setCoordinates: (coords) -> komoo.event.trigger @, 'coordinates_changed'
 
@@ -115,7 +117,7 @@ define (require) ->
         getVisible: -> @overlay?.getVisible()
         setVisible: (flag) -> @overlay?.setVisible flag
 
-        setOptions: (@options) -> @overlay?.setOptions(@options)
+        setOptions: (@options) -> @overlay?.setOptions?(@options)
 
         getIcon: -> @overlay?.getIcon?()
         setIcon: (icon) -> @overlay?.setIcon?(icon)
