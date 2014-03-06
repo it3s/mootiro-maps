@@ -3,7 +3,7 @@
 define(function(require) {
   'use strict';
 
-  var Feature, defaultFeatureType, geometries, googleMaps, _base, _ref, _ref1;
+  var Feature, defaultFeatureType, geometries, googleMaps, uid, _base, _ref, _ref1;
   googleMaps = require('googlemaps');
   geometries = require('./geometries');
   if ((_ref = window.komoo) == null) {
@@ -12,6 +12,7 @@ define(function(require) {
   if ((_ref1 = (_base = window.komoo).event) == null) {
     _base.event = googleMaps.event;
   }
+  uid = 0;
   defaultFeatureType = {
     minZoomPoint: 0,
     maxZoomPoint: 10,
@@ -29,6 +30,7 @@ define(function(require) {
     function Feature(options) {
       var geometry;
       this.options = options != null ? options : {};
+      this.uid = uid++;
       geometry = this.options.geometry;
       this.setFeatureType(this.options.featureType);
       if (this.options.geojson) {
@@ -163,8 +165,12 @@ define(function(require) {
       return url;
     };
 
+    Feature.prototype.createIcon = function(zoom) {
+      return this.geometry.createIcon(zoom, this.isHighlighted());
+    };
+
     Feature.prototype.updateIcon = function(zoom) {
-      return this.setIcon(this.getIconUrl(zoom));
+      return this.setIcon(this.createIcon(zoom));
     };
 
     Feature.prototype.getCategoriesIcons = function() {
@@ -283,6 +289,15 @@ define(function(require) {
       if (this.oldMap === void 0) {
         return this.handleMapEvents();
       }
+    };
+
+    Feature.prototype.isOutOfBounds = function() {
+      return this.outOfBounds;
+    };
+
+    Feature.prototype.setOutOfBounds = function(outOfBounds) {
+      this.outOfBounds = outOfBounds;
+      return this.setMap(this.outOfBounds ? null : this.oldMap);
     };
 
     Feature.prototype.handleMapEvents = function() {

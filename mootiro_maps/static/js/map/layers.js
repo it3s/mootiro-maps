@@ -110,27 +110,29 @@ define(function(require) {
     };
 
     Layers.prototype.shouldFeatureBeVisible = function(feature) {
-      var matched, visible,
+      var layers, visible,
         _this = this;
+      if (feature.isOutOfBounds()) {
+        return false;
+      }
       if (this.length === 0) {
         return true;
       }
       visible = false;
-      matched = false;
-      this.forEach(function(layer) {
-        var matched_, visible_;
-        if (matched && !layer.isVisible()) {
+      layers = this._getFromCache(feature);
+      layers.forEach(function(layerId) {
+        var layer, visible_;
+        layer = _this.getLayer(layerId);
+        if (!layer.isVisible()) {
           return;
         }
-        matched_ = layer.match(feature);
         visible_ = layer.isVisible();
-        if (matched_ && visible_ && (!matched || !visible || layer.isImportant())) {
+        if (visible_ && (!visible || layer.isImportant())) {
           _this._updateFeatureStyle(feature, layer);
         }
-        visible || (visible = visible_ && matched_);
-        return matched || (matched = matched_);
+        return visible || (visible = visible_);
       });
-      if (!matched) {
+      if (layers.length === 0) {
         visible = true;
       }
       return visible;
@@ -170,6 +172,7 @@ define(function(require) {
       if (!this.map) {
         return;
       }
+      this.reset();
       this.handleMapEvents();
       return this.forEach(function(layer) {
         return layer.setMap(this.map);
@@ -183,6 +186,7 @@ define(function(require) {
         matched = false;
         return _this.forEach(function(layer) {
           if (layer.match(feature)) {
+            _this._addToCache(feature, layer);
             if (!matched) {
               _this._updateFeatureStyle(feature, layer);
             }
@@ -193,6 +197,39 @@ define(function(require) {
           }
         });
       });
+    };
+
+    Layers.prototype.reset = function() {
+      this._resetCache();
+      return this.forEach(function(layer) {
+        return layer.reset();
+      });
+    };
+
+    Layers.prototype._resetCache = function() {
+      return this.cache = {};
+    };
+
+    Layers.prototype._addToCache = function(feature, layer) {
+      var _base, _name, _ref;
+      if ((_ref = (_base = this.cache)[_name = feature.uid]) == null) {
+        _base[_name] = [];
+      }
+      return this.cache[feature.uid].push(layer.getId());
+    };
+
+    Layers.prototype._getFromCache = function(feature) {
+      var layers, _ref,
+        _this = this;
+      layers = this.cache[feature.uid];
+      if (!layers) {
+        this.forEach(function(layer) {
+          if (layer.match(feature)) {
+            return _this._addToCache(feature, layer);
+          }
+        });
+      }
+      return (_ref = this.cache[feature.uid]) != null ? _ref : [];
     };
 
     Layers.prototype.toJSON = function() {
@@ -302,7 +339,7 @@ define(function(require) {
     };
 
     Layer.prototype.getIconUrl = function() {
-      return static_path + (this.visible ? this.icon : this.iconOff);
+      return this.icon && static_path + (this.visible ? this.icon : this.iconOff);
     };
 
     Layer.prototype.setMap = function(map) {
@@ -320,7 +357,14 @@ define(function(require) {
       }
     };
 
-    Layer.prototype.handleMapEvents = function() {};
+    Layer.prototype.handleMapEvents = function() {
+      var _this = this;
+      return this.map.subscribe('feature_added', function(feature) {
+        if (!_this.cache.isEmpty() && _this.match(feature)) {
+          return _this.cache.push(feature);
+        }
+      });
+    };
 
     Layer.prototype.isVisible = function() {
       return this.visible;
@@ -362,6 +406,10 @@ define(function(require) {
 
     Layer.prototype.countFeatures = function() {
       return this.getFeatures().length;
+    };
+
+    Layer.prototype.reset = function() {
+      return this.cache.clear();
     };
 
     Layer.prototype.updateCache = function() {

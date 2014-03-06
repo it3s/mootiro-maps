@@ -62,6 +62,7 @@ define (require) ->
         init: (options) ->
             super options
             @keptFeatures = komoo.collections.makeFeatureCollection()
+            window.kf = @keptFeatures
             @openConnections = 0
             @_addrs = []
             @_requestQueue = {}
@@ -71,7 +72,7 @@ define (require) ->
                 bounds = @map.googleMap.getBounds()
                 @keptFeatures.forEach (feature) =>
                     if not bounds.intersects feature.getBounds()
-                        feature.setMap null
+                        feature.setOutOfBounds true
                 @keptFeatures.clear()
 
             @map.subscribe 'zoom_changed', =>
@@ -85,19 +86,18 @@ define (require) ->
 
             if @fetchedTiles[tile.addr]
                 bounds = @map.getBounds()
-                @map.data.when @fetchedTiles[tile.addr].features, (features) ->
+                @map.data.when(@fetchedTiles[tile.addr].features).then (features) =>
                     features.forEach (feature) =>
                         if feature.getBounds
                             if not bounds.intersects feature.getBounds()
-                                feature.setMap null
+                                feature.setOutOfBounds true
                             else if not bounds.contains feature.getBounds().getNorthEast() or \
                                     not bounds.contains feature.getBounds().getSouthWest()
                                 @keptFeatures.push feature
-                                feature.setMap @map
+                                feature.setOutOfBounds false
                         else if feature.getPosition
                             if not bounds.contains feature.getPosition()
-                                feature.setVisible false
-                                feature.setMap null
+                                feature.setOutOfBounds true
 
         getTile: (coord, zoom, ownerDocument) ->
 
@@ -113,7 +113,7 @@ define (require) ->
             d = new Date()
             if @fetchedTiles[addr] and
                     (d - @fetchedTiles[addr].date <= @expiration)
-                @fetchedTiles[addr].features.setMap? @map
+                @fetchedTiles[addr].features.setOutOfBounds false
                 return div
             if @openConnections is 0
                 @map.publish 'features_request_started'
@@ -150,9 +150,10 @@ define (require) ->
                             addr = @_addrs.pop()
                             data = @fetchedTiles[addr].geojson
                             features = @map.loadGeoJSON JSON.parse(data), false, true, true
+                            features.setOutOfBounds false
                             @fetchedTiles[addr].features.resolve?(features)
                             @fetchedTiles[addr].features = features
-                        delete @_requestQueue[addr]
+                        @_requestQueue[addr] = undefined
                         @map.publish 'features_loaded', @map.getFeatures()
             return div
 

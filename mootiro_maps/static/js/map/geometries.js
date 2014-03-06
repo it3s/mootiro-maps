@@ -48,8 +48,9 @@ define(function(require) {
       throw "Not Implemented";
     };
 
-    Geometry.prototype.refresh = function() {
-      return this.setOptions(this.getOverlayOptions());
+    Geometry.prototype.refresh = function(zoom) {
+      this.setOptions(this.getOverlayOptions());
+      return this.updateIcon(zoom);
     };
 
     Geometry.prototype.getCoordinates = function() {
@@ -239,6 +240,52 @@ define(function(require) {
       return (_ref2 = this.feature) != null ? _ref2.getIconUrl(zoom) : void 0;
     };
 
+    Geometry.prototype.createIcon = function(zoom, highlighted) {
+      return {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 5 * (highlighted ? 1.5 : 1),
+        fillColor: this.getBackgroundColor(),
+        fillOpacity: this.getBackgroundOpacity(),
+        strokeColor: highlighted ? 1 : this.getBorderColor(),
+        strokeOpacity: highlighted ? 1 : this.getBorderOpacity(),
+        strokeWeight: this.getBorderSize()
+      };
+    };
+
+    Geometry.prototype.updateIcon = function(zoom) {
+      return this.setIcon(this.createIcon(zoom));
+    };
+
+    Geometry.prototype.getBorderColor = function() {
+      var _ref2;
+      return ((_ref2 = this.feature) != null ? _ref2.getBorderColor() : void 0) || defaults.BORDER_COLOR;
+    };
+
+    Geometry.prototype.getBorderOpacity = function() {
+      var _ref2;
+      return ((_ref2 = this.feature) != null ? _ref2.getBorderOpacity() : void 0) || defaults.BORDER_OPACITY;
+    };
+
+    Geometry.prototype.getBorderSize = function() {
+      var _ref2;
+      return ((_ref2 = this.feature) != null ? _ref2.getBorderSize() : void 0) || defaults.BORDER_SIZE;
+    };
+
+    Geometry.prototype.getBorderSizeHover = function() {
+      var _ref2;
+      return ((_ref2 = this.feature) != null ? _ref2.getBorderSizeHover() : void 0) || defaults.BORDER_SIZE_HOVER;
+    };
+
+    Geometry.prototype.getBackgroundColor = function() {
+      var _ref2;
+      return ((_ref2 = this.feature) != null ? _ref2.getBackgroundColor() : void 0) || defaults.BACKGROUND_COLOR;
+    };
+
+    Geometry.prototype.getBackgroundOpacity = function() {
+      var _ref2;
+      return ((_ref2 = this.feature) != null ? _ref2.getBackgroundOpacity() : void 0) || defaults.BACKGROUND_OPACITY;
+    };
+
     Geometry.prototype.getGeoJson = function() {
       return {
         type: this.getGeometryType(),
@@ -301,7 +348,7 @@ define(function(require) {
       return {
         clickable: (_ref2 = options.clickable) != null ? _ref2 : true,
         zIndex: (_ref3 = options.zIndex) != null ? _ref3 : MAX_ZINDEX,
-        icon: (_ref4 = options.icon) != null ? _ref4 : this.getIconUrl(options.zoom)
+        icon: (_ref4 = options.icon) != null ? _ref4 : this.createIcon(options.zoom)
       };
     };
 
@@ -371,7 +418,7 @@ define(function(require) {
       return {
         clickable: (_ref2 = options.clickable) != null ? _ref2 : true,
         zIndex: (_ref3 = options.zIndex) != null ? _ref3 : MAX_ZINDEX,
-        icon: (_ref4 = options.icon) != null ? _ref4 : this.getIconUrl(options.zoom)
+        icon: (_ref4 = options.icon) != null ? _ref4 : this.createIcon(options.zoom)
       };
     };
 
@@ -556,26 +603,6 @@ define(function(require) {
       return this.overlay.setEditable(flag);
     };
 
-    LineString.prototype.getBorderColor = function() {
-      var _ref2;
-      return ((_ref2 = this.feature) != null ? _ref2.getBorderColor() : void 0) || defaults.BORDER_COLOR;
-    };
-
-    LineString.prototype.getBorderOpacity = function() {
-      var _ref2;
-      return ((_ref2 = this.feature) != null ? _ref2.getBorderOpacity() : void 0) || defaults.BORDER_OPACITY;
-    };
-
-    LineString.prototype.getBorderSize = function() {
-      var _ref2;
-      return ((_ref2 = this.feature) != null ? _ref2.getBorderSize() : void 0) || defaults.BORDER_SIZE;
-    };
-
-    LineString.prototype.getBorderSizeHover = function() {
-      var _ref2;
-      return ((_ref2 = this.feature) != null ? _ref2.getBorderSizeHover() : void 0) || defaults.BORDER_SIZE_HOVER;
-    };
-
     LineString.prototype.getPath = function() {
       return this.overlay.getPath();
     };
@@ -721,16 +748,6 @@ define(function(require) {
 
     Polygon.prototype.initOverlay = function(options) {
       return this.setOverlay(new googleMaps.Polygon(this.getOverlayOptions(options)));
-    };
-
-    Polygon.prototype.getBackgroundColor = function() {
-      var _ref2;
-      return ((_ref2 = this.feature) != null ? _ref2.getBackgroundColor() : void 0) || defaults.BACKGROUND_COLOR;
-    };
-
-    Polygon.prototype.getBackgroundOpacity = function() {
-      var _ref2;
-      return ((_ref2 = this.feature) != null ? _ref2.getBackgroundOpacity() : void 0) || defaults.BACKGROUND_OPACITY;
     };
 
     Polygon.prototype.getCoordinates = function() {

@@ -2,7 +2,7 @@
   <% layers.forEach(function (layer) {  %>
     <li class="layer">
       <div class="item on" data-layer="<%= layer.getId() %>" data-visible="<%= layer.isVisible() %>">
-        <div class="img-holder"><img class="layer-icon" src="<%= layer.getIconUrl() %>" /></div>
+        <div class="img-holder"><% if (layer.getIconUrl()) { %><img class="layer-icon" src="<%= layer.getIconUrl() %>" /><% } else { %><span style="display: inline-block; border-radius: 4px; width: 16px; height: 16px; background: <%= layer.getFillColor() %>; border: 2px solid <%= layer.getStrokeColor() %>;"></span><% } %></div>
         <span class="name"><%= layer.name %></span><span class="length"><% if (layer.countFeatures()) { %> <%= layer.countFeatures() %> <% } %></span>
       </div>
       <div class="collapser" style="<% if (!layer.countFeatures()) { %>display: none;<%  } %>"><i class="icon-chevron-right"></i></div>

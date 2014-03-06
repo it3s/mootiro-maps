@@ -67,19 +67,20 @@ define (require) ->
         getHiddenLayers: -> @filter (layer) -> not layer.visible
 
         shouldFeatureBeVisible: (feature) ->
+            #console.log 'AAA', feature.getMap()?
+            return false if feature.isOutOfBounds()
             return true if @length is 0
             visible = false
-            matched = false
-            @forEach (layer) =>
-                return if matched and not layer.isVisible()
-                matched_ = layer.match feature
+            layers = @_getFromCache feature
+            layers.forEach (layerId) =>
+                layer = @getLayer layerId
+                return if not layer.isVisible()
                 visible_ = layer.isVisible()
-                @_updateFeatureStyle feature, layer if matched_ and visible_ and (not matched or not visible or layer.isImportant())
-                visible or= visible_ and matched_
-                matched or= matched_
+                @_updateFeatureStyle feature, layer if visible_ and (not visible or layer.isImportant())
+                visible or= visible_
 
             # Orphan features should be visible
-            visible = true if not matched
+            visible = true if layers.length is 0
 
             visible
 
@@ -101,6 +102,7 @@ define (require) ->
 
         setMap: (@map) ->
             return if not @map
+            @reset()
             @handleMapEvents()
             @forEach (layer) -> layer.setMap @map
 
@@ -109,9 +111,29 @@ define (require) ->
                 matched = false
                 @forEach (layer) =>
                     if layer.match feature
+                        @_addToCache feature, layer
                         @_updateFeatureStyle feature, layer if not matched
                         matched = true
                         layer.cache.push feature if not layer.cache.isEmpty()
+
+        reset: ->
+            @_resetCache()
+            @forEach (layer) -> layer.reset()
+
+        _resetCache: -> @cache = {}
+
+        _addToCache: (feature, layer) ->
+            # Cache the relationship between layers and features
+            # to boost layers performance
+            @cache[feature.uid] ?= []
+            @cache[feature.uid].push layer.getId()
+
+        _getFromCache: (feature) ->
+            layers = @cache[feature.uid]
+            if not layers
+                @forEach (layer) =>
+                    @_addToCache(feature, layer) if layer.match feature
+            return @cache[feature.uid] ? []
 
         toJSON: ->
             layers = []
@@ -172,7 +194,7 @@ define (require) ->
             @cache.clear()
             this
 
-        getIconUrl: -> static_path + (if @visible then @icon else @iconOff)
+        getIconUrl: -> @icon and static_path + (if @visible then @icon else @iconOff)
 
         setMap: (@map) ->
             return if not @map
@@ -181,6 +203,8 @@ define (require) ->
             @setCollection @map.getFeatures() if not @collection?
 
         handleMapEvents: ->
+            @map.subscribe 'feature_added', (feature) =>
+                @cache.push feature if not @cache.isEmpty() and  @match feature
 
         isVisible: -> @visible
 
@@ -207,6 +231,8 @@ define (require) ->
 
         countFeatures: ->
             @getFeatures().length
+
+        reset: -> @cache.clear()
 
         updateCache: ->
             @cache.clear()

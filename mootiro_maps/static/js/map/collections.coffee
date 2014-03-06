@@ -89,6 +89,9 @@ define (require) ->
                     @bounds?.union feature.getBounds() if feature.getGeometryType() isnt 'Empty'
             @bounds
 
+        setOutOfBounds: (flag) ->
+            @forEach (feature) -> feature.setOutOfBounds flag
+
         setMap: (@map, force) ->
             # FIXME: Is `force` param deprecated?
             tmpForce = null

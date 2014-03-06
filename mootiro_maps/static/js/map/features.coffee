@@ -7,6 +7,8 @@ define (require) ->
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
 
+    uid = 0;
+
     # FIXME: Are these zoom options deprecated?
     defaultFeatureType = {
         minZoomPoint: 0
@@ -22,6 +24,8 @@ define (require) ->
         displayInfoWindow: on
 
         constructor: (@options = {}) ->
+            # Create an unique internal id
+            @uid = uid++
             # Try to get a `geometry` object from options.
             geometry = @options.geometry
             @setFeatureType(@options.featureType)
@@ -107,7 +111,9 @@ define (require) ->
             url = "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png".replace ' ', '-'
             url
 
-        updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
+        createIcon: (zoom) -> @geometry.createIcon zoom, @isHighlighted()
+
+        updateIcon: (zoom) -> @setIcon(@createIcon(zoom))
 
         getCategoriesIcons: ->
             # FIXME: Generalize.
@@ -161,6 +167,10 @@ define (require) ->
 
             # `@oldMap` is undefined only at the first time this method is called.
             @handleMapEvents() if @oldMap is undefined
+
+        isOutOfBounds: -> @outOfBounds
+        setOutOfBounds: (@outOfBounds) ->
+            @setMap if @outOfBounds then null else @oldMap
 
         handleMapEvents: ->
             @map.subscribe 'feature_highlight_changed', (flag, feature) =>
