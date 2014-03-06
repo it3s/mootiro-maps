@@ -56,7 +56,9 @@
               {% trans 'Apply' %}
           </div>
 
+          {% if object_type != 'project' %}
             {% filtered_query_to_project  object_type filter_params filtered %}
+          {% endif %}
 
       </div>
     {% endif %}
