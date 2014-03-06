@@ -1,10 +1,17 @@
 {% load i18n %}
+{% load komoo_tags %}
 
 <div class="contacts-view" >
 {% for contact in contacts %}
   <div class="contacts-item" title="{{contact.1}}">
     <img src="/static/img/contacts/{{contact.0}}.png" title="{{contact.1}}">
-    <span>{{contact.2}}</span>
+    <span>
+      {% if contact.0 == 'site' %}
+        <a href="{{ contact.2|with_http }}">{{ contact.2}}</a>
+      {% else %}
+        {{contact.2}}
+      {% endif %}
+    </span>
   </div>
 {% endfor %}
 </div>

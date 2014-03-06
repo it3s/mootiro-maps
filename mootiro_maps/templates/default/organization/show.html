@@ -181,11 +181,6 @@
             {% endfor %}
             </ul>
 
-          {% if organization.link %}
-          <h4>{% trans "Website" %}</h4>
-            <a href="{{ organization.link|with_http }}">{{ organization.link }}</a>
-          {% endif %}
-
         </div>
 
         {% projects_for_object organization %}
