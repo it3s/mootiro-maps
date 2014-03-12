@@ -49,6 +49,7 @@ define(function(require) {
 
     Feature.prototype.createMarker = function() {
       var marker, _ref2;
+      return void 0;
       if ((_ref2 = this.geometry.getGeometryType()) === 'Point' || _ref2 === 'MultiPoint') {
         return;
       }
@@ -297,7 +298,12 @@ define(function(require) {
 
     Feature.prototype.setOutOfBounds = function(outOfBounds) {
       this.outOfBounds = outOfBounds;
-      return this.setMap(this.outOfBounds ? null : this.oldMap);
+      if (this.outOfBounds) {
+        return this.setMap(null);
+      } else {
+        this.setMap(this.oldMap);
+        return this.setVisible(this.visible);
+      }
     };
 
     Feature.prototype.handleMapEvents = function() {

@@ -240,7 +240,7 @@ def save_layers(request, id=None):
 
     if proj and layers:
         proj.layers = simplejson.loads(layers)
-        return {'success': True}
+        return {'success': True, 'redirect_url': proj.view_url}
 
     return {'success': False}
 

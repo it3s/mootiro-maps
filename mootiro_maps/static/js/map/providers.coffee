@@ -54,7 +54,7 @@ define (require) ->
                 "bounds=#{ne.toUrlValue()},#{sw.toUrlValue()}&zoom=#{zoom}"
 
 
-    class FeatureProvider extends GenericProvider
+    class TileFeatureProvider extends GenericProvider
         name: 'Feature Provider'
         alt: 'Feature Provider'
         fetchUrl: '/get_geojson?'
@@ -151,6 +151,7 @@ define (require) ->
                             data = @fetchedTiles[addr].geojson
                             features = @map.loadGeoJSON JSON.parse(data), false, true, true
                             features.setOutOfBounds false
+                            features.show()
                             @fetchedTiles[addr].features.resolve?(features)
                             @fetchedTiles[addr].features = features
                         @_requestQueue[addr] = undefined
@@ -161,7 +162,7 @@ define (require) ->
     # TODO: Use hooks to create the url to be possible the use of any
     # filter combination.
 
-    class ZoomFilteredFeatureProvider extends FeatureProvider
+    class ZoomFilteredFeatureProvider extends TileFeatureProvider
         getUrl: (coord, zoom) ->
             baseUrl = super coord, zoom
             models = []
@@ -175,7 +176,7 @@ define (require) ->
 
     window.komoo.providers =
         GenericProvider: GenericProvider
-        FeatureProvider: FeatureProvider
+        TileFeatureProvider: TileFeatureProvider
         ZoomFilteredFeatureProvider: ZoomFilteredFeatureProvider
         makeFeatureProvider: (options) -> new FeatureProvider options
 

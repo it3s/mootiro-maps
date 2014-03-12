@@ -66,6 +66,7 @@ define(function(require) {
         this.push(layer);
       }
       layer.setLayersCollection(this);
+      this._resetCache();
       return (_ref = layer.map) != null ? _ref.publish('layer_added', layer) : void 0;
     };
 
@@ -190,10 +191,7 @@ define(function(require) {
             if (!matched) {
               _this._updateFeatureStyle(feature, layer);
             }
-            matched = true;
-            if (!layer.cache.isEmpty()) {
-              return layer.cache.push(feature);
-            }
+            return matched = true;
           }
         });
       });

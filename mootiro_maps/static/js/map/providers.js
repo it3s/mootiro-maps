@@ -5,7 +5,7 @@ var __hasProp = {}.hasOwnProperty,
 define(function(require) {
   'use strict';
 
-  var Component, FeatureProvider, GenericProvider, ZoomFilteredFeatureProvider, googleMaps, _base, _ref, _ref1;
+  var Component, GenericProvider, TileFeatureProvider, ZoomFilteredFeatureProvider, googleMaps, _base, _ref, _ref1;
   googleMaps = require('googlemaps');
   Component = require('./component');
   if ((_ref = window.komoo) == null) {
@@ -82,22 +82,22 @@ define(function(require) {
     return GenericProvider;
 
   })(Component);
-  FeatureProvider = (function(_super) {
+  TileFeatureProvider = (function(_super) {
 
-    __extends(FeatureProvider, _super);
+    __extends(TileFeatureProvider, _super);
 
-    function FeatureProvider() {
-      return FeatureProvider.__super__.constructor.apply(this, arguments);
+    function TileFeatureProvider() {
+      return TileFeatureProvider.__super__.constructor.apply(this, arguments);
     }
 
-    FeatureProvider.prototype.name = 'Feature Provider';
+    TileFeatureProvider.prototype.name = 'Feature Provider';
 
-    FeatureProvider.prototype.alt = 'Feature Provider';
+    TileFeatureProvider.prototype.alt = 'Feature Provider';
 
-    FeatureProvider.prototype.fetchUrl = '/get_geojson?';
+    TileFeatureProvider.prototype.fetchUrl = '/get_geojson?';
 
-    FeatureProvider.prototype.init = function(options) {
-      FeatureProvider.__super__.init.call(this, options);
+    TileFeatureProvider.prototype.init = function(options) {
+      TileFeatureProvider.__super__.init.call(this, options);
       this.keptFeatures = komoo.collections.makeFeatureCollection();
       window.kf = this.keptFeatures;
       this.openConnections = 0;
@@ -105,7 +105,7 @@ define(function(require) {
       return this._requestQueue = {};
     };
 
-    FeatureProvider.prototype.handleMapEvents = function() {
+    TileFeatureProvider.prototype.handleMapEvents = function() {
       var _this = this;
       this.map.subscribe('idle', function() {
         var bounds;
@@ -129,7 +129,7 @@ define(function(require) {
       });
     };
 
-    FeatureProvider.prototype.releaseTile = function(tile) {
+    TileFeatureProvider.prototype.releaseTile = function(tile) {
       var bounds,
         _this = this;
       if (this.enabled === false) {
@@ -156,7 +156,7 @@ define(function(require) {
       }
     };
 
-    FeatureProvider.prototype.getTile = function(coord, zoom, ownerDocument) {
+    TileFeatureProvider.prototype.getTile = function(coord, zoom, ownerDocument) {
       var addr, d, div,
         _this = this;
       div = ownerDocument.createElement('DIV');
@@ -217,6 +217,7 @@ define(function(require) {
               data = _this.fetchedTiles[addr].geojson;
               features = _this.map.loadGeoJSON(JSON.parse(data), false, true, true);
               features.setOutOfBounds(false);
+              features.show();
               if (typeof (_base1 = _this.fetchedTiles[addr].features).resolve === "function") {
                 _base1.resolve(features);
               }
@@ -230,7 +231,7 @@ define(function(require) {
       return div;
     };
 
-    return FeatureProvider;
+    return TileFeatureProvider;
 
   })(GenericProvider);
   ZoomFilteredFeatureProvider = (function(_super) {
@@ -257,10 +258,10 @@ define(function(require) {
 
     return ZoomFilteredFeatureProvider;
 
-  })(FeatureProvider);
+  })(TileFeatureProvider);
   window.komoo.providers = {
     GenericProvider: GenericProvider,
-    FeatureProvider: FeatureProvider,
+    TileFeatureProvider: TileFeatureProvider,
     ZoomFilteredFeatureProvider: ZoomFilteredFeatureProvider,
     makeFeatureProvider: function(options) {
       return new FeatureProvider(options);

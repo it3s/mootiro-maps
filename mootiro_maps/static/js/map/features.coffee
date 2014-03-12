@@ -42,6 +42,7 @@ define (require) ->
             # We dont want another marker to geometries that are already
             # rendered as a marker. So dont create markers to points and
             # multipoints.
+            return undefined  # Removing markers temporarily
             return if @geometry.getGeometryType() in ['Point', 'MultiPoint']
             # Create the marker for polygons and lines and display it at the
             # element center.
@@ -170,7 +171,11 @@ define (require) ->
 
         isOutOfBounds: -> @outOfBounds
         setOutOfBounds: (@outOfBounds) ->
-            @setMap if @outOfBounds then null else @oldMap
+            if @outOfBounds
+                @setMap null
+            else
+                @setMap @oldMap
+                @setVisible @visible
 
         handleMapEvents: ->
             @map.subscribe 'feature_highlight_changed', (flag, feature) =>

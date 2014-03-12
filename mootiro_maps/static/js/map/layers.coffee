@@ -50,6 +50,7 @@ define (require) ->
         addLayer: (layer) ->
             @push layer if not @contains layer
             layer.setLayersCollection this
+            @_resetCache()
             layer.map?.publish 'layer_added', layer
 
         getLayer: (id) ->
@@ -114,7 +115,6 @@ define (require) ->
                         @_addToCache feature, layer
                         @_updateFeatureStyle feature, layer if not matched
                         matched = true
-                        layer.cache.push feature if not layer.cache.isEmpty()
 
         reset: ->
             @_resetCache()
@@ -204,7 +204,7 @@ define (require) ->
 
         handleMapEvents: ->
             @map.subscribe 'feature_added', (feature) =>
-                @cache.push feature if not @cache.isEmpty() and  @match feature
+                @cache.push feature if not @cache.isEmpty() and @match feature
 
         isVisible: -> @visible
 

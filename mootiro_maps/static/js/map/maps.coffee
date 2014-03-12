@@ -54,6 +54,7 @@ define (require) ->
             @addComponents [
                 'map/controls::Location'
                 ['map/controls::LayersBox', 'panel', el: '#map-panel-layers']
+                'map/controls::LayersFilter'
             ]
 
         addControl: (pos, el) ->
@@ -299,7 +300,7 @@ define (require) ->
                 features_.push feature
                 feature.setVisible true
 
-                #if attach then feature.setMap @
+                if attach then feature.setMap @
 
             @fitBounds() if panTo and features_.getBounds()?
             @publish 'features_loaded', features_ if not silent
@@ -460,7 +461,6 @@ define (require) ->
                 ['map/providers::ZoomFilteredFeatureProvider', 'provider']
                 ['map/controls::CommunityClusterer', 'clusterer', {map: this}]
                 'map/controls::FeatureZoomFilter'
-                'map/controls::LayersFilter'
             ]
 
 

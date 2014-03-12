@@ -75,7 +75,7 @@ define(function(require) {
           'map/controls::LayersBox', 'panel', {
             el: '#map-panel-layers'
           }
-        ]
+        ], 'map/controls::LayersFilter'
       ]);
     }
 
@@ -476,7 +476,10 @@ define(function(require) {
             feature = _this.makeFeature(geojsonFeature, attach);
           }
           features_.push(feature);
-          return feature.setVisible(true);
+          feature.setVisible(true);
+          if (attach) {
+            return feature.setMap(_this);
+          }
         });
       }
       if (panTo && (features_.getBounds() != null)) {
@@ -695,7 +698,7 @@ define(function(require) {
           'map/controls::CommunityClusterer', 'clusterer', {
             map: this
           }
-        ], 'map/controls::FeatureZoomFilter', 'map/controls::LayersFilter'
+        ], 'map/controls::FeatureZoomFilter'
       ]);
     }
 
