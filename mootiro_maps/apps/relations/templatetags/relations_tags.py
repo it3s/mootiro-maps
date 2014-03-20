@@ -5,6 +5,6 @@ from django import template
 register = template.Library()
 
 @register.inclusion_tag('relations/edit.html', takes_context=True)
-def projects_for_object(context, obj=None):
+def edit_relations_for(context, obj=None):
     return {}
 
