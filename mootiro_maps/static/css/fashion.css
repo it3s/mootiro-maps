@@ -698,19 +698,6 @@ div.importsheet_missing_column {
   padding-left: 0px;
   padding-right: 0px;
   /* For IE 6/7 (trigger hasLayout) */ }
-  #main-content.project > div {
-    width: 950px;
-    margin-left: auto !important;
-    margin-right: auto !important; }
-  #main-content.project .main-column {
-    width: 620px;
-    margin-right: 10px; }
-  #main-content.project .main-column.right {
-    margin-left: 10px;
-    margin-right: 0px; }
-  #main-content.project .left-bar,
-  #main-content.project .right-bar {
-    width: 300px; }
   #main-content.project .tabs {
     margin: 10px 0px 40px !important;
     width: 100% !important;
@@ -746,6 +733,19 @@ div.importsheet_missing_column {
     display: table; }
   #main-content.project .tab-content:after {
     clear: both; }
+  #main-content.project > div {
+    width: 950px;
+    margin-left: auto !important;
+    margin-right: auto !important; }
+  #main-content.project .main-column {
+    width: 620px;
+    margin-right: 10px; }
+  #main-content.project .main-column.right {
+    margin-left: 10px;
+    margin-right: 0px; }
+  #main-content.project .left-bar,
+  #main-content.project .right-bar {
+    width: 300px; }
   #main-content.project .container {
     zoom: 1; }
   #main-content.project .view-info-contributor {
@@ -1036,3 +1036,39 @@ label[for=id_contacts] {
         width: 80px;
         float: left;
         margin: 5px; }
+
+#main-content.georefobject .tabs {
+  margin: 10px 0px 40px !important;
+  width: 100% !important;
+  border-bottom: solid 1px silver;
+  font-size: 0.9em; }
+  #main-content.georefobject .tabs > ul {
+    width: 950px;
+    margin: 0 auto;
+    list-style: none; }
+    #main-content.georefobject .tabs > ul .tab {
+      -moz-border-radius: 5px 5px 0px 0px;
+      -webkit-border-radius: 5px 5px 0px 0px;
+      border-radius: 5px 5px 0px 0px;
+      display: inline-block;
+      margin: 0 5px -1px;
+      padding: 3px 0;
+      border: solid 1px transparent; }
+      #main-content.georefobject .tabs > ul .tab > a {
+        padding: 3px 30px;
+        text-decoration: underline; }
+    #main-content.georefobject .tabs > ul > .tab.selected {
+      border: solid 1px silver;
+      border-bottom: solid 1px white; }
+      #main-content.georefobject .tabs > ul > .tab.selected > a {
+        color: black;
+        text-decoration: none; }
+#main-content.georefobject .tab-content {
+  overflow: visible;
+  min-height: 300px; }
+#main-content.georefobject .tab-content:before,
+#main-content.georefobject .tab-content:after {
+  content: "";
+  display: table; }
+#main-content.georefobject .tab-content:after {
+  clear: both; }
