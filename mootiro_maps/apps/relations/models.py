@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
+from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
@@ -88,7 +89,19 @@ class Relation(BaseModel):
             ref=TABLE_ID_MAP[obj.__class__.__name__],
             id=obj.id)
 
-    def relation_type(self):
+    @classmethod
+    def relations_for(cls, obj):
+        oid = cls.build_oid(obj)
+        relations = cls.objects.filter(Q(oid_1=oid) | Q(oid_2=oid))
+        return [{
+            'target': None,
+            'type': None,
+            'direction': None,
+            'rel_type': None,
+            'metadata': None,
+        } for rel in relations]
+
+    def _rel_type_dict(self):
         return {
             # 'relation_type_name': (from_1_to_2, from_2_to_1),
 
@@ -156,4 +169,7 @@ class Relation(BaseModel):
                 _('is board member of'), _('has as board member')
             ),
             # é conselheiro de, tem como conselheiro
-        }[self.rel_type]
+        }
+
+    def relation_type(self):
+        return self._rel_type_dict[self.rel_type]

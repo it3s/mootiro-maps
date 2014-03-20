@@ -5,25 +5,40 @@
 {% load video_tags %}
 {% load i18n %}
 {% load komoo_tags %}
+{% load relations_tags %}
 
 {% block menu %} {% menu "resource" %} {% endblock %}
 
 {% block content %}
   {% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=' 'lazy=True' %}
   <div id="main-content">
-    <div class="main-column">
-      <div class='form-legend'>{% trans 'Edit resource' %}</div>
 
-      <div class='alert alert-info required-notice' data-alert='info'>
-          <div class='msg'>
-          {% trans '<strong>*</strong> required fields!' %}
-          </div>
+    <div class="tabs">
+      <ul>
+        <li class="tab"><a href="#edit-info">{% trans 'Info' %}</a></li>
+        <li class="tab"><a href="#edit-relations">{% trans 'Relations' %}</a></li>
+      </ul>
+    </div>
+
+    <div class="tab-content" id="edit-info">
+      <div class="main-column">
+        <div class='form-legend'>{% trans 'Edit resource' %}</div>
+
+        <div class='alert alert-info required-notice' data-alert='info'>
+            <div class='msg'>
+            {% trans '<strong>*</strong> required fields!' %}
+            </div>
+        </div>
+        {% crispy form_resource form_resource.helper %}
       </div>
-      {% crispy form_resource form_resource.helper %}
+      <div class="right-bar">
+        {% komoo_map geojson 'type=preview' 'edit_button=True' %}
+      </div>
     </div>
-    <div class="right-bar">
-      {% komoo_map geojson 'type=preview' 'edit_button=True' %}
-    </div>
+  </div>
+
+  <div class="tab-content" id="edit-relations">
+    {% edit_relations_for %}
   </div>
 {% endblock %}
 
@@ -66,6 +81,8 @@
           }
 
         });
+
+        var tabs = new Tabs('.tab', '.tab-content');
       });
     </script>
 {% endblock %}
