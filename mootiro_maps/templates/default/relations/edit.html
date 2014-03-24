@@ -1,1 +1,16 @@
-relation template tag
+<div class="relations-edit">
+  <form action="{% url edit_relations %}">
+    <input type="hidden" name="object_id" value=""/>
+    <input type="hidden" name="relations_json" value="" />
+
+    <div class="add-relation">+ Add relation</div>
+    <div class="relation-item">
+      <select name="relation_type">
+        <option value="bla">Bla</option>
+        <option value="ble">Ble</option>
+      </select>
+      <input type="text" name="target"/>
+    </div>
+  </form>
+
+</div>
