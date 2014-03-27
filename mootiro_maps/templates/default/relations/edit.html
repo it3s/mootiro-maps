@@ -1,3 +1,4 @@
+<script src="/static/js/relations/edit.js" type="text/javascript"></script>
 <div class="relations-edit">
   <form action="{% url edit_relations %}">
     <input type="hidden" name="object_id" value=""/>
@@ -6,10 +7,11 @@
     <div class="add-relation">+ Add relation</div>
     <div class="relation-item">
       <select name="relation_type">
-        <option value="bla">Bla</option>
-        <option value="ble">Ble</option>
+        {% for opt in options %}
+          <option value="{{ opt.direction }}{{ opt.type }}">{{ opt.name }}</option>
+        {% endfor %}
       </select>
-      <input type="text" name="target"/>
+      <input type="text" name="target" id="target"/>
     </div>
   </form>
 

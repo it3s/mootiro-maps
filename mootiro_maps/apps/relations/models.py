@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import itertools
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
@@ -101,7 +102,8 @@ class Relation(BaseModel):
             'metadata': None,
         } for rel in relations]
 
-    def _rel_type_dict(self):
+    @classmethod
+    def _rel_type_dict(cls):
         return {
             # 'relation_type_name': (from_1_to_2, from_2_to_1),
 
@@ -170,6 +172,22 @@ class Relation(BaseModel):
             ),
             # é conselheiro de, tem como conselheiro
         }
+
+    @classmethod
+    def rel_type_options(cls):
+        options = []
+        for rel_type, relations in cls._rel_type_dict().iteritems():
+            options.append({
+                'type': rel_type,
+                'direction': '+',
+                'name': relations[0]
+            })
+            options.append({
+                'type': rel_type,
+                'direction': '-',
+                'name': relations[1]
+            })
+        return options
 
     def relation_type(self):
         return self._rel_type_dict[self.rel_type]
