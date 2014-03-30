@@ -93,6 +93,9 @@ class FileuploadWidget(forms.Widget):
                             <div>
                                 <input type="text" name="subtitle" id="id_subtitle" file-id="">
                             </div>
+                            <div>
+                                <label><input type="checkbox" name="cover" id="id_cover" file-id="">%(cover_photo)s</label>
+                            </div>
                         </p>
                     </div>
                     <div class="modal-footer">
@@ -128,7 +131,8 @@ class FileuploadWidget(forms.Widget):
             'enter_subtitle': _('Insert a subtitle for this image'),
             'name': name,
             'delete': _('Delete'),
-            'or': _('or')
+            'or': _('or'),
+            'cover_photo': _('Cover photo'),
         }
         return html
 

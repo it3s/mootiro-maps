@@ -119,7 +119,11 @@ def uploader_poc(request):
 def file_info(request):
     file_obj = UploadedFile.objects.get(pk=request.GET['id'])
     return JSONResponse(
-        {'subtitle': file_obj.subtitle, 'url': file_obj.file.url},
+        {
+            'subtitle': file_obj.subtitle,
+            'url': file_obj.file.url,
+            'cover': file_obj.cover
+        },
         {},
         response_mimetype(request))
 
@@ -128,6 +132,7 @@ def save_subtitle(request):
     try:
         file_obj = UploadedFile.objects.get(pk=request.POST['id'])
         file_obj.subtitle = request.POST.get('subtitle', '')
+        file_obj.cover = (request.POST.get('cover', 'false') == 'true')
         file_obj.save()
         success = True
     except Exception:
