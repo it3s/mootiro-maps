@@ -59,7 +59,7 @@ var ContactsWidget = {
   },
 
   renderKeyValuePair: function(key, keyName, value) {
-    console.log("rendering contacts: key=%s value=%s", key, value);
+    // console.log("rendering contacts: key=%s value=%s", key, value);
     this.contactsListField.append("" +
       "<div class=\"contact-kv\">" +
         "<label>" + keyName + "</label>" +
