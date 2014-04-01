@@ -199,4 +199,9 @@ def search_by_term(ter, size=10):
             data=json.dumps(search_dict(ter, size=size)))
     data = json.loads(r.content)
     hits = data.get('hits', {}).get('hits', [])
-    return [hit['_source'] for hit in hits]
+    results = []
+    for hit in hits:
+        res = hit['_source']
+        res.update({'id': hit['_id']})
+        results.append(res)
+    return results

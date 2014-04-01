@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django.http import HttpResponse
 from main.utils import to_json
+from search.utils import search_by_term
 
 
 def edit_relations(request):
@@ -8,7 +9,8 @@ def edit_relations(request):
     return HttpResponse()
 
 def search_relations(request):
-    print "SEARCH RELATIONS", request
-    results = [{'label': "blabla", 'value': '1'}, {'label': "blebleble", 'value': '2'}]
+    term = request.GET.get('term', '')
+    raw_results = search_by_term(term)
+    results = [{'label': item['name'], 'value': item['id']} for item in raw_results]
     return HttpResponse(to_json(results),
                         mimetype="application/x-javascript")
