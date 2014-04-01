@@ -1,11 +1,8 @@
 $(function(){
+  var target_autocomplete =  $("#id_target_autocomplete");
 
-  $("#id_target_autocomplete").autocomplete({
-    source: [
-      'object 1',
-      'blablabal',
-      'resource bla',
-    ],
+  target_autocomplete.autocomplete({
+    source: target_autocomplete.attr('data-autocomplete'),
     focus: function(event, ui) {
       $("#id_target_autocomplete").val(ui.item.label);
       return false;
