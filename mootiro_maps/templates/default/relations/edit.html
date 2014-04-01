@@ -11,7 +11,10 @@
           <option value="{{ opt.direction }}{{ opt.type }}">{{ opt.name }}</option>
         {% endfor %}
       </select>
-      <input type="text" name="target" id="target"/>
+
+      <input type="hidden" id="id_target" name="target" />
+      <input type="text" id="id_target_autocomplete" name="id_target_autocomplete" />
+
     </div>
   </form>
 
