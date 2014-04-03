@@ -3,6 +3,7 @@
 <script type="text/x-template" id="relation-item-tpl">
   <div class="relation-item">
     <select name="relation_type">
+      <option value=""> </option>
       {% for opt in options %}
         <option value="{{ opt.direction }}{{ opt.type }}">{{ opt.name }}</option>
       {% endfor %}
@@ -23,7 +24,7 @@
 
     <div class="add-relation">+ Add relation</div>
 
-    <div class="relations-list">
+    <div class="relations-list" data-relations='{{ relations|safe }}'>
 
     </div>
   </form>

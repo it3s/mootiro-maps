@@ -9,6 +9,7 @@
         this.field = this.container.find('.target');
         this.dropdown = this.container.find('select[name=relation_type]');
         this.startPlugin();
+        return this;
       },
 
       onFocus: function(_this, ui) {
@@ -42,6 +43,13 @@
 
         _this.dropdown.change(function() { _this.container.trigger('relations:update'); });
       },
+
+      loadValues: function(obj) {
+        this.input.val(obj.target_name);
+        this.field.val(obj.target_oid);
+        this.dropdown.find('option[value="' +  obj.direction + obj.rel_type + '"]').attr('selected', 'selected');
+        this.container.trigger('relations:update');
+      }
     };
   };
 
@@ -53,8 +61,20 @@
         this.addButton = $('.add-relation');
         this.input = $(".relations-edit input[name='relations_json']");
 
-        this.addNewRelation();  // starts with at least one relation entry
         this.bindEvents();
+
+        this.loadInitialData();
+        this.addNewRelation();  // starts with at least one relation entry
+      },
+
+      loadInitialData: function() {
+        var _this = this;
+        var relations = _this.relationsList.data('relations');
+        console.log('loading relations');
+        _.each(relations, function(rel) {
+          var widget = _this.addNewRelation();
+          widget.loadValues(rel);
+        });
       },
 
       addNewRelation: function() {
@@ -62,7 +82,7 @@
         var relationItem = $(_this.relationTpl);
         this.relationsList.append(relationItem);
         relationItem.on('relations:update', function() { _this.updateInput(_this); });
-        autocompleteWidget(relationItem).init();
+        return autocompleteWidget(relationItem).init();
       },
 
       onRemove: function(_this, el) {
