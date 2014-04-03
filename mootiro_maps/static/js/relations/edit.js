@@ -65,6 +65,11 @@
         autocompleteWidget(relationItem).init();
       },
 
+      onRemove: function(_this, el) {
+        el.closest('.relation-item').remove();
+        _this.updateInput(_this);
+      },
+
       updateInput: function(_this) {
         var relations = [];
         _this.relationsList.find('.relation-item').each(function(i, el) {
@@ -85,6 +90,9 @@
       bindEvents: function() {
         var _this = this;
         _this.addButton.click(function(){ _this.addNewRelation() });
+        $('.relations-edit .remove-btn').live('click', function(evt) {
+          _this.onRemove(_this, $(evt.target));
+        });
       }
     };
   };
