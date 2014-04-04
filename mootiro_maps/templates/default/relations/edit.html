@@ -1,3 +1,4 @@
+{% load i18n %}
 <script src="/static/js/relations/edit.js" type="text/javascript"></script>
 
 <script type="text/x-template" id="relation-item-tpl">
@@ -18,7 +19,8 @@
 </script>
 
 <div class="relations-edit">
-  <form action="{% url edit_relations %}">
+  <form action="{% url edit_relations %}" method="POST">
+    {% csrf_token %}
     <input type="hidden" name="object_id" value=""/>
     <input type="hidden" name="relations_json" value="" />
 
@@ -26,6 +28,10 @@
 
     <div class="relations-list" data-relations='{{ relations|safe }}'>
 
+    </div>
+
+    <div>
+      <input type="submit" value='{% trans "save" %}' />
     </div>
   </form>
 
