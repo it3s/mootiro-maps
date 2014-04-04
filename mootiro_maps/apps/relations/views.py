@@ -1,12 +1,19 @@
 # -*- encoding: utf-8 -*-
-from django.http import HttpResponse
+import simplejson as json
+import re
+from urlparse import urlparse
+from django.shortcuts import HttpResponse, redirect
+from django.core.urlresolvers import reverse
 from main.utils import to_json
 from search.utils import search_by_term
+from relations.models import Relation
 
+def _back_url(request):
+    return urlparse(request.META['HTTP_REFERER']).path.replace('/edit', '')
 
 def edit_relations(request):
-    print '\n\nEDIT RELATIONS', request.POST
-    return HttpResponse()
+    Relation.edit(request.POST['object_oid'], json.loads(request.POST['relations_json']))
+    return redirect(_back_url(request))
 
 def search_relations(request):
     term = request.GET.get('term', '')

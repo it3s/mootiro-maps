@@ -92,15 +92,21 @@ class Relation(BaseModel):
 
     @classmethod
     def relations_for(cls, obj):
-        oid = cls.build_oid(obj)
+        oid = obj if isinstance(obj, basestring) else cls.build_oid(obj)
         relations = cls.objects.filter(Q(oid_1=oid) | Q(oid_2=oid))
         return [{
             'target': None,
+            'target_oid': None,
             'type': None,
             'direction': None,
             'rel_type': None,
             'metadata': None,
         } for rel in relations]
+
+    @classmethod
+    def edit(cls, obj_oid, relations):
+        # TODO implement-me
+        return None
 
     @classmethod
     def _rel_type_dict(cls):
