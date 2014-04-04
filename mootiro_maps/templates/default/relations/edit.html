@@ -21,7 +21,7 @@
 <div class="relations-edit">
   <form action="{% url edit_relations %}" method="POST">
     {% csrf_token %}
-    <input type="hidden" name="object_id" value=""/>
+    <input type="hidden" name="object_oid" value="{{ oid }}"/>
     <input type="hidden" name="relations_json" value="" />
 
     <div class="add-relation">+ Add relation</div>

@@ -13,5 +13,6 @@ def edit_relations_for(context, obj=None):
         {"direction":"-","rel_type":"students attendance","target_oid":"r1277", "target_name": "ABC Rugby"},
         {"direction":"-","rel_type":"directing people","target":"o15639", "target_name": "Sesc Santo Amaro"}
     ]
-    return {"options": options, "relations": to_json(relations)}
+    oid = Relation.build_oid(obj)
+    return {"options": options, "relations": to_json(relations), "oid": oid}
 

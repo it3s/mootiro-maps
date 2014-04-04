@@ -5,7 +5,7 @@ from search.utils import search_by_term
 
 
 def edit_relations(request):
-    print 'EDIT RELATIONS', request
+    print '\n\nEDIT RELATIONS', request.POST
     return HttpResponse()
 
 def search_relations(request):
