@@ -9,10 +9,14 @@ register = template.Library()
 @register.inclusion_tag('relations/edit.html', takes_context=True)
 def edit_relations_for(context, obj=None):
     options = Relation.rel_type_options()
-    relations = [  # XXX fake data for testing
-        {"direction":"-","rel_type":"students attendance","target_oid":"r1277", "target_name": "ABC Rugby"},
-        {"direction":"-","rel_type":"directing people","target":"o15639", "target_name": "Sesc Santo Amaro"}
-    ]
+    relations = [
+        {
+            "direction": rel['direction'],
+            "rel_type": rel['rel_type'],
+            "target_oid": rel['target_oid'],
+            "target_name": rel['target'].name
+        }
+        for rel in Relation.relations_for(obj)]
     oid = Relation.build_oid(obj)
     return {"options": options, "relations": to_json(relations), "oid": oid}
 

@@ -70,7 +70,6 @@
       loadInitialData: function() {
         var _this = this;
         var relations = _this.relationsList.data('relations');
-        console.log('loading relations');
         _.each(relations, function(rel) {
           var widget = _this.addNewRelation();
           widget.loadValues(rel);

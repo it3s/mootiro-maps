@@ -9,6 +9,12 @@ from django.core.urlresolvers import reverse
 
 from main.mixins import BaseModel
 from authentication.models import User
+from organization.models import Organization
+from komoo_resource.models import Resource
+from need.models import Need
+from community.models import Community
+from komoo_project.models import Project
+from proposal.models import Proposal
 
 RELATION_TYPES = [
     ('ownership', 'Ownership'),
@@ -36,6 +42,17 @@ TABLE_ID_MAP = {
     'Proposal': 's',
 }
 
+def _get_model_class_for_oid(oid):
+    return {
+        'o': Organization,
+        'r': Resource,
+        'n': Need,
+        'u': User,
+        'c': Community,
+        'p': Project,
+        's': Proposal,
+    }[oid[0]]
+
 
 class Relation(BaseModel):
     """Generic relations"""
@@ -60,30 +77,6 @@ class Relation(BaseModel):
     # ==========================================================================
     # Utils
 
-    # def from_dict(self, data):
-    #     keys = ['id', 'name', 'contact', 'geojson',  'creation_date',
-    #             'is_admin', 'is_active', 'about_me']
-    #     date_keys = ['creation_date']
-    #     build_obj_from_dict(self, data, keys, date_keys)
-
-    # def to_dict(self):
-    #     fields_and_defaults = [
-    #         ('name', None), ('kind_id', None), ('description', None),
-    #         ('short_description ', None),
-    #         ('creator_id', None), ('creation_date', None),
-    #         ('last_editor_id', None), ('last_update', None),
-    #         ('geojson', {}), ('contacts', {}),
-    #     ]
-    #     dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
-    #     dict_['community'] = [comm.id for comm in self.community.all()]
-    #     dict_['tags'] = [tag.name for tag in self.tags.all()]
-    #     return dict_
-
-    # def is_valid(self, ignore=[]):
-    #     self.errors = {}
-    #     valid = True
-    #     return valid
-
     @classmethod
     def build_oid(cls, obj):
         return "{ref}{id}".format(
@@ -93,20 +86,38 @@ class Relation(BaseModel):
     @classmethod
     def relations_for(cls, obj):
         oid = obj if isinstance(obj, basestring) else cls.build_oid(obj)
-        relations = cls.objects.filter(Q(oid_1=oid) | Q(oid_2=oid))
-        return [{
-            'target': None,
-            'target_oid': None,
-            'type': None,
-            'direction': None,
-            'rel_type': None,
-            'metadata': None,
-        } for rel in relations]
+        relations = []
+        for rel in cls.objects.filter(Q(oid_1=oid) | Q(oid_2=oid)):
+            target_oid = rel.oid_1 if oid != rel.oid_1 else rel.oid_2
+            relations.append({
+                'target': cls.get_model_from_oid(target_oid),
+                'target_oid': target_oid,
+                'type': None,
+                'direction': rel.direction,
+                'rel_type': rel.rel_type,
+                'metadata': None,
+            })
+        return relations
 
     @classmethod
     def edit(cls, obj_oid, relations):
-        # TODO implement-me
-        return None
+        for rel in relations:
+            oid_1, oid_2 = sorted([obj_oid, rel['target']])  # lexycographical order
+            relation = cls.get_relation(oid_1, oid_2)
+            relation.rel_type = rel['rel_type']
+            relation.direction = rel['direction']
+            relation.save()
+
+    @classmethod
+    def get_relation(cls, oid_1, oid_2):
+        qs = cls.objects.filter(
+            (Q(oid_1=oid_1) & Q(oid_2=oid_2)) |
+            (Q(oid_1=oid_2) & Q(oid_2=oid_1)) )
+        return qs[0] if qs.exists() else Relation(oid_1=oid_1, oid_2=oid_2)
+
+    @classmethod
+    def get_model_from_oid(cls, oid):
+        return _get_model_class_for_oid(oid).objects.get(pk=oid[1:])
 
     @classmethod
     def _rel_type_dict(cls):
