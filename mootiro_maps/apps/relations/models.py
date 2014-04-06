@@ -101,6 +101,13 @@ class Relation(BaseModel):
 
     @classmethod
     def edit(cls, obj_oid, relations):
+        # delete removed relations
+        old_relations_oids = map(lambda r: r['target_oid'], cls.relations_for(obj_oid))
+        edited_relations_oids = map(lambda r: r['target'], relations)
+        for oid in set(old_relations_oids) - set(edited_relations_oids):
+            cls.get_relation(obj_oid, oid).delete()
+
+        # add or update relations
         for rel in relations:
             oid_1, oid_2 = sorted([obj_oid, rel['target']])  # lexycographical order
             relation = cls.get_relation(oid_1, oid_2)
