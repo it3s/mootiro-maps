@@ -1098,3 +1098,19 @@ label[for=id_contacts] {
       cursor: pointer; }
       .relations-edit .relation-item .remove-btn i {
         margin: -3px 0 0 10px; }
+
+.relations-view-list {
+  background-color: #dceff4;
+  border-radius: 5px;
+  padding: 20px; }
+  .relations-view-list a {
+    color: #333;
+    text-decoration: none; }
+  .relations-view-list .relation-item {
+    margin: 10px 0px;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 5px; }
+    .relations-view-list .relation-item:hover {
+      background: #8eccdc;
+      cursor: pointer; }

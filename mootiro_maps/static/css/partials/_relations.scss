@@ -40,3 +40,29 @@
     }
   }
 }
+
+.relations-view-list {
+  $light-blue: #DCEFF4;
+
+  background-color: $light-blue;
+  border-radius: 5px;
+  padding: 20px;
+
+  a {
+    color: #333;
+    text-decoration: none;
+  }
+
+  .relation-item {
+    margin: 10px 0px;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 5px;
+
+
+    &:hover {
+      background: darken($light-blue, 20%);
+      cursor: pointer;
+    }
+  }
+}

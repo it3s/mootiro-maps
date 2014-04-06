@@ -10,6 +10,7 @@
 {% load upload_tags %}
 {% load video_tags %}
 {% load project_tags %}
+{% load relations_tags %}
 {% load i18n %}
 
 {% block title %}{{ resource.name }}{% endblock %}
@@ -68,7 +69,7 @@
 
       <div class="tab-content" id="object-relations">
         <div class="view-body">
-          RELATIONS <!-- TODO implement-me -->
+          {% view_relations_for resource %}
         </div>
       </div>
 

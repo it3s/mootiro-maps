@@ -1,0 +1,11 @@
+<ul class="relations-view-list">
+  {% for relation in relations %}
+  <li>
+    <a href="{{ relation.link }}">
+      <div class="relation-item">
+        <b>{{ relation.rel_type }}</b> {{ relation.name }}
+    </div>
+  </a>
+  </li>
+  {% endfor %}
+</div>

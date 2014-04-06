@@ -54,6 +54,77 @@ def _get_model_class_for_oid(oid):
     }[oid[0]]
 
 
+def _rel_type_dict():
+    return {
+        # 'relation_type_name': (from_1_to_2, from_2_to_1),
+
+        'ownership': (
+            _('owns'), _('is owned by')
+        ),
+        # possui, pertence à
+
+        'participation': (
+            _('participates in'), _('has as participant')
+        ),
+        # participa de, tem como participante
+
+        'partnership': (
+            _('partners with'), _('partners with')
+        ),
+        # é parceiro de, é parceiro de
+
+        'grants': (
+            _('gives a grant to'), _('receives a grant from')
+        ),
+        # finacia, recebe um financiamento de
+
+        'certification': (
+            _('certifies'), _('is certified by')
+        ),
+        # certifica, é certificada por
+
+        'students attendance': (
+            _('attends students from'), _('attends')
+        ),
+        # students attendance, attends students from - atende alunos de
+
+        'directing people': (
+            _('directs people to'), _('receives people from')
+        ),
+        # encaminha atendidos para, recebe encaminhamentos de atendidos de
+
+        'volunteers': (
+            _('recruits volunteers for'), _('receives volunteers from')
+        ),
+        # recruta voluntários para, recebe voluntários de
+
+        'support': (
+            _('supports'), _('is supported by')
+        ),
+        # suporta, recebe suporte
+
+        'representation': (
+            _('represents'), _('is represented by')
+        ),
+        # representa, é representado por
+
+        'membership': (
+            _('is a member of'), _('has as member')
+        ),
+        # é membro de, tem como membro
+
+        'supply': (
+            _('supplies to'), _('buys from')
+        ),
+        # fornece para, compra de
+
+        'council': (
+            _('is board member of'), _('has as board member')
+        ),
+        # é conselheiro de, tem como conselheiro
+    }
+
+
 class Relation(BaseModel):
     """Generic relations"""
     oid_1 = models.CharField(max_length=64, null=False)
@@ -96,6 +167,7 @@ class Relation(BaseModel):
                 'direction': rel.direction,
                 'rel_type': rel.rel_type,
                 'metadata': None,
+                'relation_inst': rel,
             })
         return relations
 
@@ -127,80 +199,9 @@ class Relation(BaseModel):
         return _get_model_class_for_oid(oid).objects.get(pk=oid[1:])
 
     @classmethod
-    def _rel_type_dict(cls):
-        return {
-            # 'relation_type_name': (from_1_to_2, from_2_to_1),
-
-            'ownership': (
-                _('owns'), _('is owned by')
-            ),
-            # possui, pertence à
-
-            'participation': (
-                _('participates in'), _('has as participant')
-            ),
-            # participa de, tem como participante
-
-            'partnership': (
-                _('partners with'), _('partners with')
-            ),
-            # é parceiro de, é parceiro de
-
-            'grants': (
-                _('gives a grant to'), _('receives a grant from')
-            ),
-            # finacia, recebe um financiamento de
-
-            'certification': (
-                _('certifies'), _('is certified by')
-            ),
-            # certifica, é certificada por
-
-            'students attendance': (
-                _('attends students from'), _('attends')
-            ),
-            # students attendance, attends students from - atende alunos de
-
-            'directing people': (
-                _('directs people to'), _('receives people from')
-            ),
-            # encaminha atendidos para, recebe encaminhamentos de atendidos de
-
-            'volunteers': (
-                _('recruits volunteers for'), _('receives volunteers from')
-            ),
-            # recruta voluntários para, recebe voluntários de
-
-            'support': (
-                _('supports'), _('is supported by')
-            ),
-            # suporta, recebe suporte
-
-            'representation': (
-                _('represents'), _('is represented by')
-            ),
-            # representa, é representado por
-
-            'membership': (
-                _('is a member of'), _('has as member')
-            ),
-            # é membro de, tem como membro
-
-            'supply': (
-                _('supplies to'), _('buys from')
-            ),
-            # fornece para, compra de
-
-            'council': (
-                _('is board member of'), _('has as board member')
-            ),
-            # é conselheiro de, tem como conselheiro
-        }
-
-    @classmethod
     def rel_type_options(cls):
         options = []
-        for rel_type, relations in cls._rel_type_dict().iteritems():
+        for rel_type, relations in _rel_type_dict().iteritems():
             options.append({
                 'type': rel_type,
                 'direction': '+',
@@ -214,4 +215,5 @@ class Relation(BaseModel):
         return options
 
     def relation_type(self):
-        return self._rel_type_dict[self.rel_type]
+        index = 0 if self.direction == '+' else 1
+        return _rel_type_dict()[self.rel_type][index]

@@ -20,3 +20,17 @@ def edit_relations_for(context, obj=None):
     oid = Relation.build_oid(obj)
     return {"options": options, "relations": to_json(relations), "oid": oid}
 
+
+@register.inclusion_tag('relations/view.html', takes_context=True)
+def view_relations_for(context, obj=None):
+    relations = [
+            {
+                'name': rel['target'].name,
+                'rel_type': rel['relation_inst'].relation_type(),
+                'link': rel['target'].view_url
+            }
+            for rel in Relation.relations_for(obj)]
+
+    return {"relations": relations}
+
+
