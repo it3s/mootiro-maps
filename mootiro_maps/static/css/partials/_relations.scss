@@ -1,3 +1,42 @@
 #main-content.georefobject {
   @include tabs;
 }
+
+.relations-edit {
+  $green: #3E7F4B;
+  $light-blue: #DCEFF4;
+
+  background-color: $light-blue;
+  border-radius: 5px;
+  padding: 10px;
+  width: 70%;
+  margin: 0 auto;
+
+  .add-relation {
+    color: $green;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 20px;
+  }
+
+  .relation-item {
+    margin: 10px 0px;
+    background-color: #fafafa;
+    padding: 10px 10px 3px;
+    border-radius: 5px;
+
+    input, select {
+      background-color: #fff;
+    }
+
+    input {
+      box-shadow: none;
+      width: 350px;
+    }
+
+    .remove-btn {
+      cursor: pointer;
+
+    }
+  }
+}

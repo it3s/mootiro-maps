@@ -1072,3 +1072,27 @@ label[for=id_contacts] {
   display: table; }
 #main-content.georefobject .tab-content:after {
   clear: both; }
+
+.relations-edit {
+  background-color: #dceff4;
+  border-radius: 5px;
+  padding: 10px;
+  width: 70%;
+  margin: 0 auto; }
+  .relations-edit .add-relation {
+    color: #3e7f4b;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 20px; }
+  .relations-edit .relation-item {
+    margin: 10px 0px;
+    background-color: #fafafa;
+    padding: 10px 10px 3px;
+    border-radius: 5px; }
+    .relations-edit .relation-item input, .relations-edit .relation-item select {
+      background-color: #fff; }
+    .relations-edit .relation-item input {
+      box-shadow: none;
+      width: 350px; }
+    .relations-edit .relation-item .remove-btn {
+      cursor: pointer; }
