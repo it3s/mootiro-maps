@@ -31,12 +31,12 @@
 
     input {
       box-shadow: none;
-      width: 350px;
+      width: 360px;
     }
 
     .remove-btn {
       cursor: pointer;
-
+      i { margin: -3px 0 0 10px; }
     }
   }
 }

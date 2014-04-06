@@ -1093,6 +1093,8 @@ label[for=id_contacts] {
       background-color: #fff; }
     .relations-edit .relation-item input {
       box-shadow: none;
-      width: 350px; }
+      width: 360px; }
     .relations-edit .relation-item .remove-btn {
       cursor: pointer; }
+      .relations-edit .relation-item .remove-btn i {
+        margin: -3px 0 0 10px; }
