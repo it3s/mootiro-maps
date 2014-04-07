@@ -202,7 +202,8 @@ class Relation(BaseModel):
             oid_1, oid_2 = [obj_oid, rel['target']]  # lexycographical order
             relation = cls.get_relation(oid_1, oid_2)
             relation.rel_type = rel['rel_type']
-            relation.direction = rel['direction']
+            direction = rel['direction'] if oid_1 == relation.oid_1 else _swap_direction(rel['direction'])
+            relation.direction = direction
             relation.save()
 
     @classmethod
