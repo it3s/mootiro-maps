@@ -15,6 +15,7 @@ from need.models import Need
 from community.models import Community
 from komoo_project.models import Project
 from proposal.models import Proposal
+from investment.models import Investment
 
 RELATION_TYPES = [
     ('ownership', 'Ownership'),
@@ -30,6 +31,8 @@ RELATION_TYPES = [
     ('membership', 'Membership'),
     ('supply', 'Supply'),
     ('council', 'Council'),
+    ('contains', 'Contains'),
+    ('investment', 'Investment'),
 ]
 
 TABLE_ID_MAP = {
@@ -40,6 +43,7 @@ TABLE_ID_MAP = {
     'Community': 'c',
     'Project': 'p',
     'Proposal': 's',
+    'Investment': 'i',
 }
 
 def _get_model_class_for_oid(oid):
@@ -51,6 +55,7 @@ def _get_model_class_for_oid(oid):
         'c': Community,
         'p': Project,
         's': Proposal,
+        'i': Investment,
     }[oid[0]]
 
 
@@ -122,7 +127,19 @@ def _rel_type_dict():
             _('is board member of'), _('has as board member')
         ),
         # é conselheiro de, tem como conselheiro
+
+        'contains': (
+            _('contains'), _('is contained in')
+        ),
+        # contém, está contido em
+
+        'investment': (
+            _('has investment'), _('investment for')
+        ),
     }
+
+def _swap_direction(direction):
+    return {'+': '-', '-': '+'}[direction]
 
 
 class Relation(BaseModel):
@@ -160,14 +177,15 @@ class Relation(BaseModel):
         relations = []
         for rel in cls.objects.filter(Q(oid_1=oid) | Q(oid_2=oid)):
             target_oid = rel.oid_1 if oid != rel.oid_1 else rel.oid_2
+            direction = rel.direction if oid == rel.oid_1 else _swap_direction(rel.direction)
             relations.append({
                 'target': cls.get_model_from_oid(target_oid),
                 'target_oid': target_oid,
                 'type': None,
-                'direction': rel.direction,
+                'direction': direction,
                 'rel_type': rel.rel_type,
+                'relation_title': cls.relation_title(rel.rel_type, direction),
                 'metadata': None,
-                'relation_inst': rel,
             })
         return relations
 
@@ -181,7 +199,7 @@ class Relation(BaseModel):
 
         # add or update relations
         for rel in relations:
-            oid_1, oid_2 = sorted([obj_oid, rel['target']])  # lexycographical order
+            oid_1, oid_2 = [obj_oid, rel['target']]  # lexycographical order
             relation = cls.get_relation(oid_1, oid_2)
             relation.rel_type = rel['rel_type']
             relation.direction = rel['direction']
@@ -214,6 +232,8 @@ class Relation(BaseModel):
             })
         return options
 
-    def relation_type(self):
-        index = 0 if self.direction == '+' else 1
-        return _rel_type_dict()[self.rel_type][index]
+    @classmethod
+    def relation_title(cls, rel_type, direction):
+        index = 0 if direction == '+' else 1
+        return _rel_type_dict()[rel_type][index]
+

@@ -26,7 +26,7 @@ def view_relations_for(context, obj=None):
     relations = [
             {
                 'name': rel['target'].name,
-                'rel_type': rel['relation_inst'].relation_type(),
+                'rel_type': rel['relation_title'],
                 'link': rel['target'].view_url
             }
             for rel in Relation.relations_for(obj)]

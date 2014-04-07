@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <ul class="relations-view-list">
   {% for relation in relations %}
   <li>
@@ -7,5 +9,7 @@
     </div>
   </a>
   </li>
+  {% empty %}
+    {% trans "No relations provided yet" %}
   {% endfor %}
 </div>
