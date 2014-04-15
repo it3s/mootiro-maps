@@ -6,10 +6,13 @@
   <img src="{{ object.organization.logo.file.url }}" class="inline-block organization-logo">
 {% endif %}
 {% block title %}
-  <div class="inline-block"><strong><a href="{{ object.view_url }}">{{ object }}</a></strong></div>
+  <div class="inline-block"><h3><a href="{{ object.view_url }}">{{ object }}</a></h3></div>
 {% endblock %}
 {% block content %}
   <div>
+    {% if image %}
+      <img style="display:block; width:80%; margin:10px auto;" src="{{ image.file.url }}" alt="{% firstof image.subtitle '' %}">
+    {% endif %}
     {% if object.categories %}
       <ul class="horizontal" id="categories">
         {% for c in object.categories.all %}

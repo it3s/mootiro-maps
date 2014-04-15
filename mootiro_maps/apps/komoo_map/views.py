@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render_to_response
 from django.db.models.loading import get_model
+from fileupload.models import UploadedFile
 
 from komoo_map.models import get_editable_models, get_models_json
 from main.utils import create_geojson, to_json
@@ -53,7 +54,12 @@ def tooltip(request, zoom, app_label, model_name, obj_id):
 def info_window(request, zoom, app_label, model_name, obj_id):
     model = get_model(app_label, model_name)
     obj = get_object_or_404(model, id=obj_id) if model else None
+    images = UploadedFile.get_files_for(obj)
+    try:
+        image = images.get(cover=True)
+    except UploadedFile.DoesNotExist:
+        image = None
     template = getattr(obj, 'info_window_template',
                        'komoo_map/info_window.html')
-    return render_to_response(template, {'object': obj, 'zoom': zoom},
+    return render_to_response(template, {'object': obj, 'zoom': zoom, 'image': image},
                               context_instance=RequestContext(request))
