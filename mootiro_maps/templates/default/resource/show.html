@@ -73,16 +73,6 @@
         </div>
       </div>
 
-      <div class="view-extras">
-        {% track_buttons resource %}
-        {% report_content resource %}
-        {% delete_button resource %}
-        {% social_buttons %}
-        {% comments resource %}
-      </div>
-
-    </div>
-
     <div class="right-bar right-bar-modif">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
         <a class="see-on-map" href="#">{% trans 'View on map' %}</a>
@@ -127,6 +117,17 @@
         {% taglist resource %}
 
     </div>
+
+      <div class="view-extras">
+        {% track_buttons resource %}
+        {% report_content resource %}
+        {% delete_button resource %}
+        {% social_buttons %}
+        {% comments resource %}
+      </div>
+
+    </div>
+
 
 </div>
 
