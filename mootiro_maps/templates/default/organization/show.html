@@ -63,92 +63,6 @@
           <div class="view-body">
               <div class="mark-down">{{ organization.description|render_markup|safe }}</div>
               <div class="related-button"><a class="button" href="{{ organization.related_items_url }}">{% trans 'See all objects on the map' %}</a></div>
-              <div class="organization-buttons row">
-                  <div class="org-btn span3" panel="supported-organizations-list">
-                      <i class="icon-organization"></i>
-                      <div class="inline-block">
-                        {% blocktrans count num=organization.supported_organizations|length %}Supported {{ num }} organization{% plural %}Supported {{ num }} organizations{% endblocktrans %}
-                      </div>
-                  </div>
-                  <div class="org-btn span3" panel="communities-list">
-                      <i class="icon-community"></i>
-                      <div class="inline-block">
-                        {% blocktrans count num=organization.community.count %}On {{ num }} community{% plural %}On {{ num }} communities{% endblocktrans %}
-                      </div>
-                  </div>
-                  <div class="org-btn span3" panel="supported-proposals-list">
-                      <i class="icon-need"></i>
-                      <div class="inline-block">
-                        {% blocktrans count num=organization.supported_proposals|length %}Supported {{ num }} proposal{% plural %}Supported {{ num }} proposals{% endblocktrans %}
-                      </div>
-                  </div>
-                  <div class="org-btn span3" panel="supported-resources-list">
-                      <i class="icon-resource"></i>
-                      <div class="inline-block">
-                        {% blocktrans count num=organization.supported_resources|length %}Supported {{ num }} resource{% plural %}Supported {{ num }} resources{% endblocktrans %}
-                      </div>
-                  </div>
-                  <div class="org-btn span3 multiline" panel="investments-list">
-                      <i class="icon-investment"></i>
-                      <div class="inline-block">
-                        {% blocktrans count num=organization.realized_investments.count %}Realized {{ num }} investment
-                        {% plural %}Realized {{ num }} investments{% endblocktrans %}
-                      <br>
-                      {% blocktrans count num=organization.investments.count %}Received {{ num }} investment
-                      {% plural %}Received {{ num }} investments{% endblocktrans %}
-                      </div>
-                  </div>
-              </div>
-
-              <div class="org-info-panel supported-organizations-list hidden">
-                  {% for org in organization.supported_organizations %}
-                      <div class="org-info-div {% cycle 'odd' '' %}">
-                          <a href="{{ org.view_url }}">{{ org.name }}</a>
-                      </div>
-                  {% empty %}
-                      {% trans 'No organizations supported' %}
-                  {% endfor %}
-              </div>
-
-              <div class="org-info-panel communities-list hidden">
-                  {% for com in organization.community.all %}
-                      <div class="org-info-div {% cycle 'odd' '' %}">
-                          <a href="{{ com.view_url }}">{{ com.name }}</a>
-                      </div>
-                  {% empty %}
-                      {% trans 'No communities related to this organization' %}
-                  {% endfor %}
-              </div>
-
-              <div class="org-info-panel supported-proposals-list hidden">
-                  {% for prop in organization.supported_proposals %}
-                      <div class="org-info-div {% cycle 'odd' '' %}">
-                          <a href="{{ prop.view_url }}">{{ prop.title }}</a>
-                      </div>
-                  {% empty %}
-                      {% trans 'No proposals supported' %}
-                  {% endfor %}
-              </div>
-
-              <div class="org-info-panel supported-resources-list hidden">
-                  {% for res in organization.supported_resources %}
-                      <div class="org-info-div {% cycle 'odd' '' %}">
-                          <a href="{{ res.view_url }}">{{ res.name }}</a>
-                      </div>
-                  {% empty %}
-                      {% trans 'No resources supported' %}
-                  {% endfor %}
-              </div>
-
-              <div class="org-info-panel investments-list hidden">
-                  <div class="apart">
-                      <a class="button login-required" href="{{ organization.new_investment_url }}">
-                          {% trans "New investment" %}
-                      </a>
-                  </div>
-
-                  {% investments_list organization.investments.all organization.realized_investments.all  %}
-              </div>
           </div>
 
           <div class="view-footer">
@@ -228,15 +142,6 @@
     {% comments_staticfiles %}
     <script type="text/javascript" src="/static/js/ajax_select.js"></script>
     <script type="text/javascript">
-
-        $('.org-btn').click(function(evt){
-            $('.org-btn.selected').removeClass('selected');
-            $('.org-info-panel').hide();
-            var $this = $(this);
-            $this.addClass('selected');
-            $('.' + $this.attr('panel')).fadeIn();
-        });
-
 
         $('.view-footer img').each(function(idx, obj){
             if(obj.offsetHeight > obj.offsetWidth){
