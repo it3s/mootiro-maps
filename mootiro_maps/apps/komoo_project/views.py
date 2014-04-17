@@ -233,8 +233,23 @@ def save_layers(request, id=None):
 def tag_search(request):
     term = request.GET['term']
     qset = TaggedItem.tags_for(Project).filter(name__istartswith=term)
-    # qset = TaggedItem.tags_for(project)
     tags = [t.name for t in qset]
+    return HttpResponse(to_json(tags),
+                mimetype="application/x-javascript")
+
+
+def all_tag_search(request):
+    term = request.GET['term']
+    tags = []
+    qset = TaggedItem.tags_for(Community).filter(name__istartswith=term)
+    tags += [t.name for t in qset]
+    qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
+    tags += [t.name for t in qset]
+    qset = TaggedItem.tags_for(Resource).filter(name__istartswith=term)
+    tags += [t.name for t in qset]
+    qset = TaggedItem.tags_for(Organization).filter(name__istartswith=term)
+    tags += [t.name for t in qset]
+    tags = list(set(tags))  # remove duplicates
     return HttpResponse(to_json(tags),
                 mimetype="application/x-javascript")
 

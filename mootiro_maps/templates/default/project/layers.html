@@ -236,7 +236,7 @@
                   // FIXME: DRY
                   // TODO: Convert the tags list to rule json format
                   layer.$el.find('input[name=tags]').attr('id', 'tags'+layer.getId()).tagsInput({
-                    'autocomplete_url':'/organization/search_tags/',
+                    'autocomplete_url':'/project/search_all_tags/',
                     'height':'auto',
                     'width':'100%',
                     'onChange': function () {
@@ -340,6 +340,7 @@
                   return layers;
                 };
                 var map;
+                var layersWidget;
                 var initialized = false;
                 var initialize = function() {
                   if (initialized) return;
@@ -357,7 +358,7 @@
                   map = $map.data('map');
                   map.setZoom(0);
                   // Create the layers editor widget
-                  var layersWidget = new LayersWidget('#layers-widget-canvas');
+                  layersWidget = new LayersWidget('#layers-widget-canvas');
                   // Load the project layers into map and get the Layers objects
                   var layers = map.loadLayers(layers_data);
                   // Load the project layers into layers widget
