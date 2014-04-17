@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-30 17:52-0300\n"
+"POT-Creation-Date: 2014-04-17 18:05-0300\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -115,8 +115,8 @@ msgstr "Meio-dia"
 
 #: public/admin/js/admin/DateTimeShortcuts.js:91
 #: public/admin/js/admin/DateTimeShortcuts.js:188
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:18
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:18
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:25
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:25
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -1125,43 +1125,43 @@ msgid ""
 "people with this data!"
 msgstr "Gostou desse projeto? Divulgue nas redes sociais!"
 
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:17
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:17
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:24
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:24
 msgid "Next step"
 msgstr "Próximo passo"
 
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:19
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:19
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:26
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:26
 msgid "Close"
 msgstr "Fechar"
 
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:20
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:20
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:27
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:27
 msgid "Add shape"
 msgstr "Adicionar área"
 
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:21
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:21
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:28
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:28
 msgid "Add line"
 msgstr "Adicionar linha"
 
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:22
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:22
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:29
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:29
 msgid "Add point"
 msgstr "Adicionar ponto"
 
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:23
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:23
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:30
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:30
 msgid "Sum"
 msgstr "Somar"
 
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:24
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:24
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:31
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:31
 msgid "Cut out"
 msgstr "Cortar"
 
-#: public/js.build/map/controls.js:1 public/js/map/controls.js:25
-#: static/js.build/map/controls.js:1 static/js/map/controls.js:25
+#: public/js.build/map/controls.js:1 public/js/map/controls.js:32
+#: static/js.build/map/controls.js:1 static/js/map/controls.js:32
 msgid "Loading..."
 msgstr "Carregando..."
 
@@ -1283,14 +1283,6 @@ msgstr[1] "%s necessidades apoiadas"
 msgid "This list will be added to the project"
 msgstr "Esta lista será adicionada ao projeto"
 
-#: public/js.build/video/video_selector.js:1
-#: public/js/video/video_selector.js:168
-#: static/js.build/video/video_selector.js:1
-#: static/js/video/video_selector.js:168
-#, fuzzy
-msgid "Are you sure that you want to remove this video?"
-msgstr "Você deseja realmente apagar este arquivo?"
-
 #: public/js/authentication/profile.js:28
 #: static/js/authentication/profile.js:28
 msgid "Organization"
@@ -1316,7 +1308,7 @@ msgstr "Recurso"
 msgid "at"
 msgstr "em"
 
-#: public/js/map/controls.js:915 static/js/map/controls.js:915
+#: public/js/map/controls.js:977 static/js/map/controls.js:977
 #, perl-format
 msgid "%s Community"
 msgid_plural "%s Communities"
@@ -1469,3 +1461,8 @@ msgstr ""
 #, perl-format
 msgid "The following urls could not be resolved as valid videos: %s"
 msgstr ""
+
+#: public/js/video/video_selector.js:168 static/js/video/video_selector.js:168
+#, fuzzy
+msgid "Are you sure that you want to remove this video?"
+msgstr "Você deseja realmente apagar este arquivo?"
