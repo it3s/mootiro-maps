@@ -6,25 +6,41 @@
 {% load video_tags %}
 {% load i18n %}
 {% load komoo_tags %}
+{% load relations_tags %}
 
 {% block menu %} {% menu "community" %} {% endblock %}
 
 {% block content %}
   {% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=' 'lazy=True' %}
-  <div id="main-content">
-    <div class="main-column">
-        <div class='form-legend'>{% trans 'Edit community' %}</div>
+  <div id="main-content" class="georefobject">
 
-        <div class='alert alert-info required-notice' data-alert='info'>
-            <div class='msg'>
-                {% trans '<strong>*</strong> required fields!' %}
-            </div>
-        </div>
-        {% crispy form form.helper %}
+    <div class="tabs">
+      <ul>
+        <li class="tab"><a href="#edit-info">{% trans 'Info' %}</a></li>
+        <li class="tab"><a href="#edit-relations">{% trans 'Relations' %}</a></li>
+      </ul>
     </div>
 
-    <div class="right-bar">
-      {% komoo_map geojson 'type=preview' 'edit_button=True' %}
+    <div class="tab-content" id="edit-info">
+      <div class="main-column">
+          <div class='form-legend'>{% trans 'Edit community' %}</div>
+
+          <div class='alert alert-info required-notice' data-alert='info'>
+              <div class='msg'>
+                  {% trans '<strong>*</strong> required fields!' %}
+              </div>
+          </div>
+          {% crispy form form.helper %}
+      </div>
+
+      <div class="right-bar">
+        {% komoo_map geojson 'type=preview' 'edit_button=True' %}
+      </div>
+    </div>
+
+
+    <div class="tab-content" id="edit-relations">
+      {% edit_relations_for community %}
     </div>
   </div>
 {% endblock %}
@@ -61,6 +77,8 @@
                 hint: '{% trans "Please, upload photos of the community or link to photos on Wiki Commons or Flickr. Make sure that the photos are licensed under creative commons." %}'
             }
         });
+
+        var tabs = new Tabs('.tab', '.tab-content');
       });
     </script>
 {% endblock %}
