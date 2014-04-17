@@ -5,34 +5,50 @@
 {% load upload_tags %}
 {% load video_tags %}
 {% load i18n %}
+{% load relations_tags %}
 
 {% block menu %} {% menu "need" %} {% endblock %}
 
 {% block content %}
   {% komoo_map geojson 'type=editor' 'width=100%' 'height=100%' 'zoom=13' 'panel=' 'lazy=True' %}
-  <div id="main-content">
-    <div class="main-column">
+  <div id="main-content" class="georefobject">
 
-      {% if need %}
-      <div class='form-legend'>{% trans 'Edit need' %}</div>
-      {% else %}
-      <div class='form-legend'>{% trans 'New need' %}</div>
-      {% endif %}
+    <div class="tabs">
+      <ul>
+        <li class="tab"><a href="#edit-info">{% trans 'Info' %}</a></li>
+        <li class="tab"><a href="#edit-relations">{% trans 'Relations' %}</a></li>
+      </ul>
+    </div>
 
-      <div class='alert alert-info required-notice' data-alert='info'>
-          <div class='msg'>
-          {% trans '<strong>*</strong> required fields!' %}
-          </div>
+    <div class="tab-content" id="edit-info">
+      <div class="main-column">
+
+        {% if need %}
+        <div class='form-legend'>{% trans 'Edit need' %}</div>
+        {% else %}
+        <div class='form-legend'>{% trans 'New need' %}</div>
+        {% endif %}
+
+        <div class='alert alert-info required-notice' data-alert='info'>
+            <div class='msg'>
+            {% trans '<strong>*</strong> required fields!' %}
+            </div>
+        </div>
+
+        {% crispy form form.helper %}
       </div>
 
-      {% crispy form form.helper %}
+      {% if need %}
+      <div class="right-bar">
+        {% komoo_map geojson 'type=preview' 'edit_button=True' %}
+      </div>
+      {% endif %}
     </div>
 
-    {% if need %}
-    <div class="right-bar">
-      {% komoo_map geojson 'type=preview' 'edit_button=True' %}
+
+    <div class="tab-content" id="edit-relations">
+      {% edit_relations_for need %}
     </div>
-    {% endif %}
   </div>
 {% endblock %}
 
@@ -77,6 +93,8 @@
               top: '-32px'
             }
           });
+
+        var tabs = new Tabs('.tab', '.tab-content');
 
       })
     </script>
