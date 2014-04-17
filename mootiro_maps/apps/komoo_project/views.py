@@ -152,24 +152,6 @@ def project_edit(request, id='', *arg, **kwargs):
             'project': project, 'layers': layers}
 
 
-@login_required
-@render_to('project/layers.html')
-def project_layers(request, id=''):
-    project = get_object_or_404(Project, pk=id)
-    related_items = []
-    layers = to_json(project.layers)
-
-    for obj in project.related_items:
-        if obj and not obj.is_empty():
-            related_items.append({'name': getattr(obj, 'name', _('Unnamed')), 'obj': obj})
-
-    related_items.sort(key=lambda o: o['name'])
-    related_items = [o['obj'] for o in related_items]
-
-    geojson = create_geojson(related_items)
-    return dict(project=project, layers=layers, geojson=geojson)
-
-
 @ajax_request
 def add_related_object(request):
     ct = request.POST.get('content_type', '')
@@ -232,6 +214,7 @@ def delete_relations(request):
     return{'success': success}
 
 
+@login_required
 @ajax_request
 def save_layers(request, id=None):
     proj = get_object_or_404(Project, pk=id)
