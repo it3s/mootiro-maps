@@ -7,26 +7,54 @@
 {% block menu %} {% menu "project" %} {% endblock %}
 
 {% block content %}
-    <div id="main-content">
+    <div id="main-content" class="project-edit-container">
         <div class="main-column">
 
-            <div class="form-legend">
-                {% if  project %}
-                    {% trans 'Edit project map' %}
-                {% else %}
-                    {% trans 'New project map' %}
-                {% endif %}
-            </div>
-            <div class='alert alert-info required-notice' data-alert='info'>
-                <div class='msg'>
-                  {% trans '<strong>*</strong> required fields!' %}
-                </div>
-            </div>
+        <div class="form-legend">
+            {% if  project %}
+                {% trans 'Edit project map' %}
+            {% else %}
+                {% trans 'New project map' %}
+            {% endif %}
+        </div>
 
-            {% crispy form form.helper %}
-
+        <!-- tab navigation -->
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#tab-pane-info" data-toggle="tab">
+                    {% trans 'Map info' %}
+                </a>
+            </li>
             {% if project and project.related_objects.count %}
-                <hr/>
+            <li>
+                <a href="#tab-pane-content" data-toggle="tab">
+                    {% trans 'Content' %}
+                </a>
+            </li>
+            {% endif %}
+            <li>
+                <a href="#tab-pane-appearance" data-toggle="tab">
+                    {% trans 'Appearance' %}
+                </a>
+            </li>
+        </ul>
+
+        <!-- tab content section -->
+        <div class="tab-content">
+
+            <!-- Tab pane map info -->
+            <div class="tab-pane active" id="tab-pane-info">
+              <div class='alert alert-info required-notice' data-alert='info'>
+                  <div class='msg'>
+                    {% trans '<strong>*</strong> required fields!' %}
+                  </div>
+              </div>
+
+              {% crispy form form.helper %}
+            </div>
+
+            <div class="tab-pane" id="tab-pane-content">
+            {% if project and project.related_objects.count %}
                 <div class="form-legend">
                     {% trans 'Edit associated contents of this map' %}
                 </div>
@@ -40,6 +68,13 @@
                 </ul>
                 <div class="button" id="delete-associations-btn">{% trans "Delete selected associations" %}</div>
             {% endif %}
+            </div>
+
+            <div class="tab-pane" id="tab-pane-appearance">
+              {% include 'project/layers.html' %}
+            </div>
+        </div><!-- end of tab content-->
+
         </div>
     </div>
 {% endblock %}
@@ -51,6 +86,10 @@
     <style type="text/css">
         #delete-associations-btn{
             margin-top: 10px;
+        }
+
+        .tab-content {
+          overflow: visible;
         }
     </style>
 {% endblock %}

@@ -131,6 +131,8 @@ def project_new(request):
 def project_edit(request, id='', *arg, **kwargs):
     project = get_object_or_404(Project, pk=id)
 
+    layers = to_json(project.layers)
+
     if not project.user_can_edit(request.user):
         return redirect(project.view_url)
 
@@ -147,7 +149,7 @@ def project_edit(request, id='', *arg, **kwargs):
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
-            'project': project}
+            'project': project, 'layers': layers}
 
 
 @login_required

@@ -1,11 +1,8 @@
-{% extends 'global.html'%}
 {% load komoo_tags %}
 {% load i18n %}
 
-{% block menu %} {% menu "project" %} {% endblock %}
-
 {% block content %}
-    <div id="main-content">
+    <div>
       <div id="map" class="map preview">
         <h3>{% trans "Map" %}</h3>
         <div class="description">Arraste para definir o centro e ajuste o nível de zoom do mapa</div>
@@ -21,7 +18,7 @@
         <div id="layers-widget-canvas"></div>
       </div>
 
-      <button id="save" class="btn">{% trans "Save" %}</button>
+      <button id="save" class="btn button">{% trans "Save" %}</button>
     </div>
 
     <div id="layer_content_model" class="content" style="display: none">
@@ -146,20 +143,6 @@
 
               // Project layers
               var layers_data = {{ layers|safe }};
-
-              // Map main configuration
-                // FIXME: Load all project objects
-                var $map = $("#map-main-preview-canvas").komooMap({
-                    type: 'main',
-                    projectId: {{ project.id }},
-                    layers: [], // starts with no layers
-                    geojson: {{ geojson|safe }},
-                    ajax: false,
-                    width: '100%',
-                    height: '350px'
-                });
-
-                var map = $map.data('map');
 
                 var getMapConfig = function(map) {
                   return {
@@ -356,17 +339,35 @@
                   });
                   return layers;
                 };
+                var map;
+                var initialized = false;
+                $('a[href=#tab-pane-appearance]').on('shown', function() {
+                  if (initialized) return;
+                  // Map main configuration
+                  // FIXME: Load all project objects
+                  var $map = $("#map-main-preview-canvas").komooMap({
+                      type: 'main',
+                      projectId: {{ project.id }},
+                      layers: [], // starts with no layers
+                      ajax: true,
+                      width: '100%',
+                      height: '350px'
+                  });
 
-                // Create the layers editor widget
-                var layersWidget = new LayersWidget('#layers-widget-canvas');
-                // Load the project layers into map and get the Layers objects
-                var layers = map.loadLayers(layers_data);
-                // Load the project layers into layers widget
-                layersWidget.loadLayers(layers);
-                map.subscribe('features_loaded', function (features){
-                  if (features.length) {
-                    layersWidget.refresh()
-                  }
+                  map = $map.data('map');
+                  map.setZoom(0);
+                  // Create the layers editor widget
+                  var layersWidget = new LayersWidget('#layers-widget-canvas');
+                  // Load the project layers into map and get the Layers objects
+                  var layers = map.loadLayers(layers_data);
+                  // Load the project layers into layers widget
+                  layersWidget.loadLayers(layers);
+                  map.subscribe('features_loaded', function (features){
+                    if (features.length) {
+                      layersWidget.refresh()
+                    }
+                  });
+                  initialized = true;
                 });
 
 
