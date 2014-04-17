@@ -341,7 +341,7 @@
                 };
                 var map;
                 var initialized = false;
-                $('a[href=#tab-pane-appearance]').on('shown', function() {
+                var initialize = function() {
                   if (initialized) return;
                   // Map main configuration
                   // FIXME: Load all project objects
@@ -368,6 +368,13 @@
                     }
                   });
                   initialized = true;
+                };
+                $('a[href=#tab-pane-appearance]').on('shown', function() {
+                  initialize();
+                });
+                $(function() {
+                  if ($('a[href=#tab-pane-appearance]').parent().hasClass('active'))
+                    initialize();
                 });
 
 
