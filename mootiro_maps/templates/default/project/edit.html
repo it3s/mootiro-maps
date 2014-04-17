@@ -32,11 +32,13 @@
                 </a>
             </li>
             {% endif %}
+            {% if project %}
             <li>
                 <a href="#tab-pane-appearance" data-toggle="tab">
                     {% trans 'Appearance' %}
                 </a>
             </li>
+            {% endif %}
         </ul>
 
         <!-- tab content section -->
@@ -71,7 +73,9 @@
             </div>
 
             <div class="tab-pane" id="tab-pane-appearance">
+            {% if project %}
               {% include 'project/layers.html' %}
+            {% endif %}
             </div>
         </div><!-- end of tab content-->
 
