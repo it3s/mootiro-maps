@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-17 18:03-0300\n"
+"POT-Creation-Date: 2014-04-17 18:31-0300\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -3529,11 +3529,14 @@ msgstr "Arraste o mapa para definir o centro e ajuste o nível de zoom."
 
 #: templates/default/project/layers.html:14
 msgid "Group objects by tags and identify them with colors."
-msgstr "Defina o agrupamento dos objetos por palavras-chave e identifique-os com cores."
+msgstr ""
+"Defina o agrupamento dos objetos por palavras-chave e identifique-os com "
+"cores."
 
 #: templates/default/project/layers.html:15
 msgid "Drag each grouping up or down to set priority."
-msgstr "Arraste cada agrupamento para cima ou para baixo para definir a prioridade."
+msgstr ""
+"Arraste cada agrupamento para cima ou para baixo para definir a prioridade."
 
 #: templates/default/project/layers.html:29
 msgid "Colors"

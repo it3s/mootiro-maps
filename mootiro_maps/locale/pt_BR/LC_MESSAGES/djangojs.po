@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-17 18:05-0300\n"
+"POT-Creation-Date: 2014-04-17 18:31-0300\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -1466,3 +1466,27 @@ msgstr ""
 #, fuzzy
 msgid "Are you sure that you want to remove this video?"
 msgstr "Você deseja realmente apagar este arquivo?"
+
+#: public/js/widgets/layers.js:24 static/js/widgets/layers.js:24
+msgid "New layer"
+msgstr "Nova camada"
+
+#: public/js/widgets/layers.js:46 static/js/widgets/layers.js:46
+#, perl-format
+msgid "Layer %s"
+msgstr "Camada %s"
+
+#: public/js/widgets/layers.js:63 static/js/widgets/layers.js:63
+#, perl-format
+msgid "%s object"
+msgid_plural "%s objects"
+msgstr[0] "%s objeto"
+msgstr[1] "%s objetos"
+
+#: public/js/widgets/layers.js:125 static/js/widgets/layers.js:125
+msgid "Remove layer"
+msgstr "Remover camada"
+
+#: public/js/widgets/layers.js:125 static/js/widgets/layers.js:125
+msgid "Do you really want to remove this layer?"
+msgstr "Você deseja realmente apagar esta camada?"
