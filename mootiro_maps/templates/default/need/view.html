@@ -10,6 +10,7 @@
 {% load upload_tags %}
 {% load video_tags %}
 {% load project_tags %}
+{% load relations_tags %}
 
 {% block title %}{{ need.name }} {% endblock %}
 
@@ -23,99 +24,124 @@
 
 {% block content %}
   {% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'ajax=True' 'lazy=True' %}
-  <div id="main-content">
+  <div id="main-content" class="georefobject">
     <div class="need main-column">
-      <h2 class="title need-title">{{ need.name }}</h2>
 
-      <div class="clear-both"></div>
-      <ul class="horizontal" id="categories">
-        {% for c in need.categories.all %}
-        <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{%trans c.name %}" /></li>
-        {% endfor %}
-      </ul>
+      <div class="view-header">
+          <div>
+            <h2 class="inline-block title need-title">{{ need.name }}</h2>
 
-      <div class="view-edit-btn">
-        {% history need %}
-        <a href="{% url view_discussion need.perm_id %}" class="btn login-required" title="{% trans 'Go to discussion page' %}"><i class="icon-comment"></i></a>
-        <a href="{{ need.edit_url }}" class="btn login-required"><i class="icon-pencil" title="{% trans 'Edit this content' %}"></i></a>
-      </div>
+            <!--div class="clear-both"></div-->
+            <div class="view-edit-btn">
+              {% history need %}
+              <a href="{% url view_discussion need.perm_id %}" class="btn login-required" title="{% trans 'Go to discussion page' %}"><i class="icon-comment"></i></a>
+              <a href="{{ need.edit_url }}" class="btn login-required"><i class="icon-pencil" title="{% trans 'Edit this content' %}"></i></a>
+            </div>
 
-      <div class="clear-both"></div>
-
-      <div class="apart">
-        <div><span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}</div>
-        <div>{% trans 'created by' %} <a href="{{ need.creator.view_url }}">{% firstof need.creator.name  '---' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</div>
-      </div>
-      <div class="mark-down">{{ need.description|render_markup|safe }}</div>
-
-      <div class="view-footer">
-          {% video_gallery need %}
-          {% image_gallery need %}
-      </div>
-
-      <div class="view-extras">
-        {% track_buttons need %}
-        {% report_content need %}
-        {% delete_button need %}
-        {% social_buttons %}
-        {% comments need %}
-      </div>
-    </div>
-
-  <div class="right-bar">
-    <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
-    <a class="see-on-map" href="#">{% trans "View on map" %}</a>
-
-    {% view_contacts need.contacts %}
-
-    <div class="block need-proposals">
-      <h3>{% trans "Proposals" %}</h3>
-      {% for proposal in need.proposals.all %}
-        {% proposal_summary proposal %}
-      {% endfor %}
-      <div class="centralizer">
-        <a class="button login-required" href="{% url new_proposal %}?need={{ need.id }}">
-        {% trans "New proposal" %}
-        </a>
-      </div>
-    </div>
-
-    {% with similar_needs=need.tags.similar_objects %}
-      {% if similar_needs %}
-      <div id="related-needs" class="block">
-        <h3>{% trans "Related needs" %}</h3>
-        <ul>
-          {% for n in similar_needs %}
-          <li {% if forloop.counter > 3 %}class="overflow hidden"{% endif %}>
-            <a href="{% url view_need n.id %}"> {{ n.name }} </a>
-            {% if n.community.all.count %}
-              <span class="attenuate">
-              {% for comm in n.community.all %}
-                <a href="{% url view_community comm.id %}">
-                  {{ comm.name }}
-                </a>
-                {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
+            <ul class="horizontal" id="categories">
+              {% for c in need.categories.all %}
+              <li><img src="{{ STATIC_URL }}{{ c.image }}" title="{%trans c.name %}" /></li>
               {% endfor %}
-              </span>
-            {% endif %}
-          </li>
-          {% empty %}
-          <li>{% trans "No related needs" %}</li>
-          {% endfor %}
-        </ul>
-        <div class=""><span class="show-more clickable">{% trans 'see all' %}</span></div>
-        <div class="hidden"><span class="show-less clickable">{% trans 'see less' %}</span></div>
-        <div class="clear-both"></div>
-      </div>
-      {% endif %}
-    {% endwith %}
+            </ul>
 
-    {% projects_for_object need %}
-    {% taglist need %}
+
+            <div class="clear-both"></div>
+          </div>
+        </div>
+
+       <div class="tabs">
+          <ul>
+            <li class="tab"><a href="#object-info">{% trans 'Info' %}</a></li>
+            <li class="tab"><a href="#object-relations">{% trans 'Relations' %}</a></li>
+          </ul>
+        </div>
+
+
+      <div class="tab-content" id="object-info">
+        <div class="view-body">
+          <div class="apart">
+            <div><span class="meta-info">{% trans 'Target audiences' %}</span> {{ need.target_audiences.all|join:", " }}</div>
+            <div>{% trans 'created by' %} <a href="{{ need.creator.view_url }}">{% firstof need.creator.name  '---' %}</a> {% trans 'on' %} {{ need.creation_date|date:'j/n/Y' }}</div>
+          </div>
+          <div class="mark-down">{{ need.description|render_markup|safe }}</div>
+
+          <div class="view-footer">
+              {% video_gallery need %}
+              {% image_gallery need %}
+          </div>
+
+          <div class="view-extras">
+            {% track_buttons need %}
+            {% report_content need %}
+            {% delete_button need %}
+            {% social_buttons %}
+            {% comments need %}
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="object-relations">
+        <div class="view-body">
+          {% view_relations_for need %}
+        </div>
+      </div>
+
+      <div class="right-bar">
+        <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
+        <a class="see-on-map" href="#">{% trans "View on map" %}</a>
+
+        {% view_contacts need.contacts %}
+
+        <div class="block need-proposals">
+          <h3>{% trans "Proposals" %}</h3>
+          {% for proposal in need.proposals.all %}
+            {% proposal_summary proposal %}
+          {% endfor %}
+          <div class="centralizer">
+            <a class="button login-required" href="{% url new_proposal %}?need={{ need.id }}">
+            {% trans "New proposal" %}
+            </a>
+          </div>
+        </div>
+
+        {% with similar_needs=need.tags.similar_objects %}
+          {% if similar_needs %}
+          <div id="related-needs" class="block">
+            <h3>{% trans "Related needs" %}</h3>
+            <ul>
+              {% for n in similar_needs %}
+              <li {% if forloop.counter > 3 %}class="overflow hidden"{% endif %}>
+                <a href="{% url view_need n.id %}"> {{ n.name }} </a>
+                {% if n.community.all.count %}
+                  <span class="attenuate">
+                  {% for comm in n.community.all %}
+                    <a href="{% url view_community comm.id %}">
+                      {{ comm.name }}
+                    </a>
+                    {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
+                  {% endfor %}
+                  </span>
+                {% endif %}
+              </li>
+              {% empty %}
+              <li>{% trans "No related needs" %}</li>
+              {% endfor %}
+            </ul>
+            <div class=""><span class="show-more clickable">{% trans 'see all' %}</span></div>
+            <div class="hidden"><span class="show-less clickable">{% trans 'see less' %}</span></div>
+            <div class="clear-both"></div>
+          </div>
+          {% endif %}
+        {% endwith %}
+
+        {% projects_for_object need %}
+        {% taglist need %}
+
+      </div>
+
+    </div>
 
   </div>
-
-</div>
 {% endblock %}
 
 {% block page_scripts %}
@@ -139,6 +165,8 @@
         $('#related-needs .show-less').parent().toggle();
         $('#related-needs .show-more').parent().toggle();
       });
+
+      var tabs = new Tabs('.tab', '.tab-content');
     </script>
 {% endblock %}
 
