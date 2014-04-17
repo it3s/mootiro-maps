@@ -9,7 +9,10 @@ from search.utils import search_by_term
 from relations.models import Relation
 
 def _back_url(request):
-    return urlparse(request.META['HTTP_REFERER']).path.replace('/edit', '')
+    back_url = urlparse(request.META['HTTP_REFERER']).path.replace('/edit', '')
+    if "community" in back_url:
+        back_url += "/about"
+    return back_url
 
 def edit_relations(request):
     Relation.edit(request.POST['object_oid'], json.loads(request.POST['relations_json']))
