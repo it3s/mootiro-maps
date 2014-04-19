@@ -131,6 +131,8 @@ def project_new(request):
 def project_edit(request, id='', *arg, **kwargs):
     project = get_object_or_404(Project, pk=id)
 
+    layers = to_json(project.layers)
+
     if not project.user_can_edit(request.user):
         return redirect(project.view_url)
 
@@ -147,7 +149,7 @@ def project_edit(request, id='', *arg, **kwargs):
         return {'redirect': obj.view_url}
 
     return {'on_get': on_get, 'on_after_save': on_after_save,
-            'project': project}
+            'project': project, 'layers': layers}
 
 
 @ajax_request
@@ -212,11 +214,42 @@ def delete_relations(request):
     return{'success': success}
 
 
+@login_required
+@ajax_request
+def save_layers(request, id=None):
+    proj = get_object_or_404(Project, pk=id)
+    print 'proj = ', proj
+
+    layers = request.POST.get('layers', None)
+    print 'layers = ', layers
+
+    if proj and layers:
+        proj.layers = simplejson.loads(layers)
+        return {'success': True, 'redirect_url': proj.view_url}
+
+    return {'success': False}
+
+
 def tag_search(request):
     term = request.GET['term']
     qset = TaggedItem.tags_for(Project).filter(name__istartswith=term)
-    # qset = TaggedItem.tags_for(project)
     tags = [t.name for t in qset]
+    return HttpResponse(to_json(tags),
+                mimetype="application/x-javascript")
+
+
+def all_tag_search(request):
+    term = request.GET['term']
+    tags = []
+    qset = TaggedItem.tags_for(Community).filter(name__istartswith=term)
+    tags += [t.name for t in qset]
+    qset = TaggedItem.tags_for(Need).filter(name__istartswith=term)
+    tags += [t.name for t in qset]
+    qset = TaggedItem.tags_for(Resource).filter(name__istartswith=term)
+    tags += [t.name for t in qset]
+    qset = TaggedItem.tags_for(Organization).filter(name__istartswith=term)
+    tags += [t.name for t in qset]
+    tags = list(set(tags))  # remove duplicates
     return HttpResponse(to_json(tags),
                 mimetype="application/x-javascript")
 

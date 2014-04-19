@@ -38,6 +38,10 @@ define (require) ->
 
         initOverlay: (options) -> throw "Not Implemented"
 
+        refresh: (zoom) ->
+            @setOptions @getOverlayOptions()
+            @updateIcon(zoom)
+
         getCoordinates: -> throw "Not Implemented"
         setCoordinates: (coords) -> komoo.event.trigger @, 'coordinates_changed'
 
@@ -115,12 +119,32 @@ define (require) ->
         getVisible: -> @overlay?.getVisible()
         setVisible: (flag) -> @overlay?.setVisible flag
 
-        setOptions: (@options) -> @overlay?.setOptions(@options)
+        setOptions: (@options) -> @overlay?.setOptions?(@options)
 
         getIcon: -> @overlay?.getIcon?()
         setIcon: (icon) -> @overlay?.setIcon?(icon)
 
         getIconUrl: (zoom) -> @feature?.getIconUrl zoom
+
+        createIcon: (zoom, highlighted) ->
+            #return @getIconUrl zoom
+            path: google.maps.SymbolPath.CIRCLE
+            scale: 5 * (if highlighted then 1.5 else 1)
+            fillColor: @getBackgroundColor()
+            fillOpacity: @getBackgroundOpacity()
+            strokeColor: if highlighted then 1 else @getBorderColor()
+            strokeOpacity: if highlighted then 1 else @getBorderOpacity()
+            strokeWeight: @getBorderSize()
+
+        updateIcon: (zoom) -> @setIcon(@createIcon zoom)
+
+        getBorderColor: ->
+            @feature?.getBorderColor() or defaults.BORDER_COLOR
+        getBorderOpacity: -> @feature?.getBorderOpacity() or defaults.BORDER_OPACITY
+        getBorderSize: -> @feature?.getBorderSize() or defaults.BORDER_SIZE
+        getBorderSizeHover: -> @feature?.getBorderSizeHover() or defaults.BORDER_SIZE_HOVER
+        getBackgroundColor: -> @feature?.getBackgroundColor() or defaults.BACKGROUND_COLOR
+        getBackgroundOpacity: -> @feature?.getBackgroundOpacity() or defaults.BACKGROUND_OPACITY
 
         getGeoJson: ->
             type: @getGeometryType(),
@@ -146,7 +170,7 @@ define (require) ->
         getOverlayOptions: (options = {}) ->
             clickable: options.clickable ? on
             zIndex: options.zIndex ? MAX_ZINDEX
-            icon: options.icon ? @getIconUrl options.zoom
+            icon: options.icon ? @createIcon options.zoom
 
         initOverlay: (options) ->
             @setOverlay new googleMaps.Marker @getOverlayOptions options
@@ -183,7 +207,7 @@ define (require) ->
         getOverlayOptions: (options = {}) ->
             clickable: options.clickable ? on
             zIndex: options.zIndex ? MAX_ZINDEX
-            icon: options.icon ? @getIconUrl options.zoom
+            icon: options.icon ? @createIcon options.zoom
 
         initOverlay: (options) ->
             @setOverlay new MultiMarker @getOverlayOptions options
@@ -254,12 +278,6 @@ define (require) ->
 
         setEditable: (flag) -> @overlay.setEditable flag
 
-        getBorderColor: ->
-            @feature?.getBorderColor() or defaults.BORDER_COLOR
-        getBorderOpacity: -> @feature?.getBorderOpacity() or defaults.BORDER_OPACITY
-        getBorderSize: -> @feature?.getBorderSize() or defaults.BORDER_SIZE
-        getBorderSizeHover: -> @feature?.getBorderSizeHover() or defaults.BORDER_SIZE_HOVER
-
         getPath: -> @overlay.getPath()
         setPath: (path) -> @overlay.setPath(path)
 
@@ -321,9 +339,6 @@ define (require) ->
 
         initOverlay: (options) ->
             @setOverlay new googleMaps.Polygon @getOverlayOptions options
-
-        getBackgroundColor: -> @feature?.getBackgroundColor() or defaults.BACKGROUND_COLOR
-        getBackgroundOpacity: -> @feature?.getBackgroundOpacity() or defaults.BACKGROUND_OPACITY
 
         getCoordinates: ->
             coords = []

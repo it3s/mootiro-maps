@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-30 17:52-0300\n"
+"POT-Creation-Date: 2014-04-17 18:31-0300\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -69,6 +69,7 @@ msgstr "Contatos"
 #: apps/main/templatetags/komoo_tags.py:389 apps/need/forms.py:30
 #: apps/organization/forms.py:49 lib/taggit/models.py:10
 #: templates/default/organization/branch_form.html:13
+#: templates/default/project/layers.html:25
 msgid "Name"
 msgstr "Nome"
 
@@ -225,6 +226,7 @@ msgstr "Descrição"
 #: templates/default/importsheet/row_templates/organizacoes.html:83
 #: templates/default/importsheet/row_templates/recursos.html:59
 #: templates/default/main/templatetags/taglist.html:5
+#: templates/default/project/layers.html:27
 msgid "Tags"
 msgstr "Palavras-chave"
 
@@ -953,7 +955,7 @@ msgstr "Cancelar"
 msgid "Add"
 msgstr "Adicionar"
 
-#: apps/video/forms.py:95
+#: apps/video/forms.py:95 templates/default/project/layers.html:35
 msgid "Ok"
 msgstr "Ok"
 
@@ -964,6 +966,7 @@ msgstr "Editar detalhes de vídeo"
 #: apps/video/forms.py:98 lib/fileupload/forms.py:133
 #: lib/fileupload/forms.py:196
 #: templates/default/moderation/delete_button_templatetag.html:5
+#: templates/default/project/layers.html:34
 msgid "Delete"
 msgstr "Apagar"
 
@@ -1367,7 +1370,7 @@ msgstr "Novo usuário"
 #: templates/default/organization/edit.html:19
 #: templates/default/organization/new.html:16
 #: templates/default/organization/new_frommap.html:15
-#: templates/default/project/edit.html:22
+#: templates/default/project/edit.html:49
 #: templates/default/proposal/edit.html:19
 #: templates/default/resource/edit.html:19
 #: templates/default/resource/new.html:15
@@ -1447,6 +1450,7 @@ msgstr "Confirme sua senha"
 
 #: templates/default/authentication/profile_update.html:94
 #: templates/default/authentication/profile_update.html:122
+#: templates/default/project/layers.html:21
 msgid "Save"
 msgstr "Salvar"
 
@@ -1995,6 +1999,7 @@ msgid "Filter the contents to be shown on the map"
 msgstr "Filtrar conteúdos que serão exibidos no mapa"
 
 #: templates/default/komoo_map/panel.html:10
+#: templates/default/project/layers.html:13
 msgid "Layers"
 msgstr "Camadas"
 
@@ -3063,6 +3068,7 @@ msgid "History"
 msgstr "Histórico"
 
 #: templates/default/main/templatetags/menu.html:5
+#: templates/default/project/layers.html:7
 msgid "Map"
 msgstr "Mapa"
 
@@ -3480,11 +3486,24 @@ msgstr "Editar mapa de projeto"
 msgid "New project map"
 msgstr "Novo mapa de projeto"
 
+#: templates/default/project/edit.html:25
+msgid "Project Information"
+msgstr "Informações sobre o projeto"
+
 #: templates/default/project/edit.html:31
+#: templates/default/project/view.html:61
+msgid "Content"
+msgstr "Conteúdo"
+
+#: templates/default/project/edit.html:37
+msgid "Appearance"
+msgstr "Aparência"
+
+#: templates/default/project/edit.html:59
 msgid "Edit associated contents of this map"
 msgstr "Editar conteúdos associados a esse projeto"
 
-#: templates/default/project/edit.html:41
+#: templates/default/project/edit.html:69
 msgid "Delete selected associations"
 msgstr "Apagar associações marcadas"
 
@@ -3503,6 +3522,37 @@ msgstr "Adicionar a um projeto"
 #: templates/default/project/filtered_query_to_project.html:10
 msgid "Add this list to a project"
 msgstr "Adicionar esta lista a um projeto"
+
+#: templates/default/project/layers.html:8
+msgid "Drag to set the center and adjust the zoom level."
+msgstr "Arraste o mapa para definir o centro e ajuste o nível de zoom."
+
+#: templates/default/project/layers.html:14
+msgid "Group objects by tags and identify them with colors."
+msgstr ""
+"Defina o agrupamento dos objetos por palavras-chave e identifique-os com "
+"cores."
+
+#: templates/default/project/layers.html:15
+msgid "Drag each grouping up or down to set priority."
+msgstr ""
+"Arraste cada agrupamento para cima ou para baixo para definir a prioridade."
+
+#: templates/default/project/layers.html:29
+msgid "Colors"
+msgstr "Cores"
+
+#: templates/default/project/layers.html:30
+msgid "Fill color"
+msgstr "Cor do preenchimeto"
+
+#: templates/default/project/layers.html:31
+msgid "Stroke color"
+msgstr "Cor do traço"
+
+#: templates/default/project/layers.html:32
+msgid "Use icon"
+msgstr "Usar ícone"
 
 #: templates/default/project/list.html:17
 msgid "Create new project map"
@@ -3574,10 +3624,6 @@ msgstr "Adicionar este objeto a um projeto"
 #: templates/default/project/view.html:60
 msgid "Project Map"
 msgstr "Mapa de Projeto"
-
-#: templates/default/project/view.html:61
-msgid "Content"
-msgstr "Conteúdo"
 
 #: templates/default/project/view.html:129
 msgid "No content have been added to this project map yet"

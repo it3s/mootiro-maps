@@ -31,6 +31,15 @@ define (require) ->
             @updateLength()
             element
 
+        remove: (args...) ->
+            output = []
+            for arg in args
+                index = @elements.indexOf arg
+                output.push @elements.splice(index, 1) if index isnt -1
+            output = output[0] if args.length is 1
+            @updateLength()
+            output
+
         isEmpty: -> @elements.length is 0
 
         forEach: (callback, thisArg) ->
@@ -52,6 +61,8 @@ define (require) ->
             collection.elements = results
             collection.updateLength()
             collection
+
+        contains: (element) -> element in @elements
 
 
     class FeatureCollection extends GenericCollection
@@ -77,6 +88,9 @@ define (require) ->
                 @forEach (feature) =>
                     @bounds?.union feature.getBounds() if feature.getGeometryType() isnt 'Empty'
             @bounds
+
+        setOutOfBounds: (flag) ->
+            @forEach (feature) -> feature.setOutOfBounds flag
 
         setMap: (@map, force) ->
             # FIXME: Is `force` param deprecated?

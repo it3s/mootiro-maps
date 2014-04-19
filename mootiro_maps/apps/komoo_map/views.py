@@ -9,7 +9,19 @@ from django.db.models.loading import get_model
 from fileupload.models import UploadedFile
 
 from komoo_map.models import get_editable_models, get_models_json
+from komoo_project.models import Project
 from main.utils import create_geojson, to_json
+
+
+def default_layers():
+    return [{
+            'name': m.get_map_attr('title') or m.__name__,
+            'id': m.__name__,
+            'fillColor': m.get_map_attr('background_color'),
+            'strokeColor': m.get_map_attr('border_color'),
+            'icon': [getattr(m, 'image'), getattr(m, 'image_off')],
+            'rule': {'operator': 'is', 'property': 'type', 'value': m.__name__}
+            } for m in get_editable_models()]
 
 
 def feature_types(request):
@@ -17,15 +29,20 @@ def feature_types(request):
 
 
 def layers(request):
-    # TODO: Get custom layers from DB
+    '''Default layers'''
     return HttpResponse(
-        to_json([{
-            'name': m.get_map_attr('title') or m.__name__,
-            'id': m.__name__,
-            'color': m.get_map_attr('background_color'),
-            'icon': [getattr(m, 'image'), getattr(m, 'image_off')],
-            'rule': {'operator': 'is', 'property': 'type', 'value': m.__name__}
-        } for m in get_editable_models()]),
+        to_json(default_layers()),
+        mimetype="application/x-javascript")
+
+
+def project_layers(request, proj_id=None):
+    # TODO: Get layers from DB
+    project = get_object_or_404(Project, id=proj_id)
+    layers = project.layers
+    if not layers:
+        layers = default_layers()
+    return HttpResponse(
+        to_json(layers),
         mimetype="application/x-javascript")
 
 

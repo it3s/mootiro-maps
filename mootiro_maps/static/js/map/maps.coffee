@@ -47,13 +47,14 @@ define (require) ->
             @components = {}
             @setProjectId(@options.projectId)
             @initGoogleMap @options.googleMapOptions
-            @initFeatureTypes()
             @initLayers()
+            @initFeatureTypes()
             @handleEvents()
 
             @addComponents [
                 'map/controls::Location'
                 ['map/controls::LayersBox', 'panel', el: '#map-panel-layers']
+                'map/controls::LayersFilter'
             ]
 
         addControl: (pos, el) ->
@@ -97,31 +98,32 @@ define (require) ->
 
         initLayers: ->
             @layers ?= new layers.Layers
+            @layers.setMap this
             if @options.layers?
                 @loadLayersFromOptions @options
             else
-                @loadRemoteLayers @layersUrl
+                @loadRemoteLayers(@layersUrl + (@getProjectId() ? ''))
 
         loadLayer: (data) ->
-            layer = new layers.Layer _.extend {
-                collection: @getFeatures()
-                map: this
-            }, data
-            @layers.addLayer layer
-
+            layer = @layers.loadLayer data
             @publish 'layer_loaded', layer
+            layer
+
+        loadLayers: (data) ->
+            layers = []
+            data.forEach (l) => layers.push @loadLayer l
+            layers
 
         loadLayersFromOptions: (options) ->
             # Get Layers from options
-            options.layers.forEach (l) => @loadLayer l
+            @loadLayers options.layers
 
         loadRemoteLayers: (url) ->
             # Load Layers via ajax
             $.ajax
                 url: url
                 dataType: 'json'
-                success: (data) =>
-                    data.forEach (l) => @loadLayer l
+                success: (data) => @loadLayers data
 
         getLayers: -> @layers
 
@@ -298,7 +300,7 @@ define (require) ->
                 features_.push feature
                 feature.setVisible true
 
-                #if attach then feature.setMap @
+                if attach then feature.setMap @
 
             @fitBounds() if panTo and features_.getBounds()?
             @publish 'features_loaded', features_ if not silent
@@ -364,6 +366,12 @@ define (require) ->
 
         getZoom: -> @googleMap.getZoom()
         setZoom: (zoom) -> if zoom? then @googleMap.setZoom zoom
+
+        getCenter: ->
+            center = @googleMap.getCenter()
+            [center.lat(), center.lng()]
+
+        getMapType: -> @googleMap.getMapTypeId()
 
         fitBounds: (bounds = @features.getBounds()) ->
             @googleMap.fitBounds bounds
@@ -453,7 +461,6 @@ define (require) ->
                 ['map/providers::ZoomFilteredFeatureProvider', 'provider']
                 ['map/controls::CommunityClusterer', 'clusterer', {map: this}]
                 'map/controls::FeatureZoomFilter'
-                'map/controls::LayersFilter'
             ]
 
 
