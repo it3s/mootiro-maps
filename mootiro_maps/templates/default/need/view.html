@@ -112,16 +112,6 @@
               {% for n in similar_needs %}
               <li {% if forloop.counter > 3 %}class="overflow hidden"{% endif %}>
                 <a href="{% url view_need n.id %}"> {{ n.name }} </a>
-                {% if n.community.all.count %}
-                  <span class="attenuate">
-                  {% for comm in n.community.all %}
-                    <a href="{% url view_community comm.id %}">
-                      {{ comm.name }}
-                    </a>
-                    {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
-                  {% endfor %}
-                  </span>
-                {% endif %}
               </li>
               {% empty %}
               <li>{% trans "No related needs" %}</li>

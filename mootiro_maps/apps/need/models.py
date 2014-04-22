@@ -69,8 +69,6 @@ class TargetAudience(models.Model):
 
 
 class Need(GeoRefModel, BaseModel):
-    """A need of a Community"""
-
     class Meta:
         verbose_name = "need"
         verbose_name_plural = "needs"
@@ -90,7 +88,7 @@ class Need(GeoRefModel, BaseModel):
     contacts = ContactsField()
 
     # Relationships
-    community = models.ManyToManyField(Community, related_name="needs",
+    community = models.ManyToManyField(Community, related_name="needs", # TODO: remove-me
                                        null=True, blank=True)
     categories = models.ManyToManyField(NeedCategory)
     target_audiences = models.ManyToManyField(TargetAudience, blank=False)
@@ -165,7 +163,6 @@ class Need(GeoRefModel, BaseModel):
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['tags'] = [tag.name for tag in self.tags.all()]
-        dict_['community'] = [comm.id for comm in self.community.all()]
         dict_['target_audiences'] = [ta.name for ta in self.target_audiences.all()]
         dict_['categories'] = [cat.id for cat in self.categories.all()]
         return dict_

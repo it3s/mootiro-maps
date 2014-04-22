@@ -27,7 +27,7 @@
           {% pagination needs %}
         </div>
 
-        {% visualization_opts 'need' "sorters=['name','creation_date']" "filters=['tags','community', 'need_categories', 'target_audiences']"%}
+        {% visualization_opts 'need' "sorters=['name','creation_date']" "filters=['tags','need_categories', 'target_audiences']"%}
 
       </div>
 
@@ -36,13 +36,6 @@
         <h4>
           <span class="apart big">
             <a href="{{ need.view_url }}"> {{ need.name }} </a>
-            {% if need.community.all.count %}
-            {% trans 'at' %}
-            {% for comm in need.community.all %}
-              <a href="{% url view_community comm.id %}">{{ comm.name }}</a>
-              {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
-            {% endfor %}
-            {% endif %}
           </span>
           <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson need %}" title="{% trans 'View on map' %}">
             <i class="icon-see-on-map"></i>

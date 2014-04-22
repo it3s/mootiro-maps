@@ -129,9 +129,9 @@ def _rel_type_dict():
         # é conselheiro de, tem como conselheiro
 
         'contains': (
-            _('contains'), _('is contained in')
+            _('contains'), _('belongs to')
         ),
-        # contém, está contido em
+        # contém, pertence a
 
         'investment': (
             _('has investment'), _('investment for')
@@ -199,7 +199,7 @@ class Relation(BaseModel):
 
         # add or update relations
         for rel in relations:
-            oid_1, oid_2 = [obj_oid, rel['target']]  # lexycographical order
+            oid_1, oid_2 = [obj_oid, rel['target']]
             relation = cls.get_relation(oid_1, oid_2)
             relation.rel_type = rel['rel_type']
             direction = rel['direction'] if oid_1 == relation.oid_1 else _swap_direction(rel['direction'])
