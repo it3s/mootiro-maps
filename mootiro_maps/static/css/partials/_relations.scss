@@ -31,12 +31,34 @@
 
     input {
       box-shadow: none;
-      width: 360px;
+      width: 330px;
     }
 
-    .remove-btn {
+    .remove-btn, .metadata-btn {
       cursor: pointer;
-      i { margin: -3px 0 0 10px; }
+      height: 23px;
+      vertical-align: top;
+      display: inline-block;
+      border: solid 1px #dedede;
+      border-radius: 4px;
+      padding: 2px 5px;
+
+      i { margin-top: 4px;}
+
+      &:hover {
+        background-color: #dedede;
+      }
+    }
+
+    .metadata-container {
+      display: inline-block;
+    }
+    .metadata-anchor {
+      float: right;
+    }
+
+    .metadata-form {
+      display: none;
     }
   }
 }

@@ -1093,11 +1093,25 @@ label[for=id_contacts] {
       background-color: #fff; }
     .relations-edit .relation-item input {
       box-shadow: none;
-      width: 360px; }
-    .relations-edit .relation-item .remove-btn {
-      cursor: pointer; }
-      .relations-edit .relation-item .remove-btn i {
-        margin: -3px 0 0 10px; }
+      width: 330px; }
+    .relations-edit .relation-item .remove-btn, .relations-edit .relation-item .metadata-btn {
+      cursor: pointer;
+      height: 23px;
+      vertical-align: top;
+      display: inline-block;
+      border: solid 1px #dedede;
+      border-radius: 4px;
+      padding: 2px 5px; }
+      .relations-edit .relation-item .remove-btn i, .relations-edit .relation-item .metadata-btn i {
+        margin-top: 4px; }
+      .relations-edit .relation-item .remove-btn:hover, .relations-edit .relation-item .metadata-btn:hover {
+        background-color: #dedede; }
+    .relations-edit .relation-item .metadata-container {
+      display: inline-block; }
+    .relations-edit .relation-item .metadata-anchor {
+      float: right; }
+    .relations-edit .relation-item .metadata-form {
+      display: none; }
 
 .relations-view-list {
   background-color: #dceff4;

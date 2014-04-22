@@ -13,7 +13,14 @@
     <input type="hidden" class="target" name="target" />
     <input type="text" class="target_autocomplete" name="id_target_autocomplete" data-autocomplete="{% url search_relations %}" />
 
-    <span class="remove-btn"><i class="icon-trash"></i></span>
+    <span class="metadata-btn" title="{% trans 'aditional info' %}"><i class="icon-plus"></i></span>
+    <span class="remove-btn" title="{% trans 'remove relation'%}"><i class="icon-trash"></i></span>
+
+    <div class="metadata-form">
+      <input type="hidden" name="metadata" />
+      <labe>Description</label>
+      <input type="text" name="metadata_description" />
+    </div>
 
   </div>
 </script>

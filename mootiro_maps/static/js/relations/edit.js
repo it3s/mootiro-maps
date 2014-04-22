@@ -8,6 +8,8 @@
         this.input = this.container.find('.target_autocomplete');
         this.field = this.container.find('.target');
         this.dropdown = this.container.find('select[name=relation_type]');
+        this.metadataBtn = this.container.find('.metadata-btn');
+        this.metadataForm = this.container.find('.metadata-form');
         this.startPlugin();
         return this;
       },
@@ -32,6 +34,17 @@
         }
       },
 
+      clickOnMetadataBtn: function(_this, el) {
+        var icon = el.find('i');
+        if (icon.is('.icon-plus')) {
+          icon.removeClass('icon-plus').addClass('icon-minus');
+          _this.metadataForm.slideDown();
+        } else {
+          icon.removeClass('icon-minus').addClass('icon-plus');
+          _this.metadataForm.slideUp();
+        }
+      },
+
       startPlugin: function() {
         var _this = this;
         _this.input.autocomplete({
@@ -42,6 +55,7 @@
         });
 
         _this.dropdown.change(function() { _this.container.trigger('relations:update'); });
+        _this.metadataBtn.click(function(evt) { _this.clickOnMetadataBtn(_this, $(evt.target)); });
       },
 
       loadValues: function(obj) {
