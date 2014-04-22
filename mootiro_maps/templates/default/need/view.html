@@ -3,7 +3,6 @@
 {% load i18n %}
 {% load komoo_map_tags %}
 {% load comment_tags %}
-{% load proposal_tags %}
 {% load komoo_tags %}
 {% load moderation_tags %}
 {% load markitup_tags %}
@@ -92,18 +91,6 @@
 
         {% view_contacts need.contacts %}
 
-        <div class="block need-proposals">
-          <h3>{% trans "Proposals" %}</h3>
-          {% for proposal in need.proposals.all %}
-            {% proposal_summary proposal %}
-          {% endfor %}
-          <div class="centralizer">
-            <a class="button login-required" href="{% url new_proposal %}?need={{ need.id }}">
-            {% trans "New proposal" %}
-            </a>
-          </div>
-        </div>
-
         {% with similar_needs=need.tags.similar_objects %}
           {% if similar_needs %}
           <div id="related-needs" class="block">
@@ -168,7 +155,6 @@
         "need:what_is",
         "need:why",
         "need:discuss",
-        "need:proposal",
       ],
       'need_show'
     );
