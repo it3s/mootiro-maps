@@ -26,7 +26,7 @@ CREATE TABLE relations_relation
   oid_2 character varying(64) NOT NULL,
   rel_type character varying(246) NOT NULL,
   direction character varying(1) NOT NULL,
-  metada_id integer NOT NULL,
+  metada_id integer,
   creation_date timestamp with time zone NOT NULL,
   last_update timestamp with time zone NOT NULL,
   CONSTRAINT relations_relation_pkey PRIMARY KEY (id),
