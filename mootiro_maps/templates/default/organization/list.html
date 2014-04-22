@@ -27,7 +27,7 @@
         {% pagination organizations %}
       </div>
 
-      {% visualization_opts 'organization' "sorters=['name','creation_date']" "filters=['tags','community', 'target_audiences']" %}
+      {% visualization_opts 'organization' "sorters=['name','creation_date']" "filters=['tags', 'target_audiences']" %}
 
     </div>
     {% for org in organizations.object_list %}
@@ -55,8 +55,12 @@
                   {% for cat in org.categories.all %}
                     {{ cat.get_translated_name }}
                     {% if not forloop.last %},&nbsp; {% endif %}
+                  {% empty %}
+                   ---
                   {% endfor %}
                 </div>
+              </div>
+              <div class="inline-block org-list-extra-info">
                 <div class="org-list-extra-info-entry">
                   <span class="org-extra-info-name">
                     {% trans 'Public' %}:
@@ -64,23 +68,9 @@
                   {% for aud in org.target_audiences.all %}
                     {{ aud.name }}
                     {% if not forloop.last %},&nbsp; {% endif %}
-                  {% endfor %}
-                </div>
-              </div>
-              <div class="inline-block org-list-extra-info">
-                <div class="org-list-extra-info-entry">
-                  <span class="org-extra-info-name">
-                    {% trans 'Attended communities' %}:
-                  </span>
-                  {% for com in org.community.all|slice:'6' %}
-                    <a href="/{{ com.slug }}/about/">{{ com.name }}</a>
-                    {% if not forloop.last %},&nbsp; {% endif %}
                   {% empty %}
-                    nenhuma comunidade cadastrada
+                   ---
                   {% endfor %}
-                  {% if org.community.count > 6 %}
-                    {% blocktrans with diff=org.community.count|add:'-6' %} and {{ diff }} more {% endblocktrans %}
-                  {% endif %}
                 </div>
               </div>
             </div>

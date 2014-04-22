@@ -17,6 +17,16 @@ WITH (
   OIDS=FALSE
 );
 
+CREATE INDEX relations_relation_oid_1
+  ON relations_relation
+  USING btree
+  (oid_1 );
+
+CREATE INDEX relations_relation_oid_2
+  ON relations_relation
+  USING btree
+  (oid_2 );
+
 -- Remove contact and link
 ALTER TABLE komoo_resource_resource DROP COLUMN contact;
 ALTER TABLE organization_organization DROP COLUMN contact;

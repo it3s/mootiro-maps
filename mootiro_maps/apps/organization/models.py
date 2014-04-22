@@ -49,7 +49,7 @@ class Organization(GeoRefModel, BaseModel):
                         blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
-    community = models.ManyToManyField(Community, null=True, blank=True)
+    community = models.ManyToManyField(Community, null=True, blank=True) # TODO remove-me
 
     contacts = ContactsField()
 
@@ -74,11 +74,16 @@ class Organization(GeoRefModel, BaseModel):
         form_view_name = 'new_organization_from_map'
 
     @property
+    def communities(self):
+        from relations.models import Relation
+        return [rel['target'] for rel in Relation.relations_for(self)
+                if rel['target'].__class__.__name__ == 'Community']
+    @property
     def related_items(self):
-        return [c for c in self.community.all()] + \
-            [r for r in self.supported_resources] + \
-            [p.need for p in self.supported_proposals] + \
-            [o for o in self.supported_organizations]
+        return [c for c in self.communities] + \
+               [r for r in self.supported_resources] + \
+               [p.need for p in self.supported_proposals] + \
+               [o for o in self.supported_organizations]
 
     @property
     def as_investor(self):
@@ -195,7 +200,6 @@ class Organization(GeoRefModel, BaseModel):
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['tags'] = [tag.name for tag in self.tags.all()]
-        dict_['community'] = [comm.id for comm in self.community.all()]
         dict_['target_audiences'] = [ta.name for ta in self.target_audiences.all()]
         dict_['categories'] = [cat.id for cat in self.categories.all()]
         return dict_
