@@ -52,6 +52,14 @@
 
     .metadata-form {
       display: none;
+
+      input { width: 270px; }
+      input[name=metadata_description] { width: 555px; }
+
+      .date-field {
+        display:inline-block;
+        width: 282px;
+      }
     }
   }
 }

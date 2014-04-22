@@ -1108,6 +1108,13 @@ label[for=id_contacts] {
         background-color: #dedede; }
     .relations-edit .relation-item .metadata-form {
       display: none; }
+      .relations-edit .relation-item .metadata-form input {
+        width: 270px; }
+      .relations-edit .relation-item .metadata-form input[name=metadata_description] {
+        width: 555px; }
+      .relations-edit .relation-item .metadata-form .date-field {
+        display: inline-block;
+        width: 282px; }
 
 .relations-view-list {
   background-color: #dceff4;
