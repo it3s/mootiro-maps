@@ -34,17 +34,6 @@
         }
       },
 
-      clickOnMetadataBtn: function(_this, el) {
-        var icon = el.find('i');
-        if (icon.is('.icon-plus')) {
-          icon.removeClass('icon-plus').addClass('icon-minus');
-          _this.metadataForm.slideDown();
-        } else {
-          icon.removeClass('icon-minus').addClass('icon-plus');
-          _this.metadataForm.slideUp();
-        }
-      },
-
       startPlugin: function() {
         var _this = this;
         _this.input.autocomplete({
@@ -55,7 +44,6 @@
         });
 
         _this.dropdown.change(function() { _this.container.trigger('relations:update'); });
-        _this.metadataBtn.click(function(evt) { _this.clickOnMetadataBtn(_this, $(evt.target)); });
       },
 
       loadValues: function(obj) {
@@ -103,6 +91,19 @@
         _this.updateInput(_this);
       },
 
+      onClickMetadata: function(_this, el) {
+        var icon = el.find('i');
+        var metadataForm = el.closest('.relation-item').find('.metadata-form');
+        if (icon.is('.icon-plus')) {
+          icon.removeClass('icon-plus').addClass('icon-minus');
+          metadataForm.slideDown();
+        } else {
+          icon.removeClass('icon-minus').addClass('icon-plus');
+          metadataForm.slideUp();
+        }
+      },
+
+
       updateInput: function(_this) {
         var relations = [];
         _this.relationsList.find('.relation-item').each(function(i, el) {
@@ -125,6 +126,12 @@
         _this.addButton.click(function(){ _this.addNewRelation() });
         $('.relations-edit .remove-btn').live('click', function(evt) {
           _this.onRemove(_this, $(evt.target));
+        });
+
+        $('.relations-edit .metadata-btn').live('click', function(evt) {
+          var el = $(evt.target);
+          var target = el.is('i') ? el.parent() : el; // kludge for fixing weird behavior when click exactly over the icon
+          _this.onClickMetadata(_this, target);
         });
       }
     };

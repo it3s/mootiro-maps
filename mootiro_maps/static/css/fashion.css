@@ -1106,10 +1106,6 @@ label[for=id_contacts] {
         margin-top: 4px; }
       .relations-edit .relation-item .remove-btn:hover, .relations-edit .relation-item .metadata-btn:hover {
         background-color: #dedede; }
-    .relations-edit .relation-item .metadata-container {
-      display: inline-block; }
-    .relations-edit .relation-item .metadata-anchor {
-      float: right; }
     .relations-edit .relation-item .metadata-form {
       display: none; }
 
