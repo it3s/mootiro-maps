@@ -134,8 +134,9 @@ def _rel_type_dict():
         # contém, pertence a
 
         'investment': (
-            _('has investment'), _('investment for')
+            _('invested in'), _('received investment from')
         ),
+        # investiu em, recebeu investimento de
     }
 
 def _swap_direction(direction):
