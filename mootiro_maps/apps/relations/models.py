@@ -143,13 +143,20 @@ def _swap_direction(direction):
     return {'+': '-', '-': '+'}[direction]
 
 
+class RelationMetadata(BaseModel):
+    value = models.FloatField()
+    start_date = models.DateField()
+    end_date = models.DateField()
+    description = models.TextField()
+
+
 class Relation(BaseModel):
     """Generic relations"""
     oid_1 = models.CharField(max_length=64, null=False)
     oid_2 = models.CharField(max_length=64, null=False)
     rel_type = models.CharField(max_length=246, null=False, choices=RELATION_TYPES)
     direction = models.CharField(max_length=1, null=False, choices=[('+', '+'), ('-', '-')])
-    # metada = ??
+    metada = models.ForeignKey(RelationMetadata)
 
     # Meta info
     # creator = models.ForeignKey(User, editable=False, null=True,
@@ -161,7 +168,6 @@ class Relation(BaseModel):
 
     def __unicode__(self):
         return u"[relation :: %s]  %s => %s" % (self.rel_type, self.oid_1, self.oid_2)
-
 
     # ==========================================================================
     # Utils
