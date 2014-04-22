@@ -94,15 +94,6 @@
                         {% for r in similar_resources|slice:'5' %}
                         <li>
                             <a href="{{ r.view_url }}"> {{ r.name }} </a>
-                            {% if r.community.all.count %}
-                              {% trans 'at' %}
-                              {% for comm in r.community.all %}
-                                <a href="{% url view_community comm.id %}">
-                                    {{ comm.name }}
-                                </a>
-                                {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
-                              {% endfor %}
-                            {% endif %}
                         </li>
                         {% endfor %}
                     </ul>

@@ -48,7 +48,7 @@ class Resource(GeoRefModel, BaseModel):
     tags = TaggableManager()
 
     community = models.ManyToManyField(Community, related_name='resources',
-            null=True, blank=True)
+            null=True, blank=True)  # TODO remove me
 
     investments = generic.GenericRelation(Investment,
                         content_type_field='grantee_content_type',
@@ -131,7 +131,6 @@ class Resource(GeoRefModel, BaseModel):
             ('geojson', {}), ('contacts', {}),
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
-        dict_['community'] = [comm.id for comm in self.community.all()]
         dict_['tags'] = [tag.name for tag in self.tags.all()]
         return dict_
 
