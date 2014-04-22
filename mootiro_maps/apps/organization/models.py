@@ -51,8 +51,6 @@ class Organization(GeoRefModel, BaseModel):
 
     community = models.ManyToManyField(Community, null=True, blank=True)
 
-    link = models.CharField(max_length=250, null=True, blank=True)  # TODO remove me
-    contact = models.TextField(null=True, blank=True)               # TODO remove me
     contacts = ContactsField()
 
     categories = models.ManyToManyField('OrganizationCategory', null=True,

@@ -16,3 +16,11 @@ CREATE TABLE relations_relation
 WITH (
   OIDS=FALSE
 );
+
+-- Remove contact and link
+ALTER TABLE komoo_resource_resource DROP COLUMN contact;
+ALTER TABLE organization_organization DROP COLUMN contact;
+ALTER TABLE organization_organization DROP COLUMN link;
+ALTER TABLE komoo_project_project DROP COLUMN contact;
+
+

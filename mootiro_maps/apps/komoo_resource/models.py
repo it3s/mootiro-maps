@@ -44,7 +44,6 @@ class Resource(GeoRefModel, BaseModel):
     kind = models.ForeignKey(ResourceKind, null=True, blank=True)
     description = models.TextField()
     short_description = models.CharField(max_length=250, null=True, blank=True)
-    contact = models.TextField(null=True, blank=True)  # TODO remove me
     contacts = ContactsField()
     tags = TaggableManager()
 
