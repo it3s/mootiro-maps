@@ -1118,7 +1118,7 @@ label[for=id_contacts] {
         vertical-align: top; }
       .relations-edit .relation-item .metadata-form .error {
         border: solid 1px #ad3333; }
-      .relations-edit .relation-item .metadata-form .date-error {
+      .relations-edit .relation-item .metadata-form .error-msg {
         display: none;
         color: #ad3333; }
 

@@ -1,6 +1,6 @@
 (function() {
 
-  var isValidDate = function(date) {
+  function isValidDate(date) {
     if (!date || date.length === 0) { return true; }
     var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
     if (matches == null) { return false; }
@@ -13,6 +13,10 @@
            composedDate.getMonth() == m &&
            composedDate.getFullYear() == y;
   };
+
+  function isNumber(num) {
+    return !isNaN(parseFloat(num));
+  }
 
   var autocompleteWidget = function(container) {
     return {
@@ -122,11 +126,24 @@
         var date = el.val();
         if (isValidDate(date)) {
           el.removeClass('error');
-          el.closest('.date-field').find('.date-error').slideUp();
-          _this.submitBtn.removeAttr('disabled');
+          el.closest('.date-field').find('.error-msg').slideUp();
+          if ($('.relations-edit .error').length === 0) _this.submitBtn.removeAttr('disabled');
         } else {
           el.addClass('error');
-          el.closest('.date-field').find('.date-error').slideDown();
+          el.closest('.date-field').find('.error-msg').slideDown();
+          _this.submitBtn.attr('disabled', 'disable');
+        }
+      },
+
+      validateNumberInput: function(_this, el) {
+        var number = el.val();
+        if (!number || number.lenght === 0 || isNumber(number)) {
+          el.removeClass('error');
+          el.closest('.number-field').find('.error-msg').slideUp();
+          if ($('.relations-edit .error').length === 0) _this.submitBtn.removeAttr('disabled');
+        } else {
+          el.addClass('error');
+          el.closest('.number-field').find('.error-msg').slideDown();
           _this.submitBtn.attr('disabled', 'disable');
         }
       },
@@ -162,6 +179,7 @@
         });
 
         $('.date-input').live('change', function(evt) { _this.validateDateInput(_this, $(evt.target)); });
+        $('.number-input').live('change', function(evt) { _this.validateNumberInput(_this, $(evt.target)); });
       }
     };
   };
