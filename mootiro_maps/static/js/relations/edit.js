@@ -1,5 +1,19 @@
 (function() {
 
+  var isValidDate = function(date) {
+    if (!date || date.length === 0) { return true; }
+    var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
+    if (matches == null) { return false; }
+
+    var d = matches[1];
+    var m = matches[2] - 1;
+    var y = matches[3];
+    var composedDate = new Date(y, m, d);
+    return composedDate.getDate() == d &&
+           composedDate.getMonth() == m &&
+           composedDate.getFullYear() == y;
+  };
+
   var autocompleteWidget = function(container) {
     return {
       container: container,
@@ -62,6 +76,7 @@
         this.relationTpl = $('#relation-item-tpl').html();
         this.addButton = $('.add-relation');
         this.input = $(".relations-edit input[name='relations_json']");
+        this.submitBtn = $(".relations-edit input[type='submit']");
 
         this.bindEvents();
 
@@ -103,6 +118,18 @@
         }
       },
 
+      validateDateInput: function(_this, el) {
+        var date = el.val();
+        if (isValidDate(date)) {
+          el.removeClass('error');
+          el.closest('.date-field').find('.date-error').slideUp();
+          _this.submitBtn.removeAttr('disabled');
+        } else {
+          el.addClass('error');
+          el.closest('.date-field').find('.date-error').slideDown();
+          _this.submitBtn.attr('disabled', 'disable');
+        }
+      },
 
       updateInput: function(_this) {
         var relations = [];
@@ -133,6 +160,8 @@
           var target = el.is('i') ? el.parent() : el; // kludge for fixing weird behavior when click exactly over the icon
           _this.onClickMetadata(_this, target);
         });
+
+        $('.date-input').live('change', function(evt) { _this.validateDateInput(_this, $(evt.target)); });
       }
     };
   };

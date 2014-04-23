@@ -1114,7 +1114,13 @@ label[for=id_contacts] {
         width: 555px; }
       .relations-edit .relation-item .metadata-form .date-field {
         display: inline-block;
-        width: 282px; }
+        width: 282px;
+        vertical-align: top; }
+      .relations-edit .relation-item .metadata-form .error {
+        border: solid 1px #ad3333; }
+      .relations-edit .relation-item .metadata-form .date-error {
+        display: none;
+        color: #ad3333; }
 
 .relations-view-list {
   background-color: #dceff4;

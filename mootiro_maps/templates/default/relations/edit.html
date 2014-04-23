@@ -19,21 +19,23 @@
     <div class="metadata-form">
       <input type="hidden" name="metadata" />
       <p>
-        <label>Description</label>
+      <label>{% trans 'Description' %}</label>
         <input type="text" name="metadata_description" />
       </p>
       <p>
         <div class="date-field">
-          <label>Start Date (dd/mm/yyyy)</label>
-          <input type="text" name="metadata_start_date" />
+          <label>{% trans 'Start Date (DD/MM/YYYY)' %}. Ex: 25/12/2000</label>
+          <input type="text" class="date-input" name="metadata_start_date" />
+          <div class="date-error">{% trans 'Date should be on DD/MM/YYYY format.' %}</div>
         </div>
         <div class="date-field">
-          <label>End Date (dd/mm/yyyy)</label>
-          <input type="text" name="metadata_end_date" />
+          <label>{% trans 'End Date (DD/MM/YYYY)' %}. Ex: 25/12/2000</label>
+          <input type="text" class="date-input" name="metadata_end_date" />
+          <div class="date-error">{% trans 'Date should be on DD/MM/YYYY format.' %}</div>
         </div>
       </p>
       <p>
-        <label>Value</label>
+      <label>{% trans 'Value' %}</label>
         <input type="text" name="metadata_value" />
       </p>
     </div>
