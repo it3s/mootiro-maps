@@ -40,7 +40,6 @@
       onSelect: function(_this, ui) {
         _this.input.val(ui.item.label);
         _this.field.val(ui.item.value);
-        _this.container.trigger('relations:update');
         return false;
       },
 
@@ -48,7 +47,6 @@
         if(!ui.item || !_this.input.val()){
           _this.field.val('');
           _this.input.val('');
-          _this.container.trigger('relations:update');
         }
       },
 
@@ -60,15 +58,12 @@
           select: function(event, ui) { return _this.onSelect(_this, ui); },
           change: function(event, ui) { return _this.onChange(_this, ui); },
         });
-
-        _this.dropdown.change(function() { _this.container.trigger('relations:update'); });
       },
 
       loadValues: function(obj) {
         this.input.val(obj.target_name);
         this.field.val(obj.target_oid);
         this.dropdown.find('option[value="' +  obj.direction + obj.rel_type + '"]').attr('selected', 'selected');
-        this.container.trigger('relations:update');
       }
     };
   };
@@ -101,7 +96,6 @@
         var _this = this;
         var relationItem = $(_this.relationTpl);
         this.relationsList.append(relationItem);
-        relationItem.on('relations:update', function() { _this.updateInput(_this); });
         return autocompleteWidget(relationItem).init();
       },
 
@@ -155,10 +149,26 @@
           var rel = $el.find('[name=relation_type]').val();
           var target = $el.find('.target').val()
           if (target && target.length > 0 && rel && rel.length > 0) {
+
+            // get metadata
+            var start_date =  $el.find('[name=metadata_start_date]').val();
+            start_date = isValidDate(start_date) ? start_date : null;
+            var end_date =  $el.find('[name=metadata_end_date]').val();
+            end_date = isValidDate(end_date) ? end_date : null;
+            var value = $el.find('[name=metadata_value]').val();
+            value = isNumber(value) ? value : null;
+            var metadata = {
+              description: $el.find('[name=metadata_description]').val() || null,
+              start_date : start_date,
+              end_date   : end_date,
+              value      : value,
+            };
+
             relations.push({
               direction: rel[0],
               rel_type : rel.substring(1, rel.length),
               target   : target,
+              metadata : metadata,
             })
           }
         });
@@ -180,6 +190,7 @@
 
         $('.date-input').live('change', function(evt) { _this.validateDateInput(_this, $(evt.target)); });
         $('.number-input').live('change', function(evt) { _this.validateNumberInput(_this, $(evt.target)); });
+        $('.relations-edit form').submit(function(evt) { _this.updateInput(_this); });
       }
     };
   };
