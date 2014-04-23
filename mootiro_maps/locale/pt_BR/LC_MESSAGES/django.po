@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-22 18:35-0300\n"
+"POT-Creation-Date: 2014-04-23 13:30-0300\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -212,6 +212,7 @@ msgstr "População"
 #: apps/need/forms.py:32 apps/organization/forms.py:51
 #: apps/proposal/forms.py:34
 #: templates/default/organization/branch_form.html:16
+#: templates/default/relations/edit.html:22
 msgid "Description"
 msgstr "Descrição"
 
@@ -301,6 +302,7 @@ msgid "Currency"
 msgstr "Moeda"
 
 #: apps/investment/forms.py:44 templates/default/investment/view.html:51
+#: templates/default/relations/edit.html:39
 msgid "Value"
 msgstr "Valor"
 
@@ -3553,11 +3555,36 @@ msgstr "Nova proposta"
 msgid "Add investment"
 msgstr "Adicionar investimento"
 
+#: templates/default/relations/edit.html:16
+msgid "aditional info"
+msgstr "informações adicionais"
+
+#: templates/default/relations/edit.html:17
+msgid "remove relation"
+msgstr "remover relação"
+
 #: templates/default/relations/edit.html:27
+msgid "Start Date (DD/MM/YYYY)"
+msgstr "Data de Início (DD/MM/AAAA)"
+
+#: templates/default/relations/edit.html:29
+#: templates/default/relations/edit.html:34
+msgid "Date should be on DD/MM/YYYY format."
+msgstr "Date deve estar no formato DD/MM/AAAA"
+
+#: templates/default/relations/edit.html:32
+msgid "End Date (DD/MM/YYYY)"
+msgstr "Data de Término (DD/MM/AAAA)"
+
+#: templates/default/relations/edit.html:41
+msgid "Must be a number."
+msgstr "Deve ser um número."
+
+#: templates/default/relations/edit.html:55
 msgid "Add relation"
 msgstr "Adicionar relação"
 
-#: templates/default/relations/edit.html:34
+#: templates/default/relations/edit.html:62
 msgid "save"
 msgstr "salvar"
 
