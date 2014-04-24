@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import itertools
+from datetime import datetime
 from django.db import models
 from django.db.models import Q
 from django.utils.translation import ugettext_lazy as _
@@ -143,20 +144,12 @@ def _swap_direction(direction):
     return {'+': '-', '-': '+'}[direction]
 
 
-class RelationMetadata(BaseModel):
-    value = models.FloatField()
-    start_date = models.DateField()
-    end_date = models.DateField()
-    description = models.TextField()
-
-
 class Relation(BaseModel):
     """Generic relations"""
     oid_1 = models.CharField(max_length=64, null=False)
     oid_2 = models.CharField(max_length=64, null=False)
     rel_type = models.CharField(max_length=246, null=False, choices=RELATION_TYPES)
     direction = models.CharField(max_length=1, null=False, choices=[('+', '+'), ('-', '-')])
-    metada = models.ForeignKey(RelationMetadata)
 
     # Meta info
     # creator = models.ForeignKey(User, editable=False, null=True,
@@ -168,6 +161,25 @@ class Relation(BaseModel):
 
     def __unicode__(self):
         return u"[relation :: %s]  %s => %s" % (self.rel_type, self.oid_1, self.oid_2)
+
+    def upsert_metadata(self, data, parse=False):
+        if parse:
+            if data['start_date']:
+                data['start_date'] = datetime.strptime(data['start_date'], "%d/%m/%Y").date()
+            if data['end_date']:
+                data['end_date'] = datetime.strptime(data['end_date'], "%d/%m/%Y").date()
+            if data['value']:
+                data['value'] = float(data['value'])
+
+        metadata, created = self.metadata.get_or_create()
+        metadata.from_dict(data)
+        metadata.save()
+
+    def metadata_dict(self):
+        try:
+            return self.metadata.get().to_dict()
+        except:
+            return {}
 
     # ==========================================================================
     # Utils
@@ -188,11 +200,10 @@ class Relation(BaseModel):
             relations.append({
                 'target': cls.get_model_from_oid(target_oid),
                 'target_oid': target_oid,
-                'type': None,
                 'direction': direction,
                 'rel_type': rel.rel_type,
                 'relation_title': cls.relation_title(rel.rel_type, direction),
-                'metadata': None,
+                'metadata': rel.metadata_dict(),
             })
         return relations
 
@@ -212,6 +223,7 @@ class Relation(BaseModel):
             direction = rel['direction'] if oid_1 == relation.oid_1 else _swap_direction(rel['direction'])
             relation.direction = direction
             relation.save()
+            relation.upsert_metadata(rel['metadata'], parse=True)
 
     @classmethod
     def get_relation(cls, oid_1, oid_2):
@@ -244,4 +256,27 @@ class Relation(BaseModel):
     def relation_title(cls, rel_type, direction):
         index = 0 if direction == '+' else 1
         return _rel_type_dict()[rel_type][index]
+
+
+class RelationMetadata(BaseModel):
+    value = models.FloatField(null=True)
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
+    description = models.TextField(null=True)
+    relation = models.ForeignKey(Relation, related_name="metadata")
+
+    def to_dict(self):
+        return {
+            'description': self.description,
+            'start_date': self.start_date.strftime('%d/%m/%Y') if self.start_date else None,
+            'end_date': self.end_date.strftime('%d/%m/%Y') if self.end_date else None,
+            'value': self.value
+        }
+
+    def from_dict(self, d):
+        self.description = d.get('description', None)
+        self.start_date = d.get('start_date', None)
+        self.end_date = d.get('end_date', None)
+        self.value = d.get('value', None)
+
 

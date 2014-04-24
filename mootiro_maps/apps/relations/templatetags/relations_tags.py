@@ -14,7 +14,8 @@ def edit_relations_for(context, obj=None):
             "direction": rel['direction'],
             "rel_type": rel['rel_type'],
             "target_oid": rel['target_oid'],
-            "target_name": rel['target'].name
+            "target_name": rel['target'].name,
+            "metadata": rel['metadata']
         }
         for rel in Relation.relations_for(obj)]
     oid = Relation.build_oid(obj)

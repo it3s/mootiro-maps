@@ -1,7 +1,7 @@
 (function() {
 
   function isValidDate(date) {
-    if (!date || date.length === 0) { return true; }
+    if (!date || date.length === 0) { return false; }
     var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
     if (matches == null) { return false; }
 
@@ -64,6 +64,10 @@
         this.input.val(obj.target_name);
         this.field.val(obj.target_oid);
         this.dropdown.find('option[value="' +  obj.direction + obj.rel_type + '"]').attr('selected', 'selected');
+        this.metadataForm.find('[name=metadata_description]').val(obj.metadata.description || '');
+        this.metadataForm.find('[name=metadata_start_date]').val(obj.metadata.start_date || '');
+        this.metadataForm.find('[name=metadata_end_date]').val(obj.metadata.end_date || '');
+        this.metadataForm.find('[name=metadata_value]').val(obj.metadata.value || '');
       }
     };
   };
@@ -118,7 +122,7 @@
 
       validateDateInput: function(_this, el) {
         var date = el.val();
-        if (isValidDate(date)) {
+        if (!date || date.length === 0 || isValidDate(date)) {
           el.removeClass('error');
           el.closest('.date-field').find('.error-msg').slideUp();
           if ($('.relations-edit .error').length === 0) _this.submitBtn.removeAttr('disabled');
