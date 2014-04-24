@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-23 13:30-0300\n"
+"POT-Creation-Date: 2014-04-24 16:07-0300\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -213,6 +213,7 @@ msgstr "População"
 #: apps/proposal/forms.py:34
 #: templates/default/organization/branch_form.html:16
 #: templates/default/relations/edit.html:22
+#: templates/default/relations/view.html:13
 msgid "Description"
 msgstr "Descrição"
 
@@ -303,6 +304,7 @@ msgstr "Moeda"
 
 #: apps/investment/forms.py:44 templates/default/investment/view.html:51
 #: templates/default/relations/edit.html:39
+#: templates/default/relations/view.html:34
 msgid "Value"
 msgstr "Valor"
 
@@ -311,7 +313,7 @@ msgid "Invalid investor"
 msgstr "Investidor inválido"
 
 #: apps/investment/models.py:22 apps/main/templatetags/komoo_tags.py:268
-#: apps/organization/models.py:69
+#: apps/organization/models.py:64
 msgid "Organization"
 msgstr "Organização"
 
@@ -428,11 +430,11 @@ msgstr "Imagens"
 msgid "invalid field data"
 msgstr "campo com dados inválidos"
 
-#: apps/komoo_resource/models.py:42
+#: apps/komoo_resource/models.py:41
 msgid "Resource without name"
 msgstr "Recurso sem nome"
 
-#: apps/komoo_resource/models.py:66 apps/main/templatetags/komoo_tags.py:269
+#: apps/komoo_resource/models.py:61 apps/main/templatetags/komoo_tags.py:269
 msgid "Resource"
 msgstr "Recurso"
 
@@ -476,103 +478,103 @@ msgstr "Web Site"
 msgid "Other"
 msgstr "Outro"
 
-#: apps/main/relations.py:8 apps/relations/models.py:67
+#: apps/main/relations.py:8 apps/relations/models.py:68
 msgid "owns"
 msgstr "possui"
 
-#: apps/main/relations.py:8 apps/relations/models.py:67
+#: apps/main/relations.py:8 apps/relations/models.py:68
 msgid "is owned by"
 msgstr "pertence à"
 
-#: apps/main/relations.py:13 apps/relations/models.py:72
+#: apps/main/relations.py:13 apps/relations/models.py:73
 msgid "participates in"
 msgstr "participa de"
 
-#: apps/main/relations.py:13 apps/relations/models.py:72
+#: apps/main/relations.py:13 apps/relations/models.py:73
 msgid "has as participant"
 msgstr "tem como participante"
 
-#: apps/main/relations.py:18 apps/relations/models.py:77
+#: apps/main/relations.py:18 apps/relations/models.py:78
 msgid "partners with"
 msgstr "é parceiro de"
 
-#: apps/main/relations.py:23 apps/relations/models.py:82
+#: apps/main/relations.py:23 apps/relations/models.py:83
 msgid "gives a grant to"
 msgstr "financia"
 
-#: apps/main/relations.py:23 apps/relations/models.py:82
+#: apps/main/relations.py:23 apps/relations/models.py:83
 msgid "receives a grant from"
 msgstr "recebe financiamento de"
 
-#: apps/main/relations.py:28 apps/relations/models.py:87
+#: apps/main/relations.py:28 apps/relations/models.py:88
 msgid "certifies"
 msgstr "certifica"
 
-#: apps/main/relations.py:28 apps/relations/models.py:87
+#: apps/main/relations.py:28 apps/relations/models.py:88
 msgid "is certified by"
 msgstr "é certificado por"
 
-#: apps/main/relations.py:33 apps/relations/models.py:92
+#: apps/main/relations.py:33 apps/relations/models.py:93
 msgid "attends students from"
 msgstr "atende alunos de"
 
-#: apps/main/relations.py:33 apps/relations/models.py:92
+#: apps/main/relations.py:33 apps/relations/models.py:93
 msgid "attends"
 msgstr "atende a"
 
-#: apps/main/relations.py:38 apps/relations/models.py:97
+#: apps/main/relations.py:38 apps/relations/models.py:98
 msgid "directs people to"
 msgstr "encaminha atendidos para"
 
-#: apps/main/relations.py:38 apps/relations/models.py:97
+#: apps/main/relations.py:38 apps/relations/models.py:98
 msgid "receives people from"
 msgstr "recebe encaminhamentos de"
 
-#: apps/main/relations.py:43 apps/relations/models.py:102
+#: apps/main/relations.py:43 apps/relations/models.py:103
 msgid "recruits volunteers for"
 msgstr "recruta voluntários para"
 
-#: apps/main/relations.py:43 apps/relations/models.py:102
+#: apps/main/relations.py:43 apps/relations/models.py:103
 msgid "receives volunteers from"
 msgstr "recebe voluntários de"
 
-#: apps/main/relations.py:48 apps/relations/models.py:107
+#: apps/main/relations.py:48 apps/relations/models.py:108
 msgid "supports"
 msgstr "apoia"
 
-#: apps/main/relations.py:48 apps/relations/models.py:107
+#: apps/main/relations.py:48 apps/relations/models.py:108
 msgid "is supported by"
 msgstr "é apoiado por"
 
-#: apps/main/relations.py:53 apps/relations/models.py:112
+#: apps/main/relations.py:53 apps/relations/models.py:113
 msgid "represents"
 msgstr "representa"
 
-#: apps/main/relations.py:53 apps/relations/models.py:112
+#: apps/main/relations.py:53 apps/relations/models.py:113
 msgid "is represented by"
 msgstr "é representado por"
 
-#: apps/main/relations.py:58 apps/relations/models.py:117
+#: apps/main/relations.py:58 apps/relations/models.py:118
 msgid "is a member of"
 msgstr "é membro de"
 
-#: apps/main/relations.py:58 apps/relations/models.py:117
+#: apps/main/relations.py:58 apps/relations/models.py:118
 msgid "has as member"
 msgstr "tem como membro"
 
-#: apps/main/relations.py:63 apps/relations/models.py:122
+#: apps/main/relations.py:63 apps/relations/models.py:123
 msgid "supplies to"
 msgstr "fornece para"
 
-#: apps/main/relations.py:63 apps/relations/models.py:122
+#: apps/main/relations.py:63 apps/relations/models.py:123
 msgid "buys from"
 msgstr "compra de"
 
-#: apps/main/relations.py:68 apps/relations/models.py:127
+#: apps/main/relations.py:68 apps/relations/models.py:128
 msgid "is board member of"
 msgstr "é conselheiro de"
 
-#: apps/main/relations.py:68 apps/relations/models.py:127
+#: apps/main/relations.py:68 apps/relations/models.py:128
 msgid "has as board member"
 msgstr "tem como conselheiro"
 
@@ -832,7 +834,7 @@ msgstr "Segurança"
 msgid "Categories"
 msgstr "Categorias"
 
-#: apps/organization/models.py:70
+#: apps/organization/models.py:65
 msgid "Add an organization"
 msgstr "Adicionar uma organização"
 
@@ -845,19 +847,19 @@ msgstr "Título"
 msgid "Cost"
 msgstr "Custo"
 
-#: apps/relations/models.py:132
+#: apps/relations/models.py:133
 msgid "contains"
 msgstr "contém"
 
-#: apps/relations/models.py:132
+#: apps/relations/models.py:133
 msgid "belongs to"
 msgstr "pertence a"
 
-#: apps/relations/models.py:137
+#: apps/relations/models.py:138
 msgid "invested in"
 msgstr "investiu em"
 
-#: apps/relations/models.py:137
+#: apps/relations/models.py:138
 msgid "received investment from"
 msgstr "recebeu investimento de"
 
@@ -1192,7 +1194,7 @@ msgid "Last updates"
 msgstr "Últimas atualizações"
 
 #: templates/child/main/root.html:113 templates/default/main/root.html:170
-#: templates/default/need/view.html:107
+#: templates/default/need/view.html:108
 msgid "see all"
 msgstr "ver todos"
 
@@ -1290,7 +1292,6 @@ msgid "Needs"
 msgstr "Necessidades"
 
 #: templates/default/404.html:32 templates/default/investment/list.html:9
-#: templates/default/main/templatetags/menu.html:23
 #: templates/default/project/old_view.html:112
 #: templates/default/project/view.html:179
 msgid "Investments"
@@ -1399,7 +1400,7 @@ msgstr "Carregando..."
 #: templates/default/authentication/profile.html:73
 #: templates/default/highlight/project_highlights.html:7
 #: templates/default/highlight/project_highlights.html:14
-#: templates/default/main/templatetags/menu.html:28
+#: templates/default/main/templatetags/menu.html:25
 #: templates/default/project/list.html:7
 #: templates/default/project/projects_tag.html:5
 msgid "Project Maps"
@@ -1485,13 +1486,13 @@ msgstr "Conecte sua conta do Facebook"
 
 #: templates/default/authentication/profile_update.html:193
 #: templates/default/community/list.html:36
-#: templates/default/community/view.html:72
+#: templates/default/community/view.html:81
 #: templates/default/investment/investment_list_templatetag.html:33
 #: templates/default/investment/investment_list_templatetag.html:52
 #: templates/default/investment/list.html:36
-#: templates/default/need/list.html:40 templates/default/need/view.html:90
+#: templates/default/need/list.html:40 templates/default/need/view.html:91
 #: templates/default/organization/list.html:44
-#: templates/default/organization/show.html:85
+#: templates/default/organization/show.html:94
 #: templates/default/project/old_view.html:151
 #: templates/default/project/old_view.html:164
 #: templates/default/project/old_view.html:177
@@ -1507,7 +1508,7 @@ msgstr "Conecte sua conta do Facebook"
 #: templates/default/project/view.html:260
 #: templates/default/project/view.html:273
 #: templates/default/resource/list.html:41
-#: templates/default/resource/show.html:78
+#: templates/default/resource/show.html:85
 #: templates/default/search/list.html:21
 #: templates/default/update/updates_list_templatetag.html:100
 msgid "View on map"
@@ -1626,9 +1627,9 @@ msgstr "ver mais ..."
 #: templates/default/community/view.html:43
 #: templates/default/need/edit.html:18 templates/default/need/view.html:53
 #: templates/default/organization/edit.html:18
-#: templates/default/organization/show.html:57
+#: templates/default/organization/show.html:56
 #: templates/default/resource/edit.html:18
-#: templates/default/resource/show.html:51
+#: templates/default/resource/show.html:50
 msgid "Info"
 msgstr "Informações"
 
@@ -1636,9 +1637,9 @@ msgstr "Informações"
 #: templates/default/community/view.html:44
 #: templates/default/need/edit.html:19 templates/default/need/view.html:54
 #: templates/default/organization/edit.html:19
-#: templates/default/organization/show.html:58
+#: templates/default/organization/show.html:57
 #: templates/default/resource/edit.html:19
-#: templates/default/resource/show.html:52
+#: templates/default/resource/show.html:51
 msgid "Relations"
 msgstr "Relações"
 
@@ -1715,20 +1716,20 @@ msgstr "população:"
 #: templates/default/community/view.html:33
 #: templates/default/investment/view.html:29
 #: templates/default/need/view.html:36
-#: templates/default/organization/show.html:47
+#: templates/default/organization/show.html:46
 #: templates/default/project/old_view.html:46
 #: templates/default/project/view.html:41
-#: templates/default/resource/show.html:37
+#: templates/default/resource/show.html:36
 msgid "Go to discussion page"
 msgstr "Ir para página de discussões"
 
 #: templates/default/community/view.html:34
 #: templates/default/need/view.html:37
-#: templates/default/organization/show.html:48
+#: templates/default/organization/show.html:47
 msgid "Edit this content"
 msgstr "Editar conteúdo"
 
-#: templates/default/community/view.html:79
+#: templates/default/community/view.html:88
 msgid "Nearby communities"
 msgstr "Comunidades próximas"
 
@@ -1826,7 +1827,7 @@ msgstr "Geometria"
 
 #: templates/default/importsheet/row_templates/necessidades.html:57
 #: templates/default/importsheet/row_templates/organizacoes.html:61
-#: templates/default/organization/show.html:105
+#: templates/default/organization/show.html:110
 msgid "Audience"
 msgstr "Público"
 
@@ -1839,7 +1840,7 @@ msgstr "Contato"
 #: templates/default/importsheet/row_templates/organizacoes.html:72
 #: templates/default/komoo_map/info_window.html:44
 #: templates/default/organization/list.html:53
-#: templates/default/organization/show.html:94
+#: templates/default/organization/show.html:99
 msgid "Operation Field"
 msgstr "Área de atuação"
 
@@ -1848,8 +1849,6 @@ msgid "Edit investment"
 msgstr "Editar investimento"
 
 #: templates/default/investment/edit.html:19
-#: templates/default/organization/show.html:88
-#: templates/default/resource/show.html:81
 msgid "New investment"
 msgstr "Novo investimento"
 
@@ -1980,7 +1979,7 @@ msgid "Grantee"
 msgstr "Destino da doação"
 
 #: templates/default/investment/view.html:30
-#: templates/default/resource/show.html:38
+#: templates/default/resource/show.html:37
 msgid "Edit content"
 msgstr "Editar conteúdo"
 
@@ -3291,15 +3290,15 @@ msgstr "criado por"
 msgid "on"
 msgstr "em"
 
-#: templates/default/need/view.html:97
+#: templates/default/need/view.html:98
 msgid "Related needs"
 msgstr "Necessidades relacionadas"
 
-#: templates/default/need/view.html:104
+#: templates/default/need/view.html:105
 msgid "No related needs"
 msgstr "Sem necessidades relacionadas"
 
-#: templates/default/need/view.html:108
+#: templates/default/need/view.html:109
 msgid "see less"
 msgstr "ver menos"
 
@@ -3403,21 +3402,21 @@ msgstr ""
 msgid "Content related to"
 msgstr "Conteúdo relacionado a"
 
-#: templates/default/organization/show.html:65
+#: templates/default/organization/show.html:64
 #: templates/default/project/old_view.html:62
 #: templates/default/project/view.html:75
 msgid "See all objects on the map"
 msgstr "Ver todos os objetos no mapa"
 
-#: templates/default/organization/show.html:101
+#: templates/default/organization/show.html:106
 msgid "No categories provided"
 msgstr "Categorias não fornecidas"
 
-#: templates/default/organization/show.html:110
+#: templates/default/organization/show.html:115
 msgid "No target audience provided"
 msgstr "Público-alvo não fornecido"
 
-#: templates/default/organization/show.html:115
+#: templates/default/organization/show.html:120
 msgid "Website"
 msgstr "Website"
 
@@ -3588,7 +3587,19 @@ msgstr "Adicionar relação"
 msgid "save"
 msgstr "salvar"
 
-#: templates/default/relations/view.html:13
+#: templates/default/relations/view.html:9
+msgid "show extra info"
+msgstr "mostra informação adicional"
+
+#: templates/default/relations/view.html:20
+msgid "Start Date"
+msgstr "Data de Início"
+
+#: templates/default/relations/view.html:27
+msgid "End Date"
+msgstr "Data de Término"
+
+#: templates/default/relations/view.html:43
 msgid "No relations provided yet"
 msgstr "Nenhuma relação fornecida ainda"
 
@@ -3655,11 +3666,11 @@ msgstr "Criar novo recurso"
 msgid "New resource"
 msgstr "Novo recurso"
 
-#: templates/default/resource/show.html:46
+#: templates/default/resource/show.html:45
 msgid "type:"
 msgstr "tipo:"
 
-#: templates/default/resource/show.html:91
+#: templates/default/resource/show.html:93
 msgid "Related resources"
 msgstr "Recursos relacionados"
 
