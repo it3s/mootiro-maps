@@ -80,6 +80,16 @@
     </div>
 
 
+    <div class="view-extras">
+
+        {% track_buttons organization %}
+        {% report_content organization %}
+        {% delete_button organization %}
+        {% social_buttons %}
+        {% comments organization %}
+    </div>
+
+    </div>
     <div class="right-bar right-bar-modif">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
         <a href="{{ organization.related_items_url }}" class="see-on-map">{% trans 'View on map' %}</a>
@@ -120,16 +130,6 @@
 
         {% projects_for_object organization %}
         {% taglist organization %}
-
-    </div>
-    <div class="view-extras">
-
-        {% track_buttons organization %}
-        {% report_content organization %}
-        {% delete_button organization %}
-        {% social_buttons %}
-        {% comments organization %}
-    </div>
 
     </div>
 

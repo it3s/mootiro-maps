@@ -65,6 +65,15 @@
       </div>
     </div>
 
+
+    <div class="view-extras">
+      {% track_buttons community %}
+      {% report_content community %}
+      {% delete_button community %}
+      {% social_buttons %}
+      {% comments community %}
+    </div>
+  </div>
     <div class="right-bar">
       <div id="map-preview">
         <div id="map-preview-canvas"></div>
@@ -85,15 +94,6 @@
       </div>
       {% projects_for_object community %}
     </div>
-
-    <div class="view-extras">
-      {% track_buttons community %}
-      {% report_content community %}
-      {% delete_button community %}
-      {% social_buttons %}
-      {% comments community %}
-    </div>
-  </div>
 </div>
 
 {% endblock %}
