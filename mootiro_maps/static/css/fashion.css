@@ -1129,11 +1129,28 @@ label[for=id_contacts] {
   .relations-view-list a {
     color: #333;
     text-decoration: none; }
+    .relations-view-list a:hove {
+      cursor: pointer; }
   .relations-view-list .relation-item {
     margin: 10px 0px;
     background-color: #fafafa;
     padding: 15px;
     border-radius: 5px; }
     .relations-view-list .relation-item:hover {
-      background: #8eccdc;
-      cursor: pointer; }
+      background: #8eccdc; }
+  .relations-view-list .view-metadata-btn {
+    cursor: pointer;
+    display: inline-block;
+    float: right; }
+  .relations-view-list .item-metadata {
+    display: none;
+    padding: 20px; }
+    .relations-view-list .item-metadata .metadata-label {
+      display: inline-block;
+      margin-bottom: 5px;
+      width: 20%;
+      font-weight: bold; }
+    .relations-view-list .item-metadata .metadata-value {
+      display: inline-block;
+      margin-bottom: 5px;
+      width: 60%; }

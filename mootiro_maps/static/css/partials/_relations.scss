@@ -78,6 +78,7 @@
   a {
     color: #333;
     text-decoration: none;
+    &:hove { cursor: pointer; }
   }
 
   .relation-item {
@@ -89,7 +90,18 @@
 
     &:hover {
       background: darken($light-blue, 20%);
-      cursor: pointer;
     }
+  }
+  .view-metadata-btn {
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+  }
+  .item-metadata {
+    display: none;
+    padding: 20px;
+
+    .metadata-label { display: inline-block; margin-bottom: 5px; width: 20%; font-weight: bold; }
+    .metadata-value { display: inline-block; margin-bottom: 5px; width: 60%; }
   }
 }

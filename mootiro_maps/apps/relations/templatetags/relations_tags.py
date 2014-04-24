@@ -21,6 +21,8 @@ def edit_relations_for(context, obj=None):
     oid = Relation.build_oid(obj)
     return {"options": options, "relations": to_json(relations), "oid": oid}
 
+def _dict_has_values(d):
+    return reduce(lambda x, acc: x or acc,  map(bool, d.values()), False)
 
 @register.inclusion_tag('relations/view.html', takes_context=True)
 def view_relations_for(context, obj=None):
@@ -28,7 +30,8 @@ def view_relations_for(context, obj=None):
             {
                 'name': rel['target'].name,
                 'rel_type': rel['relation_title'],
-                'link': rel['target'].view_url
+                'link': rel['target'].view_url,
+                'metadata': rel['metadata'] if _dict_has_values(rel['metadata']) else {}
             }
             for rel in Relation.relations_for(obj)]
 
