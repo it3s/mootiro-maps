@@ -15,7 +15,6 @@ from community.models import Community
 from need.models import TargetAudience
 from proposal.models import Proposal
 from komoo_resource.models import Resource
-from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 from search.signals import index_object_for_search
@@ -60,10 +59,6 @@ class Organization(GeoRefModel, BaseModel):
 
     tags = TaggableManager()
 
-    investments = generic.GenericRelation(Investment,
-                        content_type_field='grantee_content_type',
-                        object_id_field='grantee_object_id')
-
     class Map:
         editable = True
         title = _('Organization')
@@ -80,34 +75,15 @@ class Organization(GeoRefModel, BaseModel):
                 if rel['target'].__class__.__name__ == 'Community']
     @property
     def related_items(self):
-        return [c for c in self.communities] + \
-               [r for r in self.supported_resources] + \
-               [p.need for p in self.supported_proposals] + \
-               [o for o in self.supported_organizations]
+        return [c for c in self.communities] # + \
+               # [r for r in self.supported_resources] + \
+               # [p.need for p in self.supported_proposals] + \
+               # [o for o in self.supported_organizations]
 
     @property
     def as_investor(self):
         investor, created = Investor.get_or_create_for(self)
         return investor
-
-    @property
-    def realized_investments(self):
-        return self.as_investor.investments.all()
-
-    @property
-    def supported_organizations(self):
-        return [i.grantee for i in self.realized_investments
-                if isinstance(i.grantee, Organization)]
-
-    @property
-    def supported_proposals(self):
-        return [i.grantee for i in self.realized_investments
-                if isinstance(i.grantee, Proposal)]
-
-    @property
-    def supported_resources(self):
-        return [i.grantee for i in self.realized_investments
-                if isinstance(i.grantee, Resource)]
 
     def __unicode__(self):
         return unicode(self.name)
@@ -156,11 +132,6 @@ class Organization(GeoRefModel, BaseModel):
     def admin_url(self):
         return reverse('admin:{}_{}_change'.format(self._meta.app_label,
             self._meta.module_name), args=[self.id])
-
-    @property
-    def new_investment_url(self):
-        return reverse('new_investment') + ('?type=organization&obj=%(id)s' % {
-                'id': self.id})
 
     @property
     def related_items_url(self):

@@ -14,7 +14,6 @@ from main.models import ContactsField
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
-from investment.models import Investment
 from fileupload.models import UploadedFile
 from search.signals import index_object_for_search
 
@@ -49,10 +48,6 @@ class Resource(GeoRefModel, BaseModel):
 
     community = models.ManyToManyField(Community, related_name='resources',
             null=True, blank=True)  # TODO remove me
-
-    investments = generic.GenericRelation(Investment,
-                        content_type_field='grantee_content_type',
-                        object_id_field='grantee_object_id')
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True,
@@ -98,11 +93,6 @@ class Resource(GeoRefModel, BaseModel):
     def admin_url(self):
         return reverse('admin:{}_{}_change'.format(self._meta.app_label,
             self._meta.module_name), args=[self.id])
-
-    @property
-    def new_investment_url(self):
-        return reverse('new_investment') + '?type=resource&obj={id}'.format(
-                id=self.id)
 
     @property
     def perm_id(self):

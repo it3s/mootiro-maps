@@ -6,7 +6,6 @@
 {% load i18n %}
 {% load comment_tags %}
 {% load markitup_tags %}
-{% load investment_tags %}
 {% load upload_tags %}
 {% load video_tags %}
 {% load project_tags %}
@@ -93,10 +92,6 @@
     <div class="right-bar right-bar-modif">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
         <a href="{{ organization.related_items_url }}" class="see-on-map">{% trans 'View on map' %}</a>
-
-        <div class="centralizer apart">
-          <a class="button login-required" href="{{ organization.new_investment_url }}">{% trans "New investment" %}</a>
-        </div>
 
         {% view_contacts organization.contacts %}
 
