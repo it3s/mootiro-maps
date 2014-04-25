@@ -78,7 +78,6 @@ class Project(BaseModel):
             related_name='project_contributors')
     community = models.ManyToManyField(Community, null=True, blank=True)
 
-    contact = models.TextField(null=True, blank=True)   # TODO remove me
     contacts = ContactsField()
 
     logo = models.ForeignKey(UploadedFile, null=True, blank=True)

@@ -28,7 +28,7 @@ class FormResource(AjaxModelForm):
     class Meta:
         model = Resource
         fields = ('id', 'name', 'short_description', 'description', 'contacts',
-                  'tags', 'kind', 'community', 'files', 'videos', 'project_id')
+                  'tags', 'kind', 'files', 'videos', 'project_id')
 
     _field_labels = {
         'name': _('Name'),
@@ -37,7 +37,6 @@ class FormResource(AjaxModelForm):
         'contacts': _('Contacts'),
         'tags': _('Tags'),
         'kind': _('Content type'),
-        'community': _('Community'),
         'files': _('Images'),
         'videos': _('Videos'),
     }
@@ -49,8 +48,6 @@ class FormResource(AjaxModelForm):
     kind = forms.CharField(required=False, widget=AutocompleteWithFavorites(
             ResourceKind, '/resource/search_by_kind/',
             ResourceKind.favorites(number=10), can_add=True))
-    community = AutoCompleteSelectMultipleField('community', help_text='',
-        required=False)
     files = FileuploadField(required=False)
     videos = VideosField(required=False)
     project_id = forms.CharField(widget=forms.HiddenInput(), required=False)
@@ -70,7 +67,7 @@ class FormResource(AjaxModelForm):
         videos = json.loads(self.cleaned_data.get('videos', ''))
         Video.save_videos(videos, resource)
 
-        # Add the community to project if a project id was given.
+        # Add to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)
         if project_id:
             project = get_object_or_None(Project, pk=int(project_id))
@@ -103,6 +100,6 @@ class FormResourceGeoRef(FormResource):
     class Meta:
         model = Resource
         fields = ('id', 'name', 'short_description', 'description', 'contacts',
-                  'tags', 'kind', 'community', 'files', 'videos', 'project_id',
+                  'tags', 'kind', 'files', 'videos', 'project_id',
                   'geometry')
 

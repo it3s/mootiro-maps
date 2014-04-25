@@ -8,6 +8,7 @@
 {% load upload_tags %}
 {% load video_tags %}
 {% load project_tags %}
+{% load relations_tags %}
 
 {% block title %}{{ community.name }}{% endblock %}
 
@@ -21,58 +22,78 @@
 
 {% block content %}
 
-<div id="main-content">
+<div id="main-content" class="georefobject">
   <div class="main-column">
-    <h2 class="title">{{ community.name }}</h2>
-    <div class="view-edit-btn">
-      {% history community %}
-      <a href="{% url view_discussion community.perm_id %}" class="btn login-required" title="{% trans 'Go to discussion page' %}"><i class="icon-comment"></i></a>
-      <a href="{% url edit_community community.id %}" class="btn login-required" title="{% trans 'Edit this content' %}"><i class="icon-pencil"></i></a>
+
+    <div class="view-header">
+        <div>
+          <h2 class="inline-block title">{{ community.name }}</h2>
+          <div class="view-edit-btn">
+            {% history community %}
+            <a href="{% url view_discussion community.perm_id %}" class="btn login-required" title="{% trans 'Go to discussion page' %}"><i class="icon-comment"></i></a>
+            <a href="{% url edit_community community.id %}" class="btn login-required" title="{% trans 'Edit this content' %}"><i class="icon-pencil"></i></a>
+          </div>
+
+          <div class="clear-both"></div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <ul>
+          <li class="tab"><a href="#object-info">{% trans 'Info' %}</a></li>
+          <li class="tab"><a href="#object-relations">{% trans 'Relations' %}</a></li>
+        </ul>
+      </div>
+
+    <div class="tab-content" id="object-info">
+      <div class="view-body">
+        <div class="mark-down">{{ community.description|render_markup|safe }}</div>
+        <p>
+          <!-- <span class="meta-info">Type</span>NOT IMPLEMENTED<br/> -->
+          <span class="meta-info">{% trans "Population" %}</span> {% firstof community.population '-' %}
+        </p>
+        <div class="view-footer">
+            {% video_gallery community %}
+            {% image_gallery community %}
+        </div>
+      </div>
     </div>
 
-    <div class="clear-both"></div>
-
-    <div class="mark-down">{{ community.description|render_markup|safe }}</div>
-    <p>
-      <!-- <span class="meta-info">Type</span>NOT IMPLEMENTED<br/> -->
-      <span class="meta-info">{% trans "Population" %}</span> {% firstof community.population '-' %}
-    </p>
-    <div class="view-footer">
-        {% video_gallery community %}
-        {% image_gallery community %}
+    <div class="tab-content" id="object-relations">
+      <div class="view-body">
+        {% view_relations_for community %}
+      </div>
     </div>
 
+
+    <div class="view-extras">
+      {% track_buttons community %}
+      {% report_content community %}
+      {% delete_button community %}
+      {% social_buttons %}
+      {% comments community %}
+    </div>
   </div>
+    <div class="right-bar">
+      <div id="map-preview">
+        <div id="map-preview-canvas"></div>
+      </div>
+      <a href="{% url community_on_map community.id %}">{% trans 'View on map' %}</a>
 
-  <div class="right-bar">
-    <div id="map-preview">
-      <div id="map-preview-canvas"></div>
+      {% view_contacts community.contacts %}
+
+      {% taglist community %}
+
+      <div class="block nearby-communities">
+        <h3>{% trans "Nearby communities" %}</h3>
+        <ul>
+          {% for c in community.closest_communities %}
+          <li><a href="{% url view_community c.id %}">{{ c.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% projects_for_object community %}
     </div>
-    <a href="{% url community_on_map community.id %}">{% trans 'View on map' %}</a>
-
-    {% view_contacts community.contacts %}
-
-    {% taglist community %}
-
-    <div class="block nearby-communities">
-      <h3>{% trans "Nearby communities" %}</h3>
-      <ul>
-        {% for c in community.closest_communities %}
-        <li><a href="{% url view_community c.id %}">{{ c.name }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% projects_for_object community %}
-  </div>
-
-  <div class="view-extras">
-    {% track_buttons community %}
-    {% report_content community %}
-    {% delete_button community %}
-    {% social_buttons %}
-    {% comments community %}
-  </div>
-
 </div>
 
 {% endblock %}
@@ -86,6 +107,9 @@
         width: '200px',
         height: '200px'
       });
+    });
+    $(function(){
+      var tabs = new Tabs('.tab', '.tab-content');
     });
   </script>
   {% comments_staticfiles %}

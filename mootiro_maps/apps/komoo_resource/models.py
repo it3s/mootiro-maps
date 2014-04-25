@@ -14,7 +14,6 @@ from main.models import ContactsField
 from authentication.models import User
 from community.models import Community
 from komoo_map.models import GeoRefModel, POLYGON, LINESTRING, POINT
-from investment.models import Investment
 from fileupload.models import UploadedFile
 from search.signals import index_object_for_search
 
@@ -44,16 +43,11 @@ class Resource(GeoRefModel, BaseModel):
     kind = models.ForeignKey(ResourceKind, null=True, blank=True)
     description = models.TextField()
     short_description = models.CharField(max_length=250, null=True, blank=True)
-    contact = models.TextField(null=True, blank=True)  # TODO remove me
     contacts = ContactsField()
     tags = TaggableManager()
 
     community = models.ManyToManyField(Community, related_name='resources',
-            null=True, blank=True)
-
-    investments = generic.GenericRelation(Investment,
-                        content_type_field='grantee_content_type',
-                        object_id_field='grantee_object_id')
+            null=True, blank=True)  # TODO remove me
 
     # Meta info
     creator = models.ForeignKey(User, editable=False, null=True,
@@ -101,11 +95,6 @@ class Resource(GeoRefModel, BaseModel):
             self._meta.module_name), args=[self.id])
 
     @property
-    def new_investment_url(self):
-        return reverse('new_investment') + '?type=resource&obj={id}'.format(
-                id=self.id)
-
-    @property
     def perm_id(self):
         return 'r%d' % self.id
 
@@ -132,7 +121,6 @@ class Resource(GeoRefModel, BaseModel):
             ('geojson', {}), ('contacts', {}),
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
-        dict_['community'] = [comm.id for comm in self.community.all()]
         dict_['tags'] = [tag.name for tag in self.tags.all()]
         return dict_
 

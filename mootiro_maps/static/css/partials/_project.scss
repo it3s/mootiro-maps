@@ -1,5 +1,5 @@
 #main-content.project {
-    $tab-border-color: silver;
+    @include tabs;
 
     width: 100%;
     margin-top: 50px;
@@ -25,55 +25,6 @@
     .left-bar,
     .right-bar {
         width: 300px;
-    }
-
-    .tabs {
-        margin: 10px 0px 40px !important;
-        width: 100% !important;
-        border-bottom: solid 1px $tab-border-color;
-        font-size: 0.9em;
-
-        > ul {
-            width: 950px;
-            margin: 0 auto;
-            list-style: none;
-
-            .tab {
-                 @include border-radius(5px 5px 0px 0px);
-                 display: inline-block;
-                 margin: 0 5px -1px;
-                 padding: 3px 0;
-                 border: solid 1px transparent;
-
-                 > a {
-                    padding: 3px 30px;
-                    text-decoration: underline;
-                 }
-
-            }
-            > .tab.selected {
-                border: solid 1px $tab-border-color;
-                border-bottom: solid 1px white;
-
-                > a {
-                    color: black;
-                    text-decoration: none;
-                }
-            }
-         }
-    }
-
-    .tab-content {
-        overflow: visible;
-        min-height: 300px;
-    }
-    .tab-content:before,
-    .tab-content:after {
-        content: "";
-        display: table;
-    }
-    .tab-content:after {
-        clear: both;
     }
 
     /* For IE 6/7 (trigger hasLayout) */

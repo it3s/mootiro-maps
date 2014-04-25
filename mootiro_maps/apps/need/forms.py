@@ -23,7 +23,7 @@ from video.models import Video
 
 
 need_form_fields = ('id', 'name', 'short_description', 'description',
-                    'contacts', 'tags', 'community', 'categories',
+                    'contacts', 'tags', 'categories',
                     'target_audiences', 'files', 'videos', 'project_id')
 
 need_form_field_labels = {
@@ -32,7 +32,6 @@ need_form_field_labels = {
     'description': _('Description'),
     'contacts': _('Contacts'),
     'tags': _('Tags'),
-    'community': _('Community'),
     'categories': _('Need categories'),
     'target_audiences': _('Target audiences'),
     'files': _('Images'),
@@ -49,9 +48,6 @@ class NeedForm(AjaxModelForm):
 
     class Media:
         js = ('lib/jquery.imagetick-original.js',)
-
-    community = AutoCompleteSelectMultipleField('community', help_text='',
-        required=False)
 
     description = forms.CharField(widget=MarkItUpWidget())
 
@@ -95,7 +91,7 @@ class NeedForm(AjaxModelForm):
         videos = json.loads(self.cleaned_data.get('videos', ''))
         Video.save_videos(videos, need)
 
-        # Add the community to project if a project id was given.
+        # Add to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)
         if project_id:
             project = get_object_or_None(Project, pk=int(project_id))

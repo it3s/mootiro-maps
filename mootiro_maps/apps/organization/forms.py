@@ -42,7 +42,7 @@ class FormOrganization(AjaxModelForm):
     class Meta:
         model = Organization
         fields = ('id', 'name', 'short_description', 'description', 'contacts',
-                  'tags', 'community', 'target_audiences', 'categories',
+                  'tags', 'target_audiences', 'categories',
                   'logo', 'logo_category', 'logo_choice', 'project_id', 'videos')
 
     _field_labels = {
@@ -51,7 +51,6 @@ class FormOrganization(AjaxModelForm):
         'description': _('Description'),
         'contacts': _('Contacts'),
         'tags': _('Tags'),
-        'community': _('Community'),
         'target_audiences': _('Target audiences'),
         'categories': _('Categories'),
         'files': _('Images'),
@@ -63,8 +62,6 @@ class FormOrganization(AjaxModelForm):
     contacts = forms.CharField(required=False, widget=ContactsWidget())
     tags = forms.Field(
         widget=TaggitWidget(autocomplete_url="/organization/search_tags/"),
-        required=False)
-    community = AutoCompleteSelectMultipleField('community', help_text='',
         required=False)
     target_audiences = forms.Field(required=False,
         widget=Tagsinput(
@@ -108,7 +105,7 @@ class FormOrganization(AjaxModelForm):
         videos = json.loads(self.cleaned_data.get('videos', ''))
         Video.save_videos(videos, org)
 
-        # Add the community to project if a project id was given.
+        # Add to project if a project id was given.
         project_id = self.cleaned_data.get('project_id', None)
         if project_id:
             project = get_object_or_None(Project, pk=int(project_id))
@@ -132,6 +129,6 @@ class FormOrganizationGeoRef(FormOrganization):
     class Meta:
         model = Organization
         fields = ('id', 'name', 'short_description', 'description', 'contacts',
-                  'tags', 'community', 'target_audiences', 'categories',
+                  'tags', 'target_audiences', 'categories',
                   'logo', 'logo_category', 'logo_choice', 'geometry',
                   'project_id', 'videos')

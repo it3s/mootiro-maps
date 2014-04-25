@@ -2,7 +2,6 @@
 
 {% load komoo_map_tags %}
 {% load moderation_tags %}
-{% load investment_tags %}
 {% load crispy_forms_tags %}
 {% load comment_tags %}
 {% load markitup_tags %}
@@ -10,6 +9,7 @@
 {% load upload_tags %}
 {% load video_tags %}
 {% load project_tags %}
+{% load relations_tags %}
 {% load i18n %}
 
 {% block title %}{{ resource.name }}{% endblock %}
@@ -24,7 +24,7 @@
 
 {% block content %}
   {% komoo_map geojson 'type=view' 'width=100%' 'height=100%' 'zoom=13' 'ajax=True' 'lazy=True' %}
-<div id="main-content">
+<div id="main-content" class="georefobject">
     <div class="main-column">
 
         <div class="view-header">
@@ -45,6 +45,14 @@
             <span class="resource-type">{% trans 'type:' %} &nbsp;<strong>{{ resource.kind }}</strong></span>
         </div>
 
+        <div class="tabs">
+          <ul>
+            <li class="tab"><a href="#object-info">{% trans 'Info' %}</a></li>
+            <li class="tab"><a href="#object-relations">{% trans 'Relations' %}</a></li>
+          </ul>
+        </div>
+
+      <div class="tab-content" id="object-info">
         <div class="view-body">
             <div class="mark-down">{{ resource.description|render_markup|safe }}</div>
         </div>
@@ -53,28 +61,30 @@
             {% video_gallery resource %}
             {% image_gallery resource %}
         </div>
+      </div>
 
-        {% investments_list resource.investments.all %}
-
-        <div class="view-extras">
-                {% track_buttons resource %}
-                {% report_content resource %}
-                {% delete_button resource %}
-                {% social_buttons %}
-                {% comments resource %}
+      <div class="tab-content" id="object-relations">
+        <div class="view-body">
+          {% view_relations_for resource %}
         </div>
+      </div>
+
+
+      <div class="view-extras">
+        {% track_buttons resource %}
+        {% report_content resource %}
+        {% delete_button resource %}
+        {% social_buttons %}
+        {% comments resource %}
+      </div>
 
     </div>
+
     <div class="right-bar right-bar-modif">
         <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
         <a class="see-on-map" href="#">{% trans 'View on map' %}</a>
 
-        <div class="centralizer apart">
-          <a class="button login-required" href="{{ resource.new_investment_url }}">{% trans "New investment" %}</a>
-        </div>
-
         {% view_contacts resource.contacts %}
-
 
         {% with similar_resources=resource.tags.similar_objects|slice:"5" %}
 
@@ -86,15 +96,6 @@
                         {% for r in similar_resources|slice:'5' %}
                         <li>
                             <a href="{{ r.view_url }}"> {{ r.name }} </a>
-                            {% if r.community.all.count %}
-                              {% trans 'at' %}
-                              {% for comm in r.community.all %}
-                                <a href="{% url view_community comm.id %}">
-                                    {{ comm.name }}
-                                </a>
-                                {% if not forloop.last %}&nbsp;|&nbsp;{% endif %}
-                              {% endfor %}
-                            {% endif %}
                         </li>
                         {% endfor %}
                     </ul>
@@ -116,8 +117,13 @@
 {% endblock %}
 
 {% block page_scripts %}
-    {% comments_staticfiles %}
+  {% comments_staticfiles %}
 
+  <script type="text/javascript">
+    $(function(){
+      var tabs = new Tabs('.tab', '.tab-content');
+    });
+  </script>
 {% endblock %}
 
 {% block help_center %}

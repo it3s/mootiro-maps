@@ -1,0 +1,61 @@
+{% load i18n %}
+
+<ul class="relations-view-list">
+  {% for relation in relations %}
+  <li>
+      <div class="relation-item">
+        <a href="{{ relation.link }}"><b>{{ relation.rel_type }}</b> {{ relation.name }}</a>
+        {% if relation.metadata %}
+          <div class="view-metadata-btn" title="{% trans 'show extra info' %}"><i class="icon-plus"></i></div>
+          <div class="item-metadata">
+            {% if relation.metadata.description %}
+              <div>
+                <div class="metadata-label">{% trans "Description" %}:</div>
+                <div class="metadata-value">{{ relation.metadata.description}}</div>
+              </div>
+            {% endif %}
+
+            {% if relation.metadata.start_date %}
+              <div>
+                <div class="metadata-label">{% trans "Start Date" %}:</div>
+                <div class="metadata-value">{{ relation.metadata.start_date}}</div>
+              </div>
+            {% endif %}
+
+            {% if relation.metadata.end_date %}
+              <div>
+                <div class="metadata-label">{% trans "End Date" %}:</div>
+                <div class="metadata-value">{{ relation.metadata.end_date}}</div>
+              </div>
+            {% endif %}
+
+            {% if relation.metadata.value %}
+              <div>
+                <div class="metadata-label">{% trans "Value" %}:</div>
+                <div class="metadata-value">{{ relation.metadata.value}}</div>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </div>
+  </li>
+  {% empty %}
+    {% trans "No relations provided yet" %}
+  {% endfor %}
+</ul>
+<script type="text/javascript">
+  $(function() {
+    $('.view-metadata-btn').click(function(evt){
+      var el = $(evt.target);
+      el = el.is('i') ? el : el.find('i');
+      var target = el.closest('.relation-item').find('.item-metadata');
+      if (target.is(':visible')) {
+        el.removeClass('icon-minus').addClass('icon-plus');
+        target.slideUp('fast');
+      } else {
+        el.removeClass('icon-plus').addClass('icon-minus');
+        target.slideDown('fast');
+      }
+    });
+  });
+</script>

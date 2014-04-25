@@ -1,0 +1,107 @@
+#main-content.georefobject {
+  @include tabs;
+}
+
+.relations-edit {
+  $green: #3E7F4B;
+  $light-blue: #DCEFF4;
+
+  background-color: $light-blue;
+  border-radius: 5px;
+  padding: 10px;
+  width: 70%;
+  margin: 0 auto;
+
+  .add-relation {
+    color: $green;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 20px;
+  }
+
+  .relation-item {
+    margin: 10px 0px;
+    background-color: #fafafa;
+    padding: 10px 10px 3px;
+    border-radius: 5px;
+
+    input, select {
+      background-color: #fff;
+    }
+
+    input {
+      box-shadow: none;
+      width: 330px;
+    }
+
+    .remove-btn, .metadata-btn {
+      cursor: pointer;
+      height: 23px;
+      vertical-align: top;
+      display: inline-block;
+      border: solid 1px #dedede;
+      border-radius: 4px;
+      padding: 2px 5px;
+
+      i { margin-top: 4px;}
+
+      &:hover {
+        background-color: #dedede;
+      }
+    }
+
+    .metadata-form {
+      display: none;
+
+      input { width: 270px; }
+      input[name=metadata_description] { width: 555px; }
+
+      .date-field {
+        display:inline-block;
+        width: 282px;
+        vertical-align: top;
+      }
+
+      .error { border: solid 1px #ad3333; }
+      .error-msg { display: none; color: #ad3333; }
+    }
+  }
+}
+
+.relations-view-list {
+  $light-blue: #DCEFF4;
+
+  background-color: $light-blue;
+  border-radius: 5px;
+  padding: 20px;
+
+  a {
+    color: #333;
+    text-decoration: none;
+    &:hove { cursor: pointer; }
+  }
+
+  .relation-item {
+    margin: 10px 0px;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 5px;
+
+
+    &:hover {
+      background: darken($light-blue, 20%);
+    }
+  }
+  .view-metadata-btn {
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+  }
+  .item-metadata {
+    display: none;
+    padding: 20px;
+
+    .metadata-label { display: inline-block; margin-bottom: 5px; width: 20%; font-weight: bold; }
+    .metadata-value { display: inline-block; margin-bottom: 5px; width: 60%; }
+  }
+}

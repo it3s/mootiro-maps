@@ -15,7 +15,6 @@ from community.models import Community
 from need.models import TargetAudience
 from proposal.models import Proposal
 from komoo_resource.models import Resource
-from investment.models import Investment, Investor
 from fileupload.models import UploadedFile
 from lib.taggit.managers import TaggableManager
 from search.signals import index_object_for_search
@@ -49,10 +48,8 @@ class Organization(GeoRefModel, BaseModel):
                         blank=True)
     last_update = models.DateTimeField(auto_now=True)
 
-    community = models.ManyToManyField(Community, null=True, blank=True)
+    community = models.ManyToManyField(Community, null=True, blank=True) # TODO remove-me
 
-    link = models.CharField(max_length=250, null=True, blank=True)  # TODO remove me
-    contact = models.TextField(null=True, blank=True)               # TODO remove me
     contacts = ContactsField()
 
     categories = models.ManyToManyField('OrganizationCategory', null=True,
@@ -61,10 +58,6 @@ class Organization(GeoRefModel, BaseModel):
                         blank=True)
 
     tags = TaggableManager()
-
-    investments = generic.GenericRelation(Investment,
-                        content_type_field='grantee_content_type',
-                        object_id_field='grantee_object_id')
 
     class Map:
         editable = True
@@ -76,35 +69,21 @@ class Organization(GeoRefModel, BaseModel):
         form_view_name = 'new_organization_from_map'
 
     @property
+    def communities(self):
+        from relations.models import Relation
+        return [rel['target'] for rel in Relation.relations_for(self)
+                if rel['target'].__class__.__name__ == 'Community']
+    @property
     def related_items(self):
-        return [c for c in self.community.all()] + \
-            [r for r in self.supported_resources] + \
-            [p.need for p in self.supported_proposals] + \
-            [o for o in self.supported_organizations]
+        return [c for c in self.communities] # + \
+               # [r for r in self.supported_resources] + \
+               # [p.need for p in self.supported_proposals] + \
+               # [o for o in self.supported_organizations]
 
     @property
     def as_investor(self):
         investor, created = Investor.get_or_create_for(self)
         return investor
-
-    @property
-    def realized_investments(self):
-        return self.as_investor.investments.all()
-
-    @property
-    def supported_organizations(self):
-        return [i.grantee for i in self.realized_investments
-                if isinstance(i.grantee, Organization)]
-
-    @property
-    def supported_proposals(self):
-        return [i.grantee for i in self.realized_investments
-                if isinstance(i.grantee, Proposal)]
-
-    @property
-    def supported_resources(self):
-        return [i.grantee for i in self.realized_investments
-                if isinstance(i.grantee, Resource)]
 
     def __unicode__(self):
         return unicode(self.name)
@@ -155,11 +134,6 @@ class Organization(GeoRefModel, BaseModel):
             self._meta.module_name), args=[self.id])
 
     @property
-    def new_investment_url(self):
-        return reverse('new_investment') + ('?type=organization&obj=%(id)s' % {
-                'id': self.id})
-
-    @property
     def related_items_url(self):
         return reverse('view_organization_related_items',
                        kwargs=self.home_url_params)
@@ -197,7 +171,6 @@ class Organization(GeoRefModel, BaseModel):
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['tags'] = [tag.name for tag in self.tags.all()]
-        dict_['community'] = [comm.id for comm in self.community.all()]
         dict_['target_audiences'] = [ta.name for ta in self.target_audiences.all()]
         dict_['categories'] = [cat.id for cat in self.categories.all()]
         return dict_

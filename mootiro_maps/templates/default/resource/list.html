@@ -26,7 +26,7 @@
         {% pagination resources %}
       </div>
 
-      {% visualization_opts 'resource' "filters=['tags','community']" "sorters=['name', 'creation_date']" %}
+      {% visualization_opts 'resource' "filters=['tags']" "sorters=['name', 'creation_date']" %}
     </div>
 
 
@@ -37,15 +37,6 @@
       <h4>
         <span class="apart">
           <a href="{{ resource.view_url }}">{{ resource.name }}</a>
-          {% if resource.community.count %}
-            &nbsp;{% trans 'at' %}&nbsp;
-            {% for comm in resource.community.all %}
-              <a href="/{{ comm.slug }}/about/">{{ comm.name }}</a>
-              {% if not forloop.last %}
-                &nbsp;|&nbsp;
-              {% endif %}
-            {% endfor %}
-          {% endif %}
         </span>
         <a class="small preview-on-map list-map-preview" href="#" data-geojson="{% geojson resource %}" title="{% trans 'View on map' %}">
             <i class="icon-see-on-map"></i>

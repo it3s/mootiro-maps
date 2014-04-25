@@ -162,6 +162,26 @@ def create_mapping():
 def refresh_index():
     requests.post(es_url('{ES}/{INDEX}]_refresh'))
 
+def reset_all():
+    reset_index()
+    create_mapping()
+
+    # load all data
+    from organization.models import Organization
+    from komoo_resource.models import Resource
+    from need.models import Need
+    from community.models import Community
+    from authentication.models import User
+    from komoo_project.models import Project
+
+    model_list = [Organization, Resource, Need, Community, User, Project]
+
+    for model in model_list:
+        for obj in model.objects.all():
+            index_object(obj)
+
+
+    refresh_index()
 
 def es_index_dict(obj):
     return {
@@ -199,4 +219,9 @@ def search_by_term(ter, size=10):
             data=json.dumps(search_dict(ter, size=size)))
     data = json.loads(r.content)
     hits = data.get('hits', {}).get('hits', [])
-    return [hit['_source'] for hit in hits]
+    results = []
+    for hit in hits:
+        res = hit['_source']
+        res.update({'id': hit['_id']})
+        results.append(res)
+    return results

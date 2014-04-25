@@ -733,19 +733,6 @@ div.importsheet_missing_column {
   padding-left: 0px;
   padding-right: 0px;
   /* For IE 6/7 (trigger hasLayout) */ }
-  #main-content.project > div {
-    width: 950px;
-    margin-left: auto !important;
-    margin-right: auto !important; }
-  #main-content.project .main-column {
-    width: 620px;
-    margin-right: 10px; }
-  #main-content.project .main-column.right {
-    margin-left: 10px;
-    margin-right: 0px; }
-  #main-content.project .left-bar,
-  #main-content.project .right-bar {
-    width: 300px; }
   #main-content.project .tabs {
     margin: 10px 0px 40px !important;
     width: 100% !important;
@@ -781,6 +768,19 @@ div.importsheet_missing_column {
     display: table; }
   #main-content.project .tab-content:after {
     clear: both; }
+  #main-content.project > div {
+    width: 950px;
+    margin-left: auto !important;
+    margin-right: auto !important; }
+  #main-content.project .main-column {
+    width: 620px;
+    margin-right: 10px; }
+  #main-content.project .main-column.right {
+    margin-left: 10px;
+    margin-right: 0px; }
+  #main-content.project .left-bar,
+  #main-content.project .right-bar {
+    width: 300px; }
   #main-content.project .container {
     zoom: 1; }
   #main-content.project .view-info-contributor {
@@ -1074,3 +1074,121 @@ label[for=id_contacts] {
         width: 80px;
         float: left;
         margin: 5px; }
+
+#main-content.georefobject .tabs {
+  margin: 10px 0px 40px !important;
+  width: 100% !important;
+  border-bottom: solid 1px silver;
+  font-size: 0.9em; }
+  #main-content.georefobject .tabs > ul {
+    width: 950px;
+    margin: 0 auto;
+    list-style: none; }
+    #main-content.georefobject .tabs > ul .tab {
+      -moz-border-radius: 5px 5px 0px 0px;
+      -webkit-border-radius: 5px 5px 0px 0px;
+      border-radius: 5px 5px 0px 0px;
+      display: inline-block;
+      margin: 0 5px -1px;
+      padding: 3px 0;
+      border: solid 1px transparent; }
+      #main-content.georefobject .tabs > ul .tab > a {
+        padding: 3px 30px;
+        text-decoration: underline; }
+    #main-content.georefobject .tabs > ul > .tab.selected {
+      border: solid 1px silver;
+      border-bottom: solid 1px white; }
+      #main-content.georefobject .tabs > ul > .tab.selected > a {
+        color: black;
+        text-decoration: none; }
+#main-content.georefobject .tab-content {
+  overflow: visible;
+  min-height: 300px; }
+#main-content.georefobject .tab-content:before,
+#main-content.georefobject .tab-content:after {
+  content: "";
+  display: table; }
+#main-content.georefobject .tab-content:after {
+  clear: both; }
+
+.relations-edit {
+  background-color: #dceff4;
+  border-radius: 5px;
+  padding: 10px;
+  width: 70%;
+  margin: 0 auto; }
+  .relations-edit .add-relation {
+    color: #3e7f4b;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-bottom: 20px; }
+  .relations-edit .relation-item {
+    margin: 10px 0px;
+    background-color: #fafafa;
+    padding: 10px 10px 3px;
+    border-radius: 5px; }
+    .relations-edit .relation-item input, .relations-edit .relation-item select {
+      background-color: #fff; }
+    .relations-edit .relation-item input {
+      box-shadow: none;
+      width: 330px; }
+    .relations-edit .relation-item .remove-btn, .relations-edit .relation-item .metadata-btn {
+      cursor: pointer;
+      height: 23px;
+      vertical-align: top;
+      display: inline-block;
+      border: solid 1px #dedede;
+      border-radius: 4px;
+      padding: 2px 5px; }
+      .relations-edit .relation-item .remove-btn i, .relations-edit .relation-item .metadata-btn i {
+        margin-top: 4px; }
+      .relations-edit .relation-item .remove-btn:hover, .relations-edit .relation-item .metadata-btn:hover {
+        background-color: #dedede; }
+    .relations-edit .relation-item .metadata-form {
+      display: none; }
+      .relations-edit .relation-item .metadata-form input {
+        width: 270px; }
+      .relations-edit .relation-item .metadata-form input[name=metadata_description] {
+        width: 555px; }
+      .relations-edit .relation-item .metadata-form .date-field {
+        display: inline-block;
+        width: 282px;
+        vertical-align: top; }
+      .relations-edit .relation-item .metadata-form .error {
+        border: solid 1px #ad3333; }
+      .relations-edit .relation-item .metadata-form .error-msg {
+        display: none;
+        color: #ad3333; }
+
+.relations-view-list {
+  background-color: #dceff4;
+  border-radius: 5px;
+  padding: 20px; }
+  .relations-view-list a {
+    color: #333;
+    text-decoration: none; }
+    .relations-view-list a:hove {
+      cursor: pointer; }
+  .relations-view-list .relation-item {
+    margin: 10px 0px;
+    background-color: #fafafa;
+    padding: 15px;
+    border-radius: 5px; }
+    .relations-view-list .relation-item:hover {
+      background: #8eccdc; }
+  .relations-view-list .view-metadata-btn {
+    cursor: pointer;
+    display: inline-block;
+    float: right; }
+  .relations-view-list .item-metadata {
+    display: none;
+    padding: 20px; }
+    .relations-view-list .item-metadata .metadata-label {
+      display: inline-block;
+      margin-bottom: 5px;
+      width: 20%;
+      font-weight: bold; }
+    .relations-view-list .item-metadata .metadata-value {
+      display: inline-block;
+      margin-bottom: 5px;
+      width: 60%; }
