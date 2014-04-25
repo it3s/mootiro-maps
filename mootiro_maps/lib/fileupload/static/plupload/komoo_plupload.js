@@ -118,6 +118,10 @@ $('.file-thumb').live('click', function(ev){
                 $('#subtitle-modal #img-subtitle-modal').attr('src', data.url);
                 $('#subtitle-modal #id_subtitle').val(data.subtitle || '');
                 $('#subtitle-modal #id_subtitle').attr('file-id', file_id);
+                if (data.cover) {
+                  $('#subtitle-modal #id_cover').attr('checked', 'checked');
+                }
+                $('#subtitle-modal #id_cover').attr('file-id', file_id);
                 $('#subtitle-modal #delete-file').attr('file-id', file_id);
                 $('#subtitle-modal').modal('show');
             },
@@ -146,11 +150,13 @@ $('.file-thumb').live('click', function(ev){
 $('#save-subtitle').live('click', function(){
     var file_id = $('#subtitle-modal #id_subtitle').attr('file-id');
     var subtitle = $('#subtitle-modal #id_subtitle').val();
+    var cover = $('#subtitle-modal #id_cover').prop('checked');
     $.post(
         '/upload/save_subtitle/',
         {
             id: file_id,
             subtitle: subtitle,
+            cover: cover,
             csrfmiddlewaretoken: getCookie('csrftoken')
         },
         function(data){

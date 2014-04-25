@@ -18,12 +18,14 @@ from .models import Video
 logger = logging.getLogger(__name__)
 
 def get_video_info_from_url(url):
+    service = None
+    video_id = None
     if 'vimeo.com' in url:
-        video_id = get_vimeo_video_id_from_url(url)
         service = Video.VIMEO
+        video_id = get_vimeo_video_id_from_url(url)
     elif 'youtu' in url:
-        video_id = get_youtube_video_id_from_url(url)
         service = Video.YOUTUBE
+        video_id = get_youtube_video_id_from_url(url)
     return get_video_info(service, video_id)
 
 
@@ -66,11 +68,13 @@ def get_vimeo_video_id_from_url(url):
     return None
 
 def get_video_info(service, video_id):
+    if not video_id:
+        return None, False
     services = {
         Video.YOUTUBE: get_youtube_video_info,
         Video.VIMEO: get_vimeo_video_info,
     }
-    return services.get(service, lambda x: {})(video_id)
+    return services.get(service, lambda x: None)(video_id)
 
 
 yt_service = gdata.youtube.service.YouTubeService()
@@ -89,10 +93,12 @@ def get_youtube_video_info(video_id):
             'video_url': video.media.player.url,
             'thumbnail_url': video.media.thumbnail[0].url,
         }
+        success = True
     except Exception as e:
         # {'status': ..., 'body':..., 'reason':...}
         info = e.message
-    return info
+        success = False
+    return info, success
 
 def get_vimeo_video_info(video_id):
     try:
@@ -107,23 +113,24 @@ def get_vimeo_video_info(video_id):
             'video_url': video.get('url', ''),
             'thumbnail_url': video.get('thumbnail_medium', ''),
         }
+        success = True
     except Exception as e:
         info = None
-    return info
+        success = False
+    return info, success
 
 def youtube_info(request, video_id=None):
-    info = get_youtube_video_info(video_id)
+    info, success = get_youtube_video_info(video_id)
     return HttpResponse(to_json(info),
                         mimetype="application/x-javascript")
 
 def url_info(request):
     url = request.POST.get('video_url', None)
     if url:
-        success = True
-        video_ = get_video_info_from_url(url)
+        video_, success = get_video_info_from_url(url)
     else:
+        video_ = None
         success = False
-        video_ = {}
     return HttpResponse(to_json({'success': success, 'video': video_}),
                         mimetype="application/x-javascript")
 

@@ -16,6 +16,7 @@ class UploadedFile(models.Model):
 
     file = models.FileField(upload_to=file_upload)
     subtitle = models.TextField(null=True, blank=True)
+    cover = models.NullBooleanField(null=True, blank=True)
 
     # dynamic ref
     content_type = models.ForeignKey(ContentType,  null=True, blank=True)

@@ -92,6 +92,9 @@
     width: 450px;
     margin: 20px auto 0 auto;
 }
+#id_cover{
+    margin: 10px 0 10px 35px;
+}
 #delete-file{
     float: left;
     color: #ffffff;

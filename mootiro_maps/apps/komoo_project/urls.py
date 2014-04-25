@@ -13,10 +13,12 @@ urlpatterns = patterns('komoo_project.views',
     url(r'^add_list/?$', 'add_list_of_objects', name="project_add_list"),
     url(r'^delete_relations/?$', 'delete_relations', name='delete_relations'),
     url(r'^search_tags/?$', 'tag_search', name='project_tag_search'),
+    url(r'^search_all_tags/?$', 'all_tag_search', name='all_tag_search'),
     url(r'^search_by_name/?$', 'search_by_name', name='search_by_name'),
 
     url(pr(r'^ID/?$'), 'project_view', name='project_view'),
     url(pr(r'^ID/edit/?$'), 'project_edit', name='project_edit'),
+    url(pr(r'^ID/save_layers/?$'), 'save_layers', name='save_layers'),
     url(pr(r'^ID/map/?$'), 'project_map', name='project_map'),
 
     url(r'^explanations/?$', 'explanations'),

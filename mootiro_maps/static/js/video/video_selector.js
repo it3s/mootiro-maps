@@ -26,6 +26,10 @@ window.get_videos_list = function(){
 
 var new_id_count = 0;
 
+window.has_video = function(video) {
+    return $('#videolist').find('div[id='+video.video_id+'][data-service='+video.service+']').length > 0;
+};
+
 window.add_video = function(video){
     var _new = false;
     if (video.id === undefined) {
@@ -58,23 +62,44 @@ $('.add-new-video-link').click(function(){
 });
 
 $('#add_videos_from_links').click(function(evt){
+    var requests = [];
+    var errors = [];
     $('.video-modal input[name=video_link]').each(function(idx, el){
         var url = $(el).val();
         if (url.search('iframe') != -1) {
             var iframe = $(url);
             url = iframe.attr('src');
         }
-        $.post(
-            '/video/info_from_url/',
-            {
-                video_url: url,
-                csrfmiddlewaretoken : getCookie('csrftoken')
-            },
-            function(data){
-                add_video(data.video)
-            },
-            'json'
-        );
+        if (url) { // Ignore empty fields
+            var post = $.post(
+                dutils.urls.resolve('video_url_info'),
+                {
+                    video_url: url,
+                    csrfmiddlewaretoken : getCookie('csrftoken')
+                },
+                function(data){
+                    if (data.success) {
+                        if (!has_video(data.video)) {
+                            add_video(data.video);
+                        }
+                    } else {
+                        errors.push(url);
+                    }
+                },
+                'json'
+            );
+            requests.push(post);
+        }
+    });
+
+    $.when.apply($, requests).then(function() {
+        if (errors.length) {
+            var urls = errors.join(', ');
+            errorMessage(
+                gettext('Invalid URL'),
+                interpolate(gettext('The following urls could not be resolved as valid videos: %s'), [urls])
+            );
+        }
     });
 
     $('.video-modal').modal('hide');
@@ -99,9 +124,9 @@ $('.video-entry').live('click', function(ev){
 
         $('#title-modal #video-title-modal').attr('src', video_thumb);
         $('#title-modal #id_title').val(video_title || '');
-        $('#title-modal #id_description').val(video_description || '');
+        $('#title-modal #id_video_description').val(video_description || '');
         $('#title-modal #id_title').attr('data-id', id);
-        $('#title-modal #id_description').attr('data-id', id);
+        $('#title-modal #id_video_description').attr('data-id', id);
         $('#title-modal #delete-video').attr('data-id', id);
         $('#title-modal').modal('show');
 
@@ -127,7 +152,7 @@ $('.video-entry').live('click', function(ev){
 $('#save-title').live('click', function(){
     var id = $('#title-modal #id_title').attr('data-id');
     var title = $('#title-modal #id_title').val();
-    var description = $('#title-modal #id_description').val();
+    var description = $('#title-modal #id_video_description').val();
 
     var entry = $('#videolist .video-entry[data-id='+id+']');
     entry.attr('data-title', title).attr('data-description', description);

@@ -151,13 +151,17 @@ define (require)->
                 @handleViewEvents()
 
         handleViewEvents: ->
-            @view.on 'highlight_feature', (featureId) => @map.highlightFeature featureId
+            @view.on 'highlight_feature', (featureType, featureId) => @map.highlightFeature featureType, featureId
             @view.on 'show', (layer) => @layers.getLayer(layer).show()
             @view.on 'hide', (layer) => @layers.getLayer(layer).hide()
 
         handleMapEvents: ->
             @map.subscribe 'layer_added', (layer) =>
                 @view?.render @layers
+            @map.subscribe 'features_loaded', (features) =>
+                if features.length
+                    @view?.updateCounters @layers
+                    @view?.updateSublists @layers
 
     # Display some supporters logos.
     class SupporterBox extends Box
@@ -1187,12 +1191,11 @@ define (require)->
         init: ->
             super()
             @disabled = []
-            window.dd = @disabled
 
         beforeFeatureSetVisibleHook: (feature, visible) ->
             visible_ = visible
-            if visible and not @map.getLayers().shouldFeatureBeVisible feature
-                visible_ = false
+            if visible isnt @map.getLayers().shouldFeatureBeVisible feature
+                visible_ = not visible
             [feature, visible_]
 
         handleMapEvents: ->

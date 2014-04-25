@@ -7,6 +7,8 @@ define (require) ->
     window.komoo ?= {}
     window.komoo.event ?= googleMaps.event
 
+    uid = 0;
+
     # FIXME: Are these zoom options deprecated?
     defaultFeatureType = {
         minZoomPoint: 0
@@ -22,6 +24,8 @@ define (require) ->
         displayInfoWindow: on
 
         constructor: (@options = {}) ->
+            # Create an unique internal id
+            @uid = uid++
             # Try to get a `geometry` object from options.
             geometry = @options.geometry
             @setFeatureType(@options.featureType)
@@ -38,6 +42,7 @@ define (require) ->
             # We dont want another marker to geometries that are already
             # rendered as a marker. So dont create markers to points and
             # multipoints.
+            return undefined  # Removing markers temporarily
             return if @geometry.getGeometryType() in ['Point', 'MultiPoint']
             # Create the marker for polygons and lines and display it at the
             # element center.
@@ -107,7 +112,9 @@ define (require) ->
             url = "/static/img/#{nearOrFar}/#{highlighted}#{categoryOrType}.png".replace ' ', '-'
             url
 
-        updateIcon: (zoom) -> @setIcon(@getIconUrl(zoom))
+        createIcon: (zoom) -> @geometry.createIcon zoom, @isHighlighted()
+
+        updateIcon: (zoom) -> @setIcon(@createIcon(zoom))
 
         getCategoriesIcons: ->
             # FIXME: Generalize.
@@ -162,6 +169,14 @@ define (require) ->
             # `@oldMap` is undefined only at the first time this method is called.
             @handleMapEvents() if @oldMap is undefined
 
+        isOutOfBounds: -> @outOfBounds
+        setOutOfBounds: (@outOfBounds) ->
+            if @outOfBounds
+                @setMap null
+            else
+                @setMap @oldMap
+                @setVisible @visible
+
         handleMapEvents: ->
             @map.subscribe 'feature_highlight_changed', (flag, feature) =>
                 # Should be only one feature highlighted, so if another feature
@@ -203,13 +218,22 @@ define (require) ->
             @marker?.setIcon icon
             @geometry.setIcon icon
 
-        getBorderSize: -> @featureType.border_size
-        getBorderSizeHover: -> @featureType.borderSizeHover
-        getBorderColor: -> @featureType.borderColor
-        getBorderOpacity: -> @featureType.borderOpacity
-        getBackgroundColor: -> @featureType.backgroundColor
-        getBackgroundOpacity: -> @featureType.backgroundOpacity
-        getDefaultZIndex: -> @featureType.zIndex
+        setBorderSize: (@borderSize) ->
+        getBorderSize: -> @borderSize ? @featureType.border_size
+        setBorderSizeHover: (@borderSizeHover) ->
+        getBorderSizeHover: -> @borderSizeHover ? @featureType.borderSizeHover
+        setBorderColor: (@borderColor) ->
+        getBorderColor: -> @borderColor ? @featureType.borderColor
+        setBorderOpacity: (@borderOpacity) ->
+        getBorderOpacity: -> @borderOpacity ? @featureType.borderOpacity
+        setBackgroundColor: (@backgroundColor) ->
+        getBackgroundColor: -> @backgroundColor ? @featureType.backgroundColor
+        setBackgroundOpacity: (@backgroundOpacity) ->
+        getBackgroundOpacity: -> @backgroundOpacity ? @featureType.backgroundOpacity
+        setDefaultZIndex: (@defaultZIndex) ->
+        getDefaultZIndex: -> @defaultZIndex ? @featureType.zIndex
+
+        refresh: -> @geometry.refresh()
 
 
     window.komoo.features =
