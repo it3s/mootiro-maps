@@ -223,7 +223,8 @@ class Relation(BaseModel):
             direction = rel['direction'] if oid_1 == relation.oid_1 else _swap_direction(rel['direction'])
             relation.direction = direction
             relation.save()
-            relation.upsert_metadata(rel['metadata'], parse=True)
+            if rel.fetch('metadata', None):
+                relation.upsert_metadata(rel['metadata'], parse=True)
 
     @classmethod
     def get_relation(cls, oid_1, oid_2):
