@@ -19,7 +19,7 @@ define(['map/layers'], function(Layers) {
       delay: 300,
       axis: "y",
       stop: function(e, ui) { that.refresh(); }
-    }).disableSelection();
+    });
     this.$el.append(this.$ul);
     var $addBtn = $('<a>').text(gettext('New layer')).addClass('add_btn');
     $addBtn.click(function() { that.createNewLayer(); });
