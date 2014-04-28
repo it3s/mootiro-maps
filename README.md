@@ -1,7 +1,7 @@
 # http://maps.mootiro.org/
 
 
-instalations instructions on: https://github.com/it3s/mootiro-maps/wiki/Instala%C3%A7%C3%A3o
+instalation instructions on: https://github.com/it3s/mootiro-maps/wiki/Instala%C3%A7%C3%A3o
 
 
 
