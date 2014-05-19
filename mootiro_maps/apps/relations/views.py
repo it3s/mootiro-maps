@@ -15,9 +15,6 @@ def _back_url(request):
     return back_url
 
 def edit_relations(request):
-    print "\n\n"
-    print json.loads(request.POST['relations_json'])
-    print "\n\n"
     Relation.edit(request.POST['object_oid'], json.loads(request.POST['relations_json']))
     return redirect(_back_url(request))
 
