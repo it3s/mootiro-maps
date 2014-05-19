@@ -23,6 +23,7 @@
       container: container,
 
       init: function() {
+        this.id = this.container.find('.relation_id');
         this.input = this.container.find('.target_autocomplete');
         this.field = this.container.find('.target');
         this.dropdown = this.container.find('select[name=relation_type]');
@@ -61,6 +62,7 @@
       },
 
       loadValues: function(obj) {
+        this.id.val(obj.id);
         this.input.val(obj.target_name);
         this.field.val(obj.target_oid);
         this.dropdown.find('option[value="' +  obj.direction + obj.rel_type + '"]').attr('selected', 'selected');
@@ -153,6 +155,7 @@
           var rel = $el.find('[name=relation_type]').val();
           var target = $el.find('.target').val()
           if (target && target.length > 0 && rel && rel.length > 0) {
+            var id = $el.find('.relation_id').val() || null;
 
             // get metadata
             var start_date =  $el.find('[name=metadata_start_date]').val();
@@ -169,6 +172,7 @@
             };
 
             relations.push({
+              id       : id,
               direction: rel[0],
               rel_type : rel.substring(1, rel.length),
               target   : target,

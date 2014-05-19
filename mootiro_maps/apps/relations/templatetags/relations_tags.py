@@ -11,6 +11,7 @@ def edit_relations_for(context, obj=None):
     options = Relation.rel_type_options()
     relations = [
         {
+            "id": rel['id'],
             "direction": rel['direction'],
             "rel_type": rel['rel_type'],
             "target_oid": rel['target_oid'],
