@@ -24,7 +24,7 @@ RELATION_TYPES = [
     ('partnership', 'Partnership'),
     ('grants', 'Grants'),
     ('certification', 'Certification'),
-    ('students attendance', 'Students attendance'),
+    ('attendance', 'Attendance'),
     ('directing people', 'Directing people'),
     ('volunteers', 'Volunteers'),
     ('support', 'Support'),
@@ -89,8 +89,8 @@ def _rel_type_dict():
         ),
         # certifica, é certificada por
 
-        'students attendance': (
-            _('attends students from'), _('attends')
+        'attendance': (
+            _('attended by'), _('attends')
         ),
         # students attendance, attends students from - atende alunos de
 
