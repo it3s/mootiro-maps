@@ -18,6 +18,7 @@ CREATE TABLE relations_relationmetadata
 (
   id serial NOT NULL,
   value double precision,
+  currency character varying(3),
   start_date date,
   end_date date,
   description text,

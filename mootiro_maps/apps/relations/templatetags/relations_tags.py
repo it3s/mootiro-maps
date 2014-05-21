@@ -2,13 +2,14 @@
 import json
 from django import template
 from main.utils import to_json
-from relations.models import Relation
+from relations.models import Relation, RelationMetadata
 
 register = template.Library()
 
 @register.inclusion_tag('relations/edit.html', takes_context=True)
 def edit_relations_for(context, obj=None):
     options = Relation.rel_type_options()
+    currencies = RelationMetadata.CURRENCIES_CHOICES
     relations = [
         {
             "id": rel['id'],
@@ -20,7 +21,7 @@ def edit_relations_for(context, obj=None):
         }
         for rel in Relation.relations_for(obj)]
     oid = Relation.build_oid(obj)
-    return {"options": options, "relations": to_json(relations), "oid": oid}
+    return {"options": options, "currencies": currencies, "relations": to_json(relations), "oid": oid}
 
 def _dict_has_values(d):
     return reduce(lambda x, acc: x or acc,  map(bool, d.values()), False)

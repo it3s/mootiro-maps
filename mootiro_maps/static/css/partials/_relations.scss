@@ -57,8 +57,15 @@
       input[name=metadata_description] { width: 555px; }
 
       .date-field {
-        display:inline-block;
         width: 282px;
+      }
+      .number-field {
+        width: 330px;
+        input { width: 100%; }
+      }
+
+      .inline-field {
+        display: inline-block;
         vertical-align: top;
       }
 

@@ -1151,8 +1151,13 @@ label[for=id_contacts] {
       .relations-edit .relation-item .metadata-form input[name=metadata_description] {
         width: 555px; }
       .relations-edit .relation-item .metadata-form .date-field {
+        width: 282px; }
+      .relations-edit .relation-item .metadata-form .number-field {
+        width: 330px; }
+        .relations-edit .relation-item .metadata-form .number-field input {
+          width: 100%; }
+      .relations-edit .relation-item .metadata-form .inline-field {
         display: inline-block;
-        width: 282px;
         vertical-align: top; }
       .relations-edit .relation-item .metadata-form .error {
         border: solid 1px #ad3333; }

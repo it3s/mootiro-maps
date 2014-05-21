@@ -277,6 +277,15 @@ class Relation(BaseModel):
 
 
 class RelationMetadata(BaseModel):
+
+    CURRENCIES_CHOICES = (
+        ('BRL', _('Brazilian Real (BRL)')),
+        ('USD', _('US-Dollar (USD)')),
+        ('EUR', _('Euro')),
+    )
+
+    currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES,
+                null=True, blank=True)
     value = models.FloatField(null=True)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
