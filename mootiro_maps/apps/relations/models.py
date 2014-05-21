@@ -297,7 +297,9 @@ class RelationMetadata(BaseModel):
             'description': self.description,
             'start_date': self.start_date.strftime('%d/%m/%Y') if self.start_date else None,
             'end_date': self.end_date.strftime('%d/%m/%Y') if self.end_date else None,
-            'value': self.value
+            'value': self.value,
+            'currency': self.currency,
+            'currency_label': self.currency_label,
         }
 
     def from_dict(self, d):
@@ -305,5 +307,15 @@ class RelationMetadata(BaseModel):
         self.start_date = d.get('start_date', None)
         self.end_date = d.get('end_date', None)
         self.value = d.get('value', None)
+        self.currency = d.get('currency', None)
+
+    @property
+    def currency_label(self):
+        return {
+            'BRL': 'R$',
+            'USD': '$',
+            'EUR': '€',
+            None: '',
+        }[self.currency]
 
 

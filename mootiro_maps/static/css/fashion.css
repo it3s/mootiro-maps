@@ -1197,3 +1197,7 @@ label[for=id_contacts] {
       display: inline-block;
       margin-bottom: 5px;
       width: 60%; }
+    .relations-view-list .item-metadata .metadata-currency {
+      display: inline-block;
+      margin-right: 5px;
+      font-style: italic; }

@@ -38,7 +38,7 @@
       <p>
         <div class="currency-field inline-field">
           <label>{% trans 'Currency' %}</label>
-          <select name="currency">
+          <select name="metadata_currency">
             {% for curr in currencies %}
               <option value="{{ curr.0 }}">{{ curr.1 }}</option>
             {% endfor %}

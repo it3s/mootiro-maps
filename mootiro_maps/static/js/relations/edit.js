@@ -70,6 +70,7 @@
         this.metadataForm.find('[name=metadata_start_date]').val(obj.metadata.start_date || '');
         this.metadataForm.find('[name=metadata_end_date]').val(obj.metadata.end_date || '');
         this.metadataForm.find('[name=metadata_value]').val(obj.metadata.value || '');
+        this.metadataForm.find('[name=metadata_currency]').find('option[value="' +  obj.metadata.currency + '"]').attr('selected', 'selected');
       }
     };
   };
@@ -164,11 +165,13 @@
             end_date = isValidDate(end_date) ? end_date : null;
             var value = $el.find('[name=metadata_value]').val();
             value = isNumber(value) ? value : null;
+            var currency = $el.find('[name=metadata_currency]').val();
             var metadata = {
               description: $el.find('[name=metadata_description]').val() || null,
               start_date : start_date,
               end_date   : end_date,
               value      : value,
+              currency   : currency,
             };
 
             relations.push({
