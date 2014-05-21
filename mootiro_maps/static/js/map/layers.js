@@ -57,14 +57,59 @@ define(function(require) {
     __extends(Layers, _super);
 
     function Layers() {
-      return Layers.__super__.constructor.apply(this, arguments);
+      Layers.__super__.constructor.call(this);
+      this.othersLayer = this.loadLayer({
+        id: 'Others',
+        name: gettext('Others'),
+        position: 100
+      });
+      window.o = this.othersLayer;
     }
+
+    Layers.prototype.updateOthersLayerRule = function() {
+      var rule, _ref,
+        _this = this;
+      rule = void 0;
+      this.forEach(function(layer) {
+        var not_;
+        if (layer === _this.othersLayer || !(layer.getRule() != null)) {
+          return;
+        }
+        not_ = {
+          operator: 'not',
+          child: layer.getRule()
+        };
+        return rule = rule != null ? {
+          operator: 'and',
+          left: rule,
+          right: not_
+        } : not_;
+      });
+      return (_ref = this.othersLayer) != null ? _ref.setRule(rule) : void 0;
+    };
+
+    Layers.prototype.sort = function(compareFunction) {
+      if (compareFunction != null) {
+        return Layers.__super__.sort.call(this, compareFunction);
+      }
+      return Layers.__super__.sort.call(this, function(a, b) {
+        if (a.getPosition() < b.getPosition()) {
+          return -1;
+        }
+        if (a.getPosition() > b.getPosition()) {
+          return 1;
+        }
+        return 0;
+      });
+    };
 
     Layers.prototype.addLayer = function(layer) {
       var _ref;
       if (!this.contains(layer)) {
         this.push(layer);
       }
+      this.updateOthersLayerRule();
+      this.sort();
       layer.setLayersCollection(this);
       this._resetCache();
       return (_ref = layer.map) != null ? _ref.publish('layer_added', layer) : void 0;
@@ -140,7 +185,11 @@ define(function(require) {
     };
 
     Layers.prototype.setCollection = function(collection) {
+      var _this = this;
       this.collection = collection;
+      return this.forEach(function(layer) {
+        return layer.setCollection(_this.collection);
+      });
     };
 
     Layers.prototype.getCollection = function() {
@@ -169,15 +218,19 @@ define(function(require) {
     };
 
     Layers.prototype.setMap = function(map) {
+      var _this = this;
       this.map = map;
       if (!this.map) {
         return;
       }
       this.reset();
       this.handleMapEvents();
-      return this.forEach(function(layer) {
-        return layer.setMap(this.map);
+      this.forEach(function(layer) {
+        return layer.setMap(_this.map);
       });
+      if (!(this.collection != null)) {
+        return this.setCollection(this.map.getFeatures());
+      }
     };
 
     Layers.prototype.handleMapEvents = function() {
@@ -234,6 +287,9 @@ define(function(require) {
       var layers;
       layers = [];
       this.forEach(function(layer) {
+        if (layer.getId() === 'Others') {
+          return;
+        }
         return layers.push(layer.toJSON());
       });
       return layers;

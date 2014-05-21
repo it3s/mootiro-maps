@@ -43,6 +43,7 @@ define(['map/layers'], function(Layers) {
   LayersWidget.prototype.refresh = function(layers) {
     layers = layers || this.layers;
     layers.forEach(function(layer) {
+      if (layer.getId() == 'Others') return
       layer.$el.find('input[name=name]').val(layer.getName());
 
       // This widget only accept rule of type {operator:'has', property:'tags', value:[...]}
@@ -82,6 +83,7 @@ define(['map/layers'], function(Layers) {
   };
 
   LayersWidget.prototype.addNewLayer = function(layer, map) {
+    if (layer.getId() == 'Others') return
     var that = this;
     this.$ul.find('.content').slideUp().parent().find('.details').show();
     layer.$el = $('<li>').addClass('layer');
@@ -213,6 +215,7 @@ define(['map/layers'], function(Layers) {
   LayersWidget.prototype.toJSON = function() {
     layers = []
     this.layers.forEach(function(layer) {
+      if (layer.getId() == 'Others') return
       var layerJSON = layer.toJSON();
       // removes the temporary id
       if(layer.isNew) {

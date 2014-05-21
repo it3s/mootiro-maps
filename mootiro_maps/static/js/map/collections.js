@@ -104,6 +104,10 @@ define(function(require) {
       return collection;
     };
 
+    GenericCollection.prototype.sort = function(compareFunction) {
+      return this.elements.sort(compareFunction);
+    };
+
     GenericCollection.prototype.contains = function(element) {
       return __indexOf.call(this.elements, element) >= 0;
     };
