@@ -41,6 +41,7 @@ def migrate_investments():
                     'end_date': inv.end_date.strftime('%d/%m/%Y') if inv.end_date else None,
                     'description': inv.name,
                     'value': inv.value,
+                    'currency': inv.currency,
                 }
             }]
             Relation.edit(oid, relation)
