@@ -73,8 +73,10 @@ define (require) ->
         sort: (compareFunction) ->
             return super compareFunction if compareFunction?
             super (a, b) ->
-                return -1 if a.getPosition() < b.getPosition()
-                return  1 if a.getPosition() > b.getPosition()
+                aPos = a.getPosition() ? 0
+                bPos = b.getPosition() ? 0
+                return -1 if aPos < bPos
+                return  1 if aPos > bPos
                 return  0
 
         addLayer: (layer) ->

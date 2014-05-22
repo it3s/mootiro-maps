@@ -93,10 +93,13 @@ define(function(require) {
         return Layers.__super__.sort.call(this, compareFunction);
       }
       return Layers.__super__.sort.call(this, function(a, b) {
-        if (a.getPosition() < b.getPosition()) {
+        var aPos, bPos, _ref, _ref1;
+        aPos = (_ref = a.getPosition()) != null ? _ref : 0;
+        bPos = (_ref1 = b.getPosition()) != null ? _ref1 : 0;
+        if (aPos < bPos) {
           return -1;
         }
-        if (a.getPosition() > b.getPosition()) {
+        if (aPos > bPos) {
           return 1;
         }
         return 0;
