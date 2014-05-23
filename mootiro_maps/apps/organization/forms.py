@@ -26,7 +26,7 @@ from signatures.signals import notify_on_update
 from video.forms import VideosField
 from video.models import Video
 
-if settings.LANGUAGE_CODE == 'en-us':
+if settings.LANGUAGE_CODE in ['en-us', 'en']:
     CATEGORIES = [(cat.id, cat.name)
                 for cat in OrganizationCategory.objects.all().order_by('name')]
 else:
