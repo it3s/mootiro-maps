@@ -24,7 +24,7 @@ RELATION_TYPES = [
     ('partnership', 'Partnership'),
     ('grants', 'Grants'),
     ('certification', 'Certification'),
-    ('students attendance', 'Students attendance'),
+    ('attendance', 'Attendance'),
     ('directing people', 'Directing people'),
     ('volunteers', 'Volunteers'),
     ('support', 'Support'),
@@ -89,8 +89,8 @@ def _rel_type_dict():
         ),
         # certifica, é certificada por
 
-        'students attendance': (
-            _('attends students from'), _('attends')
+        'attendance': (
+            _('attended by'), _('attends')
         ),
         # students attendance, attends students from - atende alunos de
 
@@ -198,6 +198,7 @@ class Relation(BaseModel):
             target_oid = rel.oid_1 if oid != rel.oid_1 else rel.oid_2
             direction = rel.direction if oid == rel.oid_1 else _swap_direction(rel.direction)
             relations.append({
+                'id': rel.id,
                 'target': cls.get_model_from_oid(target_oid),
                 'target_oid': target_oid,
                 'direction': direction,
@@ -210,15 +211,23 @@ class Relation(BaseModel):
     @classmethod
     def edit(cls, obj_oid, relations):
         # delete removed relations
-        old_relations_oids = map(lambda r: r['target_oid'], cls.relations_for(obj_oid))
-        edited_relations_oids = map(lambda r: r['target'], relations)
-        for oid in set(old_relations_oids) - set(edited_relations_oids):
-            cls.get_relation(obj_oid, oid).delete()
+        old_relations_ids = map(lambda r: r['id'], cls.relations_for(obj_oid))
+        edited_relations_ids = [int(r['id']) for r in relations if r.get('id', None)]
+        relations_to_delete =  set(old_relations_ids) - set(edited_relations_ids)
+        cls.objects.filter(pk__in=relations_to_delete).delete()
 
         # add or update relations
         for rel in relations:
             oid_1, oid_2 = [obj_oid, rel['target']]
-            relation = cls.get_relation(oid_1, oid_2)
+
+            # get existing relation or create new one
+            relation = cls.objects.get(pk=int(rel['id'])) if rel.get('id', None) else Relation(oid_1=oid_1, oid_2=oid_2)
+
+            if relation.has_changed(oid_1, oid_2):
+                relation.oid_1 = oid_1
+                relation.oid_2 = oid_2
+
+            # old
             relation.rel_type = rel['rel_type']
             direction = rel['direction'] if oid_1 == relation.oid_1 else _swap_direction(rel['direction'])
             relation.direction = direction
@@ -226,12 +235,12 @@ class Relation(BaseModel):
             if rel.get('metadata', None):
                 relation.upsert_metadata(rel['metadata'], parse=True)
 
-    @classmethod
-    def get_relation(cls, oid_1, oid_2):
-        qs = cls.objects.filter(
-            (Q(oid_1=oid_1) & Q(oid_2=oid_2)) |
-            (Q(oid_1=oid_2) & Q(oid_2=oid_1)) )
-        return qs[0] if qs.exists() else Relation(oid_1=oid_1, oid_2=oid_2)
+    # @classmethod
+    # def get_relation(cls, oid_1, oid_2):
+    #     qs = cls.objects.filter(
+    #         (Q(oid_1=oid_1) & Q(oid_2=oid_2)) |
+    #         (Q(oid_1=oid_2) & Q(oid_2=oid_1)) )
+    #     return qs[0] if qs.exists() else Relation(oid_1=oid_1, oid_2=oid_2)
 
     @classmethod
     def get_model_from_oid(cls, oid):
@@ -259,7 +268,24 @@ class Relation(BaseModel):
         return _rel_type_dict()[rel_type][index]
 
 
+    def has_changed(self, oid_1, oid_2):
+        return not (
+            (self.oid_1 == oid_1 and self.oid_2 == oid_2)
+            or
+            (self.oid_1 == oid_2 and elf.oid_2 == oid_1)
+        )
+
+
 class RelationMetadata(BaseModel):
+
+    CURRENCIES_CHOICES = (
+        ('BRL', _('Brazilian Real (BRL)')),
+        ('USD', _('US-Dollar (USD)')),
+        ('EUR', _('Euro')),
+    )
+
+    currency = models.CharField(max_length=3, choices=CURRENCIES_CHOICES,
+                null=True, blank=True)
     value = models.FloatField(null=True)
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
@@ -271,7 +297,9 @@ class RelationMetadata(BaseModel):
             'description': self.description,
             'start_date': self.start_date.strftime('%d/%m/%Y') if self.start_date else None,
             'end_date': self.end_date.strftime('%d/%m/%Y') if self.end_date else None,
-            'value': self.value
+            'value': self.value,
+            'currency': self.currency,
+            'currency_label': self.currency_label,
         }
 
     def from_dict(self, d):
@@ -279,5 +307,15 @@ class RelationMetadata(BaseModel):
         self.start_date = d.get('start_date', None)
         self.end_date = d.get('end_date', None)
         self.value = d.get('value', None)
+        self.currency = d.get('currency', None)
+
+    @property
+    def currency_label(self):
+        return {
+            'BRL': 'R$',
+            'USD': '$',
+            'EUR': '€',
+            None: '',
+        }[self.currency]
 
 

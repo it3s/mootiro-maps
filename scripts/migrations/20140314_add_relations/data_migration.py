@@ -7,6 +7,12 @@ from need.models import Need
 from investment.models import Investment
 from relations.models import Relation
 
+COMM_REL_TYPE = {
+    Organization: 'attendance',
+    Resource: 'contains',
+    Need: 'contains',
+}
+
 def migrate_community_relations():
     for model in [Resource, Organization, Need]:
         for obj in model.objects.all():
@@ -15,7 +21,7 @@ def migrate_community_relations():
                 relations = [
                     {
                         'target': 'c{id}'.format(id=comm.id),
-                        'rel_type': 'contains',
+                        'rel_type': COMM_REL_TYPE[model],
                         'direction': '-',
                     } for comm in obj.community.all()
                 ]
@@ -33,8 +39,9 @@ def migrate_investments():
                 'metadata': {
                     'start_date': inv.date.strftime('%d/%m/%Y') if inv.date else None,
                     'end_date': inv.end_date.strftime('%d/%m/%Y') if inv.end_date else None,
-                    'description': inv.name,
+                    'description': "%s\n%s" % (inv.name, inv.description),
                     'value': inv.value,
+                    'currency': inv.currency,
                 }
             }]
             Relation.edit(oid, relation)

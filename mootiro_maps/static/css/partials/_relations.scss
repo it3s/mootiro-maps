@@ -57,8 +57,15 @@
       input[name=metadata_description] { width: 555px; }
 
       .date-field {
-        display:inline-block;
         width: 282px;
+      }
+      .number-field {
+        width: 330px;
+        input { width: 100%; }
+      }
+
+      .inline-field {
+        display: inline-block;
         vertical-align: top;
       }
 
@@ -101,7 +108,21 @@
     display: none;
     padding: 20px;
 
-    .metadata-label { display: inline-block; margin-bottom: 5px; width: 20%; font-weight: bold; }
-    .metadata-value { display: inline-block; margin-bottom: 5px; width: 60%; }
+    .metadata-label {
+      display: inline-block;
+      margin-bottom: 5px; width: 20%;
+      font-weight: bold;
+      vertical-align: top;
+    }
+    .metadata-value {
+      display: inline-block;
+      margin-bottom: 5px;
+      width: 60%;
+    }
+    .metadata-currency {
+      display: inline-block;
+      margin-right: 5px;
+      font-style: italic;
+    }
   }
 }

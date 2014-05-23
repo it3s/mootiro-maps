@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-24 22:04-0300\n"
+"POT-Creation-Date: 2014-05-21 14:13-0300\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -213,7 +213,7 @@ msgstr "População"
 #: apps/need/forms.py:32 apps/organization/forms.py:51
 #: apps/proposal/forms.py:34
 #: templates/default/organization/branch_form.html:16
-#: templates/default/relations/edit.html:22
+#: templates/default/relations/edit.html:23
 #: templates/default/relations/view.html:13
 msgid "Description"
 msgstr "Descrição"
@@ -305,7 +305,7 @@ msgid "Currency"
 msgstr "Moeda"
 
 #: apps/investment/forms.py:44 templates/default/investment/view.html:51
-#: templates/default/relations/edit.html:39
+#: templates/default/relations/edit.html:40
 #: templates/default/relations/view.html:34
 msgid "Value"
 msgstr "Valor"
@@ -479,106 +479,6 @@ msgstr "Web Site"
 #: apps/main/models.py:59 apps/moderation/models.py:57
 msgid "Other"
 msgstr "Outro"
-
-#: apps/main/relations.py:8 apps/relations/models.py:68
-msgid "owns"
-msgstr "possui"
-
-#: apps/main/relations.py:8 apps/relations/models.py:68
-msgid "is owned by"
-msgstr "pertence à"
-
-#: apps/main/relations.py:13 apps/relations/models.py:73
-msgid "participates in"
-msgstr "participa de"
-
-#: apps/main/relations.py:13 apps/relations/models.py:73
-msgid "has as participant"
-msgstr "tem como participante"
-
-#: apps/main/relations.py:18 apps/relations/models.py:78
-msgid "partners with"
-msgstr "é parceiro de"
-
-#: apps/main/relations.py:23 apps/relations/models.py:83
-msgid "gives a grant to"
-msgstr "financia"
-
-#: apps/main/relations.py:23 apps/relations/models.py:83
-msgid "receives a grant from"
-msgstr "recebe financiamento de"
-
-#: apps/main/relations.py:28 apps/relations/models.py:88
-msgid "certifies"
-msgstr "certifica"
-
-#: apps/main/relations.py:28 apps/relations/models.py:88
-msgid "is certified by"
-msgstr "é certificado por"
-
-#: apps/main/relations.py:33 apps/relations/models.py:93
-msgid "attends students from"
-msgstr "atende alunos de"
-
-#: apps/main/relations.py:33 apps/relations/models.py:93
-msgid "attends"
-msgstr "atende a"
-
-#: apps/main/relations.py:38 apps/relations/models.py:98
-msgid "directs people to"
-msgstr "encaminha atendidos para"
-
-#: apps/main/relations.py:38 apps/relations/models.py:98
-msgid "receives people from"
-msgstr "recebe encaminhamentos de"
-
-#: apps/main/relations.py:43 apps/relations/models.py:103
-msgid "recruits volunteers for"
-msgstr "recruta voluntários para"
-
-#: apps/main/relations.py:43 apps/relations/models.py:103
-msgid "receives volunteers from"
-msgstr "recebe voluntários de"
-
-#: apps/main/relations.py:48 apps/relations/models.py:108
-msgid "supports"
-msgstr "apoia"
-
-#: apps/main/relations.py:48 apps/relations/models.py:108
-msgid "is supported by"
-msgstr "é apoiado por"
-
-#: apps/main/relations.py:53 apps/relations/models.py:113
-msgid "represents"
-msgstr "representa"
-
-#: apps/main/relations.py:53 apps/relations/models.py:113
-msgid "is represented by"
-msgstr "é representado por"
-
-#: apps/main/relations.py:58 apps/relations/models.py:118
-msgid "is a member of"
-msgstr "é membro de"
-
-#: apps/main/relations.py:58 apps/relations/models.py:118
-msgid "has as member"
-msgstr "tem como membro"
-
-#: apps/main/relations.py:63 apps/relations/models.py:123
-msgid "supplies to"
-msgstr "fornece para"
-
-#: apps/main/relations.py:63 apps/relations/models.py:123
-msgid "buys from"
-msgstr "compra de"
-
-#: apps/main/relations.py:68 apps/relations/models.py:128
-msgid "is board member of"
-msgstr "é conselheiro de"
-
-#: apps/main/relations.py:68 apps/relations/models.py:128
-msgid "has as board member"
-msgstr "tem como conselheiro"
 
 #: apps/main/utils.py:123
 msgid "Submit"
@@ -848,6 +748,106 @@ msgstr "Título"
 #: templates/default/proposal/view.html:39
 msgid "Cost"
 msgstr "Custo"
+
+#: apps/relations/models.py:68
+msgid "owns"
+msgstr "possui"
+
+#: apps/relations/models.py:68
+msgid "is owned by"
+msgstr "pertence à"
+
+#: apps/relations/models.py:73
+msgid "participates in"
+msgstr "participa de"
+
+#: apps/relations/models.py:73
+msgid "has as participant"
+msgstr "tem como participante"
+
+#: apps/relations/models.py:78
+msgid "partners with"
+msgstr "é parceiro de"
+
+#: apps/relations/models.py:83
+msgid "gives a grant to"
+msgstr "financia"
+
+#: apps/relations/models.py:83
+msgid "receives a grant from"
+msgstr "recebe financiamento de"
+
+#: apps/relations/models.py:88
+msgid "certifies"
+msgstr "certifica"
+
+#: apps/relations/models.py:88
+msgid "is certified by"
+msgstr "é certificado por"
+
+#: apps/relations/models.py:93
+msgid "attended by"
+msgstr "é atendido por"
+
+#: apps/relations/models.py:93
+msgid "attends"
+msgstr "atende"
+
+#: apps/relations/models.py:98
+msgid "directs people to"
+msgstr "encaminha atendidos para"
+
+#: apps/relations/models.py:98
+msgid "receives people from"
+msgstr "recebe encaminhamentos de"
+
+#: apps/relations/models.py:103
+msgid "recruits volunteers for"
+msgstr "recruta voluntários para"
+
+#: apps/relations/models.py:103
+msgid "receives volunteers from"
+msgstr "recebe voluntários de"
+
+#: apps/relations/models.py:108
+msgid "supports"
+msgstr "apoia"
+
+#: apps/relations/models.py:108
+msgid "is supported by"
+msgstr "é apoiado por"
+
+#: apps/relations/models.py:113
+msgid "represents"
+msgstr "representa"
+
+#: apps/relations/models.py:113
+msgid "is represented by"
+msgstr "é representado por"
+
+#: apps/relations/models.py:118
+msgid "is a member of"
+msgstr "é membro de"
+
+#: apps/relations/models.py:118
+msgid "has as member"
+msgstr "tem como membro"
+
+#: apps/relations/models.py:123
+msgid "supplies to"
+msgstr "fornece para"
+
+#: apps/relations/models.py:123
+msgid "buys from"
+msgstr "compra de"
+
+#: apps/relations/models.py:128
+msgid "is board member of"
+msgstr "é conselheiro de"
+
+#: apps/relations/models.py:128
+msgid "has as board member"
+msgstr "tem como conselheiro"
 
 #: apps/relations/models.py:133
 msgid "contains"
@@ -3600,36 +3600,36 @@ msgstr "Nova proposta"
 msgid "Add investment"
 msgstr "Adicionar investimento"
 
-#: templates/default/relations/edit.html:16
+#: templates/default/relations/edit.html:17
 msgid "aditional info"
 msgstr "informações adicionais"
 
-#: templates/default/relations/edit.html:17
+#: templates/default/relations/edit.html:18
 msgid "remove relation"
 msgstr "remover relação"
 
-#: templates/default/relations/edit.html:27
+#: templates/default/relations/edit.html:28
 msgid "Start Date (DD/MM/YYYY)"
 msgstr "Data de início (DD/MM/AAAA)"
 
-#: templates/default/relations/edit.html:29
-#: templates/default/relations/edit.html:34
+#: templates/default/relations/edit.html:30
+#: templates/default/relations/edit.html:35
 msgid "Date should be on DD/MM/YYYY format."
 msgstr "Data deve estar no formato DD/MM/AAAA."
 
-#: templates/default/relations/edit.html:32
+#: templates/default/relations/edit.html:33
 msgid "End Date (DD/MM/YYYY)"
 msgstr "Data de Término (DD/MM/AAAA)"
 
-#: templates/default/relations/edit.html:41
+#: templates/default/relations/edit.html:42
 msgid "Must be a number."
 msgstr "Deve ser um número."
 
-#: templates/default/relations/edit.html:55
+#: templates/default/relations/edit.html:56
 msgid "Add relation"
 msgstr "Adicionar relação"
 
-#: templates/default/relations/edit.html:62
+#: templates/default/relations/edit.html:63
 msgid "save"
 msgstr "salvar"
 
@@ -3835,6 +3835,9 @@ msgstr "saiba mais sobre esse objeto"
 #: templates/default/update/updates_list_templatetag.html:116
 msgid "by"
 msgstr "por"
+
+#~ msgid "attends students from"
+#~ msgstr "atende alunos de"
 
 #~ msgid "at"
 #~ msgstr "em"
