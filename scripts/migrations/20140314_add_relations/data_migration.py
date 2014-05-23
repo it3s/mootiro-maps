@@ -39,7 +39,7 @@ def migrate_investments():
                 'metadata': {
                     'start_date': inv.date.strftime('%d/%m/%Y') if inv.date else None,
                     'end_date': inv.end_date.strftime('%d/%m/%Y') if inv.end_date else None,
-                    'description': inv.name,
+                    'description': "%s\n%s" % (inv.name, inv.description),
                     'value': inv.value,
                     'currency': inv.currency,
                 }

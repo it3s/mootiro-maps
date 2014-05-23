@@ -108,8 +108,21 @@
     display: none;
     padding: 20px;
 
-    .metadata-label { display: inline-block; margin-bottom: 5px; width: 20%; font-weight: bold; }
-    .metadata-value { display: inline-block; margin-bottom: 5px; width: 60%; }
-    .metadata-currency { display: inline-block; margin-right: 5px; font-style: italic; }
+    .metadata-label {
+      display: inline-block;
+      margin-bottom: 5px; width: 20%;
+      font-weight: bold;
+      vertical-align: top;
+    }
+    .metadata-value {
+      display: inline-block;
+      margin-bottom: 5px;
+      width: 60%;
+    }
+    .metadata-currency {
+      display: inline-block;
+      margin-right: 5px;
+      font-style: italic;
+    }
   }
 }

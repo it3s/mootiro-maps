@@ -1192,7 +1192,8 @@ label[for=id_contacts] {
       display: inline-block;
       margin-bottom: 5px;
       width: 20%;
-      font-weight: bold; }
+      font-weight: bold;
+      vertical-align: top; }
     .relations-view-list .item-metadata .metadata-value {
       display: inline-block;
       margin-bottom: 5px;

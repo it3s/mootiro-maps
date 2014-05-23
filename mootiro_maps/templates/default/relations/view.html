@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load markitup_tags %}
 
 <ul class="relations-view-list">
   {% for relation in relations %}
@@ -11,7 +12,7 @@
             {% if relation.metadata.description %}
               <div>
                 <div class="metadata-label">{% trans "Description" %}:</div>
-                <div class="metadata-value">{{ relation.metadata.description}}</div>
+                <div class="metadata-value">{{ relation.metadata.description|render_markup|safe}}</div>
               </div>
             {% endif %}
 
