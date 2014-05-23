@@ -62,6 +62,9 @@ define (require) ->
             collection.updateLength()
             collection
 
+        sort: (compareFunction) ->
+            @elements.sort compareFunction
+
         contains: (element) -> element in @elements
 
 

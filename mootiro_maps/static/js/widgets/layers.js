@@ -1,4 +1,17 @@
 define(['map/layers'], function(Layers) {
+  colors = [
+    'e11d21',
+    'eb6420',
+    'fbca04',
+    '009800',
+    '006b75',
+    '207de5',
+    '0052cc',
+    '5319e7'
+  ];
+
+  var lastUsedColor = -1;
+
   // Layers configuration
   var LayersWidget = function(el) {
   if(el === undefined) el = '<div>';
@@ -19,16 +32,18 @@ define(['map/layers'], function(Layers) {
       delay: 300,
       axis: "y",
       stop: function(e, ui) { that.refresh(); }
-    }).disableSelection();
+    });
     this.$el.append(this.$ul);
     var $addBtn = $('<a>').text(gettext('New layer')).addClass('add_btn');
     $addBtn.click(function() { that.createNewLayer(); });
     this.$el.append($addBtn);
+    return this;
   };
 
   LayersWidget.prototype.refresh = function(layers) {
     layers = layers || this.layers;
     layers.forEach(function(layer) {
+      if (layer.getId() == 'Others') return
       layer.$el.find('input[name=name]').val(layer.getName());
 
       // This widget only accept rule of type {operator:'has', property:'tags', value:[...]}
@@ -47,6 +62,7 @@ define(['map/layers'], function(Layers) {
       layer.$el.find('.title').text(interpolate(gettext("Layer %s"), [layer.getPosition() + 1]));
       layer.$el.find('.layer_name').text(layer.getName());
     });
+    return this;
   };
 
   LayersWidget.prototype.setRule = function(layer, tags) {
@@ -63,19 +79,21 @@ define(['map/layers'], function(Layers) {
     layer.$el.find('.layer_count').text(interpolate(
         ngettext('%s object', '%s objects', count),
         [count]));
+    return this;
   };
 
   LayersWidget.prototype.addNewLayer = function(layer, map) {
+    if (layer.getId() == 'Others') return
     var that = this;
     this.$ul.find('.content').slideUp().parent().find('.details').show();
     layer.$el = $('<li>').addClass('layer');
-    layer.$el.html('<div class="header"><h3 class="title"></h3><div class="details"><strong class="layer_name"></strong></div><span class="layer_count"></span></div>');
+    layer.$el.html('<div class="header"><h3 class="title"></h3><div class="details"><span class="strokecolor"><span class="fillcolor"></span></span><strong class="layer_name"></strong></div><span class="layer_count"></span></div>');
     layer.$el.find('.details').hide();
     layer.$el.append($('#layer_content_model').clone().show().attr('id', ''));
     // append to widget
     this.$ul.append(layer.$el);
     // init name widget
-    layer.$el.find('input[name=name]').change(function() {
+    layer.$el.find('input[name=name]').keyup(function() {
       layer.setName(this.value);
       layer.$el.find('.layer_name').text(this.value);
     });
@@ -98,8 +116,8 @@ define(['map/layers'], function(Layers) {
       colorScheme: 'light',
       onChange: function(hsb, hex, rgb, fromSetColor) {
         if(!fromSetColor) {
-          layer.$el.find('.fillcolor').css('background','#'+hex);
-          layer.setFillColor('#'+hex);
+          layer.$el.find('.fillcolor').css('background','#' + hex);
+          layer.setFillColor('#' + hex);
         }
       }
     }).keyup(function(){
@@ -111,8 +129,8 @@ define(['map/layers'], function(Layers) {
       colorScheme: 'light',
       onChange: function(hsb, hex, rgb, fromSetColor) {
         if(!fromSetColor) {
-          layer.$el.find('.strokecolor').css('background','#'+hex);
-          layer.setStrokeColor('#'+hex);
+          layer.$el.find('.strokecolor').css('background','#' + hex);
+          layer.setStrokeColor('#' + hex);
         }
       }
     }).keyup(function(){
@@ -137,12 +155,30 @@ define(['map/layers'], function(Layers) {
     this.layers.addLayer(layer);
     layer.setMap(map);
     this.refresh([layer]);
+    return this;
   };
 
   LayersWidget.prototype.toggleLayer = function(layer) {
     layer.$el.find('.content').toggle(500);
     layer.$el.find('.details').toggle();
-  }
+    return this;
+  };
+
+  LayersWidget.prototype.setRandomColor = function(layer) {
+    // First try to get a color from the predefined list, if all colors were
+    // already used then create a random color.
+    hex = colors[++lastUsedColor];
+    if (hex === undefined) {
+      hex = Math.floor(Math.random() * 16777215).toString(16);
+    }
+    layer.setFillColor('#' + hex);
+    layer.setStrokeColor('#' + hex);
+    if (layer.$el) {
+      layer.$el.find('.fillcolor').css('background','#' + hex);
+      layer.$el.find('.strokecolor').css('background','#' + hex);
+    }
+    return this;
+  };
 
   LayersWidget.prototype.removeLayer = function(layer) {
     // marks the layer to be deleted
@@ -155,24 +191,31 @@ define(['map/layers'], function(Layers) {
     // removes the layer DOM from widget
     layer.$el.remove();
     this.refresh();
+    return this;
   };
 
   LayersWidget.prototype.createNewLayer = function(map) {
     var layer = new Layers.Layer({ id: 'new'+this.cur++ });
     layer.isNew = true;
+    this.setRandomColor(layer);
     this.addNewLayer(layer, map);
     layer.$el.find('input[name=name]').focus();
+    return this;
   };
 
   LayersWidget.prototype.loadLayers = function(layers, map) {
     for(var i=0, l=layers.length; i < l; i++) {
       this.addNewLayer(layers[i], map);
     }
+    // Try to avoid repeted colors
+    lastUsedColor = layers.length - 1;
+    return this;
   };
 
   LayersWidget.prototype.toJSON = function() {
     layers = []
     this.layers.forEach(function(layer) {
+      if (layer.getId() == 'Others') return
       var layerJSON = layer.toJSON();
       // removes the temporary id
       if(layer.isNew) {

@@ -78,12 +78,28 @@
 
       .layers_widget .layer .header h3,
       .layers_widget .layer .header .details {
-        display: inline;
+        display: inline !important;
         margin: 0 10px;
       }
 
       .layers_widget .layer .header .layer_count {
         float: right;
+      }
+
+      .layers_widget .layer .header .strokecolor {
+        display: inline-block;
+        border-radius: 5px;
+        width: 18px;
+        height: 18px;
+        padding: 2px;
+        margin: 0 10px 0 0;
+      }
+
+      .layers_widget .layer .header .fillcolor {
+        display: inline-block;
+        border-radius: 3px;
+        width: 100%;
+        height: 100%;
       }
 
       .layers_widget .layer > .content {

@@ -76,6 +76,11 @@ def info_window(request, zoom, app_label, model_name, obj_id):
         image = images.get(cover=True)
     except UploadedFile.DoesNotExist:
         image = None
+    if not image:  # Have no selected image. Get the first one.
+        try:
+            image = images.all()[:1].get()
+        except UploadedFile.DoesNotExist:
+            image = None
     template = getattr(obj, 'info_window_template',
                        'komoo_map/info_window.html')
     return render_to_response(template, {'object': obj, 'zoom': zoom, 'image': image},

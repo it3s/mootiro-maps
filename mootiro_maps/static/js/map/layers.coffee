@@ -47,8 +47,42 @@ define (require) ->
 
 
     class Layers extends collections.GenericCollection
+        constructor:  ->
+            super()
+            @othersLayer = @loadLayer
+                id: 'Others'
+                name: gettext 'Others'
+                position: 100
+            window.o = @othersLayer
+
+        updateOthersLayerRule: ->
+            rule = undefined
+            @forEach (layer) =>
+                return if layer is @othersLayer or not layer.getRule()?
+                not_ =
+                    operator: 'not'
+                    child: layer.getRule()
+                rule = if rule?
+                    operator: 'and'
+                    left: rule
+                    right: not_
+                else
+                    not_
+            @othersLayer?.setRule rule
+
+        sort: (compareFunction) ->
+            return super compareFunction if compareFunction?
+            super (a, b) ->
+                aPos = a.getPosition() ? 0
+                bPos = b.getPosition() ? 0
+                return -1 if aPos < bPos
+                return  1 if aPos > bPos
+                return  0
+
         addLayer: (layer) ->
             @push layer if not @contains layer
+            @updateOthersLayerRule()
+            @sort()
             layer.setLayersCollection this
             @_resetCache()
             layer.map?.publish 'layer_added', layer
@@ -86,6 +120,7 @@ define (require) ->
             visible
 
         setCollection: (@collection) ->
+            @forEach (layer) => layer.setCollection @collection
         getCollection: -> @collection ? @map?.getFeatures() ? []
 
         loadLayer: (data) ->
@@ -105,7 +140,8 @@ define (require) ->
             return if not @map
             @reset()
             @handleMapEvents()
-            @forEach (layer) -> layer.setMap @map
+            @forEach (layer) => layer.setMap @map
+            @setCollection @map.getFeatures() if not @collection?
 
         handleMapEvents: ->
             @map.subscribe 'feature_added', (feature) =>
@@ -138,6 +174,7 @@ define (require) ->
         toJSON: ->
             layers = []
             @forEach (layer) ->
+                return if layer.getId() is 'Others'
                 layers.push layer.toJSON()
             layers
 
