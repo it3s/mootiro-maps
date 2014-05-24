@@ -200,6 +200,15 @@ define(function(require) {
       return (_ref = (_ref1 = this.collection) != null ? _ref1 : (_ref2 = this.map) != null ? _ref2.getFeatures() : void 0) != null ? _ref : [];
     };
 
+    Layers.prototype.refresh = function() {
+      var _this = this;
+      return this.getCollection().forEach(function(feature) {
+        var layer, _ref;
+        layer = _this.getLayer((_ref = _this._getFromCache(feature)) != null ? _ref[0] : void 0);
+        return _this._updateFeatureStyle(feature, layer);
+      });
+    };
+
     Layers.prototype.loadLayer = function(data) {
       var layer;
       layer = new Layer(_.extend({
@@ -299,9 +308,7 @@ define(function(require) {
     };
 
     Layers.prototype._updateFeatureStyle = function(feature, layer) {
-      feature.setBorderColor(layer.getStrokeColor());
-      feature.setBackgroundColor(layer.getFillColor());
-      return feature.refresh();
+      return layer._updateFeatureStyle(feature);
     };
 
     return Layers;
@@ -489,6 +496,12 @@ define(function(require) {
         "fillColor": this.getFillColor(),
         "strokeColor": this.getStrokeColor()
       };
+    };
+
+    Layer.prototype._updateFeatureStyle = function(feature) {
+      feature.setBorderColor(this.getStrokeColor());
+      feature.setBackgroundColor(this.getFillColor());
+      return feature.refresh();
     };
 
     return Layer;

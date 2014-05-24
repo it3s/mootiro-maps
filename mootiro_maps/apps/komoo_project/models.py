@@ -214,6 +214,24 @@ class Project(BaseModel):
         return self.filter_related_items(Q(), get_models())
 
     @property
+    def bounds(self):
+        # Get the project items
+        items = self.related_items
+        bounds = None
+        for item in items:
+            if not bounds:
+                bounds = item.bounds
+            else:
+                bounds = bounds.union(item.bounds).envelope
+        return bounds
+
+    @property
+    def bbox(self):
+        coords = self.bounds.coords[0]
+        return [coords[0][1], coords[0][0], coords[2][1], coords[2][0]]
+
+
+    @property
     def json(self):
         return to_json({
             'name': self.name,
@@ -221,7 +239,8 @@ class Project(BaseModel):
             'logo_url': self.logo_url,
             'view_url': self.view_url,
             'partners_logo': [{'url': logo.file.url}
-                                for logo in self.partners_logo()]
+                                for logo in self.partners_logo()],
+            'bounds': self.bounds,
         })
 
     @property
@@ -254,6 +273,7 @@ class Project(BaseModel):
             ('last_editor_id', None), ('last_update', None),
             ('logo_id', None),
             ('contacts', {}),
+            ('bounds', None),
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['tags'] = [tag.name for tag in self.tags.all()]

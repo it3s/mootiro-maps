@@ -352,7 +352,9 @@ define(function(require) {
     };
 
     Map.prototype.refresh = function() {
-      return googleMaps.event.trigger(this.googleMap, 'resize');
+      var _ref2;
+      googleMaps.event.trigger(this.googleMap, 'resize');
+      return (_ref2 = this.layers) != null ? _ref2.refresh() : void 0;
     };
 
     Map.prototype.saveLocation = function(center, zoom) {
@@ -596,8 +598,14 @@ define(function(require) {
     };
 
     Map.prototype.fitBounds = function(bounds) {
+      var ne, sw;
       if (bounds == null) {
         bounds = this.features.getBounds();
+      }
+      if (_.isArray(bounds)) {
+        sw = new googleMaps.LatLng(bounds[1], bounds[0]);
+        ne = new googleMaps.LatLng(bounds[3], bounds[2]);
+        bounds = new googleMaps.LatLngBounds(sw, ne);
       }
       return this.googleMap.fitBounds(bounds);
     };

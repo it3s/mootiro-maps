@@ -13,8 +13,6 @@
         <h3>{% trans "Layers" %}</h3>
         <div class="description">{% trans "Group objects by tags and identify them with colors." %}</div>
         <div class="description">{% trans "Drag each grouping up or down to set priority." %}</div>
-        <!--Defina o agrupamento dos objetos por palavras chave e identifique-os com cores.
-        Arraste cada agrupamento para cima ou para baixo para definir a prioridade.-->
         <div id="layers-widget-canvas"></div>
       </div>
 
@@ -42,9 +40,6 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}lib/colpick/css/colpick.css" type="text/css"/>
     <link rel="stylesheet" href="{{ STATIC_URL }}lib/tagsinput/jquery.tagsinput.css" type="text/css"/>
     <style type="text/css">
-      #map {
-        display: none;
-      }
       #map-main-preview-canvas {
         height: 350px;
         width: 100%;
@@ -182,7 +177,8 @@
                       height: '350px'
                   });
                   map = $map.data('map');
-                  map.setZoom(0);  // load all project objects
+                  window.map = map;
+                  map.fitBounds({{ project.bbox }});
                   // Create the layers editor widget
                   layersWidget = new LayersWidget('#layers-widget-canvas');
                   // Load the project layers into map and get the Layers objects

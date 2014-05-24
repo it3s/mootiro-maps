@@ -219,7 +219,9 @@ define (require) ->
             @features.removeAllFromMap()
             @features.clear()
 
-        refresh: -> googleMaps.event.trigger @googleMap, 'resize'
+        refresh: ->
+            googleMaps.event.trigger @googleMap, 'resize'
+            @layers?.refresh()
 
         saveLocation: (center = @googleMap.getCenter(), zoom = @getZoom()) ->
             @publish 'save_location', center, zoom
@@ -374,6 +376,10 @@ define (require) ->
         getMapType: -> @googleMap.getMapTypeId()
 
         fitBounds: (bounds = @features.getBounds()) ->
+            if _.isArray bounds
+                sw = new googleMaps.LatLng bounds[1], bounds[0]
+                ne = new googleMaps.LatLng bounds[3], bounds[2]
+                bounds = new googleMaps.LatLngBounds sw, ne
             @googleMap.fitBounds bounds
 
         getMapTypeId: -> @googleMap.getMapTypeId()

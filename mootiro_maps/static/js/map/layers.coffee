@@ -123,6 +123,11 @@ define (require) ->
             @forEach (layer) => layer.setCollection @collection
         getCollection: -> @collection ? @map?.getFeatures() ? []
 
+        refresh: ->
+            @getCollection().forEach (feature) =>
+                layer = @getLayer(@_getFromCache(feature)?[0])
+                @_updateFeatureStyle feature, layer
+
         loadLayer: (data) ->
             layer = new Layer _.extend {
                 collection: @getCollection()
@@ -179,10 +184,7 @@ define (require) ->
             layers
 
         _updateFeatureStyle: (feature, layer) ->
-            feature.setBorderColor layer.getStrokeColor()
-            feature.setBackgroundColor layer.getFillColor()
-            feature.refresh()
-
+            layer._updateFeatureStyle feature
 
 
     class Layer
@@ -285,6 +287,11 @@ define (require) ->
             "position": @getPosition()
             "fillColor": @getFillColor()
             "strokeColor": @getStrokeColor()
+
+        _updateFeatureStyle: (feature) ->
+            feature.setBorderColor @getStrokeColor()
+            feature.setBackgroundColor @getFillColor()
+            feature.refresh()
 
 
     layers =
