@@ -8,6 +8,7 @@ from django.db.models import Q
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.contrib.gis.db import models as geomodels
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
@@ -66,7 +67,7 @@ class Layer(models.Model):
         self.strokeColor = data.get('strokeColor');
 
 
-class Project(BaseModel):
+class Project(BaseModel, geomodels.Model):
     name = models.CharField(max_length=1024)
     slug = models.SlugField(max_length=1024)
     description = models.TextField()
@@ -88,6 +89,10 @@ class Project(BaseModel):
     last_editor = models.ForeignKey(User, editable=False, null=True,
             blank=True, related_name='project_last_editor')
     last_update = models.DateTimeField(auto_now=True)
+
+    maptype = models.CharField(max_length=32, default='clean', editable=False)
+    bounds_cache = geomodels.PolygonField(null=True, blank=True, editable=False)
+    custom_bounds = geomodels.PolygonField(null=True, blank=True, editable=False)
 
     def __unicode__(self):
         return unicode(self.name)
@@ -196,6 +201,7 @@ class Project(BaseModel):
         obj, created = ProjectRelatedObject.objects.get_or_create(
                 content_type_id=ct.id, object_id=related_object.id,
                 project_id=self.id)
+        self._update_bounds_cache()
         if user:
             # Adds user as contributor
             self.contributors.add(user)
@@ -215,14 +221,22 @@ class Project(BaseModel):
 
     @property
     def bounds(self):
+        if not self.bounds_cache:
+            self._update_bounds_cache()
+        return self.bounds_cache
+
+    def _update_bounds_cache(self):
         # Get the project items
         items = self.related_items
         bounds = None
         for item in items:
-            if not bounds:
-                bounds = item.bounds
-            else:
-                bounds = bounds.union(item.bounds).envelope
+            if not item.geometry.empty:
+                if not bounds:
+                    bounds = item.bounds
+                else:
+                    bounds = bounds.union(item.bounds).envelope
+        self.bounds_cache = bounds
+        self.save()
         return bounds
 
     @property

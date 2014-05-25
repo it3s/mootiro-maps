@@ -439,13 +439,13 @@ define(function(require) {
     };
 
     Layer.prototype.show = function() {
-      this.visible = true;
-      return this.getFeatures().show();
+      this.getFeatures().show();
+      return this.visible = true;
     };
 
     Layer.prototype.hide = function() {
-      this.visible = false;
-      return this.getFeatures().hide();
+      this.getFeatures().hide();
+      return this.visible = false;
     };
 
     Layer.prototype.toggle = function() {

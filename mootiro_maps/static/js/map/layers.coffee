@@ -250,12 +250,12 @@ define (require) ->
         isImportant: -> @important
 
         show: ->
-            @visible = on
             @getFeatures().show()
+            @visible = on
 
         hide: ->
-            @visible = off
             @getFeatures().hide()
+            @visible = off
 
         toggle: ->
             if not @visible then @show() else @hide()
