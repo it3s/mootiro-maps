@@ -218,13 +218,17 @@ def delete_relations(request):
 @ajax_request
 def save_layers(request, id=None):
     proj = get_object_or_404(Project, pk=id)
-    print 'proj = ', proj
-
+    map_config = request.POST.get('map', None)
+    print map_config
     layers = request.POST.get('layers', None)
-    print 'layers = ', layers
 
-    if proj and layers:
-        proj.layers = simplejson.loads(layers)
+    if proj:
+        if layers:
+            proj.layers = simplejson.loads(layers)
+        if map_config:
+            map_config = simplejson.loads(map_config)
+            proj.maptype = map_config.get('mapType', 'clean')
+        proj.save()
         return {'success': True, 'redirect_url': proj.view_url}
 
     return {'success': False}

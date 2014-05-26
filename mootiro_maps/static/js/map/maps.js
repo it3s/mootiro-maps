@@ -593,7 +593,15 @@ define(function(require) {
       return [center.lat(), center.lng()];
     };
 
+    Map.prototype.setMapType = function(mapTypeId) {
+      return this.googleMap.setMapTypeId(mapTypeId);
+    };
+
     Map.prototype.getMapType = function() {
+      return this.googleMap.getMapTypeId();
+    };
+
+    Map.prototype.getMapTypeId = function() {
       return this.googleMap.getMapTypeId();
     };
 
@@ -608,10 +616,6 @@ define(function(require) {
         bounds = new googleMaps.LatLngBounds(sw, ne);
       }
       return this.googleMap.fitBounds(bounds);
-    };
-
-    Map.prototype.getMapTypeId = function() {
-      return this.googleMap.getMapTypeId();
     };
 
     Map.prototype.getProjectId = function() {

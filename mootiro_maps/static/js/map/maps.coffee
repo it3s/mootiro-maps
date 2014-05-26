@@ -373,7 +373,9 @@ define (require) ->
             center = @googleMap.getCenter()
             [center.lat(), center.lng()]
 
+        setMapType: (mapTypeId) -> @googleMap.setMapTypeId mapTypeId
         getMapType: -> @googleMap.getMapTypeId()
+        getMapTypeId: -> @googleMap.getMapTypeId()
 
         fitBounds: (bounds = @features.getBounds()) ->
             if _.isArray bounds
@@ -382,7 +384,6 @@ define (require) ->
                 bounds = new googleMaps.LatLngBounds sw, ne
             @googleMap.fitBounds bounds
 
-        getMapTypeId: -> @googleMap.getMapTypeId()
 
         getProjectId: -> @projectId
         setProjectId: (@projectId) ->

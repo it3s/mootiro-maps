@@ -178,7 +178,8 @@
                   });
                   map = $map.data('map');
                   window.map = map;
-                  map.fitBounds({{ project.bbox }});
+                  map.fitBounds({{ project.custom_bbox }});
+                  map.setMapType('{{ project.maptype }}');
                   // Create the layers editor widget
                   layersWidget = new LayersWidget('#layers-widget-canvas');
                   // Load the project layers into map and get the Layers objects
@@ -209,13 +210,11 @@
                   var mapConfig = getMapConfig(map);
                   var layersConfig = getLayersConfig(layersWidget);
                   var config = {
-                    "map": mapConfig,
-                    "layers": layersConfig
+                    "map": JSON.stringify(mapConfig),
+                    "layers": JSON.stringify(layersConfig)
                   };
                   var url = '/project/{{ project.id }}/save_layers/';
-                  $.post(url, {
-                    layers: JSON.stringify(layersConfig)
-                  }, function(data) {
+                  $.post(url, config, function(data) {
                     if (data.success) {
                       if (data.redirect_url) {
                         window.location = data.redirect_url;
