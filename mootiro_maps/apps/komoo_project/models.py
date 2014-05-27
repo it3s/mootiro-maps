@@ -96,7 +96,7 @@ class Project(BaseModel, geomodels.Model):
 
     _maptype = models.CharField(db_column='maptype', max_length=32, null=True, default=DEFAULT_MAPTYPE, editable=False)
     bounds_cache = geomodels.PolygonField(null=True, blank=True, editable=False)
-    _custom_bounds = geomodels.PolygonField(db_column='custom_bounds', null=True, blank=True, editable=False)
+    custom_bounds = geomodels.PolygonField(null=True, blank=True, editable=False)
 
     def __unicode__(self):
         return unicode(self.name)
@@ -244,20 +244,14 @@ class Project(BaseModel, geomodels.Model):
         return bounds
 
     @property
-    def custom_bounds(self):
-        return self._custom_bounds or self.bounds
-
-    @custom_bounds.setter
-    def custom_bounds(self, value):
-        self._custom_bounds = value
-
-    @property
     def bbox(self):
         coords = self.bounds.coords[0]
         return [coords[0][1], coords[0][0], coords[2][1], coords[2][0]]
 
     @property
     def custom_bbox(self):
+        if not self.custom_bounds:
+            return None
         coords = self.custom_bounds.coords[0]
         return [coords[0][1], coords[0][0], coords[2][1], coords[2][0]]
 

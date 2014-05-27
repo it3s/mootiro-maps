@@ -206,6 +206,7 @@ def delete_relations(request):
             if rel:
                 p = ProjectRelatedObject.objects.get(pk=rel)
                 p.delete()
+        project._update_bounds_cache()
         success = True
     except Exception as err:
         logger.error('ERRO ao deletar relacao: %s' % err)
@@ -227,7 +228,11 @@ def save_layers(request, id=None):
         if map_config:
             map_config = simplejson.loads(map_config)
             proj.maptype = map_config.get('mapType', 'clean')
-            proj.custom_bbox = [float(i) for i in map_config.get('bounds', '').split(',')]
+            bounds = map_config.get('bounds', None)
+            if bounds:
+                proj.custom_bbox = [float(i) for i in bounds.split(',')]
+            else:
+                proj.custom_bounds = None
         proj.save()
         return {'success': True, 'redirect_url': proj.view_url}
 

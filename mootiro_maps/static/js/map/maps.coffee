@@ -65,7 +65,7 @@ define (require) ->
             if @options.geojson
                 features_ = @loadGeoJSON @options.geojson, not @options.zoom?
                 bounds = features_.getBounds()
-                @fitBounds bounds if bounds?
+                @fitBounds bounds if bounds? and not @projectInfo?
                 features_?.setMap this, geometry: on, icon: on
                 @publish 'set_zoom', @options.zoom
 
@@ -378,23 +378,62 @@ define (require) ->
         getMapType: -> @googleMap.getMapTypeId()
         getMapTypeId: -> @googleMap.getMapTypeId()
 
-        fitBounds: (bounds = @features.getBounds()) ->
+        fitBounds: (bounds, removeBorder=false) ->
+            if not bounds
+                if @projectInfo
+                    if @projectInfo.custom_bbox?
+                        bounds = @projectInfo.custom_bbox ? @projectInfo.bbox
+                        removeBorder = true
+                    else
+                        bounds = @projectInfo.bbox
+                else
+                    bounds = @features.getBounds()
             if _.isArray bounds  # Accepts bbox array
                 sw = new googleMaps.LatLng bounds[1], bounds[0]
                 ne = new googleMaps.LatLng bounds[3], bounds[2]
                 bounds = new googleMaps.LatLngBounds sw, ne
+            if removeBorder
+              sw = bounds.getSouthWest()
+              ne = bounds.getNorthEast()
+
+              lat1 = sw.lat()
+              lng1 = sw.lng()
+              lat2 = ne.lat()
+              lng2 = ne.lng()
+
+              dx = (lng1 - lng2) / 2.0
+              dy = (lat1 - lat2) / 2.0
+              cx = (lng1 + lng2) / 2.0
+              cy = (lat1 + lat2) / 2.0
+
+              lng1 = cx + dx / 1.4
+              lng2 = cx - dx / 1.4
+              lat1 = cy + dy / 1.4
+              lat2 = cy - dy / 1.4
+
+              sw = new google.maps.LatLng(lat1,lng1)
+              ne = new google.maps.LatLng(lat2,lng2)
+              bounds = new google.maps.LatLngBounds(sw,ne)
             @googleMap.fitBounds bounds
 
 
         getProjectId: -> @projectId
         setProjectId: (@projectId) ->
+            @_applyProjectConfig()
+
+        _applyProjectConfig: ->
             return if not @projectId?
             $.ajax
                 url: @projectUrl + @projectId
                 dataType: 'json'
                 success: (data) =>
+                    @projectInfo = data
+                    console.log "applying project config"
                     @setMapType data.maptype
-                    @fitBounds data.custom_bbox
+                    if data.custom_bbox
+                        @fitBounds data.custom_bbox, true
+                    else
+                        @fitBounds data.bbox
 
 
     class UserEditor extends Map

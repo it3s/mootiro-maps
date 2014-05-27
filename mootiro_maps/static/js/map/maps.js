@@ -90,7 +90,7 @@ define(function(require) {
       if (this.options.geojson) {
         features_ = this.loadGeoJSON(this.options.geojson, !(this.options.zoom != null));
         bounds = features_.getBounds();
-        if (bounds != null) {
+        if ((bounds != null) && !(this.projectInfo != null)) {
           this.fitBounds(bounds);
         }
         if (features_ != null) {
@@ -607,15 +607,46 @@ define(function(require) {
       return this.googleMap.getMapTypeId();
     };
 
-    Map.prototype.fitBounds = function(bounds) {
-      var ne, sw;
-      if (bounds == null) {
-        bounds = this.features.getBounds();
+    Map.prototype.fitBounds = function(bounds, removeBorder) {
+      var cx, cy, dx, dy, lat1, lat2, lng1, lng2, ne, sw, _ref2;
+      if (removeBorder == null) {
+        removeBorder = false;
+      }
+      if (!bounds) {
+        if (this.projectInfo) {
+          if (this.projectInfo.custom_bbox != null) {
+            bounds = (_ref2 = this.projectInfo.custom_bbox) != null ? _ref2 : this.projectInfo.bbox;
+            removeBorder = true;
+          } else {
+            bounds = this.projectInfo.bbox;
+          }
+        } else {
+          bounds = this.features.getBounds();
+        }
       }
       if (_.isArray(bounds)) {
         sw = new googleMaps.LatLng(bounds[1], bounds[0]);
         ne = new googleMaps.LatLng(bounds[3], bounds[2]);
         bounds = new googleMaps.LatLngBounds(sw, ne);
+      }
+      if (removeBorder) {
+        sw = bounds.getSouthWest();
+        ne = bounds.getNorthEast();
+        lat1 = sw.lat();
+        lng1 = sw.lng();
+        lat2 = ne.lat();
+        lng2 = ne.lng();
+        dx = (lng1 - lng2) / 2.0;
+        dy = (lat1 - lat2) / 2.0;
+        cx = (lng1 + lng2) / 2.0;
+        cy = (lat1 + lat2) / 2.0;
+        lng1 = cx + dx / 1.4;
+        lng2 = cx - dx / 1.4;
+        lat1 = cy + dy / 1.4;
+        lat2 = cy - dy / 1.4;
+        sw = new google.maps.LatLng(lat1, lng1);
+        ne = new google.maps.LatLng(lat2, lng2);
+        bounds = new google.maps.LatLngBounds(sw, ne);
       }
       return this.googleMap.fitBounds(bounds);
     };
@@ -625,8 +656,12 @@ define(function(require) {
     };
 
     Map.prototype.setProjectId = function(projectId) {
-      var _this = this;
       this.projectId = projectId;
+      return this._applyProjectConfig();
+    };
+
+    Map.prototype._applyProjectConfig = function() {
+      var _this = this;
       if (!(this.projectId != null)) {
         return;
       }
@@ -634,8 +669,14 @@ define(function(require) {
         url: this.projectUrl + this.projectId,
         dataType: 'json',
         success: function(data) {
+          _this.projectInfo = data;
+          console.log("applying project config");
           _this.setMapType(data.maptype);
-          return _this.fitBounds(data.custom_bbox);
+          if (data.custom_bbox) {
+            return _this.fitBounds(data.custom_bbox, true);
+          } else {
+            return _this.fitBounds(data.bbox);
+          }
         }
       });
     };
