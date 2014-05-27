@@ -37,7 +37,7 @@ define ['jquery', 'map/maps'], ($, maps) ->
                         return
                     map = maps.makeMap opts
                     $this.data 'map', map
-                    if opts.mapType? then map.googleMap.setMapTypeId opts.mapType
+                    if opts.mapType? then map.setMapType opts.mapType
                     if opts.height is '100%'
                         $(window).resize map: map, fixMapSize
                         $(window).resize()

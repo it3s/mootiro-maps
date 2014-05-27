@@ -323,7 +323,8 @@
                     geojson: {{ geojson|safe }},
                     width: '300px',
                     height: '200px',
-                    projectId: {{ project.id }}
+                    projectId: {{ project.id }},
+                    mapType: '{{ project.maptype }}'
                 });
             });
 

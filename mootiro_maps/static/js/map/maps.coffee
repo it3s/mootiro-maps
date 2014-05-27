@@ -18,6 +18,7 @@ define (require) ->
     class Map extends core.Mediator
         featureTypesUrl: '/map_info/feature_types/'
         layersUrl: '/map_info/layers/'
+        projectUrl: '/map_info/project/'
 
         googleMapDefaultOptions:
             zoom: 12
@@ -378,7 +379,7 @@ define (require) ->
         getMapTypeId: -> @googleMap.getMapTypeId()
 
         fitBounds: (bounds = @features.getBounds()) ->
-            if _.isArray bounds
+            if _.isArray bounds  # Accepts bbox array
                 sw = new googleMaps.LatLng bounds[1], bounds[0]
                 ne = new googleMaps.LatLng bounds[3], bounds[2]
                 bounds = new googleMaps.LatLngBounds sw, ne
@@ -387,6 +388,13 @@ define (require) ->
 
         getProjectId: -> @projectId
         setProjectId: (@projectId) ->
+            return if not @projectId?
+            $.ajax
+                url: @projectUrl + @projectId
+                dataType: 'json'
+                success: (data) =>
+                    @setMapType data.maptype
+                    @fitBounds data.custom_bbox
 
 
     class UserEditor extends Map

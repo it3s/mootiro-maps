@@ -219,7 +219,6 @@ def delete_relations(request):
 def save_layers(request, id=None):
     proj = get_object_or_404(Project, pk=id)
     map_config = request.POST.get('map', None)
-    print map_config
     layers = request.POST.get('layers', None)
 
     if proj:
@@ -228,6 +227,7 @@ def save_layers(request, id=None):
         if map_config:
             map_config = simplejson.loads(map_config)
             proj.maptype = map_config.get('mapType', 'clean')
+            proj.custom_bbox = [float(i) for i in map_config.get('bounds', '').split(',')]
         proj.save()
         return {'success': True, 'redirect_url': proj.view_url}
 

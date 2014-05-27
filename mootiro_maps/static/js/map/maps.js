@@ -32,6 +32,8 @@ define(function(require) {
 
     Map.prototype.layersUrl = '/map_info/layers/';
 
+    Map.prototype.projectUrl = '/map_info/project/';
+
     Map.prototype.googleMapDefaultOptions = {
       zoom: 12,
       center: new googleMaps.LatLng(-23.55, -46.65),
@@ -623,7 +625,19 @@ define(function(require) {
     };
 
     Map.prototype.setProjectId = function(projectId) {
+      var _this = this;
       this.projectId = projectId;
+      if (!(this.projectId != null)) {
+        return;
+      }
+      return $.ajax({
+        url: this.projectUrl + this.projectId,
+        dataType: 'json',
+        success: function(data) {
+          _this.setMapType(data.maptype);
+          return _this.fitBounds(data.custom_bbox);
+        }
+      });
     };
 
     return Map;

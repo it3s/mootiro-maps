@@ -9,6 +9,7 @@ from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.gis.db import models as geomodels
+from django.contrib.gis.geos import Polygon
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
@@ -260,6 +261,10 @@ class Project(BaseModel, geomodels.Model):
         coords = self.custom_bounds.coords[0]
         return [coords[0][1], coords[0][0], coords[2][1], coords[2][0]]
 
+    @custom_bbox.setter
+    def custom_bbox(self, value):
+        self.custom_bounds = Polygon.from_bbox(tuple(value))
+
     @property
     def maptype(self):
         return self._maptype or DEFAULT_MAPTYPE
@@ -277,8 +282,8 @@ class Project(BaseModel, geomodels.Model):
             'view_url': self.view_url,
             'partners_logo': [{'url': logo.file.url}
                                 for logo in self.partners_logo()],
-            'bounds': self.bounds,
-            'custom_bounds': self.custom_bounds,
+            'bbox': self.bbox,
+            'custom_bbox': self.custom_bbox,
             'maptype': self.maptype,
         })
 
