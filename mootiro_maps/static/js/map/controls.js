@@ -1186,6 +1186,18 @@ define(function(require) {
           });
         }, delay);
       });
+      this.map.subscribe('feature_mouseover', function(e, feature) {
+        clearTimeout(_this.timer);
+        if (feature === _this.feature || !feature.displayTooltip) {
+          return;
+        }
+        if (feature.geometry.geometryType === 'Point') {
+          return _this.open({
+            feature: feature,
+            position: e.latLng
+          });
+        }
+      });
       this.map.subscribe('feature_mouseout', function(e, feature) {
         return _this.close();
       });

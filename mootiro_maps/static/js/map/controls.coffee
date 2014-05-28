@@ -840,6 +840,11 @@ define (require)->
                     @open feature: feature, position: e.latLng
                 , delay
 
+            @map.subscribe 'feature_mouseover', (e, feature) =>
+                clearTimeout @timer
+                return if feature is @feature or not feature.displayTooltip
+                @open feature: feature, position: e.latLng if feature.geometry.geometryType is 'Point'
+
             @map.subscribe 'feature_mouseout', (e, feature) =>
                 @close()
 

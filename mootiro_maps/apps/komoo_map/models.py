@@ -44,6 +44,8 @@ class GeoRefModel(geomodels.Model):
 
     @property
     def bounds(self):
+        if self.is_empty():
+            return None
         return self.geometry[0].envelope
 
     @property
