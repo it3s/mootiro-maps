@@ -716,11 +716,12 @@ define(function(require) {
 
     __extends(Preview, _super);
 
-    function Preview() {
-      return Preview.__super__.constructor.apply(this, arguments);
-    }
-
     Preview.prototype.type = 'preview';
+
+    function Preview(options) {
+      Preview.__super__.constructor.call(this, options);
+      this.addComponents([['map/maptypes::CleanMapType', 'mapType']]);
+    }
 
     Preview.prototype.googleMapDefaultOptions = {
       zoom: 12,

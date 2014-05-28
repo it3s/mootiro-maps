@@ -210,7 +210,7 @@
                   map.fitBounds({{ project.bbox }});
                   map.setMapType('{{ project.maptype }}');
                   // Create the layers editor widget
-                  layersWidget = new LayersWidget('#layers-widget-canvas');
+                  layersWidget = new LayersWidget('#layers-widget-canvas', map);
                   // Load the project layers into map and get the Layers objects
                   var layers = map.loadLayers(layers_data);
                   // Load the project layers into layers widget

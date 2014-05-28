@@ -13,16 +13,16 @@ define(['map/layers'], function(Layers) {
   var lastUsedColor = -1;
 
   // Layers configuration
-  var LayersWidget = function(el) {
+  var LayersWidget = function(el, mao) {
   if(el === undefined) el = '<div>';
     this.$el = $(el);
     this.$el.addClass('layers_widget');
     this.layers = new Layers.Layers();
     window.layers = this.layers;
-    this.createControls();
+    this.createControls(map);
   };
 
-  LayersWidget.prototype.createControls = function() {
+  LayersWidget.prototype.createControls = function(map) {
     var that = this;
     this.cur = 0;
     this.$ul = $('<ul>');
@@ -35,7 +35,7 @@ define(['map/layers'], function(Layers) {
     });
     this.$el.append(this.$ul);
     var $addBtn = $('<a>').text(gettext('New layer')).addClass('add_btn');
-    $addBtn.click(function() { that.createNewLayer(); });
+    $addBtn.click(function() { that.createNewLayer(map); });
     this.$el.append($addBtn);
     return this;
   };
@@ -84,6 +84,9 @@ define(['map/layers'], function(Layers) {
 
   LayersWidget.prototype.addNewLayer = function(layer, map) {
     if (layer.getId() == 'Others') return
+    // add to layers collection
+    this.layers.addLayer(layer);
+    layer.setMap(map);
     var that = this;
     this.$ul.find('.content').slideUp().parent().find('.details').show();
     layer.$el = $('<li>').addClass('layer');
@@ -151,9 +154,6 @@ define(['map/layers'], function(Layers) {
     layer.$el.find('.collapse_btn').click(function() {
         that.toggleLayer(layer);
     });
-    // add to layers collection
-    this.layers.addLayer(layer);
-    layer.setMap(map);
     this.refresh([layer]);
     return this;
   };

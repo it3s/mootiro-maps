@@ -41,8 +41,9 @@ define (require) ->
         setMap: (@map) ->
             @map.googleMap.mapTypes.set @id, @mapType
             options = @map.googleMap.mapTypeControlOptions
-            options.mapTypeIds.push @id
-            @map.googleMap.setOptions mapTypeControlOptions: options
+            if options?  # options is undefined if there is no mapType control
+                options.mapTypeIds.push @id
+                @map.googleMap.setOptions mapTypeControlOptions: options
             @map.publish 'maptype_loaded', @id
 
 

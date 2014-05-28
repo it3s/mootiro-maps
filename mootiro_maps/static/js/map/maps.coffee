@@ -473,6 +473,13 @@ define (require) ->
     class Preview extends Map
         type: 'preview'
 
+        constructor: (options) ->
+            super options
+
+            @addComponents [
+                ['map/maptypes::CleanMapType', 'mapType']
+            ]
+
         googleMapDefaultOptions:
             zoom: 12
             center: new googleMaps.LatLng(-23.55, -46.65)
