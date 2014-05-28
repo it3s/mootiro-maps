@@ -36,13 +36,19 @@ def layers(request):
 
 
 def project_layers(request, proj_id=None):
-    # TODO: Get layers from DB
     project = get_object_or_404(Project, id=proj_id)
     layers = project.layers
     if not layers:
         layers = default_layers()
     return HttpResponse(
         to_json(layers),
+        mimetype="application/x-javascript")
+
+
+def project_json(request, proj_id=None):
+    project = get_object_or_404(Project, id=proj_id)
+    return HttpResponse(
+        project.json,
         mimetype="application/x-javascript")
 
 

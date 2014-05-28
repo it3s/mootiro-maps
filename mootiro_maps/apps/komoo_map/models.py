@@ -43,6 +43,10 @@ class GeoRefModel(geomodels.Model):
         #return geo.area
 
     @property
+    def bounds(self):
+        return self.geometry[0].envelope
+
+    @property
     def geojson(self):
         geojson = create_geojson([self], convert=False)
         if geojson and geojson.get('features'):

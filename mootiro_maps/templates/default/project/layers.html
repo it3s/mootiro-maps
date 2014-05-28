@@ -5,16 +5,18 @@
     <div>
       <div id="map" class="map preview">
         <h3>{% trans "Map" %}</h3>
-        <div class="description">{% trans "Drag to set the center and adjust the zoom level." %}</div>
+        <label for="customize-map-position"><input type="checkbox" id="customize-map-position"> {% trans "Customize the map position" %}</label>
+        <div class="description" id="customize-map-position-description">{% trans "Drag to set the center and adjust the zoom level." %}</div>
         <div id="map-main-preview-canvas"></div>
+        <div class="controls">
+          <a href="#" id="map-fit-all">Fit all objects</a>
+        </div>
       </div>
-
+      <br>
       <div id="layers" class="layers editor">
         <h3>{% trans "Layers" %}</h3>
         <div class="description">{% trans "Group objects by tags and identify them with colors." %}</div>
         <div class="description">{% trans "Drag each grouping up or down to set priority." %}</div>
-        <!--Defina o agrupamento dos objetos por palavras chave e identifique-os com cores.
-        Arraste cada agrupamento para cima ou para baixo para definir a prioridade.-->
         <div id="layers-widget-canvas"></div>
       </div>
 
@@ -42,18 +44,20 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}lib/colpick/css/colpick.css" type="text/css"/>
     <link rel="stylesheet" href="{{ STATIC_URL }}lib/tagsinput/jquery.tagsinput.css" type="text/css"/>
     <style type="text/css">
-      #map {
-        display: none;
-      }
       #map-main-preview-canvas {
         height: 350px;
         width: 100%;
         background: #dedede;
       }
+      #map-fit-all {
+        box-sizing: border-box;
+        width: 100%;
+      }
       .layers_widget > ul {
         margin: 10px 0;
       }
 
+      #map-fit-all,
       .layers_widget .layer,
       .layers_widget .add_btn {
         display: block;
@@ -160,16 +164,36 @@
               var layers_data = {{ layers|safe }};
 
                 var getMapConfig = function(map) {
+                  bounds = null;
+                  mapType = map.getMapType();
+                  if ($("#customize-map-position").prop("checked")) {
+                    bounds = map.getBounds().toUrlValue();
+                  }
                   return {
                     "center": map.getCenter(),
                     "zoom": map.getZoom(),
-                    "mapType": map.getMapType()
+                    "bounds": bounds,
+                    "mapType": mapType
                   };
                 };
+
+                {% if project.custom_bounds %}
+                  $("#customize-map-position").attr("checked", "checked");
+                {% else %}
+                  $("#customize-map-position-description").hide()
+                {% endif %}
+                $("#customize-map-position").change(function(evt) {
+                  if (this.checked) {
+                    $("#customize-map-position-description").show()
+                  } else {
+                    $("#customize-map-position-description").hide()
+                  }
+                });
 
                 var map;
                 var layersWidget;
                 var initialized = false;
+                var customBounds = false;
                 var initialize = function() {
                   if (initialized) return;
                   // Map main configuration
@@ -182,7 +206,9 @@
                       height: '350px'
                   });
                   map = $map.data('map');
-                  map.setZoom(0);  // load all project objects
+                  window.map = map;
+                  map.fitBounds({{ project.bbox }});
+                  map.setMapType('{{ project.maptype }}');
                   // Create the layers editor widget
                   layersWidget = new LayersWidget('#layers-widget-canvas');
                   // Load the project layers into map and get the Layers objects
@@ -193,6 +219,11 @@
                     if (features.length) {
                       layersWidget.refresh()
                     }
+                  });
+                  $('#map-fit-all').click(function(evt) {
+                    map.fitBounds(map.projectInfo.bbox);
+                    customBounds = false;
+                    return false;
                   });
                   initialized = true;
                 };
@@ -213,13 +244,11 @@
                   var mapConfig = getMapConfig(map);
                   var layersConfig = getLayersConfig(layersWidget);
                   var config = {
-                    "map": mapConfig,
-                    "layers": layersConfig
+                    "map": JSON.stringify(mapConfig),
+                    "layers": JSON.stringify(layersConfig)
                   };
                   var url = '/project/{{ project.id }}/save_layers/';
-                  $.post(url, {
-                    layers: JSON.stringify(layersConfig)
-                  }, function(data) {
+                  $.post(url, config, function(data) {
                     if (data.success) {
                       if (data.redirect_url) {
                         window.location = data.redirect_url;

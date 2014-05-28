@@ -78,7 +78,7 @@ define (require) ->
             @map.subscribe 'zoom_changed', =>
                 # Aborting ajax requests when zoom changes
                 for addr, xhr of @_requestQueue
-                    xhr.abort()
+                    xhr?.abort()
 
 
         releaseTile: (tile) ->

@@ -65,16 +65,16 @@ def komoo_map_objects_list(context, arg1='', arg2=''):
 @register.inclusion_tag('komoo_map/map_templatetag.html',
                         takes_context=True)
 def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
-              arg5='', arg6='', arg7='', arg8='', arg9=''):
+              arg5='', arg6='', arg7='', arg8='', arg9='', arg10=''):
     """
     The syntax:
         {% komoo_map <geojson> [<project_id>] [type] [<width>] [<height>]
-        [<zoom>] [panel] [ajax] [lazy] [edit_button] %}
+        [<zoom>] [panel] [ajax] [lazy] [edit_button] [maptype] %}
     """
     if isinstance(arg1, int):
         arg1 = 'project={}'.format(arg1)
     parsed_args = _parse_args(arg1, arg2, arg3, arg4, arg5, arg6, arg7,
-                              arg8, arg9)
+                              arg8, arg9, arg10)
     type = parsed_args.get('type', 'main')
     width = parsed_args.get('width', '200')
     height = parsed_args.get('height', '200')
@@ -85,6 +85,7 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
     ajax = parsed_args.get('ajax', 'True').lower() != 'false'
     lazy = parsed_args.get('lazy', 'False').lower() != 'false'
     edit_button = parsed_args.get('edit_button', 'False').lower() != 'false'
+    maptype = parsed_args.get('maptype', 'clean')
 
     editable = type in ('main', 'editor')
     if geojson:
@@ -104,7 +105,7 @@ def komoo_map(context, geojson={}, arg1='', arg2='', arg3='', arg4='',
 
     return dict(type=type, width=width, height=height, zoom=zoom, panel=panel,
                 lazy=lazy, geojson=geojson, edit_button=edit_button,
-                project=project, ajax=ajax, editable=editable,
+                project=project, ajax=ajax, editable=editable, maptype=maptype,
                 feature_types_json=get_models_json(),
                 STATIC_URL=settings.STATIC_URL,
                 LANGUAGE_CODE=settings.LANGUAGE_CODE)

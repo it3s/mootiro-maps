@@ -123,7 +123,7 @@ define(function(require) {
         _results = [];
         for (addr in _ref2) {
           xhr = _ref2[addr];
-          _results.push(xhr.abort());
+          _results.push(xhr != null ? xhr.abort() : void 0);
         }
         return _results;
       });

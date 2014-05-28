@@ -8,6 +8,8 @@ from django.db.models import Q
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from django.contrib.gis.db import models as geomodels
+from django.contrib.gis.geos import Polygon
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
@@ -66,7 +68,10 @@ class Layer(models.Model):
         self.strokeColor = data.get('strokeColor');
 
 
-class Project(BaseModel):
+DEFAULT_MAPTYPE = 'clean'
+
+
+class Project(BaseModel, geomodels.Model):
     name = models.CharField(max_length=1024)
     slug = models.SlugField(max_length=1024)
     description = models.TextField()
@@ -88,6 +93,10 @@ class Project(BaseModel):
     last_editor = models.ForeignKey(User, editable=False, null=True,
             blank=True, related_name='project_last_editor')
     last_update = models.DateTimeField(auto_now=True)
+
+    _maptype = models.CharField(db_column='maptype', max_length=32, null=True, default=DEFAULT_MAPTYPE, editable=False)
+    bounds_cache = geomodels.PolygonField(null=True, blank=True, editable=False)
+    custom_bounds = geomodels.PolygonField(null=True, blank=True, editable=False)
 
     def __unicode__(self):
         return unicode(self.name)
@@ -196,6 +205,7 @@ class Project(BaseModel):
         obj, created = ProjectRelatedObject.objects.get_or_create(
                 content_type_id=ct.id, object_id=related_object.id,
                 project_id=self.id)
+        self._update_bounds_cache()
         if user:
             # Adds user as contributor
             self.contributors.add(user)
@@ -214,6 +224,50 @@ class Project(BaseModel):
         return self.filter_related_items(Q(), get_models())
 
     @property
+    def bounds(self):
+        if not self.bounds_cache:
+            self._update_bounds_cache()
+        return self.bounds_cache
+
+    def _update_bounds_cache(self):
+        # Get the project items
+        items = self.related_items
+        bounds = None
+        for item in items:
+            if not item.geometry.empty:
+                if not bounds:
+                    bounds = item.bounds
+                else:
+                    bounds = bounds.union(item.bounds).envelope
+        self.bounds_cache = bounds
+        self.save()
+        return bounds
+
+    @property
+    def bbox(self):
+        coords = self.bounds.coords[0]
+        return [coords[0][1], coords[0][0], coords[2][1], coords[2][0]]
+
+    @property
+    def custom_bbox(self):
+        if not self.custom_bounds:
+            return None
+        coords = self.custom_bounds.coords[0]
+        return [coords[0][1], coords[0][0], coords[2][1], coords[2][0]]
+
+    @custom_bbox.setter
+    def custom_bbox(self, value):
+        self.custom_bounds = Polygon.from_bbox(tuple(value))
+
+    @property
+    def maptype(self):
+        return self._maptype or DEFAULT_MAPTYPE
+
+    @maptype.setter
+    def maptype(self, value):
+        self._maptype = value
+
+    @property
     def json(self):
         return to_json({
             'name': self.name,
@@ -221,7 +275,10 @@ class Project(BaseModel):
             'logo_url': self.logo_url,
             'view_url': self.view_url,
             'partners_logo': [{'url': logo.file.url}
-                                for logo in self.partners_logo()]
+                                for logo in self.partners_logo()],
+            'bbox': self.bbox,
+            'custom_bbox': self.custom_bbox,
+            'maptype': self.maptype,
         })
 
     @property
@@ -254,6 +311,7 @@ class Project(BaseModel):
             ('last_editor_id', None), ('last_update', None),
             ('logo_id', None),
             ('contacts', {}),
+            ('bounds', None),
         ]
         dict_ = {v[0]: getattr(self, v[0], v[1]) for v in fields_and_defaults}
         dict_['tags'] = [tag.name for tag in self.tags.all()]
