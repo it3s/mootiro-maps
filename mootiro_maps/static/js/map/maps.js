@@ -171,12 +171,13 @@ define(function(require) {
     };
 
     Map.prototype.loadLayers = function(data) {
-      var _this = this;
-      layers = [];
+      var _layers,
+        _this = this;
+      _layers = [];
       data.forEach(function(l) {
-        return layers.push(_this.loadLayer(l));
+        return _layers.push(_this.loadLayer(l));
       });
-      return layers;
+      return _layers;
     };
 
     Map.prototype.loadLayersFromOptions = function(options) {
@@ -720,7 +721,9 @@ define(function(require) {
 
     function Preview(options) {
       Preview.__super__.constructor.call(this, options);
-      this.addComponents([['map/maptypes::CleanMapType', 'mapType']]);
+      if (options.projectId != null) {
+        this.addComponents([['map/maptypes::CleanMapType', 'mapType']]);
+      }
     }
 
     Preview.prototype.googleMapDefaultOptions = {

@@ -111,9 +111,9 @@ define (require) ->
             layer
 
         loadLayers: (data) ->
-            layers = []
-            data.forEach (l) => layers.push @loadLayer l
-            layers
+            _layers = []
+            data.forEach (l) => _layers.push @loadLayer l
+            _layers
 
         loadLayersFromOptions: (options) ->
             # Get Layers from options
@@ -476,9 +476,10 @@ define (require) ->
         constructor: (options) ->
             super options
 
-            @addComponents [
-                ['map/maptypes::CleanMapType', 'mapType']
-            ]
+            if options.projectId?
+                @addComponents [
+                    ['map/maptypes::CleanMapType', 'mapType']
+                ]
 
         googleMapDefaultOptions:
             zoom: 12

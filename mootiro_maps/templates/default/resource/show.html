@@ -81,7 +81,7 @@
     </div>
 
     <div class="right-bar right-bar-modif">
-        <div id="map-preview">{% komoo_map geojson 'type=preview' %}</div>
+        <div id="map-preview">{% komoo_map geojson 'type=preview' 'maptype=hybrid' %}</div>
         <a class="see-on-map" href="#">{% trans 'View on map' %}</a>
 
         {% view_contacts resource.contacts %}
