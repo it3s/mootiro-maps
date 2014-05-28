@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mootiro Maps\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-21 14:13-0300\n"
+"POT-Creation-Date: 2014-05-28 14:06-0300\n"
 "PO-Revision-Date: 2013-11-14 20:15-0300\n"
 "Last-Translator: Luiz Armesto <luiz.armesto@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/"
@@ -69,7 +69,7 @@ msgstr "Contatos"
 #: apps/main/templatetags/komoo_tags.py:389 apps/need/forms.py:30
 #: apps/organization/forms.py:49 lib/taggit/models.py:10
 #: templates/default/organization/branch_form.html:13
-#: templates/default/project/layers.html:25
+#: templates/default/project/layers.html:27
 msgid "Name"
 msgstr "Nome"
 
@@ -214,7 +214,7 @@ msgstr "População"
 #: apps/proposal/forms.py:34
 #: templates/default/organization/branch_form.html:16
 #: templates/default/relations/edit.html:23
-#: templates/default/relations/view.html:13
+#: templates/default/relations/view.html:14
 msgid "Description"
 msgstr "Descrição"
 
@@ -228,7 +228,7 @@ msgstr "Descrição"
 #: templates/default/importsheet/row_templates/organizacoes.html:83
 #: templates/default/importsheet/row_templates/recursos.html:59
 #: templates/default/main/templatetags/taglist.html:5
-#: templates/default/project/layers.html:27
+#: templates/default/project/layers.html:29
 msgid "Tags"
 msgstr "Palavras-chave"
 
@@ -300,13 +300,13 @@ msgstr "Data"
 msgid "End date"
 msgstr "Data final"
 
-#: apps/investment/forms.py:43
+#: apps/investment/forms.py:43 templates/default/relations/edit.html:40
 msgid "Currency"
 msgstr "Moeda"
 
 #: apps/investment/forms.py:44 templates/default/investment/view.html:51
-#: templates/default/relations/edit.html:40
-#: templates/default/relations/view.html:34
+#: templates/default/relations/edit.html:48
+#: templates/default/relations/view.html:35
 msgid "Value"
 msgstr "Valor"
 
@@ -327,15 +327,15 @@ msgstr "Pessoa"
 msgid "Anonymous"
 msgstr "Anônimo"
 
-#: apps/investment/models.py:121
+#: apps/investment/models.py:121 apps/relations/models.py:282
 msgid "Brazilian Real (BRL)"
 msgstr "Real (BRL)"
 
-#: apps/investment/models.py:122
+#: apps/investment/models.py:122 apps/relations/models.py:283
 msgid "US-Dollar (USD)"
 msgstr "Dólar americano (USD)"
 
-#: apps/investment/models.py:123
+#: apps/investment/models.py:123 apps/relations/models.py:284
 msgid "Euro"
 msgstr "Euro"
 
@@ -974,7 +974,7 @@ msgstr "Cancelar"
 msgid "Add"
 msgstr "Adicionar"
 
-#: apps/video/forms.py:95 templates/default/project/layers.html:35
+#: apps/video/forms.py:95 templates/default/project/layers.html:37
 msgid "Ok"
 msgstr "Ok"
 
@@ -985,7 +985,7 @@ msgstr "Editar detalhes de vídeo"
 #: apps/video/forms.py:98 lib/fileupload/forms.py:133
 #: lib/fileupload/forms.py:196
 #: templates/default/moderation/delete_button_templatetag.html:5
-#: templates/default/project/layers.html:34
+#: templates/default/project/layers.html:36
 msgid "Delete"
 msgstr "Apagar"
 
@@ -1468,7 +1468,7 @@ msgstr "Confirme sua senha"
 
 #: templates/default/authentication/profile_update.html:94
 #: templates/default/authentication/profile_update.html:122
-#: templates/default/project/layers.html:21
+#: templates/default/project/layers.html:23
 msgid "Save"
 msgstr "Salvar"
 
@@ -2034,7 +2034,7 @@ msgid "Filter the contents to be shown on the map"
 msgstr "Filtrar conteúdos que serão exibidos no mapa"
 
 #: templates/default/komoo_map/panel.html:10
-#: templates/default/project/layers.html:13
+#: templates/default/project/layers.html:17
 msgid "Layers"
 msgstr "Camadas"
 
@@ -3474,33 +3474,37 @@ msgid "Add this list to a project"
 msgstr "Adicionar esta lista a um projeto"
 
 #: templates/default/project/layers.html:8
+msgid "Customize the map position"
+msgstr "Configurar a posição no mapa"
+
+#: templates/default/project/layers.html:9
 msgid "Drag to set the center and adjust the zoom level."
 msgstr "Arraste o mapa para definir o centro e ajuste o nível de zoom."
 
-#: templates/default/project/layers.html:14
+#: templates/default/project/layers.html:18
 msgid "Group objects by tags and identify them with colors."
 msgstr ""
 "Defina o agrupamento dos objetos por palavras-chave e identifique-os com "
 "cores."
 
-#: templates/default/project/layers.html:15
+#: templates/default/project/layers.html:19
 msgid "Drag each grouping up or down to set priority."
 msgstr ""
 "Arraste cada agrupamento para cima ou para baixo para definir a prioridade."
 
-#: templates/default/project/layers.html:29
+#: templates/default/project/layers.html:31
 msgid "Colors"
 msgstr "Cores"
 
-#: templates/default/project/layers.html:30
+#: templates/default/project/layers.html:32
 msgid "Fill color"
 msgstr "Cor do preenchimeto"
 
-#: templates/default/project/layers.html:31
+#: templates/default/project/layers.html:33
 msgid "Stroke color"
 msgstr "Cor do traço"
 
-#: templates/default/project/layers.html:32
+#: templates/default/project/layers.html:34
 msgid "Use icon"
 msgstr "Usar ícone"
 
@@ -3621,31 +3625,31 @@ msgstr "Data deve estar no formato DD/MM/AAAA."
 msgid "End Date (DD/MM/YYYY)"
 msgstr "Data de Término (DD/MM/AAAA)"
 
-#: templates/default/relations/edit.html:42
+#: templates/default/relations/edit.html:50
 msgid "Must be a number."
 msgstr "Deve ser um número."
 
-#: templates/default/relations/edit.html:56
+#: templates/default/relations/edit.html:64
 msgid "Add relation"
 msgstr "Adicionar relação"
 
-#: templates/default/relations/edit.html:63
+#: templates/default/relations/edit.html:71
 msgid "save"
 msgstr "salvar"
 
-#: templates/default/relations/view.html:9
+#: templates/default/relations/view.html:10
 msgid "show extra info"
 msgstr "mostrar informações adicionais"
 
-#: templates/default/relations/view.html:20
+#: templates/default/relations/view.html:21
 msgid "Start Date"
 msgstr "Data de Início"
 
-#: templates/default/relations/view.html:27
+#: templates/default/relations/view.html:28
 msgid "End Date"
 msgstr "Data de Término"
 
-#: templates/default/relations/view.html:43
+#: templates/default/relations/view.html:45
 msgid "No relations provided yet"
 msgstr "Nenhuma relação fornecida ainda"
 
