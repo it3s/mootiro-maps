@@ -1018,6 +1018,14 @@ a.big-button:visited {
 #footer {
   width: 950px;
   padding: 0; }
+  #footer .nav {
+    width: 100%;
+    text-align: left; }
+    #footer .nav > div {
+      display: inline-block;
+      vertical-align: top;
+      width: 49%;
+      margin-bottom: 30px; }
   #footer .license {
     width: 230px; }
   #footer .it3s {

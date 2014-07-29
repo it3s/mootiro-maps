@@ -47,6 +47,18 @@ a.big-button:visited {
     width: 950px;
     padding: 0;
 
+    .nav {
+      width: 100%;
+      text-align: left;
+
+      > div {
+        display: inline-block;
+        vertical-align: top;
+        width: 49%;
+        margin-bottom: 30px;
+      }
+    }
+
     .license {
         width: 230px;
     }
