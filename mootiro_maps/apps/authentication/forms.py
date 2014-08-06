@@ -26,11 +26,13 @@ class FormProfile(AjaxModelForm):
 
     class Meta:
         model = User
-        fields = ['name', 'about_me', 'id', 'geometry', 'contacts']
+        fields = ['name', 'about_me', 'id', 'country', 'organization', 'geometry', 'contacts']
 
     _field_labels = {
         'name': _('Full name'),
         'about_me': _('About me'),
+        'country': _('Country'),
+        'organization': _('Organization'),
         'photo': _('Photo'),
         'geometry': _('Location'),
         'contacts': _('Contacts'),
@@ -56,10 +58,12 @@ class FormUser(AjaxModelForm):
 
     class Meta:
         model = User
-        fields = ('name', 'email', 'password')
+        fields = ('name', 'organization', 'country', 'email', 'password')
 
     _field_labels = {
         'name': _('Name'),
+        'country': _('Country'),
+        'organization': _('Organization'),
         'email': _('Email'),
         'password': _('Password'),
         'password_confirmation': _('Confirm your password'),

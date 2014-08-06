@@ -152,6 +152,7 @@ INSTALLED_APPS = [
     'locker',
     'video',
     'model_versioning',
+    'tracking',
 ]
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10 * 1024 * 1024

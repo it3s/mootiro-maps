@@ -103,6 +103,5 @@ def google_authorized(request):
             user.name = data['name']
             user.save()
         auth_login(request, user)
-
     return redirect(request.session['next'] or reverse('root'))
 

@@ -9,6 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils import translation
 from django.core.urlresolvers import reverse
 from jsonfield import JSONField
+from django_countries.fields import CountryField
 
 from main.mixins import BaseModel
 from main.utils import build_obj_from_dict
@@ -60,6 +61,8 @@ class User(GeoRefModel, BaseModel):
     contacts = ContactsField()
     creation_date = models.DateField(null=True, blank=True, auto_now_add=True)
     language = models.CharField(max_length=10, null=True, blank=True)
+    country = CountryField(null=True, blank=True)
+    organization = models.CharField(max_length=256, null=True, blank=True)
     # last_access = models.DateTimeField(null=True, blank=True)
 
     is_admin = models.BooleanField(default=False)

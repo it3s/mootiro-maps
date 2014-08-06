@@ -46,7 +46,7 @@ class Organization(GeoRefModel, BaseModel):
                         related_name='created_organizations')
     creation_date = models.DateTimeField(auto_now_add=True)
     last_editor = models.ForeignKey(User, editable=False, null=True,
-                        blank=True)
+                        blank=True, related_name='organization_edited')
     last_update = models.DateTimeField(auto_now=True)
 
     community = models.ManyToManyField(Community, null=True, blank=True)

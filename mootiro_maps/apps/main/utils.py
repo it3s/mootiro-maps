@@ -23,6 +23,7 @@ from django.utils.functional import Promise
 from django.utils.encoding import force_unicode as force_text
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django_countries.fields import Country
 
 try:
     from functools import wraps
@@ -496,6 +497,10 @@ def _to_json_default(obj):
     # Django tags
     if hasattr(obj, 'get_query_set'):
         return [tag.name for tag in obj.get_query_set()]
+
+    # Country
+    if isinstance(obj, Country):
+        return obj.name
 
     try:
         return obj.id

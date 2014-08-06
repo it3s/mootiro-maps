@@ -3,9 +3,16 @@
 {% load i18n %}
 
 {% block content %}
+    {% include "authentication/login_box.html" %}
     {% include "authentication/new_box.html" %}
 {% endblock %}
 
+{% block css %}
+<style>
+  #content #login_box { display: block; float: left; margin: 15px; }
+  .main-column { width: 550px; margin: 0; float: right; }
+</style>
+{% endblock %}
 {% block help_center %}
   <script type="text/javascript">
     var help = new HelpCenter(

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 import logging
-from urllib import unquote
+from urllib import unquote, quote
 
 from django.shortcuts import redirect, get_object_or_404
 from django.core.urlresolvers import reverse
@@ -235,6 +235,30 @@ def user_new(request):
     return {'on_get': on_get, 'on_after_save': on_after_save}
 
 
+@ajax_form('authentication/login_and_new.html', FormUser)
+def user_login_new(request):
+    '''Displays user creation form.'''
+
+    def on_get(request, form):
+        form.helper.form_action = reverse('user_new')
+        return form
+
+    def on_after_save(request, user):
+        user.is_active = False
+        user.set_password(request.POST['password'])
+
+        user.save()
+
+        user.send_confirmation_mail(request)
+        send_explanations_mail(user)
+
+        redirect_url = reverse('user_check_inbox')
+        return {'redirect': redirect_url}
+
+    next = request.GET.get('next', request.get_full_path())
+    return {'on_get': on_get, 'on_after_save': on_after_save, 'next': quote(next)}
+
+
 @ajax_request
 def test_email(request):
     user = request.user
@@ -251,7 +275,7 @@ def login(request):
     '''
     if request.method == 'GET':
         next = request.GET.get('next', request.get_full_path())
-        return dict(next=next)
+        return dict(next=quote(next))
     else:
         next = request.POST.get('next', request.get_full_path())
 
@@ -261,16 +285,16 @@ def login(request):
     email = request.POST.get('email', '').lower()
     password = request.POST['password']
     if not email or not password:
-        return dict(login_error='wrong_credentials', next=next)
+        return dict(login_error='wrong_credentials', next=quote(next))
 
     password = User.calc_hash(password)
     q = User.objects.filter(email=email, password=password)
     if not q.exists():
-        return dict(login_error='wrong_credentials', next=next)
+        return dict(login_error='wrong_credentials', next=quote(next))
 
     user = q.get()
     if not user.is_active:
-        return dict(login_error='user_not_active', next=next)
+        return dict(login_error='user_not_active', next=quote(next))
 
     auth_login(request, user)
     next = unquote(next)

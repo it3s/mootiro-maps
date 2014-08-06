@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+from urllib import quote as urlquote
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
+from django.conf import settings
 
 from main.utils import JsonResponseError
 
@@ -55,7 +58,7 @@ def login_required(func=None):
     def wrapped_func(request, *a, **kw):
         if not request.user.is_authenticated():
             next = request.get_full_path()
-            url = reverse('user') + '?next=' + next
+            url = reverse('user_login_new') + '?next=' + urlquote(next)
             return redirect(url)
         else:
             return func(request, *a, **kw)
@@ -70,6 +73,18 @@ def api_login_required(func=None):
             return JsonResponseError({'form': 'Login required.'})
         else:
             return func(handler, request, *a, **kw)
+    return wrapped_func
+
+
+def access_key_required(func=None):
+    '''Decorator that requires a valid user in request.'''
+    def wrapped_func(request, *a, **kw):
+        provided_key = request.GET.get('access_key')
+        internal_key = settings.ACCESS_KEY
+        if not provided_key == internal_key:
+            return HttpResponse('Unauthorized', status=401)
+        else:
+            return func(request, *a, **kw)
     return wrapped_func
 
 
