@@ -119,6 +119,10 @@ $(function(){
                     $('#subtitle-modal').modal('hide');
                     $('.file-entry[file-id=' + file_id + ']').fadeOut('slow', function(){
                         $(this).remove();
+                        // fix to delete project logo
+                        if ($('#id_logo').val() == file_id) {
+                            $('#id_logo').val('');
+                        }
                     });
                 },
                 'json'
