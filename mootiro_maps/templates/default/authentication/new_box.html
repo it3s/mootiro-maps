@@ -1,17 +1,17 @@
 {% load crispy_forms_tags %}
 {% load i18n %}
 
-  <div id="main-content">
-    <div class="main-column">
-      <div class='form-legend'>{% trans 'New User' %}</div>
+  <section id="new_box">
+    <header>
+      <h1 class='form-legend'>{% trans 'New User' %}</h1>
       <div class='alert alert-info required-notice' data-alert='info'>
           <div class='msg'>
             {% trans '<strong>*</strong> required fields!' %}
           </div>
       </div>
+    </header>
       {% crispy form form.helper %}
-    </div>
-  </div>
+  </section>
     <script type="text/javascript">
       $(function(){
         $('#form_user').ajaxform();

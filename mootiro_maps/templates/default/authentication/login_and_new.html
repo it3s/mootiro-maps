@@ -3,14 +3,18 @@
 {% load i18n %}
 
 {% block content %}
+  <div id="main-content">
     {% include "authentication/login_box.html" %}
     {% include "authentication/new_box.html" %}
+  </div>
 {% endblock %}
 
 {% block css %}
 <style>
-  #content #login_box { display: block; float: left; margin: 15px; }
-  .main-column { width: 550px; margin: 0; float: right; }
+  #content #login_box { display: block; float: left; margin: 15px; background: none; }
+  #content #new_box { width: 550px; margin: 0; float: left; margin: 15px; border-left: 1px solid silver; padding-left: 30px;}
+  #content #new_box h1 { font-size: 20px; }
+  #main-content { margin: 0 auto; width: 1250px; }
 </style>
 {% endblock %}
 {% block help_center %}
