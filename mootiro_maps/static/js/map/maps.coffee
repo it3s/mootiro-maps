@@ -35,7 +35,7 @@ define (require) ->
             mapTypeControlOptions:
                 mapTypeIds: [googleMaps.MapTypeId.ROADMAP,
                              googleMaps.MapTypeId.HYBRID]
-            mapTypeId: googleMaps.MapTypeId.HYBRID
+            mapTypeId: googleMaps.MapTypeId.ROADMAP
 
         constructor: (@options = {}) ->
             super()
@@ -420,7 +420,7 @@ define (require) ->
             scaleControlOptions:
                 position: googleMaps.ControlPosition.RIGHT_BOTTOM
                 style: googleMaps.ScaleControlStyle.DEFAULT
-            mapTypeId: googleMaps.MapTypeId.HYBRID
+            mapTypeId: googleMaps.MapTypeId.ROADMAP
 
 
     class StaticMap extends Map
