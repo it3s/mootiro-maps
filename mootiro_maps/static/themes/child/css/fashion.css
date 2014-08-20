@@ -703,6 +703,8 @@ label[for=id_contacts] {
     display: inline-block;
     width: 405px;
     vertical-align: top; }
+  #main-content.frontpage .slideshow {
+    margin-top: 20px; }
   #main-content.frontpage > div.resource-kits {
     white-space: nowrap;
     /* hack for windows. issue #100 */ }
