@@ -1,39 +1,5 @@
 {% load i18n %}
 {% load komoo_tags %}
-{% with LANGUAGE_CODE|split:"-" as lang %}
-<hr />
-
-<div class="nav">
-  <div>
-    <h3 class="attenuate">{% trans "Facilitator Guides" %}</h3>
-    <ul>
-      <li><a href="/resourcekit/assessment/introduce/?lang={{ lang.0 }}">{% trans "Introduce" %}</a></li>
-      <li><a href="/resourcekit/assessment/explore/?lang={{ lang.0 }}">{% trans "Explore" %}</a></li>
-      <li><a href="/resourcekit/assessment/assess/?lang={{ lang.0 }}">{% trans "Assess" %}</a></li>
-      <li><a href="/resourcekit/planning/analyze/?lang={{ lang.0 }}">{% trans "Analyze" %}</a></li>
-      <li><a href="/resourcekit/planning/plan/?lang={{ lang.0 }}">{% trans "Plan" %}</a></li>
-      <li><a href="/resourcekit/advocacy-actions/share/?lang={{ lang.0 }}">{% trans "Share" %}</a></li>
-      <li><a href="/resourcekit/advocacy-action/act/?lang={{ lang.0 }}">{% trans "Act" %}</a></li>
-      <li><a href="/resourcekit/outcomes/review/?lang={{ lang.0 }}">{% trans "Review" %}</a></li>
-    </ul>
-  </div>
-
-  <div>
-    <h3 class="attenuate">{% trans "Background Materials" %}</h3>
-    <ul>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D79%26vp_edd_act%3Dshow_download">{% trans "Resource Kit Overview" %}</a></li>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D284%26vp_edd_act%3Dshow_download">{% trans "Introduction to the Resource Kit" %}</a></li>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D285%26vp_edd_act%3Dshow_download">{% trans "Ways to Use the Resource Kit" %}</a></li>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D278%26vp_edd_act%3Dshow_download">{% trans "Adapting the Resource Kit to Your Context" %}</a></li>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D81%26vp_edd_act%3Dshow_download">{% trans "Planning Your Assessment Process" %}</a></li>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D173%26vp_edd_act%3Dshow_download">{% trans "Identifying Participants" %}</a></li>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D172%26vp_edd_act%3Dshow_download">{% trans "Working with Different Age Groups" %}</a></li>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D171%26vp_edd_act%3Dshow_download">{% trans "Ensuring the Participation of Everyone" %}</a></li>
-      <li><a href="/tracking/redirect/?url=http%3A%2F%2Fchildfriendlyplaces.org%2Fresourcekit%3Fdid%3D739%26vp_edd_act%3Dshow_download">{% trans "Creating a Children’s Rights Community Observatory" %}</a></li>
-    </ul>
-  </div>
-</div>
-{% endwith %}
 
 <div>
   <h3 class="attenuate">{% trans "Initiative, Research & Coordination" %}</h3>

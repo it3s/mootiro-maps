@@ -1017,17 +1017,23 @@ a.big-button:visited {
   #main-content.highlights .section ul li p {
     max-height: 12em; }
 
-#footer {
-  width: 950px;
-  padding: 0; }
-  #footer .nav {
-    width: 100%;
+#secnavbar {
+  background: #ededed;
+  margin: 0 0 50px; }
+  #secnavbar .nav {
+    font-size: 105%;
+    width: 910px;
+    margin: 0 auto;
     text-align: left; }
-    #footer .nav > div {
+    #secnavbar .nav > div {
       display: inline-block;
       vertical-align: top;
       width: 49%;
       margin-bottom: 30px; }
+
+#footer {
+  width: 950px;
+  padding: 0; }
   #footer .license {
     width: 230px; }
   #footer .it3s {

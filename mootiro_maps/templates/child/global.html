@@ -29,8 +29,8 @@
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/jquery-ui-1.8.16/jquery-ui-1.8.16.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/flexslider/flexslider.css" />
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}lib/joyride/joyride-2.0.3.css" />
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css" />
-    <link rel="stylesheet" type="text/css" href="{{THEME_STATIC_URL}}css/fashion.css" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/styles.css?20120820" />
+    <link rel="stylesheet" type="text/css" href="{{THEME_STATIC_URL}}css/fashion.css?20120820" />
     <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Droid+Serif:400,7000&#038;subset=latin,latin-ext' type='text/css'>
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700&#038;subset=latin,latin-ext' type='text/css' />
     <script type="text/javascript" src="{% url javascript_catalog %}"></script>
@@ -104,6 +104,12 @@
 
       <div id="content">
         {% block content %}{% endblock %}
+      </div>
+
+      <div id="secnavbar">
+        {% block secnavbar %}
+          {% include "main/secnavbar.html" %}
+        {% endblock %}
       </div>
 
       <div id="footer">

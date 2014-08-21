@@ -42,22 +42,30 @@ a.big-button:visited {
         max-height: 12em;
     }
 }
+#secnavbar {
+    background: #ededed;
+    margin: 0 0 50px;
+
+    .nav {
+        font-size: 105%;
+        width: 910px;
+        margin: 0 auto;
+        text-align: left;
+
+        > div {
+            display: inline-block;
+            vertical-align: top;
+            width: 49%;
+            margin-bottom: 30px;
+        }
+    }
+
+
+}
 
 #footer {
     width: 950px;
     padding: 0;
-
-    .nav {
-      width: 100%;
-      text-align: left;
-
-      > div {
-        display: inline-block;
-        vertical-align: top;
-        width: 49%;
-        margin-bottom: 30px;
-      }
-    }
 
     .license {
         width: 230px;
