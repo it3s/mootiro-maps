@@ -63,7 +63,7 @@ var ContactsWidget = {
     this.contactsListField.append("" +
       "<div class=\"contact-kv\">" +
         "<label>" + keyName + "</label>" +
-        "<input type='text' value='" + (value || "") + "' data-key='" + key + "' />" +
+        "<input type='text' value=\"" + (value || "") + "\" data-key='" + key + "' />" +
       "</div>"
     );
   },
