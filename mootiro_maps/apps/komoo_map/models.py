@@ -4,6 +4,7 @@ import os
 
 from django.conf import settings
 from django.contrib.gis.db import models as geomodels
+from django.contrib.gis.geos import Polygon
 from django.core.urlresolvers import reverse
 from collection_from import CollectionFrom
 
@@ -46,7 +47,7 @@ class GeoRefModel(geomodels.Model):
     def bounds(self):
         if self.is_empty():
             return None
-        return self.geometry[0].envelope
+        return Polygon.from_bbox(self.geometry[0].extent)
 
     @property
     def geojson(self):
