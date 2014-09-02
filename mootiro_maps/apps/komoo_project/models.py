@@ -238,7 +238,7 @@ class Project(BaseModel, geomodels.Model):
                 if not bounds:
                     bounds = item.bounds
                 else:
-                    bounds = bounds.union(item.bounds).envelope
+                    bounds = Polygon.from_bbox(bounds.envelope.union(item.bounds.envelope).extent)
         self.bounds_cache = bounds
         self.save()
         return bounds
