@@ -34,6 +34,7 @@ def migrate_all():
     migrate_comments()
     migrate_discussions()
     migrate_relations()
+    migrate_projects()
 
 def migrate_organizations():
     print "Migrating Organizations"
@@ -226,3 +227,33 @@ def parse_relation(obj, model):
         'updated_at': str(obj.last_update),
         'metadata': obj.metadata_dict(),
     }
+
+def migrate_projects():
+    print "Migrating Projects"
+    from komoo_project.models import Project
+
+    for obj in Project.objects.all():
+        parsed = parse_project(obj)
+        send_to_redis(parsed)
+
+def parse_project(obj):
+    return {
+        'oid': build_oid(obj),
+        'mootiro_type': 'project',
+        'name': obj.name,
+        'description': obj.description,
+        "created_at": str(obj.creation_date),
+        "updated_at": str(obj.last_update),
+        "contacts": obj.contacts,
+        'short_description': obj.short_description,
+        'creator': obj.creator.name if obj.creator else None,
+        'contributors': [build_oid(c) for c in obj.contributors.all()],
+        'logo': str(obj.logo) if obj.logo else None ,
+        'tags': [tag.name for tag in obj.tags.all()],
+        'maptype': obj.maptype,
+        'bbox': obj.bbox if obj.bounds else None,
+        'custom_bbox': obj.custom_bbox,
+        'partners_logo': [logo.file.url for logo in obj.partners_logo()],
+        'related_items': [build_oid(i) for i in obj.related_items]
+    }
+
