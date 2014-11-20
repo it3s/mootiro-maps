@@ -20,6 +20,8 @@ OID_MAPPER = {
     "Proposal":     'pps',
     "Project":      'pro',
     "Relation":     'rel',
+    "Layer":        'lay',
+    "UploadedFile": 'fil',
 }
 def build_oid(obj):
     return "{}_{}".format(OID_MAPPER[obj.__class__.__name__], obj.id)
@@ -35,6 +37,8 @@ def migrate_all():
     migrate_discussions()
     migrate_relations()
     migrate_projects()
+    migrate_layers()
+    migrate_files()
 
 def migrate_organizations():
     print "Migrating Organizations"
@@ -255,5 +259,44 @@ def parse_project(obj):
         'custom_bbox': obj.custom_bbox,
         'partners_logo': [logo.file.url for logo in obj.partners_logo()],
         'related_items': [build_oid(i) for i in obj.related_items]
+    }
+
+def migrate_layers():
+    print "Migrating Layers"
+    from komoo_project.models import Layer
+
+    for obj in Layer.objects.all():
+        parsed = parse_layer(obj)
+        send_to_redis(parsed)
+
+def parse_layer(obj):
+    return {
+        'oid': build_oid(obj),
+        'mootiro_type': 'layer',
+        'name': obj.name,
+        'project': build_oid(obj.project),
+        'position': obj.position,
+        'visible': obj.visible,
+        'fill_color': obj.fillColor,
+        'stroke_color': obj.strokeColor,
+        'rule': obj.rule,
+    }
+
+def migrate_files():
+    print "Migrating Files"
+    from fileupload.models import UploadedFile
+
+    for obj in UploadedFile.objects.all():
+        parsed = parse_file(obj)
+        send_to_redis(parsed)
+
+def parse_file(obj):
+    return {
+        'oid': build_oid(obj),
+        'mootiro_type': 'uploaded_file',
+        'file': str(obj.file) if obj.file else None,
+        'subtitle': obj.subtitle,
+        'cover': obj.cover,
+        'content_object': build_oid(obj.content_object) if obj.content_object else None,
     }
 
