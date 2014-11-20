@@ -10,19 +10,22 @@ def send_to_redis(obj):
     redis.set('mootiro:{}'.format(oid), json.dumps(obj))
 
 OID_MAPPER = {
-    "Organization": 'org',
-    "Community":    'com',
-    "Resource":     'res',
-    "Need":         'ned',
-    "User":         'usr',
-    "Discussion":   'dis',
-    "Comment":      'cmt',
-    "Proposal":     'pps',
-    "Project":      'pro',
-    "Relation":     'rel',
-    "Layer":        'lay',
-    "UploadedFile": 'fil',
-    "Video":        'vid',
+    "Organization":    'org',
+    "Community":       'com',
+    "Resource":        'res',
+    "Need":            'ned',
+    "User":            'usr',
+    "Discussion":      'dis',
+    "Comment":         'cmt',
+    "Proposal":        'pps',
+    "Project":         'pro',
+    "Relation":        'rel',
+    "Layer":           'lay',
+    "UploadedFile":    'fil',
+    "Video":           'vid',
+    "ModelVersion":    'ver',
+    "Signature":       'sig',
+    "Report":          'rep',
 }
 def build_oid(obj):
     return "{}_{}".format(OID_MAPPER[obj.__class__.__name__], obj.id)
@@ -40,6 +43,10 @@ def migrate_all():
     migrate_projects()
     migrate_layers()
     migrate_files()
+    migrate_videos()
+    migrate_versions()
+    migrate_signatures()
+    migrate_reports()
 
 def migrate_organizations():
     print "Migrating Organizations"
@@ -322,3 +329,58 @@ def parse_video(obj):
         'content_object': build_oid(obj.content_object) if obj.content_object else None,
     }
 
+
+def migrate_versions():
+    print "Migrating Versions"
+    from model_versioning.models import ModelVersion
+
+    for obj in ModelVersion.objects.all():
+        parsed = parse_version(obj)
+        send_to_redis(parsed)
+
+def parse_version(obj):
+    item_oid = "{}_{}".format(OID_MAPPER[obj.table_ref.split('.')[-1]], obj.object_id)
+    return {
+        'oid': build_oid(obj),
+        'mootiro_type': 'version',
+        'item': item_oid,
+        'whodunnit': build_oid(obj.creator) if obj.creator else None,
+        'created_at': str(obj.creation_date),
+        'data': obj.data,
+    }
+
+def migrate_signatures():
+    print "Migrating Signatures"
+    from signatures.models import Signature
+
+    for obj in Signature.objects.all():
+        if obj.user and obj.content_object and obj.content_object.__class__.__name__ not in ['Investment']:
+            parsed = parse_signature(obj)
+            send_to_redis(parsed)
+
+def parse_signature(obj):
+    return {
+        'oid': build_oid(obj),
+        'mootiro_type': 'signature',
+        'user': build_oid(obj.user),
+        'content_object': build_oid(obj.content_object),
+    }
+
+def migrate_reports():
+    print "Migrating Reports"
+    from moderation.models import Report
+
+    for obj in Report.objects.all():
+        parsed = parse_report(obj)
+        send_to_redis(parsed)
+
+def parse_report(obj):
+    return {
+        'oid': build_oid(obj),
+        'mootiro_type': 'report',
+        'user': build_oid(obj.user),
+        'content_object': build_oid(obj.moderation.content_object),
+        'created_at': str(obj.date),
+        'comment': obj.comment,
+        'reason': obj.reason_name,
+    }
