@@ -22,6 +22,7 @@ OID_MAPPER = {
     "Relation":     'rel',
     "Layer":        'lay',
     "UploadedFile": 'fil',
+    "Video":        'vid',
 }
 def build_oid(obj):
     return "{}_{}".format(OID_MAPPER[obj.__class__.__name__], obj.id)
@@ -297,6 +298,27 @@ def parse_file(obj):
         'file': str(obj.file) if obj.file else None,
         'subtitle': obj.subtitle,
         'cover': obj.cover,
+        'content_object': build_oid(obj.content_object) if obj.content_object else None,
+    }
+
+def migrate_videos():
+    print "Migrating Videos"
+    from video.models import Video
+
+    for obj in Video.objects.all():
+        parsed = parse_video(obj)
+        send_to_redis(parsed)
+
+def parse_video(obj):
+    return {
+        'oid': build_oid(obj),
+        'mootiro_type': 'video',
+        'title': obj.title,
+        'description': obj.description,
+        'video_url': obj.video_url,
+        'video_id': obj.video_id,
+        'thumbnail_url': obj.thumbnail_url,
+        'service': obj.service,
         'content_object': build_oid(obj.content_object) if obj.content_object else None,
     }
 
