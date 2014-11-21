@@ -1,8 +1,12 @@
 # coding: utf-8
+import os
 from redis import StrictRedis
 import simplejson as json
 
-redis = StrictRedis(host='10.0.2.2', port=6379, db=0)
+HOST = os.getenv('REDIS_HOST', '10.0.2.2')
+PORT = os.getenv('REDIS_PORT', 6379)
+PASS = os.getenv('REDIS_PASS', '')
+redis = StrictRedis(host=HOST, port=PORT, db=0, password=PASS)
 
 def send_to_redis(obj):
     oid = obj['oid']
