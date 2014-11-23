@@ -41,16 +41,16 @@ def migrate_all():
     migrate_communities()
     migrate_resources()
     migrate_needs()
+    migrate_projects()
     migrate_comments()
     migrate_discussions()
     migrate_relations()
-    migrate_projects()
     migrate_layers()
+    migrate_signatures()
+    migrate_reports()
     migrate_files()
     migrate_videos()
     migrate_versions()
-    migrate_signatures()
-    migrate_reports()
 
 def migrate_organizations():
     print "Migrating Organizations"
@@ -262,7 +262,7 @@ def parse_project(obj):
         "updated_at": str(obj.last_update),
         "contacts": obj.contacts,
         'short_description': obj.short_description,
-        'creator': obj.creator.name if obj.creator else None,
+        'creator': build_oid(obj.creator) if obj.creator else None,
         'contributors': [build_oid(c) for c in obj.contributors.all()],
         'logo': str(obj.logo) if obj.logo else None ,
         'tags': [tag.name for tag in obj.tags.all()],
@@ -305,7 +305,7 @@ def migrate_files():
 def parse_file(obj):
     return {
         'oid': build_oid(obj),
-        'mootiro_type': 'uploaded_file',
+        'mootiro_type': 'file',
         'file': str(obj.file) if obj.file else None,
         'subtitle': obj.subtitle,
         'cover': obj.cover,
