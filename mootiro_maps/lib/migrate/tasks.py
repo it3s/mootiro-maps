@@ -64,8 +64,10 @@ def get_wkt(obj):
     points = obj.points
     lines = obj.lines
     polys = obj.polys
+    # use the geometry collection by default
     geom = obj.geometry
-    if not ((points and lines) or (points and polys) or (lines and points)):
+    # check if tere is only one type of geometry. If true selects it.
+    if not ((points and lines) or (points and polys) or (lines and polys)):
         if points:
             geom = points
         elif lines:
