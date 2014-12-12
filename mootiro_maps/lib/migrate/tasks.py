@@ -60,6 +60,24 @@ def migrate_organizations():
         parsed = parse_organization(obj)
         send_to_redis(parsed)
 
+def get_wkt(obj):
+    points = obj.points
+    lines = obj.lines
+    polys = obj.polys
+    # use the geometry collection by default
+    geom = obj.geometry
+    # check if tere is only one type of geometry. If true selects it.
+    if not ((points and lines) or (points and polys) or (lines and polys)):
+        if points:
+            geom = points
+        elif lines:
+            geom = lines
+        elif polys:
+            geom = polys
+        else:
+            return "POINT EMPTY"
+    return geom.wkt
+
 def parse_organization(obj):
     return {
         'oid': build_oid(obj),
@@ -75,7 +93,7 @@ def parse_organization(obj):
             'creator': obj.creator.name if obj.creator else None,
         },
         'tags': [tag.name for tag in obj.tags.all() if tag] + [c.get_translated_name() for c in obj.categories.all() if c],
-        'geometry': obj.geometry.wkt,
+        'geometry': get_wkt(obj),
         # logo ? logo_category ? logo_choice ?
     }
 
@@ -102,7 +120,7 @@ def parse_community(obj):
             'creator': obj.creator.name if obj.creator else None,
         },
         'tags': [tag.name for tag in obj.tags.all() if tag],
-        'geometry': obj.geometry.wkt,
+        'geometry': get_wkt(obj),
     }
 
 def migrate_resources():
@@ -127,7 +145,7 @@ def parse_resource(obj):
             'creator': obj.creator.name if obj.creator else None,
         },
         'tags': [tag.name for tag in obj.tags.all() if tag] + ([obj.kind.name] if obj.kind else []),
-        'geometry': obj.geometry.wkt,
+        'geometry': get_wkt(obj),
     }
 
 def migrate_needs():
@@ -153,7 +171,7 @@ def parse_need(obj):
             'target_audiences':  [ta.name for ta in obj.target_audiences.all() if ta],
         },
         'tags': [tag.name for tag in obj.tags.all()] + [cat.name for cat in obj.categories.all()],
-        'geometry': obj.geometry.wkt,
+        'geometry': get_wkt(obj),
     }
 
 def migrate_comments():
@@ -219,7 +237,7 @@ def parse_user(obj):
         'language': obj.language,
         'is_admin': obj.is_admin,
         'is_active': obj.is_active,
-        'geometry': obj.geometry.wkt,
+        'geometry': get_wkt(obj),
         'avatar': obj.avatar if obj.avatar != "/static/img/user-placeholder.png" else None,
     }
 
