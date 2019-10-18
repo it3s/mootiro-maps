@@ -5,7 +5,7 @@ Flask==0.9
 Genshi==0.6
 Jinja2==2.6
 Markdown==2.1.1
-Werkzeug==0.8.3
+Werkzeug==0.15.3
 amqp==1.0.8
 amqplib==1.0.2
 anyjson==0.3.1
