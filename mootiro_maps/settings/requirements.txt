@@ -23,7 +23,7 @@ django-markitup==1.0.0
 django-nose==1.0
 django-picklefield==0.2.1
 django-taggit==0.9.3
-eventlet==0.12.1
+eventlet==0.31.0
 gdata==2.0.17
 geopy==0.94.1
 gevent==0.13.8
