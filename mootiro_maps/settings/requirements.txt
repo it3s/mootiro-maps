@@ -38,7 +38,7 @@ meld3==0.6.10
 mock==0.8.0
 nose==1.1.2
 oauth2client==1.0
-paramiko==1.10.0
+paramiko==2.10.1
 pika==0.9.5
 polib==0.7.0
 psycopg2==2.4.4
