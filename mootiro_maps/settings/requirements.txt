@@ -44,7 +44,7 @@ polib==0.7.0
 psycopg2==2.4.4
 pycrypto==2.5
 pyes==0.19.1
-pymongo==2.4.1
+pymongo==2.5.2
 python-dateutil==1.5
 python-gflags==2.0
 pytz==2012j
